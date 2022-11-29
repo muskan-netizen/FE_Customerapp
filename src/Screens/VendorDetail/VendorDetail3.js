@@ -87,8 +87,7 @@ export default function VendorDetail3({navigation, route}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
-
-    if (item?.redirect_to == "Pickup/Delivery") {
+    if (item?.redirect_to == 'Pickup/Delivery') {
       if (!!userData?.auth_token) {
         item['pickup_taxi'] = true;
         item['redirect_to'] = item.redirect_to;

@@ -23,6 +23,7 @@ import DeviceCountry, {
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import staticStrings from '../constants/staticStrings';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -534,6 +535,59 @@ export function deviceCountryCode() {
         reject(error);
       });
   });
+}
+
+export function redirectFromNotification(clickActionUrl = null) {
+  if (!!clickActionUrl) {
+    // redirectToData[0] for redirection to vendor or category
+    //redirectToData[1] for name of vendor or category
+    // redirectToData[2] for getting id of vendor or category
+    let redirectToData = clickActionUrl.split('/');
+    if (!!redirectToData[2]) {
+      if (
+        redirectToData[0] == staticStrings.VENDOR ||
+        redirectToData[0] == staticStrings.PRODUCT ||
+        redirectToData[0] == staticStrings.CATEGORY ||
+        redirectToData[0] == staticStrings.ONDEMANDSERVICE ||
+        redirectToData[0] == staticStrings.LAUNDRY
+      ) {
+        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+          screen: navigationStrings.HOMESTACK,
+          params: {
+            screen: navigationStrings.PRODUCT_LIST,
+            params: {
+              data: {
+                id: redirectToData[2],
+                vendor:
+                  redirectToData[0] == staticStrings.CATEGORY ||
+                  redirectToData[0] == staticStrings.VENDOR
+                    ? true
+                    : false,
+                name: redirectToData[1],
+                fetchOffers: true,
+              },
+            },
+          },
+        });
+      } else if (redirectToData[0] == staticStrings.SUBCATEGORY) {
+        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+          screen: navigationStrings.HOMESTACK,
+          params: {
+            screen: navigationStrings.VENDOR_DETAIL,
+            params: {
+              data: {
+                item: {
+                  id: redirectToData[2],
+                  name: redirectToData[1],
+                  redirect_to: staticStrings.SUBCATEGORY,
+                },
+              },
+            },
+          },
+        });
+      }
+    }
+  }
 }
 
 export {

@@ -1643,6 +1643,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </View>
         </Modal>
       )}
+
+      {console.log(paymentDataFlutterWave, 'paymentDataFlutterWave...')}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}

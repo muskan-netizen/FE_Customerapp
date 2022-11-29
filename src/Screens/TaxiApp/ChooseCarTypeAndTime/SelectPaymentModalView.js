@@ -14,6 +14,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
@@ -738,7 +739,9 @@ style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
             // paddingBottom: moderateScale(keyboardHeight),
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <>
+            <KeyboardAvoidingView
+              keyboardVerticalOffset={height / 2.5}
+              behavior={'padding'}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -1030,7 +1033,7 @@ style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
                 marginTop={moderateScaleVertical(16)}
                 marginBottom={moderateScaleVertical(16)}
               />
-            </>
+            </KeyboardAvoidingView>
           </ScrollView>
         </View>
       </Modal>

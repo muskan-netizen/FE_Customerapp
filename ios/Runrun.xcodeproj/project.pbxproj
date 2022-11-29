@@ -36,6 +36,8 @@
 		00301AEC27BE0FAE0088151F /* ONTHEGO(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 00CF6E9527B6832B005F458C /* ONTHEGO(Development).xcconfig */; };
 		00301AED27BE0FB60088151F /* ONTHEGO(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 00CF6E9727B68373005F458C /* ONTHEGO(Production).xcconfig */; };
 		00301AEE27BE0FBA0088151F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00CF6E9927B683D1005F458C /* Images.xcassets */; };
+		003023A0292BB2450009FBD3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
+		00314502292DF9EB00E5A6C8 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		0038C05827BA900B00B7CF17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		0038C05927BA900B00B7CF17 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		0038C05A27BA900B00B7CF17 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -50761,6 +50763,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00314502292DF9EB00E5A6C8 /* main.jsbundle in Resources */,
 				8478DB24270703490083F24E /* Eina02-Regular.ttf in Resources */,
 				8478DEB7270704CD0083F24E /* Images.xcassets in Resources */,
 				8478DB25270703490083F24E /* SFProDisplay-Regular.ttf in Resources */,
@@ -55804,6 +55807,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				003023A0292BB2450009FBD3 /* main.jsbundle in Resources */,
 				98C00351286C7A2B00478618 /* Eina02-Regular.ttf in Resources */,
 				98C00352286C7A2B00478618 /* SFProDisplay-Regular.ttf in Resources */,
 				98C00353286C7A2B00478618 /* Futura-Medium.ttf in Resources */,

@@ -935,10 +935,9 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
-  console.log(appStyle?.homePageLayout, 'homePageLayouthomePageLayout');
   const renderHomeScreen = () => {
-
     switch (appStyle?.homePageLayout) {
+      // switch (case_) {
       case 1:
         return (
           <>
@@ -1296,63 +1295,63 @@ export default function Home({route, navigation}) {
             )}
           </>
         );
-                // 3
-        case 7:
-          return (
-            <>
-              <DashBoardHeaderSix
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
+
+      case 7:
+        return (
+          <>
+            <DashBoardHeaderSix
+              showToggles={false}
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            {dineInType == 'pick_drop' ? (
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
                 isLoading={isLoading}
-                currentLocation={currentLocation}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
-  
-              {dineInType == 'pick_drop' ? (
-                <TaxiHomeDashbord
-                  handleRefresh={() => handleRefresh()}
-                  bannerPress={(item) => bannerPress(item)}
-                  isLoading={isLoading}
-                  isRefreshing={isRefreshing}
-                  appMainData={appMainData}
-                  onPressCategory={(item) => onPressCategory(item)}
-                  toggleData={appData}
-                  location={location}
-                  curLatLong={curLatLong}
-                />
-              ) : (
-                <DashBoardNine
-                  handleRefresh={() => handleRefresh()}
-                  bannerPress={(item) => bannerPress(item)}
-                  isLoading={isLoading}
-                  isRefreshing={isRefreshing}
-                  appMainData={appMainData}
-                  onPressCategory={(item) => {
-                    onPressCategory(item);
-                  }}
-                  onPressVendor={(item) => {
-                    onPressVendor(item);
-                  }}
-                  isDineInSelected={isDineInSelected}
-                  selcetedToggle={selcetedToggle}
-                  tempCartData={tempCartData}
-                  toggleData={appData}
-                  navigation={navigation}
-                  onVendorFilterSeletion={onVendorFilterSeletion}
-                  singleVendor={singleVendor}
-                  onPressAddLaundryItem={onPressAddLaundryItem}
-                  isLoadingAddons={isLoadingAddons}
-                  selectedHomeCategory={selectedHomeCategory}
-                />
-              )}
-            </>
-          );
+            ) : (
+              <DashBoardNine
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                tempCartData={tempCartData}
+                toggleData={appData}
+                navigation={navigation}
+                onVendorFilterSeletion={onVendorFilterSeletion}
+                singleVendor={singleVendor}
+                onPressAddLaundryItem={onPressAddLaundryItem}
+                isLoadingAddons={isLoadingAddons}
+                selectedHomeCategory={selectedHomeCategory}
+              />
+            )}
+          </>
+        );
     }
   };
 
