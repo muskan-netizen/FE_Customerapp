@@ -17,6 +17,7 @@ import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 
 const TaxiHomeCategoryCard = ({
   data = {},
@@ -43,7 +44,10 @@ const TaxiHomeCategoryCard = ({
       activeOpacity={0.9}
       style={{
         // shadowOpacity: 0.5,
-        width: width / moderateScale(5.4),
+        // width: width / moderateScale(3),
+        width: appIds.hezniTaxi
+          ? width / moderateScale(3)
+          : width / moderateScale(5.4),
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',

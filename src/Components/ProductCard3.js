@@ -1,9 +1,7 @@
-import {string} from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Image,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -25,7 +23,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -88,9 +86,12 @@ const ProductCard3 = ({
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
+
   const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleData({themeColors, fontFamily});
@@ -390,13 +391,12 @@ const ProductCard3 = ({
                 fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
               }}>
-              {`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
-                // Number(data?.variant_multiplier) *
-                Number(data?.variant[0]?.price),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+              {tokenConverterPlusCurrencyNumberFormater(
+                data?.variant[0]?.price,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
             {Number(data?.variant[0]?.compare_at_price) >
               Number(data?.variant[0]?.price) && (
@@ -410,13 +410,12 @@ const ProductCard3 = ({
                   textDecorationLine: 'line-through',
                   marginHorizontal: moderateScale(8),
                 }}>
-                {`${
-                  currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
-                  // Number(data?.variant_multiplier) *
-                  Number(data?.variant[0]?.compare_at_price),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  data?.variant[0]?.compare_at_price,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             )}
           </View>

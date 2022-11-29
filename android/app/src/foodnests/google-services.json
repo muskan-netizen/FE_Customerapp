@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "487451161102",
-    "project_id": "foodnests-2d968",
-    "storage_bucket": "foodnests-2d968.appspot.com"
+    "project_number": "843573894537",
+    "project_id": "foodnest-a3000",
+    "storage_bucket": "foodnest-a3000.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:487451161102:android:c2b7811eb8edd91a9c825f",
+        "mobilesdk_app_id": "1:843573894537:android:42c796ab699f709c8ad558",
         "android_client_info": {
-          "package_name": "com.foodnests"
+          "package_name": "com.foodnests.orderapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "487451161102-mct9jjicookhudi8b2nkik3qs7i8j8c1.apps.googleusercontent.com",
+          "client_id": "843573894537-2ls8s6v3e5luo7u3f0mckogr8qaglns5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.foodnests",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "487451161102-qdmprkhen6r6j4s7lhfjjr0bn9s3nj4p.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.foodnests",
+            "package_name": "com.foodnests.orderapp",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "487451161102-toq2joee36j52cgkk6a10h0bru2ji428.apps.googleusercontent.com",
+          "client_id": "843573894537-kliq6n224phrqskf1do6m89etq77va8a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.foodnests",
+            "package_name": "com.foodnests.orderapp",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "843573894537-su6bbp7nl8n1n2mcavluji87iufeq3ct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodnests.orderapp",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "487451161102-p3djinjbidocfd9huutinbct6fs4plb4.apps.googleusercontent.com",
+          "client_id": "843573894537-rm16f2qen4fgeo919fnpp7gice6k6vv2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA24CTaYrql48dzeQjg8ci2vFrAwjhnck8"
+          "current_key": "AIzaSyDHWz1OKYyC0CD0e9fXYD6nYDUug5QcBJk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "487451161102-p3djinjbidocfd9huutinbct6fs4plb4.apps.googleusercontent.com",
+              "client_id": "843573894537-rm16f2qen4fgeo919fnpp7gice6k6vv2.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "487451161102-6u9ai348l7csm73lai1sevmqvq1bgme0.apps.googleusercontent.com",
+              "client_id": "843573894537-79nh4g9d4eenj7mk1b56ddud9jtos3tr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.foodnests"
+                "bundle_id": "com.foodnests.orderapp"
               }
             }
           ]

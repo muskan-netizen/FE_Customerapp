@@ -2147,6 +2147,99 @@ end
 #Dbairro_
 target 'Dbairro_' do
 end
+
+#Genee
+target 'Genee' do
+end
+
+#SpeedyDelivery
+target 'SpeedyDelivery' do
+end
+
+#Holla
+target 'Holla' do
+end
+
+#Stabex
+target 'Stabex' do
+end
+
+#UberWeeds
+target 'UberWeeds' do
+end
+
+#CabPro
+target 'CabPro' do
+end
+
+#PointoneExpediteDelivery
+target 'PointoneExpediteDelivery' do
+end
+
+#TDC
+target 'TDC' do
+end
+
+#GiftyLeaf
+target 'GiftyLeaf' do
+end
+
+#FlyCommerce
+target 'FlyCommerce' do
+end
+
+#Saamanshop
+target 'Saamanshop' do
+end
+
+#PIK
+target 'PIK' do
+end
+
+#MOTINA
+target 'MOTINA' do
+end
+
+#Hungry
+target 'Hungry' do
+end
+
+#Greenhippo
+target 'Greenhippo' do
+end
+
+#Mymeddy
+target 'Mymeddy' do
+end
+
+#URyd
+target 'URyd' do
+end
+
+#HappySingh
+target 'HappySingh' do
+end
+
+#Vital
+target 'Vital' do
+end
+
+
+#parcelworks
+target 'ParcelWorks' do
+end
+
+#UsVetsDeliver
+target 'UsVetsDeliver' do
+end
+
+#Konectame
+target 'Konectame' do
+end
+
+#Fly Builder
+target 'FlyBuilder' do
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

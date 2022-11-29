@@ -14,13 +14,15 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {getImageUrl} from '../utils/helperFunctions';
 
 const WishlistCard = ({data, onPress}) => {
   const {themeColor, themeToggle, appData} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -85,13 +87,15 @@ const WishlistCard = ({data, onPress}) => {
                   ? MyDarkTheme.colors.text
                   : colors.blackOpacity86,
                 fontSize: textScale(11),
-              }}>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(data?.variant[0]?.multiplier) *
-                Number(data?.variant[0]?.price),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(data?.variant[0]?.multiplier) *
+                  Number(data?.variant[0]?.price),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
             {data?.averageRating && (
               <View style={styles.ratingView}>
                 <Text style={styles.ratingTxt}>

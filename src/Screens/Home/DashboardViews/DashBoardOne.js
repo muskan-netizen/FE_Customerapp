@@ -36,7 +36,7 @@ export default function DashBoardOne({
   isRefreshing = false,
   onPressCategory = () => {},
   selcetedToggle,
-  toggleData,
+  toggleData={},
   isDineInSelected = false,
   tempCartData = null,
   navigation = {},
@@ -55,7 +55,7 @@ export default function DashBoardOne({
     (state) => state?.initBoot,
   );
   console.log(appMainData, 'appMainData');
-  console.log(homeData, 'homeData');
+  console.log(appData?.banners, 'homeData');
 
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();

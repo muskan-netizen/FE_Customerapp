@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>509691049465-mefcdl34cd4dm5geic4ugem24ddifsa5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.509691049465-mefcdl34cd4dm5geic4ugem24ddifsa5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>509691049465-6vh5h47fg4971krm96umd1o1qb8t4ihj.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCsvG1lV1FyQ6P5bskJbQgwRiyFvy91uJ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>509691049465</string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.holla.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>holla-d46f7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>holla-d46f7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:509691049465:ios:1411cfc5d35178b8967928</string>
+</dict>
+</plist>

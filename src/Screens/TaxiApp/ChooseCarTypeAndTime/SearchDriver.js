@@ -73,7 +73,8 @@ export default function ({
                 alignSelf:'center',
                 fontFamily:fontFamily?.regular,
                 fontSize:moderateScale(16),
-                marginBottom:moderateScale(20)
+                marginBottom:moderateScale(20),
+                textAlign:'center'
               }}
             >
              your ride has been schedule for {scheduleDate}

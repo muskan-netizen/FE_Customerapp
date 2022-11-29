@@ -120,11 +120,11 @@ export default function (Stack) {
           unmountOnBlur: true,
         }}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.VERIFY_ACCOUNT}
+      <Stack.Screen
+        name={navigationStrings.VERIFY_ACCOUNT_TAXI}
         component={VerifyAccount}
         options={{headerShown: false}}
-      /> */}
+      />
     </>
   );
 }

@@ -1,0 +1,15 @@
+#include "Pods/Target Support Files/Pods-available_pods-TDC/Pods-available_pods-TDC.debug.xcconfig"
+
+PROJECT_APPLE_ID = 6444281212
+PROJECT_BUNDLE_ID =com.tdc.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = TDC Rider
+PROJECT_GOOGLE_CLIENT_ID = 547191148428-5po3r5sk54vkfsojah93hliig4gm3306.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.547191148428-5po3r5sk54vkfsojah93hliig4gm3306
+PROJECT_FACEBOOK_ID = 480651277229491
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =TDCInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+
+
