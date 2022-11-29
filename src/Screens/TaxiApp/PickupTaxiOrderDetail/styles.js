@@ -418,7 +418,17 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       width: moderateScale(15),
       height:moderateScale(15)
 
-    }
+    },  textInputStyle: {
+       height:moderateScaleVertical(60),
+      padding: 10,
+      borderRadius: 5,
+      textAlignVertical: 'top',
+      width:'90%',
+      marginHorizontal:moderateScale(10),
+      borderWidth:moderateScale(0.5),
+      alignSelf:'center',
+      marginVertical:moderateScaleVertical(10)
+    },
   });
   return styles;
 };

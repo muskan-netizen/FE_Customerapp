@@ -290,6 +290,7 @@ export default function Signup({navigation}) {
           updateState({isLoading: false});
 
           if (!!res.data) {
+          
             checkEmailPhoneVerified(res.data);
           }
         })

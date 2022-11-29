@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>792310717333-hh3ghi30fvcde6ktbbs9surotk0t5ebu.apps.googleusercontent.com</string>
+	<string>430510586576-0f86l6v11nerkq0ccq8i4tm4og906svq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.792310717333-hh3ghi30fvcde6ktbbs9surotk0t5ebu</string>
+	<string>com.googleusercontent.apps.430510586576-0f86l6v11nerkq0ccq8i4tm4og906svq</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>792310717333-ag36sf58onojjj41d9j9dm9sc24p42au.apps.googleusercontent.com</string>
+	<string>430510586576-0b06q9vtsm4rons5orgct5eesgah0seq.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCzKym5nwmwfVX_18-UJK_DCekZRHxzbBc</string>
+	<string>AIzaSyC7FqIaLQxNFFU13AHs8Nk0Dh7xiLIanLA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>792310717333</string>
+	<string>430510586576</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.iPicknDrop</string>
+	<string>com.iPicknDrop.order</string>
 	<key>PROJECT_ID</key>
-	<string>ipickndrop-3ffe2</string>
+	<string>ipd-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ipickndrop-3ffe2.appspot.com</string>
+	<string>ipd-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:792310717333:ios:5e0420737fe0a0b9f2749c</string>
+	<string>1:430510586576:ios:6f92620020f4bed5613cd5</string>
 </dict>
 </plist>

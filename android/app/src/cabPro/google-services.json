@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "35139908637",
+    "project_id": "cabpro-678a7",
+    "storage_bucket": "cabpro-678a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35139908637:android:42a11c326faaeb37da82f4",
+        "android_client_info": {
+          "package_name": "com.cabpro.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35139908637-2riojtgjlv9kc6sv00nac1qh3pmmdauq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabpro.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "35139908637-jo0e4sb16dusai2h8sr2q5j22qjtlbj2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabpro.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "35139908637-qvo6u4tmbrkt4fhc1fn7qskc9iqebmu1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabpro.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "35139908637-vtp3p9qs2rbegab1aamnk17jc23gpvo7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn3fP9dx6Jbnjl3QVrzEle3lYpKkkK_4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35139908637-vtp3p9qs2rbegab1aamnk17jc23gpvo7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "35139908637-metgh5o9i7nn2kp2j9jvtgnl2ham3rn4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cabpro.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

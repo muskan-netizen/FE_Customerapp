@@ -36,7 +36,7 @@ export default function DashBoardOne({
   isRefreshing = false,
   onPressCategory = () => {},
   selcetedToggle,
-  toggleData,
+  toggleData={},
   isDineInSelected = false,
   tempCartData = null,
   navigation = {},

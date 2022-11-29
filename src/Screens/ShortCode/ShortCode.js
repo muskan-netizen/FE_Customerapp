@@ -79,7 +79,9 @@ export default function ShortCode({route, navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
 
-  const customColor = themeColors.primary_color;
+ 
+
+  const customColor = themeColors?.primary_color;
 
   useEffect(() => {
     (async () => {
@@ -2765,6 +2767,48 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.genee:
+          updateState({
+            shortCode: shortCodes.genee,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.speedyDelivery:
+          updateState({
+            shortCode: shortCodes.speedyDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.holla:
+          updateState({
+            shortCode: shortCodes.holla,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stabex:
+          updateState({
+            shortCode: shortCodes.stabex,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.uberWeeds:
+          updateState({
+            shortCode: shortCodes.uberWeeds,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.cabPro:
+          updateState({
+            shortCode: shortCodes.cabPro,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.pointoneExpediteDelivery:
+          updateState({
+            shortCode: shortCodes.pointoneExpediteDelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2797,19 +2841,19 @@ export default function ShortCode({route, navigation}) {
 
     let header = {};
 
+
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '245base',
+        // code: '245bae',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        //  code: '1da2e9',
+        // code: '245bae',
         code: shortCode,
       };
     }
-    console.log(header, 'header*******');
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
@@ -2842,7 +2886,7 @@ export default function ShortCode({route, navigation}) {
 
         if (
           getBundleId() == appIds.masa ||
-          getBundleId() == appIds.iPicknDrop ||
+       
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
           getBundleId() == appIds.flank
