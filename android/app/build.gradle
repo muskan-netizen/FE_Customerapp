@@ -202,7 +202,7 @@ android {
         }
     }
   productFlavors {
-                             sheRyders{
+       sheRyders{
             dimension "appType"
             versionCode 1
             versionName "1.0"

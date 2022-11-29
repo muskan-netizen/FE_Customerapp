@@ -243,7 +243,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   //     updateState({ isLoading: false });
   //   }
   // }, []);
-  console.log(urlValue,"urlValueurlValueurlValueurlValue")
+  console.log(urlValue, 'urlValueurlValueurlValueurlValue');
   useInterval(
     () => {
       if (urlValue) {
@@ -282,10 +282,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     }
   }, [driverStatus]);
 
-  console.log(
-    paramData,
-    'paramData?.orderDetail?.dispatch_traking_url',
-  );
+  console.log(paramData, 'paramData?.orderDetail?.dispatch_traking_url');
 
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
@@ -294,7 +291,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         '/order-details/',
       )
     : null;
-  console.log(new_dispatch_traking_url, 'new_dispatch_traking_urlnew_dispatch_traking_url');
+  console.log(
+    new_dispatch_traking_url,
+    'new_dispatch_traking_urlnew_dispatch_traking_url',
+  );
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -936,8 +936,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               style={{height: height / 1.8, width: '100%'}}
               initialRegion={region}
               ref={mapRef}
-
-              
               // cacheEnabled={true}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
@@ -1234,7 +1232,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   </View>
                 )}
                 <View style={styles.horizontalLine} />
-               
+
                 {orderStatus == 'unassigned' && (
                   <SearchDriver
                     isWaitingOver={isWaitingOver}
@@ -1242,7 +1240,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       onCancelOrder('No drivers available.');
                     }}
                     scheduleDate={orderDetail?.scheduled_date_time}
-                   
                     isBtnLoader={isBtnLoader}
                   />
                 )}
@@ -1979,7 +1976,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               backgroundColor: themeColors.primary_color,
               borderWidth: 0,
             }}
-            onPress={()=>onCancelOrder(false)}
+            onPress={() => onCancelOrder(false)}
           />
         </View>
       </Modal>
