@@ -22,7 +22,7 @@ import stylesFun from './styles';
 
 export default function AvailableDriver({
   isCabPooling=false,
-  isLoading = false,
+  isLoading ,
   disabled,
   updateSeatNo,
   availableCarList = [],

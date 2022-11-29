@@ -181,7 +181,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
-//            shrinkResources true
+      //            shrinkResources true
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -3662,6 +3662,1066 @@ android {
     //             resValue "string", "host_name", ""
     //         }
 
+            
+    //         homeric{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.homeric'
+    //             resValue "string", "app_name", "Homeric"
+    //             resValue "string", "host_name", ""  
+    //         }
+    //         gokab{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.gokab'
+    //             resValue "string", "app_name", "GoKab"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         voltaic{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.voltaic'
+    //             resValue "string", "app_name", "Voltaic"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         elixir{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.elixir.customer'
+    //             resValue "string", "app_name", "Elixir"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         zest{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zest.customer'
+    //             resValue "string", "app_name", "Zest"
+    //             resValue "string", "host_name", ""
+
+    //         }
+    //         ace{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.customer.ace'
+    //             resValue "string", "app_name", "Ace"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         expressdelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.expressdelivery'
+    //             resValue "string", "app_name", "Express Delivery"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         booziedoozie{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.booziedoozie'
+    //             resValue "string", "app_name", "Boozie Doozie"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         bakesale{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.bakesale'
+    //             resValue "string", "app_name", "BakeSale"
+    //             resValue "string", "host_name", ""
+    //         }
+    
+    //         yaawi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.yaawi'
+    //             resValue "string", "app_name", "Yaawi"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         hosta{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.hosta'
+    //             resValue "string", "app_name", "HOSTA"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         somame{
+    //             dimension "appType"
+    //             versionCode 4
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.somame'
+    //             resValue "string", "app_name", "Somame"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         goodwheelz{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.goodwheelz'
+    //             resValue "string", "app_name", "Good Wheelz"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         tranznet{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.tranznet'
+    //             resValue "string", "app_name", "Tranz.net"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sambiga{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.sambiga'
+    //             resValue "string", "app_name", "Sambiga"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         agrionline{
+    //             dimension "appType"
+    //             versionCode 3
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.agrionline'
+    //             resValue "string", "app_name", "AgriOnline"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         quickquick{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.quickquick'
+    //             resValue "string", "app_name", "Quick Quick"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         caribeclean{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.caribeclean'
+    //             resValue "string", "app_name", "Caribe Clean"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         stonses{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.stonses'
+    //             resValue "string", "app_name", "Stonses"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         agbdeliveries{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.agbdeliveries'
+    //             resValue "string", "app_name", "AGB Deliveries"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         twofinder{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.twofinder'
+    //             resValue "string", "app_name", "Two Finder"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         bookem{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.bookem'
+    //             resValue "string", "app_name", "Bookem"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         zip{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.zip'
+    //             resValue "string", "app_name", "Zip"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ridetci{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ridetci'
+    //             resValue "string", "app_name", "TRIP TCI"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         noki{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.noki'
+    //             resValue "string", "app_name", "Noki"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         rxnow{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.rxnow'
+    //             resValue "string", "app_name", "RX Now"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         seachangevending{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.seachangevending'
+    //             resValue "string", "app_name", "Sea Change Vending"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ored{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ored'
+    //             resValue "string", "app_name", "Ored"
+    //             resValue "string", "host_name", ""
+    //         }
+        
+    //         maxisdelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.maxisdelivery'
+    //             resValue "string", "app_name", "Maxis Delivery"
+    //             resValue "string", "host_name", ""
+    //         }
+            
+    //             vendorspot{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.vendorspot'
+    //             resValue "string", "app_name", "Vendor Spot"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         pinkydeli{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.pinkydeli'
+    //             resValue "string", "app_name", "Pinky Deli"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         gasgiant{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.gasgiant'
+    //             resValue "string", "app_name", "Gas Giant"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         releezer{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.releezer'
+    //             resValue "string", "app_name", "Releezer"
+    //             resValue "string", "host_name", ""
+    //         }
+    //             vendoor{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.vendoor'
+    //             resValue "string", "app_name", "Vendoor"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     farmersouq{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.farmersouq'
+    //             resValue "string", "app_name", "FARMER SOUQ"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         tmgShops{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.tmgShops'
+    //             resValue "string", "app_name", "TMG Shops"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         stitchesonsite{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.stitchesonsite'
+    //             resValue "string", "app_name", "Stitches on Site"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         easyu{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.easyu'
+    //             resValue "string", "app_name", "Easyu"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         mozmarcas{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.mozmarcas'
+    //             resValue "string", "app_name", "Pakela"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         myfiji{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.myfiji'
+    //             resValue "string", "app_name", "Fiji Eats"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         fastmikes{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.fastmikes'
+    //             resValue "string", "app_name", "Fast Mikes"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         citysuds{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.citysuds'
+    //             resValue "string", "app_name", "CitySuds"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         homeTownDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.homeTownDelivery'
+    //             resValue "string", "app_name", "Home Town Delivery LLC"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         ritenow{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ritenow'
+    //             resValue "string", "app_name", "Ritenow"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         flit{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.flit'
+    //             resValue "string", "app_name", "Flit"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         ullaz{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ullaz'
+    //             resValue "string", "app_name", "Ullaz"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         privatepremiumpickups{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.privatepremiumpickups'
+    //             resValue "string", "app_name", "Private premium pickups"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         fidesDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.fidesDelivery'
+    //             resValue "string", "app_name", "Fides Delivery"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         bksTaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.bksTaxi'
+    //             resValue "string", "app_name", "BKS Taxi"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         oxo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.oxo'
+    //             resValue "string", "app_name", "OXO"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sijang{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.sijang'
+    //             resValue "string", "app_name", "Sijang"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         fairex{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.fairex'
+    //             resValue "string", "app_name", "Fairex"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         everywhere{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.everywhere'
+    //             resValue "string", "app_name", "Everywhere"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cannabisClubSF{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.cannabisClubSF'
+    //             resValue "string", "app_name", "Cannabis Club SF"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         halaTalabat{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.halaTalabat'
+    //             resValue "string", "app_name", "Hala Talabat"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     jadorDrive{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.jadorDrive'
+    //             resValue "string", "app_name", "Jador Drive"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         palmettoplus{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.palmettoplus'
+    //             resValue "string", "app_name", "Palmetto Plus"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ubercann{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ubercann'
+    //             resValue "string", "app_name", "UBERCANN"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kongafood{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kongafood'
+    //             resValue "string", "app_name", "KONGA FOOD"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         allotaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.allotaxi'
+    //             resValue "string", "app_name", "Allo taxi"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cannabisClubSF{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.cannabisClubSF'
+    //             resValue "string", "app_name", "Cannabis Club SF"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     jadorDrive{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.jadorDrive'
+    //             resValue "string", "app_name", "Jador Drive"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         palmettoplus{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.palmettoplus'
+    //             resValue "string", "app_name", "Palmetto Plus"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ubercann{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ubercann'
+    //             resValue "string", "app_name", "UBERCANN"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kongafood{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kongafood'
+    //             resValue "string", "app_name", "KONGA FOOD"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         allotaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.allotaxi'
+    //             resValue "string", "app_name", "Allo taxi"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         launch{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.customer.launch'
+    //             resValue "string", "app_name", "Launch"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kampick{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kampick'
+    //             resValue "string", "app_name", "kampick"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cabio{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.cabio'
+    //             resValue "string", "app_name", "Cabio"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         tumbak{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.tumbak'
+    //             resValue "string", "app_name", "Tumbak"
+    //             resValue "string", "host_name", ""
+    //         }
+   
+    //         bluebolt{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.bluebolt'
+    //             resValue "string", "app_name", "Bluebolt"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         meatEasy{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.meatEasy'
+    //             resValue "string", "app_name", "Meat Easy"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         boltDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.boltDelivery'
+    //             resValue "string", "app_name", "Bolt Delivery Services"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         onthego{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.customer.onthego'
+    //             resValue "string", "app_name", "ONTHEGO"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         mylaglobal{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.mylaglobal'
+    //             resValue "string", "app_name", "Myla Global"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ambutap{
+    //             dimension "appType"
+    //             versionCode 3
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ambutap.userapp'
+    //             resValue "string", "app_name", "AmbuTap"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sabroson{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.sabroson'
+    //             resValue "string", "app_name", "Sabroson"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         swiffyllc{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.swiffyllc.customer'
+    //             resValue "string", "app_name", "Swiffy LLC"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         beakme{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.beakme'
+    //             resValue "string", "app_name", "BeakMe"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         onscart{
+    //             dimension "appType"
+    //             versionCode 8
+    //             versionName "1.2"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.onscart'
+    //             resValue "string", "app_name", "Onscart"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         gamaDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.gamaDelivery'
+    //             resValue "string", "app_name", "Gama Delivery"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         hivefair{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.hivefair'
+    //         resValue "string", "app_name", "Hivefair Delivery"
+    //         resValue "string", "host_name", ""
+    //         }
+            
+    //     mandaExpress{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.mandaExpress.customer'
+    //         resValue "string", "app_name", "Manda Express"
+    //         resValue "string", "host_name", ""
+    //         }
+    //     foodies{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.app.foodies'
+    //         resValue "string", "app_name", "Foodies"
+    //         resValue "string", "host_name", ""
+    //         }
+    //     gO{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.customer.gO'
+    //         resValue "string", "app_name", "GO"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         bauBau{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.baubau'
+    //         resValue "string", "app_name", "BauBau"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         bookARyde{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.bookARyde'
+    //         resValue "string", "app_name", "Book-A-Ryde"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         petsChoice{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.petsChoice'
+    //         resValue "string", "app_name", "Pets Choice"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         heyBuddy{
+    //         dimension "appType"
+    //         versionCode 5
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.app.heyBuddy'
+    //         resValue "string", "app_name", "Hey Buddy"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         yoloSonic{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.yoloSonic'
+    //         resValue "string", "app_name", "YoloSonic"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         mrHealth{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.mrHealth.customer'
+    //         resValue "string", "app_name", "MrHealth"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         lopht{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.lopht'
+    //         resValue "string", "app_name", "LOPHT"
+    //         resValue "string", "host_name", ""
+    //         }
+
+    //         yalary{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.yalary'
+    //         resValue "string", "app_name", "Yalary"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         seratho{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.seratho'
+    //         resValue "string", "app_name", "Seratho"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         xborne{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.xborne'
+    //         resValue "string", "app_name", "Xborne"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         fawaz{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.fawaz'
+    //         resValue "string", "app_name", "Fawaz"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         grn{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.grn'
+    //         resValue "string", "app_name", "GRN"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         delivadrinks{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.delivadrinks'
+    //         resValue "string", "app_name", "Delivadrinks"
+    //         resValue "string", "host_name", ""
+    //         }
+    //         myRide{
+    //         dimension "appType"
+    //         versionCode 1
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.app.myride'
+    //         resValue "string", "app_name", "MyRide"
+    //         resValue "string", "host_name", ""
+            
+    //     shopcentral{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.shopcentral'
+    //             resValue "string", "app_name", "Shop Central"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         skidoo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.skidoo'
+    //             resValue "string", "app_name", "Skidoo"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         admCourier{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.admcourier'
+    //             resValue "string", "app_name", "ADM Courier"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kurbsidekings{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kurbsidekings'
+    //             resValue "string", "app_name", "Instaride user"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         movingwheelsdelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.movingwheelsdelivery'
+    //             resValue "string", "app_name", "Moving Wheels Delivery"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         safewalks{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.safewalks'
+    //             resValue "string", "app_name", "SafeWalks"
+    //             resValue "string", "host_name", ""
+    //         }
+
     //         skoop{
     //             dimension "appType"
     //             versionCode 1
@@ -4139,7 +5199,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion         
-    //             applicationId 'com.iPicknDrop'
+    //             applicationId 'com.iPicknDrop.orderApp'
     //             resValue "string", "app_name", "iPicknDrop"
     //             resValue "string", "host_name", ""
     //         }
@@ -4195,7 +5255,7 @@ android {
     //         }
     //         ambutap{
     //             dimension "appType"
-    //             versionCode 3
+    //             versionCode 2
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -4264,176 +5324,546 @@ android {
     //         resValue "string", "host_name", ""
     //         }
             
-    //     mandaExpress{
+    //             vendorspot{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.vendorspot'
+    //             resValue "string", "app_name", "Vendor Spot"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         pinkydeli{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.pinkydeli'
+    //             resValue "string", "app_name", "Pinky Deli"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sxm2go{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.sxm2go'
+    //             resValue "string", "app_name", "SXM2GO"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         gasgiant{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.gasgiant'
+    //             resValue "string", "app_name", "Gas Giant"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         releezer{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.releezer'
+    //             resValue "string", "app_name", "Releezer"
+    //             resValue "string", "host_name", ""
+    //         }
+    //             vendoor{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.vendoor'
+    //             resValue "string", "app_name", "Vendoor"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     farmersouq{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.farmersouq'
+    //             resValue "string", "app_name", "FARMER SOUQ"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         tmgShops{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.tmgShops'
+    //             resValue "string", "app_name", "TMG Shops"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         stitchesonsite{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.stitchesonsite'
+    //             resValue "string", "app_name", "Stitches on Site"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         easyu{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.easyu'
+    //             resValue "string", "app_name", "Easyu"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         mozmarcas{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.mozmarcas'
+    //             resValue "string", "app_name", "Pakela"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         myfiji{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.myfiji'
+    //             resValue "string", "app_name", "Fiji Eats"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         fastmikes{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.fastmikes'
+    //             resValue "string", "app_name", "Fast Mikes"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         citysuds{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.citysuds'
+    //             resValue "string", "app_name", "CitySuds"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         homeTownDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.homeTownDelivery'
+    //             resValue "string", "app_name", "Home Town Delivery LLC"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         ritenow{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ritenow'
+    //             resValue "string", "app_name", "Ritenow"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         flit{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.flit'
+    //             resValue "string", "app_name", "Flit"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         ullaz{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ullaz'
+    //             resValue "string", "app_name", "Ullaz"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         privatepremiumpickups{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.privatepremiumpickups'
+    //             resValue "string", "app_name", "Private premium pickups"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         fidesDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.fidesDelivery'
+    //             resValue "string", "app_name", "Fides Delivery"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         bksTaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.bksTaxi'
+    //             resValue "string", "app_name", "BKS Taxi"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         oxo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.oxo'
+    //             resValue "string", "app_name", "OXO"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sijang{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.sijang'
+    //             resValue "string", "app_name", "Sijang"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         fairex{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.fairex'
+    //             resValue "string", "app_name", "Fairex"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         everywhere{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.everywhere'
+    //             resValue "string", "app_name", "Everywhere"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cannabisClubSF{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.cannabisClubSF'
+    //             resValue "string", "app_name", "Cannabis Club SF"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         halaTalabat{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.halaTalabat'
+    //             resValue "string", "app_name", "Hala Talabat"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     jadorDrive{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.jadorDrive'
+    //             resValue "string", "app_name", "Jador Drive"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         palmettoplus{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.palmettoplus'
+    //             resValue "string", "app_name", "Palmetto Plus"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ubercann{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ubercann'
+    //             resValue "string", "app_name", "UBERCANN"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kongafood{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kongafood'
+    //             resValue "string", "app_name", "KONGA FOOD"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         allotaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.allotaxi'
+    //             resValue "string", "app_name", "Allo taxi"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cannabisClubSF{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.cannabisClubSF'
+    //             resValue "string", "app_name", "Cannabis Club SF"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     jadorDrive{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.jadorDrive'
+    //             resValue "string", "app_name", "Jador Drive"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         palmettoplus{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.palmettoplus'
+    //             resValue "string", "app_name", "Palmetto Plus"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ubercann{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ubercann'
+    //             resValue "string", "app_name", "UBERCANN"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kongafood{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kongafood'
+    //             resValue "string", "app_name", "KONGA FOOD"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         allotaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.allotaxi'
+    //             resValue "string", "app_name", "Allo taxi"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         launch{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.customer.launch'
+    //             resValue "string", "app_name", "Launch"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         kampick{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.kampick'
+    //             resValue "string", "app_name", "kampick"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cabio{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.cabio'
+    //             resValue "string", "app_name", "Cabio"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         tumbak{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.tumbak'
+    //             resValue "string", "app_name", "Tumbak"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         bluebolt{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.app.bluebolt'
+    //             resValue "string", "app_name", "Bluebolt"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         meatEasy{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.meatEasy'
+    //             resValue "string", "app_name", "Meat Easy"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         boltDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.boltDelivery'
+    //             resValue "string", "app_name", "Bolt Delivery Services"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         onthego{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.customer.onthego'
+    //             resValue "string", "app_name", "ONTHEGO"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         mylaglobal{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.mylaglobal'
+    //             resValue "string", "app_name", "Myla Global"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ambutap{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.ambutap.userapp'
+    //             resValue "string", "app_name", "AmbuTap"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sabroson{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.sabroson'
+    //             resValue "string", "app_name", "Sabroson"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         swiffyllc{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.swiffyllc.customer'
+    //             resValue "string", "app_name", "Swiffy LLC"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         beakme{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.beakme'
+    //             resValue "string", "app_name", "BeakMe"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         onscart{
+    //             dimension "appType"
+    //             versionCode 8
+    //             versionName "1.2"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.onscart'
+    //             resValue "string", "app_name", "Onscart"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         gamaDelivery{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.gamaDelivery'
+    //             resValue "string", "app_name", "Gama Delivery"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         hivefair{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.mandaExpress.customer'
-    //         resValue "string", "app_name", "Manda Express"
+    //         applicationId 'com.hivefair'
+    //         resValue "string", "app_name", "Hivefair Delivery"
     //         resValue "string", "host_name", ""
     //         }
-    //     foodies{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.app.foodies'
-    //         resValue "string", "app_name", "Foodies"
-    //         resValue "string", "host_name", ""
-    //         }
-    //     gO{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.customer.gO'
-    //         resValue "string", "app_name", "GO"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         bauBau{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.baubau'
-    //         resValue "string", "app_name", "BauBau"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         bookARyde{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.bookARyde'
-    //         resValue "string", "app_name", "Book-A-Ryde"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         petsChoice{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.petsChoice'
-    //         resValue "string", "app_name", "Pets Choice"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         heyBuddy{
-    //         dimension "appType"
-    //         versionCode 5
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.app.heyBuddy'
-    //         resValue "string", "app_name", "Hey Buddy"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         yoloSonic{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.yoloSonic'
-    //         resValue "string", "app_name", "YoloSonic"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         mrHealth{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.mrHealth.customer'
-    //         resValue "string", "app_name", "MrHealth"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         lopht{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.lopht'
-    //         resValue "string", "app_name", "LOPHT"
-    //         resValue "string", "host_name", ""
-    //         }
-
-    //         yalary{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.yalary'
-    //         resValue "string", "app_name", "Yalary"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         seratho{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.seratho'
-    //         resValue "string", "app_name", "Seratho"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         xborne{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.xborne'
-    //         resValue "string", "app_name", "Xborne"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         fawaz{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.fawaz'
-    //         resValue "string", "app_name", "Fawaz"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         grn{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.grn'
-    //         resValue "string", "app_name", "GRN"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         delivadrinks{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.delivadrinks'
-    //         resValue "string", "app_name", "Delivadrinks"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         myRide{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.app.myride'
-    //         resValue "string", "app_name", "MyRide"
-    //         resValue "string", "host_name", ""
             
     //         }
     //         spidbi{
@@ -4535,118 +5965,6 @@ android {
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.app.timHomeServices'
     //         resValue "string", "app_name", "TimHomeServices"
-    //         resValue "string", "host_name", ""
-    //         }
-
-    //         viversbox{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.viversbox'
-    //         resValue "string", "app_name", "Viversbox"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         scootz{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.app.scootz'
-    //         resValue "string", "app_name", "Scootz"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         ola{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.app.ola'
-    //         resValue "string", "app_name", "Ola"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         spliffnation{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.spliffnation'
-    //         resValue "string", "app_name", "Spliffnation"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         sourcesServices{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.sourcesServices'
-    //         resValue "string", "app_name", "Sources Services"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         slider{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.app.slider'
-    //         resValue "string", "app_name", "Slider"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         iCare{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.codebrew.ICare'
-    //         resValue "string", "app_name", "ICare"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         wer{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.wer'
-    //         resValue "string", "app_name", "Wer"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         beachhop{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.beachhop.customer'
-    //         resValue "string", "app_name", "Beachhop"
-    //         resValue "string", "host_name", ""
-    //         }
-    //         qseek{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.qseek'
-    //         resValue "string", "app_name", "Qseek"
-    //         resValue "string", "host_name", ""
-    //         }
-
-    //         delvento{
-    //         dimension "appType"
-    //         versionCode 1
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.delvento'
-    //         resValue "string", "app_name", "Delvento"
     //         resValue "string", "host_name", ""
     //         }
 
@@ -6225,7 +7543,7 @@ android {
     //         resValue "string", "app_name", "CLICKOKART" 
     //         resValue "string", "host_name", ""
     //            }
-    //             tiimo{
+    //        tiimo{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6255,7 +7573,7 @@ android {
     //         resValue "string", "app_name", "RagioMigo" 
     //         resValue "string", "host_name", ""
     //         }
-    //           jimsAutoRescue{ 
+    //         jimsAutoRescue{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6315,7 +7633,7 @@ android {
     //         resValue "string", "app_name", "Life Home Fit" 
     //         resValue "string", "host_name", ""
     //         }
-    //           appi{ 
+    //      appi{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6325,7 +7643,7 @@ android {
     //         resValue "string", "app_name", "Appi" 
     //         resValue "string", "host_name", ""
     //         }
-    //           dbairro_{ 
+    //        dbairro_{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6335,7 +7653,7 @@ android {
     //         resValue "string", "app_name", "Dbairro_" 
     //         resValue "string", "host_name", ""
     //         }
-    //            genee{ 
+    //         genee{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6345,7 +7663,7 @@ android {
     //         resValue "string", "app_name", "Genee" 
     //         resValue "string", "host_name", ""
     //         }
-    //            speedyDelivery{ 
+    //       speedyDelivery{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6355,17 +7673,17 @@ android {
     //         resValue "string", "app_name", "Speedy Delivery" 
     //         resValue "string", "host_name", ""
     //         }
-    //                holla{ 
+    //         holla{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.holla.royoorders'
-    //         resValue "string", "app_name", "/$10 Holla" 
+    //         resValue "string", "app_name", "Holla" 
     //         resValue "string", "host_name", ""
     //         }
-    //                stabex{ 
+    //        stabex{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6375,7 +7693,7 @@ android {
     //         resValue "string", "app_name", "Stabex" 
     //         resValue "string", "host_name", ""
     //         }
-    //                 uberWeeds{ 
+    //         uberWeeds{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6385,7 +7703,7 @@ android {
     //         resValue "string", "app_name", "UberWeeds" 
     //         resValue "string", "host_name", ""
     //         }
-    //                  cabPro{ 
+    //        cabPro{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6395,7 +7713,7 @@ android {
     //         resValue "string", "app_name", "I - Cab Pro" 
     //         resValue "string", "host_name", ""
     //         }
-    //                 pointoneExpediteDelivery{ 
+    //         pointoneExpediteDelivery{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6405,7 +7723,7 @@ android {
     //         resValue "string", "app_name", "Pointone Expedite Delivery" 
     //         resValue "string", "host_name", ""
     //         }
-    //                 saamanshop{ 
+    //        saamanshop{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6415,7 +7733,7 @@ android {
     //         resValue "string", "app_name", "Saamanshop" 
     //         resValue "string", "host_name", ""
     //         }
-    //                 tdc{ 
+    //         tdc{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6425,7 +7743,7 @@ android {
     //         resValue "string", "app_name", "TDC" 
     //         resValue "string", "host_name", ""
     //         }
-    //                   giftyLeaf{ 
+    //          giftyLeaf{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6435,7 +7753,7 @@ android {
     //         resValue "string", "app_name", "Gifty Leaf" 
     //         resValue "string", "host_name", ""
     //         }
-    //                    flyCommerce{ 
+    //         flyCommerce{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6445,7 +7763,7 @@ android {
     //         resValue "string", "app_name", "Fly Commerce" 
     //         resValue "string", "host_name", ""
     //         }
-    //                    pik{ 
+    //        pik{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6455,7 +7773,7 @@ android {
     //         resValue "string", "app_name", "PIK" 
     //         resValue "string", "host_name", ""
     //         }
-    //                        motina{ 
+    //       motina{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6465,7 +7783,7 @@ android {
     //         resValue "string", "app_name", "MOTINA" 
     //         resValue "string", "host_name", ""
     //         }
-    //                          hungry{ 
+    //          hungry{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6475,7 +7793,7 @@ android {
     //         resValue "string", "app_name", "Hungry" 
     //         resValue "string", "host_name", ""
     //         }
-    //                          greenhippo{ 
+    //        greenhippo{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6485,7 +7803,7 @@ android {
     //         resValue "string", "app_name", "GreenHippo" 
     //         resValue "string", "host_name", ""
     //         }
-    //                           mymeddy{ 
+    //       mymeddy{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6495,7 +7813,7 @@ android {
     //         resValue "string", "app_name", "MyMeddy" 
     //         resValue "string", "host_name", ""
     //         }
-    //                            uryd{ 
+    //        uryd{ 
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -6566,8 +7884,8 @@ android {
     //             resValue "string", "host_name", ""
     //         }
     // }
-}
 
+}
 dependencies {
     
    implementation 'androidx.work:work-runtime-ktx:2.6.0' // added line here
@@ -6585,8 +7903,8 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     api(platform("com.squareup.okhttp3:okhttp-bom:4.7.2"))
-api("com.squareup.okhttp3:okhttp")
-api("com.squareup.okhttp3:logging-interceptor")
+    api("com.squareup.okhttp3:okhttp")
+    api("com.squareup.okhttp3:logging-interceptor")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
