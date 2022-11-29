@@ -1,30 +1,39 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import LottieView from 'lottie-react-native';
 import moment from 'moment';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
   I18nManager,
   Image,
   RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import DashedLine from 'react-native-dashed-line';
+import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import AddressModal2 from '../../Components/AddressModal2';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import {
+  loaderOne,
+  loaderSix,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -33,29 +42,20 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
-  height,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import Modal from 'react-native-modal';
-import DatePicker from 'react-native-date-picker';
-import GradientButton from '../../Components/GradientButton';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import LottieView from 'lottie-react-native';
-import {
-  loaderOne,
-  loaderSix,
-} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
 
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;
@@ -120,6 +120,8 @@ export default function Cart2({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const selectedLanguage = languages?.primary_language?.sort_code;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -436,8 +438,7 @@ export default function Cart2({navigation, route}) {
         }
       }
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
   };
 
@@ -739,13 +740,12 @@ export default function Cart2({navigation, route}) {
                                 : colors.black,
                             },
                           ]}>
-                          {`${currencies?.primary_currency?.symbol}${
-                            // Number(i?.pvariant?.multiplier) *
-                            Number(i?.variants?.quantity_price).toFixed(
-                              appData?.profile?.preferences
-                                ?.digit_after_decimal,
-                            )
-                          }`}
+                          {tokenConverterPlusCurrencyNumberFormater(
+                            Number(i?.variants?.quantity_price),
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
                         </Text>
                       </View>
                     </View>
@@ -805,12 +805,15 @@ export default function Cart2({navigation, route}) {
                                           : colors.textGrey,
                                       },
                                     ]}
-                                    numberOfLines={1}>{` ${
-                                    currencies?.primary_currency?.symbol
-                                  }${currencyNumberFormatter(
+                                    numberOfLines={
+                                      1
+                                    }>{` ${tokenConverterPlusCurrencyNumberFormater(
                                     Number(j.price) * Number(j.multiplier),
                                     appData?.profile?.preferences
                                       ?.digit_after_decimal,
+                                    digit_after_decimal,
+                                    additional_preferences,
+                                    currencies?.primary_currency?.symbol,
                                   )} `}</Text>
                                 </View>
                               );
@@ -887,11 +890,11 @@ export default function Cart2({navigation, route}) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyB,
                   },
-                ]}>{`- ${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                ]}>{`- ${tokenConverterPlusCurrencyNumberFormater(
                 Number(item?.discount_amount ? item?.discount_amount : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -917,12 +920,14 @@ export default function Cart2({navigation, route}) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyB,
                   },
-                ]}>{`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
-                Number(item?.deliver_charge ? item?.deliver_charge : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}</Text>
+                ]}>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(item?.deliver_charge ? item?.deliver_charge : 0),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
           )}
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -937,12 +942,14 @@ export default function Cart2({navigation, route}) {
               style={[
                 styles.priceItemLabel2,
                 {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
-              ]}>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(item?.payable_amount ? item?.payable_amount : 0),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              ]}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item?.payable_amount ? item?.payable_amount : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         </View>
       </>
@@ -1046,12 +1053,14 @@ export default function Cart2({navigation, route}) {
               style={[
                 styles.totalTxts,
                 {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
-              ]}>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(cartData?.gross_paybale_amount),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              ]}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.gross_paybale_amount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
           {!!cartData?.wallet_amount && (
             <View style={styles.bottomTabLableValue}>
@@ -1066,11 +1075,14 @@ export default function Cart2({navigation, route}) {
                 style={[
                   styles.totalTxts,
                   {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
-                ]}>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-              ).toFixed(
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}</Text>
+                ]}>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
           )}
           {!!cartData?.loyalty_amount && (
@@ -1086,11 +1098,11 @@ export default function Cart2({navigation, route}) {
                 style={[
                   styles.totalTxts,
                   {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
-                ]}>{`-${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                ]}>{`-${tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.loyalty_amount ? cartData?.loyalty_amount : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1108,11 +1120,11 @@ export default function Cart2({navigation, route}) {
                 style={[
                   styles.totalTxts,
                   {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
-                ]}>{`-${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                ]}>{`-${tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.total_discount_amount),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1129,11 +1141,11 @@ export default function Cart2({navigation, route}) {
                 style={[
                   styles.totalTxts,
                   {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
-                ]}>{`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                ]}>{`${tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.total_tax ? cartData?.total_tax : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1167,7 +1179,8 @@ export default function Cart2({navigation, route}) {
 
                 <KeyboardAwareScrollView
                   horizontal
-                  showsHorizontalScrollIndicator={false}>
+                  showsHorizontalScrollIndicator={false}
+                  enableOnAndroid={true}>
                   {cartData?.tip.map((j, jnx) => {
                     return (
                       <TouchableOpacity
@@ -1197,7 +1210,12 @@ export default function Cart2({navigation, route}) {
                                       : colors.black,
                                 }
                           }>
-                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                          {tokenConverterPlusCurrencyNumberFormater(
+                            j.value,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
                         </Text>
                         <Text
                           style={
@@ -1301,15 +1319,17 @@ export default function Cart2({navigation, route}) {
               style={[
                 styles.priceItemLabel3,
                 {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
-              ]}>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(cartData?.total_payable_amount) +
-                (selectedTipAmount != null && selectedTipAmount != ''
-                  ? Number(selectedTipAmount)
-                  : 0),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              ]}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_payable_amount) +
+                  (selectedTipAmount != null && selectedTipAmount != ''
+                    ? Number(selectedTipAmount)
+                    : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         </View>
         <View style={{height: moderateScaleVertical(40)}} />

@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>704963886440-mbklloged6oa4dspg18h3ja44f7pru6f.apps.googleusercontent.com</string>
+	<string>543310886006-m90kbmph7oq4nfnh4ihleril9ferpc92.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.704963886440-mbklloged6oa4dspg18h3ja44f7pru6f</string>
+	<string>com.googleusercontent.apps.543310886006-m90kbmph7oq4nfnh4ihleril9ferpc92</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>704963886440-p2dfkdemf99te8cou3rbirmtpdqnib40.apps.googleusercontent.com</string>
+	<string>543310886006-0cc95abiojs3470iq4h3jfagq6h3q6f5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBM3Svx8ZN7buzCnm3MBm0_amooxeUo1DM</string>
+	<string>AIzaSyCIZh72TdWR3QWKyspv8jc4mkxTEGPBuvk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>704963886440</string>
+	<string>543310886006</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.swan</string>
+	<string>com.swan.userApp</string>
 	<key>PROJECT_ID</key>
-	<string>swan-c1649</string>
+	<string>swan-user</string>
 	<key>STORAGE_BUCKET</key>
-	<string>swan-c1649.appspot.com</string>
+	<string>swan-user.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:704963886440:ios:7933cf595afcb1af5daadd</string>
+	<string>1:543310886006:ios:3a7148f1aa0d88cbc7db57</string>
 </dict>
 </plist>

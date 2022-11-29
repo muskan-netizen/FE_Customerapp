@@ -14,7 +14,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -53,7 +53,8 @@ const ProductCard3demo = ({
   const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
 
   const {themeLayouts} = currentTheme;
@@ -180,13 +181,13 @@ const ProductCard3demo = ({
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
-                {`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                {tokenConverterPlusCurrencyNumberFormater(
                   Number(data?.variant[0]?.multiplier) *
                     Number(data?.variant[0]?.price),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
 

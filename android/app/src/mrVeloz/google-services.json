@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "964305245979",
+    "project_id": "mr-veloz-da096",
+    "storage_bucket": "mr-veloz-da096.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964305245979:android:7e99f4e23848b8e51925be",
+        "android_client_info": {
+          "package_name": "com.mrVeloz.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964305245979-belar53o105qs28blmhmmn4ob5alanj5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrVeloz.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "964305245979-p2c369rfdeoe4skm2a2ni3qf3s5rp8qj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrVeloz.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "964305245979-uq17quve1840t1ucsrc1ffl2acg6knmk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrVeloz.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "964305245979-2aj2nnl9ln71mb37i08itad784lbb6bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn8TqWvRs1Z4rdWsNKSXnY-baaVwJNxD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964305245979-2aj2nnl9ln71mb37i08itad784lbb6bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

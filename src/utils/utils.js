@@ -1,9 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {resetStackAndNavigate} from '../navigation/NavigationService';
-import navigationStrings from '../navigation/navigationStrings';
-import {enums} from './enums';
-import {sessionHandler} from './helperFunctions';
+import { sessionHandler } from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
@@ -109,8 +106,6 @@ export async function apiReq(
       // cancelToken:source.token
     };
 
-
-    console.log(headers,"headersheadersheaders");
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,
@@ -119,8 +114,8 @@ export async function apiReq(
       };
     }
 
-    console.log(headers, 'headersheaders');
-    console.log(data, 'datadata');
+    console.log('header sending--->', headers);
+    console.log('data sending ---->', data);
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
@@ -199,14 +194,4 @@ export const verticalAnimation = {
       },
     };
   },
-};
-
-export const checkIsAdmin = (navigation_, navigation, userData) => {
-  // navigation.push(navigationStrings.TABROUTESVENDOR);
-  if (userData?.is_admin && enums?.isVendorStandloneApp) {
-    // resetStackAndNavigate(navigation_, navigationStrings.TABROUTESVENDORNEW);
-    navigation.push(navigationStrings.TAB_ROUTES);
-  } else {
-    navigation.push(navigationStrings.TAB_ROUTES);
-  }
 };

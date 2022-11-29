@@ -100,8 +100,7 @@ const CustomBottomTabBarThree = ({
           moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
         }
       } else {
-        // showError(strings.UNAUTHORIZED_MESSAGE);
-        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
@@ -258,10 +257,7 @@ const CustomBottomTabBarThree = ({
                             // ...styles.labelStyle,
                             color: isFocused
                               ? themeColors.secondary_color
-                              : getColorCodeWithOpactiyNumber(
-                                  themeColors?.secondary_color.substr(1),
-                                  70,
-                                ),
+                              : colors.white,
                             opacity: isFocused ? 1 : 0.6,
                             fontSize: textScale(11),
                           }

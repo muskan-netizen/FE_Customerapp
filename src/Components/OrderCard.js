@@ -14,6 +14,7 @@ import ButtonWithLoader from './ButtonWithLoader';
 import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
 import {useSelector} from 'react-redux';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 
 const OrderCard = (props) => {
   const {
@@ -34,7 +35,12 @@ const OrderCard = (props) => {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
+
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  console.log(item,"itemm>>")
 
   return (
     <View style={styles.container}>
@@ -111,32 +117,12 @@ const OrderCard = (props) => {
                 />
               ))}
             </View>
-            <View style={{flex: 1}}>
-              {!!(
-                item.product_details && item.product_details[0]?.category_name!="" && item.product_details[0]?.category_name!=null
-              ) && (
-                <Text
-                  style={[
-                    styles.font16Regular,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyB,
-                    },
-                  ]}>
-                  {item.product_details &&
-                  item.product_details[0]?.category_name
-                    ? item.product_details[0].category_name
-                    : ''}{' '}
-                </Text>
-              )}
-              <Text style={[styles.font16Regular]}>
-                {item.product_details && item.product_details[0]
-                  ? item.product_details[0].title
-                  : ''}{' '}
-                {count == 0 ? '' : 'x' + ' ' + count + ' more'}
-              </Text>
-            </View>
+            <Text style={[styles.font16Regular, {flex: 1}]}>
+              {item?.product_details && item?.product_details[0]
+                ? item?.product_details[0].title
+                : ''}{' '}
+              {count == 0 ? '' : 'x' + ' ' + count + ' more'}
+            </Text>
           </View>
           <Text
             style={{
@@ -154,8 +140,12 @@ const OrderCard = (props) => {
         <View>
           <Text style={styles.orderText}>{strings.ORDER_TOTAL}</Text>
           <Text style={styles.totalPrice}>
-            {currencies?.primary_currency?.symbol}
-            {Number(item?.payable_amount).toFixed(2)}
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(item?.payable_amount),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
           </Text>
         </View>
 
@@ -244,7 +234,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontFamily: fontFamily.regular,
-    fontSize: 13,
+    fontSize: 11,
     color: colors.blackOpacity66,
   },
   btnText: {

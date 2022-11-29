@@ -1,5 +1,5 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -9,11 +9,11 @@ import {
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -25,7 +25,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
@@ -34,14 +34,14 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {checkIsAdmin} from '../../utils/utils';
-import {useNavigation} from '@react-navigation/native';
+import { setUserData } from '../../utils/utils';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Login2({navigation}) {
+export default function Login2({ navigation }) {
   const navigation_ = useNavigation();
   var clonedState = {};
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -55,10 +55,10 @@ export default function Login2({navigation}) {
     isLoading: false,
   });
 
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
+  const { apple_login, fb_login, twitter_login, google_login } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
 
@@ -69,31 +69,32 @@ export default function Login2({navigation}) {
   }, []);
 
   //Update states
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   //Styles in app
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //all states used in this screen
-  const {email, password, isLoading} = state;
+  const { email, password, isLoading } = state;
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Validate form
   const isValidData = () => {
-    const error = validator({email, password});
+    const error = validator({ email, password });
     if (error) {
       showError(error);
       return;
     }
     return true;
   };
+
 
   //Login api fucntion
   const _onLogin = async () => {
@@ -109,7 +110,7 @@ export default function Login2({navigation}) {
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .login(data, {
         code: appData?.profile?.code,
@@ -118,45 +119,50 @@ export default function Login2({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            checkIsAdmin(navigation_, navigation, res.data);
-          }
-        }
-        updateState({isLoading: false});
+
+
+        checkIfEmailVerification(res.data);
+
+
+        updateState({ isLoading: false });
         getCartDetail();
       })
       .catch(errorMethod);
+  };
+
+  const checkIfEmailVerification = (_data) => {
+    if (
+      !!_data?.client_preference?.verify_email &&
+      !_data?.verify_details?.is_email_verified
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, _data)();
+    } else {
+      successLogin(_data);
+    }
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successLogin(data);
+    }
   };
 
   //Get your cart detail
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        '',
         {},
         {
           code: appData?.profile?.code,
@@ -168,11 +174,11 @@ export default function Login2({navigation}) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
   //Error handling in api
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
   };
 
@@ -200,58 +206,60 @@ export default function Login2({navigation}) {
       })
       .then((res) => {
         console.log(res, 'res>>>SOCIAL');
+        updateState({ isLoading: false });
+
         if (!!res.data) {
-          !!res.data?.client_preference?.verify_email ||
-          !!res.data?.client_preference?.verify_phone
-            ? !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-              ? checkIsAdmin(navigation_, navigation, res.data)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : checkIsAdmin(navigation_, navigation, res.data);
+          checkEmailPhoneVerified(res?.data);
+          getCartDetail();
         }
-        updateState({isLoading: false});
-        getCartDetail();
       })
       .catch(errorMethod);
   };
 
+  const successLogin = (data) => {
+    if (!!data) {
+      setUserData(data).then((suc) => {
+        actions.saveUserData(data);
+      });
+    }
+  };
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     handleAppleLogin()
       .then((res) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     googleLogin()
       .then((res) => {
         console.log(res, 'google');
         if (res?.user) {
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
   const _responseInfoCallback = (error, result) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     if (error) {
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     } else {
       if (result && result?.id) {
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       }
     }
   };
@@ -268,7 +276,7 @@ export default function Login2({navigation}) {
           _saveSocailLogin(res, 'twitter');
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (
@@ -294,10 +302,10 @@ export default function Login2({navigation}) {
               style={
                 isDarkMode
                   ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                  : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
               }
             />
           </TouchableOpacity>
@@ -325,17 +333,18 @@ export default function Login2({navigation}) {
         style={{
           flex: 1,
           marginHorizontal: moderateScale(24),
-        }}>
-        <View style={{height: moderateScaleVertical(10)}} />
+        }}
+        enableOnAndroid={true}>
+        <View style={{ height: moderateScaleVertical(10) }} />
         <Text
           style={
             isDarkMode
-              ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+              ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
               : styles.txtSmall
           }>
           {strings.ENTE_REGISTERED_EMAIL}
         </Text>
-        <View style={{height: moderateScaleVertical(25)}} />
+        <View style={{ height: moderateScaleVertical(25) }} />
 
         <AutoUpLabelTxtInput
           value={email}
@@ -349,7 +358,7 @@ export default function Login2({navigation}) {
           value={password}
           label={strings.ENTER_PASSWORD}
           onChangeText={_onChangeText('password')}
-          containerStyle={{marginTop: moderateScale(15)}}
+          containerStyle={{ marginTop: moderateScale(15) }}
           secureTextEntry={true}
         />
 
@@ -383,7 +392,7 @@ export default function Login2({navigation}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orText2, {color: MyDarkTheme.colors.text}]
+                    ? [styles.orText2, { color: MyDarkTheme.colors.text }]
                     : styles.orText2
                 }>
                 {'or'}
@@ -395,7 +404,7 @@ export default function Login2({navigation}) {
               flexDirection: 'column',
             }}>
             {!!google_login && (
-              <View style={{marginTop: moderateScaleVertical(15)}}>
+              <View style={{ marginTop: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_google2}
                   btnText={strings.CONTINUE_GOOGLE}
@@ -415,7 +424,7 @@ export default function Login2({navigation}) {
               </View>
             )}
             {!!fb_login && (
-              <View style={{marginVertical: moderateScaleVertical(15)}}>
+              <View style={{ marginVertical: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_fb2}
                   btnText={strings.CONTINUE_FACEBOOK}
@@ -454,7 +463,7 @@ export default function Login2({navigation}) {
             )}
 
             {!!apple_login && Platform.OS == 'ios' && (
-              <View style={{marginVertical: moderateScaleVertical(15)}}>
+              <View style={{ marginVertical: moderateScaleVertical(15) }}>
                 <TransparentButtonWithTxtAndIcon
                   icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                   btnText={strings.CONTINUE_APPLE}

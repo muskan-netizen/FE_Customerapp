@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
 
 const shortCodes = {
+  royoorder: '245bae',
   runrun: 'bf8608',
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
@@ -95,10 +96,12 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
-  gokab: 'fb78f0',
+  gokab: 'cb17f2', // live
+  // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
+  // ace: '245bae',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',
@@ -140,7 +143,8 @@ const shortCodes = {
   gumastas: '2cdae8',
   dishefs: '4c13fd',
   bilionza: '9a8793',
-  doleypharmacy: 'e925ef',
+  // doleypharmacy: 'e925ef',
+  doleypharmacy: '245bae',
   bezalio: 'c1ab2b',
   youchillax: 'a2c90d',
   instashop: 'cb6671',
@@ -274,87 +278,202 @@ const shortCodes = {
   sourcesServices: '67f0c8',
   wer: 'fb5def',
   beachhop: '9199e7',
-  qseek:'a1ffe8',
-  delvento:'6a617a',
-  rideshare:'d4997d',
-  bua:'132c75',
-  upstreet:'260629',
-  newYorkMiniMart:'5e4b3b',
-  airlinesRecruiter:'deb34c',
-  nineOneTwo:'f92fea',
-  trip:'89e246',
-  aauJau:'326d8e',
-  mediPick:'b92261',
-  meltivers:'deca6f',
-  ensoDigitalAgency:'419dc9',
-  hiperAbasto:'50cb7f',
-  redglee:'9e185e',
-  dropItOffUsa:'9524c4',
-  handyPickup:'530592',
-  TJJHub:'41a3db',
-  curblerLLC:'959ecf',
-  cartnar:'7b87ed',
-  uven:'9b8db5',
-  pAS41:'4c0a17',
-  freshFarmz:'eafe42',
-  ryde:'309c33',
-  waterTaxi:'f0f44c',
-  muvpod:'3cc883',
-  smile:'d3a41c',
-  caronaTaxi:'c12d06',
-  arwin:'6a391a',
-  marjMarketplace:'aa4c64',
-  eVSOnTheGo:'0fa442',
-  kazakazi:'ec3bf6',
-  papiruki:'58e4d2',
-  markSoublet:'2b77d8',
-  amstaFood:'825037',
-  toor:'0388b6',
-  peerDeliveries:'cd7768',
-  swan:'0bd9cb',
-  SCOOTUP:'cf21cf',
-  patrolNow:'ad0c7d',
-  butlerDelivery:'56086e',
-  swatiRX:'c7129e',
-  chowHub:'57bab0',
-  ginDeliver:'ee3d33',
-  orderFirst:'d760c8',
-  maiz:'3df0b6',
-  dingDongEat:'2f2b60',
-  medicab:'b1f6f1',
-  fazeiTeam:'0eca90',
-  weTogether:'686b6c',
-  jiffex:'67dcfd',
-  clickService:'cb17f2',
-  amazingTaxi:'32e266',
-  jazzyBug:'3441ec',
-  myfarma:'612a45',
-  valley:'b1add5',
-  kartAndKarry:'4eaab9',
-  quickLube:'4ab432',
-  keystoneDelivery:'87ad74',
-  blueBundles:'b245dd',
-  busTaMove:'9d065e',
+  qseek: 'a1ffe8',
+  delvento: '6a617a',
+  rideshare: 'd4997d',
+  bua: '132c75',
+  upstreet: '260629',
+  newYorkMiniMart: '5e4b3b',
+  airlinesRecruiter: 'deb34c',
+  nineOneTwo: 'f92fea',
+  trip: '89e246',
+  aauJau: '326d8e',
+  mediPick: 'b92261',
+  meltivers: 'deca6f',
+  ensoDigitalAgency: '419dc9',
+  hiperAbasto: '50cb7f',
+  redglee: '9e185e',
+  dropItOffUsa: '9524c4',
+  handyPickup: '530592',
+  TJJHub: '41a3db',
+  curblerLLC: '959ecf',
+  cartnar: '7b87ed',
+  uven: '9b8db5',
+  pAS41: '4c0a17',
+  freshFarmz: 'eafe42',
+  ryde: '309c33',
+  waterTaxi: 'f0f44c',
+  muvpod: '3cc883',
+  smile: 'd3a41c',
+  caronaTaxi: 'c12d06',
+  arwin: '6a391a',
+  marjMarketplace: 'aa4c64',
+  eVSOnTheGo: '0fa442',
+  kazakazi: 'ec3bf6',
+  papiruki: '58e4d2',
+  markSoublet: '2b77d8',
+  amstaFood: '825037',
+  toor: '0388b6',
+  peerDeliveries: 'cd7768',
+  swan: '0bd9cb',
+  SCOOTUP: 'cf21cf',
+  patrolNow: 'ad0c7d',
+  butlerDelivery: '56086e',
+  swatiRX: 'c7129e',
+  chowHub: '57bab0',
+  ginDeliver: 'ee3d33',
+  orderFirst: 'd760c8',
+  maiz: '3df0b6',
+  dingDongEat: '2f2b60',
+  medicab: 'b1f6f1',
+  fazeiTeam: '0eca90',
+  weTogether: '686b6c',
+  jiffex: '67dcfd',
+  clickService: 'cb17f2',
+  amazingTaxi: '32e266',
+  jazzyBug: '3441ec',
+  myfarma: '612a45',
+  valley: 'b1add5',
+  kartAndKarry: '4eaab9',
+  quickLube: '4ab432',
+  keystoneDelivery: '87ad74',
+  blueBundles: 'b245dd',
+  busTaMove: '9d065e',
   atasktt: '9bbd4e',
   lunchboxSpecials: 'cfa64c',
   sorDelivery: '732007',
-  grubHouse:'d9c5ee',
-  hitchDelivery:'3bc1d7',
-  zoodMarket:'b077a9',
-  meow:'71f36c',
-  dingDongDelivers:'380c49',
+  grubHouse: 'd9c5ee',
+  hitchDelivery: '3bc1d7',
+  zoodMarket: 'b077a9',
+  meow: '71f36c',
+  dingDongDelivers: '380c49',
   torunz: 'f23b31',
   kurs: '046761',
   spa: '9022c6',
   capitalDiagnostic: 'fd6dd6',
   abbeRides: '8501b6',
-  nrsa:'e9f97c',
-  sadia:'312528',
-  elentaMart:'e084cc',
-  exprexPro :'cb98e8',
-
+  nrsa: 'e9f97c',
+  sadia: '312528',
+  elentaMart: 'e084cc',
+  exprexPro: 'cb98e8',
+  fresHest: '7e43f5',
+  servern: '1ba1e9',
+  smokeRun: '545a71',
+  myEvPlus: '1c7d9e',
+  qdelo: '0fcc84',
+  pawsee: 'bd2d83',
+  hairRun: 'fabaaf',
+  zuriRide: 'fa47e7',
+  americanLuxury: '0015d5',
+  smartMur: '780ecd',
+  ouiSpeed: '089eee',
+  getItSent: '9af7a9',
+  easyDrink: '96eb54',
+  iAmSelling: '7fd0dd',
+  fifteenP: '016908',
+  euodooTechnologies: 'c9d1ee',
+  rota: 'e4b727',
+  farmMeat: '371731',
+  danielleBejjani: 'b47da2',
+  yallaEat: '94679a',
+  choizez: '05c28e',
+  otto: 'd0121e',
+  rescueRoadsideAssistance: '6355c5',
+  tax_E: 'a7952f',
+  baggageTaxi: '52bb0a',
+  mersi: '1b308e',
+  foodSpot: '1c67f3',
+  karibaMart: 'c1ca39',
+  sourceWith: '503079',
+  apptFindr: 'ee3958',
+  vdu: '181d99',
+  laundroZone: '35a0ed',
+  taxiolgy: '43d7df',
+  swipe: '48c861',
+  sheRyders: '058f37',
+  kurrix: 'a11a9d',
+  mrVeloz: '326609',
+  greenCab: '20d107',
+  axxi: 'bc1119',
+  pets: '8e0436',
+  getDress: '7d11ac',
+  shelf: '345974',
+  baly: '3ae3ec',
+  nuvoni: '0f3d8d',
+  syloMart: 'f5358d',
+  fairDeal: 'e5e082',
+  hezniTaxi: 'fc1398',
+  onTheWheel: '6b0c51',
+  valleyMeats: '738e42',
+  perucabs: '8b8156',
+  hafizjwlry: '585d04',
+  jana: '405d8d',
+  myWayBill: '32f1ae',
+  cattch: 'c399db',
+  tezras: '424d92',
+  eureka: '7feaa0',
+  kaypee: 'ed9a42',
+  hitaxi: 'fb240c',
+  kwivar: '2037b0',
+  parcel: '60277b',
+  lex: 'a7f382',
+  smokyKitchen: '8c4efa',
+  flank: '3de814',
+  zynoride: '2768e6',
+  mealsarehere: 'c00a78',
+  loamscape: 'ded864',
+  delcolink: 'a2726b',
+  youSmokeShops: '3f6e8e',
+  doober: 'e8a1af',
+  inmotion: '0e2db7',
+  eatHalal: '607c84',
+  jeevann: '31afbb',
+  novamed: '3b5cd2',
+  awamer: 'c6df5f',
+  goTech: 'd87a1f',
+  idrv: '07ba5d',
+  qwiker: '9eeb4d',
+  spryton: 'd0a063',
+  nittosadai: '26662c',
+  clickokart: 'f34c51',
+  tiimo: 'aac5d5',
+  verz: '2e1b4a',
+  ragiomigo: '39c82e',
+  jimsAutoRescue: '4fc57b',
+  carryfood: '86d81e',
+  nhazi: 'abaf70',
+  petverse: '9d740f',
+  clickndrop: '9536ba',
+  lifehomefit: '191bdb',
+  appi: 'e5e222',
+  dbairro_: '2b7742',
+  genee: '54f90f',
+  speedyDelivery: '528728',
+  holla: '4fe8db',
+  stabex: '7678ee',
+  uberWeeds: '3e90c0',
+  cabPro: 'c672b6',
+  pointoneExpediteDelivery: 'afd6cc',
+  saamanshop: 'cedf8e',
+  tdc: 'fd1259',
+  giftyLeaf: 'c61dff',
+  flyCommerce: '73cb91',
+  pik: '970884',
+  motina: 'a16093',
+  hungry: '48b467',
+  greenhippo: '2d6cda',
+  mymeddy: 'dda7d5',
+  uryd: 'dc8909',
+  happySingh: '87b9fc',
+  vital: 'db6f5a',
+  parcelworks: '4b5376',
+  usVetsDeliver: '4a533c',
+  flybuilder: '7cd4bc',
+  konectame: '1338c1',
+  skyline: 'ce1ed6',
+  bliss: '6eb260',
+  rentzy: 'd4fc07',
 };
-
 
 const appIds = {
   royoorder: Platform.select({
@@ -470,8 +589,8 @@ const appIds = {
     android: 'com.customer.snabbhem',
   }),
   lastminutedress: Platform.select({
-    ios: 'com.codebrewLab.lastminutedress',
-    android: 'com.codebrewLab.lastminutedress',
+    ios: 'com.lastminutedress.order',
+    android: 'com.lastminutedress.order',
   }),
   rerak: Platform.select({
     ios: 'com.codebrew.rerak',
@@ -486,7 +605,7 @@ const appIds = {
     android: 'com.codebrew.yoho',
   }),
   glamsouq: Platform.select({
-    ios: 'com.codebrew.glamsouq',
+    ios: 'com.glamsouq.customer',
     android: 'com.glamsouq.customer',
   }),
   doctatransportation: Platform.select({
@@ -606,12 +725,12 @@ const appIds = {
     android: 'com.carhop',
   }),
   yogolift: Platform.select({
-    ios: 'com.yogolift',
-    android: 'com.yogolift',
+    ios: 'com.yogolift.orders',
+    android: 'com.yogolift.order',
   }),
   fleety: Platform.select({
     ios: 'com.fleety',
-    android: 'com.fleety',
+    android: 'com.feelty.userApp',
   }),
   flyinghorse: Platform.select({
     ios: 'com.flyinghorse',
@@ -666,8 +785,8 @@ const appIds = {
     android: 'com.yourlaundryapp',
   }),
   hemptyfy: Platform.select({
-    ios: 'com.hemptyfy',
-    android: 'com.hemptyfy',
+    ios: 'com.hemptyfy.orders',
+    android: 'com.hemptyfy.orders',
   }),
   sharu: Platform.select({
     ios: 'com.sharu',
@@ -854,8 +973,8 @@ const appIds = {
     android: 'com.noki',
   }),
   driveree: Platform.select({
-    ios: 'com.driveree',
-    android: 'com.driveree',
+    ios: 'com.driveree.orders',
+    android: 'com.driveree.orders',
   }),
   rxnow: Platform.select({
     ios: 'com.app.rxnow',
@@ -906,8 +1025,8 @@ const appIds = {
     android: 'com.gumastas',
   }),
   dishefs: Platform.select({
-    ios: 'com.dishefs',
-    android: 'com.dishefs',
+    ios: 'com.dishefsOrders',
+    android: 'com.dishefsOrders',
   }),
   bilionza: Platform.select({
     ios: 'com.bilionza',
@@ -970,8 +1089,8 @@ const appIds = {
     android: 'com.ssuum',
   }),
   blacnetwork: Platform.select({
-    ios: 'com.blacnetwork',
-    android: 'com.blacnetwork',
+    ios: 'com.blacnetwork.orders',
+    android: 'com.blacnetwork.orders',
   }),
   threadagain: Platform.select({
     ios: 'com.threadagain',
@@ -1007,7 +1126,7 @@ const appIds = {
   }),
   ineed: Platform.select({
     ios: 'com.customer.ineed',
-    android: 'com.customer.ineed',
+    android: 'com.ineed.userApplication',
   }),
   nadelivery: Platform.select({
     ios: 'com.app.nadelivery',
@@ -1034,12 +1153,12 @@ const appIds = {
     android: 'com.enext',
   }),
   hokitch: Platform.select({
-    ios: 'com.hokitch',
-    android: 'com.hokitch',
+    ios: 'com.hokitch.orders',
+    android: 'com.hokitch.orders',
   }),
   foodnests: Platform.select({
     ios: 'com.foodnests',
-    android: 'com.foodnests',
+    android: 'com.foodnests.orderapp',
   }),
   sponge: Platform.select({
     ios: 'com.app.sponge',
@@ -1098,7 +1217,7 @@ const appIds = {
     android: 'com.app.mml',
   }),
   bimol: Platform.select({
-    ios: 'com.bimol',
+    ios: 'com.bimol.user',
     android: 'com.bimol.user',
   }),
   vendorspot: Platform.select({
@@ -1106,8 +1225,8 @@ const appIds = {
     android: 'com.vendorspot',
   }),
   sxm2go: Platform.select({
-    ios: 'com.sxm2go',
-    android: 'com.sxm2go',
+    ios: 'com.sxm2go.userapp',
+    android: 'com.sxm2go.userapp',
   }),
   pinkydeli: Platform.select({
     ios: 'com.codebrew.pinkydeli',
@@ -1130,8 +1249,8 @@ const appIds = {
     android: 'com.farmersouq',
   }),
   tmgShops: Platform.select({
-    ios: 'com.tmgShops',
-    android: 'com.tmgShops',
+    ios: 'com.tmgShops.orders',
+    android: 'com.tmgShops.orders',
   }),
   stitchesonsite: Platform.select({
     ios: 'com.stitchesonsite',
@@ -1146,8 +1265,8 @@ const appIds = {
     android: 'com.mozmarcas',
   }),
   myfiji: Platform.select({
-    ios: 'com.myfiji',
-    android: 'com.myfiji',
+    ios: 'com.fijieats.user',
+    android: 'com.fijieats.customer',
   }),
   fastmikes: Platform.select({
     ios: 'com.fastmikes.customer',
@@ -1174,8 +1293,8 @@ const appIds = {
     android: 'com.customer.Ihelp',
   }),
   ullaz: Platform.select({
-    ios: 'com.ullaz',
-    android: 'com.ullaz',
+    ios: 'com.ullazOrder',
+    android: 'com.ullazOrder',
   }),
   privatepremiumpickups: Platform.select({
     ios: 'com.privatepremiumpickups',
@@ -1198,8 +1317,8 @@ const appIds = {
     android: 'com.sijang',
   }),
   fairex: Platform.select({
-    ios: 'com.fairex',
-    android: 'com.fairex',
+    ios: 'com.fairex.orders',
+    android: 'com.fairex.orders',
   }),
   everywhere: Platform.select({
     ios: 'com.app.everywhere',
@@ -1250,8 +1369,8 @@ const appIds = {
     android: 'com.tumbak',
   }),
   iPicknDrop: Platform.select({
-    ios: 'com.iPicknDrop',
-    android: 'com.iPicknDrop',
+    ios: 'com.iPicknDrop.order',
+    android: 'com.iPicknDrop.orderApp',
   }),
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
@@ -1267,11 +1386,11 @@ const appIds = {
   }),
   ambutap: Platform.select({
     ios: 'com.ambutap',
-    android: 'com.ambutap',
+    android: 'com.ambutap.userapp',
   }),
   sabroson: Platform.select({
-    ios: 'com.sabroson',
-    android: 'com.sabroson',
+    ios: 'com.sabroson.orders',
+    android: 'com.sabroson.orders',
   }),
   swiffyllc: Platform.select({
     ios: 'com.swiffyllc.customer',
@@ -1359,7 +1478,7 @@ const appIds = {
   }),
   xborne: Platform.select({
     ios: 'com.xborne',
-    android: 'com.xborne',
+    android: 'com.xborne.order',
   }),
   fawaz: Platform.select({
     ios: 'com.fawaz',
@@ -1378,7 +1497,7 @@ const appIds = {
     android: 'com.app.myRide',
   }),
   getfix: Platform.select({
-    ios: 'com.app.getfix',
+    ios: 'com.getfix.customer',
     android: 'com.getfix.customer',
   }),
   scoopaTechnologies: Platform.select({
@@ -1387,11 +1506,11 @@ const appIds = {
   }),
   dbairro: Platform.select({
     ios: 'com.app.dbairro',
-    android: 'com.dbairro',
+    android: 'com.Dbairro.order',
   }),
   knockknock: Platform.select({
-    ios: 'com.application.knockknock',
-    android: 'com.knockknock',
+    ios: 'com.knockKnock.userApp',
+    android: 'com.knockKnock.userApp',
   }),
   qrider: Platform.select({
     ios: 'com.qrider',
@@ -1402,8 +1521,8 @@ const appIds = {
     android: 'com.dlvrd',
   }),
   delivery: Platform.select({
-    ios: 'com.application.delivery',
-    android: 'com.app.delivery',
+    ios: 'com.gdotDelivery.user',
+    android: 'com.gdotDelivery.user',
   }),
   timHomeServices: Platform.select({
     ios: 'com.timHomeServices',
@@ -1419,12 +1538,12 @@ const appIds = {
   }),
 
   viversbox: Platform.select({
-    ios: 'com.viversbox',
-    android: 'com.viversbox',
+    ios: 'com.viversbox.user',
+    android: 'com.viversbox.user',
   }),
   scootz: Platform.select({
     ios: 'com.scootz',
-    android: 'com.app.scootz',
+    android: 'com.scootz.userapp',
   }),
   ola: Platform.select({
     ios: 'com.application.ola',
@@ -1456,7 +1575,7 @@ const appIds = {
   }),
   rideshare: Platform.select({
     ios: 'com.customer.rideshare',
-    android: 'com.rideshare',
+    android: 'com.classiccab.userapp',
   }),
   bua: Platform.select({
     ios: 'com.bua',
@@ -1467,8 +1586,8 @@ const appIds = {
     android: 'com.upstreet',
   }),
   newYorkMiniMart: Platform.select({
-    ios: 'com.newYorkMiniMart',
-    android: 'com.newYorkMiniMart',
+    ios: 'com.littlebird.order',
+    android: 'com.littlebird.order',
   }),
   airlinesRecruiter: Platform.select({
     ios: 'com.airlinesRecruiter',
@@ -1484,7 +1603,7 @@ const appIds = {
   }),
   aauJau: Platform.select({
     ios: 'com.aauJau',
-    android: 'com.aauJau',
+    android: 'com.app.aaujau',
   }),
   mediPick: Platform.select({
     ios: 'com.mediPick',
@@ -1499,8 +1618,8 @@ const appIds = {
     android: 'com.ensoDigitalAgency',
   }),
   hiperAbasto: Platform.select({
-    ios: 'com.hiperAbasto',
-    android: 'com.hiperAbasto',
+    ios: 'com.hiperAbastoOrder',
+    android: 'com.hiperAbastoOrder',
   }),
   redglee: Platform.select({
     ios: 'com.redglee',
@@ -1508,7 +1627,7 @@ const appIds = {
   }),
   dropItOffUsa: Platform.select({
     ios: 'com.dropItOffUsa',
-    android: 'com.dropItOffUsa',
+    android: 'com.dropItOffUsaOrder',
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
@@ -1575,8 +1694,8 @@ const appIds = {
     android: 'com.kazakazi',
   }),
   papiruki: Platform.select({
-    ios: 'com.papiruki',
-    android: 'com.papiruki',
+    ios: 'com.papiruki.userApp',
+    android: 'com.papiruki.userApp',
   }),
   markSoublet: Platform.select({
     ios: 'com.markSoublet',
@@ -1587,16 +1706,16 @@ const appIds = {
     android: 'com.amstaFood',
   }),
   toor: Platform.select({
-    ios: 'com.app.toor',
-    android: 'com.app.toor',
+    ios: 'com.toor.order',
+    android: 'com.toor.order',
   }),
   peerDeliveries: Platform.select({
     ios: 'com.peerDeliveries',
     android: 'com.peerDeliveries',
   }),
   swan: Platform.select({
-    ios: 'com.swan',
-    android: 'com.swan',
+    ios: 'com.swan.userApp',
+    android: 'com.swan.userApp',
   }),
   SCOOTUP: Platform.select({
     ios: 'com.SCOOTUP',
@@ -1614,7 +1733,7 @@ const appIds = {
     ios: 'com.swatiRX',
     android: 'com.swatiRX',
   }),
-  
+
   chowHub: Platform.select({
     ios: 'com.chowHub',
     android: 'com.chowHub',
@@ -1649,27 +1768,27 @@ const appIds = {
   }),
   jiffex: Platform.select({
     ios: 'com.jiffex',
-    android: 'com.jiffex',
+    android: 'com.jiffex.order',
   }),
   clickService: Platform.select({
     ios: 'com.clickService',
     android: 'com.clickService',
   }),
   amazingTaxi: Platform.select({
-    ios: 'com.amazingTaxi',
-    android: 'com.amazingTaxi',
+    ios: 'com.amazingTaxi.orders',
+    android: 'com.amazingTaxi.orders',
   }),
   jazzyBug: Platform.select({
-    ios: 'com.jazzyBug',
-    android: 'com.jazzyBug',
+    ios: 'com.jazzyBugOrder',
+    android: 'com.jazzyBugOrder',
   }),
   myfarma: Platform.select({
     ios: 'com.myfarma',
     android: 'com.myfarma',
   }),
   valley: Platform.select({
-    ios: 'com.valley',
-    android: 'com.valley',
+    ios: 'com.valleyOrder',
+    android: 'com.valleyOrder',
   }),
   kartAndKarry: Platform.select({
     ios: 'com.kartandkarry',
@@ -1680,11 +1799,11 @@ const appIds = {
     android: 'com.quickLube',
   }),
   keystoneDelivery: Platform.select({
-    ios: 'com.keystoneDelivery',
-    android: 'com.keystoneDelivery',
+    ios: 'com.keystone.orders',
+    android: 'com.keystone.orders',
   }),
   blueBundles: Platform.select({
-    ios: 'com.bluebundles',
+    ios: 'com.bluebundles.customer',
     android: 'com.bluebundles.customer',
   }),
   busTaMove: Platform.select({
@@ -1720,12 +1839,16 @@ const appIds = {
     android: 'com.meow.order',
   }),
   dingDongDelivers: Platform.select({
-    ios: 'com.dingDongDelivers',
-    android: 'com.dingDongDelivers',
+    ios: 'com.dingdongdelivery.order',
+    android: 'com.dingdongdelivery.order',
   }),
   torunz: Platform.select({
-    ios: 'com.torunz',
-    android: 'com.torunz',
+    ios: 'com.torunz.userapp',
+    android: 'com.torunz.userapp',
+  }),
+  kurs: Platform.select({
+    ios: 'com.app.kurs',
+    android: 'com.app.kurs',
   }),
   spa: Platform.select({
     ios: 'com.customerApp.spa',
@@ -1738,8 +1861,8 @@ const appIds = {
   }),
 
   abbeRides: Platform.select({
-    ios: 'com.abbeRides',
-    android: 'com.abbeRides',
+    ios: 'com.abbeRides.Orders',
+    android: 'com.abbeRides.Orders',
   }),
   nrsa: Platform.select({
     ios: 'com.nrsa',
@@ -1757,7 +1880,474 @@ const appIds = {
     ios: 'com.exprexPro',
     android: 'com.exprexPro',
   }),
-
+  fresHest: Platform.select({
+    ios: 'com.FresHest.royoOrder',
+    android: 'com.FresHest.royoOrder',
+  }),
+  servern: Platform.select({
+    ios: 'com.servern.order',
+    android: 'com.servern.order',
+  }),
+  smokeRun: Platform.select({
+    ios: 'com.smokeRun.order',
+    android: 'com.smokerun.ordersapp',
+  }),
+  myEvPlus: Platform.select({
+    ios: 'com.myEvPlus.order',
+    android: 'com.myEvPlus.order',
+  }),
+  qdelo: Platform.select({
+    ios: 'com.qdelo.order',
+    android: 'com.qdelo.order',
+  }),
+  pawsee: Platform.select({
+    ios: 'com.pawsee.order',
+    android: 'com.pawsee.order',
+  }),
+  hairRun: Platform.select({
+    ios: 'com.hairRun.order',
+    android: 'com.hairRun.order',
+  }),
+  zuriRide: Platform.select({
+    ios: 'com.zuriRide.order',
+    android: 'com.zuriRide.order',
+  }),
+  americanLuxury: Platform.select({
+    ios: 'com.americanLuxury.order',
+    android: 'com.americanLuxury.order',
+  }),
+  smartMur: Platform.select({
+    ios: 'com.smartMur.order',
+    android: 'com.smartMur.order',
+  }),
+  ouiSpeed: Platform.select({
+    ios: 'com.ouiSpeed.order',
+    android: 'com.ouiSpeed.order',
+  }),
+  getItSent: Platform.select({
+    ios: 'com.getItSent.order',
+    android: 'com.getItSent.order',
+  }),
+  easyDrink: Platform.select({
+    ios: 'com.easyDrink.order',
+    android: 'com.easyDrink.order',
+  }),
+  iAmSelling: Platform.select({
+    ios: 'com.iAmSelling.order',
+    android: 'com.iAmSelling.order',
+  }),
+  fifteenP: Platform.select({
+    ios: 'com.fifteenP.order',
+    android: 'com.fifteenP.order',
+  }),
+  euodooTechnologies: Platform.select({
+    ios: 'com.euodooTechnologies.order',
+    android: 'com.euodooTechnologies.order',
+  }),
+  rota: Platform.select({
+    ios: 'com.rota.order',
+    android: 'com.rota.order',
+  }),
+  farmMeat: Platform.select({
+    ios: 'com.farmMeat.order',
+    android: 'com.farmMeat.order',
+  }),
+  danielleBejjani: Platform.select({
+    ios: 'com.danielleBejjani',
+    android: 'com.danielleBejjani',
+  }),
+  yallaEat: Platform.select({
+    ios: 'com.yallaEat.order',
+    android: 'com.yallaEat.order',
+  }),
+  choizez: Platform.select({
+    ios: 'com.choizez.order',
+    android: 'com.choizez.order',
+  }),
+  otto: Platform.select({
+    ios: 'com.otto.order',
+    android: 'com.otto.order',
+  }),
+  rescueRoadsideAssistance: Platform.select({
+    ios: 'com.rescueRoadsideAssistance.order',
+    android: 'com.rescueRoadsideAssistance.order',
+  }),
+  tax_E: Platform.select({
+    ios: 'com.taxE.order',
+    android: 'com.taxE.order',
+  }),
+  baggageTaxi: Platform.select({
+    ios: 'com.baggageTaxi.order',
+    android: 'com.baggageTaxi.order',
+  }),
+  mersi: Platform.select({
+    ios: 'com.mersi.order',
+    android: 'com.mersi.order',
+  }),
+  foodSpot: Platform.select({
+    ios: 'com.foodSpot.order',
+    android: 'com.foodSpot.order',
+  }),
+  karibaMart: Platform.select({
+    ios: 'com.karibaMart.order',
+    android: 'com.karibaMart.order',
+  }),
+  sourceWith: Platform.select({
+    ios: 'com.sourceWith.order',
+    android: 'com.sourceWith.order',
+  }),
+  apptFindr: Platform.select({
+    ios: 'com.apptFindr.order',
+    android: 'com.apptFindr.order',
+  }),
+  vdu: Platform.select({
+    ios: 'com.vdu.order',
+    android: 'com.vdu.order',
+  }),
+  laundroZone: Platform.select({
+    ios: 'com.laundroZone.order',
+    android: 'com.laundroZone.order',
+  }),
+  taxiolgy: Platform.select({
+    ios: 'com.taxiolgy.order',
+    android: 'com.taxiolgy.order',
+  }),
+  swipe: Platform.select({
+    ios: 'com.swipe.order',
+    android: 'com.swipe.order',
+  }),
+  sheRyders: Platform.select({
+    ios: 'com.sheRyders',
+    android: 'com.sheRyders',
+  }),
+  kurrix: Platform.select({
+    ios: 'com.kurrix.order',
+    android: 'com.goadeliv.userapp',
+  }),
+  mrVeloz: Platform.select({
+    ios: 'com.mrVeloz.order',
+    android: 'com.mrVeloz.order',
+  }),
+  greenCab: Platform.select({
+    ios: 'com.greenCab.order',
+    android: 'com.greenCab.order',
+  }),
+  axxi: Platform.select({
+    ios: 'com.axxi.order',
+    android: 'com.axxi.order',
+  }),
+  pets: Platform.select({
+    ios: 'com.pets.order',
+    android: 'com.pets.order',
+  }),
+  getDress: Platform.select({
+    ios: 'com.getDress.order',
+    android: 'com.getDress.order',
+  }),
+  shelf: Platform.select({
+    ios: 'com.shelf.order',
+    android: 'com.shelf.order',
+  }),
+  baly: Platform.select({
+    ios: 'com.baly.orders',
+    android: 'com.baly.orders',
+  }),
+  nuvoni: Platform.select({
+    ios: 'com.nuvoni.orders',
+    android: 'com.nuvoni.orders',
+  }),
+  syloMart: Platform.select({
+    ios: 'com.syloMart.order',
+    android: 'com.syloMart.order',
+  }),
+  fairDeal: Platform.select({
+    ios: 'com.fairDeal.order',
+    android: 'com.fairDeal.order',
+  }),
+  hezniTaxi: Platform.select({
+    ios: 'com.heznitaxi.royoorders',
+    android: 'com.heznitaxi.royoorders',
+  }),
+  onTheWheel: Platform.select({
+    ios: 'com.onthewheel.royorders',
+    android: 'com.onthewheel.royorders',
+  }),
+  valleyMeats: Platform.select({
+    ios: 'com.valleymeats.royoorders',
+    android: 'com.valleymeats.royoorders',
+  }),
+  perucabs: Platform.select({
+    ios: 'com.perucabs.royoorders',
+    android: 'com.perucabs.royoorders',
+  }),
+  hafizjwlry: Platform.select({
+    ios: 'com.hafizjwlry.orderapp',
+    android: 'com.hafizjwlry.orderapp',
+  }),
+  jana: Platform.select({
+    ios: 'com.jana.royoordersapp',
+    android: 'com.jana.royoordersapp',
+  }),
+  myWayBill: Platform.select({
+    ios: 'com.mywaybill.royoorders',
+    android: 'com.mywaybill.royoorders',
+  }),
+  cattch: Platform.select({
+    ios: 'com.cattch.royoorders',
+    android: 'com.cattch.royoorders',
+  }),
+  tezras: Platform.select({
+    ios: 'com.tezras.royoorders',
+    android: 'com.tezras.royoorders',
+  }),
+  eureka: Platform.select({
+    ios: 'com.eureka.royoorders',
+    android: 'com.eureka.royoorders',
+  }),
+  kaypee: Platform.select({
+    ios: 'com.kaypee.royoorders',
+    android: 'com.kaypee.royoorders',
+  }),
+  hitaxi: Platform.select({
+    ios: 'com.hitaxi.royoorders',
+    android: 'com.hitaxi.royoorders',
+  }),
+  kwivar: Platform.select({
+    ios: 'com.kwivar.royoorders',
+    android: 'com.kwivar.royoorders',
+  }),
+  parcel: Platform.select({
+    ios: 'com.parcel.royoorders',
+    android: 'com.parcel.royoorders',
+  }),
+  lex: Platform.select({
+    ios: 'com.lex.royoorders',
+    android: 'com.lex.royoorders',
+  }),
+  smokyKitchen: Platform.select({
+    ios: 'com.smokyKitchen.royoorders',
+    android: 'com.smokyKitchen.royoorders',
+  }),
+  flank: Platform.select({
+    ios: 'com.flank.royoorders',
+    android: 'com.flank.royoorders',
+  }),
+  zynoride: Platform.select({
+    ios: 'com.zynoride.royoorders',
+    android: 'com.zynoride.royoorders',
+  }),
+  mealsarehere: Platform.select({
+    ios: 'com.mealsarehere.royoorders',
+    android: 'com.mealsarehere.royoorders',
+  }),
+  loamscape: Platform.select({
+    ios: 'com.loamscape.royoorders',
+    android: 'com.loamscape.royoorders',
+  }),
+  delcolink: Platform.select({
+    ios: 'com.delcolink.royoorders',
+    android: 'com.delcolink.royoorders',
+  }),
+  youSmokeShops: Platform.select({
+    ios: 'com.youSmokeShops.royoorders',
+    android: 'com.youSmokeShops.royoorders',
+  }),
+  doober: Platform.select({
+    ios: 'com.doober.royoorders',
+    android: 'com.doober.royoorders',
+  }),
+  inmotion: Platform.select({
+    ios: 'com.inmotion.royoorders',
+    android: 'com.inmotion.royoorders',
+  }),
+  eatHalal: Platform.select({
+    ios: 'com.eathalal.royoorders',
+    android: 'com.eathalal.royoorders',
+  }),
+  jeevann: Platform.select({
+    ios: 'com.jeevann.royoorders',
+    android: 'com.jeevann.royoorders',
+  }),
+  novamed: Platform.select({
+    ios: 'com.novamed.royoorders',
+    android: 'com.novamed.royoorders',
+  }),
+  awamer: Platform.select({
+    ios: 'com.awamer.royoorders',
+    android: 'com.awamer.royoorders',
+  }),
+  goTech: Platform.select({
+    ios: 'com.goTech.royoorders',
+    android: 'com.goTech.royoorders',
+  }),
+  idrv: Platform.select({
+    ios: 'com.idvr.royoorders',
+    android: 'com.idvr.royoorders',
+  }),
+  qwiker: Platform.select({
+    ios: 'com.qwiker.royoorders',
+    android: 'com.qwiker.royoorders',
+  }),
+  spryton: Platform.select({
+    ios: 'com.spryton.royoorders',
+    android: 'com.spryton.royoorders',
+  }),
+  nittosadai: Platform.select({
+    ios: 'com.nittosadai.royoorders',
+    android: 'com.nittosadai.royoorders',
+  }),
+  clickokart: Platform.select({
+    ios: 'com.clickokart.royoorders',
+    android: 'com.clickokart.royoorders',
+  }),
+  tiimo: Platform.select({
+    ios: 'com.tiimo.royoorders',
+    android: 'com.tiimo.royoorders',
+  }),
+  verz: Platform.select({
+    ios: 'com.verz.royoorders',
+    android: 'com.verz.royoorders',
+  }),
+  ragiomigo: Platform.select({
+    ios: 'com.ragiomigo.royoorders',
+    android: 'com.ragiomigo.royoorders',
+  }),
+  jimsAutoRescue: Platform.select({
+    ios: 'com.jimsautorescue.royoorders',
+    android: 'com.jimsautorescue.royoorders',
+  }),
+  carryfood: Platform.select({
+    ios: 'com.carryfood.royoorders',
+    android: 'com.carryfood.royoorders',
+  }),
+  nhazi: Platform.select({
+    ios: 'com.nhazi.royoorders',
+    android: 'com.nhazi.royoorders',
+  }),
+  petverse: Platform.select({
+    ios: 'com.petverse.royoorders',
+    android: 'com.petverse.royoorders',
+  }),
+  clickndrop: Platform.select({
+    ios: 'com.clickndrop.royoorders',
+    android: 'com.clickndrop.royoorders',
+  }),
+  lifehomefit: Platform.select({
+    ios: 'com.lifehomefit.royoorders',
+    android: 'com.lifehomefit.royoorders',
+  }),
+  appi: Platform.select({
+    ios: 'com.appi.royoorders',
+    android: 'com.appi.royoorders',
+  }),
+  dbairro_: Platform.select({
+    ios: 'com.dbairroapp.royoorders',
+    android: 'com.dbairroapp.royoorders',
+  }),
+  genee: Platform.select({
+    ios: 'com.genee.royoorders',
+    android: 'com.genee.royoorders',
+  }),
+  speedyDelivery: Platform.select({
+    ios: 'com.speedydelivery.royoorders',
+    android: 'com.speedydelivery.royoorders',
+  }),
+  holla: Platform.select({
+    ios: 'com.holla.royoorders',
+    android: 'com.holla.royoorders',
+  }),
+  stabex: Platform.select({
+    ios: 'com.stabex.royoorders',
+    android: 'com.stabex.royoorders',
+  }),
+  uberWeeds: Platform.select({
+    ios: 'com.uberweeds.royoorders',
+    android: 'com.uberweeds.royoorders',
+  }),
+  cabPro: Platform.select({
+    ios: 'com.cabpro.royoorders',
+    android: 'com.cabpro.royoorders',
+  }),
+  pointoneExpediteDelivery: Platform.select({
+    ios: 'com.pointoneExpediteDelivery.royoorders',
+    android: 'com.pointoneExpediteDelivery.royoorders',
+  }),
+  saamanshop: Platform.select({
+    ios: 'com.saamanshop.royoorders',
+    android: 'com.saamanshop.royoorders',
+  }),
+  tdc: Platform.select({
+    ios: 'com.tdc.royoorders',
+    android: 'com.tdc.royoorders',
+  }),
+  giftyLeaf: Platform.select({
+    ios: 'com.giftyleaf.royoorders',
+    android: 'com.giftyleaf.royoorders',
+  }),
+  flyCommerce: Platform.select({
+    ios: 'com.flycommerce.royoorders',
+    android: 'com.flycommerce.royoorders',
+  }),
+  pik: Platform.select({
+    ios: 'com.pik.royoorders',
+    android: 'com.pik.royoorders',
+  }),
+  motina: Platform.select({
+    ios: 'com.motina.royoorders',
+    android: 'com.motina.royoorders',
+  }),
+  hungry: Platform.select({
+    ios: 'com.hungry.royoorders',
+    android: 'com.hungry.royoorders',
+  }),
+  greenhippo: Platform.select({
+    ios: 'com.greenhippo.royoorders',
+    android: 'com.greenhippo.royoorders',
+  }),
+  mymeddy: Platform.select({
+    ios: 'com.mymeddy.royoorders',
+    android: 'com.mymeddy.royoorders',
+  }),
+  uryd: Platform.select({
+    ios: 'com.uryd.royoorders',
+    android: 'com.uryd.royoorders',
+  }),
+  happySingh: Platform.select({
+    ios: 'com.happysingh.royoorders',
+    android: 'com.happysingh.royoorders',
+  }),
+  vital: Platform.select({
+    ios: 'com.vital.royoorders',
+    android: 'com.vital.royoorders',
+  }),
+  parcelworks: Platform.select({
+    ios: 'com.parcelworks.royoorders',
+    android: 'com.parcelworks.royoorders',
+  }),
+  usVetsDeliver: Platform.select({
+    ios: 'com.UsVetsDeliver.royoorders',
+    android: 'com.UsVetsDeliver.royoorders',
+  }),
+  konectame: Platform.select({
+    ios: 'com.konectame.royoorders',
+    android: 'com.konectame.royoorders',
+  }),
+  flybuilder: Platform.select({
+    ios: 'com.flybuilder.royoorders',
+    android: 'com.flybuilder.royoorders',
+  }),
+  skyline: Platform.select({
+    ios: 'com.skyline.royoorders',
+    android: 'com.skyline',
+  }),
+  bliss: Platform.select({
+    ios: 'com.bliss.royoorders',
+    android: 'com.bliss',
+  }),
+  rentzy: Platform.select({
+    ios: 'com.rentzy.royoorders',
+    android: 'com.rentzy',
+  }),
 };
 
 const socialKeys = {

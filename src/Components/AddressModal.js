@@ -345,19 +345,14 @@ const AddressModal = ({
       onLayout={(event) => {
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image
-          style={isDarkMode && {tintColor: colors.white}}
-          source={imagePath.crossB}
-        />
+      <TouchableOpacity
+        style={styles.closeButton}
+        onPress={() => {
+          onClose();
+          clearState();
+        }}>
+        <Image style={{tintColor: colors.white}} source={imagePath.crossB} />
       </TouchableOpacity>
-      {/* <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        style={[
-          styles.modalMainViewContainer,
-          {paddingHorizontal: moderateScale(24)},
-        ]}> */}
 
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
@@ -387,18 +382,6 @@ const AddressModal = ({
           </Text>
         </View>
 
-        {/* <BorderTextInput
-          containerStyle={styles.textInputContainer}
-          onChangeText={_onChangeText('address')}
-          placeholder={strings.SEARCH_LOCATION}
-          textInputStyle={getTextInputStyle(address, 2)}
-          numberOfLines={1}
-          value={address}
-          onFocus={() => {
-            updateState({showDialogBox: true});
-          }}
-        /> */}
-
         <GooglePlaceInput
           getDefaultValue={address}
           type={type}
@@ -410,31 +393,6 @@ const AddressModal = ({
           addressHelper={(results) => addressHelper(results)}
           handleAddressOnKeyUp={(text) => handleAddressOnKeyUp(text)}
         />
-
-        {/* <View style={styles.textInputContainerAddress}>
-            <TextInput
-              onChangeText={_onChangeText('address')}
-              placeholder={strings.SEARCH_LOCATION}
-              style={[
-                styles.addressTextStyle,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  ...getTextInputStyle(address, 2),
-                },
-              ]}
-              multiline={false}
-              // style={getTextInputStyle(address, 2)}
-              numberOfLines={2}
-              value={address}
-              onFocus={() => {
-                updateState({showDialogBox: true});
-              }}
-            />
-          </View> */}
-
-        {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
-          <View style={styles.addressDropDownView}>{renderDropDown()}</View>
-        )} */}
         <View
           style={{
             zIndex: -1000,
@@ -476,13 +434,6 @@ const AddressModal = ({
           />
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            {/* <BorderTextInput
-              containerStyle={{flex: 0.45}}
-              onChangeText={_onChangeText('country')}
-              placeholder={strings.COUNTRY}
-              textInputStyle={getTextInputStyle(country)}
-              value={country}
-            /> */}
             <View
               style={{
                 flex: 0.48,
@@ -501,20 +452,16 @@ const AddressModal = ({
                   isDarkMode ? MyDarkTheme.colors.text : colors.black
                 }
                 placeholderTextColor={
-                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
+                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
                 }
                 onChangeText={_onChangeText('country')}
                 placeholder={strings.COUNTRY}
                 // textInputStyle={getTextInputStyle(country)}
                 value={country}
-                style={
-                  isDarkMode
-                    ? [styles.textInput3, {opacity: 0.7, color: '#fff'}]
-                    : [
-                        styles.textInput3,
-                        {opacity: 0.7, color: colors.textGrey},
-                      ]
-                }
+                style={{
+                  ...styles.textInput3,
+                  color: isDarkMode ? colors.white : colors.black,
+                }}
               />
             </View>
             <BorderTextInput
@@ -551,7 +498,10 @@ const AddressModal = ({
                   <Text
                     style={[
                       {
-                        color: colors.textGreyB,
+                        color:
+                          address_type == item.id
+                            ? themeColors.primary_color
+                            : colors.textGreyB,
                         fontFamily: fontFamily.bold,
                         paddingLeft: moderateScale(10),
                       },
@@ -572,14 +522,11 @@ const AddressModal = ({
             textStyle={styles.textStyle}
             onPress={saveAddress}
             marginTop={moderateScaleVertical(10)}
-            // marginBottom={moderateScaleVertical(10)}
             btnText={strings.SAVE_ADDRESS}
             indicator={indicator}
           />
         </View>
       </KeyboardAwareScrollView>
-      {/* </View> */}
-      {/* </ScrollView> */}
     </Modal>
   );
 };
@@ -597,7 +544,7 @@ export function stylesData({fontFamily, themeColors}) {
     closeButton: {
       alignItems: 'center',
       justifyContent: 'center',
-      marginVertical: moderateScaleVertical(10),
+      marginBottom: 5,
     },
     useCurrentLocationText: {
       marginHorizontal: 5,
@@ -711,6 +658,7 @@ export function stylesData({fontFamily, themeColors}) {
       color: colors.textGrey,
       fontFamily: fontFamily.bold,
       fontSize: textScale(12),
+      opacity: 0.7,
     },
     textInput2: {
       height: moderateScaleVertical(35),

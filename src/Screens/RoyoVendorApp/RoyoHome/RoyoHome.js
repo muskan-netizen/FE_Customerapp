@@ -1,48 +1,47 @@
-import React, {useEffect, useRef} from 'react';
+import {isEmpty} from 'lodash';
+import debounce from 'lodash.debounce';
+import moment from 'moment';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  RefreshControl,
   BackHandler,
+  FlatList,
+  Image,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {useState} from 'react';
+import {BarChart} from 'react-native-chart-kit';
+import Modal from 'react-native-modal';
+import MonthPicker from 'react-native-month-year-picker';
+import {useSelector} from 'react-redux';
+import DashboardCount from '../../../Components/DashboardCount';
+import Header from '../../../Components/Header';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import OrderCard from '../../../Components/OrderCard';
+import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import commonStyles from '../../../styles/commonStyles';
+import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
-import fontFamily from '../../../styles/fontFamily';
-import navigationStrings from '../../../navigation/navigationStrings';
-import colors from '../../../styles/colors';
-import {BarChart} from 'react-native-chart-kit';
-import {FlatList} from 'react-native';
-import OrderCard from '../../../Components/OrderCard';
-import commonStyles from '../../../styles/commonStyles';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {
   boxWidth,
   customMarginBottom,
   customMarginLeftForBox,
 } from '../../../utils/constants/constants';
-import Header from '../../../Components/Header';
-import {useSelector} from 'react-redux';
-import actions from '../../../redux/actions';
-import moment from 'moment';
 import {showError} from '../../../utils/helperFunctions';
-import debounce from 'lodash.debounce';
-import {cloneDeep, isEmpty} from 'lodash';
-import {TouchableOpacity} from 'react-native';
-import MonthPicker from 'react-native-month-year-picker';
-import Modal from 'react-native-modal';
-import SelectVendorListModal from '../../../Components/SelectVendorListModal';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import {enums} from '../../../utils/enums';
-import strings from '../../../constants/lang';
-import DashboardCount from '../../../Components/DashboardCount';
 
 let vendorLimit = 50;
 // import 'moment/locale/fr';
@@ -70,6 +69,8 @@ const RoyoHome = (props) => {
   const {appData, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   console.log(languages, 'languagessssssssss');
 
   const [state, setState] = useState({
@@ -223,7 +224,8 @@ const RoyoHome = (props) => {
     try {
       const res = await actions.allVendorOrders(query, headers);
       console.log('all vendor orders count', res);
-      setAllNewOrder(res.data.data);
+      console.log(res?.data?.data, 'res?.data?.data');
+      setAllNewOrder(res?.data?.data);
     } catch (error) {
       console.log('error riased', error);
       showError(error?.error);
@@ -506,7 +508,6 @@ const RoyoHome = (props) => {
       </View>
     );
   };
-
   const onEndReachedVendor = () => {
     if (vendorLoadMore.current) {
       vendorPage.current = vendorPage.current + 1;
@@ -528,7 +529,6 @@ const RoyoHome = (props) => {
         onPressLeft={() => {
           navigation.navigate(navigationStrings.TAB_ROUTES);
         }}
-        noLeftIcon={enums.isVendorStandloneApp}
         leftIcon={imagePath.backRoyo}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
@@ -609,10 +609,15 @@ const RoyoHome = (props) => {
                     {strings.TOTAL_REVENUE}
                   </Text>
                   <Text style={styles.font16Bold}>
-                    {currencies?.primary_currency?.symbol}
-                    {!!totalRevenue ? Number(totalRevenue).toFixed(2) : 0}
+                    {tokenConverterPlusCurrencyNumberFormater(
+                      !!totalRevenue ? Number(totalRevenue) : 0,
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}
                   </Text>
                 </View>
+
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   <BarChart
                     withCustomBarColorFromData={true}
@@ -780,7 +785,7 @@ const styles = StyleSheet.create({
   },
   container: {
     // paddingHorizontal: moderateScale(16),
-    marginHorizontal:moderateScale(16),
+    marginHorizontal: moderateScale(16),
     paddingBottom: moderateScaleVertical(24),
     marginBottom: customMarginBottom(18, 86),
     backgroundColor: 'transparent',

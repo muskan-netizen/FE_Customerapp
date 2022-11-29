@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>956977322157-co7llj76u8t7obvah0phejlk66i4clv2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.956977322157-co7llj76u8t7obvah0phejlk66i4clv2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>956977322157-50vfq9eatu223m2dkcfpjlou1tsesbjl.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCJveVf1uuaIYiRCX0QMz7R9MDD7fAPTew</string>
+	<key>GCM_SENDER_ID</key>
+	<string>956977322157</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.greenhippo.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>green-hippo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>green-hippo.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:956977322157:ios:10158fb7322f5391d3ce24</string>
+</dict>
+</plist>

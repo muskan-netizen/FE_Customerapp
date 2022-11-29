@@ -26,30 +26,29 @@ export function initApp(
   refreshlang = false,
 ) {
   return new Promise((resolve, reject) => {
-    console.log(headers,"headersheadersheaders");
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
 
-        const currencies = data?.currencies
-          ? data.currencies.map((x) => {
+        const currencies = !!data?.currencies
+          ? data?.currencies.map((x) => {
               return {
-                id: x.currency.id,
-                label: x.currency.name,
-                value: x.currency.name,
-                symbol: x.currency.symbol,
-                iso_code: x.currency.iso_code,
+                id: x?.currency?.id,
+                label: x?.currency?.name,
+                value: x?.currency?.name,
+                symbol: x?.currency?.symbol,
+                iso_code: x?.currency?.iso_code,
               };
             })
           : {};
 
-        const languages = data?.languages
-          ? data.languages.map((x) => {
+        const languages = !!data?.languages
+          ? data?.languages.map((x) => {
               return {
-                id: x.language.id,
-                label: x.language.nativeName || x.language.name,
-                value: x.language.nativeName || x.language.name,
-                sort_code: x.language.sort_code,
+                id: x?.language?.id,
+                label: x?.language?.nativeName || x?.language?.name,
+                value: x?.language?.nativeName || x?.language?.name,
+                sort_code: x?.language?.sort_code,
               };
             })
           : {};
@@ -71,9 +70,9 @@ export function initApp(
 
         let themeColorsData = {};
         themeColorsData['primary_color'] =
-          data.profile.preferences.primary_color;
+          data?.profile?.preferences?.primary_color;
         themeColorsData['secondary_color'] =
-          data.profile.preferences.secondary_color;
+          data?.profile?.preferences?.secondary_color;
 
         let currenciesData = {};
         currenciesData['all_currencies'] = currencies;
@@ -83,7 +82,7 @@ export function initApp(
           data?.currencies.find((x) => x?.currency?.id == primary_curreny?.id)
             ? primary_curreny
             : data?.currencies
-            ? data.currencies.filter((x) => x.is_primary)[0].currency
+            ? data?.currencies.filter((x) => x?.is_primary)[0]?.currency
             : {};
 
         let languagesData = {};
@@ -94,7 +93,7 @@ export function initApp(
           data?.languages.find((x) => x?.language?.id == primary_language?.id)
             ? primary_language
             : data?.languages
-            ? data.languages.filter((x) => x.is_primary)[0].language
+            ? data?.languages.filter((x) => x?.is_primary)[0]?.language
             : {};
 
         let appData = {
@@ -140,8 +139,8 @@ export function initApp(
             }
             setLanguage(getPrimaryLanguage);
           } else {
-            let primaryLang = data.languages.filter((x) => x.is_primary)[0]
-              .language;
+            let primaryLang = data?.languages.filter((x) => x.is_primary)[0]
+              ?.language;
 
             // alert(JSON.stringify(I18nManager), 'I18nManager');
             setItem('setPrimaryLanguage', languagesData);

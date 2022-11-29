@@ -1,20 +1,27 @@
+import DeviceInfo from 'react-native-device-info';
 import LocalizedStrings from 'react-native-localization';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import en from './en';
 import ar from './ar';
-import es from './es';
 import de from './de';
+import en from './en';
+import es from './es';
+import fa from './fa';
 import fr from './fr';
-import tr from './tr';
-import sv from './sv';
-import zh from './zh';
-import ru from './ru';
-import pt from './pt';
-import vi from './vi';
 import hi from './hi';
+import it from './it';
+import ne from './ne';
+import pt from './pt';
+import ru from './ru';
+import sv from './sv';
+import tr from './tr';
+import vi from './vi';
+import zh from './zh';
+
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import ar_baytukom from './ar_baytukom';
 import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import es_sabroson from './es_sabroson';
+import swa from './swa';
 
 //Spanish fils
 
@@ -22,16 +29,27 @@ const spanishfile = () => {
   switch (DeviceInfo.getBundleId()) {
     case appIds?.elcheregio:
       return es_elcheragio;
-      case appIds?.heyBuddy:
-        return es_heybuddy;
+    case appIds?.heyBuddy:
+      return es_heybuddy;
+    case appIds?.sabroson:
+      return es_sabroson;
     default:
       return es;
   }
 };
 
+const arbicFile = () => {
+  switch (DeviceInfo.getBundleId()) {
+    case appIds?.baytukom:
+      return ar_baytukom;
+    default:
+      return ar;
+  }
+};
+
 let strings = new LocalizedStrings({
   en: en,
-  ar: ar,
+  ar: arbicFile(),
   es: spanishfile(),
   de: de,
   fr: fr,
@@ -42,6 +60,10 @@ let strings = new LocalizedStrings({
   pt: pt,
   vi: vi,
   hi: hi,
+  ne: ne,
+  it: it,
+  fa: fa,
+  swa: swa,
 });
 export const changeLaguage = (languageKey) => {
   strings.setLanguage(languageKey);

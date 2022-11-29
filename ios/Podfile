@@ -1,6 +1,6 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '12.0'
+platform :ios, '11.0'
 
 abstract_target 'available_pods' do
   
@@ -14,6 +14,7 @@ abstract_target 'available_pods' do
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
    pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
+ 
 
 ##RoyoOrder Target
 target 'RoyoOrder' do
@@ -24,6 +25,8 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
+  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
+
 end
 
 # ##Tranzit Target
@@ -1027,8 +1030,8 @@ target 'Mozmarcas' do
  
 end
 
-#Myfiji Target
-target 'Myfiji' do
+#FijiEats Target
+target 'FijiEats' do
 
 end
 
@@ -1642,10 +1645,10 @@ target 'AmazingTaxi' do
   
 end
 
-# # JazzyBug Target
-# target 'JazzyBug' do
+# JazzyBug Target
+target 'JazzyBug' do
   
-# end
+end
 
 # # Myfarma Target
  target 'Myfarma' do
@@ -1754,7 +1757,489 @@ end
 target 'ExprexPro' do
   
 end
+# FresHest Target
+target 'FresHest' do
+  
+end
 
+# Servern Target
+target 'Servern' do
+  
+end
+# SmokeRun Target
+target 'SmokeRun' do
+  
+end
+# MyEvPlus Target
+target 'MyEvPlus' do
+  
+end
+# Qdelo Target
+target 'Qdelo' do
+  
+end
+#Pawsee Target
+target 'Pawsee' do
+  
+end
+
+#HairRun Target
+target 'HairRun' do
+  
+end
+#ZuriRide Target
+target 'ZuriRide' do
+  
+end
+#American Luxury Target
+target 'AmericanLuxury' do
+  
+end
+#SmartMur Target
+target 'SmartMur' do
+  
+end
+#OuiSpeed Target
+target 'OuiSpeed' do
+  
+end
+#GetItSent Target
+target 'GetItSent' do
+  
+end
+#EasyDrink Target
+target 'EasyDrink' do
+  
+end
+#IAmSelling Target
+target 'IAmSelling' do
+  
+end
+#FifteenP Target
+target 'FifteenP' do
+  
+end
+#EuodooTEchnologies Target
+target 'EuodooTechnologies' do
+  
+end
+#Rota Target
+target 'Rota' do
+  
+end
+#FarmMeat Target
+target 'FarmMeat' do
+  
+end
+#DanielleBejjani Target
+target 'DanielleBejjani' do
+  
+end
+#YallaEat Target
+target 'YallaEat' do
+  
+end
+#Choizez Target
+target 'Choizez' do
+  
+end
+#Otto Target
+target 'Otto' do
+  
+end
+#RescueRoadsideAssistance Target
+target 'RescueRoadsideAssistance' do
+  
+end
+#TaxE Target
+target 'TaxE' do
+  
+end
+#BaggageTaxi Target
+target 'BaggageTaxi' do
+  
+end
+#Mersi Target
+target 'Mersi' do
+  
+end
+#FoodSpot Target
+target 'FoodSpot' do
+  
+end
+#KaribaMart Target
+target 'KaribaMart' do
+  
+end
+#SourceWith Target
+target 'SourceWith' do
+  
+end
+#ApptFindr Target
+target 'ApptFindr' do
+  
+end
+#VDU Target
+target 'VDU' do
+  
+end
+#LaundroZone Target
+target 'LaundroZone' do
+  
+end
+#Taxiolgy Target
+target 'Taxiolgy' do
+  
+end
+#Swipe Target
+target 'Swipe' do
+  
+end
+#SheRyders Target
+target 'SheRyders' do
+  
+end
+#Kurrix Target
+target 'Kurrix' do
+  
+end
+#MrVeloz Target
+target 'MrVeloz' do
+  
+end
+#GreenCab Target
+target 'GreenCab' do
+  
+end
+#Axxi Target
+target 'Axxi' do
+  
+end
+#Pets Target
+target 'Pets' do
+  
+end
+#GetDress Target
+target 'GetDress' do
+  
+end
+#Shelf Target
+target 'Shelf' do
+  
+end
+#baly Target
+target 'Baly' do
+  
+end
+#Nuvoni Target
+target 'Nuvoni' do
+  
+end
+#FairDeal Target
+target 'FairDeal' do
+  
+end
+#SyloMart Target
+target 'SyloMart' do
+  
+end
+
+#HezniTaxi Target
+target 'HezniTaxi' do
+  
+end
+
+#OnTheWheel Target
+target 'OnTheWheel' do
+  
+end
+
+#ValleyMeats Target
+target 'ValleyMeats' do
+  
+end
+#Perucabs Target
+target 'Perucabs' do
+  
+end
+
+
+#Hafizjwlry Target
+target 'Hafizjwlry' do
+  
+end
+
+
+#Jana Target
+target 'Jana' do
+  
+end
+
+#MYWAYBILL Target
+target 'MYWAYBILL' do
+  
+end
+
+#Cattch
+target 'Cattch' do
+
+end
+
+#Tezras
+target 'Tezras' do
+
+end
+
+#Eureka
+target 'Eureka' do
+
+end
+
+#Kaypee
+target 'Kaypee' do
+
+end
+
+#Hitaxi
+target 'Hitaxi' do
+
+end
+
+#Kwivar
+target 'Kwivar' do
+
+end
+
+#Parcel
+target 'Parcel' do
+
+end
+
+#Lex
+target 'Lex' do
+
+end
+#Flank
+target 'Flank' do
+
+end
+
+#Zynoride
+target 'Zynoride' do
+
+end
+
+#Mealsarehere
+target 'Mealsarehere' do
+
+end
+
+#Loamscape
+target 'Loamscape' do
+
+end
+
+#Delcolink
+target 'Delcolink' do
+
+end
+
+#YouSmokeShop
+target 'YouSmokeShop' do
+
+end
+
+#Doober
+target 'Doober' do
+
+end
+
+#Inmotion
+target 'Inmotion' do
+
+end
+
+
+#EatHalal
+target 'EatHalal' do
+
+end
+#Jeevann
+target 'Jeevann' do
+
+end
+#Novamed
+target 'Novamed' do
+
+end
+
+#Awamer
+target 'Awamer' do
+
+end
+
+#GoTech
+target 'GoTech' do
+
+end
+#IDRV
+target 'IDRV' do
+
+end
+
+#Qwiker
+target 'Qwiker' do
+
+end
+
+#Spryton
+target 'Spryton' do
+end
+
+#Nittosadai
+target 'Nittosadai' do
+end
+
+#Clickokart
+target 'Clickokart' do
+end
+
+#Tiimo
+target 'Tiimo' do
+end
+
+#Verz
+target 'Verz' do
+end
+
+#RagioMigo
+target 'RagioMigo' do
+end
+
+#JimsAutoRescue
+target 'JimsAutoRescue' do
+end
+
+#Carryfood
+target 'Carryfood' do
+end
+
+#Nhazi
+target 'Nhazi' do
+end
+
+#Petverse
+target 'Petverse' do
+end
+
+#Clickndrop
+target 'Clickndrop' do
+end
+
+#Lifehomefit
+target 'Lifehomefit' do
+end
+
+#Appi
+target 'Appi' do
+end
+
+#Dbairro_
+target 'Dbairro_' do
+end
+
+#Genee
+target 'Genee' do
+end
+
+#SpeedyDelivery
+target 'SpeedyDelivery' do
+end
+
+#Holla
+target 'Holla' do
+end
+
+#Stabex
+target 'Stabex' do
+end
+
+#UberWeeds
+target 'UberWeeds' do
+end
+
+#CabPro
+target 'CabPro' do
+end
+
+#PointoneExpediteDelivery
+target 'PointoneExpediteDelivery' do
+end
+
+#TDC
+target 'TDC' do
+end
+
+#GiftyLeaf
+target 'GiftyLeaf' do
+end
+
+#FlyCommerce
+target 'FlyCommerce' do
+end
+
+#Saamanshop
+target 'Saamanshop' do
+end
+
+#PIK
+target 'PIK' do
+end
+
+#MOTINA
+target 'MOTINA' do
+end
+
+#Hungry
+target 'Hungry' do
+end
+
+#Greenhippo
+target 'Greenhippo' do
+end
+
+#Mymeddy
+target 'Mymeddy' do
+end
+
+#URyd
+target 'URyd' do
+end
+
+#HappySingh
+target 'HappySingh' do
+end
+
+#Vital
+target 'Vital' do
+end
+
+
+#parcelworks
+target 'ParcelWorks' do
+end
+
+#UsVetsDeliver
+target 'UsVetsDeliver' do
+end
+
+#Konectame
+target 'Konectame' do
+end
+
+#Fly Builder
+target 'FlyBuilder' do
+end
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

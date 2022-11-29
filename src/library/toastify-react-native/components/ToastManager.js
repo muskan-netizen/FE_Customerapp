@@ -140,7 +140,6 @@ class ToastManager extends Component {
   };
 
   render() {
-    console.log(this.props.textStyle, 'this.props.textStyle>>>');
     this.handleBar();
     return (
       <Modal

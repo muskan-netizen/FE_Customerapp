@@ -18,7 +18,6 @@ export default ({
   savedAddressViewHeight,
   avalibleValueInTextInput,
 }) => {
-  console.log(type, 'type>>>type');
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     titleAbout: {

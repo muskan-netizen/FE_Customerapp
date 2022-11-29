@@ -1,28 +1,25 @@
 //import liraries
-import React, {useState, useEffect} from 'react';
+import {cloneDeep, debounce} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
-  View,
-  Text,
   FlatList,
+  Image,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  View,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
-import BottomSheet from 'reanimated-bottom-sheet';
+import imagePath from '../constants/imagePath';
 import actions from '../redux/actions';
+import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
-  width,
 } from '../styles/responsiveSize';
 import {showError} from '../utils/helperFunctions';
 import PendingOrderCard from './PendingOrderCard';
-import {cloneDeep, debounce} from 'lodash';
-import Modal from 'react-native-modal';
-import imagePath from '../constants/imagePath';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 
 const NotificationModal = () => {
   const pendingNotifications = useSelector(
@@ -51,7 +48,7 @@ const NotificationModal = () => {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    if (!!userData?.auth_token) {
+    if (!!userData?.auth_token && isVendorNotification) {
       (async () => {
         try {
           const res = await actions.allPendingOrders(

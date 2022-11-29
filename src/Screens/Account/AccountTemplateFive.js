@@ -1,5 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   I18nManager,
@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -19,24 +19,37 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../styles/responsiveSize';
 import stylesFun from './styles';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
-import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
-import { getImageUrl, getRandomColor, showError } from '../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import {
+  getImageUrl,
+  getRandomColor,
+  showError,
+} from '../../utils/helperFunctions';
 import FastImage from 'react-native-fast-image';
-import { color } from 'react-native-reanimated';
+import {color} from 'react-native-reanimated';
 import ListItemHorizontalWithRightText from '../../Components/ListItemHorizontalWithImageWithRightText';
 
-export default function AccountTemplateFive({ navigation }) {
+export default function AccountTemplateFive({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const { shortCodeStatus, themeColors, appStyle, appData,languages,currencies } = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {
+    shortCodeStatus,
+    themeColors,
+    appStyle,
+    appData,
+    languages,
+    currencies,
+  } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -45,15 +58,15 @@ export default function AccountTemplateFive({ navigation }) {
   const homePageLayout = appStyle?.homePageLayout;
   const businessType = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily, themeColors });
-  const commonStyles = commonStylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily, themeColors});
+  const commonStyles = commonStylesFun({fontFamily});
 
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -105,7 +118,6 @@ export default function AccountTemplateFive({ navigation }) {
   };
   const _scrollRef = useRef();
 
-
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
       Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
@@ -122,27 +134,28 @@ export default function AccountTemplateFive({ navigation }) {
     } else {
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
-  }
-  const deleleUserAccount = async() => {
+  };
+  const deleleUserAccount = async () => {
     try {
       const res = await actions.deleteAccount(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      console.log("delete user account res",res)
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      );
+      console.log('delete user account res', res);
       actions.userLogout();
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
-      console.log('erro raised',error)
-      showError(error?.message)
+      console.log('erro raised', error);
+      showError(error?.message);
     }
-  }
+  };
 
   return (
     <WrapperContainer
@@ -167,7 +180,6 @@ export default function AccountTemplateFive({ navigation }) {
               {strings.EDITCODE}
             </Text>
           )}
-
           // rightIcon={imagePath.cartShop}
           centerTitle={strings.MY_ACCOUNT}
         />
@@ -177,7 +189,7 @@ export default function AccountTemplateFive({ navigation }) {
 
       {/* <View style={{ ...commonStyles.headerTopLine }} /> */}
 
-      <ScrollView style={{ flex: 1 }} ref={_scrollRef}>
+      <ScrollView style={{flex: 1}} ref={_scrollRef}>
         {!!userData?.auth_token && (
           <>
             <TouchableOpacity
@@ -193,19 +205,19 @@ export default function AccountTemplateFive({ navigation }) {
                 //   : colors.white,
                 paddingVertical: moderateScaleVertical(12),
                 // borderRadius: 12,
-                alignSelf: 'flex-start'
+                alignSelf: 'flex-start',
               }}>
-              {(userData?.source) ? (
+              {userData?.source ? (
                 <FastImage
                   source={
                     userData?.source?.image_path
                       ? {
-                        uri: getImageUrl(
-                          userData?.source?.proxy_url,
-                          userData?.source?.image_path,
-                          '200/200',
-                        ),
-                      }
+                          uri: getImageUrl(
+                            userData?.source?.proxy_url,
+                            userData?.source?.image_path,
+                            '200/200',
+                          ),
+                        }
                       : userData?.source
                   }
                   style={{
@@ -267,7 +279,7 @@ export default function AccountTemplateFive({ navigation }) {
                 </Text>
                 {console.log('checking profile data >>>> ', userData)}
                 {/* {userData?.phone_number && ( */}
-                {(
+                {
                   <Text
                     style={{
                       fontFamily: fontFamily.regular,
@@ -280,16 +292,43 @@ export default function AccountTemplateFive({ navigation }) {
                     {/* {userData?.phone_number} */}
                     {'+61325458796'}
                   </Text>
-                )}
+                }
               </View>
-              <TouchableOpacity style={{ alignItems: 'flex-end', flex: 1, paddingRight: moderateScale(20) }}>
-                <Image source={imagePath.editBlue} style={{ tintColor: colors.grayOpacity51 }} />
+              <TouchableOpacity
+                style={{
+                  alignItems: 'flex-end',
+                  flex: 1,
+                  paddingRight: moderateScale(20),
+                }}>
+                <Image
+                  source={imagePath.editBlue}
+                  style={{tintColor: colors.grayOpacity51}}
+                />
               </TouchableOpacity>
             </TouchableOpacity>
-            <View style={{ backgroundColor: colors.redColor, flexDirection: 'row', borderRadius: moderateScale(5), alignItems: 'center', marginHorizontal: moderateScale(20), justifyContent: 'space-between', paddingHorizontal: moderateScale(17), paddingVertical: moderateScale(15) }}>
-              <Text style={{ color: colors.white, fontSize: textScale(13) }}>Security check. Please verify email</Text>
-              <TouchableOpacity style={{ paddingHorizontal: moderateScale(12), paddingVertical: moderateScaleVertical(1), borderRadius: moderateScale(50), borderWidth: 1, borderColor: colors.white }}>
-                <Text style={{ color: colors.white, fontSize: textScale(12) }}>
+            <View
+              style={{
+                backgroundColor: colors.redColor,
+                flexDirection: 'row',
+                borderRadius: moderateScale(5),
+                alignItems: 'center',
+                marginHorizontal: moderateScale(20),
+                justifyContent: 'space-between',
+                paddingHorizontal: moderateScale(17),
+                paddingVertical: moderateScale(15),
+              }}>
+              <Text style={{color: colors.white, fontSize: textScale(13)}}>
+                Security check. Please verify email
+              </Text>
+              <TouchableOpacity
+                style={{
+                  paddingHorizontal: moderateScale(12),
+                  paddingVertical: moderateScaleVertical(1),
+                  borderRadius: moderateScale(50),
+                  borderWidth: 1,
+                  borderColor: colors.white,
+                }}>
+                <Text style={{color: colors.white, fontSize: textScale(12)}}>
                   Verify
                 </Text>
               </TouchableOpacity>
@@ -311,62 +350,80 @@ export default function AccountTemplateFive({ navigation }) {
           //   centerHeadingStyle={{fontSize: textScale(15)}}
           // />
         )}
-        <Text style={{ marginHorizontal: moderateScale(20), fontSize: textScale(13), fontFamily: fontFamily.bold, marginBottom: moderateScale(5) }}>
+        <Text
+          style={{
+            marginHorizontal: moderateScale(20),
+            fontSize: textScale(13),
+            fontFamily: fontFamily.bold,
+            marginBottom: moderateScale(5),
+          }}>
           {'Account'}
         </Text>
         {!!userData?.auth_token &&
           (businessType == 4 ? null : (
             <ListItemHorizontalWithRightText
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.2, alignItems: 'center'}}
               // onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
               iconLeft={imagePath.myOrders}
               centerHeading={strings.MY_ORDERS}
               containerStyle={styles.containerStyle}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                  ? {
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.medium,
+                      color: MyDarkTheme.colors.text,
+                    }
+                  : {fontSize: textScale(14), fontFamily: fontFamily.medium}
               }
               iconRight={imagePath.goRight}
-              rightIconStyle={{ tintColor: colors.textGreyLight }}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
               rightText="See ongoing & history"
             />
           ))}
 
         {!!userData?.auth_token && (
           <ListItemHorizontalWithRightText
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.2, alignItems: 'center'}}
             // onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
             iconLeft={imagePath.roundPercentage}
             centerHeading={'Payment Methods'}
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode
-                ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                ? {
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.medium,
+                    color: MyDarkTheme.colors.text,
+                  }
+                : {fontSize: textScale(14), fontFamily: fontFamily.medium}
             }
             iconRight={imagePath.goRight}
-            rightIconStyle={{ tintColor: colors.textGreyLight }}
+            rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
         {!!userData?.auth_token && (
           <ListItemHorizontalWithRightText
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.2, alignItems: 'center'}}
             // onPress={moveToNewScreen(navigationStrings.LOYALTY)}
             iconLeft={imagePath.changeLanguage}
             centerHeading={'Change Language'}
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode
-                ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                ? {
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.medium,
+                    color: MyDarkTheme.colors.text,
+                  }
+                : {fontSize: textScale(14), fontFamily: fontFamily.medium}
             }
             iconRight={imagePath.goRight}
-            rightIconStyle={{ tintColor: colors.textGreyLight }}
+            rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
@@ -385,37 +442,45 @@ export default function AccountTemplateFive({ navigation }) {
         )} */}
         {!!userData?.auth_token && (
           <ListItemHorizontalWithRightText
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.2, alignItems: 'center'}}
             // onPress={moveToNewScreen(navigationStrings.WALLET)}
             iconLeft={imagePath.saved}
             centerHeading={'Saved Addresses'}
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode
-                ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                ? {
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.medium,
+                    color: MyDarkTheme.colors.text,
+                  }
+                : {fontSize: textScale(14), fontFamily: fontFamily.medium}
             }
             iconRight={imagePath.goRight}
-            rightIconStyle={{ tintColor: colors.textGreyLight }}
+            rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
         {!!userData?.auth_token &&
           (businessType == 4 ? null : (
             <ListItemHorizontalWithRightText
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.2, alignItems: 'center'}}
               // onPress={moveToNewScreen(navigationStrings.WISHLIST)}
               iconLeft={imagePath.inviteFriend}
               centerHeading={'Invite Friends'}
               containerStyle={styles.containerStyle}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                  ? {
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.medium,
+                      color: MyDarkTheme.colors.text,
+                    }
+                  : {fontSize: textScale(14), fontFamily: fontFamily.medium}
               }
               iconRight={imagePath.goRight}
-              rightIconStyle={{ tintColor: colors.textGreyLight }}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
@@ -499,8 +564,8 @@ export default function AccountTemplateFive({ navigation }) {
           Platform.OS === 'android' &&
           (businessType == 'taxi' ? null : (
             <ListItemHorizontalWithRightText
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.2, alignItems: 'center'}}
               onPress={() => {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
@@ -509,11 +574,9 @@ export default function AccountTemplateFive({ navigation }) {
                     } else {
                       BluetoothManager.enableBluetooth()
                         .then(() => {
-                          navigation.navigate(
-                            navigationStrings.ATTACH_PRINTER,
-                          );
+                          navigation.navigate(navigationStrings.ATTACH_PRINTER);
                         })
-                        .catch((err) => { });
+                        .catch((err) => {});
                     }
                   },
                   (err) => {
@@ -526,11 +589,15 @@ export default function AccountTemplateFive({ navigation }) {
               containerStyle={styles.containerStyle}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                  ? {
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.medium,
+                      color: MyDarkTheme.colors.text,
+                    }
+                  : {fontSize: textScale(14), fontFamily: fontFamily.medium}
               }
               iconRight={imagePath.goRight}
-              rightIconStyle={{ tintColor: colors.textGreyLight }}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
@@ -538,26 +605,30 @@ export default function AccountTemplateFive({ navigation }) {
           !!appMainData?.is_admin &&
           (businessType === 4 ? null : (
             <ListItemHorizontalWithRightText
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.2, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.2, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
               iconLeft={imagePath.myStoreIcon}
               centerHeading={strings.MYSTORES}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={
                 isDarkMode
-                  ? { fontSize: textScale(14), fontFamily: fontFamily.medium, color: MyDarkTheme.colors.text }
-                  : { fontSize: textScale(14), fontFamily: fontFamily.medium }
+                  ? {
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.medium,
+                      color: MyDarkTheme.colors.text,
+                    }
+                  : {fontSize: textScale(14), fontFamily: fontFamily.medium}
               }
               iconRight={imagePath.goRight}
-              rightIconStyle={{ tintColor: colors.textGreyLight }}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
         {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+          <ListItemHorizontalWithRightText
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={onDeleteAccount}
             iconLeft={imagePath.user}
             centerHeading={strings.DELETE_ACCOUNT}
@@ -566,12 +637,10 @@ export default function AccountTemplateFive({ navigation }) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
-
-
 
         <View style={styles.loginView}>
           <TouchableOpacity
@@ -582,11 +651,11 @@ export default function AccountTemplateFive({ navigation }) {
             </Text>
             <Image
               source={imagePath.rightBlue}
-              style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
+              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
             />
           </TouchableOpacity>
         </View>
-        <View style={{ height: 100 }} />
+        <View style={{height: 100}} />
       </ScrollView>
     </WrapperContainer>
   );

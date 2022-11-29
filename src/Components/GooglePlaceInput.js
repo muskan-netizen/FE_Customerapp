@@ -9,6 +9,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../styles/responsiveSize';
 import {getAddressComponent} from '../utils/helperFunctions';
@@ -43,7 +44,7 @@ const GooglePlaceInput = ({
   ListHeaderComponent = () => {},
   placeholderTextColor = useDarkMode()
     ? colors.textGreyOpcaity7
-    : colors.textGreyOpcaity7,
+    : colors.textGreyB,
   getResults = () => {},
   selectionColor = colors.textGreyB,
   style = {},
@@ -157,7 +158,6 @@ const GooglePlaceInput = ({
           ...style,
         }}
         enableHighAccuracyLocation={true}
-        keyboardShouldPersistTaps={'handled'}
         fetchDetails={true}
         onPress={(data, details = null) => {
           console.log(details, 'details');
@@ -242,8 +242,6 @@ const GooglePlaceInput = ({
         isPredefinedPlace={true}
         predefinedPlacesAlwaysVisible={true}
         enablePoweredByContainer={false}
-        // predefinedPlaces={[currentPlace]}
-        keyboardShouldPersistTaps={'handled'}
         nearbyPlacesAPI="GooglePlacesSearch"
         GoogleReverseGeocodingQuery={{}}
         GooglePlacesSearchQuery={{
@@ -302,9 +300,9 @@ export function stylesFunc({fontFamily}) {
       color: colors.themeColor,
     },
     textInput: {
-      fontSize: 16,
       fontFamily: fontFamily.medium,
-      color: colors.textGreyOpcaity7,
+      fontSize: textScale(12),
+      color: colors.black,
     },
     useCurrentLocationView: {
       backgroundColor: 'transparent',

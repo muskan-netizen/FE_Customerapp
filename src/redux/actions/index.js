@@ -13,7 +13,8 @@ import * as pendingNotifications from './pendingNotifications';
 import * as addressSearch from './addressSearch';
 import * as walletUserVerify from './walletUserVerify';
 import * as reloadData from './reloadData';
-
+import * as chat from './chat';
+import * as chatRefresh from './chatRefresh';
 export default {
   ...init,
   ...auth,
@@ -28,5 +29,7 @@ export default {
   ...pendingNotifications,
   ...addressSearch,
   ...walletUserVerify,
-  ...reloadData
+  ...reloadData,
+  ...chat,
+  ...chatRefresh
 };

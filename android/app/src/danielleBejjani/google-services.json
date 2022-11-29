@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "820711623516",
+    "project_id": "danielle-bejjani-7a543",
+    "storage_bucket": "danielle-bejjani-7a543.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820711623516:android:b5c41463018545f1ae0f99",
+        "android_client_info": {
+          "package_name": "com.danielleBejjani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820711623516-l5k89ct47pmt5bbae60fhffsqn58u76r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.danielleBejjani",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "820711623516-t107h3u2ae0hpfklfkkm59aaf4air1eh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.danielleBejjani",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "820711623516-tnv01q51o79me6mfghee7mhes8gmcf7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.danielleBejjani",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "820711623516-g12e53o86jm79mga2ss1lluqve6ltc1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMlvOmmEGiJJnisBTNDvEEZ5BaGrXchcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820711623516-g12e53o86jm79mga2ss1lluqve6ltc1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

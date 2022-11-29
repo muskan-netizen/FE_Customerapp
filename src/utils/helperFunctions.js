@@ -1,27 +1,29 @@
 import * as React from 'react';
-import { Vibration } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
+import {Vibration} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import { BackHandler, Alert, Animated, Text } from 'react-native';
+import {BackHandler, Alert, Animated, Text} from 'react-native';
 import strings from './../constants/lang/index';
-import { callingCountries } from 'country-data';
+import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
-import { StatusBarHeight } from '../styles/responsiveSize';
-import { getDistance } from 'geolib';
-import { min } from 'moment';
+import {StatusBarHeight} from '../styles/responsiveSize';
+import {getDistance} from 'geolib';
+import {min} from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
-import { selectContactPhone } from 'react-native-select-contact';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
+import {selectContactPhone} from 'react-native-select-contact';
 import codes from 'country-calling-code';
 import DeviceCountry, {
   TYPE_ANY,
   TYPE_TELEPHONY,
   TYPE_CONFIGURATION,
 } from 'react-native-device-country';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import staticStrings from '../constants/staticStrings';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -36,7 +38,6 @@ const getCurrentLocation = (type) =>
           position.coords.longitude,
           type,
         ).then((res) => {
-          console.log(res, 'response in utils file');
           if (type == 'home') {
             const data = {
               ...cords,
@@ -58,20 +59,20 @@ const getCurrentLocation = (type) =>
         // alert(error.message)
         reject(error.message);
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   });
 
 const getLocation = async (lat, lng, type) => {
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      let res = await Geocoder.geocodePosition({lat, lng});
       let addr = res[0].formattedAddress;
       return addr;
-    } catch (err) { }
+    } catch (err) {}
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      let res = await Geocoder.geocodePosition({lat, lng});
 
       let addr = res[0].formattedAddress;
 
@@ -97,9 +98,9 @@ const getLocation = async (lat, lng, type) => {
       };
 
       return data;
-    } catch (err) { }
+    } catch (err) {}
   } else {
-    return await Geocoder.geocodePosition({ lat, lng });
+    return await Geocoder.geocodePosition({lat, lng});
   }
 };
 
@@ -137,14 +138,15 @@ export function otpTimerCounter(seconds) {
   let s = seconds % 60;
   m = m < 10 ? '0' + m : m;
   s = s < 10 ? '0' + s : s;
-  return `${m}:${s}`;
+  // return `${m}:${s}`;
+  return `${s}`;
 }
 
-export function getRandomColor() {
+export function getRandomColor(opacity = 0.3) {
   const w = Math.floor(Math.random() * 256);
   const x = Math.floor(Math.random() * 256);
   const y = Math.floor(Math.random() * 256);
-  const z = 0.3;
+  const z = opacity;
   const rgbaColor = 'rgba(' + w + ',' + x + ',' + y + ',' + z + ')';
   return rgbaColor;
 }
@@ -191,7 +193,7 @@ const androidBackButtonHandler = () => {
       onPress: () => null,
       style: 'cancel',
     },
-    { text: strings.YES, onPress: () => BackHandler.exitApp() },
+    {text: strings.YES, onPress: () => BackHandler.exitApp()},
   ]);
   return true;
 };
@@ -279,16 +281,10 @@ export function getAddressComponent(details, update) {
 
 export const sessionHandler = (error) => {
   actions.userLogout();
-  NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-    Alert.alert(error, '', [
-      {
-        text: strings.OK,
-        // cancelable: false,
-        onPress: () => console.log('okay Pressed'),
-        //   onPress: () =>
-        //     NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
-      },
-    ]);
+  actions.cartItemQty('');
+  actions.saveAddress(null);
+  actions.setAppSessionData('guest_login');
+  AsyncStorage.clear();
 };
 
 export const getScaleTransformationStyle = (
@@ -305,7 +301,7 @@ export const getScaleTransformationStyle = (
     outputRange: [startSize, endSize],
   });
   return {
-    transform: [{ scale: interpolation }],
+    transform: [{scale: interpolation}],
   };
 };
 
@@ -367,14 +363,14 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
-const getNearestLocation = (currentLocation, savedLocations) => {
+const getNearestLocation = async (currentLocation, savedLocations = []) => {
   const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {
         latitude: currentLocation?.latitude,
         longitude: currentLocation?.longitude,
       },
-      { latitude: item?.latitude, longitude: item?.longitude },
+      {latitude: item?.latitude, longitude: item?.longitude},
     );
     var newAddressArray = Object.assign({}, indx);
     newAddressArray.distance = distance;
@@ -423,6 +419,7 @@ const timeConvert = (n) => {
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
+
   if (num >= 60) {
     if (minutes >= 30) {
       return Math.ceil(hours) + 'h'; // + '≈'
@@ -515,36 +512,82 @@ const getTabBarVisibility = (route, navigation, screen) => {
   }
 };
 
-
-
 export function getPhoneNumberFromPhoneBook() {
   return new Promise((resolve, reject) => {
     selectContactPhone()
-      .then(selection => {
+      .then((selection) => {
         resolve(selection);
-      }).catch(error => {
-        reject(error);
       })
+      .catch((error) => {
+        reject(error);
+      });
   });
-
 }
-
 
 export function deviceCountryCode() {
   return new Promise((resolve, reject) => {
     DeviceCountry.getCountryCode()
-      .then(result => {
-        resolve(codes.filter(x => x.isoCode2 == (result.code).toUpperCase()));
-      }).catch(error => {
-        reject(error);
+      .then((result) => {
+        resolve(codes.filter((x) => x.isoCode2 == result.code.toUpperCase()));
       })
+      .catch((error) => {
+        reject(error);
+      });
   });
-
-
-
 }
 
-
+export function redirectFromNotification(clickActionUrl = null) {
+  if (!!clickActionUrl) {
+    // redirectToData[0] for redirection to vendor or category
+    //redirectToData[1] for name of vendor or category
+    // redirectToData[2] for getting id of vendor or category
+    let redirectToData = clickActionUrl.split('/');
+    if (!!redirectToData[2]) {
+      if (
+        redirectToData[0] == staticStrings.VENDOR ||
+        redirectToData[0] == staticStrings.PRODUCT ||
+        redirectToData[0] == staticStrings.CATEGORY ||
+        redirectToData[0] == staticStrings.ONDEMANDSERVICE ||
+        redirectToData[0] == staticStrings.LAUNDRY
+      ) {
+        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+          screen: navigationStrings.HOMESTACK,
+          params: {
+            screen: navigationStrings.PRODUCT_LIST,
+            params: {
+              data: {
+                id: redirectToData[2],
+                vendor:
+                  redirectToData[0] == staticStrings.CATEGORY ||
+                  redirectToData[0] == staticStrings.VENDOR
+                    ? true
+                    : false,
+                name: redirectToData[1],
+                fetchOffers: true,
+              },
+            },
+          },
+        });
+      } else if (redirectToData[0] == staticStrings.SUBCATEGORY) {
+        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+          screen: navigationStrings.HOMESTACK,
+          params: {
+            screen: navigationStrings.VENDOR_DETAIL,
+            params: {
+              data: {
+                item: {
+                  id: redirectToData[2],
+                  name: redirectToData[1],
+                  redirect_to: staticStrings.SUBCATEGORY,
+                },
+              },
+            },
+          },
+        });
+      }
+    }
+  }
+}
 
 export {
   showError,
@@ -562,5 +605,4 @@ export {
   playHapticEffect,
   hapticEffects,
   getTabBarVisibility,
-
 };

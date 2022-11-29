@@ -1,5 +1,5 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep } from "lodash";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -8,38 +8,43 @@ import {
   TextInput,
   View,
   RefreshControl,
-} from 'react-native';
-import ActionSheet from 'react-native-actionsheet';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
-import GradientButton from '../../Components/GradientButton';
-import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang/index';
-import navigationStrings from '../../navigation/navigationStrings';
-import actions from '../../redux/actions';
-import colors from '../../styles/colors';
-import commonStylesFun from '../../styles/commonStyles';
+} from "react-native";
+import ActionSheet from "react-native-actionsheet";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import StarRating from "react-native-star-rating";
+import { useSelector } from "react-redux";
+import GradientButton from "../../Components/GradientButton";
+import Header from "../../Components/Header";
+import { loaderOne } from "../../Components/Loaders/AnimatedLoaderFiles";
+import WrapperContainer from "../../Components/WrapperContainer";
+import imagePath from "../../constants/imagePath";
+import strings from "../../constants/lang/index";
+import navigationStrings from "../../navigation/navigationStrings";
+import actions from "../../redux/actions";
+import colors from "../../styles/colors";
+import commonStylesFun from "../../styles/commonStyles";
 import {
   moderateScale,
   moderateScaleVertical,
-} from '../../styles/responsiveSize';
-import {cameraHandler} from '../../utils/commonFunction';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+} from "../../styles/responsiveSize";
+import { cameraHandler } from "../../utils/commonFunction";
+import {
+  getImageUrl,
+  showError,
+  showSuccess,
+} from "../../utils/helperFunctions";
 // import OrderCardComponent from './OrderCardComponent';
-import stylesFunc from './styles';
+import stylesFunc from "./styles";
 
-export default function RateOrder({navigation, route}) {
+export default function RateOrder({ navigation, route }) {
   const ratingData = route?.params?.item?.product_rating;
+  const isDriverRateData = route?.params?.item;
 
-  console.log(route?.params, 'route?.params');
+
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
-    reviewText: '',
+    reviewText: "",
     imageArray: [],
     remove_image_ids: [],
     isRefreshing: false,
@@ -54,24 +59,22 @@ export default function RateOrder({navigation, route}) {
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const currentTheme = useSelector((state) => state.initBoot);
-  const {appData, currencies, languages, appStyle} = useSelector(
-    (state) => state.initBoot,
+  const { appData, currencies, languages, appStyle } = useSelector(
+    (state) => state.initBoot
   );
   const businessType = appStyle?.homePageLayout;
-  const {themeColors, themeLayouts} = currentTheme;
+  const { themeColors, themeLayouts } = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFun({ fontFamily });
 
   const onStarRatingPress = (rating) => {
-    updateState({rating: rating});
+    updateState({ rating: rating });
   };
-
-  useEffect(() => {}, [remove_image_ids]);
 
   /***********Remove Image from rating */
   const _removeImageFromList = (selectdImage) => {
@@ -79,7 +82,7 @@ export default function RateOrder({navigation, route}) {
       let copyArrayImages = cloneDeep(imageArray);
 
       copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
+        (x) => x?.id !== selectdImage?.id
       );
       updateState({
         imageArray: copyArrayImages,
@@ -88,7 +91,7 @@ export default function RateOrder({navigation, route}) {
     } else {
       let copyArrayImages = cloneDeep(imageArray);
       copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
+        (x) => x?.image_id !== selectdImage?.image_id
       );
       updateState({
         imageArray: copyArrayImages,
@@ -117,7 +120,7 @@ export default function RateOrder({navigation, route}) {
         cropping: false,
         cropperCircleOverlay: false,
         compressImageQuality: 0.5,
-        mediaType: 'photo',
+        mediaType: "photo",
       })
         .then((res) => {
           if (res && (res?.sourceURL || res?.path)) {
@@ -131,7 +134,7 @@ export default function RateOrder({navigation, route}) {
             if (find) {
               showError(strings.IMAGE_ALREADY_UPLOADED);
             } else {
-              updateState({imageArray: [...imageArray, file]});
+              updateState({ imageArray: [...imageArray, file] });
             }
           }
         })
@@ -139,74 +142,101 @@ export default function RateOrder({navigation, route}) {
     }
   };
 
-  const _giveRatingToProduct = () => {
-    updateState({isLoading: true});
+  const _giveRatingToProductOrDriver = () => {
+    updateState({ isLoading: true });
+    if (isDriverRateData?.isDriverRate) {
+      const data = {
+        order_id: isDriverRateData?.order_id,
+        rating: rating,
+        review: reviewText,
+      };
 
-    let data = {};
-    let formdata = new FormData();
-    formdata.append(
-      'order_vendor_product_id',
-      ratingData?.order_vendor_product_id,
-    );
-    formdata.append('order_id', ratingData.order_id);
-    formdata.append('product_id', ratingData.product_id);
-    if (businessType === 4) {
-      formdata.append('rating_for_dispatch', ratingData.dispatchId);
-    }
-    formdata.append('rating', rating);
-    formdata.append('review', reviewText);
-    // formdata.append('vendor_id', ratingData.vendor_id);
-    if (imageArray.length) {
-      imageArray.forEach((element) => {
-        if (element?.id) {
-        } else {
-          formdata.append('file[]', {
-            name: element.name,
-            type: element.type,
-            uri: element.uri,
-          });
-        }
-      });
-    }
+      console.log(data, "dataaaaa for driver");
+      actions
+        .ratingToDriver(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        })
+        .then((res) => {
+          updateState({ isLoading: false });
+          console.log("res++++++", res);
+          showSuccess(res?.message);
+          navigation.goBack();
+        })
+        .catch(errorMethod);
+      return;
+    } else {
+      let data = {};
+      let formdata = new FormData();
+      formdata.append(
+        "order_vendor_product_id",
+        ratingData?.order_vendor_product_id
+      );
+      formdata.append("order_id", ratingData?.order_id);
+      formdata.append("product_id", ratingData?.product_id);
+      if (businessType === 4) {
+        formdata.append("rating_for_dispatch", ratingData?.dispatchId);
+      }
+      formdata.append("rating", rating);
+      formdata.append("review", reviewText);
+      // formdata.append('vendor_id', ratingData.vendor_id);
+      if (imageArray.length) {
+        imageArray.forEach((element) => {
+         
+          let imageRandomName = (Math.random() + 1).toString(36).substring(7);
+          if (element?.id) {
+          } else {
+            formdata.append("files[]", {
+              name: element.name?element.name:imageRandomName,
+              type: element.type,
+              uri: element.uri,
+            });
+          }
+        });
+      }
 
-    if (remove_image_ids.length) {
-      remove_image_ids.forEach((element) => {
-        formdata.append('remove_files[]', element);
-      });
+      if (remove_image_ids.length) {
+        remove_image_ids.forEach((element) => {
+          formdata.append("remove_files[]", element);
+        });
+      }
+      actions
+        .giveRating(formdata, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          "Content-Type": "multipart/form-data",
+        })
+        .then((res) => {
+          console.log(res, "resssss");
+          updateState({ isLoading: false });
+          // navigation.navigate(navigationStrings.TAXIHOMESCREEN);
+          navigation.goBack();
+          showSuccess(res?.message);
+        })
+        .catch(errorMethod);
     }
-
-    actions
-      .giveRating(formdata, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        // 'Content-Type': 'multipart/form-data',
-      })
-      .then((res) => {
-        updateState({isLoading: false});
-        // navigation.navigate(navigationStrings.TAXIHOMESCREEN);
-        navigation.goBack();
-        showSuccess(res?.message);
-      })
-      .catch(errorMethod);
   };
 
   //get All ratings of product
 
-  const getReviewRatings = () => {
+
+  const getProductReviewRatings = () => {
+  
     actions
       .getRating(
-        `?id=${ratingData.id}`,
+        `?id=${ratingData?.id}`,
         {},
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           // 'Content-Type': 'multipart/form-data',
-        },
+        }
       )
       .then((res) => {
-        console.log(res, 'res>>>>res');
+        console.log(res, "res>>>>res");
         updateState({
           // imageArray: res.data.review_files,
           rating: res.data.rating,
@@ -221,7 +251,7 @@ export default function RateOrder({navigation, route}) {
                 uri: getImageUrl(
                   i?.file?.image_fit,
                   i?.file?.image_path,
-                  '600/360',
+                  "600/360"
                 ),
                 id: i?.id,
               };
@@ -230,7 +260,7 @@ export default function RateOrder({navigation, route}) {
         }
       })
       .catch((error) => {
-        console.log(error, 'error>>>>error');
+        console.log(error, "error>>>>error");
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -239,18 +269,66 @@ export default function RateOrder({navigation, route}) {
       });
   };
 
+  const getDriverReviewRatings = () => {
+    actions
+    .getDriverRating(
+      `?id=${isDriverRateData?.driverRatingData?.id}`,
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // 'Content-Type': 'multipart/form-data',
+      }
+    )
+    .then((res) => {
+      console.log(res, "res>>>>res");
+      updateState({
+        // imageArray: res.data.review_files,
+        rating: res.data.rating,
+        reviewText:res.data.review,
+        isLoading: false,
+       
+      });
+    })
+    .catch((error) => {
+      updateState({
+        isLoading: false,
+        isRefreshing: false,
+      });
+      showError(error?.message || error?.error);
+    }
+    )
+  };
+
   useEffect(() => {
-    updateState({isLoading: true});
-    getReviewRatings();
+    if (isDriverRateData?.isDriverRate) {
+      updateState({ isLoading: true });
+      getDriverReviewRatings();
+    } else {
+      if(ratingData){
+        updateState({ isLoading: true });
+        getProductReviewRatings();
+      }
+    
+    }
   }, []);
 
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    console.log(error, "errorrr");
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
   };
 
   useEffect(() => {
-    getReviewRatings();
+    if (isDriverRateData?.isDriverRate) {
+      getDriverReviewRatings();
+    } else {
+      if(ratingData){
+        updateState({ isLoading: true });
+        getProductReviewRatings();
+      }
+    }
   }, [isRefreshing]);
 
   //Pull to refresh
@@ -265,15 +343,20 @@ export default function RateOrder({navigation, route}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.white}
       source={loaderOne}
-      isLoadingB={isLoading}>
+      isLoadingB={isLoading}
+    >
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? imagePath.icBackb
+            : imagePath.back
         }
-        centerTitle={strings.RATEORDER}
-        headerStyle={{backgroundColor: colors.white}}
+        centerTitle={
+          isDriverRateData?.isDriverRate ? "Rate the Driver" : strings.RATEORDER
+        }
+        headerStyle={{ backgroundColor: colors.white }}
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       <ScrollView
         refreshing={isRefreshing}
         refreshControl={
@@ -282,13 +365,15 @@ export default function RateOrder({navigation, route}) {
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
           />
-        }>
+        }
+      >
         <View
           style={{
             marginHorizontal: moderateScale(20),
             marginTop: moderateScaleVertical(50),
             marginBottom: moderateScaleVertical(20),
-          }}>
+          }}
+        >
           {/* star View */}
           <View style={styles.starViewStyle}>
             <StarRating
@@ -302,79 +387,89 @@ export default function RateOrder({navigation, route}) {
           </View>
 
           {/* Upload image */}
-          <View style={{marginTop: moderateScaleVertical(20)}}>
-            <Text style={styles.uploadImage}>{strings.UPLOAD_IMAGE}</Text>
-            <View
-              style={{
-                marginTop: moderateScaleVertical(10),
-                flexDirection: 'row',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-              }}>
-              <View
-                style={{
-                  marginRight: 5,
-                  marginBottom: moderateScaleVertical(10),
-                }}>
-                <TouchableOpacity
-                  onPress={showActionSheet}
-                  style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
-                  <Image
-                    source={imagePath.icCamIcon}
-                    style={{tintColor: colors.themeColor}}
-                  />
-                </TouchableOpacity>
-              </View>
+          <View style={{ marginTop: moderateScaleVertical(20) }}>
+            {!isDriverRateData?.isDriverRate && (
+              <View>
+                <Text style={styles.uploadImage}>{strings.UPLOAD_IMAGE}</Text>
+                <View
+                  style={{
+                    marginTop: moderateScaleVertical(10),
+                    flexDirection: "row",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <View
+                    style={{
+                      marginRight: 5,
+                      marginBottom: moderateScaleVertical(10),
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={showActionSheet}
+                      style={[styles.viewOverImage2, { borderStyle: "dashed" }]}
+                    >
+                      <Image
+                        source={imagePath.icCamIcon}
+                        style={{ tintColor: colors.themeColor }}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
-              {imageArray && imageArray.length
-                ? imageArray.map((i, inx) => {
-                    return (
-                      <ImageBackground
-                        source={{
-                          uri: i.uri,
-                        }}
-                        style={styles.imageOrderStyle}
-                        imageStyle={styles.imageOrderStyle}>
-                        <View style={styles.viewOverImage}>
-                          <View
-                            style={{
-                              position: 'absolute',
-                              top: -10,
-                              right: -10,
-                            }}>
-                            <TouchableOpacity
-                              onPress={() => _removeImageFromList(i)}>
-                              <Image source={imagePath.icRemoveIcon} />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      </ImageBackground>
-                    );
-                  })
-                : null}
-            </View>
+                  {imageArray && imageArray.length
+                    ? imageArray.map((i, inx) => {
+                        return (
+                          <ImageBackground
+                            source={{
+                              uri: i.uri,
+                            }}
+                            style={styles.imageOrderStyle}
+                            imageStyle={styles.imageOrderStyle}
+                          >
+                            <View style={styles.viewOverImage}>
+                              <View
+                                style={{
+                                  position: "absolute",
+                                  top: -10,
+                                  right: -10,
+                                }}
+                              >
+                                <TouchableOpacity
+                                  onPress={() => _removeImageFromList(i)}
+                                >
+                                  <Image source={imagePath.icRemoveIcon} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </ImageBackground>
+                        );
+                      })
+                    : null}
+                </View>
+              </View>
+            )}
 
             {/* Message Container    */}
-            <View style={{marginTop: moderateScaleVertical(20)}}>
+            <View style={{ marginTop: moderateScaleVertical(20) }}>
               <Text style={styles.uploadImage}>{strings.REVIEW}</Text>
               <View style={styles.textInputContainer}>
                 <TextInput
                   style={styles.textInputStyle}
                   multiline={true}
-                  value={reviewText}
-                  onChangeText={(text) => updateState({reviewText: text})}
+                  value={reviewText==null?'':reviewText}
+                  onChangeText={(text) => updateState({ reviewText: text })}
                 />
               </View>
             </View>
 
-            <View style={{marginTop: moderateScaleVertical(20)}}>
+            <View style={{ marginTop: moderateScaleVertical(20) }}>
               <GradientButton
                 colorsArray={[
                   themeColors.primary_color,
                   themeColors.primary_color,
                 ]}
                 textStyle={styles.textStyle}
-                onPress={_giveRatingToProduct}
+                onPress={_giveRatingToProductOrDriver}
                 btnText={strings.SUBMIT}
               />
             </View>

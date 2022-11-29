@@ -1,7 +1,6 @@
 //All dashBoard Main Views
 export {default as DashBoardOne} from './DashBoardOne';
 export {default as DashBoardTwo} from './DashBoardTwo';
-export {default as DashBoardThree} from './DashBoardThree';
 export {default as DashBoardFour} from './DashBoardFour';
 export {default as DashBoardFive} from './DashBoardFive';
 export {default as DashBoardSix} from './DashBoardSix';

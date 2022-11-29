@@ -51,7 +51,6 @@ export default function AllPaymentMethods({navigation, route}) {
   const {appData, appStyle, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appData, 'appDataappDataappData');
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const selectedPaymentMethodHandler = route?.params?.data;
@@ -182,16 +181,15 @@ export default function AllPaymentMethods({navigation, route}) {
         if (cardInfo) {
           await createToken({...cardInfo, type: 'Card'})
             .then((res) => {
-             
               console.log('stripeTokenres>>');
               if (!!res?.error) {
                 //alert(res.error.localizedMessage);
                 updateState({isLoading: false});
-                alert('i am here++++')
+                alert('i am here++++');
                 return;
               }
               if (res && res?.token && res.token?.id) {
-                alert('i am here')
+                alert('i am here');
                 updateState({isLoading: false});
                 navigation.navigate(navigationStrings.CART, {
                   selectedMethod: selectedPaymentMethod,

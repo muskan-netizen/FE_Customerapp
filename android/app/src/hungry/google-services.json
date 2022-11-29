@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "549810511464",
+    "project_id": "hungry-ac500",
+    "storage_bucket": "hungry-ac500.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549810511464:android:3af9081dfecd1d0b5fe5dd",
+        "android_client_info": {
+          "package_name": "com.hungry.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549810511464-3d1bn8rem515ckilcih10c70h95q21q5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hungry.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "549810511464-6qivn5hlcd4poqr32vmrimip9lpoqafh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hungry.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "549810511464-shekrp6atvqt2gg23heu3dkid9sa0jon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hungry.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "549810511464-bfadbjkruuq2pq9til3is7g3106f632h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSUUa5zFeCNW8AIwhEzKTGwtyY3c9aAYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549810511464-bfadbjkruuq2pq9til3is7g3106f632h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "549810511464-3vog2rrme36b20g7na45qen7pa3gpt57.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hungry.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -113,7 +113,6 @@ export default function Location({route, navigation}) {
   const getNearByAddress = async (latlng) => {
     try {
       const res = await nearbySearch(latlng, profile?.preferences?.map_key);
-      console.log('nearby search res+++++', res.results);
       updateState({nearByAddressess: res.results});
     } catch (error) {
       console.log('error raised', error);
@@ -125,7 +124,6 @@ export default function Location({route, navigation}) {
     updateState({
       isMapSelectLocation: true,
     });
-    return;
     chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
@@ -446,6 +444,7 @@ export default function Location({route, navigation}) {
               mapClose={mapClose}
               addressDone={addressDone}
               isMapSelectLocation={isMapSelectLocation}
+              currentLatLong={curLatLng}
             />
           </View>
         </View>

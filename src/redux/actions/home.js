@@ -15,6 +15,8 @@ import {
   ADD_RIDER,
   GET_PRODUCT_ESTIMATION_WITH_ADDONS,
   GET_ESTIMATION,
+  PICK_UP_LOCATION_SEARCH,
+  GET_SUBCATEGORY_VENDORS,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -28,7 +30,6 @@ export function homeData(data = {}, headers = {}, isShortCode = false) {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
       .then((res) => {
         if (!isShortCode) {
-          console.log('goesHere', res);
           dispatch({
             type: types.HOME_DATA,
             payload: res.data,
@@ -48,6 +49,22 @@ export function onGlobalSearch(query = '', data = {}, headers = {}) {
     apiPost(SEARCH + query, data, headers)
       .then((response) => {
         resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function pickuplocationSearch(
+  data = {},
+  headers = {},
+  isShortCode = false,
+) {
+  return new Promise((resolve, reject) => {
+    apiPost(PICK_UP_LOCATION_SEARCH, data, headers)
+      .then((res) => {
+        resolve(res);
       })
       .catch((error) => {
         reject(error);
@@ -190,6 +207,7 @@ export const setPrimaryAddress = (query = '', data = {}, headers = {}) => {
 };
 
 export function dineInData(res) {
+  console.log(res, 'dine_in_type');
   setItem('dine_in_type', res);
   dispatch({
     type: types.DINE_IN_DATA,
@@ -280,5 +298,24 @@ export const productEstimation = (data, headers = {}) => {
       .catch((error) => {
         reject(error);
       });
+  });
+};
+
+export const getSubCategoryVendors = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_SUBCATEGORY_VENDORS, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const isLocationSearched = (flag) => {
+  dispatch({
+    type: types.IS_LOCATION_SEARCHED,
+    payload: flag,
   });
 };

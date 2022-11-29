@@ -18,6 +18,7 @@ import CalanderStrip from 'react-native-calendar-strip';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
+import RenderHTML from 'react-native-render-html';
 import Toast from 'react-native-simple-toast';
 import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
@@ -36,6 +37,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
 import {showError, showSuccess} from '../utils/helperFunctions';
 import Banner from './Banner';
@@ -131,6 +133,9 @@ const HomeServiceVariantAddons = ({
   const isDarkMode = theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
@@ -410,10 +415,6 @@ const HomeServiceVariantAddons = ({
   /// cart Product Schedule
 
   const productShedule = (userSelectedDateTime, ProductId) => {
-    console.log(
-      userSelectedDateTime,
-      'userSelectedDateTimeuserSelectedDateTimeuserSelectedDateTime',
-    );
     let data = {
       task_type: 'later',
       schedule_dt: userSelectedDateTime,
@@ -475,12 +476,12 @@ const HomeServiceVariantAddons = ({
                         : colors.black,
                     },
                   ]}>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(i?.multiplier) * Number(i?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
@@ -946,6 +947,12 @@ const HomeServiceVariantAddons = ({
       onClose();
     }
   };
+
+  console.log(
+    productdetail,
+    'productdetailproductdetailproductdetailproductdetail',
+  );
+
   const addTimeDate = (selectedDate, selectedTime) => {
     // productShedule();
     onClose();
@@ -1294,7 +1301,7 @@ const HomeServiceVariantAddons = ({
             style={{
               ...styles.modalMainViewContainer,
               backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
+                ? MyDarkTheme?.colors?.background
                 : '#fff',
             }}>
             <View
@@ -1354,10 +1361,10 @@ const HomeServiceVariantAddons = ({
                     marginTop: moderateScaleVertical(6),
                   }}>
                   {strings.IN}{' '}
-                  {
-                    productdetail?.category?.category_detail?.translation[0]
-                      ?.name
-                  }
+                  {productdetail?.translation[0]?.title
+                    ? productdetail?.translation[0]?.title
+                    : productdetail?.category?.category_detail?.translation[0]
+                        ?.name}
                 </Text>
 
                 {/* rating View */}
@@ -1388,9 +1395,16 @@ const HomeServiceVariantAddons = ({
 
               {productdetail?.translation[0]?.body_html != null && (
                 <View>
-                  <HtmlViewComp
-                    plainHtml={productdetail?.translation[0]?.body_html}
+                  <RenderHTML
+                    contentWidth={width}
+                    source={{html: productdetail?.translation[0]?.body_html}}
+                    tagsStyles={{
+                      p: {
+                        color: isDarkMode ? colors.white : colors.textGreyB,
+                      },
+                    }}
                   />
+
                   <View style={{marginBottom: 10}} />
                 </View>
               )}

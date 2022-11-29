@@ -51,7 +51,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const AddressModal3 = ({
   updateData,
   isVisible = false,
-  onClose,
+  onClose = () => {},
   type,
   passLocation,
   toggleModal,
@@ -60,19 +60,23 @@ const AddressModal3 = ({
   navigation,
   selectViaMap = false,
   openCloseMapAddress = () => {},
+  constCurrLoc,
 }) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+
+  const {location} = useSelector((state) => state?.home);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
-  const {constCurrLoc} = useSelector((state) => state?.home);
+
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const {profile} = appData;
+
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -444,6 +448,7 @@ const AddressModal3 = ({
     return navigator.geolocation.default.getCurrentPosition(
       (position) => {
         // const location = JSON.stringify(position);
+        // console.log(position.coords.longitude,'position.coords.latitude')
         Geocoder.from({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -660,7 +665,7 @@ const AddressModal3 = ({
             <SelctFromMap
               addressDone={addressDone}
               mapClose={() => openCloseMapAddress(2)} //address map close
-              constCurrLoc={constCurrLoc}
+              constCurrLoc={location}
             />
           </View>
         ) : (
@@ -726,31 +731,6 @@ const AddressModal3 = ({
                   />
                 </View>
 
-                {/* <GooglePlaceInput
-              getDefaultValue={address}
-              type={type}
-              navigation={navigation}
-              googleApiKey={profile?.preferences?.map_key}
-              textInputContainer={styles.textGoogleInputContainerAddress}
-              listView={styles.listView}
-              textInput={{
-                height: moderateScaleVertical(35),
-                borderRadius: 13,
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.textGreyOpcaity7,
-                textAlign: I18nManager.isRTL ? 'right' : 'left',
-              }}
-              addressHelper={(results) => addressHelper(results)}
-              handleAddressOnKeyUp={(text) => handleAddressOnKeyUp(text)}
-              placeholderTextColor={
-                isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
-              }
-            /> */}
-
                 <View style={{marginHorizontal: moderateScale(6)}} />
                 <TouchableOpacity
                   style={{
@@ -778,8 +758,8 @@ const AddressModal3 = ({
                       fontFamily: fontFamily.regular,
                       marginLeft: moderateScale(4),
                       color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.borderLight,
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                     }}>
                     {strings.SELECT_VIA_MAP}
                   </Text>
@@ -827,7 +807,6 @@ const AddressModal3 = ({
                   height: moderateScale(16),
                 }}
               />
-              {/* <Image source={imagePath.currentLocation} /> */}
               <View style={{}}>
                 <Text
                   style={{
@@ -850,48 +829,11 @@ const AddressModal3 = ({
                 </Text>
               </View>
             </TouchableOpacity>
-            {/* <View style={styles.textInputContainerAddress}>
-            <TextInput
-              onChangeText={_onChangeText('address')}
-              placeholder={strings.SEARCH_LOCATION}
-              style={[
-                styles.addressTextStyle,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  ...getTextInputStyle(address, 2),
-                },
-              ]}
-              multiline={false}
-              // style={getTextInputStyle(address, 2)}
-              numberOfLines={2}
-              value={address}
-              onFocus={() => {
-                updateState({showDialogBox: true});
-              }}
-            />
-          </View> */}
 
-            {/* {showDialogBox && dropDownData && dropDownData.length > 0 && (
-          <View style={styles.addressDropDownView}>{renderDropDown()}</View>
-        )} */}
             <View
               style={{
                 zIndex: -1000,
-                // marginTop: moderateScaleVertical(80)
               }}>
-              {/* <View> */}
-              {/* <View style={styles.useCurrentLocationView}>
-            <Image
-              style={{tintColor: themeColors.primary_color}}
-              source={imagePath.locationGreen}
-            />
-            <TouchableOpacity>
-              <Text style={styles.useCurrentLocationText}>
-                {strings.USECURRENTLOACTION}
-              </Text>
-            </TouchableOpacity>
-          </View> */}
-
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('houseNo')}
                 placeholder={strings.HOUSE_NO}
@@ -904,8 +846,7 @@ const AddressModal3 = ({
                 containerStyle={{borderBottomWidth: 1}}
                 mainStyle={{marginTop: 10}}
                 labelStyle={styles.labelStyle}
-                returnKeyType={"next"}
-                
+                returnKeyType={'next'}
               />
 
               <BorderTextInputWithLable
@@ -916,7 +857,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
               {isStreet && (
                 <Text
@@ -941,7 +882,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
               {isCity && (
                 <Text
@@ -966,7 +907,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
               {isState && (
                 <Text
@@ -985,13 +926,6 @@ const AddressModal3 = ({
 
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                {/* <BorderTextInput
-              containerStyle={{flex: 0.45}}
-              onChangeText={_onChangeText('country')}
-              placeholder={strings.COUNTRY}
-              textInputStyle={getTextInputStyle(country)}
-              value={country}
-            /> */}
                 <View style={{flex: 0.48}}>
                   <View
                     style={{
@@ -1015,7 +949,7 @@ const AddressModal3 = ({
                           : colors.textGreyOpcaity7
                       }
                       onChangeText={_onChangeText('country')}
-                      returnKeyType={"next"}
+                      returnKeyType={'next'}
                       placeholder={strings.COUNTRY}
                       // textInputStyle={[getTextInputStyle(country)]}
                       value={country}
@@ -1064,7 +998,7 @@ const AddressModal3 = ({
                     keyboardType={'numeric'}
                     borderWidth={0}
                     borderRadius={0}
-                    returnKeyType={"next"}
+                    returnKeyType={'next'}
                   />
                   {isPincode && (
                     <Text
@@ -1091,7 +1025,7 @@ const AddressModal3 = ({
                 borderWidth={0}
                 marginBottomTxt={0}
                 containerStyle={{borderBottomWidth: 1}}
-                returnKeyType={"next"}
+                returnKeyType={'next'}
               />
 
               <Text
@@ -1146,7 +1080,7 @@ const AddressModal3 = ({
                   textInputStyle={getTextInputStyle(city)}
                   borderWidth={0}
                   marginBottomTxt={0}
-                  returnKeyType={"next"}
+                  returnKeyType={'next'}
                   containerStyle={{
                     borderBottomWidth: 1,
                     marginTop: moderateScale(5),
@@ -1160,9 +1094,9 @@ const AddressModal3 = ({
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.borderLight, }}
+              textStyle={{
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
+              }}
               onPress={saveAddress}
               marginTop={moderateScaleVertical(10)}
               // marginBottom={moderateScaleVertical(10)}
@@ -1173,12 +1107,7 @@ const AddressModal3 = ({
           </KeyboardAwareScrollView>
         )}
       </View>
-
-      {/* </View> */}
-      {/* </ScrollView> */}
     </Modal>
-    //   </View>
-    // </View>
   );
 };
 

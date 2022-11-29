@@ -1,48 +1,56 @@
-import moment from 'moment';
-import React, {useEffect, useState} from 'react';
-import * as MyShare from 'react-native-share';
+import { useNavigation } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Share,
   FlatList,
-  Linking,
+  Image,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import MyShare from 'react-native-share';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {customMarginBottom} from '../../../utils/constants/constants';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
-import {dialCall} from '../../../utils/openNativeApp';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import {isEmpty} from 'lodash';
-import FastImage from 'react-native-fast-image';
-import strings from '../../../constants/lang';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { customMarginBottom } from '../../../utils/constants/constants';
+import { getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions';
+import { dialCall } from '../../../utils/openNativeApp';
+import BottomSheet from '@gorhom/bottom-sheet';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import GradientButton from '../../../Components/GradientButton';
 
 const RoyoOrderDetail = (props) => {
-  const {data, selectedVendor} = props.route.params;
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const bottomSheetRef = useRef(null);
+  const userData = useSelector((state) => state?.auth?.userData);
+  const { data, selectedVendor } = props.route.params;
+  const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const {preferences} = appData?.profile;
 
-  console.log(data, 'dataaaaaaaaaa');
+  const navigation = useNavigation();
+
   const [state, setState] = useState({
     address: '',
     isLoadingB: false,
@@ -51,6 +59,12 @@ const RoyoOrderDetail = (props) => {
     upcoming_status: data?.order_status.upcoming_status,
     orderInfo: {},
     userDocumentList: [],
+    isUpdateOrder:false,
+    updateReason:'',
+    updatedPrice:'',
+    order_vendor_product_id:'',
+    order_product_old_price:'',
+    isLoading:false
   });
   const {
     showUpcomingStatus,
@@ -60,17 +74,22 @@ const RoyoOrderDetail = (props) => {
     address,
     orderInfo,
     userDocumentList,
+    isUpdateOrder,
+    updateReason,
+    updatedPrice,
+    order_vendor_product_id,
+    order_product_old_price,
+    isLoading
   } = state;
-  const shareOptions = {
-    title: 'Share via',
-    message: 'some message',
-    url: 'some share url',
-    social: 'WHATSAPP',
-    whatsAppNumber: '917543875613',
-  };
 
   const fun = async () => {
-    MyShare.Share.shareSingle(shareOptions)
+    MyShare.shareSingle({
+      title: 'Share via',
+      message: 'some message',
+      url: 'some share url',
+      social: MyShare.Social.WHATSAPP,
+      whatsAppNumber: '917543875613',
+    })
       .then((res) => {
         console.log(res, 'share response');
         alert('successfully shared');
@@ -80,18 +99,60 @@ const RoyoOrderDetail = (props) => {
         alert('sorry for inconvenience , we are unable to share');
       });
   };
-
   useEffect(() => {
     _getOrderDetailScreen();
   }, []);
+ //On change textinput
+ const _onChangeText = (key) => (val) => {
+  updateState({[key]: val});
+};
+  const createRoom = async (item) => {
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88', //this is static value
+        client_id: String(appData?.profile.id),
+        db_name: appData?.profile?.database_name,
+        user_id: String(userData?.id),
+        type: 'vendor_to_user',
+        order_vendor_id: String(item?.id),
+        vendor_id: String(item?.vendor_id),
+        order_id: String(item?.order_id),
+      };
+      updateState({ isLoadingB: true });
+
+      console.log('sending api data', apiData);
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      });
+      console.log('start chat res', res);
+      updateState({ isLoadingB: false });
+      if (!!res?.roomData) {
+        onChat(res.roomData);
+      }
+    } catch (error) {
+      console.log('error raised in start chat api', error);
+      showError(error?.message);
+      updateState({ isLoadingB: false });
+    }
+  };
+
+  const onChat = (item) => {
+    console.log('item+++', item);
+    navigation.navigate(navigationStrings.CHAT_SCREEN_FOR_VENDOR, {
+      data: { ...item },
+    });
+  };
+
   const _getOrderDetailScreen = () => {
     let collectedData = {};
     collectedData['order_id'] = data?.id;
     if (selectedVendor) {
       collectedData['vendor_id'] = selectedVendor?.id;
     }
-    console.log(data, '=====res');
-    updateState({isLoadingB: true});
+
+    updateState({ isLoadingB: true });
     actions
       .getOrderDetail(collectedData, {
         code: appData?.profile?.code,
@@ -99,8 +160,8 @@ const RoyoOrderDetail = (props) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res.data, '=====res');
-        updateState({isLoadingB: false});
+        console.log(res.data, 'order detail =====res');
+        updateState({ isLoadingB: false });
         if (res?.data) {
           updateState({
             address: res.data.address,
@@ -118,6 +179,7 @@ const RoyoOrderDetail = (props) => {
       isLoadingB: false,
       isLoading: false,
       isLoadingC: false,
+      isUpdateOrder:false
     });
     showError(error?.message || error?.error);
   };
@@ -126,7 +188,7 @@ const RoyoOrderDetail = (props) => {
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .updateOrderStatus(data, {
         code: appData?.profile?.code,
@@ -154,7 +216,7 @@ const RoyoOrderDetail = (props) => {
       });
   };
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const toggleUpcomingStatus = () => {
     updateState({
       showUpcomingStatus: !showUpcomingStatus,
@@ -162,45 +224,200 @@ const RoyoOrderDetail = (props) => {
   };
 
   const renderUserDetails = (item, index) => {
+    return null;
+    // <View style={{marginTop: moderateScaleVertical(15)}}>
+    //   <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+    //     {'• '}
+    //     {item?.primary?.name}
+    //   </Text>
+    //   <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
+    //     {item?.file_type == 'Text' ? (
+    //       <Text>{item?.user_document?.file_name}</Text>
+    //     ) : item?.file_type == 'Image' ? (
+    //       <FastImage
+    //         source={{
+    //           uri: getImageUrl(
+    //             item?.user_document?.image_file?.image_fit,
+    //             item?.user_document?.image_file?.image_path,
+    //             '500/500',
+    //           ),
+    //         }}
+    //         style={{height: 70, width: 70}}
+    //       />
+    //     ) : (
+    //       <TouchableOpacity
+    //         onPress={() =>
+    //           Linking.openURL(item?.user_document?.image_file?.storage_url)
+    //         }>
+    //         <Text
+    //           style={{
+    //             color: colors.blueColor,
+    //             textDecorationLine: 'underline',
+    //           }}>
+    //           {strings.VIEW_PDF}
+    //         </Text>
+    //       </TouchableOpacity>
+    //     )}
+    //   </View>
+    // </View>
+  };
+  const editOrder = (item)=>{
+    updateState({
+      isUpdateOrder:true,
+      order_vendor_product_id:item?.id,
+      order_product_old_price:item?.price
+
+    })
+  }
+  const renderItem = useCallback(({item, index}) => {
     return (
-      <View style={{marginTop: moderateScaleVertical(15)}}>
-        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
-          {'• '}
-          {item?.primary?.name}
-        </Text>
-        <View style={{marginHorizontal: moderateScale(5), marginTop: 5}}>
-          {item?.file_type == 'Text' ? (
-            <Text>{item?.user_document?.file_name}</Text>
-          ) : item?.file_type == 'Image' ? (
-            <FastImage
-              source={{
-                uri: getImageUrl(
-                  item?.user_document?.image_file?.image_fit,
-                  item?.user_document?.image_file?.image_path,
-                  '500/500',
-                ),
-              }}
-              style={{height: 70, width: 70}}
-            />
-          ) : (
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(item?.user_document?.image_file?.storage_url)
-              }>
-              <Text
-                style={{
-                  color: colors.blueColor,
-                  textDecorationLine: 'underline',
-                }}>
-                {strings.VIEW_PDF}
+      <View style={styles.itemBox}>
+        <Image
+          style={styles.itemImage}
+          source={{
+            uri: getImageUrl(
+              item?.image_path?.image_fit,
+              item?.image_path?.image_path,
+              '500/500',
+            ),
+          }}
+        />
+        <View style={{flex: 1, justifyContent: 'space-around'}}>
+          <View style={{ }}>
+            <View style={{
+             
+              flexDirection:'row',
+              justifyContent:'space-between'
+            }}>
+            <View style={{flex: 0.8}}>
+              <Text style={styles.font16Medium}>
+                {item?.translation?.title}
               </Text>
-            </TouchableOpacity>
-          )}
+            </View>
+            {!!appData?.profile?.preferences?.update_order_product_price ?(
+           <TouchableOpacity 
+           hitSlop={{
+            top:50,
+            bottom:50,
+            right:50,
+            left:50,
+           }}
+            onPress={()=>editOrder(item)}
+            style={{
+              
+            }}
+           >
+           <Image  source={imagePath?.edit1Royo}/>
+           </TouchableOpacity>) : <></>}
+            </View>
+            
+            
+
+            {!userData?.is_superadmin ? (
+              <View style={{ marginVertical: moderateScaleVertical(8) }}>
+                {!!appData?.profile?.socket_url ? (
+                  <TouchableOpacity
+                    onPress={() => createRoom(item)}
+                    style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={styles.startChatText}>
+                      {strings.START_CHAT}
+                    </Text>
+                    <Image
+                      resizeMode="contain"
+                      style={styles.agentUserIcon}
+                      source={imagePath.icUserChat}
+                    />
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+            ) : null}
+          </View>
+          <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
+            <View>
+            <Text style={styles.font13Regular}>
+              {item.quantity}
+              {strings.UNIT} {'x'}{' '}
+            </Text>
+            <Text style={styles.font14Regular}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item.price),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
+            </View>
+            <View>
+               <Text style={styles.font16Semibold}>
+          {`${currencies?.primary_currency?.symbol} ${Number(
+            item.quantity * item.price,
+          ).toFixed(2)}`}
+        </Text>
+            </View>
+          </View>
+          {!!item?.product_variant_sets ? <View style={{marginTop:moderateScale(2)}} >
+            <Text style={styles.font14Regular}>
+              {item?.product_variant_sets}
+            </Text>
+          </View> : <></>
+          }
+          {item?.product_addons.length > 0
+            ? item?.product_addons.map((j) => {
+                return (
+                  <View>
+                    <Text>
+                      {`(${j.option_title})`} ={' '}
+                      {`${tokenConverterPlusCurrencyNumberFormater(
+                        Number(j.price),
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )}`}
+                  </Text>
+                </View>
+              );
+            })
+            : null}
         </View>
+        <Text style={styles.font16Semibold}>
+          {tokenConverterPlusCurrencyNumberFormater(
+            Number(item.quantity * item.price),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )}
+        </Text>
       </View>
     );
-  };
+  }, []);
 
+  const onSubmit = ()=>{
+    updateState({
+      isLoading:true
+    })
+
+    let data ={}
+    data["order_vendor_product_id"]=order_vendor_product_id,
+    data["order_product_old_price"]=order_product_old_price,
+    data["new_product_price"]=updatedPrice,
+    data["update_price_reason"]=updateReason,
+
+     console.log(data,"sending Dataaaaa")
+     actions?.venderUpdateOrder(data,{
+      code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+     }).then(
+      (res)=>{
+        console.log(res,"resssupdate"),
+        updateState({isUpdateOrder:false,
+         isLoading:false
+        })
+        showSuccess(res?.message)
+        _getOrderDetailScreen()
+      }
+     ).catch(errorMethod)
+  }
   return (
     <WrapperContainer
       isLoading={isLoadingB}
@@ -209,9 +426,9 @@ const RoyoOrderDetail = (props) => {
       barStyle="dark-content"
       source={loaderOne}>
       <Header
-        headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        headerStyle={{ marginVertical: moderateScaleVertical(16) }}
         leftIcon={imagePath.backRoyo}
-        centerTitle={`Order #${data.order_number}`}
+        centerTitle={strings.ORDERS + `#${data.order_number}`}
       />
       {/* <View style={{...styles.orderNumberBox, zIndex: -1}}>
         <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
@@ -228,7 +445,7 @@ const RoyoOrderDetail = (props) => {
               disabled={!data?.order_status?.upcoming_status}
               onPress={toggleUpcomingStatus}
               activeOpacity={0.8}>
-              <Text style={{...styles.font16Semibold, color: colors.white}}>
+              <Text style={{ ...styles.font16Semibold, color: colors.white }}>
                 {current_status.title}
               </Text>
               <View>
@@ -240,25 +457,25 @@ const RoyoOrderDetail = (props) => {
                 activeOpacity={1}
                 style={styles.upcomingStatus}
                 onPress={() => updateOrderStatus(data, upcoming_status.id)}>
-                <Text style={{...styles.font16Semibold, color: colors.white}}>
+                <Text style={{ ...styles.font16Semibold, color: colors.white }}>
                   {upcoming_status.title}
                 </Text>
 
                 <Image
-                  style={{tintColor: colors.white}}
+                  style={{ tintColor: colors.white }}
                   source={imagePath.selectedRoyo}
                 />
               </TouchableOpacity>
             ) : null}
           </View>
         ) : null}
-        <View style={{...styles.orderNumberBox, zIndex: -1}}>
+        <View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
           {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
           <Text style={styles.orderNumber}>{strings.ORDERAT}:</Text>
           <Text style={styles.orderTime}>{data?.date_time}</Text>
         </View>
         {!!data?.scheduled_date_time && (
-          <View style={{...styles.orderNumberBox, zIndex: -1}}>
+          <View style={{ ...styles.orderNumberBox, zIndex: -1 }}>
             {/* <Text style={styles.orderNumber}>Order #{data.order_number}</Text> */}
             <Text style={styles.orderNumber}>{strings.SCHEDULE_FOR}:</Text>
             <Text style={styles.orderTime}>{data?.scheduled_date_time}</Text>
@@ -268,72 +485,17 @@ const RoyoOrderDetail = (props) => {
           bounces={false}
           showsVerticalScrollIndicator={false}
           data={
-            orderInfo.vendors && orderInfo.vendors[0]
-              ? orderInfo.vendors[0].products
+            !!orderInfo?.vendors && orderInfo.vendors[0]
+              ? orderInfo?.vendors[0]?.products
               : []
           }
           keyExtractor={(val, index) => index}
-          renderItem={({item, index}) => {
-            return (
-              <View style={styles.itemBox}>
-                <Image
-                  style={styles.itemImage}
-                  source={{
-                    uri: getImageUrl(
-                      item?.image_path?.image_fit,
-                      item?.image_path?.image_path,
-                      '500/500',
-                    ),
-                  }}
-                />
-                <View style={{flex: 1, justifyContent: 'space-around'}}>
-                  <Text style={styles.font16Medium}>
-                    {item?.translation?.title}
-                  </Text>
-                  <View style={{flexDirection:'row'}}>
-                  <Text style={styles.font13Regular}>
-                    {item.quantity}
-                    {strings.UNIT} { ' '}{ 'x'} { ' '}
-                  </Text>
-                  <Text style={styles.font14Regular}>
-                    {currencies?.primary_currency?.symbol}{' '}
-                    {Number(item.price).toFixed(2)}
-                  </Text>
-                  </View>
-                  {item?.product_addons.length > 0
-                    ? item?.product_addons.map((j) => {
-                        return (
-                          <View>
-                            <Text>
-                              {`(${j.option_title})`} ={' '}
-                              {`${
-                                currencies?.primary_currency?.symbol
-                              }${currencyNumberFormatter(
-                                Number(j.price),
-                                appData?.profile?.preferences
-                                  ?.digit_after_decimal,
-                              )}`}
-                            </Text>
-                          </View>
-                        );
-                      })
-                    : null}
-                 
-                </View>
-                <Text style={styles.font16Semibold}>
-                  {`${currencies?.primary_currency?.symbol} ${Number(
-                    item.quantity * item.price,
-                  ).toFixed(2)}`}
-                </Text>
-              </View>
-            );
-          }}
+          renderItem={renderItem}
           contentContainerStyle={styles.orderBox}
           ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
         />
-
         {!!data?.specific_instructions && (
-          <View style={{margin: moderateScaleVertical(16)}}>
+          <View style={{ margin: moderateScaleVertical(16) }}>
             <Text style={styles.font15Medium}>{strings.INSTRUCTIONS}</Text>
             <Text style={styles.font15Semibold}>
               {data?.specific_instructions}
@@ -341,41 +503,55 @@ const RoyoOrderDetail = (props) => {
           </View>
         )}
 
-        <View style={{margin: moderateScaleVertical(16)}}>
-          {!!(Number(data?.vendors[0].subtotal_amount) &&
-            Number(data?.vendors[0].subtotal_amount) !== 0) && (
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
-                <Text style={styles.font15Semibold}>
-                  {currencies?.primary_currency?.symbol}{' '}
-                  {Number(data?.vendors[0].subtotal_amount).toFixed(2)}
-                </Text>
-              </View>
-            )}
-          {!!(!!data?.total_delivery_fee && Number(data?.total_delivery_fee)) && (
+        <View style={{ margin: moderateScaleVertical(16) }}>
+          {!!(
+            Number(data?.total_amount) &&
+            !!Number(data?.total_amount) !== 0
+          ) && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
+              <Text style={styles.font15Semibold}>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.vendors[0].subtotal_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
+            </View>
+          )}
+          {!!data?.total_delivery_fee && !!Number(data?.total_delivery_fee) && (
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{strings.DELIVERYFEE}</Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {Number(data.total_delivery_fee).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.total_delivery_fee),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
 
-          {!!data?.fixed_fee_amount && Number(data.fixed_fee_amount) !== 0 && (
+          {!!data?.fixed_fee_amount && !!Number(data?.fixed_fee_amount) !== 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>
                 {preferences?.fixed_fee_nomenclature != '' &&
-                preferences?.fixed_fee_nomenclature != null
+                  preferences?.fixed_fee_nomenclature != null
                   ? preferences?.fixed_fee_nomenclature
                   : strings.FIXED_FEE}
               </Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {Number(data.fixed_fee_amount).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data.fixed_fee_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
@@ -386,46 +562,96 @@ const RoyoOrderDetail = (props) => {
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
               <Text style={styles.font15Semibold}>
-                {currencies?.primary_currency?.symbol}{' '}
-                {(
-                  Number(data?.total_service_fee) + Number(data?.taxable_amount)
-                ).toFixed(2)}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.total_service_fee) +
+                    Number(data?.taxable_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
 
-          {data?.total_container_charges &&
+          {!!data?.total_container_charges &&
             Number(data?.total_container_charges) !== 0 && (
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.font15Medium}>
                   {strings.CONTAINER_CHARGES}
                 </Text>
                 <Text style={styles.font15Semibold}>
-                  {currencies?.primary_currency?.symbol}{' '}
-                  {Number(data?.total_container_charges).toFixed(2)}
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    Number(data?.total_container_charges),
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
               </View>
             )}
 
           {!!data?.total_discount && Number(data?.total_discount) !== 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{strings.DISCOUNT}</Text>
               <Text style={styles.font15Semibold}>
-                -{currencies?.primary_currency?.symbol}{' '}
-                {Number(data.total_discount).toFixed(2)}
+                -
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.total_discount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           )}
 
+          {!!data?.tip_amount && Number(data?.tip_amount) !== 0 && (
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={styles.font15Medium}>{strings.TIP_AMOUNT}</Text>
+              <Text style={styles.font15Semibold}>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.tip_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
+            </View>
+          )}
+
+{!!orderInfo?.advance_paid_amount && Number(orderInfo?.advance_paid_amount) > 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{"Advance Paid Amount"}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(orderInfo.advance_paid_amount).toFixed(2)}
+              </Text>
+            </View>
+          )}
+        {Number(orderInfo?.advance_paid_amount) > 0 && !!orderInfo?.pending_amount && Number(orderInfo?.pending_amount) > 0 && (
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.font15Medium}>{"Pending Amount"}</Text>
+              <Text style={styles.font15Semibold}>
+                {currencies?.primary_currency?.symbol}{' '}
+                {Number(orderInfo.pending_amount).toFixed(2)}
+              </Text>
+            </View>
+          )}
           <View style={styles.dashLine} />
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`${currencies?.primary_currency?.symbol} ${Number(
+              {tokenConverterPlusCurrencyNumberFormater(
                 data?.payable_amount,
-              ).toFixed(2)}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           </View>
         </View>
@@ -438,11 +664,11 @@ const RoyoOrderDetail = (props) => {
             <Text style={styles.font14Semibold}>
               {strings.DELIEVERY_ADDRESS}
             </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity onPress={() => dialCall(1234567890)}>
                 <Image source={imagePath.callRoyo} />
               </TouchableOpacity>
-              {/* <TouchableOpacity onPress={fun}>
+              <TouchableOpacity onPress={fun}>
                 <Image
                   style={{
                     marginLeft: moderateScaleVertical(10),
@@ -450,7 +676,7 @@ const RoyoOrderDetail = (props) => {
                   }}
                   source={imagePath.whatsAppRoyo}
                 />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() =>
                   Share.share({
@@ -471,9 +697,9 @@ const RoyoOrderDetail = (props) => {
 
           <View style={styles.locationBox}>
             <Image style={styles.locationImage} source={imagePath.icMap} />
-            <View style={{justifyContent: 'space-evenly'}}>
-              <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
-                {data.user_name}
+            <View style={{ justifyContent: 'space-evenly' }}>
+              <Text style={{ fontFamily: fontFamily.semiBold, fontSize: 16 }}>
+                {data?.user_name}
               </Text>
               <Text
                 style={{
@@ -487,16 +713,16 @@ const RoyoOrderDetail = (props) => {
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{...styles.font14Semibold}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ ...styles.font14Semibold }}>
               {strings.PAYMENT_METHOD}
             </Text>
-            <Text style={{...styles.font14Semibold, color: colors.black}}>
+            <Text style={{ ...styles.font14Semibold, color: colors.black }}>
               {data.payment_option_title}
             </Text>
           </View>
         </View>
-        <View style={{marginHorizontal: moderateScale(20)}}>
+        <View style={{ marginHorizontal: moderateScale(20) }}>
           {!isEmpty(userDocumentList) &&
             userDocumentList.map(renderUserDetails)}
         </View>
@@ -510,7 +736,7 @@ const RoyoOrderDetail = (props) => {
             />
             <ButtonWithLoader
               btnText={strings.CONFIRM}
-              btnTextStyle={{...styles.btnText, color: colors.white}}
+              btnTextStyle={{ ...styles.btnText, color: colors.white }}
               btnStyle={{
                 ...styles.btnContainer,
                 backgroundColor: colors.themeColor2,
@@ -520,7 +746,85 @@ const RoyoOrderDetail = (props) => {
             />
           </View>
         ) : null}
-      </ScrollView>
+          </ScrollView>
+        {
+          !!isUpdateOrder  ?
+          (
+            <BottomSheet
+            ref={bottomSheetRef}
+            index={0}
+            snapPoints={[height]}
+            activeOffsetY={[-1, 1]}
+            failOffsetX={[-5, 5]}
+            animateOnMount={true}
+            handleComponent={null}
+           
+            > 
+              <TouchableOpacity 
+              style={{
+                alignSelf:"center",
+                
+              }}
+                onPress={()=>{
+                  updateState({
+                    isUpdateOrder:false
+                  })
+                }}
+              >
+                 <Image 
+                  source={imagePath?.close2}
+                />
+              </TouchableOpacity>
+              <View style={{
+                flex:1,
+                backgroundColor:colors?.grey2
+              }}>
+                <View 
+                 style={{
+                  marginTop:moderateScale(40),
+                  flex:1,
+                  marginHorizontal:moderateScale(16)
+                 }}
+                >
+                   <BorderTextInput
+               
+                 onChangeText={_onChangeText('updatedPrice')}
+                  placeholder={"Enter updated price"}
+                  
+                 
+                  autoCapitalize={'none'}
+                  autoFocus={true}
+                  returnKeyType={'next'}
+                />
+                <BorderTextInput
+                containerStyle={{
+                  height:moderateScale(100)
+                }}
+                 onChangeText={_onChangeText('updateReason')}
+                  placeholder={"Reason"}
+                  
+                 
+                  autoCapitalize={'none'}
+                  autoFocus={true}
+                  returnKeyType={'next'}
+                />
+                <GradientButton 
+                indicator={isLoading}
+                onPress={onSubmit}
+                btnText={"Submit"}
+                colorsArray={[colors?.black,colors?.black]} 
+                 containerStyle={{
+                 
+                 }}
+                /> 
+
+                </View>
+              </View>
+            </BottomSheet>
+          )
+           :null
+        }
+    
     </WrapperContainer>
   );
 };
@@ -539,7 +843,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   font16Medium: {
-    fontSize: 16,
+    fontSize: textScale(16),
     fontFamily: fontFamily.medium,
   },
   font16Semibold: {
@@ -686,5 +990,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  agentUserIcon: {
+    tintColor: colors?.redB,
+    width: moderateScale(15),
+    height: moderateScale(15),
+  },
+  startChatText: {
+    // margin: moderateScale(15),
+    color: colors.redB,
+    fontFamily: fontFamily.medium,
+    fontSize: textScale(12),
+    marginRight: moderateScale(6),
+    textTransform: 'capitalize',
   },
 });

@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
-import TransparentButtonWithTxtAndIcon from '../../../Components/TransparentButtonWithTxtAndIcon';
-import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -21,17 +20,14 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {MyDarkTheme} from '../../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import LinearGradient from 'react-native-linear-gradient';
-import {BlurView} from '@react-native-community/blur';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 export default function SelectCarModalView({
   isLoading = false,
@@ -53,11 +49,9 @@ export default function SelectCarModalView({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
-  console.log(
-    selectedCarOption?.variant[0]?.price,
-    'selectedCarOptionselectedCarOptionselectedCarOption',
-  );
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -172,12 +166,12 @@ export default function SelectCarModalView({
                     //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
                     //   : styles.priceStyle
                   }>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(item.tags_price),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
               </View>
 

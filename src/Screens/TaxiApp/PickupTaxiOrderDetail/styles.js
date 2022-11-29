@@ -406,7 +406,29 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       borderBottomWidth:0.8,
       borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
       marginVertical: moderateScaleVertical(10)
-    }
+    },startChatText: {
+      // margin: moderateScale(15),
+      color: colors.redB,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      marginRight:moderateScale(6)
+    },
+    agentUserIcon: {
+      tintColor: colors?.redB,
+      width: moderateScale(15),
+      height:moderateScale(15)
+
+    },  textInputStyle: {
+       height:moderateScaleVertical(60),
+      padding: 10,
+      borderRadius: 5,
+      textAlignVertical: 'top',
+      width:'90%',
+      marginHorizontal:moderateScale(10),
+      borderWidth:moderateScale(0.5),
+      alignSelf:'center',
+      marginVertical:moderateScaleVertical(10)
+    },
   });
   return styles;
 };

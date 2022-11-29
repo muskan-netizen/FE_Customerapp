@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>553899565088-bgp4akiclidm8mkgc5ji3fgmmmcpnmu9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.553899565088-bgp4akiclidm8mkgc5ji3fgmmmcpnmu9</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>553899565088-29tv7gli66rc3qi789jhir3jb0ojvjam.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAawz-H8goZsJ0wt50glAHYQKPr4GC8w98</string>
+	<key>GCM_SENDER_ID</key>
+	<string>553899565088</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mersi.order</string>
+	<key>PROJECT_ID</key>
+	<string>mersi-4b221</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mersi-4b221.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:553899565088:ios:73ff470374bb1a69bd1c45</string>
+</dict>
+</plist>

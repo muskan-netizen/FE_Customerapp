@@ -9,10 +9,11 @@ import {
   Vibration,
   View,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DropDownPicker from 'react-native-dropdown-picker';
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNRestart from 'react-native-restart';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -42,20 +43,24 @@ import {
   hapticEffects,
   playHapticEffect,
   playVibration,
+  showError,
 } from '../../utils/helperFunctions';
+import navigationStrings from '../../navigation/navigationStrings';
 
 export default function Settings({route, navigation}) {
-  // const appData = useSelector(state => state?.initBoot?.appData);
-
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    currencies,
+    appData,
+    languages,
+    appStyle,
+    themeColors,
+    themeToggle,
+    themeColor,
+  } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {currencies, appData, languages, appStyle, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
-  console.log(toggleTheme, "togletheme ")
-  console.log(currencies, 'lang');
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
@@ -91,7 +96,7 @@ export default function Settings({route, navigation}) {
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily});
+  const styles = stylesFunc({fontFamily, themeColors});
   const commonStyles = commonStylesFunc({fontFamily});
 
   useFocusEffect(
@@ -105,8 +110,8 @@ export default function Settings({route, navigation}) {
 
   useEffect(() => {
     updateState({
-      isOn: toggleTheme,
-      selectedThemeOption: theme
+      isOn: !!themeToggle,
+      selectedThemeOption: themeColor
         ? {
             id: 2,
             image: imagePath.dark,
@@ -150,7 +155,7 @@ export default function Settings({route, navigation}) {
 
   //Update language
   const updateLanguage = (item) => {
-    console.log(item, "itemmmm")
+    console.log(item, 'itemmmm');
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
     // console.log(data, "setLang")
     if (data.sort_code !== languages.primary_language.sort_code) {
@@ -270,6 +275,91 @@ export default function Settings({route, navigation}) {
   //   console.log("API_BASE_URL")
   // },[])
 
+  const userlogout = () => {
+    if (!!userData?.auth_token) {
+      Alert.alert('', strings.LOGOUT_SURE_MSG, [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: () => {
+            actions.userLogout();
+            actions.cartItemQty('');
+            actions.saveAddress('');
+            actions.addSearchResults('clear');
+            actions.setAppSessionData('on_login');
+          },
+        },
+      ]);
+    } else {
+      actions.setAppSessionData('on_login');
+    }
+  };
+
+  const logoutView = () => {
+    return (
+      <TouchableOpacity
+        // onPress={()=>actions.isVendorNotification(true)}
+        onPress={userlogout}
+        style={styles.touchAbleLoginVIew}>
+        <Text
+          style={{
+            ...styles.loginLogoutText,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>
+          {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+        </Text>
+        <Image
+          source={imagePath.rightBlue}
+          style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const onDeleteAccount = () => {
+    if (!!userData?.auth_token) {
+      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: deleleUserAccount,
+        },
+      ]);
+    } else {
+      actions.setAppSessionData('on_login');
+    }
+  };
+
+  const deleleUserAccount = async () => {
+    try {
+      const res = await actions.deleteAccount(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      );
+      console.log('delete user account res', res);
+      actions.userLogout();
+      actions.cartItemQty('');
+      actions.saveAddress('');
+      actions.addSearchResults('clear');
+      actions.setAppSessionData('on_login');
+    } catch (error) {
+      console.log('erro raised', error);
+      showError(error?.message);
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -293,6 +383,7 @@ export default function Settings({route, navigation}) {
             ? {backgroundColor: MyDarkTheme.colors.background}
             : {backgroundColor: colors.white}
         }
+        customRight={logoutView}
       />
 
       <View style={{...commonStyles.headerTopLine}} />
@@ -671,30 +762,34 @@ export default function Settings({route, navigation}) {
         <View
           style={{
             zIndex: -1,
-            flexDirection: 'row',
             alignSelf: 'center',
             marginBottom: moderateScaleVertical(90),
             marginTop: moderateScaleVertical(24),
+            alignItems: 'center',
           }}>
           <Text
             style={{
               ...commonStyles.regularFont11,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             }}>
-            App Version{' '}
+            App Version {`${DeviceInfo.getVersion()}`}{' '}
+            {`(${DeviceInfo.getBuildNumber()})`}{' '}
+            {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
           </Text>
-          <Text
-            numberOfLines={2}
-            style={{
-              ...commonStyles.regularFont11,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-            }}>
-            {`${DeviceInfo.getVersion()}`}
-            <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
-            <Text>
-              {API_BASE_URL == 'https://api.rostaging.com/api/v1' ? 'S' : ''}
+
+          {!!userData?.auth_token ? (
+            <Text
+              onPress={onDeleteAccount}
+              style={{
+                ...commonStyles.regularFont11,
+                color: colors.redB,
+                marginTop: moderateScaleVertical(4),
+                opacity: 1,
+                fontSize: textScale(13),
+              }}>
+              {strings.DELETE_ACCOUNT}
             </Text>
-          </Text>
+          ) : null}
         </View>
       </ScrollView>
     </WrapperContainer>

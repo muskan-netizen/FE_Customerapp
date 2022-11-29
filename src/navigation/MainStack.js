@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   AboutUs,
   BrandProducts,
@@ -30,46 +30,46 @@ import {
   Tracking,
   Vendors,
   Vendors2,
+  ChatScreen,
+  ChatRoom,
+  ChatScreenForVendor,
+  ChatRoomForVendor,
 } from '../Screens';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import { shortCodes } from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 
 export default function (Stack) {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
   return (
     <>
-      {/* <Stack.Screen
-        name={navigationStrings.TAB_ROUTES}
-        component={TabRoutes}
-        options={{headerShown: false}}
-      /> */}
       <Stack.Screen
         name={navigationStrings.TAXITABROUTES}
         component={TaxiTabRoutes}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SUPERMARKET}
         component={SuperMarket}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
         component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SUPERMARKET_PRODUCTS_CATEGORY}
         component={SupermarketProductsCategory}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
@@ -77,10 +77,10 @@ export default function (Stack) {
           appStyle?.homePageLayout === 2
             ? ProductList2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? ProductList3
-            : ProductList
+              ? ProductList3
+              : ProductList
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
@@ -89,10 +89,10 @@ export default function (Stack) {
           appStyle?.homePageLayout === 2
             ? ProductList2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? ProductWithCategory
-            : ProductList
+              ? ProductWithCategory
+              : ProductList
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
@@ -101,74 +101,74 @@ export default function (Stack) {
           appStyle?.homePageLayout === 2
             ? MyProfile2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? MyProfile3
-            : MyProfile
+              ? MyProfile3
+              : MyProfile
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.MY_ORDERS}
         component={MyOrders}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.NOTIFICATION}
         component={Notifications}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ABOUT_US}
         component={AboutUs}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.CONTACT_US}
         component={ContactUs}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.TRACKING}
         component={Tracking}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.TRACKDETAIL}
         component={TrackDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SEND_PRODUCT}
         component={SendProduct}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.BUY_PRODUCT}
         component={BuyProduct}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SETTIGS}
         component={Settings}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={BrandProducts}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
@@ -178,19 +178,40 @@ export default function (Stack) {
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.LOCATION}
         component={Location}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.CART}
         component={Cart}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name={navigationStrings.CHAT_SCREEN}
+        component={ChatScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
+        component={ChatScreenForVendor}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.CHAT_ROOM}
+        component={ChatRoom}
+        options={{ headerShown: false }}
+      />
+          <Stack.Screen
+        name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
+        component={ChatRoomForVendor}
+        options={{ headerShown: false }}
+      />
+      {TaxiAppStack(Stack)}
     </>
   );
 }

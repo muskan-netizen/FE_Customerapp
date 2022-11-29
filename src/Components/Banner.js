@@ -12,7 +12,7 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
 import {moderateScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
-import { MyDarkTheme } from '../styles/theme';
+import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
 
 const Banner = ({
@@ -30,7 +30,7 @@ const Banner = ({
   setActiveState = () => {},
   childView = null,
   showLightbox = false,
-  onPressImage = () => {}
+  onPressImage = () => {},
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -40,7 +40,6 @@ const Banner = ({
     slider1ActiveSlide: 0,
     showLightboxView: false,
     imageLoader: true,
-    // profileInfo: null
   });
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {slider1ActiveSlide, showLightboxView} = state;
@@ -62,27 +61,26 @@ const Banner = ({
         <TouchableOpacity
           activeOpacity={1}
           style={{
-            ...styles.imageStyle, 
+            ...styles.imageStyle,
             ...imagestyle,
           }}
           onPress={onPressImage}>
-         
           <FastImage
             source={{
-              uri: imageUrl, 
+              uri: imageUrl,
               priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.immutable
+              cache: FastImage.cacheControl.immutable,
             }}
             //  onLoadStart={()=>}
             onLoadEnd={() => updateState({imageLoader: false})}
             style={{
               height: width * 0.7,
-               width: width, 
-               backgroundColor:isDarkMode
-               ? MyDarkTheme.colors.background
-               : colors.blackOpacity10,
-               ...imagestyle
-              }}
+              width: width,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.blackOpacity10,
+              ...imagestyle,
+            }}
             resizeMode={resizeMode}>
             {!!state.imageLoader && (
               <UIActivityIndicator
@@ -114,7 +112,7 @@ const Banner = ({
     );
   };
   return (
-    <CardView style={[styles.cardViewStyle, cardViewStyle]}>
+    <CardView style={{...styles.cardViewStyle, ...cardViewStyle}}>
       <Carousel
         ref={bannerRef}
         data={bannerData}
@@ -140,13 +138,7 @@ const styles = StyleSheet.create({
   },
   dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
   cardViewStyle: {
-    alignItems: 'center',
-    height: 200,
-    width: width - 20,
     marginHorizontal: moderateScale(10),
-    overflow: 'visible',
-
-    // marginRight: 20
   },
 });
 export default React.memo(Banner);

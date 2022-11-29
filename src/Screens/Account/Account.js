@@ -1,5 +1,6 @@
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Alert,
   I18nManager,
@@ -9,6 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
+import Share from 'react-native-share';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
@@ -20,22 +24,23 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {textScale} from '../../styles/responsiveSize';
-import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
-import Share from 'react-native-share';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { showError } from '../../utils/helperFunctions';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {showError} from '../../utils/helperFunctions';
+import stylesFun from './styles';
 
 export default function Account({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const {shortCodeStatus, themeColors, appStyle, appData, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {
+    shortCodeStatus,
+    themeColors,
+    appStyle,
+    appData,
+    currencies,
+    languages,
+  } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -46,6 +51,8 @@ export default function Account({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
+
+  const [allVendors, setAllVendors] = useState([]);
 
   //Navigation to specific screen
   const moveToNewScreen =
@@ -94,19 +101,17 @@ export default function Account({navigation}) {
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
-            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
       ]);
-    } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+    actions.setAppSessionData('on_login');
   };
   const _scrollRef = useRef();
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+      Alert.alert('', strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, [
         {
           text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
@@ -118,29 +123,72 @@ export default function Account({navigation}) {
         },
       ]);
     } else {
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      actions.setAppSessionData('on_login');
     }
-  }
-  const deleleUserAccount = async() => {
+  };
+  const deleleUserAccount = async () => {
     try {
       const res = await actions.deleteAccount(
-      {},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      console.log("delete user account res",res)
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      );
+      console.log('delete user account res', res);
       actions.userLogout();
       actions.cartItemQty('');
       actions.saveAddress('');
       actions.addSearchResults('clear');
-      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
-      console.log('erro raised',error)
-      showError(error?.message)
+      console.log('erro raised', error);
+      showError(error?.message);
     }
-  }
+  };
+
+  const goToChatRoom = (type) => {
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, {
+        type: type,
+        allVendors: allVendors,
+      });
+    } else {
+      navigation.navigate(navigationStrings.CHAT_ROOM, {type: type});
+    }
+  };
+
+  const goToChatRoomForVendor = useCallback(() => {
+    navigation.navigate(navigationStrings.CHAT_ROOM_FOR_VENDOR, {
+      type: 'vendor_chat',
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors();
+    }
+  }, [appMainData?.is_admin]);
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data);
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
 
   return (
     <WrapperContainer
@@ -153,11 +201,7 @@ export default function Account({navigation}) {
           noLeftIcon={false}
           customLeft={() => (
             <Text
-              onPress={() =>
-                navigation.push(navigationStrings.SHORT_CODE, {
-                  shortCodeParam: true,
-                })
-              }
+              onPress={() => actions.setAppSessionData('show_shortcode')}
               style={{
                 color: themeColors.primary_color,
                 fontFamily: fontFamily.bold,
@@ -192,9 +236,9 @@ export default function Account({navigation}) {
             }
           />
         )}
-          {DeviceInfo.getBundleId() != appIds.dlvrd &&
-            !!userData?.auth_token &&
-            (businessType == 4 ? null : (
+        {DeviceInfo.getBundleId() != appIds.dlvrd &&
+          !!userData?.auth_token &&
+          (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -434,36 +478,87 @@ export default function Account({navigation}) {
             />
           )}
 
-{!!userData?.auth_token && (
+        {!!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          businessType != 4 &&
+          !!appData?.profile?.socket_url && (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={onDeleteAccount}
-              iconLeft={imagePath.user}
-              centerHeading={strings.DELETE_ACCOUNT}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={goToChatRoomForVendor}
+              iconLeft={imagePath.icStoreChat}
+              centerHeading={strings.STORES_CAHT}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
-        <View style={styles.loginView}>
-          <TouchableOpacity
-            onPress={userlogout}
-            style={styles.touchAbleLoginVIew}>
-            <Text style={styles.loginLogoutText}>
-              {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
-            </Text>
-            <Image
-              source={imagePath.rightBlue}
-              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+        {!!userData?.auth_token && !!appData?.profile?.socket_url && (
+          <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={() => goToChatRoom('agent_chat')}
+            iconLeft={imagePath.icDriverChat}
+            centerHeading={strings.DRIVER_CHAT}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+          />
+        )}
+
+        {!!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={() => goToChatRoom('vendor_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={strings.USER_CHAT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
             />
-          </TouchableOpacity>
-        </View>
+          )}
+
+        {!!userData?.auth_token && !!appData?.profile?.socket_url && (
+          <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={() => goToChatRoom('user_chat')}
+            iconLeft={imagePath.icVendorChat}
+            centerHeading={strings.VENDOR_CHAT}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+          />
+        )}
+
+        {!!userData?.auth_token ? null : (
+          <View style={styles.loginView}>
+            <TouchableOpacity
+              // onPress={()=>actions.isVendorNotification(true)}
+              onPress={() => actions.setAppSessionData('on_login')}
+              style={styles.touchAbleLoginVIew}>
+              <Text style={styles.loginLogoutText}>{strings.LOGIN}</Text>
+              <Image
+                source={imagePath.rightBlue}
+                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={{height: 100}} />
       </ScrollView>
     </WrapperContainer>

@@ -1,10 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {RefreshControl, ScrollView, View,Text,TouchableOpacity} from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
 import BrickList from '../../../Components/BrickList';
 import ImgCardForBrickList from '../../../Components/ImgCardForBrickList';
 import CardLoader from '../../../Components/Loaders/CardLoader';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {
@@ -14,7 +21,10 @@ import {
   sliderWidth,
   textScale,
 } from '../../../styles/responsiveSize';
-import {getColorCodeWithOpactiyNumber, getImageUrl} from '../../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
 
@@ -26,10 +36,13 @@ export default function DashBoardOne({
   isRefreshing = false,
   onPressCategory = () => {},
   selcetedToggle,
-  toggleData,
+  toggleData={},
   isDineInSelected = false,
-  tempCartData=null,
-  navigation={}
+  tempCartData = null,
+  navigation = {},
+  onClose = () => {},
+  onPressSubscribe = () => {},
+  isSubscription = false,
 }) {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -37,11 +50,12 @@ export default function DashBoardOne({
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const homeData = useSelector((state) => state?.home);
+  const userData = useSelector((state) => state?.auth?.userData);
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   console.log(appMainData, 'appMainData');
-  console.log(homeData, 'homeData');
+  console.log(appData?.banners, 'homeData');
 
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
@@ -81,6 +95,7 @@ export default function DashBoardOne({
   };
 
   const renderView = (prop) => {
+    console.log(prop, 'prop');
     return (
       <ImgCardForBrickList
         onPress={() => onPressCategory(prop)}
@@ -94,44 +109,59 @@ export default function DashBoardOne({
       orderId: item?.vendors[0].order_id,
       // fromVendorApp: true,
       orderDetail: {
-        dispatch_traking_url:item?.vendors[0].dispatch_traking_url
-            },
+        dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
+      },
       selectedVendor: {id: item?.vendors[0].vendor_id},
     });
-  }
+  };
 
-  console.log(appData?.banners,"Banners");
+  console.log(appData?.banners, 'Banners');
   const showAllTempCartOrders = () => {
     return (
       <View>
-        {
-       tempCartData &&
-       tempCartData.length
-          ?tempCartData.map((item, index) => {
+        {tempCartData && tempCartData.length
+          ? tempCartData.map((item, index) => {
               return (
                 <TouchableOpacity
-                onPress={()=>onPressViewEditAndReplace(item)}
+                  onPress={() => onPressViewEditAndReplace(item)}
                   style={{
                     padding: moderateScale(8),
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     // alignItems: 'center',
-                    backgroundColor:getColorCodeWithOpactiyNumber(
+                    backgroundColor: getColorCodeWithOpactiyNumber(
                       themeColors?.primary_color.substr(1),
                       20,
                     ),
-                    marginHorizontal:moderateScale(15),
-                    marginTop:moderateScale(15),
-                    borderRadius:moderateScale(5),
-                    borderWidth:moderateScale(0.5),
-                    borderColor:themeColors?.primary_color
+                    marginHorizontal: moderateScale(15),
+                    marginTop: moderateScale(15),
+                    borderRadius: moderateScale(5),
+                    borderWidth: moderateScale(0.5),
+                    borderColor: themeColors?.primary_color,
                   }}>
-                  <View style={{flex:0.7}}>
-                    <Text style={{fontSize:textScale(12),fontFamily:fontFamily.medium}}>{strings.YOURDRIVERHASMODIFIED}</Text>
-                    <Text style={{fontSize:textScale(12),paddingTop:moderateScale(5), fontFamily:fontFamily.bold}}>{strings.VIEW_DETAIL}</Text>
+                  <View style={{flex: 0.7}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {strings.YOURDRIVERHASMODIFIED}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        paddingTop: moderateScale(5),
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {strings.VIEW_DETAIL}
+                    </Text>
                   </View>
-                  <View style={{flex:0.3,alignItems:'flex-end'}}>
-                    <Text style={{fontSize:textScale(14),fontFamily:fontFamily.medium}}>{`#${item?.order_number}`}</Text>
+                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>{`#${item?.order_number}`}</Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -189,7 +219,7 @@ export default function DashBoardOne({
         selcetedToggle={selcetedToggle}
         isDineInSelected={isDineInSelected}
       />
-       {showAllTempCartOrders()}
+      {showAllTempCartOrders()}
 
       {isLoading && <CardLoader listSize={6} isRow />}
       {!isLoading &&
@@ -203,6 +233,14 @@ export default function DashBoardOne({
         />
       ) : null}
       <View style={{height: moderateScaleVertical(65)}} />
+      {!!userData?.auth_token &&
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+        )}
     </ScrollView>
   );
 }

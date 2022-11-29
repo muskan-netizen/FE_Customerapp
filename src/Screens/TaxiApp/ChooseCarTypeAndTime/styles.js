@@ -30,8 +30,8 @@ export default ({fontFamily, themeColors}) => {
       paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
-      flexDirection: 'row',
-      alignItems: 'center',
+      // flexDirection: 'row',
+      // alignItems: 'center',
     },
     viewOffers: {
       color: themeColors.primary_color,
@@ -253,7 +253,28 @@ export default ({fontFamily, themeColors}) => {
       fontFamily: fontFamily.medium,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
+    }, scheduleBtnStyle :{
+      borderRadius: moderateScale(4),
+      flexDirection: 'row',
+      borderColor: colors.textGreyLight,
+      borderWidth: moderateScale(0.5),
+      marginRight: moderateScale(4),
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      width:moderateScale(width/2.5)
+    },scheduleModalBtnStyle  :{
+      flex: 1,
+      height: 40,
+      backgroundColor: themeColors.primary_color,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: moderateScale(10),
     },
+    DriverUnavailable:{
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      
+    }
   });
   return styles;
 };

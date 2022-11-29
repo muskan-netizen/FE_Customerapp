@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
 import {
@@ -10,7 +10,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
+export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
   StyleSheet.create({
     topHeaderView: {
       flexDirection: 'row',
@@ -44,7 +44,7 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       paddingLeft: moderateScale(20),
       borderRadius: 13,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 1 },
+      shadowOffset: {width: 0, height: 1},
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,
@@ -87,7 +87,7 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
       // height: 42,
-      marginTop: Platform.OS === 'ios' ? StatusBarHeight : 5,
+      marginTop: 5,
     },
 
     HeaderInsideTextStyle: {
@@ -118,8 +118,8 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       left: 50,
       bottom: 10,
     },
-    header2: { height: height * 0.3 },
-    imageBackgroundHdr: { width: width, height: '100%' },
+    header2: {height: height * 0.3},
+    imageBackgroundHdr: {width: width, height: '100%'},
     linearGradientHdr: {
       height: '100%',
       width: width,
@@ -145,7 +145,7 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       // minHeight: moderateScale(90),
       shadowOpacity: 0.3,
       shadowColor: '#000',
-      shadowOffset: { height: 0, width: 0 },
+      shadowOffset: {height: 0, width: 0},
       borderTopRightRadius: moderateScale(2),
       borderTopLeftRadius: moderateScale(2),
       paddingVertical: moderateScale(8),
@@ -282,5 +282,13 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-    }
+    },
+    incDecBtnStyle: {
+      borderWidth: 0.4,
+      borderRadius: moderateScale(4),
+      height: moderateScale(38),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(12),
+    },
   });

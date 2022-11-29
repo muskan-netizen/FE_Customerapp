@@ -7,7 +7,7 @@ import strings from '../constants/lang';
 import commonStylesFunc from '../styles/commonStyles';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -34,6 +34,8 @@ const ProductCard4 = ({
   const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const {themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -106,13 +108,13 @@ const ProductCard4 = ({
                 fontSize: textScale(13),
                 fontFamily: fontFamily.medium,
               }}>
-              {`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              {tokenConverterPlusCurrencyNumberFormater(
                 Number(data?.variant[0]?.multiplier) *
                   Number(data?.variant[0]?.price),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           </View>
         </View>

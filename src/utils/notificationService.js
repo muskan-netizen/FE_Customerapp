@@ -1,11 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
-import PushNotification, {Importance} from 'react-native-push-notification';
-import {useSelector} from 'react-redux';
+import {navigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
-import {enums} from './enums';
+import {redirectFromNotification} from './helperFunctions';
 import {getItem} from './utils';
 
 export async function requestUserPermission() {
@@ -75,65 +74,87 @@ const manageRedirections = async (data) => {
   }
 };
 
-const manageRedirectionsForVendorApp = async (data) => {
-  console.log('manage Redirections +++++ Vendor App', data);
-  navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
-    screen: navigationStrings.ROYO_VENDOR_ORDER,
-    params: {index: 1},
-  });
-};
-
 export const notificationListener = async () => {
-  console.log('shjdjdvsfvhfsfj');
   // _openApp()
- 
-  PushNotification.configure({
-    permissions: {
-      alert: true,
-      badge: true,
-      sound: true,
-    },
-    requestPermissions: true,
-    popInitialNotification: true,
+
+  // PushNotification.configure({
+  //   permissions: {
+  //     alert: true,
+  //     badge: true,
+  //     sound: true,
+  //   },
+  //   requestPermissions: true,
+  //   popInitialNotification: true,
+  // });
+
+  messaging().onNotificationOpenedApp((remoteMessage) => {
+    console.log('tap on notification', remoteMessage);
+    const {data} = remoteMessage;
+
+    if (!!data?.room_id) {
+      navigate(navigationStrings.CHAT_SCREEN, {
+        data: {_id: data?.room_id, room_id: data?.room_id_text},
+      });
+    }
+    let clickActionUrl = data?.click_action || null;
+
+    clickActionUrl && redirectFromNotification(clickActionUrl);
   });
 
-  createDefaultChannels();
+  // createDefaultChannels();
 
-  function createDefaultChannels() {
-    PushNotification.createChannel(
-      {
-        channelId: 'default-channel-id', // (required)
-        channelName: `Default channel`, // (required)
-        channelDescription: 'A default channel', // (optional) default: undefined.
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-      },
-      (created) =>
-        console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-    PushNotification.createChannel(
-      {
-        channelId: 'sound-channel-id', // (required)
-        channelName: `Sound channel 2`, // (required)
-        channelDescription: 'A sound channel 2', // (optional) default: undefined.
-        soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
-        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-      },
-      (created) =>
-        console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log(
-        'Notification caused app to open from background state bla bla:',
-        remoteMessage,
-      );
-    });
+  // function createDefaultChannels() {
+  //   PushNotification.createChannel(
+  //     {
+  //       channelId: 'default-channel-id', // (required)
+  //       channelName: `Default channel`, // (required)
+  //       channelDescription: 'A default channel', // (optional) default: undefined.
+  //       soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+  //       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //     },
+  //     (created) =>
+  //       console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   );
+  //   PushNotification.createChannel(
+  //     {
+  //       channelId: 'sound-channel-id', // (required)
+  //       channelName: `Sound channel 2`, // (required)
+  //       channelDescription: 'A sound channel 2', // (optional) default: undefined.
+  //       soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
+  //       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //     },
+  //     (created) =>
+  //       console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   );
+  //   PushNotification.createChannel(
+  //     {
+  //       channelId: 'sound-channel-id', // (required)
+  //       channelName: `Sound channel 2`, // (required)
+  //       channelDescription: 'A sound channel 2', // (optional) default: undefined.
+  //       soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
+  //       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //     },
+  //     (created) =>
+  //       console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   );
 
-  }
-    
- 
+  //   // // created channel for custom notii
+  //   // PushNotification.createChannel(
+  //   //   {
+  //   //     channelId: 'sound-channel-id', // (required)
+  //   //     channelName: `Sound channel 2`, // (required)
+  //   //     channelDescription: 'A sound channel 2', // (optional) default: undefined.
+  //   //     soundName: 'customnotii.mp3', // (optional) See `soundName` parameter of `localNotification` function
+  //   //     importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //   //     vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //   //   },
+  //   //   (created) =>
+  //   //     console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   // );
+  // }
 
   messaging()
     .getInitialNotification()
@@ -150,25 +171,36 @@ export const notificationListener = async () => {
         if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
           actions.isVendorNotification(true);
         }
+
+        let clickActionUrl = data?.click_action || null;
+
+        clickActionUrl &&
+          setTimeout(() => {
+            redirectFromNotification(clickActionUrl);
+          }, 1000);
+
+        // // added check for customnotii
+        // if (
+        //   Platform.OS == 'android' &&
+        //   notification.android.sound == 'customnotii.mp3'
+        // ) {
+        //   actions.isVendorNotification(true);
+        // }
       }
     });
 
   return null;
 };
 
-
-const _openApp= ()=>{
-  messaging().onNotificationOpenedApp(remoteMessage => {
+const _openApp = () => {
+  messaging().onNotificationOpenedApp((remoteMessage) => {
     console.log(
       'Notification caused app to open from background state bla bla:',
       remoteMessage,
     );
     const {data, messageId, notification} = remoteMessage;
-    if (enums.isVendorStandloneApp) {
-      manageRedirectionsForVendorApp(data);
-    } else {
-      manageRedirections(data);
-    }
+
+    manageRedirections(data);
 
     if (
       Platform.OS == 'android' &&
@@ -181,4 +213,13 @@ const _openApp= ()=>{
     }
   });
   console.log('i am here>>>>>');
-}
+};
+
+const _onRedirectOrderScreen = (id) => {
+  if (id) {
+    navigate(navigationStrings.ORDER_DETAIL, {
+      orderId: id,
+      fromActive: true, // this value use for useInterval
+    });
+  }
+};

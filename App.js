@@ -3,20 +3,12 @@ import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Linking,
-  Platform,
-  SafeAreaView,
-  Text,
-  View,
-  Button,
-} from 'react-native';
+import {Linking, Text, View} from 'react-native';
 import codePush from 'react-native-code-push';
 import {useDarkMode} from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
-import PushNotification from 'react-native-push-notification';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
@@ -34,12 +26,15 @@ import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import colors from './src/styles/colors';
 import fontFamily from './src/styles/fontFamily';
 
+import {getBundleId} from 'react-native-device-info';
+import {MenuProvider} from 'react-native-popup-menu';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from './src/styles/responsiveSize';
+import {appIds} from './src/utils/constants/DynamicAppKeys';
 import ForegroundHandler from './src/utils/ForegroundHandler';
 import {getUrlRoutes} from './src/utils/helperFunctions';
 import {
@@ -47,10 +42,7 @@ import {
   requestUserPermission,
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
-import {MenuProvider} from 'react-native-popup-menu';
-import {getBundleId} from 'react-native-device-info';
-import {appIds} from './src/utils/constants/DynamicAppKeys';
-
+import notifee, {EventType} from '@notifee/react-native';
 
 let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
@@ -126,12 +118,11 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
-    if(getBundleId()==(appIds.masa || appIds.iPicknDrop || appIds.muvpod)){
+    if (  ( getBundleId() == appIds.masa)  || ( getBundleId() == appIds.muvpod) || ( getBundleId() == appIds.hezniTaxi) || (getBundleId() == appIds.flank)){
       setTimeout(() => {
         SplashScreen.hide();
-      },100);
-    }
-    else{
+      }, 200);
+    } else {
       setTimeout(() => {
         SplashScreen.hide();
       }, 3000);
@@ -147,25 +138,12 @@ const App = () => {
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-    
-    if (Platform.OS == 'android') {
-      checkExistChannel();
-    }
   };
 
-  const checkExistChannel = () => {
-    PushNotification.getChannels(function (channel_ids) {});
-  };
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        )
-      });
       const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({
@@ -432,6 +410,7 @@ const App = () => {
       </View>
     );
   };
+
   return (
     <SafeAreaProvider>
       <MenuProvider>

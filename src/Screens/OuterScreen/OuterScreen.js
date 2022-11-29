@@ -40,20 +40,11 @@ import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
-import {setItem} from '../../utils/utils';
+import {setItem, setUserData} from '../../utils/utils';
+import {isEmpty} from 'lodash';
+import {getValuebyKeyInArray} from '../../utils/commonFunction';
 
 export default function OuterScreen({navigation}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const [state, setState] = useState({
-    getLanguage: '',
-    isLoading: false,
-    isSelectLanguageModal: false,
-    isLangSelected: false,
-    allLangs: [],
-  });
   const {
     appData,
     currencies,
@@ -61,7 +52,20 @@ export default function OuterScreen({navigation}) {
     languages,
     shortCodeStatus,
     appStyle,
+    themeToggle,
+    themeColor,
+    redirectedFrom,
   } = useSelector((state) => state?.initBoot);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const [state, setState] = useState({
+    getLanguage: '',
+    isLoading: false,
+    isSelectLanguageModal: false,
+    isLangSelected: false,
+    allLangs: [],
+  });
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
@@ -73,8 +77,13 @@ export default function OuterScreen({navigation}) {
     isLangSelected,
     allLangs,
   } = state;
-  const {apple_login, fb_login, twitter_login, google_login} =
-    appData?.profile?.preferences;
+  const {
+    apple_login,
+    fb_login,
+    twitter_login,
+    google_login,
+    additional_preferences,
+  } = appData?.profile?.preferences;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =
@@ -121,40 +130,39 @@ export default function OuterScreen({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>SOCIAL');
-        if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              navigation.push(navigationStrings.TAB_ROUTES);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            navigation.push(navigationStrings.TAB_ROUTES);
-          }
-        }
         updateState({isLoading: false});
-        getCartDetail();
+        if (!!res.data) {
+          checkEmailPhoneVerified(res?.data);
+          getCartDetail();
+        }
       })
       .catch(errorMethod);
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successLogin(data);
+    }
+  };
+
+  const successLogin = (data) => {
+    console.log('callllled');
+    if (!!data) {
+      setUserData(data).then((suc) => {
+        actions.saveUserData(data);
+      });
+    }
   };
 
   //error handling
@@ -166,6 +174,7 @@ export default function OuterScreen({navigation}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        '',
         {},
         {
           code: appData?.profile?.code,
@@ -249,7 +258,7 @@ export default function OuterScreen({navigation}) {
   const onGuestLogin = () => {
     actions.userLogout();
     getCartDetail();
-    navigation.push(navigationStrings.TAB_ROUTES);
+    actions.setAppSessionData('guest_login');
   };
 
   const _selectLang = () => {
@@ -261,21 +270,23 @@ export default function OuterScreen({navigation}) {
   };
 
   useEffect(() => {
-    const all_languages = [...languages.all_languages];
-    
-    all_languages.forEach((itm, indx) => {
-      if (languages?.primary_language?.id === itm?.id) {
-        all_languages[indx].isActive = true;
-        updateState({
-          allLangs: [...all_languages],
-        });
-      } else {
-        all_languages[indx].isActive = false;
-        updateState({
-          allLangs: [...all_languages],
-        });
-      }
-    });
+    if (!isEmpty(languages)) {
+      const all_languages = [...languages?.all_languages];
+
+      all_languages?.forEach((itm, indx) => {
+        if (languages?.primary_language?.id === itm?.id) {
+          all_languages[indx].isActive = true;
+          updateState({
+            allLangs: [...all_languages],
+          });
+        } else {
+          all_languages[indx].isActive = false;
+          updateState({
+            allLangs: [...all_languages],
+          });
+        }
+      });
+    }
   }, []);
 
   const _onLangSelect = (item, indx) => {
@@ -299,9 +310,9 @@ export default function OuterScreen({navigation}) {
 
   //Update language
   const updateLanguage = (item) => {
-    const data = languages.all_languages.filter((x) => x.id == item.id)[0];
+    const data = languages?.all_languages?.filter((x) => x.id == item.id)[0];
 
-    if (data.sort_code !== languages.primary_language.sort_code) {
+    if (data.sort_code !== languages?.primary_language.sort_code) {
       let languagesData = {
         ...languages,
         primary_language: data,
@@ -346,6 +357,7 @@ export default function OuterScreen({navigation}) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
+      {console.log(shortCodeStatus, 'shortCodeStatus>>')}
       {shortCodeStatus ? (
         <Header
           leftIcon={
@@ -355,12 +367,7 @@ export default function OuterScreen({navigation}) {
               ? imagePath.icBackb
               : imagePath.back
           }
-          onPressLeft={() =>
-            // navigation.push(navigationStrings.SHORT_CODE, {
-            //   shortCodeParam: true,
-            // })
-            navigation.goBack()
-          }
+          onPressLeft={() => actions.setAppSessionData('guest_login')}
           isRightText
           rightTxt={
             !!selectedLangTitle
@@ -416,18 +423,47 @@ export default function OuterScreen({navigation}) {
           paddingTop: moderateScaleVertical(70),
           flexGrow: 1,
         }}>
-        <Text
-          style={
-            isDarkMode
-              ? [styles.header, {color: MyDarkTheme.colors.text}]
-              : styles.header
-          }>
-          {strings.CREATE_YOUR_ACCOUNT}
-        </Text>
+        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.header,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      backgroundColor: MyDarkTheme.colors.background,
+                    },
+                  ]
+                : styles.header
+            }>
+            Login Your Account
+          </Text>
+        ) : (
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.header,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      backgroundColor: MyDarkTheme.colors.background,
+                    },
+                  ]
+                : styles.header
+            }>
+            {strings.CREATE_YOUR_ACCOUNT}
+          </Text>
+        )}
         <View style={{marginHorizontal: moderateScale(24)}}>
           {appData?.profile?.preferences?.home_tag_line ? (
             <View style={{marginHorizontal: moderateScaleVertical(30)}}>
-              <Text numberOfLines={2} style={styles.txtSmall}>
+              <Text
+                numberOfLines={2}
+                style={
+                  isDarkMode
+                    ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                    : styles.txtSmall
+                }>
                 {appData?.profile?.preferences?.home_tag_line
                   ? appData?.profile?.preferences?.home_tag_line
                   : ''}
@@ -437,12 +473,24 @@ export default function OuterScreen({navigation}) {
 
           <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(50)}}
-            btnText={strings.CREATE_AN_ACCOUNT}
-            onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+            btnText={
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? 'Login to Your Account'
+                : strings.CREATE_AN_ACCOUNT
+            }
+            onPress={moveToNewScreen(
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? navigationStrings.LOGIN
+                : navigationStrings.SIGN_UP,
+            )}
           />
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
-            btnTextStyle={{color: themeColors.primary_color}}
+            btnTextStyle={{
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : themeColors.primary_color,
+            }}
             onPress={() => onGuestLogin()}
             btnText={strings.GUEST_LOGIN}
           />
@@ -553,35 +601,39 @@ export default function OuterScreen({navigation}) {
             </View>
           </View>
         </View>
-        <View style={styles.bottomContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text
+        {getValuebyKeyInArray(
+          'is_phone_signup',
+          additional_preferences,
+        ) ? null : (
+          <View style={styles.bottomContainer}>
+            <View
               style={{
-                ...styles.txtSmall,
-                color: colors.textGreyLight,
-                marginTop: 0,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              {strings.ALREADY_HAVE_AN_ACCOUNT}
-            </Text>
-            <TouchableOpacity
-              hitSlop={hitSlopProp}
-              onPress={moveToNewScreen(navigationStrings.LOGIN)}>
               <Text
                 style={{
-                  color: themeColors.primary_color,
-                  // lineHeight:24,
-                  fontFamily: fontFamily.bold,
+                  ...styles.txtSmall,
+                  color: colors.textGreyLight,
+                  marginTop: 0,
                 }}>
-                {strings.LOGIN}
+                {strings.ALREADY_HAVE_AN_ACCOUNT}
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                hitSlop={hitSlopProp}
+                onPress={moveToNewScreen(navigationStrings.LOGIN)}>
+                <Text
+                  style={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {strings.LOGIN}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        )}
       </ScrollView>
       {isSelectLanguageModal && (
         <LanguageModal

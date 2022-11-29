@@ -20,6 +20,8 @@ import {
 import {TextInput} from 'react-native-paper';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 
 const PhoneNumberInputWithUnderline = ({
   cca2 = '',
@@ -48,7 +50,9 @@ const PhoneNumberInputWithUnderline = ({
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    setState({countryPickerModalVisible: true});
+    if (getBundleId() !== appIds.baytukom) {
+      setState({countryPickerModalVisible: true});
+    }
   };
   const _onCountryPickerModalClose = () => {
     setState({countryPickerModalVisible: false});
@@ -71,6 +75,7 @@ const PhoneNumberInputWithUnderline = ({
         <Text
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            textAlign:'left',
             ...labelStyle,
           }}>
           {placeholder}
@@ -96,7 +101,9 @@ const PhoneNumberInputWithUnderline = ({
               marginBottom: 7,
               marginRight: 3,
             }}>
-            <Text>+</Text>
+            <Text style={{ color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyOpcaity7,}}>+ </Text>
             <Text
               style={{
                 marginRight: -5,
@@ -178,8 +185,9 @@ const PhoneNumberInputWithUnderline = ({
       /> */}
       {countryPickerModalVisible && (
         <CountryPicker
-          withCallingCode={callingCode}
+          withCallingCode={true}
           cca2={cca2}
+          countryCode={callingCode}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter

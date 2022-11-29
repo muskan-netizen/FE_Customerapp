@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "992100790659",
+    "project_id": "skyline-ee7bf",
+    "storage_bucket": "skyline-ee7bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992100790659:android:eaf2b86058a005530686b6",
+        "android_client_info": {
+          "package_name": "com.skyline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992100790659-c3u3jcq71aha28fb95tr2rlvqm3iprah.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skyline",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "992100790659-f91do87hsc69tv6iqvlstfr633rk2i8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skyline",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "992100790659-v7it83u317aenva9h7jrsbv2v96c2f64.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skyline",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "992100790659-s4ji3h2a2et4jo2ju66mbl9dq3najn1n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtgWEBZVzAxts1eYI34T_sPKTTlX7Ncrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992100790659-s4ji3h2a2et4jo2ju66mbl9dq3najn1n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "386985233485",
+    "project_id": "you-smoke-shops",
+    "storage_bucket": "you-smoke-shops.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386985233485:android:860d169e9d193caa80e004",
+        "android_client_info": {
+          "package_name": "com.youSmokeShops.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386985233485-9prspb3ncsjlncre80bjfu3apeqlte89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youSmokeShops.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "386985233485-r09fnniisvvbq05q946u36b5vrqac8og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youSmokeShops.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "386985233485-v0k71r7c7k5mckg1m2v1o1r677sp14da.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youSmokeShops.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "386985233485-2406njfd8emdd16icit98tluup100uar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX7XJ8Hgq40thmzXWvtTQj4-g7-4YPgi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386985233485-2406njfd8emdd16icit98tluup100uar.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "386985233485-8pehcrd6lhs3guloi061vegs5kuevu4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.youSmokeShops.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

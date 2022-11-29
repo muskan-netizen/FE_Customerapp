@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "961221332866",
+    "project_id": "kaypee-f636b",
+    "storage_bucket": "kaypee-f636b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961221332866:android:322c0e61d1ff8f70e3499b",
+        "android_client_info": {
+          "package_name": "com.kaypee.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961221332866-5ngs1h0b9gd3jo6q1g2rm5n6gd5h45eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHytuNm4OGHGJS9p_K8yJ5sKfHsgNNwq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961221332866-5ngs1h0b9gd3jo6q1g2rm5n6gd5h45eq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "961221332866-tgh9k74cca50b6goispbei1v1n6vlphp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kaypee.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

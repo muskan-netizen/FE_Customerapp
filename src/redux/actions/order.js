@@ -22,7 +22,11 @@ import {
   RATE_TO_DRIVER,
   SOTRE_VENDORS,
   STORE_VENDOR_COUNT,
-  ALL_VENDOR_ORDERS
+  ALL_VENDOR_ORDERS,
+  RESCHDULE_ORDER,
+  GENERATE_INVOICE,
+  VENDER_UPDATE_ORDER,
+  GET_DRIVER_RATING_DETAIL,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -142,6 +146,20 @@ export const getRating = (query = '', data = {}, headers = {}) => {
   console.log(query, data, headers, 'IN ORDER>JS');
   return new Promise((resolve, reject) => {
     apiGet(GET_RATING_DETAIL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+// get order ratings
+
+export const getDriverRating = (query = '', data = {}, headers = {}) => {
+  console.log(query, data, headers, 'IN ORDER>JS');
+  return new Promise((resolve, reject) => {
+    apiGet(GET_DRIVER_RATING_DETAIL + query, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -308,15 +326,40 @@ export function ratingToDriver(data = {}, headers = {}) {
       });
   });
 }
-
+export function genrateInvoice(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(GENERATE_INVOICE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+export function venderUpdateOrder(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDER_UPDATE_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 export function storeVendors(query, headers = {}) {
-  return apiGet(SOTRE_VENDORS + query, {}, headers)
+  return apiGet(SOTRE_VENDORS + query, {}, headers);
 }
 
 export function vendorOrderCount(query, headers = {}) {
-  return apiGet(STORE_VENDOR_COUNT + query, {}, headers)
+  return apiGet(STORE_VENDOR_COUNT + query, {}, headers);
 }
 
 export function allVendorOrders(query, headers = {}) {
-  return apiGet(ALL_VENDOR_ORDERS + query, {}, headers)
+  return apiGet(ALL_VENDOR_ORDERS + query, {}, headers);
+}
+
+export function rescheduleOrder(data = {}, headers = {}) {
+  return apiPost(RESCHDULE_ORDER, data, headers);
 }

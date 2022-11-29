@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "714751947672",
+    "project_id": "perucabs-385c0",
+    "storage_bucket": "perucabs-385c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714751947672:android:a18e927aa5051d54e3f1ed",
+        "android_client_info": {
+          "package_name": "com.perucabs.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714751947672-18ruhc9937opt3ccdi9v6q423ccqh70v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.perucabs.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "714751947672-fi6uln3ja9ithsqpgo79arapk3jsrcjs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.perucabs.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "714751947672-lhtu93599sou58qofqgbplm4fpao21j5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.perucabs.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "714751947672-ln79a8um4ms8evpgob8upckncbfqes82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKgYIzxnMT6omn3vi8OoU2NV2Wa8eDJG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714751947672-ln79a8um4ms8evpgob8upckncbfqes82.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

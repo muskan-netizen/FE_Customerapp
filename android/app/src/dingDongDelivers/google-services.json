@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "68772531236",
-    "project_id": "ding-dong-delivers",
-    "storage_bucket": "ding-dong-delivers.appspot.com"
+    "project_number": "879685530620",
+    "project_id": "dingdong-deliveries-order",
+    "storage_bucket": "dingdong-deliveries-order.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:68772531236:android:ac92d671260eb12a609cb1",
+        "mobilesdk_app_id": "1:879685530620:android:51c6eb8e94d58c96a37879",
         "android_client_info": {
-          "package_name": "com.dingDongDelivers"
+          "package_name": "com.dingdongdelivery.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "68772531236-6aaf0dj77o7n21lsbps0r8tumgsrh1ri.apps.googleusercontent.com",
+          "client_id": "879685530620-1el4lfgp2eqfuho3ropc25bmu43v6vvl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dingDongDelivers",
+            "package_name": "com.dingdongdelivery.order",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "68772531236-qacsr8vmuitqao98l1uf48jn9aj6o5ef.apps.googleusercontent.com",
+          "client_id": "879685530620-hqm1l29i7ljcqqka7u95h5s7ohk1geh5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dingDongDelivers",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "68772531236-t9sepb09j69vh8qguitdf7gl84lms0v2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dingDongDelivers",
+            "package_name": "com.dingdongdelivery.order",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "68772531236-j8rvuc4upnk7lc6dqgntu0jpssffd6m6.apps.googleusercontent.com",
+          "client_id": "879685530620-vrl55frsma1hngbclv11et1vl7igh3kc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dingdongdelivery.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "879685530620-bnn09b3530u3n01mvb3ehf5o441qugps.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFXlfAA0_CzkQZFRxmHLYqVv4S8xihyqE"
+          "current_key": "AIzaSyAFm8NKfl8OreQLZyGZXrFNZtDcGCpMaLU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "68772531236-j8rvuc4upnk7lc6dqgntu0jpssffd6m6.apps.googleusercontent.com",
+              "client_id": "879685530620-bnn09b3530u3n01mvb3ehf5o441qugps.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "68772531236-hcoditadusijouschvadgjbvnmb1737k.apps.googleusercontent.com",
+              "client_id": "879685530620-3s03he1c5jr01qfojv90ef7rof0st144.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.dingDongDelivers"
+                "bundle_id": "com.dingdongdelivery.order"
               }
             }
           ]

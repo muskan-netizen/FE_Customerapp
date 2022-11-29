@@ -59,6 +59,9 @@ import {
   AddNewCustomer,
   CustomerEarningHistory,
   Location,
+  ChatRoom,
+  ChatRoomForVendor,
+  AccountTemplateFour,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -73,7 +76,7 @@ export default function ({navigation}) {
       case 3:
         return Account3;
       case 4:
-        return Account3;
+        return AccountTemplateFour;
       case 5:
         return Account3;
       case 6:
@@ -87,7 +90,6 @@ export default function ({navigation}) {
     <Stack.Navigator>
       <Stack.Screen
         component={checkLayout(appStyle?.homePageLayout)}
-        // component={AccountTemplateFour}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
@@ -347,6 +349,16 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.CUSTOMER_EARNING_HISTORY}
         component={CustomerEarningHistory}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CHAT_ROOM}
+        component={ChatRoom}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
+        component={ChatRoomForVendor}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -18,6 +18,8 @@ import {
 import stylesFunc from './styles';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getBuildId } from 'react-native-device-info';
 
 export default function OrderSuccess({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -38,9 +40,11 @@ export default function OrderSuccess({ navigation, route }) {
   // const {themeColors, themeLayouts} = currentTheme;
 
   const viewOrderDetail = () => {
+    
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       orderId: paramData?.orderDetail?.id,
-      fromActive: true // this value use for useInterval
+      fromActive: true, // this value use for useInterval
+      from:"cart"
     });
   };
   return (
@@ -90,7 +94,7 @@ export default function OrderSuccess({ navigation, route }) {
                 ? [styles.successfully, { color: MyDarkTheme.colors.text }]
                 : styles.successfully
             }>
-            {strings.THANKS_FOR_YOUR_PURCHASE}
+            {appIds.qdelo ===getBuildId()? strings.THANKS_FOR_ORDERING_WITH_US :strings.THANKS_FOR_YOUR_PURCHASE}
           </Text>
         </View>
         <View

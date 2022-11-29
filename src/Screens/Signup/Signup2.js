@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 import {
   I18nManager,
@@ -7,40 +8,33 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
-import BorderTextInput from '../../Components/BorderTextInput';
+import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
 import GradientButton from '../../Components/GradientButton';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
+import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
+import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import commonStylesFun from '../../styles/commonStyles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {TextInput} from 'react-native-paper';
-import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
-import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {checkIsAdmin} from '../../utils/utils';
-import {useNavigation} from '@react-navigation/native';
 
 export default function Signup2({navigation}) {
-  const navigation_ = useNavigation();
   const {appData, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -130,36 +124,37 @@ export default function Signup2({navigation}) {
         updateState({isLoading: false});
 
         if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            checkIsAdmin(navigation_, navigation, res.data);
-          }
+          checkEmailPhoneVerified(res.data);
         }
       })
       .catch(errorMethod);
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successSignUp(data);
+    }
+  };
+
+  const successSignUp = (data) => {
+    setUserData(data).then((suc) => {
+      actions.saveUserData(data);
+    });
+    updateState({
+      subscriptionPopup:
+        data?.client_preference?.show_subscription_plan_popup_signup,
+    });
   };
   const errorMethod = (error) => {
     updateState({isLoading: false});

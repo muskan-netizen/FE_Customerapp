@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "291136992649",
+    "project_id": "euodoo-technologies",
+    "storage_bucket": "euodoo-technologies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291136992649:android:fe67f3a405806a8f349d58",
+        "android_client_info": {
+          "package_name": "com.euodooTechnologies.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291136992649-3caghbquhjmt4eriuci8i0b85584rjvo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.euodooTechnologies.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "291136992649-4e5jo1h432ft18hltfl02ub39sifq5c9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.euodooTechnologies.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "291136992649-k4kd6fg1hlva3isqhbbvd2humkaj3teb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.euodooTechnologies.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "291136992649-0rfi0kuebbea9ackuunn6ol3pi11pcsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK0TyY5rVG8eI215cPV0Q2peYY_k9lm9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291136992649-0rfi0kuebbea9ackuunn6ol3pi11pcsb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "291136992649-ipn33unaoi1q7e7ul5oal9odq0o7a01s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.euodooTechnologies.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

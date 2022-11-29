@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1038118654153",
+    "project_id": "delcolink-72205",
+    "storage_bucket": "delcolink-72205.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038118654153:android:d885b4a6063228808cbd18",
+        "android_client_info": {
+          "package_name": "com.delcolink.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038118654153-3upjd71n8klsdb60b0023a1nj5j9du53.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delcolink.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1038118654153-f335avfto9h8ukq91t5nlo592mmn00dv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delcolink.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1038118654153-lto6r9fsu7lp80mnh7rc99bc4s8rjk56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delcolink.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1038118654153-jr1d9fliopf3ie9rvjkmiu6qnlpoi9e7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5eOKHj2NgYi5eFVpV73pMs-W0Cum_4pI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038118654153-jr1d9fliopf3ie9rvjkmiu6qnlpoi9e7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1038118654153-15vjdbtuvsf3p84r4sob7ephkouc1aif.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.delcolink.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

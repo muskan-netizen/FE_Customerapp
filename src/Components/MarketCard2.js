@@ -11,7 +11,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber, getImageUrl} from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import MarketCard3 from './MarketCard3';
@@ -29,7 +29,20 @@ const MarketCard2 = ({data = {}, onPress = () => {}, extraStyles = {}}) => {
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={onPress}
-      style={styles.mainTouchContainer}>
+      // style={styles.mainTouchContainer}
+      style={{
+        padding: moderateScale(8),
+        ...styles.mainTouchContainer,
+        backgroundColor:
+          !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
+            ? getColorCodeWithOpactiyNumber(
+                colors.textGreyLight.substring(1),
+                20,
+              )
+            : colors.whiteOpacity15,
+        
+      }}
+      >
       <View style={{flex: 0.9}}>
         <Text
           style={

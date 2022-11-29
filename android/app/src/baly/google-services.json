@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "769453941573",
+    "project_id": "baly-f0431",
+    "storage_bucket": "baly-f0431.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769453941573:android:3fcd3b1ed0f07965f8d42c",
+        "android_client_info": {
+          "package_name": "com.baly.orders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769453941573-hj79oqi80s0de3cpmm34n5qjnb4khj2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baly.orders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "769453941573-j4u3238fj9c7tugc297fegmugspt12la.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baly.orders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "769453941573-mibhh1inu8qajeqr8np3kq56pbh2qq65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baly.orders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "769453941573-q1dgiodv8u3l40vc9u8urvki1omaport.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmtvTz6Cew3Rk6JXLyzJnjsV5_wg4R9ww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769453941573-q1dgiodv8u3l40vc9u8urvki1omaport.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "769453941573-ftc8rulu16kqleqnquicqoaggju279ge.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baly.orders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

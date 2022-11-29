@@ -1,3 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import codes from 'country-calling-code';
+import {cloneDeep, isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   I18nManager,
@@ -7,53 +10,54 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
+import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import RNOtpVerify from 'react-native-otp-verify';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
+import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {cameraHandler} from '../../utils/commonFunction';
 import {showError} from '../../utils/helperFunctions';
+import {androidCameraPermission} from '../../utils/permissions';
+import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import commonStylesFun from '../../styles/commonStyles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {checkIsAdmin} from '../../utils/utils';
-import {useNavigation} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import {cameraHandler} from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import {androidCameraPermission} from '../../utils/permissions';
-import DocumentPicker from 'react-native-document-picker';
-import codes from 'country-calling-code';
-import * as RNLocalize from "react-native-localize";
-import RNOtpVerify from 'react-native-otp-verify';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null
+
+var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    console.log(result, "getCountryCoderesult");
-    // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == (result.code).toUpperCase())
+    getPhonesCallingCodeAndCountryData = codes.filter(
+      (x) => x.isoCode2 == result.code.toUpperCase(),
+    );
+
+    // [
+    //   {
+    //     country: 'United States',
+    //     countryCodes: [''],
+    //     isoCode2: 'US',
+    //     isoCode3: 'USA',
+    //   },
+    // ];
   })
   .catch((e) => {
     console.log(e);
@@ -65,9 +69,9 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
-  const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
+  const [accept, isAccept] = useState(false);
   const {
     appData,
     themeColors,
@@ -76,6 +80,7 @@ export default function Signup({navigation}) {
     languages,
     themeColor,
     themeToggle,
+    redirectedFrom,
   } = useSelector((state) => state?.initBoot);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -85,12 +90,20 @@ export default function Signup({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+  console.log(
+    getPhonesCallingCodeAndCountryData,
+    ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
+  );
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]: appData?.profile.country?.phonecode
+    callingCode: !isEmpty(getPhonesCallingCodeAndCountryData)
+      ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace('-', '')
+      : appData?.profile.country?.phonecode
       ? appData?.profile?.country?.phonecode
       : '91',
-    cca2:  getPhonesCallingCodeAndCountryData && getPhonesCallingCodeAndCountryData.length ? getPhonesCallingCodeAndCountryData[0].isoCode2:appData?.profile?.country?.code
+    cca2: !isEmpty(getPhonesCallingCodeAndCountryData)
+      ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
+      : appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     name: '',
@@ -103,7 +116,8 @@ export default function Signup({navigation}) {
     addtionalTextInputs: [],
     addtionalImages: [],
     addtionalPdfs: [],
-    appHashKey: 'WpV3+5pgxIH',
+    appHashKey: '',
+    subscriptionPopup: false,
   });
   const {
     phoneNumber,
@@ -119,6 +133,7 @@ export default function Signup({navigation}) {
     addtionalImages,
     addtionalPdfs,
     appHashKey,
+    subscriptionPopup,
   } = state;
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
@@ -130,15 +145,10 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      name: name,
-      email: appData?.profile?.preferences?.verify_email
-        ? email
-        : 'abc@gmail.com',
+      // email: email,
       password: password,
       callingCode: callingCode,
-      phoneNumber: appData?.profile?.preferences?.verify_phone
-        ? phoneNumber
-        : '78787878787',
+      phoneNumber: phoneNumber,
     });
     if (error) {
       showError(error);
@@ -167,7 +177,7 @@ export default function Signup({navigation}) {
         },
       )
       .then((res) => {
-        console.log(res,"userRegistrationDocumentres");
+        console.log(res, 'userRegistrationDocumentres');
         updateState({
           addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
           addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
@@ -193,13 +203,19 @@ export default function Signup({navigation}) {
       showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
       return;
     }
-
-    formdata.append('name', name);
-    formdata.append('app_hash_key', appHashKey);
+    {
+      !!appData?.profile?.preferences?.concise_signup
+        ? formdata.append('name', phoneNumber)
+        : formdata.append('name', name);
+    }
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
-    formdata.append('email', email);
+    {
+      !!appData?.profile?.preferences?.concise_signup
+        ? formdata.append('email', `${phoneNumber}${'@gmail.com'}`)
+        : formdata.append('email', email);
+    }
     formdata.append('password', password);
     formdata.append('device_type', Platform.OS);
     formdata.append('device_token', DeviceInfo.getUniqueId());
@@ -208,6 +224,9 @@ export default function Signup({navigation}) {
       'fcm_token',
       !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     );
+    if (Platform.OS === 'android' && !!appHashKey) {
+      formdata.append('app_hash_key', appHashKey);
+    }
 
     var isRequired = true;
     if (!isEmpty(addtionalTextInputs)) {
@@ -262,48 +281,57 @@ export default function Signup({navigation}) {
     }
     console.log(formdata, 'formdata>><');
     updateState({isLoading: true});
-    actions
-      .signUpApi(formdata, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        console.log(res, 'THIS IS RESPONSE');
-        console.log(userData, 'USERDATA AFTER THEN');
-        updateState({isLoading: false});
-        if (!!res.data) {
-          if (
-            !!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else if (
-            !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
-          ) {
-            if (
-              !!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified
-            ) {
-              checkIsAdmin(navigation_, navigation, res.data);
-            } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
-            }
-          } else {
-            checkIsAdmin(navigation_, navigation, res.data);
+
+    if (accept) {
+      actions
+        .signUpApi(formdata, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+          'Content-Type': 'multipart/form-data',
+        })
+        .then((res) => {
+          console.log(res, 'THIS IS RESPONSE');
+          updateState({isLoading: false});
+
+          if (!!res.data) {
+          
+            checkEmailPhoneVerified(res.data);
           }
-        }
-      })
-      .catch(errorMethod);
+        })
+        .catch(errorMethod);
+    } else {
+      showError('The term and condition must be accepted.');
+      updateState({isLoading: false});
+    }
+  };
+
+  const checkEmailPhoneVerified = (data) => {
+    if (
+      !!(
+        !!data?.client_preference?.verify_email &&
+        !data?.verify_details?.is_email_verified
+      ) ||
+      !!(
+        !!data?.client_preference?.verify_phone &&
+        !data?.verify_details?.is_phone_verified
+      )
+    ) {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, data)();
+    } else {
+      successSignUp(data);
+    }
+  };
+
+  const successSignUp = (data) => {
+    setUserData(data).then((suc) => {
+      actions.saveUserData(data);
+    });
+    updateState({
+      subscriptionPopup:
+        data?.client_preference?.show_subscription_plan_popup_signup,
+    });
   };
   const errorMethod = (error) => {
     updateState({isLoading: false});
@@ -467,7 +495,21 @@ export default function Signup({navigation}) {
       }
     }
   };
+  const _closeModal = () => {
+    updateState({
+      subscriptionPopup: false,
+    });
+  };
+  const _onPressSubscribe = () => {
+    moveToNewScreen(navigationStrings.SUBSCRIPTION)();
+    updateState({
+      subscriptionPopup: false,
+    });
+  };
 
+  const _isCheck = () => {
+    isAccept(!accept);
+  };
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -502,6 +544,7 @@ export default function Signup({navigation}) {
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
+        enableOnAndroid={true}
         style={{
           flex: 1,
         }}>
@@ -530,20 +573,25 @@ export default function Signup({navigation}) {
               marginTop: moderateScaleVertical(50),
               marginHorizontal: moderateScale(24),
             }}>
-            <BorderTextInput
-              onChangeText={_onChangeText('name')}
-              placeholder={strings.YOUR_NAME}
-              value={name}
-              returnKeyType={'next'}
-            />
-            <BorderTextInput
-              // autoCapitalize={'none'}
-              onChangeText={_onChangeText('email')}
-              placeholder={strings.YOUR_EMAIL}
-              value={email}
-              keyboardType={'email-address'}
-              returnKeyType={'next'}
-            />
+            {!appData?.profile?.preferences?.concise_signup && (
+              <BorderTextInput
+                onChangeText={_onChangeText('name')}
+                placeholder={strings.YOUR_NAME}
+                value={name}
+                returnKeyType={'next'}
+              />
+            )}
+            {!appData?.profile?.preferences?.concise_signup && (
+              <BorderTextInput
+                // autoCapitalize={'none'}
+                onChangeText={_onChangeText('email')}
+                placeholder={strings.YOUR_EMAIL}
+                value={email}
+                require={true}
+                keyboardType={'email-address'}
+                returnKeyType={'next'}
+              />
+            )}
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
@@ -553,6 +601,7 @@ export default function Signup({navigation}) {
               phoneNumber={phoneNumber}
               callingCode={state.callingCode}
               placeholder={strings.YOUR_PHONE_NUMBER}
+              require={true}
               keyboardType={'phone-pad'}
               color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
@@ -572,18 +621,21 @@ export default function Signup({navigation}) {
               onPressRight={showHidePassword}
               isShowPassword={isShowPassword}
               rightIconStyle={{}}
+              require
               returnKeyType={'next'}
             />
-            <BorderTextInput
-              onChangeText={_onChangeText('referralCode')}
-              placeholder={
-                appData?.profile?.preferences?.referral_code
-                  ? appData?.profile?.preferences?.referral_code
-                  : strings.ENTERREFERALCODE
-              }
-              value={referralCode}
-              returnKeyType={'next'}
-            />
+            {!appData?.profile?.preferences?.concise_signup && (
+              <BorderTextInput
+                onChangeText={_onChangeText('referralCode')}
+                placeholder={
+                  appData?.profile?.preferences?.referral_code
+                    ? appData?.profile?.preferences?.referral_code
+                    : strings.ENTERREFERALCODE
+                }
+                value={referralCode}
+                returnKeyType={'next'}
+              />
+            )}
 
             {!isEmpty(addtionalTextInputs) &&
               addtionalTextInputs.map((item, index) => {
@@ -605,6 +657,60 @@ export default function Signup({navigation}) {
                 })}
               </View>
             )}
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={_isCheck}
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: 10,
+                }}>
+                <FastImage
+                  style={{
+                    width: moderateScale(15),
+                    height: moderateScale(15),
+                  }}
+                  tintColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  }
+                  source={
+                    accept
+                      ? imagePath.checkBox2Active
+                      : imagePath.checkBox2InActive
+                  }
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+              <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                <Text
+                  style={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  I accept the
+                </Text>
+                <Text
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                  }
+                  style={{color: colors.themeColor}}>
+                  {' '}
+                  {`${strings.TERMS_CONDITIONS} `}
+                </Text>
+                <Text
+                  style={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  and have read the
+                </Text>
+                <Text
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 1})
+                  }
+                  style={{color: colors.themeColor}}>
+                  {`${strings.PRICACY_POLICY}`}.
+                </Text>
+              </View>
+            </View>
 
             <GradientButton
               onPress={onSignup}
@@ -623,7 +729,7 @@ export default function Signup({navigation}) {
               <Text
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}
                 style={{
-                  color: themeColors.primary_color,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   fontFamily: fontFamily.futuraBtHeavy,
                 }}>
                 {strings.LOGIN}
@@ -640,6 +746,13 @@ export default function Signup({navigation}) {
         destructiveButtonIndex={2}
         onPress={(index) => cameraHandle(index)}
       />
+      {!!subscriptionPopup && (
+        <SubscriptionModal
+          isVisible={subscriptionPopup}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+        />
+      )}
     </WrapperContainer>
   );
 }

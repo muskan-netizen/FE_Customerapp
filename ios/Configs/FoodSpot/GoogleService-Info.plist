@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>839836945855-qac3ld3hp30u3f8ahne6agm59t9tqncl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.839836945855-qac3ld3hp30u3f8ahne6agm59t9tqncl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>839836945855-0k64n2g776d6j8p9nopf6j4fjn5nh6ha.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCSMhJoRR12_irteMnHUGuwA-XM-6ftqlU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>839836945855</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.foodSpot.order</string>
+	<key>PROJECT_ID</key>
+	<string>foodspot-28575</string>
+	<key>STORAGE_BUCKET</key>
+	<string>foodspot-28575.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:839836945855:ios:18d10dec7499e0046ea50a</string>
+</dict>
+</plist>

@@ -16,7 +16,8 @@ export default {
   RETURNREQUEST: 'Return Request',
   ONDEMANDSERVICE: 'On Demand Service',
   VIEW_ALL_VENDORS: 'veiwAllVendors',
-  LAUNDRY:"Laundry",
-  FPX:"fpx",
-  CASH_FREE:"Cash free"
+  LAUNDRY: 'Laundry',
+  FPX: 'fpx',
+  CASH_FREE: 'Cash free',
+  FOOD_TEMPLATE: 'Food',
 };

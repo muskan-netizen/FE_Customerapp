@@ -46,7 +46,7 @@ const RatingModal = ({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : theme;
 
-  console.log('productDetailproductDetail', productDetail);
+
 
   const [state, setState] = useState({
     isLoading: false,
@@ -141,7 +141,9 @@ const RatingModal = ({
     updateState({rating: rating});
   };
 
-  const _giveRatingToProduct = () => {
+  
+
+  const _giveRatingToProduct = () => {  
     updateState({isLoading: true});
     if (isDriverRateModal) {
       const data = {
@@ -150,12 +152,13 @@ const RatingModal = ({
         review: reviewText,
       };
 
-      console.log(data);
+      console.log(data,"dataaaaa");
       actions
         .ratingToDriver(data, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          
         })
         .then((res) => {
           updateState({isLoading: false});
@@ -197,6 +200,7 @@ const RatingModal = ({
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
         updateState({isLoading: false});
@@ -240,6 +244,7 @@ const RatingModal = ({
             headerStyle={{backgroundColor: colors.white}}
             onPressLeft={modalClose}
           />
+          
           <View
             style={{
               height: 1,
@@ -253,9 +258,27 @@ const RatingModal = ({
             <View
               style={{
                 marginHorizontal: moderateScale(20),
-                marginTop: moderateScaleVertical(50),
+                marginTop: moderateScaleVertical(20),
                 marginBottom: moderateScaleVertical(20),
               }}>
+                <View style={{
+                  marginVertical:moderateScale(18)
+                }}> 
+              <Text style={{
+                alignSelf:'center',
+                fontFamily:fontFamily.bold,
+                fontSize:moderateScale(26)
+              }}>
+                {strings.ORDER_COMPLETED}
+              </Text>
+              <Text style={{
+                alignSelf:'center',
+                fontFamily:fontFamily.medium,
+                fontSize:moderateScale(14)
+              }}>
+                {"Rate your order and your driver"}
+              </Text>
+            </View>
               {/* star View */}
               <View style={styles.starViewStyle}>
                 <StarRating
@@ -385,6 +408,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   uploadImage: {
     fontSize: textScale(12),

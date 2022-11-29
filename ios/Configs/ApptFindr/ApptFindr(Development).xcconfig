@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-ApptFindr/Pods-available_pods-ApptFindr.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1638721933
+PROJECT_BUNDLE_ID =com.apptFindr.order
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 2
+PROJECT_APP_NAME =ApptFindr
+PROJECT_GOOGLE_CLIENT_ID =73724160302-fje1t3kaeqh4rfobi6b569m2eqr66bhh.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.73724160302-fje1t3kaeqh4rfobi6b569m2eqr66bhh
+PROJECT_FACEBOOK_ID = 728291031563928
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =ApptFindrInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

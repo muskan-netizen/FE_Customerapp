@@ -76,6 +76,8 @@ export {default as MyProfile2} from './MyProfile/MyProfile2';
 export {default as MyProfile3} from './MyProfile/MyProfile3';
 export {default as Account2} from './Account/Account2';
 export {default as Account3} from './Account/Account3';
+export {default as AccountTemplateFour} from './Account/AccountTemplateFour';
+
 export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';
 export {default as ReturnOrder} from './ReturnOrder/ReturnOrder';
 export {default as Vendors3} from './Vendors/Vendors3';
@@ -99,6 +101,7 @@ export {default as PrinterConnectionSunmi} from './PrinterConnection/PrinterScre
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
 export {default as ProductWithCategory} from './ProductWithCategory/ProductWithCategory';
+export {default as ChatScreen} from './ChatScreen/ChatScreen';
 
 // vendor App screens
 export {default as RoyoHome} from './RoyoVendorApp/RoyoHome/RoyoHome';
@@ -143,3 +146,10 @@ export {default as StripeOXXO} from './PaymentGateways/StripeOXXO';
 export {default as VivaWallet} from './PaymentGateways/VivaWallet';
 export {default as MyCash} from './PaymentGateways/MyCash';
 export {default as LaundryAvailableVendors} from './LaundryAvailableVendors/LaundryAvailableVendors';
+export {default as ChatRoom} from './ChatRoom/ChatRoom';
+export {default as OpenPay} from './PaymentGateways/OpenPay';
+export {default as Userede} from './PaymentGateways/Userede';
+export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendor';
+export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
+export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
+export {default as Conekta} from './PaymentGateways/Conekta';

@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-ParcelWorks/Pods-available_pods-ParcelWorks.debug.xcconfig"
+
+PROJECT_APPLE_ID = 6444511351
+PROJECT_BUNDLE_ID = com.parcelworks.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = ParcelWorks
+PROJECT_GOOGLE_CLIENT_ID = 686298040540-86imbjg7vk5vhvhqhu87jm8p5sqg9680.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.686298040540-86imbjg7vk5vhvhqhu87jm8p5sqg9680
+PROJECT_FACEBOOK_ID = 859451318803154
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =ParcelWorksInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

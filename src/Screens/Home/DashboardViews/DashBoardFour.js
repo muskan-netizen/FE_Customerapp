@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import EmptyListLoader from '../../../Components/EmptyListLoader';
 import HomeCategoryCard from '../../../Components/HomeCategoryCard';
@@ -24,26 +24,32 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { getUserData } from '../../../utils/utils';
+import {getUserData} from '../../../utils/utils';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
-import { getColorCodeWithOpactiyNumber } from '../../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
+import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
 import navigationStrings from '../../../navigation/navigationStrings';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {getBundleId} from 'react-native-device-info';
 
 export default function DashBoardFour({
-  handleRefresh = () => { },
-  bannerPress = () => { },
+  handleRefresh = () => {},
+  bannerPress = () => {},
   //   appMainData = {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => { },
+  onPressCategory = () => {},
   selcetedToggle,
   toggleData,
   tempCartData = null,
   navigation = {},
-  onPressVendor = () => { },
+  onPressVendor = () => {},
+  onClose = () => {},
+  onPressSubscribe = () => {},
+  isSubscription = false,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -55,28 +61,28 @@ export default function DashBoardFour({
     isVendorColumnList: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const { appData, themeColors, appStyle } = useSelector(
+  const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
 
   const fontFamily = appStyle?.fontSizeData;
-  const { bannerRef } = useRef();
-  const { slider1ActiveSlide, newCategoryData, isVendorColumnList } = state;
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const {bannerRef} = useRef();
+  const {slider1ActiveSlide, newCategoryData, isVendorColumnList} = state;
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  const _renderItem = ({ item }) => (
+  const _renderItem = ({item}) => (
     <HomeCategoryCard data={item} onPress={() => onPressCategory(item)} />
   );
 
-  const _renderVendors = ({ item }) => (
+  const _renderVendors = ({item}) => (
     <MarketCard2 data={item} onPress={() => onPressVendor(item)} />
   );
   const _changeVendorListStyle = () =>
-    updateState({ isVendorColumnList: !isVendorColumnList });
+    updateState({isVendorColumnList: !isVendorColumnList});
 
   const onPressViewEditAndReplace = (item) => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -85,7 +91,7 @@ export default function DashBoardFour({
       orderDetail: {
         dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
       },
-      selectedVendor: { id: item?.vendors[0].vendor_id },
+      selectedVendor: {id: item?.vendors[0].vendor_id},
     });
   };
 
@@ -94,51 +100,51 @@ export default function DashBoardFour({
       <View>
         {tempCartData && tempCartData.length
           ? tempCartData.map((item, index) => {
-            return (
-              <TouchableOpacity
-                onPress={() => onPressViewEditAndReplace(item)}
-                style={{
-                  padding: moderateScale(8),
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  // alignItems: 'center',
-                  backgroundColor: getColorCodeWithOpactiyNumber(
-                    themeColors?.primary_color.substr(1),
-                    20,
-                  ),
-                  // marginHorizontal:moderateScale(15),
-                  marginTop: moderateScale(15),
-                  borderRadius: moderateScale(5),
-                  borderWidth: moderateScale(0.5),
-                  borderColor: themeColors?.primary_color,
-                }}>
-                <View style={{ flex: 0.7 }}>
-                  <Text
-                    style={{
-                      fontSize: textScale(12),
-                      fontFamily: fontFamily.medium,
-                    }}>
-                    {strings.YOURDRIVERHASMODIFIED}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: textScale(12),
-                      paddingTop: moderateScale(5),
-                      fontFamily: fontFamily.bold,
-                    }}>
-                    {strings.VIEW_DETAIL}
-                  </Text>
-                </View>
-                <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
-                  <Text
-                    style={{
-                      fontSize: textScale(14),
-                      fontFamily: fontFamily.medium,
-                    }}>{`#${item?.order_number}`}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })
+              return (
+                <TouchableOpacity
+                  onPress={() => onPressViewEditAndReplace(item)}
+                  style={{
+                    padding: moderateScale(8),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    // alignItems: 'center',
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      20,
+                    ),
+                    // marginHorizontal:moderateScale(15),
+                    marginTop: moderateScale(15),
+                    borderRadius: moderateScale(5),
+                    borderWidth: moderateScale(0.5),
+                    borderColor: themeColors?.primary_color,
+                  }}>
+                  <View style={{flex: 0.7}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {strings.YOURDRIVERHASMODIFIED}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        paddingTop: moderateScale(5),
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {strings.VIEW_DETAIL}
+                    </Text>
+                  </View>
+                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                    <Text
+                      style={{
+                        fontSize: textScale(14),
+                        fontFamily: fontFamily.medium,
+                      }}>{`#${item?.order_number}`}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })
           : null}
       </View>
     );
@@ -164,7 +170,7 @@ export default function DashBoardFour({
           listSize={1}
           cardWidth={sliderWidth}
           height={180}
-          containerStyle={{ marginHorizontal: moderateScale(10) }}
+          containerStyle={{marginHorizontal: moderateScale(10)}}
         />
       ) : null}
       {!isLoading && appData?.banners?.length ? (
@@ -175,11 +181,11 @@ export default function DashBoardFour({
             bannerData={appData.banners}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
-            onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
+            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
             onPress={(item) => bannerPress(item)}
             isDarkMode={isDarkMode}
           />
-          <View style={{ height: moderateScaleVertical(5) }} />
+          <View style={{height: moderateScaleVertical(5)}} />
         </>
       ) : null}
       <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
@@ -189,14 +195,14 @@ export default function DashBoardFour({
           <Text
             style={[
               styles.heyMsg,
-              { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
+              {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
             ]}>
             {strings.HEY_MSG} {userData.name},
           </Text>
           <Text
             style={[
               styles.greetingMsg,
-              { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
+              {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
             ]}>
             {strings.GREETING_MSG}
           </Text>
@@ -207,9 +213,9 @@ export default function DashBoardFour({
       )}
       {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />}
       {!isLoading &&
-        appMainData &&
-        appMainData?.categories &&
-        appMainData?.categories.length ? (
+      appMainData &&
+      appMainData?.categories &&
+      appMainData?.categories.length ? (
         <View
           style={{
             marginTop: moderateScaleVertical(10),
@@ -220,20 +226,22 @@ export default function DashBoardFour({
             keyExtractor={(item) => item.id.toString()}
             showsHorizontalScrollIndicator={false}
             renderItem={_renderItem}
-            ItemSeparatorComponent={() => <View style={{ width: 6 }} />}
+            ItemSeparatorComponent={() => <View style={{width: 6}} />}
           />
         </View>
       ) : null}
-      <View style={{ height: moderateScale(25) }} />
+      <View style={{height: moderateScale(25)}} />
       {appMainData?.vendors && appMainData?.vendors?.length ? (
         <>
           <Text
             style={
               isDarkMode
-                ? [styles.nearVendorTxt, { color: MyDarkTheme.colors.text }]
+                ? [styles.nearVendorTxt, {color: MyDarkTheme.colors.text}]
                 : styles.nearVendorTxt
             }>
-            {strings.NEAR_VENDOR}
+            {getBundleId() == appIds.sorDelivery
+              ? strings.NEAR_RESTAURANTS
+              : strings.NEAR_VENDOR}
           </Text>
         </>
       ) : null}
@@ -246,43 +254,43 @@ export default function DashBoardFour({
             marginLeft: moderateScale(2),
           }}>
           <View
-            style={{ flexDirection: 'row', marginBottom: moderateScale(15) }}
+            style={{flexDirection: 'row', marginBottom: moderateScale(15)}}
             horizontal={true}>
             {appMainData?.vendors
               ? appMainData?.vendors.map((itm, inx) => {
-                if (inx < appMainData?.vendors.length / 2) {
-                  return (
-                    <MarketCard2
-                      key={inx}
-                      data={itm}
-                      onPress={() => onPressCategory(itm)}
-                      extraStyles={{
-                        width: width * 0.8,
-                        marginRight: moderateScale(20),
-                      }}
-                    />
-                  );
-                }
-              })
+                  if (inx < appMainData?.vendors.length / 2) {
+                    return (
+                      <MarketCard2
+                        key={inx}
+                        data={itm}
+                        onPress={() => onPressCategory(itm)}
+                        extraStyles={{
+                          width: width * 0.8,
+                          marginRight: moderateScale(20),
+                        }}
+                      />
+                    );
+                  }
+                })
               : null}
           </View>
-          <View style={{ flexDirection: 'row', marginTop: moderateScale(15) }}>
+          <View style={{flexDirection: 'row', marginTop: moderateScale(15)}}>
             {!isLoading && appMainData?.vendors
               ? appMainData?.vendors.map((itm, inx) => {
-                if (inx >= appMainData?.vendors.length / 2) {
-                  return (
-                    <MarketCard2
-                      key={inx}
-                      data={itm}
-                      onPress={() => onPressCategory(itm)}
-                      extraStyles={{
-                        width: width * 0.8,
-                        marginRight: moderateScale(20),
-                      }}
-                    />
-                  );
-                }
-              })
+                  if (inx >= appMainData?.vendors.length / 2) {
+                    return (
+                      <MarketCard2
+                        key={inx}
+                        data={itm}
+                        onPress={() => onPressCategory(itm)}
+                        extraStyles={{
+                          width: width * 0.8,
+                          marginRight: moderateScale(20),
+                        }}
+                      />
+                    );
+                  }
+                })
               : null}
           </View>
         </ScrollView>
@@ -293,7 +301,7 @@ export default function DashBoardFour({
           showsVerticalScrollIndicator={false}
           renderItem={_renderVendors}
           ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScale(20) }} />
+            <View style={{height: moderateScale(20)}} />
           )}
           keyExtractor={(item) => item.id.toString()}
         />
@@ -304,11 +312,25 @@ export default function DashBoardFour({
           onPress={_changeVendorListStyle}
           style={styles.applyPromoBtn}>
           <Text style={styles.viewAllBtn}>
-            {!isVendorColumnList ? strings.VIEW_ALL_VENDORS : strings.CLOSE}
+            {!isVendorColumnList
+              ? getBundleId() == appIds.sorDelivery
+                ? strings.RESTAURANTS
+                : strings.VIEW_ALL_VENDORS
+              : getBundleId() == appIds.sorDelivery
+              ? strings.CLOSES
+              : strings.CLOSE}
           </Text>
         </TouchableOpacity>
       ) : null}
-      <View style={{ height: moderateScaleVertical(65) }} />
+      <View style={{height: moderateScaleVertical(65)}} />
+      {!!userData?.auth_token &&
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+        )}
     </ScrollView>
   );
 }

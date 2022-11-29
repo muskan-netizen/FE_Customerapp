@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "79779261194",
+    "project_id": "green-cab-1bd78",
+    "storage_bucket": "green-cab-1bd78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79779261194:android:144296bce34f355459a8f3",
+        "android_client_info": {
+          "package_name": "com.greenCab.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79779261194-dqb56qaq42j7r6rcgkvegtd11jk5fgrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenCab.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "79779261194-ga60945n9gefov20iq2v8kdqt2n1q47o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenCab.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "79779261194-intsimbgmu6275ijvu0iaf5memrc6imu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenCab.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "79779261194-474hl8547h1qhkche2gtng81sj6tdjb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwXJDfW_mNywzVvEGqB6zI7OMBbKpjjPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79779261194-474hl8547h1qhkche2gtng81sj6tdjb6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "79779261194-gagfabulvejnqj931ski687rh9auds59.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.greenCab.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
