@@ -1373,7 +1373,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           failOffsetX={[-5, 5]}
           animateOnMount={true}
           handleComponent={carModalHeader}
-          onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
+          onChange={() => playHapticEffect(hapticEffects.impactMedium)}
+          >
           <View
             style={{
               flex: 1,

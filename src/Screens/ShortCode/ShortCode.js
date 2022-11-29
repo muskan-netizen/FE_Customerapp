@@ -2939,12 +2939,14 @@ export default function ShortCode({route, navigation}) {
       header = {
         // code: '0fcc84',
         code: shortCode,
+        // code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: '0fcc84',
         code: shortCode,
+        // code: shortCode,
       };
     }
     actions
