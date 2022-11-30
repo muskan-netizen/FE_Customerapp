@@ -678,8 +678,8 @@ export default function SelectPaymentModalView({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                flex: 1,
-                backgroundColor:'red'
+                // flex: 1,
+                // backgroundColor:'red'
               }}
              
             >

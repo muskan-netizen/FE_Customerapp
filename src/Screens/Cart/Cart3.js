@@ -3936,7 +3936,7 @@ function Cart({ navigation, route }) {
           </View>
         )}
 
-        {!!Number(cartData?.total_service_fee) && (
+        {!!Number(cartData?.total_service_fee) > 0 && (
           <View style={styles.bottomTabLableValue}>
             <Text
               style={

@@ -204,14 +204,14 @@ android {
 
     flavorDimensions "appType"
   productFlavors{
-            taxiolgy{
+             sheRyders{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.taxiolgy.order'
-            resValue "string", "app_name", "Taxiolgy" 
+            applicationId 'com.sheRyders'
+            resValue "string", "app_name", "She Ryders" 
             resValue "string", "host_name", ""
             }
                       royoorder {
@@ -5899,7 +5899,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.sheRyders.order'
+    //         applicationId 'com.sheRyders'
     //         resValue "string", "app_name", "She Ryders" 
     //         resValue "string", "host_name", ""
     //         }

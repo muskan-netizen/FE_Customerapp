@@ -1344,7 +1344,7 @@ export default function OrderDetail({ navigation, route }) {
                                 {`${currencies?.primary_currency?.symbol} ${
                                   // Number(i?.pvariant?.multiplier) *
                                   currencyNumberFormatter(
-                                    Number(i?.price)*Number(i?.quantity),
+                                    Number(i?.price) * Number(i?.quantity),
                                     appData?.profile?.preferences
                                       ?.digit_after_decimal,
                                   )
@@ -1608,34 +1608,34 @@ export default function OrderDetail({ navigation, route }) {
               </Text>
 
               {item?.products.map((item, index) => {
-                  return (
-                    <View>
-                      <Text
-                        style={
-                          isDarkMode
-                            ? [
-                              styles.priceItemLabel,
-                              {
-                                color: MyDarkTheme.colors.text,
-                                fontSize: textScale(14),
-                              },
-                            ]
-                            : styles.priceItemLabel
-                        }>
-                        {`${currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
-                            Number(
-                              item?.container_charges
-                                ? item?.container_charges
-                                : 0,
-                            ),
-                            appData?.profile?.preferences?.digit_after_decimal,
-                          )}`}
-                      </Text>
-                    </View>
-                  )
-                })
-                }
+                return (
+                  <View>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                            styles.priceItemLabel,
+                            {
+                              color: MyDarkTheme.colors.text,
+                              fontSize: textScale(14),
+                            },
+                          ]
+                          : styles.priceItemLabel
+                      }>
+                      {`${currencies?.primary_currency?.symbol
+                        } ${currencyNumberFormatter(
+                          Number(
+                            item?.container_charges
+                              ? item?.container_charges
+                              : 0,
+                          ),
+                          appData?.profile?.preferences?.digit_after_decimal,
+                        )}`}
+                    </Text>
+                  </View>
+                )
+              })
+              }
 
             </View>
           )}

@@ -1,9 +1,9 @@
-import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import React, {useRef} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import React, { useRef } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
+import { useSelector } from 'react-redux';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -14,10 +14,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { currencyNumberFormatter } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
@@ -28,17 +28,17 @@ export default function AvailableDriver({
   selectedCarOption = null,
   allListedDrivers,
 }) {
-  const {appData, themeColors, appStyle, themeToggle, themeColor, currencies} =
+  const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
+  const styles = stylesFun({ fontFamily, themeColors });
 
   // choose a trip or swipe up for more
   //Render all Available amounts
-  const _renderItem = ({item, index}) => {
-    
+  const _renderItem = ({ item, index }) => {
+    console.log(item, 'itemitemitem');
     return (
       <View
         style={{
@@ -47,8 +47,8 @@ export default function AvailableDriver({
               ? colors.whiteOpacity15
               : colors.textGrey
             : selectedCarOption?.id == item?.id
-            ? colors.lightGreyBg
-            : colors.whiteOpacity77,
+              ? colors.lightGreyBg
+              : colors.whiteOpacity77,
 
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
@@ -67,7 +67,7 @@ export default function AvailableDriver({
             // marginBottom: moderateScaleVertical(8),
             opacity: selectedCarOption?.id == item?.id ? 0.8 : 1,
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
               resizeMode={'contain'}
               style={{
@@ -95,8 +95,8 @@ export default function AvailableDriver({
                       ? colors.white
                       : colors.whiteOpacity50
                     : selectedCarOption?.id == item?.id
-                    ? colors.black
-                    : colors.blackC,
+                      ? colors.black
+                      : colors.blackC,
                   fontFamily: fontFamily.medium,
                   fontSize: textScale(14),
                   textAlign: 'left',
@@ -110,8 +110,8 @@ export default function AvailableDriver({
                       ? colors.white
                       : colors.whiteOpacity50
                     : selectedCarOption?.id == item?.id
-                    ? colors.black
-                    : colors.blackOpacity66,
+                      ? colors.black
+                      : colors.blackOpacity66,
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(10),
                   textAlign: 'left',
@@ -129,14 +129,14 @@ export default function AvailableDriver({
                   ? colors.white
                   : colors.whiteOpacity50
                 : selectedCarOption?.id == item?.id
-                ? colors.black
-                : colors.blackC,
+                  ? colors.black
+                  : colors.blackC,
               fontFamily: fontFamily.medium,
               fontSize: textScale(14),
               textAlign: 'left',
             }}>
             {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(item.tags_price+item?.toll_fee),
+              Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
               appData?.profile?.preferences?.digit_after_decimal,
             )}`}
           </Text>
@@ -166,7 +166,7 @@ export default function AvailableDriver({
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i, inx) => {
               return (
                 <View
-                  style={{marginBottom: moderateScaleVertical(8)}}
+                  style={{ marginBottom: moderateScaleVertical(8) }}
                   key={inx}>
                   <ListEmptyCar isLoading={isLoading} />
                 </View>
