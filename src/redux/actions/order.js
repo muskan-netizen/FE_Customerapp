@@ -50,6 +50,7 @@ export function getOrderDetailForBilling(data = {}, headers = {}) {
 export function getOrderDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(GET_ORDER_DETAIL, data, headers)
+
       .then((res) => {
         resolve(res);
       })
