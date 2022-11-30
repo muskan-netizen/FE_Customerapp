@@ -964,8 +964,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </Text>
         </View>
         <View style={{ marginVertical: moderateScale(8) }}>
-          {console.log(availableVendors.length,"availableVendors")}
-         {availableVendors.length > 1 ? <FlatList
+        
+         {availableVendors?.length > 1 ? <FlatList
             horizontal
             data={availableVendors}
             renderItem={renderVendors}
