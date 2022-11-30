@@ -524,7 +524,6 @@ const AddressModal3 = ({
     }
 
     data['is_primary'] = type == 'addAddress' ? 1 : is_primary;
-    console.log('passLocationpassLocation>>>', data);
     passLocation(data);
   };
 

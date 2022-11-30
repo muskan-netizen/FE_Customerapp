@@ -1187,6 +1187,7 @@ export default function Products({route, navigation}) {
             )}
           </View>
         </View>
+        {console.log(categoryInfo, 'categoryInfo....categoryInfo')}
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{marginHorizontal: moderateScale(20)}}>
@@ -1821,13 +1822,8 @@ export default function Products({route, navigation}) {
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
-          setLoading(false);
-
-          if (res.data.listData.data.length == 0) {
-            loadMore = false;
-          }
           loadMore = false;
-          // onAtoZFilter()
+
           setProductListData(
             pageNo == 1
               ? res.data.listData.data
@@ -1847,11 +1843,8 @@ export default function Products({route, navigation}) {
               isLoadingC: true,
             });
           }
-          setLoading(false);
         }
         setLoading(false);
-        // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
 
       .catch(errorMethod);
@@ -2553,7 +2546,6 @@ export default function Products({route, navigation}) {
       });
     }
   };
-  console.log(productListId?.vendor, 'productListId?.vendor');
   useEffect(() => {
     if (isLoadingC) {
       getAllProductsByCategoryId(1);

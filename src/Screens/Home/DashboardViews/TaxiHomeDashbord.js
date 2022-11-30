@@ -880,7 +880,6 @@ export default function TaxiHomeDashbord({
                   alignItems: 'center',
                 }}
                 onPress={() => updateState({fullMapShow: true})}>
-                {console.log(location, 'location....location')}
                 {
                   <MapView
                     ref={mapRef}
