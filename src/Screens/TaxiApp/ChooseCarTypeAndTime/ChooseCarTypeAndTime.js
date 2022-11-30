@@ -652,69 +652,135 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       })
       .catch(errorMethod);
   };
+  // const _confirmAndPay = () => {
+  //   console.log(selectedPayment.id, 'selectedPayment.id');
+  //   let data = {};
+  //   data['task_type'] = scheduleDateTime?.selectedDateAndTime
+  //     ? ''
+  //     : pickUpTimeType
+  //       ? pickUpTimeType
+  //       : '';
+  //   data['schedule_time'] = scheduleDateTime?.selectedDateAndTime
+  //     ? `${scheduleDateTime?.selectedDateAndTime}`
+  //     : pickUpTimeType == 'now'
+  //       ? ''
+  //       : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
+  //   data['recipient_phone'] = '';
+  //   data['recipient_email'] = '';
+  //   data['task_description'] = taskInstruction;
+  //   data['amount'] = selectedCarOption?.tags_price;
+  //   data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
+  //   data['vendor_id'] = selectedCarOption?.vendor_id;
+  //   data['product_id'] = selectedCarOption?.id;
+  //   data['currency_id'] = currencies?.primary_currency?.id;
+  //   data['tasks'] = paramData?.tasks;
+  //   data['images_array'] = uploadImages;
+  //   data['is_cab_pooling'] = paramData?.is_cab_pooling;
+  //   data['no_seats_for_pooling'] = updateSeatNO;
+  //   data['user_product_order_form'] = allSubmittedAnswers
+
+  //     ? allSubmittedAnswers
+  //     : [];
+  //   if (couponInfo) {
+  //     data['coupon_id'] = couponInfo?.id;
+  //   }
+  //   data['order_time_zone'] = RNLocalize.getTimeZone();
+  //   data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
+  //   (data[
+  //     'friendName'
+  //   ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
+  //     (data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType
+  //       ? paramData?.friendBookingDetails?.mobileNumber?.includes('+')
+  //         ? paramData?.friendBookingDetails?.mobileNumber
+  //         : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
+  //       : ''),
+  //     console.log(data, 'dataaaaa');
+
+  //   if (
+  //     !!(
+  //       !!userData?.client_preference?.verify_email &&
+  //       !userData?.verify_details?.is_email_verified
+  //     ) ||
+  //     !!(
+  //       !!userData?.client_preference?.verify_phone &&
+  //       !userData?.verify_details?.is_phone_verified
+  //     )
+  //   ) {
+  //     moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
+  //       ...userData,
+  //       fromCart: true,
+  //     })();
+  //   } else {
+  //     selectedPayment.id == 10 ? renderRazorPay(data) : _finalPayment(data);
+  //   }
+  // };
+
   const _confirmAndPay = () => {
-    console.log(selectedPayment.id, 'selectedPayment.id');
+    console.log(selectedPayment.id, "selectedPayment.id");
     let data = {};
-    data['task_type'] = scheduleDateTime?.selectedDateAndTime
-      ? ''
-      : pickUpTimeType
-        ? pickUpTimeType
-        : '';
-    data['schedule_time'] = scheduleDateTime?.selectedDateAndTime
-      ? `${scheduleDateTime?.selectedDateAndTime}`
-      : pickUpTimeType == 'now'
-        ? ''
-        : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
-    data['recipient_phone'] = '';
-    data['recipient_email'] = '';
-    data['task_description'] = taskInstruction;
-    data['amount'] = selectedCarOption?.tags_price;
-    data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
-    data['vendor_id'] = selectedCarOption?.vendor_id;
-    data['product_id'] = selectedCarOption?.id;
-    data['currency_id'] = currencies?.primary_currency?.id;
-    data['tasks'] = paramData?.tasks;
-    data['images_array'] = uploadImages;
-    data['is_cab_pooling'] = paramData?.is_cab_pooling;
-    data['no_seats_for_pooling'] = updateSeatNO;
-    data['user_product_order_form'] = allSubmittedAnswers
-
-      ? allSubmittedAnswers
-      : [];
+    data["task_type"] = scheduleDateTime?.selectedDateAndTime
+    ? ""
+    : pickUpTimeType
+    ? pickUpTimeType
+    : "";
+    data["schedule_time"] = scheduleDateTime?.selectedDateAndTime
+    ? `${scheduleDateTime?.selectedDateAndTime}`
+    : pickUpTimeType == "now"
+    ? ""
+    : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
+    data["recipient_phone"] = "";
+    data["recipient_email"] = "";
+    data["task_description"] = taskInstruction;
+    data["amount"] = selectedCarOption?.total_tags_price;
+    data["tags_amount"] = selectedCarOption?.tags_price;
+    data["tollamount"] = selectedCarOption?.toll_fee
+    ? selectedCarOption?.toll_fee
+    : 0;
+    data["servicechargeamount"] = selectedCarOption?.service_charge_amount
+    ? selectedCarOption?.service_charge_amount
+    : 0;
+    data["payment_option_id"] = selectedPayment ? selectedPayment?.id : 1;
+    data["vendor_id"] = selectedCarOption?.vendor_id;
+    data["product_id"] = selectedCarOption?.id;
+    data["currency_id"] = currencies?.primary_currency?.id;
+    data["tasks"] = paramData?.tasks;
+    data["images_array"] = uploadImages;
+    data["user_product_order_form"] = allSubmittedAnswers
+    ? allSubmittedAnswers
+    : [];
     if (couponInfo) {
-      data['coupon_id'] = couponInfo?.id;
+    data["coupon_id"] = couponInfo?.id;
     }
-    data['order_time_zone'] = RNLocalize.getTimeZone();
-    data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
+    data["order_time_zone"] = RNLocalize.getTimeZone();
+    data["bookingType"] = paramData?.friendBookingDetails?.bookingType;
     (data[
-      'friendName'
-    ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
-      (data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType
-        ? paramData?.friendBookingDetails?.mobileNumber?.includes('+')
-          ? paramData?.friendBookingDetails?.mobileNumber
-          : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
-        : ''),
-      console.log(data, 'dataaaaa');
-
+    "friendName"
+    ] =  `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
+    (data["friendPhoneNumber"] = paramData?.friendBookingDetails?.bookingType
+    ? paramData?.friendBookingDetails?.mobileNumber?.includes("+")
+    ? paramData?.friendBookingDetails?.mobileNumber
+    :  `${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
+    : ""),
+    console.log(data, "dataaaaa");
+    
     if (
-      !!(
-        !!userData?.client_preference?.verify_email &&
-        !userData?.verify_details?.is_email_verified
-      ) ||
-      !!(
-        !!userData?.client_preference?.verify_phone &&
-        !userData?.verify_details?.is_phone_verified
-      )
+    !!(
+    !!userData?.client_preference?.verify_email &&
+    !userData?.verify_details?.is_email_verified
+    ) ||
+    !!(
+    !!userData?.client_preference?.verify_phone &&
+    !userData?.verify_details?.is_phone_verified
+    )
     ) {
-      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
-        ...userData,
-        fromCart: true,
-      })();
+    moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
+    ...userData,
+    fromCart: true,
+    })();
     } else {
-      selectedPayment.id == 10 ? renderRazorPay(data) : _finalPayment(data);
+    selectedPayment.id == 10 ? renderRazorPay(data) : _finalPayment(data);
     }
-  };
-
+    };
   const renderRazorPay = (data) => {
     let options = {
       description: 'Payment for your order',
