@@ -1004,5 +1004,8 @@ Amount`,
   RESTAURANTS:'Restaurants',
   NEAR_RESTAURANTS:'Top restaurants near you',
   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
-  SELECT_ANS:"Select your answer"
+  SELECT_ANS:"Select your answer",
+  PLEASE_SELECT_DATE: ' Please select date.',
+  SLOTS_NOT_FOUND_FOR_DATE: ' Slots not found for selected date',
+  ADDITIONAL_CHARGES: 'Additional Charges',
 };

@@ -1,19 +1,20 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import moment from 'moment';
+import React, {useEffect, useRef} from 'react';
 import {
-  Alert,
+  FlatList,
   Image,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  FlatList,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import DeviceInfo from 'react-native-device-info';
+import DatePicker from 'react-native-date-picker';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import Modal from 'react-native-modal';
 import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -33,20 +34,18 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
-  getColorCodeWithOpactiyNumber,
+  addRemoveMinutes,
+  getHourAndMinutes,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../utils/commonFunction';
+import {
   getImageUrl,
   hapticEffects,
   playHapticEffect,
-  showError,
-  showSuccess,
 } from '../utils/helperFunctions';
-import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
-import Modal from 'react-native-modal';
-import ImageViewer from 'react-native-image-zoom-viewer';
 
 const VariantAddons = ({
   productdetail = null,
@@ -64,14 +63,23 @@ const VariantAddons = ({
   isProductImageLargeViewVisible = false,
   isLoadingC = false,
   updateState = () => {},
+  startDateRental = new Date(),
+  endDateRental = new Date(),
+  isRentalStartDatePicker = false,
+  isRentalEndDatePicker = false,
+  rentalProductDuration = null,
+  isVarientSelectLoading = false,
+  productDetailNew = {},
+  isProductAvailable = false,
 }) => {
   const {appData, themeColors, currencies, languages, appStyle, themeColor} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
-  console.log(addonSet, 'addOnnnn');
   useFocusEffect(
     React.useCallback(() => {
       if (variantSet.length) {
@@ -92,7 +100,7 @@ const VariantAddons = ({
           getProductDetail();
         }
       }
-    }, []),
+    }, [variantSet]),
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
@@ -109,17 +117,16 @@ const VariantAddons = ({
       .then((res) => {
         console.log(res.data, 'res.data by vendor id ');
         updateState({
-          productDetailData: res?.data,
+          productDetailNew: res?.data,
           productPriceData: {
-            multiplier: res.data.multiplier,
-            price: res.data.price,
+            multiplier: res?.data?.multiplier,
+            price: res?.data?.price,
           },
-          productSku: res.data.sku,
-          productVariantId: res.data.id,
+          productSku: res?.data?.sku,
+          productVariantId: res?.data?.id,
           showErrorMessageTitle: false,
-          typeId: res?.data?.products?.category?.category_detail?.type_id,
-          isLoadingC: false,
           selectedVariant: null,
+          isVarientSelectLoading: false,
         });
       })
       .catch((error) => console.log(error, 'errrorrrr'));
@@ -128,6 +135,11 @@ const VariantAddons = ({
   useEffect(() => {
     getProductDetail();
   }, []);
+  useEffect(() => {
+    if (!isEmpty(productDetailNew)) {
+      checkProductAvailibility();
+    }
+  }, [productDetailNew]);
 
   const getProductDetail = () => {
     console.log('api hit getProductDetail');
@@ -142,23 +154,31 @@ const VariantAddons = ({
         },
       )
       .then((res) => {
-        console.log(res.data, 'res.data++ prodcut detail');
+        console.log(res?.data, 'res.data++ prodcut detail');
         updateState({
           productDetailData: res?.data?.products,
-          relatedProducts: res.data.relatedProducts,
-          productPriceData: res.data.products.variant[0],
-          addonSet: res.data.products.add_on,
-          venderDetail: res.data.products.vendor,
-          productTotalQuantity: res.data.products.variant[0]?.quantity,
-          productVariantId: res.data.products.variant[0]?.id,
-          productSku: res.data.products.sku,
-          variantSet: res.data.products.variant_set,
+          relatedProducts: res?.data?.relatedProducts,
+          productPriceData: res?.data?.products?.variant[0],
+          addonSet: res?.data?.products?.add_on,
+          venderDetail: res?.data?.products?.vendor,
+          productTotalQuantity: res?.data?.products?.variant[0]?.quantity,
+          productVariantId: res?.data?.products?.variant[0]?.id,
+          productSku: res?.data?.products?.sku,
+          variantSet: res?.data?.products?.variant_set,
           typeId: res?.data?.products?.category?.category_detail?.type_id,
           isLoadingC: false,
           selectedVariant: null,
           productQuantityForCart: !!res.data.products?.minimum_order_count
             ? Number(res.data.products?.minimum_order_count)
             : 1,
+          rentalProductDuration:
+            Number(res?.data?.products?.minimum_duration) * 60 +
+            Number(res?.data?.products?.minimum_duration_min),
+          endDateRental: addRemoveMinutes(
+            Number(res?.data?.products?.minimum_duration) * 60 +
+              Number(res?.data?.products?.minimum_duration_min),
+          ),
+          startDateRental: new Date(),
         });
         shimmerClose(false);
       })
@@ -171,14 +191,40 @@ const VariantAddons = ({
       });
   };
 
+  const checkProductAvailibility = () => {
+    actions
+      .checkProductAvailibility(
+        {
+          selectedStartDate: String(
+            moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
+          ),
+          selectEndDate: String(
+            moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
+          ),
+          variant_option_id: productDetailNew?.set[0]?.variant_option_id,
+          product_id: productDetailNew?.product?.id,
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res......res...res');
+        updateState({
+          isProductAvailable: true,
+        });
+      })
+      .catch((err) => {
+        updateState({
+          isProductAvailable: false,
+        });
+      });
+  };
+
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
-    console.log(i, 'i>>>i');
-    console.log(newArray, 'newArray>>>newArray');
-    console.log(addonSet, 'add on set');
-    let find = addonSet.find((x) => x?.addon_id == i?.addon_id);
-    console.log(find, 'find>>>find');
-
     updateState({
       addonSet: addonSet.map((vi, vnx) => {
         if (vi.addon_id == i.addon_id) {
@@ -272,12 +318,12 @@ const VariantAddons = ({
                         : colors.black,
                     },
                   ]}>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(i?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
@@ -360,7 +406,8 @@ const VariantAddons = ({
     );
   };
 
-  const selectSpecificOptions = (options, i, inx) => {
+  const selectSpecificOptions = (options, i) => {
+    console.log(options, i, 'ksjdhkfjsdfkh');
     let newArray = cloneDeep(options);
     let modifyVariants = variantSet.map((vi, vnx) => {
       if (vi.variant_type_id == i.variant_id) {
@@ -404,7 +451,7 @@ const VariantAddons = ({
         .filter((x) => x != undefined);
       console.log(variantSetData, 'variantSetData callback');
       if (variantSetData.length) {
-        updateState({isLoadingC: true});
+        updateState({isVarientSelectLoading: true});
         getProductDetailBasedOnFilter(variantSetData);
       } else {
         getProductDetail();
@@ -412,9 +459,62 @@ const VariantAddons = ({
     }
   };
 
+  const onDateChange = (val) => {
+    isRentalEndDatePicker
+      ? updateState({
+          endDateRental: val,
+        })
+      : updateState({
+          startDateRental: val,
+          endDateRental: addRemoveMinutes(
+            Number(productDetailData?.minimum_duration) * 60 +
+              Number(productDetailData?.minimum_duration_min),
+            val,
+          ),
+          rentalProductDuration:
+            Number(productDetailData?.minimum_duration * 60) +
+            Number(productDetailData?.minimum_duration_min),
+        });
+  };
+
+  const addRemoveDuration = (key) => {
+    if (key == 1) {
+      updateState({
+        rentalProductDuration:
+          rentalProductDuration +
+          Number(productDetailData?.additional_increments) * 60 +
+          Number(productDetailData?.additional_increments_min),
+        endDateRental: addRemoveMinutes(
+          Number(productDetailData?.additional_increments) * 60 +
+            Number(productDetailData?.additional_increments_min),
+          endDateRental,
+        ),
+      });
+      checkProductAvailibility();
+    } else {
+      if (
+        Number(rentalProductDuration) !=
+        Number(productDetailData.minimum_duration) * 60 +
+          Number(productDetailData.minimum_duration_min)
+      ) {
+        updateState({
+          rentalProductDuration:
+            rentalProductDuration -
+            (Number(productDetailData?.additional_increments) * 60 +
+              Number(productDetailData?.additional_increments_min)),
+          endDateRental: addRemoveMinutes(
+            Number(productDetailData?.additional_increments) * 60 +
+              Number(productDetailData?.additional_increments_min),
+            endDateRental,
+            '-',
+          ),
+        });
+      }
+    }
+  };
+
   const variantSetValue = (item) => {
     const {options, type, variant_type_id} = item;
-    console.log('variantSetValuevariantSetValue', variant_type_id);
     if (type == 1) {
       return (
         <View>
@@ -438,11 +538,257 @@ const VariantAddons = ({
                 }
               })[0]?.title || strings.SELECT + ' ' + item?.title}
             </Text>
+
             <Image source={imagePath.dropDownSingle} />
           </TouchableOpacity>
           {selectedVariant?.variant_type_id == variant_type_id
             ? radioButtonView(options)
             : null}
+
+          {!isEmpty(
+            options.filter((val) => {
+              if (val?.value) {
+                return val;
+              }
+            }),
+          ) && typeId == 10 ? (
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginVertical: moderateScaleVertical(10),
+                }}>
+                <TouchableOpacity
+                  onPress={() => updateState({isRentalStartDatePicker: true})}>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.bold,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    Start Date
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(12),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {!!startDateRental
+                      ? moment(startDateRental).format('MM/DD/YY hh:mm A')
+                      : ''}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => updateState({isRentalEndDatePicker: true})}>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.bold,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    End Date
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(12),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {!!endDateRental
+                      ? moment(endDateRental).format('MM/DD/YY hh:mm A')
+                      : ''}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <Text
+                style={{
+                  fontSize: moderateScale(13),
+                  fontFamily: fontFamily.bold,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                Duration:
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderWidth: 1,
+                  marginVertical: 5,
+                }}>
+                <TouchableOpacity
+                  onPress={() => addRemoveDuration(2)}
+                  style={{
+                    borderRightWidth: 1,
+                    flex: 0.3,
+                    alignItems: 'center',
+                    padding: 5,
+                  }}>
+                  <Text>{'<'}</Text>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    flex: 0.4,
+                    textAlign: 'center',
+                    fontSize: moderateScale(13),
+                    fontFamily: fontFamily.regular,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {getHourAndMinutes(rentalProductDuration)}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => addRemoveDuration(1)}
+                  style={{
+                    borderLeftWidth: 1,
+                    flex: 0.3,
+                    alignItems: 'center',
+                    padding: 5,
+                  }}>
+                  <Text> {'>'} </Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text
+                style={{
+                  fontSize: moderateScale(13),
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {' '}
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    productDetailNew?.actual_price,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
+                </Text>{' '}
+                for first{' '}
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {productDetailNew?.product?.minimum_duration}
+                </Text>{' '}
+                hour{' '}
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {productDetailNew?.product?.minimum_duration_min}
+                </Text>{' '}
+                min
+              </Text>
+              <Text
+                style={{
+                  fontSize: moderateScale(13),
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                Extra duration will be charged{' '}
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    productDetailNew?.incremental_price,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
+                </Text>{' '}
+                per{' '}
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {productDetailNew?.product?.additional_increments}
+                </Text>{' '}
+                hour{' '}
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {' '}
+                  {productDetailNew?.product?.additional_increments_min}
+                </Text>{' '}
+                min
+              </Text>
+              {/* {console.log(
+                productDetailNew,
+                'productDetailNew....productDetailNew',
+              )} */}
+            </View>
+          ) : null}
+          <Modal
+            key={'4'}
+            isVisible={isRentalStartDatePicker || isRentalEndDatePicker}
+            style={{
+              margin: 0,
+              justifyContent: 'flex-end',
+            }}
+            onBackdropPress={() =>
+              updateState({
+                isRentalStartDatePicker: false,
+                isRentalEndDatePicker: false,
+              })
+            }>
+            <View
+              style={{
+                ...styles.modalView,
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : colors.white,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    updateState({
+                      isRentalStartDatePicker: false,
+                      isRentalEndDatePicker: false,
+                    })
+                  }>
+                  <Image source={imagePath.closeButton} />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  ...styles.horizontalLine,
+                  borderBottomColor: isDarkMode
+                    ? colors.whiteOpacity22
+                    : colors.lightGreyBg,
+                }}
+              />
+
+              <DatePicker
+                locale={languages?.primary_language?.sort_code}
+                date={isRentalStartDatePicker ? startDateRental : endDateRental}
+                textColor={isDarkMode ? colors.white : colors.blackB}
+                mode="datetime"
+                minimumDate={new Date()}
+                onDateChange={(value) => onDateChange(value)}
+              />
+            </View>
+          </Modal>
         </View>
       );
     }
@@ -523,6 +869,7 @@ const VariantAddons = ({
                 : colors.lightGreyBg,
             }}
           />
+
           <ScrollView showsVerticalScrollIndicator={false}>
             {options.map((i, inx) => {
               return (
@@ -568,7 +915,7 @@ const VariantAddons = ({
             })}
           </ScrollView>
           <GradientButton
-            indicator={isLoadingC}
+            indicator={isVarientSelectLoading}
             indicatorColor={colors.white}
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
             textStyle={{
@@ -983,7 +1330,6 @@ const VariantAddons = ({
                 : '#fff',
               marginHorizontal: moderateScale(10),
             }}>
-              
             <View
               style={{
                 flex: 1,
@@ -1265,7 +1611,7 @@ const styles = StyleSheet.create({
     // marginRight: 20
   },
   dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
-  
+
   dropDownStyle: {
     paddingHorizontal: moderateScale(8),
     borderRadius: moderateScale(4),

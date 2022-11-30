@@ -46,7 +46,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -130,6 +130,8 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const selectedAddressData = useSelector(
@@ -914,13 +916,15 @@ export default function Cart({navigation, route}) {
                                               {color: colors.textGrey},
                                             ]
                                       }
-                                      numberOfLines={1}>{` ${
-                                      currencies?.primary_currency?.symbol
-                                    }${currencyNumberFormatter(
-                                      Number(j.price) * Number(j.multiplier),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )} `}</Text>
+                                      numberOfLines={1}>
+                                      {' '}
+                                      {tokenConverterPlusCurrencyNumberFormater(
+                                        Number(j.price) * Number(j.multiplier),
+                                        digit_after_decimal,
+                                        additional_preferences,
+                                        currencies?.primary_currency?.symbol,
+                                      )}
+                                    </Text>
                                   </View>
                                 );
                               })
@@ -934,14 +938,12 @@ export default function Cart({navigation, route}) {
                             alignItems: 'flex-end',
                           }}>
                           <Text style={styles.cartItemPrice}>
-                            {`${currencies?.primary_currency?.symbol}${
-                              // Number(i?.pvariant?.multiplier) *
-                              currencyNumberFormatter(
-                                Number(i?.variants?.quantity_price),
-                                appData?.profile?.preferences
-                                  ?.digit_after_decimal,
-                              )
-                            }`}
+                            {tokenConverterPlusCurrencyNumberFormater(
+                              Number(i?.variants?.quantity_price),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol,
+                            )}
                           </Text>
                         </View>
                       </View>
@@ -1034,11 +1036,11 @@ export default function Cart({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`- ${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+              }>{`- ${tokenConverterPlusCurrencyNumberFormater(
               Number(item?.discount_amount ? item?.discount_amount : 0),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -1067,12 +1069,14 @@ export default function Cart({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(item?.deliver_charge ? item?.deliver_charge : 0),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item?.deliver_charge ? item?.deliver_charge : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         )}
         <View style={styles.itemPriceDiscountTaxView}>
@@ -1099,12 +1103,14 @@ export default function Cart({navigation, route}) {
                     },
                   ]
                 : styles.priceItemLabel2
-            }>{`${
-            currencies?.primary_currency?.symbol
-          }${currencyNumberFormatter(
-            Number(item?.payable_amount ? item?.payable_amount : 0),
-            appData?.profile?.preferences?.digit_after_decimal,
-          )}`}</Text>
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(item?.payable_amount ? item?.payable_amount : 0),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
       </View>
     );
@@ -1176,12 +1182,14 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(cartData?.gross_paybale_amount),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.gross_paybale_amount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
           {!!cartData?.wallet_amount && (
             <View style={styles.bottomTabLableValue}>
@@ -1198,12 +1206,14 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
-                Number(cartData?.wallet_amount ? cartData?.wallet_amount : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}</Text>
+                }>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(cartData?.wallet_amount ? cartData?.wallet_amount : 0),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
           )}
           {!!cartData?.loyalty_amount && (
@@ -1221,11 +1231,11 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`-${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                }>{`-${tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.loyalty_amount ? cartData?.loyalty_amount : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1245,15 +1255,15 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`-${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                }>{`-${tokenConverterPlusCurrencyNumberFormater(
                 Number(
                   cartData?.wallet_amount_used
                     ? cartData?.wallet_amount_used
                     : 0,
                 ),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1272,11 +1282,11 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`-${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+                }>{`-${tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.total_subscription_discount),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1339,12 +1349,12 @@ export default function Cart({navigation, route}) {
                                       : colors.black,
                                 }
                           }>
-                          {`${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          {tokenConverterPlusCurrencyNumberFormater(
                             j.value,
-                            appData?.profile?.preferences?.digit_after_decimal,
-                          )}`}
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
                         </Text>
                         <Text
                           style={{
@@ -1442,12 +1452,14 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
-                Number(cartData?.total_tax ? cartData?.total_tax : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}</Text>
+                }>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(cartData?.total_tax ? cartData?.total_tax : 0),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
           )}
 
@@ -1465,15 +1477,17 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel2
-              }>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(cartData?.total_payable_amount) +
-                (selectedTipAmount != null && selectedTipAmount != ''
-                  ? Number(selectedTipAmount)
-                  : 0),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_payable_amount) +
+                  (selectedTipAmount != null && selectedTipAmount != ''
+                    ? Number(selectedTipAmount)
+                    : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         </View>
 

@@ -375,6 +375,16 @@ export default ({fontFamily}) => {
       width: moderateScale(15),
       height: moderateScale(15),
     },
+    startEndDateTitle: {
+      fontSize: moderateScale(12),
+      fontFamily: fontFamily.bold,
+      color: colors.black,
+    },
+    startEndDateValueTxt: {
+      fontSize: moderateScale(11),
+      fontFamily: fontFamily.regular,
+      color: colors.blackOpacity66,
+    },
   });
   return styles;
 };

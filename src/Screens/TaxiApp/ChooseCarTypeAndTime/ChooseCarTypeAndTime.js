@@ -842,6 +842,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const renderVendors = ({ item }) => {
+    console.log(item,"item>>>");
     return (
       <TouchableOpacity
         disabled={selectedVendorOption.id == item.id}
@@ -965,7 +966,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </Text>
         </View>
         <View style={{ marginVertical: moderateScale(8) }}>
-          <FlatList
+          {console.log(availableVendors.length,"availableVendors")}
+         {availableVendors.length > 1 ? <FlatList
             horizontal
             data={availableVendors}
             renderItem={renderVendors}
@@ -980,7 +982,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               <View style={{ marginRight: moderateScale(16) }} />
             )}
             showsHorizontalScrollIndicator={false}
-          />
+          />:null}
         </View>
       </View>
     );
@@ -988,6 +990,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const _selectCarModalView = () => {
     return (
+
       <AvailableDriver
         onPressAvailableCar={_selectedProductForDrivers}
         isCabPooling={!!paramData?.is_cab_pooling}
@@ -1201,6 +1204,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       .then((res) => {
         console.log(res, 'resres')
         updateState({
+          
+          btnLoader: true,
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
               appData?.profile?.preferences?.digit_after_decimal,
@@ -1217,7 +1222,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
-          btnLoader: false,
+         
           disableButton: false,
           productFaqQuestionAnswers: res?.data?.products?.data?.map(
             (item, index) => {

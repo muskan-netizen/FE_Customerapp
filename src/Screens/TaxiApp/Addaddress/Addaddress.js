@@ -9,17 +9,14 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
-import BorderTextInput from '../../../Components/BorderTextInput';
-import CustomSwitchTabBar from '../../../Components/CustomSwitchTabBar';
 import DropDown from '../../../Components/DropDown';
 import GradientButton from '../../../Components/GradientButton';
-
 import Modal from '../../../Components/Modal';
 import PinAddressOnMap from '../../../Components/PinAddressOnMap';
 import SearchPlaces from '../../../Components/SearchPlaces';
@@ -28,7 +25,6 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
-import {getStaticLocations} from '../../../redux/actions/pickupdelivery';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
@@ -36,7 +32,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
@@ -44,18 +40,18 @@ import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
-  nearbySearch,
+  nearbySearch
 } from '../../../utils/googlePlaceApi';
 import {
   getAddressComponent,
   getPhoneNumberFromPhoneBook,
   getRandomColor,
-  showError,
+  showError
 } from '../../../utils/helperFunctions';
 import {
   checkContactPermission,
   chekLocationPermission,
-  locationPermission,
+  locationPermission
 } from '../../../utils/permissions';
 import stylesFun from './styles';
 
@@ -350,7 +346,6 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const moveToNextScreenWithAddressData = () => {
-
     let location = [];
     if (
       dropLocationData[0].pre_address == '' ||

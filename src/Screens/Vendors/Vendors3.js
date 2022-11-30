@@ -24,6 +24,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import * as Animatable from 'react-native-animatable';
+import Header2 from '../../Components/Header2';
+import Header from '../../Components/Header';
 
 export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -157,14 +159,13 @@ export default function Vendors3({route, navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
-      <Header3
+      <Header
         leftIcon={imagePath.icBackb}
         centerTitle={data?.name}
-        rightIcon={imagePath.search}
         location={location}
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
+        headerStyle={{
+          marginBottom: moderateScaleVertical(8),
+        }}
       />
       {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
       {isLoading ? (
