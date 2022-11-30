@@ -1815,17 +1815,13 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data.listData.data.length, 'resres');
+        // console.log(res, 'resres');
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
           setLoading(false);
-
-          if (res.data.listData.data.length == 0) {
-            loadMore = false;
-          }
           loadMore = false;
           // onAtoZFilter()
           setProductListData(
@@ -1835,9 +1831,9 @@ export default function Products({route, navigation}) {
           );
           if (
             pageNo == 1 &&
-            res?.data?.listData?.data.length == 0 &&
+            res?.data?.listData?.data?.length == 0 &&
             res?.data?.category &&
-            res?.data?.category?.childs.length
+            res?.data?.category?.childs?.length
           ) {
             setSelectedCategory(res.data.category.childs[0]);
             setProductListId(res.data.category.childs[0]);
