@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  I18nManager,
   Image,
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  TextInput,
-  I18nManager,
-  Keyboard,
+  Platform,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import Modal from 'react-native-modal';
@@ -20,15 +21,17 @@ import actions from '../redux/actions';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter, dateParser} from '../utils/commonFunction';
-import {getImageUrl, showError} from '../utils/helperFunctions';
+import {
+  dateParser,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../utils/commonFunction';
+import {getImageUrl} from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCardVendorComponent2 = ({
@@ -52,6 +55,7 @@ const OrderCardVendorComponent2 = ({
   const [reasonError, setReasonError] = useState(false);
   const [cancelLoader, setLoader] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [orderCancelMessage,setOrderCancelMessage]= useState(null)
   const {
     appData,
     themeColors,
@@ -66,6 +70,9 @@ const OrderCardVendorComponent2 = ({
   const businessType = appData?.profile?.preferences?.business_type || null;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
@@ -98,7 +105,12 @@ const OrderCardVendorComponent2 = ({
       });
       setLoader(false);
       updateLocalItem(data);
+     if(res?.status ==403){
+      setOrderCancelMessage(res?.message)
+     }else{
       hideModal();
+     }
+     
       console.log('cancellation res+++++', res);
     } catch (error) {
       // showError(error?.message || error?.error)
@@ -112,6 +124,7 @@ const OrderCardVendorComponent2 = ({
     setReason('');
     setCancellationItem(null);
     setReasonError(false);
+    setOrderCancelMessage(null)
   };
 
   useEffect(() => {
@@ -385,13 +398,14 @@ const OrderCardVendorComponent2 = ({
               style={{
                 color: themeColors.primary_color,
                 marginHorizontal: moderateScale(10),
-              }}>{`${currencies?.primary_currency?.symbol}${
-              // Number(i?.pvariant?.multiplier) *
-              currencyNumberFormatter(
+              }}>
+              {tokenConverterPlusCurrencyNumberFormater(
                 Number(data?.payable_amount),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )
-            }`}</Text>
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         </View>
 
@@ -608,7 +622,7 @@ const OrderCardVendorComponent2 = ({
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          marginBottom: moderateScale(keyboardHeight),
+           marginBottom: Platform.OS=='ios'? moderateScale(keyboardHeight):0,
         }}>
         <View
           style={{
@@ -643,6 +657,8 @@ const OrderCardVendorComponent2 = ({
               />
             </TouchableOpacity>
           </View>
+          {!!orderCancelMessage &&
+          <Text style={{alignSelf:'center',color:colors.redB}}>{orderCancelMessage}</Text>}
 
           {!!reasonError && (
             <Text

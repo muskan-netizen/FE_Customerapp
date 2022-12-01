@@ -12,7 +12,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 
@@ -29,6 +29,8 @@ export default function CabAndOrderDetail({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -135,11 +137,11 @@ export default function CabAndOrderDetail({
                     {paramData &&
                     paramData?.orderDetail &&
                     paramData?.orderDetail?.payable_amount
-                      ? `${
-                          currencies?.primary_currency?.symbol
-                        }${currencyNumberFormatter(
+                      ? `${tokenConverterPlusCurrencyNumberFormater(
                           Number(paramData?.orderDetail?.payable_amount),
-                          appData?.profile?.preferences?.digit_after_decimal,
+                          digit_after_decimal,
+                          additional_preferences,
+                          currencies?.primary_currency?.symbol,
                         )}`
                       : '--'}
                   </Text>

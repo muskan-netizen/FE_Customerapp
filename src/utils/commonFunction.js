@@ -1,3 +1,4 @@
+import {isEmpty} from 'lodash';
 import {Keyboard} from 'react-native';
 import {API_BASE_URL} from '../config/urls';
 import {openCamera, openPicker} from './imagePicker';
@@ -94,5 +95,64 @@ export function dateParser(dateString) {
     return dateString;
   } else null;
 }
+
+export const getValuebyKeyInArray = (key = '', data) => {
+  if (!isEmpty(data)) {
+    let obj = data?.find((o) => o?.key_name === key);
+    if (obj?.key_value != 0) {
+      return obj?.key_value;
+    } else {
+      return 0;
+    }
+  } else {
+    return 0;
+  }
+};
+
+export const addRemoveMinutes = (numMinutes, date = new Date(), type = '+') => {
+  if (type == '+') {
+    return new Date(date.getTime() + numMinutes * 60000);
+  } else {
+    return new Date(date.getTime() - numMinutes * 60000);
+  }
+};
+
+export const getHourAndMinutes = (numMinutes) => {
+  let minutes = numMinutes % 60;
+  let hours = Math.floor(numMinutes / 60);
+  return `${hours} hour ${minutes} min`;
+};
+
+export const countDecimals = (value) => {
+  if (value.includes('.')) {
+    return value.split('.')[1].length;
+  } else {
+    return 0;
+  }
+};
+
+export const tokenConverterPlusCurrencyNumberFormater = (
+  price = 0,
+  digitAfterDecimal = 0,
+  additionalPreferences = {},
+  currencySymbol = '',
+) => {
+  if (getValuebyKeyInArray('is_token_currency_enable', additionalPreferences)) {
+    let tokenCurrency = getValuebyKeyInArray(
+      'token_currency',
+      additionalPreferences,
+    );
+    // let tokenCurrency = 2;
+    return currencyNumberFormatter(
+      Number(price) * tokenCurrency,
+      digitAfterDecimal,
+    );
+  } else {
+    return `${currencySymbol} ${currencyNumberFormatter(
+      Number(price),
+      digitAfterDecimal,
+    )}`;
+  }
+};
 
 export {cameraHandler, currencyNumberFormatter};

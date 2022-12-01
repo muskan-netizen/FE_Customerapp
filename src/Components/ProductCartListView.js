@@ -8,7 +8,7 @@ import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {getImageUrl} from '../utils/helperFunctions';
 
 const ProductCartListView = ({
@@ -24,6 +24,8 @@ const ProductCartListView = ({
   const {currencies, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -110,13 +112,13 @@ const ProductCartListView = ({
                   fontSize: textScale(16),
                   fontFamily: fontFamily.bold,
                 }}>
-                {`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                {tokenConverterPlusCurrencyNumberFormater(
                   Number(data.variant[0].multiplier) *
                     Number(data.variant[0].price),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
           </View>

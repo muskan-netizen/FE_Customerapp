@@ -1,20 +1,17 @@
-import React from "react";
-import { isEmpty } from "lodash";
-import { useEffect, useState } from "react";
+import { isEmpty } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Dimensions,
   FlatList,
   I18nManager,
   Image,
-  Keyboard,
-  Platform,
+  Keyboard, KeyboardAvoidingView, Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
 } from "react-native";
 import { useDarkMode } from "react-native-dark-mode";
 import { getBundleId } from "react-native-device-info";
@@ -35,15 +32,14 @@ import {
   StatusBarHeight,
   textScale,
   width,
-} from "../../../styles/responsiveSize";
-import { MyDarkTheme } from "../../../styles/theme";
-import { currencyNumberFormatter } from "../../../utils/commonFunction";
-import { getImageUrl } from "../../../utils/helperFunctions";
-import { androidCameraPermission } from "../../../utils/permissions";
-import stylesFun from "./styles";
-import { appIds } from "../../../utils/constants/DynamicAppKeys";
+} from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getImageUrl } from '../../../utils/helperFunctions';
+import { androidCameraPermission } from '../../../utils/permissions';
+import stylesFun from './styles';
 
-import { UIActivityIndicator } from "react-native-indicators";
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -69,10 +65,10 @@ export default function SelectPaymentModalView({
   updateInstruction,
   productFaqQuestionAnswers,
   onQuestionAnswerSubmit,
+  allScreenParamsData,
   indicatorLoader = false,
   isCabPooling = false,
   _openDateTimeModal = () => {},
-  allScreenParamsData
 }) {
   console.log(couponInfo, "couponInfo");
   console.log(selectedTime, "selectedTime+++++++");
@@ -88,6 +84,8 @@ export default function SelectPaymentModalView({
   const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({ fontFamily, themeColors });
@@ -113,7 +111,8 @@ export default function SelectPaymentModalView({
   };
 
   //Get list of all offers
-  const _getAllOffers = (vendor, cartData) => {
+  const _getAllOffers = (vendor) => {
+ 
     moveToNewScreen(navigationStrings.OFFERS2, {
       vendor: vendor,
       cabOrder: true,
@@ -254,7 +253,7 @@ export default function SelectPaymentModalView({
   };
 
   const onSelect = (val, item, index) => {
-    setSelectedType(val?.translations[0].name);
+    setSelectedType(val?.translations[0]?.name);
     onChangeText(item, val?.translations[0].name, index, item?.length);
   };
 
@@ -281,11 +280,15 @@ export default function SelectPaymentModalView({
         }}
       >
         {selectedCarOption
-          ? `${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(selectedCarOption?.variant[0]?.price),
-              appData?.profile?.preferences?.digit_after_decimal
+          ? `${tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedCarOption?.total_tags_price
+                ? selectedCarOption?.total_tags_price-(updatedPrice?updatedPrice:0)
+                : selectedCarOption?.tags_price-(updatedPrice?updatedPrice:0)),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`
-          : ""}
+          : ''}
       </Text>
       <View
         style={{
@@ -303,7 +306,7 @@ export default function SelectPaymentModalView({
               isDarkMode
                 ? [
                     styles.distanceDurationDeliveryLable,
-                    { color: MyDarkTheme.colors.text },
+                    {color: MyDarkTheme.colors.text},
                   ]
                 : styles.distanceDurationDeliveryLable
             }
@@ -330,7 +333,7 @@ export default function SelectPaymentModalView({
               isDarkMode
                 ? [
                     styles.distanceDurationDeliveryLable,
-                    { color: MyDarkTheme.colors.text },
+                    {color: MyDarkTheme.colors.text},
                   ]
                 : styles.distanceDurationDeliveryLable
             }
@@ -354,7 +357,7 @@ export default function SelectPaymentModalView({
               isDarkMode
                 ? [
                     styles.distanceDurationDeliveryLable,
-                    { color: MyDarkTheme.colors.text },
+                    {color: MyDarkTheme.colors.text},
                   ]
                 : styles.distanceDurationDeliveryLable
             }
@@ -370,8 +373,8 @@ export default function SelectPaymentModalView({
                       styles.distanceDurationDeliveryValue,
                       {
                         textDecorationLine: updatedPrice
-                          ? "line-through"
-                          : "none",
+                          ? 'line-through'
+                          : 'none',
                         opacity: updatedPrice ? 0.5 : 1,
                         color: MyDarkTheme.colors.text,
                         fontSize: textScale(12),
@@ -381,22 +384,21 @@ export default function SelectPaymentModalView({
                       styles.distanceDurationDeliveryValue,
                       {
                         textDecorationLine: updatedPrice
-                          ? "line-through"
-                          : "none",
+                          ? 'line-through'
+                          : 'none',
                         opacity: updatedPrice ? 0.5 : 1,
                         fontSize: textScale(12),
                       },
                     ]
-              }
-            >
+              }>
               {selectedCarOption
-                ? `${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                ? `${tokenConverterPlusCurrencyNumberFormater(
                     Number(selectedCarOption?.variant[0]?.price),
-                    appData?.profile?.preferences?.digit_after_decimal
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
                   )}`
-                : ""}
+                : ''}
             </Text>
             {updatedPrice && (
               <Text
@@ -410,19 +412,18 @@ export default function SelectPaymentModalView({
                         },
                       ]
                     : styles.distanceDurationDeliveryValue,
-                  { fontSize: textScale(12) })
-                }
-              >
-                {`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                  {fontSize: textScale(12)})
+                }>
+                {tokenConverterPlusCurrencyNumberFormater(
                   Number(selectedCarOption.tags_price) - Number(updatedPrice) >
                     0
                     ? Number(selectedCarOption.tags_price) -
                         Number(updatedPrice)
                     : 0,
-                  appData?.profile?.preferences?.digit_after_decimal
-                )}`}
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             )}
           </View>
@@ -475,7 +476,7 @@ export default function SelectPaymentModalView({
                 isDarkMode
                   ? [
                       styles.distanceDurationDeliveryValue,
-                      { color: MyDarkTheme.colors.text },
+                      {color: MyDarkTheme.colors.text},
                     ]
                   : styles.distanceDurationDeliveryValue
               }
@@ -545,7 +546,7 @@ export default function SelectPaymentModalView({
               isDarkMode
                 ? [
                     styles.distanceDurationDeliveryLable,
-                    { color: MyDarkTheme.colors.text },
+                    {color: MyDarkTheme.colors.text},
                   ]
                 : styles.distanceDurationDeliveryLable
             }
@@ -557,17 +558,107 @@ export default function SelectPaymentModalView({
               isDarkMode
                 ? [
                     styles.distanceDurationDeliveryValue,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }>{`-${tokenConverterPlusCurrencyNumberFormater(
+            Number(selectedCarOption?.variant[0]?.multiplier) *
+              Number(loyalityAmount),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )}`}</Text>
+        </View>
+      )}
+      {!!selectedCarOption?.toll_fee && (
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: moderateScale(20),
+            justifyContent: "space-between",
+            marginVertical: moderateScale(16),
+          }}
+        >
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    { color: MyDarkTheme.colors.text },
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }
+          >
+            {strings.TOLL_FEE}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
                     { color: MyDarkTheme.colors.text },
                   ]
                 : styles.distanceDurationDeliveryValue
             }
-          >{`-${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+          >{`${tokenConverterPlusCurrencyNumberFormater(
             Number(selectedCarOption?.variant[0]?.multiplier) *
-              Number(loyalityAmount),
-            appData?.profile?.preferences?.digit_after_decimal
-          )}`}</Text>
+            Number(selectedCarOption?.toll_fee),
+             digit_after_decimal,
+             additional_preferences,
+             currencies?.primary_currency?.symbol,
+           )}`}</Text>
         </View>
       )}
+
+
+
+
+
+
+      {!!selectedCarOption?.service_charge_amount && (
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: moderateScale(20),
+            justifyContent: "space-between",
+            marginBottom: moderateScaleVertical(10),
+          }}
+        >
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    { color: MyDarkTheme.colors.text },
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }
+          >
+            {strings.SERVICE_CHARGES}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
+                    { color: MyDarkTheme.colors.text },
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }
+          >
+            {" "}
+            {`${tokenConverterPlusCurrencyNumberFormater(
+          Number(selectedCarOption?.variant[0]?.multiplier) *
+          Number(selectedCarOption?.service_charge_amount),
+             digit_after_decimal,
+             additional_preferences,
+             currencies?.primary_currency?.symbol,
+           )}`}
+          </Text>
+        </View>
+      )}
+
+
 
       <TouchableOpacity
         style={{
@@ -636,14 +727,13 @@ export default function SelectPaymentModalView({
             ? [
                 styles.paymentMainView,
                 {
-                  justifyContent: "space-between",
+                  justifyContent: 'space-between',
                   backgroundColor: MyDarkTheme.colors.lightDark,
                 },
               ]
-            : [styles.paymentMainView, { justifyContent: "space-between" }]
-        }
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+            : [styles.paymentMainView, {justifyContent: 'space-between'}]
+        }>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
             style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
             source={imagePath.paymentMethod}
@@ -666,10 +756,10 @@ export default function SelectPaymentModalView({
             style={
               isDarkMode
                 ? {
-                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     tintColor: MyDarkTheme.colors.text,
                   }
-                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
             }
           />
         </View>

@@ -43,6 +43,7 @@ import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import Modal from 'react-native-modal';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import FastImage from 'react-native-fast-image';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 
 let dataLimit = 20;
 let vendorLimit = 50;
@@ -54,6 +55,9 @@ const RoyoProducts = (props) => {
   const {appData, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
 
   console.log('store selected vendor', storeSelectedVendor);
 
@@ -352,11 +356,12 @@ const RoyoProducts = (props) => {
               color: colors.black,
               marginTop: moderateScaleVertical(4),
             }}>
-            {item.variant[0]?.price
-              ? `${currencies?.primary_currency?.symbol} ${Number(
-                  item.variant[0]?.price,
-                ).toFixed(2)}`
-              : ''}
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(item?.variant[0]?.price),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
           </Text>
         </View>
       </View>

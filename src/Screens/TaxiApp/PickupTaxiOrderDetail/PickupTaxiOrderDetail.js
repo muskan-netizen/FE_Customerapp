@@ -21,7 +21,6 @@ import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
 import actions from "../../../redux/actions";
 import colors from "../../../styles/colors";
-
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import DeviceInfo, { getBundleId } from "react-native-device-info";
@@ -32,36 +31,34 @@ import {
   hapticEffects,
   playHapticEffect,
   showError,
-  showSuccess,
-} from "../../../utils/helperFunctions";
-import stylesFunc from "./styles";
-const { height, width } = Dimensions.get("window");
-
-import { cloneDeep } from "lodash";
-import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dark-mode";
-import FastImage from "react-native-fast-image";
-import Modal from "react-native-modal";
-import navigationStrings from "../../../navigation/navigationStrings";
-import { MyDarkTheme } from "../../../styles/theme";
-import useInterval from "../../../utils/useInterval";
-
-import moment from "moment";
-import { FlatList } from "react-native";
-import StarRating from "react-native-star-rating";
-import ButtonWithLoader from "../../../Components/ButtonWithLoader";
-import CustomCallouts from "../../../Components/CustomCallouts";
-import LeftRightText from "../../../Components/LeftRightText";
-import RoundImg from "../../../Components/RoundImg";
+  showSuccess
+} from '../../../utils/helperFunctions';
+import stylesFunc from './styles';
+const {height, width} = Dimensions.get('window');
+import { cloneDeep } from 'lodash';
+import Communications from 'react-native-communications';
+import { useDarkMode } from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
+import Modal from 'react-native-modal';
+import navigationStrings from '../../../navigation/navigationStrings';
+import { MyDarkTheme } from '../../../styles/theme';
+import useInterval from '../../../utils/useInterval';
+import moment from 'moment';
+import { FlatList } from 'react-native';
+import StarRating from 'react-native-star-rating';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import CustomCallouts from '../../../Components/CustomCallouts';
+import LeftRightText from '../../../Components/LeftRightText';
+import RoundImg from '../../../Components/RoundImg';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
-} from "../../../styles/responsiveSize";
-import { currencyNumberFormatter } from "../../../utils/commonFunction";
-import { appIds } from "../../../utils/constants/DynamicAppKeys";
-import { mapStyleGrey } from "../../../utils/constants/MapStyle";
-import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
+  textScale
+} from '../../../styles/responsiveSize';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -127,6 +124,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     isWaitingOver: false,
     submitedRatingToDriver: 0,
     driverRatingData: null,
+    orderCancelMessage: "",
   });
   const {
     isLoading,
@@ -161,6 +159,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     isWaitingOver,
     submitedRatingToDriver,
     driverRatingData,
+    orderCancelMessage,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -168,6 +167,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
@@ -878,7 +879,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   };
 
   const hideModal = () => {
-    updateState({ isCancleModal: false, cancelError: null });
+    updateState({
+      isCancleModal: false,
+      cancelError: null,
+      orderCancelMessage: "",
+      reason: "",
+    });
   };
 
   const onCancelOrder = (reasonForCancle) => {
@@ -912,16 +918,24 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       })
       .then((response) => {
         console.log(response, "responseFromServer");
-        updateState({
-          isBtnLoader: false,
-          isCancleModal: false,
-          cancelError: null,
-        });
-        showSuccess(response?.message);
-        {
-          paramData?.keyValue
-            ? navigation.goBack()
-            : navigation.navigate(navigationStrings.HOMESTACK);
+        if (response?.status == 403) {
+          updateState({
+            orderCancelMessage: response?.message,
+            isBtnLoader: false,
+            cancelError: null,
+          });
+        } else {
+          updateState({
+            isBtnLoader: false,
+            isCancleModal: false,
+            cancelError: null,
+          });
+          showSuccess(response?.message);
+          {
+            paramData?.keyValue
+              ? navigation.goBack()
+              : navigation.navigate(navigationStrings.HOMESTACK);
+          }
         }
       })
       .catch(errorMethod);
@@ -1326,11 +1340,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     }}
                   >
                     <Text style={styles.statusText}>
-                      {" "}
-                      {currencies?.primary_currency?.symbol}
-                      {currencyNumberFormatter(
+                      {tokenConverterPlusCurrencyNumberFormater(
                         Number(orderFullDetail.order_details?.payable_amount),
-                        appData?.profile?.preferences?.digit_after_decimal
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
                       )}
                     </Text>
                     <Text
@@ -1988,13 +2002,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.delivery_fee
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -2009,13 +2023,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.subtotal_amount
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -2024,19 +2038,71 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                  {!!orderFullDetail?.order_details?.toll_amount &&
+                    Number(orderFullDetail?.order_details?.toll_amount) !==
+                      0 && (
+                      <View>
+                        <LeftRightText
+                          leftText={"Toll fee"}
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
+                            Number(orderFullDetail?.order_details?.toll_amount),
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+
+
+
+
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+                  {!!orderFullDetail?.order_details
+                    ?.service_fee_percentage_amount &&
+                    Number(
+                      orderFullDetail?.order_details
+                        ?.service_fee_percentage_amount
+                    ) !== 0 && (
+                      <View>
+                        <LeftRightText
+                          leftText={strings.SERVICE_CHARGES}
+                          rightText={`${tokenConverterPlusCurrencyNumberFormater(
+                            Number(
+                             orderFullDetail?.order_details
+                               ?.service_fee_percentage_amount
+                           ),
+                             digit_after_decimal,
+                             additional_preferences,
+                             currencies?.primary_currency?.symbol,
+                           )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+
+
+
+
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
                       0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.discount_amount
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           leftTextStyle={{ color: themeColors.primary_color }}
                           rightTextStyle={{ color: themeColors.primary_color }}
@@ -2057,18 +2123,22 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <LeftRightText
                           leftText={`${
                             strings.SUBSCRIPTION_DISCOUNT
-                          } ${"("} ${currencyNumberFormatter(
+                          } ${'('} ${tokenConverterPlusCurrencyNumberFormater(
                             Number(subscription_percent),
-                            appData?.profile?.preferences?.digit_after_decimal
-                          )} ${"%)"}`}
-                          rightText={` ${"-"} ${
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )} ${'%)'}`}
+                          rightText={` ${'-'} ${
                             currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          } ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.order_detail
                                 ?.subscription_discount
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )} `}
                           leftTextStyle={{ color: themeColors.primary_color }}
                           rightTextStyle={{ color: themeColors.primary_color }}
@@ -2079,19 +2149,23 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                  {console.log(
+                    orderFullDetail,
+                    "orderFullDetailorderFullDetail"
+                  )}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                       0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.taxable_amount
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -2107,14 +2181,14 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.order_detail
                                 ?.payable_amount
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -2210,7 +2284,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
             overflow: "hidden",
             paddingHorizontal: moderateScale(16),
             paddingVertical: moderateScale(12),
-            marginBottom: moderateScale(keyboardHeight),
+            marginBottom:
+              Platform.OS == "ios" ? moderateScale(keyboardHeight) : 0,
           }}
         >
           <View
@@ -2238,7 +2313,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               />
             </TouchableOpacity>
           </View>
-
+          {!!orderCancelMessage && (
+            <Text style={{ alignSelf: "center", color: colors.redB }}>
+              {orderCancelMessage}
+            </Text>
+          )}
           {/* {!!reasonError && (
             <Text
               style={{

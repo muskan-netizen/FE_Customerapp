@@ -65,6 +65,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       backgroundColor: colors.transactionHistoryBg,
       // justifyContent: 'center',
       paddingLeft: moderateScale(10),
+      marginTop: moderateScaleVertical(15),
     },
     transactionHistoryText: {
       fontFamily: fontFamily.medium,
@@ -86,7 +87,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     addedMoneyValueCon: {
       // height: 60,
-      flex: 0.1,
+      flex: 0.2,
       flexDirection: 'row',
       justifyContent: 'flex-end',
       paddingRight: moderateScale(10),

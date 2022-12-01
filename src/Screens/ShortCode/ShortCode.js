@@ -1,17 +1,16 @@
-import {isEmpty} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
-import {Image, Linking, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import { Image, Linking, Text, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {MaterialIndicator} from 'react-native-indicators';
+import { MaterialIndicator } from 'react-native-indicators';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import Video from 'react-native-video';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import SubscriptionModal from '../../Components/SubscriptionModal';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -23,16 +22,16 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  width,
+  width
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getUrlRoutes,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
-import {getItem, setItem} from '../../utils/utils';
+import { getItem, setItem } from '../../utils/utils';
 import styles from './styles';
 
 const fs = RNFetchBlob.fs;
@@ -2956,20 +2955,20 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-         code: '2d98b5',
-        //code: shortCode,
+        code: '245bae',
+      //  code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-         code: '2d98b5',
-        //code: shortCode,
+         code: '245bae',
+       // code: shortCode,
       };
     }
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
-        console.log(res, 'ressssssssss');
+        console.log('header response--->', res);
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {
@@ -2997,8 +2996,7 @@ export default function ShortCode({route, navigation}) {
         }
 
         if (
-          getBundleId() == appIds.masa ||
-          // getBundleId() == appIds.iPicknDrop ||
+          getBundleId() == appIds.masa ||    
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
           getBundleId() == appIds.flank
@@ -3181,8 +3179,8 @@ export default function ShortCode({route, navigation}) {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      case appIds.iPicknDrop:
-        return animatedSplash();
+      // case appIds.iPicknDrop:
+      //   return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
       case appIds.hezniTaxi:

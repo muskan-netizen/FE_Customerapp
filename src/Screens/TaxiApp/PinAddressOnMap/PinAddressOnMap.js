@@ -332,7 +332,10 @@ export default function HomeScreenTaxi({navigation, route}) {
           }}>
           {strings.PLACE_PIN_ON_MAP}
         </Text>
-        <GradientButton btnText={'Done'} onPress={() => _modeToNextScreen()} />
+        <GradientButton
+          btnText={strings.DONE}
+          onPress={() => _modeToNextScreen()}
+        />
       </View>
     </>
   );
