@@ -60,7 +60,7 @@ export default function VerifyAccount({navigation, route}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   let paramsData = route?.params?.data;
-
+console.log('paramsDataparamsData',paramsData);
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
@@ -538,7 +538,7 @@ export default function VerifyAccount({navigation, route}) {
                               color: themeColors.primary_color,
                               fontFamily: fontFamily.bold,
                             }}>
-                            {`${otpTimerCounter(timer)} min`}
+                            {`${otpTimerCounter(timer)} sec`}
                           </Text>
                         </Text>
                       </View>
@@ -709,7 +709,7 @@ export default function VerifyAccount({navigation, route}) {
                             color: themeColors.primary_color,
                             fontFamily: fontFamily.bold,
                           }}>
-                          {`${otpTimerCounter(timer2)} min`}
+                          {`${otpTimerCounter(timer2)} sec`}
                         </Text>
                       </Text>
                     ) : (

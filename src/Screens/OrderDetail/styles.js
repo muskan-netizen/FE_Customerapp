@@ -176,7 +176,7 @@ export default ({fontFamily}) => {
       // height: width / 4.5,
       // backgroundColor: 'red',
       flexDirection: 'row',
-      width: width - width / 4,
+      width: width,
       paddingHorizontal: moderateScale(10),
     },
     cartItemPrice: {
@@ -374,6 +374,16 @@ export default ({fontFamily}) => {
       tintColor: colors?.redB,
       width: moderateScale(15),
       height: moderateScale(15),
+    },
+    startEndDateTitle: {
+      fontSize: moderateScale(12),
+      fontFamily: fontFamily.bold,
+      color: colors.black,
+    },
+    startEndDateValueTxt: {
+      fontSize: moderateScale(11),
+      fontFamily: fontFamily.regular,
+      color: colors.blackOpacity66,
     },
   });
   return styles;

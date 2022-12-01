@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   FlatList,
@@ -9,14 +9,12 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {useSelector} from 'react-redux';
-import BorderTextInput from '../../../Components/BorderTextInput';
-import CustomSwitchTabBar from '../../../Components/CustomSwitchTabBar';
+import { useSelector } from 'react-redux';
 import DropDown from '../../../Components/DropDown';
 import GradientButton from '../../../Components/GradientButton';
 import Modal from '../../../Components/Modal';
@@ -27,7 +25,6 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
-import {getStaticLocations} from '../../../redux/actions/pickupdelivery';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
@@ -35,39 +32,39 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
-  nearbySearch,
+  nearbySearch
 } from '../../../utils/googlePlaceApi';
 import {
   getAddressComponent,
   getPhoneNumberFromPhoneBook,
   getRandomColor,
-  showError,
+  showError
 } from '../../../utils/helperFunctions';
 import {
   checkContactPermission,
   chekLocationPermission,
-  locationPermission,
+  locationPermission
 } from '../../../utils/permissions';
 import stylesFun from './styles';
 
-export default function Addaddress({navigation, route}) {
+export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
-  const {userData} = useSelector((state) => state?.auth);
-  const {pickUpTimeType} = useSelector((state) => state?.home);
-  const {appData, allAddresss, themeColors, appStyle, themeColor, themeToggle} =
+  const { userData } = useSelector((state) => state?.auth);
+  const { pickUpTimeType } = useSelector((state) => state?.home);
+  const { appData, allAddresss, themeColors, appStyle, themeColor, themeToggle } =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const {book_for_friend} = appData?.profile?.preferences;
-  console.log(paramData, 'paramDataparamData');
+  const { book_for_friend } = appData?.profile?.preferences;
+  console.log(appData, 'paramDataparamData')
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -115,6 +112,7 @@ export default function Addaddress({navigation, route}) {
     callingCode: '+91',
     showFriendListModal: false,
     allAddedFriends: [],
+    isBooking: '0',
     selectedFriendForRide: {id: 0},
     staticLocation: [],
     selectedLoaction: [],
@@ -149,6 +147,7 @@ export default function Addaddress({navigation, route}) {
     selectedFriendForRide,
     staticLocation,
     selectedLoaction,
+    isBooking,
     isLoading,
   } = state;
 
@@ -162,26 +161,26 @@ export default function Addaddress({navigation, route}) {
       getAllAddress();
     }
   }, [paramData]);
-
   useEffect(() => {
-    getStaticLocations();
-  }, []);
+    getStaticLocations()
+  }, [])
   const getStaticLocations = () => {
-    actions
-      .getStaticLocations(
-        '',
-        {},
-        {
-          code: appData?.profile?.code,
-        },
-      )
-      .then((res) => {
+    actions.getStaticLocations('', {}, {
+      code: appData?.profile?.code,
+    }).then(
+      (res) => {
+        console.log(res, "locationssssss")
         updateState({
-          staticLocation: [...res?.data],
-        });
-      })
-      .catch((error) => {});
-  };
+          staticLocation: [...res?.data]
+        })
+      }
+
+    ).catch(
+      error => {
+        console.log(error, "locationssssss")
+      }
+    )
+  }
   //get All address
   const getAllAddress = () => {
     actions
@@ -201,7 +200,7 @@ export default function Addaddress({navigation, route}) {
         });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -212,35 +211,34 @@ export default function Addaddress({navigation, route}) {
         if (result === 'goback') {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+        Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
       })
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({
     fontFamily,
     themeColors,
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   const getAllPickUpVendors = (lat, lng) => {
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
-          code: appData?.profile?.code,
-          latitude: lat,
-          longitude: lng,
-        }
-      : {code: appData?.profile?.code};
+        code: appData?.profile?.code,
+        latitude: lat,
+        longitude: lng,
+      }
+      : { code: appData?.profile?.code };
 
     actions
       .getDataByCategoryId(
-        `/${
-          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
         latlongData,
@@ -257,7 +255,7 @@ export default function Addaddress({navigation, route}) {
       })
       .catch((err) => {
         console.log(err, 'error in Api ');
-        updateState({isLoading: false, isRefreshing: false});
+        updateState({ isLoading: false, isRefreshing: false });
       });
   };
 
@@ -278,6 +276,12 @@ export default function Addaddress({navigation, route}) {
     });
   };
 
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+      () => {
+        navigation.navigate(screenName, { data });
+      };
+
   const renderbtn = () => {
     switch (getBundleId()) {
       case appIds.yoho:
@@ -293,7 +297,7 @@ export default function Addaddress({navigation, route}) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -314,7 +318,7 @@ export default function Addaddress({navigation, route}) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(30)}
@@ -342,7 +346,6 @@ export default function Addaddress({navigation, route}) {
   };
 
   const moveToNextScreenWithAddressData = () => {
-    console.log(dropLocationData, 'dropLocationData');
     let location = [];
     if (
       dropLocationData[0].pre_address == '' ||
@@ -389,6 +392,7 @@ export default function Addaddress({navigation, route}) {
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
       pickUpTimeType: pickUpTimeType,
+      is_cab_pooling: isBooking == 1 ? 1 : 0,
       friendBookingDetails: {
         bookingType: selectedFriendForRide?.id != 0 ? 1 : 0,
         firstName: selectedFriendForRide?.first_name
@@ -409,7 +413,7 @@ export default function Addaddress({navigation, route}) {
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const onShowHideFriendListModal = () => {
@@ -431,9 +435,9 @@ export default function Addaddress({navigation, route}) {
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const {latitude, longitude} = await getCurrentLocationFromApi();
+      const { latitude, longitude } = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({curLatLng: {latitude, longitude}});
+      updateState({ curLatLng: { latitude, longitude } });
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
@@ -449,7 +453,7 @@ export default function Addaddress({navigation, route}) {
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
-        updateState({dropLocationData: cloneArr});
+        updateState({ dropLocationData: cloneArr });
       }
     }
   };
@@ -464,7 +468,17 @@ export default function Addaddress({navigation, route}) {
       console.log('error raised', error);
     }
   };
-
+  const onBooking = () => {
+    updateState({
+      isBooking: 0
+    })
+  }
+  const OnPooling = () => {
+    updateState({
+      isBooking: 1
+    })
+  }
+  console.log(isBooking,'isBookingisBooking')
   const renderAddressess = (item) => {
     return (
       <TouchableOpacity
@@ -475,9 +489,9 @@ export default function Addaddress({navigation, route}) {
             : colors.lightGreyBg,
         }}
         onPress={() =>
-          onPressAddress({place_id: item.place_id, name: item.name})
+          onPressAddress({ place_id: item.place_id, name: item.name })
         }>
-        <View style={{flex: 0.12}}>
+        <View style={{ flex: 0.12 }}>
           <Image
             style={{
               height: moderateScale(24),
@@ -487,7 +501,7 @@ export default function Addaddress({navigation, route}) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -518,13 +532,13 @@ export default function Addaddress({navigation, route}) {
       // updateAddress(place.description)
       const cloneArr = dropLocationData;
       cloneArr[searchResult.currentIndex].pre_address = place?.name;
-      updateState({dropLocationData: cloneArr});
+      updateState({ dropLocationData: cloneArr });
       try {
         let res = await getPlaceDetails(
           place.place_id,
           profile?.preferences?.map_key,
         );
-        const {result} = res;
+        const { result } = res;
 
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
@@ -540,7 +554,7 @@ export default function Addaddress({navigation, route}) {
           result?.formatted_address;
         updateState({
           dropLocationData: cloneArr,
-          searchResult: {currentIndex: searchResult.currentIndex, data: []},
+          searchResult: { currentIndex: searchResult.currentIndex, data: [] },
         });
       } catch (error) {
         console.log("something wen't wrong");
@@ -565,10 +579,10 @@ export default function Addaddress({navigation, route}) {
             : colors.lightGreyBg,
         }}
         onPress={() => onPressAddress(item)}>
-        <View style={{flex: 0.15}}>
+        <View style={{ flex: 0.15 }}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -600,7 +614,7 @@ export default function Addaddress({navigation, route}) {
           return item;
         }
       });
-      updateState({dropLocationData: removeItem});
+      updateState({ dropLocationData: removeItem });
       return;
     }
 
@@ -623,7 +637,7 @@ export default function Addaddress({navigation, route}) {
           longitude: 0,
         });
         isFill = true;
-        updateState({dropLocationData: [...dropLocationData, ...x]});
+        updateState({ dropLocationData: [...dropLocationData, ...x] });
       }
     } else {
       alert(strings.PLEASE_FILL_ADDRESS);
@@ -631,16 +645,16 @@ export default function Addaddress({navigation, route}) {
   };
 
   const updateCurValues = (text, i) => {
-    console.log(text, 'texttttttt');
+   
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
 
   const onClearAddress = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
 
   const onClose = () => {
@@ -657,7 +671,7 @@ export default function Addaddress({navigation, route}) {
 
   const getAllRiderList = () => {
     actions
-      .getAllRiderList({}, {code: appData?.profile?.code})
+      .getAllRiderList({}, { code: appData?.profile?.code })
       .then((res) => {
         updateState({
           allAddedFriends: res?.riders,
@@ -669,7 +683,7 @@ export default function Addaddress({navigation, route}) {
   };
 
   const onLayout = (event) => {
-    const {x, y, height, width} = event.nativeEvent.layout;
+    const { x, y, height, width } = event.nativeEvent.layout;
 
     setModalLayoutHeight(height);
   };
@@ -680,7 +694,7 @@ export default function Addaddress({navigation, route}) {
         onPress={() => _onAddRiderContact(1)}
         style={styles.friendListFooter}>
         <Image
-          style={{tintColor: themeColors?.primary_color}}
+          style={{ tintColor: themeColors?.primary_color }}
           source={imagePath.addRider}
         />
         <Text style={styles.addFriendText}>{strings.ADD_MANUALLY}</Text>
@@ -689,7 +703,7 @@ export default function Addaddress({navigation, route}) {
         onPress={() => _onAddRiderContact(2)}
         style={styles.friendListFooter}>
         <Image
-          style={{tintColor: themeColors?.primary_color}}
+          style={{ tintColor: themeColors?.primary_color }}
           source={imagePath.addFriend}
         />
         <Text style={styles.addFriendText}>{strings.ADD_FROM_PHONEBOOK}</Text>
@@ -697,12 +711,12 @@ export default function Addaddress({navigation, route}) {
     </>
   );
 
-  const renderAllFriends = ({item, index}) => {
+  const renderAllFriends = ({ item, index }) => {
     return (
-      <View style={{padding: 5}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{ padding: 5 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
-            style={{flexDirection: 'row'}}
+            style={{ flexDirection: 'row' }}
             onPress={() => onSelectFriend(item)}>
             <Image source={imagePath.riderImage} />
             <Text
@@ -717,7 +731,7 @@ export default function Addaddress({navigation, route}) {
           </TouchableOpacity>
           {item?.id == selectedFriendForRide?.id ? (
             <Image
-              style={{tintColor: themeColors?.primary_color}}
+              style={{ tintColor: themeColors?.primary_color }}
               source={imagePath.tickBlack}
             />
           ) : null}
@@ -755,7 +769,7 @@ export default function Addaddress({navigation, route}) {
                   : moderateScaleVertical(0),
             }}>
             <TouchableOpacity
-              style={{flex: 0.5}}
+              style={{ flex: 0.5 }}
               onPress={onShowHideFriendListModal}
               hitSlop={styles.hitSlop}>
               <Image
@@ -767,7 +781,7 @@ export default function Addaddress({navigation, route}) {
                 source={imagePath.backArrowCourier}
               />
             </TouchableOpacity>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={imagePath.user} />
               <Text
                 style={{
@@ -783,13 +797,13 @@ export default function Addaddress({navigation, route}) {
         <View
           style={
             allAddedFriends.length >= 10
-              ? {height: moderateScaleVertical(height / 1.05)}
+              ? { height: moderateScaleVertical(height / 1.05) }
               : {}
           }>
           <FlatList
             showsVerticalScrollIndicator={false}
             data={allAddedFriends}
-            contentContainerStyle={{flexGrow: 1}}
+            contentContainerStyle={{ flexGrow: 1 }}
             ListHeaderComponent={() => (
               <View>
                 <View
@@ -805,7 +819,7 @@ export default function Addaddress({navigation, route}) {
                   </TouchableOpacity>
                   {selectedFriendForRide?.id == 0 ? (
                     <Image
-                      style={{tintColor: themeColors?.primary_color}}
+                      style={{ tintColor: themeColors?.primary_color }}
                       source={imagePath.tickBlack}
                     />
                   ) : null}
@@ -822,12 +836,18 @@ export default function Addaddress({navigation, route}) {
     );
   };
 
+  const onSelectedLocation = (data) => {
+    console.log(data)
+    updateState({
+      selectedLoaction: data?.address
+    })
+  }
   const _onAddRiderContact = (type) => {
     switch (type) {
       case 0:
         updateState({
           showFriendListModal: false,
-          selectedFriendForRide: {id: type},
+          selectedFriendForRide: { id: type },
         });
         break;
       case 1:

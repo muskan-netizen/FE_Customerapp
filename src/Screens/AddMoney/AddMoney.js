@@ -1,27 +1,26 @@
 // import stripe from 'tipsi-stripe';
 import {
   CardField,
+  createPaymentMethod,
   createToken,
+  handleCardAction,
   initStripe,
   StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
 } from '@stripe/stripe-react-native';
-import queryString from 'query-string';
+import {PayWithFlutterwave} from 'flutterwave-react-native';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
   Image,
   Keyboard,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import Modal from 'react-native-modal';
 import RazorpayCheckout from 'react-native-razorpay';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
@@ -43,12 +42,13 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {
+  currencyNumberFormatter,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../../utils/commonFunction';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
 import stylesFun from './styles';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
-import Modal from 'react-native-modal';
 
 export default function AddMoney({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -78,7 +78,8 @@ export default function AddMoney({navigation}) {
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const userData = useSelector((state) => state.auth.userData);
   const {preferences} = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;

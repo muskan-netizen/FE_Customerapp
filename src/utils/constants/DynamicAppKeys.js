@@ -101,6 +101,7 @@ const shortCodes = {
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
+  // ace: '245bae',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',
@@ -142,7 +143,8 @@ const shortCodes = {
   gumastas: '2cdae8',
   dishefs: '4c13fd',
   bilionza: '9a8793',
-  doleypharmacy: 'e925ef',
+  // doleypharmacy: 'e925ef',
+  doleypharmacy: '245bae',
   bezalio: 'c1ab2b',
   youchillax: 'a2c90d',
   instashop: 'cb6671',
@@ -468,6 +470,9 @@ const shortCodes = {
   usVetsDeliver: '4a533c',
   flybuilder: '7cd4bc',
   konectame: '1338c1',
+  skyline: 'ce1ed6',
+  bliss: '6eb260',
+  rentzy: 'd4fc07',
 };
 
 const appIds = {
@@ -1364,8 +1369,8 @@ const appIds = {
     android: 'com.tumbak',
   }),
   iPicknDrop: Platform.select({
-    ios: 'com.iPicknDrop',
-    android: 'com.iPicknDrop',
+    ios: 'com.iPicknDrop.order',
+    android: 'com.iPicknDrop.orderApp',
   }),
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
@@ -2330,6 +2335,18 @@ const appIds = {
   flybuilder: Platform.select({
     ios: 'com.flybuilder.royoorders',
     android: 'com.flybuilder.royoorders',
+  }),
+  skyline: Platform.select({
+    ios: 'com.skyline.royoorders',
+    android: 'com.skyline',
+  }),
+  bliss: Platform.select({
+    ios: 'com.bliss.royoorders',
+    android: 'com.bliss',
+  }),
+  rentzy: Platform.select({
+    ios: 'com.rentzy.royoorders',
+    android: 'com.rentzy',
   }),
 };
 

@@ -1,8 +1,6 @@
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
-import ActionSheet from 'react-native-actionsheet';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
-  Alert,
   I18nManager,
   Image,
   Linking,
@@ -12,8 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Share from 'react-native-share';
@@ -29,6 +28,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 
+import {useRef} from 'react';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -40,10 +40,8 @@ import {
   getImageUrl,
   getRandomColor,
   showError,
-  showSuccess,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useRef} from 'react';
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
