@@ -138,6 +138,10 @@ const OrderCardVendorComponent2 = ({
     };
   }, []);
 
+  const onReturnOrder = () => {};
+
+  const onReplaceOrder = () => {};
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -606,6 +610,32 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         ) : null}
       </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginHorizontal: moderateScale(10),
+          marginBottom: moderateScaleVertical(8),
+          flex: 1,
+        }}>
+        <ButtonWithLoader
+          onPress={onReturnOrder}
+          btnText="Return"
+          btnTextStyle={{
+            textTransform: 'none',
+          }}
+          btnStyle={styles.returnReplaceBtnStyle}
+        />
+        <ButtonWithLoader
+          onPress={onReplaceOrder}
+          btnText="Replace"
+          btnTextStyle={{
+            textTransform: 'none',
+          }}
+          btnStyle={styles.returnReplaceBtnStyle}
+        />
+      </View>
       <Modal
         isVisible={!!cancellationItem ? true : false}
         onBackdropPress={hideModal}
@@ -885,6 +915,13 @@ export function stylesFunc({fontFamily, themeColors}) {
       fontFamily: fontFamily.medium,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
+    },
+    returnReplaceBtnStyle: {
+      flex: 0.48,
+      height: moderateScaleVertical(45),
+      backgroundColor: themeColors.primary_color,
+      borderWidth: 0,
+      marginTop: 0,
     },
   });
   return styles;
