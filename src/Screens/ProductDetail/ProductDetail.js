@@ -1194,6 +1194,7 @@ export default function ProductDetail({ route, navigation }) {
   const myRef = useRef(null);
 
   const productIncrDecreamentForCart = (type) => {
+
     let quantityToIncreaseDecrease = !!productDetailData?.batch_count
       ? Number(productDetailData?.batch_count)
       : 1;
@@ -1663,11 +1664,12 @@ export default function ProductDetail({ route, navigation }) {
                               themeColors.primary_color.substr(1),
                               15,
                             ),
-                            flex: 0.28,
+                            flex: 0.3,
                             borderColor: themeColors?.primary_color,
                             height: moderateScale(38),
                             justifyContent: 'space-between',
-                            marginRight: moderateScale(8)
+                            marginRight: moderateScale(8),
+                           
                           }}
                         // onPress={onPress}
                         >
@@ -1678,9 +1680,11 @@ export default function ProductDetail({ route, navigation }) {
                             }
                             onPress={() => productIncrDecreamentForCart(2)}
                             // hitSlop={hitSlopProp}
-                            style={{
-                              flex: 0.2,
-                            }}>
+                            // style={{
+                            //   flex: 0.2,
+                              
+                            // }}
+                            >
                             <Text
                               style={{
                                 ...commonStyles.mediumFont14,
@@ -1698,40 +1702,51 @@ export default function ProductDetail({ route, navigation }) {
                                 themeColors.primary_color.substr(1),
                                 15,
                               ),
-                              flex: 0.28,
+                              //  flex: 0.28,
                               borderColor: themeColors?.primary_color,
                               height: moderateScale(38),
                               justifyContent: 'space-between',
-                              marginRight: moderateScale(8),
+                              marginLeft: moderateScale(8),
+                          
                             }}
-                            // onPress={onPress}
-                          />
-                            <TouchableOpacity
-                              disabled={
-                                !productDetailData?.vendor?.show_slot &&
-                                !!productDetailData?.vendor?.is_vendor_closed
-                              }
-                            
-                            value={productQuantityForCart.toString()}
+                            value={`${productQuantityForCart.toString()}`}
                             onChangeText={(value) =>
                               updateState({
                                 productQuantityForCart:
                                   value == '' ? '' : Number(value),
                               })
                             }
+                            // onPress={onPress}
                           />
+
+                 
+                            <TouchableOpacity
+                              disabled={
+                                !productDetailData?.vendor?.show_slot &&
+                                !!productDetailData?.vendor?.is_vendor_closed
+                              }
+                            
+                            value={`${productQuantityForCart.toString()}`}
+                            onChangeText={(value) =>
+                              updateState({
+                                productQuantityForCart:
+                                  value == '' ? '' : Number(value),
+                              })
+                            }
+                            
+                          />
+                        
                           <TouchableOpacity
                             disabled={
                               !productDetailData?.vendor?.show_slot &&
                               !!productDetailData?.vendor?.is_vendor_closed
                             }
-                            style={{ flex: 0.2 }}
+                           
                             onPress={() => productIncrDecreamentForCart(1)}
                             hitSlop={hitSlopProp}>
                             <Text
-                              style={{
-                                flex: 0.2,
-                              }}>
+                              
+                              >
                               +
                             </Text>
                           </TouchableOpacity>
