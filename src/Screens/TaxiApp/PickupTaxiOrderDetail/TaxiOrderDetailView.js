@@ -1,5 +1,6 @@
 import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import ScaledImage from 'react-native-scalable-image';
 import {useSelector} from 'react-redux';
@@ -17,11 +18,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {MyDarkTheme} from '../../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 export default function TaxiOrderDetailView({
   isLoading = false,
@@ -36,6 +36,8 @@ export default function TaxiOrderDetailView({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -244,11 +246,11 @@ export default function TaxiOrderDetailView({
                         : styles.distanceDurationDeliveryValue
                     }>
                     {productDetail && productDetail?.payable_amount
-                      ? `${
-                          currencies?.primary_currency?.symbol
-                        }${currencyNumberFormatter(
+                      ? `${tokenConverterPlusCurrencyNumberFormater(
                           Number(productDetail?.payable_amount),
-                          appData?.profile?.preferences?.digit_after_decimal,
+                          digit_after_decimal,
+                          additional_preferences,
+                          currencies?.primary_currency?.symbol,
                         )}`
                       : '--'}
                   </Text>

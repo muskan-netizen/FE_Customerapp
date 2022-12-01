@@ -1,9 +1,9 @@
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking} from 'react-native';
+import {Alert, BackHandler, Linking, ScrollView} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -13,7 +13,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 import {
   androidBackButtonHandler,
@@ -111,6 +111,7 @@ export default function Home({route, navigation}) {
     isSubscription: true,
     stopOrderModalVisible: true,
     curLatLong: null,
+    selectedFilterType: {},
   });
 
   const {
@@ -127,7 +128,7 @@ export default function Home({route, navigation}) {
     openVendor,
     closeVendor,
     bestSeller,
-
+    selectedFilterType,
     isVoiceRecord,
     singleVendor,
     selectedAddonSet,
@@ -165,6 +166,9 @@ export default function Home({route, navigation}) {
       paramData?.details?.formatted_address != location?.address
     ) {
       _getLocationFromParams();
+      updateState({
+        selectedFilterType: {},
+      });
     }
   }, [paramData?.details]);
 
@@ -413,11 +417,6 @@ export default function Home({route, navigation}) {
       var selectedVendorType = null;
       var defaultVendorType = null;
 
-      console.log(
-        'dineInTypedineInType',
-        appData,
-      );
-
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
         defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
         appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
@@ -523,8 +522,6 @@ export default function Home({route, navigation}) {
   };
 
   const onPressVendor = (item) => {
-    console.log('item+++', item);
-
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -755,6 +752,11 @@ export default function Home({route, navigation}) {
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
+
+    updateState({
+      selectedFilterType: {},
+    });
+
     if (dineInType != type) {
       {
         updateState({
@@ -775,6 +777,7 @@ export default function Home({route, navigation}) {
       openVendor: selectedFilter?.id == 1 ? 1 : 0,
       closeVendor: selectedFilter?.id == 2 ? 1 : 0,
       bestSeller: selectedFilter?.id == 3 ? 1 : 0,
+      selectedFilterType: selectedFilter,
     });
     homeData(location, selectedFilter);
   };
@@ -935,11 +938,8 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
-  console.log(appStyle?.homePageLayout, 'homePageLayouthomePageLayout');
   const renderHomeScreen = () => {
-
     switch (appStyle?.homePageLayout) {
-   
       // switch (case_) {
       case 1:
         return (
@@ -1021,7 +1021,64 @@ export default function Home({route, navigation}) {
           </>
         );
       case 3:
-        return (
+        if (getBundleId() === appIds.onTheWheel ) {
+          return (
+            <>
+                  <DashBoardHeaderSix
+                    showToggles={false}
+                    navigation={navigation}
+                    location={location}
+                    selcetedToggle={selcetedToggle}
+                    toggleData={appData}
+                    isLoading={isLoading}
+                    currentLocation={currentLocation}
+                    isLoadingB={isLoadingB}
+                    _onVoiceListen={_onVoiceListen}
+                    isVoiceRecord={isVoiceRecord}
+                    _onVoiceStop={_onVoiceStop}
+                  />
+      
+                  {dineInType == 'pick_drop' ? (
+                    <TaxiHomeDashbord
+                      handleRefresh={() => handleRefresh()}
+                      bannerPress={(item) => bannerPress(item)}
+                      isLoading={isLoading}
+                      isRefreshing={isRefreshing}
+                      appMainData={appMainData}
+                      onPressCategory={(item) => onPressCategory(item)}
+                      toggleData={appData}
+                      location={location}
+                      curLatLong={curLatLong}
+                    />
+                  ) : (
+                    <DashBoardNine
+                      handleRefresh={() => handleRefresh()}
+                      bannerPress={(item) => bannerPress(item)}
+                      isLoading={isLoading}
+                      isRefreshing={isRefreshing}
+                      appMainData={appMainData}
+                      onPressCategory={(item) => {
+                        onPressCategory(item);
+                      }}
+                      onPressVendor={(item) => {
+                        onPressVendor(item);
+                      }}
+                      isDineInSelected={isDineInSelected}
+                      selcetedToggle={selcetedToggle}
+                      tempCartData={tempCartData}
+                      toggleData={appData}
+                      navigation={navigation}
+                      onVendorFilterSeletion={onVendorFilterSeletion}
+                      singleVendor={singleVendor}
+                      onPressAddLaundryItem={onPressAddLaundryItem}
+                      isLoadingAddons={isLoadingAddons}
+                      selectedHomeCategory={selectedHomeCategory}
+                    />
+                  )}
+                </>
+          )
+        } else {
+          return (
           <>
             <DashBoardHeaderFive
               showToggles={false}
@@ -1072,10 +1129,13 @@ export default function Home({route, navigation}) {
                 onPressAddLaundryItem={onPressAddLaundryItem}
                 isLoadingAddons={isLoadingAddons}
                 selectedHomeCategory={selectedHomeCategory}
+                selectedFilterType={selectedFilterType}
               />
             )}
           </>
         );
+          
+        } 
 
       case 4:
         return (
@@ -1180,6 +1240,7 @@ export default function Home({route, navigation}) {
                 onClose={_closeModal}
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
+                selectedFilterType={selectedFilterType}
               />
             )}
           </>
@@ -1235,67 +1296,68 @@ export default function Home({route, navigation}) {
                 onClose={_closeModal}
                 onPressSubscribe={_onPressSubscribe}
                 isSubscription={isSubscription}
+                selectedFilterType={selectedFilterType}
               />
             )}
           </>
         );
 
-        case 7:
-          return (
-            <>
-              <DashBoardHeaderSix
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
+      case 7:
+        return (
+          <>
+            <DashBoardHeaderSix
+              showToggles={false}
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            {dineInType == 'pick_drop' ? (
+              <TaxiHomeDashbord
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
                 isLoading={isLoading}
-                currentLocation={currentLocation}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                toggleData={appData}
+                location={location}
+                curLatLong={curLatLong}
               />
-  
-              {dineInType == 'pick_drop' ? (
-                <TaxiHomeDashbord
-                  handleRefresh={() => handleRefresh()}
-                  bannerPress={(item) => bannerPress(item)}
-                  isLoading={isLoading}
-                  isRefreshing={isRefreshing}
-                  appMainData={appMainData}
-                  onPressCategory={(item) => onPressCategory(item)}
-                  toggleData={appData}
-                  location={location}
-                  curLatLong={curLatLong}
-                />
-              ) : (
-                <DashBoardNine
-                  handleRefresh={() => handleRefresh()}
-                  bannerPress={(item) => bannerPress(item)}
-                  isLoading={isLoading}
-                  isRefreshing={isRefreshing}
-                  appMainData={appMainData}
-                  onPressCategory={(item) => {
-                    onPressCategory(item);
-                  }}
-                  onPressVendor={(item) => {
-                    onPressVendor(item);
-                  }}
-                  isDineInSelected={isDineInSelected}
-                  selcetedToggle={selcetedToggle}
-                  tempCartData={tempCartData}
-                  toggleData={appData}
-                  navigation={navigation}
-                  onVendorFilterSeletion={onVendorFilterSeletion}
-                  singleVendor={singleVendor}
-                  onPressAddLaundryItem={onPressAddLaundryItem}
-                  isLoadingAddons={isLoadingAddons}
-                  selectedHomeCategory={selectedHomeCategory}
-                />
-              )}
-            </>
-          );
+            ) : (
+              <DashBoardNine
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                onPressVendor={(item) => {
+                  onPressVendor(item);
+                }}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                tempCartData={tempCartData}
+                toggleData={appData}
+                navigation={navigation}
+                onVendorFilterSeletion={onVendorFilterSeletion}
+                singleVendor={singleVendor}
+                onPressAddLaundryItem={onPressAddLaundryItem}
+                isLoadingAddons={isLoadingAddons}
+                selectedHomeCategory={selectedHomeCategory}
+              />
+            )}
+          </>
+        );
     }
   };
 

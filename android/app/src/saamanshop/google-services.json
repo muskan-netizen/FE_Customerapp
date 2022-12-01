@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "513519801707",
+    "project_id": "saamanshop-a8487",
+    "storage_bucket": "saamanshop-a8487.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513519801707:android:7d655b89dfbfb55047282e",
+        "android_client_info": {
+          "package_name": "com.saamanshop.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513519801707-bnjp24lva0ketgaesil1rddqajou260n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saamanshop.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "513519801707-dqoh0jfnel8vgvl4emlbt75asb5rt2pv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saamanshop.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "513519801707-ekujhs4f872h834algh023a7em1qg0ms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saamanshop.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "513519801707-c9dam2kfjbhkjl801314d0gp52o92l6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzlCUXO4_iDDU_skhC8XnFM8W4V6ZGp0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513519801707-c9dam2kfjbhkjl801314d0gp52o92l6f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "513519801707-jbehiv0rkjtpktd6q8nsat4p0c7s3ekg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.saamanshop.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

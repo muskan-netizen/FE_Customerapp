@@ -121,7 +121,7 @@ export default function (Stack) {
         }}
       />
       <Stack.Screen
-        name={navigationStrings.VERIFY_ACCOUNT}
+        name={navigationStrings.VERIFY_ACCOUNT_TAXI}
         component={VerifyAccount}
         options={{headerShown: false}}
       />

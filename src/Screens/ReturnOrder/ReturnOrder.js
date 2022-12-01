@@ -153,7 +153,7 @@ export default function ReturnOrder({navigation, route}) {
                 code: appData?.profile?.code,
                 currency: currencies?.primary_currency?.id,
                 language: languages?.primary_language?.id,
-                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
               })
               .then((res) => {
                 console.log(res, 'res>>>>>>uploadReturnOrderImage');

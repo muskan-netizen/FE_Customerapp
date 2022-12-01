@@ -69,10 +69,10 @@ const DropDown = ({
             borderColor: themeColors.primary_color,
             borderWidth: 0.6,
             backgroundColor: colors.white,
-            top: moderateScaleVertical(48),
+            // top: moderateScaleVertical(48),
             position: 'absolute',
             minWidth: '70%',
-            zIndex: 345,
+            zIndex: 10,
             ...modalStyle,
           }}>
           {data.map((val, i) => {
@@ -92,11 +92,12 @@ const DropDown = ({
                     fontFamily:
                       selectedIndex == i ? fontFamily.bold : fontFamily.regular,
                   }}>
-                  {val?.address || val?.translations[0]?.name ||val?.address ||
+                  {val?.address ||
+                    val?.translations[0]?.name ||
+                    val?.address ||
                     val?.full_name_english ||
                     val?.name ||
-                    val  
-                    }
+                    val}
                 </Text>
               </TouchableOpacity>
             );

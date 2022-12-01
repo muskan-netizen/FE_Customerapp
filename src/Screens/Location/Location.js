@@ -124,7 +124,6 @@ export default function Location({route, navigation}) {
     updateState({
       isMapSelectLocation: true,
     });
-    return;
     chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {

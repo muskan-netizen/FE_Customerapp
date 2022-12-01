@@ -1,73 +1,63 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  Dimensions,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  BackHandler,
+  Alert,
   Animated,
-  TextInput,
+  BackHandler,
+  Dimensions,
+  Image,
   Keyboard,
   Linking,
-  Alert,
-  ActivityIndicator,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {
-  defaultLoader,
-  loaderOne,
-} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useIsFocused } from '@react-navigation/native';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapViewDirections from 'react-native-maps-directions';
 import {
   getImageUrl,
   hapticEffects,
   playHapticEffect,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
-import MapViewDirections from 'react-native-maps-directions';
-import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import {useIsFocused} from '@react-navigation/native';
-
+import { cloneDeep } from 'lodash';
 import Communications from 'react-native-communications';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import TaxiOrderDetailView from './TaxiOrderDetailView';
-import SearchingForDriverView from './SearchingForDriverView';
-import useInterval from '../../../utils/useInterval';
-import {cloneDeep} from 'lodash';
+import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
-
+import navigationStrings from '../../../navigation/navigationStrings';
+import { MyDarkTheme } from '../../../styles/theme';
+import useInterval from '../../../utils/useInterval';
+import moment from 'moment';
+import { FlatList } from 'react-native';
+import StarRating from 'react-native-star-rating';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import CustomCallouts from '../../../Components/CustomCallouts';
+import LeftRightText from '../../../Components/LeftRightText';
+import RoundImg from '../../../Components/RoundImg';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  textScale
 } from '../../../styles/responsiveSize';
-import StarRating from 'react-native-star-rating';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import RoundImg from '../../../Components/RoundImg';
-import LeftRightText from '../../../Components/LeftRightText';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
-import moment from 'moment';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import {FlatList} from 'react-native';
-import CustomCallouts from '../../../Components/CustomCallouts';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -84,11 +74,9 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import 'moment-timezone';
-import Loader from '../../../Components/Loader';
-import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
-import LottieView from 'lottie-react-native';
+import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
+import GradientButton from '../../../Components/GradientButton';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
@@ -133,6 +121,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     isBtnLoader: false,
     cancelError: null,
     isWaitingOver: false,
+    submitedRatingToDriver: 0,
+    driverRatingData: null,
+    orderCancelMessage: "",
   });
   const {
     isLoading,
@@ -165,6 +156,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     isBtnLoader,
     cancelError,
     isWaitingOver,
+    submitedRatingToDriver,
+    driverRatingData,
+    orderCancelMessage,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -172,6 +166,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
@@ -213,7 +209,6 @@ console.log(appData,'appDataappData')
       keyboardDidShowListener.remove();
     };
   }, []);
-
   // useFocusEffect(
   //   React.useCallback(() => {
   //     //   updateState({isLoading: true});
@@ -244,7 +239,6 @@ console.log(appData,'appDataappData')
   //     updateState({ isLoading: false });
   //   }
   // }, []);
-  console.log(urlValue,"urlValueurlValueurlValueurlValue")
   useInterval(
     () => {
       if (urlValue) {
@@ -283,11 +277,6 @@ console.log(appData,'appDataappData')
     }
   }, [driverStatus]);
 
-  console.log(
-    paramData,
-    'paramData?.orderDetail?.dispatch_traking_url',
-  );
-
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
@@ -295,7 +284,7 @@ console.log(appData,'appDataappData')
         '/order-details/',
       )
     : null;
-  console.log(new_dispatch_traking_url, 'new_dispatch_traking_urlnew_dispatch_traking_url');
+
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -378,65 +367,65 @@ console.log(appData,'appDataappData')
     }
   }, [isLoading]);
 
-  /*********Get order detail screen********* */
-  const _getOrderDetailScreen = (url) => {
-    actions
-      .getOrderDetailPickUp(
-        {
-          order_id: paramData?.orderId,
-          new_dispatch_traking_url: new_dispatch_traking_url,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          // systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        console.log(res, 'ressssssss');
-        // console.log(res, 'agent location2');
-        // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
-        updateState({
-          tasks: res?.data?.tasks,
-        });
-        // }
+  // /*********Get order detail screen********* */
+  // const _getOrderDetailScreen = (url) => {
+  //   actions
+  //     .getOrderDetailPickUp(
+  //       {
+  //         order_id: paramData?.orderId,
+  //         new_dispatch_traking_url: new_dispatch_traking_url,
+  //       },
+  //       {
+  //         code: appData?.profile?.code,
+  //         currency: currencies?.primary_currency?.id,
+  //         language: languages?.primary_language?.id,
+  //         // systemuser: DeviceInfo.getUniqueId(),
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res, "ressssssss");
+  //       // console.log(res, 'agent location2');
+  //       // if (JSON.stringify(tasks) !== JSON.stringify(res?.data?.tasks)) {
+  //       updateState({
+  //         tasks: res?.data?.tasks,
+  //       });
+  //       // }
 
-        updateState({
-          isLoading: false,
-          orderFullDetail: res?.data,
-          baseUrl: res?.data?.base_url,
-          region: {
-            latitude: res?.data?.tasks[0]?.latitude
-              ? Number(res?.data?.tasks[0].latitude)
-              : 30.7191,
-            longitude: res?.data?.tasks[0]?.longitude
-              ? Number(res?.data?.tasks[0].longitude)
-              : 76.8107,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          },
-          coordinate: {
-            latitude: res?.data?.tasks[0]?.latitude
-              ? Number(res?.data?.tasks[0].latitude)
-              : 30.7191,
-            longitude: res?.data?.tasks[0]?.longitude
-              ? Number(res?.data?.tasks[0].longitude)
-              : 76.8107,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          },
-          showOrderDetailView: true,
-          agent_location: res?.data?.agent_location,
-          orderDetail: res?.data?.order,
-          agent_image: res?.data?.agent_image,
-          driverStatus: res?.data?.order_details?.dispatcher_status,
-          isShowRating: res?.data?.order?.status == 'completed' ? true : false,
-          productInfo: res?.data?.order_details?.products,
-        });
-      })
-      .catch(errorMethod);
-  };
+  //       updateState({
+  //         isLoading: false,
+  //         orderFullDetail: res?.data,
+  //         baseUrl: res?.data?.base_url,
+  //         region: {
+  //           latitude: res?.data?.tasks[0]?.latitude
+  //             ? Number(res?.data?.tasks[0].latitude)
+  //             : 30.7191,
+  //           longitude: res?.data?.tasks[0]?.longitude
+  //             ? Number(res?.data?.tasks[0].longitude)
+  //             : 76.8107,
+  //           latitudeDelta: LATITUDE_DELTA,
+  //           longitudeDelta: LONGITUDE_DELTA,
+  //         },
+  //         coordinate: {
+  //           latitude: res?.data?.tasks[0]?.latitude
+  //             ? Number(res?.data?.tasks[0].latitude)
+  //             : 30.7191,
+  //           longitude: res?.data?.tasks[0]?.longitude
+  //             ? Number(res?.data?.tasks[0].longitude)
+  //             : 76.8107,
+  //           latitudeDelta: LATITUDE_DELTA,
+  //           longitudeDelta: LONGITUDE_DELTA,
+  //         },
+  //         showOrderDetailView: true,
+  //         agent_location: res?.data?.agent_location,
+  //         orderDetail: res?.data?.order,
+  //         agent_image: res?.data?.agent_image,
+  //         driverStatus: res?.data?.order_details?.dispatcher_status,
+  //         isShowRating: res?.data?.order?.status == "completed" ? true : false,
+  //         productInfo: res?.data?.order_details?.products,
+  //       });
+  //     })
+  //     .catch(errorMethod);
+  // };
 
   const errorMethod = (error) => {
     updateState({
@@ -471,8 +460,7 @@ console.log(appData,'appDataappData')
     data['review'] = productDetail?.product_rating?.review
       ? productDetail?.product_rating?.review
       : '';
-    // data['vendor_id'] = productDetail.vendor_id;
-    // console.log(productDetail, 'productDetail');
+
     actions
       .giveRating(data, {
         code: appData?.profile?.code,
@@ -483,6 +471,7 @@ console.log(appData,'appDataappData')
         // console.log(res, 'resresresresres');
         let cloned_productInfo = cloneDeep(productInfo);
         // console.log(cloned_productInfo, 'cloned_productInfo');
+        console.log(res.data, 'res.data');
         updateState({
           isLoading: false,
           productInfo: cloned_productInfo.map((itm, inx) => {
@@ -504,25 +493,34 @@ console.log(appData,'appDataappData')
   };
 
   const onStarRatingPress = (productData, rating) => {
-    let productListarray = cloneDeep(productInfo);
-
-    // console.log(getDispatchId, 'productData,rating');
-    // console.log(productData, rating, 'productDataproductDataproductData');
-    // updateState({isLoading: true});
     _giveRatingToProduct(productData, rating);
-
-    // navigation.navigate(navigationStrings.RATEORDER, {
-    //   item: {
-    //     product_rating: {
-    //       id: productData?.id,
-    //       order_vendor_product_id: productData?.order_vendor_id,
-    //       product_id: productData?.product_id,
-    //       order_id: productData?.order_id,
-    //       dispatchId: getDispatchId,
-    //     },
-    //   },
-    // });
   };
+
+  const onStarRatingForDriverPress = (rating) => {
+    const data = {
+      order_id: productInfo[0]?.order_id,
+      rating: rating,
+      review: '',
+    };
+
+    console.log(data, 'dataaaaa for driver');
+    actions
+      .ratingToDriver(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        updateState({
+          isLoading: false,
+          submitedRatingToDriver: res?.data?.rating,
+          driverRatingData: res?.data,
+        });
+        console.log('res++++++', res);
+      })
+      .catch(errorMethod);
+  };
+
   const dialCall = (number, type = 'phone') => {
     type === 'phone'
       ? Communications.phonecall(number.toString(), true)
@@ -535,9 +533,22 @@ console.log(appData,'appDataappData')
   };
   const rateYourOrder = (item) => {
     updateState({
-      isVisible: false,
+      isLoading: true,
     });
-    navigation.navigate(navigationStrings.RATEORDER, {item});
+    _updateDriverLocationLocation()
+      .then((res) => {
+        updateState({
+          isVisible: false,
+          isLoading: false,
+        });
+        navigation.navigate(navigationStrings.RATEORDER, {item});
+      })
+      .catch((error) => {
+        updateState({
+          isVisible: false,
+          isLoading: false,
+        });
+      });
   };
 
   const viewDriverStatus = () => {
@@ -564,7 +575,7 @@ console.log(appData,'appDataappData')
     return (
       <View
         style={{
-          height: height / 5,
+          // height: height / 5,
           backgroundColor: colors.white,
           alignItems: 'center',
           borderRadius: moderateScale(10),
@@ -574,99 +585,188 @@ console.log(appData,'appDataappData')
           style={{position: 'absolute', right: 0, top: 0}}>
           <Image source={imagePath.cross} />
         </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: textScale(16),
+            fontFamily: fontFamily?.bold,
+            marginTop: moderateScaleVertical(20),
+          }}>
+          Rate the product
+        </Text>
         {!!isShowRating && (
           <ScrollView horizontal>
             {productInfo?.map((item, index) => {
+              console.log(item, 'itemtmetmetmet');
               return (
-                <View
-                  style={{
-                    justifyContent: 'center',
-                  }}>
-                  <Image
+                <View style={{marginVertical: moderateScaleVertical(20)}}>
+                  <View
                     style={{
-                      resizeMode: 'contain',
-                      height: moderateScale(60),
-                      width: moderateScale(60),
-                      alignSelf: 'center',
-                    }}
-                    source={{
-                      uri: getImageUrl(
-                        item.image.proxy_url,
-                        item.image.image_path,
-                        '150/150',
-                      ),
-                      priority: FastImage.priority.high,
-                    }}
-                  />
-                  <View style={{marginTop: moderateScaleVertical(10)}}>
-                    <StarRating
-                      disabled={false}
-                      maxStars={5}
-                      rating={item?.product_rating?.rating}
-                      selectedStar={(rating) => onStarRatingPress(item, rating)}
-                      fullStarColor={colors.ORANGE}
-                      starSize={30}
+                      width: moderateScale(width - 50),
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingHorizontal: moderateScale(10),
+                    }}>
+                    <Image
+                      style={{
+                        resizeMode: 'contain',
+                        height: moderateScale(60),
+                        width: moderateScale(60),
+
+                        borderRadius: moderateScale(30),
+                      }}
+                      source={{
+                        uri: getImageUrl(
+                          item.image.proxy_url,
+                          item.image.image_path,
+                          '150/150',
+                        ),
+                        priority: FastImage.priority.high,
+                      }}
                     />
+
+                    <View
+                      style={{
+                        // marginTop: moderateScaleVertical(-30),
+                        marginHorizontal: moderateScale(10),
+                      }}>
+                      <StarRating
+                        disabled={false}
+                        maxStars={5}
+                        rating={item?.product_rating?.rating}
+                        selectedStar={(rating) =>
+                          onStarRatingPress(item, rating)
+                        }
+                        fullStarColor={colors.ORANGE}
+                        starSize={30}
+                      />
+                    </View>
                   </View>
-                  {!!item?.product_rating && (
-                    <TouchableOpacity
-                      hitSlop={{top: 100, bottom: 100, left: 125, right: 125}}
-                      onPress={() => rateYourOrder(item)}>
-                      <Text
-                        style={{
-                          marginVertical: moderateScaleVertical(20),
-                          textAlign: 'center',
-                          fontSize: moderateScale(14),
-                          fontFamily: fontFamily.medium,
-                        }}>
-                        {strings.WRITE_A_REVIEW}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
+                  <GradientButton
+                    colorsArray={[
+                      themeColors.primary_color,
+                      themeColors.primary_color,
+                    ]}
+                    textStyle={{
+                      textTransform: 'none',
+                      fontSize: textScale(16),
+                    }}
+                    onPress={() => rateYourOrder(item)}
+                    marginTop={moderateScaleVertical(10)}
+                    marginBottom={moderateScaleVertical(10)}
+                    btnText={strings.WRITE_A_REVIEW}
+                    btnStyle={{width: '80%'}}
+                  />
                 </View>
               );
             })}
           </ScrollView>
         )}
+
+        <View style={{marginVertical: moderateScaleVertical(10)}}>
+          <Text
+            style={{
+              fontSize: textScale(16),
+              fontFamily: fontFamily?.bold,
+              alignSelf: 'center',
+            }}>
+            Rate the driver
+          </Text>
+          <View
+            style={{
+              width: moderateScale(width - 50),
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: moderateScale(20),
+            }}>
+            <Image
+              style={{
+                height: moderateScale(60),
+                width: moderateScale(60),
+                borderRadius: moderateScale(30),
+              }}
+              source={{
+                uri: agent_image,
+                priority: FastImage.priority.high,
+              }}
+            />
+
+            <View
+              style={{
+                // marginTop: moderateScaleVertical(-30),
+                marginHorizontal: moderateScale(10),
+              }}>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={1}
+                selectedStar={(rating) => onStarRatingForDriverPress(rating)}
+                fullStarColor={colors.ORANGE}
+                starSize={30}
+              />
+            </View>
+          </View>
+          <View>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              textStyle={{
+                textTransform: 'none',
+                fontSize: textScale(16),
+              }}
+              onPress={() =>
+                rateYourOrder({
+                  order_id: productInfo[0]?.order_id,
+                  isDriverRate: true,
+                })
+              }
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(10)}
+              btnText={strings.WRITE_A_REVIEW}
+              btnStyle={{width: '80%'}}
+            />
+          </View>
+        </View>
       </View>
     );
   };
 
   //order detail View
-  const _selectOrderDetailView = () => {
-    return (
-      <TaxiOrderDetailView
-        // orderDetail={orderDetail}
-        isLoading={isLoading}
-        // agent_image={agent_image}
-        // agent_location={agent_location}
-        // productDetail={paramData?.orderDetail}
-        onPressCall={(orderDetail) => _onPressCall(orderDetail)}
-        onPressChat={(orderDetail) => _onPressChat(orderDetail)}
-      />
-    );
-  };
+  // const _selectOrderDetailView = () => {
+  //   return (
+  //     <TaxiOrderDetailView
+  //       // orderDetail={orderDetail}
+  //       isLoading={isLoading}
+  //       // agent_image={agent_image}
+  //       // agent_location={agent_location}
+  //       // productDetail={paramData?.orderDetail}
+  //       onPressCall={(orderDetail) => _onPressCall(orderDetail)}
+  //       onPressChat={(orderDetail) => _onPressChat(orderDetail)}
+  //     />
+  //   );
+  // };
 
-  const _selectTexiOrderDetailView = () => {
-    return (
-      <SearchingForDriverView
-        orderDetail={orderDetail}
-        isLoading={isLoading}
-        agent_image={agent_image}
-        agent_location={agent_location}
-        productDetail={paramData?.orderDetail}
-        onPressCall={(orderDetail) => _onPressCall(orderDetail)}
-        onPressChat={(orderDetail) => _onPressChat(orderDetail)}
-        totalDuration={paramData?.totalDuration}
-        selectedCarOption={paramData?.selectedCarOption}
-        productRatings={productInfo}
-        isShowRating={isShowRating}
-        navigation={navigation}
-        onStarRatingPress={onStarRatingPress}
-        driverRating={driverRating}
-      />
-    );
-  };
+  // const _selectTexiOrderDetailView = () => {
+  //   return (
+  //     <SearchingForDriverView
+  //       orderDetail={orderDetail}
+  //       isLoading={isLoading}
+  //       agent_image={agent_image}
+  //       agent_location={agent_location}
+  //       productDetail={paramData?.orderDetail}
+  //       onPressCall={(orderDetail) => _onPressCall(orderDetail)}
+  //       onPressChat={(orderDetail) => _onPressChat(orderDetail)}
+  //       totalDuration={paramData?.totalDuration}
+  //       selectedCarOption={paramData?.selectedCarOption}
+  //       productRatings={productInfo}
+  //       isShowRating={isShowRating}
+  //       navigation={navigation}
+  //       onStarRatingPress={onStarRatingPress}
+  //       driverRating={driverRating}
+  //     />
+  //   );
+  // };
 
   const offset = useRef(new Animated.Value(0)).current;
 
@@ -771,7 +871,12 @@ console.log(appData,'appDataappData')
   };
 
   const hideModal = () => {
-    updateState({isCancleModal: false, cancelError: null});
+    updateState({
+      isCancleModal: false,
+      cancelError: null,
+      orderCancelMessage: "",
+      reason: "",
+    });
   };
 
   const onCancelOrder = (reasonForCancle) => {
@@ -804,17 +909,25 @@ console.log(appData,'appDataappData')
         language: languages?.primary_language?.id,
       })
       .then((response) => {
-        console.log(response, 'responseFromServer');
-        updateState({
-          isBtnLoader: false,
-          isCancleModal: false,
-          cancelError: null,
-        });
-        showSuccess(response?.message);
-        {
-          paramData?.keyValue
-            ? navigation.goBack()
-            : navigation.navigate(navigationStrings.HOMESTACK);
+        console.log(response, "responseFromServer");
+        if (response?.status == 403) {
+          updateState({
+            orderCancelMessage: response?.message,
+            isBtnLoader: false,
+            cancelError: null,
+          });
+        } else {
+          updateState({
+            isBtnLoader: false,
+            isCancleModal: false,
+            cancelError: null,
+          });
+          showSuccess(response?.message);
+          {
+            paramData?.keyValue
+              ? navigation.goBack()
+              : navigation.navigate(navigationStrings.HOMESTACK);
+          }
         }
       })
       .catch(errorMethod);
@@ -882,6 +995,7 @@ console.log(appData,'appDataappData')
       updateState({isLoading: false});
     }
   };
+  console.log(orderStatus, 'orderStatus');
 
   return (
     <WrapperContainer
@@ -937,8 +1051,6 @@ console.log(appData,'appDataappData')
               style={{height: height / 1.8, width: '100%'}}
               initialRegion={region}
               ref={mapRef}
-
-              
               // cacheEnabled={true}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
@@ -1136,6 +1248,7 @@ console.log(appData,'appDataappData')
                             style={styles.agentUserIcon}
                             source={imagePath.icVendorChat}
                           />
+                          <Text>{"  "}</Text>
                         </TouchableOpacity>
                       ) : null}
                       
@@ -1198,10 +1311,11 @@ console.log(appData,'appDataappData')
                     }}>
                     <Text style={styles.statusText}>
                       {' '}
-                      {currencies?.primary_currency?.symbol}
-                      {currencyNumberFormatter(
+                      {tokenConverterPlusCurrencyNumberFormater(
                         Number(orderFullDetail.order_details?.payable_amount),
-                        appData?.profile?.preferences?.digit_after_decimal,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
                       )}
                     </Text>
                     <Text
@@ -1235,13 +1349,15 @@ console.log(appData,'appDataappData')
                   </View>
                 )}
                 <View style={styles.horizontalLine} />
-
+               
                 {orderStatus == 'unassigned' && (
                   <SearchDriver
                     isWaitingOver={isWaitingOver}
                     cancleOrder={() => {
                       onCancelOrder('No drivers available.');
                     }}
+                    scheduleDate={orderDetail?.scheduled_date_time}
+                   
                     isBtnLoader={isBtnLoader}
                   />
                 )}
@@ -1345,6 +1461,30 @@ console.log(appData,'appDataappData')
                               </View>
                             )}
                           </View>
+                          {orderFullDetail?.avgrating > 0 && (
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginLeft: moderateScale(8),
+                              }}>
+                              <Image
+                                source={imagePath.star}
+                                style={{tintColor: colors.yellowB}}
+                              />
+                              <Text
+                                style={{
+                                  ...styles.statusText,
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black,
+                                  marginLeft: moderateScale(5),
+                                }}>
+                                {orderFullDetail?.avgrating.toFixed(2)} (
+                                {orderFullDetail?.driver_rating_count})
+                              </Text>
+                            </View>
+                          )}
 
                           <Text
                             style={{
@@ -1419,21 +1559,53 @@ console.log(appData,'appDataappData')
                           )}
                         </View>
                       </View>
-
-                      {!!orderFullDetail?.avgrating &&
-                        Number(orderFullDetail?.avgrating) !== 0 && (
-                          <StarRating
-                            disabled={true}
-                            maxStars={5}
-                            rating={orderFullDetail?.avgrating}
-                            selectedStar={(rating) =>
-                              onStarRatingPress(item, rating)
-                            }
-                            fullStarColor={'#DD812E'}
-                            starSize={15}
-                          />
-                        )}
                     </View>
+                    {orderStatus == 'completed' && (
+                      <View
+                        style={{
+                          width: width / 3,
+                          marginVertical: moderateScaleVertical(10),
+                          alignSelf: 'center',
+                        }}>
+                        <StarRating
+                          maxStars={5}
+                          rating={
+                            submitedRatingToDriver
+                              ? submitedRatingToDriver
+                              : orderFullDetail?.order_driver_rating?.rating
+                          }
+                          selectedStar={(rating) =>
+                            onStarRatingForDriverPress(rating)
+                          }
+                          fullStarColor={colors.ORANGE}
+                          starSize={25}
+                        />
+                        {submitedRatingToDriver ||
+                        orderFullDetail?.order_driver_rating?.rating ? (
+                          <TouchableOpacity
+                            onPress={() =>
+                              rateYourOrder({
+                                order_id: productInfo[0]?.order_id,
+                                isDriverRate: true,
+                                driverRatingData: driverRatingData
+                                  ? driverRatingData
+                                  : orderFullDetail?.order_driver_rating,
+                              })
+                            }>
+                            <Text
+                              style={{
+                                alignSelf: 'center',
+                                marginVertical: moderateScaleVertical(10),
+                                fontSize: textScale(13),
+                                fontFamily: fontFamily?.bold,
+                                color: themeColors?.primary_color,
+                              }}>
+                              {strings.WRITE_A_REVIEW}
+                            </Text>
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
+                    )}
 
                     {!!orderFullDetail?.tasks[0]?.proof_image && (
                       <View>
@@ -1497,65 +1669,79 @@ console.log(appData,'appDataappData')
                         // alignItems: 'center',
                         justifyContent: 'space-between',
                       }}>
-                      {orderFullDetail.order_details.products.map((val) => {
-                        return (
-                          <View>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                              }}>
+                      {orderFullDetail.order_details.products.map(
+                        (val, index) => {
+                          console.log(val, 'valvalvalval');
+                          return (
+                            <View>
                               <View
                                 style={{
                                   flexDirection: 'row',
+                                  justifyContent: 'space-between',
                                   alignItems: 'center',
                                 }}>
-                                <FastImage
-                                  source={{
-                                    uri: getImageUrl(
-                                      val?.image.image_fit,
-                                      val?.image.image_path,
-                                      '100/100',
-                                    ),
-                                    priority: FastImage.priority.high,
-                                  }}
+                                <View
                                   style={{
-                                    height: moderateScale(70),
-                                    width: moderateScale(70),
-                                    borderRadius: moderateScale(10),
-                                  }}
-                                />
-
-                                <Text
-                                  style={{
-                                    ...styles.statusText,
-                                    color: isDarkMode
-                                      ? MyDarkTheme.colors.text
-                                      : colors.black,
-                                    marginLeft: moderateScale(10),
-                                    width: moderateScale(200),
-                                    // backgroundColor: 'red',
-                                    fontFamily: fontFamily.medium,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
                                   }}>
-                                  {val?.product_name || ''}
-                                </Text>
-                              </View>
-                              {!!orderFullDetail?.avgrating &&
-                                Number(orderFullDetail?.avgrating) !== 0 && (
-                                  <StarRating
-                                    disabled={true}
-                                    maxStars={5}
-                                    rating={orderFullDetail?.avgrating}
-                                    selectedStar={(rating) =>
-                                      onStarRatingPress(item, rating)
-                                    }
-                                    fullStarColor={'#DD812E'}
-                                    starSize={15}
+                                  <FastImage
+                                    source={{
+                                      uri: getImageUrl(
+                                        val?.image.image_fit,
+                                        val?.image.image_path,
+                                        '100/100',
+                                      ),
+                                      priority: FastImage.priority.high,
+                                    }}
+                                    style={{
+                                      height: moderateScale(90),
+                                      width: moderateScale(90),
+                                      borderRadius: moderateScale(45),
+                                    }}
                                   />
-                                )}
+                                  <View>
+                                    <Text
+                                      style={{
+                                        ...styles.statusText,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.black,
+                                        marginLeft: moderateScale(10),
+                                        width: moderateScale(200),
+                                        // backgroundColor: 'red',
+                                        fontFamily: fontFamily.medium,
+                                      }}>
+                                      {val?.product_name || ''}
+                                    </Text>
+                                    {/* <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginLeft: moderateScale(5),
+                            }}
+                          >
+                            <Image
+                              source={imagePath.star}
+                              style={{ tintColor: colors.yellowB }}
+                            />
+                            <Text
+                              style={{
+                                ...styles.statusText,
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.black,
+                                marginLeft: moderateScale(5),
+                              }}
+                            >
+                              {orderFullDetail?.avgrating} (
+                              {orderFullDetail?.driver_rating_count})
+                            </Text>
+                          </View> */}
+                                  </View>
+                                </View>
 
-                              {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image source={imagePath.startwo} />
                         <TouchableOpacity>
                           <Text style={{
@@ -1565,89 +1751,133 @@ console.log(appData,'appDataappData')
                           }}>Add Rating</Text>
                         </TouchableOpacity>
                       </View> */}
-                            </View>
-                            <View
-                              style={{
-                                // flexDirection: 'row',
-                                // alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginBottom: moderateScaleVertical(8),
-                              }}>
-                              {orderFullDetail.order_details.products.length >
-                                0 && (
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    marginBottom: moderateScaleVertical(5),
-                                  }}>
-                                  <Text
+                              </View>
+
+                              <View
+                                style={{
+                                  // flexDirection: 'row',
+                                  // alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                  marginBottom: moderateScaleVertical(8),
+                                }}>
+                                {orderFullDetail.order_details.products.length >
+                                  0 && (
+                                  <View
                                     style={{
-                                      ...styles.statusText,
-                                      color: isDarkMode
-                                        ? MyDarkTheme.colors.text
-                                        : colors.black,
-                                      // marginLeft: moderateScale(10),
+                                      flexDirection: 'row',
+                                      marginBottom: moderateScaleVertical(5),
                                     }}>
-                                    {'No. of items:'}
-                                  </Text>
-                                  <Text
-                                    style={{
-                                      ...styles.statusText,
-                                      color: isDarkMode
-                                        ? MyDarkTheme.colors.text
-                                        : colors.black,
-                                      marginLeft: moderateScale(10),
-                                      fontFamily: fontFamily.bold,
-                                    }}>
-                                    {
-                                      orderFullDetail.order_details.products
-                                        .length
-                                    }
-                                  </Text>
-                                </View>
-                              )}
-                              {val.user_product_order_form &&
-                                JSON.parse(val.user_product_order_form).length >
-                                  0 &&
-                                JSON.parse(val.user_product_order_form).map(
-                                  (el) => {
-                                    return (
-                                      <View
-                                        style={{
-                                          flexDirection: 'row',
-                                        }}>
-                                        {!!el?.question ? (
-                                          <Text
-                                            style={{
-                                              ...styles.statusText,
-                                              color: isDarkMode
-                                                ? MyDarkTheme.colors.text
-                                                : colors.black,
-                                              // marginLeft: moderateScale(10),
-                                            }}>
-                                            {el?.question}:
-                                          </Text>
-                                        ) : null}
-                                        {!!el?.answer ? (
-                                          <Text
-                                            style={{
-                                              ...styles.statusText,
-                                              color: isDarkMode
-                                                ? MyDarkTheme.colors.text
-                                                : colors.black,
-                                              marginLeft: moderateScale(10),
-                                            }}>
-                                            {el?.answer || 'NA'}
-                                          </Text>
-                                        ) : null}
-                                      </View>
-                                    );
-                                  },
+                                    <Text
+                                      style={{
+                                        ...styles.statusText,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.black,
+                                        // marginLeft: moderateScale(10),
+                                      }}>
+                                      {'No. of items:'}
+                                    </Text>
+                                    <Text
+                                      style={{
+                                        ...styles.statusText,
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.black,
+                                        marginLeft: moderateScale(10),
+                                        fontFamily: fontFamily.bold,
+                                      }}>
+                                      {
+                                        orderFullDetail.order_details.products
+                                          .length
+                                      }
+                                    </Text>
+                                  </View>
                                 )}
+                                {orderStatus == 'completed' ? (
+                                  <View
+                                    style={{
+                                      width: width / 3,
+                                      marginVertical: moderateScaleVertical(10),
+                                      alignSelf: 'center',
+                                    }}>
+                                    <StarRating
+                                      maxStars={5}
+                                      rating={
+                                        productInfo[index]?.product_rating
+                                          ?.rating
+                                      }
+                                      selectedStar={(rating) =>
+                                        onStarRatingPress(val, rating)
+                                      }
+                                      fullStarColor={colors.ORANGE}
+                                      starSize={25}
+                                    />
+                                    {console.log(
+                                      productInfo[index]?.product_rating,
+                                      'productInfo[index]?.product_rating',
+                                    )}
+                                    {productInfo[index]?.product_rating && (
+                                      <TouchableOpacity
+                                        onPress={() => rateYourOrder(val)}>
+                                        <Text
+                                          style={{
+                                            alignSelf: 'center',
+                                            marginVertical:
+                                              moderateScaleVertical(10),
+                                            fontSize: textScale(13),
+                                            fontFamily: fontFamily?.bold,
+                                            color: themeColors?.primary_color,
+                                          }}>
+                                          {strings.WRITE_A_REVIEW}
+                                        </Text>
+                                      </TouchableOpacity>
+                                    )}
+                                  </View>
+                                ) : null}
+
+                                {val.user_product_order_form &&
+                                  JSON.parse(val.user_product_order_form)
+                                    .length > 0 &&
+                                  JSON.parse(val.user_product_order_form).map(
+                                    (el) => {
+                                      return (
+                                        <View
+                                          style={{
+                                            flexDirection: 'row',
+                                          }}>
+                                          {!!el?.question ? (
+                                            <Text
+                                              style={{
+                                                ...styles.statusText,
+                                                color: isDarkMode
+                                                  ? MyDarkTheme.colors.text
+                                                  : colors.black,
+                                                // marginLeft: moderateScale(10),
+                                              }}>
+                                              {el?.question}:
+                                            </Text>
+                                          ) : null}
+                                          {!!el?.answer ? (
+                                            <Text
+                                              style={{
+                                                ...styles.statusText,
+                                                color: isDarkMode
+                                                  ? MyDarkTheme.colors.text
+                                                  : colors.black,
+                                                marginLeft: moderateScale(10),
+                                              }}>
+                                              {el?.answer || 'NA'}
+                                            </Text>
+                                          ) : null}
+                                        </View>
+                                      );
+                                    },
+                                  )}
+                              </View>
                             </View>
-                          </View>
-                        );
-                      })}
+                          );
+                        },
+                      )}
                       <View
                         style={{
                           flexDirection: 'row',
@@ -1677,13 +1907,13 @@ console.log(appData,'appDataappData')
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.delivery_fee,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1698,13 +1928,13 @@ console.log(appData,'appDataappData')
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.subtotal_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1713,19 +1943,71 @@ console.log(appData,'appDataappData')
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                  {!!orderFullDetail?.order_details?.toll_amount &&
+                    Number(orderFullDetail?.order_details?.toll_amount) !==
+                      0 && (
+                      <View>
+                        <LeftRightText
+                          leftText={"Toll fee"}
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
+                            Number(orderFullDetail?.order_details?.toll_amount),
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+
+
+
+
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+                  {!!orderFullDetail?.order_details
+                    ?.service_fee_percentage_amount &&
+                    Number(
+                      orderFullDetail?.order_details
+                        ?.service_fee_percentage_amount
+                    ) !== 0 && (
+                      <View>
+                        <LeftRightText
+                          leftText={strings.SERVICE_CHARGES}
+                          rightText={`${tokenConverterPlusCurrencyNumberFormater(
+                            Number(
+                             orderFullDetail?.order_details
+                               ?.service_fee_percentage_amount
+                           ),
+                             digit_after_decimal,
+                             additional_preferences,
+                             currencies?.primary_currency?.symbol,
+                           )}`}
+                          isDarkMode={isDarkMode}
+                          MyDarkTheme={MyDarkTheme}
+                          marginBottom={0}
+                        />
+                        <View style={styles.horizontalLine} />
+                      </View>
+                    )}
+
+
+
+
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
                       0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.discount_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           leftTextStyle={{color: themeColors.primary_color}}
                           rightTextStyle={{color: themeColors.primary_color}}
@@ -1746,18 +2028,22 @@ console.log(appData,'appDataappData')
                         <LeftRightText
                           leftText={`${
                             strings.SUBSCRIPTION_DISCOUNT
-                          } ${'('} ${currencyNumberFormatter(
+                          } ${'('} ${tokenConverterPlusCurrencyNumberFormater(
                             Number(subscription_percent),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )} ${'%)'}`}
                           rightText={` ${'-'} ${
                             currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          } ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.order_detail
                                 ?.subscription_discount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )} `}
                           leftTextStyle={{color: themeColors.primary_color}}
                           rightTextStyle={{color: themeColors.primary_color}}
@@ -1768,19 +2054,23 @@ console.log(appData,'appDataappData')
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
+                  {console.log(
+                    orderFullDetail,
+                    "orderFullDetailorderFullDetail"
+                  )}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                       0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.taxable_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1796,14 +2086,14 @@ console.log(appData,'appDataappData')
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
-                          rightText={` ${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
+                          rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                             Number(
                               orderFullDetail?.order_details?.order_detail
                                 ?.payable_amount,
                             ),
-                            appData?.profile?.preferences?.digit_after_decimal,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
                           )}`}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
@@ -1823,7 +2113,7 @@ console.log(appData,'appDataappData')
         closeModal={_modalClose}
       /> */}
       <Modal
-        isVisible={isVisible}
+        isVisible={false}
         onBackdropPress={_modalClose}
         animationIn="zoomIn"
         animationOut="zoomOut">
@@ -1893,8 +2183,10 @@ console.log(appData,'appDataappData')
             overflow: 'hidden',
             paddingHorizontal: moderateScale(16),
             paddingVertical: moderateScale(12),
-            marginBottom: moderateScale(keyboardHeight),
-          }}>
+            marginBottom:
+              Platform.OS == "ios" ? moderateScale(keyboardHeight) : 0,
+          }}
+        >
           <View
             style={{
               flexDirection: 'row',
@@ -1918,7 +2210,11 @@ console.log(appData,'appDataappData')
               />
             </TouchableOpacity>
           </View>
-
+          {!!orderCancelMessage && (
+            <Text style={{ alignSelf: "center", color: colors.redB }}>
+              {orderCancelMessage}
+            </Text>
+          )}
           {/* {!!reasonError && (
             <Text
               style={{
@@ -1978,7 +2274,7 @@ console.log(appData,'appDataappData')
               backgroundColor: themeColors.primary_color,
               borderWidth: 0,
             }}
-            onPress={onCancelOrder}
+            onPress={() => onCancelOrder(false)}
           />
         </View>
       </Modal>

@@ -26,6 +26,7 @@ import {
   RESCHDULE_ORDER,
   GENERATE_INVOICE,
   VENDER_UPDATE_ORDER,
+  GET_DRIVER_RATING_DETAIL,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -49,6 +50,7 @@ export function getOrderDetailForBilling(data = {}, headers = {}) {
 export function getOrderDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(GET_ORDER_DETAIL, data, headers)
+
       .then((res) => {
         resolve(res);
       })
@@ -145,6 +147,20 @@ export const getRating = (query = '', data = {}, headers = {}) => {
   console.log(query, data, headers, 'IN ORDER>JS');
   return new Promise((resolve, reject) => {
     apiGet(GET_RATING_DETAIL + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+// get order ratings
+
+export const getDriverRating = (query = '', data = {}, headers = {}) => {
+  console.log(query, data, headers, 'IN ORDER>JS');
+  return new Promise((resolve, reject) => {
+    apiGet(GET_DRIVER_RATING_DETAIL + query, data, headers)
       .then((res) => {
         resolve(res);
       })
