@@ -85,7 +85,7 @@ export default function WebLinks({navigation, route}) {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData, 'appData');
+  console.log(appData, 'appData>>>>>>>');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -151,7 +151,7 @@ export default function WebLinks({navigation, route}) {
       : '91',
     driverTagsAry: [],
     activeSections: [],
-    isProfilePhoto:false,
+    isProfilePhoto: false,
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -211,7 +211,7 @@ export default function WebLinks({navigation, route}) {
     callingCode,
     driverTagsAry,
     activeSections,
-    isProfilePhoto
+    isProfilePhoto,
   } = state;
 
   useEffect(() => {
@@ -252,7 +252,9 @@ export default function WebLinks({navigation, route}) {
           driverTagsAry: res?.data?.tags,
         });
       })
-      .catch(errorMethod);
+      .catch((err) => {
+        console.log(err, 'err......3');
+      });
   };
 
   const errorMethod = (error) => {
@@ -399,7 +401,9 @@ export default function WebLinks({navigation, route}) {
           navigation.goBack();
         })
         // err => console.log(err ,"formDataaaaaaererrr")
-        .catch(errorMethod);
+        .catch((err) => {
+          console.log(err, 'err......2');
+        });
     } else {
       var formData = new FormData();
       var isRequired = true;
@@ -480,7 +484,7 @@ export default function WebLinks({navigation, route}) {
         );
       });
 
-      console.log(formData, 'formData');
+      console.log(formData, 'formData>>>>>>');
       console.log(JSON.stringify(formData), 'formDatastringfy');
       actions
         .vendorRegisteration(formData, {
@@ -498,7 +502,9 @@ export default function WebLinks({navigation, route}) {
           showSuccess(res.message);
           navigation.goBack();
         })
-        .catch(errorMethod);
+        .catch((err) => {
+          console.log(err, 'err......1');
+        });
     }
   };
 
@@ -570,11 +576,11 @@ export default function WebLinks({navigation, route}) {
   useEffect(() => {
     console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
   }, [vendorRegisterationDocs]);
-  
-console.log(clickedIndx,"clickedIndx")
+
+  console.log(clickedIndx, 'clickedIndx');
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
-    console.log(index, "indxxxxxx")
+    console.log(index, 'indxxxxxx');
     if (permissionStatus) {
       if (index == 0 || index == 1) {
         cameraHandler(index, {
@@ -585,7 +591,7 @@ console.log(clickedIndx,"clickedIndx")
           mediaType: 'photo',
         })
           .then((res) => {
-            console.log(res, "ressifIndx")
+            console.log(res, 'ressifIndx');
             if (res && res.data) {
               if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
                 // console.log(clickedIndx,"clickedIndx")
@@ -603,14 +609,14 @@ console.log(clickedIndx,"clickedIndx")
                       driverRegistrationDocs: driverRegistrationDocsAry,
                     });
                   }
-                  console.log(driverRegistrationDocs,"driverRegistrationDocs")
+                  console.log(driverRegistrationDocs, 'driverRegistrationDocs');
                   clickedIndx = null;
                 } else {
                   updateState({
                     driverPic: res,
-                    isProfilePhoto:true
+                    isProfilePhoto: true,
                   });
-                  console.log(res, "resElse")
+                  console.log(res, 'resElse');
                 }
               } else {
                 console.log(res, 'regis doc');
@@ -706,7 +712,10 @@ console.log(clickedIndx,"clickedIndx")
               </Text>
             </View>
           )}
-          {console.log(driverRegistrationDocs[1]?.fileData?.path, 'driverRegistrationDocs[index]?.fileData?.path')}
+          {console.log(
+            driverRegistrationDocs[1]?.fileData?.path,
+            'driverRegistrationDocs[index]?.fileData?.path',
+          )}
           {item?.file_type == 'Image' && (
             <TouchableOpacity
               activeOpacity={0.7}
@@ -1485,7 +1494,7 @@ console.log(clickedIndx,"clickedIndx")
                   marginHorizontal: 0,
                   marginBottom: moderateScaleVertical(14),
                 }}>
-                  {console.log(driverPic, "driverPicdriverPicdriverPic")}
+                {console.log(driverPic, 'driverPicdriverPicdriverPic')}
                 <Image
                   source={
                     !!driverPic ? {uri: driverPic.path} : imagePath.icCamIcon
@@ -1993,7 +2002,10 @@ console.log(clickedIndx,"clickedIndx")
                 renderItem={_renderTransportTypes}
               />
 
-              {console.log(driverRegDocs?.driver_registration_documents,"driverRegDocsdriverRegDocs")}
+              {console.log(
+                driverRegDocs?.driver_registration_documents,
+                'driverRegDocsdriverRegDocs',
+              )}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
                 data={driverRegDocs?.driver_registration_documents}

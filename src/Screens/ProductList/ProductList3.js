@@ -1,7 +1,8 @@
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {BlurView} from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
-import _, {cloneDeep, debounce} from 'lodash';
+import _, {cloneDeep, debounce, isEmpty} from 'lodash';
+import moment from 'moment';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -9,13 +10,13 @@ import {
   I18nManager,
   Image,
   ImageBackground,
+  Linking,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  ActivityIndicator,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
@@ -61,7 +62,11 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {
+  currencyNumberFormatter,
+  getHourAndMinutes,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../../utils/commonFunction';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
@@ -74,7 +79,6 @@ import {
 } from '../../utils/helperFunctions';
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
-import {isEmpty} from 'lodash';
 
 let timeOut = undefined;
 
@@ -119,7 +123,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
- 
+
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -183,6 +187,14 @@ export default function Products({route, navigation}) {
     selectedVariant: null,
     selectedOption: null,
     isProductImageLargeViewVisible: false,
+    startDateRental: new Date(),
+    endDateRental: '',
+    isRentalStartDatePicker: false,
+    isRentalEndDatePicker: false,
+    rentalProductDuration: null,
+    isVarientSelectLoading: false,
+    productDetailNew: {},
+    isProductAvailable: false,
   });
   const {
     appData,
@@ -193,7 +205,8 @@ export default function Products({route, navigation}) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
-
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -219,21 +232,26 @@ export default function Products({route, navigation}) {
     isShowFilter,
     selectedSortFilter,
     showListEndLoader,
-
     variantSet,
     addonSet,
     productDetailData,
     showErrorMessageTitle,
     productTotalQuantity,
     productPriceData,
-
     productSku,
     productVariantId,
     productQuantityForCart,
-
     selectedVariant,
     selectedOption,
     isProductImageLargeViewVisible,
+    startDateRental,
+    endDateRental,
+    isRentalStartDatePicker,
+    isRentalEndDatePicker,
+    rentalProductDuration,
+    isVarientSelectLoading,
+    productDetailNew,
+    isProductAvailable,
   } = state;
   const [showShimmer, setShowShimmer] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -272,6 +290,7 @@ export default function Products({route, navigation}) {
   });
   const [tagFilteredData, setTagFilteredData] = useState([]);
   const [isFilteredData, setIsFilteredData] = useState(false);
+  const [isSocialMediaModal, setIsSocialMediaModal] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -282,9 +301,7 @@ export default function Products({route, navigation}) {
   //Logged in user data
   const userData = useSelector((state) => state?.auth?.userData);
   //app Main Data
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-
-  console.log(repeatItems, 'repeatItems.....repeatItems');
+  const {appMainData, location} = useSelector((state) => state?.home);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -680,7 +697,23 @@ export default function Products({route, navigation}) {
                       />
                     </TouchableOpacity>
                   </View>
-
+                  {!isEmpty(categoryInfo?.social_media_links) ? (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={{
+                        alignSelf: 'flex-end',
+                        marginHorizontal: moderateScale(16),
+                      }}
+                      onPress={() => setIsSocialMediaModal(true)}>
+                      <Image
+                        source={imagePath.icSocialShare}
+                        style={{
+                          tintColor: colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ) : null}
                   <View
                     style={{
                       width: width,
@@ -818,8 +851,12 @@ export default function Products({route, navigation}) {
                             color: colors.white,
                           }}>
                           Minimum order value{' '}
-                          {currencies?.primary_currency?.symbol}
-                          {categoryInfo?.order_min_amount}
+                          {tokenConverterPlusCurrencyNumberFormater(
+                            categoryInfo?.order_min_amount,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
                         </Text>
                       </View>
                     ) : null}
@@ -1017,7 +1054,7 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-          {ProductTags && 
+          {ProductTags &&
             ProductTags.map((el, index) => {
               return (
                 <View
@@ -1150,6 +1187,7 @@ export default function Products({route, navigation}) {
             )}
           </View>
         </View>
+        {console.log(categoryInfo, 'categoryInfo....categoryInfo')}
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{marginHorizontal: moderateScale(20)}}>
@@ -1204,7 +1242,7 @@ export default function Products({route, navigation}) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
-      console.log(item ,'chechItemm')
+      console.log(item, 'chechItemm');
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1312,6 +1350,10 @@ export default function Products({route, navigation}) {
 
   const checkIsCustomize = useCallback(
     async (item, section = null, index, type) => {
+      if (item?.category?.category_detail?.type_id == 10 && type == 1) {
+        showError('Rental product already added in cart!');
+        return;
+      }
       let itemToUpdate = cloneDeep(item);
       // console.log('check item to update', itemToUpdate);
       // return;
@@ -1469,9 +1511,7 @@ export default function Products({route, navigation}) {
 
   const getAllListItems = (pageNo = 1) => {
     if (data?.vendor) {
-      console.log(data, 'getAllListItemsdata');
       {
-        console.log(selectedFilters.current, 'selectedFilters.current'); //false
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
           : getAllProductsByVendor(pageNo);
@@ -1502,8 +1542,6 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getVendorFilter with variants');
-
         if (!!res.data.filterData?.length) {
           let filterDataNew = res.data.filterData.map((i, inx) => {
             return {
@@ -1520,7 +1558,6 @@ export default function Products({route, navigation}) {
             };
           });
           setAllFilter(filterDataNew);
-          console.log('filterDataNewfilterDataNew', filterDataNew);
         }
         // getAllVendorFilters()
       })
@@ -1630,7 +1667,7 @@ export default function Products({route, navigation}) {
 
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-    console.log(apiData, 'apiData');
+    console.log(location?.latitude, 'apiData........');
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
@@ -1639,8 +1676,8 @@ export default function Products({route, navigation}) {
           code: appData.profile.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-          latitude: appMainData?.reqData?.latitude,
-          longitude: appMainData?.reqData?.longitude,
+          latitude: appMainData?.reqData?.latitude || location?.latitude,
+          longitude: appMainData?.reqData?.longitude || location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -1670,8 +1707,6 @@ export default function Products({route, navigation}) {
           fetchTags(resData);
           setLoading(false);
         } else {
-          console.log('fetch data res ', res);
-
           if (res?.data) {
             if (res.data.products.data.length == 0) {
               loadMore = false;
@@ -1685,6 +1720,7 @@ export default function Products({route, navigation}) {
                 : [...productListData, ...res?.data?.products.data],
             );
           } else {
+            loadMore = false;
             setLoading(false);
           }
         }
@@ -1786,13 +1822,8 @@ export default function Products({route, navigation}) {
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
-          setLoading(false);
-
-          if (res.data.listData.data.length == 0) {
-            loadMore = false;
-          }
           loadMore = false;
-          // onAtoZFilter()
+
           setProductListData(
             pageNo == 1
               ? res.data.listData.data
@@ -1812,11 +1843,8 @@ export default function Products({route, navigation}) {
               isLoadingC: true,
             });
           }
-          setLoading(false);
         }
         setLoading(false);
-        // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
 
       .catch(errorMethod);
@@ -2270,7 +2298,6 @@ export default function Products({route, navigation}) {
 
   const errorMethodSecond = (error, addonSet = [], item, section, inx) => {
     console.log(error, 'Error>>>>>');
-    console.log('item+++++', item);
     console.log('sectin++++', section);
     updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
@@ -2519,11 +2546,10 @@ export default function Products({route, navigation}) {
       });
     }
   };
-  console.log(productListId?.vendor,"productListId?.vendor")
   useEffect(() => {
     if (isLoadingC) {
       getAllProductsByCategoryId(1);
-      
+
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -3258,12 +3284,14 @@ export default function Products({route, navigation}) {
       }
     }
 
-    addOnsAdditionalPrice = currencyNumberFormatter(
+    addOnsAdditionalPrice = tokenConverterPlusCurrencyNumberFormater(
       Number(productPriceData?.multiplier) *
         Number(productPriceData?.price) *
         productQuantityForCart +
         addOnsAdditionalPrice,
-      appData?.profile?.preferences?.digit_after_decimal,
+      digit_after_decimal,
+      additional_preferences,
+      currencies?.primary_currency?.symbol,
     );
     return addOnsAdditionalPrice;
   };
@@ -3307,6 +3335,11 @@ export default function Products({route, navigation}) {
   };
 
   const addToCart = (addonSet) => {
+    if (!isProductAvailable && typeId == 10) {
+      showError('Product varient is not availabel!');
+      return;
+    }
+
     playHapticEffect(hapticEffects.rigid);
     console.log('add on set', addonSet);
     const addon_ids = [];
@@ -3344,6 +3377,19 @@ export default function Products({route, navigation}) {
         data['addon_ids'] = addon_ids;
         data['addon_options'] = addon_options;
       }
+      if (typeId == 10) {
+        data['start_date_time'] = String(
+          moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
+        );
+        data['end_date_time'] = String(
+          moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
+        );
+        data['total_booking_time'] = rentalProductDuration;
+        data['additional_increments_hrs_min'] =
+          rentalProductDuration -
+          Number(productDetailNew?.product?.minimum_duration) * 60 +
+          Number(productDetailNew?.product?.minimum_duration_min);
+      }
       console.log(data, 'data for cart');
       updateState({btnLoader: true});
       actions
@@ -3371,6 +3417,10 @@ export default function Products({route, navigation}) {
         });
       return;
     }
+  };
+
+  const onPressSocialMediaItem = (item) => {
+    Linking.openURL(item?.url);
   };
 
   const renderSectionFooter = (props) => {
@@ -3645,8 +3695,8 @@ export default function Products({route, navigation}) {
               </TouchableWithoutFeedback>
             ) : null}
           </View>
-          
-          {console.log(isVisibleModal,"isVisibleModal")}
+
+          {console.log(isVisibleModal, 'isVisibleModal')}
 
           {!!typeId && typeId == 8 ? (
             <View>
@@ -3722,6 +3772,14 @@ export default function Products({route, navigation}) {
                         isLoadingC={isLoadingC}
                         btnLoader={btnLoader}
                         updateState={updateState}
+                        startDateRental={startDateRental}
+                        endDateRental={endDateRental}
+                        isRentalStartDatePicker={isRentalStartDatePicker}
+                        isRentalEndDatePicker={isRentalEndDatePicker}
+                        rentalProductDuration={rentalProductDuration}
+                        isVarientSelectLoading={isVarientSelectLoading}
+                        productDetailNew={productDetailNew}
+                        isProductAvailable={isProductAvailable}
                       />
                     </BottomSheetScrollView>
                   </BottomSheet>
@@ -3744,8 +3802,12 @@ export default function Products({route, navigation}) {
                               ? MyDarkTheme.colors.background
                               : '#fff',
                           }}>
-                          {!showErrorMessageTitle && (
-                            <View style={{flex: 0.25}}>
+                          {typeId !== 10 && !showErrorMessageTitle && (
+                            <View
+                              style={{
+                                flex: 0.35,
+                                marginRight: moderateScale(8),
+                              }}>
                               <View
                                 style={{
                                   ...commonStyles.buttonRect,
@@ -3801,11 +3863,11 @@ export default function Products({route, navigation}) {
                             </View>
                           )}
 
-                          <View style={{marginHorizontal: 8}} />
+                          <View />
                           {!showErrorMessageTitle && (
                             <View
                               pointerEvents={btnLoader ? 'none' : 'auto'}
-                              style={{flex: 0.75}}>
+                              style={{flex: 1}}>
                               <GradientButton
                                 indicator={btnLoader}
                                 indicatorColor={colors.white}
@@ -3819,8 +3881,8 @@ export default function Products({route, navigation}) {
                                   color: colors.white,
                                 }}
                                 onPress={() => addToCart(addonSet)}
-                                btnText={`${strings.ADD_ITEM} - ${
-                                  currencies?.primary_currency?.symbol
+                                btnText={`${
+                                  strings.ADD_ITEM
                                 } ${getAdditionalPriceOfAddons()}`}
                                 btnStyle={{
                                   borderRadius: moderateScale(4),
@@ -3863,11 +3925,11 @@ export default function Products({route, navigation}) {
                       CartItems.data.item_count == 1
                         ? strings.ITEM
                         : strings.ITEMS
-                    } | ${
-                      currencies.primary_currency.symbol
-                    } ${currencyNumberFormatter(
+                    } | ${tokenConverterPlusCurrencyNumberFormater(
                       Number(CartItems?.data?.gross_paybale_amount),
-                      appData?.profile?.preferences?.digit_after_decimal,
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
                     )}`
                   : ''
               }
@@ -3974,6 +4036,55 @@ export default function Products({route, navigation}) {
           ) : null}
         </View>
       </View>
+      {isSocialMediaModal ? (
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={0}
+          snapPoints={[200]}
+          // style={{minHeight: 100, maxHeight: 200}}
+          enablePanDownToClose
+          onChange={(index) => {
+            if (index == -1) {
+              setIsSocialMediaModal(false);
+            }
+            // playHapticEffect(hapticEffects.impactMedium);
+          }}
+          handleComponent={() => <></>}
+          containerStyle={{
+            backgroundColor: colors.blackOpacity66,
+          }}>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+            }}>
+            {!isEmpty(categoryInfo?.social_media_links)
+              ? categoryInfo?.social_media_links.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => onPressSocialMediaItem(item)}
+                      style={{
+                        width: '24%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingTop: 15,
+                      }}>
+                      <Image
+                        source={{uri: item?.icon_url}}
+                        style={{
+                          height: 40,
+                          width: 40,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  );
+                })
+              : null}
+          </View>
+        </BottomSheet>
+      ) : null}
     </WrapperContainer>
   );
 }

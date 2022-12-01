@@ -2,8 +2,8 @@ import {
   StripeProvider,
   CardField,
   createToken,
-} from '@stripe/stripe-react-native';
-import React, {useEffect, useState} from 'react';
+} from "@stripe/stripe-react-native";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Image,
@@ -11,52 +11,52 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {useSelector} from 'react-redux';
-import GradientButton from '../../../Components/GradientButton';
-import Header from '../../../Components/Header';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import imagePath from '../../../constants/imagePath';
-import strings from '../../../constants/lang';
-import navigationStrings from '../../../navigation/navigationStrings';
-import actions from '../../../redux/actions';
-import colors from '../../../styles/colors';
+} from "react-native";
+import { useDarkMode } from "react-native-dark-mode";
+import { useSelector } from "react-redux";
+import GradientButton from "../../../Components/GradientButton";
+import Header from "../../../Components/Header";
+import WrapperContainer from "../../../Components/WrapperContainer";
+import imagePath from "../../../constants/imagePath";
+import strings from "../../../constants/lang";
+import navigationStrings from "../../../navigation/navigationStrings";
+import actions from "../../../redux/actions";
+import colors from "../../../styles/colors";
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
-} from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {showError} from '../../../utils/helperFunctions';
-import stylesFun from './styles';
+} from "../../../styles/responsiveSize";
+import { MyDarkTheme } from "../../../styles/theme";
+import { showError } from "../../../utils/helperFunctions";
+import stylesFun from "./styles";
 
-const PaymentOptions = ({navigation, route}) => {
+const PaymentOptions = ({ navigation, route }) => {
   const [state, setState] = useState({
     pageNo: 1,
     limit: 12,
     apiPaymentOptions: [],
-    walletPayment: {id: 2, title: strings.WALLET, off_site: 0},
+    walletPayment: { id: 2, title: strings.WALLET, off_site: 0 },
     selectedPaymentMethod: null,
     cardInfo: null,
     btnLoader: false,
   });
-  const {appData, appStyle, themeColors} = useSelector(
-    (state) => state.initBoot,
+  const { appData, appStyle, themeColors } = useSelector(
+    (state) => state.initBoot
   );
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const paramData =route?.params?.data?.paramData;
+  const paramData = route?.params?.data?.paramData;
   const walletAmount = useSelector(
-    (state) => state?.product?.walletData?.wallet_amount,
+    (state) => state?.product?.walletData?.wallet_amount
   );
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
+  const styles = stylesFun({ fontFamily, themeColors });
 
   const {
     pageNo,
@@ -67,6 +67,7 @@ const PaymentOptions = ({navigation, route}) => {
     cardInfo,
     btnLoader,
   } = state;
+
 
   useEffect(() => {
     getAllPaymentOptions();
@@ -83,10 +84,10 @@ const PaymentOptions = ({navigation, route}) => {
         {},
         {
           code: appData?.profile?.code,
-        },
+        }
       )
       .then((res) => {
-        console.log(res, 'responseFromServer');
+        console.log(res, "responseFromServer");
         updateState({
           apiPaymentOptions: res?.data,
         });
@@ -101,10 +102,10 @@ const PaymentOptions = ({navigation, route}) => {
         {},
         {
           code: appData?.profile?.code,
-        },
+        }
       )
       .then((res) => {
-        console.log(res, 'Wallet Responce');
+        console.log(res, "Wallet Responce");
         updateState({
           isRefreshing: false,
           isLoading: false,
@@ -119,8 +120,8 @@ const PaymentOptions = ({navigation, route}) => {
       .catch(errorMethod);
   };
   const errorMethod = (error) => {
-    console.log(error, 'errorOccured');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    console.log(error, "errorOccured");
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
@@ -135,7 +136,7 @@ const PaymentOptions = ({navigation, route}) => {
   };
 
   const _onPressPaymentOption = (item) => {
-   
+    console.log(item, "itemitemitemitemitemitem");
     updateState({
       selectedPaymentMethod: item,
     });
@@ -144,8 +145,9 @@ const PaymentOptions = ({navigation, route}) => {
       return;
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+      ...paramData,
       selectedMethod: item,
-      ...paramData
+
     });
   };
 
@@ -154,29 +156,30 @@ const PaymentOptions = ({navigation, route}) => {
       selectedPaymentMethod?.id == 4 &&
       selectedPaymentMethod?.off_site == 0
     ) {
-      updateState({btnLoader: true});
+      updateState({ btnLoader: true });
       if (cardInfo) {
-        console.log(cardInfo, 'cardInfo>>>');
-        await createToken({...cardInfo, type: 'Card'})
+        console.log(cardInfo, "cardInfo>>>");
+        await createToken({ ...cardInfo, type: "Card" })
           .then((res) => {
-            updateState({btnLoader: false});
-            console.log(res, 'res>>>>>');
+            updateState({ btnLoader: false });
+            console.log(res, "res>>>>>");
             if (!!res?.error) {
               alert(res.error.localizedMessage);
               return;
             }
             navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
-              selectedMethod: selectedPaymentMethod,
+              ...paramData,
               cardInfo: cardInfo,
               tokenInfo: res.token?.id,
+              selectedMethod: selectedPaymentMethod,
             });
           })
           .catch((err) => {
-            updateState({btnLoader: false});
-            console.log(err, 'err>>');
+            updateState({ btnLoader: false });
+            console.log(err, "err>>");
           });
       } else {
-        updateState({btnLoader: false});
+        updateState({ btnLoader: false });
         alert(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
       }
@@ -184,7 +187,7 @@ const PaymentOptions = ({navigation, route}) => {
   };
 
   const _onChangeStripeData = (cardDetails) => {
-    console.log(cardDetails, 'cardDetails>>>');
+    console.log(cardDetails, "cardDetails>>>");
     if (cardDetails?.complete) {
       updateState({
         cardInfo: {
@@ -197,26 +200,29 @@ const PaymentOptions = ({navigation, route}) => {
         },
       });
     } else {
-      updateState({cardInfo: null});
+      updateState({ cardInfo: null });
     }
   };
 
-  const _renderItem = ({item}) => {
+  const _renderItem = ({ item }) => {
     return (
       <View>
         <TouchableOpacity
           onPress={() => _onPressPaymentOption(item)}
-          style={styles.renderItemStyle}>
+          style={styles.renderItemStyle}
+        >
           <View
             style={{
-              flexDirection: 'row',
-            }}>
+              flexDirection: "row",
+            }}
+          >
             <Image source={imagePath.radioInActive} style={styles.imageStyle} />
             <Text
               style={[
                 styles.textStyle,
-                {color: isDarkMode ? MyDarkTheme.colors.text : '#1C1C1C'},
-              ]}>
+                { color: isDarkMode ? MyDarkTheme.colors.text : "#1C1C1C" },
+              ]}
+            >
               {item.title}
             </Text>
           </View>
@@ -231,18 +237,19 @@ const PaymentOptions = ({navigation, route}) => {
             publishableKey={
               appData?.profile?.preferences?.stripe_publishable_key
             }
-            merchantIdentifier="merchant.identifier">
+            merchantIdentifier="merchant.identifier"
+          >
             <CardField
               postalCodeEnabled={false}
               placeholder={{
-                number: '4242 4242 4242 4242',
+                number: "4242 4242 4242 4242",
               }}
               cardStyle={{
                 backgroundColor: colors.backgroundGrey,
                 textColor: colors.black,
               }}
               style={{
-                width: '100%',
+                width: "100%",
                 height: 50,
                 marginVertical: 10,
               }}
@@ -250,7 +257,7 @@ const PaymentOptions = ({navigation, route}) => {
                 _onChangeStripeData(cardDetails);
               }}
               onFocus={(focusedField) => {
-                console.log('focusField', focusedField);
+                console.log("focusField", focusedField);
               }}
               onBlur={() => {
                 Keyboard.dismiss();
@@ -265,13 +272,14 @@ const PaymentOptions = ({navigation, route}) => {
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      statusBarColor={colors.white}>
+      statusBarColor={colors.white}
+    >
       <Header
         rightViewStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
             : colors.backgroundGrey,
-          alignItems: 'center',
+          alignItems: "center",
           paddingVertical: moderateScaleVertical(8),
           borderRadius: 14,
           flex: 0.15,
@@ -283,11 +291,11 @@ const PaymentOptions = ({navigation, route}) => {
             ? MyDarkTheme.colors.background
             : colors.white,
           marginVertical: moderateScaleVertical(10),
-          rightViewStyle: {backgroundColor: colors.greyColor},
+          rightViewStyle: { backgroundColor: colors.greyColor },
         }}
       />
       <View style={styles.containerStyle}>
-        <View style={{marginHorizontal: moderateScale(18)}}>
+        <View style={{ marginHorizontal: moderateScale(18) }}>
           <Text
             style={{
               opacity: 0.7,
@@ -296,7 +304,8 @@ const PaymentOptions = ({navigation, route}) => {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               marginTop: moderateScaleVertical(20),
               marginBottom: moderateScaleVertical(10),
-            }}>
+            }}
+          >
             {strings.PAYMENT_METHOD}
           </Text>
           {/* <TouchableOpacity
@@ -325,10 +334,10 @@ const PaymentOptions = ({navigation, route}) => {
           <GradientButton
             onPress={selectPaymentOption}
             containerStyle={{
-              position: 'absolute',
+              position: "absolute",
               bottom: 0,
               width: width - moderateScale(40),
-              alignSelf: 'center',
+              alignSelf: "center",
             }}
             marginTop={moderateScaleVertical(10)}
             marginBottom={moderateScaleVertical(10)}

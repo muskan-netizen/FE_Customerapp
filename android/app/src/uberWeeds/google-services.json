@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "883897235529",
+    "project_id": "uberweeds-e9dbe",
+    "storage_bucket": "uberweeds-e9dbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883897235529:android:7db067f545f9129e9ea798",
+        "android_client_info": {
+          "package_name": "com.uberweeds.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883897235529-9sf7lm1jbck3n99r4p4vpmcbhkkvfu64.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uberweeds.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "883897235529-he152eq4pkfkm5svq1h25nonij7rdqem.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uberweeds.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "883897235529-snf2tb5iid9v8vk32fa5ho0pshu5vh4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uberweeds.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "883897235529-qv2k1cjsgqegm3dqp88ikfbb56g2fsgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGC4olq2EFR8764SanyB1IGr5gPrrXtf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883897235529-qv2k1cjsgqegm3dqp88ikfbb56g2fsgq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "883897235529-r10813btu21g4mvij037t4gac8hinead.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uberweeds.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

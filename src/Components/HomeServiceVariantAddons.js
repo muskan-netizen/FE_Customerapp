@@ -37,6 +37,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
 import {showError, showSuccess} from '../utils/helperFunctions';
 import Banner from './Banner';
@@ -132,6 +133,9 @@ const HomeServiceVariantAddons = ({
   const isDarkMode = theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
@@ -411,10 +415,6 @@ const HomeServiceVariantAddons = ({
   /// cart Product Schedule
 
   const productShedule = (userSelectedDateTime, ProductId) => {
-    console.log(
-      userSelectedDateTime,
-      'userSelectedDateTimeuserSelectedDateTimeuserSelectedDateTime',
-    );
     let data = {
       task_type: 'later',
       schedule_dt: userSelectedDateTime,
@@ -476,12 +476,12 @@ const HomeServiceVariantAddons = ({
                         : colors.black,
                     },
                   ]}>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(i?.multiplier) * Number(i?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image

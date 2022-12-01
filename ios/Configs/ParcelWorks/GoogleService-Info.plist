@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>686298040540-86imbjg7vk5vhvhqhu87jm8p5sqg9680.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.686298040540-86imbjg7vk5vhvhqhu87jm8p5sqg9680</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>686298040540-2cgib6kv4duqg70hegjf7mkvud0vubot.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBuR3Oyl7GGLqT-BEC7MZuQI6WfM_uDGQ8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>686298040540</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.parcelworks.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>parcelworks-b27ae</string>
+	<key>STORAGE_BUCKET</key>
+	<string>parcelworks-b27ae.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:686298040540:ios:c92549c890669fc8dacc19</string>
+</dict>
+</plist>

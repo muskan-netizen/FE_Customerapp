@@ -530,6 +530,16 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginLeft: moderateScale(20),
       marginBottom: moderateScale(-6),
     },
+    startEndDateTitle: {
+      fontSize: moderateScale(12),
+      fontFamily: fontFamily.bold,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+    },
+    startEndDateValueTxt: {
+      fontSize: moderateScale(11),
+      fontFamily: fontFamily.regular,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
+    },
   });
   return styles;
 };

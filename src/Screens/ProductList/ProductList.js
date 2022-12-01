@@ -344,14 +344,14 @@ export default function Products({route, navigation}) {
   };
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
-    console.log('api hit getAllProductsVendorFilter++++++',);
+    console.log('api hit getAllProductsVendorFilter++++++');
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
     data['brands'] = sleectdBrands;
     data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
     data['range'] = `${minimumPrice};${maximumPrice}`;
-    console.log("sending filter data",data)
+    console.log('sending filter data', data);
     actions
       .getProductByVendorFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -387,7 +387,7 @@ export default function Products({route, navigation}) {
     data['brands'] = sleectdBrands;
     data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
     data['range'] = `${minimumPrice};${maximumPrice}`;
-console.log("sending filter data",data)
+    console.log('sending filter data', data);
     actions
       .getProductByCategoryFilters(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -429,7 +429,10 @@ console.log("sending filter data",data)
         },
       )
       .then((res) => {
-        console.log(res.data.filterData, 'getAllProductsByVendorCategory vendor +++');
+        console.log(
+          res.data.filterData,
+          'getAllProductsByVendorCategory vendor +++',
+        );
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -691,7 +694,7 @@ console.log("sending filter data",data)
               flexDirection: 'row',
               justifyContent: 'flex-end',
             }}>
-            {categories.length == 0 && (
+            {categories?.length == 0 && (
               <TouchableOpacity
                 // onPress={() => navigation.navigate(navigationStrings.FILTER)}
                 onPress={moveToNewScreen(navigationStrings.FILTER, {
@@ -775,7 +778,7 @@ console.log("sending filter data",data)
       {/* {<Loader isLoading={isLoadingB} withModal={true} />} */}
 
       <Header
-        centerTitle={data?.name || data?.translation[0]?.name}
+        centerTitle={data?.name || (data?.translation ? data?.translation[0]?.name : "")}
         hideRight={true}
         rightIcon={imagePath.search}
         onPressRight={() =>

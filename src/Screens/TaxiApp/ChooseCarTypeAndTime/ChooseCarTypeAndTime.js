@@ -79,9 +79,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData, 'appDataappDataappData');
-  const { userData } = useSelector((state) => state?.auth);
-  const { pickUpTimeType, location } = useSelector((state) => state?.home);
+  console.log(appData?.profile?.preferences, 'appDataappDataappData');
+  const distance_unit_for_time =
+    appData?.profile?.preferences?.distance_unit_for_time;
+  const total_distance = appData?.profile?.preferences?.distance_unit_for_time;
+  const {userData} = useSelector((state) => state?.auth);
+  const {pickUpTimeType, location} = useSelector((state) => state?.home);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -243,7 +246,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const [updateSeatNO, setUpdateSeatNo] = useState(1)
-  console.log(availableCarList, 'availableCarListavailableCarList');
+  console.log(paramData, 'paramDataparamDataparamData');
+
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -327,7 +331,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         },
       )
       .then((res) => {
-        console.log(res, 'resres')
+       
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -354,104 +358,114 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-  //flutter wave
-  var redirectTimeout;
-  const handleOnRedirect = (data) => {
-    clearTimeout(redirectTimeout);
-    redirectTimeout = setTimeout(() => {
-      // do something with the result
-      updateState({ isModalVisibleForPayFlutterWave: false });
-    }, 200);
-    try {
-      if (data && data?.transaction_id) {
-        let apiData = {
-          payment_option_id: paymentDataFlutterWave?.payment_option_id,
-          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
-          transaction_id: data?.transaction_id,
-          amount: paymentDataFlutterWave?.total_payable_amount,
-          action: 'cart',
-        };
 
-        console.log(apiData, 'apiData');
-        actions
-          .openSdkUrl(
-            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
-            apiData,
-            {
-              code: appData?.profile?.code,
-              currency: currencies?.primary_currency?.id,
-              language: languages?.primary_language?.id,
-            },
-          )
-          .then((res) => {
-            console.log(res, 'openSdkUrl');
-            if (res && res?.status == 'Success') {
-              // alert("hii")
-              // setCartItems([]);
-              // setCartData({});
-              // actions.reloadData(!reloadData);
-              moveToNewScreen(
-                navigationStrings.PICKUPTAXIORDERDETAILS,
-                paymentDataFlutterWave,
-                //    {
-                //   orderDetail: {
-                //     order_number:
-                //       paymentDataFlutterWave?.orderDetail?.order_number,
-                //     id: paymentDataFlutterWave?.orderDetail?.id,
-                //   },
-                // }
-              )();
-            } else {
+  let redirectTimeout = useRef();
+
+  //flutter wave
+
+  const handleOnRedirect = (data) => {
+    // clear scheduled action
+    clearTimeout(redirectTimeout.current);
+    // delay action to prevent from reoccurring
+    redirectTimeout.current = setTimeout(() => {
+      try {
+        if (data && data?.transaction_id) {
+          let apiData = {
+            payment_option_id: paymentDataFlutterWave?.payment_option_id,
+            order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+            transaction_id: data?.transaction_id,
+            amount: paymentDataFlutterWave?.total_payable_amount,
+            action: 'pickup_delivery',
+          };
+
+          actions
+            .openSdkUrl(
+              `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+              apiData,
+              {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+              },
+            )
+            .then((res) => {
+              console.log(res, 'open..SdkUrl');
+              if (res && res?.status == 'Success') {
+                console.log(
+                  paymentDataFlutterWave,
+                  'paymentDataFlutterWave....',
+                );
+                let newOrderDetail = paymentDataFlutterWave?.orderDetail;
+                newOrderDetail['dispatch_traking_url'] =
+                  res?.data?.dispatch_traking_url;
+                paymentDataFlutterWave['orderDetail'] = newOrderDetail;
+                updateState({
+                  indicatorLoader: false,
+                });
+                navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+                  ...paymentDataFlutterWave,
+                  orderId: paymentDataFlutterWave?.orderDetail?.id,
+                  fromCab: true,
+                });
+              } else {
+                redirectTimeout = setTimeout(() => {
+                  // do something with the result
+                  updateState({
+                    isModalVisibleForPayFlutterWave: false,
+                    indicatorLoader: false,
+                    // deliveryFeeLoader: false,
+                  });
+                }, 200);
+              }
+            })
+            .catch((error) => {
+              console.log(error, 'errorerrorerrorerrorerror');
+              updateState({
+                isModalVisibleForPayFlutterWave: false,
+                indicatorLoader: false,
+              });
+            });
+        } else {
+          let apiData = {
+            order_number: paymentDataFlutterWave?.orderDetail?.order_number,
+            action: 'cart',
+          };
+          actions
+            .cancelSdkUrl(
+              `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
+              apiData,
+              {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+              },
+            )
+            .then((res) => {
+              console.log(res, 'cancelPaytabUrl---resfrompaytab');
               redirectTimeout = setTimeout(() => {
                 // do something with the result
                 updateState({
                   isModalVisibleForPayFlutterWave: false,
                   indicatorLoader: false,
-                  // deliveryFeeLoader: false,
+                  deliveryFeeLoader: false,
                 });
               }, 200);
-            }
-          })
-          .catch((error) => console.log(error, 'errroro111'));
-      } else {
-        let apiData = {
-          order_number: paymentDataFlutterWave?.orderDetail?.order_number,
-          action: 'cart',
-        };
-        actions
-          .cancelSdkUrl(
-            `/${paymentDataFlutterWave?.selectedPayment?.code?.toLowerCase()}`,
-            apiData,
-            {
-              code: appData?.profile?.code,
-              currency: currencies?.primary_currency?.id,
-              language: languages?.primary_language?.id,
-            },
-          )
-          .then((res) => {
-            console.log(res, 'cancelPaytabUrl---resfrompaytab');
-            redirectTimeout = setTimeout(() => {
-              // do something with the result
-              updateState({
-                isModalVisibleForPayFlutterWave: false,
-                indicatorLoader: false,
-                deliveryFeeLoader: false,
-              });
-            }, 200);
-          })
-          .catch((error) => console.log(error, 'errorrrr'));
+            })
+            .catch((error) => console.log(error, 'errorrrr'));
+        }
+      } catch (error) {
+        console.log('error raised', error);
+        redirectTimeout = setTimeout(() => {
+          // do something with the result
+          updateState({
+            isModalVisibleForPayFlutterWave: false,
+            indicatorLoader: false,
+          });
+        }, 200);
       }
-    } catch (error) {
-      console.log('error raised', error);
-      redirectTimeout = setTimeout(() => {
-        // do something with the result
-        updateState({
-          isModalVisibleForPayFlutterWave: false,
-          indicatorLoader: false,
-        });
-      }, 200);
-    }
+    }, 100);
   };
+
   //error handling of api
   const errorMethod = (error) => {
     // alert("utyhtgyrtertcytfgh")
@@ -551,7 +565,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     });
     switch (paymentId) {
       case 4: //Stripe Payment Getway
-        console.log(' i amerereerererere');
         sendStripeToken(extraData, res);
         break;
       case 6: //Payfast Payment Getway
@@ -602,7 +615,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       isLoading: true,
       indicatorLoader: true,
     });
-    console.log(JSON.stringify(data), 'data>>>>>');
+    console.log(data, 'data>>>>>');
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -610,7 +623,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'resresresres');
+        console.log(res, 'resresresresplaceDelievryOrder');
         if (res && res?.status == 200) {
           let extraData = {
             orderId: res?.data?.id,
@@ -691,7 +704,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         !userData?.verify_details?.is_phone_verified
       )
     ) {
-      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
         ...userData,
         fromCart: true,
       })();
@@ -827,6 +840,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const renderVendors = ({ item }) => {
+    console.log(item,"item>>>");
     return (
       <TouchableOpacity
         disabled={selectedVendorOption.id == item.id}
@@ -950,7 +964,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </Text>
         </View>
         <View style={{ marginVertical: moderateScale(8) }}>
-          <FlatList
+          {console.log(availableVendors.length,"availableVendors")}
+         {availableVendors.length > 1 ? <FlatList
             horizontal
             data={availableVendors}
             renderItem={renderVendors}
@@ -965,7 +980,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               <View style={{ marginRight: moderateScale(16) }} />
             )}
             showsHorizontalScrollIndicator={false}
-          />
+          />:null}
         </View>
       </View>
     );
@@ -973,6 +988,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const _selectCarModalView = () => {
     return (
+
       <AvailableDriver
         onPressAvailableCar={_selectedProductForDrivers}
         isCabPooling={!!paramData?.is_cab_pooling}
@@ -1028,19 +1044,21 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const uploadImage = async (img) => {
     console.log('selected image', img);
-
+    let fileName = img.path.split("Pictures/")
+      console.log(fileName,"fileName...")
     const imgData = new FormData();
     imgData.append('upload_photo', {
-      uri: img,
-      name: 'image.png',
-      fileName: 'image',
-      type: 'image/png',
+      uri: img.path,
+      name: fileName[1],
+      fileName: fileName[1],
+      type: img.mime,
     });
     try {
       const res = await actions.imageUpload(imgData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       });
       console.log('image upload res', res);
       updateState({
@@ -1184,6 +1202,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       .then((res) => {
         console.log(res, 'resres')
         updateState({
+          
+          btnLoader: true,
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
               appData?.profile?.preferences?.digit_after_decimal,
@@ -1200,7 +1220,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
-          btnLoader: false,
+         
           disableButton: false,
           productFaqQuestionAnswers: res?.data?.products?.data?.map(
             (item, index) => {
@@ -1308,6 +1328,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
         indicatorLoader={indicatorLoader}
         _openDateTimeModal={_openDateTimeModal}
+        distnce_unit={distance_unit_for_time}
       />
     );
   };
@@ -1434,10 +1455,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               mode={'DRIVING'}
               // maxZoomLevel={20}
               onReady={(result) => {
+                console.log(result, 'result>>>>');
                 console.log(`Distance: ${result.distance} km`);
                 console.log(`Duration: ${result.duration} min.`);
                 updateState({
-                  totalDistance: result.distance.toFixed(2),
+                  totalDistance: distance_unit_for_time
+                    ? distance_unit_for_time === 'mile'
+                      ? (result.distance * 0.621371).toFixed(2)
+                      : result.distance.toFixed(2)
+                    : result.distance.toFixed(2),
                   totalDuration: result.duration.toFixed(2),
                 });
                 // mapRef.current.fitToCoordinates(result.coordinates, {
@@ -1622,6 +1648,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </View>
         </Modal>
       )}
+
+      {console.log(paymentDataFlutterWave, 'paymentDataFlutterWave...')}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}

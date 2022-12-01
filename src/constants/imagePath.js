@@ -513,6 +513,7 @@ export default {
   selectFriendList: require('../assets/images/BookAFriend/ic_drpdwn.png'),
   riderImage: require('../assets/images/ic_profilegrey.png'),
   //Video
+  // flank: require('../assets/flankSplash.mp4'),
   masa: require('../assets/masa.mp4'),
   ipd: require('../assets/ipd.mp4'),
   icCar: require('../assets/images/ic_topviewcar.png'),
@@ -541,5 +542,7 @@ export default {
   icVendorChat: require('../assets/images/ic_vendorchat.png'),
   icOtherAddressType: require('../assets/images/RoyoorderNewImages/ic_other_address.png'),
   HezniSplash: require('../assets/HezniSplash.mp4'),
-  flanksplash: require('../assets/Flanksplash.mp4')
+  // flanksplash: require('../assets/Flanksplash.mp4'),
+  timer: require('../assets/images/timer.png'),
+  icSocialShare: require('../assets/images/RoyoorderNewImages/social-media.png'),
 };

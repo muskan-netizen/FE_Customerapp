@@ -1,5 +1,10 @@
+import codes from 'country-calling-code';
+import {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
+import {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -18,19 +23,12 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../../styles/theme';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import codes from 'country-calling-code';
-import * as RNLocalize from 'react-native-localize';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -54,19 +52,20 @@ export default function ContactUs({navigation}) {
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(appData, 'appDataa');
 
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-
   const [state, setState] = useState({
     callingCode:
-      getPhonesCallingCodeAndCountryData &&
-      !!getPhonesCallingCodeAndCountryData?.length
-        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2:
-      getPhonesCallingCodeAndCountryData &&
-      !!getPhonesCallingCodeAndCountryData?.length
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
@@ -90,12 +89,12 @@ export default function ContactUs({navigation}) {
   useEffect(() => {
     updateState({
       cca2:
-      getPhonesCallingCodeAndCountryData &&
-      !!getPhonesCallingCodeAndCountryData?.length
-        ? getPhonesCallingCodeAndCountryData[0].isoCode2
-        : appData?.profile?.country?.code
-        ? appData?.profile?.country?.code
-        : 'IN',
+        getPhonesCallingCodeAndCountryData &&
+        !!getPhonesCallingCodeAndCountryData?.length
+          ? getPhonesCallingCodeAndCountryData[0].isoCode2
+          : appData?.profile?.country?.code
+          ? appData?.profile?.country?.code
+          : 'IN',
       callingCode:
         getPhonesCallingCodeAndCountryData &&
         !!getPhonesCallingCodeAndCountryData?.length

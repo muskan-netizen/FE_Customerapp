@@ -1,41 +1,37 @@
-import React, {useState, useEffect} from 'react';
-import {Image, Text, TouchableOpacity, View, I18nManager} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import codes from 'country-calling-code';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
+import CountryPicker, {Flag} from 'react-native-country-picker-modal';
+import DeviceCountry from 'react-native-device-country';
+import {getBundleId} from 'react-native-device-info';
+import {TextInput} from 'react-native-gesture-handler';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
-  showSuccess,
-  showError,
   otpTimerCounter,
+  showError,
+  showSuccess,
 } from '../../utils/helperFunctions';
-import stylesFunc from './styles';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import BorderTextInput from '../../Components/BorderTextInput';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import colors from '../../styles/colors';
-import {TextInput} from 'react-native-gesture-handler';
-import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import validations from '../../utils/validations';
-import {useNavigation} from '@react-navigation/native';
 import {setUserData} from '../../utils/utils';
-import codes from 'country-calling-code';
-import * as RNLocalize from 'react-native-localize';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
+import validations from '../../utils/validations';
+import stylesFunc from './styles';
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -51,22 +47,24 @@ export default function VerifyAccountSecond({navigation, route}) {
   const navigation_ = useNavigation();
   let paramsData = route?.params?.data;
   const {appData} = useSelector((state) => state?.initBoot);
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
     isLoading: false,
     callingCode:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
@@ -461,7 +459,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                               color: themeColors.primary_color,
                               fontFamily: fontFamily.bold,
                             }}>
-                            {`${otpTimerCounter(timer)} min`}
+                            {`${otpTimerCounter(timer)} sec`}
                           </Text>
                         </Text>
                       </View>
@@ -613,7 +611,7 @@ export default function VerifyAccountSecond({navigation, route}) {
                             color: themeColors.primary_color,
                             fontFamily: fontFamily.bold,
                           }}>
-                          {`${otpTimerCounter(timer2)} min`}
+                          {`${otpTimerCounter(timer2)} sec`}
                         </Text>
                       </Text>
                     ) : (

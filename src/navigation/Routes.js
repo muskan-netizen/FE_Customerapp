@@ -9,6 +9,7 @@ import {
   ChatRoomForVendor,
   ChatScreen,
   ChatScreenForVendor,
+  VerifyAccount,
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';

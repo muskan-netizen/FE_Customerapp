@@ -1006,5 +1006,8 @@ Amount`,
   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
   SELECT_ANS:"Select your answer",
   AND_HAVE_READ_THE:'and have read the',
-  I_ACCEPT_THE:'I accept the'
+  I_ACCEPT_THE:'I accept the',
+  PLEASE_SELECT_DATE: ' Please select date.',
+  SLOTS_NOT_FOUND_FOR_DATE: ' Slots not found for selected date',
+  ADDITIONAL_CHARGES: 'Additional Charges',
 };

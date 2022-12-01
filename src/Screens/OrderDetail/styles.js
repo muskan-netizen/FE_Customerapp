@@ -155,7 +155,7 @@ export default ({fontFamily}) => {
     cartItemMainContainer: {
       flexDirection: 'row',
       paddingVertical: moderateScaleVertical(10),
-      paddingHorizontal: moderateScale(10),
+      // paddingHorizontal: moderateScale(10),
       backgroundColor: colors.white,
       borderRadius: moderateScale(10),
     },
@@ -174,7 +174,9 @@ export default ({fontFamily}) => {
     },
     cartItemDetailsCon: {
       // height: width / 4.5,
-      width: width - width / 4 - 20,
+      // backgroundColor: 'red',
+      flexDirection: 'row',
+      width: width - width / 4,
       paddingHorizontal: moderateScale(10),
     },
     cartItemPrice: {
@@ -366,14 +368,23 @@ export default ({fontFamily}) => {
       color: colors.redB,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      marginRight:moderateScale(6)
+      marginRight: moderateScale(6),
     },
     agentUserIcon: {
       tintColor: colors?.redB,
       width: moderateScale(15),
-      height:moderateScale(15)
-
-    }
+      height: moderateScale(15),
+    },
+    startEndDateTitle: {
+      fontSize: moderateScale(12),
+      fontFamily: fontFamily.bold,
+      color: colors.black,
+    },
+    startEndDateValueTxt: {
+      fontSize: moderateScale(11),
+      fontFamily: fontFamily.regular,
+      color: colors.blackOpacity66,
+    },
   });
   return styles;
 };
