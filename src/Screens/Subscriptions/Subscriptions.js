@@ -287,7 +287,8 @@ export default function Subscriptions({navigation, route}) {
   const _renderItemPayments = ({item, index}) => {
     return (
       <>
-        <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
+        <TouchableOpacity 
+            onPress={() => _selectPaymentMethod(item)}>
           <View
             style={{
               flexDirection: 'row',
@@ -343,7 +344,7 @@ export default function Subscriptions({navigation, route}) {
                 Keyboard.dismiss();
               }}
             />
-          )}
+        )}
       </>
     );
   };

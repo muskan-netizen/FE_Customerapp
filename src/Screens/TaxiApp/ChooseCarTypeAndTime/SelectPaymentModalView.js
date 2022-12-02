@@ -1,23 +1,25 @@
-import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
   FlatList,
   I18nManager,
   Image,
-  Keyboard, KeyboardAvoidingView, Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { getBundleId } from 'react-native-device-info';
+import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
 import ImagePicker from 'react-native-image-crop-picker';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import DropDown from '../../../Components/DropDown';
 import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
@@ -31,19 +33,19 @@ import {
   StatusBarHeight,
   textScale,
   width,
-  height
+  height,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getImageUrl } from '../../../utils/helperFunctions';
-import { androidCameraPermission } from '../../../utils/permissions';
+import {MyDarkTheme} from '../../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {getImageUrl} from '../../../utils/helperFunctions';
+import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
 
 export default function SelectPaymentModalView({
   isLoading = false,
   onPressBack,
- 
+
   _confirmAndPay,
   slectedDate = '',
   selectedTime = '',
@@ -64,10 +66,10 @@ export default function SelectPaymentModalView({
   updateInstruction,
   productFaqQuestionAnswers,
   onQuestionAnswerSubmit,
+  allScreenParamsData,
   indicatorLoader = false,
   isCabPooling = false,
-  _openDateTimeModal = () => { },
-  
+  _openDateTimeModal = () => {},
 }) {
   console.log(pickUpTimeType, 'pickUpTimeType+++++++');
   console.log(selectedTime, 'selectedTime+++++++');
@@ -101,7 +103,7 @@ export default function SelectPaymentModalView({
   const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
-  const [selectedType, setSelectedType] = useState(null)
+  const [selectedType, setSelectedType] = useState(null);
   // const [updateSeatNo, setUpdateSeatNo] = useState(1)
 
   //Naviagtion to specific screen
@@ -117,7 +119,7 @@ export default function SelectPaymentModalView({
       vendor: vendor,
       cabOrder: true,
       isTaxi: true,
-
+      paramsData: allScreenParamsData,
       // cartId: cartData.id,
     })();
   };
@@ -129,9 +131,9 @@ export default function SelectPaymentModalView({
         'Upload Image ',
         'Choose an option',
         [
-          { text: "Camera", onPress: () => onCamera() },
-          { text: "Gallery", onPress: () => onGallery() },
-          { text: "Cancel", onPress: () => { } },
+          {text: 'Camera', onPress: () => onCamera()},
+          {text: 'Gallery', onPress: () => onGallery()},
+          {text: 'Cancel', onPress: () => {}},
         ],
         {cancelable: true},
       );
@@ -252,12 +254,10 @@ export default function SelectPaymentModalView({
     }
   };
 
-
   const onSelect = (val, item, index) => {
-    setSelectedType(val?.translations[0].name)
-    onChangeText(item, val?.translations[0].name, index, item?.length)
-  }
-
+    setSelectedType(val?.translations[0].name);
+    onChangeText(item, val?.translations[0].name, index, item?.length);
+  };
 
   return (
     <View
@@ -270,10 +270,7 @@ export default function SelectPaymentModalView({
               },
             ]
           : styles.bottomView
-      }
-    >
-     
-      
+      }>
       <Text
         style={{
           fontSize: textScale(26),
@@ -445,12 +442,12 @@ export default function SelectPaymentModalView({
                 selectedCarOption?.media.length &&
                 selectedCarOption?.media[0]?.image?.path
                   ? {
-                    uri: getImageUrl(
-                      selectedCarOption?.media[0]?.image?.path?.image_fit,
-                      selectedCarOption?.media[0]?.image?.path?.image_path,
-                      "500/500"
-                    ),
-                  }
+                      uri: getImageUrl(
+                        selectedCarOption?.media[0]?.image?.path?.image_fit,
+                        selectedCarOption?.media[0]?.image?.path?.image_path,
+                        '500/500',
+                      ),
+                    }
                   : imagePath.user
               }
             />
@@ -499,25 +496,23 @@ export default function SelectPaymentModalView({
           </View>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: 'row',
+              alignItems: 'center',
               marginVertical: 8,
               justifyContent: 'space-between',
-            }}
-          >
+            }}>
             <TouchableOpacity
               style={{
                 marginBottom: moderateScale(3),
-                flexDirection: "row",
+                flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-
               }}
-              onPress={() => setShowModal(true)}
-            >
-
-              <Image style={{ tintColor: themeColors?.primary_color }} source={imagePath.icInstruction} />
-
+              onPress={() => setShowModal(true)}>
+              <Image
+                style={{tintColor: themeColors?.primary_color}}
+                source={imagePath.icInstruction}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -559,64 +554,56 @@ export default function SelectPaymentModalView({
         </View>
       )}
 
-<TouchableOpacity
-style={{
-...styles.offersViewB,
-marginHorizontal: moderateScale(17),
-}}
-onPress={()=>_getAllOffers(selectedCarOption,"")}
->
-
-{couponInfo && updatedPrice ? (
-<View
-style={{ flexDirection: "row", justifyContent: "space-between" }}
-
->
-<View
-style={{
-flex: 0.7,
-flexDirection: 'row',
-alignItems: 'center',
-}}>
-<Image
-style={{tintColor: themeColors.primary_color}}
-source={imagePath.percent2}
-/>
-<Text
-numberOfLines={1}
-style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-{`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
-</Text>
-</View>
-<View style={{flex: 0.3, alignItems: 'flex-end'}}>
-<Text
-onPress={removeCoupon}
-style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
-{strings.REMOVE}
-</Text>
-</View>
-</View>
-) : (
-<View
-style={{
-flexDirection: 'row',
-alignItems: 'center',
-// flex: 1,
-// backgroundColor:'red'
-}}
-
->
-<Image
-style={{tintColor: themeColors.primary_color}}
-source={imagePath.percent2}
-/>
-<Text
-style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-{strings.APPLY_PROMO_CODE}
-</Text>
-</View>
-)}
-</TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          ...styles.offersViewB,
+          marginHorizontal: moderateScale(17),
+        }}
+        onPress={() => _getAllOffers(selectedCarOption, '')}>
+        {couponInfo && updatedPrice ? (
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View
+              style={{
+                flex: 0.7,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.percent2}
+              />
+              <Text
+                numberOfLines={1}
+                style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+                {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+              </Text>
+            </View>
+            <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+              <Text
+                onPress={removeCoupon}
+                style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
+                {strings.REMOVE}
+              </Text>
+            </View>
+          </View>
+        ) : (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              // flex: 1,
+              // backgroundColor:'red'
+            }}>
+            <Image
+              style={{tintColor: themeColors.primary_color}}
+              source={imagePath.percent2}
+            />
+            <Text style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+              {strings.APPLY_PROMO_CODE}
+            </Text>
+          </View>
+        )}
+      </TouchableOpacity>
       {/* select payment method */}
       <TouchableOpacity
         onPress={redirectToPayement}
@@ -697,10 +684,10 @@ style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
                 ? strings.REQUEST_RIDE
                 : strings.BOOK_NOW_RIDE
               : selectedTime || slectedDate
-                ? strings.SCHEDULE_RIDE_FOR
-                : pickUpTimeType === "now"
-                  ? strings.BOOK_NOW
-                  : strings.SCHEDULE_RIDE_FOR
+              ? strings.SCHEDULE_RIDE_FOR
+              : pickUpTimeType === 'now'
+              ? strings.BOOK_NOW
+              : strings.SCHEDULE_RIDE_FOR
           }
           indicator={indicatorLoader}
           indicatorColor={colors.white}
@@ -763,7 +750,7 @@ style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
                     <View
                       style={{
                         marginTop: moderateScaleVertical(10),
-                        zIndex: 5
+                        zIndex: 5,
                       }}>
                       <View
                         style={{
@@ -797,9 +784,8 @@ style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
                         data={item?.selection}
                         fetchValues={(val) => onSelect(val, item, index)}
                         marginBottom={0}
-                      // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+                        // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
                       />
-
                     </View>
                   );
                 }
