@@ -63,7 +63,6 @@ export default function ShortCode({route, navigation}) {
     LoadingScreen,
     videoDurationEnded,
     allAppData,
-
     initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));

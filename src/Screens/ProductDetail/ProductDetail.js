@@ -1706,14 +1706,15 @@ export default function ProductDetail({ route, navigation }) {
                               borderColor: themeColors?.primary_color,
                               height: moderateScale(38),
                               justifyContent: 'space-between',
-                              marginLeft: moderateScale(8),
+                              // marginLeft: moderateScale(8),
+                              textAlign:'center'
                           
                             }}
                             value={`${productQuantityForCart.toString()}`}
                             onChangeText={(value) =>
                               updateState({
                                 productQuantityForCart:
-                                  value == '' ? '' : Number(value),
+                                  value == '' ? 1 : Number(value),
                               })
                             }
                             // onPress={onPress}
