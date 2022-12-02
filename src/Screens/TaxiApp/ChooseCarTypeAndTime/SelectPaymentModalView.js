@@ -66,6 +66,7 @@ export default function SelectPaymentModalView({
   updateInstruction,
   productFaqQuestionAnswers,
   onQuestionAnswerSubmit,
+  allScreenParamsData,
   indicatorLoader = false,
   isCabPooling = false,
   _openDateTimeModal = () => {},
@@ -118,7 +119,7 @@ export default function SelectPaymentModalView({
       vendor: vendor,
       cabOrder: true,
       isTaxi: true,
-
+      paramsData: allScreenParamsData,
       // cartId: cartData.id,
     })();
   };

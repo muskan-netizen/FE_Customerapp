@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
@@ -119,7 +119,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://tmgsalesllc.com/api/v1';
 // export const API_BASE_URL = 'https://fijieats.com/api/v1'
 // export const API_BASE_URL = 'https://swantaxi.net/api/v1'
-export const API_BASE_URL = 'https://keystonedelivery.com/api/v1';
+// export const API_BASE_URL = 'https://keystonedelivery.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://aaujaaunepal.com/api/v1'
 

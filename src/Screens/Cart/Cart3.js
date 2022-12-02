@@ -91,6 +91,7 @@ import stylesFun from './styles';
 import BottomModal from '../../Components/BottomModal';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import DropDown from '../../Components/DropDown';
+
 let clickedItem = {};
 let isFAQsSubmitted = true;
 let addtionSelectedImageIndex = null;
@@ -240,7 +241,6 @@ function Cart({navigation, route}) {
   const {preferences} = appData?.profile;
   const {additional_preferences, digit_after_decimal} = preferences;
 
-  console.log(appData, 'preferencespreferences');
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
@@ -5638,7 +5638,7 @@ function Cart({navigation, route}) {
               <ScrollView>
                 {productFaqs.map((item, index) => {
                   setAllRequiredQuestions(item, index);
-                  if (item?.file_type === '0') {
+                  if (item?.file_type === 'Text') {
                     return (
                       <View
                         style={{
@@ -5654,7 +5654,7 @@ function Cart({navigation, route}) {
                               marginBottom: moderateScaleVertical(10),
                               color: colors.redColor,
                             }}>
-                            {`${item?.is_required ? '*' : ''}`}
+                            {`${item?.is_required ? '* ' : ''}`}
                           </Text>
                           <Text
                             style={{

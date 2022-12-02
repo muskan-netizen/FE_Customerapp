@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -40,6 +40,8 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
+import {isEmpty} from 'lodash';
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -56,6 +58,7 @@ import {useNavigation} from '@react-navigation/native';
 import RNOtpVerify from 'react-native-otp-verify';
 import {setUserData} from '../../utils/utils';
 import {getValuebyKeyInArray} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Login({navigation}) {
   const navigation_ = useNavigation();
@@ -89,15 +92,18 @@ export default function Login({navigation}) {
     mobilNo: {
       phoneNo: '',
       callingCode:
-        getPhonesCallingCodeAndCountryData &&
-        getPhonesCallingCodeAndCountryData.length
-          ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+        !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        getBundleId() !== appIds.sxm2go
+          ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+              '-',
+              '',
+            )
           : appData?.profile.country?.phonecode
           ? appData?.profile?.country?.phonecode
           : '91',
       cca2:
-        getPhonesCallingCodeAndCountryData &&
-        getPhonesCallingCodeAndCountryData.length
+        !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        getBundleId() !== appIds.sxm2go
           ? getPhonesCallingCodeAndCountryData[0].isoCode2
           : appData?.profile?.country?.code
           ? appData?.profile?.country?.code
@@ -109,15 +115,18 @@ export default function Login({navigation}) {
     },
     phoneNumberOnly: '',
     calllingCodePhoneOnly:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2PhoneOnly:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
@@ -261,8 +270,7 @@ export default function Login({navigation}) {
               countryData: mobilNo?.cca2,
               data: res.data,
             });
-          }
-           else {
+          } else {
             checkIfEmailVerification(res.data);
           }
         }

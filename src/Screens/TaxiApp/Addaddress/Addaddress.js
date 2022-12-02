@@ -235,7 +235,7 @@ export default function Addaddress({ navigation, route }) {
         longitude: lng,
       }
       : { code: appData?.profile?.code };
-
+     
     actions
       .getDataByCategoryId(
         `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id

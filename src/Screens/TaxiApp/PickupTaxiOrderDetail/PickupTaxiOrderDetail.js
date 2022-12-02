@@ -282,7 +282,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         '/order-details/',
       )
     : null;
-
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -1336,7 +1335,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   </View>
                 )}
                 <View style={styles.horizontalLine} />
-               
+
                 {orderStatus == 'unassigned' && (
                   <SearchDriver
                     isWaitingOver={isWaitingOver}
@@ -1344,7 +1343,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       onCancelOrder('No drivers available.');
                     }}
                     scheduleDate={orderDetail?.scheduled_date_time}
-                   
                     isBtnLoader={isBtnLoader}
                   />
                 )}
