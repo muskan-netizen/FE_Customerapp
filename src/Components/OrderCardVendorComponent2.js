@@ -47,6 +47,7 @@ const OrderCardVendorComponent2 = ({
   updateLocalItem,
   showRepeatOrderButton,
   onRepeatOrderPress,
+  onReplaceOrder = () => {},
 }) => {
   let cardWidth = width - 21.5;
   const [reason, setReason] = useState('');
@@ -137,10 +138,6 @@ const OrderCardVendorComponent2 = ({
       keyboardDidShowListener.remove();
     };
   }, []);
-
-  const onReturnOrder = () => {};
-
-  const onReplaceOrder = () => {};
 
   return (
     <TouchableOpacity
@@ -481,25 +478,70 @@ const OrderCardVendorComponent2 = ({
                 </Text>
               </View>
             </View>
+            <View
+              style={{
+                flex: 0.6,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}>
+              {data?.order_status?.current_status?.title !== strings.REJECTED &&
+              data?.vendor?.return_request == 1 ? (
+                data?.return_request_status == 1 ? (
+                  <Text
+                    style={{...styles.returnRequestsTxt, color: colors.greenA}}>
+                    {strings.RETURN_REQUEST} {strings.ACCEPTED}
+                  </Text>
+                ) : data?.return_request_status == 2 ? (
+                  <Text
+                    style={{...styles.returnRequestsTxt, color: colors.redB}}>
+                    {strings.RETURN_REQUEST} {strings.REJECTED}
+                  </Text>
+                ) : data?.return_request_status == 3 ? (
+                  <Text
+                    style={{...styles.returnRequestsTxt, color: colors.blackB}}>
+                    {strings.RETURN_REQUEST} {strings.PENDING}
+                  </Text>
+                ) : (
+                  <TouchableOpacity
+                    // onPress={onPressRateOrder}
+                    onPress={onPressReturnOrder}
+                    // style={{flex:0.6}}
+                    style={{...styles.bottomSecondHalf, flex: 0}}>
+                    {appStyle?.homePageLayout === 4 ? null : (
+                      <View style={styles.orderAcceptAndReadyStyleSecond}>
+                        <Text style={styles.orderStatusStyleSecond}>
+                          {strings.RETURNORDER}
+                        </Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                )
+              ) : (
+                <></>
+              )}
 
-            {data?.vendor?.return_request &&
-            data?.order_status?.current_status?.title !== strings.REJECTED ? (
-              <TouchableOpacity
-                // onPress={onPressRateOrder}
-                onPress={onPressReturnOrder}
-                // style={{flex:0.6}}
-                style={styles.bottomSecondHalf}>
-                {appStyle?.homePageLayout === 4 ? null : (
-                  <View style={styles.orderAcceptAndReadyStyleSecond}>
-                    <Text style={styles.orderStatusStyleSecond}>
-                      {strings.RETURNORDER}
-                    </Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            ) : (
-              <View style={{flex: 0.6}} />
-            )}
+              {!data?.vendor?.return_request &&
+              data?.order_status?.current_status?.title !== strings.REJECTED ? (
+                <TouchableOpacity
+                  // onPress={onPressRateOrder}
+                  onPress={() => onReplaceOrder(data)}
+                  // style={{flex:0.6}}
+                  style={{
+                    ...styles.bottomSecondHalf,
+                    flex: 0,
+                    marginLeft: moderateScale(15),
+                  }}>
+                  {appStyle?.homePageLayout === 4 ? null : (
+                    <View style={styles.orderAcceptAndReadyStyleSecond}>
+                      <Text style={styles.orderStatusStyleSecond}>Replace</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
+            </View>
           </View>
         ) : (
           <View
@@ -610,32 +652,7 @@ const OrderCardVendorComponent2 = ({
           </TouchableOpacity>
         ) : null}
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginHorizontal: moderateScale(10),
-          marginBottom: moderateScaleVertical(8),
-          flex: 1,
-        }}>
-        <ButtonWithLoader
-          onPress={onReturnOrder}
-          btnText="Return"
-          btnTextStyle={{
-            textTransform: 'none',
-          }}
-          btnStyle={styles.returnReplaceBtnStyle}
-        />
-        <ButtonWithLoader
-          onPress={onReplaceOrder}
-          btnText="Replace"
-          btnTextStyle={{
-            textTransform: 'none',
-          }}
-          btnStyle={styles.returnReplaceBtnStyle}
-        />
-      </View>
+
       <Modal
         isVisible={!!cancellationItem ? true : false}
         onBackdropPress={hideModal}
@@ -917,11 +934,18 @@ export function stylesFunc({fontFamily, themeColors}) {
       fontSize: textScale(11),
     },
     returnReplaceBtnStyle: {
-      flex: 0.48,
+      flex: 1,
       height: moderateScaleVertical(45),
       backgroundColor: themeColors.primary_color,
       borderWidth: 0,
       marginTop: 0,
+      marginBottom: moderateScaleVertical(8),
+      marginHorizontal: moderateScale(20),
+    },
+    returnRequestsTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      textTransform: 'capitalize',
     },
   });
   return styles;

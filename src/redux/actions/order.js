@@ -1,32 +1,35 @@
 import {
+  ACCEPTREJECTDRIVERUPDATE,
   ACCEPT_REJECT_ORDER,
+  ALL_VENDOR_ORDERS,
+  CANCEL_ORDER,
+  DISPATCHER_URL,
+  GENERATE_INVOICE,
   GET_ALL_ORDERS,
   GET_ALL_VENDOR_ORDERS,
+  GET_DETAIL_OF_PRODUCT_FOR_REPLACE,
+  GET_DRIVER_RATING_DETAIL,
   GET_ORDER_DETAIL,
+  GET_ORDER_DETAIL_FOR_BILLING,
+  GET_PRODUCTS_FOR_REPLACE,
   GET_RATING_DETAIL,
-  GIVE_RATING_REVIEWS,
-  GET_VENDOR_REVENUE,
   GET_RETURN_ORDER_DETAIL,
   GET_RETURN_PRODUCT_DETAIL,
-  UPLOAD_PRODUCT_IMAGE,
-  SUBMIT_RETURN_ORDER,
-  MY_PENDING_ORDERS,
-  GET_ORDER_DETAIL_FOR_BILLING,
-  DISPATCHER_URL,
-  CANCEL_ORDER,
-  REPEAT_ORDER,
-  ACCEPTREJECTDRIVERUPDATE,
-  GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_PROFILE,
+  GET_VENDOR_REVENUE,
+  GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_TRANSACTIONS,
+  GIVE_RATING_REVIEWS,
+  MY_PENDING_ORDERS,
   RATE_TO_DRIVER,
+  REPEAT_ORDER,
+  RESCHDULE_ORDER,
   SOTRE_VENDORS,
   STORE_VENDOR_COUNT,
-  ALL_VENDOR_ORDERS,
-  RESCHDULE_ORDER,
-  GENERATE_INVOICE,
+  SUBMIT_PRODUCT_FOR_REPLACEMENT,
+  SUBMIT_RETURN_ORDER,
+  UPLOAD_PRODUCT_IMAGE,
   VENDER_UPDATE_ORDER,
-  GET_DRIVER_RATING_DETAIL,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -362,4 +365,17 @@ export function allVendorOrders(query, headers = {}) {
 
 export function rescheduleOrder(data = {}, headers = {}) {
   return apiPost(RESCHDULE_ORDER, data, headers);
+}
+
+//Replace Product
+export function getProductsForReplace(url, data = {}, headers = {}) {
+  return apiGet(GET_PRODUCTS_FOR_REPLACE + url, data, headers);
+}
+
+export function getDetailOfProductToReplace(url = '', data = {}, headers = {}) {
+  return apiGet(GET_DETAIL_OF_PRODUCT_FOR_REPLACE + url, data, headers);
+}
+
+export function submitProductForReplacement(data = {}, headers = {}) {
+  return apiPost(SUBMIT_PRODUCT_FOR_REPLACEMENT, data, headers);
 }

@@ -35,9 +35,10 @@ export default function AddonModal({
   onPress,
   resizeMode = 'cover',
   imagestyle = {},
+  redirectedFrom = '',
+  updateAddonOnReplaceProduct = () => {},
 }) {
   const navigation = useNavigation();
-
   const [state, setState] = useState({
     addonSetData: addonSet,
     viewHeight: 0,
@@ -45,12 +46,19 @@ export default function AddonModal({
   });
   const {addonSetData, viewHeight, maxLimitAddon} = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const {additional_preferences, digit_after_decimal} =
     appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
@@ -272,6 +280,10 @@ export default function AddonModal({
     const checkIsError = addonSetData.findIndex((el) => el.errorShow);
     if (checkIsError == -1) {
       onClose();
+      if (redirectedFrom == 'replaceOrder') {
+        updateAddonOnReplaceProduct(addonSetData);
+        return;
+      }
       navigation.navigate(navigationStrings.PRODUCTDETAIL, {
         data: {
           addonSetData: addonSetData,

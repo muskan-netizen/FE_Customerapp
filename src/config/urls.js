@@ -1,6 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
+export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL = 'https://mealtime.menu/api/v1';
 // export const API_BASE_URL = 'https://order.fazeiteam.com/api/v1';
@@ -12,7 +12,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 //export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
@@ -618,4 +618,16 @@ export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');
 export const GENERATE_INVOICE = getApiUrl('/generate-facturama-invoice');
 export const CHECK_PRODUCT_AVAILAABILITY = getApiUrl(
   '/checkProductAvailibility',
+);
+
+//Replace Order
+
+export const GET_PRODUCTS_FOR_REPLACE = getApiUrl(
+  '/replace-order/get-replace-order-data-in-model',
+);
+export const GET_DETAIL_OF_PRODUCT_FOR_REPLACE = getApiUrl(
+  '/replace-order/get-replace-products',
+);
+export const SUBMIT_PRODUCT_FOR_REPLACEMENT = getApiUrl(
+  '/replace-order/update-product-replace',
 );

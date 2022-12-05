@@ -1,6 +1,6 @@
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking, ScrollView} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
@@ -15,15 +15,20 @@ import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 
+import Voice from '@react-native-voice/voice';
+import LaundryAddonModal from '../../Components/LaundryAddonModal';
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
-  getImageUrl,
   getNearestLocation,
   showError,
-  showSuccess,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
+import socketServices from '../../utils/scoketService';
+import DashBoardEight from './DashboardViews/DashBoardEight';
+import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
+import DashBoardNine from './DashboardViews/DashBoardNine';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -34,16 +39,6 @@ import {
   DashBoardSix,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
-import Voice from '@react-native-voice/voice';
-import FastImage from 'react-native-fast-image';
-import DashBoardEight from './DashboardViews/DashBoardEight';
-import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import _, {isEmpty} from 'lodash';
-import socketServices from '../../utils/scoketService';
-import SubscriptionModal from '../../Components/SubscriptionModal';
-import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
-import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
-import DashBoardNine from './DashboardViews/DashBoardNine';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -100,7 +95,6 @@ export default function Home({route, navigation}) {
     openVendor: 0,
     closeVendor: 0,
     bestSeller: 0,
-
     tempCartData: null,
     isVoiceRecord: false,
     singleVendor: false,
@@ -153,7 +147,6 @@ export default function Home({route, navigation}) {
       return () => backHandler.remove();
     }, []),
   );
-  console.log(appMainData, 'appMainDataappMainData');
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
   }, [appMainData]);

@@ -110,6 +110,7 @@ export default function MyOrders(props) {
     selectProductForRetrun: null,
     viewHeight: 0,
     reasons: [],
+    isOrderForReplace: false,
   });
   const {
     viewHeight,
@@ -130,6 +131,7 @@ export default function MyOrders(props) {
     selectedOrderForReturn,
     selectProductForRetrun,
     reasons,
+    isOrderForReplace,
   } = state;
 
   //Update state in screen
@@ -151,7 +153,7 @@ export default function MyOrders(props) {
         actions.setAppSessionData('on_login');
       }
     },
-    isFocused ? 3000 : null,
+    isFocused ? 10000 : null,
   );
 
   const updateLocalItem = (data) => {
@@ -208,7 +210,7 @@ export default function MyOrders(props) {
         },
       )
       .then((res) => {
-        console.log(res.data, 'res my orders >>>');
+        console.log(res, 'res my orders >>>');
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
@@ -384,6 +386,31 @@ export default function MyOrders(props) {
       .catch(errorMethod);
   };
 
+  const onReplaceOrder = (item) => {
+    console.log(item, '====>item');
+    updateState({isLoading: true});
+    actions
+      .getProductsForReplace(
+        `?id=${item?.order_id}&vendor_id=${item?.vendor_id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          isLoading: false,
+          isOrderForReplace: true,
+          isVisibleReturnOrderModal: true,
+          selectedOrderForReturn: res?.data,
+          selectProductForRetrun: null,
+        });
+      })
+      .catch(errorMethod);
+  };
+
   const renderOrders = ({item, index}) => {
     return (
       <OrderCardVendorComponent2
@@ -393,6 +420,7 @@ export default function MyOrders(props) {
         onPressRateOrder={
           selectedTab == strings.PAST_ORDERS ? () => rateYourOrder() : null
         }
+        onReplaceOrder={onReplaceOrder}
         navigation={navigation}
         onPressReturnOrder={
           selectedTab == strings.PAST_ORDERS
@@ -548,6 +576,38 @@ export default function MyOrders(props) {
         'selectProductForRetrun>>selectProductForRetrun',
       );
       updateState({isVisibleReturnOrderModal: false, isLoading: true});
+
+      if (isOrderForReplace) {
+        actions
+          .getDetailOfProductToReplace(
+            `?return_ids=${selectProductForRetrun?.id}&order_id=${selectProductForRetrun?.order_id}&product_id=${selectProductForRetrun?.product_id}`,
+            {},
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, '>>>>>>res');
+            updateState({isLoading: false});
+            setTimeout(() => {
+              navigation.navigate(navigationStrings.REPLACE_ORDER, {
+                selectProductForRetrun: selectProductForRetrun,
+                reasons:
+                  res?.data?.reasons && res?.data?.reasons.length
+                    ? res?.data?.reasons.map((item, index) => {
+                        (item['value'] = item?.title),
+                          (item['label'] = item?.title);
+                        return item;
+                      })
+                    : [],
+              });
+            }, 500);
+          })
+          .catch(errorMethod);
+        return;
+      }
       actions
         .getReturnProductrDetailData(
           `?return_ids=${selectProductForRetrun?.id}&order_id=${selectProductForRetrun?.order_id}`,
@@ -559,7 +619,6 @@ export default function MyOrders(props) {
           },
         )
         .then((res) => {
-          console.log(res, 'getReturnProductrDetailData>>>res>>>');
           updateState({isLoading: false});
           setTimeout(() => {
             navigation.navigate(navigationStrings.RETURNORDER, {
@@ -661,7 +720,7 @@ export default function MyOrders(props) {
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
         ItemSeparatorComponent={() => <View style={{height: 20}} />}
-        ListFooterComponent={() => <View style={{height: 90}} />}
+        ListFooterComponent={() => <View style={{height: 100}} />}
         ListEmptyComponent={
           !isLoading && (
             <View

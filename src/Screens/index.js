@@ -153,3 +153,5 @@ export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendo
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
+
+export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
