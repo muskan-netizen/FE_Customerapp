@@ -798,7 +798,9 @@ export default function MyOrders(props) {
                     ? [styles.carType, {color: MyDarkTheme.colors.text}]
                     : styles.carType
                 }>
-                {strings.DOYOUWANTTORETURNYOURORDER}
+                {isOrderForReplace
+                  ? strings.DOYOUWANTTOREPLACEYOURORDER
+                  : strings.DOYOUWANTTORETURNYOURORDER}
               </Text>
             </View>
             <View

@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import HTMLView from 'react-native-htmlview';
@@ -44,6 +44,11 @@ export default function AddonModal({
     viewHeight: 0,
     maxLimitAddon: 0,
   });
+
+  useEffect(() => {
+    setState({addonSetData: addonSet, viewHeight: 0, maxLimitAddon: 0});
+  }, [addonSet]);
+
   const {addonSetData, viewHeight, maxLimitAddon} = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {
@@ -281,6 +286,7 @@ export default function AddonModal({
     if (checkIsError == -1) {
       onClose();
       if (redirectedFrom == 'replaceOrder') {
+        console.log(addonSetData, 'addonSetData...');
         updateAddonOnReplaceProduct(addonSetData);
         return;
       }
@@ -391,7 +397,9 @@ export default function AddonModal({
           onPress={addToCart}
           marginTop={moderateScaleVertical(10)}
           marginBottom={moderateScaleVertical(10)}
-          btnText={strings.ADDTOCART}
+          btnText={
+            redirectedFrom == 'replaceOrder' ? 'Select' : strings.ADDTOCART
+          }
         />
       </View>
     </Modal>

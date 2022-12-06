@@ -545,4 +545,5 @@ export default {
   // flanksplash: require('../assets/Flanksplash.mp4'),
   timer: require('../assets/images/timer.png'),
   icSocialShare: require('../assets/images/RoyoorderNewImages/social-media.png'),
+  icRefundable: require('../assets/images/refundable.png'),
 };

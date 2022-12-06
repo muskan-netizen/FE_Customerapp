@@ -221,13 +221,19 @@ export default function ReplaceOrder({navigation, route}) {
     }
   };
 
-  const _submitYourReturnOrder = () => {
+  const _submitReplaceOrder = () => {
     let formdata = new FormData();
     formdata.append('order_vendor_product_id', selectProductForRetrun?.id);
     formdata.append('coments', returnText);
     formdata.append(
       'reason',
       selectedReason ? selectedReason.value : returnReasons[0].label,
+    );
+
+    formdata.append(
+      'product_a_price',
+      Number(productPriceData?.price) * Number(productQuantityForCart) +
+        Number(getPriceOfSelectedAddons()),
     );
 
     if (imageArray.length) {
@@ -248,6 +254,7 @@ export default function ReplaceOrder({navigation, route}) {
       });
     }
 
+    console.log(formdata, 'formdata....formdata');
     updateState({isLoading: true});
     actions
       .submitProductForReplacement(formdata, {
@@ -257,6 +264,7 @@ export default function ReplaceOrder({navigation, route}) {
         'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
+        console.log(res, 'res....res...res');
         updateState({isLoading: false});
         navigation.goBack();
       })
@@ -690,6 +698,20 @@ export default function ReplaceOrder({navigation, route}) {
     });
   };
 
+  const getPriceOfSelectedAddons = () => {
+    let price = 0;
+
+    addonSetData.map((i, inx) => {
+      i.setoptions.map((j, jnx) => {
+        if (j?.value == true) {
+          price = Number(price) + Number(j?.price);
+        }
+      });
+    });
+
+    return price;
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -785,7 +807,8 @@ export default function ReplaceOrder({navigation, route}) {
                   {'    '}
                   {tokenConverterPlusCurrencyNumberFormater(
                     Number(productPriceData?.price) *
-                      Number(productQuantityForCart),
+                      Number(productQuantityForCart) +
+                      Number(getPriceOfSelectedAddons()),
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,
@@ -954,12 +977,13 @@ export default function ReplaceOrder({navigation, route}) {
                   themeColors.primary_color,
                 ]}
                 textStyle={styles.textStyle}
-                onPress={_submitYourReturnOrder}
-                btnText={strings.SUBMIT}
+                onPress={_submitReplaceOrder}
+                btnText={'Replace'}
               />
             </View>
           </View>
         </View>
+        {console.log(addonSet, 'addonSet....addonSet')}
         <AddonModal
           productdetail={productDetailData}
           isVisible={isVisibleAddonModal}

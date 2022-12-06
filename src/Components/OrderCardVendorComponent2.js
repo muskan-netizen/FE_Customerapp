@@ -1,3 +1,4 @@
+import {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
@@ -177,6 +178,22 @@ const OrderCardVendorComponent2 = ({
               {strings.REPEAT_ORDER}
             </Text>
           </TouchableOpacity>
+        </View>
+      ) : null}
+      {!isEmpty(data?.exchanged_of_order) ? (
+        <View
+          style={{
+            ...styles.ariveView,
+            backgroundColor: themeColors?.primary_color,
+          }}>
+          <Text
+            style={{
+              ...styles.ariveTextStyle,
+              color: colors.white,
+            }}>
+            Exchanged for #
+            {data?.exchanged_of_order?.order_detail?.order_number}
+          </Text>
         </View>
       ) : null}
       {data?.order_status?.current_status?.title !== strings.DELIVERED &&
@@ -454,6 +471,7 @@ const OrderCardVendorComponent2 = ({
             </View>
           </>
         )}
+        {console.log(data, 'data...data')}
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View
@@ -485,8 +503,9 @@ const OrderCardVendorComponent2 = ({
                 alignItems: 'center',
                 justifyContent: 'flex-end',
               }}>
+              {console.log(data, 'data....data')}
               {data?.order_status?.current_status?.title !== strings.REJECTED &&
-              data?.vendor?.return_request == 1 ? (
+              data?.returnable == 1 ? (
                 data?.return_request_status == 1 ? (
                   <Text
                     style={{...styles.returnRequestsTxt, color: colors.greenA}}>
@@ -521,7 +540,8 @@ const OrderCardVendorComponent2 = ({
                 <></>
               )}
 
-              {!data?.vendor?.return_request &&
+              {data?.is_exchanged_or_returned == 0 &&
+              data?.replaceable &&
               data?.order_status?.current_status?.title !== strings.REJECTED ? (
                 <TouchableOpacity
                   // onPress={onPressRateOrder}

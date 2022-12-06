@@ -1009,4 +1009,6 @@ Amount`,
   SLOTS_NOT_FOUND_FOR_DATE: ' Slots not found for selected date',
   ADDITIONAL_CHARGES: 'Additional Charges',
   RETURN_REQUEST: 'Return request',
+  DOYOUWANTTOREPLACEYOURORDER:
+    'Please report issues here to log a replacement request.',
 };
