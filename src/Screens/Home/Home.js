@@ -429,9 +429,10 @@ export default function Home({route, navigation}) {
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
       }
+      console.log(selectedVendorType,defaultVendorType,"selectedVendorTypeselectedVendorType");
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
-        ...latlongObj,
+        // ...latlongObj,
         ...vendorFilterData,
       };
       let apiHeader = {

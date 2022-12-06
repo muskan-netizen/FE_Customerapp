@@ -64,7 +64,6 @@ export default function ShortCode({route, navigation}) {
     LoadingScreen,
     videoDurationEnded,
     allAppData,
-
     initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -2914,6 +2913,7 @@ export default function ShortCode({route, navigation}) {
   }, [shortCode, isShortcodePrefilled]);
 
   const checkScreen = () => {
+    
     initApiHit();
     updateState({isShortcodePrefilled: true});
   };
@@ -2937,22 +2937,23 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '0fcc84',
+        // code: '1b1c0d',
         code: shortCode,
-        // code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '0fcc84',
+        // code: '1b1c0d',
         code: shortCode,
-        // code: shortCode,
       };
     }
+ 
     actions
       .initApp({}, header, false, null, null, true)
+      
       .then((res) => {
         console.log(res, 'ressssssssss');
+        actions.dineInData(res?.data?.profile?.preferences?.vendorMode[0]?.type);
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {
@@ -3138,9 +3139,12 @@ export default function ShortCode({route, navigation}) {
   };
 
   useEffect(() => {
+    
     (async () => {
       if (changeInShortCode) {
+
         const saveShortCode = await getItem('saveShortCode');
+        
         if (saveShortCode && shortCode != saveShortCode) {
           actions.userLogout();
           actions.cartItemQty('');

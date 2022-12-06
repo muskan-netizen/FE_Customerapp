@@ -416,8 +416,8 @@ const longitudes =  !!curLatLong?.longitude
   : appData?.profile?.preferences?.Default_latitude
 
   console.log(latitudes, 'latitudeslatitudes')
-  console.log(appData?.profile?.preferences?.Default_latitude, 'latitudeslatitudeslongitudes')
-  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes')
+  // console.log(appData?.profile?.preferences?.Default_latitude, 'latitudeslatitudeslongitudes')
+  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes......')
 
   const _ModalMainView = () => {
     return (
