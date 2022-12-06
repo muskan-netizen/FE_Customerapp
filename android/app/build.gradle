@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true,  // clean and rebuild if changing
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -122,8 +122,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", true);
 
 android {
-     packagingOptions {
-        pickFirst '**/*.so'
+ packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libfbjni.so'
     }
    
     dexOptions {
@@ -203,6 +204,8 @@ android {
     }
 
     flavorDimensions "appType"
+
+
 
     productFlavors {
             royoorder {
@@ -7909,6 +7912,16 @@ android {
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.otgweeds.royoorders'
                 resValue "string", "app_name", "OTG Weeds"
+                resValue "string", "host_name", ""
+            }
+                                     rumbella {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.rumbella.royoorders'
+                resValue "string", "app_name", "Rumbella"
                 resValue "string", "host_name", ""
             }
     }

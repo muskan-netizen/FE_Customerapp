@@ -2945,6 +2945,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.rumbella:
+          updateState({
+            shortCode: shortCodes.rumbella,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
