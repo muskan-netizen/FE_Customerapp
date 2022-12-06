@@ -72,6 +72,7 @@ const VariantAddons = ({
   productDetailNew = {},
   isProductAvailable = false,
 }) => {
+  console.log("productDetailNew =>", productDetailNew,"\n productDetailData =>", productDetailData, "\n endDateRental =>",endDateRental);
   const {appData, themeColors, currencies, languages, appStyle, themeColor} =
     useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
@@ -106,8 +107,8 @@ const VariantAddons = ({
   const getProductDetailBasedOnFilter = (variantSetData) => {
     console.log('api hit getProductDetailBasedOnFilter', variantSetData);
     let data = {};
-    data['variants'] = variantSetData.map((i) => i.variant_id);
-    data['options'] = variantSetData.map((i) => i.optionId);
+    data['variants'] = variantSetData?.map((i) => i.variant_id);
+    data['options'] = variantSetData?.map((i) => i.optionId);
     actions
       .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
         code: appData.profile.code,
@@ -201,7 +202,7 @@ const VariantAddons = ({
           selectEndDate: String(
             moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
           ),
-          variant_option_id: productDetailNew?.set[0]?.variant_option_id,
+          variant_option_id: productDetailNew && productDetailNew?.set?.length && productDetailNew?.set[0]?.variant_option_id,
           product_id: productDetailNew?.product?.id,
         },
         {

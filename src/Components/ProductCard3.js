@@ -485,7 +485,7 @@ const ProductCard3 = ({
               justifyContent: url1 ? 'flex-start' : 'center',
               marginLeft: url1 ? 0 : moderateScale(100),
               marginTop: url1
-                ? 0
+                ? 3
                 : !!(
                     data?.translation[0]?.translation_description ||
                     data?.translation_description

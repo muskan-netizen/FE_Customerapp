@@ -188,7 +188,7 @@ export default function Products({route, navigation}) {
     selectedOption: null,
     isProductImageLargeViewVisible: false,
     startDateRental: new Date(),
-    endDateRental: '',
+    endDateRental: new Date(),
     isRentalStartDatePicker: false,
     isRentalEndDatePicker: false,
     rentalProductDuration: null,
@@ -808,6 +808,7 @@ export default function Products({route, navigation}) {
                             {
                               justifyContent: 'center',
                               height: moderateScale(20),
+                              width: moderateScale(60),
                               backgroundColor: categoryInfo?.show_slot
                                 ? colors.green
                                 : categoryInfo?.is_vendor_closed
@@ -1380,6 +1381,8 @@ export default function Products({route, navigation}) {
         });
       }
       console.log('totalProductQty', totalProductQty);
+      console.log('parentCartId', parentCartId);
+      console.log('cartId', cartId);
 
       // return;
 
@@ -1459,7 +1462,7 @@ export default function Products({route, navigation}) {
         return;
       }
     },
-    [cloneSectionList, productListData, selectedCartItem],
+    [cloneSectionList, productListData, selectedCartItem,cartId],
   );
 
   //useCallback end
@@ -1475,7 +1478,7 @@ export default function Products({route, navigation}) {
     if (isLoadingC) {
       getAllProductsByCategoryId(true);
     }
-  }, [navigation, languages, currencies, reloadData]);
+  }, [navigation, languages, currencies, reloadData,CartItems]);
 
   const getAllProductTags = () => {
     actions
@@ -1798,7 +1801,7 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
     // }
   };
-  /**********Get all list items by category id */
+  /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
     console.log('api hit getProductByCategoryId', data);
     actions
@@ -1855,7 +1858,7 @@ export default function Products({route, navigation}) {
   };
 
   /**********Get all list items category filters */
-  const getAllProductsCategoryFilter = (pageNo) => {
+  const getAllProductsCategoryFilter = useCallback((pageNo) => {
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
     data['options'] = selectedFilters?.current?.selectedOptions || [];
@@ -1866,9 +1869,7 @@ export default function Products({route, navigation}) {
 
     actions
       .getProductByCategoryFiltersOptamize(
-        `/${productListId.id}?page=${pageNo}&product_list=${
-          data?.rootProducts ? true : false
-        }&type=${dineInType}`,
+        `/${productListId.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false}&type=${dineInType}`,
         data,
         {
           code: appData?.profile?.code,
@@ -1884,15 +1885,16 @@ export default function Products({route, navigation}) {
           loadMore = false;
         }
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
-        setLoading(false);
         setProductListData(
           pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
         );
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       })
       .catch(errorMethod);
     // }
-  };
+  },[]);
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -2192,6 +2194,7 @@ export default function Products({route, navigation}) {
   };
 
   //decrementing/removeing products from cart
+  console.log("cartId =====", cartId);
   const removeProductFromCart = (
     itemToUpdate,
     section = null,
@@ -2217,7 +2220,7 @@ export default function Products({route, navigation}) {
       !!itemToUpdate?.check_if_in_cart_app.length > 0
         ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id
         : cartId;
-    console.log('item', itemToUpdate);
+    console.log('removeProductFromCart =>', itemToUpdate , "cartId", cartId);
 
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
@@ -2496,6 +2499,7 @@ export default function Products({route, navigation}) {
   const updateCartItems = (item, quanitity, productId, cartID) => {
     playHapticEffect(hapticEffects.impactLight);
     console.log('selcted section', selectedSection);
+    console.log('updateCartItems =============', item, quanitity, productId, cartID);
 
     if (!!selectedSection) {
       let updatedSection = selectedSection.data.map((x, xnx) => {
@@ -2530,6 +2534,7 @@ export default function Products({route, navigation}) {
         cartId: cartID,
       });
     } else {
+      console.log("else");
       let updateArray = productListData.map((val, i) => {
         if (val.id == item.id) {
           return {
@@ -3673,7 +3678,7 @@ export default function Products({route, navigation}) {
                   !categoryInfo?.is_show_products_with_category &&
                   onEndReachedDelayed
                 }
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={0.7}
                 ListFooterComponent={listFooterComponent}
                 ListEmptyComponent={listEmptyComponent}
               />
