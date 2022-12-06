@@ -196,7 +196,8 @@ const OrderCardVendorComponent2 = ({
           </Text>
         </View>
       ) : null}
-      {data?.order_status?.current_status?.title !== strings.DELIVERED &&
+      {selectedTab !== strings.PAST_ORDERS &&
+        data?.order_status?.current_status?.title !== strings.DELIVERED &&
         data?.order_status?.current_status?.title !== strings.REJECTED &&
         (!!etaTime || !!dateParser(data?.scheduled_date_time)) && (
           <View
@@ -471,7 +472,6 @@ const OrderCardVendorComponent2 = ({
             </View>
           </>
         )}
-        {console.log(data, 'data...data')}
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View

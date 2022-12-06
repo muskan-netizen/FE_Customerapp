@@ -338,7 +338,7 @@ export default function MyOrders(props) {
   };
 
   const returnYourOrder = (item) => {
-    updateState({isLoading: true});
+    updateState({isLoading: true, isOrderForReplace: false});
     actions
       .getReturnOrderDetailData(
         `?id=${item?.order_id}&vendor_id=${item?.vendor_id}`,
