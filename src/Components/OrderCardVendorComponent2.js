@@ -162,11 +162,11 @@ const OrderCardVendorComponent2 = ({
             style={[
               styles.orderAcceptAndReadyStyleSecond,
               {
-                // backgroundColor: themeColor.primary_color,
                 paddingHorizontal: moderateScale(10),
                 paddingVertical: moderateScale(5),
                 borderRadius: moderateScale(3),
                 alignSelf: 'flex-end',
+                marginBottom: 2,
               },
             ]}>
             <Text
