@@ -226,7 +226,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     actions
       .getVendorProductDetail(
         {
-          // product_id: '233',
           product_id: productDetailParam?.id || '',
         },
         {
@@ -241,8 +240,9 @@ const RoyoAddProduct = ({route, navigation}) => {
         let attributes = res?.data?.attributes;
         attributes.map((item, inx) => {
           let availableValues = [];
-          item?.product_attribute.map((item, inx) => {
-            availableValues[inx] = item?.attribute_option_id;
+          item?.product_attribute.map((itm, inx) => {
+            availableValues[inx] =
+              item?.type == 4 ? itm?.key_value : itm?.attribute_option_id;
           });
           item.values = availableValues;
         });
@@ -1201,6 +1201,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           <TextInput
             placeholder="Type here..."
             onChangeText={(text) => onChangeText(text, item)}
+            value={item?.values[0]}
             style={{
               backgroundColor: colors.white,
               height: moderateScaleVertical(40),
