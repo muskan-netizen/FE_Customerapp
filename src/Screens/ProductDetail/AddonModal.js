@@ -19,7 +19,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 import {
   getImageUrl,
   hapticEffects,
@@ -51,6 +51,8 @@ export default function AddonModal({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -160,12 +162,12 @@ export default function AddonModal({
                         : colors.black,
                     },
                   ]}>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(i?.multiplier) * Number(i?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image

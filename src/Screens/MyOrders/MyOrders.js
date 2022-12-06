@@ -143,9 +143,11 @@ export default function MyOrders(props) {
   const styles = stylesFun({fontFamily, themeColors});
 
   const isFocused = useIsFocused();
+  
   useInterval(
     () => {
       if (!!userData?.auth_token) {
+        
         _getListOfOrders();
       } else {
         actions.setAppSessionData('on_login');
@@ -165,32 +167,7 @@ export default function MyOrders(props) {
     // console.log("update location item data filter array",filterArray)
     updateState({orders: filterArray});
   };
-  // useEffect(() => {
-  //   const focus = navigation.addListener('focus', () => {
-  //     if (userData && userData?.auth_token) {
-  //       _getListOfOrders();
-  //     } else {
-  //       updateState({
-  //         isLoading: false,
-  //       });
-  //     }
-  //   });
-  //   const blur = navigation.addListener('blur', () => {
-  //     updateState({ orders: [] });
-  //   });
-  //   return focus, blur;
-  // }, []);
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     if (userData && userData?.auth_token) {
-  //       _getListOfOrders();
-  //     } else {
-  //       updateState({
-  //         isLoading: false,
-  //       });
-  //     }
-  //   }, [])
-  // );
+  
 
   //Get list of all orders api
   const _getListOfOrders = () => {
@@ -208,16 +185,14 @@ export default function MyOrders(props) {
         },
       )
       .then((res) => {
-        console.log(res.data, 'res my orders >>>');
+        console.log(res, 'res my orders >>>');
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
-          // activeOrders:
-          //   pageActive == 1
-          //     ? res.data.data
-          //     : [...activeOrders, ...res.data.data],
-          isLoading: false,
+            isLoading: false,
           isRefreshing: false,
+          
+
         });
       })
       .catch(errorMethod);
@@ -228,8 +203,6 @@ export default function MyOrders(props) {
     console.log(error, 'error>error');
     updateState({
       isLoading: false,
-      isLoadingB: false,
-      isLoadingC: false,
       isRefreshing: false,
     });
     showError(error?.message || error?.error);
@@ -298,38 +271,7 @@ export default function MyOrders(props) {
       });
     }
 
-    // (item?.dispatch_traking_url &&
-    //   item?.product_details[0]?.category_type ==
-    //     staticStrings.PICKUPANDDELIEVRY) ||
-    // item?.product_details[0]?.category_type == staticStrings.ONDEMANDSERVICE
-    //   ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-    //       orderId: item?.order_id,
-    //       fromVendorApp: true,
-    //       selectedVendor: {id: item?.vendor_id},
-    //       orderDetail: item,
-    //       showRating:
-    //         item?.order_status?.current_status?.id != 6 ? false : true,
-    //     })
-    //   : // navigation.navigate(navigationStrings.ACCOUNTS, {
-    //   screen: navigationStrings.PICKUPORDERDETAIL,
-    //   params: {
-    //     orderId: item?.order_id,
-    //     fromVendorApp: true,
-    //     selectedVendor: {id: item?.vendor_id},
-    //     orderDetail: item,
-    //   },
-    // })
-    // if (selectedTab == strings.ACTIVE_ORDERS) {
-    // navigation.navigate(navigationStrings.ORDER_DETAIL, {
-    //   orderId: item?.order_id,
-    //   fromVendorApp: true,
-    //   orderStatus: item?.order_status,
-    //   selectedVendor: {id: item?.vendor_id},
-    //   showRating:
-    //     item?.order_status?.current_status?.id != 6 ? false : true,
-    // });
-
-    // }
+    
   };
   const rateYourOrder = () => {
     navigation.navigate(navigationStrings.RATEORDER);
@@ -583,141 +525,130 @@ export default function MyOrders(props) {
       showError(strings.PLEASE_SELECT_RETURN_ORDER);
     }
   };
+  
 
-  return (
-    <WrapperContainer
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }
-      statusBarColor={colors.white}
-      source={loaderOne}
-      isLoadingB={isLoading}>
-      <Header
-        noLeftIcon={!backIconShow}
-        leftIcon={
-          appStyle?.homePageLayout === 2
-            ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3
-            ? imagePath.icBackb
-            : imagePath.backArrowCourier
+  
+    return (
+      
+      <WrapperContainer
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
         }
-        centerTitle={
-          appStyle?.homePageLayout === 4
-            ? appIds.mml == getBundleId()
-              ? strings.MYDELIERIES
-              : appIds.jiffex == getBundleId()
-              ? strings.MY_ORDERS
-              : strings.MYRIDES
-            : strings.MY_ORDERS
-        }
-        headerStyle={
-          isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
-        }
-      />
-
-      <View style={{...commonStyles.headerTopLine}} />
-
-      <CustomTopTabBar
-        scrollEnabled={true}
-        tabBarItems={tabBarData}
-        activeStyle={{
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-        }}
-        // textStyle={{ color: isDarkMode ? MyDarkTheme.colors. : colors.black }}
-        customContainerStyle={
-          isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
-        }
-        onPress={(tabData) => changeTab(tabData)}
-        customTextContainerStyle={{width: width / 2}}
-      />
-      <FlatList
-        // ref={_scrollRef}
-        data={orders}
-        extraData={orders}
-        // data={activeOrders || pastOrders || scheduledOrders}
-        // data={[1, 2, 3, 4]}
-        renderItem={renderOrders}
-        keyExtractor={(item, index) => String(index)}
-        keyboardShouldPersistTaps="always"
-        showsVerticalScrollIndicator={false}
-        style={{flex: 1}}
-        contentContainerStyle={{
-          flexGrow: 1,
-          alignItems: 'center',
-          marginVertical: moderateScaleVertical(20),
-        }}
-        refreshing={isRefreshing}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-          />
-        }
-        onEndReached={onEndReachedDelayed}
-        onEndReachedThreshold={0.5}
-        ItemSeparatorComponent={() => <View style={{height: 20}} />}
-        ListFooterComponent={() => <View style={{height: 90}} />}
-        ListEmptyComponent={
-          !isLoading && (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <NoDataFound
-                image={
-                  appStyle?.homePageLayout === 4
-                    ? appIds.mml == getBundleId()
-                      ? imagePath.notrcukImage
-                      : imagePath.noRides
-                    : imagePath.noDataFound2
-                }
-                isLoading={state.isLoading}
-                text={
-                  appStyle?.homePageLayout === 4
-                    ? appIds.mml == getBundleId()
-                      ? strings.NODELIVERIESFOUND
-                      : appIds.jiffex == getBundleId()
-                      ? strings.NO_ORDERS_FOUND
-                      : strings.NO_RIDE_FOUND
-                    : strings.NODATAFOUND
-                }
-              />
-            </View>
-          )
-        }
-      />
-
-      <Modal
-        transparent={true}
-        isVisible={isVisibleReturnOrderModal}
-        animationIn={'pulse'}
-        animationOut={'pulse'}
-        style={[styles.modalContainer]}>
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Image source={imagePath.crossB} />
-        </TouchableOpacity>
-        <View
-          style={
-            isDarkMode
-              ? [
-                  styles.modalMainViewContainer,
-                  {backgroundColor: MyDarkTheme.colors.lightDark},
-                ]
-              : styles.modalMainViewContainer
+        statusBarColor={colors.white}
+        source={loaderOne}
+        isLoadingB={isLoading}>
+        <Header
+          noLeftIcon={!backIconShow}
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3
+              ? imagePath.icBackb
+              : imagePath.backArrowCourier
           }
-          onLayout={(event) => {
-            updateState({viewHeight: event.nativeEvent.layout.height});
-          }}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            bounces={false}
+          centerTitle={
+            appStyle?.homePageLayout === 4
+              ? appIds.mml == getBundleId()
+                ? strings.MYDELIERIES
+                : appIds.jiffex == getBundleId()
+                ? strings.MY_ORDERS
+                : strings.MYRIDES
+              : strings.MY_ORDERS
+          }
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
+          }
+        />
+  
+        <View style={{...commonStyles.headerTopLine}} />
+  
+        <CustomTopTabBar
+          scrollEnabled={true}
+          tabBarItems={tabBarData}
+          activeStyle={{
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}
+          // textStyle={{ color: isDarkMode ? MyDarkTheme.colors. : colors.black }}
+          customContainerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
+          }
+          onPress={(tabData) => changeTab(tabData)}
+          customTextContainerStyle={{width: width / 2}}
+        />
+        <FlatList
+          // ref={_scrollRef}
+          data={orders}
+          extraData={orders}
+          // data={activeOrders || pastOrders || scheduledOrders}
+          // data={[1, 2, 3, 4]}
+          renderItem={renderOrders}
+          keyExtractor={(item, index) => String(index)}
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          style={{flex: 1}}
+          contentContainerStyle={{
+            flexGrow: 1,
+            alignItems: 'center',
+            marginVertical: moderateScaleVertical(20),
+          }}
+          refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          onEndReached={onEndReachedDelayed}
+          onEndReachedThreshold={0.5}
+          ItemSeparatorComponent={() => <View style={{height: 20}} />}
+          ListFooterComponent={() => <View style={{height: 90}} />}
+          ListEmptyComponent={
+            !isLoading && (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <NoDataFound
+                  image={
+                    appStyle?.homePageLayout === 4
+                      ? appIds.mml == getBundleId()
+                        ? imagePath.notrcukImage
+                        : imagePath.noRides
+                      : imagePath.noDataFound2
+                  }
+                  isLoading={state.isLoading}
+                  text={
+                    appStyle?.homePageLayout === 4
+                      ? appIds.mml == getBundleId()
+                        ? strings.NODELIVERIESFOUND
+                        : appIds.jiffex == getBundleId()
+                        ? strings.NO_ORDERS_FOUND
+                        : strings.NO_RIDE_FOUND
+                      : strings.NODATAFOUND
+                  }
+                />
+              </View>
+            )
+          }
+        />
+  
+        <Modal
+          transparent={true}
+          isVisible={isVisibleReturnOrderModal}
+          animationIn={'pulse'}
+          animationOut={'pulse'}
+          style={[styles.modalContainer]}>
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <Image source={imagePath.crossB} />
+          </TouchableOpacity>
+          <View
             style={
               isDarkMode
                 ? [
@@ -725,163 +656,179 @@ export default function MyOrders(props) {
                     {backgroundColor: MyDarkTheme.colors.lightDark},
                   ]
                 : styles.modalMainViewContainer
-            }>
-            <View
-              style={{
-                // flex: 0.6,
-                // alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 10,
-              }}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.carType, {color: MyDarkTheme.colors.text}]
-                    : styles.carType
-                }>
-                {strings.DOYOUWANTTORETURNYOURORDER}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginVertical: moderateScaleVertical(10),
-                marginBottom: moderateScale(20),
-              }}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [
-                        styles.selectItemToReturn,
-                        {color: MyDarkTheme.colors.text},
-                      ]
-                    : styles.selectItemToReturn
-                }>
-                {strings.SELECTITEMSFORRETURN}
-              </Text>
-            </View>
-
-            {selectedOrderForReturn &&
-            selectedOrderForReturn?.vendors &&
-            selectedOrderForReturn?.vendors[0]?.products
-              ? selectedOrderForReturn?.vendors[0]?.products.map(
-                  (item, index) => {
-                    return (
-                      <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginBottom: moderateScaleVertical(20),
-                          }}>
-                          {item?.product_return ? (
-                            <View>
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  fontSize: moderateScale(14),
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.textGreyJ,
-                                }}>
-                                {item?.product_return?.status}
-                              </Text>
-                            </View>
-                          ) : (
-                            <TouchableOpacity
-                              onPress={() => selectProduct(item)}>
-                              <Image
-                                source={
-                                  selectProductForRetrun &&
-                                  selectProductForRetrun?.product_id ==
-                                    item?.product_id
-                                    ? imagePath.radioActive
-                                    : imagePath.radioInActive
-                                }
-                              />
-                            </TouchableOpacity>
-                          )}
-
-                          <View style={styles.cartItemImage}>
-                            <FastImage
-                              source={
-                                item?.image != '' && item?.image != null
-                                  ? {
-                                      uri: getImageUrl(
-                                        item?.image?.proxy_url,
-                                        item?.image?.image_path,
-                                        '300/300',
-                                      ),
-                                      priority: FastImage.priority.high,
-                                    }
-                                  : imagePath.patternOne
-                              }
-                              style={styles.imageStyle}
-                            />
-                          </View>
-                          <View style={{marginLeft: 10}}>
-                            <View style={{overflow: 'hidden'}}>
-                              <Text
-                                numberOfLines={2}
-                                style={
-                                  isDarkMode
-                                    ? [
-                                        styles.priceItemLabel2,
-                                        {
-                                          opacity: 0.8,
-                                          color: MyDarkTheme.colors.text,
-                                        },
-                                      ]
-                                    : [styles.priceItemLabel2, {opacity: 0.8}]
-                                }>
-                                {item?.translation?.title}
-                              </Text>
-                            </View>
-
-                            {item?.quantity && (
-                              <View style={{flexDirection: 'row'}}>
+            }
+            onLayout={(event) => {
+              updateState({viewHeight: event.nativeEvent.layout.height});
+            }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              bounces={false}
+              style={
+                isDarkMode
+                  ? [
+                      styles.modalMainViewContainer,
+                      {backgroundColor: MyDarkTheme.colors.lightDark},
+                    ]
+                  : styles.modalMainViewContainer
+              }>
+              <View
+                style={{
+                  // flex: 0.6,
+                  // alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 10,
+                }}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.carType, {color: MyDarkTheme.colors.text}]
+                      : styles.carType
+                  }>
+                  {strings.DOYOUWANTTORETURNYOURORDER}
+                </Text>
+              </View>
+              <View
+                style={{
+                  marginVertical: moderateScaleVertical(10),
+                  marginBottom: moderateScale(20),
+                }}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.selectItemToReturn,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.selectItemToReturn
+                  }>
+                  {strings.SELECTITEMSFORRETURN}
+                </Text>
+              </View>
+  
+              {selectedOrderForReturn &&
+              selectedOrderForReturn?.vendors &&
+              selectedOrderForReturn?.vendors[0]?.products
+                ? selectedOrderForReturn?.vendors[0]?.products.map(
+                    (item, index) => {
+                      return (
+                        <ScrollView
+                          horizontal
+                          showsHorizontalScrollIndicator={false}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              marginBottom: moderateScaleVertical(20),
+                            }}>
+                            {item?.product_return ? (
+                              <View>
                                 <Text
-                                  style={
-                                    isDarkMode
-                                      ? {color: MyDarkTheme.colors.text}
-                                      : {color: colors.textGrey}
-                                  }>
-                                  {strings.QTY}
-                                </Text>
-                                <Text style={styles.cartItemWeight}>
-                                  {item?.quantity}
+                                  style={{
+                                    fontFamily: fontFamily.medium,
+                                    fontSize: moderateScale(14),
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.textGreyJ,
+                                  }}>
+                                  {item?.product_return?.status}
                                 </Text>
                               </View>
+                            ) : (
+                              <TouchableOpacity
+                                onPress={() => selectProduct(item)}>
+                                <Image
+                                  source={
+                                    selectProductForRetrun &&
+                                    selectProductForRetrun?.product_id ==
+                                      item?.product_id
+                                      ? imagePath.radioActive
+                                      : imagePath.radioInActive
+                                  }
+                                />
+                              </TouchableOpacity>
                             )}
+  
+                            <View style={styles.cartItemImage}>
+                              <FastImage
+                                source={
+                                  item?.image != '' && item?.image != null
+                                    ? {
+                                        uri: getImageUrl(
+                                          item?.image?.proxy_url,
+                                          item?.image?.image_path,
+                                          '300/300',
+                                        ),
+                                        priority: FastImage.priority.high,
+                                      }
+                                    : imagePath.patternOne
+                                }
+                                style={styles.imageStyle}
+                              />
+                            </View>
+                            <View style={{marginLeft: 10}}>
+                              <View style={{overflow: 'hidden'}}>
+                                <Text
+                                  numberOfLines={2}
+                                  style={
+                                    isDarkMode
+                                      ? [
+                                          styles.priceItemLabel2,
+                                          {
+                                            opacity: 0.8,
+                                            color: MyDarkTheme.colors.text,
+                                          },
+                                        ]
+                                      : [styles.priceItemLabel2, {opacity: 0.8}]
+                                  }>
+                                  {item?.translation?.title}
+                                </Text>
+                              </View>
+  
+                              {item?.quantity && (
+                                <View style={{flexDirection: 'row'}}>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? {color: MyDarkTheme.colors.text}
+                                        : {color: colors.textGrey}
+                                    }>
+                                    {strings.QTY}
+                                  </Text>
+                                  <Text style={styles.cartItemWeight}>
+                                    {item?.quantity}
+                                  </Text>
+                                </View>
+                              )}
+                            </View>
                           </View>
-                        </View>
-                      </ScrollView>
-                    );
-                  },
-                )
-              : null}
-            <View style={{height: 50}} />
-          </ScrollView>
-          <View
-            style={[
-              styles.bottomAddToCartView,
-              {top: viewHeight - height / 12},
-            ]}>
-            <GradientButton
-              colorsArray={[
-                themeColors.primary_color,
-                themeColors.primary_color,
-              ]}
-              // textStyle={styles.textStyle}
-              onPress={returnOrder}
-              marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(10)}
-              btnText={strings.SELECT}
-            />
+                        </ScrollView>
+                      );
+                    },
+                  )
+                : null}
+              <View style={{height: 50}} />
+            </ScrollView>
+            <View
+              style={[
+                styles.bottomAddToCartView,
+                {top: viewHeight - height / 12},
+              ]}>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                // textStyle={styles.textStyle}
+                onPress={returnOrder}
+                marginTop={moderateScaleVertical(10)}
+                marginBottom={moderateScaleVertical(10)}
+                btnText={strings.SELECT}
+              />
+            </View>
           </View>
-        </View>
-      </Modal>
-    </WrapperContainer>
-  );
+        </Modal>
+      </WrapperContainer>
+    )
+  
+
 }

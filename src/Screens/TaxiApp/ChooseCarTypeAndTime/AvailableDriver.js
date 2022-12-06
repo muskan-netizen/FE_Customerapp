@@ -1,43 +1,50 @@
-import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import React, {useRef} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import React, { useRef } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
+import { useSelector } from 'react-redux';
+import { UIActivityIndicator } from 'react-native-indicators';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
-import commonStylesFun from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
 export default function AvailableDriver({
-  isLoading = false,
+  isCabPooling=false,
+  isLoading ,
+  disabled,
+  updateSeatNo,
   availableCarList = [],
   onPressAvailableCar,
   selectedCarOption = null,
   allListedDrivers,
+  _onUpdateSeatNo=()=>{},
 }) {
-  const {appData, themeColors, appStyle, themeToggle, themeColor, currencies} =
+  const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
+  const styles = stylesFun({ fontFamily, themeColors });
 
   // choose a trip or swipe up for more
   //Render all Available amounts
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
+    console.log(item, 'itemitemitem');
     return (
       <View
         style={{
@@ -46,8 +53,8 @@ export default function AvailableDriver({
               ? colors.whiteOpacity15
               : colors.textGrey
             : selectedCarOption?.id == item?.id
-            ? colors.lightGreyBg
-            : colors.whiteOpacity77,
+              ? colors.lightGreyBg
+              : colors.whiteOpacity77,
 
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
@@ -66,7 +73,7 @@ export default function AvailableDriver({
             // marginBottom: moderateScaleVertical(8),
             opacity: selectedCarOption?.id == item?.id ? 0.8 : 1,
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
               resizeMode={'contain'}
               style={{
@@ -81,7 +88,7 @@ export default function AvailableDriver({
                 ),
               }}
             />
-
+            
             <View
               style={{
                 marginLeft: moderateScale(16),
@@ -94,8 +101,8 @@ export default function AvailableDriver({
                       ? colors.white
                       : colors.whiteOpacity50
                     : selectedCarOption?.id == item?.id
-                    ? colors.black
-                    : colors.blackC,
+                      ? colors.black
+                      : colors.blackC,
                   fontFamily: fontFamily.medium,
                   fontSize: textScale(14),
                   textAlign: 'left',
@@ -109,8 +116,8 @@ export default function AvailableDriver({
                       ? colors.white
                       : colors.whiteOpacity50
                     : selectedCarOption?.id == item?.id
-                    ? colors.black
-                    : colors.blackOpacity66,
+                      ? colors.black
+                      : colors.blackOpacity66,
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(10),
                   textAlign: 'left',
@@ -118,6 +125,7 @@ export default function AvailableDriver({
                 {item?.translation[0]?.meta_description}
               </Text>
             </View>
+           
           </View>
 
           <Text
@@ -128,16 +136,18 @@ export default function AvailableDriver({
                   ? colors.white
                   : colors.whiteOpacity50
                 : selectedCarOption?.id == item?.id
-                ? colors.black
-                : colors.blackC,
+                  ? colors.black
+                  : colors.blackC,
               fontFamily: fontFamily.medium,
               fontSize: textScale(14),
               textAlign: 'left',
             }}>
-            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(item.tags_price),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}
+            {tokenConverterPlusCurrencyNumberFormater(
+               Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
           </Text>
         </TouchableOpacity>
         {selectedCarOption?.id == item?.id && allListedDrivers?.length ? (
@@ -165,7 +175,7 @@ export default function AvailableDriver({
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i, inx) => {
               return (
                 <View
-                  style={{marginBottom: moderateScaleVertical(8)}}
+                  style={{ marginBottom: moderateScaleVertical(8) }}
                   key={inx}>
                   <ListEmptyCar isLoading={isLoading} />
                 </View>
@@ -202,6 +212,109 @@ export default function AvailableDriver({
           ? MyDarkTheme.colors.background
           : colors.white,
       }}>
+         {
+       isCabPooling && (<View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            // flex: 1,
+            margin: moderateScale(20)
+          }}>
+          <View>
+
+            <Text
+              numberOfLines={1}
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyB,
+                fontSize: textScale(13),
+                fontFamily: fontFamily.medium,
+                width: width / 2.1,
+              }}>
+              {'Number of seats'}
+            </Text>
+
+            {/* <Text
+              numberOfLines={1}
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+                fontSize: textScale(12),
+                fontFamily: fontFamily.medium,
+                width: width / 2.1,
+              }}>
+              {i?.product?.translation[0]?.title},
+            </Text> */}
+          </View>
+
+          <View
+            // pointerEvents={btnLoader ? 'none' : 'auto'}
+            style={{ minWidth: moderateScale(74) }}>
+            <View style={{
+              backgroundColor: themeColors.primary_color,
+              borderRadius: moderateScale(16),
+              paddingHorizontal: moderateScale(6),
+              paddingVertical: moderateScaleVertical(4),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                disabled={updateSeatNo == 1 || disabled?true :false}
+              onPress={()=>_onUpdateSeatNo('decrease')}
+              >
+                <Text style={{
+                  fontFamily: fontFamily.bold,
+                  fontSize: moderateScale(20),
+                  color: colors.white,
+                }}>
+                  -
+                </Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  alignItems: 'center',
+                  // width: moderateScale(20),
+                  height: moderateScale(20),
+                  justifyContent: 'center',
+                }}>
+                { isLoading ? (
+                  <UIActivityIndicator
+                    size={moderateScale(16)}
+                    color={colors.white}
+                  />
+                ) : (
+                  <Text style={{
+                    fontFamily: fontFamily.bold,
+                    fontSize: moderateScale(12),
+                    color: colors.white,
+                  }}>
+                    {updateSeatNo}
+                  </Text>
+                )}
+              </View>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                disabled={  disabled ? true: false}
+              onPress={()=>_onUpdateSeatNo('increase')}
+              >
+                <Text style={{
+                  fontFamily: fontFamily.bold,
+                  fontSize: moderateScale(20),
+                  color: colors.white,
+                }}>
+                  +
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>)
+      }
       <BottomSheetFlatList
         // scrollEnabled={false}
         data={availableCarList}

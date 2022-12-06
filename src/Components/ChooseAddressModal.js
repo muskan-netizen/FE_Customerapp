@@ -91,7 +91,6 @@ const ChooseAddressModal = ({
   };
 
   const renderItem = useCallback(({item, index}) => {
-    console.log('fsdlkfhsldkjf');
     return (
       <TouchableOpacity onPress={() => selectAddress(item)}>
         <View
@@ -253,6 +252,10 @@ const ChooseAddressModal = ({
             showsVerticalScrollIndicator={false}
             renderItem={renderItem}
           />
+          <View
+            style={{
+              height: moderateScaleVertical(60),
+            }}></View>
         </BottomSheetView>
       </BottomSheet>
     );

@@ -100,7 +100,7 @@ const shortCodes = {
   // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
-  ace: '2d98b5',
+  ace: '245bae',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',
@@ -190,7 +190,7 @@ const shortCodes = {
   mml: '348045',
   bimol: '94fc5b',
   vendorspot: 'dfa952',
-  sxm2go: 'b6e6e8',
+  sxm2go: '245bae',
   pinkydeli: '66c095',
   gasgiant: 'e6c73a',
   releezer: 'c2a130',
@@ -468,6 +468,13 @@ const shortCodes = {
   usVetsDeliver: '4a533c',
   flybuilder: '7cd4bc',
   konectame: '1338c1',
+  skyline: 'ce1ed6',
+  bliss: '6eb260',
+  rentzy: 'd4fc07',
+  todaysDeliverys: '6d055a',
+  locate: 'f9f1f8',
+  georgiacollective: '1d7bf7',
+  otgWeeds: '2a3af8',
 };
 
 const appIds = {
@@ -1364,8 +1371,8 @@ const appIds = {
     android: 'com.tumbak',
   }),
   iPicknDrop: Platform.select({
-    ios: 'com.iPicknDrop',
-    android: 'com.iPicknDrop',
+    ios: 'com.iPicknDrop.order',
+    android: 'com.iPicknDrop.orderApp',
   }),
   bluebolt: Platform.select({
     ios: 'com.app.bluebolt',
@@ -1880,8 +1887,8 @@ const appIds = {
     android: 'com.FresHest.royoOrder',
   }),
   servern: Platform.select({
-    ios: 'com.servern.order',
-    android: 'com.servern.order',
+    ios: 'com.servern.orderapp',
+    android: 'com.servern.orderapp',
   }),
   smokeRun: Platform.select({
     ios: 'com.smokeRun.order',
@@ -2330,6 +2337,34 @@ const appIds = {
   flybuilder: Platform.select({
     ios: 'com.flybuilder.royoorders',
     android: 'com.flybuilder.royoorders',
+  }),
+  skyline: Platform.select({
+    ios: 'com.skyline.royoorders',
+    android: 'com.skyline',
+  }),
+  bliss: Platform.select({
+    ios: 'com.bliss.royoorders',
+    android: 'com.bliss',
+  }),
+  rentzy: Platform.select({
+    ios: 'com.rentzy.royoorders',
+    android: 'com.rentzy',
+  }),
+  todaysDeliverys: Platform.select({
+    ios: 'com.todaysDeliverys.royoorders',
+    android: 'com.todaysDeliverys.royoorders',
+  }),
+  locate: Platform.select({
+    ios: 'com.locate.royoorders',
+    android: 'com.locate.royoorders',
+  }),
+  georgiacollective: Platform.select({
+    ios: 'com.georgiacollective.royoorders',
+    android: 'com.georgiacollective.royoorders',
+  }),
+  otgWeeds: Platform.select({
+    ios: 'com.otgweeds.royoorders',
+    android: 'com.otgweeds.royoorders',
   }),
 };
 

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   Animated,
   Image,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -24,7 +23,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
@@ -87,7 +86,8 @@ const ProductCard5 = ({
   const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleData({themeColors, fontFamily});
 
@@ -366,13 +366,13 @@ const ProductCard5 = ({
                 fontFamily: fontFamily.regular,
                 marginHorizontal: moderateScale(10),
               }}>
-              {`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
+              {tokenConverterPlusCurrencyNumberFormater(
                 Number(data?.variant_multiplier) *
                   Number(data?.variant[0]?.price),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           </View>
 

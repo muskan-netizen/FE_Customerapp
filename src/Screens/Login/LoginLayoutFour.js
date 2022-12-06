@@ -1,5 +1,5 @@
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  TextInput,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -15,22 +14,26 @@ import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import CountryPicker from 'react-native-country-picker-modal';
-import PhoneInput from 'react-native-phone-number-input';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import {useDarkMode} from 'react-native-dark-mode';
+import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 import {
   fbLogin,
@@ -38,34 +41,10 @@ import {
   handleAppleLogin,
   _twitterSignIn,
 } from '../../utils/socialLogin';
+import {checkIsAdmin} from '../../utils/utils';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {mobile} from 'is_js';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
-import {useNavigation} from '@react-navigation/native';
-import {checkIsAdmin} from '../../utils/utils';
-import codes from 'country-calling-code';
-import DeviceCountry, {
-  TYPE_ANY,
-  TYPE_TELEPHONY,
-  TYPE_CONFIGURATION,
-} from 'react-native-device-country';
-var getPhonesCallingCodeAndCountryData = null;
-DeviceCountry.getCountryCode()
-  .then((result) => {
-    // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(
-      (x) => x.isoCode2 == result.code.toUpperCase(),
-    );
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+
 export default function LoginLayoutFour({navigation}) {
   const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
@@ -79,11 +58,7 @@ export default function LoginLayoutFour({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(
-    getPhonesCallingCodeAndCountryData,
-    'getPhonesCallingCodeAndCountryData',
-  );
+
   const [state, setState] = useState({
     // email: '',
     // password: '',

@@ -114,8 +114,7 @@ export default function OrderSuccess({ navigation, route }) {
               }`}
           </Text>
         </View>
-      </KeyboardAwareScrollView>
-      <View
+        <View
         style={{
           alignItems: 'center',
           marginBottom: moderateScaleVertical(90),
@@ -131,6 +130,8 @@ export default function OrderSuccess({ navigation, route }) {
           }}
         />
       </View>
+      </KeyboardAwareScrollView>
+     
       {/* */}
     </WrapperContainer>
   );

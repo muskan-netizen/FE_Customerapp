@@ -56,7 +56,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
@@ -160,7 +160,8 @@ export default function ProductWithCategory({route, navigation}) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
-
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -710,8 +711,12 @@ export default function ProductWithCategory({route, navigation}) {
                             color: colors.white,
                           }}>
                           {strings.MINIMUM_ORDER_VALUE}{' '}
-                          {currencies?.primary_currency?.symbol}
-                          {categoryInfo?.order_min_amount}
+                          {tokenConverterPlusCurrencyNumberFormater(
+                            categoryInfo?.order_min_amount,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
                         </Text>
                       </View>
                     ) : null}
@@ -1132,8 +1137,6 @@ export default function ProductWithCategory({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getVendorFilter with variants');
-
         if (!!res.data.filterData?.length) {
           let filterDataNew = res.data.filterData.map((i, inx) => {
             return {
@@ -1150,7 +1153,6 @@ export default function ProductWithCategory({route, navigation}) {
             };
           });
           setAllFilter(filterDataNew);
-          console.log('filterDataNewfilterDataNew', filterDataNew);
         }
         // getAllVendorFilters()
       })
@@ -3322,9 +3324,11 @@ export default function ProductWithCategory({route, navigation}) {
                   CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
                 } | ${
                   currencies.primary_currency.symbol
-                } ${currencyNumberFormatter(
+                } ${tokenConverterPlusCurrencyNumberFormater(
                   Number(CartItems.data.total_payable_amount),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
                 )}`
               : ''
           }

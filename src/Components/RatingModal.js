@@ -267,9 +267,16 @@ const RatingModal = ({
               <Text style={{
                 alignSelf:'center',
                 fontFamily:fontFamily.bold,
-                fontSize:moderateScale(22)
+                fontSize:moderateScale(26)
               }}>
                 {strings.ORDER_COMPLETED}
+              </Text>
+              <Text style={{
+                alignSelf:'center',
+                fontFamily:fontFamily.medium,
+                fontSize:moderateScale(14)
+              }}>
+                {"Rate your order and your driver"}
               </Text>
             </View>
               {/* star View */}

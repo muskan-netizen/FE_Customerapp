@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Image, Linking, Text, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
@@ -11,7 +11,6 @@ import {useSelector} from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -2902,6 +2901,49 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.skyline:
+          updateState({
+            shortCode: shortCodes.skyline,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bliss:
+          updateState({
+            shortCode: shortCodes.bliss,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rentzy:
+          updateState({
+            shortCode: shortCodes.rentzy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.todaysDeliverys:
+          updateState({
+            shortCode: shortCodes.todaysDeliverys,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.locate:
+          updateState({
+            shortCode: shortCodes.locate,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.georgiacollective:
+          updateState({
+            shortCode: shortCodes.georgiacollective,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.otgWeeds:
+          updateState({
+            shortCode: shortCodes.otgWeeds,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2937,13 +2979,13 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        // code: '1b1c0d',
+        //   code: '2d98b5',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        // code: '1b1c0d',
+        //  code: '2d98b5',
         code: shortCode,
       };
     }
@@ -2952,8 +2994,7 @@ export default function ShortCode({route, navigation}) {
       .initApp({}, header, false, null, null, true)
       
       .then((res) => {
-        console.log(res, 'ressssssssss');
-        actions.dineInData(res?.data?.profile?.preferences?.vendorMode[0]?.type);
+        console.log('header response--->', res);
         if (res.data.mobile_banners.length > 0) {
           let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
             return {
@@ -2982,7 +3023,6 @@ export default function ShortCode({route, navigation}) {
 
         if (
           getBundleId() == appIds.masa ||
-          // getBundleId() == appIds.iPicknDrop ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
           getBundleId() == appIds.flank

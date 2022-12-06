@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -40,6 +40,8 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
+import {isEmpty} from 'lodash';
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
@@ -55,15 +57,21 @@ DeviceCountry.getCountryCode()
 import {useNavigation} from '@react-navigation/native';
 import RNOtpVerify from 'react-native-otp-verify';
 import {setUserData} from '../../utils/utils';
+import {getValuebyKeyInArray} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Login({navigation}) {
   const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
-  );
+  const {
+    apple_login,
+    fb_login,
+    twitter_login,
+    google_login,
+    additional_preferences,
+  } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -84,15 +92,18 @@ export default function Login({navigation}) {
     mobilNo: {
       phoneNo: '',
       callingCode:
-        getPhonesCallingCodeAndCountryData &&
-        getPhonesCallingCodeAndCountryData.length
-          ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+        !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        getBundleId() !== appIds.sxm2go
+          ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+              '-',
+              '',
+            )
           : appData?.profile.country?.phonecode
           ? appData?.profile?.country?.phonecode
           : '91',
       cca2:
-        getPhonesCallingCodeAndCountryData &&
-        getPhonesCallingCodeAndCountryData.length
+        !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        getBundleId() !== appIds.sxm2go
           ? getPhonesCallingCodeAndCountryData[0].isoCode2
           : appData?.profile?.country?.code
           ? appData?.profile?.country?.code
@@ -100,8 +111,26 @@ export default function Login({navigation}) {
       focus: false,
       countryName: '',
       isShowPassword: false,
-      appHashKey: 'WpV3+5pgxIH',
+      appHashKey: '',
     },
+    phoneNumberOnly: '',
+    calllingCodePhoneOnly:
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
+        : appData?.profile.country?.phonecode
+        ? appData?.profile?.country?.phonecode
+        : '91',
+    cca2PhoneOnly:
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0].isoCode2
+        : appData?.profile?.country?.code
+        ? appData?.profile?.country?.code
+        : 'IN',
   });
 
   const fontFamily = appStyle?.fontSizeData;
@@ -135,6 +164,9 @@ export default function Login({navigation}) {
     number,
     isShowPassword,
     appHashKey,
+    phoneNumberOnly,
+    cca2PhoneOnly,
+    calllingCodePhoneOnly,
   } = state;
 
   //Naviagtion to specific screen
@@ -148,7 +180,12 @@ export default function Login({navigation}) {
 
   //Validate form
   const isValidData = () => {
-    const error = email.focus
+    const error = getValuebyKeyInArray(
+      'is_phone_signup',
+      additional_preferences,
+    )
+      ? validator({phoneNumber: phoneNumberOnly})
+      : email.focus
       ? validator({email: email.value, password})
       : validator({
           phoneNumber: mobilNo.phoneNo,
@@ -182,17 +219,35 @@ export default function Login({navigation}) {
     }
 
     let data = {
-      username: email.focus ? email.value : mobilNo.phoneNo,
+      username: getValuebyKeyInArray('is_phone_signup', additional_preferences)
+        ? phoneNumberOnly
+        : email.focus
+        ? email.value
+        : mobilNo.phoneNo,
       password: password,
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
-      dialCode: mobilNo.focus ? mobilNo.callingCode : '',
-      countryData: mobilNo.focus ? mobilNo.cca2 : '',
+      dialCode: getValuebyKeyInArray('is_phone_signup', additional_preferences)
+        ? calllingCodePhoneOnly
+        : mobilNo.focus
+        ? mobilNo.callingCode
+        : '',
+      countryData: getValuebyKeyInArray(
+        'is_phone_signup',
+        additional_preferences,
+      )
+        ? cca2PhoneOnly
+        : mobilNo.focus
+        ? mobilNo.cca2
+        : '',
       app_hash_key: appHashKey,
     };
+    if (Platform.OS === 'android' && !!appHashKey) {
+      data['app_hash_key'] = appHashKey;
+    }
     updateState({isLoading: true});
-    console.log('chck login data >>>', data);
+
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -205,7 +260,12 @@ export default function Login({navigation}) {
         if (!!res.data) {
           if (res?.data?.is_phone) {
             navigation.navigate(navigationStrings.OTP_VERIFICATION, {
-              username: mobilNo?.phoneNo,
+              username: getValuebyKeyInArray(
+                'is_phone_signup',
+                additional_preferences,
+              )
+                ? phoneNumberOnly
+                : mobilNo?.phoneNo,
               dialCode: mobilNo?.callingCode,
               countryData: mobilNo?.cca2,
               data: res.data,
@@ -376,17 +436,23 @@ export default function Login({navigation}) {
       })
       .catch((err) => {});
   };
+
   const _onCountryChange = (data) => {
-    updateState({
-      mobilNo: {
-        phoneNo: mobilNo.phoneNo,
-        cca2: data.cca2,
-        callingCode: data.callingCode.toString(),
-        focus: true,
-      },
-      // cca2: data.cca2,
-      // callingCode: data.mobilNo.callingCode[0],
-    });
+    getValuebyKeyInArray('is_phone_signup', additional_preferences)
+      ? updateState({
+          cca2PhoneOnly: data.cca2,
+          calllingCodePhoneOnly: data.callingCode.toString(),
+        })
+      : updateState({
+          mobilNo: {
+            phoneNo: mobilNo.phoneNo,
+            cca2: data.cca2,
+            callingCode: data.callingCode.toString(),
+            focus: true,
+          },
+          // cca2: data.cca2,
+          // callingCode: data.mobilNo.callingCode[0],
+        });
     return;
   };
 
@@ -421,18 +487,6 @@ export default function Login({navigation}) {
         },
       });
     }
-  };
-
-  /*************************** On Text Change
-   */ const textChangeHandler = (type, data, value = 'value') => {
-    updateState((preState) => {
-      return {
-        [type]: {
-          ...preState[type],
-          [value]: data,
-        },
-      };
-    });
   };
 
   const showHidePassword = () => {
@@ -483,97 +537,107 @@ export default function Login({navigation}) {
           {strings.LOGIN_YOUR_ACCOUNT}
         </Text>
 
-        <Text
-          style={
-            isDarkMode
-              ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
-              : styles.txtSmall
-          }>
-          {strings.ENTE_REGISTERED_EMAIL}
-        </Text>
-        <View style={{height: moderateScaleVertical(30)}} />
-        {/* <BorderTextInput
-            onChangeText={_onChangeText('email')}
-            placeholder={strings.YOUR_EMAIL}
-            value={email}
-            keyboardType={'email-ad
-            autoCapitalize={'none'}
-          /> */}
-        {!phoneInput && (
-          <>
-            <BorderTextInput
-              onChangeText={(data) => checkInputHandler(data)}
-              placeholder={strings.YOUR_EMAIL_PHONE}
-              value={email.value}
-              keyboardType={'email-address'}
-              autoCapitalize={'none'}
-              autoFocus={true}
-              returnKeyType={'next'}
-            />
-            <BorderTextInput
-              onChangeText={_onChangeText('password')}
-              placeholder={strings.ENTER_PASSWORD}
-              value={password}
-              secureTextEntry={isShowPassword ? false : true}
-              rightIcon={
-                password.length > 0
-                  ? !isShowPassword
-                    ? imagePath.icShowPassword
-                    : imagePath.icHidePassword
-                  : false
-              }
-              onPressRight={showHidePassword}
-              isShowPassword={isShowPassword}
-              rightIconStyle={{}}
-              // returnKeyType={'next'}
-            />
-          </>
+        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
+          <Text
+            style={
+              isDarkMode
+                ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                : styles.txtSmall
+            }>
+            Enter phone number to login your account.
+          </Text>
+        ) : (
+          <Text
+            style={
+              isDarkMode
+                ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                : styles.txtSmall
+            }>
+            {strings.ENTE_REGISTERED_EMAIL}
+          </Text>
         )}
-        {phoneInput && (
-          <View style={{marginBottom: moderateScale(18)}}>
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(data) => checkInputHandler(data)}
-              cca2={mobilNo.cca2}
-              phoneNumber={mobilNo.phoneNo}
-              callingCode={mobilNo.callingCode}
-              placeholder={strings.YOUR_PHONE_NUMBER}
-              keyboardType={'phone-pad'}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
-              autoFocus={true}
-            />
+        <View style={{height: moderateScaleVertical(30)}} />
 
-            {/* <PhoneInput
-              // ref={phoneInput}
-              // defaultValue={value}
-              defaultCode="DM"
-              layout="first"
-              onChangeText={(text) => {
-                // setValue(text);
-                console.log(text, "text>text");
-              }}
-              onChangeFormattedText={(text) => {
-                // setFormattedValue(text);
-                console.log(text, "text>tex>>>>>>t");
-              }}
-              withDarkTheme
-              withShadow
-              autoFocus
-            /> */}
+        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
+          <PhoneNumberInput
+            onCountryChange={_onCountryChange}
+            onChangePhone={(data) => updateState({phoneNumberOnly: data})}
+            cca2={cca2PhoneOnly}
+            phoneNumber={phoneNumberOnly}
+            callingCode={calllingCodePhoneOnly}
+            placeholder={strings.YOUR_PHONE_NUMBER}
+            keyboardType={'phone-pad'}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
+            autoFocus={true}
+            containerStyle={{
+              marginBottom: 20,
+            }}
+          />
+        ) : (
+          <View>
+            {!phoneInput && (
+              <>
+                <BorderTextInput
+                  onChangeText={(data) => checkInputHandler(data)}
+                  placeholder={strings.YOUR_EMAIL_PHONE}
+                  value={email.value}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'}
+                  autoFocus={true}
+                  returnKeyType={'next'}
+                />
+                <BorderTextInput
+                  onChangeText={_onChangeText('password')}
+                  placeholder={strings.ENTER_PASSWORD}
+                  value={password}
+                  secureTextEntry={isShowPassword ? false : true}
+                  rightIcon={
+                    password.length > 0
+                      ? !isShowPassword
+                        ? imagePath.icShowPassword
+                        : imagePath.icHidePassword
+                      : false
+                  }
+                  onPressRight={showHidePassword}
+                  isShowPassword={isShowPassword}
+                  rightIconStyle={{}}
+                  // returnKeyType={'next'}
+                />
+              </>
+            )}
+            {phoneInput && (
+              <View style={{marginBottom: moderateScale(18)}}>
+                <PhoneNumberInput
+                  onCountryChange={_onCountryChange}
+                  onChangePhone={(data) => checkInputHandler(data)}
+                  cca2={mobilNo.cca2}
+                  phoneNumber={mobilNo.phoneNo}
+                  callingCode={mobilNo.callingCode}
+                  placeholder={strings.YOUR_PHONE_NUMBER}
+                  keyboardType={'phone-pad'}
+                  color={isDarkMode ? MyDarkTheme.colors.text : null}
+                  autoFocus={true}
+                />
+              </View>
+            )}
           </View>
         )}
-
-        <View style={styles.forgotContainer}>
-          <Text
-            onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
-            style={{
-              fontFamily: fontFamily.bold,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-            }}>
-            {' '}
-            {strings.FORGOT}
-          </Text>
-        </View>
+        {getValuebyKeyInArray(
+          'is_phone_signup',
+          additional_preferences,
+        ) ? null : (
+          <View style={styles.forgotContainer}>
+            <Text
+              onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
+              style={{
+                fontFamily: fontFamily.bold,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {' '}
+              {strings.FORGOT}
+            </Text>
+          </View>
+        )}
 
         <GradientButton
           containerStyle={{marginTop: moderateScaleVertical(10)}}
@@ -717,25 +781,30 @@ export default function Login({navigation}) {
           </View>
         </View>
 
-        <View style={styles.bottomContainer}>
-          <Text
-            style={
-              isDarkMode
-                ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                : {...styles.txtSmall, color: colors.textGreyLight}
-            }>
-            {strings.DONT_HAVE_ACCOUNT}
+        {getValuebyKeyInArray(
+          'is_phone_signup',
+          additional_preferences,
+        ) ? null : (
+          <View style={styles.bottomContainer}>
             <Text
-              onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
-              style={{
-                fontFamily: fontFamily.bold,
-                color: themeColors.primary_color,
-              }}>
-              {' '}
-              {strings.SIGN_UP}
+              style={
+                isDarkMode
+                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+                  : {...styles.txtSmall, color: colors.textGreyLight}
+              }>
+              {strings.DONT_HAVE_ACCOUNT}
+              <Text
+                onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+                style={{
+                  fontFamily: fontFamily.bold,
+                  color: themeColors.primary_color,
+                }}>
+                {' '}
+                {strings.SIGN_UP}
+              </Text>
             </Text>
-          </Text>
-        </View>
+          </View>
+        )}
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );

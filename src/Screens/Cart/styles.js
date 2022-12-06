@@ -490,7 +490,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: 'left',
     },
     insctructionText: {
-      flex: 1,
+      // flex: 1,
       fontFamily: fontFamily.medium,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
@@ -529,6 +529,16 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: colors.black,
       marginLeft: moderateScale(20),
       marginBottom: moderateScale(-6),
+    },
+    startEndDateTitle: {
+      fontSize: moderateScale(12),
+      fontFamily: fontFamily.bold,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+    },
+    startEndDateValueTxt: {
+      fontSize: moderateScale(11),
+      fontFamily: fontFamily.regular,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
     },
   });
   return styles;

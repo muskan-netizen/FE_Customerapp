@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import React,{useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
@@ -7,6 +7,7 @@ import {
   I18nManager,
   Image,
   Keyboard,
+  KeyboardAvoidingView,
   Platform,
   ScrollView,
   Text,
@@ -27,6 +28,7 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   StatusBarHeight,
@@ -34,7 +36,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import {androidCameraPermission} from '../../../utils/permissions';
@@ -43,6 +45,7 @@ import stylesFun from './styles';
 export default function SelectPaymentModalView({
   isLoading = false,
   onPressBack,
+
   _confirmAndPay,
   slectedDate = '',
   selectedTime = '',
@@ -63,10 +66,12 @@ export default function SelectPaymentModalView({
   updateInstruction,
   productFaqQuestionAnswers,
   onQuestionAnswerSubmit,
+  allScreenParamsData,
   indicatorLoader = false,
+  isCabPooling = false,
   _openDateTimeModal = () => {},
 }) {
-  console.log(pickUpTimeType, 'pickUpTimeType+++++++');
+  console.log(couponInfo, 'couponInfo');
   console.log(selectedTime, 'selectedTime+++++++');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -80,6 +85,8 @@ export default function SelectPaymentModalView({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -97,6 +104,7 @@ export default function SelectPaymentModalView({
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
+  // const [updateSeatNo, setUpdateSeatNo] = useState(1)
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -106,12 +114,12 @@ export default function SelectPaymentModalView({
     };
 
   //Get list of all offers
-  const _getAllOffers = (vendor, cartData) => {
+  const _getAllOffers = (vendor) => {
     moveToNewScreen(navigationStrings.OFFERS2, {
       vendor: vendor,
       cabOrder: true,
       isTaxi: true,
-
+      paramsData: allScreenParamsData,
       // cartId: cartData.id,
     })();
   };
@@ -150,7 +158,7 @@ export default function SelectPaymentModalView({
         mediaType: 'photo',
       });
       console.log('Image path', imageRes);
-      uploadImage(imageRes.path);
+      uploadImage(imageRes);
       setImage([...image, ...[imageRes?.path]]);
     } catch (error) {
       console.log(error);
@@ -167,7 +175,7 @@ export default function SelectPaymentModalView({
         mediaType: 'photo',
       });
       console.log('Image path', imageRes);
-      uploadImage(imageRes.path);
+      uploadImage(imageRes);
       setImage([...image, ...[imageRes?.path]]);
     } catch (error) {
       console.log('Image Picker error: ', error);
@@ -217,7 +225,6 @@ export default function SelectPaymentModalView({
       question: item?.translations[0]?.name,
       answer: text,
     };
-    console.log(answerdArray, 'answerdArray');
 
     if (item?.is_required) {
       setvalidationFucCalled(false);
@@ -248,7 +255,7 @@ export default function SelectPaymentModalView({
   };
 
   const onSelect = (val, item, index) => {
-    setSelectedType(val?.translations[0].name);
+    setSelectedType(val?.translations[0]?.name);
     onChangeText(item, val?.translations[0].name, index, item?.length);
   };
 
@@ -273,9 +280,17 @@ export default function SelectPaymentModalView({
           alignSelf: 'center',
         }}>
         {selectedCarOption
-          ? `${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
-              Number(selectedCarOption?.variant[0]?.price),
-              appData?.profile?.preferences?.digit_after_decimal,
+          ? `${tokenConverterPlusCurrencyNumberFormater(
+              Number(
+                selectedCarOption?.total_tags_price
+                  ? selectedCarOption?.total_tags_price -
+                      (updatedPrice ? updatedPrice : 0)
+                  : selectedCarOption?.tags_price -
+                      (updatedPrice ? updatedPrice : 0),
+              ),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`
           : ''}
       </Text>
@@ -375,11 +390,11 @@ export default function SelectPaymentModalView({
                     ]
               }>
               {selectedCarOption
-                ? `${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                ? `${tokenConverterPlusCurrencyNumberFormater(
                     Number(selectedCarOption?.variant[0]?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
                   )}`
                 : ''}
             </Text>
@@ -397,16 +412,16 @@ export default function SelectPaymentModalView({
                     : styles.distanceDurationDeliveryValue,
                   {fontSize: textScale(12)})
                 }>
-                {`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                {tokenConverterPlusCurrencyNumberFormater(
                   Number(selectedCarOption.tags_price) - Number(updatedPrice) >
                     0
                     ? Number(selectedCarOption.tags_price) -
                         Number(updatedPrice)
                     : 0,
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             )}
           </View>
@@ -535,71 +550,142 @@ export default function SelectPaymentModalView({
                     {color: MyDarkTheme.colors.text},
                   ]
                 : styles.distanceDurationDeliveryValue
-            }>{`-${
-            currencies?.primary_currency?.symbol
-          }${currencyNumberFormatter(
+            }>{`-${tokenConverterPlusCurrencyNumberFormater(
             Number(selectedCarOption?.variant[0]?.multiplier) *
               Number(loyalityAmount),
-            appData?.profile?.preferences?.digit_after_decimal,
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )}`}</Text>
+        </View>
+      )}
+      {!!selectedCarOption?.toll_fee && (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+            marginVertical: moderateScale(16),
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }>
+            {strings.TOLL_FEE}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }>{`${tokenConverterPlusCurrencyNumberFormater(
+            Number(selectedCarOption?.variant[0]?.multiplier) *
+              Number(selectedCarOption?.toll_fee),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
           )}`}</Text>
         </View>
       )}
 
-      <View
+      {!!selectedCarOption?.service_charge_amount && (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }>
+            {strings.SERVICE_CHARGES}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }>
+            {' '}
+            {`${tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(selectedCarOption?.service_charge_amount),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}`}
+          </Text>
+        </View>
+      )}
+
+      <TouchableOpacity
         style={{
           ...styles.offersViewB,
           marginHorizontal: moderateScale(17),
-        }}>
-        <TouchableOpacity
-          onPress={() => _getAllOffers(selectedCarOption, '')}
-          style={{flex: 1}}>
-          {couponInfo ? (
-            <TouchableOpacity
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View
-                style={{
-                  flex: 0.7,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  style={{tintColor: themeColors.primary_color}}
-                  source={imagePath.percent2}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                  {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
-                </Text>
-              </View>
-              <View style={{flex: 0.3, alignItems: 'flex-end'}}>
-                <Text
-                  onPress={removeCoupon}
-                  style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
-                  {strings.REMOVE}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
+        }}
+        onPress={() => _getAllOffers(selectedCarOption, '')}>
+        {couponInfo && updatedPrice ? (
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View
               style={{
+                flex: 0.7,
                 flexDirection: 'row',
                 alignItems: 'center',
-                flex: 1,
-              }}
-              onPress={() => _getAllOffers(selectedCarOption, '')}>
+              }}>
               <Image
                 style={{tintColor: themeColors.primary_color}}
                 source={imagePath.percent2}
               />
               <Text
+                numberOfLines={1}
                 style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                {strings.APPLY_PROMO_CODE}
+                {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
               </Text>
-            </TouchableOpacity>
-          )}
-        </TouchableOpacity>
-      </View>
+            </View>
+            <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+              <Text
+                onPress={removeCoupon}
+                style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
+                {strings.REMOVE}
+              </Text>
+            </View>
+          </View>
+        ) : (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              // flex: 1,
+              // backgroundColor:'red'
+            }}>
+            <Image
+              style={{tintColor: themeColors.primary_color}}
+              source={imagePath.percent2}
+            />
+            <Text style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+              {strings.APPLY_PROMO_CODE}
+            </Text>
+          </View>
+        )}
+      </TouchableOpacity>
       {/* select payment method */}
       <TouchableOpacity
         onPress={redirectToPayement}
@@ -720,7 +806,9 @@ export default function SelectPaymentModalView({
             // paddingBottom: moderateScale(keyboardHeight),
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <>
+            <KeyboardAvoidingView
+              keyboardVerticalOffset={height / 2.5}
+              behavior={'padding'}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -737,7 +825,6 @@ export default function SelectPaymentModalView({
               </View>
 
               {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
-                console.log(item, 'itemitemitem');
                 setAllRequiredQuestions(item, index);
 
                 if (item?.file_type === 'selector') {
@@ -745,7 +832,7 @@ export default function SelectPaymentModalView({
                     <View
                       style={{
                         marginTop: moderateScaleVertical(10),
-                        zIndex: 50 / Number(index),
+                        zIndex: 5,
                       }}>
                       <View
                         style={{
@@ -1012,7 +1099,7 @@ export default function SelectPaymentModalView({
                 marginTop={moderateScaleVertical(16)}
                 marginBottom={moderateScaleVertical(16)}
               />
-            </>
+            </KeyboardAvoidingView>
           </ScrollView>
         </View>
       </Modal>

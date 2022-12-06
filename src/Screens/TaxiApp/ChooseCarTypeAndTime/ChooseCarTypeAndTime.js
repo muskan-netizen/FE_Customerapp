@@ -64,7 +64,9 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function ChooseCarTypeAndTime({navigation, route}) {
-  const paramData = route?.params;
+  const paramData = route?.params?.promocodeDetail
+    ? route?.params?.promocodeDetail
+    : route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
   const mapRef = useRef();
@@ -95,20 +97,20 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const [state, setState] = useState({
     region: {
       latitude: paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0].latitude)
+        ? Number(paramData?.location[0]?.latitude)
         : 30.7191,
       longitude: paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0].longitude)
+        ? Number(paramData?.location[0]?.longitude)
         : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
     coordinate: {
       latitude: paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0].latitude)
+        ? Number(paramData?.location[0]?.latitude)
         : 30.7191,
       longitude: paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0].longitude)
+        ? Number(paramData?.location[0]?.longitude)
         : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
@@ -188,6 +190,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     allListedDrivers: [],
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
+    btnLoader: false,
+    disableButton: false,
   });
   const {
     selectedPayment,
@@ -239,8 +243,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     allListedDrivers,
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
+    btnLoader,
+    disableButton,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const [updateSeatNO, setUpdateSeatNo] = useState(1);
+  const [showFinalUpdatedSeatNo, setShowFinalUpdatedSeatNo] = useState(1);
+  console.log(paramData, 'paramDataparamDataparamData');
+
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -291,20 +301,21 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
   useEffect(() => {
     updateState({
-      updatedAmount: paramData?.promocodeDetail?.couponInfo?.new_amount,
-      couponInfo: paramData?.promocodeDetail?.couponInfo,
+      updatedAmount: paramData?.couponInfo?.new_amount,
+      couponInfo: paramData?.couponInfo,
     });
-  }, [
-    paramData?.promocodeDetail?.couponInfo,
-    paramData?.promocodeDetail?.new_amount,
-  ]);
+  }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
+
+  useEffect(() => {
+    _getAllCarAndPrices();
+  }, [updateSeatNO]);
 
   //Get list of all orders api
   const _getAllCarAndPrices = (showInitalModal = true) => {
     if (showInitalModal) {
-      updateState({showCarModal: true});
+      updateState({showCarModal: true, btnLoader: true});
     }
-    console.log('i am hiting >>>>>>');
+
     updateState({isLoading: true, showVendorModal: false});
     actions
       .getAllCarAndPrices(
@@ -316,6 +327,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             : `${pickedUpDate ? pickedUpDate : ''} ${
                 pickedUpTime ? pickedUpTime : ''
               }`,
+          is_cab_pooling: paramData?.is_cab_pooling,
+          no_seats_for_pooling: updateSeatNO,
         },
         {
           code: appData?.profile?.code,
@@ -324,7 +337,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'resssListOfCars');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -342,14 +354,24 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
+          btnLoader: false,
           productFaqQuestionAnswers: res?.data?.products?.data?.map(
             (item, index) => {
               return item;
             },
           ),
         });
+        setShowFinalUpdatedSeatNo(updateSeatNO);
       })
       .catch(errorMethod);
+  };
+
+  const _onUpdateSeatNo = (type) => {
+    if (type == 'increase') {
+      setUpdateSeatNo(updateSeatNO + 1);
+    } else {
+      setUpdateSeatNo(updateSeatNO - 1);
+    }
   };
 
   let redirectTimeout = useRef();
@@ -608,7 +630,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-    console.log(JSON.stringify(data), 'data>>>>>');
+
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -659,7 +681,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = taskInstruction;
-    data['amount'] = selectedCarOption?.tags_price;
+    data['amount'] = selectedCarOption?.total_tags_price;
+    data['tags_amount'] = selectedCarOption?.tags_price;
+    data['tollamount'] = selectedCarOption?.toll_fee
+      ? selectedCarOption?.toll_fee
+      : 0;
+    data['servicechargeamount'] = selectedCarOption?.service_charge_amount
+      ? selectedCarOption?.service_charge_amount
+      : 0;
     data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
     data['vendor_id'] = selectedCarOption?.vendor_id;
     data['product_id'] = selectedCarOption?.id;
@@ -713,7 +742,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       ),
       currency: currencies?.primary_currency?.iso_code,
       key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
-      amount: Number(selectedCarOption?.tags_price) * 100,
+      amount: Number(selectedCarOption?.total_tags_price) * 100,
       name: appData?.profile?.company_name,
       prefill: {
         email: userData?.email,
@@ -953,22 +982,24 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           </Text>
         </View>
         <View style={{marginVertical: moderateScale(8)}}>
-          <FlatList
-            horizontal
-            data={availableVendors}
-            renderItem={renderVendors}
-            extraData={availableVendors}
-            ItemSeparatorComponent={() => (
-              <View style={{marginRight: moderateScale(12)}} />
-            )}
-            ListHeaderComponent={() => (
-              <View style={{marginLeft: moderateScale(16)}} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{marginRight: moderateScale(16)}} />
-            )}
-            showsHorizontalScrollIndicator={false}
-          />
+          {availableVendors?.length > 1 ? (
+            <FlatList
+              horizontal
+              data={availableVendors}
+              renderItem={renderVendors}
+              extraData={availableVendors}
+              ItemSeparatorComponent={() => (
+                <View style={{marginRight: moderateScale(12)}} />
+              )}
+              ListHeaderComponent={() => (
+                <View style={{marginLeft: moderateScale(16)}} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{marginRight: moderateScale(16)}} />
+              )}
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : null}
         </View>
       </View>
     );
@@ -978,6 +1009,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     return (
       <AvailableDriver
         onPressAvailableCar={_selectedProductForDrivers}
+        isCabPooling={!!paramData?.is_cab_pooling}
+        disabled={disableButton}
+        isLoading={btnLoader}
+        _onUpdateSeatNo={_onUpdateSeatNo}
+        updateSeatNo={showFinalUpdatedSeatNo}
         selectedCarOption={selectedCarOption}
         allListedDrivers={allListedDrivers}
         onPressPickUpNow={() => {
@@ -990,7 +1026,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
-        isLoading={isLoading}
+        // isLoading={isLoading}
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
@@ -1025,19 +1061,21 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const uploadImage = async (img) => {
     console.log('selected image', img);
-
+    let fileName = img.path.split('Pictures/');
+    console.log(fileName, 'fileName...');
     const imgData = new FormData();
     imgData.append('upload_photo', {
-      uri: img,
-      name: 'image.png',
-      fileName: 'image',
-      type: 'image/png',
+      uri: img.path,
+      name: fileName[1],
+      fileName: fileName[1],
+      type: img.mime,
     });
     try {
       const res = await actions.imageUpload(imgData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       });
       console.log('image upload res', res);
       updateState({
@@ -1157,6 +1195,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _selectPaymentView = () => {
+    console.log(paramData, 'paramDataparamData');
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}
@@ -1181,7 +1220,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         totalDuration={totalDuration}
         selectedCarOption={selectedCarOption}
         navigation={navigation}
-        couponInfo={couponInfo}
+        couponInfo={paramData?.couponInfo}
         updatedPrice={updatedAmount}
         loyalityAmount={loyalityAmount}
         removeCoupon={() => removeCoupon()}
@@ -1195,6 +1234,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
         indicatorLoader={indicatorLoader}
         _openDateTimeModal={_openDateTimeModal}
+        allScreenParamsData={paramData}
         distnce_unit={distance_unit_for_time}
       />
     );
@@ -1214,7 +1254,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const onCenter = useCallback(() => {
-    if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
+    if (
+      paramData?.location?.length > 0 &&
+      !!mapRef?.current?.fitToCoordinates
+    ) {
       mapRef.current.fitToCoordinates(paramData?.location, {
         edgePadding: {
           right: 80,
@@ -1305,7 +1348,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             <MapViewDirections
               origin={paramData?.location[0]}
               waypoints={
-                paramData?.location.length > 2
+                paramData?.location?.length > 2
                   ? paramData?.location.slice(1, -1)
                   : []
               }
@@ -1367,14 +1410,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         </TouchableOpacity>
         <BottomSheet
           ref={bottomSheetRef}
-          index={0}
+          index={1}
           snapPoints={[height / 2.2, height / 1.25]}
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
           animateOnMount={true}
           handleComponent={carModalHeader}
-          onChange={() => playHapticEffect(hapticEffects.impactMedium)}
-          >
+          onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
           <View
             style={{
               flex: 1,
@@ -1517,6 +1559,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           </View>
         </Modal>
       )}
+
+      {console.log(paymentDataFlutterWave, 'paymentDataFlutterWave...')}
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}

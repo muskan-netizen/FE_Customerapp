@@ -13,7 +13,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -37,6 +37,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {cameraHandler} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import {androidCameraPermission} from '../../utils/permissions';
 import {setUserData} from '../../utils/utils';
@@ -46,7 +47,6 @@ import stylesFun from './styles';
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
-    // {"code": "BY", "type": "telephony"}
     getPhonesCallingCodeAndCountryData = codes.filter(
       (x) => x.isoCode2 == result.code.toUpperCase(),
     );
@@ -56,9 +56,6 @@ DeviceCountry.getCountryCode()
   });
 
 let addtionSelectedImageIndex = null;
-
-// alert("SignUp")
-let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -81,24 +78,23 @@ export default function Signup({navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(
-    getPhonesCallingCodeAndCountryData,
-    ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
-  );
+
   const [state, setState] = useState({
     isLoading: false,
     callingCode:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].isoCode2
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
         : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
         : 'IN',
@@ -112,7 +108,7 @@ export default function Signup({navigation}) {
     addtionalTextInputs: [],
     addtionalImages: [],
     addtionalPdfs: [],
-    appHashKey: 'WpV3+5pgxIH',
+    appHashKey: '',
     subscriptionPopup: false,
   });
   const {
@@ -204,7 +200,6 @@ export default function Signup({navigation}) {
         ? formdata.append('name', phoneNumber)
         : formdata.append('name', name);
     }
-    formdata.append('app_hash_key', appHashKey);
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
@@ -221,6 +216,9 @@ export default function Signup({navigation}) {
       'fcm_token',
       !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     );
+    if (Platform.OS === 'android' && !!appHashKey) {
+      formdata.append('app_hash_key', appHashKey);
+    }
 
     var isRequired = true;
     if (!isEmpty(addtionalTextInputs)) {
