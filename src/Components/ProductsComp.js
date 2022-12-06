@@ -139,7 +139,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                       : colors.blackOpacity66,
                     width: width / 4,
                   }}>
-                  {strings.IN} {category?.category_detail?.translation[0]?.name}
+                  {category?.category_detail?.translation[0]?.name || category}
                 </Text>
               )}
             </View>

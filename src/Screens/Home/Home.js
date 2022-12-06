@@ -31,6 +31,7 @@ import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 import {
   DashBoardFive,
+  DashBoardFive2,
   DashBoardFour,
   DashBoardHeaderFive,
   DashBoardHeaderFour,
@@ -435,7 +436,6 @@ export default function Home({route, navigation}) {
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          // await preLoadImages(res.data);
           updateState({searchDataLoader: false});
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
@@ -929,6 +929,7 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
@@ -1098,7 +1099,7 @@ export default function Home({route, navigation}) {
                   curLatLong={curLatLong}
                 />
               ) : (
-                <DashBoardFive
+                <DashBoardFive2
                   handleRefresh={() => handleRefresh()}
                   bannerPress={(item) => bannerPress(item)}
                   isLoading={isLoading}

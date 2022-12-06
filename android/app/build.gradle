@@ -204,7 +204,11 @@ android {
  
     flavorDimensions "appType"
     productFlavors{
+<<<<<<< HEAD
            grub{
+=======
+                       grub{
+>>>>>>> 17e86018a (home page styling updated as web styles)
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
