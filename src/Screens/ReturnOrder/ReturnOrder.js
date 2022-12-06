@@ -209,6 +209,7 @@ export default function ReturnOrder({navigation, route}) {
         console.log(res, 'res>>>>>>submitReturnOrder');
         updateState({isLoading: false});
         navigation.goBack();
+        route?.params?.getOrderDetail();
       })
       .catch(errorMethod);
   };

@@ -46,6 +46,7 @@ import Modal from 'react-native-modal';
 export default function ReplaceOrder({navigation, route}) {
   let actionSheet = useRef();
   const {selectProductForRetrun, reasons} = route?.params;
+  // console.log(route, 'daskjfljkdsf');
   const {
     appData,
     currencies,
@@ -267,6 +268,7 @@ export default function ReplaceOrder({navigation, route}) {
         console.log(res, 'res....res...res');
         updateState({isLoading: false});
         navigation.goBack();
+        route?.params?.getOrderDetail();
       })
       .catch(errorMethod);
   };

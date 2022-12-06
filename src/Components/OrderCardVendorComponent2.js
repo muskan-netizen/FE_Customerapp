@@ -503,8 +503,8 @@ const OrderCardVendorComponent2 = ({
                 alignItems: 'center',
                 justifyContent: 'flex-end',
               }}>
-              {console.log(data, 'data....data')}
-              {data?.order_status?.current_status?.title !== strings.REJECTED &&
+              {isEmpty(data?.exchanged_of_order) &&
+              data?.order_status?.current_status?.title !== strings.REJECTED &&
               data?.returnable == 1 ? (
                 data?.return_request_status == 1 ? (
                   <Text
@@ -523,7 +523,6 @@ const OrderCardVendorComponent2 = ({
                   </Text>
                 ) : (
                   <TouchableOpacity
-                    // onPress={onPressRateOrder}
                     onPress={onPressReturnOrder}
                     // style={{flex:0.6}}
                     style={{...styles.bottomSecondHalf, flex: 0}}>
@@ -540,7 +539,8 @@ const OrderCardVendorComponent2 = ({
                 <></>
               )}
 
-              {data?.is_exchanged_or_returned == 0 &&
+              {isEmpty(data?.exchanged_of_order) &&
+              data?.is_exchanged_or_returned == 0 &&
               data?.replaceable &&
               data?.order_status?.current_status?.title !== strings.REJECTED ? (
                 <TouchableOpacity

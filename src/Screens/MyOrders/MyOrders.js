@@ -569,6 +569,7 @@ export default function MyOrders(props) {
       });
     }
   };
+
   const returnOrder = () => {
     if (selectProductForRetrun) {
       console.log(
@@ -602,6 +603,7 @@ export default function MyOrders(props) {
                         return item;
                       })
                     : [],
+                getOrderDetail: _getListOfOrders,
               });
             }, 500);
           })
@@ -634,6 +636,7 @@ export default function MyOrders(props) {
                       return item;
                     })
                   : [],
+              getOrderDetail: _getListOfOrders,
             });
           }, 500);
         })
