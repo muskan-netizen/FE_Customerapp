@@ -1190,7 +1190,7 @@ function Cart({ navigation, route }) {
       .then((res) => {
         console.log(res, "placeOrder");
         actions.reloadData(!reloadData);
-
+        actions.cartItemQty(0)
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
         setVendorComment(null);

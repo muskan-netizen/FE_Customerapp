@@ -369,6 +369,7 @@ export default function SelectPaymentModal({
           style={{
             marginHorizontal: moderateScaleVertical(20),
             marginTop: moderateScaleVertical(10),
+           
           }}>
           {!isEmpty(payementMethods)
             ? payementMethods.map((item, index) => {

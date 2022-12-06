@@ -1661,12 +1661,15 @@ export default function Products({route, navigation}) {
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
+
+
+    
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
 
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-    console.log(location?.latitude, 'apiData........');
+   
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
