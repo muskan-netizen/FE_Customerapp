@@ -236,11 +236,17 @@ function Cart({navigation, route}) {
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const styles = stylesFun({
+    fontFamily,
+    themeColors,
+    isDarkMode,
+    MyDarkTheme,
+  });
 
   const {preferences} = appData?.profile;
   const {additional_preferences, digit_after_decimal} = preferences;
 
+  console.log(appData, 'preferencespreferences');
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
@@ -3856,7 +3862,12 @@ function Cart({navigation, route}) {
                 : styles.priceItemLabel
             }>
             {tokenConverterPlusCurrencyNumberFormater(
-              Number(cartData?.gross_paybale_amount),
+              Number(cartData?.gross_paybale_amount) +
+                Number(
+                  cartData?.total_container_charges
+                    ? cartData?.total_container_charges
+                    : 0,
+                ),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
@@ -4026,6 +4037,30 @@ function Cart({navigation, route}) {
           </View>
         )}
 
+        {!!Number(cartData?.total_service_fee) > 0 && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>
+              {'Service Fee'}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${tokenConverterPlusCurrencyNumberFormater(
+              Number(cartData?.total_service_fee),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}`}</Text>
+          </View>
+        )}
+
         {/* {!!Number(cartData?.total_container_charges) && (
           <View style={styles.bottomTabLableValue}>
             <Text
@@ -4100,54 +4135,7 @@ function Cart({navigation, route}) {
             )}`}</Text>
           </View>
         )}
-        {!!Number(cartData?.total_service_fee) > 0 && (
-          <View
-            style={{
-              ...styles.itemPriceDiscountTaxView,
-              ...{
-                paddingHorizontal: moderateScale(16),
-                marginTop: moderateScaleVertical(4),
-              },
-            }}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>
-              {`Service Fee`}
-              {/* {preferences?.fixed_fee_nomenclature != '' &&
-                  preferences?.fixed_fee_nomenclature != null
-                    ? preferences?.fixed_fee_nomenclature
-                    : strings.FIXED_FEE} */}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>
-              {tokenConverterPlusCurrencyNumberFormater(
-                Number(
-                  cartData?.total_service_fee ? cartData?.total_service_fee : 0,
-                ),
-                digit_after_decimal,
-                additional_preferences,
-                currencies?.primary_currency?.symbol,
-              )}
-            </Text>
-          </View>
-        )}
+
         {cartData?.total_tax > 0 && (
           <Animatable.View
             style={{
@@ -4197,7 +4185,7 @@ function Cart({navigation, route}) {
           </Animatable.View>
         )}
         {!!preferences?.advance_booking_amount &&
-          cartData?.advance_payable_amount > 0 && (
+          cartData?.pending_amount > 0 && (
             <Animatable.View
               style={{
                 ...styles.bottomTabLableValue,
@@ -4319,12 +4307,17 @@ function Cart({navigation, route}) {
               </Text>
             </Animatable.View>
           )}
+
         {showTaxFeeArea && (
           <View>
             <Animatable.View
               animation="fadeIn"
-              style={{marginLeft: moderateScale(15)}}>
-              {cartData?.total_service_fee > 0 && (
+              style={{
+                marginLeft: moderateScale(10),
+                borderWidth: moderateScale(0.4),
+                marginRight: moderateScale(5),
+              }}>
+              {/* {cartData?.total_service_fee > 0 && (
                 <View
                   style={{...styles.bottomTabLableValue, marginVertical: 1}}>
                   <Text
@@ -4350,19 +4343,61 @@ function Cart({navigation, route}) {
                       Number(
                         cartData?.total_service_fee
                           ? cartData?.total_service_fee
-                          : 0,
+                          : 0
                       ),
                       digit_after_decimal,
                       additional_preferences,
-                      currencies?.primary_currency?.symbol,
-                    )}{' '}
+                      currencies?.primary_currency?.symbol
+                    )}{" "}
                   </Text>
                 </View>
-              )}
-              {cartData?.tax_details.map((val) => {
+              )} */}
+
+              {!isEmpty(cartData?.specific_taxes) &&
+                cartData?.specific_taxes.map((val, index) => {
+                  return (
+                    <View>
+                      {val?.value > 0 && (
+                        <View
+                          style={{
+                            ...styles.bottomTabLableValue,
+                            marginVertical: 1,
+                          }}>
+                          <Text
+                            style={{
+                              ...styles.priceItemLabel,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.textGreyB,
+                              fontSize: textScale(11),
+                            }}>
+                            {val?.label}
+                          </Text>
+                          <Text
+                            style={{
+                              ...styles.priceItemLabel,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.textGreyB,
+                              fontSize: textScale(11),
+                            }}>{`${
+                            currencies?.primary_currency?.symbol
+                          }${Number(val?.value ? val?.value : 0).toFixed(
+                            appData?.profile?.preferences?.digit_after_decimal,
+                          )}`}</Text>
+                        </View>
+                      )}
+                    </View>
+                  );
+                })}
+
+              {/* {cartData?.tax_details.map((val) => {
                 return (
+                  <View>
+                    {val?.value > 0 && (
                   <View
-                    style={{...styles.bottomTabLableValue, marginVertical: 1}}>
+                    style={{ ...styles.bottomTabLableValue, marginVertical: 1 }}
+                  >
                     <Text
                       style={{
                         ...styles.priceItemLabel,
@@ -4370,7 +4405,8 @@ function Cart({navigation, route}) {
                           ? MyDarkTheme.colors.text
                           : colors.textGreyB,
                         fontSize: textScale(11),
-                      }}>
+                      }}
+                    >
                       {val?.identifier}
                     </Text>
 
@@ -4381,18 +4417,19 @@ function Cart({navigation, route}) {
                           ? MyDarkTheme.colors.text
                           : colors.textGreyB,
                         fontSize: textScale(11),
-                      }}>
-                      {' '}
+                      }}
+                    >
+                      {" "}
                       {tokenConverterPlusCurrencyNumberFormater(
                         Number(val?.tax_amount ? val?.tax_amount : 0),
                         digit_after_decimal,
                         additional_preferences,
-                        currencies?.primary_currency?.symbol,
+                        currencies?.primary_currency?.symbol
                       )}
                     </Text>
                   </View>
                 );
-              })}
+              })} */}
               {/* {cartData?.total_tax > 0 && (
                 
                 <View

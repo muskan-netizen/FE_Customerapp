@@ -57,6 +57,8 @@ export default function ChatScreen({ route, navigation }) {
   );
   const styles = stylesFun({ fontFamily, isDarkMode });
 
+  console.log("paramDataparamDataparamDataparamDataparamData", paramData);
+
   let defaultImage =
     "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
 
@@ -66,8 +68,8 @@ export default function ChatScreen({ route, navigation }) {
     isLoading: false,
     roomUsers: [],
     isVoiceRecord: false,
-    allRoomUsersAppartFromAgent:[],
-    allAgentIds:[]
+    allRoomUsersAppartFromAgent: [],
+    allAgentIds: [],
   });
   const {
     isLoading,
@@ -76,7 +78,7 @@ export default function ChatScreen({ route, navigation }) {
     showParticipant,
     chatUsersData,
     allRoomUsersAppartFromAgent,
-    allAgentIds
+    allAgentIds,
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -153,28 +155,33 @@ export default function ChatScreen({ route, navigation }) {
           language: languages?.primary_language?.id,
         }
       );
-      console.log("fetchAllRoomUser res", res);
-      if (!!res?.userData && isFocused) {
- 
-    
 
-       const allRoomUsersAppartFromAgentAry= res?.userData.splice(res?.userData.findIndex(item => item?.user_type != "agent") )
-       const allAgentIdsAry= res?.userData.splice(res?.userData.findIndex(item => item?.user_type == "agent") )
-       console.log(allRoomUsersAppartFromAgentAry,allAgentIdsAry,"allChatUseresallChatUseres");
-       
-       updateState({
-        allRoomUsersAppartFromAgent:allRoomUsersAppartFromAgentAry,
-        allAgentIds:allAgentIdsAry,
+      console.log("resresresresres+++", res);
+
+      if (!!res?.userData && isFocused) {
+        const allRoomUsersAppartFromAgent = res?.userData.filter(function (el) {
+          return el.user_type != "agent";
+        });
+        const allAgentIds = res?.userData.filter(function (el) {
+          return el.user_type == "agent";
+        });
+
+        updateState({
+          allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent.map(
+            (val) => {
+              return { auth_user_id: !!userData?.is_superadmin? val?.auth_user_id: val?.vendor_id };
+            }
+          ),
+          allAgentIds: allAgentIds.map((val) => {
+            return { auth_user_id:  val?.auth_user_id };
+          }),
           roomUsers: res?.userData,
         });
-       
       }
     } catch (error) {
       console.log("error raised in fetchAllRoomUser api", error);
     }
   }, [allRoomUsersAppartFromAgent, allAgentIds, roomUsers]);
-
-  
 
   const checkToMessage = () => {
     let userType = paramData?.type;
@@ -192,94 +199,93 @@ export default function ChatScreen({ route, navigation }) {
     }
   };
 
-  const onSend = useCallback(async (messages = []) => {
-    if (String(messages[0].text).trim().length < 1) {
-      return;
-    }
-    let phoneNumber = !!userData.phone_number
-      ? `+${userData?.dial_code} ${userData.phone_number}`
-      : null;
-    console.log("phoneNumberphoneNumber", userData);
-    let userImage = !!userData?.source
-      ? getImageUrl(
-          userData?.source?.proxy_url,
-          userData?.source?.image_path,
-          "200/200"
-        )
-      : null;
-      
+  const onSend = useCallback(
+    async (messages = []) => {
+      if (String(messages[0].text).trim().length < 1) {
+        return;
+      }
+      let phoneNumber = !!userData.phone_number
+        ? `+${userData?.dial_code} ${userData.phone_number}`
+        : null;
+      console.log("phoneNumberphoneNumber", userData);
+      let userImage = !!userData?.source
+        ? getImageUrl(
+            userData?.source?.proxy_url,
+            userData?.source?.image_path,
+            "200/200"
+          )
+        : null;
 
-    try {
-      const apiData = {
-        room_id: paramData?._id,
-        message: messages[0].text,
-        user_type: !!userData?.is_superadmin ? "admin" : "user",
-        to_message: checkToMessage(),
-        from_message: !!userData?.is_superadmin ? "from_admin" : "from_user",
-        user_id: userData?.id,
-        email: userData.email,
-        username: userData?.name,
-        phone_num: phoneNumber,
-        display_image: userImage,
-        sub_domain: "192.168.101.88", //this is static value
-        //'room_name' =>$data->name,
-        chat_type: paramData?.type,
-      };
-      console.log("apiDataapiData", apiData);
-      const res = await actions.sendMessage(apiData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      });
-      console.log("on send message res", res);
-      socketServices.emit("save-message", res);
-      // const message = {
-      //   _id: userData.id,
-      //   auth_user_id: userData.id,
-      //   message: messages[0].text,
-      //   createdAt: new Date(),
-      //   username: userData?.name,
-      //   display_image: getImageUrl(
-      //     userData?.source?.proxy_url,
-      //     userData?.source?.image_path,
-      //     '200/200',
-      //   )
-      // };
-      await sendToUserNotification(paramData?._id, messages[0].text);
-      // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
-    } catch (error) {
-      console.log("error raised in fetchAllMessages api", error);
-    }
-  }, [allRoomUsersAppartFromAgent, allAgentIds]);
+      try {
+        const apiData = {
+          room_id: paramData?._id,
+          message: messages[0].text,
+          user_type: !!userData?.is_superadmin ? "admin" : "user",
+          to_message: checkToMessage(),
+          from_message: !!userData?.is_superadmin ? "from_admin" : "from_user",
+          user_id: userData?.id,
+          email: userData.email,
+          username: userData?.name,
+          phone_num: phoneNumber,
+          display_image: userImage,
+          sub_domain: "192.168.101.88", //this is static value
+          //'room_name' =>$data->name,
+          chat_type: paramData?.type,
+        };
+        
+        console.log("apiDataapiData", apiData);
+        const res = await actions.sendMessage(apiData, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        });
+        console.log("on send message res", res);
+        socketServices.emit("save-message", res);
 
+        await sendToUserNotification(paramData?._id, messages[0].text);
+        // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
+      } catch (error) {
+        console.log("error raised in fetchAllMessages api", error);
+      }
+    },
+    [allRoomUsersAppartFromAgent, allAgentIds]
+  );
 
 
   const sendToUserNotification = (id, text) => {
     let apiData = {
-      user_ids: allRoomUsersAppartFromAgent,
+      user_ids:
+        allRoomUsersAppartFromAgent.length == 0
+          ? [{ auth_user_id:  !!userData?.is_superadmin?  paramData?.order_user_id: paramData.vendor_id }]
+          : allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
       text_message: text,
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
-      all_agentids: allAgentIds,
-      order_vendor_id:paramData?.order_vendor_id,
-      username:userData?.name,
-      vendor_id:paramData?.vendor_id,
-      auth_id:userData?.id
-    };    
-   console.log(apiData,"apiDataapiDataapiData");
-    actions.sendNotification(apiData, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-    }).then((res)=>{
-      console.log(res,"response+++++",apiData);
-    }).catch((error)=>{
-      console.log(error,"errororr in notification");
-    })
+      all_agentids:
+        allAgentIds.length == 0 ? [{ auth_user_id: paramData?.agent_id }] : allAgentIds,
+      order_vendor_id: paramData?.order_vendor_id,
+      username: userData?.name,
+      vendor_id: paramData?.vendor_id,
+      auth_id: userData?.id,
+    };
+
+
+    actions
+      .sendNotification(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, "response+++++", apiData);
+      })
+      .catch((error) => {
+        console.log(error, "errororr in notification");
+      });
   };
-  
+
   const showRoomUser = useCallback(
     (props) => {
       if (_.isEmpty(roomUsers)) {

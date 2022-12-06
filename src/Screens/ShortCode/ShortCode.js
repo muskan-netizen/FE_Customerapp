@@ -2921,6 +2921,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.todaysDeliverys:
+          updateState({
+            shortCode: shortCodes.todaysDeliverys,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.locate:
+          updateState({
+            shortCode: shortCodes.locate,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.georgiacollective:
+          updateState({
+            shortCode: shortCodes.georgiacollective,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.otgWeeds:
+          updateState({
+            shortCode: shortCodes.otgWeeds,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2955,7 +2979,7 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        //  code: '2d98b5',
+        //   code: '2d98b5',
         code: shortCode,
         language: res?.primary_language?.id,
       };

@@ -203,20 +203,7 @@ android {
     }
 
     flavorDimensions "appType"
-    productFlavors{
 
-            bliss {
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.bliss'
-                resValue "string", "app_name", "Bliss"
-                resValue "string", "host_name", ""
-            }
-   
-    }
     productFlavors {
             royoorder {
                 dimension "appType"
@@ -619,7 +606,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.servze'
+                applicationId 'com.servze.orderapp'
                 resValue "string", "app_name", "Servze"
                 resValue "string", "host_name", ""
 
@@ -6757,7 +6744,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.servern.order'
+            applicationId 'com.servern.orderapp'
             resValue "string", "app_name", "Servern"
             resValue "string", "host_name", ""
             }
@@ -7882,6 +7869,46 @@ android {
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.rentzy'
                 resValue "string", "app_name", "Rentzy"
+                resValue "string", "host_name", ""
+            }
+             todaysDeliverys {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.todaysDeliverys.royoorders'
+                resValue "string", "app_name", "Today's Deliverys"
+                resValue "string", "host_name", ""
+            }
+                         locate {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.locate.royoorders'
+                resValue "string", "app_name", "Locate"
+                resValue "string", "host_name", ""
+            }
+                             georgiacollective {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.georgiacollective.royoorders'
+                resValue "string", "app_name", "Georgia Collective"
+                resValue "string", "host_name", ""
+            }
+                                 otgWeeds {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.otgweeds.royoorders'
+                resValue "string", "app_name", "OTG Weeds"
                 resValue "string", "host_name", ""
             }
     }

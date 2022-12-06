@@ -200,7 +200,12 @@ export default function OrderDetail({navigation, route}) {
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
-  const styles2 = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const styles2 = stylesFun({
+    fontFamily,
+    themeColors,
+    isDarkMode,
+    MyDarkTheme,
+  });
 
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -1177,10 +1182,13 @@ export default function OrderDetail({navigation, route}) {
                                 style={{
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
+                                  alignItems: 'center',
                                 }}>
                                 <View
                                   style={{
                                     justifyContent: 'center',
+
+                                    width: '100%',
                                   }}>
                                   <Text
                                     style={{
@@ -1194,34 +1202,70 @@ export default function OrderDetail({navigation, route}) {
                                     }}>
                                     {i?.product_name}
                                   </Text>
-                                  {i?.quantity && (
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      justifyContent: 'space-between',
+                                    }}>
+                                    <View>
+                                      {i?.quantity && (
+                                        <View
+                                          style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                          }}>
+                                          <Text
+                                            style={{
+                                              ...styles.quantityStyles,
+                                              color: isDarkMode
+                                                ? MyDarkTheme.colors.text
+                                                : colors.textGrey,
+                                            }}>
+                                            <Text
+                                              style={{
+                                                ...styles.quantityStyles,
+                                                color: isDarkMode
+                                                  ? MyDarkTheme.colors.text
+                                                  : colors.textGrey,
+                                              }}>
+                                              {strings.QTY}
+                                            </Text>
+                                            <Text style={styles.cartItemWeight}>
+                                              {i?.quantity}
+                                            </Text>
+                                          </Text>
+                                        </View>
+                                      )}
+                                    </View>
                                     <View
                                       style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        alignItems: 'flex-start',
                                       }}>
                                       <Text
+                                        numberOfLines={1}
                                         style={{
-                                          ...styles.quantityStyles,
+                                          ...styles.priceItemLabel2,
                                           color: isDarkMode
                                             ? MyDarkTheme.colors.text
-                                            : colors.textGrey,
+                                            : colors.blackOpacity86,
+                                          fontSize: textScale(12),
+                                          fontFamily: fontFamily.medium,
                                         }}>
-                                        <Text
-                                          style={{
-                                            ...styles.quantityStyles,
-                                            color: isDarkMode
-                                              ? MyDarkTheme.colors.text
-                                              : colors.textGrey,
-                                          }}>
-                                          {strings.QTY}
-                                        </Text>
-                                        <Text style={styles.cartItemWeight}>
-                                          {i?.quantity}
+                                        <Text style={styles.cartItemPrice}>
+                                          {tokenConverterPlusCurrencyNumberFormater(
+                                            Number(i?.price) *
+                                              Number(i?.quantity),
+                                            digit_after_decimal,
+                                            additional_preferences,
+                                            currencies?.primary_currency
+                                              ?.symbol,
+                                          )}
                                         </Text>
                                       </Text>
                                     </View>
-                                  )}
+                                  </View>
+
                                   {!!i?.product_addons.length && (
                                     <View>
                                       <Text style={styles.cartItemWeight2}>
@@ -1329,31 +1373,70 @@ export default function OrderDetail({navigation, route}) {
                                       )}
                                     </View>
                                   )}
-                                </View>
-                                <View
-                                  style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'flex-start',
-                                  }}>
-                                  <Text
-                                    numberOfLines={1}
-                                    style={{
-                                      ...styles.priceItemLabel2,
-                                      color: isDarkMode
-                                        ? MyDarkTheme.colors.text
-                                        : colors.blackOpacity86,
-                                      fontSize: textScale(12),
-                                      fontFamily: fontFamily.medium,
-                                    }}>
-                                    <Text style={styles.cartItemPrice}>
-                                      {tokenConverterPlusCurrencyNumberFormater(
-                                        Number(i?.price),
-                                        digit_after_decimal,
-                                        additional_preferences,
-                                        currencies?.primary_currency?.symbol,
+                                  {!!(
+                                    !!i?.container_charges &&
+                                    Number(i?.container_charges)
+                                  ) && (
+                                    <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        marginTop: moderateScale(2),
+                                      }}>
+                                      <View>
+                                        <Text
+                                          style={{
+                                            ...styles.cartItemWeight2,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.textGreyB,
+                                            marginBottom: moderateScale(2),
+                                            // marginTop: moderateScaleVertical(6),
+                                          }}>
+                                          {`${strings.CONTAINERCHARGES} : `}
+                                        </Text>
+                                      </View>
+                                      {!!(
+                                        !!i?.container_charges &&
+                                        Number(i?.container_charges)
+                                      ) && (
+                                        <View
+                                          style={{
+                                            marginBottom:
+                                              moderateScaleVertical(2),
+                                          }}>
+                                          <View
+                                            style={{
+                                              marginRight: moderateScale(10),
+                                            }}>
+                                            <Text
+                                              style={
+                                                isDarkMode
+                                                  ? [
+                                                      styles.cartItemWeight2,
+                                                      {
+                                                        color:
+                                                          MyDarkTheme.colors
+                                                            .text,
+                                                      },
+                                                    ]
+                                                  : styles.cartItemWeight2
+                                              }
+                                              // numberOfLines={1}
+                                            >
+                                              {tokenConverterPlusCurrencyNumberFormater(
+                                                Number(i?.container_charges),
+                                                digit_after_decimal,
+                                                additional_preferences,
+                                                currencies?.primary_currency
+                                                  ?.symbol,
+                                              )}
+                                            </Text>
+                                          </View>
+                                        </View>
                                       )}
-                                    </Text>
-                                  </Text>
+                                    </View>
+                                  )}
                                 </View>
                               </View>
                             </View>
@@ -1644,6 +1727,7 @@ export default function OrderDetail({navigation, route}) {
               </Text>
             </View>
           )}
+
           {!!Number(item?.total_container_charges) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
@@ -1660,6 +1744,7 @@ export default function OrderDetail({navigation, route}) {
                 }>
                 {strings.CONTAINER_CHARGES}
               </Text>
+
               <Text
                 style={
                   isDarkMode
@@ -1674,8 +1759,8 @@ export default function OrderDetail({navigation, route}) {
                 }>
                 {tokenConverterPlusCurrencyNumberFormater(
                   Number(
-                    item?.total_container_charges
-                      ? item?.total_container_charges
+                    cartData?.total_container_charges
+                      ? cartData?.total_container_charges
                       : 0,
                   ),
                   digit_after_decimal,
@@ -2340,7 +2425,7 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {!!cartData?.vendors[0]?.total_container_charges &&
+          {/* {!!cartData?.vendors[0]?.total_container_charges &&
             Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
                 leftText={strings.TOTALCONTAINERCHARGES}
@@ -2353,7 +2438,7 @@ export default function OrderDetail({navigation, route}) {
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
-            )}
+            )} */}
 
           {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText

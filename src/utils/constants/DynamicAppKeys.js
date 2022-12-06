@@ -471,6 +471,10 @@ const shortCodes = {
   skyline: 'ce1ed6',
   bliss: '6eb260',
   rentzy: 'd4fc07',
+  todaysDeliverys: '6d055a',
+  locate: 'f9f1f8',
+  georgiacollective: '1d7bf7',
+  otgWeeds: '2a3af8',
 };
 
 const appIds = {
@@ -1883,8 +1887,8 @@ const appIds = {
     android: 'com.FresHest.royoOrder',
   }),
   servern: Platform.select({
-    ios: 'com.servern.order',
-    android: 'com.servern.order',
+    ios: 'com.servern.orderapp',
+    android: 'com.servern.orderapp',
   }),
   smokeRun: Platform.select({
     ios: 'com.smokeRun.order',
@@ -2345,6 +2349,22 @@ const appIds = {
   rentzy: Platform.select({
     ios: 'com.rentzy.royoorders',
     android: 'com.rentzy',
+  }),
+  todaysDeliverys: Platform.select({
+    ios: 'com.todaysDeliverys.royoorders',
+    android: 'com.todaysDeliverys.royoorders',
+  }),
+  locate: Platform.select({
+    ios: 'com.locate.royoorders',
+    android: 'com.locate.royoorders',
+  }),
+  georgiacollective: Platform.select({
+    ios: 'com.georgiacollective.royoorders',
+    android: 'com.georgiacollective.royoorders',
+  }),
+  otgWeeds: Platform.select({
+    ios: 'com.otgweeds.royoorders',
+    android: 'com.otgweeds.royoorders',
   }),
 };
 

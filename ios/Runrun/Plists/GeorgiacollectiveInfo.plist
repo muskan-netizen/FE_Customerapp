@@ -14,10 +14,10 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
+	<key>CFBundlePackageType</key> 
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(PROJECT_APP_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -52,9 +52,19 @@
 				<string>fb$(PROJECT_FACEBOOK_ID)</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>$(CODE_PUSH_KEY)</string>
 	<key>FacebookAppID</key>
 	<string>$(PROJECT_FACEBOOK_ID)</string>
 	<key>FacebookDisplayName</key>
@@ -72,6 +82,21 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>codepush.appcenter.ms</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>codepush.blob.core.windows.net</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>codepushupdates.azureedge.net</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -81,8 +106,14 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to microphone to get your voice to search Products and vendors.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access to speech recognition to get speech results.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
+	<key>NSContactsUsageDescription</key>
+	<string>$(PRODUCT_NAME) requires contacts access to function properly.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -90,7 +121,7 @@
 	<key>NSLocationUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to access your current location to get the your address and to show in app</string>
+	<string>$(PRODUCT_NAME) would like to access your current location to show nearby vendors or products</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
 	<key>PROJECT_GOOGLE_PLACE_KEY</key>
@@ -130,6 +161,9 @@
 		<string>Eina02-Regular.ttf</string>
 		<string>Eina02-Bold.ttf</string>
 		<string>Eina02-SemiBold.ttf</string>
+		<string>Metropolis-Bold.otf</string>
+		<string>Metropolis-Regular.otf</string>
+		<string>Metropolis-SemiBold.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

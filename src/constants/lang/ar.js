@@ -945,5 +945,7 @@ export default {
   START_CHAT: 'Start Chat',
   RECENTORDERS: 'الطلبيات الأخيرة',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
-  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
+  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
+  TOLL_FEE:"Toll Fee",
+  SERVICE_CHARGES:"Service Charges"
 };
