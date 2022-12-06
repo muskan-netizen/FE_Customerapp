@@ -475,6 +475,7 @@ const shortCodes = {
   locate: 'f9f1f8',
   georgiacollective: '1d7bf7',
   otgWeeds: '2a3af8',
+  rumbella: 'fd2e2f',
 };
 
 const appIds = {
@@ -2365,6 +2366,10 @@ const appIds = {
   otgWeeds: Platform.select({
     ios: 'com.otgweeds.royoorders',
     android: 'com.otgweeds.royoorders',
+  }),
+  rumbella: Platform.select({
+    ios: 'com.rumbella.royoorders',
+    android: 'com.rumbella.royoorders',
   }),
 };
 
