@@ -83,7 +83,6 @@ export default function ProductDetail({route, navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const {data} = route.params;
-  console.log(data, 'dataaaaaa');
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -1130,7 +1129,6 @@ export default function ProductDetail({route, navigation}) {
     const addon_options = [];
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
         if (j?.value == true) {
           addon_ids.push(j?.addon_id);
           addon_options.push(j?.id);
@@ -1650,8 +1648,6 @@ export default function ProductDetail({route, navigation}) {
                     </View>
                   )}
                 </View>
-                {console.log(typeId, 'typeId....typeId')}
-
                 {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{justifyContent: 'center'}}>
                     <Text
@@ -1678,6 +1674,7 @@ export default function ProductDetail({route, navigation}) {
                   style={{
                     flexDirection: 'row',
                     marginTop: moderateScaleVertical(10),
+                    marginHorizontal: moderateScale(10),
                   }}>
                   <Image source={imagePath.icRefundable} />
                   <Text
@@ -1687,7 +1684,10 @@ export default function ProductDetail({route, navigation}) {
                       fontSize: textScale(12),
                       color: colors.textGrey,
                     }}>
-                    We have a{' '}
+                    We have{' '}
+                    {productDetailData?.is_return_days
+                      ? productDetailData?.return_days + ' days '
+                      : ''}
                     {productDetailData?.replaceable ? 'replaceable' : ''}
                     {productDetailData?.replaceable &&
                     productDetailData?.returnable

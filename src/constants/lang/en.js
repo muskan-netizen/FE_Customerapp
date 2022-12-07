@@ -1011,4 +1011,11 @@ Amount`,
   RETURN_REQUEST: 'Return request',
   DOYOUWANTTOREPLACEYOURORDER:
     'Please report issues here to log a replacement request.',
+  REASON_FOR_REPLACEMENT: 'Reason for replace product',
+  CHOOSE_REASON_TO_REPLACE_PRODUCT:
+    'Choose your reason to replace the product.',
+  REPLACE: 'Replace',
+  SELECT_CANCELLATION_REASON: 'Select cancellation reason',
+  PLEASE_ENTER_CANCELLATION_REASON: 'Please enter cancellation reason',
+  CANCELLATION_REQUEST: 'Cancellation request',
 };

@@ -210,14 +210,10 @@ export default function MyOrders(props) {
         },
       )
       .then((res) => {
-        console.log(res, 'res my orders >>>');
+        console.log(res, '<=== response my orders');
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
-          // activeOrders:
-          //   pageActive == 1
-          //     ? res.data.data
-          //     : [...activeOrders, ...res.data.data],
           isLoading: false,
           isRefreshing: false,
         });

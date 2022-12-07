@@ -508,19 +508,6 @@ export default function DashBoardFive({
     );
   };
 
-  const renderSale = ({item}) => {
-    return (
-      <ProductsComp
-        // isDiscount
-        item={item}
-        imageStyle={{height: moderateScale(186)}}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-      />
-    );
-  };
-
   const scrollRef = React.useRef(null);
   useScrollToTop(scrollRef);
 

@@ -1187,7 +1187,6 @@ export default function Products({route, navigation}) {
             )}
           </View>
         </View>
-        {console.log(categoryInfo, 'categoryInfo....categoryInfo')}
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{marginHorizontal: moderateScale(20)}}>
@@ -3412,7 +3411,6 @@ export default function Products({route, navigation}) {
           // onClose();
         })
         .catch((error) => {
-          console.log('called...2', addonSet);
           errorMethodSecond(error, addonSet);
         });
       return;
@@ -3695,8 +3693,6 @@ export default function Products({route, navigation}) {
               </TouchableWithoutFeedback>
             ) : null}
           </View>
-
-          {console.log(isVisibleModal, 'isVisibleModal')}
 
           {!!typeId && typeId == 8 ? (
             <View>

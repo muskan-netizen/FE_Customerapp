@@ -246,7 +246,6 @@ export default function ReplaceOrder({navigation, route}) {
     if (!isEmpty(addonSetData)) {
       addonSetData.map((i, inx) => {
         i.setoptions.map((j, jnx) => {
-          console.log(j, 'J');
           if (j?.value == true) {
             formdata.append('addon_ids[]', j?.addon_id);
             formdata.append('addon_options[]', j?.id);
@@ -751,7 +750,7 @@ export default function ReplaceOrder({navigation, route}) {
                 fontFamily: fontFamily.medium,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ,
               }}>
-              {'Choose your reason to replace the product.'}
+              {strings.CHOOSE_REASON_TO_REPLACE_PRODUCT}
             </Text>
           </View>
 
@@ -910,7 +909,7 @@ export default function ReplaceOrder({navigation, route}) {
                     ? MyDarkTheme.colors.text
                     : colors.textGreyJ,
                 }}>
-                Reason for replace product
+                {strings.REASON_FOR_REPLACEMENT}
               </Text>
             </View>
 
@@ -980,12 +979,11 @@ export default function ReplaceOrder({navigation, route}) {
                 ]}
                 textStyle={styles.textStyle}
                 onPress={_submitReplaceOrder}
-                btnText={'Replace'}
+                btnText={strings.REPLACE}
               />
             </View>
           </View>
         </View>
-        {console.log(addonSet, 'addonSet....addonSet')}
         <AddonModal
           productdetail={productDetailData}
           isVisible={isVisibleAddonModal}

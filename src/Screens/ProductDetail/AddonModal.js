@@ -73,11 +73,7 @@ export default function AddonModal({
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
-    console.log(i, 'i>>>i');
-    console.log(newArray, 'newArray>>>newArray');
-    console.log(addonSetData, 'addonSetData>>>addonSetData');
     let find = addonSetData.find((x) => x?.addon_id == i?.addon_id);
-    console.log(find, 'find>>>find');
 
     updateState({
       addonSetData: addonSetData.map((vi, vnx) => {
@@ -92,7 +88,6 @@ export default function AddonModal({
                     incrementedValue = incrementedValue + 1;
                   }
                 });
-                console.log(incrementedValue, 'incrementedValue');
                 if (incrementedValue == vi?.max_select && !j.value) {
                   return {
                     ...j,

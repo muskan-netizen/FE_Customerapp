@@ -1,6 +1,6 @@
 import {useScrollToTop} from '@react-navigation/native';
 import _, {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -8,9 +8,10 @@ import {
   Platform,
   RefreshControl,
   ScrollView,
+  StyleSheet,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -34,7 +35,7 @@ import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
-import ProductsComp from '../../../Components/ProductsComp';
+import ProductsComp2 from '../../../Components/ProductsComp2';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -96,31 +97,18 @@ export default function DashBoardFive({
     slider1ActiveSlide: 0,
     newCategoryData: [],
     isVendorColumnList: false,
-    vendorsData: [],
     showMenu: false,
     currSelectedFilter: null,
     categoriesData: [],
     seeMore: false,
   });
-  const {slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore} =
-    state;
+  const {slider1ActiveSlide, showMenu, categoriesData, seeMore} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   console.log(appMainData, 'appMainDataappMainData');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  useEffect(() => {
-    if (appMainData?.vendors && !isEmpty(appMainData?.vendors)) {
-      updateState({
-        vendorsData: _.values(appMainData?.vendors),
-      });
-      return;
-    }
-    updateState({
-      vendorsData: [],
-    });
-  }, [appMainData?.vendors]);
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
       if (appStyle?.homePageLayout == 5) {
@@ -205,7 +193,7 @@ export default function DashBoardFive({
       console.log(error, 'error');
     }
   };
-  const _renderItem = ({item, index}) => {
+  const _renderCategories = ({item, index}) => {
     return (
       <View
         style={{
@@ -222,7 +210,10 @@ export default function DashBoardFive({
   };
 
   const _renderVendors = ({item, index}) => (
-    <View style={{marginHorizontal: moderateScale(16)}}>
+    <View
+      style={{
+        width: width - width / 3.5,
+      }}>
       <MarketCard3
         data={item}
         onPress={() => onPressVendor(item)}
@@ -240,206 +231,16 @@ export default function DashBoardFive({
     });
   };
 
-  const renderBanners = ({item}) => {
-    const imageUrl = getImageUrl(
-      item.image.image_fit,
-      item.image.image_path,
-      appStyle?.homePageLayout === 5
-        ? '800/600'
-        : DeviceInfo.getBundleId() == appIds.masa
-        ? '800/600'
-        : '400/600',
-    );
-    return (
-      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
-        <FastImage
-          source={{
-            uri: imageUrl,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
-          }}
-          style={{
-            height:
-              appStyle?.homePageLayout == 5
-                ? moderateScale(140)
-                : DeviceInfo.getBundleId() == appIds.masa
-                ? moderateScale(260)
-                : height / 3.8,
-            width:
-              appStyle?.homePageLayout == 5
-                ? width / 1.2
-                : DeviceInfo.getBundleId() == appIds.masa
-                ? width / 1.1
-                : moderateScale(160),
-            borderRadius: moderateScale(16),
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.greyColor,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </TouchableOpacity>
-    );
-  };
-
-  const renderLaundryBanners = ({item}) => {
-    const imageUrl = getImageUrl(
-      item?.image?.image_fit,
-      item?.image?.image_path,
-      '400/600',
-    );
-
-    return (
-      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
-        <FastImage
-          source={{
-            uri: imageUrl,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
-          }}
-          style={{
-            height: moderateScaleVertical(160),
-            width: width - moderateScale(50),
-            borderRadius: moderateScale(16),
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </TouchableOpacity>
-    );
-  };
-
-  const categoriesBanners = () => {
-    return (
-      <View style={{marginTop: moderateScaleVertical(16)}}>
-        {appMainData &&
-          appMainData?.categories &&
-          !!appMainData?.categories?.length && (
-            <View
-              style={{
-                // marginHorizontal: moderateScale(8),
-                marginVertical: moderateScaleVertical(16),
-              }}>
-              {appStyle?.homePageLayout === 5 ? (
-                <FlatList
-                  key={'7'}
-                  numColumns={4}
-                  data={categoriesData}
-                  keyExtractor={(item) => item?.id?.toString()}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={_renderItem}
-                  ItemSeparatorComponent={() => (
-                    <View style={{marginTop: moderateScale(24)}} />
-                  )}
-                />
-              ) : (
-                <FlatList
-                  key={'6'}
-                  horizontal
-                  data={categoriesData}
-                  keyExtractor={(item) => item?.id?.toString()}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={_renderItem}
-                  ItemSeparatorComponent={() => (
-                    <View style={{marginTop: moderateScale(24)}} />
-                  )}
-                  ListHeaderComponent={() => (
-                    <View style={{marginLeft: moderateScale(12)}} />
-                  )}
-                  ListFooterComponent={() => (
-                    <View style={{marginRight: moderateScale(12)}} />
-                  )}
-                />
-              )}
-              <View>
-                {appMainData?.categories.length > 8 &&
-                  appStyle?.homePageLayout === 5 && (
-                    <TouchableOpacity
-                      onPress={seeMoreCategories}
-                      activeOpacity={0.8}
-                      style={{
-                        borderWidth: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        paddingVertical: moderateScaleVertical(6),
-                        marginHorizontal: moderateScale(8),
-                        borderRadius: moderateScale(6),
-                        marginTop: moderateScaleVertical(16),
-                        borderColor: colors.borderColorB,
-                      }}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text
-                          style={{
-                            fontSize: textScale(10),
-                            fontFamily: fontFamily.regular,
-                            color: isDarkMode ? colors.white : colors.black,
-                          }}>
-                          {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
-                        </Text>
-                        <Image
-                          source={imagePath.icDropdown4}
-                          style={{
-                            tintColor: isDarkMode ? colors.white : colors.black,
-                            transform: [{rotate: seeMore ? '180deg' : '0deg'}],
-                            marginLeft: moderateScale(4),
-                          }}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  )}
-              </View>
-            </View>
-          )}
-        <View style={{}}>
-          {!!appData?.mobile_banners?.length &&
-          appStyle?.homePageLayout == 3 &&
-          getBundleId() !== appIds?.masa ? (
-            <Carousel
-              autoplay={true}
-              loop={true}
-              autoplayInterval={2000}
-              data={appMainData?.mobile_banners || appData?.mobile_banners}
-              renderItem={renderBanners}
-              sliderWidth={width}
-              itemWidth={moderateScale(180)}
-            />
-          ) : (
-            <View style={{marginTop: moderateScaleVertical(4)}}>
-              <FlatList
-                horizontal
-                data={appMainData?.mobile_banners || appData?.mobile_banners}
-                keyExtractor={(item) => item?.id?.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderBanners}
-                ItemSeparatorComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
-                )}
-                ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(16)}} />
-                )}
-                ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(16)}} />
-                )}
-              />
-            </View>
-          )}
-        </View>
-      </View>
-    );
-  };
-
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
       navigation.navigate(screenName, {data});
     };
-  const renderBrands = ({item}) => {
-    // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
-    const imageURI = getImageUrl(
-      item.image.proxy_url,
-      item.image.image_path,
-      '800/600',
-    );
+
+  const _renderBrands = ({item}) => {
+    const imageURI = item?.image?.proxy_url
+      ? getImageUrl(item.image.proxy_url, item.image.image_path, '800/600')
+      : item?.image_url;
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
     return (
       <TouchableOpacity
@@ -474,51 +275,6 @@ export default function DashBoardFive({
       data: data,
       type: type,
     });
-  };
-
-  const listHeader = (type, data = [], isViewAll = false) => {
-    return (
-      <View style={styles.viewAllVeiw}>
-        <Text
-          style={{
-            ...styles.exploreStoresTxt,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            marginTop: 0,
-          }}>
-          {type}
-        </Text>
-
-        {!!isViewAll && !!vendorsData && vendorsData.length > 1 && (
-          <TouchableOpacity onPress={() => onViewAll(type, data)}>
-            <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
-
-  const renderFeaturedProducts = ({item}) => {
-    return (
-      <ProductsComp
-        item={item}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-      />
-    );
-  };
-
-  const renderSale = ({item}) => {
-    return (
-      <ProductsComp
-        // isDiscount
-        item={item}
-        imageStyle={{height: moderateScale(186)}}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-      />
-    );
   };
 
   const scrollRef = React.useRef(null);
@@ -676,7 +432,7 @@ export default function DashBoardFive({
     );
   }
 
-  const vendorHeader = () => {
+  const vendorHeader = (item) => {
     if (appData?.profile?.preferences?.single_vendor) {
       return (
         <View
@@ -688,12 +444,7 @@ export default function DashBoardFive({
       );
     }
     return (
-      <View
-        key={Math.random()}
-        style={{
-          marginBottom:
-            getBundleId() == appIds.muvpod ? moderateScaleVertical(10) : 0,
-        }}>
+      <View key={Math.random()}>
         {getBundleId() == appIds.muvpod ? null : (
           <View style={{...styles.viewAllVeiw}}>
             <Text
@@ -705,15 +456,13 @@ export default function DashBoardFive({
                 flex: 1,
               }}>
               {getBundleId() == appIds.quickLube
-                ? vendorsData.length > 1
+                ? item?.data?.length > 1
                   ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`
                   : strings.BOOK_HERE
                 : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
-              {/* {strings.EXPLORE_STORES}{' '}
-            {appData?.profile?.preferences?.vendors_nomenclature} */}
             </Text>
 
-            {!!vendorsData && vendorsData.length > 1 && (
+            {item?.data?.length > 1 && (
               <TouchableOpacity
                 style={{marginHorizontal: moderateScale(4)}}
                 onPress={() => onViewAll('vendor', appMainData.vendors)}>
@@ -858,81 +607,9 @@ export default function DashBoardFive({
     );
   };
 
-  const _renderLaundryItem = ({item, index}) => {
+  const _renderProducts = ({item, index}) => {
     return (
-      <LaundryCategoryCard
-        data={item}
-        onPress={() => onPressAddLaundryItem(item)}
-        isLoading={
-          selectedHomeCategory?.id == item?.id ? isLoadingAddons : false
-        }
-      />
-    );
-  };
-
-  const laundryCategoriesBanners = () => {
-    return (
-      <View>
-        {!!appData?.mobile_banners?.length && (
-          <View
-            style={{
-              marginTop: moderateScaleVertical(4),
-            }}>
-            <FlatList
-              horizontal
-              data={appData?.mobile_banners}
-              keyExtractor={(item) => item?.id?.toString()}
-              showsHorizontalScrollIndicator={false}
-              renderItem={renderLaundryBanners}
-              ItemSeparatorComponent={() => (
-                <View style={{marginRight: moderateScale(12)}} />
-              )}
-              ListHeaderComponent={() => (
-                <View style={{marginLeft: moderateScale(16)}} />
-              )}
-              ListFooterComponent={() => (
-                <View style={{marginRight: moderateScale(16)}} />
-              )}
-            />
-          </View>
-        )}
-
-        {!isEmpty(appMainData?.categories) && (
-          <View style={{marginBottom: moderateScaleVertical(16)}}>
-            <Text
-              style={{
-                ...styles.exploreStoresTxt,
-                marginLeft: moderateScale(15),
-                marginVertical: moderateScale(20),
-              }}>
-              Select Service
-            </Text>
-
-            <FlatList
-              key={'6'}
-              data={categoriesData}
-              keyExtractor={(item) => item?.id?.toString()}
-              showsHorizontalScrollIndicator={false}
-              renderItem={_renderLaundryItem}
-              contentContainerStyle={{
-                paddingHorizontal: moderateScale(15),
-              }}
-              ItemSeparatorComponent={() => (
-                <View style={{marginTop: moderateScale(10)}} />
-              )}
-              ListHeaderComponent={() => (
-                <View style={{marginLeft: moderateScale(12)}} />
-              )}
-            />
-          </View>
-        )}
-      </View>
-    );
-  };
-
-  const renderProductTheme = ({item, index}) => {
-    return (
-      <ProductsComp
+      <ProductsComp2
         item={item}
         onPress={() =>
           navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
@@ -941,26 +618,16 @@ export default function DashBoardFive({
     );
   };
 
-  const renderProductsTheme = (item) => {
+  const productsThemeView = (item) => {
     return !isEmpty(item?.data) ? (
       <View>
-        <Text
-          style={{
-            ...styles.exploreStoresTxt,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-
-            marginHorizontal: moderateScale(16),
-            marginBottom: moderateScaleVertical(24),
-            marginTop: moderateScaleVertical(15),
-          }}>
-          {item?.title}
-        </Text>
+        {titleViewHome(item)}
 
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal
           data={item?.data}
-          renderItem={renderProductTheme}
+          renderItem={_renderProducts}
           keyExtractor={(item) => item?.id?.toString()}
           ItemSeparatorComponent={() => (
             <View style={{marginRight: moderateScale(16)}} />
@@ -978,12 +645,10 @@ export default function DashBoardFive({
     );
   };
 
-  const renderCategories = (item) => {
+  const categoriesView = (item) => {
     return !isEmpty(item?.data) ? (
-      <View
-        style={{
-          marginVertical: moderateScaleVertical(16),
-        }}>
+      <View>
+        {titleViewHome(item)}
         {appStyle?.homePageLayout === 5 ? (
           <FlatList
             key={'7'}
@@ -991,7 +656,7 @@ export default function DashBoardFive({
             data={item?.data}
             keyExtractor={(item) => item?.id?.toString()}
             showsHorizontalScrollIndicator={false}
-            renderItem={_renderItem}
+            renderItem={_renderCategories}
             ItemSeparatorComponent={() => (
               <View style={{marginTop: moderateScale(24)}} />
             )}
@@ -1003,7 +668,7 @@ export default function DashBoardFive({
             data={item?.data}
             keyExtractor={(item) => item?.id?.toString()}
             showsHorizontalScrollIndicator={false}
-            renderItem={_renderItem}
+            renderItem={_renderCategories}
             ItemSeparatorComponent={() => (
               <View style={{marginTop: moderateScale(24)}} />
             )}
@@ -1059,47 +724,206 @@ export default function DashBoardFive({
 
   const vendorsView = (item) => {
     return !isEmpty(item?.data) ? (
-      <FlatList
-        scrollEnabled={false}
-        ListHeaderComponent={vendorHeader()}
-        showsVerticalScrollIndicator={false}
-        alwaysBounceVertical={true}
-        // ref={ref}
-        data={item?.data}
-        keyExtractor={(item) => item?.id?.toString()}
-        showsHorizontalScrollIndicator={false}
-        renderItem={_renderVendors}
-        ListEmptyComponent={() => (
-          <View>
-            <FastImage
-              source={imagePath.noDataFound}
-              resizeMode="contain"
-              style={{
-                width: moderateScale(140),
-                height: moderateScale(140),
-                alignSelf: 'center',
-                marginTop: moderateScaleVertical(30),
-              }}
-            />
+      <View>
+        {vendorHeader(item)}
+        <FlatList
+          horizontal
+          alwaysBounceVertical={true}
+          data={item?.data}
+          keyExtractor={(item) => item?.id?.toString()}
+          showsHorizontalScrollIndicator={false}
+          renderItem={_renderVendors}
+          ListHeaderComponent={() => (
+            <View style={{marginLeft: moderateScale(16)}} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{marginLeft: moderateScale(16)}} />
+          )}
+          ListEmptyComponent={() => (
+            <View>
+              <FastImage
+                source={imagePath.noDataFound}
+                resizeMode="contain"
+                style={{
+                  width: moderateScale(140),
+                  height: moderateScale(140),
+                  alignSelf: 'center',
+                  marginTop: moderateScaleVertical(30),
+                }}
+              />
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: textScale(11),
+                  fontFamily: fontFamily.regular,
+                  marginHorizontal: moderateScale(10),
+                  lineHeight: moderateScale(20),
+                  marginTop: moderateScale(5),
+                }}>
+                {businessType == 'home_service'
+                  ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+                  : `${strings.SORRY_MSG}`}
+              </Text>
+            </View>
+          )}
+          ItemSeparatorComponent={() => (
+            <View style={{width: moderateScale(10)}} />
+          )}
+        />
+      </View>
+    ) : (
+      <></>
+    );
+  };
+
+  const _renderBestVendors = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => onPressVendor(item)}
+        activeOpacity={0.7}
+        style={{
+          height: moderateScaleVertical(140),
+          width: width - width / 3.5,
+          borderRadius: moderateScale(10),
+          overflow: 'hidden',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <FastImage
+          source={{uri: item?.logo?.image_s3_url}}
+          style={{
+            ...StyleSheet.absoluteFill,
+            height: moderateScaleVertical(140),
+            width: width - width / 3.5,
+          }}
+        />
+        <View
+          style={{
+            ...StyleSheet.absoluteFill,
+            height: moderateScaleVertical(140),
+            width: width - width / 3.5,
+            backgroundColor: colors.blackOpacity43,
+          }}
+        />
+        {!!item?.rating !== '0.0' && (
+          <View
+            style={{...styles.hdrRatingTxtView, position: 'absolute', top: 0}}>
             <Text
               style={{
-                textAlign: 'center',
-                fontSize: textScale(11),
-                fontFamily: fontFamily.regular,
-                marginHorizontal: moderateScale(10),
-                lineHeight: moderateScale(20),
-                marginTop: moderateScale(5),
+                ...styles.ratingTxt,
+                fontFamily: fontFamily.medium,
               }}>
-              {businessType == 'home_service'
-                ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
-                : `${strings.SORRY_MSG}`}
+              {Number(item?.rating).toFixed(1)}
             </Text>
+            <Image
+              style={styles.starImg}
+              source={imagePath.star}
+              resizeMode="contain"
+            />
           </View>
         )}
-        ItemSeparatorComponent={() => (
-          <View style={{height: moderateScale(10)}} />
-        )}
-      />
+        <Text
+          style={{
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(18),
+            color: colors.white,
+          }}>
+          {item?.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const bestSellersView = (item) => {
+    return !isEmpty(item?.data) ? (
+      <View>
+        {titleViewHome(item)}
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={item?.data}
+          renderItem={_renderBestVendors}
+          keyExtractor={(item) => item?.id?.toString()}
+          ItemSeparatorComponent={() => (
+            <View style={{marginRight: moderateScale(16)}} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{marginLeft: moderateScale(16)}} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{marginRight: moderateScale(16)}} />
+          )}
+        />
+      </View>
+    ) : (
+      <></>
+    );
+  };
+
+  const brandsView = (item) => {
+    return !isEmpty(item?.data) ? (
+      <View>
+        {titleViewHome(item)}
+
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={item?.data}
+          renderItem={_renderBrands}
+          keyExtractor={(item) => item?.id?.toString()}
+          ItemSeparatorComponent={() => (
+            <View style={{marginRight: moderateScale(12)}} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{marginLeft: moderateScale(16)}} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{marginRight: moderateScale(16)}} />
+          )}
+        />
+      </View>
+    ) : (
+      <></>
+    );
+  };
+
+  const titleViewHome = (item) => {
+    return (
+      <Text
+        style={{
+          ...styles.exploreStoresTxt,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          marginHorizontal: moderateScale(16),
+          marginVertical: moderateScaleVertical(15),
+        }}>
+        {item?.title}
+      </Text>
+    );
+  };
+
+  const _renderSpotlightDeals = (item) => {};
+
+  const spotlightDealsView = (item) => {
+    return !isEmpty(item?.data) ? (
+      <View>
+        {titleViewHome(item)}
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={item?.data}
+          renderItem={_renderSpotlightDeals}
+          keyExtractor={(item) => item?.id?.toString()}
+          ItemSeparatorComponent={() => (
+            <View style={{marginRight: moderateScale(12)}} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{marginLeft: moderateScale(16)}} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{marginRight: moderateScale(16)}} />
+          )}
+        />
+      </View>
     ) : (
       <></>
     );
@@ -1111,12 +935,19 @@ export default function DashBoardFive({
         {item?.slug == 'new_products' ||
         item?.slug == 'featured_products' ||
         item?.slug == 'on_sale' ||
-        item?.slug == 'most_popular_products' ? (
-          <View>{renderProductsTheme(item)}</View>
+        item?.slug == 'most_popular_products' ||
+        item?.slug == 'single_category_products' ? (
+          <View>{productsThemeView(item)}</View>
         ) : item?.slug == 'vendors' ? (
           <View>{vendorsView(item)}</View>
         ) : item?.slug == 'nav_categories' ? (
-          <View>{renderCategories(item)}</View>
+          <View>{categoriesView(item)}</View>
+        ) : item?.slug == 'best_sellers' ? (
+          <View>{bestSellersView(item)}</View>
+        ) : item?.slug == 'brands' ? (
+          <View>{brandsView(item)}</View>
+        ) : item?.slug == 'spotlight_deals' ? (
+          <View>{spotlightDealsView(item)}</View>
         ) : (
           <></>
         )}
@@ -1137,10 +968,8 @@ export default function DashBoardFive({
             tintColor={themeColors.primary_color}
           />
         }>
-        {console.log(appMainData?.homePageLabels, 'skdjlksdjfsd')}
         {showAllTempCartOrders()}
         <Animatable.View animation={'fadeInUp'} delay={200}>
-          {!!isGetEstimation ? laundryCategoriesBanners() : categoriesBanners()}
           <FlatList
             data={appMainData?.homePageLabels}
             renderItem={renderHomePageItems}

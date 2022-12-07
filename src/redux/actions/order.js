@@ -7,6 +7,7 @@ import {
   GENERATE_INVOICE,
   GET_ALL_ORDERS,
   GET_ALL_VENDOR_ORDERS,
+  GET_CANCEL_REASONS,
   GET_DETAIL_OF_PRODUCT_FOR_REPLACE,
   GET_DRIVER_RATING_DETAIL,
   GET_ORDER_DETAIL,
@@ -378,4 +379,8 @@ export function getDetailOfProductToReplace(url = '', data = {}, headers = {}) {
 
 export function submitProductForReplacement(data = {}, headers = {}) {
   return apiPost(SUBMIT_PRODUCT_FOR_REPLACEMENT, data, headers);
+}
+
+export function getCancellationReason(data = {}, headers = {}) {
+  return apiGet(GET_CANCEL_REASONS, data, headers);
 }
