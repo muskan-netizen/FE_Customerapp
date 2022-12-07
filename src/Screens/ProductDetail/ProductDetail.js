@@ -1729,11 +1729,9 @@ export default function ProductDetail({ route, navigation }) {
                             onPress={() => productIncrDecreamentForCart(1)}
                             hitSlop={hitSlopProp}>
                             <Text
-                              style={{
-                                flex: 0.2,
-                              }}>
-                              +
-                            </Text>
+                              style={{...commonStyles.mediumFont14,
+                                color: themeColors?.primary_color,
+                                fontFamily: fontFamily.bold,}}>+</Text>
                           </TouchableOpacity>
                         </View> : null}
 
