@@ -2191,8 +2191,8 @@ const appIds = {
     android: 'com.spryton.royoorders',
   }),
   nittosadai: Platform.select({
-    ios: 'com.nittosadai.royoorders',
-    android: 'com.nittosadai.royoorders',
+    ios: 'com.nittosadai.orders',
+    android: 'com.nittosadai.orders',
   }),
   clickokart: Platform.select({
     ios: 'com.clickokart.royoorders',

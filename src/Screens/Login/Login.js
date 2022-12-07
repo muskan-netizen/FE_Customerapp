@@ -147,7 +147,6 @@ export default function Login({navigation}) {
     }
     clonedState = cloneDeep(state);
   }, []);
-
   //Update states
   const updateState = (data) => setState((state) => ({...state, ...data}));
   //Styles in app
@@ -168,6 +167,7 @@ export default function Login({navigation}) {
     cca2PhoneOnly,
     calllingCodePhoneOnly,
   } = state;
+  console.log(calllingCodePhoneOnly,'mobilNomobilNo')
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
@@ -247,7 +247,7 @@ export default function Login({navigation}) {
       data['app_hash_key'] = appHashKey;
     }
     updateState({isLoading: true});
-
+console.log(data,'datadata')
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -266,9 +266,9 @@ export default function Login({navigation}) {
               )
                 ? phoneNumberOnly
                 : mobilNo?.phoneNo,
-              dialCode: mobilNo?.callingCode,
-              countryData: mobilNo?.cca2,
-              data: res.data,
+              dialCode: res?.data?.dialCode,
+              countryData: res?.data?.countryData,
+              data: res?.data,
             });
           } else {
             checkIfEmailVerification(res.data);
@@ -438,6 +438,7 @@ export default function Login({navigation}) {
   };
 
   const _onCountryChange = (data) => {
+    console.log(data,'datatatttt')
     getValuebyKeyInArray('is_phone_signup', additional_preferences)
       ? updateState({
           cca2PhoneOnly: data.cca2,
@@ -453,6 +454,7 @@ export default function Login({navigation}) {
           // cca2: data.cca2,
           // callingCode: data.mobilNo.callingCode[0],
         });
+       
     return;
   };
 
@@ -573,7 +575,8 @@ export default function Login({navigation}) {
               marginBottom: 20,
             }}
           />
-        ) : (
+        )
+         : (
           <View>
             {!phoneInput && (
               <>
