@@ -2009,7 +2009,7 @@ const appIds = {
   }),
   laundroZone: Platform.select({
     ios: 'com.laundroZone.order',
-    android: 'com.laundroZone.order',
+    android: 'com.laundroZone.orderapplication',
   }),
   taxiolgy: Platform.select({
     ios: 'com.taxiolgy.order',
@@ -2029,7 +2029,7 @@ const appIds = {
   }),
   mrVeloz: Platform.select({
     ios: 'com.mrVeloz.order',
-    android: 'com.mrVeloz.order',
+    android: 'com.mrVeloz.orderapp',
   }),
   greenCab: Platform.select({
     ios: 'com.greenCab.order',

@@ -1676,7 +1676,7 @@ export default function Products({route, navigation}) {
           code: appData.profile.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-          latitude: appMainData?.reqData?.latitude ,
+          latitude: appMainData?.reqData?.latitude,
           longitude: appMainData?.reqData?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },

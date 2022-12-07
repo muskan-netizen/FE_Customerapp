@@ -7047,7 +7047,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.laundroZone.order'
+            applicationId 'com.laundroZone.orderapplication'
             resValue "string", "app_name", "Laundro Zone" 
             resValue "string", "host_name", ""
             }
@@ -7097,7 +7097,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.mrVeloz.order'
+            applicationId 'com.mrVeloz.orderapp'
             resValue "string", "app_name", "Mr Veloz" 
             resValue "string", "host_name", ""
             }
@@ -7922,6 +7922,16 @@ android {
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.rumbella.royoorders'
                 resValue "string", "app_name", "Rumbella"
+                resValue "string", "host_name", ""
+            }
+                                                 usVetsDeliver {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.UsVetsDeliver.royoorders'
+                resValue "string", "app_name", "UsVetsDeliver"
                 resValue "string", "host_name", ""
             }
     }
