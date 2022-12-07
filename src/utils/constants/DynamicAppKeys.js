@@ -1296,7 +1296,7 @@ const appIds = {
     android: 'com.customer.Ihelp',
   }),
   ullaz: Platform.select({
-    ios: 'com.ullazOrder',
+    ios: 'com.ullaz',
     android: 'com.ullazOrder',
   }),
   privatepremiumpickups: Platform.select({

@@ -235,6 +235,7 @@ export default function Addaddress({ navigation, route }) {
   const { profile } = appData;
 
   const getAllPickUpVendors = (lat, lng) => {
+    console.log(appData,"appDataappData......");
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
@@ -253,6 +254,7 @@ export default function Addaddress({ navigation, route }) {
         latlongData
       )
       .then((res) => {
+        console.log(res,'resss>>>>>>>>>');
         updateState({
           isLoading: false,
           isRefreshing: false,

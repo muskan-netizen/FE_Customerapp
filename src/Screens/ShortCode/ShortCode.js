@@ -63,7 +63,6 @@ export default function ShortCode({route, navigation}) {
     LoadingScreen,
     videoDurationEnded,
     allAppData,
-
     initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -2962,6 +2961,7 @@ export default function ShortCode({route, navigation}) {
   }, [shortCode, isShortcodePrefilled]);
 
   const checkScreen = () => {
+    
     initApiHit();
     updateState({isShortcodePrefilled: true});
   };
@@ -2995,8 +2995,10 @@ export default function ShortCode({route, navigation}) {
         code: shortCode,
       };
     }
+ 
     actions
       .initApp({}, header, false, null, null, true)
+      
       .then((res) => {
         console.log('header response--->', res);
         if (res.data.mobile_banners.length > 0) {
@@ -3183,9 +3185,12 @@ export default function ShortCode({route, navigation}) {
   };
 
   useEffect(() => {
+    
     (async () => {
       if (changeInShortCode) {
+
         const saveShortCode = await getItem('saveShortCode');
+        
         if (saveShortCode && shortCode != saveShortCode) {
           actions.userLogout();
           actions.cartItemQty('');
