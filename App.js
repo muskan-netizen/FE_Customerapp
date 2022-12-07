@@ -63,7 +63,6 @@ const App = () => {
     AsyncStorage.removeItem('BleDevice2');
   };
 
-
   const [internetConnection, setInternet] = useState(true);
 
   const appMainData = store.getState().home;
@@ -114,7 +113,12 @@ const App = () => {
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
-    if (  ( getBundleId() == appIds.masa)  || ( getBundleId() == appIds.muvpod) || ( getBundleId() == appIds.hezniTaxi) || (getBundleId() == appIds.flank)){
+    if (
+      getBundleId() == appIds.masa ||
+      getBundleId() == appIds.muvpod ||
+      getBundleId() == appIds.hezniTaxi ||
+      getBundleId() == appIds.flank
+    ) {
       setTimeout(() => {
         SplashScreen.hide();
       }, 200);

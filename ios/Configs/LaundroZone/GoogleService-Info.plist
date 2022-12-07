@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>214772883502-6umjmbe7o14vj4ako129rkefdtqlajfm.apps.googleusercontent.com</string>
+	<string>583315525929-n85nmrjh2jn8vab2spphfpt2uajiffl2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.214772883502-6umjmbe7o14vj4ako129rkefdtqlajfm</string>
+	<string>com.googleusercontent.apps.583315525929-n85nmrjh2jn8vab2spphfpt2uajiffl2</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>214772883502-6dt4k9gmit5qovgp8cfj6ulp16suu8db.apps.googleusercontent.com</string>
+	<string>583315525929-a9q39moq3ds6a8jhd3kum8b75ff2e0he.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCcgDdCrX4VLpPqAQ7W9BmM_AGqnO8uC-4</string>
+	<string>AIzaSyBWsQZEIbiJ0HhpubMAtDQINYsJbgO1hiA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>214772883502</string>
+	<string>583315525929</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.laundroZone.order</string>
+	<string>com.laundroZone.orderapplication</string>
 	<key>PROJECT_ID</key>
-	<string>laundrozone-61740</string>
+	<string>laundrozone-b39b6</string>
 	<key>STORAGE_BUCKET</key>
-	<string>laundrozone-61740.appspot.com</string>
+	<string>laundrozone-b39b6.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:214772883502:ios:b745949c745283b29ebfbf</string>
+	<string>1:583315525929:ios:ca969d49a4d9a64d906738</string>
 </dict>
 </plist>

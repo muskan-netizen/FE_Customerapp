@@ -89,6 +89,7 @@ export default function SelctFromMap({
           json.results.every((val, i) => {
             console.log('my val', val);
             if (
+              val.types.includes('plus_code') ||
               val.types.includes('street_address') ||
               val.types.includes('route') ||
               val.types.includes('postal_code') ||
