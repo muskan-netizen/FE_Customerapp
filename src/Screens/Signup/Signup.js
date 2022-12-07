@@ -191,11 +191,13 @@ export default function Signup({navigation}) {
 
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
+
     let formdata = new FormData();
     let fcmToken = await AsyncStorage.getItem('fcmToken');
 
     const checkValid = isValidData();
     if (!checkValid) {
+      
       return;
     }
 
@@ -203,6 +205,7 @@ export default function Signup({navigation}) {
       showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
       return;
     }
+    
     {
       !!appData?.profile?.preferences?.concise_signup
         ? formdata.append('name', phoneNumber)
@@ -277,6 +280,7 @@ export default function Signup({navigation}) {
     }
 
     if (!isRequired) {
+     
       return;
     }
     console.log(formdata, 'formdata>><');

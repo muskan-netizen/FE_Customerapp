@@ -123,7 +123,7 @@ export default function Products({route, navigation}) {
   let selectedFilters = useRef(null);
   // console.log(route.params, 'route.params');
   const {data} = route.params;
-
+console.log(data, "data..........");
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -3421,7 +3421,7 @@ export default function Products({route, navigation}) {
         })
         .catch((error) => {
           console.log('called...2', addonSet);
-          errorMethodSecond(error, addonSet);
+          errorMethodSecond(error, addonSet,'dsfghghdfhfdgffsdehg');
         });
       return;
     }
