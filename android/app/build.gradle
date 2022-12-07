@@ -204,15 +204,15 @@ android {
  
     flavorDimensions "appType"
     productFlavors{
-       awamer{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.awamer.royoorders'
-            resValue "string", "app_name", "Awamer" 
-            resValue "string", "host_name", ""
+         homeric{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.homeric'
+                resValue "string", "app_name", "Homeric"
+                resValue "string", "host_name", ""  
             }
     }
     // productFlavors {
