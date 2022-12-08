@@ -57,20 +57,15 @@ import {
   MenuTrigger,
   MenuProvider,
 } from 'react-native-popup-menu';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 let clickedIndx = null;
 let clickedItem = null;
 let isVendorLogo = false;
 
-const SECTIONS = [
-  {
-    name: 'First',
-    content: 'Lorem ipsum...',
-  },
-  {
-    name: 'Second',
-    content: 'Lorem ipsum...',
-  },
+let vendorTypes = [
+  {label: 'Vendor', value: 'vendor'},
+  {label: 'Seller', value: 'seller'},
 ];
 
 export default function WebLinks({navigation, route}) {
@@ -121,7 +116,7 @@ export default function WebLinks({navigation, route}) {
     isDelivery: false,
     vendorRegDocs: [],
     vendorRegisterationDocs: [],
-    driverRegDocs: [],
+    pageData: [],
     driverPic: '',
     driverName: '',
     driverPhoneNumber: '',
@@ -183,7 +178,7 @@ export default function WebLinks({navigation, route}) {
     isLoading,
     htmlContent,
     vendorRegisterationDocs,
-    driverRegDocs,
+    pageData,
     driverPic,
     driverName,
     driverPhoneNumber,
@@ -213,6 +208,9 @@ export default function WebLinks({navigation, route}) {
     activeSections,
     isProfilePhoto,
   } = state;
+
+  const [isVendor, setIsVendor] = useState(false);
+  const [isSeller, setIsSeller] = useState(false);
 
   useEffect(() => {
     //  isDineIn: false,
@@ -248,7 +246,7 @@ export default function WebLinks({navigation, route}) {
         updateState({
           htmlContent: res?.data?.page_detail?.primary?.description,
           vendorRegDocs: res?.data?.vendor_registration_documents,
-          driverRegDocs: res?.data,
+          pageData: res?.data,
           driverTagsAry: res?.data?.tags,
         });
       })
@@ -269,9 +267,9 @@ export default function WebLinks({navigation, route}) {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
   };
-  console.log(driverRegDocs, 'driverRegDocsdriverRegDocs');
+  console.log(pageData, 'pageData');
   const isValidData = () => {
-    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+    if (pageData?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
         name: driverName,
         phoneNumber: driverPhoneNumber,
@@ -312,16 +310,15 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _onSubmit = () => {
-    console.log(driverRegistrationDocs, 'driverRegistrationDocs');
     const checkValid = isValidData();
     if (!checkValid) {
       return;
     }
 
-    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+    if (pageData?.page_detail?.primary?.type_of_form == 2) {
       // var isRequired = true;
 
-      // driverRegDocs?.driver_registration_documents.map((itm, indx) => {
+      // pageData?.driver_registration_documents.map((itm, indx) => {
       //   if (itm.is_required) {
       //     if (isRequired) {
       //       if (isEmpty(driverRegistrationDocs)) {
@@ -509,7 +506,7 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _dynamicTextInputChange = (item, indx, mainItem) => {
-    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+    if (pageData?.page_detail?.primary?.type_of_form == 2) {
       const driverRegistrationDocsAry = [...driverRegistrationDocs];
       driverRegistrationDocsAry[indx] = {
         item: mainItem,
@@ -540,7 +537,7 @@ export default function WebLinks({navigation, route}) {
           type: DocumentPicker.types.pdf,
         });
 
-        if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+        if (pageData?.page_detail?.primary?.type_of_form == 2) {
           const driverRegistrationDocsAry = [...driverRegistrationDocs];
           driverRegistrationDocsAry[indx] = {
             item: item,
@@ -593,7 +590,7 @@ export default function WebLinks({navigation, route}) {
           .then((res) => {
             console.log(res, 'ressifIndx');
             if (res && res.data) {
-              if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+              if (pageData?.page_detail?.primary?.type_of_form == 2) {
                 // console.log(clickedIndx,"clickedIndx")
                 if (clickedIndx != null && isProfilePhoto) {
                   {
@@ -702,7 +699,7 @@ export default function WebLinks({navigation, route}) {
                     ? MyDarkTheme.colors.text
                     : colors.borderLight,
                 }}>
-                {driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                {pageData?.page_detail?.primary?.type_of_form == 2
                   ? driverRegistrationDocs[index]?.fileData
                     ? driverRegistrationDocs[index]?.fileData?.name
                     : strings.NO_FILE_CHOSEN
@@ -711,10 +708,6 @@ export default function WebLinks({navigation, route}) {
                   : strings.NO_FILE_CHOSEN}
               </Text>
             </View>
-          )}
-          {console.log(
-            driverRegistrationDocs[1]?.fileData?.path,
-            'driverRegistrationDocs[index]?.fileData?.path',
           )}
           {item?.file_type == 'Image' && (
             <TouchableOpacity
@@ -727,7 +720,7 @@ export default function WebLinks({navigation, route}) {
               }}>
               <Image
                 source={
-                  driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                  pageData?.page_detail?.primary?.type_of_form == 2
                     ? driverRegistrationDocs[index]?.fileData?.path
                       ? {
                           uri: driverRegistrationDocs[index]?.fileData?.path,
@@ -741,7 +734,7 @@ export default function WebLinks({navigation, route}) {
                 }
                 style={{
                   // tintColor:
-                  //   driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                  //   pageData?.page_detail?.primary?.type_of_form == 2
                   //     ? !driverRegistrationDocs[index]?.fileData?.path
                   //       ? themeColors.primary_color
                   //       : null
@@ -749,7 +742,7 @@ export default function WebLinks({navigation, route}) {
                   //     ? themeColors.primary_color
                   //     : null,
                   height:
-                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                    pageData?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? height / 6 - moderateScale(15)
                         : 30
@@ -757,7 +750,7 @@ export default function WebLinks({navigation, route}) {
                       ? height / 6 - moderateScale(15)
                       : 30,
                   width:
-                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                    pageData?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? width - moderateScale(80)
                         : 30
@@ -846,17 +839,17 @@ export default function WebLinks({navigation, route}) {
   const _onLinkPress = (route) => {
     if (route == 'terms') {
       navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-        url: driverRegDocs?.terms_and_conditions,
+        url: pageData?.terms_and_conditions,
       });
     } else {
       navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-        url: driverRegDocs?.terms_and_conditions,
+        url: pageData?.terms_and_conditions,
       });
     }
   };
 
   const onSearchTags = (text) => {
-    const driverTagsNewAry = [...driverRegDocs?.tags];
+    const driverTagsNewAry = [...pageData?.tags];
     let searchedAry;
     if (text) {
       searchedAry = driverTagsNewAry.filter((item) => {
@@ -864,7 +857,7 @@ export default function WebLinks({navigation, route}) {
       });
       updateState({driverTagsAry: searchedAry});
     } else {
-      updateState({driverTagsAry: driverRegDocs?.tags});
+      updateState({driverTagsAry: pageData?.tags});
     }
   };
 
@@ -930,7 +923,7 @@ export default function WebLinks({navigation, route}) {
     });
   };
 
-  if (driverRegDocs?.page_detail?.primary?.type_of_form == 3) {
+  if (pageData?.page_detail?.primary?.type_of_form == 3) {
     return (
       <WrapperContainer
         bgColor={colors.backGroundGreyD}
@@ -958,7 +951,7 @@ export default function WebLinks({navigation, route}) {
           }}
           showsVerticalScrollIndicator={false}>
           <Accordion
-            sections={driverRegDocs?.faq_data}
+            sections={pageData?.faq_data}
             activeSections={activeSections}
             renderSectionTitle={_renderSectionTitle}
             renderHeader={_renderHeader}
@@ -1066,7 +1059,7 @@ export default function WebLinks({navigation, route}) {
             )}
           </View>
 
-          {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
+          {pageData?.page_detail?.primary?.type_of_form == 1 && (
             <View style={styles.mainView}>
               <View
                 style={{
@@ -1292,7 +1285,6 @@ export default function WebLinks({navigation, route}) {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-
                   marginHorizontal: moderateScale(10),
                   marginVertical: moderateScaleVertical(16),
                 }}>
@@ -1378,6 +1370,140 @@ export default function WebLinks({navigation, route}) {
                   </View>
                 )}
               </View>
+
+              {pageData?.is_seller_module && (
+                <View
+                  style={{
+                    marginVertical: moderateScaleVertical(15),
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.bold,
+                      fontSize: textScale(14),
+                    }}>
+                    Vendor Type
+                  </Text>
+
+                  <DropDownPicker
+                    items={vendorTypes}
+                    // defaultValue={vendorTypes[0].label}
+                    containerStyle={{
+                      height: 40,
+                      marginTop: moderateScaleVertical(5),
+                    }}
+                    style={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : '#fafafa',
+                      zIndex: 5000,
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    }}
+                    itemStyle={{
+                      justifyContent: 'flex-start',
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    }}
+                    labelStyle={isDarkMode && {color: MyDarkTheme.colors.text}}
+                    zIndex={5000}
+                    dropDownStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : '#fafafa',
+
+                      width: width - moderateScale(40),
+                      alignSelf: 'center',
+                    }}
+                    // onChangeItem={(item) => updateReason(item)}
+                  />
+                </View>
+              )}
+              {pageData?.is_gst_required_for_vendor_registration && (
+                <View>
+                  <Text
+                    style={{
+                      ...styles.detailStyle,
+                      marginTop: moderateScale(5),
+                    }}>
+                    GST Details
+                  </Text>
+                  <BorderTextInput
+                    // secureTextEntry={true}
+                    placeholder={`Company Name`}
+                    // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      marginBottom: 0,
+                      marginTop: moderateScale(10),
+                    }}
+                  />
+                  <BorderTextInput
+                    // secureTextEntry={true}
+                    placeholder={`GST Number`}
+                    // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      marginBottom: moderateScaleVertical(15),
+                      marginTop: moderateScale(10),
+                    }}
+                  />
+                </View>
+              )}
+              {pageData?.is_baking_required_for_vendor_registration && (
+                <View>
+                  <Text
+                    style={{
+                      ...styles.detailStyle,
+                      marginTop: moderateScale(5),
+                    }}>
+                    Banking Details
+                  </Text>
+                  <BorderTextInput
+                    // secureTextEntry={true}
+                    placeholder={`Account Name`}
+                    // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      marginBottom: 0,
+                      marginTop: moderateScale(10),
+                    }}
+                  />
+                  <BorderTextInput
+                    // secureTextEntry={true}
+                    placeholder={`Bank Name`}
+                    // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      marginBottom: 0,
+                      marginTop: moderateScale(10),
+                    }}
+                  />
+                  <BorderTextInput
+                    // secureTextEntry={true}
+                    placeholder={`Account Number`}
+                    // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      marginBottom: 0,
+                      marginTop: moderateScale(10),
+                    }}
+                  />
+                  <BorderTextInput
+                    // secureTextEntry={true}
+                    placeholder={`IFSC Code`}
+                    // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      marginBottom: moderateScaleVertical(10),
+                      marginTop: moderateScale(10),
+                    }}
+                  />
+                </View>
+              )}
+              {!isEmpty(vendorRegDocs) && (
+                <Text
+                  style={{...styles.detailStyle, marginTop: moderateScale(10)}}>
+                  Additional Details
+                </Text>
+              )}
               <View
                 style={{
                   marginHorizontal: moderateScale(5),
@@ -1463,7 +1589,7 @@ export default function WebLinks({navigation, route}) {
             </View>
           )}
 
-          {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
+          {pageData?.page_detail?.primary?.type_of_form == 2 && (
             <View style={styles.mainView}>
               <View
                 style={{
@@ -1702,9 +1828,9 @@ export default function WebLinks({navigation, route}) {
                       shadowOffset: {width: 0, height: 1},
                       shadowOpacity: 0.1,
                     }}>
-                    {driverRegDocs?.teams.length > 0 ? (
+                    {pageData?.teams.length > 0 ? (
                       <View>
-                        {driverRegDocs?.teams.map((itm, indx) => {
+                        {pageData?.teams.map((itm, indx) => {
                           return (
                             <TouchableOpacity
                               key={indx}
@@ -1770,7 +1896,7 @@ export default function WebLinks({navigation, route}) {
                       marginTop: Platform.OS == 'android' ? moderateScaleVertical(45) : 0
                     }}
                   >
-                  {driverRegDocs?.teams.map((itm, indx) => {
+                  {pageData?.teams.map((itm, indx) => {
                       console.log(itm, driverTypes, "itmitmitmitm")
 
                       return (
@@ -1981,7 +2107,7 @@ export default function WebLinks({navigation, route}) {
                 onChangeText={_onChangeText('driverColor')}
                 containerStyle={styles.containerStyle}
               />
-              {!!driverRegDocs && (
+              {!!pageData && (
                 <Text
                   style={{
                     color: isDarkMode
@@ -1996,19 +2122,16 @@ export default function WebLinks({navigation, route}) {
               )}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
-                data={driverRegDocs?.transport_types}
+                data={pageData?.transport_types}
                 horizontal={true}
                 ItemSeparatorComponent={() => <View style={{width: 10}} />}
                 renderItem={_renderTransportTypes}
               />
 
-              {console.log(
-                driverRegDocs?.driver_registration_documents,
-                'driverRegDocsdriverRegDocs',
-              )}
+              {console.log(pageData?.driver_registration_documents, 'pageData')}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
-                data={driverRegDocs?.driver_registration_documents}
+                data={pageData?.driver_registration_documents}
                 renderItem={_renderFields}
               />
 
