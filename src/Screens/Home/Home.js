@@ -33,6 +33,7 @@ import {
   DashBoardOne,
   DashBoardSix,
   TaxiHomeDashbord,
+  DashBoardTen,
 } from './DashboardViews/Index';
 import Voice from '@react-native-voice/voice';
 import FastImage from 'react-native-fast-image';
@@ -44,6 +45,7 @@ import SubscriptionModal from '../../Components/SubscriptionModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
+import DashBoardHeaderZonesso from './DashboardViews/DashBoardHeaderZonesso';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -937,7 +939,7 @@ export default function Home({route, navigation}) {
     });
   };
   const renderHomeScreen = () => {
-    switch (appStyle?.homePageLayout) {
+    switch (8) {
       // switch (case_) {
       case 1:
         return (
@@ -1353,6 +1355,52 @@ export default function Home({route, navigation}) {
                 selectedHomeCategory={selectedHomeCategory}
               />
             )}
+          </>
+        );
+      case 8:
+        return (
+          <>
+            <DashBoardHeaderZonesso
+              showToggles={false}
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
+
+            <DashBoardTen
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+              selectedFilterType={selectedFilterType}
+            />
           </>
         );
     }

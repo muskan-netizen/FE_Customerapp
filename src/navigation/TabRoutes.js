@@ -25,6 +25,7 @@ import DeviceInfo from 'react-native-device-info';
 import MyOrdersStack from './MyOrdersStack';
 import {SearchProductVendorItem2} from '../Screens';
 import SearchProductVendorStack from './SearchProductVendorStack';
+import PostStack from './PostStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -180,6 +181,44 @@ export default function TabRoutes(props) {
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
           tabBarLabel: strings.HOME,
+          tabBarIcon: ({focused, tintColor}) => (
+            <Image
+              style={[
+                {tintColor: tintColor},
+                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+              ]}
+              source={
+                appStyle?.tabBarLayout === 5
+                  ? focused
+                    ? imagePath.homeActive
+                    : imagePath.homeInActive
+                  : appStyle?.tabBarLayout === 4
+                  ? focused
+                    ? imagePath.homeRedActive
+                    : imagePath.homeRedInActive
+                  : focused
+                  ? imagePath.tabAActive
+                  : imagePath.tabAInActive
+              }
+            />
+          ),
+
+          // unmountOnBlur: true,
+        })}
+      />
+
+      <Tab.Screen
+        component={PostStack}
+        name={navigationStrings.POST}
+        options={({route, navigation}) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            // navigationStrings.POST,
+            // navigationStrings.PRODUCTDETAIL,
+            // navigationStrings.PRODUCTWITHCATEGORY,
+            // navigationStrings.ADDADDRESS,
+            // navigationStrings.CHOOSECARTYPEANDTIMETAXI,
+          ]),
+          tabBarLabel: strings.POST,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[

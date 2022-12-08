@@ -98,9 +98,9 @@ const Header = ({
                   style={{
                     ...leftIconStyle,
                     transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
+                    // tintColor: isDarkMode
+                    //   ? MyDarkTheme.colors.text
+                    //   : colors.whiteOpacity15,
                   }}
                 />
               </TouchableOpacity>
@@ -209,7 +209,7 @@ export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
     headerStyle: {
       // padding: moderateScaleVertical(16),
-      paddingHorizontal: moderateScale(16),
+      // paddingHorizontal: moderateScale(16),
       height: StatusBarHeight,
     },
 

@@ -545,4 +545,11 @@ export default {
   // flanksplash: require('../assets/Flanksplash.mp4'),
   timer: require('../assets/images/timer.png'),
   icSocialShare: require('../assets/images/RoyoorderNewImages/social-media.png'),
+  app_icon: require('../assets/images/app_icon_zonesso.png'),
+  back1: require('../assets/images/back.png'),
+  phone_button: require('../assets/images/phone_button.png'),
+  gmail: require('../assets/images/gmail.png'),
+  // facebook: require("../assets/images/facebook.png"),
+  apple1: require('../assets/images/Apple.png'),
+  tiago: require('../assets/images/tiago.png'),
 };

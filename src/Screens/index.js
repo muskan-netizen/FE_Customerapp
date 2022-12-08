@@ -153,3 +153,6 @@ export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendo
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
+//zonesso template
+export {default as Login3} from './Login/Login3';
+export {default as Post} from './Post/PostCategory';

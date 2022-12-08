@@ -155,4 +155,6 @@ export default {
   CONEKTA: 'conekta',
   VERIFY_ACCOUNT_TAXI: 'VerifyAccountTaxi',
   VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
+  POST: 'Post',
+  POST_CATEGORY: 'PostCategory',
 };

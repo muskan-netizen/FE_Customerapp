@@ -7,7 +7,7 @@ import commonStylesFun from '../styles/commonStyles';
 const GradientButton = ({
   containerStyle,
   btnStyle = {},
-  //colorsArray = [themeColors?.primary_color, themeColors?.primary_color],
+  // colorsArray = [themeColors?.primary_color, themeColors?.primary_color],
   borderRadius = 13,
   onPress,
   btnText,

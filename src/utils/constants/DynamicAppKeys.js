@@ -472,6 +472,8 @@ const shortCodes = {
   skyline: 'ce1ed6',
   bliss: '6eb260',
   rentzy: 'd4fc07',
+  // zonesso: '4f459b',
+  zonesso: '245bae',
 };
 
 const appIds = {
@@ -2346,6 +2348,10 @@ const appIds = {
   rentzy: Platform.select({
     ios: 'com.rentzy.royoorders',
     android: 'com.rentzy',
+  }),
+  zonesso: Platform.select({
+    ios: 'com.zonesso.royoorders',
+    android: 'com.zonesso.royoorders',
   }),
 };
 

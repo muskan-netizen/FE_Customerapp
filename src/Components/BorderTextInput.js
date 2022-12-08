@@ -87,8 +87,6 @@ const BorderTextInput = ({
           fontFamily: fontFamily.medium,
           fontSize: textScale(14),
           paddingHorizontal: 8,
-          paddingTop: 0,
-          paddingBottom: 0,
           textAlign: I18nManager.isRTL ? 'right' : 'left',
           ...textInputStyle,
         }}

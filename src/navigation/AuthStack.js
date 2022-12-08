@@ -4,6 +4,7 @@ import {
   ForgotPassword2,
   Location,
   Login,
+  Login3,
   OtpVerification,
   OuterScreen,
   OuterScreen2,
@@ -34,7 +35,7 @@ export default function (Stack, appStyle) {
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={appStyle?.homePageLayout === 2 ? Login2 : Login}
+        component={appStyle?.homePageLayout === 2 ? Login3 : Login3}
         options={{headerShown: false}}
       />
       <Stack.Screen

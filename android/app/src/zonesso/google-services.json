@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1020424477940",
+    "project_id": "zonesso-order",
+    "storage_bucket": "zonesso-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020424477940:android:eb5f976262162a8480d2a1",
+        "android_client_info": {
+          "package_name": "com.zonesso.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020424477940-725q57utvddoplgrdc8hf0mfnb2hsfeu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zonesso.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1020424477940-l8g7fbuctrp8li5dij4pu38bjn7agosu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zonesso.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1020424477940-sjcplgvfnviblqd9ul36vnno78ilf1t3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zonesso.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1020424477940-7gdqha3ed9mmuvhs4fjvpa7lv68b7ggt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGsxhHyU0Xx_VnoKhvkfSLYL7lbScpOlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020424477940-7gdqha3ed9mmuvhs4fjvpa7lv68b7ggt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1020424477940-m6m3c3jevl8p729ebr14pbcioomhiaaf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zonesso.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
