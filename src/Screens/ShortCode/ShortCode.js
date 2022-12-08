@@ -2950,6 +2950,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.lincshare:
+          updateState({
+            shortCode: shortCodes.lincshare,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lvlup:
+          updateState({
+            shortCode: shortCodes.lvlup,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.glavour:
+          updateState({
+            shortCode: shortCodes.glavour,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

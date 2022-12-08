@@ -476,6 +476,9 @@ const shortCodes = {
   georgiacollective: '1d7bf7',
   otgWeeds: '2a3af8',
   rumbella: 'fd2e2f',
+  lincshare: '9b8d33',
+  lvlup: 'b2eb09',
+  glavour: '620b19',
 };
 
 const appIds = {
@@ -2370,6 +2373,18 @@ const appIds = {
   rumbella: Platform.select({
     ios: 'com.rumbella.royoorders',
     android: 'com.rumbella.royoorders',
+  }),
+  lincshare: Platform.select({
+    ios: 'com.lincshare.royoorders',
+    android: 'com.lincshare.royoorders',
+  }),
+  lvlup: Platform.select({
+    ios: 'com.lvlup.royoorders',
+    android: 'com.lvlup.royoorders',
+  }),
+  glavour: Platform.select({
+    ios: 'com.glavour.royoorders',
+    android: 'com.glavour.royoorders',
   }),
 };
 
