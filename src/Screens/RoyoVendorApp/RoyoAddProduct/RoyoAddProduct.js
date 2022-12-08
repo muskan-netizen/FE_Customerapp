@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  RefreshControl,
+  TextInput,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -35,6 +37,7 @@ import {
 } from '../../../styles/responsiveSize';
 import {
   cameraHandler,
+  checkValueExistInAry,
   getValuebyKeyInArray,
 } from '../../../utils/commonFunction';
 import {
@@ -47,11 +50,12 @@ import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
 import {hitSlopProp} from '../../../styles/commonStyles';
 import ModalDropDownComp from '../../../Components/ModalDropDown';
 import ModalView from '../../../Components/Modal';
+import {MultiSelect} from 'react-native-element-dropdown';
+import RadioGroup from 'react-native-radio-buttons-group';
 
 const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
   const productDetailParam = paramData?.productDetail;
-  console.log(productDetailParam, 'productDetailParamproductDetailParam');
   const {appData, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
@@ -111,7 +115,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     price: '',
     compareAtPrice: '',
     isTrackInventory: false,
-
     isNew: false,
     isFeatured: false,
     isInquiryOnly: false,
@@ -142,6 +145,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantImages: [],
     isVarientImageDeleted: false,
     tempImg: '',
+    isRefreshing: false,
   });
   const {
     isLoading,
@@ -206,7 +210,11 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantImages,
     isVarientImageDeleted,
     tempImg,
+    isRefreshing,
   } = state;
+
+  const [attributeInfo, setAttributeInfo] = useState([]);
+  const [isAttribute, setIsAttribute] = useState(false);
 
   useEffect(() => {
     if (isLoading || isVarientImageDeleted) {
@@ -215,11 +223,9 @@ const RoyoAddProduct = ({route, navigation}) => {
   }, [isLoading, isVarientImageDeleted]);
 
   const getVendorProductDetailByID = () => {
-    console.log('productDetailParamproductDetailParam', productDetailParam);
     actions
       .getVendorProductDetail(
         {
-          // product_id: '233',
           product_id: productDetailParam?.id || '',
         },
         {
@@ -229,9 +235,21 @@ const RoyoAddProduct = ({route, navigation}) => {
         },
       )
       .then((res) => {
+        console.log(res, '<==== res');
         const productInfo = res?.data?.product_detail;
-
+        let attributes = res?.data?.attributes;
+        attributes.map((item, inx) => {
+          let availableValues = [];
+          item?.product_attribute.map((itm, inx) => {
+            availableValues[inx] =
+              item?.type == 4 ? itm?.key_value : itm?.attribute_option_id;
+          });
+          item.values = availableValues;
+        });
+        setAttributeInfo(attributes || []);
+        setIsAttribute(res?.data?.p2p_active || false);
         updateState({
+          isRefreshing: false,
           isLoading: false,
           isLoadingB: false,
           addons: res?.data?.addons,
@@ -330,6 +348,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     updateState({
       isLoading: false,
       isLoadingB: false,
+      isRefreshing: false,
     });
     showError(error?.message || error?.error);
   };
@@ -341,8 +360,6 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const onUpdateProduct = () => {
-    console.log('paramDataparamData', productDetailParam);
-    console.log('paramDataparamData', productDetailParam);
     updateState({isLoadingB: true});
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
@@ -407,6 +424,30 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('delay_order_hrs', delayHrs);
     formData.append('delay_order_min', delayMinutes);
     formData.append('category_id', productDetailParam?.category_id);
+
+    if (isAttribute) {
+      let apiObj = {};
+      attributeInfo.map((item, index) => {
+        let optionData = [];
+        item?.option?.map((item, inx) => {
+          optionData[inx] = {
+            option_id: item?.id,
+            option_title: item?.title,
+          };
+        });
+        apiObj[item?.id] = {
+          type: item?.type,
+          id: item?.id,
+          attribute_title: item?.title,
+          option: optionData,
+          value: item?.values,
+        };
+      });
+      formData.append('attribute', JSON.stringify(apiObj));
+    }
+
+    console.log(formData, 'formData....formData');
+
     // formData.append('country_origin_id', itm);
     // formData.append('weight', itm);
     // formData.append('weight_unit', itm);
@@ -423,8 +464,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     // formData.append('celebrities[]', itm);
     // formData.append('cost_price', itm);
 
-    console.log(formData, 'formData>>>Sending');
-
     actions
       .updateVendorProduct(formData, {
         code: appData?.profile?.code,
@@ -437,12 +476,11 @@ const RoyoAddProduct = ({route, navigation}) => {
         updateState({
           isLoadingB: false,
         });
-        console.log('asdasdsd', productDetailParam);
 
         await paramData?.onCallBack();
         setTimeout(() => {
           navigation.goBack();
-        }, 2000);
+        }, 1000);
         setTimeout(() => {
           paramData?.onCallBack();
         }, 5000);
@@ -497,8 +535,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     actionSheet.current.show();
   };
 
-  console.log(variantImages, 'variantImagesvariantImages>>>');
-
   const cameraHandle = (index) => {
     if (index == 0 || index == 1) {
       cameraHandler(index, {
@@ -546,7 +582,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
     formData.append('media_id', selectdImage?.media_id);
-    console.log(formData, 'formData>>>removeImage');
     actions
       .deleteProductImage(formData, {
         code: appData?.profile?.code,
@@ -562,20 +597,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         });
       })
       .catch(errorMethod);
-  };
-
-  const onSelect = (idx, value) => {
-    console.log(idx);
-  };
-
-  const renderRowComponent = (item, sdf) => {
-    console.log(item, 'itemitem', sdf);
-    return (
-      <TouchableHighlight
-        style={{
-          height: moderateScale(35),
-        }}></TouchableHighlight>
-    );
   };
 
   const onProductVariant = (parent_variant, child_variant) => {
@@ -651,8 +672,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     );
   };
 
-  console.log(selectedAddons, 'selectedAddons>>>>');
-
   const onMakeVariantSet = () => {
     updateState({
       isLoadingB: true,
@@ -666,10 +685,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     optionsSet.map((itm) => {
       formData.append('optionIds[]', itm);
     });
-    console.log(variantSet, 'variantSet>>>>');
-    console.log(optionsSet, 'optionsSet>>>>');
-    console.log(formData, 'formData>>>');
-
     actions
       .createProductVariant(formData, {
         code: appData?.profile?.code,
@@ -677,7 +692,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, '>>>>>responseFromServer');
         updateState({isLoadingB: false, createdVariantSets: res?.data});
       })
       .catch(errorMethod);
@@ -753,8 +767,6 @@ const RoyoAddProduct = ({route, navigation}) => {
           style={{
             ...styles.flexRowStyle,
           }}>
-          {console.log(item, 'itemitemitem>>')}
-
           <TouchableOpacity
             activeOpacity={0.7}
             style={{alignItems: 'center'}}
@@ -912,8 +924,6 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const addProductImages = (formData) => {
-    console.log(formData, 'formData>>>>');
-
     updateState({isLoadingB: true});
     actions
       .addProductImage(formData, {
@@ -928,13 +938,11 @@ const RoyoAddProduct = ({route, navigation}) => {
           isLoadingB: false,
           productImages: res?.data,
         });
-        console.log(res, 'responseFromServer');
       })
       .catch(errorMethod);
   };
 
   const _removeImageFromLocalList = (localImage) => {
-    console.log(localImage, 'localImage>>');
     const variantImagesAry = [...variantImages];
     const filteredVariantImages = variantImagesAry.filter(
       (itm) => itm?.image_id != localImage?.image_id,
@@ -1032,6 +1040,191 @@ const RoyoAddProduct = ({route, navigation}) => {
       </View>
     );
   };
+
+  const handleRefresh = () => {
+    updateState({isRefreshing: true});
+    getVendorProductDetailByID();
+  };
+
+  const onChangeDropDownOption = (value, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = value;
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const renderRadioBtns = (item, data) => {
+    return (
+      <TouchableOpacity
+        onPress={() => onPressRadioButton(item)}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginRight: moderateScale(20),
+        }}>
+        <Image
+          source={
+            !isEmpty(data?.values) && data?.values[0] == item?.id
+              ? imagePath.icActiveRadio
+              : imagePath.icInActiveRadio
+          }
+        />
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(14),
+            marginLeft: moderateScale(6),
+          }}>
+          {item?.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const onPressRadioButton = (item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.attribute_id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const renderCheckBoxes = (item, data) => {
+    return (
+      <TouchableOpacity
+        onPress={() => onPressCheckBoxes(item, data)}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginRight: moderateScale(20),
+          marginBottom: moderateScaleVertical(10),
+        }}>
+        <Image
+          source={
+            checkValueExistInAry(item, data?.values)
+              ? imagePath.checkBox2Active
+              : imagePath.checkBox2InActive
+          }
+        />
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(12),
+            marginLeft: moderateScale(6),
+          }}>
+          {item?.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const onPressCheckBoxes = (value, data) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == value?.attribute_id,
+    );
+    if (!isEmpty(data?.values)) {
+      let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
+      if (existingItmIndx == -1) {
+        attributeInfoData[indexOfAttributeToUpdate].values = [
+          ...data?.values,
+          value?.id,
+        ];
+      } else {
+        let index = attributeInfoData[indexOfAttributeToUpdate].values.indexOf(
+          value?.id,
+        );
+        if (index >= 0) {
+          attributeInfoData[indexOfAttributeToUpdate].values.splice(index, 1);
+        }
+      }
+    } else {
+      attributeInfoData[indexOfAttributeToUpdate].values = [value?.id];
+    }
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onChangeText = (text, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [text];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const renderAttributeOptions = ({item, index}) => {
+    return (
+      <View>
+        <Text
+          style={{
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(12),
+          }}>
+          {item?.title}
+        </Text>
+        {item?.type == 1 ? (
+          <MultiSelect
+            style={{
+              height: moderateScaleVertical(40),
+              backgroundColor: colors.white,
+              borderRadius: moderateScale(5),
+              marginTop: moderateScaleVertical(5),
+            }}
+            labelField="title"
+            valueField="id"
+            value={item?.values}
+            data={item?.option}
+            onChange={(value) => onChangeDropDownOption(value, item)}
+            placeholder={'Select value'}
+            fontFamily={fontFamily.regular}
+            placeholderStyle={{
+              color: colors.black,
+              paddingHorizontal: moderateScale(5),
+              fontSize: textScale(12),
+              fontFamily: fontFamily.regular,
+            }}
+          />
+        ) : item?.type == 3 ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              marginTop: moderateScaleVertical(5),
+            }}>
+            {item?.option?.map((itm) => renderRadioBtns(itm, item))}
+          </View>
+        ) : item?.type == 4 ? (
+          <TextInput
+            placeholder="Type here..."
+            onChangeText={(text) => onChangeText(text, item)}
+            value={item?.values[0]}
+            style={{
+              backgroundColor: colors.white,
+              height: moderateScaleVertical(40),
+              marginTop: moderateScaleVertical(5),
+              borderRadius: moderateScale(5),
+              paddingHorizontal: moderateScale(5),
+            }}
+          />
+        ) : (
+          <View
+            style={{
+              flexDirection: 'row',
+
+              flexWrap: 'wrap',
+              marginTop: moderateScaleVertical(5),
+            }}>
+            {item?.option?.map((itm) => renderCheckBoxes(itm, item))}
+          </View>
+        )}
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
       <Header
@@ -1039,6 +1232,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         centerTitle={productDetailParam?.title || ''}
         customRight={customRight}
       />
+
       <View style={{...styles.stepBarView, marginTop: moderateScale(10)}}>
         {stepPoints.map(renderStepIndicator)}
       </View>
@@ -1046,8 +1240,15 @@ const RoyoAddProduct = ({route, navigation}) => {
       <KeyboardAwareScrollView
         // scrollEnabled={!isLangugaeDropDown}
         showsVerticalScrollIndicator={false}
-        style={styles.container}
-        bounces={false}>
+        refreshing={isRefreshing}
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }>
         {currentStepIndex == 0 ? (
           <View>
             <View style={styles.mainViewStyle}>
@@ -1236,6 +1437,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 ? productImages.map((i, inx) => {
                     return (
                       <ImageBackground
+                        key={String(inx)}
                         source={{
                           uri: getImageUrl(
                             i.image?.path?.image_fit,
@@ -1463,6 +1665,27 @@ const RoyoAddProduct = ({route, navigation}) => {
                 />
               </View>
             )}
+
+            {isAttribute ? (
+              <View
+                style={{
+                  marginVertical: moderateScaleVertical(20),
+                  paddingHorizontal: moderateScale(15),
+                }}>
+                <Text style={styles.labelStyle}>{'Attribute Information'}</Text>
+                <FlatList
+                  data={attributeInfo}
+                  ItemSeparatorComponent={() => (
+                    <View
+                      style={{
+                        height: moderateScaleVertical(20),
+                      }}
+                    />
+                  )}
+                  renderItem={renderAttributeOptions}
+                />
+              </View>
+            ) : null}
           </View>
         ) : (
           <View

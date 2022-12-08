@@ -94,7 +94,8 @@ const shortCodes = {
   taquick: '630e49',
   vecto: '39f6fd',
   goody: '397840',
-  grub: '2f3120',
+  // grub: '2f3120',
+  grub: '2d98b5',
   gusto: 'd1b1a0',
   gokab: 'cb17f2', // live
   // gokab: '578b33', // staging
