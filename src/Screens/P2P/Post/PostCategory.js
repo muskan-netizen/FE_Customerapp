@@ -173,8 +173,10 @@ const PostCategory = ({}) => {
 
   const onFillManaully = () => {
     setIsAutofillModal(false);
-    setIsAttributesModal(true);
-    setLoadingAttributes(true);
+    setTimeout(() => {
+      setIsAttributesModal(true);
+      setLoadingAttributes(true);
+    }, 500);
     getListOfAvailableAttributes();
   };
 
@@ -401,71 +403,73 @@ const PostCategory = ({}) => {
   };
   const attributesModalContent = () => {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.white,
-          paddingHorizontal: moderateScale(15),
-        }}>
-        <Header
-          onPressLeft={() => setIsAttributesModal(false)}
-          centerTitle={'Attribute Information'}
-          leftIcon={imagePath.back1}
-        />
-        {true ? (
-          <View>
-            <FormLoader />
-          </View>
-        ) : (
-          <View>
-            <Text
-              style={{
-                ...styles.attributeTitle,
-                marginTop: moderateScaleVertical(20),
-              }}>
-              Name
-            </Text>
-            <TextInput
-              placeholder="Type here..."
-              onChangeText={(text) => setName(text)}
-              style={styles.textInputStyle}
-            />
-
-            <Text
-              style={{
-                ...styles.attributeTitle,
-                marginTop: moderateScaleVertical(20),
-              }}>
-              Description
-            </Text>
-            <TextInput
-              placeholder="Type here..."
-              onChangeText={(text) => setDescription(text)}
-              style={styles.textInputStyle}
-            />
-
-            <View
-              style={{
-                flex: 1,
-                marginTop: moderateScaleVertical(16),
-              }}>
-              <FlatList
-                data={attributeInfo}
-                keyboardShouldPersistTaps={'handled'}
-                ItemSeparatorComponent={() => (
-                  <View
-                    style={{
-                      height: moderateScaleVertical(18),
-                    }}
-                  />
-                )}
-                renderItem={renderAttributeOptions}
-                ListFooterComponent={listFooterComponent}
-              />
+      <WrapperContainer>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: colors.white,
+            paddingHorizontal: moderateScale(15),
+          }}>
+          <Header
+            onPressLeft={() => setIsAttributesModal(false)}
+            centerTitle={'Attribute Information'}
+            leftIcon={imagePath.back1}
+          />
+          {true ? (
+            <View>
+              <FormLoader />
             </View>
-          </View>
-        )}
-      </View>
+          ) : (
+            <View>
+              <Text
+                style={{
+                  ...styles.attributeTitle,
+                  marginTop: moderateScaleVertical(20),
+                }}>
+                Name
+              </Text>
+              <TextInput
+                placeholder="Type here..."
+                onChangeText={(text) => setName(text)}
+                style={styles.textInputStyle}
+              />
+
+              <Text
+                style={{
+                  ...styles.attributeTitle,
+                  marginTop: moderateScaleVertical(20),
+                }}>
+                Description
+              </Text>
+              <TextInput
+                placeholder="Type here..."
+                onChangeText={(text) => setDescription(text)}
+                style={styles.textInputStyle}
+              />
+
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: moderateScaleVertical(16),
+                }}>
+                <FlatList
+                  data={attributeInfo}
+                  keyboardShouldPersistTaps={'handled'}
+                  ItemSeparatorComponent={() => (
+                    <View
+                      style={{
+                        height: moderateScaleVertical(18),
+                      }}
+                    />
+                  )}
+                  renderItem={renderAttributeOptions}
+                  ListFooterComponent={listFooterComponent}
+                />
+              </View>
+            </View>
+          )}
+        </View>
+      </WrapperContainer>
     );
   };
 

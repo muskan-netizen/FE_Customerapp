@@ -158,3 +158,4 @@ export {default as Login3} from './Login/Login3';
 export {default as Post} from './P2P/Post/PostCategory';
 export {default as CategoryListing} from './P2P/CategoryListing/CategoryListing';
 export {default as ListDetail} from './P2P/ListDetail/ListDetail';
+export {default as AttributeInformation} from './P2P/AttributeInformation/AttributeInformation';

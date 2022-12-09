@@ -12,6 +12,10 @@ export default function () {
         name={navigationStrings.POST_CATEGORY}
         component={Screens.Post}
       />
+      <Stack.Screen
+        name={navigationStrings.ATTRIBUTEINFORMATION}
+        component={Screens.AttributeInformation}
+      />
     </Stack.Navigator>
   );
 }
