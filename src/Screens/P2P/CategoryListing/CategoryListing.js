@@ -17,7 +17,11 @@ import TopBar from '../../../Components/NewComponents/TopBar';
 import GradientButton from '../../../Components/GradientButton';
 import TopHeader from '../../../Components/NewComponents/TopHeader';
 //styling
-import {moderateScale, width} from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../../styles/responsiveSize';
 import colors from '../../../styles/colors';
 import styleFun from './styles';
 import {MyDarkTheme} from '../../../styles/theme';
@@ -30,6 +34,7 @@ import {useSelector} from 'react-redux';
 import {useDarkMode} from 'react-native-dark-mode';
 import _ from 'lodash';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Header from '../../../Components/Header';
 
 const DATA = [
   {
@@ -55,6 +60,10 @@ const DATA = [
 ];
 
 const CategoryListing = ({route, navigation}) => {
+  const {location} = useSelector((state) => state?.home);
+  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
+  const darkthemeusingDevice = useDarkMode();
+
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -66,9 +75,6 @@ const CategoryListing = ({route, navigation}) => {
     {label: 'Banana', value: 'banana'},
   ]);
 
-  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
-
-  const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // const { themeColor } = useSelector((state) => state?.initBoot);
   const styles = styleFun({themeColor, themeToggle});
@@ -84,6 +90,11 @@ const CategoryListing = ({route, navigation}) => {
   };
 
   let selected = products.filter((product) => product.isChecked);
+
+  const modalPress = () => {
+    setModalVisible(!modalVisible);
+  };
+
   const TextWithCheck = (item) => {
     return (
       <View style={styles.checkView}>
@@ -102,10 +113,6 @@ const CategoryListing = ({route, navigation}) => {
     );
   };
 
-  const modalPress = () => {
-    setModalVisible(!modalVisible);
-  };
-
   return (
     <WrapperContainer
       bgColor={
@@ -113,15 +120,14 @@ const CategoryListing = ({route, navigation}) => {
       }
       isLoading={isLoading}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1}}>
-        <TopBar
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          themeColor={themeColor}
-          showBack={true}
+        <Header
+          leftIcon={imagePath.back1}
+          centerTitle={''}
+          location={location}
+          headerStyle={{
+            marginBottom: moderateScaleVertical(8),
+            marginHorizontal: moderateScale(15),
+          }}
         />
         <SearchBar2
           navigation={navigation}
