@@ -621,3 +621,8 @@ export const GENERATE_INVOICE = getApiUrl('/generate-facturama-invoice');
 export const CHECK_PRODUCT_AVAILAABILITY = getApiUrl(
   '/checkProductAvailibility',
 );
+
+//P2P
+export const GET_AVAILABLE_ATTRIBUTES = getApiUrl(
+  '/mystore/product/availableListOfAttribute',
+);

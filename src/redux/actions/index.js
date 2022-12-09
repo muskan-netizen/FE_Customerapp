@@ -15,6 +15,8 @@ import * as walletUserVerify from './walletUserVerify';
 import * as reloadData from './reloadData';
 import * as chat from './chat';
 import * as chatRefresh from './chatRefresh';
+import * as p2p from './p2p';
+
 export default {
   ...init,
   ...auth,
@@ -31,5 +33,6 @@ export default {
   ...walletUserVerify,
   ...reloadData,
   ...chat,
-  ...chatRefresh
+  ...chatRefresh,
+  ...p2p,
 };
