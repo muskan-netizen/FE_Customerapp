@@ -553,29 +553,32 @@ export default function Home({route, navigation}) {
   const onPressCategory = (item) => {
     console.log(item, 'item>>>>item');
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
-      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      // moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      moveToNewScreen(navigationStrings.CATEGORYLISTING, item)();
       return;
     }
     if (item.redirect_to == staticStrings.VENDOR) {
-      moveToNewScreen(navigationStrings.VENDOR, item)();
+      // moveToNewScreen(navigationStrings.VENDOR, item)();
+      moveToNewScreen(navigationStrings.CATEGORYLISTING, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY ||
       item.redirect_to == staticStrings.ONDEMANDSERVICE ||
       item?.redirect_to == staticStrings.LAUNDRY
     ) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-        fetchOffers: true,
-        id: item.id,
-        vendor:
-          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-          item.redirect_to == staticStrings.PRODUCT ||
-          item?.redirect_to == staticStrings.LAUNDRY
-            ? false
-            : true,
-        name: item.name,
-        isVendorList: false,
-      })();
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+      //   fetchOffers: true,
+      //   id: item.id,
+      //   vendor:
+      //     item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+      //     item.redirect_to == staticStrings.PRODUCT ||
+      //     item?.redirect_to == staticStrings.LAUNDRY
+      //       ? false
+      //       : true,
+      //   name: item.name,
+      //   isVendorList: false,
+      // })();
+      moveToNewScreen(navigationStrings.CATEGORYLISTING, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {

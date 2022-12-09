@@ -157,4 +157,6 @@ export default {
   VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
   POST: 'Post',
   POST_CATEGORY: 'PostCategory',
+  CATEGORYLISTING: 'CategoryListing',
+  LISTDETAIL: 'ListDetail',
 };
