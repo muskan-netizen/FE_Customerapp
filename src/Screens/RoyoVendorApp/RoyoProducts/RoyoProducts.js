@@ -424,7 +424,6 @@ const RoyoProducts = (props) => {
             ? moderateScale(10)
             : 0,
       }}>
-      {console.log(item)}
       <TouchableOpacity
         // disabled
         onPress={() => selectedCategory(item)}

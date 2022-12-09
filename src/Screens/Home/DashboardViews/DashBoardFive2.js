@@ -245,6 +245,13 @@ export default function DashBoardFive({
     return (
       <TouchableOpacity
         activeOpacity={0.7}
+        style={
+          {
+            // elevation: 1,
+            // marginVertical: 1,
+            // borderRadius: 2,
+          }
+        }
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
         {isSVG ? (
           <SvgUri

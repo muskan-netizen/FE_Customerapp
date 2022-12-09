@@ -142,6 +142,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantImages: [],
     isVarientImageDeleted: false,
     tempImg: '',
+    costPrice: '',
+    vendorInfo: {},
   });
   const {
     isLoading,
@@ -206,6 +208,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantImages,
     isVarientImageDeleted,
     tempImg,
+    costPrice,
+    vendorInfo,
   } = state;
 
   useEffect(() => {
@@ -229,8 +233,8 @@ const RoyoAddProduct = ({route, navigation}) => {
         },
       )
       .then((res) => {
+        console.log(res, '<===response');
         const productInfo = res?.data?.product_detail;
-
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -320,6 +324,7 @@ const RoyoAddProduct = ({route, navigation}) => {
               : '',
           selectedProductStatus:
             productInfo?.is_live == 0 ? productStatus[0] : productStatus[1],
+          vendorInfo: productInfo?.vendor,
         });
       })
       .catch(errorMethod);
@@ -341,8 +346,6 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const onUpdateProduct = () => {
-    console.log('paramDataparamData', productDetailParam);
-    console.log('paramDataparamData', productDetailParam);
     updateState({isLoadingB: true});
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
@@ -407,6 +410,8 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('delay_order_hrs', delayHrs);
     formData.append('delay_order_min', delayMinutes);
     formData.append('category_id', productDetailParam?.category_id);
+    formData.append('cost_price', costPrice);
+
     // formData.append('country_origin_id', itm);
     // formData.append('weight', itm);
     // formData.append('weight_unit', itm);
@@ -1278,34 +1283,57 @@ const RoyoAddProduct = ({route, navigation}) => {
                 ...styles.flexRowStyle,
                 marginTop: moderateScale(20),
               }}>
-              <TextInputWithUnderlineAndLabel
-                label={strings.PRICE}
-                labelStyle={styles.labelStyle}
-                placeholder={'200'}
-                onChangeText={(value) =>
-                  updateState({
-                    price: value,
-                  })
-                }
-                value={price}
-                mainStyle={{flex: 0.2}}
-                placeholderTextColor={colors.textGreyB}
-                txtInputStyle={styles.textInputStyle}
-              />
-              <TextInputWithUnderlineAndLabel
-                label={strings.COMPARE_AT_PRICE}
-                placeholder={'200'}
-                onChangeText={(value) =>
-                  updateState({
-                    compareAtPrice: value,
-                  })
-                }
-                value={compareAtPrice}
-                mainStyle={{flex: 0.4}}
-                labelStyle={styles.labelStyle}
-                placeholderTextColor={colors.textGreyB}
-                txtInputStyle={styles.textInputStyle}
-              />
+              {vendorInfo?.is_seller == 1 ? (
+                <TextInputWithUnderlineAndLabel
+                  label={strings.COST_PRICE}
+                  placeholder={'200'}
+                  onChangeText={(value) =>
+                    updateState({
+                      costPrice: value,
+                    })
+                  }
+                  value={costPrice}
+                  mainStyle={{flex: 0.4}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.textGreyB}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              ) : (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flex: 1,
+                  }}>
+                  <TextInputWithUnderlineAndLabel
+                    label={strings.PRICE}
+                    labelStyle={styles.labelStyle}
+                    placeholder={'200'}
+                    onChangeText={(value) =>
+                      updateState({
+                        price: value,
+                      })
+                    }
+                    value={price}
+                    mainStyle={{flex: 0.3}}
+                    placeholderTextColor={colors.textGreyB}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                  <TextInputWithUnderlineAndLabel
+                    label={strings.COMPARE_AT_PRICE}
+                    placeholder={'200'}
+                    onChangeText={(value) =>
+                      updateState({
+                        compareAtPrice: value,
+                      })
+                    }
+                    value={compareAtPrice}
+                    mainStyle={{flex: 0.65, marginLeft: moderateScale(10)}}
+                    labelStyle={styles.labelStyle}
+                    placeholderTextColor={colors.textGreyB}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                </View>
+              )}
               <View style={{flex: 0.31}}>
                 <Text style={styles.labelStyle}>{strings.TRACK_INVENTORY}</Text>
                 <ToggleSwitch

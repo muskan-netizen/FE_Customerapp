@@ -832,14 +832,29 @@ export default function ReplaceOrder({navigation, route}) {
                   </Text>
                 </View>
               )}
+              {!isEmpty(addonSet) && (
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: moderateScaleVertical(6),
+                  }}
+                  onPress={onChangeAddons}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.regular,
+                      marginRight: moderateScale(6),
+                      fontSize: textScale(12),
+                    }}>
+                    Edit Addons
+                  </Text>
+                  <Image source={imagePath.edit1Royo} />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
           {!isEmpty(variantSet) ? showAllVariants() : null}
-          {!isEmpty(addonSet) && (
-            <TouchableOpacity onPress={onChangeAddons}>
-              <Text>Change Addon</Text>
-            </TouchableOpacity>
-          )}
+
           {/* Upload image */}
           <View style={{marginTop: moderateScaleVertical(10)}}>
             <Text

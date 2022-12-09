@@ -34,6 +34,7 @@ const BorderTextInput = ({
   isShowPassword,
   rightIconStyle = {},
   require = false,
+  keyboardType = 'default',
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -93,6 +94,7 @@ const BorderTextInput = ({
           ...textInputStyle,
         }}
         ref={inputRef}
+        keyboardType={keyboardType}
         // numberOfLines
         blurOnSubmit
         onChangeText={onChangeText}
