@@ -40,8 +40,9 @@ import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import navigationStrings from '../../../navigation/navigationStrings';
 
-const PostCategory = ({}) => {
+const PostCategory = ({navigation}) => {
   const modalRef = useRef();
   const {
     appData,
@@ -403,7 +404,13 @@ const PostCategory = ({}) => {
         <TouchableOpacity
           style={styles.linkButton}
           activeOpacity={0.7}
-          onPress={onFillManaully}>
+          // onPress={onFillManaully}
+          onPress={() => {
+            setIsAutofillModal(false);
+            navigation.navigate(navigationStrings.ATTRIBUTEINFORMATION, {
+              category_id: selectedP2Pcategory?.id,
+            });
+          }}>
           <Text style={styles.linkStyle}>{strings.FILL_MANUALLY}</Text>
         </TouchableOpacity>
       </View>
@@ -413,7 +420,6 @@ const PostCategory = ({}) => {
     return (
       <WrapperContainer>
         <Header
-          onPressLeft={() => setIsAttributesModal(false)}
           centerTitle={'Attribute Information'}
           leftIcon={imagePath.back1}
         />

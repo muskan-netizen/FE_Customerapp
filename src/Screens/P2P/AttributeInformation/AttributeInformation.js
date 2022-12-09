@@ -1,21 +1,41 @@
-import {View, Text, FlatList} from 'react-native';
-import React, {useCallback, useEffect} from 'react';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
+import React, {useCallback, useState, useEffect} from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import Header from '../../../Components/Header';
 import FormLoader from '../../../Components/Loaders/FormLoader';
 import {TextInput} from 'react-native-gesture-handler';
 import actions from '../../../redux/actions';
+import imagePath from '../../../constants/imagePath';
+import {useSelector} from 'react-redux';
 
-const AttributeInformation = () => {
+const AttributeInformation = ({route, navigation}) => {
+  let paramData = route?.params;
+
+  const {
+    appData,
+    currencies,
+    languages,
+    appStyle,
+
+    themeColors,
+  } = useSelector((state) => state?.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({fontFamily, themeColors});
+
   const [isAttributesModal, setIsAttributesModal] = useState(false);
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [isLoadingAttributes, setLoadingAttributes] = useState(false);
+  console.log(route, 'ROUTE HERE+++');
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -24,6 +44,7 @@ const AttributeInformation = () => {
   const getListOfAvailableAttributes = () => {
     actions
       .getAvailableAttributes(
+        `?category_id=${paramData?.category_id}`,
         {},
         {
           code: appData?.profile?.code,
@@ -32,12 +53,18 @@ const AttributeInformation = () => {
         },
       )
       .then((res) => {
+        console.log(res, '<===res');
         setLoadingAttributes(false);
         setAttributeInfo(res?.data);
       })
       .catch((err) => {
         setLoadingAttributes(false);
         console.log(err, '<===error');
+        // modalRef.current.showMessage({
+        //   type: 'danger',
+        //   icon: 'danger',
+        //   message: err?.message,
+        // });
       });
   };
 
@@ -194,3 +221,84 @@ const AttributeInformation = () => {
 };
 
 export default AttributeInformation;
+
+function stylesFunc({fontFamily, themeColors}) {
+  const styles = StyleSheet.create({
+    header: {
+      marginTop: moderateScale(32),
+      marginBottom: moderateScale(20),
+      fontSize: 19,
+      fontFamily: fontFamily.medium,
+    },
+    categoryStyle: {
+      flex: 1,
+      backgroundColor: colors.blackOpacity05,
+      borderRadius: moderateScale(12),
+      marginHorizontal: moderateScale(10),
+      height: height / 6,
+      width: width / 2.5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: moderateScale(10),
+    },
+    textStyle: {
+      fontFamily: fontFamily.medium,
+      letterSpacing: 0.3,
+      maxWidth: 100,
+      marginTop: moderateScale(8),
+      textAlign: 'center',
+    },
+    modalStyle: {
+      overflow: 'hidden',
+      justifyContent: 'flex-end',
+      marginHorizontal: 0,
+      marginBottom: 0,
+    },
+    modalViewStyle: {
+      flex: 0.5,
+      backgroundColor: 'white',
+      padding: moderateScale(16),
+      // alignItems: 'center',
+      borderTopRightRadius: moderateScale(24),
+      borderTopLeftRadius: moderateScale(24),
+    },
+    txtStyle: {
+      fontFamily: fontFamily.medium,
+      fontSize: 16,
+      letterSpacing: 0.3,
+      textAlign: 'center',
+      marginVertical: moderateScale(18),
+    },
+    linkStyle: {
+      color: colors.orange1,
+      fontFamily: fontFamily.regular,
+      fontSize: 16,
+      marginTop: moderateScale(12),
+      textAlign: 'center',
+    },
+    labelText: {
+      textAlign: 'left',
+      marginVertical: moderateScale(12),
+      fontFamily: fontFamily.regular,
+    },
+    linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '5%'},
+    labelStyle: {
+      fontFamily: fontFamily.bold,
+      color: colors.blackOpacity43,
+      fontSize: textScale(12),
+      marginBottom: moderateScale(10),
+    },
+    attributeTitle: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(14),
+    },
+    textInputStyle: {
+      backgroundColor: colors.blackOpacity05,
+      height: moderateScaleVertical(40),
+      marginTop: moderateScaleVertical(5),
+      borderRadius: moderateScale(5),
+      paddingHorizontal: moderateScale(5),
+    },
+  });
+  return styles;
+}
