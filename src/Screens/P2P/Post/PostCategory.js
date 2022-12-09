@@ -15,13 +15,13 @@ import GradientButton from '../../../Components/GradientButton';
 //constants
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
 //styling
 import {height, moderateScale, width} from '../../../styles/responsiveSize';
 import fontFamily from '../../../styles/fontFamily';
 import colors from '../../../styles/colors';
 //3rd party
 import Modal from 'react-native-modal';
-import BorderTextInputWithLable from '../../../Components/BorderTextInputWithLable';
 
 const DATA = [
   {
@@ -156,11 +156,12 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   modalViewStyle: {
-    flex: 0.4,
+    flex: 0.5,
     backgroundColor: 'white',
     padding: moderateScale(16),
     // alignItems: 'center',
-    borderRadius: moderateScale(24),
+    borderTopRightRadius: moderateScale(24),
+    borderTopLeftRadius: moderateScale(24),
   },
   txtStyle: {
     fontFamily: fontFamily.medium,
@@ -181,5 +182,5 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(12),
     fontFamily: fontFamily.regular,
   },
-  linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '10%'},
+  linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '5%'},
 });
