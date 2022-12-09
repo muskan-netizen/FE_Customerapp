@@ -209,7 +209,7 @@ export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
     headerStyle: {
       // padding: moderateScaleVertical(16),
-      // paddingHorizontal: moderateScale(16),
+      paddingHorizontal: moderateScale(16),
       height: StatusBarHeight,
     },
 

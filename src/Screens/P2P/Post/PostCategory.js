@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -38,8 +38,11 @@ import actions from '../../../redux/actions';
 import {checkValueExistInAry} from '../../../utils/commonFunction';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';
+import FlashMessage from 'react-native-flash-message';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const PostCategory = ({}) => {
+  const modalRef = useRef();
   const {
     appData,
     currencies,
@@ -97,10 +100,10 @@ const PostCategory = ({}) => {
     setP2pCategoriesRefreshing(false);
     showError(error?.message || error?.error);
   };
-
   const getListOfAvailableAttributes = () => {
     actions
       .getAvailableAttributes(
+        `?category_id=${selectedP2Pcategory?.id}`,
         {},
         {
           code: appData?.profile?.code,
@@ -109,12 +112,18 @@ const PostCategory = ({}) => {
         },
       )
       .then((res) => {
+        console.log(res, '<===res');
         setLoadingAttributes(false);
         setAttributeInfo(res?.data);
       })
       .catch((err) => {
         setLoadingAttributes(false);
         console.log(err, '<===error');
+        // modalRef.current.showMessage({
+        //   type: 'danger',
+        //   icon: 'danger',
+        //   message: err?.message,
+        // });
       });
   };
 
@@ -187,7 +196,6 @@ const PostCategory = ({}) => {
 
   const renderAttributeOptions = useCallback(
     ({item, index}) => {
-      console.log(item?.values, 'dkslakjfsd');
       return (
         <View>
           <Text
@@ -404,23 +412,28 @@ const PostCategory = ({}) => {
   const attributesModalContent = () => {
     return (
       <WrapperContainer>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: colors.white,
-            paddingHorizontal: moderateScale(15),
+        <Header
+          onPressLeft={() => setIsAttributesModal(false)}
+          centerTitle={'Attribute Information'}
+          leftIcon={imagePath.back1}
+        />
+        <KeyboardAwareScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingHorizontal: moderateScale(20),
           }}>
-          <Header
-            onPressLeft={() => setIsAttributesModal(false)}
-            centerTitle={'Attribute Information'}
-            leftIcon={imagePath.back1}
-          />
-          {true ? (
-            <View>
+          {isLoadingAttributes ? (
+            <View
+              style={{
+                flex: 1,
+              }}>
               <FormLoader />
             </View>
           ) : (
-            <View>
+            <View
+              style={{
+                flex: 1,
+              }}>
               <Text
                 style={{
                   ...styles.attributeTitle,
@@ -454,7 +467,9 @@ const PostCategory = ({}) => {
                 }}>
                 <FlatList
                   data={attributeInfo}
+                  scrollEnabled={false}
                   keyboardShouldPersistTaps={'handled'}
+                  keyExtractor={(itm) => String(itm?.id)}
                   ItemSeparatorComponent={() => (
                     <View
                       style={{
@@ -466,9 +481,10 @@ const PostCategory = ({}) => {
                   ListFooterComponent={listFooterComponent}
                 />
               </View>
+              <FlashMessage ref={modalRef} position={'top'} />
             </View>
           )}
-        </View>
+        </KeyboardAwareScrollView>
       </WrapperContainer>
     );
   };
