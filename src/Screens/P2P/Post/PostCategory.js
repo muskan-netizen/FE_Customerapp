@@ -8,20 +8,20 @@ import {
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
 //custom components
-import WrapperContainer from '../../Components/WrapperContainer';
-import Header from '../../Components/Header';
-import BorderTextInput from '../../Components/BorderTextInput';
-import GradientButton from '../../Components/GradientButton';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import Header from '../../../Components/Header';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import GradientButton from '../../../Components/GradientButton';
 //constants
-import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 //styling
-import {height, moderateScale, width} from '../../styles/responsiveSize';
-import fontFamily from '../../styles/fontFamily';
-import colors from '../../styles/colors';
+import {height, moderateScale, width} from '../../../styles/responsiveSize';
+import fontFamily from '../../../styles/fontFamily';
+import colors from '../../../styles/colors';
 //3rd party
 import Modal from 'react-native-modal';
-import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
+import BorderTextInputWithLable from '../../../Components/BorderTextInputWithLable';
 
 const DATA = [
   {
