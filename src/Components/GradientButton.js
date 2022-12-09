@@ -28,6 +28,7 @@ const GradientButton = ({
 
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       disabled={disabled}
       style={{
         ...commonStyles.buttonRect,

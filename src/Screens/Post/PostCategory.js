@@ -82,9 +82,13 @@ const PostCategory = () => {
           keyExtractor={(item) => item.id}
         />
       </View>
-      <Modal style={styles.modalStyle} isVisible={isModalVisible}>
+      <Modal
+        style={styles.modalStyle}
+        isVisible={isModalVisible}
+        onBackdropPress={toggleModal}>
         <View style={styles.modalViewStyle}>
           <Text style={styles.txtStyle}>Auto-fill your car details</Text>
+          <Text style={styles.labelText}>Enter VIN / Chassis number</Text>
           <BorderTextInput
             onChangeText={(data) => setData(data)}
             containerStyle={{
@@ -107,10 +111,10 @@ const PostCategory = () => {
             containerStyle={{marginTop: moderateScale(18), width: '100%'}}
             colorsArray={['#FC7049', '#FD312C']}
             // onPress={_onLogin}
-            btnText={strings.SIGN_IN}
+            btnText={strings.AUTO_FILL_DETAILS}
           />
-          <TouchableOpacity>
-            <Text style={styles.linkStyle}>No thanks, I'll do it manually</Text>
+          <TouchableOpacity style={styles.linkButton} activeOpacity={0.7}>
+            <Text style={styles.linkStyle}>{strings.FILL_MANUALLY}</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -152,10 +156,10 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   modalViewStyle: {
-    flex: 0.5,
+    flex: 0.4,
     backgroundColor: 'white',
     padding: moderateScale(16),
-    alignItems: 'center',
+    // alignItems: 'center',
     borderRadius: moderateScale(24),
   },
   txtStyle: {
@@ -170,5 +174,12 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.regular,
     fontSize: 16,
     marginTop: moderateScale(12),
+    textAlign: 'center',
   },
+  labelText: {
+    textAlign: 'left',
+    marginVertical: moderateScale(12),
+    fontFamily: fontFamily.regular,
+  },
+  linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '10%'},
 });

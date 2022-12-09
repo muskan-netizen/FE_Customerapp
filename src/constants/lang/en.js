@@ -1009,4 +1009,6 @@ Amount`,
   NEWHOME: 'New Home',
   RESET_ALL: 'Reset All',
   SELECT_YOUR_CATEGORY: 'Select Your Category',
+  AUTO_FILL_DETAILS: ' Auto-fill my car details',
+  FILL_MANUALLY: `No thanks, I'll do it manually`,
 };
