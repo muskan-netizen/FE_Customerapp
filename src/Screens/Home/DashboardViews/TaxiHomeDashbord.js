@@ -767,7 +767,7 @@ const longitudes =  !!curLatLong?.longitude
                   {strings.WHERETO}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
+             {getBundleId() == appIds.appi ? null :<TouchableOpacity
                 onPress={() => {
                   userData?.auth_token
                     ? updateState({
@@ -797,7 +797,7 @@ const longitudes =  !!curLatLong?.longitude
                     source={imagePath.goRight}
                   />
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity>}
             </View>
             {allSavedAddress.length > 0 && userData?.auth_token ? (
               <></>

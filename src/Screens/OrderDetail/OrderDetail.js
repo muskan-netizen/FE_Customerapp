@@ -209,7 +209,7 @@ export default function OrderDetail({ navigation, route }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot
   );
-
+console.log(cartItems,'cartItem++++++')
   const { preferences } = appData?.profile;
   let businessType = preferences?.business_type;
   const { additional_preferences, digit_after_decimal } = preferences;
@@ -1825,8 +1825,8 @@ export default function OrderDetail({ navigation, route }) {
             </View>
           )}
 
-          
-          {!!Number(item?.total_container_charges) && (
+    
+          {!!Number(item?.total_container_charges) && (index == cartItems.length  - 1)&&(
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
@@ -2247,7 +2247,7 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-
+         
           <LeftRightText
             leftText={strings.PAYMENT_METHOD}
             rightText={
@@ -2519,6 +2519,20 @@ export default function OrderDetail({ navigation, route }) {
             />
           )}
           {(cartData?.total_service_fee > 0 ||
+            Number(cartData?.taxable_amount) > 0) && (
+            <LeftRightText
+              leftText={'Service Fee'}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_service_fee),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol
+              )}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
+          {(cartData?.total_other_taxes > 0 ||
             Number(cartData?.taxable_amount) > 0) && (
             <LeftRightText
               leftText={strings.TAXES_FEES}

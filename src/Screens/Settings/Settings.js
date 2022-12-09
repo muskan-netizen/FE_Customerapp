@@ -163,7 +163,6 @@ export default function Settings({route, navigation}) {
         ...languages,
         primary_language: data,
       };
-
       // updateState({isLoading: true});
       setItem('setPrimaryLanguage', languagesData);
       setTimeout(() => {
