@@ -74,7 +74,7 @@ const Header = ({
         <View
           style={{
             alignItems: 'flex-start',
-            flex: 0.2,
+            flex: 0.4,
             ...rightViewStyle,
           }}>
           {!noLeftIcon &&

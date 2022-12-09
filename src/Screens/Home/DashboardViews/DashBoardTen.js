@@ -41,6 +41,7 @@ import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
+import LeftRightText from '../../../Components/LeftRightText';
 import {
   height,
   moderateScale,
@@ -209,27 +210,35 @@ export default function DashBoardTen({
     return (
       <View
         style={{
-          marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
           width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+          flex: 1,
+          justifyContent: 'space-between',
         }}>
-        <HomeCategoryCard2
-          data={item}
-          onPress={() => onPressCategory(item)}
-          isLoading={isLoading}
-        />
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            flex: 1,
+            backgroundColor: !!themeColor ? colors.whiteOpacity15 : '#EFEFEF',
+            borderRadius: moderateScale(12),
+            height: moderateScale(100),
+            width: width / 3.5,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => onPressCategory(item)}>
+          <Image source={imagePath.cabImage} />
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              marginTop: 6,
+              color: themeColor ? colors.white : colors.black,
+            }}>
+            xvcd
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };
-
-  const _renderVendors = ({item, index}) => (
-    <View style={{marginHorizontal: moderateScale(16)}}>
-      <MarketCard3
-        data={item}
-        onPress={() => onPressVendor(item)}
-        extraStyles={{margin: 2}}
-      />
-    </View>
-  );
 
   const seeMoreCategories = () => {
     updateState({
@@ -251,7 +260,10 @@ export default function DashBoardTen({
         : '400/600',
     );
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
+      <TouchableOpacity
+        style={{flex: 1, margin: moderateScale(18), marginBottom: 0}}
+        activeOpacity={0.8}
+        onPress={() => bannerPress(item)}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -259,22 +271,25 @@ export default function DashBoardTen({
             cache: FastImage.cacheControl.immutable,
           }}
           style={{
-            height:
-              appStyle?.homePageLayout == 5
-                ? moderateScale(140)
-                : DeviceInfo.getBundleId() == appIds.masa
-                ? moderateScale(260)
-                : height / 3.8,
-            width:
-              appStyle?.homePageLayout == 5
-                ? width / 1.2
-                : DeviceInfo.getBundleId() == appIds.masa
-                ? width / 1.1
-                : moderateScale(160),
+            width: width / 1.1,
+            height: height / 5,
             borderRadius: moderateScale(16),
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.greyColor,
+            // height:
+            //   appStyle?.homePageLayout == 5
+            //     ? moderateScale(140)
+            //     : DeviceInfo.getBundleId() == appIds.masa
+            //     ? moderateScale(260)
+            //     : height / 3.8,
+            // width:
+            //   appStyle?.homePageLayout == 5
+            //     ? width / 1.2
+            //     : DeviceInfo.getBundleId() == appIds.masa
+            //     ? width / 1.1
+            //     : moderateScale(160),
+            // borderRadius: moderateScale(16),
+            // backgroundColor: isDarkMode
+            //   ? colors.whiteOpacity15
+            //   : colors.greyColor,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -311,6 +326,19 @@ export default function DashBoardTen({
   const categoriesBanners = () => {
     return (
       <View style={{}}>
+        <View style={{}}>
+          {!isEmpty(appData?.mobile_banners) && (
+            <Carousel
+              autoplay={true}
+              loop={true}
+              autoplayInterval={2000}
+              data={appMainData?.mobile_banners || appData?.mobile_banners}
+              renderItem={renderBanners}
+              sliderWidth={width}
+              itemWidth={width}
+            />
+          )}
+        </View>
         {appMainData &&
           appMainData?.categories &&
           !!appMainData?.categories?.length && (
@@ -318,7 +346,21 @@ export default function DashBoardTen({
               style={{
                 flex: 1,
                 marginVertical: moderateScaleVertical(16),
+                marginHorizontal: moderateScale(16),
               }}>
+              <LeftRightText
+                leftText={'Top Categories'}
+                rightText={'View all'}
+                leftTextStyle={{
+                  color: !!isDarkMode ? colors.white : colors.black,
+                  fontSize: 20,
+                  fontFamily: fontFamily.medium,
+                }}
+                rightTextStyle={{
+                  color: colors.orange,
+                  fontFamily: fontFamily.medium,
+                }}
+              />
               <FlatList
                 key={'6'}
                 data={categoriesData}
@@ -377,40 +419,6 @@ export default function DashBoardTen({
               </View>
             </View>
           )}
-        <View style={{}}>
-          {!!appData?.mobile_banners?.length &&
-          appStyle?.homePageLayout == 3 &&
-          getBundleId() !== appIds?.masa ? (
-            <Carousel
-              autoplay={true}
-              loop={true}
-              autoplayInterval={2000}
-              data={appMainData?.mobile_banners || appData?.mobile_banners}
-              renderItem={renderBanners}
-              sliderWidth={width}
-              itemWidth={moderateScale(180)}
-            />
-          ) : (
-            <View style={{marginTop: moderateScaleVertical(4)}}>
-              <FlatList
-                horizontal
-                data={appMainData?.mobile_banners || appData?.mobile_banners}
-                keyExtractor={(item) => item?.id?.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderBanners}
-                ItemSeparatorComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
-                )}
-                ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(16)}} />
-                )}
-                ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(16)}} />
-                )}
-              />
-            </View>
-          )}
-        </View>
       </View>
     );
   };
@@ -429,29 +437,70 @@ export default function DashBoardTen({
     );
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
     return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
-        {isSVG ? (
-          <SvgUri
-            height={moderateScale(96)}
-            width={moderateScale(96)}
-            uri={imageURI}
-          />
-        ) : (
+      // <TouchableOpacity
+      //   activeOpacity={0.7}
+      //   onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
+      //   {isSVG ? (
+      //     <SvgUri
+      //       height={moderateScale(96)}
+      //       width={moderateScale(96)}
+      //       uri={imageURI}
+      //     />
+      //   ) : (
+      //     <FastImage
+      //       source={{uri: imageURI, priority: FastImage.priority.high}}
+      //       style={{
+      //         height: moderateScale(96),
+      //         width: moderateScale(96),
+      //         borderRadius: moderateScale(10),
+      //         backgroundColor: isDarkMode
+      //           ? colors.whiteOpacity15
+      //           : colors.greyColor,
+      //       }}
+      //     />
+      //   )}
+      // </TouchableOpacity>
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            flex: 1,
+
+            alignItems: 'center',
+          }}>
           <FastImage
-            source={{uri: imageURI, priority: FastImage.priority.high}}
+            source={imagePath.tiago}
             style={{
-              height: moderateScale(96),
-              width: moderateScale(96),
-              borderRadius: moderateScale(10),
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.greyColor,
+              width: width / 2.3,
+              height: 120,
+              borderRadius: 8,
             }}
           />
-        )}
-      </TouchableOpacity>
+        </TouchableOpacity>
+        <View style={{marginLeft: 8}}>
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              marginVertical: 6,
+
+              color: !!themeColor ? colors.white : colors.black,
+            }}>
+            Tata Tiago
+          </Text>
+          <LeftRightText
+            leftTextStyle={{
+              color: !!isDarkMode ? colors.white : colors.black,
+            }}
+            rightTextStyle={{
+              color: colors.orange,
+            }}
+            leftText={'AED 1,900,0'}
+          />
+        </View>
+      </View>
     );
   };
 
@@ -486,12 +535,53 @@ export default function DashBoardTen({
 
   const renderFeaturedProducts = ({item}) => {
     return (
-      <ProductsComp
-        item={item}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-      />
+      // <ProductsComp
+      //   item={item}
+      //   onPress={() =>
+      //     navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
+      //   }
+      // />
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            flex: 1,
+
+            alignItems: 'center',
+          }}>
+          <FastImage
+            source={imagePath.tiago}
+            style={{
+              width: width / 2.3,
+              height: 120,
+              borderRadius: 8,
+            }}
+          />
+        </TouchableOpacity>
+        <View style={{marginLeft: 8}}>
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              marginVertical: 6,
+
+              color: !!themeColor ? colors.white : colors.black,
+            }}>
+            Tata Tiago
+          </Text>
+          <LeftRightText
+            leftTextStyle={{
+              color: !!isDarkMode ? colors.white : colors.black,
+            }}
+            rightTextStyle={{
+              color: colors.orange,
+            }}
+            leftText={'AED 1,900,0'}
+          />
+        </View>
+      </View>
     );
   };
 
@@ -935,7 +1025,7 @@ export default function DashBoardTen({
           {!!isGetEstimation ? laundryCategoriesBanners() : categoriesBanners()}
           {
             <>
-              <FlatList
+              {/* <FlatList
                 scrollEnabled={false}
                 ListHeaderComponent={vendorHeader()}
                 showsVerticalScrollIndicator={false}
@@ -975,7 +1065,7 @@ export default function DashBoardTen({
                 ItemSeparatorComponent={() => (
                   <View style={{height: moderateScale(10)}} />
                 )}
-              />
+              /> */}
 
               {checkForBrand && (
                 <View style={{}}>
@@ -983,23 +1073,43 @@ export default function DashBoardTen({
                     appMainData?.brands &&
                     !!appMainData?.brands.length && (
                       <>
-                        <View>{listHeader(strings.POPULAR_BRANDS)}</View>
-                        <FlatList
-                          showsHorizontalScrollIndicator={false}
-                          horizontal
-                          data={appMainData?.brands}
-                          renderItem={renderBrands}
-                          keyExtractor={(item) => item?.id?.toString()}
-                          ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(16)}} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(16)}} />
-                          )}
-                        />
+                        <View
+                          style={{
+                            flex: 1,
+                            marginVertical: moderateScaleVertical(16),
+                            marginHorizontal: moderateScale(16),
+                          }}>
+                          <LeftRightText
+                            leftText={'Top Sales'}
+                            // rightText={'View all'}
+                            leftTextStyle={{
+                              color: !!isDarkMode ? colors.white : colors.black,
+                              fontSize: 20,
+                              fontFamily: fontFamily.medium,
+                            }}
+                            rightTextStyle={{
+                              color: colors.orange,
+                              fontFamily: fontFamily.medium,
+                            }}
+                          />
+                          <FlatList
+                            // showsHorizontalScrollIndicator={false}
+                            // horizontal
+                            data={appMainData?.brands}
+                            renderItem={renderBrands}
+                            keyExtractor={(item) => item?.id?.toString()}
+                            ItemSeparatorComponent={() => (
+                              <View style={{marginRight: moderateScale(12)}} />
+                            )}
+                            ListHeaderComponent={() => (
+                              <View style={{marginLeft: moderateScale(16)}} />
+                            )}
+                            ListFooterComponent={() => (
+                              <View style={{marginRight: moderateScale(16)}} />
+                            )}
+                            numColumns={2}
+                          />
+                        </View>
                       </>
                     )}
                 </View>
@@ -1013,34 +1123,55 @@ export default function DashBoardTen({
                 appMainData?.featured_products &&
                 !!appMainData?.featured_products.length && (
                   <>
-                    {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+                    {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
                       <View>{listHeader(strings.ALCOHAL)}</View>
                     ) : (
                       <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
-                    )}
+                    )} */}
+                    <View
+                      style={{
+                        flex: 1,
+                        marginVertical: moderateScaleVertical(16),
+                        marginHorizontal: moderateScale(16),
+                      }}>
+                      <LeftRightText
+                        leftText={'Previous Searches'}
+                        // rightText={'View all'}
+                        leftTextStyle={{
+                          color: !!isDarkMode ? colors.white : colors.black,
+                          fontSize: 20,
+                          fontFamily: fontFamily.medium,
+                        }}
+                        rightTextStyle={{
+                          color: colors.orange,
+                          fontFamily: fontFamily.medium,
+                        }}
+                      />
+                      <FlatList
+                        // showsHorizontalScrollIndicator={false}
+                        // horizontal
 
-                    <FlatList
-                      showsHorizontalScrollIndicator={false}
-                      horizontal
-                      data={appMainData?.featured_products}
-                      renderItem={renderFeaturedProducts}
-                      keyExtractor={(item) => item?.id?.toString()}
-                      ItemSeparatorComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                      ListHeaderComponent={() => (
-                        <View style={{marginLeft: moderateScale(16)}} />
-                      )}
-                      ListFooterComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                    />
+                        data={appMainData?.featured_products}
+                        renderItem={renderFeaturedProducts}
+                        keyExtractor={(item) => item?.id?.toString()}
+                        ItemSeparatorComponent={() => (
+                          <View style={{marginRight: moderateScale(16)}} />
+                        )}
+                        ListHeaderComponent={() => (
+                          <View style={{marginLeft: moderateScale(16)}} />
+                        )}
+                        ListFooterComponent={() => (
+                          <View style={{marginRight: moderateScale(16)}} />
+                        )}
+                        numColumns={2}
+                      />
+                    </View>
                   </>
                 )}
             </View>
           )}
 
-          {businessType !== 'laundry' &&
+          {/* {businessType !== 'laundry' &&
             appIds.orderchekout != DeviceInfo.getBundleId() && (
               <View style={{}}>
                 {appMainData &&
@@ -1067,7 +1198,7 @@ export default function DashBoardTen({
                     </>
                   )}
               </View>
-            )}
+            )} */}
 
           {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
             <></>

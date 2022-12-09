@@ -36,6 +36,7 @@ import {
 import LottieView from 'lottie-react-native';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
+import Header from '../../../Components/Header';
 
 export default function DashBoardHeaderZonesso({
   // navigation = {},
@@ -61,31 +62,40 @@ export default function DashBoardHeaderZonesso({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
-  const imageURI = getImageUrl(
-    isDarkMode
-      ? profileInfo?.dark_logo?.image_fit
-      : profileInfo?.logo?.image_fit,
-    isDarkMode
-      ? profileInfo?.dark_logo?.image_path
-      : profileInfo?.logo?.image_path,
-    '200/400',
-  );
-
   return (
     <View
       style={{
-        borderBottomColor: isDarkMode
-          ? colors.whiteOpacity22
-          : colors.borderColorD,
+        marginHorizontal: moderateScale(18),
       }}>
+      <Header
+        leftIcon={imagePath.location1}
+        // centerTitle={'Abu Dhabi'}
+        customLeft={() => {
+          return (
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Image source={imagePath.location1} />
+              </TouchableOpacity>
+              <Text style={{marginLeft: 12, fontFamily: fontFamily.regular}}>
+                Abu Dhabi
+              </Text>
+            </View>
+          );
+        }}
+      />
       {showAboveView ? (
-        <View
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
           style={{
             ...styles.headerContainer,
-            borderBottomColor: isDarkMode
+            borderBottomWidth: 0,
+            backgroundColor: isDarkMode
               ? colors.whiteOpacity22
-              : colors.borderColorD,
-            // borderBottomWidth: 0,
+              : colors.blackOpacity05,
+            borderRadius: moderateScale(12),
           }}>
           <View
             style={{
@@ -93,23 +103,6 @@ export default function DashBoardHeaderZonesso({
               flex: 1,
               alignItems: 'center',
             }}>
-            {!!(
-              profileInfo &&
-              (profileInfo?.logo || profileInfo?.dark_logo)
-            ) ? (
-              <FastImage
-                style={{
-                  width: moderateScale(width / 6),
-                  height: moderateScale(40),
-                }}
-                resizeMode={FastImage.resizeMode.contain}
-                source={{
-                  uri: imageURI,
-                  priority: FastImage.priority.high,
-                  cache: FastImage.cacheControl.immutable,
-                }}
-              />
-            ) : null}
             {!!appData?.profile?.preferences?.is_hyperlocal && (
               <TouchableOpacity
                 activeOpacity={1}
@@ -167,12 +160,12 @@ export default function DashBoardHeaderZonesso({
           <View
             style={{
               flexDirection: 'row',
+              justifyContent: 'center',
               alignItems: 'center',
-              height: moderateScale(30),
-              width: moderateScale(80),
+              height: moderateScale(36),
             }}>
             <TouchableOpacity
-              style={{marginHorizontal: moderateScale(8)}}
+              style={{}}
               onPress={() =>
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }>
@@ -185,51 +178,11 @@ export default function DashBoardHeaderZonesso({
                 source={imagePath.search1}
               />
             </TouchableOpacity>
-            {isVoiceRecord ? (
-              <TouchableOpacity onPress={_onVoiceStop}>
-                <LottieView
-                  style={{
-                    height: moderateScale(43),
-                    width: moderateScale(30),
-                    marginLeft: moderateScale(-2),
-                  }}
-                  source={voiceListen}
-                  autoPlay
-                  loop
-                  colorFilters={[
-                    {keypath: 'layers', color: themeColors.primary_color},
-                    {keypath: 'transparent2', color: themeColors.primary_color},
-                    {keypath: 'transparent1', color: themeColors.primary_color},
-                    {keypath: '01', color: themeColors.primary_color},
-                    {keypath: '02', color: themeColors.primary_color},
-                    {keypath: '03', color: themeColors.primary_color},
-                    {keypath: '04', color: themeColors.primary_color},
-                  ]}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{marginHorizontal: moderateScale(8)}}
-                onPress={_onVoiceListen}>
-                <Image
-                  source={imagePath.icVoice}
-                  style={{
-                    height: moderateScale(20),
-                    width: moderateScale(20),
-                    borderRadius: moderateScale(10),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                  }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            )}
           </View>
-        </View>
+        </TouchableOpacity>
       ) : null}
 
-      <DeliveryTypeComp selectedToggle={selcetedToggle} />
+      {/* <DeliveryTypeComp selectedToggle={selcetedToggle} /> */}
 
       <CustomAnimatedLoader
         source={loaderOne}

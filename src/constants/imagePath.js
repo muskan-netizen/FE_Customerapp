@@ -552,4 +552,6 @@ export default {
   // facebook: require("../assets/images/facebook.png"),
   apple1: require('../assets/images/Apple.png'),
   tiago: require('../assets/images/tiago.png'),
+  location1: require('../assets/images/ic_location1.png'),
+  check3: require('../assets/images/ic_check3.png'),
 };

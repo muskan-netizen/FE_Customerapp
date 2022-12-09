@@ -112,6 +112,23 @@ export default ({themeColor, toggleTheme}) => {
       marginVertical: moderateScale(24),
       marginTop: '10%',
     },
+    successModal: {
+      alignSelf: 'center',
+      flex: 0.35,
+      width: '80%',
+      backgroundColor: colors.white,
+      borderRadius: moderateScale(24),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    success: {
+      color: !!themeColor ? colors.white : colors.black,
+      fontFamily: fontFamily.medium,
+      fontSize: 19,
+      maxWidth: '70%',
+      textAlign: 'center',
+      marginVertical: moderateScale(18),
+    },
   });
   // export default styles;
   return styles;
