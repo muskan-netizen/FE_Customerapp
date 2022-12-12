@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
@@ -31,6 +32,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -320,7 +322,10 @@ export default function Account3({navigation}) {
             />
           ))}
 
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token &&
+         !!appData &&
+         !!appData?.profile &&
+         appData?.profile?.preferences?.subscription_mode == 1 && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -337,7 +342,7 @@ export default function Account3({navigation}) {
           />
         )}
 
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token && getBundleId() !== appIds.appi && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -367,7 +372,7 @@ export default function Account3({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token &&  (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -448,7 +453,7 @@ export default function Account3({navigation}) {
         />
 
         {!!userData?.auth_token &&
-          Platform.OS === 'android' &&
+          Platform.OS === 'android' && getBundleId() !== appIds.appi &&
           (businessType == 'taxi' ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}

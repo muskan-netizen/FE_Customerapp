@@ -68,6 +68,7 @@ import navigationStrings from './navigationStrings';
 const Stack = createStackNavigator();
 export default function ({navigation}) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  console.log(appStyle,'appStyleappStyleappStyle')
   const checkLayout = (inx) => {
     switch (inx) {
       case 2:
