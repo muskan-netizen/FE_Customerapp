@@ -1,5 +1,12 @@
-import {View, Text, FlatList, StyleSheet} from 'react-native';
-import React, {useCallback, useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TextInput,
+  Platform,
+} from 'react-native';
+import React, {useCallback, useState, useEffect, useRef} from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import colors from '../../../styles/colors';
 import {
@@ -11,31 +18,41 @@ import {
 } from '../../../styles/responsiveSize';
 import Header from '../../../Components/Header';
 import FormLoader from '../../../Components/Loaders/FormLoader';
-import {TextInput} from 'react-native-gesture-handler';
 import actions from '../../../redux/actions';
 import imagePath from '../../../constants/imagePath';
 import {useSelector} from 'react-redux';
+import {showError} from '../../../utils/helperFunctions';
+import {MultiSelect} from 'react-native-element-dropdown';
+import {isEmpty} from 'lodash';
+import {TouchableOpacity} from 'react-native';
+import {
+  cameraHandler,
+  checkValueExistInAry,
+} from '../../../utils/commonFunction';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import {Image} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import validations from '../../../utils/validations';
+import {hitSlopProp} from '../../../styles/commonStyles';
+import ActionSheet from 'react-native-actionsheet';
+import strings from '../../../constants/lang';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
-
-  const {
-    appData,
-    currencies,
-    languages,
-    appStyle,
-
-    themeColors,
-  } = useSelector((state) => state?.initBoot);
+  console.log(paramData, '<===paramData');
+  const {appData, currencies, languages, appStyle, themeColors} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
-
-  const [isAttributesModal, setIsAttributesModal] = useState(false);
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [isLoadingAttributes, setLoadingAttributes] = useState(false);
-  console.log(route, 'ROUTE HERE+++');
+  const [isLoadingAttributes, setLoadingAttributes] = useState(true);
+  const [isLoadingSubmitAttributes, setLoadingSubmitAttributes] =
+    useState(false);
+
+  const [userSelectedImgs, setUserSelectedImgs] = useState([]);
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -55,22 +72,226 @@ const AttributeInformation = ({route, navigation}) => {
       .then((res) => {
         console.log(res, '<===res');
         setLoadingAttributes(false);
-        setAttributeInfo(res?.data);
+        setAttributeInfo(res?.data || []);
       })
-      .catch((err) => {
-        setLoadingAttributes(false);
-        console.log(err, '<===error');
-        // modalRef.current.showMessage({
-        //   type: 'danger',
-        //   icon: 'danger',
-        //   message: err?.message,
-        // });
-      });
+      .catch(errorMethod);
   };
+
+  const isValidData = () => {
+    const error = validations({
+      productName: name,
+      productDetail: description,
+    });
+    if (error) {
+      showError(error);
+      return;
+    }
+    return true;
+  };
+
+  const onSubmitAttributes = () => {
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+    setLoadingSubmitAttributes(true);
+
+    let formData = new FormData();
+    formData.append('product_name', name);
+    formData.append('product_description', description);
+    // formData.append('file[]', file);
+
+    attributeInfo.map((item, index) => {
+      let optionData = [];
+      item?.option?.map((item, inx) => {
+        optionData[inx] = {
+          option_id: item?.id,
+          option_title: item?.title,
+        };
+      });
+      apiObj[item?.id] = {
+        type: item?.type,
+        id: item?.id,
+        attribute_title: item?.title,
+        option: optionData,
+        value: item?.values,
+      };
+    });
+    formData.append('attribute', JSON.stringify(apiObj));
+    console.log(formData, '<===formData onSubmitAttributes');
+
+    actions
+      .submitProductWithAttributes(formData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        setLoadingSubmitAttributes(false);
+        console.log(res, '<===response onSubmitAttributes');
+      })
+      .catch(errorMethod);
+  };
+
+  const errorMethod = (error) => {
+    setLoadingAttributes(false);
+    setLoadingSubmitAttributes(false);
+
+    showError(error?.message || error?.error);
+  };
+
+  const onChangeDropDownOption = (value, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = value;
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onPressRadioButton = (item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.attribute_id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onChangeText = (text, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [text];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onPressCheckBoxes = (value, data) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == value?.attribute_id,
+    );
+    if (!isEmpty(data?.values)) {
+      let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
+      if (existingItmIndx == -1) {
+        attributeInfoData[indexOfAttributeToUpdate].values = [
+          ...data?.values,
+          value?.id,
+        ];
+      } else {
+        let index = attributeInfoData[indexOfAttributeToUpdate].values.indexOf(
+          value?.id,
+        );
+        if (index >= 0) {
+          attributeInfoData[indexOfAttributeToUpdate].values.splice(index, 1);
+        }
+      }
+    } else {
+      attributeInfoData[indexOfAttributeToUpdate].values = [value?.id];
+    }
+    setAttributeInfo(attributeInfoData);
+  };
+
+  //this function use for open actionsheet
+  let actionSheet = useRef();
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
+
+  const cameraHandle = (index) => {
+    if (index == 0 || index == 1) {
+      cameraHandler(index, {
+        width: 300,
+        height: 400,
+        cropping: false,
+        cropperCircleOverlay: false,
+        compressImageQuality: 0.5,
+        mediaType: 'photo',
+      })
+        .then((res) => {
+          if (res && (res?.sourceURL || res?.path)) {
+            let file = {
+              image_id: Math.random(),
+              name:
+                Platform.OS == 'ios'
+                  ? res?.filename
+                  : res?.path.substring(res?.path.lastIndexOf('/') + 1),
+              type: res?.mime,
+              uri: res?.sourceURL || res?.path,
+            };
+            setUserSelectedImgs([...userSelectedImgs, file]);
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+
+  const renderRadioBtns = useCallback(
+    (item, data) => {
+      return (
+        <TouchableOpacity
+          onPress={() => onPressRadioButton(item)}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: moderateScale(20),
+          }}>
+          <Image
+            source={
+              !isEmpty(data?.values) && data?.values[0] == item?.id
+                ? imagePath.icActiveRadio
+                : imagePath.icInActiveRadio
+            }
+          />
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(14),
+              marginLeft: moderateScale(6),
+            }}>
+            {item?.title}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [attributeInfo],
+  );
+
+  const renderCheckBoxes = useCallback(
+    (item, data) => {
+      return (
+        <TouchableOpacity
+          onPress={() => onPressCheckBoxes(item, data)}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: moderateScale(20),
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <Image
+            source={
+              checkValueExistInAry(item, data?.values)
+                ? imagePath.checkBox2Active
+                : imagePath.checkBox2InActive
+            }
+          />
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(12),
+              marginLeft: moderateScale(6),
+            }}>
+            {item?.title}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [attributeInfo],
+  );
 
   const renderAttributeOptions = useCallback(
     ({item, index}) => {
-      console.log(item?.values, 'dkslakjfsd');
       return (
         <View>
           <Text
@@ -82,11 +303,7 @@ const AttributeInformation = ({route, navigation}) => {
           </Text>
           {item?.type == 1 ? (
             <MultiSelect
-              style={{
-                height: moderateScaleVertical(40),
-                backgroundColor: colors.blackOpacity05,
-                borderRadius: moderateScale(5),
-              }}
+              style={styles.multiSelect}
               labelField="title"
               valueField="id"
               value={!isEmpty(item?.values) ? item?.values : []}
@@ -94,36 +311,20 @@ const AttributeInformation = ({route, navigation}) => {
               onChange={(value) => onChangeDropDownOption(value, item)}
               placeholder={'Select value'}
               fontFamily={fontFamily.regular}
-              placeholderStyle={{
-                color: colors.black,
-                paddingHorizontal: moderateScale(5),
-                fontSize: textScale(12),
-                fontFamily: fontFamily.regular,
-              }}
+              placeholderStyle={styles.multiSelectPlaceholder}
             />
           ) : item?.type == 3 ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                marginTop: moderateScaleVertical(5),
-              }}>
+            <View style={styles.radioBtn}>
               {item?.option?.map((itm) => renderRadioBtns(itm, item))}
             </View>
           ) : item?.type == 4 ? (
             <TextInput
               placeholder="Type here..."
               onChangeText={(text) => onChangeText(text, item)}
-              style={styles.textInputStyle}
+              style={styles.textInput}
             />
           ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-
-                flexWrap: 'wrap',
-                marginTop: moderateScaleVertical(5),
-              }}>
+            <View style={styles.checkBox}>
               {item?.option?.map((itm) => renderCheckBoxes(itm, item))}
             </View>
           )}
@@ -137,11 +338,9 @@ const AttributeInformation = ({route, navigation}) => {
     return (
       <ButtonWithLoader
         btnText="Submit"
-        btnStyle={{
-          marginBottom: moderateScaleVertical(20),
-          backgroundColor: themeColors.primary_color,
-          borderWidth: 0,
-        }}
+        btnStyle={styles.submitBtn}
+        onPress={onSubmitAttributes}
+        isLoading={isLoadingSubmitAttributes}
         btnTextStyle={{
           textTransform: 'none',
         }}
@@ -155,67 +354,128 @@ const AttributeInformation = ({route, navigation}) => {
         style={{
           flex: 1,
           backgroundColor: colors.white,
-          paddingHorizontal: moderateScale(15),
         }}>
         <Header
-          onPressLeft={() => setIsAttributesModal(false)}
           centerTitle={'Attribute Information'}
           leftIcon={imagePath.back1}
         />
-        {true ? (
-          <View>
+        {isLoadingAttributes ? (
+          <View style={{flex: 1}}>
+            <FormLoader />
+            <FormLoader
+              loaderStyle={{
+                marginTop: 10,
+              }}
+            />
             <FormLoader />
           </View>
         ) : (
-          <View>
-            <Text
-              style={{
-                ...styles.attributeTitle,
-                marginTop: moderateScaleVertical(20),
-              }}>
-              Name
-            </Text>
-            <TextInput
-              placeholder="Type here..."
-              onChangeText={(text) => setName(text)}
-              style={styles.textInputStyle}
-            />
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps={'handled'}
+            showsVerticalScrollIndicator={false}>
+            {!isEmpty(attributeInfo) ? (
+              <View
+                style={{
+                  paddingHorizontal: moderateScale(20),
+                }}>
+                <Text
+                  style={{
+                    ...styles.attributeTitle,
+                    marginTop: moderateScaleVertical(20),
+                  }}>
+                  Name
+                </Text>
+                <TextInput
+                  placeholder="Enter name"
+                  onChangeText={(text) => setName(text)}
+                  style={styles.textInput}
+                />
 
-            <Text
-              style={{
-                ...styles.attributeTitle,
-                marginTop: moderateScaleVertical(20),
-              }}>
-              Description
-            </Text>
-            <TextInput
-              placeholder="Type here..."
-              onChangeText={(text) => setDescription(text)}
-              style={styles.textInputStyle}
-            />
-
-            <View
-              style={{
-                flex: 1,
-                marginTop: moderateScaleVertical(16),
-              }}>
-              <FlatList
-                data={attributeInfo}
-                keyboardShouldPersistTaps={'handled'}
-                ItemSeparatorComponent={() => (
+                <Text
+                  style={{
+                    ...styles.attributeTitle,
+                    marginTop: moderateScaleVertical(20),
+                  }}>
+                  Description
+                </Text>
+                <TextInput
+                  placeholder="Enter description"
+                  onChangeText={(text) => setDescription(text)}
+                  multiline
+                  style={{
+                    ...styles.textInput,
+                    height: moderateScaleVertical(100),
+                  }}
+                />
+                <Text
+                  style={{
+                    ...styles.attributeTitle,
+                    marginTop: moderateScaleVertical(20),
+                  }}>
+                  Add Image
+                </Text>
+                {!isEmpty(userSelectedImgs) && (
                   <View
                     style={{
-                      height: moderateScaleVertical(18),
-                    }}
-                  />
+                      marginBottom: moderateScaleVertical(5),
+                    }}>
+                    {userSelectedImgs.map((itm) => (
+                      <Image
+                        source={{uri: itm?.uri}}
+                        style={{
+                          width: '96%',
+                          height: moderateScaleVertical(100),
+                          borderRadius: moderateScale(5),
+                          marginTop: moderateScale(5),
+                        }}
+                      />
+                    ))}
+                  </View>
                 )}
-                renderItem={renderAttributeOptions}
-                ListFooterComponent={listFooterComponent}
-              />
-            </View>
-          </View>
+                <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
+                  <Image source={imagePath.icPlaceholder} />
+                </TouchableOpacity>
+                <View
+                  style={{
+                    marginTop: moderateScaleVertical(16),
+                  }}>
+                  <FlatList
+                    data={attributeInfo}
+                    keyboardShouldPersistTaps={'handled'}
+                    scrollEnabled={false}
+                    ItemSeparatorComponent={() => (
+                      <View
+                        style={{
+                          height: moderateScaleVertical(18),
+                        }}
+                      />
+                    )}
+                    renderItem={renderAttributeOptions}
+                    ListFooterComponent={listFooterComponent}
+                  />
+                  <View style={{height: moderateScaleVertical(65)}} />
+                </View>
+              </View>
+            ) : (
+              <View
+                style={{
+                  marginTop: height / 3.5,
+                  alignItems: 'center',
+                }}>
+                <Image source={imagePath.icEmptyCart} />
+              </View>
+            )}
+          </KeyboardAwareScrollView>
         )}
       </View>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 };
@@ -291,13 +551,40 @@ function stylesFunc({fontFamily, themeColors}) {
     attributeTitle: {
       fontFamily: fontFamily.bold,
       fontSize: textScale(14),
+      color: colors.black,
     },
-    textInputStyle: {
+    textInput: {
       backgroundColor: colors.blackOpacity05,
       height: moderateScaleVertical(40),
       marginTop: moderateScaleVertical(5),
       borderRadius: moderateScale(5),
       paddingHorizontal: moderateScale(5),
+    },
+    multiSelect: {
+      height: moderateScaleVertical(40),
+      backgroundColor: colors.blackOpacity05,
+      borderRadius: moderateScale(5),
+    },
+    multiSelectPlaceholder: {
+      color: colors.black,
+      paddingHorizontal: moderateScale(5),
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+    },
+    radioBtn: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: moderateScaleVertical(5),
+    },
+    checkBox: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: moderateScaleVertical(5),
+    },
+    submitBtn: {
+      marginBottom: moderateScaleVertical(20),
+      backgroundColor: themeColors.primary_color,
+      borderWidth: 0,
     },
   });
   return styles;

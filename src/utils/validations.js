@@ -115,24 +115,27 @@ export default function (data) {
       return emptyValidationText;
     }
   }
-  if (productDetail !== undefined) {
-    let emptyValidationText = checkEmpty(
-      productDetail,
-      strings.ENTER_NEW_ADDRESS,
-    );
-    if (emptyValidationText !== '') {
-      return emptyValidationText;
-    }
-  }
   if (productName !== undefined) {
     let emptyValidationText = checkEmpty(
       productName,
-      strings.ENTER_NEW_ADDRESS,
+      strings.PRODUCT_NAME,
+      false,
     );
     if (emptyValidationText !== '') {
       return emptyValidationText;
     }
   }
+  if (productDetail !== undefined) {
+    let emptyValidationText = checkEmpty(
+      productDetail,
+      strings.ENTER_PRODUCT_DESC,
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
   if (mrp !== undefined) {
     let emptyValidationText = checkEmpty(mrp, strings.ENTER_NEW_ADDRESS);
     let checkNumericValue = checkNumeric(mrp, strings.ENTER_NEW_ADDRESS);

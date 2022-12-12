@@ -13,7 +13,7 @@ export default function () {
         component={Screens.Post}
       />
       <Stack.Screen
-        name={navigationStrings.ATTRIBUTEINFORMATION}
+        name={navigationStrings.ATTRIBUTE_INFORMATION}
         component={Screens.AttributeInformation}
       />
     </Stack.Navigator>

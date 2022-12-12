@@ -626,3 +626,6 @@ export const CHECK_PRODUCT_AVAILAABILITY = getApiUrl(
 export const GET_AVAILABLE_ATTRIBUTES = getApiUrl(
   '/mystore/product/availableListOfAttribute',
 );
+export const SUBMIT_PRODUCT_WITH_ATTRIBUTE = getApiUrl(
+  'mystore/product/addProductWithAttribute',
+);

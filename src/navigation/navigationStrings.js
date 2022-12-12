@@ -159,5 +159,5 @@ export default {
   POST_CATEGORY: 'PostCategory',
   CATEGORYLISTING: 'CategoryListing',
   LISTDETAIL: 'ListDetail',
-  ATTRIBUTEINFORMATION: 'AttributeInformation',
+  ATTRIBUTE_INFORMATION: 'attributeInformation',
 };
