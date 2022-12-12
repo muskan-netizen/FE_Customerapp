@@ -213,9 +213,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     isRefreshing,
   } = state;
 
-  const [attributeInfo, setAttributeInfo] = useState([]);
-  const [isAttribute, setIsAttribute] = useState(false);
-
   useEffect(() => {
     if (isLoading || isVarientImageDeleted) {
       getVendorProductDetailByID();
@@ -237,17 +234,6 @@ const RoyoAddProduct = ({route, navigation}) => {
       .then((res) => {
         console.log(res, '<==== res');
         const productInfo = res?.data?.product_detail;
-        let attributes = res?.data?.attributes;
-        attributes.map((item, inx) => {
-          let availableValues = [];
-          item?.product_attribute.map((itm, inx) => {
-            availableValues[inx] =
-              item?.type == 4 ? itm?.key_value : itm?.attribute_option_id;
-          });
-          item.values = availableValues;
-        });
-        setAttributeInfo(attributes || []);
-        setIsAttribute(res?.data?.p2p_active || false);
         updateState({
           isRefreshing: false,
           isLoading: false,
@@ -424,27 +410,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('delay_order_hrs', delayHrs);
     formData.append('delay_order_min', delayMinutes);
     formData.append('category_id', productDetailParam?.category_id);
-
-    if (isAttribute) {
-      let apiObj = {};
-      attributeInfo.map((item, index) => {
-        let optionData = [];
-        item?.option?.map((item, inx) => {
-          optionData[inx] = {
-            option_id: item?.id,
-            option_title: item?.title,
-          };
-        });
-        apiObj[item?.id] = {
-          type: item?.type,
-          id: item?.id,
-          attribute_title: item?.title,
-          option: optionData,
-          value: item?.values,
-        };
-      });
-      formData.append('attribute', JSON.stringify(apiObj));
-    }
 
     console.log(formData, 'formData....formData');
 
@@ -1046,185 +1011,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     getVendorProductDetailByID();
   };
 
-  const onChangeDropDownOption = (value, item) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      (itm) => itm?.id == item?.id,
-    );
-    attributeInfoData[indexOfAttributeToUpdate].values = value;
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const renderRadioBtns = (item, data) => {
-    return (
-      <TouchableOpacity
-        onPress={() => onPressRadioButton(item)}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginRight: moderateScale(20),
-        }}>
-        <Image
-          source={
-            !isEmpty(data?.values) && data?.values[0] == item?.id
-              ? imagePath.icActiveRadio
-              : imagePath.icInActiveRadio
-          }
-        />
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(14),
-            marginLeft: moderateScale(6),
-          }}>
-          {item?.title}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const onPressRadioButton = (item) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      (itm) => itm?.id == item?.attribute_id,
-    );
-    attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const renderCheckBoxes = (item, data) => {
-    return (
-      <TouchableOpacity
-        onPress={() => onPressCheckBoxes(item, data)}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginRight: moderateScale(20),
-          marginBottom: moderateScaleVertical(10),
-        }}>
-        <Image
-          source={
-            checkValueExistInAry(item, data?.values)
-              ? imagePath.checkBox2Active
-              : imagePath.checkBox2InActive
-          }
-        />
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(12),
-            marginLeft: moderateScale(6),
-          }}>
-          {item?.title}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const onPressCheckBoxes = (value, data) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      (itm) => itm?.id == value?.attribute_id,
-    );
-    if (!isEmpty(data?.values)) {
-      let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
-      if (existingItmIndx == -1) {
-        attributeInfoData[indexOfAttributeToUpdate].values = [
-          ...data?.values,
-          value?.id,
-        ];
-      } else {
-        let index = attributeInfoData[indexOfAttributeToUpdate].values.indexOf(
-          value?.id,
-        );
-        if (index >= 0) {
-          attributeInfoData[indexOfAttributeToUpdate].values.splice(index, 1);
-        }
-      }
-    } else {
-      attributeInfoData[indexOfAttributeToUpdate].values = [value?.id];
-    }
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const onChangeText = (text, item) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      (itm) => itm?.id == item?.id,
-    );
-    attributeInfoData[indexOfAttributeToUpdate].values = [text];
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const renderAttributeOptions = ({item, index}) => {
-    return (
-      <View>
-        <Text
-          style={{
-            fontFamily: fontFamily.bold,
-            fontSize: textScale(12),
-          }}>
-          {item?.title}
-        </Text>
-        {item?.type == 1 ? (
-          <MultiSelect
-            style={{
-              height: moderateScaleVertical(40),
-              backgroundColor: colors.white,
-              borderRadius: moderateScale(5),
-              marginTop: moderateScaleVertical(5),
-            }}
-            labelField="title"
-            valueField="id"
-            value={item?.values}
-            data={item?.option}
-            onChange={(value) => onChangeDropDownOption(value, item)}
-            placeholder={'Select value'}
-            fontFamily={fontFamily.regular}
-            placeholderStyle={{
-              color: colors.black,
-              paddingHorizontal: moderateScale(5),
-              fontSize: textScale(12),
-              fontFamily: fontFamily.regular,
-            }}
-          />
-        ) : item?.type == 3 ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              marginTop: moderateScaleVertical(5),
-            }}>
-            {item?.option?.map((itm) => renderRadioBtns(itm, item))}
-          </View>
-        ) : item?.type == 4 ? (
-          <TextInput
-            placeholder="Type here..."
-            onChangeText={(text) => onChangeText(text, item)}
-            value={item?.values[0]}
-            style={{
-              backgroundColor: colors.white,
-              height: moderateScaleVertical(40),
-              marginTop: moderateScaleVertical(5),
-              borderRadius: moderateScale(5),
-              paddingHorizontal: moderateScale(5),
-            }}
-          />
-        ) : (
-          <View
-            style={{
-              flexDirection: 'row',
-
-              flexWrap: 'wrap',
-              marginTop: moderateScaleVertical(5),
-            }}>
-            {item?.option?.map((itm) => renderCheckBoxes(itm, item))}
-          </View>
-        )}
-      </View>
-    );
-  };
-
   return (
     <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
       <Header
@@ -1665,27 +1451,6 @@ const RoyoAddProduct = ({route, navigation}) => {
                 />
               </View>
             )}
-
-            {isAttribute ? (
-              <View
-                style={{
-                  marginVertical: moderateScaleVertical(20),
-                  paddingHorizontal: moderateScale(15),
-                }}>
-                <Text style={styles.labelStyle}>{'Attribute Information'}</Text>
-                <FlatList
-                  data={attributeInfo}
-                  ItemSeparatorComponent={() => (
-                    <View
-                      style={{
-                        height: moderateScaleVertical(20),
-                      }}
-                    />
-                  )}
-                  renderItem={renderAttributeOptions}
-                />
-              </View>
-            ) : null}
           </View>
         ) : (
           <View

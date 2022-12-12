@@ -1114,7 +1114,8 @@
     "socket.io-client": "^2.1.1",
     "toastify-react-native": "^2.0.0",
     "toggle-switch-react-native": "^3.2.0",
-    "translate-json-object": "^2.3.7"
+    "translate-json-object": "^2.3.7",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.12.16",

@@ -179,7 +179,7 @@ export default function TabRoutes(props) {
             navigationStrings.PRODUCTWITHCATEGORY,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
-            navigationStrings.CATEGORYLISTING,
+            navigationStrings.P2P_PRODUCTS,
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({focused, tintColor}) => (

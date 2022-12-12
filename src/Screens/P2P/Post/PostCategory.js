@@ -407,7 +407,7 @@ const PostCategory = ({navigation}) => {
           // onPress={onFillManaully}
           onPress={() => {
             setIsAutofillModal(false);
-            navigation.navigate(navigationStrings.ATTRIBUTEINFORMATION, {
+            navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
               category_id: selectedP2Pcategory?.id,
             });
           }}>

@@ -7,6 +7,7 @@ import {
   FlatList,
   ImageBackground,
   TextInput,
+  Alert,
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
 //custom components
@@ -58,7 +59,7 @@ const DATA = [
   },
 ];
 
-const CategoryListing = ({route, navigation}) => {
+const P2pProducts = ({route, navigation}) => {
   const {location} = useSelector((state) => state?.home);
   const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
@@ -281,4 +282,4 @@ const CategoryListing = ({route, navigation}) => {
   );
 };
 
-export default CategoryListing;
+export default P2pProducts;
