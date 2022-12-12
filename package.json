@@ -938,6 +938,7 @@
     "skylineRelease": "cd android && ./gradlew assembleskylineRelease",
     "blissRelease": "cd android && ./gradlew assembleblissRelease",
     "rentzyRelease": "cd android && ./gradlew assemblerentzyRelease",
+    "zonessoRelease": "cd android && ./gradlew assemblezonessoRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
