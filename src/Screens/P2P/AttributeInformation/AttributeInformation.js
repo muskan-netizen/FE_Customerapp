@@ -21,7 +21,7 @@ import FormLoader from '../../../Components/Loaders/FormLoader';
 import actions from '../../../redux/actions';
 import imagePath from '../../../constants/imagePath';
 import {useSelector} from 'react-redux';
-import {showError} from '../../../utils/helperFunctions';
+import {showError, showSuccess} from '../../../utils/helperFunctions';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {isEmpty} from 'lodash';
 import {TouchableOpacity} from 'react-native';
@@ -37,6 +37,7 @@ import {hitSlopProp} from '../../../styles/commonStyles';
 import ActionSheet from 'react-native-actionsheet';
 import strings from '../../../constants/lang';
 import {v4 as uuidv4} from 'uuid';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
@@ -97,6 +98,7 @@ const AttributeInformation = ({route, navigation}) => {
     }
     setLoadingSubmitAttributes(true);
     let formData = new FormData();
+    formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
     formData.append('body_html', description);
     productImgs.map((item) => {
@@ -132,6 +134,8 @@ const AttributeInformation = ({route, navigation}) => {
       .then((res) => {
         setLoadingSubmitAttributes(false);
         console.log(res, '<===response onSubmitAttributes');
+        showSuccess(res?.message);
+        navigation.goBack();
       })
       .catch(errorMethod);
   };
@@ -231,7 +235,6 @@ const AttributeInformation = ({route, navigation}) => {
   };
 
   const removeProductImg = (item) => {
-    console.log(item, 'item/....item');
     const productImgsData = [...productImgs];
     let itmIndx = productImgsData.findIndex((itm) => itm?.id == item?.uri);
     productImgsData.splice(itmIndx, 1);
@@ -372,13 +375,34 @@ const AttributeInformation = ({route, navigation}) => {
         />
         {isLoadingAttributes ? (
           <View style={{flex: 1}}>
-            <FormLoader />
-            <FormLoader
-              loaderStyle={{
-                marginTop: 10,
-              }}
-            />
-            <FormLoader />
+            {['', '', '', '', '', '', '', '', ''].map((itm) => (
+              <View
+                style={{
+                  marginTop: moderateScaleVertical(20),
+                }}>
+                <HeaderLoader
+                  isRight={false}
+                  widthLeft={moderateScale(100)}
+                  rectWidthLeft={moderateScale(100)}
+                  heightLeft={moderateScaleVertical(30)}
+                  rectHeightLeft={moderateScaleVertical(30)}
+                  rx={5}
+                  ry={5}
+                />
+                <HeaderLoader
+                  isRight={false}
+                  widthLeft={width - moderateScale(30)}
+                  rectWidthLeft={width - moderateScale(30)}
+                  heightLeft={moderateScaleVertical(35)}
+                  rectHeightLeft={moderateScaleVertical(35)}
+                  rx={5}
+                  ry={5}
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(5),
+                  }}
+                />
+              </View>
+            ))}
           </View>
         ) : (
           <KeyboardAwareScrollView
@@ -425,6 +449,7 @@ const AttributeInformation = ({route, navigation}) => {
                   }}>
                   Add Image
                 </Text>
+                {console.log(productImgs, 'productImgs...productImgs')}
                 {!isEmpty(productImgs) && (
                   <View
                     style={{

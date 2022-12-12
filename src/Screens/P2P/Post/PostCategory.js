@@ -497,8 +497,11 @@ const PostCategory = ({navigation}) => {
 
   return (
     <WrapperContainer>
-      <View style={{margin: moderateScale(18)}}>
-        <Header leftIcon={imagePath.back1} />
+      <Header leftIcon={imagePath.back1} />
+      <View
+        style={{
+          marginHorizontal: moderateScale(15),
+        }}>
         <Text style={styles.header}>{strings.SELECT_YOUR_CATEGORY}</Text>
         {isLoadingP2pCategories ? (
           <View>
@@ -508,11 +511,10 @@ const PostCategory = ({navigation}) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginVertical: moderateScale(10),
-                  // backgroundColor:"green"
                 }}>
                 <HeaderLoader
-                  widthLeft={width / 2.5}
-                  rectWidthLeft={width / 2.5}
+                  widthLeft={(width - moderateScale(30)) / 2}
+                  rectWidthLeft={(width - moderateScale(30)) / 2}
                   heightLeft={height / 6.5}
                   rectHeightLeft={height / 6.5}
                   isRight={false}
@@ -520,8 +522,8 @@ const PostCategory = ({navigation}) => {
                   ry={15}
                 />
                 <HeaderLoader
-                  widthLeft={width / 2.5}
-                  rectWidthLeft={width / 2.5}
+                  widthLeft={(width - moderateScale(30)) / 2}
+                  rectWidthLeft={(width - moderateScale(30)) / 2}
                   heightLeft={height / 6.5}
                   rectHeightLeft={height / 6.5}
                   isRight={false}

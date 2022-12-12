@@ -41,8 +41,8 @@ import {
   SubcategoryVendor,
   Addaddress,
   ChatRoomForVendor,
-  CategoryListing,
   ListDetail,
+  P2pProducts,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
@@ -330,8 +330,8 @@ export default function () {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name={navigationStrings.CATEGORYLISTING}
-        component={CategoryListing}
+        name={navigationStrings.P2P_PRODUCTS}
+        component={P2pProducts}
         options={{headerShown: false}}
       />
       <Stack.Screen

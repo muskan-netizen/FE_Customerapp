@@ -157,7 +157,7 @@ export default {
   VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
   POST: 'Post',
   POST_CATEGORY: 'PostCategory',
-  CATEGORYLISTING: 'CategoryListing',
+  P2P_PRODUCTS: 'p2pProducts',
   LISTDETAIL: 'ListDetail',
   ATTRIBUTE_INFORMATION: 'attributeInformation',
 };

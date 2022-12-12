@@ -553,7 +553,7 @@ export default function Home({route, navigation}) {
   const onPressCategory = (item) => {
     console.log(item, 'item>>>>item');
 
-    moveToNewScreen(navigationStrings.CATEGORYLISTING, item)();
+    moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
     return;
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
@@ -562,7 +562,7 @@ export default function Home({route, navigation}) {
     }
     if (item.redirect_to == staticStrings.VENDOR) {
       // moveToNewScreen(navigationStrings.VENDOR, item)();
-      moveToNewScreen(navigationStrings.CATEGORYLISTING, item)();
+      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY ||
@@ -581,7 +581,7 @@ export default function Home({route, navigation}) {
       //   name: item.name,
       //   isVendorList: false,
       // })();
-      moveToNewScreen(navigationStrings.CATEGORYLISTING, item)();
+      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
