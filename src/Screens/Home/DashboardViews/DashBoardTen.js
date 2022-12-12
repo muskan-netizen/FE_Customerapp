@@ -207,6 +207,7 @@ export default function DashBoardTen({
     }
   };
   const _renderItem = ({item, index}) => {
+    console.log(item, 'item...item');
     return (
       <View
         style={{
@@ -229,10 +230,10 @@ export default function DashBoardTen({
           <Text
             style={{
               fontFamily: fontFamily.regular,
-              marginTop: 6,
+              marginTop: moderateScaleVertical(10),
               color: themeColor ? colors.white : colors.black,
             }}>
-            xvcd
+            {item?.name || (item?.translation && item?.translation[0]?.name)}
           </Text>
         </TouchableOpacity>
       </View>
@@ -273,22 +274,6 @@ export default function DashBoardTen({
             width: width / 1.1,
             height: height / 5,
             borderRadius: moderateScale(16),
-            // height:
-            //   appStyle?.homePageLayout == 5
-            //     ? moderateScale(140)
-            //     : DeviceInfo.getBundleId() == appIds.masa
-            //     ? moderateScale(260)
-            //     : height / 3.8,
-            // width:
-            //   appStyle?.homePageLayout == 5
-            //     ? width / 1.2
-            //     : DeviceInfo.getBundleId() == appIds.masa
-            //     ? width / 1.1
-            //     : moderateScale(160),
-            // borderRadius: moderateScale(16),
-            // backgroundColor: isDarkMode
-            //   ? colors.whiteOpacity15
-            //   : colors.greyColor,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -1122,11 +1107,6 @@ export default function DashBoardTen({
                 appMainData?.featured_products &&
                 !!appMainData?.featured_products.length && (
                   <>
-                    {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
-                      <View>{listHeader(strings.ALCOHAL)}</View>
-                    ) : (
-                      <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
-                    )} */}
                     <View
                       style={{
                         flex: 1,

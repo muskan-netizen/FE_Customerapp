@@ -1,119 +1,351 @@
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Image,
   FlatList,
+  Image,
   ImageBackground,
+  Text,
   TextInput,
-  Alert,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import React, {useCallback, useState} from 'react';
 //custom components
-import WrapperContainer from '../../../Components/WrapperContainer';
-import SearchBar2 from '../../../Components/NewComponents/SearchBar2';
-import TopBar from '../../../Components/NewComponents/TopBar';
 import GradientButton from '../../../Components/GradientButton';
+import SearchBar2 from '../../../Components/NewComponents/SearchBar2';
 import TopHeader from '../../../Components/NewComponents/TopHeader';
+import WrapperContainer from '../../../Components/WrapperContainer';
 //styling
+import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
-  width,
+  textScale,
 } from '../../../styles/responsiveSize';
-import colors from '../../../styles/colors';
-import styleFun from './styles';
 import {MyDarkTheme} from '../../../styles/theme';
+import styleFun from './styles';
 //constants
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
-import {useSelector} from 'react-redux';
+import {isEmpty} from 'lodash';
 import {useDarkMode} from 'react-native-dark-mode';
-import _ from 'lodash';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import Header from '../../../Components/Header';
+import deviceInfoModule from 'react-native-device-info';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
+import {useSelector} from 'react-redux';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import Header from '../../../Components/Header';
+import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
+import {getImageUrl, showError} from '../../../utils/helperFunctions';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '8694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
-const P2pProducts = ({route, navigation}) => {
-  const {location} = useSelector((state) => state?.home);
-  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
+const P2pProducts = ({route, navigation, category_id = 38}) => {
+  const {
+    appData,
+    currencies,
+    languages,
+    appStyle,
+    themeColors,
+    themeToggle,
+    themeColor,
+  } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
-
+  const fontFamily = appStyle?.fontSizeData;
   const showModal = true;
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [clicked, setClicked] = useState();
-  const [products, setProducts] = React.useState(DATA);
-  const [items, setItems] = useState([
-    {label: 'Abu Dhabi', value: 'Abu Dhabi'},
-    {label: 'Banana', value: 'banana'},
-  ]);
-
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  // const { themeColor } = useSelector((state) => state?.initBoot);
-  const styles = styleFun({themeColor, themeToggle});
+  const styles = styleFun({themeColor, themeToggle, fontFamily});
 
-  const handleChange = (id) => {
-    let temp = products.map((product) => {
-      if (id === product.id) {
-        return {...product, isChecked: !product.isChecked};
+  const [isLoading, setIsLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [products, setProducts] = React.useState([]);
+  const [p2pProducts, setP2pProducts] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [attributeInfo, setAttributeInfo] = useState([]);
+  const [isAttributeFilterModal, setIsAttributeFilterModal] = useState(false);
+
+  useEffect(() => {
+    getP2pProductsByCategoryId();
+    getListOfAvailableAttributes();
+  }, []);
+
+  const getListOfAvailableAttributes = () => {
+    actions
+      .getAvailableAttributes(
+        `?category_id=${category_id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, '<===response getListOfAvailableAttributes');
+        setAttributeInfo(res?.data || []);
+      })
+      .catch((error) => showError(error?.message || error?.error));
+  };
+
+  const getP2pProductsByCategoryId = (pageNo = 1) => {
+    actions
+      .getProductByP2pCategoryId(
+        `/${category_id}?page=${pageNo}&product_list=true&type=p2p`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: deviceInfoModule.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log(res, '<===response getP2pProductsByCategoryId');
+        setP2pProducts(
+          pageNo == 1
+            ? res?.data?.listData?.data
+            : [...p2pProducts, ...res?.data?.listData?.data],
+        );
+        setIsLoading(false);
+      })
+      .catch(errorMethod);
+  };
+
+  const errorMethod = (error) => {
+    setIsLoading(false);
+    showError(error?.message || error?.error);
+  };
+
+  const onChangeDropDownOption = (value, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = value;
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onPressRadioButton = (item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.attribute_id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onChangeText = (text, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [text];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onPressCheckBoxes = (value, data) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == value?.attribute_id,
+    );
+    if (!isEmpty(data?.values)) {
+      let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
+      if (existingItmIndx == -1) {
+        attributeInfoData[indexOfAttributeToUpdate].values = [
+          ...data?.values,
+          value?.id,
+        ];
+      } else {
+        let index = attributeInfoData[indexOfAttributeToUpdate].values.indexOf(
+          value?.id,
+        );
+        if (index >= 0) {
+          attributeInfoData[indexOfAttributeToUpdate].values.splice(index, 1);
+        }
       }
-      return product;
-    });
-    setProducts(temp);
+    } else {
+      attributeInfoData[indexOfAttributeToUpdate].values = [value?.id];
+    }
+    setAttributeInfo(attributeInfoData);
   };
 
-  let selected = products.filter((product) => product.isChecked);
+  const renderP2pProducts = useCallback(
+    ({item, index}) => {
+      const getImage = (quality) =>
+        getImageUrl(
+          item?.media[0]?.image?.path.image_fit,
+          item?.media[0]?.image?.path.image_path,
+          quality,
+        );
+      return (
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate(navigationStrings.LISTDETAIL)}>
+            <ImageBackground
+              style={styles.imgBack}
+              source={{uri: getImage('200/200')}}
+              imageStyle={{borderRadius: moderateScale(10)}}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={{
+                  alignSelf: 'flex-end',
+                  margin: moderateScale(10),
+                }}>
+                <Image source={imagePath.heart2} style={styles.btn1} />
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+          <Text style={styles.txt1}>
+            {item?.translation[0]?.title || item?.title || item?.sku}
+          </Text>
 
-  const modalPress = () => {
-    setModalVisible(!modalVisible);
-  };
+          <View style={{}}>
+            {!!item?.translation_description ||
+            !!item?.translation[0]?.translation_description ? (
+              <View style={{}}>
+                <Text
+                  numberOfLines={3}
+                  style={{
+                    fontSize: textScale(10),
+                    fontFamily: fontFamily.regular,
+                    lineHeight: moderateScale(14),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity66,
+                    textAlign: 'left',
+                  }}>
+                  {!!item?.translation_description
+                    ? item?.translation_description.toString()
+                    : !!item?.translation[0]?.translation_description
+                    ? item?.translation[0]?.translation_description
+                    : ''}
+                </Text>
+              </View>
+            ) : null}
+          </View>
+          <GradientButton
+            btnText={`AED ${Number(item?.variant[0]?.price).toFixed(2)}`}
+            btnStyle={styles.btn}
+            containerStyle={{alignItems: 'flex-start'}}
+          />
+        </View>
+      );
+    },
+    [p2pProducts],
+  );
 
-  const TextWithCheck = (item) => {
-    return (
-      <View style={styles.checkView}>
-        <Text style={styles.checkText}>Alfa Romeo</Text>
-        <TouchableOpacity onPress={() => handleChange(item?.item?.id)}>
+  const renderRadioBtns = useCallback(
+    (item, data, index) => {
+      return (
+        <TouchableOpacity
+          key={String(index)}
+          onPress={() => onPressRadioButton(item)}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: moderateScale(20),
+          }}>
           <Image
             source={
-              !!item?.item?.isChecked
-                ? imagePath.icCheckBoxActive
-                : imagePath.icCheckBoxInactive
+              !isEmpty(data?.values) && data?.values[0] == item?.id
+                ? imagePath.icActiveRadio
+                : imagePath.icInActiveRadio
             }
-            style={{tintColor: colors.orange}}
           />
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(14),
+              marginLeft: moderateScale(6),
+            }}>
+            {item?.title}
+          </Text>
         </TouchableOpacity>
-      </View>
-    );
-  };
+      );
+    },
+    [attributeInfo],
+  );
+
+  const renderCheckBoxes = useCallback(
+    (item, data, index) => {
+      return (
+        <TouchableOpacity
+          key={String(index)}
+          onPress={() => onPressCheckBoxes(item, data)}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: moderateScale(20),
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <Image
+            source={
+              checkValueExistInAry(item, data?.values)
+                ? imagePath.checkBox2Active
+                : imagePath.checkBox2InActive
+            }
+          />
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(12),
+              marginLeft: moderateScale(6),
+            }}>
+            {item?.title}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [attributeInfo],
+  );
+
+  const renderAttributeOptions = useCallback(
+    ({item, index}) => {
+      return (
+        <View>
+          <Text
+            style={{
+              ...styles.attributeTitle,
+              marginBottom: moderateScaleVertical(6),
+            }}>
+            {item?.title}
+          </Text>
+          {item?.type == 1 ? (
+            <MultiSelect
+              style={styles.multiSelect}
+              labelField="title"
+              valueField="id"
+              value={!isEmpty(item?.values) ? item?.values : []}
+              data={item?.option}
+              onChange={(value) => onChangeDropDownOption(value, item)}
+              placeholder={'Select value'}
+              fontFamily={fontFamily.regular}
+              placeholderStyle={styles.multiSelectPlaceholder}
+            />
+          ) : item?.type == 3 ? (
+            <View style={styles.radioBtn}>
+              {item?.option?.map((itm, indx) =>
+                renderRadioBtns(itm, item, indx),
+              )}
+            </View>
+          ) : item?.type == 4 ? (
+            <TextInput
+              placeholder="Type here..."
+              onChangeText={(text) => onChangeText(text, item)}
+              style={styles.textInput}
+            />
+          ) : (
+            <View style={styles.checkBox}>
+              {item?.option?.map((itm, index) =>
+                renderCheckBoxes(itm, item, index),
+              )}
+            </View>
+          )}
+        </View>
+      );
+    },
+    [attributeInfo],
+  );
 
   return (
     <WrapperContainer
@@ -121,150 +353,123 @@ const P2pProducts = ({route, navigation}) => {
         isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
       }
       isLoading={isLoading}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1}}>
-        <Header
-          leftIcon={imagePath.back2}
-          centerTitle={''}
-          headerStyle={{
-            marginVertical: moderateScaleVertical(8),
-          }}
-        />
+      <Header
+        leftIcon={imagePath.back2}
+        centerTitle={''}
+        headerStyle={{
+          marginVertical: moderateScaleVertical(8),
+        }}
+      />
 
-        <SearchBar2
-          navigation={navigation}
-          placeHolderTxt={'Search here.....'}
-          showFilter={true}
-          modalPress={modalPress}
-        />
-        <View style={styles.view2}>
-          {DATA.map((item, index) => {
-            return (
+      <SearchBar2
+        navigation={navigation}
+        placeHolderTxt={'Search here.....'}
+        showFilter={true}
+        modalPress={() => setIsAttributeFilterModal(true)}
+        mainContainer={{
+          flex: 0,
+        }}
+      />
+
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: moderateScale(15),
+        }}>
+        <FlatList
+          data={p2pProducts}
+          renderItem={renderP2pProducts}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() =>
+            !isLoading && (
               <View>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.LISTDETAIL)
-                  }>
-                  <ImageBackground
-                    style={styles.imgBack}
-                    source={imagePath.tiago}
-                    imageStyle={{borderRadius: moderateScale(10)}}>
-                    <View style={styles.view1}>
-                      <TouchableOpacity activeOpacity={0.7}>
-                        <Image
-                          source={imagePath.facebook}
-                          style={styles.btn1}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity activeOpacity={0.7}>
-                        <Image source={imagePath.heart2} style={styles.btn1} />
-                      </TouchableOpacity>
-                    </View>
-                  </ImageBackground>
-                </TouchableOpacity>
-                <Text style={styles.txt1}>Range Rover</Text>
-                <Text style={styles.txt2}>Range Rover Sport HSE 2014</Text>
-                <Text style={styles.txt2}>
-                  Reliable Is the 2014 Land Rover Range Rover Sport? The 2014
-                  Land Rover.
-                </Text>
-                <GradientButton
-                  btnText={'AED 15000'}
-                  btnStyle={styles.btn}
-                  containerStyle={{alignItems: 'flex-start'}}
+                <Image
+                  source={imagePath.noDataFound}
+                  style={{
+                    marginTop: height / 4.5,
+                    height: moderateScaleVertical(200),
+                    width: moderateScale(200),
+                    alignSelf: 'center',
+                  }}
                 />
+                <Text
+                  style={{
+                    fontFamily: fontFamily.bold,
+                    fontSize: textScale(17),
+                    textAlign: 'center',
+                  }}>
+                  {strings.NODATAFOUND}
+                </Text>
               </View>
-            );
-          })}
-        </View>
+            )
+          }
+        />
+      </View>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        style={{
+          overflow: 'hidden',
+          marginHorizontal: 0,
+          marginBottom: 0,
+        }}
+        visible={isAttributeFilterModal}
+        onRequestClose={() => setIsAttributeFilterModal(false)}>
+        <View
           style={{
-            overflow: 'hidden',
-            marginHorizontal: 0,
-            marginBottom: 0,
-          }}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
+            flex: 1,
+            backgroundColor: colors.white,
+            paddingHorizontal: moderateScale(15),
+            borderTopLeftRadius: moderateScale(12),
+            borderTopRightRadius: moderateScale(12),
           }}>
-          <ScrollView
+          <TopHeader onLeftIconPress={() => setIsAttributeFilterModal(false)} />
+          <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}
             style={{flexGrow: 1}}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <TopHeader modalPress={modalPress} />
-                <Text style={styles.txt3}>Brands</Text>
-                {products.map((item, index) => {
-                  return <TextWithCheck item={item} />;
-                })}
-                <Text style={styles.txt3}>Price</Text>
-                <View style={{marginVertical: 18}} />
-                <MultiSlider
-                  values={[0, 1000]}
-                  sliderLength={width / 1.1}
-                  min={0}
-                  max={1000}
-                  step={1}
-                  allowOverlap={false}
-                  enableLabel
-                  selectedStyle={{
-                    ...styles.selectedStyle,
-                    backgroundColor: colors.blackOpacity66,
+            <FlatList
+              data={attributeInfo}
+              keyboardShouldPersistTaps={'handled'}
+              scrollEnabled={false}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{
+                    height: moderateScaleVertical(18),
                   }}
-                  customMarker={() => (
-                    <View
-                      style={{
-                        ...styles.customMarker,
-                        backgroundColor: colors.white,
-                      }}
-                    />
-                  )}
                 />
-                <View style={styles.commonStyle}>
-                  <Text style={styles.text4}>AED 100</Text>
-                  <Text style={styles.text4}>AED 1000</Text>
-                </View>
-                <Text style={styles.txt3}>Category</Text>
-                {products.map((item, index) => {
-                  return <TextWithCheck item={item} />;
-                })}
-                <Text style={styles.txt3}>Year</Text>
-
-                <Text style={styles.txt3}>Make</Text>
-                {products.map((item, index) => {
-                  return <TextWithCheck item={item} />;
-                })}
-                <Text style={styles.txt3}>Model</Text>
-                {products.map((item, index) => {
-                  return <TextWithCheck item={item} />;
-                })}
-                <Text style={styles.txt3}>Country</Text>
-                {products.map((item, index) => {
-                  return <TextWithCheck item={item} />;
-                })}
-                <Text style={styles.txt3}>City</Text>
-                {products.map((item, index) => {
-                  return <TextWithCheck item={item} />;
-                })}
-                <View style={styles.btnStyle}>
-                  <GradientButton
-                    colorsArray={['#FC7049', '#FD312C']}
-                    btnText="APPLY FILTER"
-                    containerStyle={{width: '48%'}}
-                  />
-                  <TouchableOpacity style={styles.rowBtn} activeOpacity={0.7}>
-                    <Text style={styles.rowTxt}>CLEAR FILTER</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              )}
+              renderItem={renderAttributeOptions}
+              ListFooterComponent={listFooterComponent}
+            />
+            <View style={styles.btnStyle}>
+              <ButtonWithLoader
+                btnText="Apply Filter"
+                btnStyle={{
+                  flex: 0.48,
+                  backgroundColor: themeColors.primary_color,
+                  borderWidth: 0,
+                }}
+                btnTextStyle={{
+                  textTransform: 'none',
+                }}
+              />
+              <ButtonWithLoader
+                btnText="Clear Filter"
+                btnStyle={{
+                  flex: 0.48,
+                  borderColor: themeColors.primary_color,
+                }}
+                btnTextStyle={{
+                  color: themeColors.primary_color,
+                  textTransform: 'none',
+                }}
+              />
             </View>
-          </ScrollView>
-        </Modal>
-      </ScrollView>
+          </KeyboardAwareScrollView>
+        </View>
+      </Modal>
+
       {!!showModal && (
         <Modal isVisible={false} hasBackdrop={true}>
           <View style={styles.successModal}>

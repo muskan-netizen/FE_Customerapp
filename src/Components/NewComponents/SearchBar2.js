@@ -15,6 +15,7 @@ const SearchBar2 = ({
   placeHolderTxt = strings.SEARCH_HERE,
   containerStyle,
   modalPress,
+  mainContainer = {},
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -25,7 +26,7 @@ const SearchBar2 = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={{...styles.mainContainer, ...mainContainer}}>
       <TouchableOpacity
         activeOpacity={0.8}
         style={{

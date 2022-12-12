@@ -242,9 +242,10 @@ const AttributeInformation = ({route, navigation}) => {
   };
 
   const renderRadioBtns = useCallback(
-    (item, data) => {
+    (item, data, index) => {
       return (
         <TouchableOpacity
+          key={String(index)}
           onPress={() => onPressRadioButton(item)}
           style={{
             flexDirection: 'row',
@@ -273,9 +274,10 @@ const AttributeInformation = ({route, navigation}) => {
   );
 
   const renderCheckBoxes = useCallback(
-    (item, data) => {
+    (item, data, index) => {
       return (
         <TouchableOpacity
+          key={String(index)}
           onPress={() => onPressCheckBoxes(item, data)}
           style={{
             flexDirection: 'row',
@@ -329,7 +331,9 @@ const AttributeInformation = ({route, navigation}) => {
             />
           ) : item?.type == 3 ? (
             <View style={styles.radioBtn}>
-              {item?.option?.map((itm) => renderRadioBtns(itm, item))}
+              {item?.option?.map((itm, indx) =>
+                renderRadioBtns(itm, item, indx),
+              )}
             </View>
           ) : item?.type == 4 ? (
             <TextInput
@@ -339,7 +343,9 @@ const AttributeInformation = ({route, navigation}) => {
             />
           ) : (
             <View style={styles.checkBox}>
-              {item?.option?.map((itm) => renderCheckBoxes(itm, item))}
+              {item?.option?.map((itm, index) =>
+                renderCheckBoxes(itm, item, index),
+              )}
             </View>
           )}
         </View>
@@ -375,8 +381,9 @@ const AttributeInformation = ({route, navigation}) => {
         />
         {isLoadingAttributes ? (
           <View style={{flex: 1}}>
-            {['', '', '', '', '', '', '', '', ''].map((itm) => (
+            {['', '', '', '', '', '', '', '', ''].map((itm, indx) => (
               <View
+                key={String(indx)}
                 style={{
                   marginTop: moderateScaleVertical(20),
                 }}>
@@ -455,8 +462,8 @@ const AttributeInformation = ({route, navigation}) => {
                     style={{
                       marginBottom: moderateScaleVertical(5),
                     }}>
-                    {productImgs.map((itm) => (
-                      <View>
+                    {productImgs.map((itm, indx) => (
+                      <View style={String(indx)}>
                         <Image
                           source={{uri: itm?.uri}}
                           style={{

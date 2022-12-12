@@ -548,36 +548,36 @@ export default function Home({route, navigation}) {
   //onPress Category
   const onPressCategory = (item) => {
     console.log(item, 'item>>>>item');
+    if (item?.redirect_to !== staticStrings.P2P) {
+      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      return;
+    }
 
-    moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
-    return;
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
 
       return;
     }
     if (item.redirect_to == staticStrings.VENDOR) {
-      // moveToNewScreen(navigationStrings.VENDOR, item)();
-      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY ||
       item.redirect_to == staticStrings.ONDEMANDSERVICE ||
       item?.redirect_to == staticStrings.LAUNDRY
     ) {
-      // moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-      //   fetchOffers: true,
-      //   id: item.id,
-      //   vendor:
-      //     item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-      //     item.redirect_to == staticStrings.PRODUCT ||
-      //     item?.redirect_to == staticStrings.LAUNDRY
-      //       ? false
-      //       : true,
-      //   name: item.name,
-      //   isVendorList: false,
-      // })();
-      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+          item.redirect_to == staticStrings.PRODUCT ||
+          item?.redirect_to == staticStrings.LAUNDRY
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -941,6 +941,7 @@ export default function Home({route, navigation}) {
     });
   };
   const renderHomeScreen = () => {
+    // switch (appStyle?.homePageLayout) {
     switch (8) {
       // switch (case_) {
       case 1:
