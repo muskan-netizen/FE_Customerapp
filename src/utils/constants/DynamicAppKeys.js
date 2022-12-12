@@ -2028,7 +2028,7 @@ const appIds = {
     android: 'com.goadeliv.userapp',
   }),
   mrVeloz: Platform.select({
-    ios: 'com.mrVeloz.order',
+    ios: 'com.mrVeloz.orderapp',
     android: 'com.mrVeloz.orderapp',
   }),
   greenCab: Platform.select({
