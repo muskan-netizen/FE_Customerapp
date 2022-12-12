@@ -100,7 +100,7 @@ const Header = ({
                     transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     // tintColor: isDarkMode
                     //   ? MyDarkTheme.colors.text
-                    //   : colors.whiteOpacity15,
+                    //   : colors.redB,
                   }}
                 />
               </TouchableOpacity>

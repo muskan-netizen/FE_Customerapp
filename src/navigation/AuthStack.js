@@ -12,6 +12,7 @@ import {
   ResetPassword,
   Signup,
   Signup2,
+  Signup4,
   VerifyAccount,
   WebLinks,
 } from '../Screens';
@@ -28,9 +29,14 @@ export default function (Stack, appStyle) {
         component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.SIGN_UP}
         component={appStyle?.homePageLayout === 2 ? Signup2 : Signup}
+        options={{headerShown: false}}
+      /> */}
+      <Stack.Screen
+        name={navigationStrings.SIGN_UP}
+        component={appStyle?.homePageLayout === 2 ? Signup4 : Signup4}
         options={{headerShown: false}}
       />
       <Stack.Screen

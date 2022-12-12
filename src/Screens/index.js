@@ -155,6 +155,7 @@ export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
 //zonesso template
 export {default as Login3} from './Login/Login3';
+export {default as Signup4} from './Signup/Signup4';
 export {default as Post} from './P2P/Post/PostCategory';
 export {default as CategoryListing} from './P2P/CategoryListing/CategoryListing';
 export {default as ListDetail} from './P2P/ListDetail/ListDetail';

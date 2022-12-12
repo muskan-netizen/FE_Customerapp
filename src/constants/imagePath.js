@@ -554,4 +554,6 @@ export default {
   tiago: require('../assets/images/tiago.png'),
   location1: require('../assets/images/ic_location1.png'),
   check3: require('../assets/images/ic_check3.png'),
+  search3: require('../assets/images/ic_search3.png'),
+  back2: require('../assets/images/ic_back2.png'),
 };

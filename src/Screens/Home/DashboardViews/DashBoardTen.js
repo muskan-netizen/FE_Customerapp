@@ -211,8 +211,6 @@ export default function DashBoardTen({
       <View
         style={{
           width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
-          flex: 1,
-          justifyContent: 'space-between',
         }}>
         <TouchableOpacity
           activeOpacity={0.7}
@@ -222,6 +220,7 @@ export default function DashBoardTen({
             borderRadius: moderateScale(12),
             height: moderateScale(100),
             width: width / 3.5,
+            marginHorizontal: moderateScale(4),
             justifyContent: 'center',
             alignItems: 'center',
           }}

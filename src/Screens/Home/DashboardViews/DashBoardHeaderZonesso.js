@@ -51,10 +51,11 @@ export default function DashBoardHeaderZonesso({
   showAboveView = true,
 }) {
   const navigation = useNavigation();
-
+  console.log(location, 'locationlocation++locationlocation');
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -103,6 +104,13 @@ export default function DashBoardHeaderZonesso({
               flex: 1,
               alignItems: 'center',
             }}>
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                color: colors.blackOpacity66,
+              }}>
+              Search here.....
+            </Text>
             {!!appData?.profile?.preferences?.is_hyperlocal && (
               <TouchableOpacity
                 activeOpacity={1}
@@ -171,11 +179,9 @@ export default function DashBoardHeaderZonesso({
               }>
               <Image
                 style={{
-                  tintColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.black,
+                  tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
                 }}
-                source={imagePath.search1}
+                source={imagePath.search3}
               />
             </TouchableOpacity>
           </View>

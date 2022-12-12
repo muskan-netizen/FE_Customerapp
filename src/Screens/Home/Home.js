@@ -69,6 +69,7 @@ export default function Home({route, navigation}) {
   const {location, appMainData, dineInType, isLocationSearched} = useSelector(
     (state) => state?.home,
   );
+  console.log(location, 'locationlocation+++locationlocation');
   const isFocused = useIsFocused();
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
 

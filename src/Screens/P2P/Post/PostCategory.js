@@ -497,56 +497,58 @@ const PostCategory = ({navigation}) => {
 
   return (
     <WrapperContainer>
-      <View style={{margin: moderateScale(18)}}>
+      <View style={{marginVertical: moderateScale(18)}}>
         <Header leftIcon={imagePath.back1} />
-        <Text style={styles.header}>{strings.SELECT_YOUR_CATEGORY}</Text>
-        {isLoadingP2pCategories ? (
-          <View>
-            {['', '', '', ''].map(() => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginVertical: moderateScale(10),
-                }}>
-                <HeaderLoader
-                  widthLeft={width / 2.5}
-                  rectWidthLeft={width / 2.5}
-                  heightLeft={height / 6.5}
-                  rectHeightLeft={height / 6.5}
-                  isRight={false}
-                  rx={15}
-                  ry={15}
+        <View style={{marginHorizontal: moderateScale(18)}}>
+          <Text style={styles.header}>{strings.SELECT_YOUR_CATEGORY}</Text>
+          {isLoadingP2pCategories ? (
+            <View>
+              {['', '', '', ''].map(() => (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginVertical: moderateScale(10),
+                  }}>
+                  <HeaderLoader
+                    widthLeft={width / 2.5}
+                    rectWidthLeft={width / 2.5}
+                    heightLeft={height / 6.5}
+                    rectHeightLeft={height / 6.5}
+                    isRight={false}
+                    rx={15}
+                    ry={15}
+                  />
+                  <HeaderLoader
+                    widthLeft={width / 2.5}
+                    rectWidthLeft={width / 2.5}
+                    heightLeft={height / 6.5}
+                    rectHeightLeft={height / 6.5}
+                    isRight={false}
+                    rx={15}
+                    ry={15}
+                  />
+                </View>
+              ))}
+            </View>
+          ) : (
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              data={p2pCategories}
+              renderItem={renderP2Pcategories}
+              numColumns={2}
+              keyExtractor={(item) => item.id}
+              refreshing={isP2pCategoriesRefreshing}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isP2pCategoriesRefreshing}
+                  onRefresh={handleRefresh}
+                  tintColor={themeColors.primary_color}
                 />
-                <HeaderLoader
-                  widthLeft={width / 2.5}
-                  rectWidthLeft={width / 2.5}
-                  heightLeft={height / 6.5}
-                  rectHeightLeft={height / 6.5}
-                  isRight={false}
-                  rx={15}
-                  ry={15}
-                />
-              </View>
-            ))}
-          </View>
-        ) : (
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            data={p2pCategories}
-            renderItem={renderP2Pcategories}
-            numColumns={2}
-            keyExtractor={(item) => item.id}
-            refreshing={isP2pCategoriesRefreshing}
-            refreshControl={
-              <RefreshControl
-                refreshing={isP2pCategoriesRefreshing}
-                onRefresh={handleRefresh}
-                tintColor={themeColors.primary_color}
-              />
-            }
-          />
-        )}
+              }
+            />
+          )}
+        </View>
       </View>
       <Modal
         style={styles.modalStyle}

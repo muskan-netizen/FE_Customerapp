@@ -122,14 +122,13 @@ const CategoryListing = ({route, navigation}) => {
       isLoading={isLoading}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1}}>
         <Header
-          leftIcon={imagePath.back1}
+          leftIcon={imagePath.back2}
           centerTitle={''}
-          location={location}
           headerStyle={{
-            marginBottom: moderateScaleVertical(8),
-            marginHorizontal: moderateScale(15),
+            marginVertical: moderateScaleVertical(8),
           }}
         />
+
         <SearchBar2
           navigation={navigation}
           placeHolderTxt={'Search here.....'}
@@ -266,7 +265,7 @@ const CategoryListing = ({route, navigation}) => {
         </Modal>
       </ScrollView>
       {!!showModal && (
-        <Modal isVisible={true} hasBackdrop={true}>
+        <Modal isVisible={false} hasBackdrop={true}>
           <View style={styles.successModal}>
             <Image source={imagePath.check3} />
             <Text style={styles.success}>Car Uploaded Successfully</Text>
