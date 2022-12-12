@@ -9,7 +9,3 @@ const {dispatch} = store;
 export function getAvailableAttributes(url = '', data = {}, headers = {}) {
   return apiGet(GET_AVAILABLE_ATTRIBUTES + url, data, headers);
 }
-
-export function submitProductWithAttributes(data = {}, headers = {}) {
-  return apiPost(SUBMIT_PRODUCT_WITH_ATTRIBUTE, data, headers);
-}

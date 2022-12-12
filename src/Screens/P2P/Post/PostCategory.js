@@ -40,9 +40,8 @@ import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import navigationStrings from '../../../navigation/navigationStrings';
 
-const PostCategory = ({navigation}) => {
+const PostCategory = ({}) => {
   const modalRef = useRef();
   const {
     appData,
