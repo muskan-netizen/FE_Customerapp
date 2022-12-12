@@ -40,8 +40,9 @@ import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import navigationStrings from '../../../navigation/navigationStrings';
 
-const PostCategory = ({}) => {
+const PostCategory = ({navigation}) => {
   const modalRef = useRef();
   const {
     appData,
@@ -507,6 +508,7 @@ const PostCategory = ({}) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginVertical: moderateScale(10),
+                  // backgroundColor:"green"
                 }}>
                 <HeaderLoader
                   widthLeft={width / 2.5}

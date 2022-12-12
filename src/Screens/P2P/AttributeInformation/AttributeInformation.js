@@ -36,6 +36,7 @@ import validations from '../../../utils/validations';
 import {hitSlopProp} from '../../../styles/commonStyles';
 import ActionSheet from 'react-native-actionsheet';
 import strings from '../../../constants/lang';
+import {v4 as uuidv4} from 'uuid';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
@@ -52,7 +53,7 @@ const AttributeInformation = ({route, navigation}) => {
   const [isLoadingSubmitAttributes, setLoadingSubmitAttributes] =
     useState(false);
 
-  const [userSelectedImgs, setUserSelectedImgs] = useState([]);
+  const [productImgs, setProductImgs] = useState([]);
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -95,12 +96,13 @@ const AttributeInformation = ({route, navigation}) => {
       return;
     }
     setLoadingSubmitAttributes(true);
-
     let formData = new FormData();
     formData.append('product_name', name);
-    formData.append('product_description', description);
-    // formData.append('file[]', file);
-
+    formData.append('body_html', description);
+    productImgs.map((item) => {
+      formData.append('file[]', item);
+    });
+    let apiObj = {};
     attributeInfo.map((item, index) => {
       let optionData = [];
       item?.option?.map((item, inx) => {
@@ -125,6 +127,7 @@ const AttributeInformation = ({route, navigation}) => {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
         setLoadingSubmitAttributes(false);
@@ -212,7 +215,7 @@ const AttributeInformation = ({route, navigation}) => {
         .then((res) => {
           if (res && (res?.sourceURL || res?.path)) {
             let file = {
-              image_id: Math.random(),
+              id: uuidv4(),
               name:
                 Platform.OS == 'ios'
                   ? res?.filename
@@ -220,11 +223,19 @@ const AttributeInformation = ({route, navigation}) => {
               type: res?.mime,
               uri: res?.sourceURL || res?.path,
             };
-            setUserSelectedImgs([...userSelectedImgs, file]);
+            setProductImgs([...productImgs, file]);
           }
         })
         .catch((err) => {});
     }
+  };
+
+  const removeProductImg = (item) => {
+    console.log(item, 'item/....item');
+    const productImgsData = [...productImgs];
+    let itmIndx = productImgsData.findIndex((itm) => itm?.id == item?.uri);
+    productImgsData.splice(itmIndx, 1);
+    setProductImgs(productImgsData);
   };
 
   const renderRadioBtns = useCallback(
@@ -414,26 +425,39 @@ const AttributeInformation = ({route, navigation}) => {
                   }}>
                   Add Image
                 </Text>
-                {!isEmpty(userSelectedImgs) && (
+                {!isEmpty(productImgs) && (
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(5),
                     }}>
-                    {userSelectedImgs.map((itm) => (
-                      <Image
-                        source={{uri: itm?.uri}}
-                        style={{
-                          width: '96%',
-                          height: moderateScaleVertical(100),
-                          borderRadius: moderateScale(5),
-                          marginTop: moderateScale(5),
-                        }}
-                      />
+                    {productImgs.map((itm) => (
+                      <View>
+                        <Image
+                          source={{uri: itm?.uri}}
+                          style={{
+                            width: '96%',
+                            height: moderateScaleVertical(100),
+                            borderRadius: moderateScale(5),
+                            marginTop: moderateScale(5),
+                          }}
+                        />
+                        <TouchableOpacity
+                          hitSlop={hitSlopProp}
+                          onPress={() => removeProductImg(itm)}
+                          style={{position: 'absolute', right: 4, top: -2}}>
+                          <Image source={imagePath.icRemoveIcon} />
+                        </TouchableOpacity>
+                      </View>
                     ))}
                   </View>
                 )}
                 <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
-                  <Image source={imagePath.icPlaceholder} />
+                  <Image
+                    source={imagePath.icPlaceholder}
+                    style={{
+                      marginTop: moderateScaleVertical(5),
+                    }}
+                  />
                 </TouchableOpacity>
                 <View
                   style={{
