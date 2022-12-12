@@ -3021,6 +3021,7 @@ export default function ShortCode({route, navigation}) {
           FastImage.preload(preLoadTutorial); //preload tutorial images
         }
 
+        // actions.dineInData(res?.data?.profile?.preferences?.vendorMode[0]?.type)
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);

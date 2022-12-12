@@ -1288,7 +1288,6 @@ console.log(data, "data..........");
         : 1;
       data['product_variant_id'] = item?.variant[0].id;
       data['type'] = dine_In_Type;
-
       console.log('Sending api data', data);
       actions
         .addProductsToCart(data, {
