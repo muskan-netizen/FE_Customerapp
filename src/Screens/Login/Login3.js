@@ -553,7 +553,7 @@ export default function Login3({navigation}) {
             />
           ) : (
             <View>
-              {!withEmail && (
+              {!!withEmail && (
                 <>
                   <BorderTextInput
                     onChangeText={(data) => checkInputHandler(data)}
@@ -601,7 +601,7 @@ export default function Login3({navigation}) {
                   />
                 </>
               )}
-              {!!withEmail && (
+              {!withEmail && (
                 <View style={{marginBottom: moderateScale(18)}}>
                   <PhoneNumberInput
                     containerStyle={{
@@ -664,7 +664,7 @@ export default function Login3({navigation}) {
               flexDirection: 'row',
             }}>
             <Image
-              source={!withEmail ? imagePath.phone_button : imagePath.message}
+              source={!!withEmail ? imagePath.phone_button : imagePath.message}
             />
             <Text
               style={{
@@ -676,8 +676,8 @@ export default function Login3({navigation}) {
                 marginLeft: moderateScale(8),
               }}>
               {!!withEmail
-                ? strings.SIGN_IN_WITH_EMAIL
-                : strings.SIGN_IN_WITH_PHONE}
+                ? strings.SIGN_IN_WITH_PHONE
+                : strings.SIGN_IN_WITH_EMAIL}
             </Text>
           </TouchableOpacity>
           <View style={{marginTop: moderateScaleVertical(30)}}>
