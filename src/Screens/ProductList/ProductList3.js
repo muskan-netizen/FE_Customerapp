@@ -83,7 +83,6 @@ import stylesFunc from './styles';
 let timeOut = undefined;
 
 var tempQty = 0;
-var loadMore = true;
 
 const filtersData = [
   {
@@ -143,6 +142,7 @@ export default function Products({route, navigation}) {
     sortFilters: filtersData,
     searchInput: '',
     pageNo: 1,
+    lastPage: null,
     limit: 200,
     selectedItemID: -1,
     selectedDiffAdsOnId: 0,
@@ -195,6 +195,7 @@ export default function Products({route, navigation}) {
     isVarientSelectLoading: false,
     productDetailNew: {},
     isProductAvailable: false,
+    loadMore: false,
   });
   const {
     appData,
@@ -210,8 +211,10 @@ export default function Products({route, navigation}) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
+    loadMore,
     isLoadingC,
     pageNo,
+    lastPage,
     limit,
     minimumPrice,
     maximumPrice,
@@ -1469,8 +1472,7 @@ export default function Products({route, navigation}) {
 
   useEffect(() => {
     // setLoading(true)
-    updateState({pageNo: 1});
-    loadMore = true;
+    updateState({ pageNo: 1, loadMore: true });
     getAllListItems(1);
     if (productListId?.vendor && routeData) {
       fetchOffers();
@@ -1525,6 +1527,9 @@ export default function Products({route, navigation}) {
           : getAllProductsByCategoryId(pageNo);
       }
     }
+    setTimeout(() => {
+      updateState({ loadMore: false });
+    }, 500);
   };
 
   useEffect(() => {
@@ -1641,12 +1646,12 @@ export default function Products({route, navigation}) {
     console.log(filterData, 'filterDatafilterData');
     selectedFilters.current = filterData;
     // setFilteredAtoZData(filterData)
-    loadMore = true;
+    updateState({ loadMore: true });
     updateState({pageNo: 1});
     getAllListItems(1);
   };
   const allClearFilters = () => {
-    loadMore = true;
+    updateState({ loadMore: true });
     selectedFilters.current = null;
     updateState({
       pageNo: 1,
@@ -1711,9 +1716,8 @@ export default function Products({route, navigation}) {
         } else {
           if (res?.data) {
             if (res.data.products.data.length == 0) {
-              loadMore = false;
+              updateState({ loadMore: false });
             }
-            loadMore = false;
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
             setProductListData(
@@ -1722,7 +1726,6 @@ export default function Products({route, navigation}) {
                 : [...productListData, ...res?.data?.products.data],
             );
           } else {
-            loadMore = false;
             setLoading(false);
           }
         }
@@ -1732,6 +1735,7 @@ export default function Products({route, navigation}) {
             appMainData.brands,
           );
         }
+        updateState({ loadMore: false });
       })
       .catch(errorMethod);
   };
@@ -1781,7 +1785,7 @@ export default function Products({route, navigation}) {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             if (res.data.products.data.length == 0) {
-              loadMore = false;
+              updateState({ loadMore: false });
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
@@ -1797,6 +1801,7 @@ export default function Products({route, navigation}) {
         if (res?.data) {
           updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
         }
+        updateState({ loadMore: false });
       })
       .catch(errorMethod);
     // }
@@ -1825,7 +1830,6 @@ export default function Products({route, navigation}) {
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
           setLoading(false);
-          loadMore = false;
           // onAtoZFilter()
           setProductListData(
             pageNo == 1
@@ -1844,6 +1848,7 @@ export default function Products({route, navigation}) {
               pageNo: 1,
               limit: 10,
               isLoadingC: true,
+              lastPage: res?.data?.listData?.last_page
             });
           }
           setLoading(false);
@@ -1851,6 +1856,7 @@ export default function Products({route, navigation}) {
         setLoading(false);
         // getAllVendorFilters()
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateState({ loadMore: false });
       })
 
       .catch(errorMethod);
@@ -1882,15 +1888,19 @@ export default function Products({route, navigation}) {
         setLoading(false);
 
         if (res.data.data.length == 0) {
-          loadMore = false;
+          updateState({ loadMore: false });
         }
+        console.log("productListData ++++",productListData);
+
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
         setProductListData(
           pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
         );
+        updateState({lastPage: res.data.last_page})
         setTimeout(() => {
           setLoading(false);
         }, 3000);
+        updateState({ loadMore: false });
       })
       .catch(errorMethod);
     // }
@@ -1974,6 +1984,7 @@ export default function Products({route, navigation}) {
     });
     setLoading(false);
     showError(error?.message || error?.error);
+    updateState({ loadMore: false });
   };
 
   //Pull to refresh
@@ -1984,9 +1995,11 @@ export default function Products({route, navigation}) {
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
     if (loadMore) {
-      updateState({pageNo: pageNo + 1});
-      getAllListItems(pageNo + 1);
-      setLoading(false);
+      if(pageNo < lastPage){
+        updateState({pageNo: pageNo + 1});
+        getAllListItems(pageNo + 1);
+        setLoading(false);
+      }
     }
   };
 
@@ -3678,7 +3691,7 @@ export default function Products({route, navigation}) {
                   !categoryInfo?.is_show_products_with_category &&
                   onEndReachedDelayed
                 }
-                onEndReachedThreshold={0.7}
+                onEndReachedThreshold={0.5}
                 ListFooterComponent={listFooterComponent}
                 ListEmptyComponent={listEmptyComponent}
               />

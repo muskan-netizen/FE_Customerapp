@@ -285,7 +285,7 @@ export default function ProductDetail({ route, navigation }) {
           updateState({ variantSet: res.data.products.variant_set });
         }
       })
-      .catch((error) => console.log(error, 'error'));
+      .catch( errorMethod );
   };
 
   //Get Product detail based on varint selection
@@ -589,7 +589,7 @@ export default function ProductDetail({ route, navigation }) {
   const variantSetValue = (item) => {
     const { options, type, variant_type_id } = item;
     console.log('variantSetValuevariantSetValue', item);
-    if (type == 1) {
+    if (type == 1 || type == 2) {
       return (
         <View>
           <TouchableOpacity
@@ -1655,7 +1655,8 @@ export default function ProductDetail({ route, navigation }) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
-                        {getBundleId() !== appIds.danielleBejjani ? <View
+                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 ? 
+                        <View
                           style={{
                             ...commonStyles.buttonRect,
                             ...styles.incDecBtnStyle,
@@ -1901,7 +1902,7 @@ export default function ProductDetail({ route, navigation }) {
             date={isRentalStartDatePicker ? startDateRental : endDateRental}
             textColor={isDarkMode ? colors.white : colors.blackB}
             mode="datetime"
-            minimumDate={new Date()}
+            minimumDate={isRentalEndDatePicker ? startDateRental : new Date()}
             onDateChange={(value) => onDateChange(value)}
           />
         </View>
