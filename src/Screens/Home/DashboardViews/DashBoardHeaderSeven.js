@@ -77,8 +77,13 @@ export default function DashBoardHeaderSeven({
               <TouchableOpacity activeOpacity={0.7}>
                 <Image source={imagePath.location1} />
               </TouchableOpacity>
-              <Text style={{marginLeft: 12, fontFamily: fontFamily.regular}}>
-                Abu Dhabi
+
+              <Text
+                style={{
+                  marginLeft: 8,
+                  fontFamily: fontFamily.regular,
+                }}>
+                {location?.address.substring(0, 10)} ...
               </Text>
             </View>
           );

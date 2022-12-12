@@ -71,6 +71,7 @@ const P2pProducts = ({route, navigation}) => {
   const [value, setValue] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [clicked, setClicked] = useState();
+  const [liked, setLiked] = useState(false);
   const [products, setProducts] = React.useState(DATA);
   const [items, setItems] = useState([
     {label: 'Abu Dhabi', value: 'Abu Dhabi'},
@@ -156,8 +157,12 @@ const P2pProducts = ({route, navigation}) => {
                           style={styles.btn1}
                         />
                       </TouchableOpacity>
-                      <TouchableOpacity activeOpacity={0.7}>
-                        <Image source={imagePath.heart2} style={styles.btn1} />
+                      <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={() => setLiked(!liked)}>
+                        <Image
+                          source={!!liked ? imagePath.heart3 : imagePath.heart4}
+                        />
                       </TouchableOpacity>
                     </View>
                   </ImageBackground>

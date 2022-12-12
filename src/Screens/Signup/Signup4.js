@@ -549,16 +549,46 @@ export default function Signup4({navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.header, {color: MyDarkTheme.colors.text}]
-                  : styles.header
+                  ? [
+                      {
+                        color: colors.black,
+                        fontSize: moderateScale(24),
+                        fontFamily: fontFamily.medium,
+                        marginLeft: moderateScale(24),
+                      },
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : {
+                      color: colors.black,
+                      fontSize: moderateScale(24),
+                      fontFamily: fontFamily.medium,
+                      marginLeft: moderateScale(24),
+                    }
               }>
               {strings.CREATE_YOUR_ACCOUNT}
             </Text>
             <Text
               style={
                 isDarkMode
-                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
-                  : styles.txtSmall
+                  ? [
+                      {
+                        marginLeft: moderateScale(24),
+                        fontFamily: fontFamily.regular,
+                        marginTop: moderateScaleVertical(15),
+                        color: colors.blackOpacity40,
+                        letterSpacing: 0.5,
+                        fontSize: 18,
+                      },
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : {
+                      marginLeft: moderateScale(24),
+                      fontFamily: fontFamily.regular,
+                      marginTop: moderateScaleVertical(15),
+                      color: colors.blackOpacity40,
+                      letterSpacing: 0.5,
+                      fontSize: 18,
+                    }
               }>
               {strings.ENTER_DETAILS_BELOW}
             </Text>
@@ -575,6 +605,15 @@ export default function Signup4({navigation}) {
                 placeholder={strings.NAME}
                 value={name}
                 returnKeyType={'next'}
+                containerStyle={{
+                  backgroundColor: colors.blackOpacity05,
+                  borderWidth: 0,
+                }}
+                textInputStyle={{
+                  fontFamily: fontFamily.regular,
+                  fontSize: 18,
+                  paddingHorizontal: 18,
+                }}
               />
             )}
             {!appData?.profile?.preferences?.concise_signup && (
@@ -586,10 +625,28 @@ export default function Signup4({navigation}) {
                 require={true}
                 keyboardType={'email-address'}
                 returnKeyType={'next'}
+                containerStyle={{
+                  backgroundColor: colors.blackOpacity05,
+                  borderWidth: 0,
+                }}
+                textInputStyle={{
+                  fontFamily: fontFamily.regular,
+                  fontSize: 18,
+                  paddingHorizontal: 18,
+                }}
               />
             )}
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
+              containerStyle={{
+                backgroundColor: colors.blackOpacity05,
+                borderWidth: 0,
+              }}
+              TxtInputStyle={{
+                fontFamily: fontFamily.regular,
+                fontSize: 18,
+                paddingHorizontal: 18,
+              }}
               onChangePhone={(phoneNumber) =>
                 updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
               }
@@ -607,6 +664,15 @@ export default function Signup4({navigation}) {
               onChangeText={_onChangeText('password')}
               placeholder={strings.PASSWORD}
               value={password}
+              containerStyle={{
+                backgroundColor: colors.blackOpacity05,
+                borderWidth: 0,
+              }}
+              textInputStyle={{
+                fontFamily: fontFamily.regular,
+                fontSize: 18,
+                paddingHorizontal: 18,
+              }}
               rightIcon={
                 // password.length > 0
                 !isShowPassword
@@ -620,18 +686,6 @@ export default function Signup4({navigation}) {
               require
               returnKeyType={'next'}
             />
-            {/* {!appData?.profile?.preferences?.concise_signup && (
-              <BorderTextInput
-                onChangeText={_onChangeText("referralCode")}
-                placeholder={
-                  appData?.profile?.preferences?.referral_code
-                    ? appData?.profile?.preferences?.referral_code
-                    : strings.ENTERREFERALCODE
-                }
-                value={referralCode}
-                returnKeyType={"next"}
-              />
-            )} */}
 
             {!isEmpty(addtionalTextInputs) &&
               addtionalTextInputs.map((item, index) => {
@@ -653,65 +707,6 @@ export default function Signup4({navigation}) {
                 })}
               </View>
             )}
-            <View style={{flexDirection: 'row'}}>
-              {/* <TouchableOpacity
-                onPress={_isCheck}
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginRight: 10,
-                }}
-              >
-                <FastImage
-                  style={{
-                    width: moderateScale(15),
-                    height: moderateScale(15),
-                  }}
-                  tintColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.black
-                  }
-                  source={
-                    accept
-                      ? imagePath.checkBox2Active
-                      : imagePath.checkBox2InActive
-                  }
-                  resizeMode="contain"
-                />
-              </TouchableOpacity> */}
-              {/* <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                <Text
-                  style={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}
-                >
-                  I accept the
-                </Text>
-                <Text
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
-                  }
-                  style={{ color: colors.themeColor }}
-                >
-                  {" "}
-                  {`${strings.TERMS_CONDITIONS} `}
-                </Text>
-                <Text
-                  style={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}
-                >
-                  and have read the
-                </Text>
-                <Text
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
-                  }
-                  style={{ color: colors.themeColor }}
-                >
-                  {`${strings.PRICACY_POLICY}`}.
-                </Text>
-              </View> */}
-            </View>
 
             <GradientButton
               onPress={onSignup}

@@ -102,9 +102,18 @@ export default function DashBoardTen({
     currSelectedFilter: null,
     categoriesData: [],
     seeMore: false,
+    isExpendBrands: true,
   });
-  const {slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore} =
-    state;
+
+  const {
+    slider1ActiveSlide,
+    vendorsData,
+    showMenu,
+    categoriesData,
+    seeMore,
+    isExpendBrands,
+  } = state;
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   console.log(appMainData, 'appMainDataappMainData');
@@ -143,6 +152,12 @@ export default function DashBoardTen({
   }, [appMainData?.categories]);
 
   const {currSelectedFilter} = state;
+
+  const onViewAllData = (type, data) => {
+    updateState({
+      isExpendBrands: !isExpendBrands,
+    });
+  };
 
   const onSelectedFilter = (selectedFilter) => {
     updateState({showMenu: false, currSelectedFilter: selectedFilter});
@@ -271,24 +286,8 @@ export default function DashBoardTen({
           }}
           style={{
             width: width / 1.1,
-            height: height / 5,
+            height: height / 6,
             borderRadius: moderateScale(16),
-            // height:
-            //   appStyle?.homePageLayout == 5
-            //     ? moderateScale(140)
-            //     : DeviceInfo.getBundleId() == appIds.masa
-            //     ? moderateScale(260)
-            //     : height / 3.8,
-            // width:
-            //   appStyle?.homePageLayout == 5
-            //     ? width / 1.2
-            //     : DeviceInfo.getBundleId() == appIds.masa
-            //     ? width / 1.1
-            //     : moderateScale(160),
-            // borderRadius: moderateScale(16),
-            // backgroundColor: isDarkMode
-            //   ? colors.whiteOpacity15
-            //   : colors.greyColor,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -347,22 +346,39 @@ export default function DashBoardTen({
                 marginVertical: moderateScaleVertical(16),
                 marginHorizontal: moderateScale(16),
               }}>
-              <LeftRightText
-                leftText={'Top Categories'}
-                rightText={'View all'}
-                leftTextStyle={{
-                  color: !!isDarkMode ? colors.white : colors.black,
-                  fontSize: 20,
-                  fontFamily: fontFamily.medium,
-                }}
-                rightTextStyle={{
-                  color: colors.orange,
-                  fontFamily: fontFamily.medium,
-                }}
-              />
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginVertical: moderateScale(12),
+                }}>
+                <Text
+                  style={{
+                    color: !!isDarkMode ? colors.white : colors.black,
+                    fontSize: 20,
+                    fontFamily: fontFamily.medium,
+                  }}>
+                  Top Categories
+                </Text>
+                {categoriesData?.length > 9 && (
+                  <TouchableOpacity activeOpacity={0.7} onPress={onViewAllData}>
+                    <Text
+                      style={{
+                        color: colors.orange,
+                        fontFamily: fontFamily.medium,
+                      }}>
+                      {isExpendBrands ? 'View all' : 'View less'}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
               <FlatList
                 key={'6'}
-                data={categoriesData}
+                data={
+                  isExpendBrands ? categoriesData.slice(0, 9) : categoriesData
+                }
                 keyExtractor={(item) => item?.id?.toString()}
                 showsHorizontalScrollIndicator={false}
                 numColumns={3}

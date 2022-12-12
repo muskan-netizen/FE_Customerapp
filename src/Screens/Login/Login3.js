@@ -78,6 +78,7 @@ export default function Login3({navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
 
+  const [withEmail, setwithEmail] = useState(true);
   const [state, setState] = useState({
     // email: '',
     password: '',
@@ -552,7 +553,7 @@ export default function Login3({navigation}) {
             />
           ) : (
             <View>
-              {!phoneInput && (
+              {!withEmail && (
                 <>
                   <BorderTextInput
                     onChangeText={(data) => checkInputHandler(data)}
@@ -600,7 +601,7 @@ export default function Login3({navigation}) {
                   />
                 </>
               )}
-              {phoneInput && (
+              {!!withEmail && (
                 <View style={{marginBottom: moderateScale(18)}}>
                   <PhoneNumberInput
                     containerStyle={{
@@ -650,6 +651,8 @@ export default function Login3({navigation}) {
             btnText={strings.SIGN_IN}
           />
           <TouchableOpacity
+            onPress={() => setwithEmail(!withEmail)}
+            activeOpacity={0.7}
             style={{
               borderWidth: 1,
               borderColor: colors.orange,
@@ -660,7 +663,9 @@ export default function Login3({navigation}) {
               alignItems: 'center',
               flexDirection: 'row',
             }}>
-            <Image source={imagePath.phone_button} />
+            <Image
+              source={!withEmail ? imagePath.phone_button : imagePath.message}
+            />
             <Text
               style={{
                 fontFamily: fontFamily?.regular,
@@ -670,7 +675,9 @@ export default function Login3({navigation}) {
                 fontSize: 16,
                 marginLeft: moderateScale(8),
               }}>
-              {strings.SIGN_IN_WITH_PHONE}
+              {!!withEmail
+                ? strings.SIGN_IN_WITH_EMAIL
+                : strings.SIGN_IN_WITH_PHONE}
             </Text>
           </TouchableOpacity>
           <View style={{marginTop: moderateScaleVertical(30)}}>
