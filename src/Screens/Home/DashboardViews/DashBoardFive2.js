@@ -629,7 +629,6 @@ export default function DashBoardFive({
     return !isEmpty(item?.data) ? (
       <View>
         {titleViewHome(item)}
-
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -962,6 +961,48 @@ export default function DashBoardFive({
     );
   };
 
+  const renderBanners = ({item}) => {
+    const imageUrl = getImageUrl(
+      item.image.image_fit,
+      item.image.image_path,
+      appStyle?.homePageLayout === 5
+        ? '800/600'
+        : DeviceInfo.getBundleId() == appIds.masa
+        ? '800/600'
+        : '400/600',
+    );
+    return (
+      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
+        <FastImage
+          source={{
+            uri: imageUrl,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={{
+            height:
+              appStyle?.homePageLayout == 5
+                ? moderateScale(140)
+                : DeviceInfo.getBundleId() == appIds.masa
+                ? moderateScale(260)
+                : height / 3.8,
+            width:
+              appStyle?.homePageLayout == 5
+                ? width / 1.2
+                : DeviceInfo.getBundleId() == appIds.masa
+                ? width / 1.1
+                : moderateScale(160),
+            borderRadius: moderateScale(16),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <ScrollView
@@ -976,7 +1017,42 @@ export default function DashBoardFive({
           />
         }>
         {showAllTempCartOrders()}
+
         <Animatable.View animation={'fadeInUp'} delay={200}>
+          <View style={{}}>
+            {!isEmpty(appData?.mobile_banners) &&
+            appStyle?.homePageLayout == 3 &&
+            getBundleId() !== appIds?.masa ? (
+              <Carousel
+                autoplay={true}
+                loop={true}
+                autoplayInterval={2000}
+                data={appMainData?.mobile_banners || appData?.mobile_banners}
+                renderItem={renderBanners}
+                sliderWidth={width}
+                itemWidth={moderateScale(180)}
+              />
+            ) : (
+              <View style={{marginTop: moderateScaleVertical(4)}}>
+                <FlatList
+                  horizontal
+                  data={appMainData?.mobile_banners || appData?.mobile_banners}
+                  keyExtractor={(item) => item?.id?.toString()}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={renderBanners}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginRight: moderateScale(12)}} />
+                  )}
+                  ListHeaderComponent={() => (
+                    <View style={{marginLeft: moderateScale(16)}} />
+                  )}
+                  ListFooterComponent={() => (
+                    <View style={{marginRight: moderateScale(16)}} />
+                  )}
+                />
+              </View>
+            )}
+          </View>
           <FlatList
             data={appMainData?.homePageLabels}
             renderItem={renderHomePageItems}
