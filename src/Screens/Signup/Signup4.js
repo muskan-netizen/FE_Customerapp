@@ -288,7 +288,11 @@ export default function Signup4({navigation}) {
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
         updateState({isLoading: false});
-        navigation.navigate(navigationStrings.OTP_VERIFICATION);
+        navigation.navigate(navigationStrings.OTP_VERIFICATION, {
+          username: phoneNumber,
+          dialCode: callingCode,
+          countryData: cca2,
+        });
 
         // if (!!res.data) {
         //   checkEmailPhoneVerified(res.data);

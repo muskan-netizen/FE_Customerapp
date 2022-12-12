@@ -73,7 +73,7 @@ const PostCategory = ({navigation}) => {
 
   const getP2Pcategories = () => {
     actions
-      .homeData(
+      .getP2pCategories(
         {
           type: 'p2p',
           open_vendor: 0,
@@ -499,7 +499,7 @@ const PostCategory = ({navigation}) => {
     <WrapperContainer>
       <View style={{marginVertical: moderateScale(18)}}>
         <Header leftIcon={imagePath.back1} />
-        <View style={{marginHorizontal: moderateScale(18)}}>
+        <View style={{marginHorizontal: moderateScale(15)}}>
           <Text style={styles.header}>{strings.SELECT_YOUR_CATEGORY}</Text>
           {isLoadingP2pCategories ? (
             <View>
@@ -518,6 +518,9 @@ const PostCategory = ({navigation}) => {
                     isRight={false}
                     rx={15}
                     ry={15}
+                    viewStyles={{
+                      marginHorizontal: moderateScale(5),
+                    }}
                   />
                   <HeaderLoader
                     widthLeft={width / 2.5}
@@ -527,6 +530,9 @@ const PostCategory = ({navigation}) => {
                     isRight={false}
                     rx={15}
                     ry={15}
+                    viewStyles={{
+                      marginHorizontal: moderateScale(5),
+                    }}
                   />
                 </View>
               ))}

@@ -629,3 +629,4 @@ export const GET_AVAILABLE_ATTRIBUTES = getApiUrl(
 export const SUBMIT_PRODUCT_WITH_ATTRIBUTE = getApiUrl(
   '/mystore/product/addProductWithAttribute',
 );
+export const GET_PRODUCT_BY_P2P_CATEGORY = getApiUrl('/v2/attribute/category');

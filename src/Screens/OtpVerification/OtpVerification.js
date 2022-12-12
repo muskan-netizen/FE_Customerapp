@@ -39,6 +39,7 @@ import RNOtpVerify from 'react-native-otp-verify';
 export default function OtpVerification({navigation, route}) {
   const navigation_ = useNavigation();
   const paramData = route?.params;
+  console.log(paramData, 'paramData...paramData');
 
   const [state, setState] = useState({
     timer: 30,

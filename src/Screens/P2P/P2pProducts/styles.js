@@ -1,10 +1,13 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../../styles/colors';
-import {moderateScale} from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../../styles/responsiveSize';
 import {width, height} from '../../../styles/responsiveSize';
-import fontFamily from '../../../styles/fontFamily';
 
-export default ({themeColor, toggleTheme}) => {
+export default ({themeColor, toggleTheme, fontFamily}) => {
   const styles = StyleSheet.create({
     imgBack: {
       width: width / 1.1,
@@ -18,7 +21,8 @@ export default ({themeColor, toggleTheme}) => {
     },
     txt1: {
       color: !!themeColor ? colors.white : colors.black,
-      fontFamily: fontFamily.medium,
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(16),
     },
     txt2: {
       color: !!themeColor ? colors.white : colors.blackOpacity70,
@@ -109,8 +113,7 @@ export default ({themeColor, toggleTheme}) => {
     btnStyle: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginVertical: moderateScale(24),
-      marginTop: '10%',
+      flex: 1,
     },
     successModal: {
       alignSelf: 'center',
@@ -128,6 +131,40 @@ export default ({themeColor, toggleTheme}) => {
       maxWidth: '70%',
       textAlign: 'center',
       marginVertical: moderateScale(18),
+    },
+
+    attributeTitle: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(14),
+      color: colors.black,
+    },
+    textInput: {
+      backgroundColor: colors.blackOpacity05,
+      height: moderateScaleVertical(40),
+      marginTop: moderateScaleVertical(5),
+      borderRadius: moderateScale(5),
+      paddingHorizontal: moderateScale(5),
+    },
+    multiSelect: {
+      height: moderateScaleVertical(40),
+      backgroundColor: colors.blackOpacity05,
+      borderRadius: moderateScale(5),
+    },
+    multiSelectPlaceholder: {
+      color: colors.black,
+      paddingHorizontal: moderateScale(5),
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+    },
+    radioBtn: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: moderateScaleVertical(5),
+    },
+    checkBox: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: moderateScaleVertical(5),
     },
   });
   // export default styles;

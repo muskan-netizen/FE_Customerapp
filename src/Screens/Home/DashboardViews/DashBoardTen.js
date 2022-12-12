@@ -222,6 +222,7 @@ export default function DashBoardTen({
     }
   };
   const _renderItem = ({item, index}) => {
+    console.log(item, 'item...item');
     return (
       <View
         style={{
@@ -244,10 +245,10 @@ export default function DashBoardTen({
           <Text
             style={{
               fontFamily: fontFamily.regular,
-              marginTop: 6,
+              marginTop: moderateScaleVertical(10),
               color: themeColor ? colors.white : colors.black,
             }}>
-            xvcd
+            {item?.name || (item?.translation && item?.translation[0]?.name)}
           </Text>
         </TouchableOpacity>
       </View>
@@ -1138,11 +1139,6 @@ export default function DashBoardTen({
                 appMainData?.featured_products &&
                 !!appMainData?.featured_products.length && (
                   <>
-                    {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
-                      <View>{listHeader(strings.ALCOHAL)}</View>
-                    ) : (
-                      <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
-                    )} */}
                     <View
                       style={{
                         flex: 1,
