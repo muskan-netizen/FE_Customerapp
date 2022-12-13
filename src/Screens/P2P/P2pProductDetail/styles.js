@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
-import colors from "../../../styles/colors";
-import { moderateScale } from "../../../styles/responsiveSize";
-import { width, height } from "../../../styles/responsiveSize";
-import fontFamily from "../../../styles/fontFamily";
+import {StyleSheet} from 'react-native';
+import colors from '../../../styles/colors';
+import {moderateScale} from '../../../styles/responsiveSize';
+import {width, height} from '../../../styles/responsiveSize';
+import fontFamily from '../../../styles/fontFamily';
 
-export default ({ themeColor, toggleTheme }) => {
+export default ({themeColor, toggleTheme}) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -29,9 +29,9 @@ export default ({ themeColor, toggleTheme }) => {
       marginVertical: moderateScale(12),
     },
     view2: {
-      flexDirection: "row",
+      flexDirection: 'row',
       marginVertical: 18,
-      alignItems: "center",
+      alignItems: 'center',
       backgroundColor: !!themeColor ? colors.blackOpacity10 : colors.white,
     },
     txt1: {
@@ -53,7 +53,7 @@ export default ({ themeColor, toggleTheme }) => {
       borderRadius: 12,
       backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: "#FC7049",
+      borderColor: '#FC7049',
     },
     btn2: {
       width: width / 2.5,
@@ -61,10 +61,10 @@ export default ({ themeColor, toggleTheme }) => {
       borderRadius: 12,
     },
     view3: {
-      flexDirection: "row",
+      flexDirection: 'row',
       marginBottom: 18,
-      alignItems: "center",
-      justifyContent: "space-around",
+      alignItems: 'center',
+      justifyContent: 'space-around',
     },
     chatBtn: {
       fontFamily: fontFamily.regular,
@@ -73,21 +73,21 @@ export default ({ themeColor, toggleTheme }) => {
     imageContainer: {
       // flex: 1,
       // marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-      backgroundColor: "white",
+      backgroundColor: 'white',
       borderRadius: 8,
     },
     item: {
       width: width,
       height: height / 3,
       flex: 1,
-      backgroundColor: "white",
+      backgroundColor: 'white',
     },
     pagination: {
       // backgroundColor: colors.white,
-      flexDirection: "row",
-      position: "relative",
+      flexDirection: 'row',
+      position: 'relative',
       bottom: 18,
-      justifyContent: "center",
+      justifyContent: 'center',
     },
     dotStyle: {
       backgroundColor: colors.blackOpacity43,
@@ -96,8 +96,8 @@ export default ({ themeColor, toggleTheme }) => {
       borderRadius: 6,
       marginHorizontal: 8,
     },
-    back: { position: "absolute", left: 18, top: 38 },
-    heart: { position: "absolute", right: 18, top: 42 },
+    back: {position: 'absolute', left: 18, top: 38},
+    heart: {position: 'absolute', right: 18, top: 42},
   });
   // export default styles;
   return styles;

@@ -453,29 +453,6 @@ export default function DashBoardTen({
     );
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
     return (
-      // <TouchableOpacity
-      //   activeOpacity={0.7}
-      //   onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
-      //   {isSVG ? (
-      //     <SvgUri
-      //       height={moderateScale(96)}
-      //       width={moderateScale(96)}
-      //       uri={imageURI}
-      //     />
-      //   ) : (
-      //     <FastImage
-      //       source={{uri: imageURI, priority: FastImage.priority.high}}
-      //       style={{
-      //         height: moderateScale(96),
-      //         width: moderateScale(96),
-      //         borderRadius: moderateScale(10),
-      //         backgroundColor: isDarkMode
-      //           ? colors.whiteOpacity15
-      //           : colors.greyColor,
-      //       }}
-      //     />
-      //   )}
-      // </TouchableOpacity>
       <View
         style={{
           flex: 1,

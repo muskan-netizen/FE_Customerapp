@@ -52,6 +52,8 @@ const PostCategory = ({navigation}) => {
 
     themeColors,
   } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
   const [isAutofillModal, setIsAutofillModal] = useState(false);
@@ -195,6 +197,16 @@ const PostCategory = ({navigation}) => {
     getP2Pcategories();
   };
 
+  const onPressP2pCategory = (item) => {
+    if (!!userData?.auth_token) {
+      setP2Pcategory(item);
+      setIsAutofillModal(true);
+    } else {
+      actions.setRedirection('p2pPost');
+      actions.setAppSessionData('on_login');
+    }
+  };
+
   const renderAttributeOptions = useCallback(
     ({item, index}) => {
       return (
@@ -333,10 +345,7 @@ const PostCategory = ({navigation}) => {
         <TouchableOpacity
           style={styles.categoryStyle}
           activeOpacity={0.7}
-          onPress={() => {
-            setP2Pcategory(item);
-            setIsAutofillModal(true);
-          }}>
+          onPress={() => onPressP2pCategory(item)}>
           <FastImage
             style={{
               height: moderateScale(70),

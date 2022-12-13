@@ -39,6 +39,9 @@ import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 
+import {MultiSelect} from 'react-native-element-dropdown';
+import {checkValueExistInAry} from '../../../utils/commonFunction';
+
 const P2pProducts = ({route, navigation, category_id = 38}) => {
   const {
     appData,
@@ -49,6 +52,8 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
+  const {userData} = useSelector((state) => state?.auth);
+
   const darkthemeusingDevice = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const showModal = true;
@@ -168,6 +173,23 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
     setAttributeInfo(attributeInfoData);
   };
 
+  const onFilterPress = () => {
+    if (!!userData?.auth_token) {
+      setIsAttributeFilterModal(true);
+    } else {
+      actions.setRedirection('');
+      actions.setAppSessionData('on_login');
+    }
+  };
+
+  const onResetFilter = () => {
+    const attributeInfoData = [...attributeInfo];
+    attributeInfoData.map((itm) => {
+      delete itm['values'];
+    });
+    setAttributeInfo(attributeInfoData);
+  };
+
   const renderP2pProducts = useCallback(
     ({item, index}) => {
       const getImage = (quality) =>
@@ -191,7 +213,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
                   alignSelf: 'flex-end',
                   margin: moderateScale(10),
                 }}>
-                <Image source={imagePath.heart2} style={styles.btn1} />
+                <Image source={imagePath.heart4} />
               </TouchableOpacity>
             </ImageBackground>
           </TouchableOpacity>
@@ -365,7 +387,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
         navigation={navigation}
         placeHolderTxt={'Search here.....'}
         showFilter={true}
-        modalPress={() => setIsAttributeFilterModal(true)}
+        modalPress={onFilterPress}
         mainContainer={{
           flex: 0,
         }}
@@ -424,7 +446,10 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
             borderTopLeftRadius: moderateScale(12),
             borderTopRightRadius: moderateScale(12),
           }}>
-          <TopHeader onLeftIconPress={() => setIsAttributeFilterModal(false)} />
+          <TopHeader
+            onPressLeft={() => setIsAttributeFilterModal(false)}
+            onPressRight={onResetFilter}
+          />
           <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}
             style={{flexGrow: 1}}>

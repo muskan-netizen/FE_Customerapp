@@ -5,14 +5,14 @@ import {moderateScale} from '../../styles/responsiveSize';
 import fontFamily from '../../styles/fontFamily';
 import strings from '../../constants/lang';
 
-const TopHeader = ({onLeftIconPress = () => {}}) => {
+const TopHeader = ({onPressLeft = () => {}, onPressRight}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.7} onPress={onLeftIconPress}>
+      <TouchableOpacity activeOpacity={0.7} onPress={onPressLeft}>
         <Image source={imagePath.back1} />
       </TouchableOpacity>
       <Text style={styles.text1}>{strings.FILTER}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPressRight}>
         <Text>{strings.RESET_ALL}</Text>
       </TouchableOpacity>
     </View>
