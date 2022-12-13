@@ -132,18 +132,10 @@ export default function DashBoardTen({
     });
   }, [appMainData?.vendors]);
   useEffect(() => {
-    if (!!appMainData?.categories && appMainData?.categories.length) {
-      if (appStyle?.homePageLayout == 5) {
-        updateState({
-          categoriesData: appMainData?.categories.filter(
-            (item, indx) => indx < 8,
-          ),
-        });
-      } else {
-        updateState({
-          categoriesData: appMainData?.categories,
-        });
-      }
+    if (!isEmpty(appMainData?.categories)) {
+      updateState({
+        categoriesData: appMainData?.categories,
+      });
       return;
     }
     updateState({
@@ -226,7 +218,7 @@ export default function DashBoardTen({
     return (
       <View
         style={{
-          width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+          width: 'auto',
         }}>
         <TouchableOpacity
           activeOpacity={0.7}
@@ -268,11 +260,7 @@ export default function DashBoardTen({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      appStyle?.homePageLayout === 5
-        ? '800/600'
-        : DeviceInfo.getBundleId() == appIds.masa
-        ? '800/600'
-        : '400/600',
+      DeviceInfo.getBundleId() == appIds.masa ? '800/600' : '400/600',
     );
     return (
       <TouchableOpacity
@@ -394,45 +382,6 @@ export default function DashBoardTen({
                   <View style={{marginRight: moderateScale(12)}} />
                 )}
               />
-
-              <View>
-                {appMainData?.categories.length > 8 &&
-                  appStyle?.homePageLayout === 5 && (
-                    <TouchableOpacity
-                      onPress={seeMoreCategories}
-                      activeOpacity={0.8}
-                      style={{
-                        borderWidth: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        paddingVertical: moderateScaleVertical(6),
-                        marginHorizontal: moderateScale(8),
-                        borderRadius: moderateScale(6),
-                        marginTop: moderateScaleVertical(16),
-                        borderColor: colors.borderColorB,
-                      }}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text
-                          style={{
-                            fontSize: textScale(10),
-                            fontFamily: fontFamily.regular,
-                            color: isDarkMode ? colors.white : colors.black,
-                          }}>
-                          {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
-                        </Text>
-                        <Image
-                          source={imagePath.icDropdown4}
-                          style={{
-                            tintColor: isDarkMode ? colors.white : colors.black,
-                            transform: [{rotate: seeMore ? '180deg' : '0deg'}],
-                            marginLeft: moderateScale(4),
-                          }}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  )}
-              </View>
             </View>
           )}
       </View>
@@ -519,12 +468,6 @@ export default function DashBoardTen({
 
   const renderFeaturedProducts = ({item}) => {
     return (
-      // <ProductsComp
-      //   item={item}
-      //   onPress={() =>
-      //     navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
-      //   }
-      // />
       <View
         style={{
           flex: 1,
@@ -628,79 +571,47 @@ export default function DashBoardTen({
           </View>
         )}
 
-        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
-          <CategoryLoader2 viewStyles={{marginBottom: moderateScale(16)}} />
-        ) : null}
-        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
-          <View
-            style={{
-              flexDirection: 'row',
+        <View style={{flexDirection: 'row'}}>
+          <HeaderLoader
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
               marginBottom: moderateScaleVertical(16),
-            }}>
-            <HeaderLoader
-              widthLeft={moderateScale(width / 1.2)}
-              rectWidthLeft={moderateScale(width / 1.2)}
-              heightLeft={moderateScaleVertical(140)}
-              rectHeightLeft={moderateScaleVertical(140)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-            <HeaderLoader
-              widthLeft={moderateScale(width / 1.2)}
-              rectWidthLeft={moderateScale(width / 1.2)}
-              heightLeft={moderateScaleVertical(140)}
-              rectHeightLeft={moderateScaleVertical(140)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-          </View>
-        ) : (
-          !isGetEstimation && (
-            <View style={{flexDirection: 'row'}}>
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                }}
-                widthLeft={moderateScale(150)}
-                rectWidthLeft={moderateScale(150)}
-                heightLeft={moderateScaleVertical(240)}
-                rectHeightLeft={moderateScaleVertical(240)}
-                isRight={false}
-                rx={15}
-                ry={15}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                }}
-                widthLeft={moderateScale(150)}
-                rectWidthLeft={moderateScale(150)}
-                heightLeft={moderateScaleVertical(240)}
-                rectHeightLeft={moderateScaleVertical(240)}
-                isRight={false}
-                rx={15}
-                ry={15}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                }}
-                widthLeft={moderateScale(150)}
-                rectWidthLeft={moderateScale(150)}
-                heightLeft={moderateScaleVertical(240)}
-                rectHeightLeft={moderateScaleVertical(240)}
-                isRight={false}
-                rx={15}
-                ry={15}
-              />
-            </View>
-          )
-        )}
+            }}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
+              marginBottom: moderateScaleVertical(16),
+            }}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
+              marginBottom: moderateScaleVertical(16),
+            }}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <HeaderLoader

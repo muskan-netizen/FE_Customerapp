@@ -66,11 +66,12 @@ export default function DashBoardHeaderSeven({
   return (
     <View
       style={{
-        marginHorizontal: moderateScale(18),
+        marginHorizontal: moderateScale(15),
       }}>
       <Header
         leftIcon={imagePath.location1}
         rightViewStyle={{flex: 1}}
+        headerStyle={{}}
         // centerTitle={'Abu Dhabi'}
         customLeft={() => {
           return (
@@ -98,6 +99,7 @@ export default function DashBoardHeaderSeven({
           );
         }}
       />
+      <DeliveryTypeComp selectedToggle={selcetedToggle} />
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() =>
@@ -130,8 +132,6 @@ export default function DashBoardHeaderSeven({
           source={imagePath.search3}
         />
       </TouchableOpacity>
-
-      {/* <DeliveryTypeComp selectedToggle={selcetedToggle} /> */}
 
       <CustomAnimatedLoader
         source={loaderOne}

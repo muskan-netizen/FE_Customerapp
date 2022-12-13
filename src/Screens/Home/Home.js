@@ -547,12 +547,10 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'item>>>>item');
-    if (item?.redirect_to !== staticStrings.P2P) {
+    if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
       return;
     }
-
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
 

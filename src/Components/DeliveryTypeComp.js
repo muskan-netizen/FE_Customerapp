@@ -65,7 +65,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
   const _onTableItm = (value, indx) => {
     const newTabs = [...tabs];
     newTabs.forEach((item, index) => {
-    
       if (index === indx) {
         selectedToggle(item?.type);
         newTabs[index].isActive = true;
@@ -203,7 +202,7 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
     tabMainStyle: {
       borderRadius: moderateScale(10),
       flexDirection: 'row',
-      marginTop: moderateScale(10),
+      // marginTop: moderateScale(10),
       borderBottomWidth: 0.8,
     },
     tabItemView: {
