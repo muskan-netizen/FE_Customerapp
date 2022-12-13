@@ -1,20 +1,18 @@
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
-import React, {useState, useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 //constants
 import imagePath from '../../../constants/imagePath';
 //custom components
 import GradientButton from '../../../Components/GradientButton';
 //styling
-import styleFun from './styles';
-import {height, width} from '../../../styles/responsiveSize';
 import colors from '../../../styles/colors';
+import {height, width} from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
+import styleFun from './styles';
 //3rd party
+import {useDarkMode} from 'react-native-dark-mode';
 import Carousel from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
-import _ from 'lodash';
-import {navigationRef} from '../../../navigation/NavigationService';
 
 const DATA = [
   {

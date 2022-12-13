@@ -38,6 +38,7 @@ import ActionSheet from 'react-native-actionsheet';
 import strings from '../../../constants/lang';
 import {v4 as uuidv4} from 'uuid';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import PanoramaView from '@lightbase/react-native-panorama-view';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
@@ -217,6 +218,7 @@ const AttributeInformation = ({route, navigation}) => {
         mediaType: 'photo',
       })
         .then((res) => {
+          console.log(res, 'res....res');
           if (res && (res?.sourceURL || res?.path)) {
             let file = {
               id: uuidv4(),
@@ -456,7 +458,6 @@ const AttributeInformation = ({route, navigation}) => {
                   }}>
                   Add Image
                 </Text>
-                {console.log(productImgs, 'productImgs...productImgs')}
                 {!isEmpty(productImgs) && (
                   <View
                     style={{
@@ -464,14 +465,15 @@ const AttributeInformation = ({route, navigation}) => {
                     }}>
                     {productImgs.map((itm, indx) => (
                       <View style={String(indx)}>
-                        <Image
-                          source={{uri: itm?.uri}}
+                        <PanoramaView
                           style={{
+                            height: moderateScaleVertical(250),
                             width: '96%',
-                            height: moderateScaleVertical(100),
-                            borderRadius: moderateScale(5),
-                            marginTop: moderateScale(5),
+                            marginTop: moderateScaleVertical(7),
                           }}
+                          dimensions={{height: 230, width: width}}
+                          inputType="mono"
+                          imageUrl={itm?.uri}
                         />
                         <TouchableOpacity
                           hitSlop={hitSlopProp}

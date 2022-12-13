@@ -157,6 +157,8 @@ export default function TabRoutes(props) {
       initialRouteName={
         redirectedFrom == 'cart'
           ? navigationStrings.CART
+          : redirectedFrom == 'p2pPost'
+          ? navigationStrings.POST
           : navigationStrings.HOMESTACK
       }
       tabBarOptions={{

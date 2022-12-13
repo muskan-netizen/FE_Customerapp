@@ -114,6 +114,7 @@ export default ({themeColor, toggleTheme, fontFamily}) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       flex: 1,
+      paddingBottom: moderateScaleVertical(10),
     },
     successModal: {
       alignSelf: 'center',
