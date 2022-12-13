@@ -1802,7 +1802,6 @@
 		2C4207C0290F97C800C988C3 /* Holla(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C4207BF290F97C800C988C3 /* Holla(Development).xcconfig */; };
 		2C4207C2290F97E700C988C3 /* Holla(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C4207C1290F97E600C988C3 /* Holla(Production).xcconfig */; };
 		2C4207C4290F980900C988C3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C4207C3290F980800C988C3 /* Images.xcassets */; };
-		2C4207C6290F988200C988C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4207C5290F987C00C988C3 /* GoogleService-Info.plist */; };
 		2C44582228C0DD3A00E2312C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C44582128C0DD3700E2312C /* GoogleService-Info.plist */; };
 		2C44E44B28D882980062E9D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2C44E44C28D882980062E9D1 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -13870,6 +13869,7 @@
 		F4F808A628608C8600C05F89 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		F5A594A1CCBB539F0239D9DD /* libPods-available_pods-Valley.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B44111974B0D92618D9040 /* libPods-available_pods-Valley.a */; };
 		F7A4F0554C1F3A5510B70368 /* libPods-available_pods-Empire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BF0853F52EF231298876B7 /* libPods-available_pods-Empire.a */; };
+		F834517729483C3D00DE9F02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F834517629483C3900DE9F02 /* GoogleService-Info.plist */; };
 		F9BB0144F34F73C1D6DA5712 /* libPods-available_pods-Nuvoni.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC95D72C034818BEBCD69A82 /* libPods-available_pods-Nuvoni.a */; };
 		FA491C264A105B1BEC8320D4 /* libPods-available_pods-GoKab.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4242E1EBBAA1055FE0E8DA4E /* libPods-available_pods-GoKab.a */; };
 		FAC6EE07AC48F6721AB07E51 /* libPods-available_pods-Icare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E1352BFBB6C0640FC04B70 /* libPods-available_pods-Icare.a */; };
@@ -14500,7 +14500,6 @@
 		2C4207BF290F97C800C988C3 /* Holla(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Holla(Development).xcconfig"; sourceTree = "<group>"; };
 		2C4207C1290F97E600C988C3 /* Holla(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Holla(Production).xcconfig"; sourceTree = "<group>"; };
 		2C4207C3290F980800C988C3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		2C4207C5290F987C00C988C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C44582128C0DD3700E2312C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C44E48728D882990062E9D1 /* Delcolink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delcolink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C44E48A28D885570062E9D1 /* Delcolink(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Delcolink(Development).xcconfig"; sourceTree = "<group>"; };
@@ -17952,6 +17951,7 @@
 		F7C64FE1812124AAB319B657 /* Pods-available_pods-Fairex.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Fairex.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Fairex/Pods-available_pods-Fairex.debug.xcconfig"; sourceTree = "<group>"; };
 		F82F6481F29568E095F3F610 /* libPods-available_pods-GajaMove.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-GajaMove.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F832427BCDBF1E19667E2F2B /* Pods-available_pods-BaggageTaxi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-BaggageTaxi.release.xcconfig"; path = "Target Support Files/Pods-available_pods-BaggageTaxi/Pods-available_pods-BaggageTaxi.release.xcconfig"; sourceTree = "<group>"; };
+		F834517629483C3900DE9F02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F8594D28C9A85D671D5D773C /* Pods-available_pods-Ridemate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Ridemate.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Ridemate/Pods-available_pods-Ridemate.release.xcconfig"; sourceTree = "<group>"; };
 		F88C1EA856A116C5C28D6EEE /* libPods-available_pods-Kongafood.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Kongafood.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B0D7D61477563CEBFE3406 /* Pods-available_pods-PetsChoice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-PetsChoice.release.xcconfig"; path = "Target Support Files/Pods-available_pods-PetsChoice/Pods-available_pods-PetsChoice.release.xcconfig"; sourceTree = "<group>"; };
@@ -23366,7 +23366,7 @@
 		2C4207BE290F977400C988C3 /* Holla */ = {
 			isa = PBXGroup;
 			children = (
-				2C4207C5290F987C00C988C3 /* GoogleService-Info.plist */,
+				F834517629483C3900DE9F02 /* GoogleService-Info.plist */,
 				2C4207BF290F97C800C988C3 /* Holla(Development).xcconfig */,
 				2C4207C1290F97E600C988C3 /* Holla(Production).xcconfig */,
 				2C4207C3290F980800C988C3 /* Images.xcassets */,
@@ -40641,7 +40641,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					2C42078E290F96C500C988C3 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = Y7T8H386G6;
 						ProvisioningStyle = Automatic;
 					};
 					2C44E44728D882980062E9D1 = {
@@ -44729,7 +44729,7 @@
 				2C4207C2290F97E700C988C3 /* Holla(Production).xcconfig in Resources */,
 				2C4207A1290F96C500C988C3 /* SFProText-SemiBold.ttf in Resources */,
 				2C4207A2290F96C500C988C3 /* SFProText-Medium.ttf in Resources */,
-				2C4207C6290F988200C988C3 /* GoogleService-Info.plist in Resources */,
+				F834517729483C3D00DE9F02 /* GoogleService-Info.plist in Resources */,
 				2C4207A4290F96C500C988C3 /* notification.wav in Resources */,
 				2C4207A7290F96C500C988C3 /* Plists in Resources */,
 				2C4207A8290F96C500C988C3 /* Futura-Normal.ttf in Resources */,
@@ -159697,7 +159697,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = Y7T8H386G6;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -159732,7 +159732,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = Y7T8H386G6;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

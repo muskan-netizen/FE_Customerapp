@@ -2251,7 +2251,7 @@ const appIds = {
     android: 'com.speedydelivery.royoorders',
   }),
   holla: Platform.select({
-    ios: 'com.holla.royoorders',
+    ios: 'com.holla.orders',
     android: 'com.holla.royoorders',
   }),
   stabex: Platform.select({
