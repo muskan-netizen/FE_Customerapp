@@ -75,17 +75,25 @@ export default function DashBoardHeaderSeven({
         customLeft={() => {
           return (
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity activeOpacity={0.7}>
-                <Image source={imagePath.location1} />
-              </TouchableOpacity>
-
-              <Text
-                style={{
-                  marginLeft: 8,
-                  fontFamily: fontFamily.regular,
-                }}>
-                {location?.address.substring(0, 10)} ...
-              </Text>
+              {!!location?.address && (
+                <TouchableOpacity
+                  style={{flexDirection: 'row'}}
+                  activeOpacity={0.7}
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.LOCATION, {
+                      type: 'Home1',
+                    })
+                  }>
+                  <Image source={imagePath.location1} />
+                  <Text
+                    style={{
+                      marginLeft: 8,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {location?.address.substring(0, 10)} ...
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           );
         }}

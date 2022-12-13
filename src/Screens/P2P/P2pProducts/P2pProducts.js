@@ -440,7 +440,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
                 />
               )}
               renderItem={renderAttributeOptions}
-              ListFooterComponent={listFooterComponent}
+              // ListFooterComponent={listFooterComponent}
             />
             <View style={styles.btnStyle}>
               <ButtonWithLoader

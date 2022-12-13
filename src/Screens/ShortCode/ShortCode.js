@@ -3234,6 +3234,8 @@ export default function ShortCode({route, navigation}) {
         return imagePath.HezniSplash;
       case appIds?.flank:
         return imagePath.flanksplash;
+      case appIds?.zonesso:
+        return imagePath.zonessoSplash;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }

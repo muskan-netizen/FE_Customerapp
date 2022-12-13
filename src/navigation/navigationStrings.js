@@ -158,6 +158,6 @@ export default {
   POST: 'Post',
   POST_CATEGORY: 'PostCategory',
   P2P_PRODUCTS: 'p2pProducts',
-  LISTDETAIL: 'ListDetail',
   ATTRIBUTE_INFORMATION: 'attributeInformation',
+  P2P_PRODUCT_DETAIL: 'p2pProductDetail',
 };
