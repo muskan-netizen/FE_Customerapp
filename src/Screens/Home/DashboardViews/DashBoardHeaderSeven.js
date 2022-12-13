@@ -70,6 +70,7 @@ export default function DashBoardHeaderSeven({
       }}>
       <Header
         leftIcon={imagePath.location1}
+        rightViewStyle={{flex: 1}}
         // centerTitle={'Abu Dhabi'}
         customLeft={() => {
           return (
