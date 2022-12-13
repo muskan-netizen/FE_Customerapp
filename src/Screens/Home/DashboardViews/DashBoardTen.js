@@ -486,16 +486,7 @@ export default function DashBoardTen({
             flex: 1,
 
             alignItems: 'center',
-          }}>
-          <FastImage
-            source={imagePath.tiago}
-            style={{
-              width: width / 2.3,
-              height: 120,
-              borderRadius: 8,
-            }}
-          />
-        </TouchableOpacity>
+          }}></TouchableOpacity>
         <View style={{marginLeft: 8}}>
           <Text
             style={{
@@ -569,7 +560,7 @@ export default function DashBoardTen({
             alignItems: 'center',
           }}>
           <FastImage
-            source={imagePath.tiago}
+            source={imagePath.nature}
             style={{
               width: width / 2.3,
               height: 120,

@@ -1,57 +1,57 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
-import React, { useState, useCallback } from "react";
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import React, {useState, useCallback} from 'react';
 //constants
-import imagePath from "../../../constants/imagePath";
+import imagePath from '../../../constants/imagePath';
 //custom components
-import GradientButton from "../../../Components/GradientButton";
+import GradientButton from '../../../Components/GradientButton';
 //styling
-import styleFun from "./styles";
-import { height, width } from "../../../styles/responsiveSize";
-import colors from "../../../styles/colors";
-import { MyDarkTheme } from "../../../styles/theme";
+import styleFun from './styles';
+import {height, width} from '../../../styles/responsiveSize';
+import colors from '../../../styles/colors';
+import {MyDarkTheme} from '../../../styles/theme';
 //3rd party
-import Carousel from "react-native-snap-carousel";
-import { useSelector } from "react-redux";
-import { useDarkMode } from "react-native-dark-mode";
-import _ from "lodash";
-import { navigationRef } from "../../../navigation/NavigationService";
+import Carousel from 'react-native-snap-carousel';
+import {useSelector} from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import _ from 'lodash';
+import {navigationRef} from '../../../navigation/NavigationService';
 
 const DATA = [
   {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    thumbnail: imagePath.tiago,
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    thumbnail: imagePath.nature,
   },
   {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    thumbnail: imagePath.tiago,
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    thumbnail: imagePath.nature,
   },
   {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    thumbnail: imagePath.tiago,
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    thumbnail: imagePath.nature,
   },
   {
-    id: "8694a0f-3da1-471f-bd96-145571e29d72",
-    thumbnail: imagePath.tiago,
+    id: '8694a0f-3da1-471f-bd96-145571e29d72',
+    thumbnail: imagePath.nature,
   },
   {
-    id: "694a0f-3da1-471f-bd96-145571e29d72",
-    thumbnail: imagePath.tiago,
+    id: '694a0f-3da1-471f-bd96-145571e29d72',
+    thumbnail: imagePath.nature,
   },
 ];
 
-const ListDetail = ({ navigation, route }) => {
+const P2pProductDetail = ({navigation, route}) => {
   const [indexSelected, setIndexSelected] = useState(0);
-  const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
+  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const onSelect = (indexSelected) => {
     setIndexSelected(indexSelected);
   };
-  const styles = styleFun({ themeColor, themeToggle });
-  const renderItem = useCallback(({ item, index }) => {
+  const styles = styleFun({themeColor, themeToggle});
+  const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.item}>
-        <Image source={imagePath.tiago} style={{ backgroundColor: "white" }} />
+        <Image source={imagePath.nature} style={{backgroundColor: 'white'}} />
       </View>
     );
   }, []);
@@ -63,10 +63,9 @@ const ListDetail = ({ navigation, route }) => {
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : colors.statusbarColor,
-      }}
-    >
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flexGrow: 1 }}>
-        <View style={{ backgroundColor: colors.white }}>
+      }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1}}>
+        <View style={{backgroundColor: colors.white}}>
           <Carousel
             sliderWidth={width}
             sliderHeight={height}
@@ -78,8 +77,7 @@ const ListDetail = ({ navigation, route }) => {
         </View>
         <TouchableOpacity
           style={styles.back}
-          onPress={() => navigation.goBack()}
-        >
+          onPress={() => navigation.goBack()}>
           <Image source={imagePath.back1} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.heart}>
@@ -103,9 +101,9 @@ const ListDetail = ({ navigation, route }) => {
         </View>
         <View style={styles.view}>
           <GradientButton
-            btnText={"AED 15000"}
+            btnText={'AED 15000'}
             btnStyle={styles.btn}
-            containerStyle={{ alignItems: "flex-start" }}
+            containerStyle={{alignItems: 'flex-start'}}
           />
           <Text style={styles.txt1}>Bentley</Text>
           <Text style={styles.txt2}>Bentley Continental GT 2021</Text>
@@ -115,44 +113,42 @@ const ListDetail = ({ navigation, route }) => {
           </Text>
         </View>
         <View style={styles.view1}>
-          <Text style={{ ...styles.txt1, fontSize: 13 }}>Posted By</Text>
+          <Text style={{...styles.txt1, fontSize: 13}}>Posted By</Text>
           <View style={styles.view2}>
             <Image source={imagePath.fb} />
             <Text
-              style={{ ...styles.txt2, marginLeft: 8, color: colors.orange1 }}
-            >
+              style={{...styles.txt2, marginLeft: 8, color: colors.orange1}}>
               Martin Wallace
               <Text
                 style={{
                   ...styles.txt2,
                   color: !!themeColor ? colors.white : colors.black,
-                }}
-              >
-                {" "}
+                }}>
+                {' '}
                 Fazaa L.L.C
               </Text>
             </Text>
           </View>
           <View style={styles.view3}>
             <GradientButton
-              btnText={"Chat"}
-              textStyle={{ ...styles.chatBtn, color: colors.orange1 }}
+              btnText={'Chat'}
+              textStyle={{...styles.chatBtn, color: colors.orange1}}
               btnStyle={styles.btn1}
               source={imagePath.message}
-              containerStyle={{ alignItems: "flex-start" }}
+              containerStyle={{alignItems: 'flex-start'}}
               colorsArray={[colors.white, colors.white]}
             />
             <GradientButton
-              btnText={"Call"}
+              btnText={'Call'}
               textStyle={styles.chatBtn}
               btnStyle={styles.btn2}
               source={imagePath.call}
-              containerStyle={{ alignItems: "flex-start" }}
+              containerStyle={{alignItems: 'flex-start'}}
             />
           </View>
         </View>
-        <View style={{ ...styles.view1, marginTop: 0 }}>
-          <Text style={{ ...styles.txt1, fontSize: 13 }}>Description</Text>
+        <View style={{...styles.view1, marginTop: 0}}>
+          <Text style={{...styles.txt1, fontSize: 13}}>Description</Text>
           <Text style={styles.txt2}>
             2021 Red Abarth 595 Competizione 1.4L Convertible
           </Text>
@@ -166,4 +162,4 @@ const ListDetail = ({ navigation, route }) => {
   );
 };
 
-export default ListDetail;
+export default P2pProductDetail;

@@ -551,7 +551,6 @@ export default {
   gmail: require('../assets/images/gmail.png'),
   // facebook: require("../assets/images/facebook.png"),
   apple1: require('../assets/images/Apple.png'),
-  tiago: require('../assets/images/tiago.png'),
   location1: require('../assets/images/ic_location1.png'),
   check3: require('../assets/images/ic_check3.png'),
   search3: require('../assets/images/ic_search3.png'),

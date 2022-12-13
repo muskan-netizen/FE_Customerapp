@@ -43,6 +43,7 @@ import {
   ChatRoomForVendor,
   ListDetail,
   P2pProducts,
+  P2pProductDetail,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
@@ -335,8 +336,8 @@ export default function () {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name={navigationStrings.LISTDETAIL}
-        component={ListDetail}
+        name={navigationStrings.P2P_PRODUCT_DETAIL}
+        component={P2pProductDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
