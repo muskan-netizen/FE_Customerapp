@@ -2968,6 +2968,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.shipmoe:
+            updateState({
+              shortCode: shortCodes.shipmoe,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.bigBayong:
+              updateState({
+                shortCode: shortCodes.bigBayong,
+                isShortcodePrefilled: true,
+              });
+              break;
       }
     })();
   }, []);

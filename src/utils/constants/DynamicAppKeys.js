@@ -479,6 +479,8 @@ const shortCodes = {
   lincshare: '9b8d33',
   lvlup: 'b2eb09',
   glavour: '620b19',
+  shipmoe: '153a1f',
+  bigBayong: '5c8f1a',
 };
 
 const appIds = {
@@ -2385,6 +2387,14 @@ const appIds = {
   glavour: Platform.select({
     ios: 'com.glavour.royoorders',
     android: 'com.glavour.royoorders',
+  }),
+  shipmoe: Platform.select({
+    ios: 'com.shipmoe.royoorders',
+    android: 'com.shipmoe.royoorders',
+  }),
+  bigBayong: Platform.select({
+    ios: 'com.bigBayong.royoorders',
+    android: 'com.bigBayong.royoorders',
   }),
 };
 

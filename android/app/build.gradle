@@ -204,8 +204,7 @@ android {
     }
 
     flavorDimensions "appType"
-  
-
+ 
 
     productFlavors {
             royoorder {
@@ -7953,6 +7952,26 @@ android {
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.lincshare.royoorders'
                 resValue "string", "app_name", "LincShare"
+                resValue "string", "host_name", ""
+            }
+            shipmoe {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.shipmoe.royoorders'
+                resValue "string", "app_name", "Shipmoe"
+                resValue "string", "host_name", ""
+            }
+             bigBayong {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.bigBayong.royoorders'
+                resValue "string", "app_name", "Big Bayong"
                 resValue "string", "host_name", ""
             }
     }

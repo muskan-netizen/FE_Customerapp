@@ -2269,6 +2269,14 @@ end
 target 'Glavour' do
 end
 
+#Shipmoe
+target 'Shipmoe' do
+end
+#BigBayong
+target 'BigBayong' do
+end
+
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
