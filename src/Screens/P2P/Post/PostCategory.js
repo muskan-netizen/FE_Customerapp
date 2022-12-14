@@ -21,6 +21,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 //styling
 import colors from '../../../styles/colors';
+import {MyDarkTheme} from '../../../styles/theme';
 import {
   height,
   moderateScale,
@@ -35,6 +36,7 @@ import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import actions from '../../../redux/actions';
+import {useDarkMode} from 'react-native-dark-mode';
 import {checkValueExistInAry} from '../../../utils/commonFunction';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';
@@ -49,11 +51,14 @@ const PostCategory = ({navigation}) => {
     currencies,
     languages,
     appStyle,
-
+    themeColor,
     themeColors,
+    themeToggle,
   } = useSelector((state) => state?.initBoot);
   const {userData} = useSelector((state) => state?.auth);
 
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
   const [isAutofillModal, setIsAutofillModal] = useState(false);
@@ -334,36 +339,50 @@ const PostCategory = ({navigation}) => {
     [attributeInfo],
   );
 
-  const renderP2Pcategories = useCallback(({item, index}) => {
-    let imageURI = getImageUrl(
-      item?.icon?.image_fit,
-      item?.icon?.image_path,
-      '160/160',
-    );
-    return (
-      <View style={{flex: 1}}>
-        <TouchableOpacity
-          style={styles.categoryStyle}
-          activeOpacity={0.7}
-          onPress={() => onPressP2pCategory(item)}>
-          <FastImage
+  const renderP2Pcategories = useCallback(
+    ({item, index}) => {
+      let imageURI = getImageUrl(
+        item?.icon?.image_fit,
+        item?.icon?.image_path,
+        '160/160',
+      );
+      return (
+        <View style={{flex: 1}}>
+          <TouchableOpacity
             style={{
-              height: moderateScale(70),
-              width: moderateScale(70),
-              borderRadius: moderateScale(10),
+              ...styles.categoryStyle,
+              backgroundColor: !!themeColor
+                ? colors.whiteOpacity15
+                : colors.blackOpacity05,
             }}
-            source={{
-              uri: imageURI,
-              cache: FastImage.cacheControl.immutable,
-              priority: FastImage.priority.high,
-            }}
-            resizeMode="cover"
-          />
-          <Text style={styles.textStyle}>{item?.name || ''}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }, []);
+            activeOpacity={0.7}
+            onPress={() => onPressP2pCategory(item)}>
+            <FastImage
+              style={{
+                height: moderateScale(70),
+                width: moderateScale(70),
+                borderRadius: moderateScale(10),
+              }}
+              source={{
+                uri: imageURI,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }}
+              resizeMode="cover"
+            />
+            <Text
+              style={{
+                ...styles.textStyle,
+                color: !!themeColor ? colors.white : colors.black,
+              }}>
+              {item?.name || ''}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    },
+    [themeColor],
+  );
 
   const listFooterComponent = () => {
     return (
@@ -505,11 +524,22 @@ const PostCategory = ({navigation}) => {
   };
 
   return (
-    <WrapperContainer>
+    <WrapperContainer
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
+      }>
       <View style={{marginVertical: moderateScale(18)}}>
-        <Header leftIcon={imagePath.back1} />
+        <Header
+          leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back1}
+        />
         <View style={{marginHorizontal: moderateScale(15)}}>
-          <Text style={styles.header}>{strings.SELECT_YOUR_CATEGORY}</Text>
+          <Text
+            style={{
+              ...styles.header,
+              color: !!themeColor ? colors.white : colors.black,
+            }}>
+            {strings.SELECT_YOUR_CATEGORY}
+          </Text>
           {isLoadingP2pCategories ? (
             <View>
               {['', '', '', ''].map(() => (
@@ -585,7 +615,8 @@ const PostCategory = ({navigation}) => {
 
 export default PostCategory;
 
-function stylesFunc({fontFamily, themeColors}) {
+function stylesFunc({fontFamily, themeColor}) {
+  // alert(!!themeColor);
   const styles = StyleSheet.create({
     header: {
       marginTop: moderateScale(32),
@@ -595,7 +626,6 @@ function stylesFunc({fontFamily, themeColors}) {
     },
     categoryStyle: {
       flex: 1,
-      backgroundColor: colors.blackOpacity05,
       borderRadius: moderateScale(12),
       marginHorizontal: moderateScale(10),
       height: height / 6,
