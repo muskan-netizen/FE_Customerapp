@@ -560,4 +560,6 @@ export default {
   zonessoSplash: require('../assets/zonessoSplash.mp4'),
   back_dark: require('../assets/images/ic_back_dark.png'),
   icRefundable: require('../assets/images/refundable.png'),
+  post: require('../assets/images/ic_post.png'),
+  post_active: require('../assets/images/ic_post_active.png'),
 };

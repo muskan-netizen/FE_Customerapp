@@ -225,22 +225,23 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[
-                {tintColor: tintColor},
+                // {tintColor: tintColor},
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
-              source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.homeActive
-                    : imagePath.homeInActive
-                  : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.homeRedActive
-                    : imagePath.homeRedInActive
-                  : focused
-                  ? imagePath.tabAActive
-                  : imagePath.tabAInActive
-              }
+              // source={
+              //   appStyle?.tabBarLayout === 5
+              //     ? focused
+              //       ? imagePath.homeActive
+              //       : imagePath.homeInActive
+              //     : appStyle?.tabBarLayout === 4
+              //     ? focused
+              //       ? imagePath.homeRedActive
+              //       : imagePath.homeRedInActive
+              //     : focused
+              //     ? imagePath.tabAActive
+              //     : imagePath.tabAInActive
+              // }
+              source={focused ? imagePath.post_active : imagePath.post}
             />
           ),
 
