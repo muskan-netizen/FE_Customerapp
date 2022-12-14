@@ -472,8 +472,8 @@ const shortCodes = {
   skyline: 'ce1ed6',
   bliss: '6eb260',
   rentzy: 'd4fc07',
-  // zonesso: '2d98b5',
-  zonesso: '4f459b',
+  zonesso: '245bae',
+  // zonesso: '4f459b',
 };
 
 const appIds = {

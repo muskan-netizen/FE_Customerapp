@@ -9,6 +9,7 @@ import {
   OuterScreen,
   OuterScreen2,
   OuterScreen4,
+  OuterScreen5,
   ResetPassword,
   Signup,
   Signup2,
@@ -26,7 +27,8 @@ export default function (Stack, appStyle) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
+        // component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
+        component={OuterScreen5}
         options={{headerShown: false}}
       />
       {/* <Stack.Screen
