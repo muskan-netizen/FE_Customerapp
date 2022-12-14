@@ -371,8 +371,7 @@ export default ({themeColors, fontFamily}) => {
       alignItems: 'center',
       justifyContent: 'space-between',
       marginHorizontal: moderateScale(16),
-      marginBottom: moderateScaleVertical(24),
-      marginTop: moderateScaleVertical(15),
+      marginVertical: moderateScaleVertical(15),
     },
     menuView: {
       flexDirection: 'row',
@@ -438,44 +437,45 @@ export default ({themeColors, fontFamily}) => {
       width: width - 50,
       borderRadius: 12,
     },
-    horizontalLine:{ 
-      marginVertical:moderateScaleVertical(15), 
+    horizontalLine: {
+      marginVertical: moderateScaleVertical(15),
       width: '70%',
-      },
-      ageModalText:{ 
-        fontFamily: fontFamily.bold, 
-        fontSize: textScale(15) 
-      },
-      ageConfirmationText : {
-      marginBottom:moderateScale(10), 
-      fontFamily: fontFamily.regular, 
-      fontSize: textScale(14), 
-      textAlign: 'center', 
+    },
+    ageModalText: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(15),
+    },
+    ageConfirmationText: {
+      marginBottom: moderateScale(10),
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(14),
+      textAlign: 'center',
     },
     takeMeOutStyle: {
-      textAlign:'center',  
-      color: themeColors.primary_color,fontFamily:fontFamily.regular, 
-      fontSize:textScale(12),
-      marginTop:moderateScaleVertical(10),
+      textAlign: 'center',
+      color: themeColors.primary_color,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      marginTop: moderateScaleVertical(10),
     },
-    innerAgeModaleView :{
+    innerAgeModaleView: {
       paddingVertical: moderateScaleVertical(15),
-      paddingHorizontal:moderateScale(10),
-      backgroundColor: "white",
+      paddingHorizontal: moderateScale(10),
+      backgroundColor: 'white',
       borderRadius: 15,
       width: width / 1.2,
       minHeight: moderateScaleVertical(150),
-      alignItems: "center",
-      shadowColor: "#000",
+      alignItems: 'center',
+      shadowColor: '#000',
       shadowOffset: {
         width: 0,
-        height: 2
+        height: 2,
       },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-      elevation: 5
+      elevation: 5,
     },
-    searchBarView:{
+    searchBarView: {
       flexDirection: 'row',
       paddingHorizontal: moderateScale(16),
       height: moderateScaleVertical(48),
@@ -484,10 +484,8 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'space-between',
       borderRadius: moderateScale(10),
       marginHorizontal: moderateScale(10),
-      marginVertical:moderateScaleVertical(10)
-
-    }
-    
+      marginVertical: moderateScaleVertical(10),
+    },
   });
 
   return styles;

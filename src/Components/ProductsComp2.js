@@ -29,16 +29,13 @@ import {
 } from '../utils/helperFunctions';
 
 const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {themeColors, appStyle, currencies, themeColor, themeToggle} =
+    useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {themeColors, appStyle, currencies, appData} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 
   const scaleInAnimated = new Animated.Value(0);
@@ -50,17 +47,23 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
     vendor = {},
     variant = [],
   } = item;
+
   const imageUrl = getImageUrl(
     media[0]?.image?.path?.image_fit,
     media[0]?.image?.path?.image_path,
     '600/600',
   );
+
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
       style={{
         width: width / 2.5,
+        backgroundColor: colors.white,
+        elevation: 1,
+        marginVertical: 2,
+        borderRadius: 5,
         ...getScaleTransformationStyle(scaleInAnimated),
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -111,6 +114,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             textAlign: 'left',
             lineHeight: moderateScale(16),
+            marginLeft: moderateScale(5),
           }}>
           {translation[0]?.title || item?.title}
         </Text>
@@ -122,6 +126,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
             marginVertical: moderateScaleVertical(4),
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
             textAlign: 'left',
+            marginLeft: moderateScale(5),
           }}>
           {vendor?.name}
         </Text>
@@ -138,6 +143,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                       ? MyDarkTheme.colors.text
                       : colors.blackOpacity66,
                     width: width / 4,
+                    marginLeft: moderateScale(5),
                   }}>
                   {category?.category_detail?.translation[0]?.name || category}
                 </Text>
@@ -152,6 +158,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                   fontSize: textScale(10),
                   fontFamily: fontFamily.medium,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  marginRight: moderateScale(5),
                 }}>
                 <Text>
                   {tokenConverterPlusCurrencyNumberFormater(
@@ -173,10 +180,17 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                 color: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.blackOpacity66,
+                marginLeft: moderateScale(5),
               }}>
               {strings.IN} {category?.category_detail?.translation[0]?.name}
             </Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: moderateScale(5),
+                flexWrap: 'wrap',
+              }}>
               <Text
                 style={{
                   fontSize: textScale(12),
@@ -187,6 +201,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                 {currencies?.primary_currency.symbol} {variant[0]?.price}
               </Text>
               <Text
+                numberOfLines={2}
                 style={{
                   textDecorationLine: 'line-through',
                   color: isDarkMode

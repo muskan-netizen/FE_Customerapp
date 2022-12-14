@@ -559,4 +559,5 @@ export default {
   heart4: require('../assets/images/ic_heart4.png'),
   zonessoSplash: require('../assets/zonessoSplash.mp4'),
   back_dark: require('../assets/images/ic_back_dark.png'),
+  icRefundable: require('../assets/images/refundable.png'),
 };

@@ -26,6 +26,7 @@ import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
 import Banner2 from '../../Components/Banner2';
+import BottomSlideModal from '../../Components/BottomSlideModal';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
@@ -62,6 +63,8 @@ import {
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import Toast from 'react-native-simple-toast';
+import Clipboard from '@react-native-community/clipboard';
 
 export default function ProductDetail({route, navigation}) {
   console.log('my route', route.params.data);
@@ -80,7 +83,6 @@ export default function ProductDetail({route, navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const {data} = route.params;
-  console.log(data, 'dataaaaaa');
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -114,6 +116,8 @@ export default function ProductDetail({route, navigation}) {
     productDetailNew: {},
     isProductAvailable: false,
     productAttributes: [],
+    offersList: [],
+    isOffersModalVisible: false,
   });
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -149,6 +153,8 @@ export default function ProductDetail({route, navigation}) {
     productDetailNew,
     isProductAvailable,
     productAttributes,
+    offersList,
+    isOffersModalVisible,
   } = state;
 
   const customRight = () => {
@@ -202,7 +208,6 @@ export default function ProductDetail({route, navigation}) {
   useEffect(() => {
     getProductDetail();
   }, [state.productId, state.isLoadingB]);
-  console.log(productDetailData, 'productDetailDataproductDetailData');
   const onShare = () => {
     console.log('onShare', appData);
     if (!!productDetailData?.share_link) {
@@ -252,9 +257,9 @@ export default function ProductDetail({route, navigation}) {
         //   '1000/1000',
         // )
         // : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
-
         updateState({
           productAttributes: res?.data?.product_attribute,
+          offersList: res?.data?.coupon_list,
           productDetailNew: res?.data?.products,
           productDetailData: res.data.products,
           relatedProducts: res.data.relatedProducts,
@@ -1127,7 +1132,6 @@ export default function ProductDetail({route, navigation}) {
     const addon_options = [];
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
         if (j?.value == true) {
           addon_ids.push(j?.addon_id);
           addon_options.push(j?.id);
@@ -1331,28 +1335,131 @@ export default function ProductDetail({route, navigation}) {
     );
   };
 
-  const renderProductAttributes = ({item, index}) => {
+  // const renderProductAttributes = ({ item, index }) => {
+  //   return (
+  //     <View
+  //       style={{
+  //         flexDirection: 'row',
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //       }}>
+  //       <Text
+  //         style={{
+  //           fontFamily: fontFamily.bold,
+  //           fontSize: textScale(14),
+  //         }}>
+  //         {item?.title}
+  //       </Text>
+  //       <Text
+  //         style={{
+  //           fontFamily: fontFamily.regular,
+  //           fontSize: textScale(14),
+  //         }}>
+  //         {item?.value}
+  //       </Text>
+  //     </View>)
+  // }
+  const RenderOfferView = () => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+      <View>
         <Text
           style={{
-            fontFamily: fontFamily.bold,
             fontSize: textScale(14),
-          }}>
-          {item?.title}
-        </Text>
-        <Text
-          style={{
+            paddingHorizontal: moderateScale(15),
             fontFamily: fontFamily.regular,
-            fontSize: textScale(14),
           }}>
-          {item?.value}
+          {strings.AVAILABLE_OFFERS}
         </Text>
+        <View
+          style={{
+            width: '100%',
+            height: 1,
+            backgroundColor: colors.greyMedium,
+            marginVertical: moderateScaleVertical(10),
+          }}
+        />
+        <ScrollView style={{width: '100%'}}>
+          {offersList?.length > 0 &&
+            offersList.map((el, indx) => {
+              // console.log(el);
+              return (
+                <View
+                  key={indx}
+                  style={{
+                    borderBottomWidth: 1,
+                    paddingHorizontal: moderateScale(15),
+                    width: '100%',
+                    borderBottomColor: colors.greyMedium,
+                    marginBottom: moderateScale(10),
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(13),
+                      marginBottom: moderateScale(5),
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.name ? el.name : ''}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      marginBottom: moderateScale(5),
+                      color: colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.short_desc ? el.short_desc : ''}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      borderTopWidth: 1,
+                      borderTopColor: colors.greyMedium,
+                      alignItems: 'center',
+                      paddingTop: moderateScaleVertical(15),
+                      marginTop: moderateScale(8),
+                      paddingBottom: moderateScale(15),
+                    }}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderColor: themeColors.primary_color,
+                        borderRadius: moderateScale(3),
+                        paddingHorizontal: moderateScale(7),
+                        paddingVertical: moderateScale(4),
+                        borderStyle: 'dashed',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          fontFamily: fontFamily.regular,
+                          textTransform: 'uppercase',
+                        }}>
+                        {el.name ? el.name : ''}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Clipboard.setString(`${el.name ? el.name : ''}`);
+                        Toast.show(strings.COPIED);
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          color: themeColors.primary_color,
+                          fontFamily: fontFamily.regular,
+                        }}>
+                        {strings.TAP_TO_COPY}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+        </ScrollView>
       </View>
     );
   };
@@ -1568,8 +1675,6 @@ export default function ProductDetail({route, navigation}) {
                     </View>
                   )}
                 </View>
-                {console.log(typeId, 'typeId....typeId')}
-
                 {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{justifyContent: 'center'}}>
                     <Text
@@ -1590,6 +1695,76 @@ export default function ProductDetail({route, navigation}) {
                   </View>
                 )}
               </View>
+              {productDetailData?.replaceable ||
+              productDetailData?.returnable ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: moderateScaleVertical(10),
+                    marginHorizontal: moderateScale(10),
+                  }}>
+                  <Image source={imagePath.icRefundable} />
+                  <Text
+                    style={{
+                      marginLeft: moderateScale(10),
+                      fontFamily: fontFamily.regular,
+                      fontSize: textScale(12),
+                      color: colors.textGrey,
+                    }}>
+                    We have{' '}
+                    {productDetailData?.is_return_days
+                      ? productDetailData?.return_days + ' days '
+                      : ''}
+                    {productDetailData?.replaceable ? 'replaceable' : ''}
+                    {productDetailData?.replaceable &&
+                    productDetailData?.returnable
+                      ? ' and '
+                      : ''}
+                    {productDetailData?.returnable ? 'returnable' : ''} policy
+                    on this product!
+                  </Text>
+                </View>
+              ) : null}
+
+              {!isEmpty(offersList) ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    updateState({isOffersModalVisible: !isOffersModalVisible})
+                  }
+                  activeOpacity={0.7}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingTop: moderateScaleVertical(16),
+                    borderTopWidth: 1,
+                    borderColor: '#EBEBEB',
+                    marginTop: moderateScaleVertical(10),
+                  }}>
+                  <Text
+                    style={{
+                      ...styles.milesTxt,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      opacity: 1,
+                      fontSize: textScale(10),
+                    }}>
+                    All Offers
+                  </Text>
+                  <Image
+                    source={imagePath.icBackb}
+                    style={{
+                      transform: [{rotate: '-180deg'}],
+                      width: moderateScale(11),
+                      height: moderateScale(11),
+                      resizeMode: 'contain',
+                      marginLeft: moderateScale(6),
+                    }}
+                  />
+                </TouchableOpacity>
+              ) : null}
+
               {/* 
                {!!productDetailData?.delaySlot ?
                     <Text style={{
@@ -1834,10 +2009,10 @@ export default function ProductDetail({route, navigation}) {
                   </View>
                 ))}
 
-              <FlatList
+              {/* <FlatList
                 data={productAttributes}
                 renderItem={renderProductAttributes}
-              />
+              /> */}
 
               <AddonModal
                 productdetail={productDetailData}
@@ -1951,6 +2126,24 @@ export default function ProductDetail({route, navigation}) {
           />
         </View>
       </Modal>
+      <BottomSlideModal
+        mainContainView={RenderOfferView}
+        isModalVisible={isOffersModalVisible}
+        mainContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+          maxHeight: moderateScale(450),
+        }}
+        innerViewContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+        }}
+        onBackdropPress={() =>
+          updateState({isOffersModalVisible: !isOffersModalVisible})
+        }
+      />
     </WrapperContainer>
   );
 }

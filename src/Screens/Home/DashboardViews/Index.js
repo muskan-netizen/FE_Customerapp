@@ -5,6 +5,7 @@ export {default as DashBoardFour} from './DashBoardFour';
 export {default as DashBoardFive} from './DashBoardFive';
 export {default as DashBoardSix} from './DashBoardSix';
 export {default as DashBoardTen} from './DashBoardTen';
+export {default as DashBoardFive2} from './DashBoardFive2';
 
 //All dashBoard header
 export {default as DashBoardHeaderOne} from './DashBoardHeaderOne';

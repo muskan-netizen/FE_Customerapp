@@ -9,7 +9,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://delivery.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-// export const API_BASE_URL ='https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
@@ -380,7 +380,8 @@ export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
 export const FORGOT_API = getApiUrl('/auth/forgotPassword');
 export const APP_INITIAL_SETTINGS = getApiUrl('/header');
-export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
+// export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
+export const HOMEPAGE_DATA_URL = getApiUrl('/v2/homepage');
 export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
 export const GET_DATA_BY_CATEGORY_OPTAMIZE = getApiUrl('/v2/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
@@ -413,6 +414,7 @@ export const GET_CART_DETAIL = getApiUrl('/cart/list');
 export const REMOVE_CART_PRODUCTS = getApiUrl('/cart/remove');
 export const UPDATE_CART = getApiUrl('/cart/updateQuantity');
 export const SEARCH = getApiUrl('/search/all');
+// export const SEARCH = getApiUrl('/v2/search/all');
 export const CLEAR_CART = getApiUrl('/cart/empty');
 export const ADD_ADDRESS = getApiUrl('/user/address');
 export const SEARCH_BY_CATEGORY = getApiUrl('/search/category');
@@ -620,6 +622,22 @@ export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');
 export const GENERATE_INVOICE = getApiUrl('/generate-facturama-invoice');
 export const CHECK_PRODUCT_AVAILAABILITY = getApiUrl(
   '/checkProductAvailibility',
+);
+
+//Replace Order
+export const GET_PRODUCTS_FOR_REPLACE = getApiUrl(
+  '/replace-order/get-replace-order-data-in-model',
+);
+export const GET_DETAIL_OF_PRODUCT_FOR_REPLACE = getApiUrl(
+  '/replace-order/get-replace-products',
+);
+export const SUBMIT_PRODUCT_FOR_REPLACEMENT = getApiUrl(
+  '/replace-order/update-product-replace',
+);
+
+//Cancle order
+export const GET_CANCEL_REASONS = getApiUrl(
+  '/cancel-order/get-cancel-order-reason',
 );
 
 //P2P

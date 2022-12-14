@@ -32,6 +32,7 @@ import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 import {
   DashBoardFive,
+  DashBoardFive2,
   DashBoardFour,
   DashBoardHeaderFive,
   DashBoardHeaderFour,
@@ -97,7 +98,6 @@ export default function Home({route, navigation}) {
     openVendor: 0,
     closeVendor: 0,
     bestSeller: 0,
-
     tempCartData: null,
     isVoiceRecord: false,
     singleVendor: false,
@@ -150,7 +150,6 @@ export default function Home({route, navigation}) {
       return () => backHandler.remove();
     }, []),
   );
-  console.log(appMainData, 'appMainDataappMainData');
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
   }, [appMainData]);
@@ -439,7 +438,6 @@ export default function Home({route, navigation}) {
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          // await preLoadImages(res.data);
           updateState({searchDataLoader: false});
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
@@ -937,6 +935,7 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
+
   const renderHomeScreen = () => {
     // switch (appStyle?.homePageLayout) {
     switch (8) {
@@ -1107,7 +1106,31 @@ export default function Home({route, navigation}) {
                   curLatLong={curLatLong}
                 />
               ) : (
-                <DashBoardFive
+                // <DashBoardFive
+                //   handleRefresh={() => handleRefresh()}
+                //   bannerPress={(item) => bannerPress(item)}
+                //   isLoading={isLoading}
+                //   isRefreshing={isRefreshing}
+                //   appMainData={appMainData}
+                //   onPressCategory={(item) => {
+                //     onPressCategory(item);
+                //   }}
+                //   onPressVendor={(item) => {
+                //     onPressVendor(item);
+                //   }}
+                //   isDineInSelected={isDineInSelected}
+                //   selcetedToggle={selcetedToggle}
+                //   tempCartData={tempCartData}
+                //   toggleData={appData}
+                //   navigation={navigation}
+                //   onVendorFilterSeletion={onVendorFilterSeletion}
+                //   singleVendor={singleVendor}
+                //   onPressAddLaundryItem={onPressAddLaundryItem}
+                //   isLoadingAddons={isLoadingAddons}
+                //   selectedHomeCategory={selectedHomeCategory}
+                //   selectedFilterType={selectedFilterType}
+                // />
+                <DashBoardFive2
                   handleRefresh={() => handleRefresh()}
                   bannerPress={(item) => bannerPress(item)}
                   isLoading={isLoading}
@@ -1214,7 +1237,34 @@ export default function Home({route, navigation}) {
                 curLatLong={curLatLong}
               />
             ) : (
-              <DashBoardFive
+              // <DashBoardFive
+              //   handleRefresh={() => handleRefresh()}
+              //   bannerPress={(item) => bannerPress(item)}
+              //   isLoading={isLoading}
+              //   isRefreshing={isRefreshing}
+              //   appMainData={appMainData}
+              //   onPressCategory={(item) => {
+              //     onPressCategory(item);
+              //   }}
+              //   onPressVendor={(item) => {
+              //     onPressVendor(item);
+              //   }}
+              //   isDineInSelected={isDineInSelected}
+              //   selcetedToggle={selcetedToggle}
+              //   tempCartData={tempCartData}
+              //   toggleData={appData}
+              //   navigation={navigation}
+              //   onVendorFilterSeletion={onVendorFilterSeletion}
+              //   singleVendor={singleVendor}
+              //   onPressAddLaundryItem={onPressAddLaundryItem}
+              //   isLoadingAddons={isLoadingAddons}
+              //   selectedHomeCategory={selectedHomeCategory}
+              //   onClose={_closeModal}
+              //   onPressSubscribe={_onPressSubscribe}
+              //   isSubscription={isSubscription}
+              //   selectedFilterType={selectedFilterType}
+              // />
+              <DashBoardFive2
                 handleRefresh={() => handleRefresh()}
                 bannerPress={(item) => bannerPress(item)}
                 isLoading={isLoading}

@@ -82,7 +82,8 @@ export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';
 export {default as ReturnOrder} from './ReturnOrder/ReturnOrder';
 export {default as Vendors3} from './Vendors/Vendors3';
 export {default as ProductList3} from './ProductList/ProductList3';
-export {default as SearchProductVendorItem2} from './SearchProductVendorItem/SearchProductVendorItem2';
+// export {default as SearchProductVendorItem2} from './SearchProductVendorItem/SearchProductVendorItem2';
+export {default as SearchProductVendorItem2} from './SearchProductVendorItem/SearchProductVendorItem3(V2_API)';
 export {default as OrderDetail2} from './OrderDetail/OrderDetail2';
 export {default as Brands2} from './Brands/Brands2';
 export {default as BrandProducts2} from './BrandProducts/BrandProducts2';
@@ -153,6 +154,8 @@ export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendo
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
+export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
+
 //zonesso template
 export {default as OuterScreen5} from './OuterScreen/OuterScreen5';
 export {default as Login3} from './Login/Login3';

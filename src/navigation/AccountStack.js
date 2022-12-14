@@ -62,6 +62,7 @@ import {
   ChatRoom,
   ChatRoomForVendor,
   AccountTemplateFour,
+  ReplaceOrder,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -359,6 +360,11 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
         component={ChatRoomForVendor}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.REPLACE_ORDER}
+        component={ReplaceOrder}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

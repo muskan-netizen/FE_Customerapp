@@ -160,4 +160,5 @@ export default {
   P2P_PRODUCTS: 'p2pProducts',
   ATTRIBUTE_INFORMATION: 'attributeInformation',
   P2P_PRODUCT_DETAIL: 'p2pProductDetail',
+  REPLACE_ORDER: 'replaceOrder',
 };
