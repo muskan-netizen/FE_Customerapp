@@ -96,8 +96,6 @@ const AttributeInformation = ({route, navigation}) => {
   };
 
   const onSubmitAttributes = () => {
-    cameraHandle();
-    return;
     const checkValid = isValidData();
     if (!checkValid) {
       return;

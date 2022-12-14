@@ -95,11 +95,14 @@ const P2pProducts = ({route, navigation}) => {
       .catch((error) => showError(error?.message || error?.error));
   };
 
-  const getP2pProductsByCategoryId = (pageNo = 1) => {
+  const getP2pProductsByCategoryId = (pageNo = 1, filterAry = []) => {
+    console.log(filterAry, 'filterAry....filterAry');
     actions
       .getProductByP2pCategoryId(
         `/${paramData?.id}?page=${pageNo}&product_list=true&type=p2p`,
-        {},
+        {
+          attributes: filterAry,
+        },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -189,6 +192,24 @@ const P2pProducts = ({route, navigation}) => {
       actions.setRedirection('');
       actions.setAppSessionData('on_login');
     }
+  };
+
+  const onApplyAttributeFilter = () => {
+    setIsAttributeFilterModal(false);
+    setIsLoading(true);
+    let newAttributeInfo = [...attributeInfo];
+    let attributeFilterAry = [];
+    newAttributeInfo.map((itm) => {
+      attributeFilterAry.push({attribute_id: itm?.id, options: itm?.values});
+    });
+    getP2pProductsByCategoryId(1, attributeFilterAry);
+  };
+
+  const onClearAttributeFilter = () => {
+    onResetFilter();
+    setIsAttributeFilterModal(false);
+    setIsLoading(true);
+    getP2pProductsByCategoryId();
   };
 
   const onResetFilter = () => {
@@ -411,7 +432,6 @@ const P2pProducts = ({route, navigation}) => {
           flex: 0,
         }}
       />
-      {console.log(isLoading, 'sflkflksdjlfkjs')}
       <View
         style={{
           flex: 1,
@@ -503,6 +523,7 @@ const P2pProducts = ({route, navigation}) => {
             <View style={styles.btnStyle}>
               <ButtonWithLoader
                 btnText="Apply Filter"
+                onPress={onApplyAttributeFilter}
                 btnStyle={{
                   flex: 0.48,
                   backgroundColor: themeColors.primary_color,
@@ -513,6 +534,7 @@ const P2pProducts = ({route, navigation}) => {
                 }}
               />
               <ButtonWithLoader
+                onPress={onClearAttributeFilter}
                 btnText="Clear Filter"
                 btnStyle={{
                   flex: 0.48,

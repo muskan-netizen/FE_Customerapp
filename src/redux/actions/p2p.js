@@ -21,5 +21,5 @@ export function submitProductWithAttributes(data = {}, headers = {}) {
 }
 
 export function getProductByP2pCategoryId(url = '', data = {}, headers = {}) {
-  return apiGet(GET_PRODUCT_BY_P2P_CATEGORY + url, data, headers);
+  return apiPost(GET_PRODUCT_BY_P2P_CATEGORY + url, data, headers);
 }
