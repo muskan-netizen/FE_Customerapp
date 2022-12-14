@@ -52,6 +52,7 @@ const Header = ({
   isShareIcon,
   onShare,
   shareIconStyle = {},
+  centerTitleViewStyle = {},
 }) => {
   const {appStyle, themeColors, themeToggle, themeColor, redirectedFrom} =
     useSelector((state) => state?.initBoot);
@@ -107,7 +108,12 @@ const Header = ({
             ))}
         </View>
         <View
-          style={{flex: 0.8, alignItems: 'center', justifyContent: 'center'}}>
+          style={{
+            flex: 0.8,
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...centerTitleViewStyle,
+          }}>
           <View
             style={{
               flexDirection: 'row',

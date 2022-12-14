@@ -473,7 +473,7 @@ const shortCodes = {
   bliss: '6eb260',
   rentzy: 'd4fc07',
   // zonesso: '2d98b5',
-  zonesso: '4f459b',
+  zonesso: '245bae',
 };
 
 const appIds = {

@@ -51,7 +51,6 @@ export default function DashBoardHeaderSeven({
   showAboveView = true,
 }) {
   const navigation = useNavigation();
-  console.log(location, 'locationlocation++locationlocation');
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -70,12 +69,21 @@ export default function DashBoardHeaderSeven({
       }}>
       <Header
         leftIcon={imagePath.location1}
-        rightViewStyle={{flex: 1}}
         headerStyle={{}}
+        rightViewStyle={{
+          flex: 1,
+        }}
+        centerTitleViewStyle={{
+          flex: 0,
+        }}
         // centerTitle={'Abu Dhabi'}
         customLeft={() => {
           return (
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
               {!!location?.address && (
                 <TouchableOpacity
                   style={{flexDirection: 'row'}}
@@ -87,11 +95,13 @@ export default function DashBoardHeaderSeven({
                   }>
                   <Image source={imagePath.location1} />
                   <Text
+                    numberOfLines={1}
                     style={{
                       marginLeft: 8,
                       fontFamily: fontFamily.regular,
                     }}>
-                    {location?.address.substring(0, 10)} ...
+                    {location?.address.substring(0, 30)}{' '}
+                    {location?.address.length >= 30 ? '...' : ''}
                   </Text>
                 </TouchableOpacity>
               )}

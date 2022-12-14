@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import React, {useCallback, useState, useEffect, useRef} from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -39,6 +40,8 @@ import strings from '../../../constants/lang';
 import {v4 as uuidv4} from 'uuid';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import PanoramaView from '@lightbase/react-native-panorama-view';
+import {androidCameraPermission} from '../../../utils/permissions';
+import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
@@ -54,8 +57,8 @@ const AttributeInformation = ({route, navigation}) => {
   const [isLoadingAttributes, setLoadingAttributes] = useState(true);
   const [isLoadingSubmitAttributes, setLoadingSubmitAttributes] =
     useState(false);
-
   const [productImgs, setProductImgs] = useState([]);
+  const [isImagePickerModal, setImagePickerModal] = useState(false);
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -93,6 +96,8 @@ const AttributeInformation = ({route, navigation}) => {
   };
 
   const onSubmitAttributes = () => {
+    cameraHandle();
+    return;
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -201,38 +206,39 @@ const AttributeInformation = ({route, navigation}) => {
     setAttributeInfo(attributeInfoData);
   };
 
-  //this function use for open actionsheet
-  let actionSheet = useRef();
-  const showActionSheet = () => {
-    actionSheet.current.show();
-  };
-
-  const cameraHandle = (index) => {
-    if (index == 0 || index == 1) {
-      cameraHandler(index, {
-        width: 300,
-        height: 400,
-        cropping: false,
-        cropperCircleOverlay: false,
-        compressImageQuality: 0.5,
-        mediaType: 'photo',
-      })
-        .then((res) => {
-          console.log(res, 'res....res');
-          if (res && (res?.sourceURL || res?.path)) {
-            let file = {
-              id: uuidv4(),
-              name:
-                Platform.OS == 'ios'
-                  ? res?.filename
-                  : res?.path.substring(res?.path.lastIndexOf('/') + 1),
-              type: res?.mime,
-              uri: res?.sourceURL || res?.path,
-            };
-            setProductImgs([...productImgs, file]);
-          }
+  const cameraHandle = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    console.log(permissionStatus, 'permissionStatus...');
+    if (!!permissionStatus) {
+      if (index == 0 || index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: false,
+          cropperCircleOverlay: false,
+          compressImageQuality: 0.5,
+          mediaType: 'photo',
         })
-        .catch((err) => {});
+          .then((res) => {
+            console.log(res, 'res>>>>>>res');
+            if (res && (res?.sourceURL || res?.path)) {
+              let file = {
+                id: uuidv4(),
+                name:
+                  Platform.OS == 'ios'
+                    ? res?.filename
+                    : res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                type: res?.mime,
+                uri: res?.sourceURL || res?.path,
+              };
+              setImagePickerModal(false);
+              setProductImgs([...productImgs, file]);
+            }
+          })
+          .catch((err) => {
+            setImagePickerModal(false);
+          });
+      }
     }
   };
 
@@ -485,7 +491,9 @@ const AttributeInformation = ({route, navigation}) => {
                     ))}
                   </View>
                 )}
-                <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
+                <TouchableOpacity
+                  onPress={() => setImagePickerModal(true)}
+                  activeOpacity={0.7}>
                   <Image
                     source={imagePath.icPlaceholder}
                     style={{
@@ -526,13 +534,12 @@ const AttributeInformation = ({route, navigation}) => {
           </KeyboardAwareScrollView>
         )}
       </View>
-      <ActionSheet
-        ref={actionSheet}
-        // title={'Choose one option'}
-        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={2}
-        onPress={(index) => cameraHandle(index)}
+      <GallaryCameraImgPicker
+        isVisible={isImagePickerModal}
+        onCamera={() => cameraHandle(0)}
+        onGallary={() => cameraHandle(1)}
+        onCancel={() => setImagePickerModal(false)}
+        onClose={() => setImagePickerModal(false)}
       />
     </WrapperContainer>
   );
