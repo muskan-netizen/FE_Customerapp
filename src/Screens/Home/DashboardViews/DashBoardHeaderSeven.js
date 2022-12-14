@@ -99,6 +99,7 @@ export default function DashBoardHeaderSeven({
                     style={{
                       marginLeft: 8,
                       fontFamily: fontFamily.regular,
+                      color: colors.black,
                     }}>
                     {location?.address.substring(0, 30)}{' '}
                     {location?.address.length >= 30 ? '...' : ''}

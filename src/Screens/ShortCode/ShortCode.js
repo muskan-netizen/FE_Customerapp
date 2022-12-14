@@ -3193,6 +3193,8 @@ export default function ShortCode({route, navigation}) {
         return animatedSplash();
       case appIds.flank:
         return animatedSplash();
+      case appIds.zonesso:
+        return animatedSplash();
       default:
         return imageSplash();
     }

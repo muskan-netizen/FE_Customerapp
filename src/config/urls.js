@@ -11,7 +11,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
 // export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
-export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -367,8 +367,9 @@ export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
 //Rentzy
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
 //zonesso
-// export const API_BASE_URL = 'https://zonesso.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
+
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -380,8 +381,8 @@ export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
 export const FORGOT_API = getApiUrl('/auth/forgotPassword');
 export const APP_INITIAL_SETTINGS = getApiUrl('/header');
-// export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
-export const HOMEPAGE_DATA_URL = getApiUrl('/v2/homepage');
+export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
+// export const HOMEPAGE_DATA_URL = getApiUrl('/v2/homepage');
 export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
 export const GET_DATA_BY_CATEGORY_OPTAMIZE = getApiUrl('/v2/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
@@ -649,4 +650,4 @@ export const SUBMIT_PRODUCT_WITH_ATTRIBUTE = getApiUrl(
 );
 export const GET_PRODUCT_BY_P2P_CATEGORY = getApiUrl('/v2/attribute/category');
 
-export const GET_P2P_CATEGORIES = getApiUrl('/homepage');
+export const GET_P2P_CATEGORIES = getApiUrl('/v2/getP2pCategories');

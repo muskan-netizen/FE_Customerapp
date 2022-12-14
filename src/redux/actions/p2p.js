@@ -10,7 +10,7 @@ import store from '../store';
 const {dispatch} = store;
 
 export function getP2pCategories(data = {}, headers = {}) {
-  return apiPost(GET_P2P_CATEGORIES, data, headers);
+  return apiGet(GET_P2P_CATEGORIES, data, headers);
 }
 
 export function getAvailableAttributes(url = '', data = {}, headers = {}) {

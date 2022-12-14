@@ -202,13 +202,16 @@ const P2pProducts = ({route, navigation}) => {
     let newAttributeInfo = [...attributeInfo];
     let attributeFilterAry = [];
     newAttributeInfo.map((itm) => {
-      attributeFilterAry.push({attribute_id: itm?.id, options: itm?.values});
+      if (!isEmpty(itm?.values)) {
+        attributeFilterAry.push({attribute_id: itm?.id, options: itm?.values});
+      }
     });
     flatlistRef.current.scrollToOffset({animated: true, offset: 0});
     getP2pProductsByCategoryId(1, attributeFilterAry);
   };
 
   const onClearAttributeFilter = () => {
+    flatlistRef.current.scrollToOffset({animated: true, offset: 0});
     onResetFilter();
     setIsAttributeFilterModal(false);
     setIsLoading(true);
@@ -225,7 +228,6 @@ const P2pProducts = ({route, navigation}) => {
 
   const renderP2pProducts = useCallback(
     ({item, index}) => {
-      console.log(item, '.....item');
       const getImage = (quality) =>
         !isEmpty(item?.media)
           ? getImageUrl(
@@ -240,7 +242,9 @@ const P2pProducts = ({route, navigation}) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() =>
-              navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL)
+              navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+                product_id: item?.id,
+              })
             }>
             <ImageBackground
               style={styles.imgBack}
@@ -285,7 +289,9 @@ const P2pProducts = ({route, navigation}) => {
             ) : null}
           </View>
           <GradientButton
-            btnText={`AED ${Number(item?.variant[0]?.price).toFixed(2)}`}
+            btnText={`${currencies?.primary_currency?.symbol} ${Number(
+              item?.variant[0]?.price,
+            ).toFixed(2)}`}
             btnStyle={styles.btn}
             containerStyle={{alignItems: 'flex-start'}}
           />
@@ -409,7 +415,6 @@ const P2pProducts = ({route, navigation}) => {
   );
 
   const onEndReached = () => {
-    console.log(isLoadMore, 'isLoadMore....isLoadMore');
     if (isLoadMore) {
       setPageNo(pageNo + 1);
       getP2pProductsByCategoryId(pageNo + 1);

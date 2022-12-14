@@ -99,7 +99,7 @@ const PostCategory = ({navigation}) => {
       )
       .then((res) => {
         console.log(res, '<===response getP2pCategories');
-        setp2pCategories(res?.data?.categories || []);
+        setp2pCategories(res?.data || []);
         setLoadingP2pCategories(false);
         setP2pCategoriesRefreshing(false);
       })
@@ -379,8 +379,9 @@ const PostCategory = ({navigation}) => {
               style={{
                 ...styles.textStyle,
                 color: !!themeColor ? colors.white : colors.black,
+                lineHeight: 17,
               }}>
-              {item?.name || ''}
+              {item?.translation_one?.name || ''}
             </Text>
           </TouchableOpacity>
         </View>

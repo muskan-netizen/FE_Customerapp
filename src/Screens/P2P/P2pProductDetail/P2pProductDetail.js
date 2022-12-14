@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 //constants
 import imagePath from '../../../constants/imagePath';
@@ -13,6 +13,9 @@ import styleFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import Carousel from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
+import actions from '../../../redux/actions';
+import {showError} from '../../../utils/helperFunctions';
+import {isEmpty} from 'lodash';
 
 const DATA = [
   {
@@ -38,14 +41,52 @@ const DATA = [
 ];
 
 const P2pProductDetail = ({navigation, route}) => {
-  const [indexSelected, setIndexSelected] = useState(0);
-  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
+  const paramData = route?.params;
+
+  const {appData, currencies, languages, themeColor, themeToggle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const styles = styleFun({themeColor, themeToggle});
+
+  const [indexSelected, setIndexSelected] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [productInfo, setProductInfo] = useState({});
+
+  useEffect(() => {
+    getP2pProductDetail();
+  }, []);
+
+  const getP2pProductDetail = () => {
+    actions
+      .getProductDetailByProductId(
+        `/${paramData?.product_id}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, '<===response getProductDetailByProductId');
+        setIsLoading(false);
+        setProductInfo(res?.data?.products);
+      })
+      .catch(errorMethod);
+  };
+
   const onSelect = (indexSelected) => {
     setIndexSelected(indexSelected);
   };
-  const styles = styleFun({themeColor, themeToggle});
+
+  const errorMethod = (error) => {
+    console.log(error, '<===error getProductDetailByProductId');
+    setIsLoading(false);
+    showError(error?.message || error?.error);
+  };
+
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.item}>
@@ -53,6 +94,10 @@ const P2pProductDetail = ({navigation, route}) => {
       </View>
     );
   }, []);
+
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <View
@@ -103,8 +148,16 @@ const P2pProductDetail = ({navigation, route}) => {
             btnStyle={styles.btn}
             containerStyle={{alignItems: 'flex-start'}}
           />
-          <Text style={styles.txt1}>Bentley</Text>
-          <Text style={styles.txt2}>Bentley Continental GT 2021</Text>
+          <Text style={styles.txt1}>
+            {!isEmpty(productInfo?.translation)
+              ? productInfo?.translation[0]?.title
+              : ''}
+          </Text>
+          <Text style={styles.txt2}>
+            {!isEmpty(productInfo?.translation)
+              ? productInfo?.translation[0]?.body_html
+              : ''}
+          </Text>
           <Text style={styles.txt2}>
             Reliable Is the 2014 Land Rover Range Rover Sport? The 2014 Land
             Rover.
