@@ -125,6 +125,7 @@ export default function DashBoardHeaderSeven({
           justifyContent: 'space-between',
           paddingVertical: moderateScaleVertical(10),
           paddingHorizontal: moderateScale(10),
+          marginBottom: moderateScaleVertical(15),
         }}>
         <Text
           style={{

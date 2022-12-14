@@ -98,6 +98,7 @@ const PostCategory = ({navigation}) => {
         },
       )
       .then((res) => {
+        console.log(res, '<===response getP2pCategories');
         setp2pCategories(res?.data?.categories || []);
         setLoadingP2pCategories(false);
         setP2pCategoriesRefreshing(false);

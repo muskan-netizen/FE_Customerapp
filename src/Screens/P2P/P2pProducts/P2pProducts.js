@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -44,6 +44,7 @@ import {checkValueExistInAry} from '../../../utils/commonFunction';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const P2pProducts = ({route, navigation}) => {
+  const flatlistRef = useRef(null);
   const paramData = route?.params?.data;
   const {
     appData,
@@ -69,7 +70,7 @@ const P2pProducts = ({route, navigation}) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [isAttributeFilterModal, setIsAttributeFilterModal] = useState(false);
-  const [isLoadMore, setLoadMore] = useState(true);
+  const [isLoadMore, setLoadMore] = useState(false);
   const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
@@ -96,7 +97,6 @@ const P2pProducts = ({route, navigation}) => {
   };
 
   const getP2pProductsByCategoryId = (pageNo = 1, filterAry = []) => {
-    console.log(filterAry, 'filterAry....filterAry');
     actions
       .getProductByP2pCategoryId(
         `/${paramData?.id}?page=${pageNo}&product_list=true&type=p2p`,
@@ -113,8 +113,10 @@ const P2pProducts = ({route, navigation}) => {
       .then((res) => {
         console.log(res, '<===response getP2pProductsByCategoryId');
         if (
-          res?.data?.listData?.current_page == res?.data?.listData?.last_page
+          res?.data?.listData?.current_page < res?.data?.listData?.last_page
         ) {
+          setLoadMore(true);
+        } else {
           setLoadMore(false);
         }
         setP2pProducts(
@@ -202,6 +204,7 @@ const P2pProducts = ({route, navigation}) => {
     newAttributeInfo.map((itm) => {
       attributeFilterAry.push({attribute_id: itm?.id, options: itm?.values});
     });
+    flatlistRef.current.scrollToOffset({animated: true, offset: 0});
     getP2pProductsByCategoryId(1, attributeFilterAry);
   };
 
@@ -222,6 +225,7 @@ const P2pProducts = ({route, navigation}) => {
 
   const renderP2pProducts = useCallback(
     ({item, index}) => {
+      console.log(item, '.....item');
       const getImage = (quality) =>
         !isEmpty(item?.media)
           ? getImageUrl(
@@ -235,7 +239,9 @@ const P2pProducts = ({route, navigation}) => {
         <View>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => navigation.navigate(navigationStrings.LISTDETAIL)}>
+            onPress={() =>
+              navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL)
+            }>
             <ImageBackground
               style={styles.imgBack}
               source={{uri: getImage('200/200')}}
@@ -286,7 +292,7 @@ const P2pProducts = ({route, navigation}) => {
         </View>
       );
     },
-    [p2pProducts],
+    [p2pProducts, isLoadMore],
   );
 
   const renderRadioBtns = useCallback(
@@ -403,6 +409,7 @@ const P2pProducts = ({route, navigation}) => {
   );
 
   const onEndReached = () => {
+    console.log(isLoadMore, 'isLoadMore....isLoadMore');
     if (isLoadMore) {
       setPageNo(pageNo + 1);
       getP2pProductsByCategoryId(pageNo + 1);
@@ -438,7 +445,11 @@ const P2pProducts = ({route, navigation}) => {
           paddingHorizontal: moderateScale(15),
         }}>
         <FlatList
+          ref={flatlistRef}
           data={p2pProducts}
+          extraData={p2pProducts}
+          windowSize={4}
+          maxToRenderPerBatch={4}
           renderItem={renderP2pProducts}
           keyExtractor={(itm, indx) => String(indx)}
           showsVerticalScrollIndicator={false}
@@ -465,19 +476,22 @@ const P2pProducts = ({route, navigation}) => {
               </View>
             )
           }
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.5}
           ListFooterComponent={() => (
             <View>
               {isLoadMore ? (
-                <View style={{height: moderateScale(60)}}>
-                  {!isLoading && <UIActivityIndicator />}
-                </View>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                  }}>
+                  Loading ...{' '}
+                </Text>
               ) : (
                 <></>
               )}
             </View>
           )}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0.2}
         />
       </View>
 

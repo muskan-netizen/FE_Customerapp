@@ -1,5 +1,6 @@
 import {
   GET_AVAILABLE_ATTRIBUTES,
+  GET_P2P_CATEGORIES,
   GET_PRODUCT_BY_P2P_CATEGORY,
   HOMEPAGE_DATA_URL,
   SUBMIT_PRODUCT_WITH_ATTRIBUTE,
@@ -9,7 +10,7 @@ import store from '../store';
 const {dispatch} = store;
 
 export function getP2pCategories(data = {}, headers = {}) {
-  return apiPost(HOMEPAGE_DATA_URL, data, headers);
+  return apiPost(GET_P2P_CATEGORIES, data, headers);
 }
 
 export function getAvailableAttributes(url = '', data = {}, headers = {}) {

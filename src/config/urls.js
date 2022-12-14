@@ -413,8 +413,8 @@ export const ADD_PRODUCT_TO_CART = getApiUrl('/cart/add');
 export const GET_CART_DETAIL = getApiUrl('/cart/list');
 export const REMOVE_CART_PRODUCTS = getApiUrl('/cart/remove');
 export const UPDATE_CART = getApiUrl('/cart/updateQuantity');
-export const SEARCH = getApiUrl('/search/all');
-// export const SEARCH = getApiUrl('/v2/search/all');
+// export const SEARCH = getApiUrl('/search/all');
+export const SEARCH = getApiUrl('/v2/search/all');
 export const CLEAR_CART = getApiUrl('/cart/empty');
 export const ADD_ADDRESS = getApiUrl('/user/address');
 export const SEARCH_BY_CATEGORY = getApiUrl('/search/category');
@@ -648,3 +648,5 @@ export const SUBMIT_PRODUCT_WITH_ATTRIBUTE = getApiUrl(
   '/mystore/product/addProductWithAttribute',
 );
 export const GET_PRODUCT_BY_P2P_CATEGORY = getApiUrl('/v2/attribute/category');
+
+export const GET_P2P_CATEGORIES = getApiUrl('/homepage');
