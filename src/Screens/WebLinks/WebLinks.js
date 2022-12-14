@@ -165,7 +165,6 @@ export default function WebLinks({navigation, route}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(location, 'locationlocation');
 
   const {
     cca2,

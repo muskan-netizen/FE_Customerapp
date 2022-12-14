@@ -56,6 +56,7 @@ const PostCategory = ({navigation}) => {
     themeToggle,
   } = useSelector((state) => state?.initBoot);
   const {userData} = useSelector((state) => state?.auth);
+  const {location} = useSelector((state) => state?.home);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -86,6 +87,9 @@ const PostCategory = ({navigation}) => {
           open_vendor: 0,
           close_vendor: 0,
           best_vendor: 0,
+          address: location?.address || '',
+          latitude: location?.latitude || '',
+          longitude: location?.longitude || '',
         },
         {
           code: appData?.profile?.code,
@@ -591,6 +595,27 @@ const PostCategory = ({navigation}) => {
                   tintColor={themeColors.primary_color}
                 />
               }
+              ListEmptyComponent={() => (
+                <View>
+                  <Image
+                    source={imagePath.noDataFound}
+                    style={{
+                      marginTop: height / 6,
+                      height: moderateScaleVertical(200),
+                      width: moderateScale(200),
+                      alignSelf: 'center',
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.bold,
+                      fontSize: textScale(17),
+                      textAlign: 'center',
+                    }}>
+                    {strings.NODATAFOUND}
+                  </Text>
+                </View>
+              )}
             />
           )}
         </View>

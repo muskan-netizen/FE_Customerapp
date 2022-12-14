@@ -41,8 +41,10 @@ import {getImageUrl, showError} from '../../../utils/helperFunctions';
 
 import {MultiSelect} from 'react-native-element-dropdown';
 import {checkValueExistInAry} from '../../../utils/commonFunction';
+import {UIActivityIndicator} from 'react-native-indicators';
 
-const P2pProducts = ({route, navigation, category_id = 38}) => {
+const P2pProducts = ({route, navigation}) => {
+  const paramData = route?.params?.data;
   const {
     appData,
     currencies,
@@ -67,6 +69,8 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [isAttributeFilterModal, setIsAttributeFilterModal] = useState(false);
+  const [isLoadMore, setLoadMore] = useState(true);
+  const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
     getP2pProductsByCategoryId();
@@ -76,7 +80,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
   const getListOfAvailableAttributes = () => {
     actions
       .getAvailableAttributes(
-        `?category_id=${category_id}`,
+        `?category_id=${paramData?.id}`,
         {},
         {
           code: appData?.profile?.code,
@@ -94,7 +98,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
   const getP2pProductsByCategoryId = (pageNo = 1) => {
     actions
       .getProductByP2pCategoryId(
-        `/${category_id}?page=${pageNo}&product_list=true&type=p2p`,
+        `/${paramData?.id}?page=${pageNo}&product_list=true&type=p2p`,
         {},
         {
           code: appData?.profile?.code,
@@ -105,6 +109,11 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
       )
       .then((res) => {
         console.log(res, '<===response getP2pProductsByCategoryId');
+        if (
+          res?.data?.listData?.current_page == res?.data?.listData?.last_page
+        ) {
+          setLoadMore(false);
+        }
         setP2pProducts(
           pageNo == 1
             ? res?.data?.listData?.data
@@ -193,11 +202,14 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
   const renderP2pProducts = useCallback(
     ({item, index}) => {
       const getImage = (quality) =>
-        getImageUrl(
-          item?.media[0]?.image?.path.image_fit,
-          item?.media[0]?.image?.path.image_path,
-          quality,
-        );
+        !isEmpty(item?.media)
+          ? getImageUrl(
+              item?.media[0]?.image?.path.image_fit,
+              item?.media[0]?.image?.path.image_path,
+              quality,
+            )
+          : item?.product_image;
+
       return (
         <View>
           <TouchableOpacity
@@ -369,6 +381,13 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
     [attributeInfo],
   );
 
+  const onEndReached = () => {
+    if (isLoadMore) {
+      setPageNo(pageNo + 1);
+      getP2pProductsByCategoryId(pageNo + 1);
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -392,7 +411,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
           flex: 0,
         }}
       />
-
+      {console.log(isLoading, 'sflkflksdjlfkjs')}
       <View
         style={{
           flex: 1,
@@ -401,6 +420,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
         <FlatList
           data={p2pProducts}
           renderItem={renderP2pProducts}
+          keyExtractor={(itm, indx) => String(indx)}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() =>
             !isLoading && (
@@ -425,6 +445,19 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
               </View>
             )
           }
+          ListFooterComponent={() => (
+            <View>
+              {isLoadMore ? (
+                <View style={{height: moderateScale(60)}}>
+                  {!isLoading && <UIActivityIndicator />}
+                </View>
+              ) : (
+                <></>
+              )}
+            </View>
+          )}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.2}
         />
       </View>
 
