@@ -362,13 +362,7 @@ export default function OuterScreen5({navigation}) {
 
       {shortCodeStatus ? (
         <Header
-          leftIcon={
-            appStyle?.homePageLayout === 2
-              ? imagePath.backArrow
-              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
-          }
+          leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back2}
           onPressLeft={() => actions.setAppSessionData('guest_login')}
           isRightText
           rightTxt={

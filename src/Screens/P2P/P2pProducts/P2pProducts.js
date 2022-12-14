@@ -376,7 +376,7 @@ const P2pProducts = ({route, navigation, category_id = 38}) => {
       }
       isLoading={isLoading}>
       <Header
-        leftIcon={imagePath.back2}
+        leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back2}
         centerTitle={''}
         headerStyle={{
           marginVertical: moderateScaleVertical(8),
