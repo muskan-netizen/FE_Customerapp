@@ -3372,14 +3372,18 @@ export default function Products({route, navigation}) {
       return;
     }
   };
+  //check for View More 
+  // section?.data.length !== section?.data_count &&
+  // section?.data.length !== 0 &&
+  // searchInput &&
+  // productDataLengthAfterViewMoreSearch?.length != 0 ?
 
   const renderSectionFooter = (props) => {
     const {section} = props;
 
     return section?.data.length !== section?.data_count &&
-      section?.data.length !== 0 &&
-      searchInput &&
-      productDataLengthAfterViewMoreSearch?.length != 0 ? (
+      section?.data.length !== 0 || (searchInput &&
+        productDataLengthAfterViewMoreSearch?.length != 0)  ? (
       <View>
         <TouchableOpacity
           onPress={() => appendData(section)}
