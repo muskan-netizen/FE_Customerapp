@@ -79,6 +79,7 @@ import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import GradientButton from '../../../Components/GradientButton';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
+import Header from '../../../Components/Header';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
@@ -1219,10 +1220,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
             marginBottom: moderateScaleVertical(16),
             marginHorizontal: moderateScale(16),
           }}>
+            {console.log( paramData?.fromCab,   paramData?.pickup_taxi,"paramData?.pickup_taxi    ")}
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                ? () => navigation.navigate(navigationStrings.HOME)
                 : paramData?.pickup_taxi
                 ? () => navigation.navigate(navigationStrings.HOME)
                 : () => navigation.goBack()
@@ -1235,6 +1237,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               source={imagePath.backArrowCourier}
             />
           </TouchableOpacity>
+        
           <Text
             style={{
               fontSize: moderateScale(16),

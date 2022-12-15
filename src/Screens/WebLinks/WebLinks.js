@@ -1029,7 +1029,7 @@ export default function WebLinks({navigation, route}) {
           }
         />
         <View style={{...commonStyles.headerTopLine}} />
-        {console.log(I18nManager.isRTL, 'I18nManager.isRTL')}
+      
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}

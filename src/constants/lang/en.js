@@ -1009,5 +1009,6 @@ Amount`,
   SLOTS_NOT_FOUND_FOR_DATE: ' Slots not found for selected date',
   ADDITIONAL_CHARGES: 'Additional Charges',
   TOLL_FEE:"Toll Fee",
-  SERVICE_CHARGES:"Service Charges"
+  SERVICE_CHARGES:"Service Charges",
+  STORES:"Stores"
 };
