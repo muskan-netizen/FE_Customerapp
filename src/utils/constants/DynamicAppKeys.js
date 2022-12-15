@@ -100,7 +100,7 @@ const shortCodes = {
   // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
-  ace: '245bae',
+  ace: '2d98b5',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',
@@ -190,7 +190,7 @@ const shortCodes = {
   mml: '348045',
   bimol: '94fc5b',
   vendorspot: 'dfa952',
-  sxm2go: '245bae',
+  sxm2go: 'b6e6e8',
   pinkydeli: '66c095',
   gasgiant: 'e6c73a',
   releezer: 'c2a130',
@@ -1188,8 +1188,8 @@ const appIds = {
     android: 'com.kurbsidekings',
   }),
   movingwheelsdelivery: Platform.select({
-    ios: 'com.movingwheelsdelivery',
-    android: 'com.movingwheelsdelivery',
+    ios: 'com.movingwheelsdelivery.orderapp',
+    android: 'com.movingwheelsdelivery.orderapp',
   }),
   safewalks: Platform.select({
     ios: 'com.safewalks',
@@ -1634,7 +1634,7 @@ const appIds = {
   }),
   handyPickup: Platform.select({
     ios: 'com.handyPickup',
-    android: 'com.handyPickup',
+    android: 'com.handyPickup.orderapp',
   }),
   TJJHub: Platform.select({
     ios: 'com.TJJHub',
@@ -2257,7 +2257,7 @@ const appIds = {
   }),
   holla: Platform.select({
     ios: 'com.holla.royoorders',
-    android: 'com.holla.royoorders',
+    android: 'com.holla.orders',
   }),
   stabex: Platform.select({
     ios: 'com.stabex.royoorders',

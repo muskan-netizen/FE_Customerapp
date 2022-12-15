@@ -22,8 +22,6 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 //export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://handy-pickup.com/api/v1';
@@ -99,9 +97,9 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
-// export const API_BASE_URL = 'https://masaapp.ae/api/v1';
+// // export const API_BASE_URL = 'https://masaapp.ae/api/v1';
 // export const API_BASE_URL = 'https://movingwheelsdeliveryservices.com/api/v1';
-//export const API_BASE_URL = 'https://ace.royoorders.com/api/v1'
+// export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
 //live
 
 // dishefs
@@ -244,6 +242,8 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = "https://hitchdelivery.ie/api/v1"
 
 // export const API_BASE_URL = 'https://scootz.com/api/v1'
+
+// export const API_BASE_URL = 'https://10dollahollla.com/api/v1';
 
 //amazingTaxi
 // export const API_BASE_URL = 'https://rhondaisamazingtaxi.com/api/v1';
