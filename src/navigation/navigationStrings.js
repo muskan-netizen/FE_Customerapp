@@ -153,4 +153,6 @@ export default {
   CHAT_SCREEN_FOR_VENDOR: 'chatScreenForVendor',
   CHAT_ROOM_FOR_VENDOR: 'chatRoomForVendor',
   CONEKTA: 'conekta',
+  VERIFY_ACCOUNT_TAXI: 'VerifyAccountTaxi',
+  VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
 };

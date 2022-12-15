@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1033872255355-tdig95crgq18899h9lotsvdhcve8i025.apps.googleusercontent.com</string>
+	<string>719999216993-ajekfkqhdmbqtp202qmolg0giihoskfv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1033872255355-tdig95crgq18899h9lotsvdhcve8i025</string>
+	<string>com.googleusercontent.apps.719999216993-ajekfkqhdmbqtp202qmolg0giihoskfv</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1033872255355-j706q7gcf28cq4v9f3am8d3b0d288mjd.apps.googleusercontent.com</string>
+	<string>719999216993-0memh6kq9dhdmhei7vv106enhdfvkc9d.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB-lc4spuY1fkgfjAoMPa_4WLQB00NdNho</string>
+	<string>AIzaSyBD_MNFX70-XQ3NzhxXZ77wA5GR53Esg_o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1033872255355</string>
+	<string>719999216993</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.servern.order</string>
+	<string>com.servern.orderapp</string>
 	<key>PROJECT_ID</key>
-	<string>servern-6ab6b</string>
+	<string>servernorder</string>
 	<key>STORAGE_BUCKET</key>
-	<string>servern-6ab6b.appspot.com</string>
+	<string>servernorder.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1033872255355:ios:96135bcb9964cb2dca75de</string>
+	<string>1:719999216993:ios:99837b8b1bfb592c226920</string>
 </dict>
 </plist>

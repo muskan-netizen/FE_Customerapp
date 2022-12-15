@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "343264488514",
+    "project_id": "todays-deliverys",
+    "storage_bucket": "todays-deliverys.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343264488514:android:db7c3000d2a8b4b33dd1db",
+        "android_client_info": {
+          "package_name": "com.todaysDeliverys.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343264488514-dgtg6dfs8vvi9htqerv6psaitjub3fv6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.todaysDeliverys.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "343264488514-esh2v3sqs7jffpq6ho961csjr97os6dr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.todaysDeliverys.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "343264488514-g0m96deolrgg4vtbgg7fm7f9de8lv14u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.todaysDeliverys.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "343264488514-gav330qgh6qlm70al8lcp2ag8cr75hh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlsvL33k8w4kXxOTKYrwcWUzSuECLF-30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343264488514-gav330qgh6qlm70al8lcp2ag8cr75hh1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343264488514-ibc1kcj650lq3k9giqch1d3u7s1p791a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.todaysDeliverys.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

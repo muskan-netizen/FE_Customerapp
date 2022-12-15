@@ -2175,6 +2175,108 @@ end
 #PointoneExpediteDelivery
 target 'PointoneExpediteDelivery' do
 end
+
+#TDC
+target 'TDC' do
+end
+
+#GiftyLeaf
+target 'GiftyLeaf' do
+end
+
+#FlyCommerce
+target 'FlyCommerce' do
+end
+
+#Saamanshop
+target 'Saamanshop' do
+end
+
+#PIK
+target 'PIK' do
+end
+
+#MOTINA
+target 'MOTINA' do
+end
+
+#Hungry
+target 'Hungry' do
+end
+
+#Greenhippo
+target 'Greenhippo' do
+end
+
+#Mymeddy
+target 'Mymeddy' do
+end
+
+#URyd
+target 'URyd' do
+end
+
+#HappySingh
+target 'HappySingh' do
+end
+
+#Vital
+target 'Vital' do
+end
+
+
+#parcelworks
+target 'ParcelWorks' do
+end
+
+#UsVetsDeliver
+target 'UsVetsDeliver' do
+end
+
+#Konectame
+target 'Konectame' do
+end
+
+#Fly Builder
+target 'FlyBuilder' do
+end
+
+#TodaysDeliverys
+target 'TodaysDeliverys' do
+end
+
+#Rumbella
+target 'Rumbella' do
+end
+
+#Locate
+target 'Locate' do
+end
+
+#OtgWeeds
+target 'OtgWeeds' do
+end
+
+#LvlUp
+target 'LvlUp' do
+end
+
+#LvlUp
+target 'LincShare' do
+end
+
+#Glavour
+target 'Glavour' do
+end
+
+#Shipmoe
+target 'Shipmoe' do
+end
+#BigBayong
+target 'BigBayong' do
+end
+
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

@@ -11,7 +11,7 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import ButtonComponent from './ButtonComponent';
 
 const OrderCardComponent = ({
@@ -25,6 +25,8 @@ const OrderCardComponent = ({
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
 
@@ -96,15 +98,14 @@ const OrderCardComponent = ({
           }}>
           <Text style={styles.lableOrders}>
             {`${strings.TOTAL_AMOUNT} : `}
-            <Text style={styles.valueOrders}>{`${
-              currencies?.primary_currency?.symbol
-            }${
-              // Number(i?.pvariant?.multiplier) *
-              currencyNumberFormatter(
+            <Text style={styles.valueOrders}>
+              {tokenConverterPlusCurrencyNumberFormater(
                 Number(data?.payable_amount),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )
-            }`}</Text>
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </Text>
         </View>
         <View

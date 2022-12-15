@@ -9,6 +9,7 @@ import {
   ChatRoomForVendor,
   ChatScreen,
   ChatScreenForVendor,
+  VerifyAccount,
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -18,7 +19,7 @@ import CourierStack from './CourierStack';
 import {navigationRef} from './NavigationService';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
-import TabRoutesVendor from './TabRoutesVendor';
+import TabRoutesVendor from './TabRoutesVendor';    
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';

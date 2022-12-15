@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "77497398992",
+    "project_id": "bigbayong-d44d1",
+    "storage_bucket": "bigbayong-d44d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77497398992:android:95fae015a67d36236d90d5",
+        "android_client_info": {
+          "package_name": "com.bigBayong.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77497398992-ass59ocfsg0gh7lp1ftjgtt6n7vmnop2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bigBayong.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "77497398992-e7jptvl6ojghh4oh5h4kogskrqgup2rr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bigBayong.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "77497398992-j65c7qs32tfsjd30ug63ja6bm2nhjrtb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bigBayong.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "77497398992-5tb38atq0f145as9732s29300o8m2brn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHxOwZzOjHyO0bFrD5m5MQQYo__LOhS_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77497398992-5tb38atq0f145as9732s29300o8m2brn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

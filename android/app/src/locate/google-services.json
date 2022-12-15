@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "681462136742",
+    "project_id": "loacte-6ae9a",
+    "storage_bucket": "loacte-6ae9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681462136742:android:00858bd6c6f95a96659967",
+        "android_client_info": {
+          "package_name": "com.locate.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681462136742-3hchh070oc6o3235cger4gp1psmvq8c0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.locate.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "681462136742-b7kn0gppqpcj5g3h0ubf263nc74vkn8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.locate.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "681462136742-nle2iqg3scpmq67qdsg5p13bl0q5r54s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.locate.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "681462136742-epflgkr8am0fbtv8jbkd8atcs3akbpl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhGY4etRHgAZMtsOS5J9XJ2-twO71EH5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681462136742-epflgkr8am0fbtv8jbkd8atcs3akbpl5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "681462136742-l2tfhj5dp5b7tr10iseqha8na9b6cu0u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.locate.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

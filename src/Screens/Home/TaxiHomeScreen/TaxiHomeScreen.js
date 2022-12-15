@@ -302,7 +302,7 @@ export default function TaxiHomeScreen({route, navigation}) {
       },
       'latlongObj>>Data',
     );
-    console.log(latlongObj, 'selectedTabType');
+    console.log(dineInType, 'selectedTabType');
     actions
       .homeData(
         {

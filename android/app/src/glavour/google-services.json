@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "518096867864",
+    "project_id": "glavour-b4431",
+    "storage_bucket": "glavour-b4431.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518096867864:android:d011343e184fe3f545296d",
+        "android_client_info": {
+          "package_name": "com.glavour.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518096867864-jmo74ssegje11pb2482ullkkfd9rtocc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glavour.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "518096867864-rm6naicci884ng05jtbmftklb96t52ie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glavour.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "518096867864-tm3eui0l4gpim48q1uokfannu2i4rl4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glavour.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "518096867864-tck8tr0k0an9h10sp95ickh4t8qd5rde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy_R5OybknpXWtRJEQ52yAn1iZE7x_nFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518096867864-tck8tr0k0an9h10sp95ickh4t8qd5rde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

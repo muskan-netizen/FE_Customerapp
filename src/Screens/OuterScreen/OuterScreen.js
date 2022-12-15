@@ -42,6 +42,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
 import {setItem, setUserData} from '../../utils/utils';
 import {isEmpty} from 'lodash';
+import {getValuebyKeyInArray} from '../../utils/commonFunction';
 
 export default function OuterScreen({navigation}) {
   const {
@@ -76,8 +77,13 @@ export default function OuterScreen({navigation}) {
     isLangSelected,
     allLangs,
   } = state;
-  const {apple_login, fb_login, twitter_login, google_login} =
-    appData?.profile?.preferences;
+  const {
+    apple_login,
+    fb_login,
+    twitter_login,
+    google_login,
+    additional_preferences,
+  } = appData?.profile?.preferences;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =
@@ -417,20 +423,37 @@ export default function OuterScreen({navigation}) {
           paddingTop: moderateScaleVertical(70),
           flexGrow: 1,
         }}>
-        <Text
-          style={
-            isDarkMode
-              ? [
-                  styles.header,
-                  {
-                    color: MyDarkTheme.colors.text,
-                    backgroundColor: MyDarkTheme.colors.background,
-                  },
-                ]
-              : styles.header
-          }>
-          {strings.CREATE_YOUR_ACCOUNT}
-        </Text>
+        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.header,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      backgroundColor: MyDarkTheme.colors.background,
+                    },
+                  ]
+                : styles.header
+            }>
+            Login Your Account
+          </Text>
+        ) : (
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.header,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      backgroundColor: MyDarkTheme.colors.background,
+                    },
+                  ]
+                : styles.header
+            }>
+            {strings.CREATE_YOUR_ACCOUNT}
+          </Text>
+        )}
         <View style={{marginHorizontal: moderateScale(24)}}>
           {appData?.profile?.preferences?.home_tag_line ? (
             <View style={{marginHorizontal: moderateScaleVertical(30)}}>
@@ -450,8 +473,16 @@ export default function OuterScreen({navigation}) {
 
           <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(50)}}
-            btnText={strings.CREATE_AN_ACCOUNT}
-            onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
+            btnText={
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? 'Login to Your Account'
+                : strings.CREATE_AN_ACCOUNT
+            }
+            onPress={moveToNewScreen(
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? navigationStrings.LOGIN
+                : navigationStrings.SIGN_UP,
+            )}
           />
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
@@ -570,34 +601,39 @@ export default function OuterScreen({navigation}) {
             </View>
           </View>
         </View>
-        <View style={styles.bottomContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text
+        {getValuebyKeyInArray(
+          'is_phone_signup',
+          additional_preferences,
+        ) ? null : (
+          <View style={styles.bottomContainer}>
+            <View
               style={{
-                ...styles.txtSmall,
-                color: colors.textGreyLight,
-                marginTop: 0,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              {strings.ALREADY_HAVE_AN_ACCOUNT}
-            </Text>
-            <TouchableOpacity
-              hitSlop={hitSlopProp}
-              onPress={moveToNewScreen(navigationStrings.LOGIN)}>
               <Text
                 style={{
-                  color:isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontFamily: fontFamily.bold,
+                  ...styles.txtSmall,
+                  color: colors.textGreyLight,
+                  marginTop: 0,
                 }}>
-                {strings.LOGIN}
+                {strings.ALREADY_HAVE_AN_ACCOUNT}
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                hitSlop={hitSlopProp}
+                onPress={moveToNewScreen(navigationStrings.LOGIN)}>
+                <Text
+                  style={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  {strings.LOGIN}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        )}
       </ScrollView>
       {isSelectLanguageModal && (
         <LanguageModal

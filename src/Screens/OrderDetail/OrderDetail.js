@@ -19,24 +19,29 @@ import {
   Linking,
   Alert,
 } from 'react-native';
+
 import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
 import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 // import { showMessage } from 'react-native-flash-message';
+
 import * as RNLocalize from 'react-native-localize';
 import MapView, {AnimatedRegion, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
+import Modal from 'react-native-modal';
 import StarRating from 'react-native-star-rating';
 import WebView from 'react-native-webview';
 import {useSelector} from 'react-redux';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import LeftRightText from '../../Components/LeftRightText';
 import {
   loaderFive,
   loaderOne,
 } from '../../Components/Loaders/AnimatedLoaderFiles';
+import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import RatingModal from '../../Components/RatingModal';
 import SpecificInstruction from '../../Components/SpecificInstruction';
 import StepIndicators from '../../Components/StepIndicator';
@@ -54,19 +59,19 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {
+  getHourAndMinutes,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../../utils/commonFunction';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {getImageUrl, showSuccess, showError} from '../../utils/helperFunctions';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import stylesFun from './stylesCart';
 import {Calendar} from 'react-native-calendars';
-import Modal from 'react-native-modal';
-import GradientButton from '../../Components/GradientButton';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
+
 import BannerLoader from '../../Components/Loaders/BannerLoader';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
@@ -78,9 +83,7 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData');
   const dineInType = useSelector((state) => state?.home?.dineInType);
-
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
   const [modalType, setModalType] = useState('');
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] =
@@ -153,9 +156,9 @@ export default function OrderDetail({navigation, route}) {
     isVisibleTimeModal: false,
     currentPickupDate: paramData?.orderDetail?.schedule_pickup,
     currentDropOffDate: paramData?.orderDetail?.schedule_dropoff,
-    isLoadingA:false,
-    submitedRatingToDriver:null,
-    driverRatingData:null
+    isLoadingA: false,
+    submitedRatingToDriver: null,
+    driverRatingData: null,
   });
   const {
     showTaxFeeArea,
@@ -182,7 +185,7 @@ export default function OrderDetail({navigation, route}) {
     currentDropOffDate,
     isLoadingA,
     submitedRatingToDriver,
-    driverRatingData
+    driverRatingData,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -193,10 +196,16 @@ export default function OrderDetail({navigation, route}) {
 
   const {preferences} = appData?.profile;
   let businessType = preferences?.business_type;
+  const {additional_preferences, digit_after_decimal} = preferences;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
-  const styles2 = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const styles2 = stylesFun({
+    fontFamily,
+    themeColors,
+    isDarkMode,
+    MyDarkTheme,
+  });
 
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -222,8 +231,6 @@ export default function OrderDetail({navigation, route}) {
     },
     isFocused ? 5000 : null,
   );
-
-  console.log('cartDatacartData', cartData);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -278,8 +285,6 @@ export default function OrderDetail({navigation, route}) {
   const new_dispatch_traking_url = trackingUrl
     ? trackingUrl.replace('/order/', '/order-details/')
     : null;
-
-  console.log(isLoading, 'isLoading....');
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
@@ -419,7 +424,7 @@ export default function OrderDetail({navigation, route}) {
 
   const onStarRatingPress = (i, rating) => {
     // updateState({isLoading: true});
-       
+
     _giveRatingToProduct(i, rating);
   };
 
@@ -485,16 +490,15 @@ export default function OrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
-       
         updateState({
           isLoadingA: false,
         });
-        Alert.alert("",res?.message,[
+        Alert.alert('', res?.message, [
           {
             text: strings.OK,
             onPress: () => console.log('Okay pressed'),
           },
-        ])
+        ]);
       })
       .catch(errorMethod);
   });
@@ -607,12 +611,12 @@ export default function OrderDetail({navigation, route}) {
                                 fontFamily: fontFamily.regular,
                               }}>
                               <Text style={{}}>
-                                {`${currencies?.primary_currency?.symbol} ${
-                                  // Number(i?.pvariant?.multiplier) *
-                                  currencyNumberFormatter(
-                                    Number(i?.variants?.price).toFixed(2),
-                                  )
-                                }`}
+                                {tokenConverterPlusCurrencyNumberFormater(
+                                  Number(i?.variants?.price),
+                                  digit_after_decimal,
+                                  additional_preferences,
+                                  currencies?.primary_currency?.symbol,
+                                )}
                               </Text>{' '}
                               X {i?.quantity} ={' '}
                               <Text
@@ -622,14 +626,12 @@ export default function OrderDetail({navigation, route}) {
                                     : colors.black,
                                 }}>
                                 <Text style={{}}>
-                                  {`${currencies?.primary_currency?.symbol} ${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.variants?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
+                                  {tokenConverterPlusCurrencyNumberFormater(
+                                    Number(i?.variants?.price),
+                                    digit_after_decimal,
+                                    additional_preferences,
+                                    currencies?.primary_currency?.symbol,
+                                  )}
                                 </Text>
                               </Text>
                             </Text>
@@ -695,14 +697,12 @@ export default function OrderDetail({navigation, route}) {
                                       : colors.textGreyB,
                                     marginVertical: moderateScale(2),
                                   }}>
-                                  {`${currencies?.primary_currency?.symbol} ${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.variants?.quantity_price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
+                                  {tokenConverterPlusCurrencyNumberFormater(
+                                    Number(i?.variants?.quantity_price),
+                                    digit_after_decimal,
+                                    additional_preferences,
+                                    currencies?.primary_currency?.symbol,
+                                  )}
                                 </Text>
                               </View>
                             )}
@@ -766,14 +766,13 @@ export default function OrderDetail({navigation, route}) {
                                                   : styles2.cartItemWeight2
                                               }
                                               numberOfLines={1}>
-                                              {` ${
+                                              {tokenConverterPlusCurrencyNumberFormater(
+                                                Number(j?.quantity_price),
+                                                digit_after_decimal,
+                                                additional_preferences,
                                                 currencies?.primary_currency
-                                                  ?.symbol
-                                              } ${currencyNumberFormatter(
-                                                Number(
-                                                  j?.quantity_price,
-                                                ).toFixed(2),
-                                              )}`}
+                                                  ?.symbol,
+                                              )}
                                             </Text>
                                           </View>
                                         </View>
@@ -870,14 +869,13 @@ export default function OrderDetail({navigation, route}) {
                                                     : styles2.cartItemWeight2
                                                 }
                                                 numberOfLines={1}>
-                                                {` ${
-                                                  currencies?.primary_currency
-                                                    ?.symbol
-                                                } ${currencyNumberFormatter(
+                                                {tokenConverterPlusCurrencyNumberFormater(
                                                   Number(j?.quantity_price),
-                                                  appData?.profile?.preferences
-                                                    ?.digit_after_decimal,
-                                                )}`}
+                                                  digit_after_decimal,
+                                                  additional_preferences,
+                                                  currencies?.primary_currency
+                                                    ?.symbol,
+                                                )}
                                               </Text>
                                             </View>
                                           </View>
@@ -952,11 +950,11 @@ export default function OrderDetail({navigation, route}) {
                           },
                         ]
                       : styles2.priceItemLabel
-                  }>{`- ${
-                  currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
+                  }>{`- ${tokenConverterPlusCurrencyNumberFormater(
                   Number(item?.discount_amount ? item?.discount_amount : 0),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
                 )}`}</Text>
               </View>
             )}
@@ -986,12 +984,14 @@ export default function OrderDetail({navigation, route}) {
                           },
                         ]
                       : styles.priceItemLabel
-                  }>{`${
-                  currencies?.primary_currency?.symbol
-                } ${currencyNumberFormatter(
-                  Number(item?.deliver_charge ? item?.deliver_charge : 0),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}</Text>
+                  }>
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    Number(item?.deliver_charge ? item?.deliver_charge : 0),
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
+                </Text>
               </View>
             )}
             <View style={styles.itemPriceDiscountTaxView}>
@@ -1015,10 +1015,11 @@ export default function OrderDetail({navigation, route}) {
                       ]
                     : styles.priceItemLabel2
                 }>
-                {currencies?.primary_currency?.symbol}{' '}
-                {currencyNumberFormatter(
+                {tokenConverterPlusCurrencyNumberFormater(
                   Number(item?.payable_amount ? item?.payable_amount : 0),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
                 )}
               </Text>
 
@@ -1068,7 +1069,6 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log(item, 'itemitemitemitem');
     return (
       <View
         key={index}
@@ -1139,7 +1139,6 @@ export default function OrderDetail({navigation, route}) {
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
-              
                 if (item?.vendor_id == i?.vendor_id) {
                   return (
                     <View
@@ -1153,248 +1152,366 @@ export default function OrderDetail({navigation, route}) {
                           backgroundColor: isDarkMode
                             ? MyDarkTheme.colors.background
                             : '#F8F8F8',
-                            
+                          flexDirection: 'column',
                         }}>
-                        <FastImage
-                          source={
-                            i?.image_path
-                              ? {
-                                  uri: getImageUrl(
-                                    i?.image_path?.image_fit,
-                                    i?.image_path?.image_path,
-                                    '300/300',
-                                  ),
-                                  priority: FastImage.priority.high,
-                                }
-                              : ''
-                          }
-                          style={styles.imageStyle}
-                        />
+                        <View style={{flexDirection: 'row'}}>
+                          <FastImage
+                            source={
+                              i?.image_path
+                                ? {
+                                    uri: getImageUrl(
+                                      i?.image_path?.image_fit,
+                                      i?.image_path?.image_path,
+                                      '300/300',
+                                    ),
+                                    priority: FastImage.priority.high,
+                                  }
+                                : ''
+                            }
+                            style={styles.imageStyle}
+                          />
 
-                        <View style={styles.cartItemDetailsCon}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                            }}>
+                          <View style={styles.cartItemDetailsCon}>
                             <View
                               style={{
-                                justifyContent: 'center',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginRight: moderateScaleVertical(10),
                               }}>
-                              <Text
+                              <View
                                 style={{
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.black,
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-between',
+                                  alignItems: 'center',
                                 }}>
-                                {i?.product_name}
-                              </Text>
-                              {i?.quantity && (
                                 <View
                                   style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
+                                    justifyContent: 'center',
+
+                                    width: '100%',
                                   }}>
                                   <Text
                                     style={{
-                                      ...styles.quantityStyles,
+                                      flexDirection: 'row',
+                                      // alignItems: 'center',
+                                      // backgroundColor: 'yellow',
+                                      justifyContent: 'space-between',
                                       color: isDarkMode
                                         ? MyDarkTheme.colors.text
-                                        : colors.textGrey,
+                                        : colors.black,
                                     }}>
-                                    <Text
-                                      style={{
-                                        ...styles.quantityStyles,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.textGrey,
-                                      }}>
-                                      {strings.QTY}
-                                    </Text>
-                                    <Text style={styles.cartItemWeight}>
-                                      {i?.quantity}
-                                    </Text>
+                                    {i?.product_name}
                                   </Text>
-                                </View>
-                              )}
-                              {!!i?.product_addons.length && (
-                                <View>
-                                  <Text style={styles.cartItemWeight2}>
-                                    {strings.EXTRA}
-                                  </Text>
-                                </View>
-                              )}
-                              {i?.product_addons.length
-                                ? i?.product_addons.map((j, jnx) => {
-                                    return (
-                                      <View>
-                                        <Text
-                                          style={styles.cartItemWeight2}
-                                          numberOfLines={1}>
-                                          {j.addon_title}{' '}
-                                        </Text>
-                                        <View style={{flexDirection: 'row'}}>
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      justifyContent: 'space-between',
+                                    }}>
+                                    <View>
+                                      {i?.quantity && (
+                                        <View
+                                          style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                          }}>
                                           <Text
-                                            style={styles.cartItemWeight2}
-                                            numberOfLines={
-                                              1
-                                            }>{`(${j.option_title})`}</Text>
-                                          <Text
-                                            style={styles.cartItemWeight2}
-                                            numberOfLines={1}>
-                                            {` ${
-                                              currencies?.primary_currency
-                                                ?.symbol
-                                            } ${currencyNumberFormatter(
-                                              Number(j?.price),
-                                              appData?.profile?.preferences
-                                                ?.digit_after_decimal,
-                                            )}`}
+                                            style={{
+                                              ...styles.quantityStyles,
+                                              color: isDarkMode
+                                                ? MyDarkTheme.colors.text
+                                                : colors.textGrey,
+                                            }}>
+                                            <Text
+                                              style={{
+                                                ...styles.quantityStyles,
+                                                color: isDarkMode
+                                                  ? MyDarkTheme.colors.text
+                                                  : colors.textGrey,
+                                              }}>
+                                              {strings.QTY}
+                                            </Text>
+                                            <Text style={styles.cartItemWeight}>
+                                              {i?.quantity}
+                                            </Text>
                                           </Text>
                                         </View>
-                                      </View>
-                                    );
-                                  })
-                                : null}
-
-                              {!!(
-                                !!i?.pvariant &&
-                                Number(i?.pvariant?.container_charges)
-                              ) && (
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginTop: moderateScale(2),
-                                  }}>
-                                  <View>
-                                    <Text
+                                      )}
+                                    </View>
+                                    <View
                                       style={{
-                                        ...styles.cartItemWeight2,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.textGreyB,
-                                        marginBottom: moderateScale(2),
-                                        // marginTop: moderateScaleVertical(6),
+                                        justifyContent: 'center',
+                                        alignItems: 'flex-start',
                                       }}>
-                                      {`${strings.CONTAINERCHARGES} : `}
-                                    </Text>
+                                      <Text
+                                        numberOfLines={1}
+                                        style={{
+                                          ...styles.priceItemLabel2,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.blackOpacity86,
+                                          fontSize: textScale(12),
+                                          fontFamily: fontFamily.medium,
+                                        }}>
+                                        <Text style={styles.cartItemPrice}>
+                                          {tokenConverterPlusCurrencyNumberFormater(
+                                            Number(i?.price) *
+                                              Number(i?.quantity),
+                                            digit_after_decimal,
+                                            additional_preferences,
+                                            currencies?.primary_currency
+                                              ?.symbol,
+                                          )}
+                                        </Text>
+                                      </Text>
+                                    </View>
                                   </View>
+
+                                  {!!i?.product_addons.length && (
+                                    <View>
+                                      <Text style={styles.cartItemWeight2}>
+                                        {strings.EXTRA}
+                                      </Text>
+                                    </View>
+                                  )}
+                                  {i?.product_addons.length
+                                    ? i?.product_addons.map((j, jnx) => {
+                                        return (
+                                          <View>
+                                            <Text
+                                              style={styles.cartItemWeight2}
+                                              numberOfLines={1}>
+                                              {j.addon_title}{' '}
+                                            </Text>
+                                            <View
+                                              style={{flexDirection: 'row'}}>
+                                              <Text
+                                                style={styles.cartItemWeight2}
+                                                numberOfLines={
+                                                  1
+                                                }>{`(${j.option_title})`}</Text>
+                                              <Text
+                                                style={styles.cartItemWeight2}
+                                                numberOfLines={1}>
+                                                {tokenConverterPlusCurrencyNumberFormater(
+                                                  Number(j?.price),
+                                                  digit_after_decimal,
+                                                  additional_preferences,
+                                                  currencies?.primary_currency
+                                                    ?.symbol,
+                                                )}
+                                              </Text>
+                                            </View>
+                                          </View>
+                                        );
+                                      })
+                                    : null}
+
+                                  {!!(
+                                    !!i?.pvariant &&
+                                    Number(i?.pvariant?.container_charges)
+                                  ) && (
+                                    <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        marginTop: moderateScale(2),
+                                      }}>
+                                      <View>
+                                        <Text
+                                          style={{
+                                            ...styles.cartItemWeight2,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.textGreyB,
+                                            marginBottom: moderateScale(2),
+                                            // marginTop: moderateScaleVertical(6),
+                                          }}>
+                                          {`${strings.CONTAINERCHARGES} : `}
+                                        </Text>
+                                      </View>
+                                      {!!(
+                                        !!i?.container_charges &&
+                                        Number(i?.container_charges)
+                                      ) && (
+                                        <View
+                                          style={{
+                                            marginBottom:
+                                              moderateScaleVertical(2),
+                                          }}>
+                                          <View
+                                            style={{
+                                              marginRight: moderateScale(10),
+                                            }}>
+                                            <Text
+                                              style={
+                                                isDarkMode
+                                                  ? [
+                                                      styles.cartItemWeight2,
+                                                      {
+                                                        color:
+                                                          MyDarkTheme.colors
+                                                            .text,
+                                                      },
+                                                    ]
+                                                  : styles.cartItemWeight2
+                                              }
+                                              // numberOfLines={1}
+                                            >
+                                              {tokenConverterPlusCurrencyNumberFormater(
+                                                Number(
+                                                  i?.pvariant
+                                                    ?.container_charges,
+                                                ) * Number(i?.quantity),
+                                                digit_after_decimal,
+                                                additional_preferences,
+                                                currencies?.primary_currency
+                                                  ?.symbol,
+                                              )}
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      )}
+                                    </View>
+                                  )}
                                   {!!(
                                     !!i?.container_charges &&
                                     Number(i?.container_charges)
                                   ) && (
                                     <View
                                       style={{
-                                        marginBottom: moderateScaleVertical(2),
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        marginTop: moderateScale(2),
                                       }}>
-                                      <View
-                                        style={{
-                                          marginRight: moderateScale(10),
-                                        }}>
+                                      <View>
                                         <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
-                                                  {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          // numberOfLines={1}
-                                        >
-                                          {`${
-                                            currencies?.primary_currency?.symbol
-                                          }${currencyNumberFormatter(
-                                            Number(
-                                              i?.pvariant?.container_charges,
-                                            ) * Number(i?.quantity),
-                                            appData?.profile?.preferences
-                                              ?.digit_after_decimal,
-                                          )}`}
+                                          style={{
+                                            ...styles.cartItemWeight2,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.textGreyB,
+                                            marginBottom: moderateScale(2),
+                                            // marginTop: moderateScaleVertical(6),
+                                          }}>
+                                          {`${strings.CONTAINERCHARGES} : `}
                                         </Text>
                                       </View>
+                                      {!!(
+                                        !!i?.container_charges &&
+                                        Number(i?.container_charges)
+                                      ) && (
+                                        <View
+                                          style={{
+                                            marginBottom:
+                                              moderateScaleVertical(2),
+                                          }}>
+                                          <View
+                                            style={{
+                                              marginRight: moderateScale(10),
+                                            }}>
+                                            <Text
+                                              style={
+                                                isDarkMode
+                                                  ? [
+                                                      styles.cartItemWeight2,
+                                                      {
+                                                        color:
+                                                          MyDarkTheme.colors
+                                                            .text,
+                                                      },
+                                                    ]
+                                                  : styles.cartItemWeight2
+                                              }
+                                              // numberOfLines={1}
+                                            >
+                                              {tokenConverterPlusCurrencyNumberFormater(
+                                                Number(i?.container_charges),
+                                                digit_after_decimal,
+                                                additional_preferences,
+                                                currencies?.primary_currency
+                                                  ?.symbol,
+                                              )}
+                                            </Text>
+                                          </View>
+                                        </View>
+                                      )}
                                     </View>
                                   )}
-                                  
                                 </View>
-                              )}
-                              
+                              </View>
                             </View>
+                          </View>
+                          {cartData?.luxury_option_name == 'rental' ? (
                             <View
                               style={{
-                                justifyContent: 'center',
-                                alignItems: 'flex-start',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginVertical: moderateScaleVertical(10),
                               }}>
-                              <Text
-                                numberOfLines={1}
-                                style={{
-                                  ...styles.priceItemLabel2,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.blackOpacity86,
-                                  fontSize: textScale(12),
-                                  fontFamily: fontFamily.medium,
-                                }}>
-                                <Text style={styles.cartItemPrice}>
-                                  {`${currencies?.primary_currency?.symbol} ${
-                                    // Number(i?.pvariant?.multiplier) *
-                                    currencyNumberFormatter(
-                                      Number(i?.price),
-                                      appData?.profile?.preferences
-                                        ?.digit_after_decimal,
-                                    )
-                                  }`}
+                              <View>
+                                <Text style={styles.startEndDateTitle}>
+                                  Start Date
                                 </Text>
-                              </Text>
-                              
+                                <Text style={styles.startEndDateValueTxt}>
+                                  {i?.start_date_time}
+                                </Text>
+                              </View>
+                              <View>
+                                <Text style={styles.startEndDateTitle}>
+                                  End Date
+                                </Text>
+                                <Text style={styles.startEndDateValueTxt}>
+                                  {i?.end_date_time}
+                                </Text>
+                              </View>
+                              <View>
+                                <Text style={styles.startEndDateTitle}>
+                                  Duration
+                                </Text>
+                                <Text style={styles.startEndDateValueTxt}>
+                                  {getHourAndMinutes(
+                                    Number(i?.total_booking_time),
+                                  )}
+                                </Text>
+                              </View>
                             </View>
-                            
-                          </View>
-                         
+                          ) : null}
                         </View>
 
-                       
-                      </View>
-         
+                        {!!driverStatus?.order &&
+                        driverStatus?.order?.status === 'completed' ? (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              paddingBottom: moderateScaleVertical(5),
+                              paddingHorizontal: moderateScale(10),
+                              marginVertical: moderateScaleVertical(16),
+                            }}>
+                            <StarRating
+                              maxStars={5}
+                              rating={Number(i?.product_rating?.rating)}
+                              selectedStar={(rating) =>
+                                onStarRatingPress(i, rating)
+                              }
+                              fullStarColor={colors.ORANGE}
+                              starSize={15}
+                            />
+                            {Number(i?.product_rating?.rating) ? (
+                              <TouchableOpacity
+                                onPress={() => _onRateOrderOrDriver(i)}>
+                                <Text
+                                  style={[
+                                    styles.writeAReview,
+                                    {color: themeColors.primary_color},
+                                  ]}>
+                                  {strings.WRITE_REVIEW}
+                                </Text>
+                              </TouchableOpacity>
+                            ) : null}
 
-                      {!!driverStatus?.order &&
-                      driverStatus?.order?.status === 'completed' ? (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingBottom: moderateScaleVertical(5),
-                            paddingHorizontal: moderateScale(10),
-                            marginVertical: moderateScaleVertical(16),
-                           
-                          }}>
-                          <StarRating
-                            maxStars={5}
-                            rating={Number(i?.product_rating?.rating)}
-                            selectedStar={(rating) =>
-                              onStarRatingPress(i, rating)
-                            }
-                            fullStarColor={colors.ORANGE}
-                            starSize={15}
-                          />
-                          {Number(i?.product_rating?.rating)?
-                           <TouchableOpacity  onPress={() => _onRateOrderOrDriver(i)}>
-                           <Text
-                             style={[
-                               styles.writeAReview,
-                               {color: themeColors.primary_color},
-                             ]}>
-                             {strings.WRITE_REVIEW}
-                           </Text>
-                         </TouchableOpacity>:null
-                          }
-                         
-                          
-                          {/* {i?.product_rating?.rating ? (
+                            {/* {i?.product_rating?.rating ? (
                           <View>
                             <Text
                               onPress={() => rateYourOrder(i)}
@@ -1406,27 +1523,29 @@ export default function OrderDetail({navigation, route}) {
                             </Text>
                           </View>
                         ) : null} */}
-                        
-                        </View>
-                      ) : null}
-                      {  !!i?.is_processor_enable &&
-                     
-                     <View>
-                          <Text
-                            style={{
-                              fontSize: moderateScale(14),
-                              fontFamily: fontFamily.regular,
-                              color: colors.black,
-                            }}
-                          >{"Processor Name : "} {i?.processor_name} </Text>
-                          <Text
-                           style={{
-                            fontSize: moderateScale(14),
-                            fontFamily: fontFamily.regular,
-                            color: colors.black,
-                          }}
-                          >{"Date : "} {i?.processor_date} </Text>
-                        </View>}
+                          </View>
+                        ) : null}
+                        {!!i?.is_processor_enable && (
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: moderateScale(14),
+                                fontFamily: fontFamily.regular,
+                                color: colors.black,
+                              }}>
+                              {'Processor Name : '} {i?.processor_name}{' '}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: moderateScale(14),
+                                fontFamily: fontFamily.regular,
+                                color: colors.black,
+                              }}>
+                              {'Date : '} {i?.processor_date}{' '}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
                     </View>
                   );
                 } else {
@@ -1538,11 +1657,11 @@ export default function OrderDetail({navigation, route}) {
                         },
                       ]
                     : styles.priceItemLabel
-                }>{`- ${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
+                }>{`- ${tokenConverterPlusCurrencyNumberFormater(
                 Number(item?.discount_amount ? item?.discount_amount : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}</Text>
             </View>
           )}
@@ -1598,14 +1717,17 @@ export default function OrderDetail({navigation, route}) {
                         },
                       ]
                     : styles.priceItemLabel
-                }>{`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
-                Number(item?.delivery_fee ? item?.delivery_fee : 0),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}</Text>
+                }>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(item?.delivery_fee ? item?.delivery_fee : 0),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
           )}
+
           {!!Number(item?.total_container_charges) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
@@ -1622,6 +1744,7 @@ export default function OrderDetail({navigation, route}) {
                 }>
                 {strings.CONTAINER_CHARGES}
               </Text>
+
               <Text
                 style={
                   isDarkMode
@@ -1633,16 +1756,18 @@ export default function OrderDetail({navigation, route}) {
                         },
                       ]
                     : styles.priceItemLabel
-                }>{`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
-                Number(
-                  item?.total_container_charges
-                    ? item?.total_container_charges
-                    : 0,
-                ),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}</Text>
+                }>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(
+                    cartData?.total_container_charges
+                      ? cartData?.total_container_charges
+                      : 0,
+                  ),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
           )}
           <View style={styles.itemPriceDiscountTaxView}>
@@ -1663,12 +1788,14 @@ export default function OrderDetail({navigation, route}) {
                 color: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.blackOpacity86,
-              }}>{`${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
-              Number(item?.payable_amount ? item?.payable_amount : 0),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item?.payable_amount ? item?.payable_amount : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         </View>
       </View>
@@ -1708,12 +1835,14 @@ export default function OrderDetail({navigation, route}) {
                     },
                   ]
                 : styles.priceItemLabel
-            }>{`${
-            currencies?.primary_currency?.symbol
-          }${currencyNumberFormatter(
-            Number(cartData?.total_amount),
-            appData?.profile?.preferences?.digit_after_decimal,
-          )}`}</Text>
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(cartData?.total_amount),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
         {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
@@ -1742,13 +1871,13 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(
                 cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
               ),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -1779,15 +1908,15 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(
                 cartData?.loyalty_amount_saved
                   ? cartData?.loyalty_amount_saved
                   : 0,
               ),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -1819,50 +1948,14 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(cartData?.total_discount),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
-        {/* {!!cartData?.taxable_amount && (
-          <View style={styles.bottomTabLableValue}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>
-              {strings.TAX_AMOUNT}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(
-                cartData?.taxable_amount ? cartData?.taxable_amount : 0,
-              ), appData?.profile?.preferences?.digit_after_decimal
-            )}`}</Text>
-          </View>
-        )} */}
 
         <View style={styles.amountPayable}>
           <Text
@@ -1890,12 +1983,14 @@ export default function OrderDetail({navigation, route}) {
                     },
                   ]
                 : styles.priceItemLabel2
-            }>{`${
-            currencies?.primary_currency?.symbol
-          } ${currencyNumberFormatter(
-            Number(cartData?.payable_amount),
-            appData?.profile?.preferences?.digit_after_decimal,
-          )}`}</Text>
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(cartData?.payable_amount),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
       </View>
     );
@@ -2230,12 +2325,25 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.total_amount && cartData?.total_amount !== '0.00' && (
             <LeftRightText
               leftText={strings.SUBTOTAL}
-              rightText={`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              rightText={tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.total_amount),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
+          {Number(cartData?.additional_price) > 0 && (
+            <LeftRightText
+              leftText={strings.ADDITIONAL_CHARGES}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.additional_price),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
@@ -2244,12 +2352,12 @@ export default function OrderDetail({navigation, route}) {
             cartData?.total_delivery_fee > 0 && (
               <LeftRightText
                 leftText={strings.DELIVERY_FEE}
-                rightText={`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                rightText={tokenConverterPlusCurrencyNumberFormater(
                   Number(cartData?.total_delivery_fee),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
@@ -2258,11 +2366,11 @@ export default function OrderDetail({navigation, route}) {
             cartData?.wallet_amount_used > 0 && (
               <LeftRightText
                 leftText={strings.WALLET}
-                rightText={`- ${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                rightText={`- ${tokenConverterPlusCurrencyNumberFormater(
                   Number(cartData?.wallet_amount_used),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
@@ -2277,14 +2385,14 @@ export default function OrderDetail({navigation, route}) {
                   ? preferences?.fixed_fee_nomenclature
                   : strings.FIXED_FEE
               }
-              rightText={`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              rightText={tokenConverterPlusCurrencyNumberFormater(
                 Number(
                   cartData?.fixed_fee_amount ? cartData?.fixed_fee_amount : 0,
                 ),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
@@ -2293,13 +2401,12 @@ export default function OrderDetail({navigation, route}) {
             Number(cartData?.taxable_amount) > 0) && (
             <LeftRightText
               leftText={strings.TAXES_FEES}
-              rightText={`${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
-                Number(cartData?.total_service_fee) +
-                  Number(cartData?.taxable_amount),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.taxable_amount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
@@ -2308,40 +2415,40 @@ export default function OrderDetail({navigation, route}) {
             cartData?.loyalty_amount_saved > 0 && (
               <LeftRightText
                 leftText={strings.LOYALTY}
-                rightText={`- ${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                rightText={`- ${tokenConverterPlusCurrencyNumberFormater(
                   Number(cartData?.loyalty_amount_saved),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-          {!!cartData?.vendors[0]?.total_container_charges &&
+          {/* {!!cartData?.vendors[0]?.total_container_charges &&
             Number(cartData?.total_container_charges) > 0 && (
               <LeftRightText
                 leftText={strings.TOTALCONTAINERCHARGES}
-                rightText={`- ${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
+                rightText={`- ${tokenConverterPlusCurrencyNumberFormater(
                   Number(cartData?.total_container_charges),
-                  appData?.profile?.preferences?.digit_after_decimal,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
                 )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
-            )}
+            )} */}
 
           {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}
-              rightText={`${
-                currencies?.primary_currency?.symbol
-              } ${currencyNumberFormatter(
+              rightText={tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.tip_amount),
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}`}
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
@@ -2349,11 +2456,11 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.total_discount && cartData?.total_discount > 0 && (
             <LeftRightText
               leftText={strings.DISCOUNT}
-              rightText={`- ${
-                currencies?.primary_currency?.symbol
-              }${currencyNumberFormatter(
+              rightText={`- ${tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.total_discount),
-                appData?.profile?.preferences?.digit_after_decimal,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
               )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -2362,7 +2469,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.advance_paid_amount &&
             cartData?.advance_paid_amount > 0 && (
               <LeftRightText
-                leftText={"Advance Paid Amount"}
+                leftText={'Advance Paid Amount'}
                 rightText={`${
                   currencies?.primary_currency?.symbol
                 }${currencyNumberFormatter(
@@ -2373,20 +2480,19 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
-           {!!cartData?.pending_amount &&
-            cartData?.pending_amount > 0 && (
-              <LeftRightText
-                leftText={"Pending Amount"}
-                rightText={` ${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
-                  Number(cartData?.pending_amount),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-              />
-            )}
+          {!!cartData?.pending_amount && cartData?.pending_amount > 0 && (
+            <LeftRightText
+              leftText={'Pending Amount'}
+              rightText={` ${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.pending_amount),
+                appData?.profile?.preferences?.digit_after_decimal,
+              )}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           <View
             style={{
               ...styles.dottedLine,
@@ -2397,12 +2503,12 @@ export default function OrderDetail({navigation, route}) {
           />
           <LeftRightText
             leftText={strings.TOTAL}
-            rightText={`${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+            rightText={tokenConverterPlusCurrencyNumberFormater(
               Number(cartData?.payable_amount),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
@@ -2487,12 +2593,12 @@ export default function OrderDetail({navigation, route}) {
                                       : colors.black,
                                 }
                           }>
-                          {`${
-                            currencies?.primary_currency?.symbol
-                          } ${currencyNumberFormatter(
-                            j.value,
-                            appData?.profile?.preferences?.digit_after_decimal,
-                          )}`}
+                          {tokenConverterPlusCurrencyNumberFormater(
+                            j?.value,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
                         </Text>
                         <Text
                           style={{
@@ -2612,15 +2718,13 @@ export default function OrderDetail({navigation, route}) {
             }}
           />
         </View>
-  
-        {
-          dispatcherStatus?.order_status?.current_status?.title ==
-           strings.DELIVERED &&  
-            !!appData?.profile?.preferences?.facturama_invoice
-           && (
+
+        {dispatcherStatus?.order_status?.current_status?.title ==
+          strings.DELIVERED &&
+          !!appData?.profile?.preferences?.facturama_invoice && (
             <ButtonWithLoader
-            color={themeColors?.primary_color}
-            isLoading={isLoadingA}
+              color={themeColors?.primary_color}
+              isLoading={isLoadingA}
               onPress={generateInvoice}
               btnStyle={{
                 marginHorizontal: moderateScale(8),
@@ -2631,8 +2735,7 @@ export default function OrderDetail({navigation, route}) {
                 color: themeColors.primary_color,
               }}
             />
-          )
-        }
+          )}
       </View>
     );
   };
@@ -2744,12 +2847,14 @@ export default function OrderDetail({navigation, route}) {
               isDarkMode
                 ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
                 : styles2.priceItemLabel
-            }>{`${
-            currencies?.primary_currency?.symbol
-          } ${currencyNumberFormatter(
-            Number(updatedcartData?.gross_paybale_amount),
-            appData?.profile?.preferences?.digit_after_decimal,
-          )}`}</Text>
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(updatedcartData?.gross_paybale_amount),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
         {!!updatedcartData?.wallet_amount && (
           <View style={styles2.bottomTabLableValue}>
@@ -2766,16 +2871,18 @@ export default function OrderDetail({navigation, route}) {
                 isDarkMode
                   ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles2.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
-              Number(
-                updatedcartData?.wallet_amount
-                  ? updatedcartData?.wallet_amount
-                  : 0,
-              ),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(
+                  updatedcartData?.wallet_amount
+                    ? updatedcartData?.wallet_amount
+                    : 0,
+                ),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         )}
         {!!updatedcartData?.loyalty_amount && (
@@ -2793,15 +2900,15 @@ export default function OrderDetail({navigation, route}) {
                 isDarkMode
                   ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles2.priceItemLabel
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(
                 updatedcartData?.loyalty_amount
                   ? updatedcartData?.loyalty_amount
                   : 0,
               ),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -2821,15 +2928,15 @@ export default function OrderDetail({navigation, route}) {
                 isDarkMode
                   ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles2.priceItemLabel
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(
                 updatedcartData?.wallet_amount_used
                   ? updatedcartData?.wallet_amount_used
                   : 0,
               ),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -2848,11 +2955,11 @@ export default function OrderDetail({navigation, route}) {
                 isDarkMode
                   ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles2.priceItemLabel
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(updatedcartData?.total_subscription_discount),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -2894,19 +3001,21 @@ export default function OrderDetail({navigation, route}) {
                 isDarkMode
                   ? [styles2.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles2.priceItemLabel
-              }>{`${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
-              Number(
-                updatedcartData?.total_tax ? updatedcartData?.total_tax : 0,
-              ) +
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
                 Number(
-                  updatedcartData?.total_service_fee
-                    ? updatedcartData?.total_service_fee
-                    : 0,
-                ),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+                  updatedcartData?.total_tax ? updatedcartData?.total_tax : 0,
+                ) +
+                  Number(
+                    updatedcartData?.total_service_fee
+                      ? updatedcartData?.total_service_fee
+                      : 0,
+                  ),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </Animatable.View>
         )}
         {showTaxFeeArea && (
@@ -2935,16 +3044,18 @@ export default function OrderDetail({navigation, route}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                       fontSize: textScale(11),
-                    }}>{`${
-                    currencies?.primary_currency?.symbol
-                  } ${currencyNumberFormatter(
-                    Number(
-                      updatedcartData?.total_service_fee
-                        ? updatedcartData?.total_service_fee
-                        : 0,
-                    ),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}</Text>
+                    }}>
+                    {tokenConverterPlusCurrencyNumberFormater(
+                      Number(
+                        updatedcartData?.total_service_fee
+                          ? updatedcartData?.total_service_fee
+                          : 0,
+                      ),
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}
+                  </Text>
                 </View>
               )}
               {updatedcartData?.total_tax > 0 && (
@@ -2968,16 +3079,18 @@ export default function OrderDetail({navigation, route}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                       fontSize: textScale(11),
-                    }}>{`${
-                    currencies?.primary_currency?.symbol
-                  } ${currencyNumberFormatter(
-                    Number(
-                      updatedcartData?.total_tax
-                        ? updatedcartData?.total_tax
-                        : 0,
-                    ),
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}</Text>
+                    }}>
+                    {tokenConverterPlusCurrencyNumberFormater(
+                      Number(
+                        updatedcartData?.total_tax
+                          ? updatedcartData?.total_tax
+                          : 0,
+                      ),
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}
+                  </Text>
                 </View>
               )}
             </Animatable.View>
@@ -2997,15 +3110,17 @@ export default function OrderDetail({navigation, route}) {
               isDarkMode
                 ? [styles2.priceItemLabel2, {color: MyDarkTheme.colors.text}]
                 : styles2.priceItemLabel2
-            }>{`${
-            currencies?.primary_currency?.symbol
-          } ${currencyNumberFormatter(
-            Number(updatedcartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0),
-            appData?.profile?.preferences?.digit_after_decimal,
-          )}`}</Text>
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(updatedcartData?.total_payable_amount) +
+                (selectedTipAmount != null && selectedTipAmount != ''
+                  ? Number(selectedTipAmount)
+                  : 0),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
         <View style={styles2.amountPayable}>
           <View>
@@ -3040,24 +3155,27 @@ export default function OrderDetail({navigation, route}) {
                       styles2.priceItemLabel2,
                       {textDecorationLine: 'line-through'},
                     ]
-              }>{`${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
-              Number(updatedcartData?.total_payable_amount).toFixed(
-                appData?.profile?.preferences?.digit_after_decimal,
-              ),
-            )}`}</Text>
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(updatedcartData?.total_payable_amount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
             <Text
               style={
                 isDarkMode
                   ? [styles2.priceItemLabel2, {color: MyDarkTheme.colors.text}]
                   : styles2.priceItemLabel2
-              }>{`${
-              currencies?.primary_currency?.symbol
-            } ${currencyNumberFormatter(
-              Number(updatedcartData?.difference_to_be_paid),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(updatedcartData?.difference_to_be_paid),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
           </View>
         </View>
 
@@ -3094,24 +3212,23 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const onChat = (item) => {
-    console.log('item+++', item);
     navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
   };
 
   const _onRateOrderOrDriver = (item) => {
-      navigation.navigate(navigationStrings.RATEORDER, { item });
+    navigation.navigate(navigationStrings.RATEORDER, {item});
   };
-
 
   // give Driver Rating
 
   const onStarRatingForDriverPress = (rating) => {
     const data = {
-      order_id: cartData?.driver_rating?.order_id?cartData?.driver_rating?.order_id  :paramData?.orderId,
+      order_id: cartData?.driver_rating?.order_id
+        ? cartData?.driver_rating?.order_id
+        : paramData?.orderId,
       rating: rating,
-      review: "",
+      review: '',
     };
-
 
     actions
       .ratingToDriver(data, {
@@ -3123,10 +3240,9 @@ export default function OrderDetail({navigation, route}) {
         updateState({
           isLoading: false,
           submitedRatingToDriver: res?.data?.rating,
-          driverRatingData:res?.data
-
+          driverRatingData: res?.data,
         });
-        console.log("res++++++", res);
+        console.log('res++++++', res);
       })
       .catch(errorMethod);
   };
@@ -3138,8 +3254,12 @@ export default function OrderDetail({navigation, route}) {
       '500/500',
     );
 
-    console.log(cartData?.driver_rating,submitedRatingToDriver,"cartData?.driver_rating");
-   
+    console.log(
+      cartData?.driver_rating,
+      submitedRatingToDriver,
+      'cartData?.driver_rating',
+    );
+
     return (
       <View>
         {!!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
@@ -3148,11 +3268,17 @@ export default function OrderDetail({navigation, route}) {
             type={strings.DRIVER}
             containerStyle={{paddingHorizontal: moderateScale(8)}}
             isDriver={cartData?.order_data?.order?.driver_id}
-            _onRateDriver={ ()=>_onRateOrderOrDriver({
-              order_id:cartData?.driver_rating?.order_id?cartData?.driver_rating?.order_id:paramData?.orderId,
-              isDriverRate: true,
-             driverRatingData:driverRatingData?driverRatingData:cartData?.driver_rating,
-            })}
+            _onRateDriver={() =>
+              _onRateOrderOrDriver({
+                order_id: cartData?.driver_rating?.order_id
+                  ? cartData?.driver_rating?.order_id
+                  : paramData?.orderId,
+                isDriverRate: true,
+                driverRatingData: driverRatingData
+                  ? driverRatingData
+                  : cartData?.driver_rating,
+              })
+            }
             onStarRatingForDriverPress={onStarRatingForDriverPress}
             submitedRatingToDriver={submitedRatingToDriver}
             cartData={cartData}
@@ -3447,7 +3573,6 @@ export default function OrderDetail({navigation, route}) {
             </View>
           )}
 
-       
         {!!(updatedcartItems && updatedcartItems.length) && (
           <FlatList
             data={updatedcartItems}
@@ -4287,8 +4412,6 @@ export default function OrderDetail({navigation, route}) {
             flexGrow: 1,
           }}
         />
-
-       
       </View>
 
       <Modal
@@ -4422,8 +4545,8 @@ export default function OrderDetail({navigation, route}) {
                                   color: colors.blackOpacity66,
                                 }}>
                                 {!laundrySelectedPickupDate
-                                  ? ' Please select date.'
-                                  : ' Slots are not found for selected date.'}
+                                  ? strings.PLEASE_SELECT_DATE
+                                  : strings.SLOTS_NOT_FOUND_FOR_DATE}
                               </Text>
                             </View>
                           )}

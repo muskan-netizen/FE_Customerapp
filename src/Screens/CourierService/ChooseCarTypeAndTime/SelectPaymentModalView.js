@@ -14,7 +14,7 @@ import {
   textScale,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 
@@ -44,6 +44,8 @@ export default function SelectPaymentModalView({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -205,12 +207,12 @@ export default function SelectPaymentModalView({
                       ]
                 }>
                 {selectedCarOption
-                  ? `${
-                      currencies?.primary_currency?.symbol
-                    }${currencyNumberFormatter(
+                  ? `${tokenConverterPlusCurrencyNumberFormater(
                       Number(selectedCarOption?.variant[0]?.multiplier) *
                         Number(selectedCarOption?.variant[0]?.price),
-                      appData?.profile?.preferences?.digit_after_decimal,
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
                     )}`
                   : ''}
               </Text>
@@ -224,17 +226,17 @@ export default function SelectPaymentModalView({
                         ]
                       : styles.distanceDurationDeliveryValue
                   }>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(selectedCarOption.tags_price) -
                       Number(updatedPrice) >
                       0
                       ? Number(selectedCarOption.tags_price) -
                           Number(updatedPrice)
                       : 0,
-                    appData?.profile?.preferences?.digit_after_decimal,
-                  )}`}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
                 </Text>
               )}
               {/* <TouchableOpacity
@@ -356,13 +358,15 @@ export default function SelectPaymentModalView({
                       {color: MyDarkTheme.colors.text},
                     ]
                   : styles.distanceDurationDeliveryValue
-              }>{`-${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
-              Number(selectedCarOption?.variant[0]?.multiplier) *
-                Number(loyalityAmount),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}</Text>
+              }>
+              {`-${tokenConverterPlusCurrencyNumberFormater(
+                Number(selectedCarOption?.variant[0]?.multiplier) *
+                  Number(loyalityAmount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}`}
+            </Text>
           </View>
         )}
 
