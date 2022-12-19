@@ -5,6 +5,7 @@ import {
   FlatList,
   Image,
   RefreshControl,
+  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -530,12 +531,13 @@ export default function MyOrders(props) {
 
   if (isLoading) {
     return (
+      <SafeAreaView    style={{
+        flex: 1,
+        backgroundColor: colors.white,
+        alignItems: 'center',
+      }}>
       <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.white,
-          alignItems: 'center',
-        }}>
+      >
         <HeaderLoader
           widthLeft={moderateScale(30)}
           rectWidthLeft={moderateScale(30)}
@@ -557,6 +559,11 @@ export default function MyOrders(props) {
             marginLeft: width / 5.5,
           }}
         />
+        
+
+
+    
+        <View style={{alignItems:'center'}}>
         <HeaderLoader
           widthLeft={moderateScale(120)}
           rectWidthLeft={moderateScale(120)}
@@ -578,8 +585,6 @@ export default function MyOrders(props) {
             marginLeft: width / 5.5,
           }}
         />
-
-
         <HeaderLoader
           widthLeft={moderateScale(width / 1.2)}
           rectWidthLeft={moderateScale(width / 1.2)}
@@ -604,7 +609,6 @@ export default function MyOrders(props) {
             marginTop: moderateScaleVertical(20),
           }}
         />
-
         <HeaderLoader
           widthLeft={moderateScale(width / 1.2)}
           rectWidthLeft={moderateScale(width / 1.2)}
@@ -615,9 +619,13 @@ export default function MyOrders(props) {
           ry={15}
           viewStyles={{
             marginTop: moderateScaleVertical(20),
+    
           }}
         />
+        </View>
+
       </View>
+      </SafeAreaView>
     );
   }
   return (

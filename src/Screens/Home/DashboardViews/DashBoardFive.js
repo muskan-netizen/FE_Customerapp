@@ -106,7 +106,7 @@ export default function DashBoardFive({
     state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
- console.log(appMainData,"appMainDataappMainData")
+  console.log(appMainData, 'appMainDataappMainData');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -720,9 +720,13 @@ export default function DashBoardFive({
                 <Text
                   style={{
                     ...styles.viewAllText,
-                    color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : themeColors.primary_color,
                   }}>
-                  {getBundleId()==appIds.qdelo?`${strings.VIEW_ALL} ${strings.STORES}`:strings.VIEW_ALL}
+                  {getBundleId() == appIds.qdelo
+                    ? `${strings.VIEW_ALL} ${strings.STORES}`
+                    : strings.VIEW_ALL}
                 </Text>
               </TouchableOpacity>
             )}

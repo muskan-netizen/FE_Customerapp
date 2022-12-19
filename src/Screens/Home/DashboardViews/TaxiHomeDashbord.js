@@ -747,11 +747,9 @@ export default function TaxiHomeDashbord({
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingHorizontal: moderateScale(10),
-              
-                
               }}>
               <TouchableOpacity
-                style={{flexBasis:"auto",flexGrow:width/2}}
+                style={{flexBasis: 'auto', flexGrow: width / 2}}
                 onPress={() => {
                   actions.saveSchduleTime('now');
                   userData?.auth_token
@@ -778,11 +776,15 @@ export default function TaxiHomeDashbord({
                       })
                     : actions.setAppSessionData('on_login');
                 }}
-                style={{flexBasis:"auto",flexGrow:width/20,alignItems:'flex-end'}}>
+                style={{
+                  flexBasis: 'auto',
+                  flexGrow: width / 20,
+                  alignItems: 'flex-end',
+                }}>
                 <View
                   style={{
                     backgroundColor: colors.white,
-               
+
                     height: moderateScaleVertical(26),
                     borderRadius: 20,
                     justifyContent: 'space-around',
@@ -791,13 +793,15 @@ export default function TaxiHomeDashbord({
                     paddingHorizontal: moderateScale(5),
                   }}>
                   <Image source={imagePath.clock} />
-                  <Text style={{marginHorizontal:moderateScale(5)}}>{strings.NOW}</Text>
+                  <Text style={{marginHorizontal: moderateScale(5)}}>
+                    {strings.NOW}
+                  </Text>
                   <Image
                     style={{
                       transform: [{rotate: '90deg'}],
                       height: moderateScaleVertical(8),
                       width: moderateScale(8),
-                      resizeMode:'contain'
+                      resizeMode: 'contain',
                     }}
                     source={imagePath.goRight}
                   />

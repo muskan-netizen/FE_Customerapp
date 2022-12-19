@@ -108,7 +108,7 @@ export default function Home({route, navigation}) {
     unPresentAry: [],
     isSubscription: true,
     stopOrderModalVisible: true,
-    curLatLong: null,
+    curLatLong: {},
     selectedFilterType: {},
   });
 
@@ -197,7 +197,9 @@ export default function Home({route, navigation}) {
             .then((curLoc) => {
               updateState({
                 curLatLong: curLoc,
+                currentLocation: curLoc,
               });
+
               let locData = location?.latitude ? location : curLoc;
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
@@ -426,7 +428,11 @@ export default function Home({route, navigation}) {
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
       }
-      console.log(selectedVendorType,defaultVendorType,"selectedVendorTypeselectedVendorType");
+      console.log(
+        selectedVendorType,
+        defaultVendorType,
+        'selectedVendorTypeselectedVendorType',
+      );
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         // ...latlongObj,
@@ -1079,6 +1085,7 @@ export default function Home({route, navigation}) {
         } else {
           return (
             <>
+              {console.log('curLatLong=>', curLatLong)}
               <DashBoardHeaderFive
                 showToggles={false}
                 navigation={navigation}
@@ -1086,7 +1093,7 @@ export default function Home({route, navigation}) {
                 selcetedToggle={selcetedToggle}
                 toggleData={appData}
                 isLoading={isLoading}
-                currentLocation={currentLocation}
+                currentLocation={curLatLong}
                 isLoadingB={isLoadingB}
                 _onVoiceListen={_onVoiceListen}
                 isVoiceRecord={isVoiceRecord}

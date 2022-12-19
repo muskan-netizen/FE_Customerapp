@@ -1,6 +1,6 @@
 import React, {createRef, useEffect, useRef, useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
-import deviceInfoModule from 'react-native-device-info';
+import deviceInfoModule, {getBundleId} from 'react-native-device-info';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
@@ -36,6 +36,7 @@ import {
 import LottieView from 'lottie-react-native';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -48,9 +49,10 @@ export default function DashBoardHeaderFive({
   isVoiceRecord = false,
   _onVoiceStop = () => {},
   showAboveView = true,
+  currentLocation,
 }) {
   const navigation = useNavigation();
-
+  console.log('currentLocation=>', currentLocation, 'location=>', location);
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -130,21 +132,23 @@ export default function DashBoardHeaderFive({
                   resizeMode="contain"
                 />
                 <View>
-                  {!!location?.type && (
-                    <Text numberOfLines={1} style={styles.locationTypeTxt}>
-                      {location?.type === 3
-                        ? !!(
-                            location?.type_name != 0 &&
-                            location?.type != '0' &&
-                            location?.type_name !== null
-                          )
-                          ? location?.type_name
-                          : strings.UNKNOWN
-                        : location?.type === 2
-                        ? strings.WORK
-                        : strings.HOME}
-                    </Text>
-                  )}
+                  {getBundleId() == appIds.qdelo
+                    ? null
+                    : !!location?.type && (
+                        <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                          {location?.type === 3
+                            ? !!(
+                                location?.type_name != 0 &&
+                                location?.type != '0' &&
+                                location?.type_name !== null
+                              )
+                              ? location?.type_name
+                              : strings.UNKNOWN
+                            : location?.type === 2
+                            ? strings.WORK
+                            : strings.HOME}
+                        </Text>
+                      )}
 
                   <Text
                     numberOfLines={1}
@@ -157,7 +161,9 @@ export default function DashBoardHeaderFive({
                         fontFamily: fontFamily.medium,
                       },
                     ]}>
-                    {location?.address}
+                    {getBundleId() == appIds.qdelo
+                      ? currentLocation?.address
+                      : location?.address}
                   </Text>
                 </View>
               </TouchableOpacity>
