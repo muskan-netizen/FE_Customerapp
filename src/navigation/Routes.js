@@ -9,6 +9,7 @@ import {
   ChatRoomForVendor,
   ChatScreen,
   ChatScreenForVendor,
+  TrackDetail,
   VerifyAccount,
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
@@ -23,6 +24,7 @@ import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
+import  {Tracking} from '../Screens';
 const Stack = createStackNavigator();
 
 export default function Routes() {
@@ -35,13 +37,16 @@ export default function Routes() {
     <AppearanceProvider>
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator>
+     
           {appSessionInfo == 'shortcode' ||
           appSessionInfo == 'show_shortcode' ? (
+         
             <Stack.Screen
               name={navigationStrings.SHORT_CODE}
               component={ShortCode}
               options={{headerShown: false}}
             />
+         
           ) : appSessionInfo == 'app_intro' ? (
             <Stack.Screen
               name={navigationStrings.APP_INTRO}
@@ -54,6 +59,7 @@ export default function Routes() {
               component={businessType === 4 ? TaxiTabRoutes : TabRoutes}
               options={{headerShown: false, gestureEnabled: false}}
             />
+           
           ) : (
             AuthStack(Stack, appStyle)
           )}

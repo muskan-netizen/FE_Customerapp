@@ -53,6 +53,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     isDineInSelected,
     themeColor,
     themeToggle,
+    redirectedFrom
   } = useSelector((state) => state?.initBoot);
   const {userData} = useSelector((state) => state?.auth);
   const darkthemeusingDevice = useDarkMode();
@@ -252,8 +253,16 @@ export default function TaxiHomeScreen({route, navigation}) {
     React.useCallback(() => {
       // homeData();
       getAllAddress();
+      
     }, []),
   );
+
+useEffect(()=>{
+  if(redirectedFrom =='from_deepLinking'){
+    navigation.navigate(navigationStrings.TRACKING) 
+  }
+
+},[redirectedFrom])
 
   // useEffect(() => {
   //   homeData();

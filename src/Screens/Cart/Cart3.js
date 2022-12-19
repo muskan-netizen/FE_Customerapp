@@ -1190,7 +1190,7 @@ function Cart({ navigation, route }) {
       .then((res) => {
         console.log(res, "placeOrder");
         actions.reloadData(!reloadData);
-        actions.cartItemQty(0)
+        actions.cartItemQty(0);
         setPickupDriverComment(null);
         setDropOffDriverComment(null);
         setVendorComment(null);
@@ -1343,6 +1343,7 @@ function Cart({ navigation, route }) {
       data["specific_instructions"] = instruction;
       data["slot"] = selectedTimeSlots;
     }
+    console.log(data, "schedule api data");
 
     // updateState({isLoading: false});
 
@@ -2183,6 +2184,29 @@ function Cart({ navigation, route }) {
           isLoadingB: false,
           isRefreshing: false,
         });
+      })
+      .catch(errorMethod);
+  };
+
+  // discard customer edit order in cart
+
+  const _onDiscardCustomerEditOrder = () => {
+    const apiData = {
+      orderid: cartData?.order_id,
+    };
+
+    actions
+      .discardCustomerEditOrder(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        showSuccess(res?.message);
+        updateState({
+          isLoadingB: false,
+        });
+        getCartDetail();
       })
       .catch(errorMethod);
   };
@@ -4255,7 +4279,7 @@ function Cart({ navigation, route }) {
             )}`}</Text>
           </View>
         )}
-        
+
         {cartData?.total_tax > 0 && (
           <Animatable.View
             style={{
@@ -4445,14 +4469,15 @@ function Cart({ navigation, route }) {
           </Animatable.View>
         )}
 
-
         {showTaxFeeArea && (
           <View>
             <Animatable.View
               animation="fadeIn"
-              style={{ marginLeft: moderateScale(10),
-              borderWidth:moderateScale(0.4),
-            marginRight:moderateScale(5) }}
+              style={{
+                marginLeft: moderateScale(10),
+                borderWidth: moderateScale(0.4),
+                marginRight: moderateScale(5),
+              }}
             >
               {/* {cartData?.total_service_fee > 0 && (
                 <View
@@ -4493,46 +4518,46 @@ function Cart({ navigation, route }) {
                 </View>
               )} */}
 
-            
-              {!isEmpty(cartData?.specific_taxes) && cartData?.specific_taxes.map((val, index) => {
-                return (
-                  <View>
-                    {val?.value > 0 && (
-                      <View
-                        style={{
-                          ...styles.bottomTabLableValue,
-                          marginVertical: 1,
-                        }}
-                      >
-                        <Text
+              {!isEmpty(cartData?.specific_taxes) &&
+                cartData?.specific_taxes.map((val, index) => {
+                  return (
+                    <View>
+                      {val?.value > 0 && (
+                        <View
                           style={{
-                            ...styles.priceItemLabel,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.textGreyB,
-                            fontSize: textScale(11),
+                            ...styles.bottomTabLableValue,
+                            marginVertical: 1,
                           }}
                         >
-                          {val?.label}
-                        </Text>
-                        <Text
-                          style={{
-                            ...styles.priceItemLabel,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.textGreyB,
-                            fontSize: textScale(11),
-                          }}
-                        >{`${currencies?.primary_currency?.symbol}${Number(
-                          val?.value ? val?.value : 0
-                        ).toFixed(
-                          appData?.profile?.preferences?.digit_after_decimal
-                        )}`}</Text>
-                      </View>
-                    )}
-                  </View>
-                );
-              })}
+                          <Text
+                            style={{
+                              ...styles.priceItemLabel,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.textGreyB,
+                              fontSize: textScale(11),
+                            }}
+                          >
+                            {val?.label}
+                          </Text>
+                          <Text
+                            style={{
+                              ...styles.priceItemLabel,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.textGreyB,
+                              fontSize: textScale(11),
+                            }}
+                          >{`${currencies?.primary_currency?.symbol}${Number(
+                            val?.value ? val?.value : 0
+                          ).toFixed(
+                            appData?.profile?.preferences?.digit_after_decimal
+                          )}`}</Text>
+                        </View>
+                      )}
+                    </View>
+                  );
+                })}
 
               {/* {cartData?.tax_details.map((val) => {
                 return (
@@ -4708,7 +4733,11 @@ function Cart({ navigation, route }) {
                 marginLeft: moderateScale(16),
                 alignSelf: "flex-start",
               }}
-              onPress={clearSceduleDate}
+              onPress={ !!cartData?.editing_order?.id? ()=>Alert.alert('Info',"you can't clear schedule date for  this order",[ {
+                text: strings.CANCEL,
+                onPress: () => console.log('Cancel Pressed'),
+              },
+              {text: strings.OK, onPress: () =>console.log('') },]):clearSceduleDate}
             >
               <Text
                 style={{
@@ -4734,7 +4763,18 @@ function Cart({ navigation, route }) {
               businessType !== "laundry"
             ) && (
               <ButtonComponent
-                onPress={_selectTime}
+                onPress={
+                  !!cartData?.editing_order?.id
+                    ? () =>
+                        Alert.alert("Info", "you can't reschedule this order", [
+                          {
+                            text: strings.CANCEL,
+                            onPress: () => console.log("Cancel Pressed"),
+                          },
+                          { text: strings.OK, onPress: () => console.log("") },
+                        ])
+                    : _selectTime
+                }
                 btnText={
                   localeSheduledOrderDate
                     ? localeSheduledOrderDate
@@ -4874,68 +4914,120 @@ function Cart({ navigation, route }) {
   };
   const getHeader = () => {
     return (
-      <TouchableOpacity
-        disabled={!isEmpty(vendorAddress)}
-        onPress={() => setModalVisible(true)}
-        style={{
-          ...styles.topLable,
-          marginVertical: moderateScale(7),
-          justifyContent: "space-between",
-          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : null,
-        }}
-      >
-        <View style={{ flexDirection: "row", flex: 0.85 }}>
-          <FastImage
-            source={imagePath.mapIcon}
-            resizeMode="contain"
-            style={{
-              width: moderateScale(50),
-              height: moderateScale(50),
-            }}
-          />
-          <View style={styles.addressView}>
-            <Text
-              style={{
-                ...styles.homeTxt,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}
-            >
-              {homeType(selectedAddressData)}
-            </Text>
-
-            <Text
-              numberOfLines={2}
-              style={{
-                ...styles.addAddressTxt,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginTop: moderateScaleVertical(4),
-              }}
-            >
-              {!isEmpty(vendorAddress)
-                ? vendorAddress?.address
-                : selectedAddressData
-                ? `${
-                    !!selectedAddressData?.house_number
-                      ? selectedAddressData?.house_number + ",  "
-                      : ""
-                  }${selectedAddressData?.address}`
-                : strings.TAP_HERE_ADD_ADDRESS}
-            </Text>
-          </View>
-        </View>
-        {isEmpty(vendorAddress) && (
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => setModalVisible(true)}
-          >
+      <>
+        <TouchableOpacity
+          disabled={!isEmpty(vendorAddress)}
+          onPress={() => setModalVisible(true)}
+          style={{
+            ...styles.topLable,
+            marginVertical: moderateScale(7),
+            justifyContent: "space-between",
+            backgroundColor: isDarkMode ? MyDarkTheme.colors.background : null,
+          }}
+        >
+          <View style={{ flexDirection: "row", flex: 0.85 }}>
             <FastImage
-              source={imagePath.icEdit1}
+              source={imagePath.mapIcon}
               resizeMode="contain"
-              style={styles.editIcon}
+              style={{
+                width: moderateScale(50),
+                height: moderateScale(50),
+              }}
             />
-          </TouchableOpacity>
+            <View style={styles.addressView}>
+              <Text
+                style={{
+                  ...styles.homeTxt,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+              >
+                {homeType(selectedAddressData)}
+              </Text>
+
+              <Text
+                numberOfLines={2}
+                style={{
+                  ...styles.addAddressTxt,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  marginTop: moderateScaleVertical(4),
+                }}
+              >
+                {!isEmpty(vendorAddress)
+                  ? vendorAddress?.address
+                  : selectedAddressData
+                  ? `${
+                      !!selectedAddressData?.house_number
+                        ? selectedAddressData?.house_number + ",  "
+                        : ""
+                    }${selectedAddressData?.address}`
+                  : strings.TAP_HERE_ADD_ADDRESS}
+              </Text>
+            </View>
+          </View>
+          {isEmpty(vendorAddress) && (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => setModalVisible(true)}
+            >
+              <FastImage
+                source={imagePath.icEdit1}
+                resizeMode="contain"
+                style={styles.editIcon}
+              />
+            </TouchableOpacity>
+          )}
+        </TouchableOpacity>
+        {!!cartData?.editing_order?.id && (
+          <View
+            style={{
+              flexDirection: "row",
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                marginVertical: moderateScaleVertical(10),
+                fontFamily: fontFamily?.regular,
+              }}
+            >
+              Order{" "}
+              <Text
+                style={{
+                  fontFamily: fontFamily?.bold,
+                  color: themeColors?.primary_color,
+                }}
+              >
+                {" "}
+                {cartData?.editing_order?.order_number}
+              </Text>{" "}
+              being edited
+            </Text>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginHorizontal: moderateScale(10),
+              }}
+              onPress={_onDiscardCustomerEditOrder}
+            >
+              <Image source={imagePath.deleteRed} />
+              <Text
+                style={{
+                  marginHorizontal: moderateScale(4),
+                  color: colors.redB,
+                  fontFamily: fontFamily.bold,
+                }}
+              >
+                DISCARD
+              </Text>
+            </TouchableOpacity>
+          </View>
         )}
-      </TouchableOpacity>
+      </>
     );
   };
 

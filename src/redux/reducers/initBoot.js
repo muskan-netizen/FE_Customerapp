@@ -33,6 +33,7 @@ const initial_state = {
   themeToggle: false,
   searchText: [],
   redirectedFrom: '',
+  deeplinkUrl:''
   //internetConnection: false,
 };
 
@@ -178,6 +179,9 @@ export default function (state = initial_state, action) {
 
     case types.REDIRECTED_FROM: {
       return {...state, redirectedFrom: action.payload};
+    }
+    case types.DEEPLINK_URL: {
+      return {...state, deeplinkUrl: action.payload};
     }
 
     default: {

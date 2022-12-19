@@ -46,6 +46,7 @@ export default function (Stack) {
 
   return (
     <>
+       
       <Stack.Screen
         name={navigationStrings.TAXITABROUTES}
         component={TaxiTabRoutes}

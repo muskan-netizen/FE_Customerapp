@@ -1,5 +1,5 @@
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
-import React, {useState} from 'react';
+import { BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
+import React, { useState } from "react";
 import {
   Alert,
   I18nManager,
@@ -11,35 +11,35 @@ import {
   TouchableOpacity,
   Vibration,
   View,
-} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import FastImage from 'react-native-fast-image';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
-import Header from '../../Components/Header';
-import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
-import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang/index';
-import navigationStrings from '../../navigation/navigationStrings';
-import actions from '../../redux/actions';
-import colors from '../../styles/colors';
-import commonStylesFun, {hitSlopProp} from '../../styles/commonStyles';
+} from "react-native";
+import { useDarkMode } from "react-native-dark-mode";
+import FastImage from "react-native-fast-image";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+import Header from "../../Components/Header";
+import ListItemHorizontal from "../../Components/ListItemHorizontalWithImage";
+import WrapperContainer from "../../Components/WrapperContainer";
+import imagePath from "../../constants/imagePath";
+import strings from "../../constants/lang/index";
+import navigationStrings from "../../navigation/navigationStrings";
+import actions from "../../redux/actions";
+import colors from "../../styles/colors";
+import commonStylesFun, { hitSlopProp } from "../../styles/commonStyles";
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+} from "../../styles/responsiveSize";
+import { MyDarkTheme } from "../../styles/theme";
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   getRandomColor,
   showError,
-} from '../../utils/helperFunctions';
-import stylesFun from './styles';
+} from "../../utils/helperFunctions";
+import stylesFun from "./styles";
 
-export default function Account3({navigation}) {
+export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -61,15 +61,13 @@ export default function Account3({navigation}) {
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFun({ fontFamily, themeColors });
+  const commonStyles = commonStylesFun({ fontFamily });
 
   //Navigation to specific screen
-  const moveToNewScreen =
-    (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+  const moveToNewScreen = (screenName, data = {}) => () => {
+    navigation.navigate(screenName, { data });
+  };
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -84,7 +82,8 @@ export default function Account3({navigation}) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        url: 'https://play.google.com/store/apps/details?id=com.codebrew.customer',
+        url:
+          "https://play.google.com/store/apps/details?id=com.codebrew.customer",
       });
 
       if (result.action === Share.sharedAction) {
@@ -100,17 +99,17 @@ export default function Account3({navigation}) {
   //Logout function
   const userlogout = () => {
     if (!!userData?.auth_token) {
-      Alert.alert('', strings.LOGOUT_SURE_MSG, [
+      Alert.alert("", strings.LOGOUT_SURE_MSG, [
         {
           text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => console.log("Cancel Pressed"),
           // style: 'destructive',
         },
         {
           text: strings.CONFIRM,
           onPress: () => {
             actions.userLogout();
-            actions.cartItemQty('');
+            actions.cartItemQty("");
             moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
           },
         },
@@ -124,10 +123,10 @@ export default function Account3({navigation}) {
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
-      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, '', [
+      Alert.alert(strings.ARE_YOU_SURE_YOU_WANT_TO_DELETE, "", [
         {
           text: strings.CANCEL,
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => console.log("Cancel Pressed"),
           // style: 'destructive',
         },
         {
@@ -147,16 +146,16 @@ export default function Account3({navigation}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-        },
+        }
       );
-      console.log('delete user account res', res);
+      console.log("delete user account res", res);
       actions.userLogout();
-      actions.cartItemQty('');
-      actions.saveAddress('');
-      actions.addSearchResults('clear');
+      actions.cartItemQty("");
+      actions.saveAddress("");
+      actions.addSearchResults("clear");
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     } catch (error) {
-      console.log('erro raised', error);
+      console.log("erro raised", error);
       showError(error?.message);
     }
   };
@@ -168,27 +167,29 @@ export default function Account3({navigation}) {
           color: colors.black2Color,
           fontSize: textScale(16),
           lineHeight: textScale(28),
-          textAlign: 'center',
+          textAlign: "center",
           fontFamily: fontFamily.medium,
-        }}>
+        }}
+      >
         {strings.ACCOUNT}
       </Text>
 
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         {!!userData?.auth_token && (
           <>
             <View
               style={{
                 marginHorizontal: moderateScale(24),
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: "row",
+                alignItems: "center",
                 marginTop: moderateScaleVertical(20),
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
                   : colors.greyColor,
                 paddingVertical: moderateScaleVertical(12),
                 borderRadius: 12,
-              }}>
+              }}
+            >
               {userData?.source ? (
                 <FastImage
                   source={
@@ -197,7 +198,7 @@ export default function Account3({navigation}) {
                           uri: getImageUrl(
                             userData?.source?.proxy_url,
                             userData?.source?.image_path,
-                            '200/200',
+                            "200/200"
                           ),
                         }
                       : userData?.source
@@ -218,17 +219,19 @@ export default function Account3({navigation}) {
                     width: moderateScale(46),
                     borderRadius: moderateScale(23),
                     marginHorizontal: moderateScale(15),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: textScale(20),
-                      textTransform: 'uppercase',
+                      textTransform: "uppercase",
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.blackB,
-                    }}>
+                    }}
+                  >
                     {usernameFirstlater}
                   </Text>
                 </View>
@@ -236,11 +239,12 @@ export default function Account3({navigation}) {
               <View
                 style={{
                   marginHorizontal: moderateScale(10),
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                   flex: 1,
-                }}>
+                }}
+              >
                 <View>
                   <Text
                     style={{
@@ -249,7 +253,8 @@ export default function Account3({navigation}) {
                         : colors.textGreyJ,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(14),
-                    }}>
+                    }}
+                  >
                     {userData?.name}
                   </Text>
                   <Text
@@ -260,13 +265,15 @@ export default function Account3({navigation}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyJ,
                       marginTop: moderateScaleVertical(5),
-                    }}>
+                    }}
+                  >
                     {userData?.email}
                   </Text>
                 </View>
                 <TouchableOpacity
                   hitSlop={hitSlopProp}
-                  onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}>
+                  onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
+                >
                   <Image
                     source={imagePath.icEdit1}
                     style={{
@@ -305,8 +312,8 @@ export default function Account3({navigation}) {
         {!!userData?.auth_token &&
           (businessType == 4 ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: "row" }}
+              leftIconStyle={{ flex: 0.1, alignItems: "center" }}
               onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
               iconLeft={imagePath.myOrder2}
               centerHeading={strings.MY_ORDERS}
@@ -322,8 +329,8 @@ export default function Account3({navigation}) {
 
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: "row" }}
+            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
             onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
             iconLeft={imagePath.subscription}
             centerHeading={strings.SUBSCRIPTION}
@@ -339,8 +346,25 @@ export default function Account3({navigation}) {
 
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: "row" }}
+            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
+            onPress={moveToNewScreen(navigationStrings.TRACKING)}
+            iconLeft={imagePath.subscription}
+            centerHeading={strings.TRACKING}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          />
+        )}
+
+        {!!userData?.auth_token && (
+          <ListItemHorizontal
+            centerContainerStyle={{ flexDirection: "row" }}
+            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
             onPress={moveToNewScreen(navigationStrings.LOYALTY)}
             iconLeft={imagePath.loyalty}
             centerHeading={strings.LOYALTYPOINTS}
@@ -369,8 +393,8 @@ export default function Account3({navigation}) {
         )} */}
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: "row" }}
+            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
             onPress={moveToNewScreen(navigationStrings.WALLET)}
             iconLeft={imagePath.wallet3}
             centerHeading={strings.WALLET}
@@ -386,8 +410,8 @@ export default function Account3({navigation}) {
         {!!userData?.auth_token &&
           (businessType == 4 ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: "row" }}
+              leftIconStyle={{ flex: 0.1, alignItems: "center" }}
               onPress={moveToNewScreen(navigationStrings.WISHLIST)}
               iconLeft={imagePath.wishlist}
               centerHeading={strings.FAVOURITE}
@@ -402,8 +426,8 @@ export default function Account3({navigation}) {
           ))}
 
         <ListItemHorizontal
-          centerContainerStyle={{flexDirection: 'row'}}
-          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+          centerContainerStyle={{ flexDirection: "row" }}
+          leftIconStyle={{ flex: 0.1, alignItems: "center" }}
           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
           iconLeft={imagePath.links}
           centerHeading={strings.LINKS}
@@ -417,8 +441,8 @@ export default function Account3({navigation}) {
         />
         {!!userData?.auth_token && (
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: "row" }}
+            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
             onPress={onShare}
             iconLeft={imagePath.share1}
             centerHeading={strings.SHARE_APP}
@@ -433,8 +457,8 @@ export default function Account3({navigation}) {
         )}
 
         <ListItemHorizontal
-          centerContainerStyle={{flexDirection: 'row'}}
-          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+          centerContainerStyle={{ flexDirection: "row" }}
+          leftIconStyle={{ flex: 0.1, alignItems: "center" }}
           onPress={moveToNewScreen(navigationStrings.SETTIGS)}
           iconLeft={imagePath.settings1}
           centerHeading={strings.SETTINGS}
@@ -448,11 +472,11 @@ export default function Account3({navigation}) {
         />
 
         {!!userData?.auth_token &&
-          Platform.OS === 'android' &&
-          (businessType == 'taxi' ? null : (
+          Platform.OS === "android" &&
+          (businessType == "taxi" ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: "row" }}
+              leftIconStyle={{ flex: 0.1, alignItems: "center" }}
               onPress={() => {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
@@ -468,7 +492,7 @@ export default function Account3({navigation}) {
                   },
                   (err) => {
                     err;
-                  },
+                  }
                 );
               }}
               iconLeft={imagePath.printer}
@@ -496,8 +520,8 @@ export default function Account3({navigation}) {
           />
         )} */}
         <ListItemHorizontal
-          centerContainerStyle={{flexDirection: 'row'}}
-          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+          centerContainerStyle={{ flexDirection: "row" }}
+          leftIconStyle={{ flex: 0.1, alignItems: "center" }}
           onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
           iconLeft={imagePath.contactUs}
           centerHeading={strings.CONTACT_US}
@@ -513,18 +537,20 @@ export default function Account3({navigation}) {
           <View style={styles.loginView}>
             <TouchableOpacity
               // onPress={()=>actions.isVendorNotification(true)}
-              onPress={() => actions.setAppSessionData('on_login')}
-              style={styles.touchAbleLoginVIew}>
+              onPress={() => actions.setAppSessionData("on_login")}
+              style={styles.touchAbleLoginVIew}
+            >
               <Text
                 style={{
                   ...styles.loginLogoutText,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
+                }}
+              >
                 {strings.LOGIN}
               </Text>
               <Image
                 source={imagePath.rightBlue}
-                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+                style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>
           </View>
@@ -533,8 +559,8 @@ export default function Account3({navigation}) {
           !!appMainData?.is_admin &&
           businessType != 4 && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: "row" }}
+              leftIconStyle={{ flex: 0.1, alignItems: "center" }}
               onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
               iconLeft={imagePath.mystores2}
               centerHeading={strings.MYSTORES}
@@ -548,7 +574,7 @@ export default function Account3({navigation}) {
             />
           )}
 
-        <View style={{height: 100}} />
+        <View style={{ height: 100 }} />
       </ScrollView>
     </WrapperContainer>
   );

@@ -218,17 +218,24 @@ export default function Location({ route, navigation }) {
           });
         }
         if (paramsDataForEditDropLocation) {
-          const allDropOffLocationsCollection = [...paramsDataForEditDropLocation?.orderDropLocations];
+          const allDropOffLocationsCollection = [
+            ...paramsDataForEditDropLocation?.orderDropLocations,
+          ];
           allDropOffLocationsCollection[
             paramsDataForEditDropLocation?.editIndex
           ] = {
-            ...allDropOffLocationsCollection[paramsDataForEditDropLocation?.editIndex],
+            ...allDropOffLocationsCollection[
+              paramsDataForEditDropLocation?.editIndex
+            ],
             address: details?.formatted_address,
             latitude: details?.geometry?.location?.lat,
             longitude: details?.geometry?.location?.lng,
           };
 
-
+          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+            ...paramsDataForEditDropLocation,
+            orderDropLocations: allDropOffLocationsCollection,
+          });
         }
       } catch (error) {
         console.log("something wen't wrong");

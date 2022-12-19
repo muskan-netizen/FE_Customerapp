@@ -393,6 +393,7 @@ export default function Addaddress({ navigation, route }) {
       (item) => item.pre_address !== ""
     );
 
+
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
       id: paramData?.data?.id,

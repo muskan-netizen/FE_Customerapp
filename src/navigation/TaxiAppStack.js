@@ -17,6 +17,7 @@ import {
   PinAddressOnMap,
   RateOrder,
   VerifyAccount,
+  Location
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
@@ -66,6 +67,11 @@ export default function (Stack) {
         name={navigationStrings.OFFERS2}
         component={Offers}
         options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.LOCATION}
+        component={Location}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PICKUPTAXIORDERDETAILS}

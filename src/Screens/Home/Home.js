@@ -63,6 +63,7 @@ export default function Home({route, navigation}) {
     themeColor,
     themeToggle,
     allAddresss,
+    redirectedFrom
   } = useSelector((state) => state?.initBoot);
   const {location, appMainData, dineInType, isLocationSearched} = useSelector(
     (state) => state?.home,
@@ -187,9 +188,18 @@ export default function Home({route, navigation}) {
     useCallback(() => {
       if (!!userData?.auth_token) {
         getAllTempOrders();
+        
       }
     }, []),
   );
+
+
+  useEffect(()=>{
+    if(redirectedFrom =='from_deepLinking'){
+      navigation.navigate(navigationStrings.TRACKING) 
+    }
+  
+  },[redirectedFrom])
 
   useEffect(() => {
     chekLocationPermission(true)

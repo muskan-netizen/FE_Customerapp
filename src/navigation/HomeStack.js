@@ -327,6 +327,8 @@ export default function () {
         component={SubcategoryVendor}
         options={{ headerShown: false }}
       />
+       
+    
     </Stack.Navigator>
   );
 }

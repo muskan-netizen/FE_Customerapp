@@ -106,6 +106,8 @@ export async function apiReq(
       // cancelToken:source.token
     };
 
+    console.log(headers);
+
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,

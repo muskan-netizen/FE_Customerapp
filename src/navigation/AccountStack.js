@@ -175,16 +175,7 @@ export default function ({navigation}) {
         }
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.TRACKING}
-        component={Tracking}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.TRACKDETAIL}
-        component={TrackDetail}
-        options={{headerShown: false}}
-      />
+   
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={

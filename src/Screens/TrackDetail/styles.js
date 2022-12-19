@@ -1,30 +1,28 @@
-import {StyleSheet} from 'react-native';
-import colors from '../../styles/colors';
+import { StyleSheet } from "react-native";
+import colors from "../../styles/colors";
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-} from '../../styles/responsiveSize';
-import commonStylesFun from '../../styles/commonStyles';
+} from "../../styles/responsiveSize";
 
-export default ({fontFamily, themeColors}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors }) => {
   const styles = StyleSheet.create({
     containerStyle: {
       paddingVertical: 0,
       height: moderateScaleVertical(58),
-      alignItems: 'center',
+      alignItems: "center",
       borderBottomColor: colors.lightGreyBorder,
       borderBottomWidth: 0.7,
     },
     userProfileView: {
-      alignSelf: 'center',
+      alignSelf: "center",
       borderColor: colors.white,
       marginTop: moderateScale(30),
     },
     cameraView: {
-      position: 'absolute',
+      position: "absolute",
       right: -20,
     },
     userName: {
@@ -46,10 +44,13 @@ export default ({fontFamily, themeColors}) => {
       borderBottomRightRadius: 20,
       height: moderateScaleVertical(30),
     },
-    topSection: {},
     bottomSection: {
-      marginVertical: moderateScaleVertical(40),
-      marginHorizontal: moderateScaleVertical(20),
+      flex: 0.8,
+      marginBottom: moderateScaleVertical(78),
+    },
+    topSection: {
+      flex: 0.2,
+      justifyContent:'center'
     },
 
     address: {
@@ -70,9 +71,9 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(14),
     },
     viewDetailBottomView: {
-      position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',
+      position: "absolute",
+      alignItems: "center",
+      justifyContent: "center",
       bottom: height / 4,
       left: 0,
       right: 20,

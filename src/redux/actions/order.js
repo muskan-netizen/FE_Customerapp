@@ -27,6 +27,10 @@ import {
   GENERATE_INVOICE,
   VENDER_UPDATE_ORDER,
   GET_DRIVER_RATING_DETAIL,
+  ORDER_TRACING_DEEPLINKING,
+  EDIT_CUSTOMER_ORDER,
+  DISCARD_EDIT_CUSTOMER_ORDER,
+  DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -349,6 +353,22 @@ export function venderUpdateOrder(data = {}, headers = {}) {
       });
   });
 }
+
+
+export function orderTracingForDeepLinking(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ORDER_TRACING_DEEPLINKING, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+
 export function storeVendors(query, headers = {}) {
   return apiGet(SOTRE_VENDORS + query, {}, headers);
 }
@@ -364,3 +384,16 @@ export function allVendorOrders(query, headers = {}) {
 export function rescheduleOrder(data = {}, headers = {}) {
   return apiPost(RESCHDULE_ORDER, data, headers);
 }
+
+export function customerEditOrder(data = {}, headers = {}) {
+  return apiPost(EDIT_CUSTOMER_ORDER, data, headers);
+}
+
+export function discardCustomerEditOrder(data = {}, headers = {}) {
+  return apiPost(DISCARD_EDIT_CUSTOMER_ORDER, data, headers);
+}
+
+export function dropLocationChangeAfterOrderPlace(data = {}, headers = {}) {
+  return apiPost(DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE, data, headers);
+}
+

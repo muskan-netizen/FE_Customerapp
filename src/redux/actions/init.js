@@ -278,6 +278,15 @@ export const addSearchResults = (txt) => {
     payload: txt,
   });
 };
+
+
+export const setDeeplinkUrl = (url) => {
+  dispatch({
+    type: types.DEEPLINK_URL,
+    payload: url,
+  });
+};
+
 export const deleteSearchResults = () => {
   removeItem('searchResult');
   dispatch({

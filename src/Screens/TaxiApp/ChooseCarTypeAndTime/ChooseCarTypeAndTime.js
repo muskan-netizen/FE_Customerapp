@@ -643,7 +643,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       isLoading: true,
       indicatorLoader: true,
     });
-   
+
+
+
+   console.log(data,"orderr place data>>>>");
+
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -663,8 +667,16 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           };
-          console.log(extraData, data, "extraData, data");
-          checkPaymentOptions(extraData, data);
+          // console.log(extraData, data, "extraData, data");
+          if(!profile?.preferences?.is_postpay_enable){
+            checkPaymentOptions(extraData, data);
+          }else{
+            navigation.navigate(
+              navigationStrings.PICKUPTAXIORDERDETAILS,
+              extraData
+            );
+          }
+        
         } else {
           console.log(res, "res>>>>>");
           updateState({
@@ -774,6 +786,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data["user_product_order_form"] = allSubmittedAnswers
       ? allSubmittedAnswers
       : [];
+    data["is_postpay"]=profile?.preferences?.is_postpay_enable
     if (couponInfo) {
       data["coupon_id"] = couponInfo?.id;
     }
@@ -786,8 +799,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         ? paramData?.friendBookingDetails?.mobileNumber?.includes("+")
           ? paramData?.friendBookingDetails?.mobileNumber
           : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
-        : ""),
-      console.log(data, "dataaaaa");
+        : "")
+
 
     if (
     !!(
@@ -1281,7 +1294,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const _selectPaymentView = () => {
-    console.log(paramData, "paramDataparamData");
+
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}

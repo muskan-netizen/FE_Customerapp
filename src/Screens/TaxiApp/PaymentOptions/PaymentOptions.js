@@ -42,15 +42,17 @@ const PaymentOptions = ({ navigation, route }) => {
     cardInfo: null,
     btnLoader: false,
   });
+
   const { appData, appStyle, themeColors } = useSelector(
     (state) => state.initBoot
   );
-
+  const { profile } = appData;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params?.data?.paramData;
+
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount
   );
@@ -68,6 +70,10 @@ const PaymentOptions = ({ navigation, route }) => {
     btnLoader,
   } = state;
 
+  console.log(
+    profile?.preferences?.is_postpay_enable,
+    " profile?.preferences?.is_postpay_enable"
+  );
 
   useEffect(() => {
     getAllPaymentOptions();
@@ -141,13 +147,12 @@ const PaymentOptions = ({ navigation, route }) => {
       selectedPaymentMethod: item,
     });
 
-    if (item?.id == 4) {
+    if (item?.id == 4 && !profile?.preferences?.is_postpay_enable) {
       return;
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       ...paramData,
       selectedMethod: item,
-
     });
   };
 
@@ -205,6 +210,7 @@ const PaymentOptions = ({ navigation, route }) => {
   };
 
   const _renderItem = ({ item }) => {
+    console.log(item, "item item");
     return (
       <View>
         <TouchableOpacity
@@ -231,7 +237,8 @@ const PaymentOptions = ({ navigation, route }) => {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id === 4
+          selectedPaymentMethod?.id === 4 &&
+          !profile?.preferences?.is_postpay_enable
         ) && (
           <StripeProvider
             publishableKey={
@@ -330,7 +337,7 @@ const PaymentOptions = ({ navigation, route }) => {
             keyExtractor={(item, index) => String(index)}
           />
         </View>
-        {selectedPaymentMethod?.id == 4 && (
+        {selectedPaymentMethod?.id == 4 && !profile?.preferences?.is_postpay_enable && (
           <GradientButton
             onPress={selectPaymentOption}
             containerStyle={{
