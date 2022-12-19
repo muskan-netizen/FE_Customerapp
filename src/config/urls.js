@@ -1,5 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'http://192.168.103.164:9091/api/v1';
+
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
 // export const API_BASE_URL = 'https://shophairrun.app/api/v1';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';

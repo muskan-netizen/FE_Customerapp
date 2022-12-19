@@ -540,6 +540,11 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontFamily: fontFamily.regular,
       color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
     },
+    codmessageView: {
+      flexDirection: 'row',
+      paddingVertical: moderateScaleVertical(5),
+      paddingHorizontal: moderateScale(16),
+    },
   });
   return styles;
 };
