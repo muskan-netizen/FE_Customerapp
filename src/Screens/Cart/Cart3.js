@@ -1184,7 +1184,8 @@ function Cart({ navigation, route }) {
     actions
       .placeOrder(data, headerData)
       .then((res) => {
-        console.log(res, "placeOrder");
+        console.log(res, "=> placeOrder");
+        navigation.popToTop();
         actions.reloadData(!reloadData);
 
         setPickupDriverComment(null);
@@ -2547,6 +2548,7 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
+              console.log("item?.vendor_products =>", item);
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -2647,7 +2649,8 @@ function Cart({ navigation, route }) {
                                     </Text>
                                   </View>
 
-                                  <View
+                                  {getBundleId() !== appIds.rentzy &&
+                                    <View
                                     pointerEvents={btnLoader ? 'none' : 'auto'}
                                     style={{minWidth: moderateScale(74)}}>
                                     <View style={styles.incDecBtnContainer}>
@@ -2688,7 +2691,7 @@ function Cart({ navigation, route }) {
                                         </Text>
                                       </TouchableOpacity>
                                     </View>
-                                  </View>
+                                  </View>}
                                 </View>
                               ) : null}
 
