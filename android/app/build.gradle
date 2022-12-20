@@ -205,16 +205,15 @@ android {
     flavorDimensions "appType"
     productFlavors{
 
-                    royoorder {
+                      ace{
                 dimension "appType"
-                versionCode 3
+                versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".royoorder"
-                applicationId 'com.codebrew.royoorder'
-                resValue "string", "app_name", "RoyoOrder"
-                // resValue "string", "host_name", "192.168.100.141"
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.customer.ace'
+                resValue "string", "app_name", "Ace"
+                resValue "string", "host_name", ""
             }
     }
     // productFlavors {
