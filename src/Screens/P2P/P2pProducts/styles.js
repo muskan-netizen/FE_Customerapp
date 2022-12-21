@@ -11,8 +11,9 @@ export default ({themeColor, toggleTheme, fontFamily}) => {
   const styles = StyleSheet.create({
     imgBack: {
       width: width / 1.1,
-      height: 200,
+      height: moderateScaleVertical(220),
       marginVertical: moderateScale(8),
+      borderRadius: moderateScale(10),
     },
     btn: {
       width: '40%',

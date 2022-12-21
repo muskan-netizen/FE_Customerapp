@@ -1166,46 +1166,39 @@ export default function OrderDetail({navigation, route}) {
                             style={styles.imageStyle}
                           />
 
-                        <View style={styles.cartItemDetailsCon}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginRight: moderateScaleVertical(10),
-                            }}>
+                          <View style={styles.cartItemDetailsCon}>
                             <View
                               style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
+                                marginRight: moderateScaleVertical(10),
                               }}>
                               <View
                                 style={{
-                                  justifyContent: 'center',
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-between',
                                 }}>
-                                <Text
+                                <View
                                   style={{
-                                    flexDirection: 'row',
-                                    // alignItems: 'center',
-                                    // backgroundColor: 'yellow',
-                                    justifyContent: 'space-between',
-                                    color: isDarkMode
-                                      ? MyDarkTheme.colors.text
-                                      : colors.black,
+                                    justifyContent: 'center',
                                   }}>
-                                  {i?.product_name}
-                                </Text>
-                                {i?.quantity && (
-                                  <View
+                                  <Text
                                     style={{
                                       flexDirection: 'row',
-                                      alignItems: 'center',
+                                      // alignItems: 'center',
+                                      // backgroundColor: 'yellow',
+                                      justifyContent: 'space-between',
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.black,
                                     }}>
-                                    <Text
+                                    {i?.product_name}
+                                  </Text>
+                                  {i?.quantity && (
+                                    <View
                                       style={{
-                                        ...styles.quantityStyles,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.textGrey,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
                                       }}>
                                       <Text
                                         style={{
@@ -1214,41 +1207,117 @@ export default function OrderDetail({navigation, route}) {
                                             ? MyDarkTheme.colors.text
                                             : colors.textGrey,
                                         }}>
-                                        {strings.QTY}
+                                        <Text
+                                          style={{
+                                            ...styles.quantityStyles,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.textGrey,
+                                          }}>
+                                          {strings.QTY}
+                                        </Text>
+                                        <Text style={styles.cartItemWeight}>
+                                          {i?.quantity}
+                                        </Text>
                                       </Text>
-                                      <Text style={styles.cartItemWeight}>
-                                        {i?.quantity}
+                                    </View>
+                                  )}
+                                  {!!i?.product_addons.length && (
+                                    <View>
+                                      <Text style={styles.cartItemWeight2}>
+                                        {strings.EXTRA}
                                       </Text>
-                                    </Text>
-                                  </View>
-                                )}
-                                {!!i?.product_addons.length && (
-                                  <View>
-                                    <Text style={styles.cartItemWeight2}>
-                                      {strings.EXTRA}
-                                    </Text>
-                                  </View>
-                                )}
-                                {i?.product_addons.length
-                                  ? i?.product_addons.map((j, jnx) => {
-                                      return (
-                                        <View>
-                                          <Text
-                                            style={styles.cartItemWeight2}
-                                            numberOfLines={1}>
-                                            {j.addon_title}{' '}
-                                          </Text>
-                                          <View style={{flexDirection: 'row'}}>
-                                            <Text
-                                              style={styles.cartItemWeight2}
-                                              numberOfLines={
-                                                1
-                                              }>{`(${j.option_title})`}</Text>
+                                    </View>
+                                  )}
+                                  {i?.product_addons.length
+                                    ? i?.product_addons.map((j, jnx) => {
+                                        return (
+                                          <View>
                                             <Text
                                               style={styles.cartItemWeight2}
                                               numberOfLines={1}>
+                                              {j.addon_title}{' '}
+                                            </Text>
+                                            <View
+                                              style={{flexDirection: 'row'}}>
+                                              <Text
+                                                style={styles.cartItemWeight2}
+                                                numberOfLines={
+                                                  1
+                                                }>{`(${j.option_title})`}</Text>
+                                              <Text
+                                                style={styles.cartItemWeight2}
+                                                numberOfLines={1}>
+                                                {tokenConverterPlusCurrencyNumberFormater(
+                                                  Number(j?.price),
+                                                  digit_after_decimal,
+                                                  additional_preferences,
+                                                  currencies?.primary_currency
+                                                    ?.symbol,
+                                                )}
+                                              </Text>
+                                            </View>
+                                          </View>
+                                        );
+                                      })
+                                    : null}
+
+                                  {!!(
+                                    !!i?.pvariant &&
+                                    Number(i?.pvariant?.container_charges)
+                                  ) && (
+                                    <View
+                                      style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        marginTop: moderateScale(2),
+                                      }}>
+                                      <View>
+                                        <Text
+                                          style={{
+                                            ...styles.cartItemWeight2,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.textGreyB,
+                                            marginBottom: moderateScale(2),
+                                            // marginTop: moderateScaleVertical(6),
+                                          }}>
+                                          {`${strings.CONTAINERCHARGES} : `}
+                                        </Text>
+                                      </View>
+                                      {!!(
+                                        !!i?.container_charges &&
+                                        Number(i?.container_charges)
+                                      ) && (
+                                        <View
+                                          style={{
+                                            marginBottom:
+                                              moderateScaleVertical(2),
+                                          }}>
+                                          <View
+                                            style={{
+                                              marginRight: moderateScale(10),
+                                            }}>
+                                            <Text
+                                              style={
+                                                isDarkMode
+                                                  ? [
+                                                      styles.cartItemWeight2,
+                                                      {
+                                                        color:
+                                                          MyDarkTheme.colors
+                                                            .text,
+                                                      },
+                                                    ]
+                                                  : styles.cartItemWeight2
+                                              }
+                                              // numberOfLines={1}
+                                            >
                                               {tokenConverterPlusCurrencyNumberFormater(
-                                                Number(j?.price),
+                                                Number(
+                                                  i?.pvariant
+                                                    ?.container_charges,
+                                                ) * Number(i?.quantity),
                                                 digit_after_decimal,
                                                 additional_preferences,
                                                 currencies?.primary_currency
@@ -1257,175 +1326,109 @@ export default function OrderDetail({navigation, route}) {
                                             </Text>
                                           </View>
                                         </View>
-                                      );
-                                    })
-                                  : null}
-
-                                {!!(
-                                  !!i?.pvariant &&
-                                  Number(i?.pvariant?.container_charges)
-                                ) && (
-                                  <View
-                                    style={{
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                      marginTop: moderateScale(2),
-                                    }}>
-                                    <View>
-                                      <Text
-                                        style={{
-                                          ...styles.cartItemWeight2,
-                                          color: isDarkMode
-                                            ? MyDarkTheme.colors.text
-                                            : colors.textGreyB,
-                                          marginBottom: moderateScale(2),
-                                          // marginTop: moderateScaleVertical(6),
-                                        }}>
-                                        {`${strings.CONTAINERCHARGES} : `}
-                                      </Text>
+                                      )}
                                     </View>
-                                    {!!(
-                                      !!i?.container_charges &&
-                                      Number(i?.container_charges)
-                                    ) && (
-                                      <View
-                                        style={{
-                                          marginBottom:
-                                            moderateScaleVertical(2),
-                                        }}>
-                                        <View
-                                          style={{
-                                            marginRight: moderateScale(10),
-                                          }}>
-                                          <Text
-                                            style={
-                                              isDarkMode
-                                                ? [
-                                                    styles.cartItemWeight2,
-                                                    {
-                                                      color:
-                                                        MyDarkTheme.colors.text,
-                                                    },
-                                                  ]
-                                                : styles.cartItemWeight2
-                                            }
-                                            // numberOfLines={1}
-                                          >
-                                            {tokenConverterPlusCurrencyNumberFormater(
-                                              Number(
-                                                i?.pvariant?.container_charges,
-                                              ) * Number(i?.quantity),
-                                              digit_after_decimal,
-                                              additional_preferences,
-                                              currencies?.primary_currency
-                                                ?.symbol,
-                                            )}
-                                          </Text>
-                                        </View>
-                                      </View>
-                                    )}
-                                  </View>
-                                )}
-                              </View>
-                              <View
-                                style={{
-                                  justifyContent: 'center',
-                                  alignItems: 'flex-start',
-                                }}>
-                                <Text
-                                  numberOfLines={1}
+                                  )}
+                                </View>
+                                <View
                                   style={{
-                                    ...styles.priceItemLabel2,
-                                    color: isDarkMode
-                                      ? MyDarkTheme.colors.text
-                                      : colors.blackOpacity86,
-                                    fontSize: textScale(12),
-                                    fontFamily: fontFamily.medium,
+                                    justifyContent: 'center',
+                                    alignItems: 'flex-start',
                                   }}>
-                                  <Text style={styles.cartItemPrice}>
-                                    {tokenConverterPlusCurrencyNumberFormater(
-                                      Number(i?.price),
-                                      digit_after_decimal,
-                                      additional_preferences,
-                                      currencies?.primary_currency?.symbol,
-                                    )}
+                                  <Text
+                                    numberOfLines={1}
+                                    style={{
+                                      ...styles.priceItemLabel2,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.blackOpacity86,
+                                      fontSize: textScale(12),
+                                      fontFamily: fontFamily.medium,
+                                    }}>
+                                    <Text style={styles.cartItemPrice}>
+                                      {tokenConverterPlusCurrencyNumberFormater(
+                                        Number(i?.price),
+                                        digit_after_decimal,
+                                        additional_preferences,
+                                        currencies?.primary_currency?.symbol,
+                                      )}
+                                    </Text>
                                   </Text>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                          {cartData?.luxury_option_name == 'rental' ? (
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginVertical: moderateScaleVertical(10),
+                              }}>
+                              <View>
+                                <Text style={styles.startEndDateTitle}>
+                                  Start Date
+                                </Text>
+                                <Text style={styles.startEndDateValueTxt}>
+                                  {i?.start_date_time}
+                                </Text>
+                              </View>
+                              <View>
+                                <Text style={styles.startEndDateTitle}>
+                                  End Date
+                                </Text>
+                                <Text style={styles.startEndDateValueTxt}>
+                                  {i?.end_date_time}
+                                </Text>
+                              </View>
+                              <View>
+                                <Text style={styles.startEndDateTitle}>
+                                  Duration
+                                </Text>
+                                <Text style={styles.startEndDateValueTxt}>
+                                  {getHourAndMinutes(
+                                    Number(i?.total_booking_time),
+                                  )}
                                 </Text>
                               </View>
                             </View>
-                          </View>
+                          ) : null}
                         </View>
-                        {cartData?.luxury_option_name == 'rental' ? (
+
+                        {!!driverStatus?.order &&
+                        driverStatus?.order?.status === 'completed' ? (
                           <View
                             style={{
                               flexDirection: 'row',
-                              alignItems: 'center',
                               justifyContent: 'space-between',
-                              marginVertical: moderateScaleVertical(10),
+                              paddingBottom: moderateScaleVertical(5),
+                              paddingHorizontal: moderateScale(10),
+                              marginVertical: moderateScaleVertical(16),
                             }}>
-                            <View>
-                              <Text style={styles.startEndDateTitle}>
-                                Start Date
-                              </Text>
-                              <Text style={styles.startEndDateValueTxt}>
-                                {i?.start_date_time}
-                              </Text>
-                            </View>
-                            <View>
-                              <Text style={styles.startEndDateTitle}>
-                                End Date
-                              </Text>
-                              <Text style={styles.startEndDateValueTxt}>
-                                {i?.end_date_time}
-                              </Text>
-                            </View>
-                            <View>
-                              <Text style={styles.startEndDateTitle}>
-                                Duration
-                              </Text>
-                              <Text style={styles.startEndDateValueTxt}>
-                                {getHourAndMinutes(
-                                  Number(i?.total_booking_time),
-                                )}
-                              </Text>
-                            </View>
-                          </View>
-                        ) : null}
-                      </View>
+                            <StarRating
+                              maxStars={5}
+                              rating={Number(i?.product_rating?.rating)}
+                              selectedStar={(rating) =>
+                                onStarRatingPress(i, rating)
+                              }
+                              fullStarColor={colors.ORANGE}
+                              starSize={15}
+                            />
+                            {Number(i?.product_rating?.rating) ? (
+                              <TouchableOpacity
+                                onPress={() => _onRateOrderOrDriver(i)}>
+                                <Text
+                                  style={[
+                                    styles.writeAReview,
+                                    {color: themeColors.primary_color},
+                                  ]}>
+                                  {strings.WRITE_REVIEW}
+                                </Text>
+                              </TouchableOpacity>
+                            ) : null}
 
-                      {!!driverStatus?.order &&
-                      driverStatus?.order?.status === 'completed' ? (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingBottom: moderateScaleVertical(5),
-                            paddingHorizontal: moderateScale(10),
-                            marginVertical: moderateScaleVertical(16),
-                          }}>
-                          <StarRating
-                            maxStars={5}
-                            rating={Number(i?.product_rating?.rating)}
-                            selectedStar={(rating) =>
-                              onStarRatingPress(i, rating)
-                            }
-                            fullStarColor={colors.ORANGE}
-                            starSize={15}
-                          />
-                          {Number(i?.product_rating?.rating) ? (
-                            <TouchableOpacity
-                              onPress={() => _onRateOrderOrDriver(i)}>
-                              <Text
-                                style={[
-                                  styles.writeAReview,
-                                  {color: themeColors.primary_color},
-                                ]}>
-                                {strings.WRITE_REVIEW}
-                              </Text>
-                            </TouchableOpacity>
-                          ) : null}
-
-                          {/* {i?.product_rating?.rating ? (
+                            {/* {i?.product_rating?.rating ? (
                           <View>
                             <Text
                               onPress={() => rateYourOrder(i)}
@@ -1437,29 +1440,29 @@ export default function OrderDetail({navigation, route}) {
                             </Text>
                           </View>
                         ) : null} */}
-                        </View>
-                      ) : null}
-                      {!!i?.is_processor_enable && (
-                        <View>
-                          <Text
-                            style={{
-                              fontSize: moderateScale(14),
-                              fontFamily: fontFamily.regular,
-                              color: colors.black,
-                            }}>
-                            {'Processor Name : '} {i?.processor_name}{' '}
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: moderateScale(14),
-                              fontFamily: fontFamily.regular,
-                              color: colors.black,
-                            }}>
-                            {'Date : '} {i?.processor_date}{' '}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
+                          </View>
+                        ) : null}
+                        {!!i?.is_processor_enable && (
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: moderateScale(14),
+                                fontFamily: fontFamily.regular,
+                                color: colors.black,
+                              }}>
+                              {'Processor Name : '} {i?.processor_name}{' '}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: moderateScale(14),
+                                fontFamily: fontFamily.regular,
+                                color: colors.black,
+                              }}>
+                              {'Date : '} {i?.processor_date}{' '}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
                     </View>
                   );
                 } else {

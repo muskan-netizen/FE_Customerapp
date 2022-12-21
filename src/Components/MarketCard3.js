@@ -31,9 +31,6 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-const transparentColor = ['transparent', 'transparent'];
-const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
-
 const MarketCard3 = ({
   data = {},
   onPress = () => {},
@@ -53,8 +50,8 @@ const MarketCard3 = ({
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
-    data.banner.proxy_url || data.image.proxy_url,
-    data.banner.image_path || data.image.image_path,
+    data?.banner?.proxy_url || data?.image?.proxy_url,
+    data?.banner?.image_path || data?.image?.image_path,
     '700/300',
   );
 

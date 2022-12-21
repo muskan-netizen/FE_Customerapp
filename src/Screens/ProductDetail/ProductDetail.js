@@ -1665,9 +1665,9 @@ export default function ProductDetail({route, navigation}) {
                       <StarRating
                         disabled={false}
                         maxStars={5}
-                        rating={Number(
-                          productDetailData?.averageRating,
-                        ).toFixed(1)}
+                        rating={parseInt(
+                          Number(productDetailData?.averageRating).toFixed(1),
+                        )}
                         fullStarColor={colors.yellowB}
                         starSize={8}
                         containerStyle={{width: width / 9}}
@@ -1908,11 +1908,11 @@ export default function ProductDetail({route, navigation}) {
                                   themeColors.primary_color.substr(1),
                                   15,
                                 ),
-                                //  flex: 0.28,
                                 borderColor: themeColors?.primary_color,
                                 height: moderateScale(38),
                                 justifyContent: 'space-between',
                                 marginLeft: moderateScale(8),
+                                textAlign: 'center',
                               }}
                               value={`${productQuantityForCart.toString()}`}
                               onChangeText={(value) =>
@@ -1970,7 +1970,7 @@ export default function ProductDetail({route, navigation}) {
                               textTransform: 'capitalize',
                               color: isDarkMode
                                 ? MyDarkTheme.colors.text
-                                : themeColors.secondary_color,
+                                : colors.white,
                             }}
                             onPress={addToCart}
                             btnText={`${

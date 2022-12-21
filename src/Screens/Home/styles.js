@@ -315,7 +315,7 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(13),
     },
     exploreStoresTxt: {
-      fontFamily: fontFamily.medium,
+      fontFamily: fontFamily.bold,
       fontSize: textScale(14),
       textAlign: 'left',
     },

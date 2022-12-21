@@ -384,8 +384,11 @@ function Cart({navigation, route}) {
         closeForm();
         actions.cartItemQty(res);
         setIsShimmerLoading(false);
-        !(dineInType === 'delivery' || dineInType === 'on_demand') &&
-          setVendorAddress(res?.data?.vendor_details?.vendor_address || {});
+        !(
+          dineInType === 'delivery' ||
+          dineInType === 'on_demand' ||
+          dineInType === 'p2p'
+        ) && setVendorAddress(res?.data?.vendor_details?.vendor_address || {});
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({deliveryFeeLoader: false, isSubmitFaqLoader: false});
 
@@ -1487,7 +1490,9 @@ function Cart({navigation, route}) {
 
       if (
         !selectedAddressData &&
-        (dineInType === 'delivery' || dineInType === 'on_demand')
+        (dineInType === 'delivery' ||
+          dineInType === 'on_demand' ||
+          dineInType === 'p2p')
       ) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
@@ -2503,7 +2508,6 @@ function Cart({navigation, route}) {
                   : ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
               </Text>
             ) : null}
-
             {item?.is_vendor_closed ? (
               <Text
                 numberOfLines={1}

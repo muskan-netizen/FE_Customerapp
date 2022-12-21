@@ -161,4 +161,6 @@ export default {
   ATTRIBUTE_INFORMATION: 'attributeInformation',
   P2P_PRODUCT_DETAIL: 'p2pProductDetail',
   REPLACE_ORDER: 'replaceOrder',
+  CHAT_STACK: 'chatStack',
+  MY_POSTS: 'myPosts',
 };

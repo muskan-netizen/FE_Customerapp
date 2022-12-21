@@ -56,6 +56,7 @@ export default function Account3({navigation}) {
     languages,
   } = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
+  const {dineInType, appMainData} = useSelector((state) => state?.home);
 
   const [allVendors, setAllVendors] = useState([]);
 
@@ -79,7 +80,6 @@ export default function Account3({navigation}) {
     };
 
   const userData = useSelector((state) => state.auth.userData);
-  const appMainData = useSelector((state) => state?.home?.appMainData);
 
   //Share your app
 
@@ -109,7 +109,7 @@ export default function Account3({navigation}) {
     }
   };
 
-  console.log(userData,"appDataappData")
+  console.log(userData, 'appDataappData');
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -388,6 +388,28 @@ export default function Account3({navigation}) {
               />
             ))}
 
+          {!!userData?.auth_token &&
+            dineInType == 'p2p' &&
+            !!appMainData?.is_admin &&
+            (businessType == 4 ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
+                  isBack: true,
+                })}
+                iconLeft={imagePath.icMyPosts}
+                centerHeading={strings.MY_POSTS}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
+
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
               {!userData?.auth_token && (
@@ -587,7 +609,7 @@ export default function Account3({navigation}) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
-          {!!userData?.auth_token &&
+          {/* {!!userData?.auth_token &&
           Platform.OS === 'android' &&
           !!appMainData?.is_admin ? (
             <ListItemHorizontal
@@ -621,7 +643,7 @@ export default function Account3({navigation}) {
               // iconRight={imagePath.goRight}
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ) : null}
+          ) : null} */}
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
@@ -784,7 +806,7 @@ export default function Account3({navigation}) {
                 leftIconStyle={{flex: 0.1, alignItems: 'center'}}
                 onPress={() => goToChatRoom('vendor_chat')}
                 iconLeft={imagePath.icUserChat}
-                centerHeading={strings.USER_CHAT}
+                centerHeading={strings.VENDOR_CHAT}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -799,7 +821,7 @@ export default function Account3({navigation}) {
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={() => goToChatRoom('user_chat')}
               iconLeft={imagePath.icVendorChat}
-              centerHeading={strings.VENDOR_CHAT}
+              centerHeading={strings.USER_CHAT}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),

@@ -6,6 +6,7 @@ import {
   TextInput,
   Platform,
   PermissionsAndroid,
+  Button,
 } from 'react-native';
 import React, {useCallback, useState, useEffect, useRef} from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -37,18 +38,32 @@ import validations from '../../../utils/validations';
 import {hitSlopProp} from '../../../styles/commonStyles';
 import ActionSheet from 'react-native-actionsheet';
 import strings from '../../../constants/lang';
+import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import PanoramaView from '@lightbase/react-native-panorama-view';
 import {androidCameraPermission} from '../../../utils/permissions';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
+import GradientButton from '../../../Components/GradientButton';
+import Modal from 'react-native-modal';
+import {useDarkMode} from 'react-native-dark-mode';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
   console.log(paramData, '<===paramData');
-  const {appData, currencies, languages, appStyle, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const darkthemeusingDevice = useDarkMode();
+
+  const {
+    appData,
+    currencies,
+    languages,
+    appStyle,
+    themeColors,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
   const [attributeInfo, setAttributeInfo] = useState([]);
@@ -58,7 +73,11 @@ const AttributeInformation = ({route, navigation}) => {
   const [isLoadingSubmitAttributes, setLoadingSubmitAttributes] =
     useState(false);
   const [productImgs, setProductImgs] = useState([]);
+  const [product360Imgs, setProduct360Imgs] = useState([]);
   const [isImagePickerModal, setImagePickerModal] = useState(false);
+  const [is360ImgPicker, set360ImgPicker] = useState(false);
+  const [isProductAddedModal, setIsProductAddedModal] = useState(false);
+  const [price, setPrice] = useState('');
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -87,6 +106,7 @@ const AttributeInformation = ({route, navigation}) => {
     const error = validations({
       productName: name,
       productDetail: description,
+      price: price,
     });
     if (error) {
       showError(error);
@@ -105,8 +125,12 @@ const AttributeInformation = ({route, navigation}) => {
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
     formData.append('body_html', description);
+    formData.append('price', price);
     productImgs.map((item) => {
       formData.append('file[]', item);
+    });
+    product360Imgs.map((item) => {
+      formData.append('file_360[]', item);
     });
     let apiObj = {};
     attributeInfo.map((item, index) => {
@@ -138,8 +162,7 @@ const AttributeInformation = ({route, navigation}) => {
       .then((res) => {
         setLoadingSubmitAttributes(false);
         console.log(res, '<===response onSubmitAttributes');
-        showSuccess(res?.message);
-        navigation.goBack();
+        setIsProductAddedModal(true);
       })
       .catch(errorMethod);
   };
@@ -206,45 +229,55 @@ const AttributeInformation = ({route, navigation}) => {
 
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
-    console.log(permissionStatus, 'permissionStatus...');
     if (!!permissionStatus) {
-      if (index == 0 || index == 1) {
-        cameraHandler(index, {
-          width: 300,
-          height: 400,
-          cropping: false,
-          cropperCircleOverlay: false,
-          compressImageQuality: 0.5,
-          mediaType: 'photo',
-        })
-          .then((res) => {
-            console.log(res, 'res>>>>>>res');
-            if (res && (res?.sourceURL || res?.path)) {
-              let file = {
-                id: uuidv4(),
-                name:
-                  Platform.OS == 'ios'
-                    ? res?.filename
-                    : res?.path.substring(res?.path.lastIndexOf('/') + 1),
-                type: res?.mime,
-                uri: res?.sourceURL || res?.path,
-              };
-              setImagePickerModal(false);
+      cameraHandler(index, {
+        width: 300,
+        height: 400,
+        cropping: false,
+        cropperCircleOverlay: false,
+        compressImageQuality: 0.5,
+        mediaType: 'photo',
+      })
+        .then((res) => {
+          if (res?.path) {
+            let file = {
+              id: uuidv4(),
+              name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+              type: res?.mime,
+              uri: res?.path,
+            };
+            if (isImagePickerModal) {
               setProductImgs([...productImgs, file]);
+              setImagePickerModal(false);
+            } else {
+              setProduct360Imgs([...product360Imgs, file]);
+              set360ImgPicker(false);
             }
-          })
-          .catch((err) => {
-            setImagePickerModal(false);
-          });
-      }
+          } else {
+            closeMediaPicker();
+          }
+        })
+        .catch(closeMediaPicker);
     }
   };
 
-  const removeProductImg = (item) => {
-    const productImgsData = [...productImgs];
-    let itmIndx = productImgsData.findIndex((itm) => itm?.id == item?.uri);
-    productImgsData.splice(itmIndx, 1);
-    setProductImgs(productImgsData);
+  const closeMediaPicker = () => {
+    set360ImgPicker(false);
+    setImagePickerModal(false);
+  };
+
+  const removeProductImg = (item, type) => {
+    if (type == 1) {
+      const productImgsData = [...productImgs];
+      let itmIndx = productImgsData.findIndex((itm) => itm?.id == item?.uri);
+      productImgsData.splice(itmIndx, 1);
+      setProductImgs(productImgsData);
+    } else {
+      const product360ImgsData = [...product360Imgs];
+      let itmIndx = product360ImgsData.findIndex((itm) => itm?.id == item?.uri);
+      product360ImgsData.splice(itmIndx, 1);
+      setProduct360Imgs(product360ImgsData);
+    }
   };
 
   const renderRadioBtns = useCallback(
@@ -264,6 +297,12 @@ const AttributeInformation = ({route, navigation}) => {
                 ? imagePath.icActiveRadio
                 : imagePath.icInActiveRadio
             }
+            style={{
+              tintColor:
+                !isEmpty(data?.values) && data?.values[0] == item?.id
+                  ? themeColors.primary_color
+                  : colors.blackOpacity43,
+            }}
           />
           <Text
             style={{
@@ -297,6 +336,11 @@ const AttributeInformation = ({route, navigation}) => {
                 ? imagePath.checkBox2Active
                 : imagePath.checkBox2InActive
             }
+            style={{
+              tintColor: checkValueExistInAry(item, data?.values)
+                ? themeColors.primary_color
+                : colors.blackOpacity43,
+            }}
           />
           <Text
             style={{
@@ -366,6 +410,7 @@ const AttributeInformation = ({route, navigation}) => {
         btnText="Submit"
         btnStyle={styles.submitBtn}
         onPress={onSubmitAttributes}
+        colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
         isLoading={isLoadingSubmitAttributes}
         btnTextStyle={{
           textTransform: 'none',
@@ -460,45 +505,154 @@ const AttributeInformation = ({route, navigation}) => {
                     ...styles.attributeTitle,
                     marginTop: moderateScaleVertical(20),
                   }}>
-                  Add Image
+                  Price
                 </Text>
-                {!isEmpty(productImgs) && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    backgroundColor: colors.blackOpacity05,
+                    borderRadius: moderateScale(5),
+                  }}>
                   <View
                     style={{
-                      marginBottom: moderateScaleVertical(5),
+                      width: moderateScale(25),
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}>
-                    {productImgs.map((itm, indx) => (
-                      <View style={String(indx)}>
-                        <PanoramaView
-                          style={{
-                            height: moderateScaleVertical(250),
-                            width: '96%',
-                            marginTop: moderateScaleVertical(7),
-                          }}
-                          dimensions={{height: 230, width: width}}
-                          inputType="mono"
-                          imageUrl={itm?.uri}
-                        />
-                        <TouchableOpacity
-                          hitSlop={hitSlopProp}
-                          onPress={() => removeProductImg(itm)}
-                          style={{position: 'absolute', right: 4, top: -2}}>
-                          <Image source={imagePath.icRemoveIcon} />
-                        </TouchableOpacity>
-                      </View>
-                    ))}
+                    <Text>{currencies?.primary_currency?.symbol || '$'}</Text>
                   </View>
-                )}
-                <TouchableOpacity
-                  onPress={() => setImagePickerModal(true)}
-                  activeOpacity={0.7}>
-                  <Image
-                    source={imagePath.icPlaceholder}
+                  <TextInput
+                    placeholder="Enter price"
+                    onChangeText={(text) => setPrice(text)}
+                    keyboardType="number-pad"
                     style={{
-                      marginTop: moderateScaleVertical(5),
+                      flex: 1,
                     }}
                   />
-                </TouchableOpacity>
+                </View>
+                <Text
+                  style={{
+                    ...styles.attributeTitle,
+                    marginTop: moderateScaleVertical(20),
+                  }}>
+                  Add Image
+                </Text>
+
+                <View
+                  style={{
+                    marginTop: moderateScaleVertical(10),
+                    paddingLeft: moderateScale(10),
+                  }}>
+                  <Text
+                    style={{
+                      ...styles.attributeTitle,
+                      fontFamily: fontFamily?.medium,
+                    }}>
+                    Photo
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: moderateScaleVertical(7),
+                      flexWrap: 'wrap',
+                    }}>
+                    {!isEmpty(productImgs) &&
+                      productImgs.map((itm, indx) => (
+                        <View style={String(indx)}>
+                          <Image
+                            style={{
+                              height: moderateScale(90),
+                              width: moderateScale(90),
+                              marginRight: moderateScale(10),
+                            }}
+                            source={{uri: itm?.uri}}
+                          />
+                          <TouchableOpacity
+                            hitSlop={hitSlopProp}
+                            onPress={() => removeProductImg(itm, 1)}
+                            style={{position: 'absolute', right: 4, top: -2}}>
+                            <Image source={imagePath.icRemoveIcon} />
+                          </TouchableOpacity>
+                        </View>
+                      ))}
+                    <TouchableOpacity
+                      onPress={() => setImagePickerModal(true)}
+                      activeOpacity={0.7}>
+                      <Image
+                        source={imagePath.icPhoto}
+                        style={{
+                          marginTop: moderateScaleVertical(5),
+                          height: moderateScale(90),
+                          width: moderateScale(90),
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    marginTop: moderateScaleVertical(10),
+                    paddingLeft: moderateScale(10),
+                  }}>
+                  <Text
+                    style={{
+                      ...styles.attributeTitle,
+                      fontFamily: fontFamily?.medium,
+                    }}>
+                    360° Media
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: moderateScaleVertical(7),
+                      flexWrap: 'wrap',
+                    }}>
+                    {!isEmpty(product360Imgs) &&
+                      product360Imgs.map((itm, indx) => (
+                        <View style={String(indx)}>
+                          <PanoramaView
+                            style={{
+                              height: moderateScale(90),
+                              width: moderateScale(90),
+                              marginTop: moderateScaleVertical(7),
+                              marginRight: moderateScale(10),
+                            }}
+                            dimensions={{
+                              height: moderateScale(90),
+                              width: moderateScale(90),
+                            }}
+                            inputType="mono"
+                            imageUrl={itm?.uri}
+                          />
+                          <TouchableOpacity
+                            hitSlop={hitSlopProp}
+                            onPress={() => removeProductImg(itm, 2)}
+                            style={{position: 'absolute', right: 4, top: -2}}>
+                            <Image source={imagePath.icRemoveIcon} />
+                          </TouchableOpacity>
+                        </View>
+                      ))}
+                    <TouchableOpacity
+                      onPress={() => set360ImgPicker(true)}
+                      activeOpacity={0.7}>
+                      <Image
+                        source={imagePath.icPhoto}
+                        style={{
+                          marginTop: moderateScaleVertical(5),
+                          height: moderateScale(90),
+                          width: moderateScale(90),
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
                 <View
                   style={{
                     marginTop: moderateScaleVertical(16),
@@ -507,6 +661,7 @@ const AttributeInformation = ({route, navigation}) => {
                     data={attributeInfo}
                     keyboardShouldPersistTaps={'handled'}
                     scrollEnabled={false}
+                    keyExtractor={(item, index) => String(index)}
                     ItemSeparatorComponent={() => (
                       <View
                         style={{
@@ -533,12 +688,48 @@ const AttributeInformation = ({route, navigation}) => {
         )}
       </View>
       <GallaryCameraImgPicker
-        isVisible={isImagePickerModal}
+        isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}
         onGallary={() => cameraHandle(1)}
-        onCancel={() => setImagePickerModal(false)}
-        onClose={() => setImagePickerModal(false)}
+        isVisbleCamera={!is360ImgPicker}
+        onCancel={closeMediaPicker}
+        onClose={closeMediaPicker}
       />
+
+      <Modal isVisible={isProductAddedModal}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: moderateScale(15),
+            marginHorizontal: moderateScale(30),
+            paddingVertical: moderateScaleVertical(50),
+          }}>
+          <Image source={imagePath.check3} />
+          <Text
+            style={{
+              color: isDarkMode ? colors.white : colors.black,
+              fontFamily: fontFamily.medium,
+              fontSize: textScale(19),
+              maxWidth: '70%',
+              textAlign: 'center',
+              marginVertical: moderateScale(18),
+              lineHeight: moderateScaleVertical(30),
+            }}>
+            {strings.POST_UPLOADED_SUCCESS}
+          </Text>
+          <GradientButton
+            btnText={'Ok'}
+            onPress={() => {
+              setIsProductAddedModal(false);
+              navigation.goBack();
+            }}
+            containerStyle={{width: '50%', marginTop: moderateScaleVertical(5)}}
+            colorsArray={['#FC7049', '#FD312C']}
+          />
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 };

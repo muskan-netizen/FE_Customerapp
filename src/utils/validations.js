@@ -72,6 +72,7 @@ export default function (data) {
     vendorTitle,
     vendorDesc,
     isTermsConditions,
+    price,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -153,6 +154,12 @@ export default function (data) {
       return emptyValidationText;
     } else if (checkNumericValue) {
       return checkNumericValue;
+    }
+  }
+  if (price !== undefined) {
+    let emptyValidationText = checkEmpty(price, strings.PRICE, false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
     }
   }
 

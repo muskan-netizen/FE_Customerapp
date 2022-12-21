@@ -43,6 +43,7 @@ import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import navigationStrings from '../../../navigation/navigationStrings';
+import {SvgUri} from 'react-native-svg';
 
 const PostCategory = ({navigation}) => {
   const modalRef = useRef();
@@ -217,6 +218,8 @@ const PostCategory = ({navigation}) => {
     }
   };
 
+  console.log(fontFamily, 'fsdaklfhksjdf');
+
   const renderAttributeOptions = useCallback(
     ({item, index}) => {
       return (
@@ -349,8 +352,9 @@ const PostCategory = ({navigation}) => {
       let imageURI = getImageUrl(
         item?.icon?.image_fit,
         item?.icon?.image_path,
-        '160/160',
+        '200/200',
       );
+      const isSVG = imageURI ? imageURI.includes('.svg') : null;
       return (
         <View style={{flex: 1}}>
           <TouchableOpacity
@@ -362,24 +366,31 @@ const PostCategory = ({navigation}) => {
             }}
             activeOpacity={0.7}
             onPress={() => onPressP2pCategory(item)}>
-            <FastImage
-              style={{
-                height: moderateScale(70),
-                width: moderateScale(70),
-                borderRadius: moderateScale(10),
-              }}
-              source={{
-                uri: imageURI,
-                cache: FastImage.cacheControl.immutable,
-                priority: FastImage.priority.high,
-              }}
-              resizeMode="cover"
-            />
+            {isSVG ? (
+              <SvgUri
+                height={moderateScale(70)}
+                width={moderateScale(70)}
+                uri={imageURI}
+              />
+            ) : (
+              <FastImage
+                style={{
+                  height: moderateScale(70),
+                  width: moderateScale(70),
+                  borderRadius: moderateScale(10),
+                }}
+                source={{
+                  uri: imageURI,
+                  cache: FastImage.cacheControl.immutable,
+                  priority: FastImage.priority.high,
+                }}
+                resizeMode="contain"
+              />
+            )}
             <Text
               style={{
                 ...styles.textStyle,
                 color: !!themeColor ? colors.white : colors.black,
-                lineHeight: 17,
               }}>
               {item?.translation_one?.name || ''}
             </Text>
@@ -431,7 +442,7 @@ const PostCategory = ({navigation}) => {
 
         <GradientButton
           containerStyle={{marginTop: moderateScale(18), width: '100%'}}
-          colorsArray={['#FC7049', '#FD312C']}
+          colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
           // onPress={_onLogin}
           btnText={strings.AUTO_FILL_DETAILS}
         />
@@ -663,9 +674,7 @@ function stylesFunc({fontFamily, themeColor}) {
     },
     textStyle: {
       fontFamily: fontFamily.medium,
-      letterSpacing: 0.3,
-      maxWidth: 100,
-      marginTop: moderateScale(8),
+      marginTop: moderateScale(5),
       textAlign: 'center',
     },
     modalStyle: {

@@ -29,6 +29,7 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
@@ -61,10 +62,16 @@ import {getValuebyKeyInArray} from '../../utils/commonFunction';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Login3({navigation}) {
-  const navigation_ = useNavigation();
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {
+    appData,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
+
   const {
     apple_login,
     fb_login,
@@ -72,50 +79,19 @@ export default function Login3({navigation}) {
     google_login,
     additional_preferences,
   } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences);
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  var clonedState = {};
+
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({themeColors, fontFamily});
 
   const [withEmail, setwithEmail] = useState(true);
   const [state, setState] = useState({
-    // email: '',
+    phoneNumber: '',
+    email: '',
     password: '',
     isLoading: false,
-    phoneInput: false,
-    phoneNoVisibility: false,
-    phoneNumber: '',
-    email: {
-      value: '',
-      focus: true,
-    },
-    mobilNo: {
-      phoneNo: '',
-      callingCode:
-        !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        getBundleId() !== appIds.sxm2go
-          ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
-              '-',
-              '',
-            )
-          : appData?.profile.country?.phonecode
-          ? appData?.profile?.country?.phonecode
-          : '91',
-      cca2:
-        !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        getBundleId() !== appIds.sxm2go
-          ? getPhonesCallingCodeAndCountryData[0].isoCode2
-          : appData?.profile?.country?.code
-          ? appData?.profile?.country?.code
-          : 'IN',
-      focus: false,
-      countryName: '',
-      isShowPassword: false,
-      appHashKey: '',
-    },
-    phoneNumberOnly: '',
-    calllingCodePhoneOnly:
+    callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
       getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
@@ -125,7 +101,7 @@ export default function Login3({navigation}) {
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
-    cca2PhoneOnly:
+    cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
       getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
@@ -134,8 +110,6 @@ export default function Login3({navigation}) {
         : 'IN',
   });
 
-  const fontFamily = appStyle?.fontSizeData;
-  //CLone deep all the states
   useEffect(() => {
     if (Platform.OS == 'android') {
       RNOtpVerify.getHash()
@@ -146,28 +120,21 @@ export default function Login3({navigation}) {
         })
         .catch();
     }
-    clonedState = cloneDeep(state);
   }, []);
 
   //Update states
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  //Styles in app
-  const styles = stylesFunc({themeColors, fontFamily});
 
   //all states used in this screen
   const {
     password,
-    isLoading,
-    phoneInput,
-    phoneNoVisibility,
-    mobilNo,
+    cca2,
     email,
-    number,
+    phoneNumber,
+    isLoading,
+    callingCode,
     isShowPassword,
     appHashKey,
-    phoneNumberOnly,
-    cca2PhoneOnly,
-    calllingCodePhoneOnly,
   } = state;
 
   //Naviagtion to specific screen
@@ -181,16 +148,11 @@ export default function Login3({navigation}) {
 
   //Validate form
   const isValidData = () => {
-    const error = getValuebyKeyInArray(
-      'is_phone_signup',
-      additional_preferences,
-    )
-      ? validator({phoneNumber: phoneNumberOnly})
-      : email.focus
-      ? validator({email: email.value, password})
+    const error = !!withEmail
+      ? validator({email: email, password: password})
       : validator({
-          phoneNumber: mobilNo.phoneNo,
-          callingCode: mobilNo.callingCode,
+          phoneNumber: phoneNumber,
+          callingCode: callingCode,
         });
     if (error) {
       showError(error);
@@ -220,34 +182,20 @@ export default function Login3({navigation}) {
     }
 
     let data = {
-      username: getValuebyKeyInArray('is_phone_signup', additional_preferences)
-        ? phoneNumberOnly
-        : email.focus
-        ? email.value
-        : mobilNo.phoneNo,
-      password: password,
+      username: withEmail ? email : phoneNumber,
+      password: withEmail ? password : '',
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
-      dialCode: getValuebyKeyInArray('is_phone_signup', additional_preferences)
-        ? calllingCodePhoneOnly
-        : mobilNo.focus
-        ? mobilNo.callingCode
-        : '',
-      countryData: getValuebyKeyInArray(
-        'is_phone_signup',
-        additional_preferences,
-      )
-        ? cca2PhoneOnly
-        : mobilNo.focus
-        ? mobilNo.cca2
-        : '',
-      app_hash_key: appHashKey,
+      dialCode: !withEmail ? callingCode : '',
+      countryData: !withEmail ? cca2 : '',
     };
     if (Platform.OS === 'android' && !!appHashKey) {
       data['app_hash_key'] = appHashKey;
     }
     updateState({isLoading: true});
+
+    console.log(data, 'postdata.....');
 
     actions
       .loginUsername(data, {
@@ -261,14 +209,9 @@ export default function Login3({navigation}) {
         if (!!res.data) {
           if (res?.data?.is_phone) {
             navigation.navigate(navigationStrings.OTP_VERIFICATION, {
-              username: getValuebyKeyInArray(
-                'is_phone_signup',
-                additional_preferences,
-              )
-                ? phoneNumberOnly
-                : mobilNo?.phoneNo,
-              dialCode: mobilNo?.callingCode,
-              countryData: mobilNo?.cca2,
+              username: phoneNumber,
+              dialCode: callingCode,
+              countryData: cca2,
               data: res.data,
             });
           } else {
@@ -439,55 +382,10 @@ export default function Login3({navigation}) {
   };
 
   const _onCountryChange = (data) => {
-    getValuebyKeyInArray('is_phone_signup', additional_preferences)
-      ? updateState({
-          cca2PhoneOnly: data.cca2,
-          calllingCodePhoneOnly: data.callingCode.toString(),
-        })
-      : updateState({
-          mobilNo: {
-            phoneNo: mobilNo.phoneNo,
-            cca2: data.cca2,
-            callingCode: data.callingCode.toString(),
-            focus: true,
-          },
-          // cca2: data.cca2,
-          // callingCode: data.mobilNo.callingCode[0],
-        });
-    return;
-  };
-
-  /*************************** Check Input Handler */
-  const checkInputHandler = (data = '') => {
-    let re = /^[0-9]{1,45}$/;
-    let c = re.test(data);
-
-    if (c) {
-      updateState({
-        phoneInput: true,
-        mobilNo: {
-          ...mobilNo,
-          phoneNo: data,
-          focus: true,
-        },
-        email: {
-          ...email,
-          focus: false,
-        },
-      });
-    } else {
-      updateState({
-        phoneInput: false,
-        email: {
-          value: data,
-          focus: true,
-        },
-        mobilNo: {
-          ...mobilNo,
-          focus: false,
-        },
-      });
-    }
+    updateState({
+      cca2: data.cca2,
+      callingCode: data.callingCode.toString(),
+    });
   };
 
   const showHidePassword = () => {
@@ -528,109 +426,100 @@ export default function Login3({navigation}) {
         enableOnAndroid={true}>
         <View>
           <View style={{height: moderateScaleVertical(28)}} />
-          <View
+
+          <Image
+            source={imagePath.app_icon}
             style={{
-              alignItems: 'center',
-              margin: '5%',
-            }}>
-            <Image source={imagePath.app_icon} />
-          </View>
+              alignSelf: 'center',
+            }}
+          />
+
           <View style={{height: moderateScaleVertical(30)}} />
-          {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(data) => updateState({phoneNumberOnly: data})}
-              cca2={cca2PhoneOnly}
-              phoneNumber={phoneNumberOnly}
-              callingCode={calllingCodePhoneOnly}
-              placeholder={strings.YOUR_PHONE_NUMBER}
-              keyboardType={'phone-pad'}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
-              autoFocus={true}
-              containerStyle={{
-                marginBottom: 20,
-              }}
-            />
-          ) : (
-            <View>
-              {!!withEmail && (
-                <>
-                  <BorderTextInput
-                    onChangeText={(data) => checkInputHandler(data)}
-                    containerStyle={{
-                      backgroundColor: colors.blackOpacity05,
-                      borderWidth: 0,
-                    }}
-                    textInputStyle={{
-                      paddingHorizontal: 16,
-                      fontSize: 18,
-                      fontFamily: fontFamily.regular,
-                    }}
-                    placeholder={strings.YOUR_EMAIL_PHONE}
-                    value={email.value}
-                    keyboardType={'email-address'}
-                    autoCapitalize={'none'}
-                    autoFocus={true}
-                    returnKeyType={'next'}
-                  />
-                  <BorderTextInput
-                    containerStyle={{
-                      backgroundColor: colors.blackOpacity05,
-                      borderWidth: 0,
-                    }}
-                    textInputStyle={{
-                      paddingHorizontal: 16,
-                      fontSize: 18,
-                      fontFamily: fontFamily.regular,
-                    }}
-                    onChangeText={_onChangeText('password')}
-                    placeholder={strings.ENTER_PASSWORD}
-                    value={password}
-                    secureTextEntry={isShowPassword ? false : true}
-                    rightIcon={
-                      password.length > 0
-                        ? !isShowPassword
-                          ? imagePath.icShowPassword
-                          : imagePath.icHidePassword
-                        : false
-                    }
-                    onPressRight={showHidePassword}
-                    isShowPassword={isShowPassword}
-                    rightIconStyle={{}}
-                    // returnKeyType={'next'}
-                  />
-                </>
-              )}
-              {!withEmail && (
-                <View style={{marginBottom: moderateScale(18)}}>
-                  <PhoneNumberInput
-                    containerStyle={{
-                      backgroundColor: colors.blackOpacity05,
-                      borderWidth: 0,
-                    }}
-                    textInputStyle={{
-                      paddingHorizontal: 16,
-                      fontSize: 18,
-                      fontFamily: fontFamily.regular,
-                    }}
-                    onCountryChange={_onCountryChange}
-                    onChangePhone={(data) => checkInputHandler(data)}
-                    cca2={mobilNo.cca2}
-                    phoneNumber={mobilNo.phoneNo}
-                    callingCode={mobilNo.callingCode}
-                    placeholder={strings.YOUR_PHONE_NUMBER}
-                    keyboardType={'phone-pad'}
-                    color={isDarkMode ? MyDarkTheme.colors.text : null}
-                    autoFocus={true}
-                  />
-                </View>
-              )}
-            </View>
-          )}
-          {getValuebyKeyInArray(
-            'is_phone_signup',
-            additional_preferences,
-          ) ? null : (
+
+          <View>
+            {!!withEmail && (
+              <>
+                <BorderTextInput
+                  onChangeText={(txt) =>
+                    updateState({
+                      email: txt,
+                    })
+                  }
+                  containerStyle={{
+                    backgroundColor: colors.blackOpacity05,
+                    borderWidth: 0,
+                  }}
+                  textInputStyle={{
+                    paddingHorizontal: moderateScale(16),
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.regular,
+                  }}
+                  placeholder={'Enter your email'}
+                  value={email}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'}
+                  autoFocus={true}
+                  returnKeyType={'next'}
+                />
+                <BorderTextInput
+                  containerStyle={{
+                    backgroundColor: colors.blackOpacity05,
+                    borderWidth: 0,
+                  }}
+                  textInputStyle={{
+                    paddingHorizontal: moderateScale(16),
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.regular,
+                  }}
+                  onChangeText={_onChangeText('password')}
+                  placeholder={strings.ENTER_PASSWORD}
+                  value={password}
+                  secureTextEntry={isShowPassword ? false : true}
+                  rightIcon={
+                    password.length > 0
+                      ? !isShowPassword
+                        ? imagePath.icShowPassword
+                        : imagePath.icHidePassword
+                      : false
+                  }
+                  onPressRight={showHidePassword}
+                  isShowPassword={isShowPassword}
+                  rightIconStyle={{}}
+                  // returnKeyType={'next'}
+                />
+              </>
+            )}
+            {!withEmail && (
+              <View style={{marginBottom: moderateScale(18)}}>
+                <PhoneNumberInput
+                  containerStyle={{
+                    backgroundColor: colors.blackOpacity05,
+                    borderWidth: 0,
+                  }}
+                  textInputStyle={{
+                    paddingHorizontal: moderateScale(16),
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.regular,
+                  }}
+                  onCountryChange={_onCountryChange}
+                  onChangePhone={(txt) =>
+                    updateState({
+                      phoneNumber: txt,
+                    })
+                  }
+                  cca2={cca2}
+                  phoneNumber={phoneNumber}
+                  callingCode={callingCode}
+                  placeholder={strings.YOUR_PHONE_NUMBER}
+                  keyboardType={'phone-pad'}
+                  color={isDarkMode ? MyDarkTheme.colors.text : null}
+                  autoFocus={true}
+                />
+              </View>
+            )}
+          </View>
+
+          {!withEmail ? null : (
             <View style={styles.forgotContainer}>
               <Text
                 onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
@@ -681,23 +570,23 @@ export default function Login3({navigation}) {
             </Text>
           </TouchableOpacity>
           <View style={{marginTop: moderateScaleVertical(30)}}>
-            {/* {(!!google_login ||
-            !!fb_login ||
-            !!twitter_login ||
-            !!apple_login) && ( */}
-            <View style={styles.socialRow}>
-              <View style={styles.hyphen} />
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.orText, {color: MyDarkTheme.colors.text}]
-                    : styles.orText
-                }>
-                {strings.OR_LOGIN_WITH}
-              </Text>
-              <View style={styles.hyphen} />
-            </View>
-            {/* )} */}
+            {(!!google_login ||
+              !!fb_login ||
+              !!twitter_login ||
+              !!apple_login) && (
+              <View style={styles.socialRow}>
+                <View style={styles.hyphen} />
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.orText, {color: MyDarkTheme.colors.text}]
+                      : styles.orText
+                  }>
+                  {strings.OR_LOGIN_WITH}
+                </Text>
+                <View style={styles.hyphen} />
+              </View>
+            )}
             <View
               style={{
                 flexDirection: 'row',
@@ -705,20 +594,20 @@ export default function Login3({navigation}) {
                 marginTop: moderateScaleVertical(40),
                 alignSelf: 'center',
               }}>
-              {/* {!!google_login && ( */}
-              <TouchableOpacity
-                onPress={() => openGmailLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.gmail} />
-              </TouchableOpacity>
-              {/* )} */}
-              {/* {!!fb_login && ( */}
-              <TouchableOpacity
-                onPress={() => openFacebookLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.facebook} />
-              </TouchableOpacity>
-              {/* )} */}
+              {!!google_login && (
+                <TouchableOpacity
+                  onPress={() => openGmailLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.gmail} />
+                </TouchableOpacity>
+              )}
+              {!!fb_login && (
+                <TouchableOpacity
+                  onPress={() => openFacebookLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.facebook} />
+                </TouchableOpacity>
+              )}
               {!!twitter_login && (
                 <TouchableOpacity
                   onPress={() => openTwitterLogin()}
@@ -727,101 +616,12 @@ export default function Login3({navigation}) {
                 </TouchableOpacity>
               )}
 
-              {
-                //   !!apple_login &&
-                Platform.OS == 'ios' && (
-                  <TouchableOpacity
-                    onPress={() => openAppleLogin()}
-                    style={{marginHorizontal: moderateScale(20)}}>
-                    <Image source={imagePath.apple1} />
-                  </TouchableOpacity>
-                )
-              }
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              {!!google_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_google2}
-                    btnText={strings.CONTINUE_GOOGLE}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(15),
-                    }}
-                    onPress={openGmailLogin}
-                  />
-                </View>
-              )}
-              {!!fb_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_fb2}
-                    btnText={strings.CONTINUE_FACEBOOK}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(5),
-                    }}
-                    onPress={() => openFacebookLogin()}
-                  />
-                </View>
-              )}
-              {!!twitter_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_twitter2}
-                    btnText={strings.CONTINUE_TWITTER}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(10),
-                    }}
-                    nPress={() => openTwitterLogin()}
-                  />
-                </View>
-              )}
-
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
-                    btnText={strings.CONTINUE_APPLE}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(17),
-                    }}
-                    onPress={() => openAppleLogin()}
-                  />
-                </View>
+                <TouchableOpacity
+                  onPress={() => openAppleLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.apple1} />
+                </TouchableOpacity>
               )}
             </View>
           </View>
@@ -832,36 +632,26 @@ export default function Login3({navigation}) {
         ) ? null : (
           <View style={{marginTop: '10%'}}>
             <Text
-              style={
-                isDarkMode
-                  ? {
-                      ...styles.txtSmall,
-                      color: MyDarkTheme.colors.text,
-                      fontSize: 15,
-                    }
-                  : {
-                      ...styles.txtSmall,
-                      color: colors.textGreyLight,
-                      fontSize: 15,
-                    }
-              }>
+              style={{
+                textAlign: 'center',
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyLight,
+                fontSize: textScale(14),
+              }}>
               {strings.DONT_HAVE_ACCOUNT}
-              <View
+
+              <Text
+                onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
                 style={{
-                  borderBottomWidth: 0.7,
-                  borderBottomColor: colors.orange,
+                  fontFamily: fontFamily.bold,
+                  fontSize: textScale(14),
+                  color: '#FC7049',
+                  textDecorationLine: 'underline',
                 }}>
-                <Text
-                  onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
-                  style={{
-                    fontFamily: fontFamily.bold,
-                    fontSize: 15,
-                    color: '#FC7049',
-                  }}>
-                  {' '}
-                  {strings.REGISTER}
-                </Text>
-              </View>
+                {' '}
+                {strings.REGISTER}
+              </Text>
             </Text>
           </View>
         )}

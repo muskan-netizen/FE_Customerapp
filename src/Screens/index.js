@@ -156,7 +156,7 @@ export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
 export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
 
-//zonesso template
+//P2p template
 export {default as OuterScreen5} from './OuterScreen/OuterScreen5';
 export {default as Login3} from './Login/Login3';
 export {default as Signup4} from './Signup/Signup4';
@@ -164,3 +164,4 @@ export {default as Post} from './P2P/Post/PostCategory';
 export {default as P2pProducts} from './P2P/P2pProducts/P2pProducts';
 export {default as P2pProductDetail} from './P2P/P2pProductDetail/P2pProductDetail';
 export {default as AttributeInformation} from './P2P/AttributeInformation/AttributeInformation';
+export {default as MyP2pPosts} from './P2P/MyP2pPosts/MyP2pPosts';

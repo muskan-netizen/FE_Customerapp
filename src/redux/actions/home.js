@@ -207,7 +207,7 @@ export const setPrimaryAddress = (query = '', data = {}, headers = {}) => {
 };
 
 export function dineInData(res) {
-  console.log(res, 'dine_in_type');
+  console.log(res, 'dine_in_type in action');
   setItem('dine_in_type', res);
   dispatch({
     type: types.DINE_IN_DATA,

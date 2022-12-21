@@ -25,11 +25,14 @@ export default function ChatRoomForVendor({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+
+  const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, 'paramData...paramData');
   const styles = stylesFun({fontFamily, isDarkMode});
   const [state, setState] = useState({roomData: [], isLoading: true});
   const {roomData, isLoading} = state;
@@ -39,18 +42,24 @@ export default function ChatRoomForVendor({navigation, route}) {
 
   useFocusEffect(
     useCallback(() => {
+      if (!userData?.auth_token) {
+        actions.setAppSessionData('on_login');
+        return;
+      }
       fetchData();
     }, [navigation]),
   );
   useFocusEffect(
     useCallback(() => {
-      socketServices.on('new-app-message', (data) => {
-        console.log('listen in roomChat screen');
-        fetchData();
-      });
-      return () => {
-        socketServices.removeListener('new-app-message');
-      };
+      if (!!userData?.auth_token) {
+        socketServices.on('new-app-message', (data) => {
+          console.log('listen in roomChat screen');
+          fetchData();
+        });
+        return () => {
+          socketServices.removeListener('new-app-message');
+        };
+      }
     }, [navigation]),
   );
   console.log('paramDataparamData', appData);
@@ -61,13 +70,24 @@ export default function ChatRoomForVendor({navigation, route}) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       };
-      let apiData = {
-        sub_domain: '192.168.101.88', //this is static value
-        type: 'vendor_to_user',
-        db_name: appData?.profile?.database_name,
-        client_id: String(appData?.profile.id),
-        order_user_id: String(userData?.id),
-      };
+
+      let apiData = {};
+      if (dineInType == 'p2p') {
+        apiData = {
+          type: 'user_to_user',
+          db_name: appData?.profile?.database_name,
+          client_id: String(appData?.profile.id),
+          order_user_id: String(userData?.id),
+        };
+      } else {
+        apiData = {
+          sub_domain: '192.168.101.88', //this is static value
+          type: 'vendor_to_user',
+          db_name: appData?.profile?.database_name,
+          client_id: String(appData?.profile.id),
+          order_user_id: String(userData?.id),
+        };
+      }
       console.log('api data+++', apiData);
       const res = await actions.fetchUserChat(apiData, headerData);
       updateState({isLoading: false});

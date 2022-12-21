@@ -63,6 +63,8 @@ import {
   ChatRoomForVendor,
   AccountTemplateFour,
   ReplaceOrder,
+  MyP2pPosts,
+  P2pProductDetail,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -365,6 +367,16 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.REPLACE_ORDER}
         component={ReplaceOrder}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.P2P_PRODUCT_DETAIL}
+        component={P2pProductDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.MY_POSTS}
+        component={MyP2pPosts}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -15,7 +15,11 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
+import {
+  getCurrentLocation,
+  getImageUrl,
+  showSuccess,
+} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import {RadioButton} from 'react-native-paper';
 
@@ -37,6 +41,8 @@ import LottieView from 'lottie-react-native';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import Header from '../../../Components/Header';
+import {chekLocationPermission} from '../../../utils/permissions';
+import {isEmpty} from 'lodash';
 
 export default function DashBoardHeaderSeven({
   // navigation = {},
@@ -49,68 +55,73 @@ export default function DashBoardHeaderSeven({
   isVoiceRecord = false,
   _onVoiceStop = () => {},
   showAboveView = true,
+  curLatLong = {},
 }) {
   const navigation = useNavigation();
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
-
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
-  const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
 
   return (
     <View
       style={{
         marginHorizontal: moderateScale(15),
       }}>
-      <Header
-        leftIcon={imagePath.location1}
-        headerStyle={{}}
-        rightViewStyle={{
-          flex: 1,
-        }}
-        centerTitleViewStyle={{
-          flex: 0,
-        }}
-        // centerTitle={'Abu Dhabi'}
-        customLeft={() => {
-          return (
-            <View
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: moderateScaleVertical(15),
+          marginBottom: moderateScaleVertical(5),
+        }}>
+        <TouchableOpacity
+          style={{flexDirection: 'row'}}
+          activeOpacity={0.7}
+          disabled={!appData?.profile?.preferences?.is_hyperlocal}
+          onPress={() =>
+            navigation.navigate(navigationStrings.LOCATION, {
+              type: 'Home1',
+            })
+          }>
+          <Image source={imagePath.location1} />
+          {!appData?.profile?.preferences?.is_hyperlocal ? (
+            <Text
+              numberOfLines={1}
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
+                marginLeft: 8,
+                fontFamily: fontFamily?.regular,
+                color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
               }}>
-              {!!location?.address && (
-                <TouchableOpacity
-                  style={{flexDirection: 'row'}}
-                  activeOpacity={0.7}
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.LOCATION, {
-                      type: 'Home1',
-                    })
-                  }>
-                  <Image source={imagePath.location1} />
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      marginLeft: 8,
-                      fontFamily: fontFamily.regular,
-                      color: colors.black,
-                    }}>
-                    {location?.address.substring(0, 30)}{' '}
-                    {location?.address.length >= 30 ? '...' : ''}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          );
+              {!isEmpty(curLatLong)
+                ? `${curLatLong?.address?.substring(0, 30)} ${
+                    curLatLong?.address?.length >= 30 ? '...' : ''
+                  }`
+                : ''}
+            </Text>
+          ) : (
+            <Text
+              numberOfLines={1}
+              style={{
+                marginLeft: 8,
+                fontFamily: fontFamily?.regular,
+                color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
+              }}>
+              {location?.address?.substring(0, 30)}{' '}
+              {location?.address?.length >= 30 ? '...' : ''}
+            </Text>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <DeliveryTypeComp
+        selectedToggle={selcetedToggle}
+        tabMainStyle={{
+          marginBottom: 0,
         }}
       />
-      <DeliveryTypeComp selectedToggle={selcetedToggle} />
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() =>
@@ -124,14 +135,16 @@ export default function DashBoardHeaderSeven({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingVertical: moderateScaleVertical(10),
+          paddingVertical: moderateScaleVertical(14),
           paddingHorizontal: moderateScale(10),
-          marginBottom: moderateScaleVertical(15),
+          marginVertical: moderateScaleVertical(15),
         }}>
         <Text
           style={{
             fontFamily: fontFamily.regular,
-            color: colors.blackOpacity66,
+            color: isDarkMode
+              ? MyDarkTheme?.colors?.text
+              : colors.blackOpacity66,
           }}>
           Search here.....
         </Text>

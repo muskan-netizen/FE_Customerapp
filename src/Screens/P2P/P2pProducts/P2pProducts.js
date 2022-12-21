@@ -42,6 +42,7 @@ import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {checkValueExistInAry} from '../../../utils/commonFunction';
 import {UIActivityIndicator} from 'react-native-indicators';
+import FastImage from 'react-native-fast-image';
 
 const P2pProducts = ({route, navigation}) => {
   const flatlistRef = useRef(null);
@@ -59,15 +60,11 @@ const P2pProducts = ({route, navigation}) => {
 
   const darkthemeusingDevice = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
-  const showModal = true;
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const styles = styleFun({themeColor, themeToggle, fontFamily});
 
   const [isLoading, setIsLoading] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [products, setProducts] = React.useState([]);
   const [p2pProducts, setP2pProducts] = useState([]);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [isAttributeFilterModal, setIsAttributeFilterModal] = useState(false);
   const [isLoadMore, setLoadMore] = useState(false);
@@ -75,7 +72,9 @@ const P2pProducts = ({route, navigation}) => {
 
   useEffect(() => {
     getP2pProductsByCategoryId();
-    getListOfAvailableAttributes();
+    if (!!userData?.auth_token) {
+      getListOfAvailableAttributes();
+    }
   }, []);
 
   const getListOfAvailableAttributes = () => {
@@ -226,6 +225,13 @@ const P2pProducts = ({route, navigation}) => {
     setAttributeInfo(attributeInfoData);
   };
 
+  const onEndReached = () => {
+    if (isLoadMore) {
+      setPageNo(pageNo + 1);
+      getP2pProductsByCategoryId(pageNo + 1);
+    }
+  };
+
   const renderP2pProducts = useCallback(
     ({item, index}) => {
       const getImage = (quality) =>
@@ -244,26 +250,38 @@ const P2pProducts = ({route, navigation}) => {
             onPress={() =>
               navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
                 product_id: item?.id,
+                product_image: item?.product_image,
               })
             }>
-            <ImageBackground
+            <FastImage
               style={styles.imgBack}
-              source={{uri: getImage('200/200')}}
-              imageStyle={{borderRadius: moderateScale(10)}}>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={{
-                  alignSelf: 'flex-end',
-                  margin: moderateScale(10),
-                }}>
-                <Image source={imagePath.heart4} />
-              </TouchableOpacity>
-            </ImageBackground>
+              source={{uri: getImage('700/700')}}
+            />
+            <FastImage
+              source={
+                !!item?.vendor?.logo?.image_fit
+                  ? {
+                      uri: getImageUrl(
+                        item?.vendor?.logo?.image_fit,
+                        item?.vendor?.logo?.image_path,
+                        '400/400',
+                      ),
+                    }
+                  : imagePath.icProfile
+              }
+              style={{
+                height: moderateScale(50),
+                width: moderateScale(50),
+                borderRadius: moderateScale(25),
+                position: 'absolute',
+                top: moderateScaleVertical(15),
+                left: moderateScale(15),
+              }}
+            />
           </TouchableOpacity>
           <Text style={styles.txt1}>
             {item?.translation[0]?.title || item?.title || item?.sku}
           </Text>
-
           <View style={{}}>
             {!!item?.translation_description ||
             !!item?.translation[0]?.translation_description ? (
@@ -294,6 +312,7 @@ const P2pProducts = ({route, navigation}) => {
             ).toFixed(2)}`}
             btnStyle={styles.btn}
             containerStyle={{alignItems: 'flex-start'}}
+            colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
           />
         </View>
       );
@@ -318,6 +337,12 @@ const P2pProducts = ({route, navigation}) => {
                 ? imagePath.icActiveRadio
                 : imagePath.icInActiveRadio
             }
+            style={{
+              tintColor:
+                !isEmpty(data?.values) && data?.values[0] == item?.id
+                  ? themeColors.primary_color
+                  : colors.blackOpacity43,
+            }}
           />
           <Text
             style={{
@@ -351,6 +376,11 @@ const P2pProducts = ({route, navigation}) => {
                 ? imagePath.checkBox2Active
                 : imagePath.checkBox2InActive
             }
+            style={{
+              tintColor: checkValueExistInAry(item, data?.values)
+                ? themeColors.primary_color
+                : colors.blackOpacity43,
+            }}
           />
           <Text
             style={{
@@ -413,13 +443,6 @@ const P2pProducts = ({route, navigation}) => {
     },
     [attributeInfo],
   );
-
-  const onEndReached = () => {
-    if (isLoadMore) {
-      setPageNo(pageNo + 1);
-      getP2pProductsByCategoryId(pageNo + 1);
-    }
-  };
 
   return (
     <WrapperContainer
@@ -568,20 +591,6 @@ const P2pProducts = ({route, navigation}) => {
           </KeyboardAwareScrollView>
         </View>
       </Modal>
-
-      {!!showModal && (
-        <Modal isVisible={false} hasBackdrop={true}>
-          <View style={styles.successModal}>
-            <Image source={imagePath.check3} />
-            <Text style={styles.success}>Car Uploaded Successfully</Text>
-            <GradientButton
-              btnText={'Ok'}
-              containerStyle={{width: '50%'}}
-              colorsArray={['#FC7049', '#FD312C']}
-            />
-          </View>
-        </Modal>
-      )}
     </WrapperContainer>
   );
 };

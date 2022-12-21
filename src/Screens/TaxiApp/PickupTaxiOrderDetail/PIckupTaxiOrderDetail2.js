@@ -446,7 +446,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     </View>
   );
 
-  console.log(productInfo, 'productInfo');
   //order detail View
   const _selectOrderDetailView = () => {
     return (

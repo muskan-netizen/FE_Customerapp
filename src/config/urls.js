@@ -368,7 +368,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
 //zonesso
 export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.100.96:9002/api/v1';
+// export const API_BASE_URL = 'https://7681-103-72-170-245.in.ngrok.io/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -381,8 +381,8 @@ export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
 export const FORGOT_API = getApiUrl('/auth/forgotPassword');
 export const APP_INITIAL_SETTINGS = getApiUrl('/header');
-export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
-// export const HOMEPAGE_DATA_URL = getApiUrl('/v2/homepage');
+// export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
+export const HOMEPAGE_DATA_URL = getApiUrl('/v2/homepage');
 export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
 export const GET_DATA_BY_CATEGORY_OPTAMIZE = getApiUrl('/v2/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
@@ -617,6 +617,7 @@ export const VENDOR_CHAT = '/api/room/fetchRoomByVendor';
 export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
 export const GET_ALL_MESSAGES = '/api/chat';
 export const ALL_ROOM_USER = '/api/chat/getRoomUser';
+export const P2P_USER_TO_USER_CHAT = '/api/chat/fetchRoomByUserIdUserToUser';
 
 // static drop-location
 export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');

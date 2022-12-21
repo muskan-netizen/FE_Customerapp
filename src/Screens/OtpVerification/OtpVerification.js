@@ -167,7 +167,7 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log('resssss.....ress...');
+        console.log('resssss.....ress...', res);
         updateState({isLoading: false});
       })
       .catch(errorMethod);

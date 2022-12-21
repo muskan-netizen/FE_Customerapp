@@ -1,7 +1,9 @@
 import React from 'react';
-import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Image, Text, TouchableOpacity} from 'react-native';
+import {View} from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
 import commonStylesFun from '../styles/commonStyles';
 
 const GradientButton = ({
@@ -20,6 +22,10 @@ const GradientButton = ({
   colorsArray = null,
   indicatorColor = '#0000ff',
   disabled = false,
+  textImgViewStyle = {},
+  isImgWithTxt = false,
+  leftImgSrc = imagePath.icChatP2p,
+  leftImgStyle = {},
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -58,9 +64,19 @@ const GradientButton = ({
         {!!indicator ? (
           <ActivityIndicator size="small" color={indicatorColor} />
         ) : (
-          <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
-            {btnText}
-          </Text>
+          <View style={{...textImgViewStyle}}>
+            {isImgWithTxt && (
+              <Image
+                source={leftImgSrc}
+                style={{
+                  ...leftImgStyle,
+                }}
+              />
+            )}
+            <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
+              {btnText}
+            </Text>
+          </View>
         )}
       </LinearGradient>
     </TouchableOpacity>

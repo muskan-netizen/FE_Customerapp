@@ -1,10 +1,13 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../../styles/colors';
-import {moderateScale} from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../../styles/responsiveSize';
 import {width, height} from '../../../styles/responsiveSize';
-import fontFamily from '../../../styles/fontFamily';
 
-export default ({themeColor, toggleTheme}) => {
+export default ({themeColor, toggleTheme, fontFamily}) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -19,7 +22,7 @@ export default ({themeColor, toggleTheme}) => {
       backgroundColor: colors.white,
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(6),
-      paddingBottom: moderateScale(24),
+      paddingBottom: moderateScale(10),
       backgroundColor: !!themeColor ? colors.blackOpacity10 : colors.white,
     },
     view1: {
@@ -30,27 +33,26 @@ export default ({themeColor, toggleTheme}) => {
     },
     view2: {
       flexDirection: 'row',
-      marginVertical: 18,
+      marginVertical: moderateScaleVertical(18),
       alignItems: 'center',
       backgroundColor: !!themeColor ? colors.blackOpacity10 : colors.white,
     },
     txt1: {
       color: !!themeColor ? colors.white : colors.black,
       fontFamily: fontFamily.medium,
-      fontSize: 18,
+      fontSize: textScale(18),
       letterSpacing: 0.5,
     },
     txt2: {
       color: !!themeColor ? colors.white : colors.blackOpacity70,
       fontFamily: fontFamily.regular,
       marginVertical: moderateScale(2),
-      fontSize: 12,
-      lineHeight: 20,
+      fontSize: textScale(12),
     },
     btn1: {
       width: width / 2.5,
       height: moderateScale(48),
-      borderRadius: 12,
+      borderRadius: moderateScale(12),
       backgroundColor: colors.white,
       borderWidth: 1,
       borderColor: '#FC7049',
@@ -98,6 +100,10 @@ export default ({themeColor, toggleTheme}) => {
     },
     back: {position: 'absolute', left: 18, top: 38},
     heart: {position: 'absolute', right: 18, top: 42},
+    leftRightBtn: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   });
   // export default styles;
   return styles;

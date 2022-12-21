@@ -93,8 +93,12 @@ export default function SearchProductVendorItem2({navigation, route}) {
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
 
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const recommendedVendorsdata = appMainData?.vendors;
+  const {appMainData} = useSelector((state) => state?.home);
+  if (!isEmpty(appMainData) && !isEmpty(appMainData?.homePageLabels)) {
+    var recommendedVendorsdata = appMainData?.homePageLabels?.filter(
+      (itm) => itm?.slug == 'best_sellers',
+    );
+  }
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
 
@@ -532,7 +536,6 @@ export default function SearchProductVendorItem2({navigation, route}) {
             style={{
               marginLeft: moderateScale(10),
             }}>
-            {console.log(item?.result, 'kldsaflksdlfjsldk')}
             <FlatList
               data={item?.result}
               renderItem={renderSearchResults}
@@ -623,7 +626,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                 <View>{recentlyData(previousSearches)}</View>
               </View>
             ) : null}
-            {!isEmpty(recommendedVendorsdata) && (
+            {!isEmpty(recommendedVendorsdata[0]?.data) && (
               <View>
                 <Text
                   style={{
@@ -637,7 +640,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
 
                 <FlatList
                   horizontal
-                  data={recommendedVendorsdata}
+                  data={recommendedVendorsdata[0]?.data}
                   renderItem={renderRecommendedVendors}
                   keyExtractor={(item, index) => item?.id.toString()}
                   keyboardShouldPersistTaps="always"

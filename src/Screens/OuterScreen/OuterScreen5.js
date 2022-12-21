@@ -423,12 +423,22 @@ export default function OuterScreen5({navigation}) {
           style={{
             marginHorizontal: moderateScale(24),
             flex: 1,
-            marginTop: '20%',
+            marginTop: '10%',
           }}>
+          <Image
+            source={imagePath.app_icon}
+            style={{
+              alignSelf: 'center',
+            }}
+          />
           <GradientButton
-            containerStyle={{marginTop: moderateScaleVertical(50)}}
+            containerStyle={{
+              marginTop: moderateScaleVertical(100),
+            }}
             btnText={'Create new Account'}
-            textStyle={{color: isDarkMode ? colors.white : colors.orange}}
+            textStyle={{
+              color: isDarkMode ? colors.white : colors.orange,
+            }}
             colorsArray={
               isDarkMode
                 ? ['#FC7049', '#FD312C']
@@ -440,93 +450,80 @@ export default function OuterScreen5({navigation}) {
                 : navigationStrings.SIGN_UP,
             )}
           />
-          <View style={{marginTop: moderateScaleVertical(50)}}>
-            {/* {!!google_login ||
+
+          <TouchableOpacity
+            onPress={() => onGuestLogin()}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: colors.orange,
+              alignSelf: 'center',
+              marginTop: moderateScaleVertical(20),
+            }}>
+            <Text
+              style={{
+                color: colors.orange,
+                fontFamily: fontFamily.medium,
+              }}>
+              Continue as a Guest{' '}
+            </Text>
+          </TouchableOpacity>
+
+          <View style={{marginTop: moderateScaleVertical(70)}}>
+            {!!google_login ||
             !!fb_login ||
             !!twitter_login ||
-            !!apple_login ? ( */}
-            <View style={styles.socialRow}>
-              <View style={styles.hyphen} />
-              <Text
-                style={
-                  isDarkMode
-                    ? {
-                        color: colors.white,
-                        fontFamily: fontFamily.medium,
-                        marginHorizontal: 4,
-                        marginBottom: 4,
-                      }
-                    : {
-                        color: colors.textGrey,
-                        fontFamily: fontFamily.medium,
-                        marginHorizontal: 4,
-                        marginBottom: 4,
-                      }
-                }>
-                or login with
-              </Text>
-              <View style={styles.hyphen} />
-            </View>
-            {/* ) : null} */}
+            !!apple_login ? (
+              <View style={styles.socialRow}>
+                <View style={styles.hyphen} />
+                <Text
+                  style={{
+                    color: isDarkMode ? colors.white : colors.textGrey,
+                    fontFamily: fontFamily.medium,
+                    marginHorizontal: moderateScale(4),
+                    marginBottom: moderateScale(4),
+                  }}>
+                  or login with
+                </Text>
+                <View style={styles.hyphen} />
+              </View>
+            ) : null}
 
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-around',
-                marginTop: moderateScaleVertical(40),
+                marginTop: moderateScaleVertical(20),
                 alignSelf: 'center',
               }}>
-              {/* {!!google_login && ( */}
-              <TouchableOpacity
-                onPress={() => openGmailLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.gmail} />
-              </TouchableOpacity>
-              {/* )} */}
-              {/* {!!fb_login && ( */}
-              <TouchableOpacity
-                onPress={() => openFacebookLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.facebook} />
-              </TouchableOpacity>
-              {/* )} */}
-              {/* {!!twitter_login && ( */}
-              {/* <TouchableOpacity
-                onPress={() => openTwitterLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.twitterIcon} />
-              </TouchableOpacity> */}
-              {/* )} */}
+              {!!google_login && (
+                <TouchableOpacity
+                  onPress={() => openGmailLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.gmail} />
+                </TouchableOpacity>
+              )}
+              {!!fb_login && (
+                <TouchableOpacity
+                  onPress={() => openFacebookLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.facebook} />
+                </TouchableOpacity>
+              )}
+              {!!twitter_login && (
+                <TouchableOpacity
+                  onPress={() => openTwitterLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.twitterIcon} />
+                </TouchableOpacity>
+              )}
 
-              {/* {!!apple_login && Platform.OS == 'ios' && ( */}
-              <TouchableOpacity
-                onPress={() => openAppleLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.apple1} />
-              </TouchableOpacity>
-              {/* )} */}
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: '20%',
-                flex: 1,
-              }}>
-              <TouchableOpacity
-                onPress={() => onGuestLogin()}
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: colors.orange,
-                }}>
-                <Text
-                  style={{
-                    color: colors.orange,
-                    fontFamily: fontFamily.medium,
-                  }}>
-                  Continue as a Guest{' '}
-                </Text>
-              </TouchableOpacity>
+              {!!apple_login && Platform.OS == 'ios' && (
+                <TouchableOpacity
+                  onPress={() => openAppleLogin()}
+                  style={{marginHorizontal: moderateScale(20)}}>
+                  <Image source={imagePath.apple1} />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>

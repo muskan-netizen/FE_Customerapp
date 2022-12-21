@@ -1029,4 +1029,7 @@ Amount`,
   SELECT_CANCELLATION_REASON: 'Select cancellation reason',
   PLEASE_ENTER_CANCELLATION_REASON: 'Please enter cancellation reason',
   CANCELLATION_REQUEST: 'Cancellation request',
+  CHATS: 'Chats',
+  POST_UPLOADED_SUCCESS: 'Post Uploaded Successfully',
+  MY_POSTS: 'My Posts',
 };

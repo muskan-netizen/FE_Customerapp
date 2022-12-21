@@ -17,6 +17,7 @@ export default function GallaryCameraImgPicker({
   onGallary = () => {},
   onCamera = () => {},
   onCancel = () => {},
+  isVisbleCamera = true,
 }) {
   const modalContent = () => {
     const {appData, currencies, languages, appStyle, themeColors} = useSelector(
@@ -25,17 +26,19 @@ export default function GallaryCameraImgPicker({
     const fontFamily = appStyle?.fontSizeData;
     return (
       <View style={styles.mainViewStyle}>
-        <TouchableOpacity
-          onPress={onCamera}
-          style={styles.cameraGallaryCancelBtn}>
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(14),
-            }}>
-            Camera
-          </Text>
-        </TouchableOpacity>
+        {isVisbleCamera && (
+          <TouchableOpacity
+            onPress={onCamera}
+            style={styles.cameraGallaryCancelBtn}>
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                fontSize: textScale(14),
+              }}>
+              Camera
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           onPress={onGallary}
           style={styles.cameraGallaryCancelBtn}>

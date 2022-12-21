@@ -25,7 +25,7 @@ import imagePath from '../constants/imagePath';
 import {useDarkMode} from 'react-native-dark-mode';
 import {isEmpty} from 'lodash';
 
-function DeliveryTypeComp({selectedToggle = () => {}}) {
+function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
   const {cartItemCount} = useSelector((state) => state?.cart);
   const {
     appData,
@@ -57,6 +57,16 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
 
   const addAllTabs = () => {
     if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+      let serviceType = '';
+      appData?.profile?.preferences?.vendorMode?.map((itm) => {
+        if (itm?.type == 'p2p') {
+          serviceType = 'p2p';
+          return;
+        }
+      });
+      if (serviceType == 'p2p') {
+        selectedToggle(serviceType);
+      }
       updateState({tabs: appData?.profile?.preferences?.vendorMode});
     }
     return;
@@ -171,28 +181,35 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
   }
 
   return (
-    <View
-      style={{
-        ...styles.tabMainStyle,
-        borderBottomColor: isDarkMode
-          ? colors.whiteOpacity22
-          : colors.borderColorD,
-        marginBottom: moderateScaleVertical(12),
-      }}>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={tabs}
-        initialScrollIndex={tabs.findIndex((item) => item?.type == dineInType)}
-        renderItem={renderItem}
-        keyExtractor={awesomeChildListKeyExtractor}
-        ListFooterComponent={() => (
-          <View style={{marginLeft: moderateScale(16)}} />
-        )}
-        ListHeaderComponent={() => (
-          <View style={{marginRight: moderateScale(16)}} />
-        )}
-      />
+    <View>
+      {dineInType !== 'p2p' && (
+        <View
+          style={{
+            ...styles.tabMainStyle,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.borderColorD,
+            marginBottom: moderateScaleVertical(12),
+            ...tabMainStyle,
+          }}>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={tabs}
+            initialScrollIndex={tabs.findIndex(
+              (item) => item?.type == dineInType,
+            )}
+            renderItem={renderItem}
+            keyExtractor={awesomeChildListKeyExtractor}
+            ListFooterComponent={() => (
+              <View style={{marginLeft: moderateScale(16)}} />
+            )}
+            ListHeaderComponent={() => (
+              <View style={{marginRight: moderateScale(16)}} />
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 }

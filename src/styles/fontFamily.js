@@ -7,10 +7,9 @@ export default {
   futuraBook: 'Futura-Book',
   futura: 'Futura-Normal',
   semiBold: 'SFProText-SemiBold',
-  circularRegular:'CircularStd-Book',
+  circularRegular: 'CircularStd-Book',
   circularMedium: 'CircularStd-Medium',
   circularBold: 'CircularStd-Bold',
-
 
   // royoOrder
   // Urbanist_Regular: "Urbanist-Regular",

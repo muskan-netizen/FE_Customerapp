@@ -562,4 +562,26 @@ export default {
   icRefundable: require('../assets/images/refundable.png'),
   post: require('../assets/images/ic_post.png'),
   post_active: require('../assets/images/ic_post_active.png'),
+
+  //p2p
+  icP2pHome: require('../assets/images/p2p/ic_home.png'),
+  icP2pChat: require('../assets/images/p2p/ic_chat.png'),
+  icP2pMore: require('../assets/images/p2p/ic_more.png'),
+  icP2pPost: require('../assets/images/p2p/ic_post.png'),
+  icP2pService: require('../assets/images/p2p/ic_services.png'),
+  icP2pPostActive: require('../assets/images/p2p/ic_home_active.png'),
+  icChatP2p: require('../assets/images/p2p/ic_chat_p2p.png'),
+  icCallP2p: require('../assets/images/p2p/ic_call_p2p.png'),
+  icAddPost: require('../assets/images/p2p/ic_add_post.png'),
+
+  icHomeNewP2p: require('../assets/images/p2p/ic_home_new.png'),
+  icHomeNewP2pInActive: require('../assets/images/p2p/ic_home_new1.png'),
+  icAccountNew: require('../assets/images/p2p/ic_account_new.png'),
+  icCartNew: require('../assets/images/p2p/ic_cart_new.png'),
+  icChatNew: require('../assets/images/p2p/ic_chat_new.png'),
+  icAccountNewInActive: require('../assets/images/p2p/ic_account_new1.png'),
+  icCartNewInActive: require('../assets/images/p2p/ic_cart_new1.png'),
+  icChatNewInActive: require('../assets/images/p2p/ic_chat_new1.png'),
+  icDefaultImg: require('../assets/images/p2p/default_image.jpg'),
+  icMyPosts: require('../assets/images/p2p/ic_my_posts.png'),
 };
