@@ -1475,7 +1475,7 @@ const appIds = {
     android: 'com.seratho',
   }),
   xborne: Platform.select({
-    ios: 'com.xborne',
+    ios: 'com.xborne.order',
     android: 'com.xborne.order',
   }),
   fawaz: Platform.select({
@@ -2247,8 +2247,8 @@ const appIds = {
     android: 'com.genee.royoorders',
   }),
   speedyDelivery: Platform.select({
-    ios: 'com.speedydelivery.royoorders',
-    android: 'com.speedydelivery.royoorders',
+    ios: 'com.speedydelivery.orders',
+    android: 'com.speedydelivery.orders',
   }),
   holla: Platform.select({
     ios: 'com.holla.orders',

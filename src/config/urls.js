@@ -11,7 +11,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
 // export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
-export const API_BASE_URL = 'https://10dollahollla.com/api/v1';
+// export const API_BASE_URL = 'https://10dollahollla.com/api/v1';
 //  export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -135,8 +135,8 @@ export const API_BASE_URL = 'https://10dollahollla.com/api/v1';
 // lastminutedresss
 // export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Vishwas
-// export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
-// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+export const API_BASE_URL = 'https://speedy.com.do/api/v1';
+// export const API_BASE_URL = 'https://hitaxi.taxi/api/v1';
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
 // export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';

@@ -204,14 +204,14 @@ android {
  
     flavorDimensions "appType"
     productFlavors{
-                appi{ 
+                speedyDelivery{ 
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.appi.royoorders'
-            resValue "string", "app_name", "Appi" 
+            applicationId 'com.speedydelivery.orders'
+            resValue "string", "app_name", "Speedy - Delivery & Pickup" 
             resValue "string", "host_name", ""
             }
     }
@@ -7668,7 +7668,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.speedydelivery.royoorders'
+    //         applicationId 'com.speedydelivery.orders'
     //         resValue "string", "app_name", "Speedy Delivery" 
     //         resValue "string", "host_name", ""
     //         }
