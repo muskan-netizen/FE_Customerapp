@@ -2961,16 +2961,16 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        //   code: '2d98b5',
-        code: "6d065d",
-        //  code: shortCode,
+        //   code: '245bae',
+        //code: "6d065d",
+          code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        //  code: '2d98b5',
-        code: "6d065d",
-        // code: shortCode,
+     //  code: '245bae',
+      //  code: "6d065d",
+         code: shortCode,
       };
     }
     actions
