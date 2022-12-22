@@ -43,18 +43,25 @@ export default function ChatRoom({navigation, route}) {
 
   useFocusEffect(
     useCallback(() => {
-      fetchData();
+      if (userData?.auth_token) {
+        fetchData();
+      }
     }, [navigation]),
   );
   useFocusEffect(
     useCallback(() => {
-      socketServices.on('new-app-message', (data) => {
-        console.log('listen in roomChat screen');
-        fetchData();
-      });
-      return () => {
-        socketServices.removeListener('new-app-message');
-      };
+      if (!userData?.auth_token) {
+        actions.setAppSessionData('on_login');
+        return;
+      } else {
+        socketServices.on('new-app-message', (data) => {
+          console.log('listen in roomChat screen');
+          fetchData();
+        });
+        return () => {
+          socketServices.removeListener('new-app-message');
+        };
+      }
     }, [navigation]),
   );
   console.log('paramDataparamData', appData);

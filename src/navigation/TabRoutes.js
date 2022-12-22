@@ -282,8 +282,10 @@ export default function TabRoutes(props) {
               <Image
                 style={{
                   position: 'absolute',
-                  top: -25,
-                  left: -12,
+                  top: -37,
+                  left: -21,
+                  height: 65,
+                  width: 65,
                 }}
                 source={imagePath.icAddPost}
               />
