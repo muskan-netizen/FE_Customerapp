@@ -10,7 +10,7 @@ import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 import actions from '../../redux/actions';
-import {textScale} from '../../styles/responsiveSize';
+import {moderateScale, textScale} from '../../styles/responsiveSize';
 import _ from 'lodash';
 import {showError} from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -18,6 +18,7 @@ import stylesFun from './styles';
 import moment from 'moment';
 import CircularImages from '../../Components/CircularImages';
 import strings from '../../constants/lang';
+import FastImage from 'react-native-fast-image';
 
 export default function ChatRoom({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -25,6 +26,8 @@ export default function ChatRoom({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+  const {dineInType} = useSelector((state) => state?.home);
+
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
@@ -65,9 +68,15 @@ export default function ChatRoom({navigation, route}) {
       let apiData = {
         sub_domain: '192.168.101.88', //this is static value
         type:
-          paramData?.type == 'agent_chat' ? 'agent_to_user' : 'vendor_to_user',
+          dineInType == 'p2p'
+            ? 'user_to_user'
+            : paramData?.type == 'agent_chat'
+            ? 'agent_to_user'
+            : 'vendor_to_user',
         db_name: appData?.profile?.database_name,
         client_id: String(appData?.profile.id),
+        p2p_id: String(userData?.vendor_id),
+        vendor_id: String(userData?.vendor_id),
       };
       if (paramData?.allVendors) {
         apiData['vendor_id'] = paramData?.allVendors.map((val) => val.id);
@@ -76,7 +85,9 @@ export default function ChatRoom({navigation, route}) {
       }
       console.log('api data+++', apiData);
       const res =
-        paramData?.type == 'user_chat'
+        dineInType == 'p2p'
+          ? await actions.fetchP2pUserToUsertChat(apiData, headerData)
+          : paramData?.type == 'user_chat'
           ? await actions.fetchUserChat(apiData, headerData)
           : paramData?.type == 'vendor_chat'
           ? await actions.fetchVendorChat(apiData, headerData)
@@ -100,6 +111,7 @@ export default function ChatRoom({navigation, route}) {
   }, []);
   const renderItem = useCallback(({item, index}) => {
     let isAnyMessage = _.isEmpty(item?.chat_Data);
+    console.log(item, 'item....item');
     return (
       <TouchableOpacity
         onPress={() => goToChatRoom(item)}
@@ -107,29 +119,120 @@ export default function ChatRoom({navigation, route}) {
           ...styles.sahdowStyle,
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
         }}>
-        <View style={styles.flexView}>
-          <Text style={styles.textStyle}>
-            <Text>{strings.ORDER}</Text> # {item?.room_id}
-          </Text>
-          {!isAnyMessage ? (
-            <Text style={styles.timeStyle}>
-              {moment(item?.chat_Data[0]?.created_date).format('LLL')}
-            </Text>
-          ) : null}
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {_.isEmpty(item?.user_Data) ? null : (
-            <CircularImages
-              fontFamily={fontFamily}
-              isDarkMode={isDarkMode}
-              data={item?.user_Data}
-            />
+        <View>
+          {dineInType == 'p2p' ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                {_.isEmpty(item?.user_Data) ? (
+                  <FastImage
+                    source={imagePath?.icDefaultImg}
+                    resizeMode={'cover'}
+                    style={{
+                      width: moderateScale(40),
+                      height: moderateScale(40),
+                      borderRadius: moderateScale(40) / 2,
+                      backgroundColor: 'rgba(0,0,0,0.5)',
+                    }}
+                  />
+                ) : (
+                  <CircularImages
+                    fontFamily={fontFamily}
+                    isDarkMode={isDarkMode}
+                    data={item?.chat_Data}
+                    container={{
+                      marginTop: 0,
+                    }}
+                  />
+                )}
+                <View
+                  style={{
+                    marginLeft: moderateScale(5),
+                    alignItems: 'flex-start',
+                  }}>
+                  {!isAnyMessage ? (
+                    <Text
+                      style={{
+                        fontFamily: fontFamily?.bold,
+                        color: colors.black,
+                      }}>
+                      {item?.chat_Data[0]?.username}
+                    </Text>
+                  ) : (
+                    <Text
+                      style={{
+                        fontFamily: fontFamily?.bold,
+                        color: colors.black,
+                      }}>
+                      {userData?.name}
+                    </Text>
+                  )}
+                  {!isAnyMessage ? (
+                    <Text numberOfLines={2} style={styles.textDesc}>
+                      {item?.chat_Data[0]?.message}
+                    </Text>
+                  ) : null}
+                </View>
+              </View>
+
+              {!isAnyMessage ? (
+                <View>
+                  <Text style={styles.timeStyle}>
+                    {moment(item?.chat_Data[0]?.created_date).format(
+                      'DD/MM/YYYY',
+                    )}
+                  </Text>
+                  <Text style={{...styles.timeStyle, textAlign: 'right'}}>
+                    {moment(item?.chat_Data[0]?.created_date).format('hh:mm A')}
+                  </Text>
+                </View>
+              ) : (
+                <View>
+                  <Text style={styles.timeStyle}>
+                    {moment(item?.created_date).format('DD/MM/YYYY')}
+                  </Text>
+                  <Text style={{...styles.timeStyle, textAlign: 'right'}}>
+                    {moment(item?.created_date).format('hh:mm A')}
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : (
+            <View>
+              <View style={styles.flexView}>
+                <Text style={styles.textStyle}>
+                  <Text>{strings.ORDER}</Text> # {item?.room_id}
+                </Text>
+                {!isAnyMessage ? (
+                  <Text style={styles.timeStyle}>
+                    {moment(item?.chat_Data[0]?.created_date).format('LLL')}
+                  </Text>
+                ) : null}
+              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                {_.isEmpty(item?.user_Data) ? null : (
+                  <CircularImages
+                    fontFamily={fontFamily}
+                    isDarkMode={isDarkMode}
+                    data={item?.user_Data}
+                  />
+                )}
+                {!isAnyMessage ? (
+                  <Text numberOfLines={2} style={styles.textDesc}>
+                    {item?.chat_Data[0]?.message}
+                  </Text>
+                ) : null}
+              </View>
+            </View>
           )}
-          {!isAnyMessage ? (
-            <Text numberOfLines={2} style={styles.textDesc}>
-              {item?.chat_Data[0]?.message}
-            </Text>
-          ) : null}
         </View>
       </TouchableOpacity>
     );

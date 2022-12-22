@@ -71,23 +71,14 @@ export default function ChatRoomForVendor({navigation, route}) {
         language: languages?.primary_language?.id,
       };
 
-      let apiData = {};
-      if (dineInType == 'p2p') {
-        apiData = {
-          type: 'user_to_user',
-          db_name: appData?.profile?.database_name,
-          client_id: String(appData?.profile.id),
-          order_user_id: String(userData?.id),
-        };
-      } else {
-        apiData = {
-          sub_domain: '192.168.101.88', //this is static value
-          type: 'vendor_to_user',
-          db_name: appData?.profile?.database_name,
-          client_id: String(appData?.profile.id),
-          order_user_id: String(userData?.id),
-        };
-      }
+      let apiData = {
+        sub_domain: '192.168.101.88', //this is static value
+        type: 'vendor_to_user',
+        db_name: appData?.profile?.database_name,
+        client_id: String(appData?.profile.id),
+        order_user_id: String(userData?.id),
+      };
+
       console.log('api data+++', apiData);
       const res = await actions.fetchUserChat(apiData, headerData);
       updateState({isLoading: false});

@@ -51,7 +51,9 @@ export default function ChatScreen({route, navigation}) {
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const userData = useSelector((state) => state?.auth?.userData);
+  const {userData} = useSelector((state) => state?.auth);
+  const {dineInType} = useSelector((state) => state?.home);
+
   const isChatRefresh = useSelector(
     (state) => state?.chatRefresh.isChatRefresh,
   );
@@ -68,6 +70,7 @@ export default function ChatScreen({route, navigation}) {
     isVoiceRecord: false,
     allRoomUsersAppartFromAgent: [],
     allAgentIds: [],
+    productDetails: [],
   });
   const {
     isLoading,
@@ -77,6 +80,7 @@ export default function ChatScreen({route, navigation}) {
     chatUsersData,
     allRoomUsersAppartFromAgent,
     allAgentIds,
+    productDetails,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -85,6 +89,10 @@ export default function ChatScreen({route, navigation}) {
 
   useFocusEffect(
     useCallback(() => {
+      if (dineInType == 'p2p') {
+        getProductDetail();
+      }
+
       socketServices.on('new-message', (data) => {
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused
@@ -101,6 +109,28 @@ export default function ChatScreen({route, navigation}) {
       };
     }, [navigation]),
   );
+
+  const getProductDetail = () => {
+    actions
+      .getProuctDetailsRelatedToChat(
+        {
+          product_id: paramData?.product_id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          productDetails: res?.orderData,
+        });
+      })
+      .catch((err) => {
+        console.log(err, 'err....err');
+      });
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -586,7 +616,11 @@ export default function ChatScreen({route, navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={`# ${paramData?.room_id || ''}`}
+        centerTitle={
+          dineInType == 'p2p'
+            ? productDetails?.title
+            : `# ${paramData?.room_id || ''}`
+        }
         customRight={showRoomUser}
         headerStyle={{backgroundColor: isDarkMode ? '#171717' : '#f6f6f6'}}
         // onPressLeft={onBack}

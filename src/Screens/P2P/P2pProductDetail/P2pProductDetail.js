@@ -7,11 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-//constants
 import imagePath from '../../../constants/imagePath';
-//custom components
 import GradientButton from '../../../Components/GradientButton';
-//styling
 import colors from '../../../styles/colors';
 import {
   height,
@@ -22,28 +19,27 @@ import {
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import styleFun from './styles';
-//3rd party
+import PanoramaView from '@lightbase/react-native-panorama-view';
+import {isEmpty} from 'lodash';
 import {useDarkMode} from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
+import RenderHTML from 'react-native-render-html';
 import Carousel from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
-import actions from '../../../redux/actions';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
-import {isEmpty} from 'lodash';
-import FastImage from 'react-native-fast-image';
-import Loader from '../../../Components/Loader';
 import WrapperContainer from '../../../Components/WrapperContainer';
-import RenderHTML from 'react-native-render-html';
-import HorizontalLine from '../../../Components/HorizontalLine';
-import strings from '../../../constants/lang';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import navigationStrings from '../../../navigation/navigationStrings';
-import PanoramaView from '@lightbase/react-native-panorama-view';
+import actions from '../../../redux/actions';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
+import ReactNativeModal from 'react-native-modal';
+import Header from '../../../Components/Header';
 
 const P2pProductDetail = ({navigation, route}) => {
   const carouselRef = useRef(null);
 
   const paramData = route?.params;
+  console.log(paramData, 'paramData....paramData');
   const {
     appData,
     currencies,
@@ -65,6 +61,8 @@ const P2pProductDetail = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [productInfo, setProductInfo] = useState({});
   const [productAttributeInfo, setProductAttributeInfo] = useState([]);
+  const [isLoadingChat, setLoadingChat] = useState(false);
+  const [selectedPanoImg, setSelectedPanoImg] = useState(null);
 
   useEffect(() => {
     getP2pProductDetail();
@@ -105,7 +103,7 @@ const P2pProductDetail = ({navigation, route}) => {
       actions.setAppSessionData('on_login');
       return;
     }
-
+    setLoadingChat(true);
     try {
       const apiData = {
         sub_domain: '192.168.101.88', //this is static value
@@ -127,7 +125,9 @@ const P2pProductDetail = ({navigation, route}) => {
       if (!!res?.roomData) {
         onChat(res.roomData);
       }
+      setLoadingChat(false);
     } catch (error) {
+      setLoadingChat(false);
       console.log('error raised in start chat api', error);
       showError(error?.message);
     }
@@ -154,20 +154,43 @@ const P2pProductDetail = ({navigation, route}) => {
     return (
       <View style={styles.item}>
         {item?.image?.media_type == 4 ? (
-          <PanoramaView
-            style={{
-              height: moderateScale(299),
-              width: width,
-            }}
-            enableTouchTracking={true}
-            dimensions={{height: moderateScale(299), width: width}}
-            inputType="mono"
-            imageUrl={getImageUrl(
-              item?.image?.path?.image_fit,
-              item?.image?.path?.image_path,
-              '400/400',
-            )}
-          />
+          <View>
+            <PanoramaView
+              style={{
+                height: moderateScale(299),
+                width: width,
+              }}
+              enableTouchTracking={true}
+              dimensions={{height: moderateScale(299), width: width}}
+              inputType="mono"
+              imageUrl={getImageUrl(
+                item?.image?.path?.image_fit,
+                item?.image?.path?.image_path,
+                '400/400',
+              )}
+            />
+            <TouchableOpacity
+              onPress={() => setSelectedPanoImg(item)}
+              style={{
+                position: 'absolute',
+                paddingVertical: moderateScaleVertical(5),
+                paddingHorizontal: moderateScale(5),
+                backgroundColor: themeColors?.primary_color,
+                borderRadius: moderateScale(6),
+                right: 0,
+                bottom: 50,
+                zIndex: 1,
+              }}>
+              <Text
+                style={{
+                  fontFamily: fontFamily?.regular,
+                  color: colors.white,
+                  fontSize: textScale(12),
+                }}>
+                View in 360°
+              </Text>
+            </TouchableOpacity>
+          </View>
         ) : (
           <FastImage
             source={{
@@ -216,6 +239,39 @@ const P2pProductDetail = ({navigation, route}) => {
     [productInfo],
   );
 
+  const modalContent = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+        }}>
+        <WrapperContainer>
+          <Header
+            leftIcon={imagePath.back1}
+            onPressLeft={() => setSelectedPanoImg(null)}
+          />
+          <PanoramaView
+            style={{
+              flex: 1,
+            }}
+            enableTouchTracking={true}
+            dimensions={{
+              height: height - moderateScaleVertical(40),
+              width: width,
+            }}
+            inputType="mono"
+            imageUrl={getImageUrl(
+              selectedPanoImg?.image?.path?.image_fit,
+              selectedPanoImg?.image?.path?.image_path,
+              '400/400',
+            )}
+          />
+        </WrapperContainer>
+      </View>
+    );
+  };
+
   if (isLoading) {
     return <WrapperContainer isLoading={isLoading} />;
   }
@@ -243,9 +299,7 @@ const P2pProductDetail = ({navigation, route}) => {
               />
             ) : (
               <FastImage
-                source={{
-                  uri: paramData?.product_image,
-                }}
+                source={imagePath.icDefaultImg}
                 style={{
                   height: moderateScale(250),
                   width: width,
@@ -391,60 +445,63 @@ const P2pProductDetail = ({navigation, route}) => {
               </Text>
             </View>
             {(appData?.profile?.preferences?.chat_button == 1 ||
-              appData?.profile?.preferences?.call_button == 1) && (
-              <View style={styles.view3}>
-                {appData?.profile?.preferences?.chat_button == 1 && (
-                  <GradientButton
-                    onPress={() => createRoom()}
-                    btnText={'Chat'}
-                    isImgWithTxt
-                    textImgViewStyle={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                    leftImgSrc={imagePath.icChatP2p}
-                    textStyle={{...styles.chatBtn, color: colors.orange1}}
-                    btnStyle={{...styles.btn1}}
-                    source={imagePath.message}
-                    containerStyle={{alignItems: 'flex-start'}}
-                    colorsArray={
-                      isDarkMode
-                        ? [
-                            MyDarkTheme?.colors?.lightDark,
-                            MyDarkTheme?.colors?.lightDark,
-                          ]
-                        : [colors.white, colors.white]
-                    }
-                    leftImgStyle={{
-                      tintColor: themeColors?.primary_color,
-                    }}
-                  />
-                )}
-                {appData?.profile?.preferences?.call_button == 1 && (
-                  <GradientButton
-                    btnText={'Call'}
-                    isImgWithTxt
-                    textImgViewStyle={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                    onPress={() => {
-                      if (!userData?.auth_token) {
-                        actions.setAppSessionData('on_login');
-                        return;
+              appData?.profile?.preferences?.call_button == 1) &&
+              productInfo?.vendor?.id !== userData?.vendor_id && (
+                <View style={styles.view3}>
+                  {appData?.profile?.preferences?.chat_button == 1 && (
+                    <GradientButton
+                      onPress={() => createRoom()}
+                      btnText={'Chat'}
+                      isImgWithTxt
+                      indicator={isLoadingChat}
+                      indicatorColor={themeColors?.primary_color}
+                      textImgViewStyle={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      leftImgSrc={imagePath.icChatP2p}
+                      textStyle={{...styles.chatBtn, color: colors.orange1}}
+                      btnStyle={{...styles.btn1}}
+                      source={imagePath.message}
+                      containerStyle={{alignItems: 'flex-start'}}
+                      colorsArray={
+                        isDarkMode
+                          ? [
+                              MyDarkTheme?.colors?.lightDark,
+                              MyDarkTheme?.colors?.lightDark,
+                            ]
+                          : [colors.white, colors.white]
                       }
-                      dialCall(productInfo?.vendor?.phone_no);
-                    }}
-                    leftImgSrc={imagePath.icCallP2p}
-                    textStyle={styles.chatBtn}
-                    colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
-                    btnStyle={styles.btn2}
-                    source={imagePath.call}
-                    containerStyle={{alignItems: 'flex-start'}}
-                  />
-                )}
-              </View>
-            )}
+                      leftImgStyle={{
+                        tintColor: themeColors?.primary_color,
+                      }}
+                    />
+                  )}
+                  {appData?.profile?.preferences?.call_button == 1 && (
+                    <GradientButton
+                      btnText={'Call'}
+                      isImgWithTxt
+                      textImgViewStyle={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      onPress={() => {
+                        if (!userData?.auth_token) {
+                          actions.setAppSessionData('on_login');
+                          return;
+                        }
+                        dialCall(productInfo?.vendor?.phone_no);
+                      }}
+                      leftImgSrc={imagePath.icCallP2p}
+                      textStyle={styles.chatBtn}
+                      colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+                      btnStyle={styles.btn2}
+                      source={imagePath.call}
+                      containerStyle={{alignItems: 'flex-start'}}
+                    />
+                  )}
+                </View>
+              )}
           </View>
           {!isEmpty(productAttributeInfo) && (
             <View style={{...styles.view1, marginTop: 0}}>
@@ -457,7 +514,6 @@ const P2pProductDetail = ({navigation, route}) => {
                 }}>
                 Description
               </Text>
-
               <FlatList
                 data={productAttributeInfo}
                 renderItem={renderaAttributeItems}
@@ -466,6 +522,16 @@ const P2pProductDetail = ({navigation, route}) => {
           )}
         </ScrollView>
       )}
+      <ReactNativeModal
+        isVisible={!!selectedPanoImg}
+        onSwipeComplete={() => setSelectedPanoImg(null)}
+        useNativeDriverForBackdrop
+        style={{
+          margin: 0,
+        }}
+        swipeDirection={['down']}>
+        {modalContent()}
+      </ReactNativeModal>
     </View>
   );
 };

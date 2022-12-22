@@ -98,11 +98,11 @@ export default function MyP2pPosts({route, navigation}) {
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.itemBox}
-          onPress={() =>
+          onPress={() => {
             navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
               product_id: item?.id,
-            })
-          }>
+            });
+          }}>
           <FastImage
             style={styles.imageStyle}
             source={

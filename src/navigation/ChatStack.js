@@ -9,10 +9,6 @@ export default function () {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
-        name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
-        component={Screens.ChatRoomForVendor}
-      />
-      <Stack.Screen
         name={navigationStrings.CHAT_ROOM}
         component={Screens.ChatRoom}
       />

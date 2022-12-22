@@ -231,7 +231,10 @@ export default function TabRoutes(props) {
       <Tab.Screen
         component={ChatStack}
         name={navigationStrings.CHAT_STACK}
-        options={({route}) => ({
+        options={({route, navigation}) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.CHAT_SCREEN,
+          ]),
           tabBarLabel: strings.CHATS,
           tabBarIcon: ({focused, tintColor}) => (
             <Image

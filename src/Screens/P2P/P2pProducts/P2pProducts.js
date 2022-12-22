@@ -250,7 +250,6 @@ const P2pProducts = ({route, navigation}) => {
             onPress={() =>
               navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
                 product_id: item?.id,
-                product_image: item?.product_image,
               })
             }>
             <FastImage

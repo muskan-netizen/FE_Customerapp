@@ -2,6 +2,7 @@ import {
   AGENT_CHAT,
   ALL_ROOM_USER,
   GET_ALL_MESSAGES,
+  GET_PRODUCT_RELATED_TO_CHAT,
   P2P_USER_TO_USER_CHAT,
   SEND_MESSAGE,
   SEND_NOTIFCATION,
@@ -130,9 +131,7 @@ export function sendNotification(data = {}, headers = {}) {
 export function fetchP2pUserToUsertChat(data = {}, headers = {}) {
   return new Promise(async (resolve, reject) => {
     const getAppData = await getItem('appData');
-
     const socketUrl = getAppData?.appData?.profile?.socket_url;
-
     apiPost(socketUrl + P2P_USER_TO_USER_CHAT, data, headers)
       .then((response) => {
         resolve(response);
@@ -141,4 +140,8 @@ export function fetchP2pUserToUsertChat(data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+export function getProuctDetailsRelatedToChat(data = {}, headers = {}) {
+  return apiPost(GET_PRODUCT_RELATED_TO_CHAT, data, headers);
 }

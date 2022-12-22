@@ -320,7 +320,9 @@ export default function SearchProductVendorItem2({navigation, route}) {
     }
 
     if (item.response_type == 'category') {
-      if (item?.redirect_to == staticStrings.VENDOR) {
+      if (item.redirect_to == staticStrings.P2P) {
+        moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      } else if (item?.redirect_to == staticStrings.VENDOR) {
         navigation.push(navigationStrings.VENDOR, {
           data: {
             id: item.id,
@@ -345,6 +347,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
+
     if (item?.response_type == 'brand') {
       navigation.push(navigationStrings.BRANDDETAIL, {
         data: {

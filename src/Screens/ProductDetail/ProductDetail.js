@@ -19,7 +19,7 @@ import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Modal from 'react-native-modal';
+import Modal, {ReactNativeModal} from 'react-native-modal';
 import RenderHtml from 'react-native-render-html';
 import Share from 'react-native-share';
 import {Pagination} from 'react-native-snap-carousel';
@@ -65,6 +65,7 @@ import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
 import Toast from 'react-native-simple-toast';
 import Clipboard from '@react-native-community/clipboard';
+import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function ProductDetail({route, navigation}) {
   console.log('my route', route.params.data);
@@ -119,6 +120,8 @@ export default function ProductDetail({route, navigation}) {
     offersList: [],
     isOffersModalVisible: false,
   });
+  const [pinCode, setPinCode] = useState('');
+  const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -1464,6 +1467,13 @@ export default function ProductDetail({route, navigation}) {
     );
   };
 
+  const onChangePinCode = (text) => {
+    if (text.length === 6) {
+      alert('dksjfkdjf');
+    }
+    setPinCode(text);
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1824,6 +1834,64 @@ export default function ProductDetail({route, navigation}) {
                 </>
               ) : null}
 
+              <View
+                style={{
+                  marginBottom: moderateScaleVertical(15),
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily?.bold,
+                    fontSize: textScale(12),
+                    color: colors.black,
+                  }}>
+                  Enter Pincode for hassale free timely delivery
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    flex: 1,
+                    justifyContent: 'space-between',
+                    marginTop: moderateScaleVertical(10),
+                  }}>
+                  <BorderTextInput
+                    onChangeText={onChangePinCode}
+                    value={pinCode}
+                    placeholder={'Enter Pincode'}
+                    containerStyle={{
+                      flex: 0.48,
+                      borderRadius: moderateScale(10),
+                      height: moderateScaleVertical(40),
+                    }}
+                    keyboardType={'number-pad'}
+                    marginBottom={0}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setAvailableSlotsModal(true)}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.borderLight,
+                      flex: 0.48,
+                      height: moderateScaleVertical(40),
+                      paddingHorizontal: moderateScale(5),
+                      borderRadius: moderateScale(10),
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily?.regular,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyB,
+                      }}>
+                      Select Date
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}
               {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
@@ -2009,11 +2077,6 @@ export default function ProductDetail({route, navigation}) {
                   </View>
                 ))}
 
-              {/* <FlatList
-                data={productAttributes}
-                renderItem={renderProductAttributes}
-              /> */}
-
               <AddonModal
                 productdetail={productDetailData}
                 isVisible={isVisibleAddonModal}
@@ -2144,6 +2207,59 @@ export default function ProductDetail({route, navigation}) {
           updateState({isOffersModalVisible: !isOffersModalVisible})
         }
       />
+      <ReactNativeModal
+        onBackButtonPress={() => setAvailableSlotsModal(false)}
+        isVisible={isAvailableSlotsModal}
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}>
+        <View
+          style={{
+            height: height / 3,
+            backgroundColor: colors.white,
+            borderTopLeftRadius: moderateScale(10),
+            borderTopRightRadius: moderateScale(10),
+            padding: moderateScale(10),
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: moderateScaleVertical(10),
+            }}>
+            <Text
+              style={{
+                fontFamily: fontFamily?.bold,
+                fontSize: textScale(16),
+              }}>
+              Select delivery slot
+            </Text>
+            <TouchableOpacity onPress={() => setAvailableSlotsModal(false)}>
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 8,
+              borderWidth: 1,
+              borderColor: colors.borderColorB,
+              borderRadius: moderateScale(6),
+            }}>
+            <Image source={imagePath.radioInActive} />
+            <Text
+              style={{
+                fontFamily: fontFamily?.regular,
+                marginLeft: moderateScale(10),
+              }}>
+              Afternoon (11:01 - 15:00 $100.00)
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ReactNativeModal>
     </WrapperContainer>
   );
 }
