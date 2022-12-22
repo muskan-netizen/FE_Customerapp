@@ -101,6 +101,11 @@ const P2pProductDetail = ({navigation, route}) => {
   };
 
   const createRoom = async () => {
+    if (!userData?.auth_token) {
+      actions.setAppSessionData('on_login');
+      return;
+    }
+
     try {
       const apiData = {
         sub_domain: '192.168.101.88', //this is static value
@@ -423,7 +428,13 @@ const P2pProductDetail = ({navigation, route}) => {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}
-                    onPress={() => dialCall(productInfo?.vendor?.phone_no)}
+                    onPress={() => {
+                      if (!userData?.auth_token) {
+                        actions.setAppSessionData('on_login');
+                        return;
+                      }
+                      dialCall(productInfo?.vendor?.phone_no);
+                    }}
                     leftImgSrc={imagePath.icCallP2p}
                     textStyle={styles.chatBtn}
                     colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
