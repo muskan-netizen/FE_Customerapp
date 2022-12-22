@@ -4240,7 +4240,7 @@ function Cart({ navigation, route }) {
           </View>
         )}
 
-        {cartData?.total_tax > 0 && (
+        {(cartData?.total_tax > 0 || cartData?.total_taxable_amount>0) && (
           <Animatable.View
             style={{
               ...styles.bottomTabLableValue,
