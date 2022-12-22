@@ -85,6 +85,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
 
+
+
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [state, setState] = useState({
     isLoading: true,
@@ -174,7 +176,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const [showLocationUpdateButton, setShowLocationUpdateButton] = useState(
     true
   );
-  const [allDropOffLocationCollection,setAllDropOffLocationCollection] = useState([])
+  const [allDropOffLocationCollection, setAllDropOffLocationCollection] = useState([])
 
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -258,7 +260,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           task_type_id: item?.task_type_id,
           post_code: item?.post_code,
           short_name: item?.short_name,
-          task_status:Number(item?.task_status)
+          task_status: Number(item?.task_status)
         };
       });
       const newFormatedDropAddress = userDropLocation.map((item, index) => {
@@ -270,7 +272,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           task_type_id: item?.task_type_id,
           post_code: item?.post_code,
           short_name: item?.short_name,
-          task_status:Number(item?.task_status)
+          task_status: Number(item?.task_status)
         };
       });
 
@@ -279,7 +281,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         ...newFormatedDropAddress,
       ];
 
-      
+
 
       const allLocationsLatLongCollection = finalCollectionOfLocationsForPickAndDrop.map(
         (item, index) => {
@@ -292,11 +294,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       );
 
 
-      const allDropOffLocationsBeforeProcessing = newFormatedDropAddress.filter((item,index)=>{
-           return  item?.task_status<2
+      const allDropOffLocationsBeforeProcessing = newFormatedDropAddress.filter((item, index) => {
+        return item?.task_status < 2
       })
 
-    console.log(allDropOffLocationsBeforeProcessing,"allDropOffLocationsBeforeProcessing");
+      console.log(allDropOffLocationsBeforeProcessing, "allDropOffLocationsBeforeProcessing");
 
       setAllLocationsLatLongCollection(allLocationsLatLongCollection);
       setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing)
@@ -374,9 +376,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-        "/order/",
-        "/order-details/"
-      )
+      "/order/",
+      "/order-details/"
+    )
     : null;
 
   /*********Update driver detail screen********* */
@@ -678,7 +680,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       task_type: orderFullDetail?.scheduled_date_time
         ? orderFullDetail?.scheduled_date_time
         : "now",
-     tasks_dropoff : allDropOffLocationCollection   
+      tasks_dropoff: allDropOffLocationCollection
     };
 
     const apiHeader = {
@@ -1156,8 +1158,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               paramData?.fromCab
                 ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 : paramData?.pickup_taxi
-                ? () => navigation.navigate(navigationStrings.HOME)
-                : () => navigation.goBack()
+                  ? () => navigation.navigate(navigationStrings.HOME)
+                  : () => navigation.goBack()
             }
             activeOpacity={0.8}
           >
@@ -1229,18 +1231,18 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   </Marker.Animated>
                 )}
 
-             
 
-           <MapViewDirections
+
+              <MapViewDirections
                 resetOnChange={false}
                 origin={
                   orderStatus !== "completed" && orderStatus !== "unassigned"
                     ? {
-                        latitude: Number(agent_location?.lat),
-                        longitude: Number(
-                          agent_location?.long || agent_location?.lng
-                        ),
-                      }
+                      latitude: Number(agent_location?.lat),
+                      longitude: Number(
+                        agent_location?.long || agent_location?.lng
+                      ),
+                    }
                     : tasks[0]
                 }
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
@@ -1256,7 +1258,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 strokeWidth={4}
                 strokeColor={colors.black}
                 optimizeWaypoints={true}
-                onStart={(params) => {}}
+                onStart={(params) => { }}
                 precision={"high"}
                 timePrecision={"now"}
                 mode={"DRIVING"}
@@ -1278,7 +1280,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 onError={(errorMessage) => {
                   //
                 }}
-              /> 
+              />
             </MapView>
           )}
           {/* {!!orderFullDetail && (
@@ -1332,26 +1334,25 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     style={
                       isDarkMode
                         ? [
-                            styles.orderLableStyle,
-                            { color: MyDarkTheme.colors.text },
-                          ]
+                          styles.orderLableStyle,
+                          { color: MyDarkTheme.colors.text },
+                        ]
                         : styles.orderLableStyle
                     }
                   >
-                    {`${strings.ORDER_ID}: #${
-                      orderFullDetail?.order?.order_number
+                    {`${strings.ORDER_ID}: #${orderFullDetail?.order?.order_number
                         ? orderFullDetail?.order?.order_number
                         : paramData?.orderDetail?.order_number
-                    }`}
+                      }`}
                   </Text>
 
                   {isWaitingOver && orderStatus == "unassigned" ? (
                     <></>
                   ) : !!(
-                      orderStatus !== "completed" ||
-                      orderStatus !== "started" ||
-                      orderStatus !== "arrived"
-                    ) ? (
+                    orderStatus !== "completed" ||
+                    orderStatus !== "started" ||
+                    orderStatus !== "arrived"
+                  ) ? (
                     <TouchableOpacity
                       disabled={orderStatus == "cancelled"}
                       activeOpacity={0.7}
@@ -1366,8 +1367,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         {orderStatus == "cancelled"
                           ? strings.ORDER_CANCELLED
                           : orderStatus == "completed"
-                          ? null
-                          : strings.CANCEL_ORDER}
+                            ? null
+                            : strings.CANCEL_ORDER}
                       </Text>
                     </TouchableOpacity>
                   ) : null}
@@ -1408,9 +1409,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       ) : null}
 
                       {!!appData?.profile?.socket_url &&
-                      !!(
-                        driverStatus?.order && driverStatus?.agent_location?.lat
-                      ) ? (
+                        !!(
+                          driverStatus?.order && driverStatus?.agent_location?.lat
+                        ) ? (
                         <TouchableOpacity
                           onPress={() =>
                             createRoom(
@@ -1527,7 +1528,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   ? paramData?.orderDropLocations
                   : orderFullDetail?.tasks
                 ).map((val, i) => {
-                  console.log(val,"val for locations is here");
+                  console.log(val, "val for locations is here");
                   return (
                     <View style={{ marginHorizontal: moderateScale(16) }}>
                       <View
@@ -1551,43 +1552,44 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           >
                             {val?.address || ""}
                           </Text>
-
+                        
                           {!!(
                             val?.task_type_id != 1 &&
-                            profile?.preferences?.is_postpay_enable  &&
-                            Number(val?.task_status)<2
+                            profile?.preferences?.is_order_edit_enable &&
+                            Number(val?.task_status) < 2  &&
+                            orderFullDetail?.order_details?.order_detail?.payment_option_id ==1
                           ) && (
-                            <TouchableOpacity
-                              style={{
-                                borderColor: themeColors?.primary_color,
-                                borderWidth: 0.5,
-                                padding: moderateScale(5),
-                                paddingHorizontal: moderateScale(10),
-                                height: moderateScale(28),
-                              }}
-                              onPress={moveToNewScreen(
-                                navigationStrings.LOCATION,
-                                {
-                                  ...paramData,
-                                  orderDropLocations: !isEmpty(
-                                    paramData?.orderDropLocations
-                                  )
-                                    ? paramData?.orderDropLocations
-                                    : orderFullDetail?.tasks,
-                                  editIndex: i,
-                                }
-                              )}
-                            >
-                              <Text
+                              <TouchableOpacity
                                 style={{
-                                  fontFamily: fontFamily.regular,
-                                  fontSize: textScale(11),
+                                  borderColor: themeColors?.primary_color,
+                                  borderWidth: 0.5,
+                                  padding: moderateScale(5),
+                                  paddingHorizontal: moderateScale(10),
+                                  height: moderateScale(28),
                                 }}
+                                onPress={moveToNewScreen(
+                                  navigationStrings.LOCATION,
+                                  {
+                                    ...paramData,
+                                    orderDropLocations: !isEmpty(
+                                      paramData?.orderDropLocations
+                                    )
+                                      ? paramData?.orderDropLocations
+                                      : orderFullDetail?.tasks,
+                                    editIndex: i,
+                                  }
+                                )}
                               >
-                                {"Change"}
-                              </Text>
-                            </TouchableOpacity>
-                          )}
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.regular,
+                                    fontSize: textScale(11),
+                                  }}
+                                >
+                                  {"Change"}
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                         </View>
                       </View>
                       {orderFullDetail.tasks.length - 1 !== i && (
@@ -1726,9 +1728,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                             {Array(
                               Math.max(
                                 4 -
-                                  String(orderFullDetail?.order?.driver_id)
-                                    .length +
-                                  1,
+                                String(orderFullDetail?.order?.driver_id)
+                                  .length +
+                                1,
                                 0
                               )
                             ).join(0) + orderFullDetail?.order?.driver_id}
@@ -1813,7 +1815,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           starSize={25}
                         />
                         {submitedRatingToDriver ||
-                        orderFullDetail?.order_driver_rating?.rating ? (
+                          orderFullDetail?.order_driver_rating?.rating ? (
                           <TouchableOpacity
                             onPress={() =>
                               rateYourOrder({
@@ -2002,40 +2004,40 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                               >
                                 {orderFullDetail.order_details.products.length >
                                   0 && (
-                                  <View
-                                    style={{
-                                      flexDirection: "row",
-                                      marginBottom: moderateScaleVertical(5),
-                                    }}
-                                  >
-                                    <Text
+                                    <View
                                       style={{
-                                        ...styles.statusText,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.black,
-                                        // marginLeft: moderateScale(10),
+                                        flexDirection: "row",
+                                        marginBottom: moderateScaleVertical(5),
                                       }}
                                     >
-                                      {"No. of items:"}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        ...styles.statusText,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.black,
-                                        marginLeft: moderateScale(10),
-                                        fontFamily: fontFamily.bold,
-                                      }}
-                                    >
-                                      {
-                                        orderFullDetail.order_details.products
-                                          .length
-                                      }
-                                    </Text>
-                                  </View>
-                                )}
+                                      <Text
+                                        style={{
+                                          ...styles.statusText,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                          // marginLeft: moderateScale(10),
+                                        }}
+                                      >
+                                        {"No. of items:"}
+                                      </Text>
+                                      <Text
+                                        style={{
+                                          ...styles.statusText,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                          marginLeft: moderateScale(10),
+                                          fontFamily: fontFamily.bold,
+                                        }}
+                                      >
+                                        {
+                                          orderFullDetail.order_details.products
+                                            .length
+                                        }
+                                      </Text>
+                                    </View>
+                                  )}
                                 {orderStatus == "completed" ? (
                                   <View
                                     style={{
@@ -2155,7 +2157,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 <View style={{ marginHorizontal: moderateScale(16) }}>
                   {!!orderFullDetail?.order_details?.delivery_fee &&
                     Number(orderFullDetail?.order_details?.delivery_fee) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
@@ -2176,7 +2178,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     )}
                   {!!orderFullDetail?.order_details?.subtotal_amount &&
                     Number(orderFullDetail?.order_details?.subtotal_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
@@ -2197,7 +2199,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     )}
                   {!!orderFullDetail?.order_details?.toll_amount &&
                     Number(orderFullDetail?.order_details?.toll_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={"Toll fee"}
@@ -2243,7 +2245,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
@@ -2272,25 +2274,23 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     ) !== 0 && (
                       <View>
                         <LeftRightText
-                          leftText={`${
-                            strings.SUBSCRIPTION_DISCOUNT
-                          } ${"("} ${tokenConverterPlusCurrencyNumberFormater(
-                            Number(subscription_percent),
-                            digit_after_decimal,
-                            additional_preferences,
-                            currencies?.primary_currency?.symbol
-                          )} ${"%)"}`}
-                          rightText={` ${"-"} ${
-                            currencies?.primary_currency?.symbol
-                          } ${tokenConverterPlusCurrencyNumberFormater(
-                            Number(
-                              orderFullDetail?.order_details?.order_detail
-                                ?.subscription_discount
-                            ),
-                            digit_after_decimal,
-                            additional_preferences,
-                            currencies?.primary_currency?.symbol
-                          )} `}
+                          leftText={`${strings.SUBSCRIPTION_DISCOUNT
+                            } ${"("} ${tokenConverterPlusCurrencyNumberFormater(
+                              Number(subscription_percent),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol
+                            )} ${"%)"}`}
+                          rightText={` ${"-"} ${currencies?.primary_currency?.symbol
+                            } ${tokenConverterPlusCurrencyNumberFormater(
+                              Number(
+                                orderFullDetail?.order_details?.order_detail
+                                  ?.subscription_discount
+                              ),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol
+                            )} `}
                           leftTextStyle={{ color: themeColors.primary_color }}
                           rightTextStyle={{ color: themeColors.primary_color }}
                           isDarkMode={isDarkMode}
@@ -2306,7 +2306,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   )}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
@@ -2328,7 +2328,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
                     Number(orderFullDetail?.order_details?.payable_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
