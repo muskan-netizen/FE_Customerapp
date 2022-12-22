@@ -365,7 +365,11 @@ const PostCategory = ({navigation}) => {
                 : colors.blackOpacity05,
             }}
             activeOpacity={0.7}
-            onPress={() => onPressP2pCategory(item)}>
+            onPress={() =>
+              navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
+                category_id: item?.id,
+              })
+            }>
             {isSVG ? (
               <SvgUri
                 height={moderateScale(70)}
@@ -546,9 +550,9 @@ const PostCategory = ({navigation}) => {
         isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
       }>
       <View style={{marginVertical: moderateScale(18)}}>
-        <Header
+        {/* <Header
           leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back1}
-        />
+        /> */}
         <View style={{marginHorizontal: moderateScale(15)}}>
           <Text
             style={{

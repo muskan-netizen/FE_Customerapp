@@ -547,20 +547,22 @@ export default function Account3({navigation}) {
               />
             ))}
 
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-            iconLeft={imagePath.links}
-            centerHeading={strings.LINKS}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
+          {dineInType !== 'p2p' && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
+              iconLeft={imagePath.links}
+              centerHeading={strings.LINKS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -763,7 +765,8 @@ export default function Account3({navigation}) {
               />
             )}
 
-          {!!userData?.auth_token &&
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
             !!appMainData?.is_admin &&
             businessType != 4 &&
             !!appData?.profile?.socket_url && (
@@ -783,22 +786,25 @@ export default function Account3({navigation}) {
               />
             )}
 
-          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={() => goToChatRoom('agent_chat')}
-              iconLeft={imagePath.icDriverChat}
-              centerHeading={strings.DRIVER_CHAT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            />
-          )}
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
+            !!appData?.profile?.socket_url && (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={() => goToChatRoom('agent_chat')}
+                iconLeft={imagePath.icDriverChat}
+                centerHeading={strings.DRIVER_CHAT}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
 
-          {!!userData?.auth_token &&
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
             !!appMainData?.is_admin &&
             !!appData?.profile?.socket_url && (
               <ListItemHorizontal
@@ -815,20 +821,22 @@ export default function Account3({navigation}) {
               />
             )}
 
-          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={() => goToChatRoom('user_chat')}
-              iconLeft={imagePath.icVendorChat}
-              centerHeading={strings.USER_CHAT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            />
-          )}
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
+            !!appData?.profile?.socket_url && (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={() => goToChatRoom('user_chat')}
+                iconLeft={imagePath.icVendorChat}
+                centerHeading={strings.USER_CHAT}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
           {!!userData?.auth_token ? null : (
             <View style={styles.loginView}>
               <TouchableOpacity

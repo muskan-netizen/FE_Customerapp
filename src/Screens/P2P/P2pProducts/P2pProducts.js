@@ -40,9 +40,13 @@ import actions from '../../../redux/actions';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 
 import {MultiSelect} from 'react-native-element-dropdown';
-import {checkValueExistInAry} from '../../../utils/commonFunction';
+import {
+  checkValueExistInAry,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../../../utils/commonFunction';
 import {UIActivityIndicator} from 'react-native-indicators';
 import FastImage from 'react-native-fast-image';
+import GradientView from '../../../Components/GradientView';
 
 const P2pProducts = ({route, navigation}) => {
   const flatlistRef = useRef(null);
@@ -57,7 +61,8 @@ const P2pProducts = ({route, navigation}) => {
     themeColor,
   } = useSelector((state) => state?.initBoot);
   const {userData} = useSelector((state) => state?.auth);
-
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const darkthemeusingDevice = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -305,13 +310,16 @@ const P2pProducts = ({route, navigation}) => {
               </View>
             ) : null}
           </View>
-          <GradientButton
-            btnText={`${currencies?.primary_currency?.symbol} ${Number(
-              item?.variant[0]?.price,
-            ).toFixed(2)}`}
-            btnStyle={styles.btn}
-            containerStyle={{alignItems: 'flex-start'}}
+
+          <GradientView
+            title={tokenConverterPlusCurrencyNumberFormater(
+              Number(item?.variant[0]?.price),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
             colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+            btnStyle={{marginTop: moderateScale(4)}}
           />
         </View>
       );
@@ -480,6 +488,7 @@ const P2pProducts = ({route, navigation}) => {
           renderItem={renderP2pProducts}
           keyExtractor={(itm, indx) => String(indx)}
           showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{height: 10}} />}
           ListEmptyComponent={() =>
             !isLoading && (
               <View>

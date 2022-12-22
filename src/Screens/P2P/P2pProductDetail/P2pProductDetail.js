@@ -34,6 +34,7 @@ import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
 import ReactNativeModal from 'react-native-modal';
 import Header from '../../../Components/Header';
+import GradientView from '../../../Components/GradientView';
 
 const P2pProductDetail = ({navigation, route}) => {
   const carouselRef = useRef(null);
@@ -372,17 +373,19 @@ const P2pProductDetail = ({navigation, route}) => {
               })}
           </View>
           <View style={styles.view}>
-            <GradientButton
-              btnText={tokenConverterPlusCurrencyNumberFormater(
+            <GradientView
+              title={tokenConverterPlusCurrencyNumberFormater(
                 Number(productInfo?.variant[0]?.price),
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
               )}
-              btnStyle={styles.btn}
-              containerStyle={{alignItems: 'flex-start'}}
               colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+              btnStyle={{
+                marginVertical: moderateScaleVertical(6),
+              }}
             />
+
             <Text style={{...styles.txt1}}>
               {!isEmpty(productInfo?.translation)
                 ? productInfo?.translation[0]?.title

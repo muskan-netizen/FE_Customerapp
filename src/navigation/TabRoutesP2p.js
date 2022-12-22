@@ -1,43 +1,27 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Image, StyleSheet, Text} from 'react-native';
 import {View} from 'react-native-animatable';
 import {useSelector} from 'react-redux';
-import CustomBottomTabBar from '../Components/CustomBottomTabBar';
-import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
-import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
-import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
-import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
+import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
-import {appIds, shortCodes} from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
-import BrandStack from './BrandStack';
 import CartStack from './CartStack';
-import CelebrityStack from './CelebrityStack';
+import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
-import DeviceInfo from 'react-native-device-info';
-import MyOrdersStack from './MyOrdersStack';
-import {SearchProductVendorItem2} from '../Screens';
-import SearchProductVendorStack from './SearchProductVendorStack';
 import PostStack from './PostStack';
-import ChatStack from './ChatStack';
-import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
-import {useDarkMode} from 'react-native-dark-mode';
 
 const Tab = createBottomTabNavigator();
 
 let showBottomBar_ = true;
 
 export default function TabRoutes(props) {
-  const [showBottomBar, setShowBottomBar] = useState(true);
   const {cartItemCount} = useSelector((state) => state?.cart);
-  const {appMainData} = useSelector((state) => state?.home);
   const {
     appStyle,
     appData,
@@ -48,22 +32,7 @@ export default function TabRoutes(props) {
   } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
-  const darkthemeusingDevice = useDarkMode();
-
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
-  const allCategory = appMainData?.categories;
-  const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
-
-  // const checkForCeleb =
-  //   allCategory &&
-  //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
-  const checkForBrand =
-    allCategory &&
-    allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
-
-  var celebTab = null;
-  var brandTab = null;
 
   const getTabBarVisibility = (route, navigation, screen) => {
     if (navigation && navigation.isFocused && navigation.isFocused()) {
@@ -77,92 +46,12 @@ export default function TabRoutes(props) {
     }
   };
 
-  if (checkForCeleb) {
-    celebTab = (
-      <Tab.Screen
-        component={CelebrityStack}
-        name={navigationStrings.CELEBRITY}
-        options={({route}) => ({
-          tabBarLabel: strings.CELEBRITY,
-          tabBarIcon: ({focused, tintColor}) => (
-            <Image
-              style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 3 && {height: 26, width: 26},
-              ]}
-              source={
-                appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.celebActive
-                    : imagePath.celebInActive
-                  : appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.icCelebActive1
-                    : imagePath.icCelebInActive1
-                  : focused
-                  ? imagePath.tabDActive
-                  : imagePath.tabDInActive
-              }
-            />
-          ),
-          // unmountOnBlur: true,
-        })}
-      />
-    );
-  }
-  if (checkForBrand) {
-    brandTab = (
-      <Tab.Screen
-        component={BrandStack}
-        name={navigationStrings.BRANDS}
-        options={({route}) => ({
-          tabBarLabel: strings.BRANDS,
-          tabBarIcon: ({focused, tintColor}) => (
-            <Image
-              style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 ||
-                  (appStyle?.tabBarLayout === 4 && {height: 20, width: 20}),
-              ]}
-              source={
-                appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.icBrandActive
-                    : imagePath.icBrandInActive
-                  : appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.brandsActive1
-                    : imagePath.brandsInActive1
-                  : focused
-                  ? imagePath.tabCActive
-                  : imagePath.tabCInActive
-              }
-              // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
-            />
-          ),
-          //  unmountOnBlur: true,
-        })}
-      />
-    );
-  }
-
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
       tabBar={(props) => {
         if (showBottomBar_) {
-          switch (appStyle?.tabBarLayout) {
-            case 1:
-              return <CustomBottomTabBar {...props} />;
-            case 2:
-              return <CustomBottomTabBarTwo {...props} />;
-            case 3:
-              return <CustomBottomTabBarThree {...props} />;
-            case 4:
-              return <CustomBottomTabBarP2p {...props} />;
-            case 5:
-              return <CustomBottomTabBarFive {...props} />;
-          }
+          return <CustomBottomTabBarP2p {...props} />;
         }
       }}
       initialRouteName={
@@ -179,8 +68,6 @@ export default function TabRoutes(props) {
           fontSize: textScale(12),
           color: colors.white,
         },
-
-        // showLabel: false,
       }}>
       <Tab.Screen
         component={HomeStack}
@@ -226,8 +113,6 @@ export default function TabRoutes(props) {
               }
             />
           ),
-
-          // unmountOnBlur: true,
         })}
       />
 
@@ -270,7 +155,6 @@ export default function TabRoutes(props) {
               }
             />
           ),
-          //  unmountOnBlur: true,
         })}
       />
 
@@ -299,45 +183,8 @@ export default function TabRoutes(props) {
                 }}></View>
             </View>
           ),
-
-          // unmountOnBlur: true,
         })}
       />
-
-      {DeviceInfo.getBundleId() == appIds.sorDelivery && (
-        <Tab.Screen
-          component={SearchProductVendorStack}
-          name={navigationStrings.SEARCH}
-          options={({route}) => ({
-            tabBarLabel: strings.SEARCH,
-            tabBarIcon: ({focused, tintColor}) => (
-              <Image
-                resizeMode="contain"
-                style={[
-                  appStyle?.tabBarLayout === 2 || appStyle?.tabBarLayout === 1
-                    ? {tintColor: 'white'}
-                    : {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
-                ]}
-                source={
-                  appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.search
-                      : imagePath.search1
-                    : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.search
-                      : imagePath.search1
-                    : focused
-                    ? imagePath.search
-                    : imagePath.search1
-                }
-              />
-            ),
-            //  unmountOnBlur: true,
-          })}
-        />
-      )}
 
       <Tab.Screen
         component={CartStack}
@@ -404,41 +251,10 @@ export default function TabRoutes(props) {
             </View>
           ),
           unmountOnBlur: true,
-          // unmountOnBlur: cartItemCount?.data?.item_count ? false : true,
           gestureEnabled: true,
         })}
       />
-      {DeviceInfo.getBundleId() == appIds.dlvrd && (
-        <Tab.Screen
-          component={MyOrdersStack}
-          name={navigationStrings.MYORDERSSTACK}
-          options={({route}) => ({
-            tabBarLabel: strings.ORDERS,
-            tabBarIcon: ({focused, tintColor}) => (
-              <Image
-                resizeMode="contain"
-                style={[
-                  {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
-                ]}
-                source={
-                  appStyle?.tabBarLayout === 5
-                    ? imagePath.myOrder2
-                    : appStyle?.tabBarLayout === 4
-                    ? imagePath.myOrder2
-                    : focused
-                    ? imagePath.tabEActive
-                    : imagePath.tabEInActive
-                }
-              />
-            ),
-            //  unmountOnBlur: true,
-          })}
-        />
-      )}
 
-      {/* {brandTab}
-      {celebTab} */}
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
@@ -483,7 +299,7 @@ export default function TabRoutes(props) {
 }
 
 export function stylesData(params) {
-  const {themeColors, appStyle} = useSelector((state) => state.initBoot);
+  const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = StyleSheet.create({

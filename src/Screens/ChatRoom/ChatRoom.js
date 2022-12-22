@@ -11,7 +11,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 import actions from '../../redux/actions';
 import {moderateScale, textScale} from '../../styles/responsiveSize';
-import _ from 'lodash';
+import _, {isEmpty} from 'lodash';
 import {showError} from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
 import stylesFun from './styles';
@@ -118,7 +118,6 @@ export default function ChatRoom({navigation, route}) {
   }, []);
   const renderItem = useCallback(({item, index}) => {
     let isAnyMessage = _.isEmpty(item?.chat_Data);
-    console.log(item, 'item....item');
     return (
       <TouchableOpacity
         onPress={() => goToChatRoom(item)}
@@ -138,28 +137,23 @@ export default function ChatRoom({navigation, route}) {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
+                  flex: 0.85,
                 }}>
-                {_.isEmpty(item?.user_Data) ? (
-                  <FastImage
-                    source={imagePath?.icDefaultImg}
-                    resizeMode={'cover'}
-                    style={{
-                      width: moderateScale(40),
-                      height: moderateScale(40),
-                      borderRadius: moderateScale(40) / 2,
-                      backgroundColor: 'rgba(0,0,0,0.5)',
-                    }}
-                  />
-                ) : (
-                  <CircularImages
-                    fontFamily={fontFamily}
-                    isDarkMode={isDarkMode}
-                    data={item?.chat_Data}
-                    container={{
-                      marginTop: 0,
-                    }}
-                  />
-                )}
+                <FastImage
+                  source={
+                    _.isEmpty(item?.user_Data)
+                      ? imagePath.icDefaultImg
+                      : {uri: item?.user_Data[0]?.display_image}
+                  }
+                  resizeMode={'cover'}
+                  style={{
+                    width: moderateScale(40),
+                    height: moderateScale(40),
+                    borderRadius: moderateScale(40) / 2,
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                  }}
+                />
+
                 <View
                   style={{
                     marginLeft: moderateScale(5),
@@ -171,7 +165,8 @@ export default function ChatRoom({navigation, route}) {
                         fontFamily: fontFamily?.bold,
                         color: colors.black,
                       }}>
-                      {item?.chat_Data[0]?.username}
+                      {item?.user_Data[0]?.username}{' '}
+                      {!!item?.product_name ? `(${item?.product_name})` : ''}
                     </Text>
                   ) : (
                     <Text
@@ -179,14 +174,25 @@ export default function ChatRoom({navigation, route}) {
                         fontFamily: fontFamily?.bold,
                         color: colors.black,
                       }}>
-                      {userData?.name}
+                      {item?.vendor_name || userData?.name}
+                      {!!item?.product_name ? ` (${item?.product_name})` : ''}
                     </Text>
                   )}
-                  {!isAnyMessage ? (
-                    <Text numberOfLines={2} style={styles.textDesc}>
-                      {item?.chat_Data[0]?.message}
-                    </Text>
-                  ) : null}
+
+                  <Text numberOfLines={2} style={styles.textDesc}>
+                    {!isAnyMessage ? (
+                      item?.chat_Data[0]?.message
+                    ) : (
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(10),
+                          color: colors.blueB,
+                        }}>
+                        • New Chat
+                      </Text>
+                    )}
+                  </Text>
                 </View>
               </View>
 
@@ -278,6 +284,7 @@ export default function ChatRoom({navigation, route}) {
             ? imagePath.icBackb
             : imagePath.back
         }
+        noLeftIcon={dineInType == 'p2p'}
         centerTitle={strings.CHAT_ROOM}
       />
       <View style={styles.container}>

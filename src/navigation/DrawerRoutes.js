@@ -24,12 +24,11 @@ export default function DrawerRoutes(props) {
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
- 
   const {shortCodeStatus, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
- 
-  const businessType = appStyle?.homePageLayout;  
+
+  const businessType = appStyle?.homePageLayout;
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
@@ -92,21 +91,6 @@ export default function DrawerRoutes(props) {
       // hideStatusBar={true}
       drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      {/* <Drawer.Screen
-        component={TabRoutes}
-        name={navigationStrings.HOMESTACK}
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.HOME,
-          drawerIcon: ({focused}) => (
-            <Image
-              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
-            />
-          ),
-        }}
-      /> */}
-
       <Drawer.Screen
         component={businessType === 4 ? TaxiTabRoutes : TabRoutes}
         name={

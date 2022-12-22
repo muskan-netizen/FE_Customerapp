@@ -160,7 +160,6 @@ export default function Account3({navigation}) {
       showError(error?.message);
     }
   };
-
   return (
     <WrapperContainer>
       <Text

@@ -1834,7 +1834,7 @@ export default function ProductDetail({route, navigation}) {
                 </>
               ) : null}
 
-              <View
+              {/* <View
                 style={{
                   marginBottom: moderateScaleVertical(15),
                 }}>
@@ -1890,7 +1890,7 @@ export default function ProductDetail({route, navigation}) {
                     </Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </View> */}
 
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}

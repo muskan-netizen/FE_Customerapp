@@ -472,7 +472,7 @@ const shortCodes = {
   skyline: 'ce1ed6',
   bliss: '6eb260',
   rentzy: 'd4fc07',
-  // zonesso: 'f34c51',
+  // zonesso: '245bae',
   zonesso: '4f459b',
 };
 

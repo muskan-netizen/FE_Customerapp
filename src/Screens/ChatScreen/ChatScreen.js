@@ -359,7 +359,7 @@ export default function ChatScreen({route, navigation}) {
                     color: isDarkMode ? colors.white : colors.black,
                   }}>
                   {currentMessage?.username || currentMessage?.phone_num}{' '}
-                  {`(${currentMessage?.user_type})`}
+                  {dineInType !== 'p2p' && `(${currentMessage?.user_type})`}
                 </Text>
               ) : null}
 
@@ -385,6 +385,7 @@ export default function ChatScreen({route, navigation}) {
         </View>
       );
     }
+
     return (
       <View style={{flexDirection: 'row'}}>
         <FastImage
@@ -414,7 +415,7 @@ export default function ChatScreen({route, navigation}) {
                   color: isDarkMode ? colors.white : colors.black,
                 }}>
                 {currentMessage?.username || currentMessage?.phone_num}{' '}
-                {`(${currentMessage?.user_type})`}
+                {dineInType !== 'p2p' && `(${currentMessage?.user_type})`}
               </Text>
             ) : null}
 
@@ -618,7 +619,7 @@ export default function ChatScreen({route, navigation}) {
         }
         centerTitle={
           dineInType == 'p2p'
-            ? productDetails?.title
+            ? paramData?.product_name || productDetails?.title || ''
             : `# ${paramData?.room_id || ''}`
         }
         customRight={showRoomUser}
