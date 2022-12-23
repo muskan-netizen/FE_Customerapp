@@ -2127,7 +2127,7 @@ const appIds = {
   }),
   kaypee: Platform.select({
     ios: 'com.kaypee.royoorders',
-    android: 'com.kaypee.royoorders',
+    android: 'com.kaypee.orderapp',
   }),
   hitaxi: Platform.select({
     ios: 'com.hitaxi.royoorders',

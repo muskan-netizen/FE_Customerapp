@@ -205,18 +205,18 @@ android {
 
     flavorDimensions "appType"
 
-    // productFlavors{
-    //                potolo {
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.potolo.royoorders'
-    //             resValue "string", "app_name", "Potolo"
-    //             resValue "string", "host_name", ""
-    //         }
-    // }
+    productFlavors{
+           kaypee{
+            dimension "appType"
+            versionCode 2
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.kaypee.orderapp'
+            resValue "string", "app_name", "Kaypee" 
+            resValue "string", "host_name", ""
+            }
+    }
  
 
     productFlavors {
@@ -7282,7 +7282,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.kaypee.royoorders'
+            applicationId 'com.kaypee.orderapp'
             resValue "string", "app_name", "Kaypee" 
             resValue "string", "host_name", ""
             }
