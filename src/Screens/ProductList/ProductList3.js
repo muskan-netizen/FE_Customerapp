@@ -318,6 +318,7 @@ export default function Products({ route, navigation }) {
 
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
+      console.log(item,'renderSectionItem=>');
       // const url1 = item?.media[0]?.image?.path.image_fit;
       return (
         <View
@@ -3137,6 +3138,7 @@ export default function Products({ route, navigation }) {
   // };
 
   const scrollHeader = (index) => {
+    console.log('scrollHeader=>',index);
     setActiveIdx(index);
     sectionListRef.current.sectionList.current.scrollToLocation({
       sectionIndex: index,
@@ -3609,6 +3611,7 @@ export default function Products({ route, navigation }) {
               )}
             {/* <View style={{height: moderateScale(10)}} /> */}
             {!!categoryInfo?.is_show_products_with_category ? (
+              
               <SectionList
                 onScroll={onScroll}
                 ref={sectionListRef}

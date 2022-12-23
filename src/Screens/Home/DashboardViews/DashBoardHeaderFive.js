@@ -132,23 +132,21 @@ export default function DashBoardHeaderFive({
                   resizeMode="contain"
                 />
                 <View>
-                  {getBundleId() == appIds.qdelo
-                    ? null
-                    : !!location?.type && (
-                        <Text numberOfLines={1} style={styles.locationTypeTxt}>
-                          {location?.type === 3
-                            ? !!(
-                                location?.type_name != 0 &&
-                                location?.type != '0' &&
-                                location?.type_name !== null
-                              )
-                              ? location?.type_name
-                              : strings.UNKNOWN
-                            : location?.type === 2
-                            ? strings.WORK
-                            : strings.HOME}
-                        </Text>
-                      )}
+                  {!!location?.type && (
+                    <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                      {location?.type === 3
+                        ? !!(
+                            location?.type_name != 0 &&
+                            location?.type != '0' &&
+                            location?.type_name !== null
+                          )
+                          ? location?.type_name
+                          : strings.UNKNOWN
+                        : location?.type === 2
+                        ? strings.WORK
+                        : strings.HOME}
+                    </Text>
+                  )}
 
                   <Text
                     numberOfLines={1}
@@ -161,9 +159,7 @@ export default function DashBoardHeaderFive({
                         fontFamily: fontFamily.medium,
                       },
                     ]}>
-                    {getBundleId() == appIds.qdelo
-                      ? currentLocation?.address
-                      : location?.address}
+                    {location?.address}
                   </Text>
                 </View>
               </TouchableOpacity>
