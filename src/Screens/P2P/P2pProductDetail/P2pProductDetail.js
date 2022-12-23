@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -35,10 +35,16 @@ import {dialCall} from '../../../utils/openNativeApp';
 import ReactNativeModal from 'react-native-modal';
 import Header from '../../../Components/Header';
 import GradientView from '../../../Components/GradientView';
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
 
 const P2pProductDetail = ({navigation, route}) => {
   const carouselRef = useRef(null);
-
+  const snapPoints = useMemo(() => [height], []);
+  const bottomSheetModalRef = useRef(null);
   const paramData = route?.params;
   console.log(paramData, 'paramData....paramData');
   const {
@@ -68,6 +74,8 @@ const P2pProductDetail = ({navigation, route}) => {
   useEffect(() => {
     getP2pProductDetail();
   }, []);
+
+  console.log(selectedPanoImg, 'selectedPanoImg.....selectedPanoImg');
 
   const getP2pProductDetail = () => {
     actions
@@ -185,7 +193,10 @@ const P2pProductDetail = ({navigation, route}) => {
               )}
             />
             <TouchableOpacity
-              onPress={() => setSelectedPanoImg(item)}
+              onPress={() => {
+                bottomSheetModalRef.current.present();
+                setSelectedPanoImg(item);
+              }}
               style={{
                 position: 'absolute',
                 paddingVertical: moderateScaleVertical(5),
@@ -272,14 +283,23 @@ const P2pProductDetail = ({navigation, route}) => {
     return (
       <View
         style={{
-          flex: 1,
-          backgroundColor: colors.white,
+          height: height,
+          backgroundColor: colors.green,
         }}>
         <WrapperContainer>
-          <Header
-            leftIcon={imagePath.back1}
-            onPressLeft={() => setSelectedPanoImg(null)}
-          />
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              top: 20,
+              left: 20,
+              zIndex: 1,
+            }}
+            onPress={() => {
+              bottomSheetModalRef.current.close();
+              setSelectedPanoImg(null);
+            }}>
+            <Image source={imagePath.back1} />
+          </TouchableOpacity>
           <PanoramaView
             style={{
               flex: 1,
@@ -471,7 +491,11 @@ const P2pProductDetail = ({navigation, route}) => {
                 />
               </View>
               <Text
-                style={{...styles.txt2, marginLeft: 8, color: colors.orange1}}>
+                style={{
+                  ...styles.txt2,
+                  marginLeft: 8,
+                  color: colors.orange1,
+                }}>
                 {productInfo?.vendor?.name}
               </Text>
             </View>
@@ -553,16 +577,15 @@ const P2pProductDetail = ({navigation, route}) => {
           )}
         </ScrollView>
       )}
-      <ReactNativeModal
-        isVisible={!!selectedPanoImg}
-        onSwipeComplete={() => setSelectedPanoImg(null)}
-        useNativeDriverForBackdrop
-        style={{
-          margin: 0,
-        }}
-        swipeDirection={['down']}>
-        {modalContent()}
-      </ReactNativeModal>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          snapPoints={snapPoints}
+          index={0}
+          handleComponent={() => <></>}>
+          {modalContent()}
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     </View>
   );
 };

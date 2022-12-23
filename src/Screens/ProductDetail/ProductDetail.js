@@ -1474,6 +1474,56 @@ export default function ProductDetail({route, navigation}) {
     setPinCode(text);
   };
 
+  const deliverSlotModalContent = () => {
+    return (
+      <View
+        style={{
+          height: height / 3,
+          backgroundColor: colors.white,
+          borderTopLeftRadius: moderateScale(10),
+          borderTopRightRadius: moderateScale(10),
+          padding: moderateScale(10),
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <Text
+            style={{
+              fontFamily: fontFamily?.bold,
+              fontSize: textScale(16),
+            }}>
+            Select delivery slot
+          </Text>
+          <TouchableOpacity onPress={() => setAvailableSlotsModal(false)}>
+            <Image source={imagePath.closeButton} />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(6),
+          }}>
+          <Image source={imagePath.radioInActive} />
+          <Text
+            style={{
+              fontFamily: fontFamily?.regular,
+              marginLeft: moderateScale(10),
+            }}>
+            Afternoon (11:01 - 15:00 $100.00)
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -2208,57 +2258,13 @@ export default function ProductDetail({route, navigation}) {
         }
       />
       <ReactNativeModal
-        onBackButtonPress={() => setAvailableSlotsModal(false)}
+        onBackdropPress={() => setAvailableSlotsModal(false)}
         isVisible={isAvailableSlotsModal}
         style={{
           justifyContent: 'flex-end',
           margin: 0,
         }}>
-        <View
-          style={{
-            height: height / 3,
-            backgroundColor: colors.white,
-            borderTopLeftRadius: moderateScale(10),
-            borderTopRightRadius: moderateScale(10),
-            padding: moderateScale(10),
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: moderateScaleVertical(10),
-            }}>
-            <Text
-              style={{
-                fontFamily: fontFamily?.bold,
-                fontSize: textScale(16),
-              }}>
-              Select delivery slot
-            </Text>
-            <TouchableOpacity onPress={() => setAvailableSlotsModal(false)}>
-              <Image source={imagePath.closeButton} />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: 8,
-              borderWidth: 1,
-              borderColor: colors.borderColorB,
-              borderRadius: moderateScale(6),
-            }}>
-            <Image source={imagePath.radioInActive} />
-            <Text
-              style={{
-                fontFamily: fontFamily?.regular,
-                marginLeft: moderateScale(10),
-              }}>
-              Afternoon (11:01 - 15:00 $100.00)
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {deliverSlotModalContent()}
       </ReactNativeModal>
     </WrapperContainer>
   );
