@@ -9,7 +9,6 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
 import AccountStack from './AccountStack';
 import CartStack from './CartStack';
 import ChatStack from './ChatStack';
