@@ -2103,7 +2103,7 @@ const appIds = {
     android: 'com.eureka.royoorders',
   }),
   kaypee: Platform.select({
-    ios: 'com.kaypee.royoorders',
+    ios: 'com.kaypee.orderapp',
     android: 'com.kaypee.royoorders',
   }),
   hitaxi: Platform.select({

@@ -240,7 +240,7 @@ function Cart({navigation, route}) {
 
   const {preferences} = appData?.profile;
   const {additional_preferences, digit_after_decimal} = preferences;
-
+console.log(cartData,'cartDatacartData')
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
@@ -4543,6 +4543,7 @@ function Cart({navigation, route}) {
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
+              
             {!!(
               userData?.auth_token &&
               !appData?.profile?.preferences?.off_scheduling_at_cart &&

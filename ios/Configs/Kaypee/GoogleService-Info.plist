@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>961221332866-tgh9k74cca50b6goispbei1v1n6vlphp.apps.googleusercontent.com</string>
+	<string>789822674765-apt5um1rad4ev538972ak46ji9v964vt.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.961221332866-tgh9k74cca50b6goispbei1v1n6vlphp</string>
+	<string>com.googleusercontent.apps.789822674765-apt5um1rad4ev538972ak46ji9v964vt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>789822674765-bq758qis98jos2bqdp7fub0ulh0bo9sj.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBHQzxkXkI-dws_lxZ3oIpW6UElZRJ47vA</string>
+	<string>AIzaSyDq06KO0i7JtemCMSzlf2jjwEH9gT334pI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>961221332866</string>
+	<string>789822674765</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.kaypee.royoorders</string>
+	<string>com.kaypee.orderapp</string>
 	<key>PROJECT_ID</key>
-	<string>kaypee-f636b</string>
+	<string>kaypee-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>kaypee-f636b.appspot.com</string>
+	<string>kaypee-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:961221332866:ios:e06a832890bd89c1e3499b</string>
+	<string>1:789822674765:ios:04eb55f4a435f824b58904</string>
 </dict>
 </plist>
