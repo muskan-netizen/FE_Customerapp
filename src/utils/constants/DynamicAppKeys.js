@@ -1818,8 +1818,8 @@ const appIds = {
     android: 'com.atasktt',
   }),
   lunchboxSpecials: Platform.select({
-    ios: 'com.lunchboxspecials',
-    android: 'com.lunchboxspecials',
+    ios: 'com.mealtime.orderapp',
+    android: 'com.mealtime.orderapp',
   }),
   sorDelivery: Platform.select({
     ios: 'com.sordelivery',
@@ -2028,7 +2028,7 @@ const appIds = {
     android: 'com.goadeliv.userapp',
   }),
   mrVeloz: Platform.select({
-    ios: 'com.mrVeloz.order',
+    ios: 'com.mrVeloz.orderapp',
     android: 'com.mrVeloz.orderapp',
   }),
   greenCab: Platform.select({

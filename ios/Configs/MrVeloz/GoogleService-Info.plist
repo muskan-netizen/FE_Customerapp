@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>964305245979-nvhhur956s4ohj6bk4si21r0ni56lonl.apps.googleusercontent.com</string>
+	<string>71240007903-h484kqtt13e1cjkcpi4r1jpuiqhltd3f.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.964305245979-nvhhur956s4ohj6bk4si21r0ni56lonl</string>
+	<string>com.googleusercontent.apps.71240007903-h484kqtt13e1cjkcpi4r1jpuiqhltd3f</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>964305245979-belar53o105qs28blmhmmn4ob5alanj5.apps.googleusercontent.com</string>
+	<string>71240007903-cg3oeaga0q8v4eia37hia8g96d17usc0.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBxy8gdHH2zMI5j8CI4jWW7VwovgJRPqHQ</string>
+	<string>AIzaSyC-wdVovCdqkcDMqFEIf40Bxj4uz0-k0c0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>964305245979</string>
+	<string>71240007903</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mrVeloz.order</string>
+	<string>com.mrVeloz.orderapp</string>
 	<key>PROJECT_ID</key>
-	<string>mr-veloz-da096</string>
+	<string>mrveloz-3de21</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mr-veloz-da096.appspot.com</string>
+	<string>mrveloz-3de21.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:964305245979:ios:4e597268c83e7c3e1925be</string>
+	<string>1:71240007903:ios:a4f56152326ffe4d73a96a</string>
 </dict>
 </plist>

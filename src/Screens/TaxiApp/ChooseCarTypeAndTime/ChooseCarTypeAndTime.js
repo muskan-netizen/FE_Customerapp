@@ -650,6 +650,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             selectedCarOption: selectedCarOption?.sku,
           };
           console.log(extraData, data, 'extraData, data');
+         
           checkPaymentOptions(extraData, data);
         } else {
           console.log(res, 'res>>>>>');
@@ -680,8 +681,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = taskInstruction;
-    // data['amount'] = selectedCarOption?.total_tags_price;
-    data['amount'] = selectedCarOption?.tags_price;
+    data['amount'] = selectedCarOption?.total_tags_price;
+    // data['amount'] = selectedCarOption?.tags_price;
     data['tags_amount'] = selectedCarOption?.tags_price;
     data['tollamount'] = selectedCarOption?.toll_fee
       ? selectedCarOption?.toll_fee

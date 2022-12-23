@@ -1,12 +1,12 @@
-#include "Pods/Target Support Files/Pods-available_pods-LunchboxSpecials/Pods-available_pods-LunchboxSpecials.Release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-LunchboxSpecials/Pods-available_pods-LunchboxSpecials.Debug.xcconfig"
 
-PROJECT_APPLE_ID = 1626477673
-PROJECT_BUNDLE_ID = com.lunchboxspecials
+PROJECT_APPLE_ID = 1661065082
+PROJECT_BUNDLE_ID = com.mealtime.orderapp
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 4
+PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Meal Time
-PROJECT_GOOGLE_CLIENT_ID = 258522187933-op752vdcn9tdj4fc0h9gtvnkleeralk2.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.258522187933-op752vdcn9tdj4fc0h9gtvnkleeralk2
+PROJECT_GOOGLE_CLIENT_ID = 930203421194-l34vj1157r1lcgcspd40carqfu5vgnfe.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.930203421194-l34vj1157r1lcgcspd40carqfu5vgnfe
 PROJECT_FACEBOOK_ID = 1361843467668519
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST = LunchboxSpecialsInfo

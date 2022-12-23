@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "258522187933",
-    "project_id": "lunchbox-specials",
-    "storage_bucket": "lunchbox-specials.appspot.com"
+    "project_number": "930203421194",
+    "project_id": "mealtime-order",
+    "storage_bucket": "mealtime-order.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:258522187933:android:732cd4116e4648bc812c74",
+        "mobilesdk_app_id": "1:930203421194:android:0561b544d6ef79ac082df3",
         "android_client_info": {
-          "package_name": "com.lunchboxspecials"
+          "package_name": "com.mealtime.orderapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "258522187933-il5iouagudp2nfb835b5ut7075p64qkv.apps.googleusercontent.com",
+          "client_id": "930203421194-bk2o5klpr58qmhni9m9sib2k5h5gde92.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.lunchboxspecials",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "258522187933-nuhv0q804gi8pe91dbu1h0lumr63s84u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.lunchboxspecials",
+            "package_name": "com.mealtime.orderapp",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "258522187933-vpq56gvqkc3b4lg5p54ni10auic2rlda.apps.googleusercontent.com",
+          "client_id": "930203421194-np7v4iguuqsp14svsp7g181emn3vjj1l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.lunchboxspecials",
+            "package_name": "com.mealtime.orderapp",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "258522187933-t9m6148go42g2qh75s93ligkcigq4vrj.apps.googleusercontent.com",
+          "client_id": "930203421194-t41r0v5r2f0l5bdqqs3qikv2r7dvstnj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mealtime.orderapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "930203421194-405fkmjlh7jh78sr69ifis4d4cgqqmrm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCVuUpPQEJdDFlLqjeR5M5FlgdnRo5Z8xw"
+          "current_key": "AIzaSyCEDjLykmzO0Ad9qD7hLvOVv1QpvQhYodQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "258522187933-t9m6148go42g2qh75s93ligkcigq4vrj.apps.googleusercontent.com",
+              "client_id": "930203421194-405fkmjlh7jh78sr69ifis4d4cgqqmrm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "258522187933-op752vdcn9tdj4fc0h9gtvnkleeralk2.apps.googleusercontent.com",
+              "client_id": "930203421194-l34vj1157r1lcgcspd40carqfu5vgnfe.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.lunchboxspecials"
+                "bundle_id": "com.mealtime.orderapp"
               }
             }
           ]
