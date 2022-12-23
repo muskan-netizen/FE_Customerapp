@@ -205,20 +205,19 @@ android {
 
     flavorDimensions "appType"
 
-    productFlavors{
-                            sxm2go{
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.sxm2go.userapp'
-                resValue "string", "app_name", "SXM2GO"
-                resValue "string", "host_name", ""
-            }
-    }
-
-
+    // productFlavors{
+    //                potolo {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.potolo.royoorders'
+    //             resValue "string", "app_name", "Potolo"
+    //             resValue "string", "host_name", ""
+    //         }
+    // }
+ 
 
     productFlavors {
             royoorder {
@@ -2089,7 +2088,7 @@ android {
             }
             sxm2go{
                 dimension "appType"
-                versionCode 2
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -7910,14 +7909,175 @@ android {
                 resValue "string", "app_name", "Rumbella"
                 resValue "string", "host_name", ""
             }
-                                                 usVetsDeliver {
+         
+            lvlup {
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.UsVetsDeliver.royoorders'
-                resValue "string", "app_name", "UsVetsDeliver"
+                applicationId 'com.lvlup.royoorders'
+                resValue "string", "app_name", "LvlUp"
+                resValue "string", "host_name", ""
+            }
+            glavour {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.glavour.royoorders'
+                resValue "string", "app_name", "Glavour"
+                resValue "string", "host_name", ""
+            }
+               lincshare {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.lincshare.royoorders'
+                resValue "string", "app_name", "LincShare"
+                resValue "string", "host_name", ""
+            }
+            shipmoe {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.shipmoe.royoorders'
+                resValue "string", "app_name", "Shipmoe"
+                resValue "string", "host_name", ""
+            }
+             bigBayong {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.bigBayong.royoorders'
+                resValue "string", "app_name", "Big Bayong"
+                resValue "string", "host_name", ""
+            }
+                 efectibo {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.efectibo.royoorders'
+                resValue "string", "app_name", "Efectibo"
+                resValue "string", "host_name", ""
+            }
+                sooq {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.sooq.royoorders'
+                resValue "string", "app_name", "Sooq"
+                resValue "string", "host_name", ""
+            }
+                    hectoHomes {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.hectohomes.royoorders'
+                resValue "string", "app_name", "Hecto Homes"
+                resValue "string", "host_name", ""
+            }
+                        zynoBidandRide {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.zynoapp.royoorders'
+                resValue "string", "app_name", "Zyno Bid & Ride"
+                resValue "string", "host_name", ""
+            }
+                            glamguide {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.glamguide.royoorders'
+                resValue "string", "app_name", "Glamguide"
+                resValue "string", "host_name", ""
+            }
+                    solace {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.solace.royoorders'
+                resValue "string", "app_name", "Solace"
+                resValue "string", "host_name", ""
+            }
+               superpana {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.superpana.royoorders'
+                resValue "string", "app_name", "Superpana"
+                resValue "string", "host_name", ""
+            }
+                   kero {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.kero.royoorders'
+                resValue "string", "app_name", "Kero"
+                resValue "string", "host_name", ""
+            }
+                       godamPAY {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.godamPAY.royoorders'
+                resValue "string", "app_name", "GodamPAY"
+                resValue "string", "host_name", ""
+            }
+                           housingSubsidies {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.housingSubsidies.royoorders'
+                resValue "string", "app_name", "Housing Subsidies"
+                resValue "string", "host_name", ""
+            }
+                   bocch {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.bocch.royoorders'
+                resValue "string", "app_name", "Bocch"
+                resValue "string", "host_name", ""
+            }
+                 potolo {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.potolo.royoorders'
+                resValue "string", "app_name", "Potolo"
                 resValue "string", "host_name", ""
             }
     }

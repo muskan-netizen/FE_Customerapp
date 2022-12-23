@@ -297,7 +297,8 @@ const shortCodes = {
   curblerLLC: '959ecf',
   cartnar: '7b87ed',
   uven: '9b8db5',
-  pAS41: '4c0a17',
+  // pAS41: '4c0a17',
+  pAS41: '200651',
   freshFarmz: 'eafe42',
   ryde: '309c33',
   waterTaxi: 'f0f44c',
@@ -476,6 +477,23 @@ const shortCodes = {
   georgiacollective: '1d7bf7',
   otgWeeds: '2a3af8',
   rumbella: 'fd2e2f',
+  lincshare: '9b8d33',
+  lvlup: 'b2eb09',
+  glavour: '620b19',
+  shipmoe: '153a1f',
+  bigBayong: '5c8f1a',
+  efectibo: 'c1412b',
+  sooq: 'c7824a',
+  hectoHomes: '186e1d',
+  zynoBidandRide: '958bb4',
+  glamguide: 'e428fc',
+  solace: '6d065d',
+  superpana: '9242b4',
+  kero: '776666',
+  godamPAY: '2ae863',
+  housingSubsidies: '428883',
+  bocch: '987b45',
+  potolo: '12ada8',
 };
 
 const appIds = {
@@ -2370,6 +2388,74 @@ const appIds = {
   rumbella: Platform.select({
     ios: 'com.rumbella.royoorders',
     android: 'com.rumbella.royoorders',
+  }),
+  lincshare: Platform.select({
+    ios: 'com.lincshare.royoorders',
+    android: 'com.lincshare.royoorders',
+  }),
+  lvlup: Platform.select({
+    ios: 'com.lvlup.royoorders',
+    android: 'com.lvlup.royoorders',
+  }),
+  glavour: Platform.select({
+    ios: 'com.glavour.royoorders',
+    android: 'com.glavour.royoorders',
+  }),
+  shipmoe: Platform.select({
+    ios: 'com.shipmoe.royoorders',
+    android: 'com.shipmoe.royoorders',
+  }),
+  bigBayong: Platform.select({
+    ios: 'com.bigBayong.royoorders',
+    android: 'com.bigBayong.royoorders',
+  }),
+  efectibo: Platform.select({
+    ios: 'com.efectibo.royoorders',
+    android: 'com.efectibo.royoorders',
+  }),
+  sooq: Platform.select({
+    ios: 'com.sooq.royoorders',
+    android: 'com.sooq.royoorders',
+  }),
+  hectoHomes: Platform.select({
+    ios: 'com.hectohomes.royoorders',
+    android: 'com.hectohomes.royoorders',
+  }),
+  zynoBidandRide: Platform.select({
+    ios: 'com.zynoapp.royoorders',
+    android: 'com.zynoapp.royoorders',
+  }),
+  glamguide: Platform.select({
+    ios: 'com.glamguide.royoorders',
+    android: 'com.glamguide.royoorders',
+  }),
+  solace: Platform.select({
+    ios: 'com.solace.royoorders',
+    android: 'com.solace.royoorders',
+  }),
+  superpana: Platform.select({
+    ios: 'com.superpana.royoorders',
+    android: 'com.superpana.royoorders',
+  }),
+  kero: Platform.select({
+    ios: 'com.kero.royoorders',
+    android: 'com.kero.royoorders',
+  }),
+  godamPAY: Platform.select({
+    ios: 'com.godamPAY.royoorders',
+    android: 'com.godamPAY.royoorders',
+  }),
+  housingSubsidies: Platform.select({
+    ios: 'com.housingSubsidies.royoorders',
+    android: 'com.housingSubsidies.royoorders',
+  }),
+  bocch: Platform.select({
+    ios: 'com.bocch.royoorders',
+    android: 'com.bocch.royoorders',
+  }),
+  potolo: Platform.select({
+    ios: 'com.potolo.royoorders',
+    android: 'com.potolo.royoorders',
   }),
 };
 
