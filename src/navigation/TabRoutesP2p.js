@@ -9,6 +9,7 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import AccountStack from './AccountStack';
 import CartStack from './CartStack';
 import ChatStack from './ChatStack';
@@ -86,7 +87,11 @@ export default function TabRoutesP2p(props) {
             <Image
               style={[
                 {
-                  tintColor: tintColor,
+                  tintColor: focused
+                    ? themeColors?.primary_color
+                    : isDarkMode
+                    ? colors.whiteOpacity50
+                    : colors.blackOpacity43,
                 },
               ]}
               source={
@@ -108,11 +113,13 @@ export default function TabRoutesP2p(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               resizeMode="contain"
-              style={[
-                {
-                  tintColor: tintColor,
-                },
-              ]}
+              style={{
+                tintColor: focused
+                  ? themeColors?.primary_color
+                  : isDarkMode
+                  ? colors.whiteOpacity50
+                  : colors.blackOpacity43,
+              }}
               source={
                 focused ? imagePath.icChatP2p : imagePath.icChatP2pInActive
               }
@@ -183,11 +190,13 @@ export default function TabRoutesP2p(props) {
                 </View>
               ) : null}
               <Image
-                style={[
-                  {
-                    tintColor: tintColor,
-                  },
-                ]}
+                style={{
+                  tintColor: focused
+                    ? themeColors?.primary_color
+                    : isDarkMode
+                    ? colors.whiteOpacity50
+                    : colors.blackOpacity43,
+                }}
                 source={
                   focused ? imagePath.icCartP2p : imagePath.icCartP2pInActive
                 }
@@ -208,7 +217,11 @@ export default function TabRoutesP2p(props) {
             <Image
               resizeMode="contain"
               style={{
-                tintColor: tintColor,
+                tintColor: focused
+                  ? themeColors?.primary_color
+                  : isDarkMode
+                  ? colors.whiteOpacity50
+                  : colors.blackOpacity43,
               }}
               source={
                 focused

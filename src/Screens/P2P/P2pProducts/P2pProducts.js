@@ -37,7 +37,11 @@ import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+  showError,
+} from '../../../utils/helperFunctions';
 
 import {MultiSelect} from 'react-native-element-dropdown';
 import {
@@ -318,7 +322,17 @@ const P2pProducts = ({route, navigation}) => {
               additional_preferences,
               currencies?.primary_currency?.symbol,
             )}
-            colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+            colorsArray={[
+              getColorCodeWithOpactiyNumber(
+                themeColors?.primary_color.substr(1),
+                30,
+              ),
+              getColorCodeWithOpactiyNumber(
+                themeColors?.primary_color.substr(1),
+                60,
+              ),
+              themeColors?.primary_color,
+            ]}
             btnStyle={{marginTop: moderateScale(4)}}
           />
         </View>

@@ -30,7 +30,11 @@ import WrapperContainer from '../../../Components/WrapperContainer';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+  showError,
+} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
 import ReactNativeModal from 'react-native-modal';
 import Header from '../../../Components/Header';
@@ -74,8 +78,6 @@ const P2pProductDetail = ({navigation, route}) => {
   useEffect(() => {
     getP2pProductDetail();
   }, []);
-
-  console.log(selectedPanoImg, 'selectedPanoImg.....selectedPanoImg');
 
   const getP2pProductDetail = () => {
     actions
@@ -428,7 +430,17 @@ const P2pProductDetail = ({navigation, route}) => {
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
               )}
-              colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+              colorsArray={[
+                getColorCodeWithOpactiyNumber(
+                  themeColors?.primary_color.substr(1),
+                  30,
+                ),
+                getColorCodeWithOpactiyNumber(
+                  themeColors?.primary_color.substr(1),
+                  60,
+                ),
+                themeColors?.primary_color,
+              ]}
               btnStyle={{
                 marginVertical: moderateScaleVertical(6),
               }}
