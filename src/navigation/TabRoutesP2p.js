@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator();
 
 let showBottomBar_ = true;
 
-export default function TabRoutes(props) {
+export default function TabRoutesP2p(props) {
   const {cartItemCount} = useSelector((state) => state?.cart);
   const {
     appStyle,
@@ -87,29 +87,11 @@ export default function TabRoutes(props) {
             <Image
               style={[
                 {
-                  tintColor:
-                    appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? themeColors?.primary_color
-                        : isDarkMode
-                        ? colors.whiteOpacity77
-                        : colors.blackOpacity66
-                      : tintColor,
+                  tintColor: tintColor,
                 },
-                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.homeActive
-                    : imagePath.homeInActive
-                  : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.icHomeNewP2p
-                    : imagePath.icHomeNewP2pInActive
-                  : focused
-                  ? imagePath.tabAActive
-                  : imagePath.tabAInActive
+                focused ? imagePath.icHomeP2p : imagePath.icHomeP2pInActive
               }
             />
           ),
@@ -129,29 +111,11 @@ export default function TabRoutes(props) {
               resizeMode="contain"
               style={[
                 {
-                  tintColor:
-                    appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? themeColors?.primary_color
-                        : isDarkMode
-                        ? colors.whiteOpacity77
-                        : colors.blackOpacity66
-                      : tintColor,
+                  tintColor: tintColor,
                 },
-                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
               ]}
               source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.profileActive
-                    : imagePath.profileInActive
-                  : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.icChatNew
-                    : imagePath.icChatNewInActive
-                  : focused
-                  ? imagePath.tabEActive
-                  : imagePath.tabEInActive
+                focused ? imagePath.icChatP2p : imagePath.icChatP2pInActive
               }
             />
           ),
@@ -174,7 +138,7 @@ export default function TabRoutes(props) {
                   height: 65,
                   width: 65,
                 }}
-                source={imagePath.icAddPost}
+                source={imagePath.icAddPostP2p}
               />
               <View
                 style={{
@@ -223,29 +187,11 @@ export default function TabRoutes(props) {
               <Image
                 style={[
                   {
-                    tintColor:
-                      appStyle?.tabBarLayout === 4
-                        ? focused
-                          ? themeColors?.primary_color
-                          : isDarkMode
-                          ? colors.whiteOpacity77
-                          : colors.blackOpacity66
-                        : tintColor,
+                    tintColor: tintColor,
                   },
-                  appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
                 ]}
                 source={
-                  appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.ordersActive
-                      : imagePath.ordersInActive
-                    : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.icCartNew
-                      : imagePath.icCartNewInActive
-                    : focused
-                    ? imagePath.cartActive
-                    : imagePath.cartInActive
+                  focused ? imagePath.icCartP2p : imagePath.icCartP2pInActive
                 }
               />
             </View>
@@ -263,35 +209,16 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               resizeMode="contain"
-              style={[
-                {
-                  tintColor:
-                    appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? themeColors?.primary_color
-                        : isDarkMode
-                        ? colors.whiteOpacity77
-                        : colors.blackOpacity66
-                      : tintColor,
-                },
-                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
-              ]}
+              style={{
+                tintColor: tintColor,
+              }}
               source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.profileActive
-                    : imagePath.profileInActive
-                  : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.icAccountNew
-                    : imagePath.icAccountNewInActive
-                  : focused
-                  ? imagePath.tabEActive
-                  : imagePath.tabEInActive
+                focused
+                  ? imagePath.icAccountP2p
+                  : imagePath.icAccountP2pInActive
               }
             />
           ),
-          //  unmountOnBlur: true,
         })}
       />
     </Tab.Navigator>

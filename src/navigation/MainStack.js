@@ -42,6 +42,63 @@ import TaxiTabRoutes from './TaxiTabRoutes';
 export default function (Stack) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
+  const checkProductListLayout = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductList2;
+
+      case 3:
+        return ProductList3;
+
+      case 5:
+        return ProductList3;
+
+      case 8:
+        return ProductList3;
+
+      default:
+        return ProductList;
+    }
+  };
+
+  const checkProductWithCategoryLayout = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductList2;
+
+      case 3:
+        return ProductWithCategory;
+
+      case 5:
+        return ProductWithCategory;
+
+      case 8:
+        return ProductWithCategory;
+
+      default:
+        return ProductList;
+    }
+  };
+
+  const checkMyProfileLayout = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return MyProfile2;
+
+      case 3:
+        return MyProfile3;
+
+      case 5:
+        return MyProfile3;
+
+      case 8:
+        return MyProfile3;
+
+      default:
+        return MyProfile;
+    }
+  };
+
   return (
     <>
       <Stack.Screen
@@ -71,37 +128,19 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={
-          appStyle?.homePageLayout === 2
-            ? ProductList2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? ProductList3
-            : ProductList
-        }
+        component={checkProductListLayout()}
         options={{headerShown: false}}
       />
 
       <Stack.Screen
         name={navigationStrings.PRODUCTWITHCATEGORY}
-        component={
-          appStyle?.homePageLayout === 2
-            ? ProductList2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? ProductWithCategory
-            : ProductList
-        }
+        component={checkProductWithCategoryLayout()}
         options={{headerShown: false}}
       />
 
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={
-          appStyle?.homePageLayout === 2
-            ? MyProfile2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? MyProfile3
-            : MyProfile
-        }
+        component={checkMyProfileLayout()}
         options={{headerShown: false}}
       />
 
@@ -172,7 +211,7 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={
-          appStyle?.homePageLayout === 3
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 8
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }

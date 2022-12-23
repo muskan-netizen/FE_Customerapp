@@ -1,24 +1,16 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import {
   ForgotPassword2,
   Location,
-  Login,
   Login3,
   OtpVerification,
-  OuterScreen,
-  OuterScreen2,
-  OuterScreen4,
   OuterScreen5,
   ResetPassword,
-  Signup,
-  Signup2,
   Signup4,
   VerifyAccount,
   WebLinks,
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
-import Login2 from '../Screens/Login/Login2';
 
 import navigationStrings from './navigationStrings';
 
@@ -27,23 +19,18 @@ export default function (Stack, appStyle) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        // component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         component={OuterScreen5}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.SIGN_UP}
-        component={appStyle?.homePageLayout === 2 ? Signup2 : Signup}
-        options={{headerShown: false}}
-      /> */}
+
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={appStyle?.homePageLayout === 2 ? Signup4 : Signup4}
+        component={Signup4}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={appStyle?.homePageLayout === 2 ? Login3 : Login3}
+        component={Login3}
         options={{headerShown: false}}
       />
       <Stack.Screen

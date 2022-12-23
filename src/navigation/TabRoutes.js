@@ -25,10 +25,6 @@ import DeviceInfo from 'react-native-device-info';
 import MyOrdersStack from './MyOrdersStack';
 import {SearchProductVendorItem2} from '../Screens';
 import SearchProductVendorStack from './SearchProductVendorStack';
-import PostStack from './PostStack';
-import ChatStack from './ChatStack';
-import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
-import {useDarkMode} from 'react-native-dark-mode';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,19 +34,11 @@ export default function TabRoutes(props) {
   const [showBottomBar, setShowBottomBar] = useState(true);
   const {cartItemCount} = useSelector((state) => state?.cart);
   const {appMainData} = useSelector((state) => state?.home);
-  const {
-    appStyle,
-    appData,
-    redirectedFrom,
-    themeColors,
-    themeToggle,
-    themeColor,
-  } = useSelector((state) => state?.initBoot);
+  const {appStyle, appData, redirectedFrom} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
-  const darkthemeusingDevice = useDarkMode();
-
-  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
@@ -159,7 +147,7 @@ export default function TabRoutes(props) {
             case 3:
               return <CustomBottomTabBarThree {...props} />;
             case 4:
-              return <CustomBottomTabBarP2p {...props} />;
+              return <CustomBottomTabBarFour {...props} />;
             case 5:
               return <CustomBottomTabBarFive {...props} />;
           }
@@ -168,8 +156,6 @@ export default function TabRoutes(props) {
       initialRouteName={
         redirectedFrom == 'cart'
           ? navigationStrings.CART
-          : redirectedFrom == 'p2pPost'
-          ? navigationStrings.POST
           : navigationStrings.HOMESTACK
       }
       tabBarOptions={{
@@ -192,23 +178,12 @@ export default function TabRoutes(props) {
             navigationStrings.PRODUCTWITHCATEGORY,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
-            navigationStrings.P2P_PRODUCTS,
-            navigationStrings.P2P_PRODUCT_DETAIL,
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[
-                {
-                  tintColor:
-                    appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? themeColors?.primary_color
-                        : isDarkMode
-                        ? colors.whiteOpacity77
-                        : colors.blackOpacity66
-                      : tintColor,
-                },
+                {tintColor: tintColor},
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
@@ -218,86 +193,13 @@ export default function TabRoutes(props) {
                     : imagePath.homeInActive
                   : appStyle?.tabBarLayout === 4
                   ? focused
-                    ? imagePath.icHomeNewP2p
-                    : imagePath.icHomeNewP2pInActive
+                    ? imagePath.homeRedActive
+                    : imagePath.homeRedInActive
                   : focused
                   ? imagePath.tabAActive
                   : imagePath.tabAInActive
               }
             />
-          ),
-
-          // unmountOnBlur: true,
-        })}
-      />
-
-      <Tab.Screen
-        component={ChatStack}
-        name={navigationStrings.CHAT_STACK}
-        options={({route, navigation}) => ({
-          tabBarVisible: getTabBarVisibility(route, navigation, [
-            navigationStrings.CHAT_SCREEN,
-          ]),
-          tabBarLabel: strings.CHATS,
-          tabBarIcon: ({focused, tintColor}) => (
-            <Image
-              resizeMode="contain"
-              style={[
-                {
-                  tintColor:
-                    appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? themeColors?.primary_color
-                        : isDarkMode
-                        ? colors.whiteOpacity77
-                        : colors.blackOpacity66
-                      : tintColor,
-                },
-                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
-              ]}
-              source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.profileActive
-                    : imagePath.profileInActive
-                  : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.icChatNew
-                    : imagePath.icChatNewInActive
-                  : focused
-                  ? imagePath.tabEActive
-                  : imagePath.tabEInActive
-              }
-            />
-          ),
-          //  unmountOnBlur: true,
-        })}
-      />
-
-      <Tab.Screen
-        component={PostStack}
-        name={navigationStrings.POST}
-        options={({route, navigation}) => ({
-          tabBarVisible: getTabBarVisibility(route, navigation, []),
-          tabBarLabel: strings.POST,
-          tabBarIcon: ({focused, tintColor}) => (
-            <View style={{}}>
-              <Image
-                style={{
-                  position: 'absolute',
-                  top: -37,
-                  left: -21,
-                  height: 65,
-                  width: 65,
-                }}
-                source={imagePath.icAddPost}
-              />
-              <View
-                style={{
-                  height: 25,
-                  width: 25,
-                }}></View>
-            </View>
           ),
 
           // unmountOnBlur: true,
@@ -375,16 +277,7 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={[
-                  {
-                    tintColor:
-                      appStyle?.tabBarLayout === 4
-                        ? focused
-                          ? themeColors?.primary_color
-                          : isDarkMode
-                          ? colors.whiteOpacity77
-                          : colors.blackOpacity66
-                        : tintColor,
-                  },
+                  {tintColor: tintColor},
                   appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
                 ]}
                 source={
@@ -394,8 +287,8 @@ export default function TabRoutes(props) {
                       : imagePath.ordersInActive
                     : appStyle?.tabBarLayout === 4
                     ? focused
-                      ? imagePath.icCartNew
-                      : imagePath.icCartNewInActive
+                      ? imagePath.cartRedActive
+                      : imagePath.cartRedInActive
                     : focused
                     ? imagePath.cartActive
                     : imagePath.cartInActive
@@ -437,8 +330,8 @@ export default function TabRoutes(props) {
         />
       )}
 
-      {/* {brandTab}
-      {celebTab} */}
+      {brandTab}
+      {celebTab}
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
@@ -448,16 +341,7 @@ export default function TabRoutes(props) {
             <Image
               resizeMode="contain"
               style={[
-                {
-                  tintColor:
-                    appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? themeColors?.primary_color
-                        : isDarkMode
-                        ? colors.whiteOpacity77
-                        : colors.blackOpacity66
-                      : tintColor,
-                },
+                {tintColor: tintColor},
                 appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
               ]}
               source={
@@ -467,8 +351,8 @@ export default function TabRoutes(props) {
                     : imagePath.profileInActive
                   : appStyle?.tabBarLayout === 4
                   ? focused
-                    ? imagePath.icAccountNew
-                    : imagePath.icAccountNewInActive
+                    ? imagePath.accountRedActive
+                    : imagePath.accountRedInActive
                   : focused
                   ? imagePath.tabEActive
                   : imagePath.tabEInActive

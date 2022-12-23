@@ -4,12 +4,10 @@ import * as React from 'react';
 import {AppearanceProvider} from 'react-native-appearance';
 import {useSelector} from 'react-redux';
 import {
-  Cart,
   ChatRoom,
   ChatRoomForVendor,
   ChatScreen,
   ChatScreenForVendor,
-  VerifyAccount,
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -19,6 +17,7 @@ import CourierStack from './CourierStack';
 import {navigationRef} from './NavigationService';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
@@ -26,33 +25,36 @@ import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
 const Stack = createStackNavigator();
 
 export default function Routes() {
-  const {userData, appSessionInfo, isGuestLogin} = useSelector(
-    (state) => state?.auth,
-  );
+  const {userData, appSessionInfo} = useSelector((state) => state?.auth);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
   return (
     <AppearanceProvider>
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
           {appSessionInfo == 'shortcode' ||
           appSessionInfo == 'show_shortcode' ? (
             <Stack.Screen
               name={navigationStrings.SHORT_CODE}
               component={ShortCode}
-              options={{headerShown: false}}
             />
           ) : appSessionInfo == 'app_intro' ? (
             <Stack.Screen
               name={navigationStrings.APP_INTRO}
               component={AppIntro}
-              options={{headerShown: false, gestureEnabled: false}}
+              options={{gestureEnabled: false}}
             />
           ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
             <Stack.Screen
               name={navigationStrings.TAB_ROUTES}
-              component={businessType === 4 ? TaxiTabRoutes : TabRoutes}
-              options={{headerShown: false, gestureEnabled: false}}
+              component={
+                businessType === 4
+                  ? TaxiTabRoutes
+                  : businessType === 8
+                  ? TabRoutesP2p
+                  : TabRoutes
+              }
+              options={{gestureEnabled: false}}
             />
           ) : (
             AuthStack(Stack, appStyle)
@@ -64,33 +66,29 @@ export default function Routes() {
           <Stack.Screen
             name={navigationStrings.CHAT_SCREEN}
             component={ChatScreen}
-            options={{headerShown: false}}
           />
           <Stack.Screen
             name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
             component={ChatScreenForVendor}
-            options={{headerShown: false}}
           />
           <Stack.Screen
             name={navigationStrings.CHAT_ROOM}
             component={ChatRoom}
-            options={{headerShown: false}}
           />
           <Stack.Screen
             name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
             component={ChatRoomForVendor}
-            options={{headerShown: false}}
           />
 
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
             component={TabRoutesVendor}
-            options={{headerShown: false, gestureEnabled: false}}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDORNEW}
             component={TabRoutesVendorNewTemplate}
-            options={{headerShown: false, gestureEnabled: false}}
+            options={{gestureEnabled: false}}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -6,16 +6,17 @@ import navigationStrings from './navigationStrings';
 const Stack = createStackNavigator();
 export default function () {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen
         name={navigationStrings.VENDOR_REVENUE}
         component={VendorRevenue}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDORLIST}
         component={VendorList}
-        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

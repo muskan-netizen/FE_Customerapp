@@ -18,6 +18,7 @@ import CustomDrawerContent from '../Components/CustomDrawerContent';
 import {View} from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
+import TabRoutesP2p from './TabRoutesP2p';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
@@ -92,7 +93,13 @@ export default function DrawerRoutes(props) {
       drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
-        component={businessType === 4 ? TaxiTabRoutes : TabRoutes}
+        component={
+          businessType === 4
+            ? TaxiTabRoutes
+            : businessType === 8
+            ? TabRoutesP2p
+            : TabRoutes
+        }
         name={
           businessType === 4
             ? navigationStrings.TAXITABROUTES

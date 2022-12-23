@@ -66,7 +66,6 @@ export default {
   PICKUPLOCATION: 'pickupLocation',
   SETLOACTIONMAP: 'SetLocationInMap',
   CHOOSECARTYPEANDTIME: 'ChooseCarTypeAndTime',
-  TOP_TAB_ROUTES: 'TopTabRoutes',
   CABDRIVERLOCATIONANDDETAIL: 'cabDriverLocationTrackAndDetail',
   MULTISELECTCATEGORY: 'multiselectcategory',
   CMSLINKS: 'cmslinks',

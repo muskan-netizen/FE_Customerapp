@@ -6,20 +6,34 @@ import {
   Account,
   Account2,
   Account3,
+  AccountTemplateFour,
   AddMoney,
+  AddNewCustomer,
+  AddProduct,
+  AllinonePyments,
   BrandProducts,
   BuyProduct,
+  ChatRoom,
+  ChatRoomForVendor,
   CMSLinks,
   ContactUs,
+  CustomerEarningHistory,
   Delivery,
-  Loyalty,
+  Inventory,
+  Location,
   Loyalty2,
+  //Pyament Screens
+  Mobbex,
   MyOrders,
+  MyP2pPosts,
   MyProfile,
   MyProfile2,
   MyProfile3,
   Notifications,
   OrderDetail,
+  P2pProductDetail,
+  Payfast,
+  Paylink,
   PickupOrderDetail,
   PrinterConnection,
   PrinterConnectionSunmi,
@@ -28,7 +42,9 @@ import {
   ProductList,
   ProductList2,
   RateOrder,
+  ReplaceOrder,
   ReturnOrder,
+  SalesExpenses,
   SearchProductVendorItem,
   SearchProductVendorItem2,
   SendProduct,
@@ -38,6 +54,7 @@ import {
   TipPaymentOptions,
   TrackDetail,
   Tracking,
+  UdhaarLedger,
   Vendors,
   Vendors2,
   Wallet,
@@ -46,25 +63,7 @@ import {
   WebviewScreen,
   Wishlist,
   Wishlist2,
-  //Pyament Screens
-  Mobbex,
-  Payfast,
-  Paylink,
   Yoco,
-  AllinonePyments,
-  Inventory,
-  UdhaarLedger,
-  SalesExpenses,
-  AddProduct,
-  AddNewCustomer,
-  CustomerEarningHistory,
-  Location,
-  ChatRoom,
-  ChatRoomForVendor,
-  AccountTemplateFour,
-  ReplaceOrder,
-  MyP2pPosts,
-  P2pProductDetail,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -73,7 +72,7 @@ export default function ({navigation}) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   const checkLayout = (inx) => {
-    switch (inx) {
+    switch (appStyle?.homePageLayout) {
       case 2:
         return Account2;
       case 3:
@@ -84,27 +83,37 @@ export default function ({navigation}) {
         return Account3;
       case 6:
         return Account3;
+      case 8:
+        return Account3;
       default:
         return Account;
+    }
+  };
+  const checkProfileLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return MyProfile2;
+      case 3:
+        return MyProfile3;
+      case 5:
+        return MyProfile3;
+      case 8:
+        return MyProfile3;
+      default:
+        return MyProfile;
     }
   };
 
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={checkLayout(appStyle?.homePageLayout)}
+        component={checkLayout()}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={
-          appStyle?.homePageLayout === 2
-            ? MyProfile2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? MyProfile3
-            : MyProfile
-        }
+        component={checkProfileLayout()}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -117,11 +126,7 @@ export default function ({navigation}) {
         component={OrderDetail}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.ORDER_DETAIL2}
-        component={OrderDetail2}
-        options={{headerShown: false}}
-      /> */}
+
       <Stack.Screen
         name={navigationStrings.NOTIFICATION}
         component={Notifications}
@@ -165,7 +170,9 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.WISHLIST}
         component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+          appStyle?.homePageLayout === 3 ||
+          appStyle?.homePageLayout === 5 ||
+          appStyle?.homePageLayout === 8
             ? Wishlist2
             : Wishlist
         }
@@ -191,7 +198,9 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+          appStyle?.homePageLayout === 3 ||
+          appStyle?.homePageLayout === 5 ||
+          appStyle?.homePageLayout === 8
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }
@@ -270,22 +279,16 @@ export default function ({navigation}) {
       />
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
-        // component={WebviewScreen}
-        component={
-          WebviewScreen
-          // appStyle?.homePageLayout === 3 ? StaticTrackOrder :
-        }
+        component={WebviewScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
-        // component={appStyle?.homePageLayout === 3 ? Subscriptions2 : Subscriptions}
         component={Subscriptions2}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOYALTY}
-        // component={appStyle?.homePageLayout === 3 ? Loyalty2 : Loyalty}
         component={Loyalty2}
         options={{headerShown: false}}
       />

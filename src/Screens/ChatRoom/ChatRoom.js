@@ -118,6 +118,7 @@ export default function ChatRoom({navigation, route}) {
   }, []);
   const renderItem = useCallback(({item, index}) => {
     let isAnyMessage = _.isEmpty(item?.chat_Data);
+    console.log(item, 'item.....item');
     return (
       <TouchableOpacity
         onPress={() => goToChatRoom(item)}
@@ -165,7 +166,9 @@ export default function ChatRoom({navigation, route}) {
                         fontFamily: fontFamily?.bold,
                         color: colors.black,
                       }}>
-                      {item?.user_Data[0]?.username}{' '}
+                      {userData?.vendor_id == item?.vendor_id
+                        ? item?.user_Data[0]?.username
+                        : item?.vendor_name}{' '}
                       {!!item?.product_name ? `(${item?.product_name})` : ''}
                     </Text>
                   ) : (
