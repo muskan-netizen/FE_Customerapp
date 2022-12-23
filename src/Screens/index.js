@@ -77,7 +77,7 @@ export {default as MyProfile2} from './MyProfile/MyProfile2';
 export {default as MyProfile3} from './MyProfile/MyProfile3';
 export {default as Account2} from './Account/Account2';
 export {default as Account3} from './Account/Account3';
-export {default as AccountTemplateFour} from './Account/AccountTemplateFour';
+export {default as Account4} from './Account/Account4';
 
 export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';
 export {default as ReturnOrder} from './ReturnOrder/ReturnOrder';

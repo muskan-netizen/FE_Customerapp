@@ -29,7 +29,6 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
-  ProductWithCategory,
   ScrollableCategory,
   Simplify,
   Square,
@@ -59,50 +58,23 @@ export default function () {
 
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return ProductList;
       case 2:
         return ProductList2;
-      case 3:
-        return ProductList3;
-      case 5:
-        return ProductList3;
-      case 6:
-        return ProductList3;
-
       default:
-        return ProductList;
-    }
-  };
-  const checkProductWithCategoryLayout = () => {
-    switch (appStyle?.homePageLayout) {
-      case 2:
-        return ProductList2;
-
-      case 3:
-        return ProductWithCategory;
-
-      case 5:
-        return ProductWithCategory;
-
-      case 8:
-        return ProductWithCategory;
-
-      default:
-        return ProductList;
+        return ProductList3;
     }
   };
 
   const checkProfileLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return MyProfile;
       case 2:
         return MyProfile2;
-      case 3:
-        return MyProfile3;
-      case 5:
-        return MyProfile3;
-      case 8:
-        return MyProfile3;
       default:
-        return MyProfile;
+        return MyProfile3;
     }
   };
   return (
@@ -154,11 +126,6 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={checkProductListLayout()}
-      />
-
-      <Stack.Screen
-        name={navigationStrings.PRODUCTWITHCATEGORY}
-        component={checkProductWithCategoryLayout()}
       />
 
       <Stack.Screen

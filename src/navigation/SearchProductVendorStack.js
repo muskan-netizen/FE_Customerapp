@@ -15,16 +15,12 @@ export default function () {
 
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
-      case 3:
-        return SearchProductVendorItem2;
-      case 5:
-        return SearchProductVendorItem2;
-      case 6:
-        return SearchProductVendorItem2;
+      case 1:
+        return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem;
+        return SearchProductVendorItem2;
     }
   };
   return (

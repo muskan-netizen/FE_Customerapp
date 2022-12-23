@@ -3,7 +3,9 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {
   BrandProducts,
+  BrandProducts2,
   Brands,
+  Brands2,
   BuyProduct,
   Delivery,
   Filter,
@@ -11,19 +13,15 @@ import {
   ProductDetail2,
   ProductList,
   ProductList2,
-  ProductWithCategory,
+  ProductList3,
   SearchProductVendorItem,
   SearchProductVendorItem2,
+  SearchProductVendorItem3V2,
   SendProduct,
   Vendors,
   Vendors2,
-  Brands2,
-  BrandProducts2,
-  ProductList3,
-  SearchProductVendorItem3V2,
 } from '../Screens';
 
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -31,16 +29,12 @@ export default function () {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
-      case 3:
-        return SearchProductVendorItem2;
-      case 5:
-        return SearchProductVendorItem2;
-      case 6:
-        return SearchProductVendorItem2;
+      case 1:
+        return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem;
+        return SearchProductVendorItem2;
     }
   };
   return (
@@ -100,16 +94,6 @@ export default function () {
             ? ProductList2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
             ? ProductList3
-            : ProductList
-        }
-      />
-      <Stack.Screen
-        name={navigationStrings.PRODUCTWITHCATEGORY}
-        component={
-          appStyle?.homePageLayout === 2
-            ? ProductList2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? ProductWithCategory
             : ProductList
         }
       />

@@ -6,7 +6,7 @@ import {
   Account,
   Account2,
   Account3,
-  AccountTemplateFour,
+  Account4,
   AddMoney,
   AddNewCustomer,
   AddProduct,
@@ -72,58 +72,44 @@ const Stack = createStackNavigator();
 export default function ({navigation}) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
-  const checkLayout = (inx) => {
+  const checkAccountsLayout = (inx) => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return Account;
       case 2:
         return Account2;
-      case 3:
-        return Account3;
       case 4:
-        return AccountTemplateFour;
-      case 5:
-        return Account3;
-      case 6:
-        return Account3;
-      case 8:
-        return Account3;
+        return Account4;
       default:
-        return Account;
+        return Account3;
     }
   };
   const checkProfileLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return MyProfile;
       case 2:
         return MyProfile2;
-      case 3:
-        return MyProfile3;
-      case 5:
-        return MyProfile3;
-      case 8:
-        return MyProfile3;
       default:
-        return MyProfile;
+        return MyProfile3;
     }
   };
 
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
-      case 3:
-        return SearchProductVendorItem2;
-      case 5:
-        return SearchProductVendorItem2;
-      case 6:
-        return SearchProductVendorItem2;
+      case 1:
+        return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem;
+        return SearchProductVendorItem2;
     }
   };
 
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={checkLayout()}
+        component={checkAccountsLayout()}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />

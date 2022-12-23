@@ -2,18 +2,23 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {
+  Addaddress,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
   CategoryBrands,
   ChatRoom,
+  ChatRoomForVendor,
   ChatScreen,
   ConfirmDetailsBuy,
   Delivery,
   Filter,
   Home,
+  HomeV2Api,
   LaundryAvailableVendors,
   Location,
+  P2pProductDetail,
+  P2pProducts,
   Payment,
   PaymentSuccess,
   ProductDetail,
@@ -21,31 +26,25 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
-  ProductWithCategory,
   ScrollableCategory,
   SearchProductVendorItem,
   SearchProductVendorItem2,
+  SearchProductVendorItem3V2,
   SendProduct,
   ShippingDetails,
+  SubcategoryVendor,
+  Subscriptions2,
   SuperMarket,
+  TaxiHomeScreen,
   TrackDetail,
   Tracking,
   VendorDetail,
   VendorDetail2,
   VendorDetail3,
+  Vendors,
   Vendors2,
   Vendors3,
   ViewAllData,
-  TaxiHomeScreen,
-  Subscriptions2,
-  SubcategoryVendor,
-  Addaddress,
-  ChatRoomForVendor,
-  ListDetail,
-  P2pProducts,
-  P2pProductDetail,
-  SearchProductVendorItem3V2,
-  HomeV2Api,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
@@ -60,47 +59,34 @@ export default function () {
 
   const rendervendorScreen = () => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return Vendors;
       case 2:
         return Vendors2;
-      case 3:
-        return Vendors3;
-      case 5:
-        return Vendors3;
-      case 6:
-        return Vendors3;
       default:
-        return VendorDetail;
+        return Vendors3;
     }
   };
 
   const renderVendorDetailsScreens = () => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return VendorDetail;
       case 2:
         return VendorDetail2;
-      case 3:
-        return VendorDetail3;
-      case 5:
-        return VendorDetail3;
-      case 6:
-        return VendorDetail3;
-
       default:
-        return VendorDetail;
+        return VendorDetail3;
     }
   };
 
   const renderProductListScreen = () => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return ProductList;
       case 2:
         return ProductList2;
-      case 3:
-        return ProductList3;
-      case 5:
-        return ProductList3;
-      case 6:
-        return ProductList3;
       default:
-        return ProductList;
+        return ProductList3;
     }
   };
 
@@ -115,48 +101,21 @@ export default function () {
 
   const renderBrandProductsScreens = () => {
     switch (appStyle?.homePageLayout) {
-      case 3:
-        return BrandProducts2;
-      case 5:
-        return BrandProducts2;
-      case 6:
-        return BrandProducts2;
-      default:
+      case 1:
         return BrandProducts;
+      default:
+        return BrandProducts2;
     }
   };
 
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
-      case 3:
-        return SearchProductVendorItem2;
-      case 5:
-        return SearchProductVendorItem2;
-      case 6:
-        return SearchProductVendorItem2;
+      case 1:
+        return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem;
-    }
-  };
-
-  const checkProductWithCategoryLayout = () => {
-    switch (appStyle?.homePageLayout) {
-      case 2:
-        return ProductList2;
-
-      case 3:
-        return ProductWithCategory;
-
-      case 5:
-        return ProductWithCategory;
-
-      case 8:
-        return ProductWithCategory;
-
-      default:
-        return ProductList;
+        return SearchProductVendorItem2;
     }
   };
 
@@ -200,11 +159,6 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={renderProductListScreen()}
-      />
-
-      <Stack.Screen
-        name={navigationStrings.PRODUCTWITHCATEGORY}
-        component={checkProductWithCategoryLayout()}
       />
 
       <Stack.Screen

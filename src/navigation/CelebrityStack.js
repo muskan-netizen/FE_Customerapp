@@ -15,7 +15,6 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
-  ProductWithCategory,
   SearchProductVendorItem,
   SearchProductVendorItem2,
   SearchProductVendorItem3V2,
@@ -30,53 +29,26 @@ export default function () {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
-      case 3:
-        return SearchProductVendorItem2;
-      case 5:
-        return SearchProductVendorItem2;
-      case 6:
-        return SearchProductVendorItem2;
+      case 1:
+        return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem;
+        return SearchProductVendorItem2;
     }
   };
 
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
+      case 1:
+        return ProductList;
       case 2:
         return ProductList2;
-      case 3:
-        return ProductList3;
-      case 5:
-        return ProductList3;
-      case 6:
-        return ProductList3;
-
       default:
-        return ProductList;
+        return ProductList3;
     }
   };
 
-  const checkProductWithCategoryLayout = () => {
-    switch (appStyle?.homePageLayout) {
-      case 2:
-        return ProductList2;
-
-      case 3:
-        return ProductWithCategory;
-
-      case 5:
-        return ProductWithCategory;
-
-      case 8:
-        return ProductWithCategory;
-
-      default:
-        return ProductList;
-    }
-  };
   return (
     <Stack.Navigator
       screenOptions={{
@@ -139,10 +111,6 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={checkProductListLayout()}
-      />
-      <Stack.Screen
-        name={navigationStrings.PRODUCTWITHCATEGORY}
-        component={checkProductWithCategoryLayout()}
       />
     </Stack.Navigator>
   );

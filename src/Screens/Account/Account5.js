@@ -38,7 +38,7 @@ import FastImage from 'react-native-fast-image';
 import {color} from 'react-native-reanimated';
 import ListItemHorizontalWithRightText from '../../Components/ListItemHorizontalWithImageWithRightText';
 
-export default function AccountTemplateFive({navigation}) {
+export default function Account5({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });

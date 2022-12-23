@@ -11,7 +11,6 @@ import {
   WebLinks,
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
-
 import navigationStrings from './navigationStrings';
 
 export default function (Stack, appStyle) {

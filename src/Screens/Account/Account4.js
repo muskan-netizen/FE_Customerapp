@@ -39,7 +39,7 @@ import {
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
-export default function Account3({navigation}) {
+export default function Account4({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
