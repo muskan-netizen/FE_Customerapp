@@ -44,6 +44,8 @@ import {
   ListDetail,
   P2pProducts,
   P2pProductDetail,
+  SearchProductVendorItem3V2,
+  HomeV2Api,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
@@ -124,7 +126,7 @@ export default function () {
     }
   };
 
-  const renderSearchProductVendorItem2Screens = () => {
+  const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
       case 3:
         return SearchProductVendorItem2;
@@ -132,6 +134,8 @@ export default function () {
         return SearchProductVendorItem2;
       case 6:
         return SearchProductVendorItem2;
+      case 8:
+        return SearchProductVendorItem3V2;
       default:
         return SearchProductVendorItem;
     }
@@ -167,7 +171,13 @@ export default function () {
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
-        component={businessType === 4 ? TaxiHomeScreen : Home}
+        component={
+          businessType === 4
+            ? TaxiHomeScreen
+            : businessType === 8
+            ? HomeV2Api
+            : Home
+        }
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
@@ -226,7 +236,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={renderSearchProductVendorItem2Screens()}
+        component={checkSearchProductVendorItemLayout()}
         options={verticalAnimation}
       />
 

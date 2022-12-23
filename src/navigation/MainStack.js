@@ -26,6 +26,7 @@ import {
   ProductWithCategory,
   SearchProductVendorItem,
   SearchProductVendorItem2,
+  SearchProductVendorItem3V2,
   SendProduct,
   Settings,
   SuperMarket,
@@ -96,6 +97,21 @@ export default function (Stack) {
 
       default:
         return MyProfile;
+    }
+  };
+
+  const checkSearchProductVendorItemLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 3:
+        return SearchProductVendorItem2;
+      case 5:
+        return SearchProductVendorItem2;
+      case 6:
+        return SearchProductVendorItem2;
+      case 8:
+        return SearchProductVendorItem3V2;
+      default:
+        return SearchProductVendorItem;
     }
   };
 
@@ -210,11 +226,7 @@ export default function (Stack) {
 
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 8
-            ? SearchProductVendorItem2
-            : SearchProductVendorItem
-        }
+        component={checkSearchProductVendorItemLayout()}
         options={{headerShown: false}}
       />
 

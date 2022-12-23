@@ -18,6 +18,7 @@ import {
   ProductWithCategory,
   SearchProductVendorItem,
   SearchProductVendorItem2,
+  SearchProductVendorItem3V2,
   SendProduct,
   Vendors,
   Vendors2,
@@ -27,6 +28,20 @@ import navigationStrings from './navigationStrings';
 const Stack = createStackNavigator();
 export default function () {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const checkSearchProductVendorItemLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 3:
+        return SearchProductVendorItem2;
+      case 5:
+        return SearchProductVendorItem2;
+      case 6:
+        return SearchProductVendorItem2;
+      case 8:
+        return SearchProductVendorItem3V2;
+      default:
+        return SearchProductVendorItem;
+    }
+  };
 
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
@@ -88,13 +103,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={
-          appStyle?.homePageLayout === 3 ||
-          appStyle?.homePageLayout === 5 ||
-          appStyle?.homePageLayout === 8
-            ? SearchProductVendorItem2
-            : SearchProductVendorItem
-        }
+        component={checkSearchProductVendorItemLayout()}
       />
 
       <Stack.Screen name={navigationStrings.FILTER} component={Filter} />

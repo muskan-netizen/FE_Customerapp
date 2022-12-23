@@ -17,6 +17,8 @@ import {
   GET_ESTIMATION,
   PICK_UP_LOCATION_SEARCH,
   GET_SUBCATEGORY_VENDORS,
+  HOMEPAGE_DATA_URL_V2,
+  SEARCH_V2,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -319,3 +321,35 @@ export const isLocationSearched = (flag) => {
     payload: flag,
   });
 };
+
+//Get Homme banners and Category data
+export function homeDataV2(data = {}, headers = {}, isShortCode = false) {
+  return new Promise((resolve, reject) => {
+    apiPost(HOMEPAGE_DATA_URL_V2, data, headers)
+      .then((res) => {
+        if (!isShortCode) {
+          dispatch({
+            type: types.HOME_DATA,
+            payload: res.data,
+          });
+        }
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function onGlobalSearchV2(query = '', data = {}, headers = {}) {
+  console.log('search global');
+  return new Promise((resolve, reject) => {
+    apiPost(SEARCH_V2 + query, data, headers)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}

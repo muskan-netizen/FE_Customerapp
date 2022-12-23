@@ -84,7 +84,21 @@ const P2pProductDetail = ({navigation, route}) => {
         console.log(res, '<===response getProductDetailByProductId');
         setIsLoading(false);
         setProductInfo(res?.data?.products);
-        setProductAttributeInfo(res?.data?.product_attribute || []);
+
+        // logic for grouping same attribute ids
+        let finalProductAttribut = [];
+        var results = res?.data?.product_attribute.reduce(function (
+          results,
+          org,
+        ) {
+          (results[org.attribute_id] = results[org.attribute_id] || []).push(
+            org,
+          );
+          return results;
+        },
+        {});
+
+        setProductAttributeInfo(Object.values(results) || []);
       })
       .catch(errorMethod);
   };
@@ -219,21 +233,35 @@ const P2pProductDetail = ({navigation, route}) => {
             paddingLeft: moderateScale(10),
             marginTop: moderateScaleVertical(5),
           }}>
-          <Text
+          <View
             style={{
-              fontFamily: fontFamily?.bold,
-              fontSize: textScale(12),
-              color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
+              flexDirection: 'row',
             }}>
-            {item?.title}:{' '}
-            <Text
-              style={{
-                fontFamily: fontFamily?.regular,
-                fontSize: textScale(12),
-              }}>
-              {item?.value}
-            </Text>
-          </Text>
+            {item?.map((item, index) => {
+              return (
+                <Text
+                  style={{
+                    fontFamily: fontFamily?.regular,
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme?.colors?.text
+                      : colors.black,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily?.bold,
+                      fontSize: textScale(12),
+                      color: isDarkMode
+                        ? MyDarkTheme?.colors?.text
+                        : colors.black,
+                    }}>
+                    {index == 0 ? `${item?.title}: ` : ''}
+                  </Text>
+                  {index == 0 ? '' : ','} {item?.value}
+                </Text>
+              );
+            })}
+          </View>
         </View>
       );
     },

@@ -613,7 +613,9 @@ export default function ChatScreen({route, navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            : appStyle?.homePageLayout === 3 ||
+              appStyle?.homePageLayout === 5 ||
+              appStyle?.homePageLayout === 8
             ? imagePath.icBackb
             : imagePath.back
         }

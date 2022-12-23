@@ -120,7 +120,7 @@ const AttributeInformation = ({route, navigation}) => {
     if (!checkValid) {
       return;
     }
-    setLoadingSubmitAttributes(true);
+    // setLoadingSubmitAttributes(true);
     let formData = new FormData();
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
@@ -141,17 +141,18 @@ const AttributeInformation = ({route, navigation}) => {
           option_title: item?.title,
         };
       });
-      apiObj[item?.id] = {
-        type: item?.type,
-        id: item?.id,
-        attribute_title: item?.title,
-        option: optionData,
-        value: item?.values,
-      };
+      if (item?.values) {
+        apiObj[item?.id] = {
+          type: item?.type,
+          id: item?.id,
+          attribute_title: item?.title,
+          option: optionData,
+          value: item?.values,
+        };
+      }
     });
     formData.append('attribute', JSON.stringify(apiObj));
     console.log(formData, '<===formData onSubmitAttributes');
-
     actions
       .submitProductWithAttributes(formData, {
         code: appData?.profile?.code,

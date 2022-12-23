@@ -1,6 +1,6 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   BrandProducts,
   Brands,
@@ -20,73 +20,78 @@ import {
   Brands2,
   BrandProducts2,
   ProductList3,
+  SearchProductVendorItem3V2,
 } from '../Screens';
 
-import { shortCodes } from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const { appData, appStyle } = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const checkSearchProductVendorItemLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 3:
+        return SearchProductVendorItem2;
+      case 5:
+        return SearchProductVendorItem2;
+      case 6:
+        return SearchProductVendorItem2;
+      case 8:
+        return SearchProductVendorItem3V2;
+      default:
+        return SearchProductVendorItem;
+    }
+  };
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen
-        component={appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? Brands2 : Brands}
+        component={
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? Brands2
+            : Brands
+        }
         name={navigationStrings.BRANDS}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? BrandProducts2 : BrandProducts
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? BrandProducts2
+            : BrandProducts
         }
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name={navigationStrings.FILTER}
-        component={Filter}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name={navigationStrings.FILTER} component={Filter} />
 
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? SearchProductVendorItem2
-            : SearchProductVendorItem
-        }
-        options={{ headerShown: false }}
+        component={checkSearchProductVendorItemLayout()}
       />
 
       <Stack.Screen
         name={navigationStrings.SEND_PRODUCT}
         component={SendProduct}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.BUY_PRODUCT}
         component={BuyProduct}
-        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.VENDOR}
         component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
-        options={{ headerShown: false }}
       />
 
-      <Stack.Screen
-        name={navigationStrings.DELIVERY}
-        component={Delivery}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
 
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
@@ -94,10 +99,9 @@ export default function () {
           appStyle?.homePageLayout === 2
             ? ProductList2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? ProductList3
-              : ProductList
+            ? ProductList3
+            : ProductList
         }
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTWITHCATEGORY}
@@ -105,10 +109,9 @@ export default function () {
           appStyle?.homePageLayout === 2
             ? ProductList2
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? ProductWithCategory
-              : ProductList
+            ? ProductWithCategory
+            : ProductList
         }
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

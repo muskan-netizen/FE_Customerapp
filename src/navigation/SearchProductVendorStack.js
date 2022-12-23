@@ -1,10 +1,32 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {ProductList3, SearchProductVendorItem2} from '../Screens';
+import {useSelector} from 'react-redux';
+import {
+  ProductList3,
+  SearchProductVendorItem,
+  SearchProductVendorItem2,
+  SearchProductVendorItem3V2,
+} from '../Screens';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appStyle} = useSelector((state) => state?.initBoot);
+
+  const checkSearchProductVendorItemLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 3:
+        return SearchProductVendorItem2;
+      case 5:
+        return SearchProductVendorItem2;
+      case 6:
+        return SearchProductVendorItem2;
+      case 8:
+        return SearchProductVendorItem3V2;
+      default:
+        return SearchProductVendorItem;
+    }
+  };
   return (
     <Stack.Navigator
       screenOptions={{
@@ -12,7 +34,7 @@ export default function () {
       }}>
       <Stack.Screen
         name={navigationStrings.SEARCH}
-        component={SearchProductVendorItem2}
+        component={checkSearchProductVendorItemLayout()}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}

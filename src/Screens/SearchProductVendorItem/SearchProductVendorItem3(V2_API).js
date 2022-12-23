@@ -51,7 +51,7 @@ import {isEmpty} from 'lodash';
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;
 
-export default function SearchProductVendorItem2({navigation, route}) {
+export default function SearchProductVendorItem3V2({navigation, route}) {
   //route params
   const paramData = route?.params?.data;
   console.log('param data', paramData);
@@ -196,7 +196,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
       query = `/${paramData.id}`;
       searchAction = actions.onSearchByBrand;
     } else {
-      searchAction = actions.onGlobalSearch;
+      searchAction = actions.onGlobalSearchV2;
     }
     console.log(data, 'query +++', query);
     searchAction(query, data, {
@@ -695,7 +695,8 @@ export default function SearchProductVendorItem2({navigation, route}) {
                 source={
                   appStyle?.homePageLayout === 3 ||
                   appStyle?.homePageLayout === 5 ||
-                  appStyle?.homePageLayout === 6
+                  appStyle?.homePageLayout === 6 ||
+                  appStyle?.homePageLayout === 8
                     ? imagePath.icBackb
                     : imagePath.back
                 }

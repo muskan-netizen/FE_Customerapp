@@ -2,7 +2,6 @@ import {
   GET_AVAILABLE_ATTRIBUTES,
   GET_P2P_CATEGORIES,
   GET_PRODUCT_BY_P2P_CATEGORY,
-  HOMEPAGE_DATA_URL,
   SUBMIT_PRODUCT_WITH_ATTRIBUTE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
