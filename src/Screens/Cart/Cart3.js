@@ -82,6 +82,7 @@ import {
 } from "../../utils/commonFunction";
 import { appIds } from "../../utils/constants/DynamicAppKeys";
 import {
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getParameterByName,
   showError,
@@ -4724,7 +4725,8 @@ function Cart({ navigation, route }) {
         {!!(
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart &&
-          businessType !== "laundry"
+          businessType !== "laundry" &&
+          !cartData?.cart_error_message
         ) &&
           !!(scheduleType == "schedule" && localeSheduledOrderDate) && (
             <TouchableOpacity
@@ -4733,11 +4735,22 @@ function Cart({ navigation, route }) {
                 marginLeft: moderateScale(16),
                 alignSelf: "flex-start",
               }}
-              onPress={ !!cartData?.editing_order?.id? ()=>Alert.alert('Info',"you can't clear schedule date for  this order",[ {
-                text: strings.CANCEL,
-                onPress: () => console.log('Cancel Pressed'),
-              },
-              {text: strings.OK, onPress: () =>console.log('') },]):clearSceduleDate}
+              onPress={
+                !!cartData?.editing_order?.id
+                  ? () =>
+                      Alert.alert(
+                        "Info",
+                        "you can't clear schedule date for  this order",
+                        [
+                          {
+                            text: strings.CANCEL,
+                            onPress: () => console.log("Cancel Pressed"),
+                          },
+                          { text: strings.OK, onPress: () => console.log("") },
+                        ]
+                      )
+                  : clearSceduleDate
+              }
             >
               <Text
                 style={{
@@ -4751,8 +4764,9 @@ function Cart({ navigation, route }) {
             </TouchableOpacity>
           )}
 
-        {!!cartData?.deliver_status ||
-        cartData?.closed_store_order_scheduled ? (
+        {!!(
+          cartData?.deliver_status || cartData?.closed_store_order_scheduled
+        ) && !cartData?.cart_error_message ? (
           <View
             pointerEvents={placeLoader ? "none" : "auto"}
             style={styles.paymentView}
@@ -4803,6 +4817,12 @@ function Cart({ navigation, route }) {
               containerStyle={styles.placeOrderButtonStyle}
               placeLoader={placeLoader}
             />
+          </View>
+        ) : cartData?.cart_error_message ? (
+          <View style={styles.cartErrorMessageContainer}>
+            <Text style={{ fontFamily: fontFamily.medium, color: colors.redB }}>
+              {cartData?.cart_error_message}
+            </Text>
           </View>
         ) : null}
         {!!cartData &&
