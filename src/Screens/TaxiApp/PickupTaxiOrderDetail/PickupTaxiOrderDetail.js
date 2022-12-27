@@ -174,7 +174,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const [showLocationUpdateButton, setShowLocationUpdateButton] = useState(
     true
   );
-  const [allDropOffLocationCollection,setAllDropOffLocationCollection] = useState([])
+  const [
+    allDropOffLocationCollection,
+    setAllDropOffLocationCollection,
+  ] = useState([]);
 
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -258,7 +261,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           task_type_id: item?.task_type_id,
           post_code: item?.post_code,
           short_name: item?.short_name,
-          task_status:Number(item?.task_status)
+          task_status: Number(item?.task_status),
         };
       });
       const newFormatedDropAddress = userDropLocation.map((item, index) => {
@@ -270,7 +273,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           task_type_id: item?.task_type_id,
           post_code: item?.post_code,
           short_name: item?.short_name,
-          task_status:Number(item?.task_status)
+          task_status: Number(item?.task_status),
         };
       });
 
@@ -278,8 +281,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         ...newFormatedPickupAddress,
         ...newFormatedDropAddress,
       ];
-
-      
 
       const allLocationsLatLongCollection = finalCollectionOfLocationsForPickAndDrop.map(
         (item, index) => {
@@ -291,15 +292,19 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         finalCollectionOfLocationsForPickAndDrop
       );
 
+      const allDropOffLocationsBeforeProcessing = newFormatedDropAddress.filter(
+        (item, index) => {
+          return item?.task_status < 2;
+        }
+      );
 
-      const allDropOffLocationsBeforeProcessing = newFormatedDropAddress.filter((item,index)=>{
-           return  item?.task_status<2
-      })
-
-    console.log(allDropOffLocationsBeforeProcessing,"allDropOffLocationsBeforeProcessing");
+      console.log(
+        allDropOffLocationsBeforeProcessing,
+        "allDropOffLocationsBeforeProcessing"
+      );
 
       setAllLocationsLatLongCollection(allLocationsLatLongCollection);
-      setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing)
+      setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing);
     }
   };
 
@@ -450,6 +455,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       }
     }
   };
+
+  console.log(agent_location, "agent_location");
 
   useEffect(() => {
     if (!isLoading && orderStatus == "unassigned") {
@@ -678,7 +685,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       task_type: orderFullDetail?.scheduled_date_time
         ? orderFullDetail?.scheduled_date_time
         : "now",
-     tasks_dropoff : allDropOffLocationCollection   
+      tasks_dropoff: allDropOffLocationCollection,
     };
 
     const apiHeader = {
@@ -1229,9 +1236,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   </Marker.Animated>
                 )}
 
-             
-
-           <MapViewDirections
+              <MapViewDirections
                 resetOnChange={false}
                 origin={
                   orderStatus !== "completed" && orderStatus !== "unassigned"
@@ -1278,7 +1283,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 onError={(errorMessage) => {
                   //
                 }}
-              /> 
+              />
             </MapView>
           )}
           {/* {!!orderFullDetail && (
@@ -1527,7 +1532,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   ? paramData?.orderDropLocations
                   : orderFullDetail?.tasks
                 ).map((val, i) => {
-                  console.log(val,"val for locations is here");
+                  console.log(val, "val for locations is here");
                   return (
                     <View style={{ marginHorizontal: moderateScale(16) }}>
                       <View
@@ -1554,8 +1559,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                           {!!(
                             val?.task_type_id != 1 &&
-                            profile?.preferences?.is_postpay_enable  &&
-                            Number(val?.task_status)<2
+                            profile?.preferences?.is_postpay_enable &&
+                            Number(val?.task_status) < 2
                           ) && (
                             <TouchableOpacity
                               style={{
@@ -1564,6 +1569,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                 padding: moderateScale(5),
                                 paddingHorizontal: moderateScale(10),
                                 height: moderateScale(28),
+                                alignItems: "center",
+                                justifyContent: "center",
                               }}
                               onPress={moveToNewScreen(
                                 navigationStrings.LOCATION,
@@ -1605,20 +1612,26 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     </View>
                   );
                 })}
-                {(!isEmpty(paramData?.orderDropLocations) && showLocationUpdateButton) && (
-                  <ButtonWithLoader
-                    isLoading={false}
-                    btnText={"Update Location"}
-                    btnTextStyle={{ color: colors.white }}
-                    btnStyle={{
-                      backgroundColor: themeColors?.primary_color,
-                      borderColor: themeColors?.primary_color,
-                      width: width / 2,
-                      alignSelf: "center",
-                      height: moderateScaleVertical(40),
-                    }}
-                    onPress={_onDropLocationChangeAfterOrderPlace}
-                  />
+                {!isEmpty(paramData?.orderDropLocations) &&
+                  showLocationUpdateButton && (
+                    <ButtonWithLoader
+                      isLoading={false}
+                      btnText={"Update Location"}
+                      btnTextStyle={{ color: colors.white }}
+                      btnStyle={{
+                        backgroundColor: themeColors?.primary_color,
+                        borderColor: themeColors?.primary_color,
+                        width: width / 2,
+                        alignSelf: "center",
+                        height: moderateScaleVertical(40),
+                      }}
+                      onPress={_onDropLocationChangeAfterOrderPlace}
+                    />
+                  )}
+
+                {console.log(
+                  orderFullDetail?.agent_location,
+                  "orderFullDetail?.agent_location"
                 )}
 
                 {!!orderFullDetail?.agent_location ? (
@@ -2300,10 +2313,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-                  {console.log(
-                    orderFullDetail,
-                    "orderFullDetailorderFullDetail"
-                  )}
+
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                       0 && (

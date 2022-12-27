@@ -193,6 +193,7 @@ export default function Home({route, navigation}) {
     }, []),
   );
 
+  console.log(redirectedFrom,"redirectedFrom");
 
   useEffect(()=>{
     if(redirectedFrom =='from_deepLinking'){
