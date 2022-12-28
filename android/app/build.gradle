@@ -206,15 +206,25 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-            lunchboxSpecials{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.mealtime.orderapp'
-            resValue "string", "app_name", "Meal Time"
-            resValue "string", "host_name", ""
+            // earnApp {
+            //     dimension "appType"
+            //     versionCode 1
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion
+            //     applicationId 'com.earnapp.royoorders'
+            //     resValue "string", "app_name", "EarnApp"
+            //     resValue "string", "host_name", ""
+            // }
+            bocch {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.bocch.royoorders'
+                resValue "string", "app_name", "Bocch"
+                resValue "string", "host_name", ""
             }
     }
  
@@ -6560,8 +6570,8 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.mealtime.orderapp'
-    //         resValue "string", "app_name", "Meal Time"
+    //         applicationId 'com.lunchboxspecials'
+    //         resValue "string", "app_name", "Lunchbox Specials"
     //         resValue "string", "host_name", ""
     //         }
     //         sorDelivery{
@@ -8080,6 +8090,17 @@ android {
     //             resValue "string", "app_name", "Potolo"
     //             resValue "string", "host_name", ""
     //         }
+    //         earnApp {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.earnApp.royoorders'
+    //             resValue "string", "app_name", "EarnApp"
+    //             resValue "string", "host_name", ""
+    //         }
+            
     // }
 
 }
