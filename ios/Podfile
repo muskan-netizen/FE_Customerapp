@@ -904,10 +904,10 @@ target 'KurbsideKings' do
   
  end
 
-# #MovingWheelsDelivery Target
-# target 'MovingWheelsDelivery' do
+#MovingWheelsDelivery Target
+target 'MovingWheelsDelivery' do
   
-#  end
+ end
 
 #SafeWalks Target
 target 'SafeWalks' do
@@ -2324,6 +2324,21 @@ end
 #Potolo
 target 'Potolo' do
 end
+
+#EarnApp
+target 'EarnApp' do
+end
+
+#Aredoo
+target 'Aredoo' do
+end
+
+#Dot
+target 'Dot' do
+end
+
+
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

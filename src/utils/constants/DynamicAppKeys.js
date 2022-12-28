@@ -494,7 +494,11 @@ const shortCodes = {
   housingSubsidies: '428883',
   bocch: '987b45',
   potolo: '12ada8',
-  earnApp: '8d7b4c'
+  earnApp: '8d7b4c',
+  aredoo: 'e5e45b',
+  bukam: '1a3404',
+  dot: '64f6a4',
+
 };
 
 const appIds = {
@@ -2461,6 +2465,18 @@ const appIds = {
   earnApp: Platform.select({
     ios: 'com.earnapp.royoorders',
     android: 'com.earnapp.royoorders',
+  }),
+  aredoo: Platform.select({
+    ios: 'com.aredoo.royoorders',
+    android: 'com.aredoo.royoorders',
+  }),
+  bukam: Platform.select({
+    ios: 'com.bukam.royoorders',
+    android: 'com.bukam.royoorders',
+  }),
+  dot: Platform.select({
+    ios: 'com.dot.royoorders',
+    android: 'com.dot.royoorders',
   }),
 };
 

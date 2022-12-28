@@ -3058,6 +3058,24 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.aredoo:
+          updateState({
+            shortCode: shortCodes.aredoo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bukam:
+          updateState({
+            shortCode: shortCodes.bukam,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dot:
+          updateState({
+            shortCode: shortCodes.dot,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
