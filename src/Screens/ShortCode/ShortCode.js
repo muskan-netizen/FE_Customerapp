@@ -2950,6 +2950,108 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.lincshare:
+          updateState({
+            shortCode: shortCodes.lincshare,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lvlup:
+          updateState({
+            shortCode: shortCodes.lvlup,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.glavour:
+          updateState({
+            shortCode: shortCodes.glavour,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.shipmoe:
+          updateState({
+            shortCode: shortCodes.shipmoe,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bigBayong:
+          updateState({
+            shortCode: shortCodes.bigBayong,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.efectibo:
+          updateState({
+            shortCode: shortCodes.efectibo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sooq:
+          updateState({
+            shortCode: shortCodes.sooq,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hectoHomes:
+          updateState({
+            shortCode: shortCodes.hectoHomes,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zynoBidandRide:
+          updateState({
+            shortCode: shortCodes.zynoBidandRide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.glamguide:
+          updateState({
+            shortCode: shortCodes.glamguide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.solace:
+          updateState({
+            shortCode: shortCodes.solace,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.superpana:
+          updateState({
+            shortCode: shortCodes.superpana,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kero:
+          updateState({
+            shortCode: shortCodes.kero,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.godamPAY:
+          updateState({
+            shortCode: shortCodes.godamPAY,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.housingSubsidies:
+          updateState({
+            shortCode: shortCodes.housingSubsidies,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bocch:
+          updateState({
+            shortCode: shortCodes.bocch,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.potolo:
+          updateState({
+            shortCode: shortCodes.potolo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

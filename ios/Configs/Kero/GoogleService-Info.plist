@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>436345958188-0rhaasou430stgc1k82qq8sjk3hulfla.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.436345958188-0rhaasou430stgc1k82qq8sjk3hulfla</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>436345958188-15uha3i7ol2t9qcn1db8nnqtkqf03a68.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAC4yO5x_fipuOizGmHHmOwLVANFeMpTDE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>436345958188</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kero.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>kero-9e1ca</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kero-9e1ca.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:436345958188:ios:8b3a4889d91ba9e61c4689</string>
+</dict>
+</plist>

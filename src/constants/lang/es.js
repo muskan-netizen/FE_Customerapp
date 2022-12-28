@@ -5,6 +5,7 @@ export default {
   VERIFY_NOW: 'Verifica ahora',
   VERIFY_NUMBER: 'Verifica tu Número de Teléfono',
   JOIN_US: '¡Crea una cuenta gratuita y únete a nosotros!',
+  JOIN: '¿Eres un restaurante? Únete a nosotros hoy',
   CREATE_AN_ACCOUNT: 'CREAR UNA NUEVA CUENTA',
   DONT_HAVE_ACCOUNT: '¿No tienes una cuenta?',
   CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
@@ -979,7 +980,7 @@ export default {
   START_CHAT: 'Start Chat',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   ORDER: 'Orders',
-  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
-  TOLL_FEE:"Toll Fee",
-  SERVICE_CHARGES:"Service Charges"
+  THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
+  TOLL_FEE: 'Toll Fee',
+  SERVICE_CHARGES: 'Service Charges',
 };
