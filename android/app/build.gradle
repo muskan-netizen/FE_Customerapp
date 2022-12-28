@@ -204,15 +204,25 @@ android {
  
     flavorDimensions "appType"
     productFlavors{
-                speedyDelivery{ 
+                 flyCommerce{ 
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.speedydelivery.orders'
-            resValue "string", "app_name", "Speedy - Delivery & Pickup" 
+            applicationId 'com.flycommerce.royoorders'
+            resValue "string", "app_name", "Fly Commerce" 
             resValue "string", "host_name", ""
+            }
+            flybuilder {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.flybuilder.royoorders'
+                resValue "string", "app_name", "FlyBuilder"
+                resValue "string", "host_name", ""
             }
     }
     // productFlavors {
@@ -7880,6 +7890,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.rentzy'
     //             resValue "string", "app_name", "Rentzy"
+    //             resValue "string", "host_name", ""
+    //         }
+    //       flyBuilder {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.flybuilder.royoorders'
+    //             resValue "string", "app_name", "FlyBuilder"
     //             resValue "string", "host_name", ""
     //         }
     // }

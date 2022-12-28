@@ -106895,7 +106895,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ullaz/Pods-available_pods-Ullaz-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		846DC450279030B300980345 /* Start Packager */ = {
