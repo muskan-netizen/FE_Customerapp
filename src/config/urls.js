@@ -101,7 +101,7 @@ export const API_BASE_URL = 'https://mealtime.menu/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
 // // export const API_BASE_URL = 'https://masaapp.ae/api/v1';
-export const API_BASE_URL = 'https://movingwheelsdeliveryservices.com/api/v1';
+// export const API_BASE_URL = 'https://movingwheelsdeliveryservices.com/api/v1';
 // export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://fly-commerce.com/api/v1';
 //live
