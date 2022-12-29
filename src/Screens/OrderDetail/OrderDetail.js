@@ -2518,8 +2518,7 @@ console.log(cartItems,'cartItem++++++')
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {(cartData?.total_service_fee > 0 ||
-            Number(cartData?.taxable_amount) > 0) && (
+          {(cartData?.total_service_fee > 0 ) && (
             <LeftRightText
               leftText={'Service Fee'}
               rightText={tokenConverterPlusCurrencyNumberFormater(
