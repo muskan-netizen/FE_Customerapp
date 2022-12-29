@@ -784,6 +784,8 @@ export default function Settings({route, navigation}) {
                 ...commonStyles.regularFont11,
                 color: colors.redB,
                 marginTop: moderateScaleVertical(4),
+                opacity: 1,
+                fontSize: textScale(13),
               }}>
               {strings.DELETE_ACCOUNT}
             </Text>

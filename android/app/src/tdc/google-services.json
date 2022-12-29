@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "547191148428",
+    "project_id": "tdc-f97f0",
+    "storage_bucket": "tdc-f97f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547191148428:android:27a8a3db4db444417610a9",
+        "android_client_info": {
+          "package_name": "com.tdc.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547191148428-ib9k26b4103l34tck87vi6trubnp1bdh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tdc.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "547191148428-knc12265npckdgfq1mc0grd4hrlhm3oh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tdc.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "547191148428-mldroi9fc1umatra2pv63rbud741dk0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tdc.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "547191148428-r5mmehqhchrf0c1fcijf27628lch0nd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Llu05RvzFs-PGXDnZiX8By3QPMHkcqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547191148428-r5mmehqhchrf0c1fcijf27628lch0nd2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "547191148428-5po3r5sk54vkfsojah93hliig4gm3306.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tdc.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

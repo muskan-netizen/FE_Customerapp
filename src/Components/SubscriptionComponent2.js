@@ -21,7 +21,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -53,6 +53,8 @@ const SubscriptionComponent2 = ({
   const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
   const {themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -126,24 +128,12 @@ const SubscriptionComponent2 = ({
             {subscriptionData?.plan?.deleted_at == null && (
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.title}>
-                  {`${currencies?.primary_currency?.symbol} `}
-                </Text>
-                <Text style={styles.title}>
-                  {currencyNumberFormatter(
+                  {tokenConverterPlusCurrencyNumberFormater(
                     Number(data?.price),
-                    appData?.profile?.preferences?.digit_after_decimal,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
                   )}
-                  {/* {currencyNumberFormatter(
-                  currentSubscription
-                    ? `${
-                        (Number(subscriptionData?.subscription_amount),
-                        appData?.profile?.preferences?.digit_after_decimal)
-                      }`
-                    : `${
-                        (Number(data?.price),
-                        appData?.profile?.preferences?.digit_after_decimal)
-                      }`,
-                )} */}
                 </Text>
               </View>
             )}
@@ -172,17 +162,21 @@ const SubscriptionComponent2 = ({
                   btnText={
                     currentDateValue == subscriptionDateValue ||
                     currentTimeValue > subscriptionTimeValue
-                      ? `${strings.RENEW} (${
-                          currencies?.primary_currency?.symbol
-                        }${currencyNumberFormatter(
+                      ? `${
+                          strings.RENEW
+                        } (${tokenConverterPlusCurrencyNumberFormater(
                           Number(data?.price),
-                          appData?.profile?.preferences?.digit_after_decimal,
+                          digit_after_decimal,
+                          additional_preferences,
+                          currencies?.primary_currency?.symbol,
                         )})`
-                      : `${strings.PAY} (${
-                          currencies?.primary_currency?.symbol
-                        }${currencyNumberFormatter(
+                      : `${
+                          strings.PAY
+                        } (${tokenConverterPlusCurrencyNumberFormater(
                           Number(data?.price),
-                          appData?.profile?.preferences?.digit_after_decimal,
+                          digit_after_decimal,
+                          additional_preferences,
+                          currencies?.primary_currency?.symbol,
                         )})`
                   }
                 />
@@ -306,9 +300,14 @@ const SubscriptionComponent2 = ({
                   width: width / 2,
                 }}
                 onPress={payNowUpcoming}
-                btnText={`${strings.PAYNOW} (${
-                  currencies?.primary_currency?.symbol
-                }${Number(data?.price).toFixed(2)})`}
+                btnText={`${
+                  strings.PAYNOW
+                } (${tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.price),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )})`}
               />
               <GradientButton
                 colorsArray={[

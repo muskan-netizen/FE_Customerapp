@@ -88,7 +88,6 @@ const SearchPlaces = ({
         curLatLng,
         RNLocalize.getCountry(),
       );
-      console.log('kdjfkdkjfdf', res);
       if (res && !!res.predictions) {
         let arry = res.predictions.map((val, i) => {
           return {

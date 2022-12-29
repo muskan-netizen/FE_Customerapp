@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
-import PushNotification, {Importance} from 'react-native-push-notification';
 import {navigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
+import {redirectFromNotification} from './helperFunctions';
 import {getItem} from './utils';
 
 export async function requestUserPermission() {
@@ -74,83 +74,87 @@ const manageRedirections = async (data) => {
   }
 };
 
-
-
 export const notificationListener = async () => {
   // _openApp()
 
-  PushNotification.configure({
-    permissions: {
-      alert: true,
-      badge: true,
-      sound: true,
-    },
-    requestPermissions: true,      
-    popInitialNotification: true,
+  // PushNotification.configure({
+  //   permissions: {
+  //     alert: true,
+  //     badge: true,
+  //     sound: true,
+  //   },
+  //   requestPermissions: true,
+  //   popInitialNotification: true,
+  // });
+
+  messaging().onNotificationOpenedApp((remoteMessage) => {
+    console.log('tap on notification', remoteMessage);
+    const {data} = remoteMessage;
+
+    if (!!data?.room_id) {
+      navigate(navigationStrings.CHAT_SCREEN, {
+        data: {_id: data?.room_id, room_id: data?.room_id_text},
+      });
+    }
+    let clickActionUrl = data?.click_action || null;
+
+    clickActionUrl && redirectFromNotification(clickActionUrl);
   });
 
-  messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log('tap on notification',remoteMessage);
-    const {data} = remoteMessage
-    if(!!data?.room_id){
-    navigate(navigationStrings.CHAT_SCREEN, { data: { _id: data?.room_id, room_id: data?.room_id_text } })
-  }
-  });
+  // createDefaultChannels();
 
-  createDefaultChannels();
+  // function createDefaultChannels() {
+  //   PushNotification.createChannel(
+  //     {
+  //       channelId: 'default-channel-id', // (required)
+  //       channelName: `Default channel`, // (required)
+  //       channelDescription: 'A default channel', // (optional) default: undefined.
+  //       soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+  //       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //     },
+  //     (created) =>
+  //       console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   );
+  //   PushNotification.createChannel(
+  //     {
+  //       channelId: 'sound-channel-id', // (required)
+  //       channelName: `Sound channel 2`, // (required)
+  //       channelDescription: 'A sound channel 2', // (optional) default: undefined.
+  //       soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
+  //       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //     },
+  //     (created) =>
+  //       console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   );
+  //   PushNotification.createChannel(
+  //     {
+  //       channelId: 'sound-channel-id', // (required)
+  //       channelName: `Sound channel 2`, // (required)
+  //       channelDescription: 'A sound channel 2', // (optional) default: undefined.
+  //       soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
+  //       importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //     },
+  //     (created) =>
+  //       console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   );
 
-  function createDefaultChannels() {
-    PushNotification.createChannel(
-      {
-        channelId: 'default-channel-id', // (required)
-        channelName: `Default channel`, // (required)
-        channelDescription: 'A default channel', // (optional) default: undefined.
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-      },
-      (created) =>
-        console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-    PushNotification.createChannel(
-      {
-        channelId: 'sound-channel-id', // (required)
-        channelName: `Sound channel 2`, // (required)
-        channelDescription: 'A sound channel 2', // (optional) default: undefined.
-        soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
-        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-      },
-      (created) =>
-        console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-    PushNotification.createChannel(
-      {
-        channelId: 'sound-channel-id', // (required)
-        channelName: `Sound channel 2`, // (required)
-        channelDescription: 'A sound channel 2', // (optional) default: undefined.
-        soundName: 'notification.wav', // (optional) See `soundName` parameter of `localNotification` function
-        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-      },
-      (created) =>
-        console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    );
-
-    // // created channel for custom notii 
-    // PushNotification.createChannel(
-    //   {
-    //     channelId: 'sound-channel-id', // (required)
-    //     channelName: `Sound channel 2`, // (required)
-    //     channelDescription: 'A sound channel 2', // (optional) default: undefined.
-    //     soundName: 'customnotii.mp3', // (optional) See `soundName` parameter of `localNotification` function
-    //     importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    //     vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    //   },
-    //   (created) =>
-    //     console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-    // );
-  }
+  //   // // created channel for custom notii
+  //   // PushNotification.createChannel(
+  //   //   {
+  //   //     channelId: 'sound-channel-id', // (required)
+  //   //     channelName: `Sound channel 2`, // (required)
+  //   //     channelDescription: 'A sound channel 2', // (optional) default: undefined.
+  //   //     soundName: 'customnotii.mp3', // (optional) See `soundName` parameter of `localNotification` function
+  //   //     importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  //   //     vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  //   //   },
+  //   //   (created) =>
+  //   //     console.log(`createChannel 'sound-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  //   // );
+  // }
 
   messaging()
     .getInitialNotification()
@@ -167,6 +171,13 @@ export const notificationListener = async () => {
         if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
           actions.isVendorNotification(true);
         }
+
+        let clickActionUrl = data?.click_action || null;
+
+        clickActionUrl &&
+          setTimeout(() => {
+            redirectFromNotification(clickActionUrl);
+          }, 1000);
 
         // // added check for customnotii
         // if (

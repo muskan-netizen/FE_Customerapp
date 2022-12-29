@@ -35,6 +35,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {
   boxWidth,
   customMarginBottom,
@@ -68,6 +69,8 @@ const RoyoHome = (props) => {
   const {appData, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   console.log(languages, 'languagessssssssss');
 
   const [state, setState] = useState({
@@ -606,10 +609,15 @@ const RoyoHome = (props) => {
                     {strings.TOTAL_REVENUE}
                   </Text>
                   <Text style={styles.font16Bold}>
-                    {currencies?.primary_currency?.symbol}
-                    {!!totalRevenue ? Number(totalRevenue).toFixed(2) : 0}
+                    {tokenConverterPlusCurrencyNumberFormater(
+                      !!totalRevenue ? Number(totalRevenue) : 0,
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}
                   </Text>
                 </View>
+
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   <BarChart
                     withCustomBarColorFromData={true}

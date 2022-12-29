@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Konectame/Pods-available_pods-Konectame.debug.xcconfig"
+
+PROJECT_APPLE_ID = 6444619960
+PROJECT_BUNDLE_ID = com.konectame.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 3
+PROJECT_APP_NAME = Konectame
+PROJECT_GOOGLE_CLIENT_ID = 1082989023588-o3q5th9e6ltn2s1d9qvkuq2qacqtjfe4.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.1082989023588-o3q5th9e6ltn2s1d9qvkuq2qacqtjfe4
+PROJECT_FACEBOOK_ID = 669247761444952
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =KonectameInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

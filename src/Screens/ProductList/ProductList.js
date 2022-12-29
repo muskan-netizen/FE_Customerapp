@@ -778,7 +778,7 @@ export default function Products({route, navigation}) {
       {/* {<Loader isLoading={isLoadingB} withModal={true} />} */}
 
       <Header
-        centerTitle={data?.name || data?.translation[0]?.name}
+        centerTitle={data?.name || (data?.translation ? data?.translation[0]?.name : "")}
         hideRight={true}
         rightIcon={imagePath.search}
         onPressRight={() =>
