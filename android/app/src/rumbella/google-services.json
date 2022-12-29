@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "605126619605",
+    "project_id": "rumbella-ac8a8",
+    "storage_bucket": "rumbella-ac8a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605126619605:android:1e1fd73fb42583d1164d5c",
+        "android_client_info": {
+          "package_name": "com.rumbella.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605126619605-3hn2g7nlcnu67ve1ghvk8i37mb16ra5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rumbella.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "605126619605-9afmmc70c9vlbh414848n027pmroj7to.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rumbella.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "605126619605-epd04vvpd10kovtku83li18n28047t0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rumbella.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "605126619605-706d90j3ao85vq2l6ut4g0crb3rd6pmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDIDK9hgAKmBUbA9kh_TSEDLshlShAmaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605126619605-706d90j3ao85vq2l6ut4g0crb3rd6pmn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "605126619605-6ehmfi238ddj8rjcp8s40td13vtvtgi3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rumbella.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

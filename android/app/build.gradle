@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true,  // clean and rebuild if changing
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -122,8 +122,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", true);
 
 android {
-     packagingOptions {
-        pickFirst '**/*.so'
+ packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libfbjni.so'
     }
    
     dexOptions {
@@ -203,29 +204,18 @@ android {
     }
 
     flavorDimensions "appType"
-    productFlavors{
-                 royoorder {
-                dimension "appType"
-                versionCode 3
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".royoorder"
-                applicationId 'com.codebrew.royoorder'
-                resValue "string", "app_name", "RoyoOrder"
-                resValue "string", "host_name", "sales.royoorders.com"
+productFlavors{
+            qdelo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.qdelo.order'
+            resValue "string", "app_name", "Qdelo"
+            resValue "string", "host_name", ""
             }
-             pointoneExpediteDelivery{ 
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.pointoneExpediteDelivery.royoorders'
-                resValue "string", "app_name", "Pointone Expedite Delivery" 
-                resValue "string", "host_name", ""
-                }
-    }
+}
     // productFlavors {
     //         royoorder {
     //             dimension "appType"
@@ -628,7 +618,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.servze'
+    //             applicationId 'com.servze.orderapp'
     //             resValue "string", "app_name", "Servze"
     //             resValue "string", "host_name", ""
 
@@ -6766,7 +6756,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.servern.order'
+    //         applicationId 'com.servern.orderapp'
     //         resValue "string", "app_name", "Servern"
     //         resValue "string", "host_name", ""
     //         }
@@ -7137,7 +7127,7 @@ android {
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.axxi.order'
-    //         resValue "string", "app_name", "Axxi" 
+    //         resValue "string", "app_name", "Axxi One" 
     //         resValue "string", "host_name", ""
     //         }
     //       pets{
@@ -7891,6 +7881,107 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.rentzy'
     //             resValue "string", "app_name", "Rentzy"
+    //             resValue "string", "host_name", ""
+    //         }
+    //          todaysDeliverys {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.todaysDeliverys.royoorders'
+    //             resValue "string", "app_name", "Todays Deliverys"
+    //             resValue "string", "host_name", ""
+    //         }
+    //                      locate {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.locate.royoorders'
+    //             resValue "string", "app_name", "Locate"
+    //             resValue "string", "host_name", ""
+    //         }
+    //                          georgiacollective {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.georgiacollective.royoorders'
+    //             resValue "string", "app_name", "Georgia Collective"
+    //             resValue "string", "host_name", ""
+    //         }
+    //                              otgWeeds {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.otgweeds.royoorders'
+    //             resValue "string", "app_name", "OTG Weeds"
+    //             resValue "string", "host_name", ""
+    //         }
+    //                                  rumbella {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.rumbella.royoorders'
+    //             resValue "string", "app_name", "Rumbella"
+    //             resValue "string", "host_name", ""
+    //         }
+         
+    //         lvlup {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.lvlup.royoorders'
+    //             resValue "string", "app_name", "LvlUp"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         glavour {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.glavour.royoorders'
+    //             resValue "string", "app_name", "Glavour"
+    //             resValue "string", "host_name", ""
+    //         }
+    //            lincshare {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.lincshare.royoorders'
+    //             resValue "string", "app_name", "LincShare"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         shipmoe {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.shipmoe.royoorders'
+    //             resValue "string", "app_name", "Shipmoe"
+    //             resValue "string", "host_name", ""
+    //         }
+    //          bigBayong {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.bigBayong.royoorders'
+    //             resValue "string", "app_name", "Big Bayong"
     //             resValue "string", "host_name", ""
     //         }
     // }

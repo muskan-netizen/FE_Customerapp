@@ -100,8 +100,7 @@ const shortCodes = {
   // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
-  ace: '2d98b5',
-  // ace: '245bae',
+  ace: '245bae',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',
@@ -143,8 +142,7 @@ const shortCodes = {
   gumastas: '2cdae8',
   dishefs: '4c13fd',
   bilionza: '9a8793',
-  // doleypharmacy: 'e925ef',
-  doleypharmacy: '245bae',
+  doleypharmacy: 'e925ef',
   bezalio: 'c1ab2b',
   youchillax: 'a2c90d',
   instashop: 'cb6671',
@@ -473,6 +471,16 @@ const shortCodes = {
   skyline: 'ce1ed6',
   bliss: '6eb260',
   rentzy: 'd4fc07',
+  todaysDeliverys: '6d055a',
+  locate: 'f9f1f8',
+  georgiacollective: '1d7bf7',
+  otgWeeds: '2a3af8',
+  rumbella: 'fd2e2f',
+  lincshare: '9b8d33',
+  lvlup: 'b2eb09',
+  glavour: '620b19',
+  shipmoe: '153a1f',
+  bigBayong: '5c8f1a',
 };
 
 const appIds = {
@@ -1293,7 +1301,7 @@ const appIds = {
     android: 'com.customer.Ihelp',
   }),
   ullaz: Platform.select({
-    ios: 'com.ullazOrder',
+    ios: 'com.ullaz',
     android: 'com.ullazOrder',
   }),
   privatepremiumpickups: Platform.select({
@@ -1885,8 +1893,8 @@ const appIds = {
     android: 'com.FresHest.royoOrder',
   }),
   servern: Platform.select({
-    ios: 'com.servern.order',
-    android: 'com.servern.order',
+    ios: 'com.servern.orderapp',
+    android: 'com.servern.orderapp',
   }),
   smokeRun: Platform.select({
     ios: 'com.smokeRun.order',
@@ -2347,6 +2355,46 @@ const appIds = {
   rentzy: Platform.select({
     ios: 'com.rentzy.royoorders',
     android: 'com.rentzy',
+  }),
+  todaysDeliverys: Platform.select({
+    ios: 'com.todaysDeliverys.royoorders',
+    android: 'com.todaysDeliverys.royoorders',
+  }),
+  locate: Platform.select({
+    ios: 'com.locate.royoorders',
+    android: 'com.locate.royoorders',
+  }),
+  georgiacollective: Platform.select({
+    ios: 'com.georgiacollective.royoorders',
+    android: 'com.georgiacollective.royoorders',
+  }),
+  otgWeeds: Platform.select({
+    ios: 'com.otgweeds.royoorders',
+    android: 'com.otgweeds.royoorders',
+  }),
+  rumbella: Platform.select({
+    ios: 'com.rumbella.royoorders',
+    android: 'com.rumbella.royoorders',
+  }),
+  lincshare: Platform.select({
+    ios: 'com.lincshare.royoorders',
+    android: 'com.lincshare.royoorders',
+  }),
+  lvlup: Platform.select({
+    ios: 'com.lvlup.royoorders',
+    android: 'com.lvlup.royoorders',
+  }),
+  glavour: Platform.select({
+    ios: 'com.glavour.royoorders',
+    android: 'com.glavour.royoorders',
+  }),
+  shipmoe: Platform.select({
+    ios: 'com.shipmoe.royoorders',
+    android: 'com.shipmoe.royoorders',
+  }),
+  bigBayong: Platform.select({
+    ios: 'com.bigBayong.royoorders',
+    android: 'com.bigBayong.royoorders',
   }),
 };
 

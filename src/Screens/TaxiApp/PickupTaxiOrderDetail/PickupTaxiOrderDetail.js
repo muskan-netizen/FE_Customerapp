@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
   Animated,
@@ -7,43 +7,44 @@ import {
   Image,
   Keyboard,
   Linking,
+  SafeAreaView,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {useSelector} from 'react-redux';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useIsFocused } from '@react-navigation/native';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useIsFocused} from '@react-navigation/native';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import {
   getImageUrl,
   hapticEffects,
   playHapticEffect,
   showError,
-  showSuccess
+  showSuccess,
 } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
-import { cloneDeep } from 'lodash';
+import {cloneDeep} from 'lodash';
 import Communications from 'react-native-communications';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import navigationStrings from '../../../navigation/navigationStrings';
-import { MyDarkTheme } from '../../../styles/theme';
+import {MyDarkTheme} from '../../../styles/theme';
 import useInterval from '../../../utils/useInterval';
 import moment from 'moment';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
 import StarRating from 'react-native-star-rating';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import CustomCallouts from '../../../Components/CustomCallouts';
@@ -52,11 +53,11 @@ import RoundImg from '../../../Components/RoundImg';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
 } from '../../../styles/responsiveSize';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 
 const ASPECT_RATIO = width / height;
@@ -77,6 +78,9 @@ const CANCLE_TASK_TIME = 45000;
 import 'moment-timezone';
 import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import GradientButton from '../../../Components/GradientButton';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
+import Header from '../../../Components/Header';
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
@@ -284,7 +288,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         '/order-details/',
       )
     : null;
-
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -995,14 +998,119 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       updateState({isLoading: false});
     }
   };
-  console.log(orderStatus, 'orderStatus');
+  // console.log(isLoading, 'orderStatus');
 
+  if (isLoading) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+          alignItems: 'center',
+        }}>
+        <View>
+          <HeaderLoader
+            widthLeft={moderateScale(30)}
+            rectWidthLeft={moderateScale(30)}
+            heightLeft={moderateScaleVertical(30)}
+            rectHeightLeft={moderateScaleVertical(30)}
+            widthRight={moderateScale(200)}
+            rectWidthRight={moderateScale(200)}
+            heightRight={moderateScale(20)}
+            rectHeightRight={moderateScale(20)}
+            isRight={true}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              width: width - moderateScale(30),
+            }}
+            rightViewStyle={{
+              marginLeft: width / 5.5,
+            }}
+          />
+          <View style={{alignItems: 'center'}}>
+            <HeaderLoader
+              widthLeft={moderateScale(width / 1.2)}
+              rectWidthLeft={moderateScale(width / 1.2)}
+              heightLeft={height / 3}
+              rectHeightLeft={height / 3}
+              isRight={false}
+              rx={15}
+              ry={15}
+              viewStyles={{
+                marginTop: moderateScaleVertical(20),
+              }}
+            />
+          </View>
+
+          <HeaderLoader
+            widthLeft={width / 3}
+            rectWidthLeft={moderateScale(80)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              alignSelf: 'flex-start',
+              marginTop: moderateScaleVertical(40),
+              paddingBottom: moderateScaleVertical(40),
+            }}
+          />
+
+          <HeaderLoader
+            widthLeft={moderateScale(80)}
+            rectWidthLeft={moderateScale(80)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            widthRight={moderateScale(40)}
+            rectWidthRight={moderateScale(40)}
+            heightRight={moderateScale(20)}
+            rectHeightRight={moderateScale(20)}
+            isRight={true}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              alignItems: 'center',
+              width: width - moderateScale(30),
+              marginTop: moderateScaleVertical(10),
+            }}
+            rightViewStyle={{
+              marginLeft: width / 5.5,
+            }}
+          />
+          <HeaderLoader
+            widthLeft={moderateScale(80)}
+            rectWidthLeft={moderateScale(80)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            widthRight={moderateScale(40)}
+            rectWidthRight={moderateScale(40)}
+            heightRight={moderateScale(20)}
+            rectHeightRight={moderateScale(20)}
+            isRight={true}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              alignItems: 'center',
+              width: width - moderateScale(30),
+              marginTop: moderateScaleVertical(10),
+            }}
+            rightViewStyle={{
+              marginLeft: width / 5.5,
+            }}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
-      source={loaderOne}
-      isLoadingB={isLoading}>
+      source={loaderOne}>
       <View
         style={{flex: 1, marginVertical: moderateScale(16), marginBottom: 0}}>
         <View
@@ -1012,10 +1120,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
             marginBottom: moderateScaleVertical(16),
             marginHorizontal: moderateScale(16),
           }}>
+          {console.log(
+            paramData?.fromCab,
+            paramData?.pickup_taxi,
+            'paramData?.pickup_taxi    ',
+          )}
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                ? () => navigation.navigate(navigationStrings.HOME)
                 : paramData?.pickup_taxi
                 ? () => navigation.navigate(navigationStrings.HOME)
                 : () => navigation.goBack()
@@ -1028,6 +1141,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               source={imagePath.backArrowCourier}
             />
           </TouchableOpacity>
+
           <Text
             style={{
               fontSize: moderateScale(16),
@@ -1351,7 +1465,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   </View>
                 )}
                 <View style={styles.horizontalLine} />
-               
+
                 {orderStatus == 'unassigned' && (
                   <SearchDriver
                     isWaitingOver={isWaitingOver}
@@ -1359,7 +1473,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       onCancelOrder('No drivers available.');
                     }}
                     scheduleDate={orderDetail?.scheduled_date_time}
-                   
                     isBtnLoader={isBtnLoader}
                   />
                 )}

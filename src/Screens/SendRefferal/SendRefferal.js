@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
+import { getBundleId } from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -13,6 +14,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
@@ -132,7 +134,7 @@ export default function SendRefferal({navigation}) {
             }}>
             <BorderTextInput
               onChangeText={_onChangeText('email')}
-              placeholder={strings.YOUR_EMAIL}
+              placeholder={getBundleId() === appIds.qdelo?strings.ENTER_FRIEND_Email: strings.YOUR_EMAIL}
               value={email}
             />
             <GradientButton

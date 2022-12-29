@@ -1,16 +1,16 @@
-import { isEmpty } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, Linking, Text, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { getBundleId } from 'react-native-device-info';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
+import {Image, Linking, Text, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import { MaterialIndicator } from 'react-native-indicators';
+import {MaterialIndicator} from 'react-native-indicators';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import Video from 'react-native-video';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -22,16 +22,16 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../../styles/theme';
+import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getUrlRoutes,
-  showError
+  showError,
 } from '../../utils/helperFunctions';
-import { getItem, setItem } from '../../utils/utils';
+import {getItem, setItem} from '../../utils/utils';
 import styles from './styles';
 
 const fs = RNFetchBlob.fs;
@@ -63,7 +63,6 @@ export default function ShortCode({route, navigation}) {
     LoadingScreen,
     videoDurationEnded,
     allAppData,
-
     initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -2921,6 +2920,66 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.todaysDeliverys:
+          updateState({
+            shortCode: shortCodes.todaysDeliverys,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.locate:
+          updateState({
+            shortCode: shortCodes.locate,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.georgiacollective:
+          updateState({
+            shortCode: shortCodes.georgiacollective,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.otgWeeds:
+          updateState({
+            shortCode: shortCodes.otgWeeds,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rumbella:
+          updateState({
+            shortCode: shortCodes.rumbella,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lincshare:
+          updateState({
+            shortCode: shortCodes.lincshare,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lvlup:
+          updateState({
+            shortCode: shortCodes.lvlup,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.glavour:
+          updateState({
+            shortCode: shortCodes.glavour,
+            isShortcodePrefilled: true,
+          });
+          break;
+          case appIds.shipmoe:
+            updateState({
+              shortCode: shortCodes.shipmoe,
+              isShortcodePrefilled: true,
+            });
+            break;
+            case appIds.bigBayong:
+              updateState({
+                shortCode: shortCodes.bigBayong,
+                isShortcodePrefilled: true,
+              });
+              break;
       }
     })();
   }, []);
@@ -2932,6 +2991,7 @@ export default function ShortCode({route, navigation}) {
   }, [shortCode, isShortcodePrefilled]);
 
   const checkScreen = () => {
+    
     initApiHit();
     updateState({isShortcodePrefilled: true});
   };
@@ -2965,8 +3025,10 @@ export default function ShortCode({route, navigation}) {
         code: shortCode,
       };
     }
+ 
     actions
       .initApp({}, header, false, null, null, true)
+      
       .then((res) => {
         console.log('header response--->', res);
         if (res.data.mobile_banners.length > 0) {
@@ -2996,7 +3058,7 @@ export default function ShortCode({route, navigation}) {
         }
 
         if (
-          getBundleId() == appIds.masa ||    
+          getBundleId() == appIds.masa ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
           getBundleId() == appIds.flank
@@ -3153,9 +3215,12 @@ export default function ShortCode({route, navigation}) {
   };
 
   useEffect(() => {
+    
     (async () => {
       if (changeInShortCode) {
+
         const saveShortCode = await getItem('saveShortCode');
+        
         if (saveShortCode && shortCode != saveShortCode) {
           actions.userLogout();
           actions.cartItemQty('');

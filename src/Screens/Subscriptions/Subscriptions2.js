@@ -493,7 +493,7 @@ export default function Subscriptions2({navigation, route}) {
           <Text style={styles.title}>{selectedPlan?.title}</Text>
           <Text style={[styles.title2, {marginTop: moderateScale(10)}]}>
             {tokenConverterPlusCurrencyNumberFormater(
-              Number(selectedPlan?.price) / Number(selectedPlan?.frequency),
+              Number(selectedPlan?.price)|| Number(selectedPlan?.frequency),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,

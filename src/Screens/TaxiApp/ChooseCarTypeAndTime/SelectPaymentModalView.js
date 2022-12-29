@@ -1,12 +1,14 @@
-import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
   FlatList,
   I18nManager,
   Image,
-  Keyboard, KeyboardAvoidingView, Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -33,11 +35,11 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getImageUrl } from '../../../utils/helperFunctions';
-import { androidCameraPermission } from '../../../utils/permissions';
+import {MyDarkTheme} from '../../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {getImageUrl} from '../../../utils/helperFunctions';
+import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
 
 
@@ -509,8 +511,8 @@ export default function SelectPaymentModalView({
           </View>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: 'row',
+              alignItems: 'center',
               marginVertical: 8,
               justifyContent: "space-between",
             }}

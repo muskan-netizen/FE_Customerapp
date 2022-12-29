@@ -1029,7 +1029,7 @@ export default function WebLinks({navigation, route}) {
           }
         />
         <View style={{...commonStyles.headerTopLine}} />
-        {console.log(I18nManager.isRTL, 'I18nManager.isRTL')}
+      
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
@@ -1039,8 +1039,8 @@ export default function WebLinks({navigation, route}) {
           <View
             style={{
               marginTop: moderateScaleVertical(20),
-              marginHorizontal: moderateScale(20),
-
+              marginBottom: moderateScaleVertical(25),
+              marginHorizontal: moderateScale(18),
               justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
               flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
@@ -1052,9 +1052,17 @@ export default function WebLinks({navigation, route}) {
                 tagsStyles={{
                   p: {
                     color: isDarkMode ? colors.white : colors.black,
-                    // alignSelf: I18nManager.isRTL ? 'left' : 'right',
-                    // textAlign: I18nManager.isRTL ? 'left' : 'right',
-                    // textAlign:'right',
+                    width: height / 2,
+                    paddingHorizontal: 5
+                  },
+                  h2: {
+                    width: height / 2
+                  },
+                  td: {
+                    width: height / 2,
+                  },
+                  tr: {
+                    width: height / 2,
                   },
                 }}
               />
