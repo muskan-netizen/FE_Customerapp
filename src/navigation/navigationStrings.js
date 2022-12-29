@@ -155,4 +155,5 @@ export default {
   CONEKTA: 'conekta',
   VERIFY_ACCOUNT_TAXI: 'VerifyAccountTaxi',
   VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
+  PLUGNPAY:'PlugnPay'
 };

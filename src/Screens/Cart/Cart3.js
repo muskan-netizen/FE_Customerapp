@@ -1022,6 +1022,11 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
+        case 49: //Direct Pay Online Payment Getway
+      
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PLUGNPAY, paymentData);
+        break;
 
       default:
         if (
