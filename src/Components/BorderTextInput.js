@@ -1,4 +1,3 @@
-import {concat} from 'lodash';
 import React, {useEffect, useRef} from 'react';
 import {
   I18nManager,
@@ -24,7 +23,7 @@ const BorderTextInput = ({
   rightIcon,
   onChangeText,
   value,
-  placeholder,
+  placeholder = '',
   marginBottom = 20,
   onPressRight = () => {},
   withRef = false,
@@ -35,6 +34,7 @@ const BorderTextInput = ({
   rightIconStyle = {},
   require = false,
   keyboardType = 'default',
+  maxLength,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -99,6 +99,7 @@ const BorderTextInput = ({
         value={value}
         secureTextEntry={secureTextEntry}
         autoCapitalize={'none'}
+        maxLength={maxLength}
         {...props}
       />
 

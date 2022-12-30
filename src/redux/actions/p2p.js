@@ -1,7 +1,10 @@
 import {
   GET_AVAILABLE_ATTRIBUTES,
+  GET_DETAILS_OF_INFLUENCE_CATEGORY,
+  GET_INFLUENCER_REFER_EARN_CATEGORIES,
   GET_P2P_CATEGORIES,
   GET_PRODUCT_BY_P2P_CATEGORY,
+  SAVE_INFULENCER_INFO,
   SUBMIT_PRODUCT_WITH_ATTRIBUTE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
@@ -22,4 +25,20 @@ export function submitProductWithAttributes(data = {}, headers = {}) {
 
 export function getProductByP2pCategoryId(url = '', data = {}, headers = {}) {
   return apiPost(GET_PRODUCT_BY_P2P_CATEGORY + url, data, headers);
+}
+
+export function getInfluencerReferEarnCategories(data = {}, headers = {}) {
+  return apiGet(GET_INFLUENCER_REFER_EARN_CATEGORIES, data, headers);
+}
+
+export function getDetailsOfSelectedInfluenceCategory(
+  url = '',
+  data = {},
+  headers = {},
+) {
+  return apiGet(GET_DETAILS_OF_INFLUENCE_CATEGORY + url, data, headers);
+}
+
+export function saveInfluencerInfo(data = {}, headers = {}) {
+  return apiPost(SAVE_INFULENCER_INFO, data, headers);
 }

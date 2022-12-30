@@ -269,7 +269,7 @@ export default function Products({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res?.data?.products?.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -440,7 +440,7 @@ export default function Products({route, navigation}) {
                 : [...productListData, ...res.data.products.data],
           });
         }
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
         updateState({
           isRefreshing: false,
           categoryInfo: res.data.vendor,
@@ -478,7 +478,7 @@ export default function Products({route, navigation}) {
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
     // }

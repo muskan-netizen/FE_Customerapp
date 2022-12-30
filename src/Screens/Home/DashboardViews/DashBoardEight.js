@@ -497,7 +497,7 @@ export default function DashBoardEight({
 
           {!!vendorsData && vendorsData.length > 1 && (
             <TouchableOpacity
-              onPress={() => onViewAll('vendor', appMainData.vendors)}>
+              onPress={() => onViewAll('vendor', appMainData?.vendors)}>
               <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
             </TouchableOpacity>
           )}

@@ -2,10 +2,13 @@ import React from 'react';
 import {
   ForgotPassword2,
   Location,
+  Login,
   Login3,
   OtpVerification,
+  OuterScreen,
   OuterScreen5,
   ResetPassword,
+  Signup,
   Signup4,
   VerifyAccount,
   WebLinks,
@@ -18,18 +21,18 @@ export default function (Stack, appStyle) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={OuterScreen5}
+        component={appStyle?.homePageLayout === 8 ? OuterScreen5 : OuterScreen}
         options={{headerShown: false}}
       />
 
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={Signup4}
+        component={appStyle?.homePageLayout === 8 ? Signup4 : Signup}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={Login3}
+        component={appStyle?.homePageLayout === 8 ? Login3 : Login}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -1184,7 +1184,7 @@ export default function ProductWithCategory({route, navigation}) {
             ? res.data.products.data
             : [...productListData, ...res?.data?.products?.data],
         );
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -1335,7 +1335,10 @@ export default function ProductWithCategory({route, navigation}) {
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          updateBrandAndCategoryFilter(
+            res.data.filterData,
+            appMainData?.brands,
+          );
         }
       })
       .catch(errorMethod);
@@ -1403,7 +1406,10 @@ export default function ProductWithCategory({route, navigation}) {
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          updateBrandAndCategoryFilter(
+            res.data.filterData,
+            appMainData?.brands,
+          );
         }
       })
       .catch(errorMethod);
@@ -1460,7 +1466,7 @@ export default function ProductWithCategory({route, navigation}) {
         }
         setLoading(false);
         // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
 
       .catch(errorMethod);

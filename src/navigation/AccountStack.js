@@ -42,6 +42,7 @@ import {
   ProductList,
   ProductList2,
   RateOrder,
+  ReferAndEarn,
   ReplaceOrder,
   ReturnOrder,
   SalesExpenses,
@@ -107,68 +108,41 @@ export default function ({navigation}) {
   };
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen
         component={checkAccountsLayout()}
         name={navigationStrings.ACCOUNTS}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
         component={checkProfileLayout()}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.MY_ORDERS}
-        component={MyOrders}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.MY_ORDERS} component={MyOrders} />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
-        options={{headerShown: false}}
       />
 
       <Stack.Screen
         name={navigationStrings.NOTIFICATION}
         component={Notifications}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.ABOUT_US}
-        component={AboutUs}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.CONTACT_US}
-        component={ContactUs}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.SETTIGS}
-        component={Settings}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.ABOUT_US} component={AboutUs} />
+      <Stack.Screen name={navigationStrings.CONTACT_US} component={ContactUs} />
+      <Stack.Screen name={navigationStrings.SETTIGS} component={Settings} />
       <Stack.Screen
         name={navigationStrings.ATTACH_PRINTER}
         component={PrinterConnection}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.ATTACH_PRINTER + 'sunmi'}
         component={PrinterConnectionSunmi}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.WALLET}
-        component={Wallet}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.ADD_MONEY}
-        component={AddMoney}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.WALLET} component={Wallet} />
+      <Stack.Screen name={navigationStrings.ADD_MONEY} component={AddMoney} />
       <Stack.Screen
         name={navigationStrings.WISHLIST}
         component={
@@ -178,205 +152,125 @@ export default function ({navigation}) {
             ? Wishlist2
             : Wishlist
         }
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.TRACKING}
-        component={Tracking}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.TRACKING} component={Tracking} />
       <Stack.Screen
         name={navigationStrings.TRACKDETAIL}
         component={TrackDetail}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={checkSearchProductVendorItemLayout()}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={BrandProducts}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SEND_PRODUCT}
         component={SendProduct}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.BUY_PRODUCT}
         component={BuyProduct}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
         component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.DELIVERY}
-        component={Delivery}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.RATEORDER}
-        component={RateOrder}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.RATEORDER} component={RateOrder} />
       <Stack.Screen
         name={navigationStrings.SENDREFFERAL}
         component={SendRefferal}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.CMSLINKS}
-        component={CMSLinks}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.WEBLINKS}
-        component={WebLinks}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.LOCATION}
-        component={Location}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.CMSLINKS} component={CMSLinks} />
+      <Stack.Screen name={navigationStrings.WEBLINKS} component={WebLinks} />
+      <Stack.Screen name={navigationStrings.LOCATION} component={Location} />
 
       <Stack.Screen
         name={navigationStrings.WEBPAYMENTS}
         component={WebPayment}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.TRACKORDER}
-        component={MyOrders}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.TRACKORDER} component={MyOrders} />
       <Stack.Screen
         name={navigationStrings.PICKUPORDERDETAIL}
         component={PickupOrderDetail}
-        options={{headerShown: false, tabBarVisible: false}}
+        options={{tabBarVisible: false}}
       />
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
         component={WebviewScreen}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
         component={Subscriptions2}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.LOYALTY}
-        component={Loyalty2}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.LOYALTY} component={Loyalty2} />
       <Stack.Screen
         name={navigationStrings.RETURNORDER}
         component={ReturnOrder}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.TIP_PAYMENT_OPTIONS}
         component={TipPaymentOptions}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.MOBBEX}
-        component={Mobbex}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.PAYFAST}
-        component={Payfast}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.YOCO}
-        component={Yoco}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={navigationStrings.PAYLINK}
-        component={Paylink}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.MOBBEX} component={Mobbex} />
+      <Stack.Screen name={navigationStrings.PAYFAST} component={Payfast} />
+      <Stack.Screen name={navigationStrings.YOCO} component={Yoco} />
+      <Stack.Screen name={navigationStrings.PAYLINK} component={Paylink} />
       <Stack.Screen
         name={navigationStrings.ALL_IN_ONE_PAYMENTS}
         component={AllinonePyments}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.INVENTORY}
-        component={Inventory}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.INVENTORY} component={Inventory} />
       <Stack.Screen
         name={navigationStrings.UDHAARLEDGER}
         component={UdhaarLedger}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SALES_EXPENSES}
         component={SalesExpenses}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.ADD_PRODUCT}
         component={AddProduct}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.ADD_NEW_CUSTOMER}
         component={AddNewCustomer}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.CUSTOMER_EARNING_HISTORY}
         component={CustomerEarningHistory}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.CHAT_ROOM}
-        component={ChatRoom}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={navigationStrings.CHAT_ROOM} component={ChatRoom} />
       <Stack.Screen
         name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
         component={ChatRoomForVendor}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.REPLACE_ORDER}
         component={ReplaceOrder}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
         component={P2pProductDetail}
-        options={{headerShown: false}}
       />
+      <Stack.Screen name={navigationStrings.MY_POSTS} component={MyP2pPosts} />
       <Stack.Screen
-        name={navigationStrings.MY_POSTS}
-        component={MyP2pPosts}
-        options={{headerShown: false}}
+        name={navigationStrings.REFER_AND_EARN}
+        component={ReferAndEarn}
       />
     </Stack.Navigator>
   );

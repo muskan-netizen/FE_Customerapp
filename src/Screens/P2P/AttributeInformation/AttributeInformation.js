@@ -1,16 +1,34 @@
+import PanoramaView from '@lightbase/react-native-panorama-view';
+import {isEmpty} from 'lodash';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  View,
-  Text,
   FlatList,
+  Image,
   StyleSheet,
+  Text,
   TextInput,
-  Platform,
-  PermissionsAndroid,
-  Button,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import React, {useCallback, useState, useEffect, useRef} from 'react';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MultiSelect} from 'react-native-element-dropdown';
+import 'react-native-get-random-values';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Modal from 'react-native-modal';
+import WebView from 'react-native-webview';
+import {useSelector} from 'react-redux';
+import {v4 as uuidv4} from 'uuid';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
+import GradientButton from '../../../Components/GradientButton';
+import Header from '../../../Components/Header';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import {hitSlopProp} from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -18,35 +36,13 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import Header from '../../../Components/Header';
-import FormLoader from '../../../Components/Loaders/FormLoader';
-import actions from '../../../redux/actions';
-import imagePath from '../../../constants/imagePath';
-import {useSelector} from 'react-redux';
-import {showError, showSuccess} from '../../../utils/helperFunctions';
-import {MultiSelect} from 'react-native-element-dropdown';
-import {isEmpty} from 'lodash';
-import {TouchableOpacity} from 'react-native';
 import {
   cameraHandler,
   checkValueExistInAry,
 } from '../../../utils/commonFunction';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import {Image} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import validations from '../../../utils/validations';
-import {hitSlopProp} from '../../../styles/commonStyles';
-import ActionSheet from 'react-native-actionsheet';
-import strings from '../../../constants/lang';
-import 'react-native-get-random-values';
-import {v4 as uuidv4} from 'uuid';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import PanoramaView from '@lightbase/react-native-panorama-view';
+import {showError} from '../../../utils/helperFunctions';
 import {androidCameraPermission} from '../../../utils/permissions';
-import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
-import GradientButton from '../../../Components/GradientButton';
-import Modal from 'react-native-modal';
-import {useDarkMode} from 'react-native-dark-mode';
+import validations from '../../../utils/validations';
 
 const AttributeInformation = ({route, navigation}) => {
   let paramData = route?.params;
@@ -120,7 +116,7 @@ const AttributeInformation = ({route, navigation}) => {
     if (!checkValid) {
       return;
     }
-    // setLoadingSubmitAttributes(true);
+    setLoadingSubmitAttributes(true);
     let formData = new FormData();
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
@@ -251,8 +247,15 @@ const AttributeInformation = ({route, navigation}) => {
               setProductImgs([...productImgs, file]);
               setImagePickerModal(false);
             } else {
-              setProduct360Imgs([...product360Imgs, file]);
-              set360ImgPicker(false);
+              if (res?.height >= 4096 && res?.width >= 2048) {
+                setProduct360Imgs([...product360Imgs, file]);
+                set360ImgPicker(false);
+              } else {
+                showError(
+                  'Please upload atleast 4096x2048 size image for 360° media',
+                );
+                return;
+              }
             }
           } else {
             closeMediaPicker();
@@ -628,6 +631,7 @@ const AttributeInformation = ({route, navigation}) => {
                               height: moderateScale(90),
                               width: moderateScale(90),
                             }}
+                            // enableTouchTracking={false}
                             inputType="mono"
                             imageUrl={itm?.uri}
                           />
@@ -692,7 +696,7 @@ const AttributeInformation = ({route, navigation}) => {
         isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}
         onGallary={() => cameraHandle(1)}
-        isVisbleCamera={!is360ImgPicker}
+        // isVisbleCamera={!is360ImgPicker}
         onCancel={closeMediaPicker}
         onClose={closeMediaPicker}
       />

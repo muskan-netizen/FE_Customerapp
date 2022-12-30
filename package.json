@@ -1104,6 +1104,7 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-switch-selector": "^2.2.1",
     "react-native-switch-toggle": "^2.2.1",
+    "react-native-table-component": "^1.2.2",
     "react-native-tabs-section-list": "^1.0.1",
     "react-native-user-interface-style": "^1.0.8",
     "react-native-vector-icons": "^7.1.0",

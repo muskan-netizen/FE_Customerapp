@@ -33,6 +33,7 @@ const openCamera = (options) => {
     cropping: true,
     includeBase64: true,
     cropperCircleOverlay: options.cropperCircleOverlay,
+    ...options,
   })
     .then((image) => {
       console.log(image, 'Image from camera');

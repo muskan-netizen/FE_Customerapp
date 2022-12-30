@@ -300,7 +300,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //BEZALIO LIVE
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet sir
+// export const API_BASE_URL = 'http://192.168.101.83:8004/api/v1'; // preet sir
 
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
@@ -366,9 +366,10 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 //Rentzy
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
+
 //zonesso
-export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
+// export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
+export const API_BASE_URL = 'http://192.168.101.214:9003/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -652,3 +653,20 @@ export const SUBMIT_PRODUCT_WITH_ATTRIBUTE = getApiUrl(
 export const GET_PRODUCT_BY_P2P_CATEGORY = getApiUrl('/v2/attribute/category');
 
 export const GET_P2P_CATEGORIES = getApiUrl('/v2/getP2pCategories');
+
+// E-commerce slots
+export const CHECK_VENDOR_PINCODE = getApiUrl('/checkVendorPincode');
+export const GET_VENDOR_SHIPPING_SLOTS = getApiUrl(
+  '/getShippingProductDeliverySlots',
+);
+
+//Refer and Earn
+export const GET_INFLUENCER_REFER_EARN_CATEGORIES = getApiUrl(
+  '/influencer/refer-earn',
+);
+export const GET_DETAILS_OF_INFLUENCE_CATEGORY = getApiUrl(
+  '/influencer/get-influencer-form',
+);
+export const SAVE_INFULENCER_INFO = getApiUrl(
+  '/influencer/save-influencer-form',
+);

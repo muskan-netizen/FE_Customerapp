@@ -1,6 +1,7 @@
 import validator from 'is_js';
 import strings from '../constants/lang';
 import {parsePhoneNumber, isValidPhoneNumber} from 'libphonenumber-js';
+import {isEmpty} from 'lodash';
 const checkEmpty = (val, key, key2 = true) => {
   if (validator.empty(val.trim())) {
     return `${strings.PLEASE_ENTER} ${key2 ? `${strings.YOUR} ` : ''}${key}`;
@@ -73,6 +74,14 @@ export default function (data) {
     vendorDesc,
     isTermsConditions,
     price,
+    aadharNumber,
+    aadharFrontImg,
+    aadharBackImg,
+    upiId,
+    bankName,
+    beneficiaryName,
+    accountNumber,
+    ifscCode,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -485,6 +494,69 @@ export default function (data) {
       'valid transport type',
       false,
     );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  //
+
+  if (aadharFrontImg !== undefined) {
+    if (isEmpty(aadharFrontImg)) {
+      return 'Please upload Aadhar front image';
+    }
+  }
+
+  if (aadharBackImg !== undefined) {
+    if (isEmpty(aadharBackImg)) {
+      return 'Please upload Aadhar back image';
+    }
+  }
+
+  if (aadharNumber !== undefined) {
+    let emptyValidationText = checkEmpty(aadharNumber, 'Aadhar number', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (upiId !== undefined) {
+    let emptyValidationText = checkEmpty(upiId, 'UPI id', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (bankName !== undefined) {
+    let emptyValidationText = checkEmpty(bankName, 'bank name', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (beneficiaryName !== undefined) {
+    let emptyValidationText = checkEmpty(
+      beneficiaryName,
+      'account holder name',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (accountNumber !== undefined) {
+    let emptyValidationText = checkEmpty(
+      accountNumber,
+      'account number',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (ifscCode !== undefined) {
+    let emptyValidationText = checkEmpty(ifscCode, 'IFSC code', false);
     if (emptyValidationText !== '') {
       return emptyValidationText;
     }

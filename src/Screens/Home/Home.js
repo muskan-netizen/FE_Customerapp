@@ -32,7 +32,7 @@ import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 import {
   DashBoardFive,
-  DashBoardFive2,
+  DashBoardFiveV2Api,
   DashBoardFour,
   DashBoardHeaderFive,
   DashBoardHeaderFour,
@@ -380,21 +380,15 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (locationData = null, selectedFilter = null) => {
-    console.log('called...1');
     if (!isFocused) {
-      console.log('called...2');
       return;
     }
     if (!!paramData) {
-      console.log('called...3');
-
       updateState({searchDataLoader: true});
     }
     let latlongObj = {};
 
     if (!!locationData) {
-      console.log('called...4');
-
       latlongObj = {
         address: locationData?.address || '',
         latitude: locationData?.latitude || '',
@@ -408,12 +402,8 @@ export default function Home({route, navigation}) {
       best_vendor: selectedFilter?.id == 3 ? 1 : 0,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
-      console.log('called...5');
-
       updateState({singleVendor: true});
     } else {
-      console.log('called...6');
-
       updateState({singleVendor: false});
     }
 
@@ -422,8 +412,6 @@ export default function Home({route, navigation}) {
       var defaultVendorType = null;
 
       if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-        console.log('called...7');
-
         defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
         appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
           if (val?.type == dineInType) {
@@ -432,8 +420,6 @@ export default function Home({route, navigation}) {
         });
       }
       if (!selectedVendorType) {
-        console.log('called...8');
-
         actions.dineInData(defaultVendorType);
       }
       let apiData = {
@@ -441,8 +427,6 @@ export default function Home({route, navigation}) {
         ...latlongObj,
         ...vendorFilterData,
       };
-      console.log('called...9');
-
       let apiHeader = {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -952,12 +936,8 @@ export default function Home({route, navigation}) {
     });
   };
 
-  console.log(appStyle?.homePageLayout, 'sjldjfflksdjfjsd');
-
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
-      // switch (8) {
-      // switch (case_) {
       case 1:
         return (
           <>

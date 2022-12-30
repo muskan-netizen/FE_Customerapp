@@ -58,7 +58,7 @@ import {
 import {getItem, setItem} from '../../../utils/utils';
 import stylesFunc from '../styles';
 
-export default function DashBoardFive({
+export default function DashBoardFiveV2Api({
   handleRefresh = () => {},
   bannerPress = () => {},
   isLoading = true,
@@ -105,7 +105,6 @@ export default function DashBoardFive({
   const {slider1ActiveSlide, showMenu, categoriesData, seeMore} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
-  console.log(appMainData, 'appMainDataappMainData');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -472,7 +471,7 @@ export default function DashBoardFive({
             {item?.data?.length > 1 && (
               <TouchableOpacity
                 style={{marginHorizontal: moderateScale(4)}}
-                onPress={() => onViewAll('vendor', appMainData.vendors)}>
+                onPress={() => onViewAll('vendor', appMainData?.vendors)}>
                 <Text
                   style={{
                     ...styles.viewAllText,
@@ -935,6 +934,28 @@ export default function DashBoardFive({
     );
   };
 
+  const bannersView = (item) => {
+    console.log(item, '.....item');
+    return (
+      <View>
+        {titleViewHome(item)}
+        <Carousel
+          autoplay={true}
+          loop={true}
+          autoplayInterval={2000}
+          data={
+            item?.banner_images ||
+            appMainData?.mobile_banners ||
+            appData?.mobile_banners
+          }
+          renderItem={renderBanners}
+          sliderWidth={width}
+          itemWidth={width - moderateScale(30)}
+        />
+      </View>
+    );
+  };
+
   const renderHomePageItems = ({item, index}) => {
     return (
       <View>
@@ -954,6 +975,8 @@ export default function DashBoardFive({
           <View>{brandsView(item)}</View>
         ) : item?.slug == 'spotlight_deals' ? (
           <View>{spotlightDealsView(item)}</View>
+        ) : item?.slug == 'banner' ? (
+          <View>{bannersView(item)}</View>
         ) : (
           <></>
         )}
@@ -962,15 +985,17 @@ export default function DashBoardFive({
   };
 
   const renderBanners = ({item}) => {
-    const imageUrl = getImageUrl(
-      item.image.image_fit,
-      item.image.image_path,
-      appStyle?.homePageLayout === 5
-        ? '800/600'
-        : DeviceInfo.getBundleId() == appIds.masa
-        ? '800/600'
-        : '400/600',
-    );
+    const imageUrl =
+      item?.banner_image_url ||
+      getImageUrl(
+        item.image.image_fit,
+        item.image.image_path,
+        appStyle?.homePageLayout === 5
+          ? '800/600'
+          : DeviceInfo.getBundleId() == appIds.masa
+          ? '800/600'
+          : '400/600',
+      );
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
@@ -980,18 +1005,8 @@ export default function DashBoardFive({
             cache: FastImage.cacheControl.immutable,
           }}
           style={{
-            height:
-              appStyle?.homePageLayout == 5
-                ? moderateScale(140)
-                : DeviceInfo.getBundleId() == appIds.masa
-                ? moderateScale(260)
-                : height / 3.8,
-            width:
-              appStyle?.homePageLayout == 5
-                ? width / 1.2
-                : DeviceInfo.getBundleId() == appIds.masa
-                ? width / 1.1
-                : moderateScale(160),
+            height: moderateScale(200),
+            width: width - moderateScale(30),
             borderRadius: moderateScale(16),
             backgroundColor: isDarkMode
               ? colors.whiteOpacity15
@@ -1019,7 +1034,7 @@ export default function DashBoardFive({
         {showAllTempCartOrders()}
 
         <Animatable.View animation={'fadeInUp'} delay={200}>
-          <View style={{}}>
+          {/* <View style={{}}>
             {!isEmpty(appData?.mobile_banners) &&
             appStyle?.homePageLayout == 3 &&
             getBundleId() !== appIds?.masa ? (
@@ -1052,7 +1067,7 @@ export default function DashBoardFive({
                 />
               </View>
             )}
-          </View>
+          </View> */}
           <FlatList
             data={appMainData?.homePageLabels}
             renderItem={renderHomePageItems}

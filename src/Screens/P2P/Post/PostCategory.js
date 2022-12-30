@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  BackHandler,
 } from 'react-native';
 //custom components
 import BorderTextInput from '../../../Components/BorderTextInput';
@@ -78,7 +79,19 @@ const PostCategory = ({navigation}) => {
 
   useEffect(() => {
     getP2Pcategories();
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      );
+    };
   }, []);
+
+  const handleBackButtonClick = () => {
+    navigation.navigate(navigationStrings.HOMESTACK);
+    return true;
+  };
 
   const getP2Pcategories = () => {
     actions
@@ -210,8 +223,9 @@ const PostCategory = ({navigation}) => {
 
   const onPressP2pCategory = (item) => {
     if (!!userData?.auth_token) {
-      setP2Pcategory(item);
-      setIsAutofillModal(true);
+      navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
+        category_id: item?.id,
+      });
     } else {
       actions.setRedirection('p2pPost');
       actions.setAppSessionData('on_login');
@@ -365,11 +379,7 @@ const PostCategory = ({navigation}) => {
                 : colors.blackOpacity05,
             }}
             activeOpacity={0.7}
-            onPress={() =>
-              navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
-                category_id: item?.id,
-              })
-            }>
+            onPress={() => onPressP2pCategory(item)}>
             {isSVG ? (
               <SvgUri
                 height={moderateScale(70)}

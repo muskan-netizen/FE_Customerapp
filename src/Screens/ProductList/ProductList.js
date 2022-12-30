@@ -444,7 +444,7 @@ export default function Products({route, navigation}) {
               : [...productListData, ...res?.data?.products?.data],
         });
         console.log(res.data.filterData, 'res.data.filterData vendor +++');
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -485,7 +485,10 @@ export default function Products({route, navigation}) {
           categoryInfo: res?.data?.vendor,
           filterData: res?.data?.filterData,
         });
-        updateBrandAndCategoryFilter(res?.data?.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(
+          res?.data?.filterData,
+          appMainData?.brands,
+        );
       })
       .catch(errorMethod);
   };
@@ -518,7 +521,7 @@ export default function Products({route, navigation}) {
               : [...productListData, ...res.data.listData.data],
         });
 
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
     // }
@@ -778,7 +781,9 @@ export default function Products({route, navigation}) {
       {/* {<Loader isLoading={isLoadingB} withModal={true} />} */}
 
       <Header
-        centerTitle={data?.name || (data?.translation ? data?.translation[0]?.name : "")}
+        centerTitle={
+          data?.name || (data?.translation ? data?.translation[0]?.name : '')
+        }
         hideRight={true}
         rightIcon={imagePath.search}
         onPressRight={() =>

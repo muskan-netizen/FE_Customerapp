@@ -66,6 +66,7 @@ import stylesFunc from './styles';
 import Toast from 'react-native-simple-toast';
 import Clipboard from '@react-native-community/clipboard';
 import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 export default function ProductDetail({route, navigation}) {
   console.log('my route', route.params.data);
@@ -122,6 +123,16 @@ export default function ProductDetail({route, navigation}) {
   });
   const [pinCode, setPinCode] = useState('');
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
+  const [isPincodeValid, setIsPincodeValid] = useState(false);
+  const [isDatePicker, setIsDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [availableVendorSlots, setAvailableVendorSlots] = useState([]);
+  const [isLoadingPinCode, setLoadingPinCode] = useState(false);
+  const [isLoadingGetSlots, setLoadingGetSlots] = useState(false);
+  const [selectedVendorDeliverySlot, setSelectedVendorDeliverySlot] = useState(
+    {},
+  );
+
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -160,29 +171,7 @@ export default function ProductDetail({route, navigation}) {
     isOffersModalVisible,
   } = state;
 
-  const customRight = () => {
-    return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Image source={imagePath.search} />
-      </View>
-    );
-  };
-
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
-  //Naviagtion to specific screen
-  const moveToNewScreen =
-    (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
-
-  // useEffect(() => {
-  //   updateState({
-  //     productQuantityForCart: !!productDetailData?.minimum_order_count
-  //       ? productDetailData?.minimum_order_count
-  //       : 1,
-  //   });
-  // }, [productQuantityForCart]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -334,6 +323,7 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const errorMethod = (error) => {
+    setLoadingPinCode(false);
     if (error?.message?.alert == 1) {
       updateState({
         isLoading: false,
@@ -1147,6 +1137,13 @@ export default function ProductDetail({route, navigation}) {
     data['quantity'] = productQuantityForCart;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
+    if (!isEmpty(selectedVendorDeliverySlot)) {
+      data['sele_slot_id'] = selectedVendorDeliverySlot?.delivery_slot?.id;
+      data['sele_slot_price'] =
+        selectedVendorDeliverySlot?.delivery_slot?.price;
+      data['delivery_date'] = moment(selectedDate).format('YYYY-MM-DD');
+    }
+
     data['start_date_time'] = String(
       moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
@@ -1469,20 +1466,87 @@ export default function ProductDetail({route, navigation}) {
 
   const onChangePinCode = (text) => {
     if (text.length === 6) {
-      alert('dksjfkdjf');
+      onCheckVendorPinCode(text);
+      setLoadingPinCode(true);
     }
+    setSelectedVendorDeliverySlot({});
+    setSelectedDate(null);
     setPinCode(text);
+  };
+
+  const onCheckVendorPinCode = (pin_code) => {
+    actions
+      .checkVendorPincode(
+        {
+          vendor_id: productDetailData?.vendor?.id,
+          pincode: pin_code,
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res....res');
+        setLoadingPinCode(false);
+        if (!!res?.data) {
+          setIsPincodeValid(true);
+        } else {
+          setIsPincodeValid(false);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const onDateSelected = (date) => {
+    setLoadingGetSlots(true);
+    setSelectedDate(date);
+    actions
+      .getVendorShippingSlots(
+        {
+          delivery_date: moment(date).format('YYYY-MM-DD'),
+          product_id: productDetailData?.id,
+          vendor_cutoff_time: moment(date).format('hh:mm A'),
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, '<===res');
+        setIsDatePicker(false);
+        setLoadingGetSlots(false);
+        if (!isEmpty(res?.data)) {
+          setAvailableVendorSlots(res?.data);
+          setTimeout(() => {
+            setAvailableSlotsModal(true);
+          }, 700);
+        } else {
+          setTimeout(() => {
+            showError('No available slots found!');
+          }, 700);
+        }
+      })
+      .catch((err) => {
+        setLoadingGetSlots(false);
+        setIsDatePicker(false);
+        errorMethod(err);
+      });
   };
 
   const deliverSlotModalContent = () => {
     return (
       <View
         style={{
-          height: height / 3,
+          minHeight: height / 3,
           backgroundColor: colors.white,
           borderTopLeftRadius: moderateScale(10),
           borderTopRightRadius: moderateScale(10),
           padding: moderateScale(10),
+          maxHeight: height / 1.7,
         }}>
         <View
           style={{
@@ -1498,28 +1562,66 @@ export default function ProductDetail({route, navigation}) {
             }}>
             Select delivery slot
           </Text>
-          <TouchableOpacity onPress={() => setAvailableSlotsModal(false)}>
-            <Image source={imagePath.closeButton} />
-          </TouchableOpacity>
         </View>
-        <TouchableOpacity
+        <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 8,
-            borderWidth: 1,
-            borderColor: colors.borderColorB,
-            borderRadius: moderateScale(6),
+            flex: 1,
           }}>
-          <Image source={imagePath.radioInActive} />
-          <Text
-            style={{
-              fontFamily: fontFamily?.regular,
-              marginLeft: moderateScale(10),
-            }}>
-            Afternoon (11:01 - 15:00 $100.00)
-          </Text>
-        </TouchableOpacity>
+          <FlatList
+            data={availableVendorSlots}
+            ItemSeparatorComponent={() => (
+              <View style={{height: moderateScaleVertical(10)}} />
+            )}
+            ListFooterComponent={() => (
+              <ButtonWithLoader
+                onPress={() => setAvailableSlotsModal(false)}
+                btnText="Done"
+                btnStyle={{
+                  backgroundColor: themeColors?.primary_color,
+                  borderWidth: 0,
+                }}
+              />
+            )}
+            renderItem={({item, index}) => (
+              <TouchableOpacity
+                onPress={() => setSelectedVendorDeliverySlot(item)}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 8,
+                  borderWidth: 1,
+                  borderColor:
+                    selectedVendorDeliverySlot?.id == item?.id
+                      ? themeColors?.primary_color
+                      : colors.borderColorB,
+                  borderRadius: moderateScale(6),
+                }}>
+                <Image
+                  style={{
+                    tintColor:
+                      selectedVendorDeliverySlot?.id == item?.id
+                        ? themeColors?.primary_color
+                        : colors.borderColorB,
+                    height: 15,
+                    width: 15,
+                  }}
+                  source={
+                    selectedVendorDeliverySlot?.id == item?.id
+                      ? imagePath.radioNewActive
+                      : imagePath.radioNewInActive
+                  }
+                />
+                <Text
+                  style={{
+                    fontFamily: fontFamily?.regular,
+                    marginLeft: moderateScale(10),
+                  }}>
+                  {`${item?.delivery_slot?.title} (${item?.delivery_slot?.start_time} - ${item?.delivery_slot?.end_time} ${currencies?.primary_currency?.symbol}${item?.delivery_slot?.price})`}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
       </View>
     );
   };
@@ -1557,6 +1659,7 @@ export default function ProductDetail({route, navigation}) {
         isShareIcon={imagePath.icShareb}
         onShare={onShare}
       />
+      {console.log(selectedVendorDeliverySlot, 'selectedVendorDeliverySlot..')}
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
         <View style={{marginHorizontal: moderateScale(16)}}>
@@ -1884,63 +1987,121 @@ export default function ProductDetail({route, navigation}) {
                 </>
               ) : null}
 
-              {/* <View
-                style={{
-                  marginBottom: moderateScaleVertical(15),
-                }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily?.bold,
-                    fontSize: textScale(12),
-                    color: colors.black,
-                  }}>
-                  Enter Pincode for hassale free timely delivery
-                </Text>
+              {(!!productDetailData?.vendor?.hyper_local_delivery ||
+                !!productDetailData?.vendor?.next_day_delivery ||
+                !!productDetailData?.vendor?.same_day_delivery) && (
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    flex: 1,
-                    justifyContent: 'space-between',
-                    marginTop: moderateScaleVertical(10),
+                    marginBottom: moderateScaleVertical(15),
                   }}>
-                  <BorderTextInput
-                    onChangeText={onChangePinCode}
-                    value={pinCode}
-                    placeholder={'Enter Pincode'}
-                    containerStyle={{
-                      flex: 0.48,
-                      borderRadius: moderateScale(10),
-                      height: moderateScaleVertical(40),
-                    }}
-                    keyboardType={'number-pad'}
-                    marginBottom={0}
-                  />
-                  <TouchableOpacity
-                    onPress={() => setAvailableSlotsModal(true)}
+                  <Text
                     style={{
-                      borderWidth: 1,
-                      borderColor: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.borderLight,
-                      flex: 0.48,
-                      height: moderateScaleVertical(40),
-                      paddingHorizontal: moderateScale(5),
-                      borderRadius: moderateScale(10),
-                      justifyContent: 'center',
+                      fontFamily: fontFamily?.bold,
+                      fontSize: textScale(12),
+                      color: colors.black,
                     }}>
-                    <Text
+                    Enter Pincode for hassale free timely delivery
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      flex: 1,
+                      justifyContent: 'space-between',
+                      marginTop: moderateScaleVertical(10),
+                    }}>
+                    <View
                       style={{
-                        fontFamily: fontFamily?.regular,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyB,
+                        flex: 0.48,
                       }}>
-                      Select Date
-                    </Text>
-                  </TouchableOpacity>
+                      <BorderTextInput
+                        onChangeText={onChangePinCode}
+                        value={pinCode}
+                        placeholder={'Enter Pincode'}
+                        containerStyle={{
+                          flex: 1,
+                          borderRadius: moderateScale(10),
+                          height: moderateScaleVertical(40),
+                        }}
+                        keyboardType={'number-pad'}
+                        marginBottom={0}
+                      />
+                      {!isPincodeValid &&
+                        pinCode.length == 6 &&
+                        !isLoadingPinCode && (
+                          <Text
+                            style={{
+                              textAlign: 'right',
+                              color: colors.redB,
+                              marginRight: 5,
+                              fontSize: textScale(10),
+                            }}>
+                            Enter valid pincode
+                          </Text>
+                        )}
+                    </View>
+                    {isLoadingPinCode && pinCode.length == 6 ? (
+                      <Text
+                        style={{
+                          flex: 0.48,
+                          color: colors.black,
+                        }}>
+                        Loading...
+                      </Text>
+                    ) : (
+                      <View
+                        style={{
+                          flex: 0.48,
+                        }}>
+                        {isPincodeValid && pinCode.length == 6 && (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setAvailableVendorSlots([]);
+                              setSelectedVendorDeliverySlot({});
+                              setIsDatePicker(true);
+                            }}
+                            style={{
+                              borderWidth: 1,
+                              borderColor: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.borderLight,
+                              flex: 1,
+                              height: moderateScaleVertical(40),
+                              paddingHorizontal: moderateScale(5),
+                              borderRadius: moderateScale(10),
+                              justifyContent: 'center',
+                            }}>
+                            <Text
+                              style={{
+                                fontFamily: fontFamily?.regular,
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.textGreyB,
+                              }}>
+                              {selectedDate
+                                ? moment(selectedDate).format(
+                                    'YYYY-MM-DD hh:mm A',
+                                  )
+                                : 'Select Date'}
+                            </Text>
+                          </TouchableOpacity>
+                        )}
+                      </View>
+                    )}
+                  </View>
+                  {!isEmpty(selectedVendorDeliverySlot) &&
+                    isPincodeValid &&
+                    pinCode.length == 6 && (
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          textAlign: 'right',
+                          marginRight: moderateScale(5),
+                          marginTop: moderateScale(5),
+                        }}>{`${selectedVendorDeliverySlot?.delivery_slot?.title} (${selectedVendorDeliverySlot?.delivery_slot?.start_time} - ${selectedVendorDeliverySlot?.delivery_slot?.end_time} ${currencies?.primary_currency?.symbol}${selectedVendorDeliverySlot?.delivery_slot?.price})`}</Text>
+                    )}
                 </View>
-              </View> */}
+              )}
 
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}
@@ -2239,6 +2400,66 @@ export default function ProductDetail({route, navigation}) {
           />
         </View>
       </Modal>
+      <Modal
+        key={'5'}
+        isVisible={isDatePicker}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+        }}
+        onBackdropPress={() => {
+          setIsDatePicker(false);
+          setSelectedDate(null);
+        }}>
+        <View
+          style={{
+            ...styles.modalView,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                setIsDatePicker(false);
+                setSelectedDate(null);
+              }}>
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              ...styles.horizontalLine,
+              borderBottomColor: isDarkMode
+                ? colors.whiteOpacity22
+                : colors.lightGreyBg,
+            }}
+          />
+          <DatePicker
+            locale={languages?.primary_language?.sort_code}
+            date={selectedDate || new Date()}
+            textColor={isDarkMode ? colors.white : colors.blackB}
+            mode="datetime"
+            minimumDate={new Date()}
+            onDateChange={(value) => setSelectedDate(value)}
+          />
+          <ButtonWithLoader
+            onPress={() => onDateSelected(selectedDate || new Date())}
+            btnText="Done"
+            isLoading={isLoadingGetSlots}
+            btnStyle={{
+              backgroundColor: themeColors?.primary_color,
+              borderWidth: 0,
+            }}
+          />
+        </View>
+      </Modal>
       <BottomSlideModal
         mainContainView={RenderOfferView}
         isModalVisible={isOffersModalVisible}
@@ -2258,7 +2479,6 @@ export default function ProductDetail({route, navigation}) {
         }
       />
       <ReactNativeModal
-        onBackdropPress={() => setAvailableSlotsModal(false)}
         isVisible={isAvailableSlotsModal}
         style={{
           justifyContent: 'flex-end',

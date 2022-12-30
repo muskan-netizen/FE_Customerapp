@@ -578,4 +578,7 @@ export default {
   icChatP2pInActive: require('../assets/images/p2p/ic_chat_new1.png'),
   icDefaultImg: require('../assets/images/p2p/default_image.jpg'),
   icMyPosts: require('../assets/images/p2p/ic_my_posts.png'),
+  icTapToCopy: require('../assets/images/p2p/ic_tap_to_copy.png'),
+  icAwaitingApproval: require('../assets/images/p2p/ic_waiting_apporval.gif'),
+  icApprovalRejected: require('../assets/images/p2p/ic_approval_rejected.gif'),
 };

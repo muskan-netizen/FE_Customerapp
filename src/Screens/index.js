@@ -2,7 +2,7 @@ export {default as Login} from './Login/Login';
 export {default as Signup} from './Signup/Signup';
 export {default as OtpVerification} from './OtpVerification/OtpVerification';
 export {default as OuterScreen} from './OuterScreen/OuterScreen';
-export {default as Home} from './Home/Home';
+export {default as Home} from './Home/Home(V2_API)';
 export {default as HomeV2Api} from './Home/Home(V2_API)';
 export {default as Offers} from './Offers/Offers';
 export {default as Brands} from './Brands/Brands';
@@ -166,3 +166,6 @@ export {default as P2pProducts} from './P2P/P2pProducts/P2pProducts';
 export {default as P2pProductDetail} from './P2P/P2pProductDetail/P2pProductDetail';
 export {default as AttributeInformation} from './P2P/AttributeInformation/AttributeInformation';
 export {default as MyP2pPosts} from './P2P/MyP2pPosts/MyP2pPosts';
+
+//Refer & Earn
+export {default as ReferAndEarn} from './ReferAndEarn/ReferAndEarn';

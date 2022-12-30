@@ -95,7 +95,8 @@ const shortCodes = {
   vecto: '39f6fd',
   goody: '397840',
   // grub: '2f3120',
-  grub: '2d98b5',
+  // grub: '2d98b5',
+  grub: '245bae',
   gusto: 'd1b1a0',
   gokab: 'cb17f2', // live
   // gokab: '578b33', // staging
@@ -455,7 +456,8 @@ const shortCodes = {
   pointoneExpediteDelivery: 'afd6cc',
   saamanshop: 'cedf8e',
   tdc: 'fd1259',
-  giftyLeaf: 'c61dff',
+  // giftyLeaf: 'c61dff',
+  giftyLeaf: '245bae',
   flyCommerce: '73cb91',
   pik: '970884',
   motina: 'a16093',
@@ -472,8 +474,8 @@ const shortCodes = {
   skyline: 'ce1ed6',
   bliss: '6eb260',
   rentzy: 'd4fc07',
-  // zonesso: '245bae',
-  zonesso: '4f459b',
+  zonesso: 'f34c51',
+  // zonesso: '4f459b',
 };
 
 const appIds = {

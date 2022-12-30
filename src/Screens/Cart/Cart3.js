@@ -3002,7 +3002,7 @@ function Cart({navigation, route}) {
                           }}>
                           <View>
                             <Text style={styles.startEndDateTitle}>
-                              Start Date
+                              {strings.START_DATE}
                             </Text>
                             <Text style={styles.startEndDateValueTxt}>
                               {i?.start_date_time}
@@ -3010,7 +3010,7 @@ function Cart({navigation, route}) {
                           </View>
                           <View>
                             <Text style={styles.startEndDateTitle}>
-                              End Date
+                              {strings.END_DATE}
                             </Text>
                             <Text style={styles.startEndDateValueTxt}>
                               {i?.end_date_time}
@@ -3018,10 +3018,50 @@ function Cart({navigation, route}) {
                           </View>
                           <View>
                             <Text style={styles.startEndDateTitle}>
-                              Duration
+                              {strings.DURATION}
                             </Text>
                             <Text style={styles.startEndDateValueTxt}>
                               {getHourAndMinutes(Number(i?.total_booking_time))}
+                            </Text>
+                          </View>
+                        </View>
+                      ) : null}
+                      {!!i?.delivery_date ? (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginHorizontal: moderateScale(20),
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginBottom: 3,
+                          }}>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.DELIVERY_DATE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {i?.delivery_date}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.DELIVERY_SLOT}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {`${i?.product_delivery_slot?.title} (${i?.product_delivery_slot?.start_time} - ${i?.product_delivery_slot?.end_time})`}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.SLOT_PRICE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {tokenConverterPlusCurrencyNumberFormater(
+                                Number(i?.product_delivery_slot?.price || 0),
+                                digit_after_decimal,
+                                additional_preferences,
+                                currencies?.primary_currency?.symbol,
+                              )}
                             </Text>
                           </View>
                         </View>
@@ -3045,6 +3085,7 @@ function Cart({navigation, route}) {
               </Text>
             </View>
           )}
+
           {/* offerview */}
           {!!item?.is_promo_code_available && (
             <TouchableOpacity
@@ -3867,6 +3908,32 @@ function Cart({navigation, route}) {
             )}
           </Text>
         </View>
+        {Number(cartData?.delivery_slot_amount) > 0 && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>
+              {strings.DELIVERY_SLOT_FEES}
+            </Text>
+
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.delivery_slot_amount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
+          </View>
+        )}
         {Number(cartData?.additional_price) > 0 ? (
           <View style={styles.bottomTabLableValue}>
             <Text

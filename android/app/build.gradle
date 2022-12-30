@@ -214,8 +214,7 @@ android {
             //     resValue "string", "app_name", "Grub"
             //     resValue "string", "host_name", ""
             // }
-
-                      zonesso {
+             zonesso {
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"

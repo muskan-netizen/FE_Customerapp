@@ -43,6 +43,7 @@ import {androidCameraPermission} from '../../utils/permissions';
 import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
+import {v4 as uuidv4} from 'uuid';
 
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
@@ -58,8 +59,6 @@ DeviceCountry.getCountryCode()
 let addtionSelectedImageIndex = null;
 
 export default function Signup({navigation}) {
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const userData = useSelector((state) => state.auth.userData);
   const [accept, isAccept] = useState(false);
   const {
     appData,
@@ -110,6 +109,14 @@ export default function Signup({navigation}) {
     addtionalPdfs: [],
     appHashKey: '',
     subscriptionPopup: false,
+    aadharFront: {},
+    aadharBack: {},
+    aadharNumber: '',
+    upiId: '',
+    bankName: '',
+    beneficiaryName: '',
+    accountNumber: '',
+    ifscCode: '',
   });
   const {
     phoneNumber,
@@ -126,7 +133,19 @@ export default function Signup({navigation}) {
     addtionalPdfs,
     appHashKey,
     subscriptionPopup,
+    aadharFront,
+    aadharBack,
+    aadharNumber,
+    upiId,
+    bankName,
+    beneficiaryName,
+    accountNumber,
+    ifscCode,
   } = state;
+  const [pickerType, setPickerType] = useState(0);
+
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
@@ -141,6 +160,14 @@ export default function Signup({navigation}) {
       password: password,
       callingCode: callingCode,
       phoneNumber: phoneNumber,
+      aadharNumber: aadharNumber,
+      aadharFrontImg: aadharFront,
+      aadharBackImg: aadharBack,
+      upiId: upiId,
+      bankName: bankName,
+      beneficiaryName: beneficiaryName,
+      accountNumber: accountNumber,
+      ifscCode: ifscCode,
     });
     if (error) {
       showError(error);
@@ -356,7 +383,6 @@ export default function Signup({navigation}) {
   const getTextInputField = (type, index) => {
     return (
       <BorderTextInput
-        // secureTextEntry={true}
         placeholder={type?.translations[0]?.name || ''}
         onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
       />
@@ -366,7 +392,6 @@ export default function Signup({navigation}) {
   //Update Images
   const updateImages = (type, index) => {
     addtionSelectedImageIndex = index;
-    addtionSelectedImage = type;
     showActionSheet(false);
   };
 
@@ -466,18 +491,34 @@ export default function Signup({navigation}) {
           mediaType: 'photo',
         })
           .then((res) => {
-            console.log(res, 'res>>><>>>');
-            let data = cloneDeep(addtionalImages);
+            if (pickerType == 0) {
+              let file = {
+                id: uuidv4(),
+                name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                type: res?.mime,
+                uri: res?.path,
+              };
+              updateState({
+                aadharFront: file,
+              });
+              return;
+            }
+            if (pickerType == 1) {
+              let file = {
+                id: uuidv4(),
+                name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                type: res?.mime,
+                uri: res?.path,
+              };
+              updateState({
+                aadharBack: file,
+              });
+              return;
+            }
 
+            let data = cloneDeep(addtionalImages);
             data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
             data[addtionSelectedImageIndex].fileData = res;
-            // data[addtionSelectedImageIndex].filename1 =
-            //   addtionSelectedImage?.translations[0]?.name;
-            // data[addtionSelectedImageIndex].file_type =
-            //   addtionSelectedImage?.file_type;
-            // data[addtionSelectedImageIndex].id = addtionSelectedImage?.id;
-            // data[addtionSelectedImageIndex].mime = res?.mime;
-
             updateState({addtionalImages: data});
           })
           .catch((err) => {
@@ -486,6 +527,7 @@ export default function Signup({navigation}) {
       }
     }
   };
+
   const _closeModal = () => {
     updateState({
       subscriptionPopup: false,
@@ -648,6 +690,143 @@ export default function Signup({navigation}) {
                 })}
               </View>
             )}
+            <BorderTextInput
+              placeholder={'Aadhar number*'}
+              onChangeText={_onChangeText('aadharNumber')}
+              value={aadharNumber}
+            />
+            <View
+              style={{
+                marginTop: moderateScale(10),
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginHorizontal: 20,
+              }}>
+              <View>
+                {!isEmpty(aadharFront) ? (
+                  <View>
+                    <Image
+                      source={{uri: aadharFront?.uri}}
+                      style={{
+                        height: 115,
+                        width: 115,
+                        borderRadius: moderateScale(5),
+                      }}
+                    />
+                    <TouchableOpacity
+                      onPress={() =>
+                        updateState({
+                          aadharFront: {},
+                        })
+                      }
+                      style={{
+                        position: 'absolute',
+                        right: -10,
+                        top: -10,
+                      }}>
+                      <Image
+                        source={imagePath.crossB}
+                        style={{
+                          height: 20,
+                          width: 20,
+                          tintColor: colors.black,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      showActionSheet();
+                      setPickerType(0);
+                    }}
+                    style={styles.imageUpload}>
+                    <Image source={imagePath?.icPhoto} />
+                  </TouchableOpacity>
+                )}
+
+                <Text
+                  numberOfLines={2}
+                  style={{...styles.label3, minHeight: moderateScale(25)}}>
+                  Aadhar Front*
+                </Text>
+              </View>
+              <View>
+                {!isEmpty(aadharBack) ? (
+                  <View>
+                    <Image
+                      source={{uri: aadharBack?.uri}}
+                      style={{
+                        height: 115,
+                        width: 115,
+                        borderRadius: moderateScale(5),
+                      }}
+                    />
+                    <TouchableOpacity
+                      onPress={() =>
+                        updateState({
+                          aadharBack: {},
+                        })
+                      }
+                      style={{
+                        position: 'absolute',
+                        right: -10,
+                        top: -10,
+                      }}>
+                      <Image
+                        source={imagePath.crossB}
+                        style={{
+                          height: 20,
+                          width: 20,
+                          tintColor: colors.black,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      showActionSheet();
+                      setPickerType(1);
+                    }}
+                    style={styles.imageUpload}>
+                    <Image source={imagePath?.icPhoto} />
+                  </TouchableOpacity>
+                )}
+
+                <Text
+                  numberOfLines={2}
+                  style={{...styles.label3, minHeight: moderateScale(25)}}>
+                  Aadhar Back*
+                </Text>
+              </View>
+            </View>
+            <BorderTextInput
+              placeholder={'UPI id*'}
+              onChangeText={_onChangeText('upiId')}
+              value={upiId}
+            />
+            <BorderTextInput
+              value={bankName}
+              placeholder={'Bank name*'}
+              onChangeText={_onChangeText('bankName')}
+            />
+            <BorderTextInput
+              value={beneficiaryName}
+              placeholder={'Beneficiary name*'}
+              onChangeText={_onChangeText('beneficiaryName')}
+            />
+            <BorderTextInput
+              value={accountNumber}
+              placeholder={'Account number*'}
+              onChangeText={_onChangeText('accountNumber')}
+            />
+            <BorderTextInput
+              value={ifscCode}
+              placeholder={'Ifsc Code*'}
+              onChangeText={_onChangeText('ifscCode')}
+            />
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={_isCheck}
@@ -677,7 +856,7 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  I accept the
+                  {strings.I_ACCEPT}
                 </Text>
                 <Text
                   onPress={() =>
@@ -691,7 +870,7 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  and have read the
+                  {strings.HAVE_READ}
                 </Text>
                 <Text
                   onPress={() =>
