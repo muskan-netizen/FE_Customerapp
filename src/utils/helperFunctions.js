@@ -379,7 +379,8 @@ const getNearestLocation = async (currentLocation, savedLocations = []) => {
     newAddressArray.address = item?.address;
     newAddressArray.type = item?.type;
     newAddressArray.type_name = item?.type_name;
-    return newAddressArray;
+    
+    return   newAddressArray;
   });
 
   const minDistance = Math.min.apply(

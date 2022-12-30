@@ -50,11 +50,16 @@ export default function DashBoardHeaderFive({
   _onVoiceStop = () => {},
   showAboveView = true,
   currentLocation,
+  nearestLoc,
+  currentLoc,
 }) {
   const navigation = useNavigation();
-  console.log('currentLocation=>', currentLocation, 'location=>', location);
+  console.log('currentLocation=>', currentLocation, );
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
+  );
+  const { isLocationSearched} = useSelector(
+    (state) => state?.home,
   );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -158,8 +163,10 @@ export default function DashBoardHeaderFive({
                           : colors.blackOpacity30,
                         fontFamily: fontFamily.medium,
                       },
-                    ]}>
+                    ]}> 
                     {location?.address}
+                    {/* {console.log(nearestLoc,"nearestLocnearestLoc")} */}
+                    {/* {!!nearestLoc  ? currentLocation?.address : nearestLoc?.address || location?.address} */}
                   </Text>
                 </View>
               </TouchableOpacity>
