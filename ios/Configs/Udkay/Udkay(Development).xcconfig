@@ -1,0 +1,12 @@
+#include "Pods/Target Support Files/Pods-available_pods-Udkay/Pods-available_pods-Udkay.debug.xcconfig"
+PROJECT_APPLE_ID = 1661945189
+PROJECT_BUNDLE_ID =com.udkay.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Udkay Order
+PROJECT_GOOGLE_CLIENT_ID =787970527075-j5olimvm2s628ocf26h3t7p4q4dvta93.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.787970527075-j5olimvm2s628ocf26h3t7p4q4dvta93
+PROJECT_FACEBOOK_ID = 1847955285596902
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =UdkayInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
