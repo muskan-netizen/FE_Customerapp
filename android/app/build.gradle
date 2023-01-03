@@ -206,20 +206,20 @@ android {
     flavorDimensions "appType"
 
     // productFlavors{
+             
+    //         ihelp{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.customer.Ihelp'
+    //             resValue "string", "app_name", "IHELP"
+    //             resValue "string", "host_name", ""
+    //         } 
            
-    //         lunchboxSpecials{
-    //         dimension "appType"
-    //         versionCode 3
-    //         versionName "1.0"
-    //         minSdkVersion rootProject.ext.minSdkVersion
-    //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.mealtime.orderapp'
-    //         resValue "string", "app_name", "Meal Time Online Ordering"
-    //         resValue "string", "host_name", ""
-    //         }
- 
     // }
-
+ 
 
     productFlavors {
             royoorder {
@@ -8029,7 +8029,7 @@ android {
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 applicationId 'com.superpana.royoorders'
-                resValue "string", "app_name", "Superpana"
+                resValue "string", "app_name", "Unatienda"
                 resValue "string", "host_name", ""
             }
                    kero {
@@ -8122,6 +8122,28 @@ android {
                 resValue "string", "app_name", "Dot"
                 resValue "string", "host_name", ""
             }
+             wizSonic {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.wizSonic.royoorders'
+                resValue "string", "app_name", "WizSonic"
+                resValue "string", "host_name", ""
+            }
+
+                 udkay {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.udkay.royoorders'
+                resValue "string", "app_name", "Udkay"
+                resValue "string", "host_name", ""
+            }
+    
             
     }
 
