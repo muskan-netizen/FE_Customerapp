@@ -3110,14 +3110,14 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-          code: 'd87a1f',
-        // code: shortCode,
+          // code: 'd87a1f',
+        code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-         code: 'd87a1f',
-        // code: shortCode,
+        //  code: 'd87a1f',
+        code: shortCode,
       };
     }
 

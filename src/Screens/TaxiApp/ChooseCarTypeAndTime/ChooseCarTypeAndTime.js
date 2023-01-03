@@ -522,7 +522,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['card_expiry_month'] = paramData?.cardInfo?.expiryMonth;
     data['card_expiry_year'] = paramData?.cardInfo?.expiryYear;
 
-    console.log(data, 'extraData....');
+    console.log(selectedPayment?.code,extraData,data, 'extraData....++++++++++');
 
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
@@ -547,7 +547,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           extraData,
         );
       })
-      .catch(errorMethod)
+      .catch((error)=>{
+        console.log(error,"errrrrrrrrrr");
+        showError(error.message)
+       
+      })
   };
 
   const checkPaymentOptions = (extraData, res) => {
@@ -681,7 +685,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = taskInstruction;
-    data['amount'] = selectedCarOption?.total_tags_price;
+    data['amount'] = selectedCarOption?.total_tags_price?selectedCarOption?.total_tags_price:selectedCarOption?.tags_price;
     // data['amount'] = selectedCarOption?.tags_price;
     data['tags_amount'] = selectedCarOption?.tags_price;
     data['tollamount'] = selectedCarOption?.toll_fee

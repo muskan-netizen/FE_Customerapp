@@ -205,21 +205,21 @@ android {
 
     flavorDimensions "appType"
 
-    productFlavors{
-
-         flyCommerce{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.flycommerce.royoorders'
-            resValue "string", "app_name", "Fly Commerce" 
-            resValue "string", "host_name", ""
-            }
+    // productFlavors{
            
-    }
+    //         lunchboxSpecials{
+    //         dimension "appType"
+    //         versionCode 3
+    //         versionName "1.0"
+    //         minSdkVersion rootProject.ext.minSdkVersion
+    //         targetSdkVersion rootProject.ext.targetSdkVersion
+    //         applicationId 'com.mealtime.orderapp'
+    //         resValue "string", "app_name", "Meal Time Online Ordering"
+    //         resValue "string", "host_name", ""
+    //         }
  
+    // }
+
 
     productFlavors {
             royoorder {
@@ -6558,12 +6558,12 @@ android {
             }
             lunchboxSpecials{
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.lunchboxspecials'
-            resValue "string", "app_name", "Lunchbox Specials"
+            applicationId 'com.mealtime.orderapp'
+            resValue "string", "app_name", "Meal Time Online Ordering"
             resValue "string", "host_name", ""
             }
             sorDelivery{
@@ -8092,7 +8092,7 @@ android {
                 resValue "string", "app_name", "EarnApp"
                 resValue "string", "host_name", ""
             }
-    aredoo {
+        aredoo {
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
