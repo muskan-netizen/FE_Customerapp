@@ -204,14 +204,34 @@ android {
  
     flavorDimensions "appType"
     productFlavors{
-                     nittosadai{
+                      jeevann{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jeevan.orders'
+            resValue "string", "app_name", "Jeevann" 
+            resValue "string", "host_name", ""
+            }
+             speedyDelivery{ 
             dimension "appType"
             versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.nittosadai.orders'
-            resValue "string", "app_name", "Nittosadai" 
+            applicationId 'com.speedydelivery.orders'
+            resValue "string", "app_name", "Speedy Delivery" 
+            resValue "string", "host_name", ""
+            }
+                       pAS41{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pAS41'
+            resValue "string", "app_name", "PAS41"
             resValue "string", "host_name", ""
             }
     }
@@ -7457,7 +7477,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.jeevann.royoorders'
+    //         applicationId 'com.jeevan.orders'
     //         resValue "string", "app_name", "Jeevann" 
     //         resValue "string", "host_name", ""
     //         }

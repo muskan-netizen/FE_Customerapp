@@ -1702,7 +1702,6 @@
 		2C2A698628DDBA6D00F8A7AF /* Jeevann(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C2A698528DDBA6C00F8A7AF /* Jeevann(Development).xcconfig */; };
 		2C2A698828DDBABD00F8A7AF /* Jeevann(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C2A698728DDBABC00F8A7AF /* Jeevann(Production).xcconfig */; };
 		2C2A698A28DDBAE100F8A7AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2A698928DDBAE000F8A7AF /* Images.xcassets */; };
-		2C2A698C28DDBB1500F8A7AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C2A698B28DDBB1300F8A7AF /* GoogleService-Info.plist */; };
 		2C2E4FFEE5E9204B569125E4 /* libPods-available_pods-Tasmeem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB3F3D7E9832326F6298A0F /* libPods-available_pods-Tasmeem.a */; };
 		2C39C7222922497F0096CCAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2C39C7232922497F0096CCAC /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -13864,6 +13863,7 @@
 		F774A16A1F168C8F5C6287AD /* libPods-available_pods-Torunz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BD058FC18CBD1631350B33 /* libPods-available_pods-Torunz.a */; };
 		F7DBB333845D67A71ADA4F43 /* libPods-available_pods-Appi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 025F687FA3002072F63CB686 /* libPods-available_pods-Appi.a */; };
 		F7E5CF7744FE54E51E2C2192 /* libPods-available_pods-InstaMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4951F2032E4FA2125B52FE /* libPods-available_pods-InstaMobile.a */; };
+		F801B5A6296313640044172A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F801B5A52963135A0044172A /* GoogleService-Info.plist */; };
 		F80336ED294AF42D00D804ED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80336EC294AF42A00D804ED /* GoogleService-Info.plist */; };
 		F834517729483C3D00DE9F02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F834517629483C3900DE9F02 /* GoogleService-Info.plist */; };
 		F83A78BB294A0E05007F3EC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F83A78BA294A0DFD007F3EC4 /* GoogleService-Info.plist */; };
@@ -14490,7 +14490,6 @@
 		2C2A698528DDBA6C00F8A7AF /* Jeevann(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Jeevann(Development).xcconfig"; sourceTree = "<group>"; };
 		2C2A698728DDBABC00F8A7AF /* Jeevann(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Jeevann(Production).xcconfig"; sourceTree = "<group>"; };
 		2C2A698928DDBAE000F8A7AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		2C2A698B28DDBB1300F8A7AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C39C752292249800096CCAC /* URyd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = URyd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C3A1AEC28DC2AAA0037D17A /* Inmotion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Inmotion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C3A1AEF28DC2B860037D17A /* Inmotion(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Inmotion(Development).xcconfig"; sourceTree = "<group>"; };
@@ -17941,6 +17940,7 @@
 		F7ABA5C2794DD619CCB8302C /* Pods-available_pods-Menus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Menus.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Menus/Pods-available_pods-Menus.release.xcconfig"; sourceTree = "<group>"; };
 		F7BD57F988A7129A3C849187 /* Pods-available_pods-MyRide.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-MyRide.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-MyRide/Pods-available_pods-MyRide.debug.xcconfig"; sourceTree = "<group>"; };
 		F7D9B3DA87B6C29706E591CD /* Pods-available_pods-Errand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Errand.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Errand/Pods-available_pods-Errand.debug.xcconfig"; sourceTree = "<group>"; };
+		F801B5A52963135A0044172A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F80336EC294AF42A00D804ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F834517629483C3900DE9F02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F83A78BA294A0DFD007F3EC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -23333,7 +23333,7 @@
 		2C2A698428DDB9F600F8A7AF /* Jeevann */ = {
 			isa = PBXGroup;
 			children = (
-				2C2A698B28DDBB1300F8A7AF /* GoogleService-Info.plist */,
+				F801B5A52963135A0044172A /* GoogleService-Info.plist */,
 				2C2A698528DDBA6C00F8A7AF /* Jeevann(Development).xcconfig */,
 				2C2A698728DDBABC00F8A7AF /* Jeevann(Production).xcconfig */,
 				2C2A698928DDBAE000F8A7AF /* Images.xcassets */,
@@ -40624,7 +40624,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					2C2A693E28DDB98D00F8A7AF = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = DWQ6QJC333;
 						ProvisioningStyle = Automatic;
 					};
 					2C39C71E2922497F0096CCAC = {
@@ -44596,7 +44596,7 @@
 				2C2A696A28DDB98D00F8A7AF /* SFProText-Medium.ttf in Resources */,
 				2C2A696C28DDB98D00F8A7AF /* notification.wav in Resources */,
 				2C2A696F28DDB98D00F8A7AF /* Plists in Resources */,
-				2C2A698C28DDBB1500F8A7AF /* GoogleService-Info.plist in Resources */,
+				F801B5A6296313640044172A /* GoogleService-Info.plist in Resources */,
 				2C2A697028DDB98D00F8A7AF /* Futura-Normal.ttf in Resources */,
 				2C2A697128DDB98D00F8A7AF /* Eina02-Bold.ttf in Resources */,
 				2C2A697228DDB98D00F8A7AF /* Futura-Book.ttf in Resources */,
@@ -73862,7 +73862,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Jeevann/Pods-available_pods-Jeevann-frameworks.sh\"\n";
 		};
 		2C31EBDC0249B1DEE9E7DA7E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -159399,7 +159399,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = DWQ6QJC333;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -159434,7 +159434,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = DWQ6QJC333;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -159450,7 +159450,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = jeevann;
+				PROVISIONING_PROFILE_SPECIFIER = Jeevan;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

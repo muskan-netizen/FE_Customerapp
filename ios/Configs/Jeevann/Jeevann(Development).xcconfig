@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Jeevann/Pods-available_pods-Jeevann.debug.xcconfig"
 
-PROJECT_APPLE_ID = 6443497766
-PROJECT_BUNDLE_ID =com.jeevann.royoorders
+PROJECT_APPLE_ID = 1661795282
+PROJECT_BUNDLE_ID =com.jeevan.orders
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Jeevann
-PROJECT_GOOGLE_CLIENT_ID =721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9
+PROJECT_GOOGLE_CLIENT_ID =1014434266916-d2317u9af9tv8dtncjpbef90ibooga0p.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.1014434266916-d2317u9af9tv8dtncjpbef90ibooga0p
 PROJECT_FACEBOOK_ID = 1350042828860496
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =JeevannInfo

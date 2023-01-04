@@ -2163,8 +2163,8 @@ const appIds = {
     android: 'com.eathalal.royoorders',
   }),
   jeevann: Platform.select({
-    ios: 'com.jeevann.royoorders',
-    android: 'com.jeevann.royoorders',
+    ios: 'com.jeevan.orders',
+    android: 'com.jeevan.orders',
   }),
   novamed: Platform.select({
     ios: 'com.novamed.royoorders',
