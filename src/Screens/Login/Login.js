@@ -796,8 +796,10 @@ export default function Login({navigation}) {
               <Text
                 onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
                 style={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : themeColors?.primary_color,
                   fontFamily: fontFamily.bold,
-                  color: themeColors.primary_color,
                 }}>
                 {' '}
                 {strings.SIGN_UP}

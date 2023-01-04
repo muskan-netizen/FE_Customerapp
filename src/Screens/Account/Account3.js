@@ -410,6 +410,7 @@ export default function Account3({navigation}) {
                 // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
+          {console.log(appData?.profile?.preferences, 'ldsfkjfksdjf')}
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}

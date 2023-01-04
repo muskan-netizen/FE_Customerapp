@@ -36,7 +36,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {cameraHandler} from '../../utils/commonFunction';
+import {cameraHandler, checkValueExistInAry} from '../../utils/commonFunction';
 import {showError} from '../../utils/helperFunctions';
 import {androidCameraPermission} from '../../utils/permissions';
 import validations from '../../utils/validations';
@@ -53,7 +53,17 @@ export default function ReferAndEarn() {
   } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const {dineInType, appMainData} = useSelector((state) => state?.home);
+  const {
+    aadhaar_back,
+    aadhaar_front,
+    aadhaar_number,
+    account_name,
+    account_number,
+    bank_name,
+    upi_id,
+    ifsc_code,
+  } = appData?.profile?.preferences;
+  console.log(appData?.profile?.preferences, 'fdlkjfsdlja');
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
 
@@ -124,6 +134,7 @@ export default function ReferAndEarn() {
   };
 
   const onInfluencerCategory = (item) => {
+    console.log(item, 'item......item....');
     setSelectedInfluencerCategory(item);
     setInfluencerCategoryForm(true);
     setIsLoadingCategoryAttributes(true);
@@ -169,9 +180,11 @@ export default function ReferAndEarn() {
   };
 
   const onSaveAttributeInfo = () => {
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
+    if (isKycForm) {
+      const checkValid = isValidData();
+      if (!checkValid) {
+        return;
+      }
     }
     setIsSavingInfluenceInfo(true);
     let formData = new FormData();
@@ -430,243 +443,266 @@ export default function ReferAndEarn() {
             style={{
               ...styles.formSectionTitle,
             }}>
-            Influencer Form
+            {strings.INFLUENCER_FORM}
           </Text>
           <FlatList
             data={availableAttributesOfInfluenceCategory}
             keyboardShouldPersistTaps="handled"
             keyExtractor={(item, index) => String(index)}
             renderItem={renderAttributeOptions}
+            ListEmptyComponent={() =>
+              !isLoadingCategoryAttributes && (
+                <View>
+                  <Image
+                    source={imagePath.noDataFound}
+                    style={styles.noDataFoundImg}
+                  />
+                  <Text style={styles.noDataFoundTxt}>
+                    {strings.NODATAFOUND}
+                  </Text>
+                </View>
+              )
+            }
             ListFooterComponent={
-              <View>
-                {isKycForm && (
-                  <View>
-                    <Text
-                      style={{
-                        ...styles.formSectionTitle,
-                        marginBottom: moderateScaleVertical(10),
-                        marginTop: moderateScaleVertical(40),
-                      }}>
-                      Kyc Details
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginBottom: moderateScaleVertical(5),
-                      }}>
-                      Aadhar card front
-                    </Text>
-                    {!isEmpty(aadharFrontImg) ? (
-                      <View>
+              !isEmpty(availableAttributesOfInfluenceCategory) ? (
+                <View
+                  style={{
+                    paddingBottom: moderateScaleVertical(130),
+                  }}>
+                  {isKycForm && (
+                    <View>
+                      <Text
+                        style={{
+                          ...styles.formSectionTitle,
+                          marginBottom: moderateScaleVertical(10),
+                          marginTop: moderateScaleVertical(40),
+                        }}>
+                        {strings.KYC_DETAILS}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginBottom: moderateScaleVertical(5),
+                        }}>
+                        {aadhaar_front || strings.AADHAR_FRONT}*
+                      </Text>
+                      {!isEmpty(aadharFrontImg) ? (
+                        <View>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setPickerType('front');
+                              setIsImagePickerModal(true);
+                            }}>
+                            <Image
+                              source={{uri: aadharFrontImg?.uri}}
+                              style={{
+                                height: moderateScaleVertical(100),
+                                width: '95%',
+                                borderRadius: moderateScale(6),
+                              }}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => setAadharFrontImg({})}
+                            style={{
+                              position: 'absolute',
+                              right: 12,
+                              top: -10,
+                            }}>
+                            <Image
+                              source={imagePath.crossB}
+                              style={{
+                                height: 20,
+                                width: 20,
+                                tintColor: colors.black,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
                         <TouchableOpacity
                           onPress={() => {
                             setPickerType('front');
                             setIsImagePickerModal(true);
                           }}>
-                          <Image
-                            source={{uri: aadharFrontImg?.uri}}
-                            style={{
-                              height: moderateScaleVertical(100),
-                              width: '95%',
-                              borderRadius: moderateScale(6),
-                            }}
-                          />
+                          <Image source={imagePath.icPlaceholder} />
                         </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => setAadharFrontImg({})}
-                          style={{
-                            position: 'absolute',
-                            right: 12,
-                            top: -10,
-                          }}>
-                          <Image
-                            source={imagePath.crossB}
-                            style={{
-                              height: 20,
-                              width: 20,
-                              tintColor: colors.black,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setPickerType('front');
-                          setIsImagePickerModal(true);
+                      )}
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginBottom: moderateScaleVertical(5),
+                          marginTop: moderateScaleVertical(14),
                         }}>
-                        <Image source={imagePath.icPlaceholder} />
-                      </TouchableOpacity>
-                    )}
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginBottom: moderateScaleVertical(5),
-                        marginTop: moderateScaleVertical(14),
-                      }}>
-                      Aadhar card back
-                    </Text>
-                    {!isEmpty(aadharBackImg) ? (
-                      <View>
+                        {aadhaar_back || strings.AADHAR_BACK}*
+                      </Text>
+                      {!isEmpty(aadharBackImg) ? (
+                        <View>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setPickerType('front');
+                              setIsImagePickerModal(true);
+                            }}>
+                            <Image
+                              source={{uri: aadharBackImg?.uri}}
+                              style={{
+                                height: moderateScaleVertical(100),
+                                width: '95%',
+                                borderRadius: moderateScale(6),
+                              }}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => setAadharBackImg({})}
+                            style={{
+                              position: 'absolute',
+                              right: 12,
+                              top: -10,
+                            }}>
+                            <Image
+                              source={imagePath.crossB}
+                              style={{
+                                height: 20,
+                                width: 20,
+                                tintColor: colors.black,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
                         <TouchableOpacity
                           onPress={() => {
-                            setPickerType('front');
+                            setPickerType('back');
                             setIsImagePickerModal(true);
                           }}>
-                          <Image
-                            source={{uri: aadharBackImg?.uri}}
-                            style={{
-                              height: moderateScaleVertical(100),
-                              width: '95%',
-                              borderRadius: moderateScale(6),
-                            }}
-                          />
+                          <Image source={imagePath.icPlaceholder} />
                         </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => setAadharBackImg({})}
-                          style={{
-                            position: 'absolute',
-                            right: 12,
-                            top: -10,
-                          }}>
-                          <Image
-                            source={imagePath.crossB}
-                            style={{
-                              height: 20,
-                              width: 20,
-                              tintColor: colors.black,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setPickerType('back');
-                          setIsImagePickerModal(true);
+                      )}
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginBottom: moderateScaleVertical(5),
+                          marginTop: moderateScaleVertical(14),
                         }}>
-                        <Image source={imagePath.icPlaceholder} />
-                      </TouchableOpacity>
-                    )}
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginBottom: moderateScaleVertical(5),
-                        marginTop: moderateScaleVertical(14),
-                      }}>
-                      Aadhar number
-                    </Text>
-                    <BorderTextInput
-                      onChangeText={(txt) => setAadharNumber(txt)}
-                      value={aadharNumber}
-                      keyboardType={'number-pad'}
-                      maxLength={12}
-                      containerStyle={{
-                        borderRadius: moderateScale(5),
-                      }}
-                    />
-                    <Text
-                      style={{
-                        ...styles.formSectionTitle,
-                        marginBottom: moderateScaleVertical(6),
-                        marginTop: moderateScaleVertical(20),
-                      }}>
-                      Bank Details
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginVertical: moderateScaleVertical(5),
-                      }}>
-                      UPI id
-                    </Text>
-                    <BorderTextInput
-                      onChangeText={(txt) => setUpiId(txt)}
-                      value={upiId}
-                      containerStyle={{
-                        borderRadius: moderateScale(5),
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginVertical: moderateScaleVertical(5),
-                      }}>
-                      Bank name
-                    </Text>
-                    <BorderTextInput
-                      onChangeText={(txt) => setBankName(txt)}
-                      value={bankName}
-                      containerStyle={{
-                        borderRadius: moderateScale(5),
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginBottom: moderateScaleVertical(5),
-                      }}>
-                      Beneficiary name
-                    </Text>
-                    <BorderTextInput
-                      onChangeText={(txt) => setBeneficiaryName(txt)}
-                      value={beneficiaryName}
-                      containerStyle={{
-                        borderRadius: moderateScale(5),
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginBottom: moderateScaleVertical(5),
-                      }}>
-                      Account number
-                    </Text>
-                    <BorderTextInput
-                      onChangeText={(txt) => setAccountNumber(txt)}
-                      value={accountNumber}
-                      keyboardType={'number-pad'}
-                      containerStyle={{
-                        borderRadius: moderateScale(5),
-                      }}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(14),
-                        marginBottom: moderateScaleVertical(5),
-                      }}>
-                      Ifsc Code
-                    </Text>
-                    <BorderTextInput
-                      onChangeText={(txt) => setIfscCode(txt)}
-                      value={ifscCode}
-                      containerStyle={{
-                        borderRadius: moderateScale(5),
-                      }}
-                    />
-                  </View>
-                )}
-                <ButtonWithLoader
-                  onPress={onSaveAttributeInfo}
-                  isLoading={isSavingInfluenceInfo}
-                  btnText={strings.SAVE}
-                  btnStyle={{
-                    backgroundColor: themeColors?.primary_color,
-                    borderWidth: 0,
-                    marginBottom: moderateScaleVertical(10),
-                  }}
-                />
-              </View>
+                        {aadhaar_number || strings.AADHAR_NUMBER}*
+                      </Text>
+                      <BorderTextInput
+                        onChangeText={(txt) => setAadharNumber(txt)}
+                        value={aadharNumber}
+                        keyboardType={'number-pad'}
+                        maxLength={12}
+                        containerStyle={{
+                          borderRadius: moderateScale(5),
+                        }}
+                      />
+                      <Text
+                        style={{
+                          ...styles.formSectionTitle,
+                          marginBottom: moderateScaleVertical(6),
+                          marginTop: moderateScaleVertical(20),
+                        }}>
+                        {strings.BANK_DETAILS}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginVertical: moderateScaleVertical(5),
+                        }}>
+                        {upi_id || strings.UPI_ID}*
+                      </Text>
+                      <BorderTextInput
+                        onChangeText={(txt) => setUpiId(txt)}
+                        value={upiId}
+                        containerStyle={{
+                          borderRadius: moderateScale(5),
+                        }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginVertical: moderateScaleVertical(5),
+                        }}>
+                        {bank_name || strings.BANK_NAME}*
+                      </Text>
+                      <BorderTextInput
+                        onChangeText={(txt) => setBankName(txt)}
+                        value={bankName}
+                        containerStyle={{
+                          borderRadius: moderateScale(5),
+                        }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginBottom: moderateScaleVertical(5),
+                        }}>
+                        {account_name || strings.BENEFICIARY_NAME}*
+                      </Text>
+                      <BorderTextInput
+                        onChangeText={(txt) => setBeneficiaryName(txt)}
+                        value={beneficiaryName}
+                        containerStyle={{
+                          borderRadius: moderateScale(5),
+                        }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginBottom: moderateScaleVertical(5),
+                        }}>
+                        {account_number || strings.ACCOUNT_NUMBER}*
+                      </Text>
+                      <BorderTextInput
+                        onChangeText={(txt) => setAccountNumber(txt)}
+                        value={accountNumber}
+                        keyboardType={'number-pad'}
+                        containerStyle={{
+                          borderRadius: moderateScale(5),
+                        }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(14),
+                          marginBottom: moderateScaleVertical(5),
+                        }}>
+                        {ifsc_code || strings.IFSC_CODE}*
+                      </Text>
+                      <BorderTextInput
+                        onChangeText={(txt) => setIfscCode(txt)}
+                        value={ifscCode}
+                        containerStyle={{
+                          borderRadius: moderateScale(5),
+                        }}
+                      />
+                    </View>
+                  )}
+                </View>
+              ) : null
             }
           />
+          {!isEmpty(availableAttributesOfInfluenceCategory) && (
+            <ButtonWithLoader
+              onPress={onSaveAttributeInfo}
+              isLoading={isSavingInfluenceInfo}
+              btnText={strings.SAVE}
+              btnStyle={{
+                backgroundColor: themeColors?.primary_color,
+                borderWidth: 0,
+                marginBottom: moderateScaleVertical(10),
+                position: 'absolute',
+                bottom: moderateScaleVertical(70),
+                width: '100%',
+              }}
+            />
+          )}
         </View>
       </WrapperContainer>
     );
@@ -706,7 +742,7 @@ export default function ReferAndEarn() {
             </View>
           ) : item?.type == 4 ? (
             <TextInput
-              placeholder="Type here..."
+              placeholder={strings.TYPE_HERE}
               onChangeText={(text) => onChangeText(text, item)}
               style={styles.textInput}
             />

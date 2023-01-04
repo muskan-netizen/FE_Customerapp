@@ -77,8 +77,12 @@ export default function ProductDetail({route, navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const {
+    additional_preferences,
+    digit_after_decimal,
+    seller_sold_title,
+    seller_platform_logo,
+  } = appData?.profile?.preferences;
   const {productListData} = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -1774,7 +1778,6 @@ export default function ProductDetail({route, navigation}) {
         isShareIcon={imagePath.icShareb}
         onShare={onShare}
       />
-      {console.log(selectedVendorDeliverySlot, 'selectedVendorDeliverySlot..')}
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
         <View style={{marginHorizontal: moderateScale(16)}}>
@@ -1915,19 +1918,52 @@ export default function ProductDetail({route, navigation}) {
                 </View>
 
                 <View style={styles.flexView}>
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont12,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity43,
-                    }}>
-                    {strings.IN}{' '}
-                    {
-                      productDetailData?.category?.category_detail
-                        ?.translation[0]?.name
-                    }
-                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont12,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
+                      }}>
+                      {strings.IN}{' '}
+                      {
+                        productDetailData?.category?.category_detail
+                          ?.translation[0]?.name
+                      }
+                    </Text>
+                    {!!productDetailData?.vendor?.is_seller && (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginTop: moderateScaleVertical(6),
+                        }}>
+                        <Image
+                          source={{
+                            uri: getImageUrl(
+                              seller_platform_logo?.proxy_url,
+                              seller_platform_logo?.image_path,
+                              '200/200',
+                            ),
+                          }}
+                          resizeMode="contain"
+                          style={{
+                            height: 30,
+                            width: 30,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            marginLeft: moderateScale(7),
+                            fontFamily: fontFamily?.regular,
+                            color: colors.black,
+                          }}>
+                          {seller_sold_title}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
 
                   {productDetailData?.averageRating !== null && (
                     <View

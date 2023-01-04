@@ -277,7 +277,7 @@ const PostCategory = ({navigation}) => {
             </View>
           ) : item?.type == 4 ? (
             <TextInput
-              placeholder="Type here..."
+              placeholder={strings.TYPE_HERE}
               onChangeText={(text) => onChangeText(text, item)}
               style={styles.textInputStyle}
             />
@@ -507,7 +507,7 @@ const PostCategory = ({navigation}) => {
                 Name
               </Text>
               <TextInput
-                placeholder="Type here..."
+                placeholder={strings.TYPE_HERE}
                 onChangeText={(text) => setName(text)}
                 style={styles.textInputStyle}
               />
@@ -520,7 +520,7 @@ const PostCategory = ({navigation}) => {
                 Description
               </Text>
               <TextInput
-                placeholder="Type here..."
+                placeholder={strings.TYPE_HERE}
                 onChangeText={(text) => setDescription(text)}
                 style={styles.textInputStyle}
               />

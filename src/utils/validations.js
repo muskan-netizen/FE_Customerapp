@@ -501,6 +501,13 @@ export default function (data) {
 
   //
 
+  if (aadharNumber !== undefined) {
+    let emptyValidationText = checkEmpty(aadharNumber, 'Aadhar number', false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
   if (aadharFrontImg !== undefined) {
     if (isEmpty(aadharFrontImg)) {
       return 'Please upload Aadhar front image';
@@ -510,13 +517,6 @@ export default function (data) {
   if (aadharBackImg !== undefined) {
     if (isEmpty(aadharBackImg)) {
       return 'Please upload Aadhar back image';
-    }
-  }
-
-  if (aadharNumber !== undefined) {
-    let emptyValidationText = checkEmpty(aadharNumber, 'Aadhar number', false);
-    if (emptyValidationText !== '') {
-      return emptyValidationText;
     }
   }
 

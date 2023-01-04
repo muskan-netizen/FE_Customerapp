@@ -391,7 +391,7 @@ const AttributeInformation = ({route, navigation}) => {
             </View>
           ) : item?.type == 4 ? (
             <TextInput
-              placeholder="Type here..."
+              placeholder={strings.TYPE_HERE}
               onChangeText={(text) => onChangeText(text, item)}
               style={styles.textInput}
             />
