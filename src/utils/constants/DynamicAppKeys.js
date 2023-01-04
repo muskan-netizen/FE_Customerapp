@@ -501,6 +501,7 @@ const shortCodes = {
   wizSonic: '5e15fd',
   udkay: 'bfe4de',
   hattaFoodHub: 'be22d8',
+  ondgoo: '70ae69',
 };
 
 const appIds = {
@@ -2491,6 +2492,10 @@ const appIds = {
   hattaFoodHub: Platform.select({
     ios: 'com.hattaFoodHub.royoorders',
     android: 'com.hattaFoodHub.royoorders',
+  }),
+  ondgoo: Platform.select({
+    ios: 'com.ondgoo.royoorders',
+    android: 'com.ondgoo.royoorders',
   }),
 };
 

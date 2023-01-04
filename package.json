@@ -996,6 +996,8 @@
     "udkayRelease": "cd android && ./gradlew assembleudkayRelease",
     "hattaFoodHub": "react-native run-android --variant=hattaFoodHubDebug --appIdSuffix=wizSonic",
     "hattaFoodHubRelease": "cd android && ./gradlew assemblehattaFoodHubRelease",
+    "ondgoo": "react-native run-android --variant=ondgooDebug --appIdSuffix=wizSonic",
+    "ondgooRelease": "cd android && ./gradlew assembleondgooRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

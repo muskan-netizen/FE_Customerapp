@@ -207,14 +207,14 @@ android {
 
     productFlavors{
              
-            hattaFoodHub {
-                dimension "appType"
+            dot {
+    //             dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.hattaFoodHub.royoorders'
-                resValue "string", "app_name", "HattaFoodHub"
+                applicationId 'com.dot.royoorders'
+                resValue "string", "app_name", "Dot"
                 resValue "string", "host_name", ""
             }
            
@@ -8151,6 +8151,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.hattaFoodHub.royoorders'
     //             resValue "string", "app_name", "HattaFoodHub"
+    //             resValue "string", "host_name", ""
+    //         }
+    // ondgoo {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ondgoo.royoorders'
+    //             resValue "string", "app_name", "Ondgoo"
     //             resValue "string", "host_name", ""
     //         }
     
