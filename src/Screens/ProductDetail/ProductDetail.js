@@ -132,7 +132,13 @@ export default function ProductDetail({route, navigation}) {
   const [selectedVendorDeliverySlot, setSelectedVendorDeliverySlot] = useState(
     {},
   );
-
+  const [isTimeIntervals, setIsTimeIntervals] = useState(false);
+  const [productAvailableIntervals, setProductAvailableIntervals] = useState(
+    [],
+  );
+  const [selectedProductInterval, setSelectedProductInterval] = useState({});
+  const [isLoadingProductSlotIntervals, setIsLoadingProductSlotIntervals] =
+    useState(false);
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -1137,10 +1143,9 @@ export default function ProductDetail({route, navigation}) {
     data['quantity'] = productQuantityForCart;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
-    if (!isEmpty(selectedVendorDeliverySlot)) {
-      data['sele_slot_id'] = selectedVendorDeliverySlot?.delivery_slot?.id;
-      data['sele_slot_price'] =
-        selectedVendorDeliverySlot?.delivery_slot?.price;
+    if (!isEmpty(selectedProductInterval)) {
+      data['sele_slot_id'] = selectedProductInterval?.id;
+      data['sele_slot_price'] = selectedProductInterval?.price;
       data['delivery_date'] = moment(selectedDate).format('YYYY-MM-DD');
     }
 
@@ -1537,6 +1542,53 @@ export default function ProductDetail({route, navigation}) {
       });
   };
 
+  const onDoneDeliverySlot = () => {
+    if (isTimeIntervals) {
+      if (isEmpty(selectedProductInterval)) {
+        alert('Please select a slot interval');
+        return;
+      }
+      setAvailableSlotsModal(false);
+      setIsTimeIntervals(false);
+      return;
+    }
+    setSelectedProductInterval({});
+    if (isEmpty(selectedVendorDeliverySlot)) {
+      alert('Please select a slot');
+      return;
+    }
+    setIsLoadingProductSlotIntervals(true);
+    actions
+      .getProductDeliverySlotsInterval(
+        {
+          slot_id: selectedVendorDeliverySlot?.delivery_slot?.id,
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        setProductAvailableIntervals(res?.data);
+        setIsTimeIntervals(true);
+        setIsLoadingProductSlotIntervals(false);
+
+        console.log(res, 'res.............');
+      })
+      .catch((err) => {
+        setIsLoadingProductSlotIntervals(false);
+        alert(err?.error || err?.message);
+      });
+  };
+
+  {
+    console.log(
+      productAvailableIntervals,
+      'selectedProductInterval...selectedProductIntervals',
+    );
+  }
+
   const deliverSlotModalContent = () => {
     return (
       <View
@@ -1560,66 +1612,129 @@ export default function ProductDetail({route, navigation}) {
               fontFamily: fontFamily?.bold,
               fontSize: textScale(16),
             }}>
-            Select delivery slot
+            Select delivery slot {isTimeIntervals ? 'interval' : ''}
           </Text>
         </View>
         <View
           style={{
             flex: 1,
           }}>
-          <FlatList
-            data={availableVendorSlots}
-            ItemSeparatorComponent={() => (
-              <View style={{height: moderateScaleVertical(10)}} />
-            )}
-            ListFooterComponent={() => (
-              <ButtonWithLoader
-                onPress={() => setAvailableSlotsModal(false)}
-                btnText="Done"
-                btnStyle={{
-                  backgroundColor: themeColors?.primary_color,
-                  borderWidth: 0,
-                }}
-              />
-            )}
-            renderItem={({item, index}) => (
-              <TouchableOpacity
-                onPress={() => setSelectedVendorDeliverySlot(item)}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 8,
-                  borderWidth: 1,
-                  borderColor:
-                    selectedVendorDeliverySlot?.id == item?.id
-                      ? themeColors?.primary_color
-                      : colors.borderColorB,
-                  borderRadius: moderateScale(6),
-                }}>
-                <Image
+          {isTimeIntervals ? (
+            <FlatList
+              data={productAvailableIntervals}
+              ItemSeparatorComponent={() => (
+                <View style={{height: moderateScaleVertical(10)}} />
+              )}
+              renderItem={({item, index}) => (
+                <TouchableOpacity
+                  onPress={() => setSelectedProductInterval(item)}
                   style={{
-                    tintColor:
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 8,
+                    borderWidth: 1,
+                    borderColor:
+                      selectedProductInterval?.id == item?.id
+                        ? themeColors?.primary_color
+                        : colors.borderColorB,
+                    borderRadius: moderateScale(6),
+                  }}>
+                  <Image
+                    style={{
+                      tintColor:
+                        selectedProductInterval?.id == item?.id
+                          ? themeColors?.primary_color
+                          : colors.borderColorB,
+                      height: 15,
+                      width: 15,
+                    }}
+                    source={
+                      selectedProductInterval?.id == item?.id
+                        ? imagePath.radioNewActive
+                        : imagePath.radioNewInActive
+                    }
+                  />
+                  <Text
+                    style={{
+                      fontFamily: fontFamily?.regular,
+                      marginLeft: moderateScale(10),
+                    }}>
+                    {`${item?.title} (${item?.start_time} - ${item?.end_time} ${currencies?.primary_currency?.symbol}${item?.price})`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              ListFooterComponent={() => (
+                <View
+                  style={{
+                    height: 10,
+                  }}
+                />
+              )}
+            />
+          ) : (
+            <FlatList
+              data={availableVendorSlots}
+              ItemSeparatorComponent={() => (
+                <View style={{height: moderateScaleVertical(10)}} />
+              )}
+              renderItem={({item, index}) => (
+                <TouchableOpacity
+                  onPress={() => setSelectedVendorDeliverySlot(item)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 8,
+                    borderWidth: 1,
+                    borderColor:
                       selectedVendorDeliverySlot?.id == item?.id
                         ? themeColors?.primary_color
                         : colors.borderColorB,
-                    height: 15,
-                    width: 15,
-                  }}
-                  source={
-                    selectedVendorDeliverySlot?.id == item?.id
-                      ? imagePath.radioNewActive
-                      : imagePath.radioNewInActive
-                  }
-                />
-                <Text
-                  style={{
-                    fontFamily: fontFamily?.regular,
-                    marginLeft: moderateScale(10),
+                    borderRadius: moderateScale(6),
                   }}>
-                  {`${item?.delivery_slot?.title} (${item?.delivery_slot?.start_time} - ${item?.delivery_slot?.end_time} ${currencies?.primary_currency?.symbol}${item?.delivery_slot?.price})`}
-                </Text>
-              </TouchableOpacity>
-            )}
+                  <Image
+                    style={{
+                      tintColor:
+                        selectedVendorDeliverySlot?.id == item?.id
+                          ? themeColors?.primary_color
+                          : colors.borderColorB,
+                      height: 15,
+                      width: 15,
+                    }}
+                    source={
+                      selectedVendorDeliverySlot?.id == item?.id
+                        ? imagePath.radioNewActive
+                        : imagePath.radioNewInActive
+                    }
+                  />
+                  <Text
+                    style={{
+                      fontFamily: fontFamily?.regular,
+                      marginLeft: moderateScale(10),
+                    }}>
+                    {`${item?.delivery_slot?.title} (${item?.delivery_slot?.start_time} - ${item?.delivery_slot?.end_time} ${currencies?.primary_currency?.symbol}${item?.delivery_slot?.price})`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              ListFooterComponent={() => (
+                <View
+                  style={{
+                    height: 10,
+                  }}
+                />
+              )}
+            />
+          )}
+          <ButtonWithLoader
+            onPress={onDoneDeliverySlot}
+            btnText="Done"
+            isLoading={isLoadingProductSlotIntervals}
+            btnStyle={{
+              backgroundColor: themeColors?.primary_color,
+              borderWidth: 0,
+              position: 'absolute',
+              width: '100%',
+              bottom: 0,
+            }}
           />
         </View>
       </View>
@@ -2089,7 +2204,7 @@ export default function ProductDetail({route, navigation}) {
                       </View>
                     )}
                   </View>
-                  {!isEmpty(selectedVendorDeliverySlot) &&
+                  {!isEmpty(selectedProductInterval) &&
                     isPincodeValid &&
                     pinCode.length == 6 && (
                       <Text
@@ -2098,7 +2213,7 @@ export default function ProductDetail({route, navigation}) {
                           textAlign: 'right',
                           marginRight: moderateScale(5),
                           marginTop: moderateScale(5),
-                        }}>{`${selectedVendorDeliverySlot?.delivery_slot?.title} (${selectedVendorDeliverySlot?.delivery_slot?.start_time} - ${selectedVendorDeliverySlot?.delivery_slot?.end_time} ${currencies?.primary_currency?.symbol}${selectedVendorDeliverySlot?.delivery_slot?.price})`}</Text>
+                        }}>{`${selectedProductInterval?.title} (${selectedProductInterval?.start_time} - ${selectedProductInterval?.end_time} ${currencies?.primary_currency?.symbol}${selectedProductInterval?.price})`}</Text>
                     )}
                 </View>
               )}

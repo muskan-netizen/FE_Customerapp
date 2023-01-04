@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -13,7 +13,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
@@ -26,22 +26,7 @@ import {
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
-import DashBoardEight from './DashboardViews/DashBoardEight';
-import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
-import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
-import DashBoardNine from './DashboardViews/DashBoardNine';
-import {
-  DashBoardFive,
-  DashBoardFiveV2Api,
-  DashBoardFour,
-  DashBoardHeaderFive,
-  DashBoardHeaderFour,
-  DashBoardHeaderOne,
-  DashBoardOne,
-  DashBoardSix,
-  DashBoardTen,
-  TaxiHomeDashbord,
-} from './DashboardViews/Index';
+import {DashBoardFiveV2Api, DashBoardHeaderFive} from './DashboardViews/Index';
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
@@ -61,11 +46,11 @@ export default function Home({route, navigation}) {
   console.log(appMainData, '<===appMainData');
 
   const isFocused = useIsFocused();
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const {cartItemCount} = useSelector((state) => state?.cart);
 
   const {userData} = useSelector((state) => state?.auth);
-  const pendingNotifications = useSelector(
-    (state) => state?.pendingNotifications?.pendingNotifications,
+  const {pendingNotifications} = useSelector(
+    (state) => state?.pendingNotifications,
   );
 
   const darkthemeusingDevice = useDarkMode();

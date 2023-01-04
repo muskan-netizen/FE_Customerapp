@@ -32,7 +32,6 @@ import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 import {
   DashBoardFive,
-  DashBoardFiveV2Api,
   DashBoardFour,
   DashBoardHeaderFive,
   DashBoardHeaderFour,
@@ -42,13 +41,6 @@ import {
   DashBoardTen,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
-
-// navigator.geolocation = require('react-native-geolocation-service');
-
-let maxMinObj = {
-  max_select: 1,
-  min_select: 1,
-};
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
@@ -66,11 +58,11 @@ export default function Home({route, navigation}) {
     (state) => state?.home,
   );
   const isFocused = useIsFocused();
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const {cartItemCount} = useSelector((state) => state?.cart);
 
-  const userData = useSelector((state) => state?.auth?.userData);
-  const pendingNotifications = useSelector(
-    (state) => state?.pendingNotifications?.pendingNotifications,
+  const {userData} = useSelector((state) => state?.auth);
+  const {pendingNotifications} = useSelector(
+    (state) => state?.pendingNotifications,
   );
 
   const darkthemeusingDevice = useDarkMode();

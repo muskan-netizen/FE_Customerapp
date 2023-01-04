@@ -369,7 +369,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
-export const API_BASE_URL = 'http://192.168.101.214:9003/api/v1';
+export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -658,6 +658,9 @@ export const GET_P2P_CATEGORIES = getApiUrl('/v2/getP2pCategories');
 export const CHECK_VENDOR_PINCODE = getApiUrl('/checkVendorPincode');
 export const GET_VENDOR_SHIPPING_SLOTS = getApiUrl(
   '/getShippingProductDeliverySlots',
+);
+export const GET_PRODUCT_DELIVERY_SLOTS_INTERVAL = getApiUrl(
+  '/getProductDeliverySlotsInterval',
 );
 
 //Refer and Earn

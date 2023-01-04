@@ -2,7 +2,7 @@ export {default as Login} from './Login/Login';
 export {default as Signup} from './Signup/Signup';
 export {default as OtpVerification} from './OtpVerification/OtpVerification';
 export {default as OuterScreen} from './OuterScreen/OuterScreen';
-export {default as Home} from './Home/Home(V2_API)';
+export {default as Home} from './Home/Home';
 export {default as HomeV2Api} from './Home/Home(V2_API)';
 export {default as Offers} from './Offers/Offers';
 export {default as Brands} from './Brands/Brands';
