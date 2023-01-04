@@ -2961,16 +2961,16 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        //   code: '2d98b5',
-       code: "deca6f",
-          // code: shortCode,
+           code: '245bae',
+     //   code: "2d98b5",
+        //  code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-         code: 'deca6f',
-        //code: "2d98b5",
-         code: shortCode,
+       code: '245bae',
+     //  code: "2d98b5",
+      //   code: shortCode,
       };
     }
     actions
@@ -3134,6 +3134,8 @@ export default function ShortCode({ route, navigation }) {
     }
   };
 
+  console.log(deepLinkUrl,"deepLinkUrl");
+
   const navigateToNextScreen = (res) => {
     getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
@@ -3141,7 +3143,7 @@ export default function ShortCode({ route, navigation }) {
       } else {
         if (userData?.auth_token) {
           actions.setAppSessionData("guest_login");
-        } else if (deepLinkUrl) {
+        } else if (deepLinkUrl && !userData?.auth_token) {
           actions.setAppSessionData("on_login");
         } else {
           actions.setAppSessionData("guest_login");

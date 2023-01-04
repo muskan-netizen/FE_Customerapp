@@ -50,12 +50,7 @@ export default function (Stack, appStyle) {
         }
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.LOCATION}
-        component={Location}
-        options={{headerShown: false}}
-      /> */}
-
+     
       <Stack.Screen
         name={navigationStrings.RESET_PASSWORD}
         component={ResetPassword}

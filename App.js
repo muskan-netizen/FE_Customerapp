@@ -104,8 +104,7 @@ const App = () => {
   //open screens based on deep link url
   const openSpecificScreenByDeeplink = async (deepLinkUrl) => {
     const userData = await getUserData();
-    console.log(userData, "userData");
-    if (userData && deepLinkUrl) {
+    if (userData?.auth_token && deepLinkUrl) {
       actions.setRedirection("from_deepLinking");
       actions.setAppSessionData("shortcode");
     } else {

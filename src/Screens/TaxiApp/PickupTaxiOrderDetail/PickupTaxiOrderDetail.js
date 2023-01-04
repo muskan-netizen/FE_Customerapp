@@ -85,7 +85,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
 
-
+  console.log(paramData, 'paramDataparamDataparamData');
 
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [state, setState] = useState({
@@ -176,7 +176,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const [showLocationUpdateButton, setShowLocationUpdateButton] = useState(
     true
   );
-  const [allDropOffLocationCollection, setAllDropOffLocationCollection] = useState([])
+  const [
+    allDropOffLocationCollection,
+    setAllDropOffLocationCollection,
+  ] = useState([]);
+
+
+
 
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -198,16 +204,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
 
+  useEffect(()=>{
+   if(paramData?.showLocationUpdateButton){
+    setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
+   }
+  },[paramData])
+
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
   };
-  // const urlValue = paramData?.orderDetail?.dispatch_traking_url
-  //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-  //       '/order/',
-  //       '/order-details/',
-  //     )
-  //   : null;
-
+  
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
   useEffect(() => {
@@ -260,7 +266,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           task_type_id: item?.task_type_id,
           post_code: item?.post_code,
           short_name: item?.short_name,
-          task_status: Number(item?.task_status)
+          task_status: Number(item?.task_status),
         };
       });
       const newFormatedDropAddress = userDropLocation.map((item, index) => {
@@ -272,7 +278,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           task_type_id: item?.task_type_id,
           post_code: item?.post_code,
           short_name: item?.short_name,
-          task_status: Number(item?.task_status)
+          task_status: Number(item?.task_status),
         };
       });
 
@@ -280,8 +286,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         ...newFormatedPickupAddress,
         ...newFormatedDropAddress,
       ];
-
-
 
       const allLocationsLatLongCollection = finalCollectionOfLocationsForPickAndDrop.map(
         (item, index) => {
@@ -293,15 +297,19 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         finalCollectionOfLocationsForPickAndDrop
       );
 
+      const allDropOffLocationsBeforeProcessing = newFormatedDropAddress.filter(
+        (item, index) => {
+          return item?.task_status < 2;
+        }
+      );
 
-      const allDropOffLocationsBeforeProcessing = newFormatedDropAddress.filter((item, index) => {
-        return item?.task_status < 2
-      })
-
-      console.log(allDropOffLocationsBeforeProcessing, "allDropOffLocationsBeforeProcessing");
+      console.log(
+        allDropOffLocationsBeforeProcessing,
+        "allDropOffLocationsBeforeProcessing"
+      );
 
       setAllLocationsLatLongCollection(allLocationsLatLongCollection);
-      setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing)
+      setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing);
     }
   };
 
@@ -452,6 +460,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       }
     }
   };
+
+  console.log(agent_location, "agent_location");
 
   useEffect(() => {
     if (!isLoading && orderStatus == "unassigned") {
@@ -680,7 +690,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       task_type: orderFullDetail?.scheduled_date_time
         ? orderFullDetail?.scheduled_date_time
         : "now",
-      tasks_dropoff: allDropOffLocationCollection
+      tasks_dropoff: allDropOffLocationCollection,
     };
 
     const apiHeader = {
@@ -1231,8 +1241,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   </Marker.Animated>
                 )}
 
-
-
               <MapViewDirections
                 resetOnChange={false}
                 origin={
@@ -1556,40 +1564,42 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           {!!(
                             val?.task_type_id != 1 &&
                             profile?.preferences?.is_order_edit_enable &&
-                            Number(val?.task_status) < 2  &&
-                            orderFullDetail?.order_details?.order_detail?.payment_option_id ==1
+                            Number(val?.task_status) < 2
                           ) && (
-                              <TouchableOpacity
+                            <TouchableOpacity
+                              style={{
+                                borderColor: themeColors?.primary_color,
+                                borderWidth: 0.5,
+                                padding: moderateScale(5),
+                                paddingHorizontal: moderateScale(10),
+                                height: moderateScale(28),
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                              onPress={moveToNewScreen(
+                                navigationStrings.LOCATION,
+                                {
+                                  ...paramData,
+                                  orderDropLocations: !isEmpty(
+                                    paramData?.orderDropLocations
+                                  )
+                                    ? paramData?.orderDropLocations
+                                    : orderFullDetail?.tasks,
+                                  editIndex: i,
+                                  showLocationUpdateButton:showLocationUpdateButton
+                                }
+                              )}
+                            >
+                              <Text
                                 style={{
-                                  borderColor: themeColors?.primary_color,
-                                  borderWidth: 0.5,
-                                  padding: moderateScale(5),
-                                  paddingHorizontal: moderateScale(10),
-                                  height: moderateScale(28),
+                                  fontFamily: fontFamily.regular,
+                                  fontSize: textScale(11),
                                 }}
-                                onPress={moveToNewScreen(
-                                  navigationStrings.LOCATION,
-                                  {
-                                    ...paramData,
-                                    orderDropLocations: !isEmpty(
-                                      paramData?.orderDropLocations
-                                    )
-                                      ? paramData?.orderDropLocations
-                                      : orderFullDetail?.tasks,
-                                    editIndex: i,
-                                  }
-                                )}
                               >
-                                <Text
-                                  style={{
-                                    fontFamily: fontFamily.regular,
-                                    fontSize: textScale(11),
-                                  }}
-                                >
-                                  {"Change"}
-                                </Text>
-                              </TouchableOpacity>
-                            )}
+                                {"Change"}
+                              </Text>
+                            </TouchableOpacity>
+                          )}
                         </View>
                       </View>
                       {orderFullDetail.tasks.length - 1 !== i && (
@@ -1607,22 +1617,24 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     </View>
                   );
                 })}
-                {(!isEmpty(paramData?.orderDropLocations) && showLocationUpdateButton) && (
-                  <ButtonWithLoader
-                    isLoading={false}
-                    btnText={"Update Location"}
-                    btnTextStyle={{ color: colors.white }}
-                    btnStyle={{
-                      backgroundColor: themeColors?.primary_color,
-                      borderColor: themeColors?.primary_color,
-                      width: width / 2,
-                      alignSelf: "center",
-                      height: moderateScaleVertical(40),
-                    }}
-                    onPress={_onDropLocationChangeAfterOrderPlace}
-                  />
-                )}
+                {!isEmpty(paramData?.orderDropLocations) &&
+                  showLocationUpdateButton && (
+                    <ButtonWithLoader
+                      isLoading={false}
+                      btnText={"Update Location"}
+                      btnTextStyle={{ color: colors.white }}
+                      btnStyle={{
+                        backgroundColor: themeColors?.primary_color,
+                        borderColor: themeColors?.primary_color,
+                        width: width / 2,
+                        alignSelf: "center",
+                        height: moderateScaleVertical(40),
+                      }}
+                      onPress={_onDropLocationChangeAfterOrderPlace}
+                    />
+                  )}
 
+               
                 {!!orderFullDetail?.agent_location ? (
                   <View
                     style={{
@@ -2300,10 +2312,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-                  {console.log(
-                    orderFullDetail,
-                    "orderFullDetailorderFullDetail"
-                  )}
+
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                     0 && (

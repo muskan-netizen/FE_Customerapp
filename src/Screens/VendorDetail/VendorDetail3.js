@@ -165,7 +165,7 @@ export default function VendorDetail3({navigation, route}) {
         {},
         {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
+          currency: currencies?.primary_currency?.id,
           language: languages.primary_language.id,
         },
       )

@@ -253,7 +253,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const [updateSeatNO, setUpdateSeatNo] = useState(1)
   const [showFinalUpdatedSeatNo,setShowFinalUpdatedSeatNo]=useState(1)
-  console.log(paramData, 'paramDataparamDataparamData');
+ 
 
   useFocusEffect(
     React.useCallback(() => {
@@ -782,6 +782,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data["product_id"] = selectedCarOption?.id;
     data["currency_id"] = currencies?.primary_currency?.id;
     data["tasks"] = paramData?.tasks;
+    data["is_cab_pooling"]= paramData?.is_cab_pooling,
+    data["no_seats_for_pooling"]= updateSeatNO
     data["images_array"] = uploadImages;
     data["user_product_order_form"] = allSubmittedAnswers
       ? allSubmittedAnswers
