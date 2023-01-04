@@ -148,6 +148,7 @@ export default function Location({route, navigation}) {
           },
         };
         console.log(details, 'details>>>>>');
+        console.log(type, 'type>>>>>');
         setTimeout(() => {
           if (type == 'Home1') {
             navigation.navigate(navigationStrings.HOME, {
@@ -428,7 +429,6 @@ export default function Location({route, navigation}) {
               }}
             />
           </TouchableOpacity>
-
           <View style={{flex: 0.88}}>
             <SearchPlaces
               curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
