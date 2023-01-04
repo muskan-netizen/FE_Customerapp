@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -30,7 +30,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -45,6 +45,9 @@ export default function ShippingDetails({navigation, route}) {
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const {pickUpTimeType} = useSelector((state) => state?.home);
 
   const userData = useSelector((state) => state?.auth?.userData);
@@ -75,7 +78,7 @@ export default function ShippingDetails({navigation, route}) {
     callingCode: '91',
     cca2: 'IN',
     phoneNumber: '',
-    selectedVendorOption: paramData?.cabVendors[0]
+    selectedVendorOption: !isEmpty(paramData?.cabVendors)
       ? paramData?.cabVendors[0]
       : null,
     loyalityAmount: null,
@@ -85,7 +88,9 @@ export default function ShippingDetails({navigation, route}) {
     limit: 12,
     isLoading: false,
     isLoadingB: false,
-    availableVendors: paramData?.cabVendors,
+    availableVendors: !isEmpty(paramData?.cabVendors)
+      ? paramData?.cabVendors
+      : [],
     couponInfo: null,
     updatedAmount: null,
   });
@@ -646,28 +651,28 @@ export default function ShippingDetails({navigation, route}) {
                   },
                 ]}>
                 {selectedCarOption
-                  ? `${
-                      currencies?.primary_currency?.symbol
-                    }${currencyNumberFormatter(
+                  ? `${tokenConverterPlusCurrencyNumberFormater(
                       Number(selectedCarOption?.variant[0]?.multiplier) *
                         Number(selectedCarOption?.variant[0]?.price),
-                      appData?.profile?.preferences?.digit_after_decimal,
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
                     )}`
                   : ''}
               </Text>
 
               {updatedAmount && (
                 <Text style={[styles.totalPayableValue, {paddingLeft: 5}]}>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
+                  {`${tokenConverterPlusCurrencyNumberFormater(
                     Number(selectedCarOption.tags_price) -
                       Number(updatedAmount) >
                       0
                       ? Number(selectedCarOption.tags_price) -
                           Number(updatedAmount)
                       : 0,
-                    appData?.profile?.preferences?.digit_after_decimal,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
                   )}`}
                 </Text>
               )}
@@ -683,14 +688,17 @@ export default function ShippingDetails({navigation, route}) {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.distanceDura0tionDeliveryLable}>
-              {'Loyalty'}
+              {strings.LOYALTY}
             </Text>
-            <Text style={styles.distanceDurationDeliveryValue}>{`-${
-              currencies?.primary_currency?.symbol
-            }${currencyNumberFormatter(
+            <Text
+              style={
+                styles.distanceDurationDeliveryValue
+              }>{`-${tokenConverterPlusCurrencyNumberFormater(
               Number(selectedCarOption?.variant[0]?.multiplier) *
                 Number(loyalityAmount),
-              appData?.profile?.preferences?.digit_after_decimal,
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
             )}`}</Text>
           </View>
         )}
@@ -838,10 +846,12 @@ export default function ShippingDetails({navigation, route}) {
             {item?.translation[0]?.title}
           </Text>
           <Text numberOfLines={2} style={styles.boxTitle2}>
-            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+            {tokenConverterPlusCurrencyNumberFormater(
               Number(item.tags_price),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )}`}
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
           </Text>
         </View>
       </TouchableOpacity>

@@ -57,14 +57,6 @@ const LaundryAddonModal = ({
     );
   };
 
-  const checkValidation = (addonset, indx, min_limit = 3) => {
-    // if (addonset?.min_select == 0) {
-    //   return true;
-    // }
-
-    return minMaxError.some((item) => item == indx);
-  };
-
   const renderLaundryCategoryItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -75,8 +67,8 @@ const LaundryAddonModal = ({
         <Image
           source={{
             uri: getImageUrl(
-              item?.category?.image?.image_fit,
-              item?.category?.image?.image_path,
+              item?.icon?.image_fit,
+              item?.icon?.image_path,
               '600/6000',
             ),
           }}

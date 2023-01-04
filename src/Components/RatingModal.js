@@ -46,7 +46,7 @@ const RatingModal = ({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : theme;
 
-  console.log('productDetailproductDetail', productDetail);
+
 
   const [state, setState] = useState({
     isLoading: false,
@@ -141,8 +141,9 @@ const RatingModal = ({
     updateState({rating: rating});
   };
 
-  const _giveRatingToProduct = () => {
-    
+  
+
+  const _giveRatingToProduct = () => {  
     updateState({isLoading: true});
     if (isDriverRateModal) {
       const data = {
@@ -266,9 +267,16 @@ const RatingModal = ({
               <Text style={{
                 alignSelf:'center',
                 fontFamily:fontFamily.bold,
-                fontSize:moderateScale(22)
+                fontSize:moderateScale(26)
               }}>
                 {strings.ORDER_COMPLETED}
+              </Text>
+              <Text style={{
+                alignSelf:'center',
+                fontFamily:fontFamily.medium,
+                fontSize:moderateScale(14)
+              }}>
+                {"Rate your order and your driver"}
               </Text>
             </View>
               {/* star View */}

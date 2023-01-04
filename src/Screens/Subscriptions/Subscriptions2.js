@@ -1,5 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {createRef, useEffect, useState} from 'react';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {PayWithFlutterwave} from 'flutterwave-react-native';
+import React, {createRef, useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -12,6 +13,7 @@ import {
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
@@ -27,9 +29,15 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
-import Modal from 'react-native-modal';
 // import SubscriptionComponent from '../../Components/SubscriptionComponent';
+import {
+  CardField,
+  createPaymentMethod,
+  createToken,
+  handleCardAction,
+  initStripe,
+  StripeProvider,
+} from '@stripe/stripe-react-native';
 import {
   height,
   moderateScale,
@@ -41,15 +49,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  handleCardAction,
-  createPaymentMethod,
-  confirmPayment,
-} from '@stripe/stripe-react-native';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
@@ -57,6 +57,7 @@ export default function Subscriptions2({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const [isReloadPage, setIsReloadPage] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
     isLoadingB: false,
@@ -98,6 +99,8 @@ export default function Subscriptions2({navigation, route}) {
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const {preferences} = appData?.profile;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
@@ -111,19 +114,24 @@ export default function Subscriptions2({navigation, route}) {
 
   const explosion = createRef();
 
+  const isFocused = useIsFocused();
+
   useFocusEffect(
     React.useCallback(() => {
       updateState({isLoadingB: true});
       getAllSubscriptions();
       console.log(explosion, 'explosion');
-    }, []),
+      console.log(isFocused, 'isFocusedisFocused');
+      // console.log(isLoading, isLoadingB , "ldng , ldngb")
+      console.log('getAllSubscriptionsEffect');
+    }, [isFocused]),
   );
 
   // useEffect(() => {
   //   updateState({isLoadingB: true});
   //   getAllSubscriptions();
   //   console.log(explosion, 'explosion');
-  // }, []);
+  // }, [ isReloadPage,]);
 
   useEffect(() => {
     if (
@@ -150,7 +158,8 @@ export default function Subscriptions2({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log('Get all subscription plans', res);
+        console.log('getAllSubscriptionsFunction');
+        console.log('getAllSubscriptionsFunction', res);
         updateState({
           isLoadingB: false,
           isLoading: false,
@@ -165,7 +174,7 @@ export default function Subscriptions2({navigation, route}) {
   //Subscribe for specific plan
   const selectSpecificSubscriptionPlan = (item) => {
     console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
-    updateState({isLoading: true, planPrice: 120.0});
+    updateState({isLoading: true, planPrice: item?.price});
     actions
       .selectSpecificSubscriptionPlan(
         `/${item?.slug}`,
@@ -386,7 +395,7 @@ export default function Subscriptions2({navigation, route}) {
               <CardField
                 postalCodeEnabled={false}
                 placeholder={{
-                  number: '4242 4242 4242 4242',
+                  number: '4242 4242 ',
                 }}
                 cardStyle={{
                   backgroundColor: '#FFFFFF',
@@ -471,7 +480,6 @@ export default function Subscriptions2({navigation, route}) {
     );
   };
 
-  console.log(isLoading, 'isLoadingisLoadingisLoading');
   //Modal main component
   const modalMainContent = () => {
     return (
@@ -483,11 +491,14 @@ export default function Subscriptions2({navigation, route}) {
             marginVertical: moderateScale(20),
           }}>
           <Text style={styles.title}>{selectedPlan?.title}</Text>
-          <Text
-            style={[
-              styles.title2,
-              {marginTop: moderateScale(10)},
-            ]}>{`${selectedPlan?.price}/${selectedPlan?.frequency}`}</Text>
+          <Text style={[styles.title2, {marginTop: moderateScale(10)}]}>
+            {tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedPlan?.price) / Number(selectedPlan?.frequency),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
 
         <View
@@ -656,9 +667,9 @@ export default function Subscriptions2({navigation, route}) {
     updateState({isModalVisibleForPayment: false});
     if (!!selectedPaymentMethod) {
       if (selectedPaymentMethod?.id == 4) {
-        console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id');
-
+        console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id>>');
         _offineLinePayment();
+        setIsReloadPage(true);
         return;
       } else if (selectedPaymentMethod?.id == 27) {
         let paymentData = {
@@ -898,7 +909,6 @@ export default function Subscriptions2({navigation, route}) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginBottom: moderateScale(10),
-              
             }}>
             <GradientButton
               colorsArray={[
@@ -910,7 +920,9 @@ export default function Subscriptions2({navigation, route}) {
               borderRadius={moderateScale(5)}
               containerStyle={{
                 marginHorizontal: moderateScale(10),
-                width: paymentOptions.length ? width / 3 : width-moderateScale(100),
+                width: paymentOptions.length
+                  ? width / 3
+                  : width - moderateScale(100),
               }}
               btnText={strings.CANCEL}
             />
@@ -963,7 +975,7 @@ export default function Subscriptions2({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const listHeaderComponent = () => {
+  const listHeaderComponent = useCallback(() => {
     return (
       <>
         {!!currentSubscription && (
@@ -996,7 +1008,42 @@ export default function Subscriptions2({navigation, route}) {
         )}
       </>
     );
-  };
+  }, [isReloadPage, currentSubscription]);
+
+  // const listHeaderComponent = () => {
+  //   return (
+  //     <>
+  //       {!!currentSubscription && (
+  //         <>
+  //           <View style={{marginVertical: moderateScale(10)}}>
+  //             <Text
+  //               style={
+  //                 isDarkMode
+  //                   ? [
+  //                       styles.subscriptionTitle,
+  //                       {color: MyDarkTheme.colors.text},
+  //                     ]
+  //                   : styles.subscriptionTitle
+  //               }>
+  //               {strings.MYSUBSCRIPTION}
+  //             </Text>
+  //           </View>
+  //           <SubscriptionComponent2
+  //             data={currentSubscription?.plan}
+  //             subscriptionData={currentSubscription}
+  //             clientCurrency={clientCurrency}
+  //             allSubscriptions={allSubscriptions}
+  //             currentSubscription={true}
+  //             payNowUpcoming={() =>
+  //               selectSpecificSubscriptionPlan(currentSubscription?.plan)
+  //             }
+  //             cancelSubscription={() => cancelSubscription(currentSubscription)}
+  //           />
+  //         </>
+  //       )}
+  //     </>
+  //   );
+  // };
 
   return (
     <WrapperContainer

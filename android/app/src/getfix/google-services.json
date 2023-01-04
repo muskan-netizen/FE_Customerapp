@@ -53,6 +53,13 @@
             {
               "client_id": "1055795788305-3v2gt9fn59c65bqhpue7fcr0v10ng5r3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1055795788305-1patnmladkuulo9f82i0btosafeuuabl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.getfix.customer"
+              }
             }
           ]
         }

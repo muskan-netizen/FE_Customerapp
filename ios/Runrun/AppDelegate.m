@@ -5,7 +5,7 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <TwitterKit/TWTRKit.h>
-#import "RNSplashScreen.h"  // here
+#import "RNSplashScreen.h"  
 #import <React/RCTLinkingManager.h> //deeplinking
 #import <Firebase.h>
 #import <UserNotifications/UserNotifications.h>

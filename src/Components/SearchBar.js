@@ -27,8 +27,10 @@ const SearchBar = ({
   isVoiceRecord = false,
   onVoiceStop = () => { },
   onVoiceListen = () => { },
-  showVoiceRecord = true
+  showVoiceRecord = true,
+  isEditableFalse,
 }) => {
+  console.log(isEditableFalse,"isEditableFalseisEditableFalse")
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -72,6 +74,8 @@ const SearchBar = ({
             isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
           }
           returnKeyType={"next"}
+          editable={isEditableFalse ? !isEditableFalse : true} 
+          // selectTextOnFocus={false}
         />
       </View>
       {

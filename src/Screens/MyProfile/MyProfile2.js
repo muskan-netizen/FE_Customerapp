@@ -60,7 +60,6 @@ export default function MyProfile({route, navigation}) {
   const paramData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
   const appData = useSelector((state) => state?.initBoot?.appData);
-  console.log(userData, 'userData>>');
   const [state, setState] = useState({
     currentPassword: '',
     newPassword: '',
@@ -272,6 +271,7 @@ export default function MyProfile({route, navigation}) {
         });
     }
   };
+
   //this function use for chnage password
   const isValidDataOfChangePass = () => {
     const error = validations({

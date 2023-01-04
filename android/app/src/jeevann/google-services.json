@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "598863098145",
+    "project_id": "jeevann-dispatcher",
+    "storage_bucket": "jeevann-dispatcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598863098145:android:d13fc5eb2f09e99da58e60",
+        "android_client_info": {
+          "package_name": "com.jeevann.royodispatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598863098145-gklmb8n6ggdac7n28tg986pfd1042eaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9IdAe2i-DVrTz616XkE0FWxq-7NZI518"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598863098145-gklmb8n6ggdac7n28tg986pfd1042eaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "598863098145-q6gour26q1vlib9c67d6n5cvcrh6u8lb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jeevann.royodispatcher"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

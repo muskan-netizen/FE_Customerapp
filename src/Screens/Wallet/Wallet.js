@@ -30,7 +30,11 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {
+  currencyNumberFormatter,
+  getValuebyKeyInArray,
+  tokenConverterPlusCurrencyNumberFormater,
+} from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -42,7 +46,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {showMessage} from 'react-native-flash-message';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
-import { color } from 'react-native-reanimated';
+
 import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function Wallet({navigation}) {
@@ -61,16 +65,15 @@ export default function Wallet({navigation}) {
     searchLoader: false,
     errorRaised: null,
   });
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const {appData, themeColors, currencies, themeColor, themeToggle, appStyle} =
+    useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors, currencies} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const userData = useSelector((state) => state.auth.userData);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -92,6 +95,7 @@ export default function Wallet({navigation}) {
     errorRaised,
     searchLoader,
   } = state;
+
   useFocusEffect(
     React.useCallback(() => {
       getWalletData();
@@ -287,19 +291,21 @@ export default function Wallet({navigation}) {
           }}>
           <View style={styles.addedMoneyTimeCon}>
             <Text
-              style={
-                isDarkMode
-                  ? [styles.addedMoneyMonth, {color: MyDarkTheme.colors.text}]
-                  : styles.addedMoneyMonth
-              }>
+              style={{
+                ...styles.addedMoneyMonth,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.walletTextD,
+              }}>
               {moment(item.created_at).format('ll')}
             </Text>
             <Text
-              style={
-                isDarkMode
-                  ? [styles.addedMoneyMonth, {color: MyDarkTheme.colors.text}]
-                  : styles.addedMoneyTime
-              }>
+              style={{
+                ...styles.addedMoneyMonth,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.walletTextD,
+              }}>
               {moment(item.created_at).format('LT')}
             </Text>
           </View>
@@ -315,19 +321,35 @@ export default function Wallet({navigation}) {
           </View>
           <View style={styles.addedMoneyValueCon}>
             <Text
-              numberOfLines={1}
+              numberOfLines={2}
               style={
                 isDarkMode
                   ? [styles.addedMoneyValue, {color: MyDarkTheme.colors.text}]
                   : styles.addedMoneyValue
               }>
-              {item.type == 'deposit'
-                ? `+${currencies?.primary_currency?.symbol}`
-                : `${currencies?.primary_currency?.symbol}`}
-              {currencyNumberFormatter(
-                item.amount,
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}
+              {getValuebyKeyInArray(
+                'is_token_currency_enable',
+                additional_preferences,
+              ) && item.type == 'withdraw'
+                ? tokenConverterPlusCurrencyNumberFormater(
+                    item.amount,
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )
+                : item.type == 'deposit'
+                ? `+${
+                    currencies?.primary_currency?.symbol
+                  } ${currencyNumberFormatter(
+                    item.amount,
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}`
+                : `${
+                    currencies?.primary_currency?.symbol
+                  } ${currencyNumberFormatter(
+                    item.amount,
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}`}
             </Text>
           </View>
         </View>
@@ -355,6 +377,24 @@ export default function Wallet({navigation}) {
     leading: true,
     trailing: false,
   });
+
+  const addTransferMoneyView = () => {
+    return (
+      <View style={styles.addMoneyCon}>
+        <TouchableOpacity onPress={goToAddMoney} style={styles.addMoneybtn}>
+          <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+            {strings.ADD_MONEY}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onTransferFunds} style={styles.addMoneybtn}>
+          <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+            {strings.TRANSFER_FUNDS}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -384,59 +424,166 @@ export default function Wallet({navigation}) {
         headerStyle={{backgroundColor: Colors.white}}
       /> */}
       <View style={{...commonStyles.headerTopLine}} />
-      <View
-        style={
-          isDarkMode
-            ? [
-                styles.availableBalanceCon,
-                {backgroundColor: MyDarkTheme.colors.background},
-              ]
-            : styles.availableBalanceCon
-        }>
-        <View style={styles.balanceCon}>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.availableBalanceText,
-                      {color: MyDarkTheme.colors.text},
-                    ]
-                  : styles.availableBalanceText
-              }>
-              {strings.AVAILABLE_BALANCE}
-            </Text>
-          </View>
+      {!getValuebyKeyInArray(
+        'is_token_currency_enable',
+        additional_preferences,
+      ) ? (
+        <View>
+          <View
+            style={
+              isDarkMode
+                ? [
+                    styles.availableBalanceCon,
+                    {backgroundColor: MyDarkTheme.colors.background},
+                  ]
+                : styles.availableBalanceCon
+            }>
+            <View style={styles.balanceCon}>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.availableBalanceText,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.availableBalanceText
+                  }>
+                  {strings.AVAILABLE_BALANCE}
+                </Text>
+              </View>
 
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.availableBalanceValue,
-                      {color: MyDarkTheme.colors.text},
-                    ]
-                  : styles.availableBalanceValue
-              }>
-              {currencies?.primary_currency?.symbol}{' '}
-              {currencyNumberFormatter(
-                wallet_amount,
-                appData?.profile?.preferences?.digit_after_decimal,
-              )}
-            </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.availableBalanceValue,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.availableBalanceValue
+                  }>
+                  {currencies?.primary_currency?.symbol}{' '}
+                  {currencyNumberFormatter(
+                    wallet_amount,
+                    appData?.profile?.preferences?.digit_after_decimal,
+                  )}
+                </Text>
+              </View>
+            </View>
+            {addTransferMoneyView()}
           </View>
         </View>
-        <View style={styles.addMoneyCon}>
-          <TouchableOpacity onPress={goToAddMoney} style={styles.addMoneybtn}>
-            <Text style={styles.addMoneyText}>{strings.ADD_MONEY}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={onTransferFunds}
-            style={styles.addMoneybtn}>
-            <Text style={styles.addMoneyText}>{strings.TRANSFER_FUNDS}</Text>
-          </TouchableOpacity>
+      ) : (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: moderateScale(40),
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.availableBalanceValue,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.availableBalanceValue
+                }>
+                {currencies?.primary_currency?.symbol}{' '}
+                {currencyNumberFormatter(
+                  wallet_amount,
+                  appData?.profile?.preferences?.digit_after_decimal,
+                )}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.availableBalanceText,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.availableBalanceText
+                }>
+                {strings.AVAILABLE_BALANCE}
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.availableBalanceValue,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.availableBalanceValue
+                }>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  wallet_amount,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.availableBalanceText,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.availableBalanceText
+                }>
+                {'Token Balance'}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <TouchableOpacity
+              onPress={goToAddMoney}
+              style={{
+                flex: 1,
+                backgroundColor: themeColors?.primary_color,
+                padding: moderateScaleVertical(10),
+                marginHorizontal: moderateScaleVertical(8),
+                borderRadius: moderateScale(5),
+                alignItems: 'center',
+              }}>
+              <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+                {strings.ADD_MONEY}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onTransferFunds}
+              style={{
+                flex: 1,
+                backgroundColor: themeColors?.primary_color,
+                padding: moderateScaleVertical(10),
+                marginHorizontal: moderateScaleVertical(8),
+                borderRadius: moderateScale(5),
+                alignItems: 'center',
+              }}>
+              <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+                {strings.TRANSFER_FUNDS}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      )}
       <View
         style={
           isDarkMode
@@ -496,6 +643,7 @@ export default function Wallet({navigation}) {
       </View>
       <Modal
         isVisible={transferModal}
+        // isVisible={true}
         style={{
           margin: 0,
           justifyContent: 'flex-end',
@@ -524,6 +672,7 @@ export default function Wallet({navigation}) {
                 ...styles.nameTextStyle,
                 marginLeft: 0,
                 fontSize: textScale(16),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {strings.TRANSFER_FUNDS}
             </Text>
@@ -532,26 +681,18 @@ export default function Wallet({navigation}) {
             </TouchableOpacity>
           </View>
           <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.availableBalanceText,
-                    {color: MyDarkTheme.colors.text},
-                  ]
-                : styles.availableBalanceText
-            }>
+            style={{
+              ...styles.availableBalanceText,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            }}>
             {strings.AVAILABLE_BALANCE}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.availableBalanceValue,
-                      {color: MyDarkTheme.colors.text},
-                    ]
-                  : styles.availableBalanceValue
-              }>
+              style={{
+                ...styles.availableBalanceValue,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
               {currencies?.primary_currency?.symbol}{' '}
               {currencyNumberFormatter(
                 wallet_amount,
@@ -560,25 +701,29 @@ export default function Wallet({navigation}) {
             </Text>
           </View>
 
-          <Text style={styles.headingStyle}>{strings.AMOUNT_TO_TRANSFER}</Text>
+          <Text
+            style={{
+              ...styles.headingStyle,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.AMOUNT_TO_TRANSFER}
+          </Text>
           <View style={styles.textInputView}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-              }}>
-              <TextInput
-                placeholder={strings.ENTER_AMOUNT}
-                onChangeText={(text) => updateState({transferAmount: text})}
-                textInputStyle={styles.textInputStyle}
-                keyboardType="number-pad"
-              />
-            </View>
+            <TextInput
+              placeholder={strings.ENTER_AMOUNT}
+              placeholderTextColor={
+                isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51
+              }
+              onChangeText={(text) => updateState({transferAmount: text})}
+              style={styles.textInputStyle}
+              keyboardType="number-pad"
+            />
           </View>
           <Text
             style={{
               ...styles.headingStyle,
-           
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              marginTop: moderateScaleVertical(10),
             }}>
             {strings.TRANSFER_TO}
           </Text>
@@ -588,9 +733,11 @@ export default function Wallet({navigation}) {
                 placeholder={
                   strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE
                 }
-                placeholderTextColor= {isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51}
+                placeholderTextColor={
+                  isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51
+                }
                 onChangeText={(text) => updateState({transferEmail: text})}
-                textInputStyle={styles.textInputStyle}
+                style={styles.textInputStyle}
               />
             </View>
             {searchLoader ? (
@@ -659,10 +806,14 @@ export default function Wallet({navigation}) {
             <ButtonWithLoader
               btnStyle={{
                 flex: 1,
-                backgroundColor: themeColors.primary_color,
-                borderWidth: 0,
+                backgroundColor: colors.white,
+                borderWidth: 1,
+                borderColor: themeColors.primary_color,
               }}
               btnText={strings.CANCEL}
+              btnTextStyle={{
+                color: themeColors.primary_color,
+              }}
               onPress={modalClose}
             />
           </View>

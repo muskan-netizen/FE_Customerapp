@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "289528596189",
+    "project_id": "happy-singh-443ad",
+    "storage_bucket": "happy-singh-443ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289528596189:android:7191fc3cf7fff0bd837d34",
+        "android_client_info": {
+          "package_name": "com.happysingh.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289528596189-07t8ndarco8bj1e4f8aa3aajhmim3v2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.happysingh.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "289528596189-9q8189vhv8ihls5vq44tm3u99trhn0g5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.happysingh.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "289528596189-a9ensql7dqmj1ao1q5lou6kl32p2mfcf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.happysingh.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "289528596189-tmgfcd1cbohd9qlho0s0blotn7i463si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB37wRpPWduyxDbET6wNfr6AZ-N4VjMixc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289528596189-tmgfcd1cbohd9qlho0s0blotn7i463si.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "289528596189-t4vko6uhdddk0ifaid5veupkmca30kg8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.happysingh.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

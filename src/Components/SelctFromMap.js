@@ -1,11 +1,11 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Image, Text, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
-import MapView, { PROVIDER_GOOGLE, MarkerAnimated } from 'react-native-maps';
-import { useSelector } from 'react-redux';
+import MapView, {PROVIDER_GOOGLE, MarkerAnimated} from 'react-native-maps';
+import {useSelector} from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -18,17 +18,18 @@ import {
   StatusBarHeightSecond,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { getCurrentLocation } from '../utils/helperFunctions';
-import { chekLocationPermission } from '../utils/permissions';
+import {MyDarkTheme} from '../styles/theme';
+import {getCurrentLocation} from '../utils/helperFunctions';
+import {chekLocationPermission} from '../utils/permissions';
 
 import stylesFun from './styles';
 
 export default function SelctFromMap({
-  addressDone = () => { },
-  mapClose = () => { },
+  addressDone = () => {},
+  mapClose = () => {},
   constCurrLoc,
-  location
+  location,
+  doneBtnStyle = {},
 }) {
   const navigation = useNavigation();
   const mapRef = React.createRef();
@@ -37,7 +38,6 @@ export default function SelctFromMap({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-console.log(location,"constCurrLocconstCurrLoc")
 
   const [state, setState] = useState({
     region: {
@@ -47,8 +47,8 @@ console.log(location,"constCurrLocconstCurrLoc")
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: location?.latitude || 30.7333,
-      longitude: location?.longitude || 76.7794,
+      latitude: constCurrLoc?.latitude || 30.7333,
+      longitude: constCurrLoc?.longitude || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -62,16 +62,16 @@ console.log(location,"constCurrLocconstCurrLoc")
     task_type_id: null,
   });
 
-  const { region, details } = state;
+  const {region, details} = state;
 
-  const { themeColors, appStyle } = useSelector((state) => state?.initBoot);
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily, themeColors });
+  const styles = stylesFun({fontFamily, themeColors});
 
   const _onRegionChange = (region) => {
-    updateState({ region: region });
+    updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
   };
@@ -84,24 +84,29 @@ console.log(location,"constCurrLocconstCurrLoc")
       .then((json) => {
         console.log(json, 'jsonjsonjsonjson');
 
-        let finalResult = {}
+        let finalResult = {};
         if (json?.results?.length > 0) {
           json.results.every((val, i) => {
-            console.log("my val", val)
-            if (val.types.includes("street_address") || val.types.includes("route") || val.types.includes("postal_code") || val.types.includes("administrative_area_level_1")) {
-              finalResult = val
+            console.log('my val', val);
+            if (
+              val.types.includes('street_address') ||
+              val.types.includes('route') ||
+              val.types.includes('postal_code') ||
+              val.types.includes('administrative_area_level_1')
+            ) {
+              finalResult = val;
               return false;
             } else {
-              finalResult = val
-              return true
+              finalResult = val;
+              return true;
             }
-          })
+          });
         }
 
-        console.log("final result", finalResult)
+        console.log('final result', finalResult);
 
         if (Object.keys(finalResult).length > 0) {
-          updateState({ formattedAddress: finalResult?.formatted_address });
+          updateState({formattedAddress: finalResult?.formatted_address});
           let detail = {};
           detail = {
             formatted_address: finalResult?.formatted_address,
@@ -114,15 +119,13 @@ console.log(location,"constCurrLocconstCurrLoc")
             address_components: finalResult?.address_components,
             place_id: finalResult?.place_id,
           };
-          updateState({ details: detail });
+          updateState({details: detail});
         } else {
-          alert("location not found")
+          alert('location not found');
         }
       })
       .catch((error) => console.log(error, 'errro geocode'));
   };
-
-
 
   useEffect(() => {
     chekLocationPermission()
@@ -155,7 +158,7 @@ console.log(location,"constCurrLocconstCurrLoc")
                 },
               );
             })
-            .catch((err) => { });
+            .catch((err) => {});
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -175,7 +178,6 @@ console.log(location,"constCurrLocconstCurrLoc")
 
   const markerRef = useRef();
 
-
   const MARKER_WIDTH = 20;
   /** Marker's height */
   const MARKER_HEIGHT = 40; // marker height
@@ -183,7 +185,7 @@ console.log(location,"constCurrLocconstCurrLoc")
   const getCenterOffsetForAnchor = (
     anchor = {},
     markerWidth = number,
-    markerHeight = number
+    markerHeight = number,
   ) => {
     return {
       x: markerWidth * 0.5 - markerWidth * anchor.x,
@@ -192,16 +194,16 @@ console.log(location,"constCurrLocconstCurrLoc")
   };
 
   /** Customizable anchor prop - Specify your desired anchor adjustements here */
-  const ANCHOR = { x: 0.5, y: 0.5 }; // in my case I customized this based on marker dimensions like this: { x: 0.5, y: 1 - 10 / MARKER_HEIGHT } lifting the marker up a bit
+  const ANCHOR = {x: 0.5, y: 0.5}; // in my case I customized this based on marker dimensions like this: { x: 0.5, y: 1 - 10 / MARKER_HEIGHT } lifting the marker up a bit
   /** auto generated centerOffset prop based on the anchor property */
   const CENTEROFFSET = getCenterOffsetForAnchor(
     ANCHOR,
     MARKER_WIDTH,
-    MARKER_HEIGHT
+    MARKER_HEIGHT,
   );
 
   const _onDrag = (res) => {
-    console.log(res, "ondrag res");
+    console.log(res, 'ondrag res');
     _getAddressBasedOnCoordinates(res?.coordinate);
   };
 
@@ -218,8 +220,7 @@ console.log(location,"constCurrLocconstCurrLoc")
         initialRegion={region}
         // pointerEvents={'none'}
         // minZoomLevel={20}
-        onRegionChangeComplete={_onRegionChange}
-      >
+        onRegionChangeComplete={_onRegionChange}>
         {/* <MarkerAnimated
           ref={markerRef}
 
@@ -235,9 +236,8 @@ console.log(location,"constCurrLocconstCurrLoc")
             longitude: region?.longitude,
           }}
         /> */}
-
       </MapView>
-      <View style={[styles.backbutton, { marginHorizontal: moderateScale(15) }]}>
+      <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         <TouchableOpacity onPress={mapClose}>
           <View
             style={{
@@ -253,7 +253,7 @@ console.log(location,"constCurrLocconstCurrLoc")
           </View>
         </TouchableOpacity>
       </View>
-      
+
       <View
         style={{
           position: 'absolute',
@@ -267,7 +267,7 @@ console.log(location,"constCurrLocconstCurrLoc")
         }}>
         <Image
           source={imagePath.icLocationPin_}
-          style={{ tintColor: themeColors.primary_color }}
+          style={{tintColor: themeColors.primary_color}}
         />
       </View>
 
@@ -277,6 +277,7 @@ console.log(location,"constCurrLocconstCurrLoc")
           bottom: 40,
           width: width - 40,
           alignSelf: 'center',
+          ...doneBtnStyle,
         }}>
         <Text
           style={{

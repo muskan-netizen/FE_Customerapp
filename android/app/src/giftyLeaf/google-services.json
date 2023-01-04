@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "521262857336",
+    "project_id": "giftyleaf-66012",
+    "storage_bucket": "giftyleaf-66012.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521262857336:android:89d6ad86907d9afe85418d",
+        "android_client_info": {
+          "package_name": "com.giftyleaf.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521262857336-3dsapc6s2p6ld2lsgoqmmmtj39ie60gm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giftyleaf.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "521262857336-93e8o7ub84h0sl3lf22480v8cl7bgv40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giftyleaf.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "521262857336-gpdvgjcvecemuq6afl3ddn021ra8ue7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giftyleaf.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "521262857336-skflgneu686su2e8ck84pcais96m2k4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4UbRCDhDamYyDpxLHnBqQL5_TTHWRCKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521262857336-skflgneu686su2e8ck84pcais96m2k4o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "521262857336-05q668fgbk2e1gaq0g491j8tbmvqepqq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.giftyleaf.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

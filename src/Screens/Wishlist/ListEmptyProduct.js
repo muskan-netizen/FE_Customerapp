@@ -9,7 +9,7 @@ import {moderateScale} from '../../styles/responsiveSize';
 export default function ListEmptyProduct({
   isLoading = false,
   text = strings.NODATAFOUND,
-  containerStyle,
+  containerStyle = {},
 }) {
   if (isLoading) {
     // return <ProductLoader listSize={4} isRow />;
@@ -27,7 +27,7 @@ export default function ListEmptyProduct({
   }
   return (
     <NoDataFound
-      containerStyle
+      containerStyle={containerStyle}
       text={strings.EMPTY_WISHLIST}
       isLoading={isLoading}
     />

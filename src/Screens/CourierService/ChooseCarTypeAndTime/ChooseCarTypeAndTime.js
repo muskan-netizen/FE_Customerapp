@@ -24,6 +24,7 @@ import * as RNLocalize from 'react-native-localize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
+import {isEmpty} from 'lodash';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -68,7 +69,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     isLoading: false,
     addressLabel: 'Glenpark',
     formattedAddress: '8502 Preston Rd. Inglewood, Maine 98380',
-    availableVendors: paramData?.cabVendors,
+    availableVendors: !isEmpty(paramData?.cabVendors)
+      ? paramData?.cabVendors
+      : [],
     availableCarList: [],
     availAbleTimes: [
       {
@@ -100,7 +103,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
-    selectedVendorOption: paramData?.cabVendors[0]
+    selectedVendorOption: !isEmpty(paramData?.cabVendors)
       ? paramData?.cabVendors[0]
       : null,
     pageNo: 1,
@@ -154,7 +157,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _confirmAddress = (addressType) => {};
   const _onRegionChange = (region) => {
-    console.log(region, 'region>>region>regionregion');
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
@@ -168,10 +170,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     };
 
   useEffect(() => {
-    console.log(selectedVendorOption, 'selectedVendorOption');
-    {
-      !!selectedVendorOption && _getAllCarAndPrices();
-    }
+    !!selectedVendorOption && _getAllCarAndPrices();
   }, [selectedVendorOption]);
 
   useEffect(() => {
@@ -328,7 +327,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         !userData?.verify_details?.is_phone_verified
       )
     ) {
-      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+      moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_COURIER, {
         ...userData,
         fromCart: true,
       })();

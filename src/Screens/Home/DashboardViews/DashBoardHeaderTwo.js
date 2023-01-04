@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import ScaledImage from 'react-native-scalable-image';
 import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
@@ -32,12 +33,15 @@ export default function DashBoardHeaderTwo({
   const [state, setState] = useState({
     mainViewHeight: 0,
   });
-  const {appData, appStyle, themeColors} = useSelector(
+  const darkthemeusingDevice = useDarkMode();
+
+  const {appData, appStyle, themeColors, themeToggle, themeColor} = useSelector(
     (state) => state?.initBoot,
   );
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const {mainViewHeight} = state;
   //update state
@@ -82,8 +86,12 @@ export default function DashBoardHeaderTwo({
               profileInfo && profileInfo.logo
                 ? {
                     uri: getImageUrl(
-                      profileInfo.logo.image_fit,
-                      profileInfo.logo.image_path,
+                      isDarkMode
+                        ? profileInfo.dark_logo.image_fit
+                        : profileInfo.logo.image_fit,
+                      isDarkMode
+                        ? profileInfo.dark_logo.image_path
+                        : profileInfo.logo.image_path,
                       '1000/1000',
                     ),
                   }
@@ -108,9 +116,7 @@ export default function DashBoardHeaderTwo({
           }>
           <Image source={imagePath.searchIcon} />
           <View>
-            <Text style={styles.searchTextStyle}>
-              {'Search product...'}
-            </Text>
+            <Text style={styles.searchTextStyle}>{'Search product...'}</Text>
           </View>
         </TouchableOpacity>
       </View>

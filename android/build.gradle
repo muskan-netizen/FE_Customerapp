@@ -4,19 +4,22 @@ buildscript {
     ext {
         buildToolsVersion = "30.0.2"
         minSdkVersion = 21
-        compileSdkVersion = 30
-        targetSdkVersion = 30
+        compileSdkVersion = 31
+        targetSdkVersion = 31
         googlePlayServicesAuthVersion = "16.0.1" // <--- use this version or newer
         playServicesVersion='17.0.0'
+        kotlin_version = '1.6.10'
     }
     repositories {
         google()
 //        jcenter()
         mavenCentral()
+        // gradlePluginPortal( )
     }
     dependencies {
         classpath('com.android.tools.build:gradle:4.2.0')
         classpath 'com.google.gms:google-services:4.3.10'// <--- use this version or newer
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -38,10 +41,17 @@ allprojects {
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
         google()
         mavenCentral()
+       
         jcenter()
+        // gradlePluginPortal( )
         maven { url 'https://www.jitpack.io' }
         
       
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.facebook.react:react-native:0.63.4'
+        }
     }
 
 }

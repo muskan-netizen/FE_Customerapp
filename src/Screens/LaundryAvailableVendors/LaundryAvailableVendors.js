@@ -25,6 +25,7 @@ import colors from '../../styles/colors';
 import DeviceInfo from 'react-native-device-info';
 import {isEmpty} from 'lodash';
 import navigationStrings from '../../navigation/navigationStrings';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
 
 export default function LaundryAvailableVendors({navigation, route}) {
   const paramData = route?.params?.data;
@@ -36,6 +37,8 @@ export default function LaundryAvailableVendors({navigation, route}) {
 
     themeColors,
   } = useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
 
   const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
@@ -130,7 +133,7 @@ export default function LaundryAvailableVendors({navigation, route}) {
 
   const renderItem = ({item, index}) => {
     return (
-      <View style={styles.mainRowStyle}>
+      <View style={{...styles.mainRowStyle}}>
         <View style={{flex: 0.2}}>
           <FastImage
             source={{
@@ -145,31 +148,49 @@ export default function LaundryAvailableVendors({navigation, route}) {
             style={styles.vendorImgStyle}
           />
         </View>
-        {!isEmpty(item?.product) && (
-          <View
-            style={{
-              ...styles.completePartialMatchView,
-              backgroundColor:
-                item?.product[0]?.match == 'C' ? colors.greenC : colors.redF,
-            }}>
-            <Text
-              style={{
-                ...styles.completePartialMatchTxt,
-                color:
-                  item?.product[0]?.match == 'C' ? colors.greenD : colors.redG,
-              }}>
-              {item?.product[0]?.match == 'C'
-                ? strings.COMPLETE_MATCH
-                : strings.PARTIAL_MATCH}
-            </Text>
-          </View>
-        )}
+
         <View
           style={{
             paddingHorizontal: moderateScale(20),
             flex: 0.8,
           }}>
-          <Text style={styles.vendorTitle}>{item?.name}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                ...styles.vendorTitle,
+                flex: 0.95,
+              }}>
+              {item?.name}
+            </Text>
+            {!isEmpty(item?.product) && (
+              <View
+                style={{
+                  ...styles.completePartialMatchView,
+                  backgroundColor:
+                    item?.product[0]?.match == 'C'
+                      ? colors.greenC
+                      : colors.redF,
+                }}>
+                <Text
+                  style={{
+                    ...styles.completePartialMatchTxt,
+                    color:
+                      item?.product[0]?.match == 'C'
+                        ? colors.greenD
+                        : colors.redG,
+                  }}>
+                  {item?.product[0]?.match == 'C'
+                    ? strings.COMPLETE_MATCH
+                    : strings.PARTIAL_MATCH}
+                </Text>
+              </View>
+            )}
+          </View>
+
           <View style={styles.locationImgView}>
             <Image
               source={imagePath.icLocationBlue}
@@ -181,7 +202,12 @@ export default function LaundryAvailableVendors({navigation, route}) {
           </View>
           {!isEmpty(item?.product) && (
             <Text style={styles.priceText}>
-              {currencies?.primary_currency?.symbol} {item?.product[0]?.price}
+              {tokenConverterPlusCurrencyNumberFormater(
+                item?.product[0]?.price,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
             </Text>
           )}
           <ButtonWithLoader
@@ -245,18 +271,16 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
       backgroundColor: colors.greenC,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingHorizontal: moderateScale(4),
-      paddingVertical: moderateScale(4),
-      position: 'absolute',
-      right: 10,
-      top: 10,
+
       borderRadius: moderateScale(2),
+      height: moderateScaleVertical(20),
     },
     completePartialMatchTxt: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(8),
       color: colors.greenD,
       textTransform: 'uppercase',
+      paddingHorizontal: 4,
     },
     vendorTitle: {
       fontFamily: fontFamily?.bold,

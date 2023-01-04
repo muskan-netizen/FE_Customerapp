@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import {
   Image,
@@ -9,6 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
@@ -23,14 +24,12 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {currencyNumberFormatter} from '../utils/commonFunction';
 const PendingOrderCard = ({
   data = {},
   titlestyle,
@@ -47,6 +46,9 @@ const PendingOrderCard = ({
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -122,13 +124,14 @@ const PendingOrderCard = ({
               isDarkMode
                 ? [styles.userName, {color: MyDarkTheme.colors.text}]
                 : [styles.userName]
-            }>{`${currencies?.primary_currency?.symbol}${
-            // Number(i?.pvariant?.multiplier) *
-            currencyNumberFormatter(
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
               Number(data?.payable_amount),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )
-          }`}</Text>
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
       </View>
 

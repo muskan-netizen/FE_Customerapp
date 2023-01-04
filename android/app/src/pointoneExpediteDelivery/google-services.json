@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "93509563952",
+    "project_id": "pointone-expedite-delivery",
+    "storage_bucket": "pointone-expedite-delivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93509563952:android:5fe8430f8b0f865d8ddff5",
+        "android_client_info": {
+          "package_name": "com.pointoneExpediteDelivery.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93509563952-ch3r6iqn2b5gkv3d1pg0qetlhu5s94ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pointoneExpediteDelivery.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "93509563952-d6v86ggpln8s4it6q770ngm4bm1qju8n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pointoneExpediteDelivery.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "93509563952-hqi2681lcojjel5mbffq41dkl1u294na.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pointoneExpediteDelivery.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "93509563952-qreq9sje0db0b850nofe3fjaejb9krjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3O5ResEeO9osKUcK0r0DpVl5K7E3uuw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93509563952-qreq9sje0db0b850nofe3fjaejb9krjq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93509563952-3fa2so5b4jj5l5ml99ttgdd00r6mi7f0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pointoneExpediteDelivery.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

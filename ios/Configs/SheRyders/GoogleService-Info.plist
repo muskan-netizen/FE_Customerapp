@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>263782960284-jiluqn0b2egekf5pdf8mb3ibq6jc1u4u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.263782960284-jiluqn0b2egekf5pdf8mb3ibq6jc1u4u</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>263782960284-0b9l8d7qesjbkal190lfhufv6frdl5tl.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAgMr-Jy1G64GEJVYfQgNgoJrEPTRfa-UI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>263782960284</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.sheRyders</string>
+	<key>PROJECT_ID</key>
+	<string>she-ryders-e7122</string>
+	<key>STORAGE_BUCKET</key>
+	<string>she-ryders-e7122.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:263782960284:ios:c3bbde26ddfec7e78bf159</string>
+</dict>
+</plist>

@@ -1,34 +1,43 @@
+import {useScrollToTop} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Animated,
   FlatList,
+  Image,
   Platform,
   RefreshControl,
   ScrollView,
   Text,
   View,
-  Animated,
-  Image,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import {SvgUri} from 'react-native-svg';
 import {useSelector} from 'react-redux';
-import BlurImages from '../../../Components/BlurImages';
-import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import BannerHome2 from '../../../Components/BannerHome2';
+import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import SearchLoader from '../../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp from '../../../Components/ProductsComp';
-import SearchBar2 from '../../../Components/SearchBar2';
+import SubscriptionModal from '../../../Components/SubscriptionModal';
+import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
-  height,
   itemWidth,
   moderateScale,
   moderateScaleVertical,
@@ -37,29 +46,12 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
-import stylesFunc from '../styles';
-import {SvgUri} from 'react-native-svg';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
-  getScaleTransformationStyle,
-  pressInAnimation,
-  pressOutAnimation,
 } from '../../../utils/helperFunctions';
-import {useScrollToTop} from '@react-navigation/native';
-import staticStrings from '../../../constants/staticStrings';
-import imagePath from '../../../constants/imagePath';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import {string} from 'is_js';
-import BannerHome2 from '../../../Components/BannerHome2';
-import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
+import stylesFunc from '../styles';
 
 export default function DashBoardEight({
   handleRefresh = () => {},
@@ -71,6 +63,10 @@ export default function DashBoardEight({
   toggleData = {},
   onVendorFilterSeletion = () => {},
   tempCartData = null,
+  onClose = () => {},
+  onPressSubscribe = () => {},
+  isSubscription = false,
+  selectedFilterType = {},
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -89,7 +85,6 @@ export default function DashBoardEight({
     isVendorColumnList: false,
     vendorsData: [],
     showMenu: false,
-    currSelectedFilter: null,
     categoriesData: [],
     seeMore: false,
   });
@@ -143,14 +138,7 @@ export default function DashBoardEight({
     });
   }, [appMainData?.categories]);
 
-  const {currSelectedFilter} = state;
-
   // console.log('app main data', appMainData);
-
-  const onSelectedFilter = (selectedFilter) => {
-    updateState({showMenu: false, currSelectedFilter: selectedFilter});
-    onVendorFilterSeletion(selectedFilter);
-  };
 
   const homeAllFilters = () => {
     let homeFilter = [
@@ -532,9 +520,9 @@ export default function DashBoardEight({
                     fontFamily: fontFamily.regular,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  {!currSelectedFilter
+                  {isEmpty(selectedFilterType)
                     ? strings.RELEVANCE
-                    : currSelectedFilter?.type}
+                    : selectedFilterType?.type}
                 </Text>
               </View>
             </MenuTrigger>
@@ -549,7 +537,7 @@ export default function DashBoardEight({
                 return (
                   <View key={index}>
                     <MenuOption
-                      onSelect={() => onSelectedFilter(item)}
+                      onSelect={() => onVendorFilterSeletion(item)}
                       key={String(index)}
                       text={item?.type}
                       style={{
@@ -832,6 +820,14 @@ export default function DashBoardEight({
           }}
         />
       </ScrollView>
+      {!!userData?.auth_token &&
+        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+          <SubscriptionModal
+            isVisible={isSubscription}
+            onClose={onClose}
+            onPressSubscribe={onPressSubscribe}
+          />
+        )}
     </View>
   );
 }

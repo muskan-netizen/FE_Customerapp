@@ -33,7 +33,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {cameraHandler} from '../../../utils/commonFunction';
+import {
+  cameraHandler,
+  getValuebyKeyInArray,
+} from '../../../utils/commonFunction';
 import {
   getImageUrl,
   showError,
@@ -52,6 +55,7 @@ const RoyoAddProduct = ({route, navigation}) => {
   const {appData, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences} = appData?.profile?.preferences;
   const [state, setState] = useState({
     isLoading: true,
     isLoadingB: false,
@@ -226,8 +230,7 @@ const RoyoAddProduct = ({route, navigation}) => {
       )
       .then((res) => {
         const productInfo = res?.data?.product_detail;
-        console.log(productInfo, 'productDetails<<<<<');
-        console.log(productDetailParam, 'productDetails<<<<<');
+
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -251,7 +254,18 @@ const RoyoAddProduct = ({route, navigation}) => {
             productInfo?.variant &&
             productInfo?.variant.length > 0 &&
             productInfo?.variant[0].price
-              ? Number(productInfo?.variant[0].price).toFixed(2).toString()
+              ? getValuebyKeyInArray(
+                  'is_token_currency_enable',
+                  additional_preferences,
+                )
+                ? String(
+                    Number(productInfo?.variant[0].price) *
+                      getValuebyKeyInArray(
+                        'token_currency',
+                        additional_preferences,
+                      ),
+                  )
+                : Number(productInfo?.variant[0].price).toFixed(2).toString()
               : '',
           // compareAtPrice: productInfo?.variant[0].cost_price
           //   ? productInfo?.variant[0].cost_price
@@ -260,9 +274,20 @@ const RoyoAddProduct = ({route, navigation}) => {
             productInfo?.variant &&
             productInfo?.variant.length > 0 &&
             productInfo?.variant[0].compare_at_price
-              ? Number(productInfo?.variant[0].compare_at_price)
-                  .toFixed(2)
-                  .toString()
+              ? getValuebyKeyInArray(
+                  'is_token_currency_enable',
+                  additional_preferences,
+                )
+                ? String(
+                    Number(productInfo?.variant[0].compare_at_price) *
+                      getValuebyKeyInArray(
+                        'token_currency',
+                        additional_preferences,
+                      ),
+                  )
+                : Number(productInfo?.variant[0].compare_at_price)
+                    .toFixed(2)
+                    .toString()
               : '',
           batchCount:
             productInfo?.batch_count > 0
@@ -329,7 +354,12 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('meta_title', metaTitle);
     formData.append('meta_keyword', metaKeyword);
     formData.append('meta_description', metaDescription);
-    formData.append('price', price);
+    formData.append(
+      'price',
+      getValuebyKeyInArray('is_token_currency_enable', additional_preferences)
+        ? price / getValuebyKeyInArray('token_currency', additional_preferences)
+        : price,
+    );
     formData.append('compare_at_price', compareAtPrice);
     formData.append('has_inventory', isTrackInventory ? 1 : 0);
     formData.append('quantity', quantity);
@@ -400,6 +430,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then(async (res) => {
         showSuccess(res?.message);

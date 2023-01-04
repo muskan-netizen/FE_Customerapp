@@ -19,7 +19,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
     ratingColor: {
-      color: colors.backgroundGrey,
+      // color: colors.backgroundGrey,
       paddingLeft: 5,
       fontSize: textScale(12),
       fontFamily: fontFamily.medium,

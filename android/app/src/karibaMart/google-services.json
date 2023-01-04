@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1033452106200",
+    "project_id": "karibamart-e4e3f",
+    "storage_bucket": "karibamart-e4e3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033452106200:android:97818277d0096ec98302ad",
+        "android_client_info": {
+          "package_name": "com.karibaMart.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033452106200-argj99v3b14b0d149h91dlttgipddrbs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.karibaMart.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1033452106200-datutslkuko0nom5c5ajds6gmh8fom6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.karibaMart.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1033452106200-jnrdbkt4nbedfd4ephju54ql351vthq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.karibaMart.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1033452106200-v9d3uqi1k7jaae6bmdv7oq5oe2fv9cqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbKnqxqExHW72mbU1duD82-IFxoZrM5mU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033452106200-v9d3uqi1k7jaae6bmdv7oq5oe2fv9cqu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

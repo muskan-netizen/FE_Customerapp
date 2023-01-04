@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {sessionHandler} from './helperFunctions';
+import { sessionHandler } from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
@@ -106,7 +106,6 @@ export async function apiReq(
       // cancelToken:source.token
     };
 
-    console.log(headers, 'headersheadersheaders');
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,
@@ -115,11 +114,12 @@ export async function apiReq(
       };
     }
 
-    console.log(headers, 'headersheaders');
-    console.log(data, 'datadata');
+    console.log('header sending--->', headers);
+    console.log('data sending ---->', data);
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
+        console.log("core result",result)
         const {data} = result;
 
         if (data.status === false) {

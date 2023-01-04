@@ -35,7 +35,6 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
-import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
 import {cloneDeep} from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
@@ -165,8 +164,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     }, [currencies, languages, paramData]),
   );
   const mapRef = useRef();
-
-  console.log('driverStatusdriverStatus', orderStatus);
 
   useInterval(
     () => {

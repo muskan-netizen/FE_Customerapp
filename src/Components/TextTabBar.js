@@ -34,7 +34,7 @@ const TextTabBar = ({
             {
               ...commonStyles.mediumFont14,
               color: colors.textGreyB,
-              // marginLeft: 2,
+
               opacity: 1,
               marginTop: 4,
               textAlign: 'center',

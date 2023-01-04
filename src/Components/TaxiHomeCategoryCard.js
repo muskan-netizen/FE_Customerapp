@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -13,21 +13,22 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import { SvgUri } from 'react-native-svg';
+import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 
 const TaxiHomeCategoryCard = ({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   isLoading = false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
@@ -37,15 +38,16 @@ const TaxiHomeCategoryCard = ({
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  console.log("data category", imageURI)
-
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
       style={{
         // shadowOpacity: 0.5,
-        width: width / moderateScale(5.4),
+        // width: width / moderateScale(3),
+        width: appIds.hezniTaxi
+          ? width / moderateScale(3)
+          : width / moderateScale(5.4),
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',
@@ -56,20 +58,20 @@ const TaxiHomeCategoryCard = ({
         <View
           style={{
             flex: 0.8,
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.taxiCategoryGrayColor,
-              30,
-            ),
-            paddingHorizontal:  moderateScale(8),
-            borderRadius: 10,
+            backgroundColor: colors.lightGreyBg,
+            paddingHorizontal: moderateScale(8),
+            borderRadius: moderateScale(5),
           }}>
           {!!isSVG ? (
-            <View style={{ height: moderateScale(50), width: moderateScale(50) }}>
+            <View
+              style={{
+                height: moderateScale(50),
+                width: moderateScale(50),
+              }}>
               <SvgUri
                 height={moderateScale(50)}
                 width={moderateScale(50)}
                 uri={imageURI}
-                
               />
             </View>
           ) : (

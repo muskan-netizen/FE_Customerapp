@@ -26,7 +26,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -46,6 +46,8 @@ const OrderCardVendorComponent = ({
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -175,13 +177,14 @@ const OrderCardVendorComponent = ({
               isDarkMode
                 ? [styles.userName, {color: MyDarkTheme.colors.text}]
                 : [styles.userName]
-            }>{`${currencies?.primary_currency?.symbol}${
-            // Number(i?.pvariant?.multiplier) *
-            currencyNumberFormatter(
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
               Number(data?.payable_amount),
-              appData?.profile?.preferences?.digit_after_decimal,
-            )
-          }`}</Text>
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}
+          </Text>
         </View>
       </View>
 

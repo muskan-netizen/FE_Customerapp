@@ -20,6 +20,7 @@ import {
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
+import Khalti from '../Screens/PaymentGateways/Khalti';
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
@@ -107,6 +108,11 @@ export default function (Stack) {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name={navigationStrings.KHALTI}
+        component={Khalti}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name={navigationStrings.RATEORDER}
         component={RateOrder}
         options={{
@@ -114,11 +120,11 @@ export default function (Stack) {
           unmountOnBlur: true,
         }}
       />
-      {/* <Stack.Screen
-        name={navigationStrings.VERIFY_ACCOUNT}
+      <Stack.Screen
+        name={navigationStrings.VERIFY_ACCOUNT_TAXI}
         component={VerifyAccount}
         options={{headerShown: false}}
-      /> */}
+      />
     </>
   );
 }

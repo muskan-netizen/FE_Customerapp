@@ -1,5 +1,4 @@
 import {I18nManager, StyleSheet} from 'react-native';
-import {color} from 'react-native-reanimated';
 import colors from '../../styles/colors';
 import {
   moderateScale,
@@ -26,7 +25,6 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     availableBalanceText: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(12),
-      color: colors.textGreyB,
     },
     availableBalanceValue: {
       fontFamily: fontFamily.bold,
@@ -66,13 +64,14 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       backgroundColor: colors.transactionHistoryBg,
       // justifyContent: 'center',
       paddingLeft: moderateScale(10),
+      marginTop: moderateScaleVertical(15),
     },
     transactionHistoryText: {
       fontFamily: fontFamily.medium,
     },
     addMoneyListDesc: {
       // height: 60,
-      flex: 0.6,
+      flex: 0.7,
       paddingTop: moderateScale(2),
       paddingLeft: moderateScale(10),
     },
@@ -119,23 +118,21 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     textInputStyle: {
       flex: 1,
       opacity: 0.7,
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
       fontFamily: fontFamily.medium,
-      fontSize: textScale(14),
+      fontSize: textScale(13),
       paddingHorizontal: 10,
       paddingTop: 0,
       paddingBottom: 0,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
     textInputView: {
-     
       flexDirection: 'row',
       height: moderateScaleVertical(49),
       color: colors.white,
       borderWidth: 1,
       borderRadius: 13,
-      borderColor: colors.borderLight,
-      borderBottomColor: isDarkMode
+      borderColor: isDarkMode
         ? MyDarkTheme.colors.text
         : colors.lightGreyBorder,
       paddingHorizontal: moderateScale(12),

@@ -18,7 +18,7 @@ export function onStartChat(data = {}, headers = {}) {
 export function fetchUserChat(data = {}, headers = {}) {
   return new Promise(async(resolve, reject) => {
     const getAppData = await getItem('appData');
-    console.log("getAppDatagetAppData",getAppData)
+   
     const socketUrl = getAppData?.appData?.profile?.socket_url
 
     apiPost(socketUrl + USER_CHAT, data, headers)
@@ -97,8 +97,11 @@ export function getAllRoomUser(query = '', data = {}, headers = {}) {
     const getAppData = await getItem('appData');
     const socketUrl = getAppData?.appData?.profile?.socket_url
 
+    console.log("socekt url",socketUrl + ALL_ROOM_USER + query)
+
     apiGet(socketUrl + ALL_ROOM_USER + query, data, headers)
       .then((response) => {
+        console.log("room user response",response)
         resolve(response);
       })
       .catch((error) => {
@@ -108,6 +111,7 @@ export function getAllRoomUser(query = '', data = {}, headers = {}) {
 }
 
 export function sendNotification(data = {}, headers = {}) {
+  console.log(SEND_NOTIFCATION,data,"all notification data");
   return new Promise(async(resolve, reject) => {
     apiPost(SEND_NOTIFCATION, data, headers)
       .then((response) => {

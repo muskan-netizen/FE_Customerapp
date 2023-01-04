@@ -23,7 +23,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
-import {currencyNumberFormatter} from '../../../utils/commonFunction';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -50,6 +50,8 @@ export default function SelectCarModalView({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   const fontFamily = appStyle?.fontSizeData;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -159,12 +161,12 @@ export default function SelectCarModalView({
                   //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
                   //   : styles.priceStyle
                 }>
-                {`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
-                  Number(item.tags_price),
-                  appData?.profile?.preferences?.digit_after_decimal,
-                )}`}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.payable_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
 

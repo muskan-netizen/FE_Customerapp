@@ -2,6 +2,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   Image,
   ScrollView,
   Text,
@@ -68,7 +69,6 @@ export default function MyProfile({route, navigation}) {
   const paramData = route?.params;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const userData = useSelector((state) => state?.auth?.userData);
-  console.log(userData, 'userData>>');
   const [state, setState] = useState({
     currentPassword: '',
     newPassword: '',
@@ -443,6 +443,16 @@ export default function MyProfile({route, navigation}) {
 
   //Delete address
   const delAddress = (id) => {
+    Alert.alert('', strings.DELETE_ADDRESS_CONFIRM_MSG, [
+      {
+        text: strings.NO,
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {text: strings.YES, onPress: () => onPressDelete(id)},
+    ]);
+  };
+
+  const onPressDelete = (id) => {
     updateState({isLoading: true});
 
     let data = {};
@@ -519,18 +529,6 @@ export default function MyProfile({route, navigation}) {
             </View>
           ) : null}
 
-          {/* <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('name')}
-            value={name}
-            label={'NAME'}
-            autoCapitalize={'none'}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            undnerlinecolor={colors.textGreyB}
-            txtInputStyle={{fontFamily: fontFamily.regular}}
-            labelStyle={{color: colors.textGreyB}}
-          />
-          */}
-
           <BorderTextInput
             onChangeText={_onChangeText('name')}
             placeholder={strings.YOUR_NAME}
@@ -541,16 +539,6 @@ export default function MyProfile({route, navigation}) {
             placeholder={strings.YOUR_EMAIL}
             value={email}
           />
-          {/* <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('email')}
-            value={email}
-            label={'EMAIL ID'}
-            autoCapitalize={'none'}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            txtInputStyle={{fontFamily: fontFamily.regular}}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
-          /> */}
 
           <PhoneNumberInput
             onCountryChange={_onCountryChange}
@@ -563,18 +551,6 @@ export default function MyProfile({route, navigation}) {
             callingCode={state.callingCode}
             color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
-
-          {/* <PhoneNumberInputWithUnderline
-            onCountryChange={_onCountryChange}
-            placeholder={'PHONE NUMBER'}
-            onChangePhone={(phoneNumber) =>
-              updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
-            }
-            cca2={cca2}
-            phoneNumber={phoneNumber}
-            callingCode={state.callingCode}
-            undnerlineColor={colors.textGreyB}
-          /> */}
 
           <View style={{height: moderateScaleVertical(20)}} />
 
@@ -590,7 +566,6 @@ export default function MyProfile({route, navigation}) {
       </KeyboardAwareScrollView>
     );
   };
-  console.log(fontFamily, 'fontFamily');
   //Change password info tab
   const changePasswordView = () => {
     return (
@@ -603,16 +578,6 @@ export default function MyProfile({route, navigation}) {
             marginVertical: moderateScaleVertical(50),
             marginHorizontal: moderateScale(24),
           }}>
-          {/* <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('currentpassword')}
-            label={strings.ENTER_CURRENT_PASSWORD}
-            value={currentpassword}
-            secureTextEntry={true}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
-            secureTextEntry={true}
-          /> */}
           <BorderTextInput
             onChangeText={_onChangeText('currentpassword')}
             placeholder={strings.ENTER_CURRENT_PASS}
@@ -625,15 +590,6 @@ export default function MyProfile({route, navigation}) {
             value={newPassword}
             secureTextEntry={true}
           />
-          {/* <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('newPassword')}
-            value={newPassword}
-            label={strings.ENTER_NEW_PASSWORD}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
-            secureTextEntry={true}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          /> */}
 
           <BorderTextInput
             onChangeText={_onChangeText('confirmPassword')}
@@ -641,16 +597,6 @@ export default function MyProfile({route, navigation}) {
             value={confirmPassword}
             secureTextEntry={true}
           />
-
-          {/* <TextInputWithUnderlineAndLabel
-            onChangeText={_onChangeText('confirmPassword')}
-            value={confirmPassword}
-            label={strings.ENTER_CONFIRM_PASSWORD}
-            undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
-            secureTextEntry={true}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          /> */}
 
           <GradientButton
             btnStyle={{marginTop: moderateScaleVertical(57)}}
@@ -672,9 +618,6 @@ export default function MyProfile({route, navigation}) {
       <ScrollView
         style={{
           marginVertical: moderateScaleVertical(30),
-          // borderBottomColor:colors.lightGreyBorder,
-          // borderBottomWidth:moderateScaleVertical(1)
-          // profileAddress?.address && userData?.auth_token?
         }}>
         <View
           style={{
@@ -881,14 +824,12 @@ export default function MyProfile({route, navigation}) {
       {/* top section user general info */}
 
       <View
-        style={
-          isDarkMode
-            ? [
-                styles.topSection,
-                {backgroundColor: MyDarkTheme.colors.background},
-              ]
-            : styles.topSection
-        }>
+        style={{
+          ...styles.topSection,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.backgroundGreyC,
+        }}>
         <TouchableWithoutFeedback onPress={showActionSheet}>
           <View style={styles.userProfileView}>
             <FastImage
@@ -932,47 +873,37 @@ export default function MyProfile({route, navigation}) {
             marginTop: moderateScaleVertical(20),
           }}>
           <Text
-            style={
-              isDarkMode
-                ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                : styles.userName
-            }>
+            style={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyI,
+            }}>
             {userData?.name}
           </Text>
           <Text
-            style={
-              isDarkMode
-                ? [styles.userEmail, {color: MyDarkTheme.colors.text}]
-                : styles.userEmail
-            }>
+            style={{
+              ...styles.userEmail,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyI,
+            }}>
             {userData?.email}
           </Text>
         </View>
       </View>
 
       <View
-        style={
-          isDarkMode
-            ? [
-                styles.bottomSection,
-                {backgroundColor: MyDarkTheme.colors.background},
-              ]
-            : styles.bottomSection
-        }>
+        style={{
+          ...styles.bottomSection,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.backgroundGrey,
+        }}>
         {/* scrolllablr tob bar */}
         <CustomTopTabBar
           scrollEnabled={true}
           tabBarItems={tabBarData}
           onPress={(tabData) => changeTab(tabData)}
           numberOfLines={1}
-          // containerStyle={{  width: width / 3}}
           textTabWidth={width / 2.8}
           customTextContainerStyle={{
             width: width / 2.8,
-
-            // flexWrap: 'wrap',
-            // alignSelf:'center'
-            // justifyContent: 'center',
           }}
           textStyle={{
             fontSize: textScale(13),
@@ -988,7 +919,6 @@ export default function MyProfile({route, navigation}) {
 
       <ActionSheet
         ref={actionSheet}
-        // title={'Choose one option'}
         options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
         cancelButtonIndex={2}
         destructiveButtonIndex={2}
@@ -1003,7 +933,6 @@ export default function MyProfile({route, navigation}) {
         onClose={() => setModalVisible(false)}
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
-        // onPress={currentLocation}
       />
     </WrapperContainer>
   );

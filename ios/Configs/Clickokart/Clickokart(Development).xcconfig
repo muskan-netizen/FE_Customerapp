@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Clickokart/Pods-available_pods-Clickokart.debug.xcconfig"
+
+PROJECT_APPLE_ID = 6443715176
+PROJECT_BUNDLE_ID =com.clickokart.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Clickokart
+PROJECT_GOOGLE_CLIENT_ID = 152129819683-8ir5fbobcn0r8k1uo5qfghmsjmi2tt5r.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.152129819683-8ir5fbobcn0r8k1uo5qfghmsjmi2tt5r
+PROJECT_FACEBOOK_ID = 1554352335024665
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =ClickokartInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

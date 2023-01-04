@@ -1,5 +1,4 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {wrap} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -11,7 +10,6 @@ import {
   Keyboard,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import {abs} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import GooglePlaceInput from '../../../Components/GooglePlaceInput';
 import GradientButton from '../../../Components/GradientButton';

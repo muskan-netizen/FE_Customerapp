@@ -75,10 +75,7 @@ const CustomBottomTabBarTwo = ({
                   ...styles.labelStyle,
                   color: isFocused
                     ? themeColors.secondary_color
-                    : getColorCodeWithOpactiyNumber(
-                        themeColors?.secondary_color.substr(1),
-                        70,
-                      ),
+                    : colors.whiteOpacity85,
                   opacity: isFocused ? 1 : 0.6,
                 }}>
                 {label}

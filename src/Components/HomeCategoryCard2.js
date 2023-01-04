@@ -14,6 +14,8 @@ import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 
 const HomeCategoryCard2 = ({
   data = {},
@@ -38,11 +40,11 @@ const HomeCategoryCard2 = ({
   const onLoad = (evl) => {};
 
   let imgHeight =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
+    appStyle?.homePageLayout === 5 ? moderateScale(60) : getBundleId() === appIds.onTheWheel ?  moderateScale(70) : moderateScale(50);
   let imgWidth =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
+    appStyle?.homePageLayout === 5 ? moderateScale(60) : getBundleId() === appIds.onTheWheel ?  moderateScale(70) :  moderateScale(50);
   let imgRadius =
-    appStyle?.homePageLayout === 5 ? moderateScale(40) : moderateScale(25);
+    appStyle?.homePageLayout === 5 ? moderateScale(30) : getBundleId() === appIds.onTheWheel ?  moderateScale(35): moderateScale(25);
 
   return (
     <TouchableOpacity
@@ -50,7 +52,7 @@ const HomeCategoryCard2 = ({
       activeOpacity={0.9}
       style={{
         // width: (width - moderateScale(16)) / 4,
-        marginVertical: moderateScale(0),
+        marginVertical: moderateScale(1),
         justifyContent: 'center',
         alignItems: 'center',
       }}>
@@ -99,7 +101,7 @@ const HomeCategoryCard2 = ({
             textAlign: 'center',
             marginTop: moderateScaleVertical(4),
           }}>
-          {data.name || data?.translation[0]?.name}
+          {data?.name || data?.translation&&data?.translation[0]?.name}
         </Text>
       </View>
     </TouchableOpacity>

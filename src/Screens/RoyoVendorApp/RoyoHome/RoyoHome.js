@@ -35,6 +35,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {
   boxWidth,
   customMarginBottom,
@@ -68,6 +69,8 @@ const RoyoHome = (props) => {
   const {appData, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
+  const {additional_preferences, digit_after_decimal} =
+    appData?.profile?.preferences;
   console.log(languages, 'languagessssssssss');
 
   const [state, setState] = useState({
@@ -221,7 +224,7 @@ const RoyoHome = (props) => {
     try {
       const res = await actions.allVendorOrders(query, headers);
       console.log('all vendor orders count', res);
-      console.log(res?.data?.data,"res?.data?.data")
+      console.log(res?.data?.data, 'res?.data?.data');
       setAllNewOrder(res?.data?.data);
     } catch (error) {
       console.log('error riased', error);
@@ -486,7 +489,6 @@ const RoyoHome = (props) => {
   };
 
   const renderNewOrder = ({item, index}) => {
-    console.log(item,"itemmmmmmm")
     return (
       <View
         style={{
@@ -506,7 +508,6 @@ const RoyoHome = (props) => {
       </View>
     );
   };
-
   const onEndReachedVendor = () => {
     if (vendorLoadMore.current) {
       vendorPage.current = vendorPage.current + 1;
@@ -608,10 +609,15 @@ const RoyoHome = (props) => {
                     {strings.TOTAL_REVENUE}
                   </Text>
                   <Text style={styles.font16Bold}>
-                    {currencies?.primary_currency?.symbol}
-                    {!!totalRevenue ? Number(totalRevenue).toFixed(2) : 0}
+                    {tokenConverterPlusCurrencyNumberFormater(
+                      !!totalRevenue ? Number(totalRevenue) : 0,
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}
                   </Text>
                 </View>
+
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   <BarChart
                     withCustomBarColorFromData={true}

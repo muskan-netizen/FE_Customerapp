@@ -76,6 +76,8 @@ export {default as MyProfile2} from './MyProfile/MyProfile2';
 export {default as MyProfile3} from './MyProfile/MyProfile3';
 export {default as Account2} from './Account/Account2';
 export {default as Account3} from './Account/Account3';
+export {default as AccountTemplateFour} from './Account/AccountTemplateFour';
+
 export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';
 export {default as ReturnOrder} from './ReturnOrder/ReturnOrder';
 export {default as Vendors3} from './Vendors/Vendors3';
@@ -150,3 +152,4 @@ export {default as Userede} from './PaymentGateways/Userede';
 export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendor';
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
+export {default as Conekta} from './PaymentGateways/Conekta';

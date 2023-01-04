@@ -33,7 +33,6 @@ export default function DashBoardTwo({
   );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
-  const profileInfo = appData?.profile;
 
   const {viewRef2, viewRef3, bannerRef} = useRef();
   const {slider1ActiveSlide, updateScreen, unique_key} = state;

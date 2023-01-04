@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>622443663378-q086c6ct95un0gkpgk2vg1p0af5mjsno.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.622443663378-q086c6ct95un0gkpgk2vg1p0af5mjsno</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>622443663378-811aqdolv0qlqi16ibei0j8ejh7q2nka.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAOCymrzv8nKwaEj7s_Rg5J1_aLKXZ6izg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>622443663378</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.inmotion.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>inmotion-3f52d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>inmotion-3f52d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:622443663378:ios:eb4be78f9ac0bd55fe48cb</string>
+</dict>
+</plist>
