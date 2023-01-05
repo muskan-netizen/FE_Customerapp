@@ -1,5 +1,4 @@
 import {useFocusEffect} from '@react-navigation/native';
-import codes from 'country-calling-code';
 import {cloneDeep, isEmpty} from 'lodash';
 import React, {useRef, useState} from 'react';
 import {
@@ -13,14 +12,11 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
-import DeviceCountry from 'react-native-device-country';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import AddressBottomSheet from '../../Components/AddressBottomSheet';
-import AddressModal3 from '../../Components/AddressModal3';
-import BottomSheetModal from '../../Components/BottomSheetModal';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
@@ -52,21 +48,8 @@ import {
 import {androidCameraPermission} from '../../utils/permissions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-var getPhonesCallingCodeAndCountryData = null;
-DeviceCountry.getCountryCode()
-  .then((result) => {
-    // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(
-      (x) => x.isoCode2 == result.code.toUpperCase(),
-    );
-  })
-  .catch((e) => {
-    console.log(e);
-  });
 
 var addtionSelectedImageIndex = null;
-var addtionSelectedImage = null;
-// var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
 
 export default function MyProfile3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();

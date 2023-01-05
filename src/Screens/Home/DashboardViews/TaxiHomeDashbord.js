@@ -403,21 +403,23 @@ export default function TaxiHomeDashbord({
   };
 
   const latitudes = !!curLatLong?.latitude
-  ? parseFloat(curLatLong?.latitude)
-  : !!location?.latitude
-  ? parseFloat(location?.latitude)
-  : appData?.profile?.preferences?.Default_latitude
+    ? parseFloat(curLatLong?.latitude)
+    : !!location?.latitude
+    ? parseFloat(location?.latitude)
+    : appData?.profile?.preferences?.Default_latitude;
 
+  const longitudes = !!curLatLong?.longitude
+    ? parseFloat(curLatLong?.longitude)
+    : !!location?.longitude
+    ? parseFloat(location?.longitude)
+    : appData?.profile?.preferences?.Default_latitude;
 
-const longitudes =  !!curLatLong?.longitude
-  ? parseFloat(curLatLong?.longitude)
-  : !!location?.longitude
-  ? parseFloat(location?.longitude)
-  : appData?.profile?.preferences?.Default_latitude
-
-  console.log(latitudes, 'latitudeslatitudes')
-  console.log(appData?.profile?.preferences?.Default_latitude, 'latitudeslatitudeslongitudes')
-  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes')
+  console.log(latitudes, 'latitudeslatitudes');
+  console.log(
+    appData?.profile?.preferences?.Default_latitude,
+    'latitudeslatitudeslongitudes',
+  );
+  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes');
 
   const _ModalMainView = () => {
     return (
@@ -878,17 +880,8 @@ const longitudes =  !!curLatLong?.longitude
                   alignItems: 'center',
                 }}
                 onPress={() => updateState({fullMapShow: true})}>
-                {/* <View
-                  pointerEvents="none"
-                  style={{
-                    height: height / 4,
-                    width: width - 45,
-                    borderRadius: 12,
-                    marginTop: moderateScaleVertical(20),
-                    alignItems: 'center',
-                  }}> */}
-                
-                {!!location && (
+                {console.log(location, 'location....location')}
+                {
                   <MapView
                     ref={mapRef}
                     provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -912,7 +905,6 @@ const longitudes =  !!curLatLong?.longitude
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
-                    
                     // initialRegion={region}
                     showsUserLocation={true}
                     //showsMyLocationButton={true}
@@ -935,8 +927,7 @@ const longitudes =  !!curLatLong?.longitude
                       }}
                     />
                   </MapView>
-                )}
-                {/* </View> */}
+                }
               </TouchableOpacity>
             </View>
           </>
