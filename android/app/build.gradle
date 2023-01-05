@@ -204,27 +204,17 @@ android {
  
     flavorDimensions "appType"
     productFlavors{
-                      jeevann{
+                      stabex{ 
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.jeevan.orders'
-            resValue "string", "app_name", "Jeevann" 
+            applicationId 'com.stabex.royoorders'
+            resValue "string", "app_name", "Stabex" 
             resValue "string", "host_name", ""
             }
-             speedyDelivery{ 
-            dimension "appType"
-            versionCode 2
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.speedydelivery.orders'
-            resValue "string", "app_name", "Speedy Delivery" 
-            resValue "string", "host_name", ""
-            }
-                       pAS41{
+              pAS41{
             dimension "appType"
             versionCode 1
             versionName "1.0"

@@ -297,7 +297,7 @@ const shortCodes = {
   curblerLLC: '959ecf',
   cartnar: '7b87ed',
   uven: '9b8db5',
-  pAS41: '4c0a17',
+  pAS41: '200651',
   freshFarmz: 'eafe42',
   ryde: '309c33',
   waterTaxi: 'f0f44c',
