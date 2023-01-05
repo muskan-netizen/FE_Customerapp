@@ -53,11 +53,16 @@ export default function ChatRoom({navigation, route}) {
       if (!userData?.auth_token) {
         actions.setAppSessionData('on_login');
         return;
+      }
+      if (!!userData?.auth_token && !appData?.profile?.socket_url) {
+        showError('Invalid socket url');
+        return;
       } else {
-        socketServices.on('new-app-message', (data) => {
-          console.log('listen in roomChat screen');
-          fetchData();
-        });
+        if (socketServices) {
+          socketServices.on('new-app-message', (data) => {
+            fetchData();
+          });
+        }
         return () => {
           socketServices.removeListener('new-app-message');
         };
@@ -118,7 +123,6 @@ export default function ChatRoom({navigation, route}) {
   }, []);
   const renderItem = useCallback(({item, index}) => {
     let isAnyMessage = _.isEmpty(item?.chat_Data);
-    console.log(item, 'item.....item');
     return (
       <TouchableOpacity
         onPress={() => goToChatRoom(item)}

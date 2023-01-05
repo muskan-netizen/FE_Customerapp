@@ -500,7 +500,6 @@ export default function ProductDetail({route, navigation}) {
           }
         })
         .filter((x) => x != undefined);
-      console.log(variantSetData, 'variantSetData callback');
       if (variantSetData.length) {
         updateState({btnLoader: true});
         getProductDetailBasedOnFilter(variantSetData);
@@ -511,7 +510,6 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const checkProductAvailibility = () => {
-    console.log(productDetailNew, 'productDetailNew....productDetailNew');
     // actions
     //   .checkProductAvailibility(
     //     {
@@ -804,10 +802,6 @@ export default function ProductDetail({route, navigation}) {
                 </Text>{' '}
                 min
               </Text>
-              {/* {console.log(
-                productDetailNew,
-                'productDetailNew....productDetailNew',
-              )} */}
             </View>
           ) : null}
         </View>

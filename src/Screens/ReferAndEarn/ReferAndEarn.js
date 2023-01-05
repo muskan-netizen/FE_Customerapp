@@ -63,7 +63,7 @@ export default function ReferAndEarn() {
     upi_id,
     ifsc_code,
   } = appData?.profile?.preferences;
-  console.log(appData?.profile?.preferences, 'fdlkjfsdlja');
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
 
@@ -134,7 +134,6 @@ export default function ReferAndEarn() {
   };
 
   const onInfluencerCategory = (item) => {
-    console.log(item, 'item......item....');
     setSelectedInfluencerCategory(item);
     setInfluencerCategoryForm(true);
     setIsLoadingCategoryAttributes(true);
@@ -684,25 +683,20 @@ export default function ReferAndEarn() {
                       />
                     </View>
                   )}
+                  <ButtonWithLoader
+                    onPress={onSaveAttributeInfo}
+                    isLoading={isSavingInfluenceInfo}
+                    btnText={strings.SAVE}
+                    btnStyle={{
+                      backgroundColor: themeColors?.primary_color,
+                      borderWidth: 0,
+                      marginBottom: moderateScaleVertical(10),
+                    }}
+                  />
                 </View>
               ) : null
             }
           />
-          {!isEmpty(availableAttributesOfInfluenceCategory) && (
-            <ButtonWithLoader
-              onPress={onSaveAttributeInfo}
-              isLoading={isSavingInfluenceInfo}
-              btnText={strings.SAVE}
-              btnStyle={{
-                backgroundColor: themeColors?.primary_color,
-                borderWidth: 0,
-                marginBottom: moderateScaleVertical(10),
-                position: 'absolute',
-                bottom: moderateScaleVertical(70),
-                width: '100%',
-              }}
-            />
-          )}
         </View>
       </WrapperContainer>
     );
@@ -864,7 +858,9 @@ export default function ReferAndEarn() {
               style={{
                 paddingLeft: moderateScale(20),
               }}>
-              <Text style={styles.tableTitleTxt}>Influence order history</Text>
+              <Text style={styles.tableTitleTxt}>
+                {strings.INFLUENCER_ORDER_HISTORY}
+              </Text>
               <ScrollView horizontal>
                 <Table
                   borderStyle={{
@@ -914,7 +910,7 @@ export default function ReferAndEarn() {
                 marginHorizontal: moderateScale(10),
               }}>
               <Text style={styles.selectCategoryTxt}>
-                Select Influencer Category
+                {strings.SELECT_INFLUENCER_CATEGORY}
               </Text>
               <FlatList
                 data={availableInfluencerTypes}
@@ -946,11 +942,6 @@ export default function ReferAndEarn() {
       ) : (
         <>{influencerForm()}</>
       )}
-      {/* <Modal
-        visible={isInfluencerCategoryForm}
-        onRequestClose={() => setInfluencerCategoryForm(false)}>
-        {influencerForm()}
-      </Modal> */}
       <GallaryCameraImgPicker
         isVisible={isImagePickerModal}
         onCamera={() => cameraHandle(0)}
