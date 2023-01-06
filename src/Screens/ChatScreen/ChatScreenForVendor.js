@@ -168,7 +168,8 @@ export default function ChatScreenForVendor({ route, navigation }) {
             order_vendor_id: paramData?.order_vendor_id,
             username: userData?.name,
             vendor_id: paramData?.vendor_id,
-            auth_id: userData?.id
+            auth_id: userData?.id,
+            web:false
 
         }
         console.log("sending api data", apiData)

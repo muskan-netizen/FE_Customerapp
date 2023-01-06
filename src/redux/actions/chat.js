@@ -35,6 +35,7 @@ export function fetchVendorChat(data = {}, headers = {}) {
   return new Promise(async(resolve, reject) => {
     const getAppData = await getItem('appData');
     const socketUrl = getAppData?.appData?.profile?.socket_url
+    console.log("socketUrlsocketUrl vendor",socketUrl)
     apiPost(socketUrl+ VENDOR_CHAT, data, headers)
       .then((response) => {
         resolve(response);

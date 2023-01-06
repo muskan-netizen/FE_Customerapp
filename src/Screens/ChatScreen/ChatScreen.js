@@ -66,8 +66,8 @@ export default function ChatScreen({ route, navigation }) {
     isLoading: false,
     roomUsers: [],
     isVoiceRecord: false,
-    allRoomUsersAppartFromAgent:[],
-    allAgentIds:[]
+    allRoomUsersAppartFromAgent: [],
+    allAgentIds: []
   });
   const {
     isLoading,
@@ -88,18 +88,25 @@ export default function ChatScreen({ route, navigation }) {
   useFocusEffect(
     useCallback(() => {
       socketServices.on("new-message", (data) => {
+        console.log("new-message++",data)
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused
             ? setMessages((previousMessages) =>
-                GiftedChat.append(previousMessages, data.message.chatData)
-              )
+              GiftedChat.append(previousMessages, data.message.chatData)
+            )
             : null;
-          // isFocused ? fetchAllRoomUser() : null;
+          isFocused ? fetchAllRoomUser() : null;
         }
+      });
+
+      socketServices.on("room-created", (data) => {
+          fetchAllRoomUser() 
+          alert("room created")
       });
       return () => {
         socketServices.removeListener("new-message");
         socketServices.removeListener("save-message");
+        // socketServices.removeListener("room-created");
       };
     }, [navigation])
   );
@@ -142,7 +149,7 @@ export default function ChatScreen({ route, navigation }) {
   }, []);
 
 
-  async function fetchAllRoomUser(){
+  async function fetchAllRoomUser() {
 
     try {
       const apiData = `/${paramData?._id}`;
@@ -156,32 +163,32 @@ export default function ChatScreen({ route, navigation }) {
         }
       );
       console.log("fetchAllRoomUser res", res);
-      
+
       if (!!res?.userData && isFocused) {
- 
+
         let cloneRes = _.cloneDeep(res)
 
-       const allRoomUsersAppartFromAgentAry= cloneRes?.userData.splice(cloneRes?.userData.findIndex(item => item?.user_type != "agent") )
-       const allAgentIdsAry= cloneRes?.userData.splice(cloneRes?.userData.findIndex(item => item?.user_type == "agent") )
+        const allRoomUsersAppartFromAgentAry = cloneRes?.userData.splice(cloneRes?.userData.findIndex(item => item?.user_type != "agent"))
+        const allAgentIdsAry = cloneRes?.userData.splice(cloneRes?.userData.findIndex(item => item?.user_type == "agent"))
 
-       console.log(allRoomUsersAppartFromAgentAry,allAgentIdsAry,"allChatUseresallChatUseres");
-       
-       updateState({
-        allRoomUsersAppartFromAgent:allRoomUsersAppartFromAgentAry,
-        allAgentIds:allAgentIdsAry,
-        roomUsers: res?.userData,
+        console.log(allRoomUsersAppartFromAgentAry, allAgentIdsAry, "allChatUseresallChatUseres");
+
+        updateState({
+          allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgentAry,
+          allAgentIds: allAgentIdsAry,
+          roomUsers: res?.userData,
         });
-       
+
       }
     } catch (error) {
       console.log("error raised in fetchAllRoomUser api", error);
     }
 
   }
-  
-  console.log("allRoomUsersAppartFromAgentallRoomUsersAppartFromAgent",allRoomUsersAppartFromAgent)
 
-  console.log("roomUsersroomUsers",roomUsers)
+  console.log("allRoomUsersAppartFromAgentallRoomUsersAppartFromAgent", allRoomUsersAppartFromAgent)
+
+  console.log("roomUsersroomUsers", roomUsers)
 
   const checkToMessage = () => {
     let userType = paramData?.type;
@@ -209,12 +216,12 @@ export default function ChatScreen({ route, navigation }) {
     console.log("phoneNumberphoneNumber", userData);
     let userImage = !!userData?.source
       ? getImageUrl(
-          userData?.source?.proxy_url,
-          userData?.source?.image_path,
-          "200/200"
-        )
+        userData?.source?.proxy_url,
+        userData?.source?.image_path,
+        "200/200"
+      )
       : null;
-      
+
 
     try {
       const apiData = {
@@ -232,7 +239,7 @@ export default function ChatScreen({ route, navigation }) {
         //'room_name' =>$data->name,
         chat_type: paramData?.type,
       };
-      console.log("apiDataapiData", apiData);
+      console.log("sending chat apiDataapiData", apiData);
       const res = await actions.sendMessage(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -270,23 +277,24 @@ export default function ChatScreen({ route, navigation }) {
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
       all_agentids: allAgentIds,
-      order_vendor_id:paramData?.order_vendor_id,
-      username:userData?.name,
-      vendor_id:paramData?.vendor_id,
-      auth_id:userData?.id
-    };    
-   console.log(apiData,"apiDataapiDataapiData send notification");
+      order_vendor_id: paramData?.order_vendor_id,
+      username: userData?.name,
+      vendor_id: paramData?.vendor_id,
+      auth_id: userData?.id,
+      web: false
+    };
+    console.log(apiData, "apiDataapiDataapiData send notification");
     actions.sendNotification(apiData, {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
-    }).then((res)=>{
-      console.log(res,"response+++++",apiData);
-    }).catch((error)=>{
-      console.log(error,"errororr in notification");
+    }).then((res) => {
+      console.log(res, "response+++++", apiData);
+    }).catch((error) => {
+      console.log(error, "errororr in notification");
     })
   };
-  
+
   const showRoomUser = useCallback(
     (props) => {
       if (_.isEmpty(roomUsers)) {
@@ -437,7 +445,7 @@ export default function ChatScreen({ route, navigation }) {
     );
   }, []);
 
-  const onSpeechStartHandler = (e) => {};
+  const onSpeechStartHandler = (e) => { };
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -456,7 +464,7 @@ export default function ChatScreen({ route, navigation }) {
     updateState({ isVoiceRecord: true });
     try {
       await Voice.start(langType);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const _onVoiceStop = async () => {
@@ -512,9 +520,9 @@ export default function ChatScreen({ route, navigation }) {
 
                 updateState({ isLoading: false });
               })
-              .catch((err) => {});
+              .catch((err) => { });
           })
-          .catch((err) => {});
+          .catch((err) => { });
       }
     }
   };
@@ -597,13 +605,13 @@ export default function ChatScreen({ route, navigation }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={`# ${paramData?.room_id || ""}`}
         customRight={showRoomUser}
         headerStyle={{ backgroundColor: isDarkMode ? "#171717" : "#f6f6f6" }}
-        // onPressLeft={onBack}
+      // onPressLeft={onBack}
       />
 
       <ImageBackground

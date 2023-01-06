@@ -205,6 +205,8 @@ export default function OrderDetail({navigation, route}) {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
 
+  console.log("appDataappDataappData",appData)
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
