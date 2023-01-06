@@ -2348,12 +2348,23 @@ end
 #Udkay
 target 'Udkay' do
 end
+
 #HattaFoodHub
 target 'HattaFoodHub' do
 end
+
 #Ondgoo
 target 'Ondgoo' do
 end
+
+#Junkerz
+target 'Junkerz' do
+end
+
+#Shopcart
+target 'Shopcart' do
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

@@ -502,6 +502,8 @@ const shortCodes = {
   udkay: 'bfe4de',
   hattaFoodHub: 'be22d8',
   ondgoo: '70ae69',
+  junkerz: '09811d',
+  shopcart: 'ae366e'
 };
 
 const appIds = {
@@ -2496,6 +2498,14 @@ const appIds = {
   ondgoo: Platform.select({
     ios: 'com.ondgoo.royoorders',
     android: 'com.ondgoo.royoorders',
+  }),
+  junkerz: Platform.select({
+    ios: 'com.junkerz.royoOrders',
+    android: 'com.junkerz.royoOrders',
+  }),
+  shopcart: Platform.select({
+    ios: 'com.shopcart.royoorder',
+    android: 'com.shopcart.royoorder',
   }),
 };
 

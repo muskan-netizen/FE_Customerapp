@@ -207,17 +207,17 @@ android {
 
     productFlavors{
              
-            ondgoo {
+               shopcart{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ondgoo.royoorders'
-                resValue "string", "app_name", "Ondgoo"
+                applicationId 'com.shopcart.royoorder'
+                resValue "string", "app_name", "Shopcart"
                 resValue "string", "host_name", ""
             }
-           
+    
     }
  
 
@@ -8161,6 +8161,26 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.ondgoo.royoorders'
     //             resValue "string", "app_name", "Ondgoo"
+    //             resValue "string", "host_name", ""
+    //         }
+    // junkerz{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.junkerz.royoOrders'
+    //             resValue "string", "app_name", "Junkerz"
+    //             resValue "string", "host_name", ""
+    //         }
+    // shopcart{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.shopcart.royoorder'
+    //             resValue "string", "app_name", "Shopcart"
     //             resValue "string", "host_name", ""
     //         }
     

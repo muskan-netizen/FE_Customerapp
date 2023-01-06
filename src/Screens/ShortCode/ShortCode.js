@@ -3100,6 +3100,18 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.junkerz:
+          updateState({
+            shortCode: shortCodes.junkerz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.shopcart:
+          updateState({
+            shortCode: shortCodes.shopcart,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
