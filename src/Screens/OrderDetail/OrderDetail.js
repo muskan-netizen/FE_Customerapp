@@ -60,6 +60,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {
+  currencyNumberFormatter,
   getHourAndMinutes,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
@@ -247,21 +248,33 @@ export default function OrderDetail({navigation, route}) {
     }
   };
 
+  
+
   const createRoom = async (item, type) => {
+    console.log("driverStatus?.agent_location", driverStatus)
+   
     try {
       const apiData = {
         sub_domain: '192.168.101.88', //this is static value
         client_id: String(appData?.profile.id),
         db_name: appData?.profile?.database_name,
         user_id: String(userData?.id),
-        type: 'vendor_to_user',
+        type: type,
         order_vendor_id: String(item?.id),
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
       };
+      if(type == 'agent_to_user'){
+        apiData.agent_id = driverStatus?.agent_location?.agent_id
+        apiData.agent_db = driverStatus?.agent_dbname
+      }
+
+      // agent_id: String(item?.order?.driver_id),
+      // agent_db: clientInfo?.database_name,
+
       updateState({isLoading: true});
 
-      console.log('sending api data', apiData);
+      console.log('sending create room data', apiData);
       const res = await actions.onStartChat(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,

@@ -101,7 +101,6 @@ export default function ChatScreen({ route, navigation }) {
 
       socketServices.on("room-created", (data) => {
           fetchAllRoomUser() 
-          alert("room created")
       });
       return () => {
         socketServices.removeListener("new-message");
@@ -167,9 +166,12 @@ export default function ChatScreen({ route, navigation }) {
       if (!!res?.userData && isFocused) {
 
         let cloneRes = _.cloneDeep(res)
+        let cloneRes2 = _.cloneDeep(res)
+
+        console.log("cloneRescloneRes",res)
 
         const allRoomUsersAppartFromAgentAry = cloneRes?.userData.splice(cloneRes?.userData.findIndex(item => item?.user_type != "agent"))
-        const allAgentIdsAry = cloneRes?.userData.splice(cloneRes?.userData.findIndex(item => item?.user_type == "agent"))
+        const allAgentIdsAry = cloneRes2?.userData.splice(cloneRes2?.userData.findIndex(item => item?.user_type == "agent"))
 
         console.log(allRoomUsersAppartFromAgentAry, allAgentIdsAry, "allChatUseresallChatUseres");
 
