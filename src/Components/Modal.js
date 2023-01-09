@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {moderateScaleVertical} from '../styles/responsiveSize';
+import {height, moderateScaleVertical} from '../styles/responsiveSize';
 import Header from './Header';
 
 const ModalView = ({

@@ -34,6 +34,7 @@ const BorderTextInput = ({
   isShowPassword,
   rightIconStyle = {},
   require = false,
+  maxLength,
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -80,6 +81,7 @@ const BorderTextInput = ({
         placeholderTextColor={
           isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
         }
+        maxLength={maxLength}
         style={{
           flex: 1,
           opacity: 0.7,

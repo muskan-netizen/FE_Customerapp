@@ -109,7 +109,7 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
 function Cart({ navigation, route }) {
   let paramsData = route?.params;
-
+  console.log(paramsData, 'paramsDataparamsData')
   let actionSheet = useRef(null);
   const bottomSheetRef = useRef(null);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
@@ -1022,11 +1022,7 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
-        case 49: //Direct Pay Online Payment Getway
       
-        updateState({ placeLoader: false });
-        navigation.navigate(navigationStrings.PLUGNPAY, paymentData);
-        break;
 
       default:
         if (
@@ -1140,7 +1136,7 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-
+ 
   const _directOrderPlace = () => {
     let data = {};
     data["vendor_id"] = cartData?.products[0]?.vendor_id;
@@ -1149,13 +1145,7 @@ function Cart({ navigation, route }) {
         ? ""
         : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data["payment_option_id"] =
-      Number(cartData?.total_payable_amount) +
-        (selectedTipAmount != null && selectedTipAmount != ""
-          ? Number(selectedTipAmount)
-          : 0) >
-        0
-        ? paramsData?.selectedPayment?.id || selectedPayment?.id
-        : 1;
+        paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data["type"] = dineInType || "";
     data["is_gift"] = isGiftBoxSelected ? 1 : 0;
@@ -1166,6 +1156,15 @@ function Cart({ navigation, route }) {
     if (!!selectedTipAmount) {
       data["tip"] = selectedTipAmount || "";
     }
+    if(selectedPayment?.id == 49){
+      data['cno'] = paramsData?.CardNumber,
+      data['cv'] =paramsData?.cvc,
+      data['dt']=paramsData?.expiryDate
+    }
+    data['amount'] = Number(cartData?.total_payable_amount) +
+    (selectedTipAmount != null && selectedTipAmount != ""
+      ? Number(selectedTipAmount)
+      : 0),
     placeOrderData(data);
   };
 
@@ -1393,7 +1392,9 @@ function Cart({ navigation, route }) {
     ) {
       _webPayment();
       return;
-    } else {
+    }
+    
+    else {
       _directOrderPlace();
     }
 
@@ -1590,8 +1591,8 @@ function Cart({ navigation, route }) {
     console.log(returnUrl, "returnUrl");
     console.log(cancelUrl, "cancelUrl");
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ""
-        ? Number(selectedTipAmount)
-        : 0
+      ? Number(selectedTipAmount)
+      : 0
       }&amount=${(
         Number(cartData?.total_payable_amount) +
         (selectedTipAmount != null && selectedTipAmount != ""
@@ -3007,9 +3008,9 @@ function Cart({ navigation, route }) {
                             marginBottom: moderateScale(3),
                           }}
                         >{`${i?.product.delay_order_hrs > 0 ||
-                            i?.product.delay_order_min > 0
-                            ? strings.PREPARATION_TIME_IS
-                            : ""
+                          i?.product.delay_order_min > 0
+                          ? strings.PREPARATION_TIME_IS
+                          : ""
                           }${i?.product.delay_order_hrs > 0
                             ? ` ${i?.product.delay_order_hrs} hrs`
                             : ""
@@ -4245,7 +4246,7 @@ function Cart({ navigation, route }) {
           </View>
         )}
 
-        {(cartData?.total_tax > 0 || cartData?.total_taxable_amount>0) && (
+        {(cartData?.total_tax > 0 || cartData?.total_taxable_amount > 0) && (
           <Animatable.View
             style={{
               ...styles.bottomTabLableValue,
@@ -4290,9 +4291,9 @@ function Cart({ navigation, route }) {
             >
               {tokenConverterPlusCurrencyNumberFormater(
                 Number(cartData?.total_tax ? cartData?.total_tax : 0)
-               + Number(cartData?.total_taxable_amount
-                ? cartData?.total_taxable_amount
-                : 0),
+                + Number(cartData?.total_taxable_amount
+                  ? cartData?.total_taxable_amount
+                  : 0),
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol
