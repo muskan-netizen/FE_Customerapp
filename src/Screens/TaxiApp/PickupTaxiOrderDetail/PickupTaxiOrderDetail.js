@@ -1582,6 +1582,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                     ? paramData?.orderDropLocations
                                     : orderFullDetail?.tasks,
                                   editIndex: i,
+                                  
                                 }
                               )}
                             >
