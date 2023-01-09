@@ -205,15 +205,15 @@ android {
 
     flavorDimensions "appType"
 productFlavors{
-             iPicknDrop{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.iPicknDrop.orderApp'
-                resValue "string", "app_name", "iPicknDrop"
-                resValue "string", "host_name", ""
+                         jazzyBug{
+            dimension "appType"
+            versionCode 2
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jazzyBugOrder'
+            resValue "string", "app_name", "JazzyBug Rider "
+            resValue "string", "host_name", ""
             }
 
 }
@@ -6495,7 +6495,7 @@ productFlavors{
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.jazzyBug'
+    //         applicationId 'com.jazzyBugOrder'
     //         resValue "string", "app_name", "Jazzy Bug"
     //         resValue "string", "host_name", ""
     //         }

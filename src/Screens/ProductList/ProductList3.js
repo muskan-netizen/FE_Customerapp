@@ -3721,6 +3721,7 @@ export default function Products({ route, navigation }) {
               )}
             </View>
           ) : (
+          
             <>
               {isVisibleModal ? (
                 <>
@@ -3919,7 +3920,7 @@ export default function Products({ route, navigation }) {
             ]}
             visible={updateQtyLoader}
           />
-          {!searchInput && !isVisibleModal && (
+          { !isVisibleModal && (
             <GradientCartView
               onPress={() => {
                 playHapticEffect(hapticEffects.notificationSuccess);

@@ -3420,8 +3420,7 @@ export default function OrderDetail({ navigation, route }) {
     );
 
     console.log(
-      cartData?.driver_rating,
-      submitedRatingToDriver,
+      cartData,
       "cartData?.driver_rating"
     );
 
