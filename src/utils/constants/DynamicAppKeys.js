@@ -190,7 +190,7 @@ const shortCodes = {
   mml: '348045',
   bimol: '94fc5b',
   vendorspot: 'dfa952',
-  sxm2go: '245bae',
+  sxm2go: 'b6e6e8',
   pinkydeli: '66c095',
   gasgiant: 'e6c73a',
   releezer: 'c2a130',

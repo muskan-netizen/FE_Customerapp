@@ -203,26 +203,16 @@ android {
     }
  
     flavorDimensions "appType"
-    productFlavors{
-                      stabex{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.stabex.royoorders'
-            resValue "string", "app_name", "Stabex" 
-            resValue "string", "host_name", ""
-            }
-              pAS41{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.pAS41'
-            resValue "string", "app_name", "PAS41"
-            resValue "string", "host_name", ""
+    productFlavors{ 
+           sxm2go{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.sxm2go.userapp'
+                resValue "string", "app_name", "SXM2GO"
+                resValue "string", "host_name", ""
             }
     }
     // productFlavors {

@@ -1,4 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
+// export const API_BASE_URL='https://uber-weeds.com/api/v1'
+// export const API_BASE_URL='https://pas41.net/api/v1'
+// export const API_BASE_URL='https://carryfood.org/api/v1'
 // export const API_BASE_URL='http://192.168.101.54:9090/api/v1'
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';

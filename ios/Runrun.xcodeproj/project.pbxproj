@@ -30498,7 +30498,6 @@
 				109C3EBF280EB2AF004D7344 /* Frameworks */,
 				109C3EC3280EB2AF004D7344 /* Resources */,
 				109C3EDE280EB2AF004D7344 /* Bundle React Native code and images */,
-				109C3EDF280EB2AF004D7344 /* ShellScript */,
 				01A1F1E9CD82F9CA067D2A8C /* ShellScript */,
 				D50A8F135017226ACB147088 /* [CP] Embed Pods Frameworks */,
 				AE437779B95D5999A61488C0 /* [CP] Copy Pods Resources */,
@@ -58979,7 +58978,6 @@
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-Ored-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -64287,26 +64285,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		109C3EDF280EB2AF004D7344 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-InstaShop-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-PAS41/Pods-available_pods-PAS41-frameworks.sh\"\n";
 		};
 		109C3EF3280EC98A004D7344 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
