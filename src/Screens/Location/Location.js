@@ -235,6 +235,7 @@ export default function Location({ route, navigation }) {
           navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
             ...paramsDataForEditDropLocation,
             orderDropLocations: allDropOffLocationsCollection,
+            showLocationUpdateButton:true
           });
         }
       } catch (error) {

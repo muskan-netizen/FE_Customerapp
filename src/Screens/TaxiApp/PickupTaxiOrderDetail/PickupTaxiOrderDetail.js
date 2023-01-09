@@ -85,6 +85,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
 
+  console.log(paramData, 'paramDataparamDataparamData');
+
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [state, setState] = useState({
     isLoading: true,
@@ -179,6 +181,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     setAllDropOffLocationCollection,
   ] = useState([]);
 
+
+
+
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -199,16 +204,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
 
+  useEffect(()=>{
+   if(paramData?.showLocationUpdateButton){
+    setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
+   }
+  },[paramData])
+
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
   };
-  // const urlValue = paramData?.orderDetail?.dispatch_traking_url
-  //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-  //       '/order/',
-  //       '/order-details/',
-  //     )
-  //   : null;
-
+  
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
   useEffect(() => {
@@ -379,9 +384,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-        "/order/",
-        "/order-details/"
-      )
+      "/order/",
+      "/order-details/"
+    )
     : null;
 
   /*********Update driver detail screen********* */
@@ -1163,8 +1168,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               paramData?.fromCab
                 ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 : paramData?.pickup_taxi
-                ? () => navigation.navigate(navigationStrings.HOME)
-                : () => navigation.goBack()
+                  ? () => navigation.navigate(navigationStrings.HOME)
+                  : () => navigation.goBack()
             }
             activeOpacity={0.8}
           >
@@ -1241,11 +1246,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 origin={
                   orderStatus !== "completed" && orderStatus !== "unassigned"
                     ? {
-                        latitude: Number(agent_location?.lat),
-                        longitude: Number(
-                          agent_location?.long || agent_location?.lng
-                        ),
-                      }
+                      latitude: Number(agent_location?.lat),
+                      longitude: Number(
+                        agent_location?.long || agent_location?.lng
+                      ),
+                    }
                     : tasks[0]
                 }
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
@@ -1261,7 +1266,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 strokeWidth={4}
                 strokeColor={colors.black}
                 optimizeWaypoints={true}
-                onStart={(params) => {}}
+                onStart={(params) => { }}
                 precision={"high"}
                 timePrecision={"now"}
                 mode={"DRIVING"}
@@ -1337,26 +1342,25 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     style={
                       isDarkMode
                         ? [
-                            styles.orderLableStyle,
-                            { color: MyDarkTheme.colors.text },
-                          ]
+                          styles.orderLableStyle,
+                          { color: MyDarkTheme.colors.text },
+                        ]
                         : styles.orderLableStyle
                     }
                   >
-                    {`${strings.ORDER_ID}: #${
-                      orderFullDetail?.order?.order_number
+                    {`${strings.ORDER_ID}: #${orderFullDetail?.order?.order_number
                         ? orderFullDetail?.order?.order_number
                         : paramData?.orderDetail?.order_number
-                    }`}
+                      }`}
                   </Text>
 
                   {isWaitingOver && orderStatus == "unassigned" ? (
                     <></>
                   ) : !!(
-                      orderStatus !== "completed" ||
-                      orderStatus !== "started" ||
-                      orderStatus !== "arrived"
-                    ) ? (
+                    orderStatus !== "completed" ||
+                    orderStatus !== "started" ||
+                    orderStatus !== "arrived"
+                  ) ? (
                     <TouchableOpacity
                       disabled={orderStatus == "cancelled"}
                       activeOpacity={0.7}
@@ -1371,8 +1375,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         {orderStatus == "cancelled"
                           ? strings.ORDER_CANCELLED
                           : orderStatus == "completed"
-                          ? null
-                          : strings.CANCEL_ORDER}
+                            ? null
+                            : strings.CANCEL_ORDER}
                       </Text>
                     </TouchableOpacity>
                   ) : null}
@@ -1413,9 +1417,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       ) : null}
 
                       {!!appData?.profile?.socket_url &&
-                      !!(
-                        driverStatus?.order && driverStatus?.agent_location?.lat
-                      ) ? (
+                        !!(
+                          driverStatus?.order && driverStatus?.agent_location?.lat
+                        ) ? (
                         <TouchableOpacity
                           onPress={() =>
                             createRoom(
@@ -1556,10 +1560,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           >
                             {val?.address || ""}
                           </Text>
-
+                        
                           {!!(
                             val?.task_type_id != 1 &&
-                            profile?.preferences?.is_postpay_enable &&
+                            profile?.preferences?.is_order_edit_enable &&
                             Number(val?.task_status) < 2
                           ) && (
                             <TouchableOpacity
@@ -1582,7 +1586,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                     ? paramData?.orderDropLocations
                                     : orderFullDetail?.tasks,
                                   editIndex: i,
-                                  
+                                  showLocationUpdateButton:showLocationUpdateButton
                                 }
                               )}
                             >
@@ -1630,11 +1634,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     />
                   )}
 
-                {console.log(
-                  orderFullDetail?.agent_location,
-                  "orderFullDetail?.agent_location"
-                )}
-
+               
                 {!!orderFullDetail?.agent_location ? (
                   <View
                     style={{
@@ -1740,9 +1740,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                             {Array(
                               Math.max(
                                 4 -
-                                  String(orderFullDetail?.order?.driver_id)
-                                    .length +
-                                  1,
+                                String(orderFullDetail?.order?.driver_id)
+                                  .length +
+                                1,
                                 0
                               )
                             ).join(0) + orderFullDetail?.order?.driver_id}
@@ -1827,7 +1827,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           starSize={25}
                         />
                         {submitedRatingToDriver ||
-                        orderFullDetail?.order_driver_rating?.rating ? (
+                          orderFullDetail?.order_driver_rating?.rating ? (
                           <TouchableOpacity
                             onPress={() =>
                               rateYourOrder({
@@ -2016,40 +2016,40 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                               >
                                 {orderFullDetail.order_details.products.length >
                                   0 && (
-                                  <View
-                                    style={{
-                                      flexDirection: "row",
-                                      marginBottom: moderateScaleVertical(5),
-                                    }}
-                                  >
-                                    <Text
+                                    <View
                                       style={{
-                                        ...styles.statusText,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.black,
-                                        // marginLeft: moderateScale(10),
+                                        flexDirection: "row",
+                                        marginBottom: moderateScaleVertical(5),
                                       }}
                                     >
-                                      {"No. of items:"}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        ...styles.statusText,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.black,
-                                        marginLeft: moderateScale(10),
-                                        fontFamily: fontFamily.bold,
-                                      }}
-                                    >
-                                      {
-                                        orderFullDetail.order_details.products
-                                          .length
-                                      }
-                                    </Text>
-                                  </View>
-                                )}
+                                      <Text
+                                        style={{
+                                          ...styles.statusText,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                          // marginLeft: moderateScale(10),
+                                        }}
+                                      >
+                                        {"No. of items:"}
+                                      </Text>
+                                      <Text
+                                        style={{
+                                          ...styles.statusText,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                          marginLeft: moderateScale(10),
+                                          fontFamily: fontFamily.bold,
+                                        }}
+                                      >
+                                        {
+                                          orderFullDetail.order_details.products
+                                            .length
+                                        }
+                                      </Text>
+                                    </View>
+                                  )}
                                 {orderStatus == "completed" ? (
                                   <View
                                     style={{
@@ -2169,7 +2169,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 <View style={{ marginHorizontal: moderateScale(16) }}>
                   {!!orderFullDetail?.order_details?.delivery_fee &&
                     Number(orderFullDetail?.order_details?.delivery_fee) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
@@ -2190,7 +2190,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     )}
                   {!!orderFullDetail?.order_details?.subtotal_amount &&
                     Number(orderFullDetail?.order_details?.subtotal_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
@@ -2211,7 +2211,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     )}
                   {!!orderFullDetail?.order_details?.toll_amount &&
                     Number(orderFullDetail?.order_details?.toll_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={"Toll fee"}
@@ -2257,7 +2257,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
@@ -2286,25 +2286,23 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     ) !== 0 && (
                       <View>
                         <LeftRightText
-                          leftText={`${
-                            strings.SUBSCRIPTION_DISCOUNT
-                          } ${"("} ${tokenConverterPlusCurrencyNumberFormater(
-                            Number(subscription_percent),
-                            digit_after_decimal,
-                            additional_preferences,
-                            currencies?.primary_currency?.symbol
-                          )} ${"%)"}`}
-                          rightText={` ${"-"} ${
-                            currencies?.primary_currency?.symbol
-                          } ${tokenConverterPlusCurrencyNumberFormater(
-                            Number(
-                              orderFullDetail?.order_details?.order_detail
-                                ?.subscription_discount
-                            ),
-                            digit_after_decimal,
-                            additional_preferences,
-                            currencies?.primary_currency?.symbol
-                          )} `}
+                          leftText={`${strings.SUBSCRIPTION_DISCOUNT
+                            } ${"("} ${tokenConverterPlusCurrencyNumberFormater(
+                              Number(subscription_percent),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol
+                            )} ${"%)"}`}
+                          rightText={` ${"-"} ${currencies?.primary_currency?.symbol
+                            } ${tokenConverterPlusCurrencyNumberFormater(
+                              Number(
+                                orderFullDetail?.order_details?.order_detail
+                                  ?.subscription_discount
+                              ),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol
+                            )} `}
                           leftTextStyle={{ color: themeColors.primary_color }}
                           rightTextStyle={{ color: themeColors.primary_color }}
                           isDarkMode={isDarkMode}
@@ -2317,7 +2315,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
@@ -2339,7 +2337,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
                     Number(orderFullDetail?.order_details?.payable_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
