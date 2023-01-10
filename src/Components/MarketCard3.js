@@ -88,7 +88,9 @@ const MarketCard3 = ({
           <View />
         )}
 
-        {!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance ? (
+      {
+        appIds.sxm2go !=getBundleId()
+        && (!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance) ? (
           <View
             style={{
               ...styles.ratingView,

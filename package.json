@@ -974,7 +974,7 @@
     "@stripe/stripe-react-native": "^0.2.3",
     "@twotalltotems/react-native-otp-input": "^1.3.11",
     "appcenter": "4.4.3",
-    "axios": "^1.2.2",
+    "axios": "^0.27.2",
     "country-calling-code": "^0.0.3",
     "country-data": "0.0.31",
     "entities": "^2.2.0",
