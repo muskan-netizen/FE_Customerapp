@@ -102,6 +102,9 @@ const ProductCard = ({
             {data?.translation[0]?.title}
           </Text>
         </View>
+
+       {console.log(additional_preferences,"additional_preferences")}
+
         {getBundleId() !== appIds.danielleBejjani || Number(data?.variant[0]?.price) !==0? <View
           style={{
             // height: 30,
@@ -117,10 +120,10 @@ const ProductCard = ({
               color: themeColors.currencyRed,
             }}>
             {`${tokenConverterPlusCurrencyNumberFormater(
-              Number(data?.variant[0]?.multiplier) *
+              Number(10) *
                 Number(data?.variant[0]?.price),
               digit_after_decimal,
-              additional_preferences,
+              Number(additional_preferences),
               currencies?.primary_currency?.symbol,
             )}`}
           </Text>

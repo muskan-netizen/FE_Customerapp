@@ -180,17 +180,11 @@ export default function Products({route, navigation}) {
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //
-  //     // updateState({pageNo: 1});
-  //     getAllListItems();
-  //   }, []),
-  // );
+  
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({pageNo: 1});
+      
       getAllListItems();
     }, [
       pageNo,
@@ -205,28 +199,7 @@ export default function Products({route, navigation}) {
     ]),
   );
 
-  // useEffect(() => {
-  //   updateState({ pageNo: 1 });
-  //   getAllListItems();
-  // }, [languages, currencies]);
 
-  // useEffect(() => {
-  //   // do something
-  //   getAllListItems();
-  // }, [pageNo, isRefreshing]);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     updateState({ pageNo: 1 });
-  //     getAllListItems();
-  //   }, [
-  //     sleectdBrands,
-  //     selectedOptions,
-  //     slectedSortBy,
-  //     minimumPrice,
-  //     maximumPrice,
-  //   ]),
-  // );
 
   const getAllListItems = () => {
     let filterExist =
@@ -239,17 +212,7 @@ export default function Products({route, navigation}) {
       checkForMaximumPriceChange ||
       checkForMinimumPriceChange;
 
-    console.log(
-      sleectdBrands,
-      selectedVariants,
-      selectedOptions,
-      slectedSortBy,
-      minimumPrice,
-      maximumPrice,
-      checkForMaximumPriceChange,
-      checkForMinimumPriceChange,
-      'filterExistfilterExist',
-    );
+
 
     {
       filterExist
@@ -292,7 +255,7 @@ export default function Products({route, navigation}) {
         },
       ];
 
-      // updateState({allFilters: [...allFilters,...brandDatas]});
+   
     }
 
     // Price filter
@@ -799,7 +762,7 @@ export default function Products({route, navigation}) {
 
       {isLoading && <ProductLoader isLoading={isLoading} listSize={4} isRow />}
       <FlatList
-        data={(!isLoading && productListData) || []}
+        data={productListData}
         renderItem={renderProduct}
         ListHeaderComponent={listHeaderComponent()}
         keyExtractor={(item, index) => String(index)}
