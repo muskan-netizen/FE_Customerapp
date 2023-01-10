@@ -28,12 +28,12 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   StatusBarHeight,
   textScale,
   width,
-  height,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
@@ -41,6 +41,7 @@ import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -71,7 +72,7 @@ export default function SelectPaymentModalView({
   isCabPooling = false,
   _openDateTimeModal = () => {},
 }) {
-  console.log(pickUpTimeType, 'pickUpTimeType+++++++');
+  console.log(couponInfo, 'couponInfo');
   console.log(selectedTime, 'selectedTime+++++++');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -261,16 +262,12 @@ export default function SelectPaymentModalView({
 
   return (
     <View
-      style={
-        isDarkMode
-          ? [
-              styles.bottomView,
-              {
-                backgroundColor: MyDarkTheme.colors.background,
-              },
-            ]
-          : styles.bottomView
-      }>
+      style={{
+        ...styles.bottomView,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+      }}>
       <Text
         style={{
           fontSize: textScale(26),
@@ -299,14 +296,10 @@ export default function SelectPaymentModalView({
         }}>
         <View style={{flex: 0.33}}>
           <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.distanceDurationDeliveryLable,
-                    {color: MyDarkTheme.colors.text},
-                  ]
-                : styles.distanceDurationDeliveryLable
-            }>
+            style={{
+              ...styles.distanceDurationDeliveryLable,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ,
+            }}>
             {strings.DISTANCE}
           </Text>
           <Text
