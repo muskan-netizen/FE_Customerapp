@@ -47,6 +47,7 @@ export default function PaymentGateways({
         </View>
         <View style={{ flex: .4 }}>
           <BorderTextInput
+          secureTextEntry={true}
             onChangeText={onChangeCvcText}
             placeholder={'CVC'}
             value={cvc}

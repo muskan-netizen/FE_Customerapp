@@ -84,6 +84,7 @@ import { appIds } from "../../utils/constants/DynamicAppKeys";
 import {
   getImageUrl,
   getParameterByName,
+  getPaymentGatewayResponseWithUri,
   showError,
   showInfo,
   showSuccess,
@@ -720,7 +721,7 @@ function Cart({ navigation, route }) {
       _directOrderPlace();
     }
   }, [paramsData?.transactionId]);
-
+  console.log(selectedPayment, 'selectedPaymentselectedPayment')
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
     // updateState({ isLoadingB: true });
@@ -1022,7 +1023,7 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
-      
+
 
       default:
         if (
@@ -1136,7 +1137,52 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
- 
+  const _paymentWthOtherMethods = (res) => {
+
+    let queryData = `/${selectedPayment?.code?.toLowerCase()}?amount=${Number(cartData?.total_payable_amount) +
+      (selectedTipAmount != null && selectedTipAmount != ""
+        ? Number(selectedTipAmount)
+        : 0)}&cv=${paramsData?.cvc}&dt=${paramsData?.expiryDate}&cno=${paramsData?.CardNumber.split(" ").join("")}&order_number=${res?.data?.order_number
+      }&from=cart`;
+console.log('guit8ohu',queryData)
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        }
+      )
+      .then((res) => {
+        console.log(res, "wtwettewtwetwt>>>>>");
+        getPlugnPayUrlData(res)
+      })
+      .catch((err) => {
+        console.log('rgrtngrtjgn', err)
+      })
+  }
+
+  const getPlugnPayUrlData = (uri) => {
+    getPaymentGatewayResponseWithUri(uri).then((res) => {
+      console.log(res, "res is here for payment");
+      updateState({
+        placeLoader:false
+      })
+    }).catch((error) => {
+      console.log(error, "error is here");
+      updateState({
+        placeLoader:false
+      })
+    })
+  }
+
+
+
+
+
+
   const _directOrderPlace = () => {
     let data = {};
     data["vendor_id"] = cartData?.products[0]?.vendor_id;
@@ -1145,7 +1191,7 @@ function Cart({ navigation, route }) {
         ? ""
         : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data["payment_option_id"] =
-        paramsData?.selectedPayment?.id || selectedPayment?.id;
+      paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data["type"] = dineInType || "";
     data["is_gift"] = isGiftBoxSelected ? 1 : 0;
@@ -1156,16 +1202,11 @@ function Cart({ navigation, route }) {
     if (!!selectedTipAmount) {
       data["tip"] = selectedTipAmount || "";
     }
-    if(selectedPayment?.id == 49){
-      data['cno'] = paramsData?.CardNumber,
-      data['cv'] =paramsData?.cvc,
-      data['dt']=paramsData?.expiryDate
-    }
     data['amount'] = Number(cartData?.total_payable_amount) +
-    (selectedTipAmount != null && selectedTipAmount != ""
-      ? Number(selectedTipAmount)
-      : 0),
-    placeOrderData(data);
+      (selectedTipAmount != null && selectedTipAmount != ""
+        ? Number(selectedTipAmount)
+        : 0),
+      placeOrderData(data);
   };
 
   const placeOrderData = (data) => {
@@ -1184,106 +1225,107 @@ function Cart({ navigation, route }) {
       .placeOrder(data, headerData)
       .then((res) => {
         console.log(res, "placeOrder");
-        actions.reloadData(!reloadData);
+        _paymentWthOtherMethods(res);
+              actions.reloadData(!reloadData);
 
-        setPickupDriverComment(null);
-        setDropOffDriverComment(null);
-        setVendorComment(null);
-        setLocalPickupDate(null);
-        setLocaleDropOffDate(null);
-        setSheduledpickupdate(null);
-        setModalType(null);
-        setSheduleddropoffdate(null);
-        updateState({
-          isLoadingB: false,
-          placeLoader: false,
-        });
-        console.log("paymebnt res", res);
-        checkPaymentOptions(res);
-        if (
-          selectedPayment?.id != 32 &&
-          selectedPayment?.id != 17 &&
-          selectedPayment?.id != 4 &&
-          selectedPayment?.id != 27 &&
-          selectedPayment?.id != 26 &&
-          selectedPayment?.id != 30 &&
-          selectedPayment?.id != 29 &&
-          selectedPayment?.id != 37 &&
-          selectedPayment?.id != 21 &&
-          selectedPayment?.id != 36 &&
-          selectedPayment?.id != 39 &&
-          selectedPayment?.id != 34 &&
-          selectedPayment?.id != 41 &&
-          selectedPayment?.id != 44
-        ) {
-          setCartItems([]);
-          setCartData({});
-          actions.reloadData(!reloadData);
-          if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
-            showSuccess(res?.message);
-            return;
-          }
-          return;
-        }
-      })
-      .catch(errorMethod);
-  };
+              setPickupDriverComment(null);
+              setDropOffDriverComment(null);
+              setVendorComment(null);
+              setLocalPickupDate(null);
+              setLocaleDropOffDate(null);
+              setSheduledpickupdate(null);
+              setModalType(null);
+              setSheduleddropoffdate(null);
+              updateState({
+                isLoadingB: false,
+                placeLoader: false,
+              });
+              console.log("paymebnt res", res);
+              checkPaymentOptions(res);
+              if (
+                selectedPayment?.id != 32 &&
+                selectedPayment?.id != 17 &&
+                selectedPayment?.id != 4 &&
+                selectedPayment?.id != 27 &&
+                selectedPayment?.id != 26 &&
+                selectedPayment?.id != 30 &&
+                selectedPayment?.id != 29 &&
+                selectedPayment?.id != 37 &&
+                selectedPayment?.id != 21 &&
+                selectedPayment?.id != 36 &&
+                selectedPayment?.id != 39 &&
+                selectedPayment?.id != 34 &&
+                selectedPayment?.id != 41 &&
+                selectedPayment?.id != 44
+              ) {
+                setCartItems([]);
+                setCartData({});
+                actions.reloadData(!reloadData);
+                if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
+                  showSuccess(res?.message);
+                  return;
+                }
+                return;
+              }
+            })
+            .catch(errorMethod);
+        };
 
-  const _getOrderDetail = ({ order_id, vendor_id }) => {
-    // return;
-    let data = {};
-    data["order_id"] = order_id;
-    data["vendor_id"] = vendor_id;
-    // updateState({ isLoading: true });
-    actions
-      .getOrderDetail(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        timezone: RNLocalize.getTimeZone(),
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        console.log(res, "res===> order detail");
-        if (res?.data) {
-          if (
-            !!businessType &&
-            businessType == "home_service" &&
-            res?.data?.vendors.length == 1 &&
-            res?.data?.vendors[0]?.dispatch_traking_url
-          ) {
-            setCartItems([]);
-            setCartData({});
-            actions.reloadData(!reloadData);
+        const _getOrderDetail = ({ order_id, vendor_id }) => {
+          // return;
+          let data = {};
+          data["order_id"] = order_id;
+          data["vendor_id"] = vendor_id;
+          // updateState({ isLoading: true });
+          actions
+            .getOrderDetail(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              timezone: RNLocalize.getTimeZone(),
+              // systemuser: DeviceInfo.getUniqueId(),
+            })
+            .then((res) => {
+              console.log(res, "res===> order detail");
+              if (res?.data) {
+                if (
+                  !!businessType &&
+                  businessType == "home_service" &&
+                  res?.data?.vendors.length == 1 &&
+                  res?.data?.vendors[0]?.dispatch_traking_url
+                ) {
+                  setCartItems([]);
+                  setCartData({});
+                  actions.reloadData(!reloadData);
 
-            updateState({
-              isLoadingB: false,
-              placeLoader: false,
-            });
-            navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-              orderId: order_id,
-              fromVendorApp: true,
-              selectedVendor: { id: vendor_id },
-              orderDetail: res.data.vendors[0],
-              showRating:
-                res.data.vendors[0]?.order_status?.current_status?.id != 6
-                  ? false
-                  : true,
-            });
-            actions.cartItemQty({});
-          } else {
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-            setCartItems([]);
-            setCartData({});
-            actions.reloadData(!reloadData);
-            updateState({
-              isLoadingB: false,
-              placeLoader: false,
-            });
-          }
-        }
+                  updateState({
+                    isLoadingB: false,
+                    placeLoader: false,
+                  });
+                  navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+                    orderId: order_id,
+                    fromVendorApp: true,
+                    selectedVendor: { id: vendor_id },
+                    orderDetail: res.data.vendors[0],
+                    showRating:
+                      res.data.vendors[0]?.order_status?.current_status?.id != 6
+                        ? false
+                        : true,
+                  });
+                  actions.cartItemQty({});
+                } else {
+                  moveToNewScreen(navigationStrings.ORDERSUCESS, {
+                    orderDetail: res.data,
+                  })();
+                  setCartItems([]);
+                  setCartData({});
+                  actions.reloadData(!reloadData);
+                  updateState({
+                    isLoadingB: false,
+                    placeLoader: false,
+                  });
+                }
+              }
       })
       .catch(errorMethod);
   };
@@ -1370,7 +1412,6 @@ function Cart({ navigation, route }) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-
     if (
       selectedPayment?.id == 10 &&
       selectedPayment?.off_site == 0 &&
@@ -1393,7 +1434,7 @@ function Cart({ navigation, route }) {
       _webPayment();
       return;
     }
-    
+
     else {
       _directOrderPlace();
     }
@@ -1492,10 +1533,10 @@ function Cart({ navigation, route }) {
         });
       });
 
-      if (!isFAQsSubmitted) {
-        showInfo("Please fill all product's FAQs");
-        return;
-      }
+      // if (!isFAQsSubmitted) {
+      //   showInfo("Please fill all product's FAQs");
+      //   return;
+      // }
 
       updateState({ placeLoader: true });
       var d1 = new Date();
