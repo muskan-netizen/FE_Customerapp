@@ -158,13 +158,13 @@ export default function ChatScreenForVendor({ route, navigation }) {
 
     const sendToUserNotification = async (id, text) => {
         let apiData = {
-            user_ids: allRoomUsersAppartFromAgent,
+            user_ids: allRoomUsersAppartFromAgent.length == 0 ? [{auth_user_id: paramData?.vendor_id}]: allRoomUsersAppartFromAgent,
             roomId: id,
             roomIdText: paramData?.room_id,
             text_message: text,
             chat_type: paramData?.type,
             order_id: paramData?.order_id,
-            all_agentids: allAgentIds,
+            all_agentids: allAgentIds.length == 0 ? [{auth_user_id: !!paramData?.agent_id ? paramData?.agent_id: ''}]: allAgentIds,
             order_vendor_id: paramData?.order_vendor_id,
             username: userData?.name,
             vendor_id: paramData?.vendor_id,

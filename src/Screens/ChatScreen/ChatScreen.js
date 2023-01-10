@@ -57,6 +57,8 @@ export default function ChatScreen({ route, navigation }) {
   );
   const styles = stylesFun({ fontFamily, isDarkMode });
 
+  console.log("paramDataparamDataparamData",paramData)
+
   let defaultImage =
     "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
 
@@ -272,13 +274,13 @@ export default function ChatScreen({ route, navigation }) {
 
   const sendToUserNotification = (id, text) => {
     let apiData = {
-      user_ids: allRoomUsersAppartFromAgent,
+      user_ids: allRoomUsersAppartFromAgent.length == 0 ? [{auth_user_id: paramData?.vendor_id}]: allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
       text_message: text,
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
-      all_agentids: allAgentIds,
+      all_agentids: allAgentIds.length == 0 ? [{auth_user_id: !!paramData?.agent_id ? paramData?.agent_id: ''}]: allAgentIds,
       order_vendor_id: paramData?.order_vendor_id,
       username: userData?.name,
       vendor_id: paramData?.vendor_id,

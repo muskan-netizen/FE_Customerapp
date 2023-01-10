@@ -1075,7 +1075,7 @@
     "react-native-radio-buttons-group": "^2.2.5",
     "react-native-ratings": "github:vinaygoyal20/react-native-ratings",
     "react-native-razorpay": "^2.2.8",
-    "react-native-reanimated": "^2.11.0",
+    "react-native-reanimated": "^2.4.1",
     "react-native-render-html": "^6.3.4",
     "react-native-responsive-fontsize": "^0.5.0",
     "react-native-restart": "^0.0.22",
