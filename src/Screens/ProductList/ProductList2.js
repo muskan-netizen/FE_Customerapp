@@ -769,6 +769,7 @@ export default function Products({route, navigation}) {
         ItemSeparatorComponent={() => <View style={{height: 10}} />}
         refreshing={isRefreshing}
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={()=>console.log("")}
         initialNumToRender={12}
         maxToRenderPerBatch={10}
         windowSize={10}
