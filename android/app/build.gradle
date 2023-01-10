@@ -207,15 +207,15 @@ android {
 
     productFlavors{
              
-             nittosadai{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.nittosadai.royoorders'
-            resValue "string", "app_name", "Nittosadai" 
-            resValue "string", "host_name", ""
+          stargaze{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.stargaze.royoorder'
+                resValue "string", "app_name", "Stargaze"
+                resValue "string", "host_name", ""
             }
     
     }
@@ -8181,6 +8181,26 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.shopcart.royoorder'
     //             resValue "string", "app_name", "Shopcart"
+    //             resValue "string", "host_name", ""
+    //         }
+    // viralClean{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.viralclean.royoorder'
+    //             resValue "string", "app_name", "ViralClean"
+    //             resValue "string", "host_name", ""
+    //         }
+    // stargaze{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.stargaze.royoorder'
+    //             resValue "string", "app_name", "Stargaze"
     //             resValue "string", "host_name", ""
     //         }
     

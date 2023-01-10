@@ -503,7 +503,9 @@ const shortCodes = {
   hattaFoodHub: 'be22d8',
   ondgoo: '70ae69',
   junkerz: '09811d',
-  shopcart: 'ae366e'
+  shopcart: 'ae366e',
+  viralClean: 'e3166f',
+  stargaze: 'cc100d'
 };
 
 const appIds = {
@@ -2506,6 +2508,14 @@ const appIds = {
   shopcart: Platform.select({
     ios: 'com.shopcart.royoorder',
     android: 'com.shopcart.royoorder',
+  }),
+  viralClean: Platform.select({
+    ios: 'com.viralclean.royoorder',
+    android: 'com.viralclean.royoorder',
+  }),
+  stargaze: Platform.select({
+    ios: 'com.stargaze.royoorder',
+    android: 'com.stargaze.royoorder',
   }),
 };
 

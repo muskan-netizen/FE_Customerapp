@@ -3112,6 +3112,18 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.viralClean:
+          updateState({
+            shortCode: shortCodes.viralClean,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stargaze:
+          updateState({
+            shortCode: shortCodes.stargaze,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
