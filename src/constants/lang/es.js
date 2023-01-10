@@ -192,7 +192,7 @@ export default {
   APPLY_PROMO_CODE: 'Aplicar cupones promocionales',
   AMOUNT: 'Cantidad',
   SUBTOTAL: 'Subtotal',
-  WALLET: 'Cartera',
+  WALLET: 'Billetera',
   LOYALTY: 'Lealtad',
   AMOUNT_PAYABLE: 'Cantidad pagable',
   TAX: 'Impuesto',

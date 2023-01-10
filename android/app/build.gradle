@@ -206,18 +206,27 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-             
-            dot {
-    //             dimension "appType"
+         appi{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.appi.royoorders'
+            resValue "string", "app_name", "Appi" 
+            resValue "string", "host_name", ""
+            }
+                        kurs{
+                dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.dot.royoorders'
-                resValue "string", "app_name", "Dot"
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.app.kurs'
+                resValue "string", "app_name", "KURS"
                 resValue "string", "host_name", ""
             }
-           
     }
  
 
@@ -6098,7 +6107,7 @@ android {
     //         }
     //         handyPickup{
     //         dimension "appType"
-    //         versionCode 1
+    //         versionCode 2
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -7245,7 +7254,7 @@ android {
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.mywaybill.royoorders'
-    //         resValue "string", "app_name", "MYWAYBILL" 
+    //         resValue "string", "app_name", "MyWaysRide" 
     //         resValue "string", "host_name", ""
     //         }
     //       cattch{

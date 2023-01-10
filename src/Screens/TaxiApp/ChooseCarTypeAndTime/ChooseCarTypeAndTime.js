@@ -524,7 +524,12 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     data['card_expiry_month'] = paramData?.cardInfo?.expiryMonth;
     data['card_expiry_year'] = paramData?.cardInfo?.expiryYear;
 
-    console.log(selectedPayment?.code,extraData,data, 'extraData....++++++++++');
+    console.log(
+      selectedPayment?.code,
+      extraData,
+      data,
+      'extraData....++++++++++',
+    );
 
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {

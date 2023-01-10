@@ -161,7 +161,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     orderCancelMessage,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
-console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
+  console.log(paramData?.pickup_taxi, 'paramDataparamDataparamData');
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
@@ -1014,7 +1014,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.HOME)
+                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 : paramData?.pickup_taxi
                 ? () => navigation.navigate(navigationStrings.HOME)
                 : () => navigation.goBack()
