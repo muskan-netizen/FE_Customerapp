@@ -427,12 +427,14 @@ export default function Login3({navigation}) {
         <View>
           <View style={{height: moderateScaleVertical(28)}} />
 
-          <Image
-            source={imagePath.app_icon}
-            style={{
-              alignSelf: 'center',
-            }}
-          />
+          {appIds.zonesso === getBundleId() && (
+            <Image
+              source={imagePath.app_icon}
+              style={{
+                alignSelf: 'center',
+              }}
+            />
+          )}
 
           <View style={{height: moderateScaleVertical(30)}} />
 

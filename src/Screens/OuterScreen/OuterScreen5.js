@@ -32,7 +32,7 @@ import {
   handleAppleLogin,
   _twitterSignIn,
 } from '../../utils/socialLogin';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -44,6 +44,7 @@ import {setItem, setUserData} from '../../utils/utils';
 import {isEmpty} from 'lodash';
 import {getValuebyKeyInArray} from '../../utils/commonFunction';
 import {color} from 'react-native-reanimated';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function OuterScreen5({navigation}) {
   const {
@@ -425,12 +426,14 @@ export default function OuterScreen5({navigation}) {
             flex: 1,
             marginTop: '10%',
           }}>
-          <Image
-            source={imagePath.app_icon}
-            style={{
-              alignSelf: 'center',
-            }}
-          />
+          {appIds.zonesso === getBundleId() && (
+            <Image
+              source={imagePath.app_icon}
+              style={{
+                alignSelf: 'center',
+              }}
+            />
+          )}
           <GradientButton
             containerStyle={{
               marginTop: moderateScaleVertical(100),
