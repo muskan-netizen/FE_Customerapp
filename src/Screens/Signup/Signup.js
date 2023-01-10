@@ -83,19 +83,19 @@ export default function Signup({navigation}) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+      (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery )
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
             '-',
             '',
           )
-        : appData?.profile.country?.phonecode
+        : getBundleId() == appIds.speedyDelivery ? "1" : appData?.profile?.country?.code
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+      (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery )
         ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
-        : appData?.profile?.country?.code
+        : getBundleId() == appIds.speedyDelivery ? "DO" : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
         : 'IN',
     name: '',

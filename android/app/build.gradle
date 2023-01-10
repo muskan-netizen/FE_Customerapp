@@ -204,15 +204,15 @@ android {
  
     flavorDimensions "appType"
     productFlavors{ 
-           sxm2go{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.sxm2go.userapp'
-                resValue "string", "app_name", "SXM2GO"
-                resValue "string", "host_name", ""
+              speedyDelivery{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.speedydelivery.orders'
+            resValue "string", "app_name", "Speedy Delivery" 
+            resValue "string", "host_name", ""
             }
     }
     // productFlavors {
