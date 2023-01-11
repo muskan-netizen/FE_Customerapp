@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-  // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+   export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
   //  export const API_BASE_URL = 'http://192.168.100.135:9090/api/v1';
   //export const API_BASE_URL = 'http://192.168.100.141:8001/api/v1'
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
@@ -71,7 +71,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://smartershopper.co.uk/api/v1'
 // export const API_BASE_URL = ' https://36kel.com.ph/api/v1'
-export const API_BASE_URL = 'https://order.orderfirst.store/api/v1'
+//export const API_BASE_URL = 'https://order.orderfirst.store/api/v1'
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
 // export const API_BASE_URL = 'https://foodnests.com/api/v1';
 // export const API_BASE_URL = 'https://hiperabasto.mx/api/v1';
