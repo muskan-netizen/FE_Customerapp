@@ -506,7 +506,8 @@ const shortCodes = {
   shopcart: 'ae366e',
   viralClean: 'e3166f',
   stargaze: 'cc100d',
-  messiaa:'c326b3'
+  messiaa: 'c326b3',
+  superApp: '041795'
 };
 
 const appIds = {
@@ -2521,6 +2522,10 @@ const appIds = {
   messiaa: Platform.select({
     ios: 'com.messiaa.orders',
     android: 'com.messiaa.orders',
+  }),
+  superApp: Platform.select({
+    ios: 'com.superapp.royoorder',
+    android: 'com.superapp.royoorder',
   }),
 };
 

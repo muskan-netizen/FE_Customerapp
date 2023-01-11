@@ -1008,6 +1008,8 @@
     "stargazeRelease": "cd android && ./gradlew assemblestargazeRelease",
     "messiaa": "react-native run-android --variant=messiaaDebug --appIdSuffix=messiaa",
     "messiaaRelease": "cd android && ./gradlew assemblemessiaaRelease",
+    "superApp": "react-native run-android --variant=superAppDebug --appIdSuffix=superApp",
+    "superAppRelease": "cd android && ./gradlew assemblesuperAppRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

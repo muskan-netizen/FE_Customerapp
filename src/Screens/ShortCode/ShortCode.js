@@ -3124,9 +3124,15 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.messiaa:
+        case appIds.messiaa:
           updateState({
             shortCode: shortCodes.messiaa,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.superApp:
+          updateState({
+            shortCode: shortCodes.superApp,
             isShortcodePrefilled: true,
           });
           break;
