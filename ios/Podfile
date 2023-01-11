@@ -1,6 +1,6 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 abstract_target 'available_pods' do
   
@@ -2372,6 +2372,10 @@ end
 
 #Stargaze
 target 'Stargaze' do
+end
+
+#Messiaa
+target 'Messiaa' do
 end
 
 post_install do |installer|

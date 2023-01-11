@@ -505,7 +505,8 @@ const shortCodes = {
   junkerz: '09811d',
   shopcart: 'ae366e',
   viralClean: 'e3166f',
-  stargaze: 'cc100d'
+  stargaze: 'cc100d',
+  messiaa:'c326b3'
 };
 
 const appIds = {
@@ -2516,6 +2517,10 @@ const appIds = {
   stargaze: Platform.select({
     ios: 'com.stargaze.royoorder',
     android: 'com.stargaze.royoorder',
+  }),
+  messiaa: Platform.select({
+    ios: 'com.messiaa.orders',
+    android: 'com.messiaa.orders',
   }),
 };
 

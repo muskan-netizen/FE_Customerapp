@@ -1006,6 +1006,8 @@
     "viralCleanRelease": "cd android && ./gradlew assembleviralCleanRelease",
     "stargaze": "react-native run-android --variant=stargazeDebug --appIdSuffix=stargaze",
     "stargazeRelease": "cd android && ./gradlew assemblestargazeRelease",
+    "messiaa": "react-native run-android --variant=messiaaDebug --appIdSuffix=messiaa",
+    "messiaaRelease": "cd android && ./gradlew assemblemessiaaRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

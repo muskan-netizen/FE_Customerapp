@@ -205,21 +205,18 @@ android {
 
     flavorDimensions "appType"
 
-    productFlavors{
-             
-          stargaze{
+productFlavors{
+             messiaa{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.stargaze.royoorder'
-                resValue "string", "app_name", "Stargaze"
+                applicationId 'com.messiaa.orders'
+                resValue "string", "app_name", "MESSIAA"
                 resValue "string", "host_name", ""
             }
-    
-    }
- 
+}
 
     // productFlavors {
     //         royoorder {
@@ -6658,7 +6655,7 @@ android {
     //         resValue "string", "host_name", ""
     //         }
  
-    //   capitalDiagnostic{
+    //         capitalDiagnostic{
     //         dimension "appType"
     //         versionCode 1
     //         versionName "1.0"
@@ -7871,7 +7868,7 @@ android {
     //             resValue "string", "app_name", "Todays Deliverys"
     //             resValue "string", "host_name", ""
     //         }
-    //                      locate {
+    //          locate {
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -7881,7 +7878,7 @@ android {
     //             resValue "string", "app_name", "Locate"
     //             resValue "string", "host_name", ""
     //         }
-    //                          georgiacollective {
+    //              georgiacollective {
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -7891,7 +7888,7 @@ android {
     //             resValue "string", "app_name", "Georgia Collective"
     //             resValue "string", "host_name", ""
     //         }
-    //                              otgWeeds {
+    //            otgWeeds {
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8153,7 +8150,7 @@ android {
     //             resValue "string", "app_name", "HattaFoodHub"
     //             resValue "string", "host_name", ""
     //         }
-    // ondgoo {
+    //          ondgoo {
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8163,7 +8160,7 @@ android {
     //             resValue "string", "app_name", "Ondgoo"
     //             resValue "string", "host_name", ""
     //         }
-    // junkerz{
+    //         junkerz{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8173,7 +8170,7 @@ android {
     //             resValue "string", "app_name", "Junkerz"
     //             resValue "string", "host_name", ""
     //         }
-    // shopcart{
+    //         shopcart{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8183,7 +8180,7 @@ android {
     //             resValue "string", "app_name", "Shopcart"
     //             resValue "string", "host_name", ""
     //         }
-    // viralClean{
+    //         viralClean{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8193,7 +8190,7 @@ android {
     //             resValue "string", "app_name", "ViralClean"
     //             resValue "string", "host_name", ""
     //         }
-    // stargaze{
+    //         stargaze{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8203,7 +8200,16 @@ android {
     //             resValue "string", "app_name", "Stargaze"
     //             resValue "string", "host_name", ""
     //         }
-    
+    //         messiaa{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.messiaa.orders'
+    //             resValue "string", "app_name", "MESSIAA"
+    //             resValue "string", "host_name", ""
+    //         }
             
     // }
 
