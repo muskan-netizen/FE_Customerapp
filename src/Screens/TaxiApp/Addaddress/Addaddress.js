@@ -64,7 +64,7 @@ export default function Addaddress({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const {book_for_friend} = appData?.profile?.preferences;
-  console.log(paramData, 'paramDataparamData...............');
+  console.log(paramData?.cat, 'paramDataparamData...............');
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -392,7 +392,7 @@ export default function Addaddress({navigation, route}) {
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
       id: paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id,
-      pickup_taxi: paramData?.data?.pickup_taxi,
+      pickup_taxi: paramData?.cat?.pickup_taxi,
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,

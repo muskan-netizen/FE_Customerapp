@@ -81,7 +81,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData?.profile?.preferences, 'appDataappDataappData');
+  console.log(paramData, 'appDataappDataappData');
   const distance_unit_for_time =
     appData?.profile?.preferences?.distance_unit_for_time;
   const total_distance = appData?.profile?.preferences?.distance_unit_for_time;
@@ -491,6 +491,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoadingB: false,
       isRefreshing: false,
       indicatorLoader: false,
+      btnLoader: false,
       isModalVisibleForPayFlutterWave: false,
     });
     showError(error?.message || error?.error || error?.description);

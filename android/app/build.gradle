@@ -206,26 +206,15 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-         appi{ 
+            weTogether{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.appi.royoorders'
-            resValue "string", "app_name", "Appi" 
+            applicationId 'com.weTogether'
+            resValue "string", "app_name", "WeTogether"
             resValue "string", "host_name", ""
-            }
-                        kurs{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.app.kurs'
-                resValue "string", "app_name", "KURS"
-                resValue "string", "host_name", ""
             }
     }
  
