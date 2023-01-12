@@ -1610,10 +1610,6 @@
 		1893781E296D3AC00081D15B /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		1893781F296D3AC00081D15B /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		18937820296D3AC00081D15B /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
-		1893782F296D3D2B0081D15B /* ViralClean(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1893782B296D3D0B0081D15B /* ViralClean(Production).xcconfig */; };
-		18937830296D3D2B0081D15B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1893782C296D3D100081D15B /* Images.xcassets */; };
-		18937831296D3D2B0081D15B /* ViralClean(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1893782D296D3D170081D15B /* ViralClean(Development).xcconfig */; };
-		18937832296D3D2B0081D15B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1893782E296D3D200081D15B /* GoogleService-Info.plist */; };
 		18937833296D3E190081D15B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1893782E296D3D200081D15B /* GoogleService-Info.plist */; };
 		18937834296D3E270081D15B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1893782C296D3D100081D15B /* Images.xcassets */; };
 		18937835296D3E890081D15B /* ViralClean(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1893782D296D3D170081D15B /* ViralClean(Development).xcconfig */; };
@@ -35302,7 +35298,7 @@
 				46DD2CE4296EC73C0030593B /* Frameworks */,
 				46DD2CE6296EC73C0030593B /* Resources */,
 				46DD2D03296EC73C0030593B /* Bundle React Native code and images */,
-				46DD2D04296EC73C0030593B /* ShellScript */,
+				46DD2D04296EC73C0030593B /* Run Script */,
 				F563FC2386C0A76BC1DC4720 /* [CP] Embed Pods Frameworks */,
 				C5FF985C7E6EBE3603F01E5B /* [CP] Copy Pods Resources */,
 			);
@@ -47552,7 +47548,6 @@
 				846DA7B92681E47100CC5BA2 /* SFProText-Medium.ttf in Resources */,
 				98C00380286C7C7400478618 /* Images.xcassets in Resources */,
 				8455CA3926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
-				18937830296D3D2B0081D15B /* Images.xcassets in Resources */,
 				84DD36D92653D9EF00E2097D /* Plists in Resources */,
 				8455CA7C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				844FDD232673989300C16835 /* CircularStd-Medium.otf in Resources */,
@@ -47561,16 +47556,13 @@
 				846DA7B12681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
 				846DA7B52681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844804C82653D04F0050AA67 /* Images.xcassets in Resources */,
-				1893782F296D3D2B0081D15B /* ViralClean(Production).xcconfig in Resources */,
 				8496BC5E26F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D1CDDE2703529D00C05E36 /* notification.wav in Resources */,
-				18937832296D3D2B0081D15B /* GoogleService-Info.plist in Resources */,
 				846DA7952681E47100CC5BA2 /* FuturaBT-Heavy.ttf in Resources */,
 				8496BC0826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				844FDD1F2673989300C16835 /* CircularStd-Bold.ttf in Resources */,
 				767C68602655481D00AA80AD /* GoogleService-Info.plist in Resources */,
 				847AFDAD2771DB9900866398 /* Runrun(Production).xcconfig in Resources */,
-				18937831296D3D2B0081D15B /* ViralClean(Development).xcconfig in Resources */,
 				846DA7AD2681E47100CC5BA2 /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71985,7 +71977,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MovingWheelsDelivery/Pods-available_pods-MovingWheelsDelivery\n-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MovingWheelsDelivery/Pods-available_pods-MovingWheelsDelivery-frameworks.sh\"\n";
 		};
 		18543A24295ACA1400E9741E /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -92905,7 +92897,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		46DD2D04296EC73C0030593B /* ShellScript */ = {
+		46DD2D04296EC73C0030593B /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -92916,6 +92908,7 @@
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (

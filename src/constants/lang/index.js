@@ -16,12 +16,13 @@ import tr from './tr';
 import vi from './vi';
 import zh from './zh';
 
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import ar_baytukom from './ar_baytukom';
 import es_elcheragio from './es_elcheragio';
 import es_heybuddy from './es_heybuddy';
 import es_sabroson from './es_sabroson';
 import swa from './swa';
+import heb from './heb'
 
 //Spanish fils
 
@@ -42,6 +43,8 @@ const arbicFile = () => {
   switch (DeviceInfo.getBundleId()) {
     case appIds?.baytukom:
       return ar_baytukom;
+    case appIds?.messiaa:
+      return heb;
     default:
       return ar;
   }
