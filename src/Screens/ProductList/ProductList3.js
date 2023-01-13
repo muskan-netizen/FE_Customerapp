@@ -84,7 +84,6 @@ import stylesFunc from './styles';
 let timeOut = undefined;
 
 var tempQty = 0;
-var loadMore = true;
 
 const filtersData = [
   {
@@ -144,6 +143,7 @@ export default function Products({ route, navigation }) {
     sortFilters: filtersData,
     searchInput: '',
     pageNo: 1,
+    lastPage: null,
     limit: 200,
     selectedItemID: -1,
     selectedDiffAdsOnId: 0,
@@ -189,13 +189,14 @@ export default function Products({ route, navigation }) {
     selectedOption: null,
     isProductImageLargeViewVisible: false,
     startDateRental: new Date(),
-    endDateRental: '',
+    endDateRental: new Date(),
     isRentalStartDatePicker: false,
     isRentalEndDatePicker: false,
     rentalProductDuration: null,
     isVarientSelectLoading: false,
     productDetailNew: {},
     isProductAvailable: false,
+    loadMore: false,
   });
   const {
     appData,
@@ -211,8 +212,10 @@ export default function Products({ route, navigation }) {
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
+    loadMore,
     isLoadingC,
     pageNo,
+    lastPage,
     limit,
     minimumPrice,
     maximumPrice,
@@ -813,6 +816,7 @@ export default function Products({ route, navigation }) {
                             {
                               justifyContent: 'center',
                               height: moderateScale(20),
+                              width: moderateScale(60),
                               backgroundColor: categoryInfo?.show_slot
                                 ? colors.green
                                 : categoryInfo?.is_vendor_closed
@@ -1388,6 +1392,8 @@ export default function Products({ route, navigation }) {
         });
       }
       console.log('totalProductQty', totalProductQty);
+      console.log('parentCartId', parentCartId);
+      console.log('cartId', cartId);
 
       // return;
 
@@ -1467,15 +1473,14 @@ export default function Products({ route, navigation }) {
         return;
       }
     },
-    [cloneSectionList, productListData, selectedCartItem],
+    [cloneSectionList, productListData, selectedCartItem,cartId],
   );
 
   //useCallback end
 
   useEffect(() => {
     // setLoading(true)
-    updateState({ pageNo: 1 });
-    loadMore = true;
+    updateState({ pageNo: 1, loadMore: true });
     getAllListItems(1);
     if (productListId?.vendor && routeData) {
       fetchOffers();
@@ -1483,7 +1488,7 @@ export default function Products({ route, navigation }) {
     if (isLoadingC) {
       getAllProductsByCategoryId(true);
     }
-  }, [navigation, languages, currencies, reloadData]);
+  }, [navigation, languages, currencies, reloadData,CartItems]);
 
   const getAllProductTags = () => {
     actions
@@ -1530,6 +1535,9 @@ export default function Products({ route, navigation }) {
           : getAllProductsByCategoryId(pageNo);
       }
     }
+    setTimeout(() => {
+      updateState({ loadMore: false });
+    }, 500);
   };
 
   useEffect(() => {
@@ -1646,12 +1654,12 @@ export default function Products({ route, navigation }) {
     console.log(filterData, 'filterDatafilterData');
     selectedFilters.current = filterData;
     // setFilteredAtoZData(filterData)
-    loadMore = true;
-    updateState({ pageNo: 1 });
+    updateState({ loadMore: true });
+    updateState({pageNo: 1});
     getAllListItems(1);
   };
   const allClearFilters = () => {
-    loadMore = true;
+    updateState({ loadMore: true });
     selectedFilters.current = null;
     updateState({
       pageNo: 1,
@@ -1719,9 +1727,8 @@ export default function Products({ route, navigation }) {
         } else {
           if (res?.data) {
             if (res.data.products.data.length == 0) {
-              loadMore = false;
+              updateState({ loadMore: false });
             }
-            loadMore = false;
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
             setProductListData(
@@ -1730,7 +1737,6 @@ export default function Products({ route, navigation }) {
                 : [...productListData, ...res?.data?.products.data],
             );
           } else {
-            loadMore = false;
             setLoading(false);
           }
         }
@@ -1740,6 +1746,7 @@ export default function Products({ route, navigation }) {
             appMainData.brands,
           );
         }
+        updateState({ loadMore: false });
       })
       .catch(errorMethod);
   };
@@ -1789,7 +1796,7 @@ export default function Products({ route, navigation }) {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             if (res.data.products.data.length == 0) {
-              loadMore = false;
+              updateState({ loadMore: false });
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
@@ -1805,11 +1812,12 @@ export default function Products({ route, navigation }) {
         if (res?.data) {
           updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
         }
+        updateState({ loadMore: false });
       })
       .catch(errorMethod);
     // }
   };
-  /**********Get all list items by category id */
+  /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
     console.log('api hit getProductByCategoryId', data);
     actions
@@ -1825,14 +1833,14 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res.data.listData.data.length, 'resres');
+        // console.log(res, 'resres');
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
-          loadMore = false;
-
+          setLoading(false);
+          // onAtoZFilter()
           setProductListData(
             pageNo == 1
               ? res.data.listData.data
@@ -1840,9 +1848,9 @@ export default function Products({ route, navigation }) {
           );
           if (
             pageNo == 1 &&
-            res?.data?.listData?.data.length == 0 &&
+            res?.data?.listData?.data?.length == 0 &&
             res?.data?.category &&
-            res?.data?.category?.childs.length
+            res?.data?.category?.childs?.length
           ) {
             setSelectedCategory(res.data.category.childs[0]);
             setProductListId(res.data.category.childs[0]);
@@ -1850,10 +1858,14 @@ export default function Products({ route, navigation }) {
               pageNo: 1,
               limit: 10,
               isLoadingC: true,
+              lastPage: res?.data?.listData?.last_page
             });
           }
         }
         setLoading(false);
+        // getAllVendorFilters()
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateState({ loadMore: false });
       })
 
       .catch(errorMethod);
@@ -1861,7 +1873,7 @@ export default function Products({ route, navigation }) {
   };
 
   /**********Get all list items category filters */
-  const getAllProductsCategoryFilter = (pageNo) => {
+  const getAllProductsCategoryFilter = useCallback((pageNo) => {
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
     data['options'] = selectedFilters?.current?.selectedOptions || [];
@@ -1872,8 +1884,7 @@ export default function Products({ route, navigation }) {
 
     actions
       .getProductByCategoryFiltersOptamize(
-        `/${productListId.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
-        }&type=${dineInType}`,
+        `/${productListId.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false}&type=${dineInType}`,
         data,
         {
           code: appData?.profile?.code,
@@ -1886,18 +1897,23 @@ export default function Products({ route, navigation }) {
         setLoading(false);
 
         if (res.data.data.length == 0) {
-          loadMore = false;
+          updateState({ loadMore: false });
         }
+        console.log("productListData ++++",productListData);
+
         console.log(res, 'getAllProductsCategoryFilter  res ++++++');
-        setLoading(false);
         setProductListData(
           pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
         );
-        setLoading(false);
+        updateState({lastPage: res.data.last_page})
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+        updateState({ loadMore: false });
       })
       .catch(errorMethod);
     // }
-  };
+  },[]);
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -1977,6 +1993,7 @@ export default function Products({ route, navigation }) {
     });
     setLoading(false);
     showError(error?.message || error?.error);
+    updateState({ loadMore: false });
   };
 
   //Pull to refresh
@@ -1987,9 +2004,11 @@ export default function Products({ route, navigation }) {
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
     if (loadMore) {
-      updateState({ pageNo: pageNo + 1 });
-      getAllListItems(pageNo + 1);
-      setLoading(false);
+      if(pageNo < lastPage){
+        updateState({pageNo: pageNo + 1});
+        getAllListItems(pageNo + 1);
+        setLoading(false);
+      }
     }
   };
 
@@ -1997,28 +2016,6 @@ export default function Products({ route, navigation }) {
     leading: true,
     trailing: false,
   });
-
-  const clearCartAndAddProduct = async (item, section = null) => {
-    updateState({ updateQtyLoader: true });
-    actions
-      .clearCart(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        actions.cartItemQty(res);
-        console.log('clear cart and add product res', res);
-        // alert("add single item")
-        addSingleItem(item, section);
-        // showSuccess(res?.message);
-      })
-      .catch(errorMethod);
-  };
 
   const hideDifferentAddOns = () => {
     updateState({ differentAddsOnsModal: false });
@@ -2197,6 +2194,7 @@ export default function Products({ route, navigation }) {
   };
 
   //decrementing/removeing products from cart
+  console.log("cartId =====", cartId);
   const removeProductFromCart = (
     itemToUpdate,
     section = null,
@@ -2222,7 +2220,7 @@ export default function Products({ route, navigation }) {
         !!itemToUpdate?.check_if_in_cart_app.length > 0
         ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id
         : cartId;
-    console.log('item', itemToUpdate);
+    console.log('removeProductFromCart =>', itemToUpdate , "cartId", cartId);
 
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
@@ -2501,6 +2499,7 @@ export default function Products({ route, navigation }) {
   const updateCartItems = (item, quanitity, productId, cartID) => {
     playHapticEffect(hapticEffects.impactLight);
     console.log('selcted section', selectedSection);
+    console.log('updateCartItems =============', item, quanitity, productId, cartID);
 
     if (!!selectedSection) {
       let updatedSection = selectedSection.data.map((x, xnx) => {
@@ -2535,6 +2534,7 @@ export default function Products({ route, navigation }) {
         cartId: cartID,
       });
     } else {
+      console.log("else");
       let updateArray = productListData.map((val, i) => {
         if (val.id == item.id) {
           return {

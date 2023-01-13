@@ -1183,7 +1183,7 @@ function Cart({navigation, route}) {
     actions
       .placeOrder(data, headerData)
       .then((res) => {
-        console.log(res, 'placeOrder');
+        navigation.popToTop();
         actions.reloadData(!reloadData);
         actions.cartItemQty(0);
         setPickupDriverComment(null);
@@ -2656,7 +2656,8 @@ function Cart({navigation, route}) {
                                     </Text>
                                   </View>
 
-                                  <View
+                                  {getBundleId() !== appIds.rentzy &&
+                                    <View
                                     pointerEvents={btnLoader ? 'none' : 'auto'}
                                     style={{minWidth: moderateScale(74)}}>
                                     <View style={styles.incDecBtnContainer}>
@@ -2697,7 +2698,7 @@ function Cart({navigation, route}) {
                                         </Text>
                                       </TouchableOpacity>
                                     </View>
-                                  </View>
+                                  </View>}
                                 </View>
                               ) : null}
 
