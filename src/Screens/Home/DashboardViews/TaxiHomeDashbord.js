@@ -747,15 +747,14 @@ export default function TaxiHomeDashbord({
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingHorizontal: moderateScale(10),
-                justifyContent: 'space-between',
               }}>
               <TouchableOpacity
-                style={{width: width - width / 3}}
+                style={{flexBasis: 'auto', flexGrow: width / 2}}
                 onPress={() => {
                   actions.saveSchduleTime('now');
                   userData?.auth_token
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                        cat: appMainData?.categories[0],
+                        cat: appMainData,
                         datetime: {slectedDate, selectedTime},
                       })
                     : actions.setAppSessionData('on_login');
@@ -776,11 +775,16 @@ export default function TaxiHomeDashbord({
                         isVisible: true,
                       })
                     : actions.setAppSessionData('on_login');
+                }}
+                style={{
+                  flexBasis: 'auto',
+                  flexGrow: width / 20,
+                  alignItems: 'flex-end',
                 }}>
                 <View
                   style={{
                     backgroundColor: colors.white,
-                    width: moderateScale(80),
+
                     height: moderateScaleVertical(26),
                     borderRadius: 20,
                     justifyContent: 'space-around',
@@ -789,12 +793,15 @@ export default function TaxiHomeDashbord({
                     paddingHorizontal: moderateScale(5),
                   }}>
                   <Image source={imagePath.clock} />
-                  <Text>{strings.NOW}</Text>
+                  <Text style={{marginHorizontal: moderateScale(5)}}>
+                    {strings.NOW}
+                  </Text>
                   <Image
                     style={{
                       transform: [{rotate: '90deg'}],
                       height: moderateScaleVertical(8),
                       width: moderateScale(8),
+                      resizeMode: 'contain',
                     }}
                     source={imagePath.goRight}
                   />
@@ -880,7 +887,6 @@ export default function TaxiHomeDashbord({
                   alignItems: 'center',
                 }}
                 onPress={() => updateState({fullMapShow: true})}>
-                {console.log(location, 'location....location')}
                 {
                   <MapView
                     ref={mapRef}

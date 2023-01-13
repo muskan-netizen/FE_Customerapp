@@ -35,7 +35,6 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import FastImage from 'react-native-fast-image';
-import {color} from 'react-native-reanimated';
 import ListItemHorizontalWithRightText from '../../Components/ListItemHorizontalWithImageWithRightText';
 
 export default function AccountTemplateFive({navigation}) {

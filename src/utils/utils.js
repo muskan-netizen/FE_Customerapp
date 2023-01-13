@@ -121,6 +121,7 @@ export async function apiReq(
     //
     axios[method](endPoint, data, {headers})
       .then((result) => {
+        console.log("core result",result)
         const {data} = result;
 
         if (data.status === false) {

@@ -54,6 +54,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import {
   height,
   moderateScale,
@@ -322,15 +323,7 @@ export default function Products({route, navigation}) {
       return (
         <View
           key={String(index)}
-          style={{
-            minHeight: 180,
-            // minHeight: url1
-            //   ? moderateScaleVertical(200)
-            //   : 0,
-            // overflow: 'visible',
-            // backgroundColor: 'red',
-            // marginBottom: moderateScaleVertical(5),
-          }}>
+          style={{ height: moderateScale(180)}}>
           <ProductCard3
             data={item}
             index={index}
@@ -362,9 +355,18 @@ export default function Products({route, navigation}) {
     ],
   );
 
-  const getItemLayout = useCallback((data, index) => {
-    return {length: 180, offset: 180 * index, index};
-  }, []);
+  const getItemLayout = sectionListGetItemLayout({
+    // The height of the row with rowData at the given sectionIndex and rowIndex
+    getItemHeight: (rowData, sectionIndex, rowIndex) =>
+      sectionIndex === 0 ? moderateScale(180) : moderateScale(180),
+    // These three properties are optional
+
+    getSectionHeaderHeight: () => moderateScale(50), // The height of your section headers
+    getSectionFooterHeight: ()=> moderateScale(50), 
+    listHeaderHeight:height/2.4,
+    getSeparatorHeight: ()=> moderateScale(8)
+
+  });
 
   const renderSectionHeader = useCallback(
     (props) => {
@@ -373,7 +375,8 @@ export default function Products({route, navigation}) {
         <View
           style={{
             marginHorizontal: moderateScale(16),
-            marginVertical: moderateScaleVertical(8),
+            // marginVertical: moderateScaleVertical(8),
+            height: moderateScale(50), 
           }}>
           <Text
             style={{
@@ -499,10 +502,11 @@ export default function Products({route, navigation}) {
       });
     });
   };
+  
 
   const listHeaderComponent2 = () => {
     return (
-      <View>
+      <View style={{height: height/2.4}}>
         {data?.categoryExist ? (
           <View
             // key={AnimatedHeaderValue}
@@ -889,6 +893,7 @@ export default function Products({route, navigation}) {
                       })}
                     </Text> : null} */}
 
+     
                   {!!desc && (
                     <Text
                       numberOfLines={2}
@@ -905,6 +910,7 @@ export default function Products({route, navigation}) {
                       {desc}
                     </Text>
                   )}
+        
                 </View>
 
                 {!!categoryInfo?.closed_store_order_scheduled ? (
@@ -1046,7 +1052,7 @@ export default function Products({route, navigation}) {
             )}
           </View>
         )}
-        <ScrollView
+        {ProductTags.length > 0 ?<ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           style={{
@@ -1106,7 +1112,7 @@ export default function Products({route, navigation}) {
                 </View>
               );
             })}
-        </ScrollView>
+        </ScrollView>: null}
 
         <View
           style={{
@@ -1127,6 +1133,7 @@ export default function Products({route, navigation}) {
                     ? colors.whiteOpacity15
                     : colors.greyColor,
                   height: moderateScaleVertical(37),
+                  marginRight: moderateScale(8)
                 }}
                 searchValue={searchInput}
                 placeholder={strings.SEARCH_WITHIN_MENU}
@@ -1187,6 +1194,7 @@ export default function Products({route, navigation}) {
             )}
           </View>
         </View>
+        {console.log(categoryInfo, 'categoryInfo....categoryInfo')}
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{marginHorizontal: moderateScale(20)}}>
@@ -1287,7 +1295,6 @@ export default function Products({route, navigation}) {
         : 1;
       data['product_variant_id'] = item?.variant[0].id;
       data['type'] = dine_In_Type;
-
       console.log('Sending api data', data);
       actions
         .addProductsToCart(data, {
@@ -1824,13 +1831,8 @@ export default function Products({route, navigation}) {
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
-          setLoading(false);
-
-          if (res.data.listData.data.length == 0) {
-            loadMore = false;
-          }
           loadMore = false;
-          // onAtoZFilter()
+
           setProductListData(
             pageNo == 1
               ? res.data.listData.data
@@ -1850,11 +1852,8 @@ export default function Products({route, navigation}) {
               isLoadingC: true,
             });
           }
-          setLoading(false);
         }
         setLoading(false);
-        // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
 
       .catch(errorMethod);
@@ -2556,7 +2555,6 @@ export default function Products({route, navigation}) {
       });
     }
   };
-  console.log(productListId?.vendor, 'productListId?.vendor');
   useEffect(() => {
     if (isLoadingC) {
       getAllProductsByCategoryId(1);
@@ -3441,13 +3439,13 @@ export default function Products({route, navigation}) {
       section?.data.length !== 0 &&
       searchInput &&
       productDataLengthAfterViewMoreSearch?.length != 0 ? (
-      <View>
+      <View style={{height: moderateScale(50)}}>
         <TouchableOpacity
           onPress={() => appendData(section)}
           style={{
             // alignSelf: 'center',
-            padding: 7,
-            borderRadius: 5,
+            padding: moderateScale(6),
+            borderRadius: moderateScale(5),
             marginHorizontal: moderateScale(20),
             borderWidth: 1,
             borderColor: themeColors?.primary_color,
@@ -3467,7 +3465,7 @@ export default function Products({route, navigation}) {
           ) : null}
         </TouchableOpacity>
       </View>
-    ) : null;
+    ) : <View style={{height: moderateScale(50)}}/>;
   };
 
   return (
@@ -3618,7 +3616,7 @@ export default function Products({route, navigation}) {
                 )}
               </View>
             )}
-            {/* <View style={{height: moderateScale(10)}} /> */}
+
             {!!categoryInfo?.is_show_products_with_category ? (
               <SectionList
                 onScroll={onScroll}
@@ -3632,24 +3630,26 @@ export default function Products({route, navigation}) {
                 // ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderTab={renderSectionTab}
                 renderItem={renderSectionItem}
-                // ListFooterComponent={() => (
-                //   <View style={{height: moderateScale(80)}} />
-                // )}
-                contentContainerStyle={{
-                  paddingBottom: moderateScale(60),
-                }}
                 renderSectionHeader={renderSectionHeader}
+                renderSectionFooter={renderSectionFooter}
+                  getItemLayout={getItemLayout}
+                ItemSeparatorComponent={()=> <View style={{height: moderateScale(8)}} />}
+       
+                // contentContainerStyle={{
+                //   paddingBottom: moderateScale(60),
+                // }}
+            
                 ListEmptyComponent={listEmptyComponent}
                 onScrollToIndexFailed={(val) => console.log('indexed failed')}
                 extraData={cloneSectionList}
-                getItemLayout={getItemLayout}
+              
                 // Performance settings
                 removeClippedSubviews={true} // Unmount components when outside of window
                 // initialNumToRender={2} // Reduce initial render amount
                 // maxToRenderPerBatch={10} // Redu ce number in each render batch
                 updateCellsBatchingPeriod={20} // Increase time between renders
                 // windowSize={7} // Reduce the window size
-                renderSectionFooter={renderSectionFooter}
+         
               />
             ) : (
               <FlatList
@@ -3707,7 +3707,7 @@ export default function Products({route, navigation}) {
             ) : null}
           </View>
 
-          {console.log(isVisibleModal, 'isVisibleModal')}
+
 
           {!!typeId && typeId == 8 ? (
             <View>

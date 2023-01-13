@@ -10,16 +10,16 @@ import {
   TouchableOpacity,
   View,
   Platform,
-} from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
-import Modal from "react-native-modal";
-import { useSelector } from "react-redux";
-import { dummyUser } from "../constants/constants";
-import imagePath from "../constants/imagePath";
-import strings from "../constants/lang";
-import actions from "../redux/actions";
-import colors from "../styles/colors";
-import commonStylesFunc from "../styles/commonStyles";
+} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import Modal from 'react-native-modal';
+import {useSelector} from 'react-redux';
+import {dummyUser} from '../constants/constants';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import actions from '../redux/actions';
+import colors from '../styles/colors';
+import commonStylesFunc from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -57,7 +57,7 @@ const OrderCardVendorComponent2 = ({
   const [reasonError, setReasonError] = useState(false);
   const [cancelLoader, setLoader] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [orderCancelMessage, setOrderCancelMessage] = useState(null);
+  const [orderCancelMessage,setOrderCancelMessage]= useState(null)
   const {
     appData,
     themeColors,
@@ -109,13 +109,13 @@ const OrderCardVendorComponent2 = ({
       });
       setLoader(false);
       updateLocalItem(data);
-      if (res?.status == 403) {
-        setOrderCancelMessage(res?.message);
-      } else {
-        hideModal();
-      }
-
-      console.log("cancellation res+++++", res);
+     if(res?.status ==403){
+      setOrderCancelMessage(res?.message)
+     }else{
+      hideModal();
+     }
+     
+      console.log('cancellation res+++++', res);
     } catch (error) {
       // showError(error?.message || error?.error)
       alert(error?.message || error?.error);
@@ -128,7 +128,7 @@ const OrderCardVendorComponent2 = ({
     setReason("");
     setCancellationItem(null);
     setReasonError(false);
-    setOrderCancelMessage(null);
+    setOrderCancelMessage(null)
   };
 
   useEffect(() => {

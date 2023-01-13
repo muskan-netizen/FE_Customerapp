@@ -311,7 +311,7 @@ useEffect(()=>{
       },
       'latlongObj>>Data',
     );
-    console.log(latlongObj, 'selectedTabType');
+    console.log(dineInType, 'selectedTabType');
     actions
       .homeData(
         {

@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  FlatList
 } from "react-native";
 import { useSelector } from "react-redux";
 import { loaderOne } from "../../../Components/Loaders/AnimatedLoaderFiles";
@@ -34,7 +35,6 @@ import {
   showSuccess,
 } from "../../../utils/helperFunctions";
 import stylesFunc from "./styles";
-const { height, width } = Dimensions.get("window");
 import { cloneDeep, isEmpty } from "lodash";
 import Communications from "react-native-communications";
 import { useDarkMode } from "react-native-dark-mode";
@@ -44,7 +44,7 @@ import navigationStrings from "../../../navigation/navigationStrings";
 import { MyDarkTheme } from "../../../styles/theme";
 import useInterval from "../../../utils/useInterval";
 import moment from "moment";
-import { FlatList } from "react-native";
+
 import StarRating from "react-native-star-rating";
 import ButtonWithLoader from "../../../Components/ButtonWithLoader";
 import CustomCallouts from "../../../Components/CustomCallouts";
@@ -54,6 +54,8 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  height,
+  width
 } from "../../../styles/responsiveSize";
 import { tokenConverterPlusCurrencyNumberFormater } from "../../../utils/commonFunction";
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
@@ -388,7 +390,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       "/order-details/"
     )
     : null;
-
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
     let apiData = {
@@ -1125,9 +1126,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
       };
-      updateState({ isLoading: true });
+      if (type == 'agent_to_user') {
+        apiData.agent_id = orderFullDetail?.agent_location?.agent_id;
+        apiData.agent_db = orderFullDetail?.agent_dbname;
+      }
+      updateState({isLoading: true});
 
-      console.log("sending api data", apiData);
+      console.log('sending api data room created', orderFullDetail);
       const res = await actions.onStartChat(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -1416,33 +1421,31 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         </TouchableOpacity>
                       ) : null}
 
-                      {!!appData?.profile?.socket_url &&
-                        !!(
-                          driverStatus?.order && driverStatus?.agent_location?.lat
-                        ) ? (
-                        <TouchableOpacity
-                          onPress={() =>
-                            createRoom(
-                              orderFullDetail?.order_details,
-                              "agent_to_user"
-                            )
-                          }
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                          }}
-                          activeOpacity={0.7}
-                        >
-                          <Text style={styles.startChatText}>
-                            {strings.DRIVER}
-                          </Text>
-                          <Image
-                            resizeMode="contain"
-                            style={styles.agentUserIcon}
-                            source={imagePath.icUserChat}
-                          />
-                        </TouchableOpacity>
-                      ) : null}
+                      {orderFullDetail?.order &&
+                        orderFullDetail?.agent_location?.lat &&
+                        appData?.profile?.socket_url && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              createRoom(
+                                orderFullDetail?.order_details,
+                                'agent_to_user',
+                              )
+                            }
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}
+                            activeOpacity={0.7}>
+                            <Text style={styles.startChatText}>
+                              {strings.DRIVER}
+                            </Text>
+                            <Image
+                              resizeMode="contain"
+                              style={styles.agentUserIcon}
+                              source={imagePath.icUserChat}
+                            />
+                          </TouchableOpacity>
+                        )}
                     </View>
                   ) : null}
                 </View>
@@ -2210,7 +2213,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                       </View>
                     )}
                   {!!orderFullDetail?.order_details?.toll_amount &&
-                    Number(orderFullDetail?.order_details?.toll_amount) !==
+                    Number(orderFullDetail?.order_details?.toll_amount) >
                     0 && (
                       <View>
                         <LeftRightText
@@ -2312,7 +2315,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         <View style={styles.horizontalLine} />
                       </View>
                     )}
-
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
                     0 && (

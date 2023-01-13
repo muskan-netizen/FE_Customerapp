@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>258522187933-op752vdcn9tdj4fc0h9gtvnkleeralk2.apps.googleusercontent.com</string>
+	<string>930203421194-l34vj1157r1lcgcspd40carqfu5vgnfe.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.258522187933-op752vdcn9tdj4fc0h9gtvnkleeralk2</string>
+	<string>com.googleusercontent.apps.930203421194-l34vj1157r1lcgcspd40carqfu5vgnfe</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>258522187933-il5iouagudp2nfb835b5ut7075p64qkv.apps.googleusercontent.com</string>
+	<string>930203421194-bk2o5klpr58qmhni9m9sib2k5h5gde92.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB-4TdYKW5vO5XaXLPgZsnEqT0wOLoV_zA</string>
+	<string>AIzaSyCyVH5-O3h22t_ZbJTKPrN-vH76Vet77PQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>258522187933</string>
+	<string>930203421194</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.lunchboxspecials</string>
+	<string>com.mealtime.orderapp</string>
 	<key>PROJECT_ID</key>
-	<string>lunchbox-specials</string>
+	<string>mealtime-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>lunchbox-specials.appspot.com</string>
+	<string>mealtime-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:258522187933:ios:3c2402f146f23b75812c74</string>
+	<string>1:930203421194:ios:7ea7cfe7057eb59b082df3</string>
 </dict>
 </plist>

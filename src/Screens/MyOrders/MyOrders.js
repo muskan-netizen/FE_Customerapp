@@ -147,10 +147,10 @@ export default function MyOrders(props) {
   const styles = stylesFun({ fontFamily, themeColors });
 
   const isFocused = useIsFocused();
-
   useInterval(
     () => {
       if (!!userData?.auth_token) {
+        
         _getListOfOrders();
       } else {
         actions.setAppSessionData("on_login");
@@ -193,6 +193,8 @@ export default function MyOrders(props) {
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
           isLoading: false,
           isRefreshing: false,
+          
+
         });
       })
       .catch(errorMethod);
@@ -577,6 +579,7 @@ export default function MyOrders(props) {
       showError(strings.PLEASE_SELECT_RETURN_ORDER);
     }
   };
+  
 
   return (
     <WrapperContainer
@@ -847,7 +850,7 @@ export default function MyOrders(props) {
                               </Text>
                             </View>
 
-                            {item?.quantity && (
+                            {item?.quantity ? (
                               <View style={{ flexDirection: "row" }}>
                                 <Text
                                   style={
@@ -862,7 +865,73 @@ export default function MyOrders(props) {
                                   {item?.quantity}
                                 </Text>
                               </View>
+                            ) : (
+                              <TouchableOpacity
+                                onPress={() => selectProduct(item)}>
+                                <Image
+                                  source={
+                                    selectProductForRetrun &&
+                                    selectProductForRetrun?.product_id ==
+                                      item?.product_id
+                                      ? imagePath.radioActive
+                                      : imagePath.radioInActive
+                                  }
+                                />
+                              </TouchableOpacity>
                             )}
+  
+                            <View style={styles.cartItemImage}>
+                              <FastImage
+                                source={
+                                  item?.image != '' && item?.image != null
+                                    ? {
+                                        uri: getImageUrl(
+                                          item?.image?.proxy_url,
+                                          item?.image?.image_path,
+                                          '300/300',
+                                        ),
+                                        priority: FastImage.priority.high,
+                                      }
+                                    : imagePath.patternOne
+                                }
+                                style={styles.imageStyle}
+                              />
+                            </View>
+                            <View style={{marginLeft: 10}}>
+                              <View style={{overflow: 'hidden'}}>
+                                <Text
+                                  numberOfLines={2}
+                                  style={
+                                    isDarkMode
+                                      ? [
+                                          styles.priceItemLabel2,
+                                          {
+                                            opacity: 0.8,
+                                            color: MyDarkTheme.colors.text,
+                                          },
+                                        ]
+                                      : [styles.priceItemLabel2, {opacity: 0.8}]
+                                  }>
+                                  {item?.translation?.title}
+                                </Text>
+                              </View>
+  
+                              {item?.quantity && (
+                                <View style={{flexDirection: 'row'}}>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? {color: MyDarkTheme.colors.text}
+                                        : {color: colors.textGrey}
+                                    }>
+                                    {strings.QTY}
+                                  </Text>
+                                  <Text style={styles.cartItemWeight}>
+                                    {item?.quantity}
+                                  </Text>
+                                </View>
+                              )}
+                            </View>
                           </View>
                         </View>
                       </ScrollView>
@@ -890,8 +959,10 @@ export default function MyOrders(props) {
               btnText={strings.SELECT}
             />
           </View>
-        </View>
-      </Modal>
-    </WrapperContainer>
-  );
+          </View>
+        </Modal>
+      </WrapperContainer>
+    )
+  
+
 }

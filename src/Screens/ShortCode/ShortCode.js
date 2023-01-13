@@ -63,7 +63,6 @@ export default function ShortCode({ route, navigation }) {
     LoadingScreen,
     videoDurationEnded,
     allAppData,
-
     initapiresponse,
   } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -2927,6 +2926,186 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.todaysDeliverys:
+          updateState({
+            shortCode: shortCodes.todaysDeliverys,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.locate:
+          updateState({
+            shortCode: shortCodes.locate,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.georgiacollective:
+          updateState({
+            shortCode: shortCodes.georgiacollective,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.otgWeeds:
+          updateState({
+            shortCode: shortCodes.otgWeeds,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rumbella:
+          updateState({
+            shortCode: shortCodes.rumbella,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lincshare:
+          updateState({
+            shortCode: shortCodes.lincshare,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.lvlup:
+          updateState({
+            shortCode: shortCodes.lvlup,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.glavour:
+          updateState({
+            shortCode: shortCodes.glavour,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.shipmoe:
+          updateState({
+            shortCode: shortCodes.shipmoe,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bigBayong:
+          updateState({
+            shortCode: shortCodes.bigBayong,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.efectibo:
+          updateState({
+            shortCode: shortCodes.efectibo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sooq:
+          updateState({
+            shortCode: shortCodes.sooq,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hectoHomes:
+          updateState({
+            shortCode: shortCodes.hectoHomes,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zynoBidandRide:
+          updateState({
+            shortCode: shortCodes.zynoBidandRide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.glamguide:
+          updateState({
+            shortCode: shortCodes.glamguide,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.solace:
+          updateState({
+            shortCode: shortCodes.solace,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.superpana:
+          updateState({
+            shortCode: shortCodes.superpana,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kero:
+          updateState({
+            shortCode: shortCodes.kero,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.godamPAY:
+          updateState({
+            shortCode: shortCodes.godamPAY,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.housingSubsidies:
+          updateState({
+            shortCode: shortCodes.housingSubsidies,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bocch:
+          updateState({
+            shortCode: shortCodes.bocch,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.potolo:
+          updateState({
+            shortCode: shortCodes.potolo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.earnApp:
+          updateState({
+            shortCode: shortCodes.earnApp,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.aredoo:
+          updateState({
+            shortCode: shortCodes.aredoo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bukam:
+          updateState({
+            shortCode: shortCodes.bukam,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dot:
+          updateState({
+            shortCode: shortCodes.dot,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.wizSonic:
+          updateState({
+            shortCode: shortCodes.wizSonic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.udkay:
+          updateState({
+            shortCode: shortCodes.udkay,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hattaFoodHub:
+          updateState({
+            shortCode: shortCodes.hattaFoodHub,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ondgoo:
+          updateState({
+            shortCode: shortCodes.ondgoo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -2973,8 +3152,10 @@ export default function ShortCode({ route, navigation }) {
         code: shortCode,
       };
     }
+
     actions
       .initApp({}, header, false, null, null, true)
+
       .then((res) => {
         console.log("header response--->", res);
         if (res.data.mobile_banners.length > 0) {

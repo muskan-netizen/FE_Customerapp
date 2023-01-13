@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "359505896082",
+    "project_id": "lincshare-1079a",
+    "storage_bucket": "lincshare-1079a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359505896082:android:70ff510d106a397521bc4b",
+        "android_client_info": {
+          "package_name": "com.lincshare.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359505896082-cpg8leesjqga103audnmubsapbiekkrg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lincshare.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "359505896082-ic4mddrla54qaakc1n23ob44gtgrg80j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lincshare.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "359505896082-rnvags7eu1g7moc4ek73sj41n5ibuv06.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lincshare.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "359505896082-v4v8baim0oejnqj7unn1quqgq11q3qgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIsqdAtt67VJNCKFaYfiAyQEM-klp8tD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359505896082-v4v8baim0oejnqj7unn1quqgq11q3qgj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

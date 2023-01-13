@@ -1,8 +1,8 @@
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { isEmpty } from 'lodash';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -11,14 +11,14 @@ import {
   View,
   Modal,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import * as RNLocalize from 'react-native-localize';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import RazorpayCheckout from 'react-native-razorpay';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
@@ -34,9 +34,9 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import {MyDarkTheme} from '../../../styles/theme';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import {
   deviceCountryCode,
   getCurrentLocation,
@@ -53,20 +53,20 @@ import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import DatePicker from 'react-native-date-picker';
-import { chekLocationPermission } from '../../../utils/permissions';
+import {chekLocationPermission} from '../../../utils/permissions';
 import useInterval from '../../../utils/useInterval';
 // import Modal from '../../../Components/Modal';
-import { FlutterwaveButton, PayWithFlutterwave } from 'flutterwave-react-native';
-import { generateTransactionRef } from '../../../utils/paystackMethod';
+import {FlutterwaveButton, PayWithFlutterwave} from 'flutterwave-react-native';
+import {generateTransactionRef} from '../../../utils/paystackMethod';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function ChooseCarTypeAndTime({ navigation, route }) {
+export default function ChooseCarTypeAndTime({navigation, route}) {
   const paramData = route?.params?.promocodeDetail
-  ? route?.params?.promocodeDetail
-  : route?.params;
+    ? route?.params?.promocodeDetail
+    : route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
   const mapRef = useRef();
@@ -81,7 +81,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  console.log(appData?.profile?.preferences, 'appDataappDataappData');
+  console.log(paramData, 'appDataappDataappData');
   const distance_unit_for_time =
     appData?.profile?.preferences?.distance_unit_for_time;
   const total_distance = appData?.profile?.preferences?.distance_unit_for_time;
@@ -90,30 +90,26 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { profile } = appData;
+  const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily, themeColors });
+  const styles = stylesFun({fontFamily, themeColors});
 
   const [state, setState] = useState({
     region: {
-      latitude: 
-      paramData?.location[0]?.latitude
+      latitude: paramData?.location[0]?.latitude
         ? Number(paramData?.location[0]?.latitude)
         : 30.7191,
-      longitude: 
-      paramData?.location[0]?.longitude
+      longitude: paramData?.location[0]?.longitude
         ? Number(paramData?.location[0]?.longitude)
         : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
     coordinate: {
-      latitude: 
-       paramData?.location[0]?.latitude
+      latitude: paramData?.location[0]?.latitude
         ? Number(paramData?.location[0]?.latitude)
         : 30.7191,
-      longitude: 
-      paramData?.location[0]?.longitude
+      longitude: paramData?.location[0]?.longitude
         ? Number(paramData?.location[0]?.longitude)
         : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
@@ -195,7 +191,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
     btnLoader: false,
-    disableButton: false
+    disableButton: false,
   });
   const {
     selectedPayment,
@@ -250,28 +246,28 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     btnLoader,
     disableButton,
   } = state;
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const [updateSeatNO, setUpdateSeatNo] = useState(1)
-  const [showFinalUpdatedSeatNo,setShowFinalUpdatedSeatNo]=useState(1)
- 
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const [updateSeatNO, setUpdateSeatNo] = useState(1);
+  const [showFinalUpdatedSeatNo, setShowFinalUpdatedSeatNo] = useState(1);
+  console.log(paramData, 'paramDataparamDataparamData');
 
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
-        updateState({ selectedPayment: paramData?.selectedMethod });
+        updateState({selectedPayment: paramData?.selectedMethod});
       }
       // updateState({isLoadingB: true});
     }, [paramData])
   );
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
     setTimeout(() => {
       onCenter();
     }, 3000);
   }, []);
 
   const _onRegionChange = (region) => {
-    updateState({ region: region });
+    updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     markerRef.current.showCallout();
 
@@ -281,9 +277,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   useEffect(() => {
     {
@@ -308,10 +304,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       updatedAmount: paramData?.couponInfo?.new_amount,
       couponInfo: paramData?.couponInfo,
     });
-  }, [
-    paramData?.couponInfo,
-    paramData?.couponInfo?.new_amount,
-  ]);
+  }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
+
+  useEffect(() => {
+    _getAllCarAndPrices();
+  }, [updateSeatNO]);
 
 
   useEffect(()=>{
@@ -323,11 +320,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   //Get list of all orders api
   const _getAllCarAndPrices = (showInitalModal = true) => {
     if (showInitalModal) {
-      updateState({ showCarModal: true,
-        btnLoader:true });
+      updateState({showCarModal: true, btnLoader: true});
     }
 
-    updateState({ isLoading: true, showVendorModal: false });
+    updateState({isLoading: true, showVendorModal: false});
     actions
       .getAllCarAndPrices(
         `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`,
@@ -335,10 +331,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           locations: paramData?.location,
           schedule_date_delivery: scheduleDateTime?.selectedDateAndTime
             ? scheduleDateTime?.selectedDateAndTime
-            : `${pickedUpDate ? pickedUpDate : ''} ${pickedUpTime ? pickedUpTime : ''
-            }`,
+            : `${pickedUpDate ? pickedUpDate : ''} ${
+                pickedUpTime ? pickedUpTime : ''
+              }`,
           is_cab_pooling: paramData?.is_cab_pooling,
-          no_seats_for_pooling: updateSeatNO
+          no_seats_for_pooling: updateSeatNO,
         },
         {
           code: appData?.profile?.code,
@@ -347,12 +344,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         }
       )
       .then((res) => {
-       
+        console.log(res?.data?.products, 'resresresresresresres');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
-              appData?.profile?.preferences?.digit_after_decimal,
-            )
+                appData?.profile?.preferences?.digit_after_decimal,
+              )
             : 0,
           availableCarList:
             pageNo == 1
@@ -365,27 +362,25 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
-          btnLoader:false ,
+          btnLoader: false,
           productFaqQuestionAnswers: res?.data?.products?.data?.map(
             (item, index) => {
               return item;
             }
           ),
         });
-        setShowFinalUpdatedSeatNo(updateSeatNO)
+        setShowFinalUpdatedSeatNo(updateSeatNO);
       })
       .catch(errorMethod);
   };
 
-
- const _onUpdateSeatNo = (type)=>{
-    if(type=='increase'){
-      setUpdateSeatNo(updateSeatNO+1)
-    }else{
-      setUpdateSeatNo(updateSeatNO-1)
+  const _onUpdateSeatNo = (type) => {
+    if (type == 'increase') {
+      setUpdateSeatNo(updateSeatNO + 1);
+    } else {
+      setUpdateSeatNo(updateSeatNO - 1);
     }
- }
-
+  };
 
   let redirectTimeout = useRef();
 
@@ -503,6 +498,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       isLoadingB: false,
       isRefreshing: false,
       indicatorLoader: false,
+      btnLoader: false,
       isModalVisibleForPayFlutterWave: false,
     });
     showError(error?.message || error?.error || error?.description);
@@ -524,7 +520,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const _selectTime = () => {
-    updateState({ showTimeModal: false, showPaymentModal: true });
+    updateState({showTimeModal: false, showPaymentModal: true});
   };
 
   const sendStripeToken = (extraData, data) => {
@@ -536,7 +532,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data["card_expiry_month"] = paramData?.cardInfo?.expiryMonth;
     data["card_expiry_year"] = paramData?.cardInfo?.expiryYear;
 
-    console.log(data, "extraData....");
+    console.log(
+      selectedPayment?.code,
+      extraData,
+      data,
+      'extraData....++++++++++',
+    );
 
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
@@ -644,10 +645,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       indicatorLoader: true,
     });
 
-
-
-   console.log(data,"orderr place data>>>>");
-
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -660,23 +657,16 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           let extraData = {
             orderId: res?.data?.id,
             fromVendorApp: true,
-            selectedVendor: { id: selectedCarOption?.vendor_id },
+            selectedVendor: {id: selectedCarOption?.vendor_id},
             orderDetail: res?.data,
             fromCab: paramData?.pickup_taxi ? false : true,
             pickup_taxi: paramData?.pickup_taxi,
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           };
-          // console.log(extraData, data, "extraData, data");
-          if(!profile?.preferences?.is_postpay_enable){
-            checkPaymentOptions(extraData, data);
-          }else{
-            navigation.navigate(
-              navigationStrings.PICKUPTAXIORDERDETAILS,
-              extraData
-            );
-          }
-        
+          console.log(extraData, data, 'extraData, data');
+
+          checkPaymentOptions(extraData, data);
         } else {
           console.log(res, "res>>>>>");
           updateState({
@@ -690,102 +680,39 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-  // const _confirmAndPay = () => {
-  //   console.log(selectedPayment.id, 'selectedPayment.id');
-  //   let data = {};
-  //   data['task_type'] = scheduleDateTime?.selectedDateAndTime
-  //     ? ''
-  //     : pickUpTimeType
-  //       ? pickUpTimeType
-  //       : '';
-  //   data['schedule_time'] = scheduleDateTime?.selectedDateAndTime
-  //     ? `${scheduleDateTime?.selectedDateAndTime}`
-  //     : pickUpTimeType == 'now'
-  //       ? ''
-  //       : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
-  //   data['recipient_phone'] = '';
-  //   data['recipient_email'] = '';
-  //   data['task_description'] = taskInstruction;
-  //   data['amount'] = selectedCarOption?.tags_price;
-  //   data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
-  //   data['vendor_id'] = selectedCarOption?.vendor_id;
-  //   data['product_id'] = selectedCarOption?.id;
-  //   data['currency_id'] = currencies?.primary_currency?.id;
-  //   data['tasks'] = paramData?.tasks;
-  //   data['images_array'] = uploadImages;
-  //   data['is_cab_pooling'] = paramData?.is_cab_pooling;
-  //   data['no_seats_for_pooling'] = updateSeatNO;
-  //   data['user_product_order_form'] = allSubmittedAnswers
-
-  //     ? allSubmittedAnswers
-  //     : [];
-  //   if (couponInfo) {
-  //     data['coupon_id'] = couponInfo?.id;
-  //   }
-  //   data['order_time_zone'] = RNLocalize.getTimeZone();
-  //   data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
-  //   (data[
-  //     'friendName'
-  //   ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
-  //     (data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType
-  //       ? paramData?.friendBookingDetails?.mobileNumber?.includes('+')
-  //         ? paramData?.friendBookingDetails?.mobileNumber
-  //         : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
-  //       : ''),
-  //     console.log(data, 'dataaaaa');
-
-  //   if (
-  //     !!(
-  //       !!userData?.client_preference?.verify_email &&
-  //       !userData?.verify_details?.is_email_verified
-  //     ) ||
-  //     !!(
-  //       !!userData?.client_preference?.verify_phone &&
-  //       !userData?.verify_details?.is_phone_verified
-  //     )
-  //   ) {
-  //     moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_TAXI, {
-  //       ...userData,
-  //       fromCart: true,
-  //     })();
-  //   } else {
-  //     selectedPayment.id == 10 ? renderRazorPay(data) : _finalPayment(data);
-  //   }
-  // };
-
   const _confirmAndPay = () => {
-    console.log(selectedPayment.id, "selectedPayment.id");
+    console.log(selectedPayment, 'selectedPayment.id');
     let data = {};
-    data["task_type"] = scheduleDateTime?.selectedDateAndTime
-      ? ""
+    data['task_type'] = scheduleDateTime?.selectedDateAndTime
+      ? ''
       : pickUpTimeType
       ? pickUpTimeType
-      : "";
-    data["schedule_time"] = scheduleDateTime?.selectedDateAndTime
+      : '';
+    data['schedule_time'] = scheduleDateTime?.selectedDateAndTime
       ? `${scheduleDateTime?.selectedDateAndTime}`
-      : pickUpTimeType == "now"
-      ? ""
+      : pickUpTimeType == 'now'
+      ? ''
       : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
-    data["recipient_phone"] = "";
-    data["recipient_email"] = "";
-    data["task_description"] = taskInstruction;
-    data["amount"] = selectedCarOption?.total_tags_price;
-    data["tags_amount"] = selectedCarOption?.tags_price;
-    data["tollamount"] = selectedCarOption?.toll_fee
+    data['recipient_phone'] = '';
+    data['recipient_email'] = '';
+    data['task_description'] = taskInstruction;
+    data['amount'] = selectedCarOption?.total_tags_price
+      ? selectedCarOption?.total_tags_price
+      : selectedCarOption?.tags_price;
+    data['tags_amount'] = selectedCarOption?.tags_price;
+    data['tollamount'] = selectedCarOption?.toll_fee
       ? selectedCarOption?.toll_fee
       : 0;
-    data["servicechargeamount"] = selectedCarOption?.service_charge_amount
+    data['servicechargeamount'] = selectedCarOption?.service_charge_amount
       ? selectedCarOption?.service_charge_amount
       : 0;
-    data["payment_option_id"] = selectedPayment ? selectedPayment?.id : 1;
-    data["vendor_id"] = selectedCarOption?.vendor_id;
-    data["product_id"] = selectedCarOption?.id;
-    data["currency_id"] = currencies?.primary_currency?.id;
-    data["tasks"] = paramData?.tasks;
-    data["is_cab_pooling"]= paramData?.is_cab_pooling,
-    data["no_seats_for_pooling"]= updateSeatNO
-    data["images_array"] = uploadImages;
-    data["user_product_order_form"] = allSubmittedAnswers
+    data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
+    data['vendor_id'] = selectedCarOption?.vendor_id;
+    data['product_id'] = selectedCarOption?.id;
+    data['currency_id'] = currencies?.primary_currency?.id;
+    data['tasks'] = paramData?.tasks;
+    data['images_array'] = uploadImages;
+    data['user_product_order_form'] = allSubmittedAnswers
       ? allSubmittedAnswers
       : [];
     data["is_postpay"]=profile?.preferences?.is_postpay_enable
@@ -801,9 +728,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         ? paramData?.friendBookingDetails?.mobileNumber?.includes("+")
           ? paramData?.friendBookingDetails?.mobileNumber
           : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
-        : "")
-
-
+        : '')
+     
     if (
     !!(
     !!userData?.client_preference?.verify_email &&
@@ -839,7 +765,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         contact: userData?.phone_number || "",
         name: userData?.name,
       },
-      theme: { color: themeColors.primary_color },
+      theme: {color: themeColors.primary_color},
     };
 
     RazorpayCheckout.open(options)
@@ -948,7 +874,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  const renderVendors = ({ item }) => {
+  const renderVendors = ({item}) => {
     return (
       <TouchableOpacity
         disabled={selectedVendorOption.id == item.id}
@@ -1005,11 +931,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             <TouchableOpacity
               onPress={() =>
                 redirectFromNow
-                  ? updateState({ showCarModal: true, showPaymentModal: false })
-                  : updateState({ showTimeModal: true, showPaymentModal: false })
+                  ? updateState({showCarModal: true, showPaymentModal: false})
+                  : updateState({showTimeModal: true, showPaymentModal: false})
               }>
               <Image
-                style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
+                style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
                 source={imagePath.backArrowCourier}
               />
             </TouchableOpacity>
@@ -1026,7 +952,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             />
             <Text />
           </View>
-          <View style={{ marginBottom: moderateScaleVertical(32) }} />
+          <View style={{marginBottom: moderateScaleVertical(32)}} />
         </View>
       );
     }
@@ -1054,7 +980,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Image style={{ opacity: 0 }} source={imagePath.backArrowCourier} />
+            <Image style={{opacity: 0}} source={imagePath.backArrowCourier} />
 
             <View
               style={{
@@ -1078,24 +1004,25 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             {availableCarList?.length > 0 ? strings.CHOOSE_A_TRIP : ""}
           </Text>
         </View>
-        <View style={{ marginVertical: moderateScale(8) }}>
-          {console.log(availableVendors.length,"availableVendors")}
-         {availableVendors.length > 1 ? <FlatList
-            horizontal
-            data={availableVendors}
-            renderItem={renderVendors}
-            extraData={availableVendors}
-            ItemSeparatorComponent={() => (
-              <View style={{ marginRight: moderateScale(12) }} />
-            )}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(16) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginRight: moderateScale(16) }} />
-            )}
-            showsHorizontalScrollIndicator={false}
-          />:null}
+        <View style={{marginVertical: moderateScale(8)}}>
+          {availableVendors?.length > 1 ? (
+            <FlatList
+              horizontal
+              data={availableVendors}
+              renderItem={renderVendors}
+              extraData={availableVendors}
+              ItemSeparatorComponent={() => (
+                <View style={{marginRight: moderateScale(12)}} />
+              )}
+              ListHeaderComponent={() => (
+                <View style={{marginLeft: moderateScale(16)}} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{marginRight: moderateScale(16)}} />
+              )}
+              showsHorizontalScrollIndicator={false}
+            />
+          ) : null}
         </View>
       </View>
     );
@@ -1103,35 +1030,34 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const _selectCarModalView = () => {
     return (
-
       <AvailableDriver
         onPressAvailableCar={_selectedProductForDrivers}
         isCabPooling={!!paramData?.is_cab_pooling}
         disabled={disableButton}
         isLoading={btnLoader}
-        _onUpdateSeatNo = {_onUpdateSeatNo}
-        updateSeatNo = {showFinalUpdatedSeatNo}
+        _onUpdateSeatNo={_onUpdateSeatNo}
+        updateSeatNo={showFinalUpdatedSeatNo}
         selectedCarOption={selectedCarOption}
         allListedDrivers={allListedDrivers}
         onPressPickUpNow={() => {
           selectedCarOption
             ? updateState({
-              // pickUpTimeType: 'now',
-              showPaymentModal: true,
-              redirectFromNow: true,
-              showCarModal: false,
-            })
+                // pickUpTimeType: 'now',
+                showPaymentModal: true,
+                redirectFromNow: true,
+                showCarModal: false,
+              })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         // isLoading={isLoading}
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
-              // pickUpTimeType: 'schedule',
-              showTimeModal: true,
-              redirectFromNow: false,
-              showCarModal: false,
-            })
+                // pickUpTimeType: 'schedule',
+                showTimeModal: true,
+                redirectFromNow: false,
+                showCarModal: false,
+              })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         availableCarList={availableCarList}
@@ -1158,8 +1084,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const uploadImage = async (img) => {
     console.log('selected image', img);
-    let fileName = img.path.split("Pictures/")
-      console.log(fileName,"fileName...")
+    let fileName = img.path.split('Pictures/');
+    console.log(fileName, 'fileName...');
     const imgData = new FormData();
     imgData.append('upload_photo', {
       uri: img.path,
@@ -1185,7 +1111,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const updateInstruction = (val) => {
-    updateState({ taskInstruction: val });
+    updateState({taskInstruction: val});
   };
 
   const onQuestionAnswerSubmit = (item) => {
@@ -1254,18 +1180,18 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 onPress={_modalClose}
               >
                 <Text
-                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
                   {strings.CANCEL}
                 </Text>
               </TouchableOpacity>
 
-              <View style={{ marginHorizontal: 4 }} />
+              <View style={{marginHorizontal: 4}} />
               <TouchableOpacity
                 style={styles.scheduleModalBtnStyle}
                 onPress={_modalCloseModal}
               >
                 <Text
-                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
                   {strings.SET}
                 </Text>
               </TouchableOpacity>
@@ -1296,11 +1222,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const _selectPaymentView = () => {
-
+    console.log(paramData, 'paramDataparamData');
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}
-
         slectedDate={
           scheduleDateTime?.slectedDate
             ? scheduleDateTime?.slectedDate
@@ -1315,8 +1240,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         date={date}
         onPressBack={() =>
           redirectFromNow
-            ? updateState({ showCarModal: true, showPaymentModal: false })
-            : updateState({ showTimeModal: true, showPaymentModal: false })
+            ? updateState({showCarModal: true, showPaymentModal: false})
+            : updateState({showTimeModal: true, showPaymentModal: false})
         }
         totalDistance={totalDistance}
         totalDuration={totalDuration}
@@ -1351,7 +1276,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const _updateState = () => {
     // navigationStrings.CABDRIVERLOCATIONANDDETAIL
-    updateState({ isModalVisible: false });
+    updateState({isModalVisible: false});
     navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {});
   };
 
@@ -1374,11 +1299,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const onPressPickUpNow = () => {
     selectedCarOption
       ? updateState({
-        // pickUpTimeType: 'now',
-        showPaymentModal: true,
-        redirectFromNow: true,
-        showCarModal: false,
-      })
+          // pickUpTimeType: 'now',
+          showPaymentModal: true,
+          redirectFromNow: true,
+          showCarModal: false,
+        })
       : showError(strings.PLEASE_SELECT_CAR);
   };
 
@@ -1403,8 +1328,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   return (
-    <View style={{ ...styles.container }}>
-      <View style={{ flex: 1 }}>
+    <View style={{...styles.container}}>
+      <View style={{flex: 1}}>
         {!!paramData?.location.length > 0 && (
           <MapView
             ref={mapRef}
@@ -1412,7 +1337,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             customMapStyle={
               appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
             }
-            style={{ height: height / 1.25 }}
+            style={{height: height / 1.25}}
             region={region}
             initialRegion={region}
             tracksViewChanges={false}
@@ -1554,12 +1479,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                   color: themeColors?.primary_color,
                 }}
                 onPress={_openDateTimeModal}
-                btnText={`${scheduleDateTime?.selectedDateAndTime
+                btnText={`${
+                  scheduleDateTime?.selectedDateAndTime
                     ? `${scheduleDateTime?.selectedDateAndTime}`
                     : slectedDate || selectedTime
-                      ? `${slectedDate} ${selectedTime}`
-                      : 'Schedule a ride'
-                  }`}
+                    ? `${slectedDate} ${selectedTime}`
+                    : 'Schedule a ride'
+                }`}
                 btnStyle={styles.scheduleBtnStyle}
               />
             )}
@@ -1580,15 +1506,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 onPress={
                   selectedCarOption?.variant[0]?.price > 0
                     ? onPressPickUpNow
-                    : () => { }
+                    : () => {}
                 }
                 btnText={
                   selectedCarOption?.variant[0]?.price > 0
                     ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title}`
                     : strings.NORIDEAVAILABLE
                 }
-                containerStyle={{ flex: 1 }}
-                btnStyle={{ borderRadius: moderateScale(4) }}
+                containerStyle={{flex: 1}}
+                btnStyle={{borderRadius: moderateScale(4)}}
               />
             )}
           </View>

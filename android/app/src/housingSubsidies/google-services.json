@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "260044691077",
+    "project_id": "housingsubsidies-3c794",
+    "storage_bucket": "housingsubsidies-3c794.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260044691077:android:1394bd98b62d874a277bec",
+        "android_client_info": {
+          "package_name": "com.housingSubsidies.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260044691077-bhfhkvn8c3k03k7gifj11ldrfbbdpbcb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.housingSubsidies.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "260044691077-kbo4vb7fdlgnkr1760msg0i69u022l6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.housingSubsidies.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "260044691077-p6fmpop6srqc3924i1lgte8phhe9r2b8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.housingSubsidies.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "260044691077-afac8idhk5ldhd3oq8f40g7sk8cakmn1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNKERdsNh6mtxsPmQRiRgFSVKfHJtbeVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260044691077-afac8idhk5ldhd3oq8f40g7sk8cakmn1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "260044691077-6oskj7e2i0o8q8lpgd2fs92h20psd0ps.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.housingSubsidies.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

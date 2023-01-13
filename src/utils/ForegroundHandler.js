@@ -46,16 +46,34 @@ const ForegroundHandler = (props) => {
         sound: 'customnotii',
       });
 
-      if (Platform.OS == 'ios') {
-        PushNotificationIOS.addNotificationRequest({
-          id: messageId,
-          body: data?.body || '',
-          title: data?.title || '',
-          sound: notification?.sound || '',
-        });
-      } else {
-        let displayNotificationData = {};
-        if (notification?.android?.imageUrl) {
+      // if (Platform.OS == 'ios') {
+      //   PushNotificationIOS.addNotificationRequest({
+      //     id: messageId,
+      //     body: data?.body || '',
+      //     title: data?.title || '',
+      //     sound: notification?.sound || '',
+      //   });
+      // }
+      //  else {
+      let displayNotificationData = {};
+
+      if (!!data?.fcm_options?.image || !!notification?.android?.imageUrl) {
+        if (Platform.OS == 'ios') {
+          console.log('hello');
+          displayNotificationData = {
+            title: data?.title || notification?.title || '',
+            body: data?.body || notification?.body || '',
+            ios: {
+              attachments: [
+                {
+                  // Remote image
+                  url: data?.fcm_options?.image,
+                },
+              ],
+            },
+            data: {...data},
+          };
+        } else {
           displayNotificationData = {
             title: data?.title || notification?.title || '',
             body: data?.body || notification?.body || '',
@@ -70,25 +88,28 @@ const ForegroundHandler = (props) => {
                 picture: notification?.android?.imageUrl,
               },
             },
-            data: {...data},
-          };
-        } else {
-          displayNotificationData = {
-            title: data?.title || notification?.title || '',
-            body: data?.body || notification?.body || '',
-            android: {
-              sound: notification?.android?.sound || 'customnotii',
-              channelId,
-              pressAction: {
-                id: 'default',
-              },
-            },
+
             data: {...data},
           };
         }
+      } else {
+        displayNotificationData = {
+          title: data?.title || notification?.title || '',
+          body: data?.body || notification?.body || '',
+          android: {
+            sound: notification?.android?.sound || 'customnotii',
+            channelId,
+            pressAction: {
+              id: 'default',
+            },
+          },
 
-        await notifee.displayNotification(displayNotificationData);
+          data: {...data},
+        };
       }
+
+      await notifee.displayNotification(displayNotificationData);
+      // }
 
       // {
       //   Platform.OS == 'ios'

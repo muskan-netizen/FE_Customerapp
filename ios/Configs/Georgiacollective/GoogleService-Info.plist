@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>441886153453-louipdj6hu2snhp3pfokd3vcihutsvve.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.441886153453-louipdj6hu2snhp3pfokd3vcihutsvve</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>441886153453-bgb14p528lark1p450qeholnhorcg2fs.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBnVa0jaLUhPaDWQZCKytKN8rJzjd8OkA0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>441886153453</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.georgiacollective.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>georgiacollective-7f057</string>
+	<key>STORAGE_BUCKET</key>
+	<string>georgiacollective-7f057.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:441886153453:ios:25cb2197ec6f58f57d4ae4</string>
+</dict>
+</plist>

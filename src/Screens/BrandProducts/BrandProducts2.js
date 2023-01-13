@@ -1379,6 +1379,7 @@ export default function BrandProducts2({route, navigation}) {
               }}
               ItemSeparatorComponent={() => <View style={{height: 18}} />}
               getItemLayout={getItemLayout}
+              onScrollToIndexFailed={()=>console.log("")}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
               windowSize={10}

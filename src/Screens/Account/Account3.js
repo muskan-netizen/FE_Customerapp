@@ -65,6 +65,8 @@ export default function Account3({navigation}) {
 
   const {preferences, phone_number, contact_phone_number} = appData?.profile;
 
+  console.log("appDataappDataappData",appData)
+
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -109,7 +111,7 @@ export default function Account3({navigation}) {
     }
   };
 
-  console.log(userData,"appDataappData")
+  console.log(userData, 'appDataappData');
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -530,7 +532,9 @@ export default function Account3({navigation}) {
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
-            centerHeading={strings.LINKS}
+            centerHeading={
+              getBundleId() == appIds.sxm2go ? strings.JOIN : strings.LINKS
+            }
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),

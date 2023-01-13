@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "509691049465",
-    "project_id": "holla-d46f7",
-    "storage_bucket": "holla-d46f7.appspot.com"
+    "project_number": "114020939571",
+    "project_id": "holla-f8f42",
+    "storage_bucket": "holla-f8f42.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:509691049465:android:b5cc8615f21c6588967928",
+        "mobilesdk_app_id": "1:114020939571:android:bc9d81b58efacd12853046",
         "android_client_info": {
-          "package_name": "com.holla.royoorders"
+          "package_name": "com.holla.orders"
         }
       },
       "oauth_client": [
         {
-          "client_id": "509691049465-6vh5h47fg4971krm96umd1o1qb8t4ihj.apps.googleusercontent.com",
+          "client_id": "114020939571-2don1bk09bn7bunntpfqe8hho1mh6idk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.holla.royoorders",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "509691049465-l3dlc18pignmgitn6macuo47si3k1rkj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.holla.royoorders",
+            "package_name": "com.holla.orders",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "509691049465-r3rdkla5bmnca4hu0rlbs2b2dbi133m8.apps.googleusercontent.com",
+          "client_id": "114020939571-cvitegmanhoppirmofoqg0b7slv09h91.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.holla.royoorders",
+            "package_name": "com.holla.orders",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "509691049465-0h18o26m3cc8kdu50qcjke6qt3n7606q.apps.googleusercontent.com",
+          "client_id": "114020939571-k8q3j4lepvpftbj8ld16ps8u4dhjv73g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.holla.orders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "114020939571-kt968o6u4tkkgfpv0imsdivqtsit149q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDjANkie3D7uZUe4OcJ1z2obk5c4x99_PU"
+          "current_key": "AIzaSyBNRpz7j-E8tSzJY84DNHI99ovTiss0JEA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "509691049465-0h18o26m3cc8kdu50qcjke6qt3n7606q.apps.googleusercontent.com",
+              "client_id": "114020939571-kt968o6u4tkkgfpv0imsdivqtsit149q.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "509691049465-mefcdl34cd4dm5geic4ugem24ddifsa5.apps.googleusercontent.com",
+              "client_id": "114020939571-4s7fpf134fvnde7sh4buabpk071ugc2v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.holla.royoorders"
+                "bundle_id": "com.holla.orders"
               }
             }
           ]

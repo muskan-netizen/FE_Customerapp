@@ -50,6 +50,7 @@ export default function Vendors3({route, navigation}) {
 
   const {isLoading, pageNo, isRefreshing, limit, listData} = state;
   const {data} = route.params;
+  console.log(data,"datadatadata");
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -75,7 +76,7 @@ export default function Vendors3({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('vendor data', res);
+        console.log('vendor data', res,location);
         updateState({isLoading: false, isRefreshing: false});
         updateState({
           listData:
@@ -83,14 +84,6 @@ export default function Vendors3({route, navigation}) {
               ? res.data.listData.data
               : [...listData, ...res.data.listData.data],
         });
-        // const vendorData = {
-        //   category: res.data.category,
-        //   listData:
-        //     pageNo == 1
-        //       ? res.data.listData.data
-        //       : [...categoryData?.listData, ...res.data.listData.data],
-        // };
-        // actions.saveVendorListingAndCategoryInfo(vendorData);
       })
       .catch(errorMethod);
   }, [pageNo, isRefreshing]);

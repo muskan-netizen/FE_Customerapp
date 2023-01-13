@@ -36,7 +36,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData>>>>>');
+  console.log(paramData?.cabVendors[0], 'paramData>>>>>');
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -197,7 +197,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res, 'res>>>>>>>>>>>>>>>>>>>>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(

@@ -437,9 +437,10 @@ export default function Home({route, navigation}) {
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
       }
+      console.log(selectedVendorType,defaultVendorType,"selectedVendorTypeselectedVendorType");
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
-        ...latlongObj,
+        // ...latlongObj,
         ...vendorFilterData,
       };
       let apiHeader = {
@@ -560,12 +561,13 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'item>>>>item');
+   
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
       return;
     }
     if (item.redirect_to == staticStrings.VENDOR) {
+
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||

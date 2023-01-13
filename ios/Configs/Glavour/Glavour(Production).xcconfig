@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-LvlUp/Pods-available_pods-LvlUp.release.xcconfig"
+
+PROJECT_APPLE_ID = 1658693667
+PROJECT_BUNDLE_ID =com.glavour.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Glavour
+PROJECT_GOOGLE_CLIENT_ID =700358399661-hqt1usb4b1umm6ngtcqo206odjj7iqf9.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.700358399661-hqt1usb4b1umm6ngtcqo206odjj7iqf9
+PROJECT_FACEBOOK_ID = 532767295393387
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =GlavourInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

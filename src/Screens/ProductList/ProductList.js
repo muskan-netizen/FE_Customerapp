@@ -780,6 +780,7 @@ export default function Products({route, navigation}) {
         }}
         refreshing={isRefreshing}
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={()=>console.log("")}
         initialNumToRender={12}
         maxToRenderPerBatch={10}
         windowSize={10}

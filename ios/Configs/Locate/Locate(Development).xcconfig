@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-available_pods-Locate/Pods-available_pods-Locate.debug.xcconfig"
+
+PROJECT_APPLE_ID = 6444818833
+PROJECT_BUNDLE_ID = com.locate.royoorders
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Locate
+PROJECT_GOOGLE_CLIENT_ID = 681462136742-l2tfhj5dp5b7tr10iseqha8na9b6cu0u.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.681462136742-l2tfhj5dp5b7tr10iseqha8na9b6cu0u
+PROJECT_FACEBOOK_ID = 672771601225339
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =LocateInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "46226157991",
+    "project_id": "hecto-homes",
+    "storage_bucket": "hecto-homes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46226157991:android:b71a3a334045d273f98682",
+        "android_client_info": {
+          "package_name": "com.hectohomes.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46226157991-1jq94is2rpjrcj21ec1mhjj3v6e7vort.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hectohomes.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "46226157991-5uclbh87ncd6h0t5gs3789k4ple1cpee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hectohomes.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "46226157991-ojikr6ns5ufotg83sfaqa1pkck07klq2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hectohomes.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "46226157991-245palkeef0r2gfhnecbhgkjn80kmdki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrefCYTDLPHvnxrhi-42q3Ry6fcavMm_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46226157991-245palkeef0r2gfhnecbhgkjn80kmdki.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "46226157991-oajmigi2nnqfcjtvgukc8vrfvp5mfck1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hectohomes.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
