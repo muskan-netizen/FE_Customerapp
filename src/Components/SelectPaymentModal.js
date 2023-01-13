@@ -1,13 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   CardField,
   createPaymentMethod,
   createToken,
   initStripe,
-  StripeProvider
+  StripeProvider,
 } from '@stripe/stripe-react-native';
-import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Keyboard,
@@ -15,15 +15,15 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
-import { loaderOne } from '../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang/index';
@@ -34,14 +34,16 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
+import {MyDarkTheme} from '../styles/theme';
 import HomeLoader from './Loaders/HomeLoader';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => {},
   dineInType,
+  codMinAmount = '',
+  amount = '',
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
@@ -57,7 +59,7 @@ export default function SelectPaymentModal({
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
-
+  console.log(codMinAmount, amount, 'codMinAmount');
   const [state, setState] = useState({
     isLoading: false,
     payementMethods: [],
@@ -295,22 +297,6 @@ export default function SelectPaymentModal({
         source={loaderOne}
         // isLoadingB={isLoading}
       >
-        <Header
-          leftIcon={
-            appStyle?.homePageLayout === 2
-              ? imagePath.backArrow
-              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
-          }
-          onPressLeft={paymentModalClose}
-          centerTitle={strings.PAYMENT}
-          headerStyle={
-            isDarkMode
-              ? {backgroundColor: MyDarkTheme.colors.background}
-              : {backgroundColor: colors.backgroundGrey}
-          }
-        />
         <View
           style={{
             height: 1,
@@ -373,41 +359,74 @@ export default function SelectPaymentModal({
           }}>
           {!isEmpty(payementMethods)
             ? payementMethods.map((item, index) => {
-                console.log(item, 'item>>>>');
+                console.log(amount, codMinAmount, 'item>>>>');
                 return (
                   <>
                     <Animatable.View
                       // animation={'slideInUp'}
                       // duration={200}
                       style={{flex: 1}}>
-                      <TouchableOpacity
-                        onPress={() => selectPaymentMethod(item, index)}
-                        key={index}
-                        style={[
-                          styles.caseOnDeliveryView,
-                          //  {...getAndCheckStyle(item)}
-                        ]}>
-                        <Image
-                          source={
-                            selectedPaymentMethod &&
-                            selectedPaymentMethod?.id == item.id
-                              ? imagePath.radioActive
-                              : imagePath.radioInActive
-                          }
-                        />
-                        {/* {strings.CASE_ON_DELIVERY} */}
-                        <Text
-                          style={
-                            isDarkMode
-                              ? [
-                                  styles.caseOnDeliveryText,
-                                  {color: MyDarkTheme.colors.text},
-                                ]
-                              : styles.caseOnDeliveryText
-                          }>
-                          {item?.title_lng ? item?.title_lng : item?.title}
-                        </Text>
-                      </TouchableOpacity>
+                      {Number(amount) >= Number(codMinAmount) ? (
+                        <TouchableOpacity
+                          onPress={() => selectPaymentMethod(item, index)}
+                          key={index}
+                          style={[
+                            styles.caseOnDeliveryView,
+                            //  {...getAndCheckStyle(item)}
+                          ]}>
+                          <Image
+                            source={
+                              selectedPaymentMethod &&
+                              selectedPaymentMethod?.id == item.id
+                                ? imagePath.radioActive
+                                : imagePath.radioInActive
+                            }
+                          />
+                          {/* {strings.CASE_ON_DELIVERY} */}
+                          <Text
+                            style={
+                              isDarkMode
+                                ? [
+                                    styles.caseOnDeliveryText,
+                                    {color: MyDarkTheme.colors.text},
+                                  ]
+                                : styles.caseOnDeliveryText
+                            }>
+                            {item?.title_lng ? item?.title_lng : item?.title}
+                          </Text>
+                        </TouchableOpacity>
+                      ) : (
+                        item.code !== 'cod' && (
+                          <TouchableOpacity
+                            onPress={() => selectPaymentMethod(item, index)}
+                            key={index}
+                            style={[
+                              styles.caseOnDeliveryView,
+                              //  {...getAndCheckStyle(item)}
+                            ]}>
+                            <Image
+                              source={
+                                selectedPaymentMethod &&
+                                selectedPaymentMethod?.id == item.id
+                                  ? imagePath.radioActive
+                                  : imagePath.radioInActive
+                              }
+                            />
+                            {/* {strings.CASE_ON_DELIVERY} */}
+                            <Text
+                              style={
+                                isDarkMode
+                                  ? [
+                                      styles.caseOnDeliveryText,
+                                      {color: MyDarkTheme.colors.text},
+                                    ]
+                                  : styles.caseOnDeliveryText
+                              }>
+                              {item?.title_lng ? item?.title_lng : item?.title}
+                            </Text>
+                          </TouchableOpacity>
+                        )
+                      )}
                       {!!(
                         selectedPaymentMethod &&
                         selectedPaymentMethod?.id == item.id &&
@@ -524,22 +543,6 @@ export default function SelectPaymentModal({
       source={loaderOne}
       // isLoadingB={isLoading}
     >
-      <Header
-        leftIcon={
-          appStyle?.homePageLayout === 2
-            ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
-        }
-        onPressLeft={paymentModalClose}
-        centerTitle={strings.PAYMENT}
-        headerStyle={
-          isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.backgroundGrey}
-        }
-      />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
 
       <StripeProvider

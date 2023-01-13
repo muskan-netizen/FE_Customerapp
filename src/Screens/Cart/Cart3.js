@@ -194,6 +194,8 @@ function Cart({navigation, route}) {
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
     selectedType: null,
+    orderAmount: '',
+    codMinAmount: '',
   });
 
   const {
@@ -220,6 +222,8 @@ function Cart({navigation, route}) {
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
     selectedType,
+    orderAmount,
+    codMinAmount,
   } = state;
 
   //Redux store data
@@ -390,6 +394,10 @@ function Cart({navigation, route}) {
         closeForm();
         actions.cartItemQty(res);
         setIsShimmerLoading(false);
+        updateState({
+          codMinAmount: res?.data?.cod_min_amount,
+          orderAmount: res?.data?.total_payable_amount,
+        });
         !(dineInType === 'delivery' || dineInType === 'on_demand') &&
           setVendorAddress(res?.data?.vendor_details?.vendor_address || {});
         let checkDate = !!res?.data?.scheduled_date_time;
@@ -4584,6 +4592,26 @@ function Cart({navigation, route}) {
             </TouchableOpacity>
           )}
 
+        {!isEmpty(codMinAmount) && Number(orderAmount) <= Number(codMinAmount) && (
+          <View
+            style={styles.codmessageView}>
+            <Text
+              style={{
+                color: isDarkMode ? colors.white : colors.grayOpacity51,
+
+                marginTop: moderateScale(-5),
+              }}>
+              {'*'}
+            </Text>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                textAlign: 'left',
+
+                color: isDarkMode ? colors.white : colors.grayOpacity51,
+              }}>{`Cash on delivery only available for amount greater then. ${codMinAmount}`}</Text>
+          </View>
+        )}
         {!!(
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart &&
@@ -7055,6 +7083,23 @@ function Cart({navigation, route}) {
           failOffsetX={[-5, 5]}
           animateOnMount={true}
           handleComponent={null}>
+          <Header
+            leftIcon={
+              appStyle?.homePageLayout === 2
+                ? imagePath.backArrow
+                : appStyle?.homePageLayout === 3 ||
+                  appStyle?.homePageLayout === 5
+                ? imagePath.icBackb
+                : imagePath.back
+            }
+            onPressLeft={() => updateState({paymentModal: false})}
+            centerTitle={strings.PAYMENT}
+            headerStyle={
+              isDarkMode
+                ? {backgroundColor: MyDarkTheme.colors.background}
+                : {backgroundColor: colors.backgroundGrey}
+            }
+          />
           <BottomSheetScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
@@ -7069,6 +7114,8 @@ function Cart({navigation, route}) {
                 merchantIdentifier="merchant.identifier">
                 <SelectPaymentModal
                   onSelectPayment={onSelectPayment}
+                  codMinAmount={codMinAmount}
+                  amount={orderAmount}
                   paymentModalClose={() => updateState({paymentModal: false})}
                   dineInType={dineInType}
                 />
