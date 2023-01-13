@@ -195,7 +195,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     additional_preferences,
     digit_after_decimal,
   } = appData?.profile?.preferences;
-  const isFocused = useIsFocused();
+  const positionposition = useIsFocused();
   const bottomSheetRef = useRef(null);
 
   const { profile } = appData;
@@ -351,7 +351,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({ isLoading: false });
       }
     },
-    isFocused && orderStatus != "completed" ? 3000 : null
+    isFocused && orderStatus != "completed" ? 30000 : null
   );
 
   useEffect(() => {
