@@ -8,6 +8,7 @@ import {
   Image,
   Keyboard,
   Linking,
+  SafeAreaView,
   ScrollView,
   Text,
   TextInput,
@@ -77,9 +78,12 @@ const CANCLE_TASK_TIME = 45000;
 // import 'moment/locale/tr';
 // import 'moment/locale/vi';
 // import 'moment/locale/ar';
-import "moment-timezone";
-import "moment/min/locales"; // Import all moment-locales -- it's just 400kb
-import GradientButton from "../../../Components/GradientButton";
+import 'moment-timezone';
+import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
+import GradientButton from '../../../Components/GradientButton';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
+import Header from '../../../Components/Header';
 
 export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
@@ -1149,6 +1153,112 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     }
   };
 
+  if (isLoading) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: colors.white,
+          alignItems: 'center',
+        }}>
+        <View>
+          <HeaderLoader
+            widthLeft={moderateScale(30)}
+            rectWidthLeft={moderateScale(30)}
+            heightLeft={moderateScaleVertical(30)}
+            rectHeightLeft={moderateScaleVertical(30)}
+            widthRight={moderateScale(200)}
+            rectWidthRight={moderateScale(200)}
+            heightRight={moderateScale(20)}
+            rectHeightRight={moderateScale(20)}
+            isRight={true}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              width: width - moderateScale(30),
+            }}
+            rightViewStyle={{
+              marginLeft: width / 5.5,
+            }}
+          />
+          <View style={{alignItems: 'center'}}>
+            <HeaderLoader
+              widthLeft={moderateScale(width / 1.2)}
+              rectWidthLeft={moderateScale(width / 1.2)}
+              heightLeft={height / 3}
+              rectHeightLeft={height / 3}
+              isRight={false}
+              rx={15}
+              ry={15}
+              viewStyles={{
+                marginTop: moderateScaleVertical(20),
+              }}
+            />
+          </View>
+
+          <HeaderLoader
+            widthLeft={width / 3}
+            rectWidthLeft={moderateScale(80)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              alignSelf: 'flex-start',
+              marginTop: moderateScaleVertical(40),
+              paddingBottom: moderateScaleVertical(40),
+            }}
+          />
+
+          <HeaderLoader
+            widthLeft={moderateScale(80)}
+            rectWidthLeft={moderateScale(80)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            widthRight={moderateScale(40)}
+            rectWidthRight={moderateScale(40)}
+            heightRight={moderateScale(20)}
+            rectHeightRight={moderateScale(20)}
+            isRight={true}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              alignItems: 'center',
+              width: width - moderateScale(30),
+              marginTop: moderateScaleVertical(10),
+            }}
+            rightViewStyle={{
+              marginLeft: width / 5.5,
+            }}
+          />
+          <HeaderLoader
+            widthLeft={moderateScale(80)}
+            rectWidthLeft={moderateScale(80)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            widthRight={moderateScale(40)}
+            rectWidthRight={moderateScale(40)}
+            heightRight={moderateScale(20)}
+            rectHeightRight={moderateScale(20)}
+            isRight={true}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              alignItems: 'center',
+              width: width - moderateScale(30),
+              marginTop: moderateScaleVertical(10),
+            }}
+            rightViewStyle={{
+              marginLeft: width / 5.5,
+            }}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1170,7 +1280,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                ? () => navigation.navigate(navigationStrings.HOME)
                 : paramData?.pickup_taxi
                   ? () => navigation.navigate(navigationStrings.HOME)
                   : () => navigation.goBack()
@@ -1184,6 +1294,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               source={imagePath.backArrowCourier}
             />
           </TouchableOpacity>
+
           <Text
             style={{
               fontSize: moderateScale(16),

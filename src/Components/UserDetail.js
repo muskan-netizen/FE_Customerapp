@@ -223,7 +223,7 @@ const UserDetail = ({
           )}
         </View>
 
-        {getBundleId() == appIds.masa || appIds.hokitch
+        {getBundleId() == ( appIds.masa || appIds.hokitch)
           ? null
           : (data?.vendor?.phone_no || data?.order?.phone_number) && (
               <View style={{ flexDirection: "row" }}>

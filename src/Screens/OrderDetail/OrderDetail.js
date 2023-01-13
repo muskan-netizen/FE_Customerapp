@@ -1277,30 +1277,34 @@ export default function OrderDetail({ navigation, route }) {
                                   </Text>
                                   <View
                                     style={{
-                                      flexDirection: 'row',
-                                      justifyContent: 'space-between',
-                                    }}>
+                                      flexDirection: "row",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
                                     <View>
                                       {i?.quantity && (
                                         <View
                                           style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                          }}>
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                          }}
+                                        >
                                           <Text
                                             style={{
                                               ...styles.quantityStyles,
                                               color: isDarkMode
                                                 ? MyDarkTheme.colors.text
                                                 : colors.textGrey,
-                                            }}>
+                                            }}
+                                          >
                                             <Text
                                               style={{
                                                 ...styles.quantityStyles,
                                                 color: isDarkMode
                                                   ? MyDarkTheme.colors.text
                                                   : colors.textGrey,
-                                              }}>
+                                              }}
+                                            >
                                               {strings.QTY}
                                             </Text>
                                             <Text style={styles.cartItemWeight}>
@@ -1312,9 +1316,10 @@ export default function OrderDetail({ navigation, route }) {
                                     </View>
                                     <View
                                       style={{
-                                        justifyContent: 'center',
-                                        alignItems: 'flex-start',
-                                      }}>
+                                        justifyContent: "center",
+                                        alignItems: "flex-start",
+                                      }}
+                                    >
                                       <Text
                                         numberOfLines={1}
                                         style={{
@@ -1324,15 +1329,14 @@ export default function OrderDetail({ navigation, route }) {
                                             : colors.blackOpacity86,
                                           fontSize: textScale(12),
                                           fontFamily: fontFamily.medium,
-                                        }}>
+                                        }}
+                                      >
                                         <Text style={styles.cartItemPrice}>
                                           {tokenConverterPlusCurrencyNumberFormater(
-                                            Number(i?.price) *
-                                              Number(i?.quantity),
+                                            Number(i?.price) * Number(i?.quantity),
                                             digit_after_decimal,
                                             additional_preferences,
-                                            currencies?.primary_currency
-                                              ?.symbol,
+                                            currencies?.primary_currency?.symbol
                                           )}
                                         </Text>
                                       </Text>
@@ -1438,8 +1442,7 @@ export default function OrderDetail({ navigation, route }) {
                                             >
                                               {tokenConverterPlusCurrencyNumberFormater(
                                                 Number(
-                                                  i?.pvariant
-                                                    ?.container_charges,
+                                                  i?.pvariant?.container_charges
                                                 ) * Number(i?.quantity),
                                                 digit_after_decimal,
                                                 additional_preferences,
@@ -1458,10 +1461,11 @@ export default function OrderDetail({ navigation, route }) {
                                   ) && (
                                     <View
                                       style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
+                                        flexDirection: "row",
+                                        alignItems: "center",
                                         marginTop: moderateScale(2),
-                                      }}>
+                                      }}
+                                    >
                                       <View>
                                         <Text
                                           style={{
@@ -1471,7 +1475,8 @@ export default function OrderDetail({ navigation, route }) {
                                               : colors.textGreyB,
                                             marginBottom: moderateScale(2),
                                             // marginTop: moderateScaleVertical(6),
-                                          }}>
+                                          }}
+                                        >
                                           {`${strings.CONTAINERCHARGES} : `}
                                         </Text>
                                       </View>
@@ -3412,8 +3417,7 @@ export default function OrderDetail({ navigation, route }) {
     );
 
     console.log(
-      cartData?.driver_rating,
-      submitedRatingToDriver,
+      cartData,
       "cartData?.driver_rating"
     );
 

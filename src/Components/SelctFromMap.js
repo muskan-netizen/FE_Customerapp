@@ -217,10 +217,11 @@ export default function SelctFromMap({
           ...StyleSheet.absoluteFillObject,
           height: height,
         }}
+  
         // region={region}
         initialRegion={region}
         // pointerEvents={'none'}
-        // minZoomLevel={20}
+       
         onRegionChangeComplete={_onRegionChange}>
         {/* <MarkerAnimated
           ref={markerRef}

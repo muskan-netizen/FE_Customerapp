@@ -142,7 +142,7 @@ export default function AddMoney({navigation}) {
       isRefreshing: false,
       isModalVisibleForPayFlutterWave: false,
     });
-    showError(error?.message || error?.error);
+    showError(error?.error?.reason|| error?.message || error?.error);
   };
 
   //Navigation to specific screen
@@ -425,7 +425,7 @@ export default function AddMoney({navigation}) {
     // }
     if (
       selectedPaymentMethod?.off_site == 0 &&
-      selectedPaymentMethod?.id == 1
+      selectedPaymentMethod?.id == 10
     ) {
       renderRazorPay();
       return;

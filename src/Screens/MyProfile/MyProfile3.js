@@ -342,6 +342,10 @@ export default function MyProfile3({route, navigation}) {
           obj['dial_code'] = res.data.callingCode || callingCode;
           obj['user_document'] = res.data.user_document || '';
 
+          obj['verify_details'] = {
+            ['is_email_verified']: res.data.is_email_verified,
+            ['is_phone_verified']: res.data.is_phone_verified,
+          };
           actions.updateProfile({...userData, ...obj});
           updateState({isLoading: false});
           // navigation.goBack()

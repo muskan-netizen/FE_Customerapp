@@ -86,7 +86,8 @@ export default function Home({route, navigation}) {
   const [minMaxError, setMinMaxError] = useState([]);
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
-
+  const [nearestLocDis, setNearestLocDis] = useState(null)
+  const [isSearchLoc, setIsSearchLoc] = useState(0)
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -109,7 +110,7 @@ export default function Home({route, navigation}) {
     unPresentAry: [],
     isSubscription: true,
     stopOrderModalVisible: true,
-    curLatLong: null,
+    curLatLong: {},
     selectedFilterType: {},
   });
 
@@ -208,8 +209,11 @@ export default function Home({route, navigation}) {
             .then((curLoc) => {
               updateState({
                 curLatLong: curLoc,
+                currentLocation: curLoc,
               });
+
               let locData = location?.latitude ? location : curLoc;
+              
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
@@ -223,7 +227,17 @@ export default function Home({route, navigation}) {
 
                         getNearestLocation(curLoc, filterAddress)
                           .then((nearestLoc) => {
+                            console.log(nearestLoc,"nearestLocnearestLoc")
+
+                            // if NearestLocation dis. is greareter than 500m 
+                            if(nearestLoc?.distance >= 500){
+                              setNearestLocDis(nearestLoc) 
+                              actions.locationData(curLoc);
+                              homeData(curLoc);
+                              // return
+                            }else{
                             //ifTab selected
+                            setNearestLocDis(null)
                             if (isLocationSearched || isRefreshing) {
                               actions.locationData(locData);
                               homeData(locData);
@@ -231,7 +245,9 @@ export default function Home({route, navigation}) {
                               actions.locationData(nearestLoc);
                               homeData(nearestLoc);
                             }
-                          })
+                          } 
+                        }
+                          )
                           .catch((error) => {
                             actions.locationData(locData);
                             homeData(locData);
@@ -437,10 +453,15 @@ export default function Home({route, navigation}) {
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
       }
-      console.log(selectedVendorType,defaultVendorType,"selectedVendorTypeselectedVendorType");
+      console.log(
+        selectedVendorType,
+        defaultVendorType,
+        'selectedVendorTypeselectedVendorType',
+      );
+
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
-        // ...latlongObj,
+        ...latlongObj,
         ...vendorFilterData,
       };
       let apiHeader = {
@@ -1091,6 +1112,7 @@ export default function Home({route, navigation}) {
         } else {
           return (
             <>
+              {console.log('curLatLong=>', curLatLong)}
               <DashBoardHeaderFive
                 showToggles={false}
                 navigation={navigation}
@@ -1098,11 +1120,13 @@ export default function Home({route, navigation}) {
                 selcetedToggle={selcetedToggle}
                 toggleData={appData}
                 isLoading={isLoading}
-                currentLocation={currentLocation}
+                currentLocation={curLatLong}
                 isLoadingB={isLoadingB}
                 _onVoiceListen={_onVoiceListen}
                 isVoiceRecord={isVoiceRecord}
                 _onVoiceStop={_onVoiceStop}
+                nearestLoc={nearestLocDis}
+                currentLoc={currentLocation}
               />
 
               {dineInType == 'pick_drop' ? (
@@ -1211,6 +1235,8 @@ export default function Home({route, navigation}) {
               _onVoiceListen={_onVoiceListen}
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
             />
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord
@@ -1270,6 +1296,8 @@ export default function Home({route, navigation}) {
               _onVoiceListen={_onVoiceListen}
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
             />
             {dineInType == 'pick_drop' ? (
               <TaxiHomeDashbord

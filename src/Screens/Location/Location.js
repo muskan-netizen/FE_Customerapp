@@ -149,25 +149,26 @@ export default function Location({ route, navigation }) {
             },
           },
         };
-        console.log(details, "details>>>>>");
-        setTimeout(() => {
-          if (type == "Home1") {
-            navigation.navigate(navigationStrings.HOME, {
-              details,
-            });
-          }
-          if (type == "Pickup") {
-            navigation.navigate(navigationStrings.PICKUPLOCATION, {
-              details,
-              addressType,
-            });
-          }
-          if (type == "vendorRegistration") {
-            navigation.navigate(navigationStrings.WEBLINKS, {
-              details,
-            });
-          }
-        }, 200);
+        console.log(details, 'details>>>>>');
+        console.log(type, 'type>>>>>');
+        // setTimeout(() => {
+        //   if (type == 'Home1') {
+        //     navigation.navigate(navigationStrings.HOME, {
+        //       details,
+        //     });
+        //   }
+        //   if (type == 'Pickup') {
+        //     navigation.navigate(navigationStrings.PICKUPLOCATION, {
+        //       details,
+        //       addressType,
+        //     });
+        //   }
+        //   if (type == 'vendorRegistration') {
+        //     navigation.navigate(navigationStrings.WEBLINKS, {
+        //       details,
+        //     });
+        //   }
+        // }, 20000);
       })
       .catch((err) => console.log(err, "errorOccured"));
   };

@@ -246,7 +246,7 @@ function Cart({navigation, route}) {
 
   const {preferences} = appData?.profile;
   const {additional_preferences, digit_after_decimal} = preferences;
-console.log(cartData,'cartDatacartData')
+
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
@@ -2550,6 +2550,7 @@ console.log(cartData,'cartDatacartData')
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
+                console.log('item=>>>', item);
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -3890,7 +3891,7 @@ console.log(cartData,'cartDatacartData')
                 Number(
                   cartData?.total_container_charges
                     ? cartData?.total_container_charges
-                    : 0,
+                    : 0
                 ),
               digit_after_decimal,
               additional_preferences,
@@ -4066,21 +4067,23 @@ console.log(cartData,'cartDatacartData')
             <Text
               style={
                 isDarkMode
-                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel
-              }>
-              {'Service Fee'}
+              }
+            >
+              {"Service Fee"}
             </Text>
             <Text
               style={
                 isDarkMode
-                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel
-              }>{`${tokenConverterPlusCurrencyNumberFormater(
+              }
+            >{`${tokenConverterPlusCurrencyNumberFormater(
               Number(cartData?.total_service_fee),
               digit_after_decimal,
               additional_preferences,
-              currencies?.primary_currency?.symbol,
+              currencies?.primary_currency?.symbol
             )}`}</Text>
           </View>
         )}
@@ -4159,7 +4162,7 @@ console.log(cartData,'cartDatacartData')
             )}`}</Text>
           </View>
         )}
-
+        
         {cartData?.total_tax > 0 && (
           <Animatable.View
             style={{
@@ -4203,32 +4206,35 @@ console.log(cartData,'cartDatacartData')
                 Number(cartData?.total_tax ? cartData?.total_tax : 0),
                 digit_after_decimal,
                 additional_preferences,
-                currencies?.primary_currency?.symbol,
+                currencies?.primary_currency?.symbol
               )}
             </Text>
           </Animatable.View>
         )}
         {!!preferences?.advance_booking_amount &&
-          cartData?.pending_amount > 0 && (
+          cartData?.advance_payable_amount > 0 && (
             <Animatable.View
               style={{
                 ...styles.bottomTabLableValue,
                 marginTop: moderateScale(8),
                 marginBottom: moderateScale(2),
-              }}>
+              }}
+            >
               <TouchableOpacity
                 activeOpacity={0.9}
                 hitSlop={hitSlopProp}
-                onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                onPress={() => updateState({ showTaxFeeArea: !showTaxFeeArea })}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text
                     style={{
                       ...styles.priceItemLabel,
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
-                    }}>
-                    {'Advance Payable Amount'}
+                    }}
+                  >
+                    {"Advance Payable Amount"}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -4236,43 +4242,46 @@ console.log(cartData,'cartDatacartData')
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [
+                        styles.priceItemLabel,
+                        { color: MyDarkTheme.colors.text },
+                      ]
                     : styles.priceItemLabel
-                }>
-                {' '}
+                }
+              >
+                {" "}
                 {tokenConverterPlusCurrencyNumberFormater(
                   Number(cartData?.advance_payable_amount),
                   digit_after_decimal,
                   additional_preferences,
-                  currencies?.primary_currency?.symbol,
+                  currencies?.primary_currency?.symbol
                 )}
               </Text>
             </Animatable.View>
           )}
-        {!!preferences?.advance_booking_amount &&
-          cartData?.pending_amount > 0 && (
-            <Animatable.View
-              style={{
-                ...styles.bottomTabLableValue,
-                marginTop: moderateScale(8),
-                marginBottom: moderateScale(2),
-              }}>
-              <TouchableOpacity
-                activeOpacity={0.9}
-                hitSlop={hitSlopProp}
-                onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      ...styles.priceItemLabel,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyB,
-                    }}>
-                    {'Pending Amount'}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+        {!!preferences?.advance_booking_amount && cartData?.pending_amount > 0 && (
+          <Animatable.View
+            style={{
+              ...styles.bottomTabLableValue,
+              marginTop: moderateScale(8),
+              marginBottom: moderateScale(2),
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {'Advance Payable Amount'}
+                </Text>
+              </View>
+            </TouchableOpacity>
 
               <Text
                 style={

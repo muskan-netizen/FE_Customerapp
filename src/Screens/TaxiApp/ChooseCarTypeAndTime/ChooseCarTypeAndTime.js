@@ -644,7 +644,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isLoading: true,
       indicatorLoader: true,
     });
-
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -1222,7 +1221,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _selectPaymentView = () => {
-    console.log(paramData, 'paramDataparamData');
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}

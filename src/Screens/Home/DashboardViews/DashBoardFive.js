@@ -724,7 +724,9 @@ export default function DashBoardFive({
                       ? MyDarkTheme.colors.text
                       : themeColors.primary_color,
                   }}>
-                  {strings.VIEW_ALL}
+                  {getBundleId() == appIds.qdelo
+                    ? `${strings.VIEW_ALL} ${strings.STORES}`
+                    : strings.VIEW_ALL}
                 </Text>
               </TouchableOpacity>
             )}

@@ -5,6 +5,7 @@ import {
   FlatList,
   Image,
   RefreshControl,
+  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -35,17 +36,14 @@ import {
   moderateScale,
   moderateScaleVertical,
   width,
-} from "../../styles/responsiveSize";
-import { MyDarkTheme } from "../../styles/theme";
-import {
-  getImageUrl,
-  showError,
-  showSuccess,
-} from "../../utils/helperFunctions";
-import stylesFun from "./styles";
-import useInterval from "../../utils/useInterval";
-import { appIds } from "../../utils/constants/DynamicAppKeys";
-import { getBundleId } from "react-native-device-info";
+} from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import stylesFun from './styles';
+import useInterval from '../../utils/useInterval';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 
 export default function MyOrders(props) {
   const { navigation, route } = props;
@@ -70,10 +68,10 @@ export default function MyOrders(props) {
     tabBarData: [
       appStyle?.homePageLayout == 4
         ? {
-            title:
-              appIds.mml == getBundleId()
-                ? strings.ACTIVEDELEIVERIES
-                : appIds.jiffex == getBundleId()
+          title:
+            appIds.mml == getBundleId()
+              ? strings.ACTIVEDELEIVERIES
+              : appIds.jiffex == getBundleId()
                 ? strings.ACTIVE_ORDERS
                 : strings.ACTIVERIDES,
             isActive: true,
@@ -81,10 +79,10 @@ export default function MyOrders(props) {
         : { title: strings.ACTIVE_ORDERS, isActive: true },
       appStyle?.homePageLayout == 4
         ? {
-            title:
-              appIds.mml == getBundleId()
-                ? strings.PASTDELEIVERIES
-                : appIds.jiffex == getBundleId()
+          title:
+            appIds.mml == getBundleId()
+              ? strings.PASTDELEIVERIES
+              : appIds.jiffex == getBundleId()
                 ? strings.PAST_ORDERS
                 : strings.PASTRIDES,
             isActive: false,
@@ -228,14 +226,14 @@ export default function MyOrders(props) {
         selectedTab: tabData.title,
         tabType:
           tabData.title == strings.ACTIVE_ORDERS ||
-          tabData.title == strings.ACTIVERIDES ||
-          tabData.title == strings?.ACTIVEDELEIVERIES
+            tabData.title == strings.ACTIVERIDES ||
+            tabData.title == strings?.ACTIVEDELEIVERIES
             ? staticStrings.ACTIVE
             : tabData.title == strings.PAST_ORDERS ||
               tabData.title == strings.PASTRIDES ||
               tabData.title == strings?.PASTDELEIVERIES
-            ? staticStrings.PAST
-            : staticStrings.SCHEDULE,
+              ? staticStrings.PAST
+              : staticStrings.SCHEDULE,
         pageActive: 1,
         orders: selectedTab != tabData.title ? [] : orders,
       });
@@ -251,7 +249,7 @@ export default function MyOrders(props) {
       (item?.product_details[0]?.category_type ==
         staticStrings.PICKUPANDDELIEVRY ||
         item?.product_details[0]?.category_type ==
-          staticStrings.ONDEMANDSERVICE)
+        staticStrings.ONDEMANDSERVICE)
     ) {
       navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
         orderId: item?.order_id,
@@ -491,20 +489,14 @@ export default function MyOrders(props) {
       selectedTab == strings.ACTIVERIDES ||
       selectedTab == strings.ACTIVEDELEIVERIES
     ) {
-      updateState({
-        pageActive: pageActive + 1,
-        tabType: staticStrings.ACTIVE,
-      });
+      updateState({ pageActive: pageActive + 1, tabType: staticStrings.ACTIVE });
     }
     if (
       selectedTab == strings.PAST_ORDERS ||
       selectedTab == strings.PASTRIDES ||
       selectedTab == strings.PASTDELEIVERIES
     ) {
-      updateState({
-        pageActive: pagePastOrder + 1,
-        tabType: staticStrings.PAST,
-      });
+      updateState({ pageActive: pagePastOrder + 1, tabType: staticStrings.PAST });
     }
     // if (selectedTab == strings.SCHEDULED_ORDERS) {
     //   updateState({
@@ -555,7 +547,6 @@ export default function MyOrders(props) {
           }
         )
         .then((res) => {
-          console.log(res, "getReturnProductrDetailData>>>res>>>");
           updateState({ isLoading: false });
           setTimeout(() => {
             navigation.navigate(navigationStrings.RETURNORDER, {
@@ -566,10 +557,10 @@ export default function MyOrders(props) {
               reasons:
                 res?.data?.reasons && res?.data?.reasons.length
                   ? res?.data?.reasons.map((item, index) => {
-                      (item["value"] = item?.title),
-                        (item["label"] = item?.title);
-                      return item;
-                    })
+                    (item['value'] = item?.title),
+                      (item['label'] = item?.title);
+                    return item;
+                  })
                   : [],
             });
           }, 500);
@@ -722,9 +713,9 @@ export default function MyOrders(props) {
             style={
               isDarkMode
                 ? [
-                    styles.modalMainViewContainer,
-                    { backgroundColor: MyDarkTheme.colors.lightDark },
-                  ]
+                  styles.modalMainViewContainer,
+                  { backgroundColor: MyDarkTheme.colors.lightDark },
+                ]
                 : styles.modalMainViewContainer
             }
           >

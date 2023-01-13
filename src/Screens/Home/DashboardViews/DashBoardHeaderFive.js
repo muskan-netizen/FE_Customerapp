@@ -1,6 +1,6 @@
 import React, {createRef, useEffect, useRef, useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
-import deviceInfoModule from 'react-native-device-info';
+import deviceInfoModule, {getBundleId} from 'react-native-device-info';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
@@ -36,6 +36,7 @@ import {
 import LottieView from 'lottie-react-native';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -48,11 +49,17 @@ export default function DashBoardHeaderFive({
   isVoiceRecord = false,
   _onVoiceStop = () => {},
   showAboveView = true,
+  currentLocation,
+  nearestLoc,
+  currentLoc,
 }) {
   const navigation = useNavigation();
-
+  console.log('currentLocation=>', currentLocation, );
   const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
+  );
+  const { isLocationSearched} = useSelector(
+    (state) => state?.home,
   );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -156,8 +163,10 @@ export default function DashBoardHeaderFive({
                           : colors.blackOpacity30,
                         fontFamily: fontFamily.medium,
                       },
-                    ]}>
+                    ]}> 
                     {location?.address}
+                    {/* {console.log(nearestLoc,"nearestLocnearestLoc")} */}
+                    {/* {!!nearestLoc  ? currentLocation?.address : nearestLoc?.address || location?.address} */}
                   </Text>
                 </View>
               </TouchableOpacity>
