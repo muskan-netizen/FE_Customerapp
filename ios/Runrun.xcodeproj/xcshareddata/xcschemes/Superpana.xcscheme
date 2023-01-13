@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C3A3A1C29517C3D002ECBC0"
-               BuildableName = "Superpana.app"
+               BuildableName = "Superpana"
                BlueprintName = "Superpana"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C3A3A1C29517C3D002ECBC0"
-            BuildableName = "Superpana.app"
+            BuildableName = "Superpana"
             BlueprintName = "Superpana"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C3A3A1C29517C3D002ECBC0"
-            BuildableName = "Superpana.app"
+            BuildableName = "Superpana"
             BlueprintName = "Superpana"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

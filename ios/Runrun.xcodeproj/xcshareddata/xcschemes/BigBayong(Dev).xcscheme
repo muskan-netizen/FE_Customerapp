@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "989380FE2948607A00BCB8BE"
-               BuildableName = "BigBayong.app"
+               BuildableName = "BigBayong"
                BlueprintName = "BigBayong"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "989380FE2948607A00BCB8BE"
-            BuildableName = "BigBayong.app"
+            BuildableName = "BigBayong"
             BlueprintName = "BigBayong"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "989380FE2948607A00BCB8BE"
-            BuildableName = "BigBayong.app"
+            BuildableName = "BigBayong"
             BlueprintName = "BigBayong"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

@@ -46,7 +46,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {showMessage} from 'react-native-flash-message';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
-import {color} from 'react-native-reanimated';
+
 import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function Wallet({navigation}) {

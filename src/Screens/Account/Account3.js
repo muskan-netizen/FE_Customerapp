@@ -65,6 +65,8 @@ export default function Account3({navigation}) {
 
   const {preferences, phone_number, contact_phone_number} = appData?.profile;
 
+  console.log("appDataappDataappData",appData)
+
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;

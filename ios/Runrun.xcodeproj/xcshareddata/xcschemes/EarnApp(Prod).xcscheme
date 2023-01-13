@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18F794F2295963CA000B9D15"
-               BuildableName = "EarnApp.app"
+               BuildableName = "EarnApp"
                BlueprintName = "EarnApp"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18F794F2295963CA000B9D15"
-            BuildableName = "EarnApp.app"
+            BuildableName = "EarnApp"
             BlueprintName = "EarnApp"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18F794F2295963CA000B9D15"
-            BuildableName = "EarnApp.app"
+            BuildableName = "EarnApp"
             BlueprintName = "EarnApp"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

@@ -93,6 +93,8 @@ export default function VerifyAccount({navigation, route}) {
     countryPickerModalVisible,
   } = state;
 
+
+
   const sendOTP = (type, resendType) => {
     let data = {};
     if (type == 'phone') {
@@ -111,7 +113,7 @@ export default function VerifyAccount({navigation, route}) {
         authorization: paramsData?.auth_token,
       })
       .then((res) => {
-        console.log(res, 'resresres');
+        console.log(res, 'resend otp resresres');
         showSuccess(res?.message);
         if (type == 'phone') {
           updateState({

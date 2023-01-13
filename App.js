@@ -3,7 +3,7 @@ import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect, useRef, useState} from 'react';
-import {Linking, Text, View} from 'react-native';
+import {Linking, Platform, Text, View} from 'react-native';
 import codePush from 'react-native-code-push';
 import {useDarkMode} from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
@@ -49,6 +49,7 @@ let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 const App = () => {
   const [progress, setProgress] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('black');
+
   const ConnectBTFunction = async () => {
     await AsyncStorage.removeItem('autoConnectEnabled');
 
@@ -130,7 +131,9 @@ const App = () => {
 
     AsyncStorage.getItem('autoConnectEnabled').then((res) => {
       if (res !== null) {
-        ConnectBTFunction();
+        if (Platform.OS == 'android') {
+          ConnectBTFunction();
+        }
       }
     });
   }, []);

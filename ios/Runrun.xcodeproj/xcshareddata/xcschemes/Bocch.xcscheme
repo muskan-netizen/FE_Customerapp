@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C11434929546D4A00510F55"
-               BuildableName = "Bocch.app"
+               BuildableName = "Bocch"
                BlueprintName = "Bocch"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C11434929546D4A00510F55"
-            BuildableName = "Bocch.app"
+            BuildableName = "Bocch"
             BlueprintName = "Bocch"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C11434929546D4A00510F55"
-            BuildableName = "Bocch.app"
+            BuildableName = "Bocch"
             BlueprintName = "Bocch"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

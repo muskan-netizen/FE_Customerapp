@@ -619,7 +619,7 @@ export default function Signup({navigation}) {
               require
               returnKeyType={'next'}
             />
-            {!appData?.profile?.preferences?.concise_signup && (
+            {!appData?.profile?.preferences?.concise_signup &&  appIds.sxm2go !=getBundleId() && (
               <BorderTextInput
                 onChangeText={_onChangeText('referralCode')}
                 placeholder={

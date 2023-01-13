@@ -550,12 +550,13 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'item>>>>item');
+   
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
       return;
     }
     if (item.redirect_to == staticStrings.VENDOR) {
+
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||

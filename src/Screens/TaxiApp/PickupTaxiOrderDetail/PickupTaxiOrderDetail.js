@@ -960,6 +960,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   };
 
   const onChat = (item) => {
+    console.log('itemitemitem', item);
+
     navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
   };
 
@@ -975,9 +977,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
       };
+      if (type == 'agent_to_user') {
+        apiData.agent_id = orderFullDetail?.agent_location?.agent_id;
+        apiData.agent_db = orderFullDetail?.agent_dbname;
+      }
       updateState({isLoading: true});
 
-      console.log('sending api data', apiData);
+      console.log('sending api data room created', orderFullDetail);
       const res = await actions.onStartChat(apiData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -1253,7 +1259,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
                       {orderFullDetail?.order &&
                         orderFullDetail?.agent_location?.lat &&
-                        appData?.profile?.socket && (
+                        appData?.profile?.socket_url && (
                           <TouchableOpacity
                             onPress={() =>
                               createRoom(

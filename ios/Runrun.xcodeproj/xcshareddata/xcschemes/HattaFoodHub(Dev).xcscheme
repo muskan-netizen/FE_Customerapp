@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18FAD7E929643CC2003603EA"
-               BuildableName = "HattaFoodHub.app"
+               BuildableName = "HattaFoodHub"
                BlueprintName = "HattaFoodHub"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18FAD7E929643CC2003603EA"
-            BuildableName = "HattaFoodHub.app"
+            BuildableName = "HattaFoodHub"
             BlueprintName = "HattaFoodHub"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18FAD7E929643CC2003603EA"
-            BuildableName = "HattaFoodHub.app"
+            BuildableName = "HattaFoodHub"
             BlueprintName = "HattaFoodHub"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

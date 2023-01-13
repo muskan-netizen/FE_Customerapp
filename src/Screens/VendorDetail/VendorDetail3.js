@@ -85,6 +85,7 @@ export default function VendorDetail3({navigation, route}) {
   const commonStyles = commonStylesFun({fontFamily});
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
+
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
     if (item?.redirect_to == 'Pickup/Delivery') {
@@ -100,12 +101,12 @@ export default function VendorDetail3({navigation, route}) {
     if (!!item?.redirect_to && item?.redirect_to == staticStrings.PRODUCT) {
       navigation.navigate(navigationStrings.PRODUCT_LIST, {
         data: {
-          id: item.id,
+          id: item?.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
           vendorData: vendorParams?.item,
           categoryInfo: item,
-          name: item.name,
+          name: item?.name,
           isVendorList: false,
           category_slug: item?.slug,
           categoryExist: item?.id || null,
@@ -116,7 +117,7 @@ export default function VendorDetail3({navigation, route}) {
     if (!!item?.type && item?.type.redirect_to == staticStrings.PRODUCT) {
       navigation.navigate(navigationStrings.PRODUCT_LIST, {
         data: {
-          id: item.id,
+          id: item?.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
           vendorData: vendorParams?.item,
@@ -141,7 +142,7 @@ export default function VendorDetail3({navigation, route}) {
 
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
-        id: item.id,
+        id: item?.id,
         rootProducts: vendorParams?.rootProducts,
         vendor: vendorParams?.rootProducts ? true : false,
         vendorData: vendorParams?.item,

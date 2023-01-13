@@ -1,4 +1,10 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+} from 'react';
 import {
   StyleSheet,
   Text,
@@ -57,7 +63,7 @@ export default function ChatScreen({route, navigation}) {
   );
   const styles = stylesFun({fontFamily, isDarkMode});
 
-  console.log('paramDataparamDataparamDataparamDataparamData', paramData);
+  console.log('paramDataparamDataparamData chat screen', paramData);
 
   let defaultImage =
     'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png';
@@ -90,6 +96,7 @@ export default function ChatScreen({route, navigation}) {
   useFocusEffect(
     useCallback(() => {
       socketServices.on('new-message', (data) => {
+        console.log('new-message++', data);
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused
             ? setMessages((previousMessages) =>
@@ -99,9 +106,14 @@ export default function ChatScreen({route, navigation}) {
           isFocused ? fetchAllRoomUser() : null;
         }
       });
+
+      socketServices.on('room-created', (data) => {
+        fetchAllRoomUser();
+      });
       return () => {
         socketServices.removeListener('new-message');
         socketServices.removeListener('save-message');
+        // socketServices.removeListener("room-created");
       };
     }, [navigation]),
   );
@@ -143,7 +155,7 @@ export default function ChatScreen({route, navigation}) {
     }
   }, []);
 
-  const fetchAllRoomUser = useCallback(async () => {
+  async function fetchAllRoomUser() {
     try {
       const apiData = `/${paramData?._id}`;
       const res = await actions.getAllRoomUser(
@@ -155,37 +167,51 @@ export default function ChatScreen({route, navigation}) {
           language: languages?.primary_language?.id,
         },
       );
-
-      console.log('resresresresres+++', res);
+      console.log('fetchAllRoomUser res', res);
 
       if (!!res?.userData && isFocused) {
-        const allRoomUsersAppartFromAgent = res?.userData.filter(function (el) {
-          return el.user_type != 'agent';
-        });
-        const allAgentIds = res?.userData.filter(function (el) {
-          return el.user_type == 'agent';
+        let cloneRes = _.cloneDeep(res);
+        let cloneRes2 = _.cloneDeep(res);
+
+        console.log('cloneRescloneRes', res);
+
+        const allRoomUsersAppartFromAgentAry = cloneRes?.userData.filter(
+          (item) => {
+            console.log('Item+++++++', item);
+            if (item?.user_type == 'agent') {
+              return item?.user_type !== 'agent';
+            }
+          },
+        );
+        const allAgentIdsAry = cloneRes2?.userData.filter((item) => {
+          console.log('Item+++++++', item);
+          if (item?.user_type == 'agent') {
+            return item?.user_type == 'agent';
+          }
         });
 
+        console.log(
+          allAgentIdsAry,
+          'allAgentIdsAryallAgentIdsAryallAgentIdsAry',
+        );
+
         updateState({
-          allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgent.map(
-            (val) => {
-              return {
-                auth_user_id: !!userData?.is_superadmin
-                  ? val?.auth_user_id
-                  : val?.vendor_id,
-              };
-            },
-          ),
-          allAgentIds: allAgentIds.map((val) => {
-            return {auth_user_id: val?.auth_user_id};
-          }),
+          allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgentAry,
+          allAgentIds: allAgentIdsAry,
           roomUsers: res?.userData,
         });
       }
     } catch (error) {
       console.log('error raised in fetchAllRoomUser api', error);
     }
-  }, [allRoomUsersAppartFromAgent, allAgentIds, roomUsers]);
+  }
+
+  console.log(
+    'allRoomUsersAppartFromAgentallRoomUsersAppartFromAgent',
+    allRoomUsersAppartFromAgent,
+  );
+
+  console.log('roomUsersroomUsers', roomUsers);
 
   const checkToMessage = () => {
     let userType = paramData?.type;
@@ -236,8 +262,7 @@ export default function ChatScreen({route, navigation}) {
           //'room_name' =>$data->name,
           chat_type: paramData?.type,
         };
-
-        console.log('apiDataapiData', apiData);
+        console.log('sending chat apiDataapiData', apiData);
         const res = await actions.sendMessage(apiData, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -245,7 +270,18 @@ export default function ChatScreen({route, navigation}) {
         });
         console.log('on send message res', res);
         socketServices.emit('save-message', res);
-
+        // const message = {
+        //   _id: userData.id,
+        //   auth_user_id: userData.id,
+        //   message: messages[0].text,
+        //   createdAt: new Date(),
+        //   username: userData?.name,
+        //   display_image: getImageUrl(
+        //     userData?.source?.proxy_url,
+        //     userData?.source?.image_path,
+        //     '200/200',
+        //   )
+        // };
         await sendToUserNotification(paramData?._id, messages[0].text);
         // setMessages(previousMessages => GiftedChat.append(previousMessages, message))
       } catch (error) {
@@ -256,33 +292,33 @@ export default function ChatScreen({route, navigation}) {
   );
 
   const sendToUserNotification = (id, text) => {
+    let notificaionAgentIds =
+      allAgentIds.length == 0
+        ? [{auth_user_id: !!paramData?.agent_id ? paramData?.agent_id : ''}]
+        : allAgentIds;
+
     let apiData = {
       user_ids:
         allRoomUsersAppartFromAgent.length == 0
-          ? [
-              {
-                auth_user_id: !!userData?.is_superadmin
-                  ? paramData?.order_user_id
-                  : paramData.vendor_id,
-              },
-            ]
+          ? [{auth_user_id: paramData?.vendor_id}]
           : allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
       text_message: text,
       chat_type: paramData?.type,
       order_id: paramData?.order_id,
-      all_agentids:
-        allAgentIds.length == 0
-          ? [{auth_user_id: paramData?.agent_id}]
-          : allAgentIds,
+      all_agentids: notificaionAgentIds,
+      // all_agentids:
+      //   allAgentIds.length == 0
+      //     ? [{auth_user_id: !!paramData?.agent_id ? paramData?.agent_id : ''}]
+      //     : (allAgentIds.length > 1 && paramData?.type == "agent_to_user") ,
       order_vendor_id: paramData?.order_vendor_id,
       username: userData?.name,
       vendor_id: paramData?.vendor_id,
       auth_id: userData?.id,
+      web: false,
     };
-
-    console.log('notifications send', apiData);
+    console.log(apiData, 'apiDataapiDataapiData send notification');
     actions
       .sendNotification(apiData, {
         code: appData?.profile?.code,

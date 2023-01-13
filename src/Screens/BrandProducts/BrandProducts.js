@@ -647,6 +647,7 @@ export default function BrandProducts({route, navigation}) {
                 marginHorizontal: moderateScale(14),
               }}
               getItemLayout={getItemLayout}
+              onScrollToIndexFailed={()=>console.log("")}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
               windowSize={10}

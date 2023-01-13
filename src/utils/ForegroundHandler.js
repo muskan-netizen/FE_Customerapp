@@ -55,43 +55,24 @@ const ForegroundHandler = (props) => {
       //   });
       // }
       //  else {
-        let displayNotificationData = {};
+      let displayNotificationData = {};
 
-        if (!!data?.fcm_options?.image ||!!notification?.android?.imageUrl ) {
-          if( Platform.OS=='ios') {
-            console.log("hello")
-            displayNotificationData = {
-              title: data?.title || notification?.title || '',
-              body: data?.body || notification?.body || '',
-              ios :{
-                attachments: [{
+      if (!!data?.fcm_options?.image || !!notification?.android?.imageUrl) {
+        if (Platform.OS == 'ios') {
+          console.log('hello');
+          displayNotificationData = {
+            title: data?.title || notification?.title || '',
+            body: data?.body || notification?.body || '',
+            ios: {
+              attachments: [
+                {
                   // Remote image
                   url: data?.fcm_options?.image,
-                }]
-              },
-              data: {...data},
-            };
-          }
-          else{
-            displayNotificationData = {
-              title: data?.title || notification?.title || '',
-              body: data?.body || notification?.body || '',
-              android: {
-                sound: notification?.android?.sound || 'customnotii',
-                channelId,
-                pressAction: {
-                  id: 'default',
                 },
-                style: {
-                  type: AndroidStyle.BIGPICTURE,
-                  picture: notification?.android?.imageUrl,
-                },
-              },
-             
-              data: {...data},
-            };
-          }
-         
+              ],
+            },
+            data: {...data},
+          };
         } else {
           displayNotificationData = {
             title: data?.title || notification?.title || '',
@@ -102,13 +83,32 @@ const ForegroundHandler = (props) => {
               pressAction: {
                 id: 'default',
               },
+              style: {
+                type: AndroidStyle.BIGPICTURE,
+                picture: notification?.android?.imageUrl,
+              },
             },
-            
+
             data: {...data},
           };
         }
+      } else {
+        displayNotificationData = {
+          title: data?.title || notification?.title || '',
+          body: data?.body || notification?.body || '',
+          android: {
+            sound: notification?.android?.sound || 'customnotii',
+            channelId,
+            pressAction: {
+              id: 'default',
+            },
+          },
 
-        await notifee.displayNotification(displayNotificationData);
+          data: {...data},
+        };
+      }
+
+      await notifee.displayNotification(displayNotificationData);
       // }
 
       // {

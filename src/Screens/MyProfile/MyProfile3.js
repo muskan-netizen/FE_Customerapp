@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -39,6 +40,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {cameraHandler} from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -776,7 +778,7 @@ export default function MyProfile3({route, navigation}) {
           height: height / 2,
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {userData?.refferal_code && userData?.refferal_code != '' ? (
+          {userData?.refferal_code && userData?.refferal_code != '' && appIds.sxm2go !=getBundleId() ? (
             <View
               style={{
                 flexDirection: 'row',

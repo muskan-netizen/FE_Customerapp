@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C1143802954773000510F55"
-               BuildableName = "Potolo.app"
+               BuildableName = "Potolo"
                BlueprintName = "Potolo"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C1143802954773000510F55"
-            BuildableName = "Potolo.app"
+            BuildableName = "Potolo"
             BlueprintName = "Potolo"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C1143802954773000510F55"
-            BuildableName = "Potolo.app"
+            BuildableName = "Potolo"
             BlueprintName = "Potolo"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
