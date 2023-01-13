@@ -768,7 +768,7 @@ export default function TaxiHomeDashbord({
                   {strings.WHERETO}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              { getBundleId()=== appIds.appi ? null :<TouchableOpacity
                 onPress={() => {
                   userData?.auth_token
                     ? updateState({
@@ -806,7 +806,7 @@ export default function TaxiHomeDashbord({
                     source={imagePath.goRight}
                   />
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity>}
             </View>
             {allSavedAddress.length > 0 && userData?.auth_token ? (
               <></>

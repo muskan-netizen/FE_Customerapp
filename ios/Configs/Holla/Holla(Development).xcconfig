@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Holla/Pods-available_pods-Holla.debug.xcconfig"
 
-PROJECT_APPLE_ID = 6444095924
-PROJECT_BUNDLE_ID =com.holla.royoorders
+PROJECT_APPLE_ID = 1659409450
+PROJECT_BUNDLE_ID =com.holla.orders
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
-PROJECT_APP_NAME = $10 Holla
-PROJECT_GOOGLE_CLIENT_ID = 509691049465-mefcdl34cd4dm5geic4ugem24ddifsa5.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.509691049465-mefcdl34cd4dm5geic4ugem24ddifsa5
+PROJECT_APP_NAME = 10Dollar Holla
+PROJECT_GOOGLE_CLIENT_ID = 114020939571-4s7fpf134fvnde7sh4buabpk071ugc2v.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.114020939571-4s7fpf134fvnde7sh4buabpk071ugc2v
 PROJECT_FACEBOOK_ID = 805534527323637
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =HollaInfo

@@ -83,19 +83,19 @@ export default function Signup({navigation}) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+      (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery )
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
             '-',
             '',
           )
-        : appData?.profile.country?.phonecode
+        : getBundleId() == appIds.speedyDelivery ? "1" : appData?.profile?.country?.code
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+      (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery )
         ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
-        : appData?.profile?.country?.code
+        : getBundleId() == appIds.speedyDelivery ? "DO" : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
         : 'IN',
     name: '',
@@ -275,7 +275,7 @@ export default function Signup({navigation}) {
      
       return;
     }
-    console.log(formdata, 'formdata>><');
+    console.log(formdata, '>>formdata<');
     updateState({isLoading: true});
 
     if (accept) {
@@ -681,11 +681,11 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  I accept the
+                  {strings.I_ACCEPT_THE}
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 3})
                   }
                   style={{color: colors.themeColor}}>
                   {' '}
@@ -695,11 +695,11 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  and have read the
+                 { strings.AND_HAVE_READ_THE}
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 1})
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
                   }
                   style={{color: colors.themeColor}}>
                   {`${strings.PRICACY_POLICY}`}.

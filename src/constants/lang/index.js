@@ -15,7 +15,7 @@ import sv from './sv';
 import tr from './tr';
 import vi from './vi';
 import zh from './zh';
-
+import bn from './bn'
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import ar_baytukom from './ar_baytukom';
 import es_elcheragio from './es_elcheragio';
@@ -64,6 +64,7 @@ let strings = new LocalizedStrings({
   it: it,
   fa: fa,
   swa: swa,
+  bn:bn,
 });
 export const changeLaguage = (languageKey) => {
   strings.setLanguage(languageKey);

@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9.apps.googleusercontent.com</string>
+	<string>1014434266916-d2317u9af9tv8dtncjpbef90ibooga0p.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.721486092870-i52r8g6274es84pl0rg6rjdbomotp8h9</string>
+	<string>com.googleusercontent.apps.1014434266916-d2317u9af9tv8dtncjpbef90ibooga0p</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>721486092870-0ae6au35s698o07ml4pg3he1clb5jfnk.apps.googleusercontent.com</string>
+	<string>1014434266916-5bmtojs33qtkbithk0e2sa77nakcsmva.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCvNDH0uz5a-c4C1m3rzpcQkbWSrUNLnTI</string>
+	<string>AIzaSyADEdf4FL4U2mNehP6fN2WE6z3sOrSnhzE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>721486092870</string>
+	<string>1014434266916</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.jeevann.royoorders</string>
+	<string>com.jeevan.orders</string>
 	<key>PROJECT_ID</key>
-	<string>jeevann-61c32</string>
+	<string>jeevann-e1e9d</string>
 	<key>STORAGE_BUCKET</key>
-	<string>jeevann-61c32.appspot.com</string>
+	<string>jeevann-e1e9d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:721486092870:ios:89bd0633265e297e55c847</string>
+	<string>1:1014434266916:ios:528fef4aa5e93eb8db3db1</string>
 </dict>
 </plist>

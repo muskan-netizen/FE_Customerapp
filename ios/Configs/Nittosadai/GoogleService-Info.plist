@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>739558188771-i1eat2drh8gbp2m5ebsdhg9p4g6024d1.apps.googleusercontent.com</string>
+	<string>677034692747-0g67rnfmh5116st30h7cdff6bctkfe8d.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.739558188771-i1eat2drh8gbp2m5ebsdhg9p4g6024d1</string>
+	<string>com.googleusercontent.apps.677034692747-0g67rnfmh5116st30h7cdff6bctkfe8d</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>739558188771-44gn0nhj962465gd7b3ivk459765gshu.apps.googleusercontent.com</string>
+	<string>677034692747-3kjbdrin4v38vrf1dsrqdgr7uhkis4t2.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC_n262nk87uGsFDvRsmcWmkRL-PBgKtpA</string>
+	<string>AIzaSyB-Pq-VbaWoNdw-nS-td11YsHl2ncadw3c</string>
 	<key>GCM_SENDER_ID</key>
-	<string>739558188771</string>
+	<string>677034692747</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.nittosadai.royoorders</string>
+	<string>com.nittosadai.orders</string>
 	<key>PROJECT_ID</key>
-	<string>nittosadai-b8525</string>
+	<string>nittosadai-aba6e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>nittosadai-b8525.appspot.com</string>
+	<string>nittosadai-aba6e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:739558188771:ios:c6f434b20d36a2c51e47d6</string>
+	<string>1:677034692747:ios:bf982fe3ec89803f04448e</string>
 </dict>
 </plist>

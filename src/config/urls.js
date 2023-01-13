@@ -18,6 +18,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.130:9090/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL = 'https://mealtime.menu/api/v1';
+// export const API_BASE_URL='https://jeevannapp.com/api/v1'
+// export const API_BASE_URL ='http://192.168.101.54:9090/api/v1'
+// export const API_BASE_URL='https://kaypee.app/api/v1'
+// export const API_BASE_URL='http://fly-commerce.com/api/v1'
 // export const API_BASE_URL = 'https://order.fazeiteam.com/api/v1';
 // export const API_BASE_URL = 'https://getfix.com.my/api/v1';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
@@ -71,6 +75,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://hiperabasto.mx/api/v1';
 //
 // sheryders
+// export const API_BASE_URL = 'https://sheryders.com/api/v1';
 //export const API_BASE_URL = 'https://sheryders.com/api/v1';
 
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
@@ -139,7 +144,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://jiffex.in/api/v1'
 
 // export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1';
-
+// export const API_BASE_URL='https://shophairrun.app/api/v1'
 // export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL='https://ipickndrop.com/api/v1'
@@ -148,8 +153,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // lastminutedresss
 // export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Vishwas
-// export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
-// export const API_BASE_URL = 'http://192.168.100.185:8080/api/v1';
+// export const API_BASE_URL = 'https://speedy.com.do/api/v1';
+// export const API_BASE_URL='https://pas41.net/api/v1'
+// export const API_BASE_URL = 'https://hitaxi.taxi/api/v1';
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
 // export const API_BASE_URL = 'https://peerdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://hometowndelivery21.com/api/v1';

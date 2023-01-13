@@ -8,34 +8,31 @@ import {
   ScrollView,
   Share,
   Text,
-  TouchableOpacity,
-  Vibration,
-  View,
-} from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
-import FastImage from "react-native-fast-image";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
-import Header from "../../Components/Header";
-import ListItemHorizontal from "../../Components/ListItemHorizontalWithImage";
-import WrapperContainer from "../../Components/WrapperContainer";
-import imagePath from "../../constants/imagePath";
-import strings from "../../constants/lang/index";
-import navigationStrings from "../../navigation/navigationStrings";
-import actions from "../../redux/actions";
-import colors from "../../styles/colors";
-import commonStylesFun, { hitSlopProp } from "../../styles/commonStyles";
+  TouchableOpacity, View
+} from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { getBundleId } from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
+import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang/index';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import commonStylesFun, { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
-} from "../../styles/responsiveSize";
-import { MyDarkTheme } from "../../styles/theme";
+  textScale
+} from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getRandomColor,
-  showError,
+  showError
 } from "../../utils/helperFunctions";
 import stylesFun from "./styles";
 
@@ -327,7 +324,10 @@ export default function Account3({ navigation }) {
             />
           ))}
 
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token &&
+         !!appData &&
+         !!appData?.profile &&
+         appData?.profile?.preferences?.subscription_mode == 1 && (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: "row" }}
             leftIconStyle={{ flex: 0.1, alignItems: "center" }}
@@ -344,7 +344,7 @@ export default function Account3({ navigation }) {
           />
         )}
 
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token && getBundleId() !== appIds.appi && (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: "row" }}
             leftIconStyle={{ flex: 0.1, alignItems: "center" }}
@@ -391,7 +391,7 @@ export default function Account3({ navigation }) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token &&  (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: "row" }}
             leftIconStyle={{ flex: 0.1, alignItems: "center" }}
@@ -472,8 +472,8 @@ export default function Account3({ navigation }) {
         />
 
         {!!userData?.auth_token &&
-          Platform.OS === "android" &&
-          (businessType == "taxi" ? null : (
+          Platform.OS === 'android' && getBundleId() !== appIds.appi &&
+          (businessType == 'taxi' ? null : (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: "row" }}
               leftIconStyle={{ flex: 0.1, alignItems: "center" }}

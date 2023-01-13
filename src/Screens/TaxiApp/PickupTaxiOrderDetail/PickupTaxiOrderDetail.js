@@ -200,8 +200,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const positionposition = useIsFocused();
   const bottomSheetRef = useRef(null);
 
-  const { profile } = appData;
-
+  const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();

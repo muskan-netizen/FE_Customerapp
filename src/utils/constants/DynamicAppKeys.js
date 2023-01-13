@@ -297,7 +297,6 @@ const shortCodes = {
   curblerLLC: '959ecf',
   cartnar: '7b87ed',
   uven: '9b8db5',
-  // pAS41: '4c0a17',
   pAS41: '200651',
   freshFarmz: 'eafe42',
   ryde: '309c33',
@@ -1506,7 +1505,7 @@ const appIds = {
     android: 'com.seratho',
   }),
   xborne: Platform.select({
-    ios: 'com.xborne',
+    ios: 'com.xborne.order',
     android: 'com.xborne.order',
   }),
   fawaz: Platform.select({
@@ -2134,7 +2133,7 @@ const appIds = {
     android: 'com.eureka.royoorders',
   }),
   kaypee: Platform.select({
-    ios: 'com.kaypee.royoorders',
+    ios: 'com.kaypee.orderapp',
     android: 'com.kaypee.orderapp',
   }),
   hitaxi: Platform.select({
@@ -2194,8 +2193,8 @@ const appIds = {
     android: 'com.eathalal.royoorders',
   }),
   jeevann: Platform.select({
-    ios: 'com.jeevann.royoorders',
-    android: 'com.jeevann.royoorders',
+    ios: 'com.jeevan.orders',
+    android: 'com.jeevan.orders',
   }),
   novamed: Platform.select({
     ios: 'com.novamed.royoorders',
@@ -2222,8 +2221,8 @@ const appIds = {
     android: 'com.spryton.royoorders',
   }),
   nittosadai: Platform.select({
-    ios: 'com.nittosadai.royoorders',
-    android: 'com.nittosadai.royoorders',
+    ios: 'com.nittosadai.orders',
+    android: 'com.nittosadai.orders',
   }),
   clickokart: Platform.select({
     ios: 'com.clickokart.royoorders',
@@ -2278,11 +2277,11 @@ const appIds = {
     android: 'com.genee.royoorders',
   }),
   speedyDelivery: Platform.select({
-    ios: 'com.speedydelivery.royoorders',
-    android: 'com.speedydelivery.royoorders',
+    ios: 'com.speedydelivery.orders',
+    android: 'com.speedydelivery.orders',
   }),
   holla: Platform.select({
-    ios: 'com.holla.royoorders',
+    ios: 'com.holla.orders',
     android: 'com.holla.orders',
   }),
   stabex: Platform.select({

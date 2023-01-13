@@ -92,19 +92,19 @@ export default function Login({navigation}) {
       phoneNo: '',
       callingCode:
         !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        getBundleId() !== appIds.sxm2go
+        ( getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
           ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
               '-',
               '',
             )
-          : appData?.profile.country?.phonecode
+          :  getBundleId() == appIds.speedyDelivery? '1': appData?.profile.country?.phonecode
           ? appData?.profile?.country?.phonecode
           : '91',
       cca2:
         !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        getBundleId() !== appIds.sxm2go
+        ( getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
           ? getPhonesCallingCodeAndCountryData[0].isoCode2
-          : appData?.profile?.country?.code
+          : getBundleId() == appIds.speedyDelivery? 'DO':appData?.profile?.country?.code
           ? appData?.profile?.country?.code
           : 'IN',
       focus: false,
@@ -115,19 +115,19 @@ export default function Login({navigation}) {
     phoneNumberOnly: '',
     calllingCodePhoneOnly:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+      ( getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
             '-',
             '',
           )
-        : appData?.profile.country?.phonecode
+        : getBundleId() == appIds.speedyDelivery? '1':appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
         : '91',
     cca2PhoneOnly:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+     ( getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
-        : appData?.profile?.country?.code
+        : getBundleId() == appIds.speedyDelivery? 'DO':appData?.profile?.country?.code
         ? appData?.profile?.country?.code
         : 'IN',
   });
@@ -146,7 +146,6 @@ export default function Login({navigation}) {
     }
     clonedState = cloneDeep(state);
   }, []);
-
   //Update states
   const updateState = (data) => setState((state) => ({...state, ...data}));
   //Styles in app
@@ -167,6 +166,7 @@ export default function Login({navigation}) {
     cca2PhoneOnly,
     calllingCodePhoneOnly,
   } = state;
+  console.log(calllingCodePhoneOnly,'mobilNomobilNo')
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
@@ -246,7 +246,7 @@ export default function Login({navigation}) {
       data['app_hash_key'] = appHashKey;
     }
     updateState({isLoading: true});
-
+console.log(data,'datadata')
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -265,9 +265,9 @@ export default function Login({navigation}) {
               )
                 ? phoneNumberOnly
                 : mobilNo?.phoneNo,
-              dialCode: mobilNo?.callingCode,
-              countryData: mobilNo?.cca2,
-              data: res.data,
+              dialCode: res?.data?.dialCode,
+              countryData: res?.data?.countryData,
+              data: res?.data,
             });
           } else {
             checkIfEmailVerification(res.data);
@@ -440,6 +440,7 @@ export default function Login({navigation}) {
   };
 
   const _onCountryChange = (data) => {
+    console.log(data,'datatatttt')
     getValuebyKeyInArray('is_phone_signup', additional_preferences)
       ? updateState({
           cca2PhoneOnly: data.cca2,
@@ -455,6 +456,7 @@ export default function Login({navigation}) {
           // cca2: data.cca2,
           // callingCode: data.mobilNo.callingCode[0],
         });
+       
     return;
   };
 
@@ -575,7 +577,8 @@ export default function Login({navigation}) {
               marginBottom: 20,
             }}
           />
-        ) : (
+        )
+         : (
           <View>
             {!phoneInput && (
               <>

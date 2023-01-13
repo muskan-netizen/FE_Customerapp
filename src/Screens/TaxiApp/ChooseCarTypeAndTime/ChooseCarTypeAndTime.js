@@ -11,8 +11,8 @@ import {
   View,
   Modal,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dark-mode';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
@@ -1467,10 +1467,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
               position: "absolute",
               bottom: 20,
               marginHorizontal: moderateScale(16),
-              flexDirection: "row",
-            }}
-          >
-            {availableCarList?.length > 0 && (
+              flexDirection: 'row',
+            }}>
+            {availableCarList?.length > 0 && getBundleId() != appIds.appi && (
               <GradientButton
                 colorsArray={[colors.white, colors.white]}
                 textStyle={{

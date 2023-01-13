@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Nittosadai/Pods-available_pods-Nittosadai.release.xcconfig"
 
-PROJECT_APPLE_ID = 6443699442
-PROJECT_BUNDLE_ID =com.nittosadai.royoorders
+PROJECT_APPLE_ID = 6444884195
+PROJECT_BUNDLE_ID =com.nittosadai.orders
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 2
+PROJECT_BUILD_NUMBER = 3
 PROJECT_APP_NAME = Nittosadai
-PROJECT_GOOGLE_CLIENT_ID = 739558188771-i1eat2drh8gbp2m5ebsdhg9p4g6024d1.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.739558188771-i1eat2drh8gbp2m5ebsdhg9p4g6024d1
+PROJECT_GOOGLE_CLIENT_ID = 677034692747-0g67rnfmh5116st30h7cdff6bctkfe8d.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.677034692747-0g67rnfmh5116st30h7cdff6bctkfe8d
 PROJECT_FACEBOOK_ID = 770290797381629
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =NittosadaiInfo
