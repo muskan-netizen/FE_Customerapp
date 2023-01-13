@@ -96,9 +96,10 @@ export default function DrawerRoutes(props) {
         component={
           businessType === 4
             ? TaxiTabRoutes
-            : businessType === 8
-            ? TabRoutesP2p
-            : TabRoutes
+            : //  businessType === 8
+              // ? TabRoutesP2p
+              // :
+              TabRoutes
         }
         name={
           businessType === 4
