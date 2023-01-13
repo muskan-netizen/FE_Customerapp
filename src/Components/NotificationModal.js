@@ -73,7 +73,6 @@ const NotificationModal = () => {
       })();
     }
   }, [pageActive, isRefreshing, isVendorNotification]);
-  // console.log(appMainData, 'appMainData');
 
   const onEndReached = ({distanceFromEnd}) => {
     updateState({pageActive: pageActive + 1});

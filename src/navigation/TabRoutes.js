@@ -3,6 +3,7 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text} from 'react-native';
 import {View} from 'react-native-animatable';
+import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
@@ -14,16 +15,14 @@ import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
-import {appIds, shortCodes} from '../utils/constants/DynamicAppKeys';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-import navigationStrings from './navigationStrings';
-import DeviceInfo from 'react-native-device-info';
 import MyOrdersStack from './MyOrdersStack';
-import {SearchProductVendorItem2} from '../Screens';
+import navigationStrings from './navigationStrings';
 import SearchProductVendorStack from './SearchProductVendorStack';
 
 const Tab = createBottomTabNavigator();
@@ -175,7 +174,6 @@ export default function TabRoutes(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
-            navigationStrings.PRODUCTWITHCATEGORY,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
@@ -248,7 +246,6 @@ export default function TabRoutes(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
-            navigationStrings.PRODUCTWITHCATEGORY,
           ]),
           tabBarLabel: strings.CART,
           tabBarIcon: ({focused, tintColor}) => (

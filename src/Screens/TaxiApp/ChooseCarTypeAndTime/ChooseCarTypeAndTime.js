@@ -311,11 +311,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   }, [updateSeatNO]);
 
 
-  useEffect(()=>{
-    _getAllCarAndPrices()
-  },[updateSeatNO])
-
-
 
   //Get list of all orders api
   const _getAllCarAndPrices = (showInitalModal = true) => {
@@ -344,7 +339,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         }
       )
       .then((res) => {
-        console.log(res?.data?.products, 'resresresresresresres');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -1219,7 +1213,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       isScheduleModalVisible: true,
     });
   };
-
   const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView

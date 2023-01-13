@@ -66,7 +66,6 @@ export default {
   PICKUPLOCATION: 'pickupLocation',
   SETLOACTIONMAP: 'SetLocationInMap',
   CHOOSECARTYPEANDTIME: 'ChooseCarTypeAndTime',
-  TOP_TAB_ROUTES: 'TopTabRoutes',
   CABDRIVERLOCATIONANDDETAIL: 'cabDriverLocationTrackAndDetail',
   MULTISELECTCATEGORY: 'multiselectcategory',
   CMSLINKS: 'cmslinks',
@@ -155,5 +154,14 @@ export default {
   CONEKTA: 'conekta',
   VERIFY_ACCOUNT_TAXI: 'VerifyAccountTaxi',
   VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
-  ORDER_TRACKING  :'OrderTracking'
+  ORDER_TRACKING  :'OrderTracking',
+  POST: 'Post',
+  POST_CATEGORY: 'PostCategory',
+  P2P_PRODUCTS: 'p2pProducts',
+  ATTRIBUTE_INFORMATION: 'attributeInformation',
+  P2P_PRODUCT_DETAIL: 'p2pProductDetail',
+  REPLACE_ORDER: 'replaceOrder',
+  CHAT_STACK: 'chatStack',
+  MY_POSTS: 'myPosts',
+  REFER_AND_EARN: 'referAndEarn',
 };

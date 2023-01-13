@@ -1,9 +1,7 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {
   Addaddress,
   AddNewRider,
-  AllContacts,
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
@@ -23,7 +21,6 @@ import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 import Khalti from '../Screens/PaymentGateways/Khalti';
 
-import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
 // ChooseCarTypeAndTimeTaxi;
 

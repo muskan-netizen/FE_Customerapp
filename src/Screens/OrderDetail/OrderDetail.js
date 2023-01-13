@@ -1260,8 +1260,6 @@ export default function OrderDetail({ navigation, route }) {
                                 <View
                                   style={{
                                     justifyContent: 'center',
-
-                                    width: '100%',
                                   }}>
                                   <Text
                                     style={{
@@ -1944,6 +1942,7 @@ export default function OrderDetail({ navigation, route }) {
             )}
           </Text>
         </View>
+
         {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
             <Text
@@ -2453,6 +2452,20 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
+          {!!cartData?.slot_based_Price &&
+            cartData?.slot_based_Price !== '0.00' && (
+              <LeftRightText
+                leftText={strings.DELIVERY_SLOT_FEES}
+                rightText={tokenConverterPlusCurrencyNumberFormater(
+                  Number(cartData?.slot_based_Price),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+              />
+            )}
           {Number(cartData?.additional_price) > 0 && (
             <LeftRightText
               leftText={strings.ADDITIONAL_CHARGES}

@@ -16,28 +16,27 @@ export default function () {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen
         name={navigationStrings.VENDOR_ORDER}
         component={VendorOrders}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDORLIST}
         component={VendorList}
-        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

@@ -54,7 +54,7 @@ const CustomBottomTabBarThree = ({
     deviceWidth: width,
     bottom: 30,
   });
-  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const {appMainData} = useSelector((state) => state?.home);
 
   const {minHeight, minWidth, deviceHeight} = tabThreeStyle;
   const updateState = (data) =>

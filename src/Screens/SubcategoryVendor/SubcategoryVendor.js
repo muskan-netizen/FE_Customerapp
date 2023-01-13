@@ -147,7 +147,7 @@ export default function SubcategoryVendor({navigation, route}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        actions.setAppSessionData('on_login')
+        actions.setAppSessionData('on_login');
       }
     } else if (!!item?.is_show_category) {
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -195,7 +195,7 @@ export default function SubcategoryVendor({navigation, route}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        actions.setAppSessionData('on_login')
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
@@ -307,7 +307,7 @@ export default function SubcategoryVendor({navigation, route}) {
           {!isEmpty(subcategoryVendorData?.vendors) && (
             <TouchableOpacity
               style={{marginHorizontal: moderateScale(4)}}
-              onPress={() => onViewAll('vendor', appMainData.vendors)}>
+              onPress={() => onViewAll('vendor', appMainData?.vendors)}>
               <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
             </TouchableOpacity>
           )}

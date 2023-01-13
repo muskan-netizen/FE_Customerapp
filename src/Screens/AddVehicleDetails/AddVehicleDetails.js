@@ -388,7 +388,7 @@ export default function AddVehicleDetails({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res?.data?.products?.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -418,7 +418,7 @@ export default function AddVehicleDetails({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res.data.products.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -449,7 +449,7 @@ export default function AddVehicleDetails({route, navigation}) {
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
     // }

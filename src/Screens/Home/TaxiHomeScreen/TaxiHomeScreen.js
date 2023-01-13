@@ -598,10 +598,6 @@ useEffect(()=>{
     }
   };
 
-  {
-    console.log(locationObj, 'locationObjlocationObj');
-  }
-
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {

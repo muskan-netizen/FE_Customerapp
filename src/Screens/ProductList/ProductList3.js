@@ -1199,7 +1199,6 @@ export default function Products({ route, navigation }) {
             )}
           </View>
         </View>
-        {console.log(categoryInfo, 'categoryInfo....categoryInfo')}
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{ marginHorizontal: moderateScale(20) }}>
@@ -1604,7 +1603,7 @@ export default function Products({ route, navigation }) {
             ? res.data.products.data
             : [...productListData, ...res?.data?.products?.data],
         );
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -1743,7 +1742,7 @@ export default function Products({ route, navigation }) {
         if (res?.data) {
           updateBrandAndCategoryFilter(
             res?.data?.filterData,
-            appMainData.brands,
+            appMainData?.brands,
           );
         }
         updateState({ loadMore: false });
@@ -1810,7 +1809,10 @@ export default function Products({ route, navigation }) {
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          updateBrandAndCategoryFilter(
+            res.data.filterData,
+            appMainData?.brands,
+          );
         }
         updateState({ loadMore: false });
       })
@@ -3423,7 +3425,6 @@ export default function Products({ route, navigation }) {
           // onClose();
         })
         .catch((error) => {
-          console.log('called...2', addonSet);
           errorMethodSecond(error, addonSet);
         });
       return;

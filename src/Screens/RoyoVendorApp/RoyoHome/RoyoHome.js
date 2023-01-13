@@ -146,7 +146,7 @@ const RoyoHome = (props) => {
     };
     try {
       const res = await actions.storeVendors(query, headers);
-      console.log('available vendors res', isEmpty(res?.data?.data));
+      console.log('available vendors res', res);
       if (!!res?.data && res?.data?.data?.length > 0) {
         let firstVendor = !!currentVendor ? currentVendor : res?.data?.data[0];
         setAvailVendor(res.data.data);

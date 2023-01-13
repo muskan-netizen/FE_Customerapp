@@ -106,7 +106,7 @@ export default function DashBoardFive({
     state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
-  console.log(appMainData, 'appMainDataappMainData');
+  
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -508,19 +508,6 @@ export default function DashBoardFive({
     );
   };
 
-  const renderSale = ({item}) => {
-    return (
-      <ProductsComp
-        // isDiscount
-        item={item}
-        imageStyle={{height: moderateScale(186)}}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-      />
-    );
-  };
-
   const scrollRef = React.useRef(null);
   useScrollToTop(scrollRef);
 
@@ -716,7 +703,7 @@ export default function DashBoardFive({
             {!!vendorsData && vendorsData.length > 1 && (
               <TouchableOpacity
                 style={{marginHorizontal: moderateScale(4)}}
-                onPress={() => onViewAll('vendor', appMainData.vendors)}>
+                onPress={() => onViewAll('vendor', appMainData?.vendors)}>
                 <Text
                   style={{
                     ...styles.viewAllText,

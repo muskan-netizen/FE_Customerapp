@@ -112,6 +112,7 @@ export default function MyOrders(props) {
     selectProductForRetrun: null,
     viewHeight: 0,
     reasons: [],
+    isOrderForReplace: false,
   });
   const {
     viewHeight,
@@ -132,6 +133,7 @@ export default function MyOrders(props) {
     selectedOrderForReturn,
     selectProductForRetrun,
     reasons,
+    isOrderForReplace,
   } = state;
 
   //Update state in screen
@@ -276,7 +278,7 @@ export default function MyOrders(props) {
   };
 
   const returnYourOrder = (item) => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true, isOrderForReplace: false});
     actions
       .getReturnOrderDetailData(
         `?id=${item?.order_id}&vendor_id=${item?.vendor_id}`,
@@ -351,21 +353,46 @@ export default function MyOrders(props) {
 
   const _onDiscardCustomerEditOrder = (orderData) => {
     updateState({
-      isLoading:true
+    isLoading:true
     })
     const apiData = {
-      orderid: orderData?.order_id,
+    orderid: orderData?.order_id,
     };
-
+    
     actions
-      .discardCustomerEditOrder(apiData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      })
-      .then((res) => {
-        showSuccess(res?.message);
+    .discardCustomerEditOrder(apiData, {
+    code: appData?.profile?.code,
+    currency: currencies?.primary_currency?.id,
+    language: languages?.primary_language?.id,
+    })
+    .then((res) => {
+    showSuccess(res?.message);
+    
+    })
+    .catch(errorMethod);
+    }
        
+  const onReplaceOrder = (item) => {
+    console.log(item, '====>item');
+    updateState({isLoading: true});
+    actions
+      .getProductsForReplace(
+        `?id=${item?.order_id}&vendor_id=${item?.vendor_id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          isLoading: false,
+          isOrderForReplace: true,
+          isVisibleReturnOrderModal: true,
+          selectedOrderForReturn: res?.data,
+          selectProductForRetrun: null,
+        });
       })
       .catch(errorMethod);
   };
@@ -379,6 +406,7 @@ export default function MyOrders(props) {
         onPressRateOrder={
           selectedTab == strings.PAST_ORDERS ? () => rateYourOrder() : null
         }
+        onReplaceOrder={onReplaceOrder}
         navigation={navigation}
         onPressReturnOrder={
           selectedTab == strings.PAST_ORDERS
@@ -529,13 +557,47 @@ export default function MyOrders(props) {
       });
     }
   };
+
   const returnOrder = () => {
     if (selectProductForRetrun) {
       console.log(
         selectProductForRetrun,
         "selectProductForRetrun>>selectProductForRetrun"
       );
-      updateState({ isVisibleReturnOrderModal: false, isLoading: true });
+      updateState({isVisibleReturnOrderModal: false, isLoading: true});
+
+      if (isOrderForReplace) {
+        actions
+          .getDetailOfProductToReplace(
+            `?return_ids=${selectProductForRetrun?.id}&order_id=${selectProductForRetrun?.order_id}&product_id=${selectProductForRetrun?.product_id}`,
+            {},
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            },
+          )
+          .then((res) => {
+            console.log(res, '>>>>>>res');
+            updateState({isLoading: false});
+            setTimeout(() => {
+              navigation.navigate(navigationStrings.REPLACE_ORDER, {
+                selectProductForRetrun: selectProductForRetrun,
+                reasons:
+                  res?.data?.reasons && res?.data?.reasons.length
+                    ? res?.data?.reasons.map((item, index) => {
+                        (item['value'] = item?.title),
+                          (item['label'] = item?.title);
+                        return item;
+                      })
+                    : [],
+                getOrderDetail: _getListOfOrders,
+              });
+            }, 500);
+          })
+          .catch(errorMethod);
+        return;
+      }
       actions
         .getReturnProductrDetailData(
           `?return_ids=${selectProductForRetrun?.id}&order_id=${selectProductForRetrun?.order_id}`,
@@ -562,6 +624,7 @@ export default function MyOrders(props) {
                     return item;
                   })
                   : [],
+              getOrderDetail: _getListOfOrders,
             });
           }, 500);
         })
@@ -732,9 +795,10 @@ export default function MyOrders(props) {
                   isDarkMode
                     ? [styles.carType, { color: MyDarkTheme.colors.text }]
                     : styles.carType
-                }
-              >
-                {strings.DOYOUWANTTORETURNYOURORDER}
+                }>
+                {isOrderForReplace
+                  ? strings.DOYOUWANTTOREPLACEYOURORDER
+                  : strings.DOYOUWANTTORETURNYOURORDER}
               </Text>
             </View>
             <View

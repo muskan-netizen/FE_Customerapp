@@ -22,8 +22,6 @@ const AppIntro = ({route, navigation}) => {
     (state) => state?.initBoot,
   );
 
-  console.log(appData, 'appData>>>>>appData');
-
   const [state, setState] = useState({
     slides: [],
   });
@@ -138,7 +136,8 @@ const AppIntro = ({route, navigation}) => {
         longitude: location?.longitude,
       };
     }
-    actions.homeData(
+    actions
+      .homeData(
         {
           type: 'delivery',
           ...latlongObj,

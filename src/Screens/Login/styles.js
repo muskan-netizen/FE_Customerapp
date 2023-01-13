@@ -49,7 +49,7 @@ export default ({themeColors, fontFamily}) => {
       bottom: moderateScale(20),
       alignItems: 'center',
       width: '100%',
-      alignSelf: 'center'
+      alignSelf: 'center',
     },
     guestBtn: {
       marginTop: moderateScaleVertical(20),

@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -27,7 +27,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-// export const API_BASE_URL ='https://sales.focushires.com/api/v1';
+export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 // export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -322,7 +322,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //BEZALIO LIVE
 // export const API_BASE_URL = 'https://bezaliohub.com/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1'; // preet sir
+// export const API_BASE_URL = 'http://192.168.101.83:8004/api/v1'; // preet sir
 
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
@@ -392,6 +392,10 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.sxm2go.com/api/v1';
 
+//zonesso
+// export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
+
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
@@ -404,6 +408,7 @@ export const SIGN_UP_API = getApiUrl('/auth/register');
 export const FORGOT_API = getApiUrl('/auth/forgotPassword');
 export const APP_INITIAL_SETTINGS = getApiUrl('/header');
 export const HOMEPAGE_DATA_URL = getApiUrl('/homepage');
+export const HOMEPAGE_DATA_URL_V2 = getApiUrl('/v2/homepage');
 export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
 export const GET_DATA_BY_CATEGORY_OPTAMIZE = getApiUrl('/v2/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
@@ -436,6 +441,7 @@ export const GET_CART_DETAIL = getApiUrl('/cart/list');
 export const REMOVE_CART_PRODUCTS = getApiUrl('/cart/remove');
 export const UPDATE_CART = getApiUrl('/cart/updateQuantity');
 export const SEARCH = getApiUrl('/search/all');
+export const SEARCH_V2 = getApiUrl('/v2/search/all');
 export const CLEAR_CART = getApiUrl('/cart/empty');
 export const ADD_ADDRESS = getApiUrl('/user/address');
 export const SEARCH_BY_CATEGORY = getApiUrl('/search/category');
@@ -630,13 +636,14 @@ export const VENDER_UPDATE_ORDER = getApiUrl('/order-update');
 //Chat Apis
 export const START_CHAT = getApiUrl('/chat/startChat');
 export const SEND_NOTIFCATION = getApiUrl('/chat/sendNotificationToUser');
-
 export const USER_CHAT = '/api/room/fetchRoomByUserId';
 export const AGENT_CHAT = '/api/room/fetchRoomByUserId';
 export const VENDOR_CHAT = '/api/room/fetchRoomByVendor';
 export const SEND_MESSAGE = '/api/chat/sendMessageJoin';
 export const GET_ALL_MESSAGES = '/api/chat';
 export const ALL_ROOM_USER = '/api/chat/getRoomUser';
+export const P2P_USER_TO_USER_CHAT = '/api/room/fetchRoomByUserIdUserToUser';
+export const GET_PRODUCT_RELATED_TO_CHAT = getApiUrl('/chat/fetchOrderDetail');
 
 // static drop-location
 export const STATIC_DROP_LOCATIONS = getApiUrl('/static-dropoff-locations');
@@ -656,5 +663,51 @@ export const DISCARD_EDIT_CUSTOMER_ORDER = getApiUrl('/user/discardeditorder');
 
 // pickup-delivery drop location change after order place
 export const DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE = getApiUrl(
-  '/pickup-delivery/edit-order',
+  '/pickup-delivery/edit-order')
+
+//Replace Order
+export const GET_PRODUCTS_FOR_REPLACE = getApiUrl(
+  '/replace-order/get-replace-order-data-in-model',
+);
+export const GET_DETAIL_OF_PRODUCT_FOR_REPLACE = getApiUrl(
+  '/replace-order/get-replace-products',
+);
+export const SUBMIT_PRODUCT_FOR_REPLACEMENT = getApiUrl(
+  '/replace-order/update-product-replace',
+);
+
+//Cancle order
+export const GET_CANCEL_REASONS = getApiUrl(
+  '/cancel-order/get-cancel-order-reason',
+);
+
+//P2P
+export const GET_AVAILABLE_ATTRIBUTES = getApiUrl(
+  '/mystore/product/availableListOfAttribute',
+);
+export const SUBMIT_PRODUCT_WITH_ATTRIBUTE = getApiUrl(
+  '/mystore/product/addProductWithAttribute',
+);
+export const GET_PRODUCT_BY_P2P_CATEGORY = getApiUrl('/v2/attribute/category');
+
+export const GET_P2P_CATEGORIES = getApiUrl('/v2/getP2pCategories');
+
+// E-commerce slots
+export const CHECK_VENDOR_PINCODE = getApiUrl('/checkVendorPincode');
+export const GET_VENDOR_SHIPPING_SLOTS = getApiUrl(
+  '/getShippingProductDeliverySlots',
+);
+export const GET_PRODUCT_DELIVERY_SLOTS_INTERVAL = getApiUrl(
+  '/getProductDeliverySlotsInterval',
+);
+
+//Refer and Earn
+export const GET_INFLUENCER_REFER_EARN_CATEGORIES = getApiUrl(
+  '/influencer/refer-earn',
+);
+export const GET_DETAILS_OF_INFLUENCE_CATEGORY = getApiUrl(
+  '/influencer/get-influencer-form',
+);
+export const SAVE_INFULENCER_INFO = getApiUrl(
+  '/influencer/save-influencer-form',
 );

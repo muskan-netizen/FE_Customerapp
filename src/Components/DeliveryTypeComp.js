@@ -1,31 +1,28 @@
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Alert,
-  Image,
+  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  FlatList,
 } from 'react-native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useDarkMode} from 'react-native-dark-mode';
+import deviceInfoModule from 'react-native-device-info';
+import {useSelector} from 'react-redux';
+import strings from '../constants/lang';
+import actions from '../redux/actions';
+import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {useSelector} from 'react-redux';
-import strings from '../constants/lang';
-import actions from '../redux/actions';
-import deviceInfoModule from 'react-native-device-info';
-import {showError, showSuccess} from '../utils/helperFunctions';
 import {MyDarkTheme} from '../styles/theme';
-import colors from '../styles/colors';
-import imagePath from '../constants/imagePath';
-import {useDarkMode} from 'react-native-dark-mode';
-import {isEmpty} from 'lodash';
+import {showError, showSuccess} from '../utils/helperFunctions';
 
-function DeliveryTypeComp({selectedToggle = () => {}}) {
+function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
   const {cartItemCount} = useSelector((state) => state?.cart);
   const {
     appData,
@@ -40,7 +37,6 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-
   const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
 
   const [state, setState] = useState({
@@ -57,6 +53,16 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
 
   const addAllTabs = () => {
     if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+      // let serviceType = '';
+      // appData?.profile?.preferences?.vendorMode?.map((itm) => {
+      //   if (itm?.type == 'p2p') {
+      //     serviceType = 'p2p';
+      //     return;
+      //   }
+      // });
+      // if (serviceType == 'p2p') {
+      //   selectedToggle(serviceType);
+      // }
       updateState({tabs: appData?.profile?.preferences?.vendorMode});
     }
     return;
@@ -171,28 +177,33 @@ function DeliveryTypeComp({selectedToggle = () => {}}) {
   }
 
   return (
-    <View
-      style={{
-        ...styles.tabMainStyle,
-        borderBottomColor: isDarkMode
-          ? colors.whiteOpacity22
-          : colors.borderColorD,
-        marginBottom: moderateScaleVertical(12),
-      }}>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={tabs}
-        initialScrollIndex={tabs.findIndex((item) => item?.type == dineInType)}
-        renderItem={renderItem}
-        keyExtractor={awesomeChildListKeyExtractor}
-        ListFooterComponent={() => (
-          <View style={{marginLeft: moderateScale(16)}} />
-        )}
-        ListHeaderComponent={() => (
-          <View style={{marginRight: moderateScale(16)}} />
-        )}
-      />
+    <View>
+      <View
+        style={{
+          ...styles.tabMainStyle,
+          borderBottomColor: isDarkMode
+            ? colors.whiteOpacity22
+            : colors.borderColorD,
+          marginBottom: moderateScaleVertical(12),
+          ...tabMainStyle,
+        }}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={tabs}
+          initialScrollIndex={tabs.findIndex(
+            (item) => item?.type == dineInType,
+          )}
+          renderItem={renderItem}
+          keyExtractor={awesomeChildListKeyExtractor}
+          ListFooterComponent={() => (
+            <View style={{marginLeft: moderateScale(16)}} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{marginRight: moderateScale(16)}} />
+          )}
+        />
+      </View>
     </View>
   );
 }
@@ -202,7 +213,7 @@ export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
     tabMainStyle: {
       borderRadius: moderateScale(10),
       flexDirection: 'row',
-      marginTop: moderateScale(10),
+      // marginTop: moderateScale(10),
       borderBottomWidth: 0.8,
     },
     tabItemView: {

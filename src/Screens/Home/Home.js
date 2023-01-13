@@ -1,6 +1,6 @@
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking, ScrollView} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Alert, BackHandler, Linking} from 'react-native';
 import AppLink from 'react-native-app-link';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
@@ -15,15 +15,21 @@ import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 
+import Voice from '@react-native-voice/voice';
+import LaundryAddonModal from '../../Components/LaundryAddonModal';
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
-  getImageUrl,
   getNearestLocation,
   showError,
-  showSuccess,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
+import socketServices from '../../utils/scoketService';
+import DashBoardEight from './DashboardViews/DashBoardEight';
+import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
+import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
+import DashBoardNine from './DashboardViews/DashBoardNine';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -32,25 +38,9 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
   DashBoardSix,
+  DashBoardTen,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
-import Voice from '@react-native-voice/voice';
-import FastImage from 'react-native-fast-image';
-import DashBoardEight from './DashboardViews/DashBoardEight';
-import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import _, {isEmpty} from 'lodash';
-import socketServices from '../../utils/scoketService';
-import SubscriptionModal from '../../Components/SubscriptionModal';
-import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
-import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
-import DashBoardNine from './DashboardViews/DashBoardNine';
-
-// navigator.geolocation = require('react-native-geolocation-service');
-
-let maxMinObj = {
-  max_select: 1,
-  min_select: 1,
-};
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
@@ -69,11 +59,11 @@ export default function Home({route, navigation}) {
     (state) => state?.home,
   );
   const isFocused = useIsFocused();
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const {cartItemCount} = useSelector((state) => state?.cart);
 
-  const userData = useSelector((state) => state?.auth?.userData);
-  const pendingNotifications = useSelector(
-    (state) => state?.pendingNotifications?.pendingNotifications,
+  const {userData} = useSelector((state) => state?.auth);
+  const {pendingNotifications} = useSelector(
+    (state) => state?.pendingNotifications,
   );
 
   const darkthemeusingDevice = useDarkMode();
@@ -102,7 +92,6 @@ export default function Home({route, navigation}) {
     openVendor: 0,
     closeVendor: 0,
     bestSeller: 0,
-
     tempCartData: null,
     isVoiceRecord: false,
     singleVendor: false,
@@ -155,7 +144,6 @@ export default function Home({route, navigation}) {
       return () => backHandler.remove();
     }, []),
   );
-  console.log(appMainData, 'appMainDataappMainData');
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
   }, [appMainData]);
@@ -475,7 +463,6 @@ export default function Home({route, navigation}) {
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          // await preLoadImages(res.data);
           updateState({searchDataLoader: false});
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
@@ -582,9 +569,13 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-   
+    if (item?.redirect_to == staticStrings.P2P) {
+      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      return;
+    }
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+
       return;
     }
     if (item.redirect_to == staticStrings.VENDOR) {
@@ -974,9 +965,9 @@ export default function Home({route, navigation}) {
       stopOrderModalVisible: false,
     });
   };
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
-      // switch (case_) {
       case 1:
         return (
           <>
@@ -1170,6 +1161,30 @@ export default function Home({route, navigation}) {
                   selectedHomeCategory={selectedHomeCategory}
                   selectedFilterType={selectedFilterType}
                 />
+                // <DashBoardFive2
+                //   handleRefresh={() => handleRefresh()}
+                //   bannerPress={(item) => bannerPress(item)}
+                //   isLoading={isLoading}
+                //   isRefreshing={isRefreshing}
+                //   appMainData={appMainData}
+                //   onPressCategory={(item) => {
+                //     onPressCategory(item);
+                //   }}
+                //   onPressVendor={(item) => {
+                //     onPressVendor(item);
+                //   }}
+                //   isDineInSelected={isDineInSelected}
+                //   selcetedToggle={selcetedToggle}
+                //   tempCartData={tempCartData}
+                //   toggleData={appData}
+                //   navigation={navigation}
+                //   onVendorFilterSeletion={onVendorFilterSeletion}
+                //   singleVendor={singleVendor}
+                //   onPressAddLaundryItem={onPressAddLaundryItem}
+                //   isLoadingAddons={isLoadingAddons}
+                //   selectedHomeCategory={selectedHomeCategory}
+                //   selectedFilterType={selectedFilterType}
+                // />
               )}
             </>
           );
@@ -1282,6 +1297,33 @@ export default function Home({route, navigation}) {
                 isSubscription={isSubscription}
                 selectedFilterType={selectedFilterType}
               />
+              // <DashBoardFive2
+              //   handleRefresh={() => handleRefresh()}
+              //   bannerPress={(item) => bannerPress(item)}
+              //   isLoading={isLoading}
+              //   isRefreshing={isRefreshing}
+              //   appMainData={appMainData}
+              //   onPressCategory={(item) => {
+              //     onPressCategory(item);
+              //   }}
+              //   onPressVendor={(item) => {
+              //     onPressVendor(item);
+              //   }}
+              //   isDineInSelected={isDineInSelected}
+              //   selcetedToggle={selcetedToggle}
+              //   tempCartData={tempCartData}
+              //   toggleData={appData}
+              //   navigation={navigation}
+              //   onVendorFilterSeletion={onVendorFilterSeletion}
+              //   singleVendor={singleVendor}
+              //   onPressAddLaundryItem={onPressAddLaundryItem}
+              //   isLoadingAddons={isLoadingAddons}
+              //   selectedHomeCategory={selectedHomeCategory}
+              //   onClose={_closeModal}
+              //   onPressSubscribe={_onPressSubscribe}
+              //   isSubscription={isSubscription}
+              //   selectedFilterType={selectedFilterType}
+              // />
             )}
           </>
         );
@@ -1398,6 +1440,53 @@ export default function Home({route, navigation}) {
                 selectedHomeCategory={selectedHomeCategory}
               />
             )}
+          </>
+        );
+      case 8:
+        return (
+          <>
+            <DashBoardHeaderSeven
+              showToggles={false}
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              curLatLong={curLatLong}
+            />
+
+            <DashBoardTen
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+              selectedFilterType={selectedFilterType}
+            />
           </>
         );
     }

@@ -22,4 +22,5 @@ export default {
   FPX: 'fpx',
   CASH_FREE: 'Cash free',
   FOOD_TEMPLATE: 'Food',
+  P2P: 'P2P',
 };

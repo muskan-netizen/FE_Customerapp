@@ -199,7 +199,7 @@ export default function Brand2({navigation}) {
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
 
       <FlatList
-        data={isLoading ? [] : appMainData.brands}
+        data={isLoading ? [] : appMainData?.brands}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<View style={{height: 10}} />}
         keyExtractor={(item, index) => String(index)}

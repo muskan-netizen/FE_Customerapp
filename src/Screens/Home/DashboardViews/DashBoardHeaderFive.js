@@ -1,42 +1,29 @@
-import React, {createRef, useEffect, useRef, useState} from 'react';
-import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
-import deviceInfoModule, {getBundleId} from 'react-native-device-info';
-import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
-import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import FastImage from 'react-native-fast-image';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import {RadioButton} from 'react-native-paper';
 
-import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import strings from '../../../constants/lang';
-import {string} from 'prop-types';
-import {BlurView} from '@react-native-community/blur';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import ScaledImage from 'react-native-scalable-image';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
+import { useDarkMode } from 'react-native-dark-mode';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import {
   loaderOne,
-  voiceListen,
+  voiceListen
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import LottieView from 'lottie-react-native';
-import HomeLoader from '../../../Components/Loaders/HomeLoader';
-import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import FastImage from 'react-native-fast-image';
+import strings from '../../../constants/lang';
+
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -238,7 +225,12 @@ export default function DashBoardHeaderFive({
         </View>
       ) : null}
 
-      <DeliveryTypeComp selectedToggle={selcetedToggle} />
+      <DeliveryTypeComp
+        selectedToggle={selcetedToggle}
+        tabMainStyle={{
+          marginBottom: 0,
+        }}
+      />
 
       <CustomAnimatedLoader
         source={loaderOne}

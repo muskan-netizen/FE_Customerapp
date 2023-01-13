@@ -45,7 +45,7 @@ import {checkIsAdmin} from '../../utils/utils';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
 
-export default function LoginLayoutFour({navigation}) {
+export default function Login4({navigation}) {
   const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state?.initBoot,

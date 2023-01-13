@@ -212,7 +212,6 @@ const VariantAddons = ({
         },
       )
       .then((res) => {
-        console.log(res, 'res......res...res');
         updateState({
           isProductAvailable: true,
         });
@@ -239,7 +238,6 @@ const VariantAddons = ({
                     incrementedValue = incrementedValue + 1;
                   }
                 });
-                console.log(incrementedValue, 'incrementedValue');
                 if (incrementedValue == vi?.max_select && !j.value) {
                   return {
                     ...j,
@@ -408,7 +406,6 @@ const VariantAddons = ({
   };
 
   const selectSpecificOptions = (options, i) => {
-    console.log(options, i, 'ksjdhkfjsdfkh');
     let newArray = cloneDeep(options);
     let modifyVariants = variantSet.map((vi, vnx) => {
       if (vi.variant_type_id == i.variant_id) {
@@ -450,7 +447,6 @@ const VariantAddons = ({
           }
         })
         .filter((x) => x != undefined);
-      console.log(variantSetData, 'variantSetData callback');
       if (variantSetData.length) {
         updateState({isVarientSelectLoading: true});
         getProductDetailBasedOnFilter(variantSetData);
@@ -571,7 +567,7 @@ const VariantAddons = ({
                         ? MyDarkTheme.colors.text
                         : colors.black,
                     }}>
-                    Start Date
+                    {strings.START_DATE}
                   </Text>
                   <Text
                     style={{
@@ -596,7 +592,7 @@ const VariantAddons = ({
                         ? MyDarkTheme.colors.text
                         : colors.black,
                     }}>
-                    End Date
+                    {strings.END_DATE}
                   </Text>
                   <Text
                     style={{
@@ -618,7 +614,7 @@ const VariantAddons = ({
                   fontFamily: fontFamily.bold,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                Duration:
+                {strings.DURATION}:
               </Text>
               <View
                 style={{
@@ -677,21 +673,21 @@ const VariantAddons = ({
                     currencies?.primary_currency?.symbol,
                   )}
                 </Text>{' '}
-                for first{' '}
+                {strings.FOR_FIRST}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
                   }}>
                   {productDetailNew?.product?.minimum_duration}
                 </Text>{' '}
-                hour{' '}
+                {strings.HOUR}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
                   }}>
                   {productDetailNew?.product?.minimum_duration_min}
                 </Text>{' '}
-                min
+                {strings.MIN}
               </Text>
               <Text
                 style={{
@@ -699,7 +695,7 @@ const VariantAddons = ({
                   fontFamily: fontFamily.regular,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                Extra duration will be charged{' '}
+                {strings.EXTRA_DURATION_CHARGES}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
@@ -711,14 +707,14 @@ const VariantAddons = ({
                     currencies?.primary_currency?.symbol,
                   )}
                 </Text>{' '}
-                per{' '}
+                {strings.PER}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
                   }}>
                   {productDetailNew?.product?.additional_increments}
                 </Text>{' '}
-                hour{' '}
+                {strings.HOUR}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
@@ -726,12 +722,8 @@ const VariantAddons = ({
                   {' '}
                   {productDetailNew?.product?.additional_increments_min}
                 </Text>{' '}
-                min
+                {strings.MIN}
               </Text>
-              {/* {console.log(
-                productDetailNew,
-                'productDetailNew....productDetailNew',
-              )} */}
             </View>
           ) : null}
           <Modal

@@ -343,12 +343,12 @@ export default function BrandProducts2({route, navigation}) {
       filterDataNew = filterData.map((i, inx) => {
         return {
           id: i.variant_type_id,
-          label: i.title,
-          value: i.options.map((j, jnx) => {
+          label: i?.title,
+          value: i?.options.map((j, jnx) => {
             return {
-              id: j.id,
-              parent: i.title,
-              label: j.title,
+              id: j?.id,
+              parent: i?.title,
+              label: j?.title,
               variant_type_id: i.variant_type_id,
             };
           }),
@@ -1195,7 +1195,7 @@ export default function BrandProducts2({route, navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={brand.name || brand.translation[0].title}
+        centerTitle={brand?.name || brand?.translation[0]?.title}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

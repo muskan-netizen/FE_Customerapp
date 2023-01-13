@@ -36,6 +36,9 @@ import {
   GET_MORE_CATEGORIES,
   VENDOR_OPTIMIZE_V2,
   CHECK_PRODUCT_AVAILAABILITY,
+  CHECK_VENDOR_PINCODE,
+  GET_VENDOR_SHIPPING_SLOTS,
+  GET_PRODUCT_DELIVERY_SLOTS_INTERVAL,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -547,4 +550,16 @@ export function getMoreCategories(query = '', data = {}, headers = {}) {
 
 export function checkProductAvailibility(data = {}, headers = {}) {
   return apiPost(CHECK_PRODUCT_AVAILAABILITY, data, headers);
+}
+
+export function checkVendorPincode(data = {}, headers = {}) {
+  return apiPost(CHECK_VENDOR_PINCODE, data, headers);
+}
+
+export function getVendorShippingSlots(data = {}, headers = {}) {
+  return apiPost(GET_VENDOR_SHIPPING_SLOTS, data, headers);
+}
+
+export function getProductDeliverySlotsInterval(data = {}, headers = {}) {
+  return apiPost(GET_PRODUCT_DELIVERY_SLOTS_INTERVAL, data, headers);
 }

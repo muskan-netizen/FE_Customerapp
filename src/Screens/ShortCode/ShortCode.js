@@ -1,6 +1,6 @@
 import { isEmpty } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import { Image, Linking, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { useDarkMode } from "react-native-dark-mode";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
@@ -22,14 +22,14 @@ import colors from "../../styles/colors";
 import {
   moderateScale,
   moderateScaleVertical,
-  width,
+  width
 } from "../../styles/responsiveSize";
 import { MyDarkTheme } from "../../styles/theme";
 import { appIds, shortCodes } from "../../utils/constants/DynamicAppKeys";
 import {
   getImageUrl,
   getUrlRoutes,
-  showError,
+  showError
 } from "../../utils/helperFunctions";
 import { getItem, setItem } from "../../utils/utils";
 import styles from "./styles";
@@ -3103,6 +3103,11 @@ export default function ShortCode({ route, navigation }) {
         case appIds.ondgoo:
           updateState({
             shortCode: shortCodes.ondgoo,
+            isShortcodePrefilled: true,})
+
+        case appIds.zonesso:
+          updateState({
+            shortCode: shortCodes.zonesso,
             isShortcodePrefilled: true,
           });
           break;
@@ -3374,6 +3379,8 @@ export default function ShortCode({ route, navigation }) {
         return animatedSplash();
       case appIds.flank:
         return animatedSplash();
+      // case appIds.zonesso:
+      //   return animatedSplash();
       default:
         return imageSplash();
     }
@@ -3416,6 +3423,8 @@ export default function ShortCode({ route, navigation }) {
         return imagePath.HezniSplash;
       case appIds?.flank:
         return imagePath.flanksplash;
+      // case appIds?.zonesso:
+      //   return imagePath.zonessoSplash;
       // case appIds?.sabroson:
       //   return imagePath.sabroson
     }

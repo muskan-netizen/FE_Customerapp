@@ -157,4 +157,9 @@ export const tokenConverterPlusCurrencyNumberFormater = (
   }
 };
 
+export const checkValueExistInAry = (item = {}, arr2 = []) => {
+  let found = arr2.includes(item?.id);
+  return found;
+};
+
 export {cameraHandler, currencyNumberFormatter};

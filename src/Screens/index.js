@@ -3,6 +3,7 @@ export {default as Signup} from './Signup/Signup';
 export {default as OtpVerification} from './OtpVerification/OtpVerification';
 export {default as OuterScreen} from './OuterScreen/OuterScreen';
 export {default as Home} from './Home/Home';
+export {default as HomeV2Api} from './Home/Home(V2_API)';
 export {default as Offers} from './Offers/Offers';
 export {default as Brands} from './Brands/Brands';
 export {default as Celebrity} from './Celebrity/Celebrity';
@@ -76,13 +77,14 @@ export {default as MyProfile2} from './MyProfile/MyProfile2';
 export {default as MyProfile3} from './MyProfile/MyProfile3';
 export {default as Account2} from './Account/Account2';
 export {default as Account3} from './Account/Account3';
-export {default as AccountTemplateFour} from './Account/AccountTemplateFour';
+export {default as Account4} from './Account/Account4';
 
 export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';
 export {default as ReturnOrder} from './ReturnOrder/ReturnOrder';
 export {default as Vendors3} from './Vendors/Vendors3';
 export {default as ProductList3} from './ProductList/ProductList3';
 export {default as SearchProductVendorItem2} from './SearchProductVendorItem/SearchProductVendorItem2';
+export {default as SearchProductVendorItem3V2} from './SearchProductVendorItem/SearchProductVendorItem3(V2_API)';
 export {default as OrderDetail2} from './OrderDetail/OrderDetail2';
 export {default as Brands2} from './Brands/Brands2';
 export {default as BrandProducts2} from './BrandProducts/BrandProducts2';
@@ -153,3 +155,17 @@ export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendo
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
+export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
+
+//P2p template
+export {default as OuterScreen5} from './OuterScreen/OuterScreen5';
+export {default as Login3} from './Login/Login3';
+export {default as Signup4} from './Signup/Signup4';
+export {default as Post} from './P2P/Post/PostCategory';
+export {default as P2pProducts} from './P2P/P2pProducts/P2pProducts';
+export {default as P2pProductDetail} from './P2P/P2pProductDetail/P2pProductDetail';
+export {default as AttributeInformation} from './P2P/AttributeInformation/AttributeInformation';
+export {default as MyP2pPosts} from './P2P/MyP2pPosts/MyP2pPosts';
+
+//Refer & Earn
+export {default as ReferAndEarn} from './ReferAndEarn/ReferAndEarn';

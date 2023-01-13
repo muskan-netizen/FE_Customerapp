@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { sessionHandler } from './helperFunctions';
+import {sessionHandler} from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
@@ -131,7 +131,7 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
-        console.log(error?.response, 'error>error');
+        console.log(error?.response, '<===error in utils');
         if (error && error?.response && error?.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);

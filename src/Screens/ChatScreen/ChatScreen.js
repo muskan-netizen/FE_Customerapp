@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -57,15 +51,13 @@ export default function ChatScreen({route, navigation}) {
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const userData = useSelector((state) => state?.auth?.userData);
+  const {userData} = useSelector((state) => state?.auth);
+  const {dineInType} = useSelector((state) => state?.home);
+
   const isChatRefresh = useSelector(
     (state) => state?.chatRefresh.isChatRefresh,
   );
   const styles = stylesFun({fontFamily, isDarkMode});
-
-  console.log('paramDataparamDataparamData chat screen', paramData);
-
-  console.log('paramDataparamDataparamDataparamDataparamData', paramData);
 
   let defaultImage =
     'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png';
@@ -78,6 +70,7 @@ export default function ChatScreen({route, navigation}) {
     isVoiceRecord: false,
     allRoomUsersAppartFromAgent: [],
     allAgentIds: [],
+    productDetails: [],
   });
   const {
     isLoading,
@@ -87,18 +80,20 @@ export default function ChatScreen({route, navigation}) {
     chatUsersData,
     allRoomUsersAppartFromAgent,
     allAgentIds,
+    productDetails,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const isFocused = useIsFocused();
 
-  console.log('userDatauserData', userData);
-
   useFocusEffect(
     useCallback(() => {
+      if (dineInType == 'p2p') {
+        getProductDetail();
+      }
+
       socketServices.on('new-message', (data) => {
-        console.log('new-message++', data);
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused
             ? setMessages((previousMessages) =>
@@ -115,10 +110,31 @@ export default function ChatScreen({route, navigation}) {
       return () => {
         socketServices.removeListener('new-message');
         socketServices.removeListener('save-message');
-        // socketServices.removeListener("room-created");
       };
     }, [navigation]),
   );
+
+  const getProductDetail = () => {
+    actions
+      .getProuctDetailsRelatedToChat(
+        {
+          product_id: paramData?.product_id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          productDetails: res?.orderData,
+        });
+      })
+      .catch((err) => {
+        console.log(err, 'err....err');
+      });
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -208,13 +224,6 @@ export default function ChatScreen({route, navigation}) {
     }
   }
 
-  console.log(
-    'allRoomUsersAppartFromAgentallRoomUsersAppartFromAgent',
-    allRoomUsersAppartFromAgent,
-  );
-
-  console.log('roomUsersroomUsers', roomUsers);
-
   const checkToMessage = () => {
     let userType = paramData?.type;
     if (!!userData?.is_superadmin && userType == 'agent_to_user') {
@@ -264,7 +273,6 @@ export default function ChatScreen({route, navigation}) {
           //'room_name' =>$data->name,
           chat_type: paramData?.type,
         };
-        console.log('sending chat apiDataapiData', apiData);
         const res = await actions.sendMessage(apiData, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -320,7 +328,6 @@ export default function ChatScreen({route, navigation}) {
       auth_id: userData?.id,
       web: false,
     };
-    console.log(apiData, 'apiDataapiDataapiData send notification');
     actions
       .sendNotification(apiData, {
         code: appData?.profile?.code,
@@ -381,7 +388,7 @@ export default function ChatScreen({route, navigation}) {
                     color: isDarkMode ? colors.white : colors.black,
                   }}>
                   {currentMessage?.username || currentMessage?.phone_num}{' '}
-                  {`(${currentMessage?.user_type})`}
+                  {dineInType !== 'p2p' && `(${currentMessage?.user_type})`}
                 </Text>
               ) : null}
 
@@ -407,6 +414,7 @@ export default function ChatScreen({route, navigation}) {
         </View>
       );
     }
+
     return (
       <View style={{flexDirection: 'row'}}>
         <FastImage
@@ -436,7 +444,7 @@ export default function ChatScreen({route, navigation}) {
                   color: isDarkMode ? colors.white : colors.black,
                 }}>
                 {currentMessage?.username || currentMessage?.phone_num}{' '}
-                {`(${currentMessage?.user_type})`}
+                {dineInType !== 'p2p' && `(${currentMessage?.user_type})`}
               </Text>
             ) : null}
 
@@ -634,11 +642,17 @@ export default function ChatScreen({route, navigation}) {
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            : appStyle?.homePageLayout === 3 ||
+              appStyle?.homePageLayout === 5 ||
+              appStyle?.homePageLayout === 8
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={`# ${paramData?.room_id || ''}`}
+        centerTitle={
+          dineInType == 'p2p'
+            ? paramData?.product_name || productDetails?.title || ''
+            : `# ${paramData?.room_id || ''}`
+        }
         customRight={showRoomUser}
         headerStyle={{backgroundColor: isDarkMode ? '#171717' : '#f6f6f6'}}
         // onPressLeft={onBack}

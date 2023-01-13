@@ -94,7 +94,8 @@ const shortCodes = {
   taquick: '630e49',
   vecto: '39f6fd',
   goody: '397840',
-  grub: '2f3120',
+  // grub: '2f3120',
+  grub: '2d98b5',
   gusto: 'd1b1a0',
   gokab: 'fb78f0', // live
   // gokab: '578b33', // staging
@@ -501,6 +502,7 @@ const shortCodes = {
   udkay: 'bfe4de',
   hattaFoodHub: 'be22d8',
   ondgoo: '70ae69',
+  zonesso: '4f459b',
 };
 
 const appIds = {
@@ -2494,7 +2496,11 @@ const appIds = {
   }),
   ondgoo: Platform.select({
     ios: 'com.ondgoo.royoorders',
-    android: 'com.ondgoo.royoorders',
+    android: 'com.ondgoo.royoorders'}),
+
+  zonesso: Platform.select({
+    ios: 'com.zonesso.royoorders',
+    android: 'com.zonesso.royoorders',
   }),
 };
 

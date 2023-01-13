@@ -39,7 +39,7 @@ import RNOtpVerify from 'react-native-otp-verify';
 export default function OtpVerification({navigation, route}) {
   const navigation_ = useNavigation();
   const paramData = route?.params;
-console.log(paramData,'paramDataparamData')
+  console.log(paramData, 'paramData...paramData');
 
   const [state, setState] = useState({
     timer: 30,
@@ -167,7 +167,7 @@ console.log(paramData,'paramDataparamData')
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log('resssss.....ress...');
+        console.log('resssss.....ress...', res);
         updateState({isLoading: false});
       })
       .catch(errorMethod);

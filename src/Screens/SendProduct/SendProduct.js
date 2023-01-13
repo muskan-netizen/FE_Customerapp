@@ -346,8 +346,6 @@ export default function SendProduct({navigation, route}) {
       //   location.push(dropOffLocationTwoLatLng);
       //   addressData.push(dropOffLocationTwoAddressData);
       // }
-      console.log(location, 'location');
-      console.log(addressData, 'addressData');
 
       navigation.navigate(navigationStrings.SHIPPING_DETAILS, {
         location: location,

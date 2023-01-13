@@ -625,7 +625,9 @@ export default function OuterScreen({navigation}) {
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}>
                 <Text
                   style={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : themeColors?.primary_color,
                     fontFamily: fontFamily.bold,
                   }}>
                   {strings.LOGIN}
