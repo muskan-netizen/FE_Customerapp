@@ -13,7 +13,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -37,6 +37,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {cameraHandler} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import {androidCameraPermission} from '../../utils/permissions';
 import {setUserData} from '../../utils/utils';
@@ -49,24 +50,12 @@ DeviceCountry.getCountryCode()
     getPhonesCallingCodeAndCountryData = codes.filter(
       (x) => x.isoCode2 == result.code.toUpperCase(),
     );
-
-    // [
-    //   {
-    //     country: 'United States',
-    //     countryCodes: [''],
-    //     isoCode2: 'US',
-    //     isoCode3: 'USA',
-    //   },
-    // ];
   })
   .catch((e) => {
     console.log(e);
   });
 
 let addtionSelectedImageIndex = null;
-
-// alert("SignUp")
-let addtionSelectedImage = null;
 
 export default function Signup({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -89,23 +78,26 @@ export default function Signup({navigation}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(
-    getPhonesCallingCodeAndCountryData,
-    ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
-  );
+
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: !isEmpty(getPhonesCallingCodeAndCountryData)
-      ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace('-', '')
-      : appData?.profile.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
-    cca2: !isEmpty(getPhonesCallingCodeAndCountryData)
-      ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
-      : appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+    callingCode:
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
+        : appData?.profile.country?.phonecode
+        ? appData?.profile?.country?.phonecode
+        : '91',
+    cca2:
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
+        : appData?.profile?.country?.code
+        ? appData?.profile?.country?.code
+        : 'IN',
     name: '',
     email: '',
     password: '',
@@ -296,7 +288,6 @@ export default function Signup({navigation}) {
           updateState({isLoading: false});
 
           if (!!res.data) {
-          
             checkEmailPhoneVerified(res.data);
           }
         })

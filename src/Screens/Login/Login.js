@@ -1,7 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import codes from "country-calling-code";
-import { cloneDeep } from "lodash";
-import React, { useEffect, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import codes from 'country-calling-code';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
@@ -9,64 +9,61 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
-import DeviceCountry from "react-native-device-country";
-import DeviceInfo from "react-native-device-info";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useSelector } from "react-redux";
-import BorderTextInput from "../../Components/BorderTextInput";
-import TransparentButtonWithTxtAndIcon from "../../Components/ButtonComponent";
-import GradientButton from "../../Components/GradientButton";
-import { loaderOne } from "../../Components/Loaders/AnimatedLoaderFiles";
-import PhoneNumberInput from "../../Components/PhoneNumberInput";
-import WrapperContainer from "../../Components/WrapperContainer";
-import imagePath from "../../constants/imagePath";
-import strings from "../../constants/lang";
-import navigationStrings from "../../navigation/navigationStrings";
-import actions from "../../redux/actions";
-import colors from "../../styles/colors";
+} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceCountry from 'react-native-device-country';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSelector} from 'react-redux';
+import BorderTextInput from '../../Components/BorderTextInput';
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import GradientButton from '../../Components/GradientButton';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-} from "../../styles/responsiveSize";
-import { MyDarkTheme } from "../../styles/theme";
-import { showError } from "../../utils/helperFunctions";
+} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
   handleAppleLogin,
   _twitterSignIn,
-} from "../../utils/socialLogin";
-import validator from "../../utils/validations";
-import stylesFunc from "./styles";
+} from '../../utils/socialLogin';
+import validator from '../../utils/validations';
+import stylesFunc from './styles';
+import {isEmpty} from 'lodash';
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {
     // {"code": "BY", "type": "telephony"}
     getPhonesCallingCodeAndCountryData = codes.filter(
-      (x) => x.isoCode2 == result.code.toUpperCase()
+      (x) => x.isoCode2 == result.code.toUpperCase(),
     );
   })
   .catch((e) => {
     console.log(e);
   });
 // import {mobile} from 'is_js';
-import { useNavigation } from "@react-navigation/native";
-import RNOtpVerify from "react-native-otp-verify";
-import { setUserData } from "../../utils/utils";
-import { getValuebyKeyInArray } from "../../utils/commonFunction";
+import {useNavigation} from '@react-navigation/native';
+import RNOtpVerify from 'react-native-otp-verify';
+import {setUserData} from '../../utils/utils';
+import {getValuebyKeyInArray} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
   const navigation_ = useNavigation();
-  const {
-    appData,
-    themeColors,
-    currencies,
-    languages,
-    appStyle,
-    deeplinkUrl,
-  } = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies, languages, appStyle, deeplinkUrl} =
+    useSelector((state) => state?.initBoot);
   const {
     apple_login,
     fb_login,
@@ -82,57 +79,63 @@ export default function Login({ navigation }) {
 
   const [state, setState] = useState({
     // email: '',
-    password: "",
+    password: '',
     isLoading: false,
     phoneInput: false,
     phoneNoVisibility: false,
-    phoneNumber: "",
+    phoneNumber: '',
     email: {
-      value: "",
+      value: '',
       focus: true,
     },
     mobilNo: {
-      phoneNo: "",
+      phoneNo: '',
       callingCode:
-        getPhonesCallingCodeAndCountryData &&
-        getPhonesCallingCodeAndCountryData.length
-          ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+        !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        getBundleId() !== appIds.sxm2go
+          ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+              '-',
+              '',
+            )
           : appData?.profile.country?.phonecode
           ? appData?.profile?.country?.phonecode
-          : "91",
+          : '91',
       cca2:
-        getPhonesCallingCodeAndCountryData &&
-        getPhonesCallingCodeAndCountryData.length
+        !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        getBundleId() !== appIds.sxm2go
           ? getPhonesCallingCodeAndCountryData[0].isoCode2
           : appData?.profile?.country?.code
           ? appData?.profile?.country?.code
-          : "IN",
+          : 'IN',
       focus: false,
-      countryName: "",
+      countryName: '',
       isShowPassword: false,
-      appHashKey: "",
+      appHashKey: '',
     },
-    phoneNumberOnly: "",
+    phoneNumberOnly: '',
     calllingCodePhoneOnly:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
-        ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+            '-',
+            '',
+          )
         : appData?.profile.country?.phonecode
         ? appData?.profile?.country?.phonecode
-        : "91",
+        : '91',
     cca2PhoneOnly:
-      getPhonesCallingCodeAndCountryData &&
-      getPhonesCallingCodeAndCountryData.length
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+      getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
         ? appData?.profile?.country?.code
-        : "IN",
+        : 'IN',
   });
 
   const fontFamily = appStyle?.fontSizeData;
   //CLone deep all the states
   useEffect(() => {
-    if (Platform.OS == "android") {
+    if (Platform.OS == 'android') {
       RNOtpVerify.getHash()
         .then((res) => {
           updateState({
@@ -145,9 +148,9 @@ export default function Login({ navigation }) {
   }, []);
 
   //Update states
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   //Styles in app
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //all states used in this screen
   const {
@@ -167,22 +170,22 @@ export default function Login({ navigation }) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, { data });
+    navigation.navigate(screenName, {data});
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
+    updateState({[key]: val});
   };
 
   //Validate form
   const isValidData = () => {
     const error = getValuebyKeyInArray(
-      "is_phone_signup",
-      additional_preferences
+      'is_phone_signup',
+      additional_preferences,
     )
-      ? validator({ phoneNumber: phoneNumberOnly })
+      ? validator({phoneNumber: phoneNumberOnly})
       : email.focus
-      ? validator({ email: email.value, password })
+      ? validator({email: email.value, password})
       : validator({
           phoneNumber: mobilNo.phoneNo,
           callingCode: mobilNo.callingCode,
@@ -207,7 +210,7 @@ export default function Login({ navigation }) {
 
   //Login api fucntion
   const _onLogin = async () => {
-    let fcmToken = await AsyncStorage.getItem("fcmToken");
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
 
     const checkValid = isValidData();
     if (!checkValid) {
@@ -215,7 +218,7 @@ export default function Login({ navigation }) {
     }
 
     let data = {
-      username: getValuebyKeyInArray("is_phone_signup", additional_preferences)
+      username: getValuebyKeyInArray('is_phone_signup', additional_preferences)
         ? phoneNumberOnly
         : email.focus
         ? email.value
@@ -224,25 +227,25 @@ export default function Login({ navigation }) {
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
-      dialCode: getValuebyKeyInArray("is_phone_signup", additional_preferences)
+      dialCode: getValuebyKeyInArray('is_phone_signup', additional_preferences)
         ? calllingCodePhoneOnly
         : mobilNo.focus
         ? mobilNo.callingCode
-        : "",
+        : '',
       countryData: getValuebyKeyInArray(
-        "is_phone_signup",
-        additional_preferences
+        'is_phone_signup',
+        additional_preferences,
       )
         ? cca2PhoneOnly
         : mobilNo.focus
         ? mobilNo.cca2
-        : "",
+        : '',
       app_hash_key: appHashKey,
     };
-    if (Platform.OS === "android" && !!appHashKey) {
-      data["app_hash_key"] = appHashKey;
+    if (Platform.OS === 'android' && !!appHashKey) {
+      data['app_hash_key'] = appHashKey;
     }
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
 
     actions
       .loginUsername(data, {
@@ -252,13 +255,13 @@ export default function Login({ navigation }) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log("login via user name", res);
+        console.log('login via user name', res);
         if (!!res.data) {
           if (res?.data?.is_phone) {
             navigation.navigate(navigationStrings.OTP_VERIFICATION, {
               username: getValuebyKeyInArray(
-                "is_phone_signup",
-                additional_preferences
+                'is_phone_signup',
+                additional_preferences,
               )
                 ? phoneNumberOnly
                 : mobilNo?.phoneNo,
@@ -270,7 +273,7 @@ export default function Login({ navigation }) {
             checkIfEmailVerification(res.data);
           }
         }
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         getCartDetail();
       })
       .catch(errorMethod);
@@ -280,14 +283,14 @@ export default function Login({ navigation }) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
-        "",
+        '',
         {},
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
-        }
+        },
       )
       .then((res) => {
         actions.cartItemQty(res);
@@ -296,8 +299,8 @@ export default function Login({ navigation }) {
   };
   //Error handling in api
   const errorMethod = (error) => {
-    console.log(error, "errorrrrr");
-    updateState({ isLoading: false });
+    console.log(error, 'errorrrrr');
+    updateState({isLoading: false});
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -305,28 +308,28 @@ export default function Login({ navigation }) {
 
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
-    let fcmToken = await AsyncStorage.getItem("fcmToken");
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     let data = {};
-    data["name"] =
+    data['name'] =
       socialLoginData?.name ||
       socialLoginData?.userName ||
       socialLoginData?.fullName?.givenName;
-    data["auth_id"] =
+    data['auth_id'] =
       socialLoginData?.id ||
       socialLoginData?.userID ||
       socialLoginData?.identityToken;
-    data["phone_number"] = "";
-    data["email"] = socialLoginData?.email;
-    data["device_type"] = Platform.OS;
-    data["device_token"] = DeviceInfo.getUniqueId();
-    data["fcm_token"] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId();
+    data['phone_number'] = '';
+    data['email'] = socialLoginData?.email;
+    data['device_type'] = Platform.OS;
+    data['device_token'] = DeviceInfo.getUniqueId();
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId();
 
-    let query = "";
+    let query = '';
     if (
-      type == "facebook" ||
-      type == "twitter" ||
-      type == "google" ||
-      type == "apple"
+      type == 'facebook' ||
+      type == 'twitter' ||
+      type == 'google' ||
+      type == 'apple'
     ) {
       query = type;
     }
@@ -338,8 +341,8 @@ export default function Login({ navigation }) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, "res>>>SOCIAL");
-        updateState({ isLoading: false });
+        console.log(res, 'res>>>SOCIAL');
+        updateState({isLoading: false});
 
         if (!!res.data) {
           checkEmailPhoneVerified(res?.data);
@@ -371,7 +374,7 @@ export default function Login({ navigation }) {
       setUserData(data).then((suc) => {
         actions.saveUserData(data);
         if (deeplinkUrl) {
-          actions.setRedirection("from_deepLinking");
+          actions.setRedirection('from_deepLinking');
         }
       });
     }
@@ -379,44 +382,44 @@ export default function Login({ navigation }) {
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({ isLoading: false });
+    updateState({isLoading: false});
     handleAppleLogin()
       .then((res) => {
-        _saveSocailLogin(res, "apple");
+        _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     googleLogin()
       .then((res) => {
         if (res?.user) {
-          console.log(res, "googlegooogle");
-          _saveSocailLogin(res.user, "google");
+          console.log(res, 'googlegooogle');
+          _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
         }
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
   const _responseInfoCallback = (error, result) => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     if (error) {
-      updateState({ isLoading: false });
+      updateState({isLoading: false});
     } else {
       if (result && result?.id) {
-        console.log(result, "fbresult");
-        _saveSocailLogin(result, "facebook");
+        console.log(result, 'fbresult');
+        _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       }
     }
   };
@@ -430,14 +433,14 @@ export default function Login({ navigation }) {
     _twitterSignIn()
       .then((res) => {
         if (res) {
-          _saveSocailLogin(res, "twitter");
+          _saveSocailLogin(res, 'twitter');
         }
       })
       .catch((err) => {});
   };
 
   const _onCountryChange = (data) => {
-    getValuebyKeyInArray("is_phone_signup", additional_preferences)
+    getValuebyKeyInArray('is_phone_signup', additional_preferences)
       ? updateState({
           cca2PhoneOnly: data.cca2,
           calllingCodePhoneOnly: data.callingCode.toString(),
@@ -456,7 +459,7 @@ export default function Login({ navigation }) {
   };
 
   /*************************** Check Input Handler */
-  const checkInputHandler = (data = "") => {
+  const checkInputHandler = (data = '') => {
     let re = /^[0-9]{1,45}$/;
     let c = re.test(data);
 
@@ -489,20 +492,18 @@ export default function Login({ navigation }) {
   };
 
   const showHidePassword = () => {
-    updateState({ isShowPassword: !isShowPassword });
+    updateState({isShowPassword: !isShowPassword});
   };
 
   return (
     <WrapperContainer
       isLoadingB={isLoading}
       source={loaderOne}
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-    >
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{ alignSelf: "flex-start" }}
-        >
+          style={{alignSelf: 'flex-start'}}>
           <Image
             source={
               appStyle?.homePageLayout === 3
@@ -512,10 +513,10 @@ export default function Login({ navigation }) {
             style={
               isDarkMode
                 ? {
-                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     tintColor: MyDarkTheme.colors.text,
                   }
-                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
             }
           />
         </TouchableOpacity>
@@ -527,51 +528,47 @@ export default function Login({ navigation }) {
           flex: 1,
           marginHorizontal: moderateScale(24),
         }}
-        enableOnAndroid={true}
-      >
-        <View style={{ height: moderateScaleVertical(28) }} />
+        enableOnAndroid={true}>
+        <View style={{height: moderateScaleVertical(28)}} />
         <Text
           style={
             isDarkMode
-              ? [styles.header, { color: MyDarkTheme.colors.text }]
+              ? [styles.header, {color: MyDarkTheme.colors.text}]
               : styles.header
-          }
-        >
+          }>
           {strings.LOGIN_YOUR_ACCOUNT}
         </Text>
 
-        {getValuebyKeyInArray("is_phone_signup", additional_preferences) ? (
+        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
           <Text
             style={
               isDarkMode
-                ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
+                ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
                 : styles.txtSmall
-            }
-          >
+            }>
             Enter phone number to login your account.
           </Text>
         ) : (
           <Text
             style={
               isDarkMode
-                ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
+                ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
                 : styles.txtSmall
-            }
-          >
+            }>
             {strings.ENTE_REGISTERED_EMAIL}
           </Text>
         )}
-        <View style={{ height: moderateScaleVertical(30) }} />
+        <View style={{height: moderateScaleVertical(30)}} />
 
-        {getValuebyKeyInArray("is_phone_signup", additional_preferences) ? (
+        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
           <PhoneNumberInput
             onCountryChange={_onCountryChange}
-            onChangePhone={(data) => updateState({ phoneNumberOnly: data })}
+            onChangePhone={(data) => updateState({phoneNumberOnly: data})}
             cca2={cca2PhoneOnly}
             phoneNumber={phoneNumberOnly}
             callingCode={calllingCodePhoneOnly}
             placeholder={strings.YOUR_PHONE_NUMBER}
-            keyboardType={"phone-pad"}
+            keyboardType={'phone-pad'}
             color={isDarkMode ? MyDarkTheme.colors.text : null}
             autoFocus={true}
             containerStyle={{
@@ -586,13 +583,13 @@ export default function Login({ navigation }) {
                   onChangeText={(data) => checkInputHandler(data)}
                   placeholder={strings.YOUR_EMAIL_PHONE}
                   value={email.value}
-                  keyboardType={"email-address"}
-                  autoCapitalize={"none"}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'}
                   autoFocus={true}
-                  returnKeyType={"next"}
+                  returnKeyType={'next'}
                 />
                 <BorderTextInput
-                  onChangeText={_onChangeText("password")}
+                  onChangeText={_onChangeText('password')}
                   placeholder={strings.ENTER_PASSWORD}
                   value={password}
                   secureTextEntry={isShowPassword ? false : true}
@@ -611,7 +608,7 @@ export default function Login({ navigation }) {
               </>
             )}
             {phoneInput && (
-              <View style={{ marginBottom: moderateScale(18) }}>
+              <View style={{marginBottom: moderateScale(18)}}>
                 <PhoneNumberInput
                   onCountryChange={_onCountryChange}
                   onChangePhone={(data) => checkInputHandler(data)}
@@ -619,7 +616,7 @@ export default function Login({ navigation }) {
                   phoneNumber={mobilNo.phoneNo}
                   callingCode={mobilNo.callingCode}
                   placeholder={strings.YOUR_PHONE_NUMBER}
-                  keyboardType={"phone-pad"}
+                  keyboardType={'phone-pad'}
                   color={isDarkMode ? MyDarkTheme.colors.text : null}
                   autoFocus={true}
                 />
@@ -628,8 +625,8 @@ export default function Login({ navigation }) {
           </View>
         )}
         {getValuebyKeyInArray(
-          "is_phone_signup",
-          additional_preferences
+          'is_phone_signup',
+          additional_preferences,
         ) ? null : (
           <View style={styles.forgotContainer}>
             <Text
@@ -637,20 +634,19 @@ export default function Login({ navigation }) {
               style={{
                 fontFamily: fontFamily.bold,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}
-            >
-              {" "}
+              }}>
+              {' '}
               {strings.FORGOT}
             </Text>
           </View>
         )}
 
         <GradientButton
-          containerStyle={{ marginTop: moderateScaleVertical(10) }}
+          containerStyle={{marginTop: moderateScaleVertical(10)}}
           onPress={_onLogin}
           btnText={strings.LOGIN_ACCOUNT}
         />
-        <View style={{ marginTop: moderateScaleVertical(30) }}>
+        <View style={{marginTop: moderateScaleVertical(30)}}>
           {(!!google_login ||
             !!fb_login ||
             !!twitter_login ||
@@ -660,10 +656,9 @@ export default function Login({ navigation }) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orText, { color: MyDarkTheme.colors.text }]
+                    ? [styles.orText, {color: MyDarkTheme.colors.text}]
                     : styles.orText
-                }
-              >
+                }>
                 {strings.OR_LOGIN_WITH}
               </Text>
               <View style={styles.hyphen} />
@@ -702,11 +697,10 @@ export default function Login({ navigation }) {
           </View> */}
           <View
             style={{
-              flexDirection: "column",
-            }}
-          >
+              flexDirection: 'column',
+            }}>
             {!!google_login && (
-              <View style={{ marginTop: moderateScaleVertical(15) }}>
+              <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_google2}
                   btnText={strings.CONTINUE_GOOGLE}
@@ -726,7 +720,7 @@ export default function Login({ navigation }) {
               </View>
             )}
             {!!fb_login && (
-              <View style={{ marginTop: moderateScaleVertical(15) }}>
+              <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_fb2}
                   btnText={strings.CONTINUE_FACEBOOK}
@@ -746,7 +740,7 @@ export default function Login({ navigation }) {
               </View>
             )}
             {!!twitter_login && (
-              <View style={{ marginTop: moderateScaleVertical(15) }}>
+              <View style={{marginTop: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={imagePath.ic_twitter2}
                   btnText={strings.CONTINUE_TWITTER}
@@ -766,8 +760,8 @@ export default function Login({ navigation }) {
               </View>
             )}
 
-            {!!apple_login && Platform.OS == "ios" && (
-              <View style={{ marginVertical: moderateScaleVertical(15) }}>
+            {!!apple_login && Platform.OS == 'ios' && (
+              <View style={{marginVertical: moderateScaleVertical(15)}}>
                 <TransparentButtonWithTxtAndIcon
                   icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                   btnText={strings.CONTINUE_APPLE}
@@ -790,26 +784,24 @@ export default function Login({ navigation }) {
         </View>
 
         {getValuebyKeyInArray(
-          "is_phone_signup",
-          additional_preferences
+          'is_phone_signup',
+          additional_preferences,
         ) ? null : (
           <View style={styles.bottomContainer}>
             <Text
               style={
                 isDarkMode
-                  ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
-                  : { ...styles.txtSmall, color: colors.textGreyLight }
-              }
-            >
+                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+                  : {...styles.txtSmall, color: colors.textGreyLight}
+              }>
               {strings.DONT_HAVE_ACCOUNT}
               <Text
                 onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
                 style={{
                   fontFamily: fontFamily.bold,
                   color: themeColors.primary_color,
-                }}
-              >
-                {" "}
+                }}>
+                {' '}
                 {strings.SIGN_UP}
               </Text>
             </Text>

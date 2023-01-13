@@ -1,7 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-   export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-  //  export const API_BASE_URL = 'http://192.168.100.135:9090/api/v1';
-  //export const API_BASE_URL = 'http://192.168.100.141:8001/api/v1'
+//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.165:8000/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL = 'https://mealtime.menu/api/v1';
 // export const API_BASE_URL = 'https://order.fazeiteam.com/api/v1';
@@ -10,7 +9,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://delivery.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
- //export const API_BASE_URL ='https://sales.focushires.com/api/v1';
+//export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 //export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 //export const API_BASE_URL = 'http://192.168.102.65:8000//api/v1';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
@@ -622,28 +621,15 @@ export const CHECK_PRODUCT_AVAILAABILITY = getApiUrl(
 );
 
 // order Tracing Url For DeepLinking
-export const ORDER_TRACING_DEEPLINKING = getApiUrl(
-  '/order-tracking',
-);
+export const ORDER_TRACING_DEEPLINKING = getApiUrl('/order-tracking');
 
 // edit order api
-export const EDIT_CUSTOMER_ORDER = getApiUrl(
-  '/user/editorder',
-);
+export const EDIT_CUSTOMER_ORDER = getApiUrl('/user/editorder');
 
 // discard Edit order from Cart
-export const DISCARD_EDIT_CUSTOMER_ORDER = getApiUrl(
-  '/user/discardeditorder',
-);
+export const DISCARD_EDIT_CUSTOMER_ORDER = getApiUrl('/user/discardeditorder');
 
 // pickup-delivery drop location change after order place
 export const DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE = getApiUrl(
   '/pickup-delivery/edit-order',
 );
-
-
-
-
-
-
-
