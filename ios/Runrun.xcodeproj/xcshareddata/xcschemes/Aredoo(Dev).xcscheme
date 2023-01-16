@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18543A22295ACA1400E9741E"
-               BuildableName = "Aredoo"
+               BuildableName = "Aredoo.app"
                BlueprintName = "Aredoo"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18543A22295ACA1400E9741E"
-            BuildableName = "Aredoo"
+            BuildableName = "Aredoo.app"
             BlueprintName = "Aredoo"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18543A22295ACA1400E9741E"
-            BuildableName = "Aredoo"
+            BuildableName = "Aredoo.app"
             BlueprintName = "Aredoo"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

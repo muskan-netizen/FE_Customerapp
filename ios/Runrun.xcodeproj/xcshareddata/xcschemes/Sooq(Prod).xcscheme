@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2CC5F79F294B07230019DB5D"
-               BuildableName = "Sooq"
+               BuildableName = "Sooq.app"
                BlueprintName = "Sooq"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2CC5F79F294B07230019DB5D"
-            BuildableName = "Sooq"
+            BuildableName = "Sooq.app"
             BlueprintName = "Sooq"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2CC5F79F294B07230019DB5D"
-            BuildableName = "Sooq"
+            BuildableName = "Sooq.app"
             BlueprintName = "Sooq"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

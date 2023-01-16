@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "251379062787",
+    "project_id": "shopcart-order",
+    "storage_bucket": "shopcart-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251379062787:android:56118f6f97b1c18317d636",
+        "android_client_info": {
+          "package_name": "com.shopcart.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251379062787-1b9pfpupbk2nlr526cfbrii02hda01qs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shopcart.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "251379062787-pmost2g3gfv6vfejtqodrtir5lcj8aha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shopcart.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "251379062787-rpnb613qs24fgu7s69u7d11m3pbi4qto.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shopcart.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "251379062787-tbnn1107stfo9snalmse6ol301dtqvjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD5CTXZrgq7WGJ03UcR3y5e-fwjZAf7mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251379062787-tbnn1107stfo9snalmse6ol301dtqvjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

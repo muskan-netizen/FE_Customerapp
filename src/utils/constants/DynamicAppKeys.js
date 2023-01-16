@@ -503,6 +503,13 @@ const shortCodes = {
   hattaFoodHub: 'be22d8',
   ondgoo: '70ae69',
   zonesso: '4f459b',
+  junkerz: '09811d',
+  shopcart: 'ae366e',
+  viralClean: 'e3166f',
+  stargaze: 'cc100d',
+  messiaa: 'c326b3',
+  superApp: '041795',
+  nounou: '7ab01a'
 };
 
 const appIds = {
@@ -2501,6 +2508,34 @@ const appIds = {
   zonesso: Platform.select({
     ios: 'com.zonesso.royoorders',
     android: 'com.zonesso.royoorders',
+  }),
+  junkerz: Platform.select({
+    ios: 'com.junkerz.royoOrders',
+    android: 'com.junkerz.royoOrders',
+  }),
+  shopcart: Platform.select({
+    ios: 'com.shopcart.royoorder',
+    android: 'com.shopcart.royoorder',
+  }),
+  viralClean: Platform.select({
+    ios: 'com.viralclean.royoorder',
+    android: 'com.viralclean.royoorder',
+  }),
+  stargaze: Platform.select({
+    ios: 'com.stargaze.royoorder',
+    android: 'com.stargaze.royoorder',
+  }),
+  messiaa: Platform.select({
+    ios: 'com.messiaa.orders',
+    android: 'com.messiaa.orders',
+  }),
+  superApp: Platform.select({
+    ios: 'com.superapp.royoorder',
+    android: 'com.superapp.royoorder',
+  }),
+  nounou: Platform.select({
+    ios: 'com.nounou.royoorder',
+    android: 'com.nounou.royoorder',
   }),
 };
 

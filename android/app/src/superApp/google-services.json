@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "184245572610",
+    "project_id": "superapp-order",
+    "storage_bucket": "superapp-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184245572610:android:877e80581d8522a6bd831b",
+        "android_client_info": {
+          "package_name": "com.superapp.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184245572610-93q8o4385ifgtbohqj06uk3gtlueifum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.superapp.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "184245572610-c1odjnmqp3qhom2jld1ovoo71tuv9pv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.superapp.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "184245572610-j3roaqpkgg46p3cro04f4nk4ilrpmkhp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.superapp.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "184245572610-kf0god7735nraq5e81pudgoamkg42uao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8_fHFEeH7z5GgEZDwi4YXbCs9eFfO9YA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184245572610-kf0god7735nraq5e81pudgoamkg42uao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

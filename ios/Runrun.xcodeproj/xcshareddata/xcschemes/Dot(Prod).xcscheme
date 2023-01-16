@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18543A5B295B11C300E9741E"
-               BuildableName = "Dot"
+               BuildableName = "Dot.app"
                BlueprintName = "Dot"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18543A5B295B11C300E9741E"
-            BuildableName = "Dot"
+            BuildableName = "Dot.app"
             BlueprintName = "Dot"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "18543A5B295B11C300E9741E"
-            BuildableName = "Dot"
+            BuildableName = "Dot.app"
             BlueprintName = "Dot"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

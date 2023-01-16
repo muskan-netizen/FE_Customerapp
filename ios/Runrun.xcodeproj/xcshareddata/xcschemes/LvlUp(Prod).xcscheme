@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "98A188D829407FC200D52AC2"
-               BuildableName = "LvlUp"
+               BuildableName = "LvlUp.app"
                BlueprintName = "LvlUp"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98A188D829407FC200D52AC2"
-            BuildableName = "LvlUp"
+            BuildableName = "LvlUp.app"
             BlueprintName = "LvlUp"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98A188D829407FC200D52AC2"
-            BuildableName = "LvlUp"
+            BuildableName = "LvlUp.app"
             BlueprintName = "LvlUp"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

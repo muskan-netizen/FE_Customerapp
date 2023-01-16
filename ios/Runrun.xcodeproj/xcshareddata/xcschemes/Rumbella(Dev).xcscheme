@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C001794293F1D07008CBCFD"
-               BuildableName = "Rumbella"
+               BuildableName = "Rumbella.app"
                BlueprintName = "Rumbella"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C001794293F1D07008CBCFD"
-            BuildableName = "Rumbella"
+            BuildableName = "Rumbella.app"
             BlueprintName = "Rumbella"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C001794293F1D07008CBCFD"
-            BuildableName = "Rumbella"
+            BuildableName = "Rumbella.app"
             BlueprintName = "Rumbella"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

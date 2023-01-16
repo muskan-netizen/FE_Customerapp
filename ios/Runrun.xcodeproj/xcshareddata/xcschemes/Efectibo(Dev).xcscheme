@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2CC5F771294B067B0019DB5D"
-               BuildableName = "Efectibo"
+               BuildableName = "Efectibo.app"
                BlueprintName = "Efectibo"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2CC5F771294B067B0019DB5D"
-            BuildableName = "Efectibo"
+            BuildableName = "Efectibo.app"
             BlueprintName = "Efectibo"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2CC5F771294B067B0019DB5D"
-            BuildableName = "Efectibo"
+            BuildableName = "Efectibo.app"
             BlueprintName = "Efectibo"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

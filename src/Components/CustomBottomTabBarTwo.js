@@ -1,16 +1,16 @@
-import React, {Fragment} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
+import React, { Fragment } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 
 const CustomBottomTabBarTwo = ({
   state,
@@ -22,23 +22,24 @@ const CustomBottomTabBarTwo = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  console.log(themeColors, "themeColorsthemeColorsthemeColors");
 
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesData({fontFamily, themeColors});
+  const styles = stylesData({ fontFamily, themeColors });
 
   return (
     <View style={[styles.tabBarStyle]}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
@@ -68,7 +69,7 @@ const CustomBottomTabBarTwo = ({
 
                 // marginBottom:20
               }}>
-              {options.tabBarIcon({focused: isFocused})}
+              {options.tabBarIcon({ focused: isFocused })}
               <Text
                 style={{
                   ...props.labelStyle,
@@ -88,7 +89,7 @@ const CustomBottomTabBarTwo = ({
   );
 };
 
-export function stylesData({fontFamily, themeColors}) {
+export function stylesData({ fontFamily, themeColors }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
@@ -107,7 +108,7 @@ export function stylesData({fontFamily, themeColors}) {
       bottom: moderateScaleVertical(10),
       borderRadius: moderateScale(35.5),
       shadowColor: colors.black,
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,

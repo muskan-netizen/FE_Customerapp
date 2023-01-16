@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C8CE0E0293A1EE9002284E9"
-               BuildableName = "OtgWeeds"
+               BuildableName = "OtgWeeds.app"
                BlueprintName = "OtgWeeds"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C8CE0E0293A1EE9002284E9"
-            BuildableName = "OtgWeeds"
+            BuildableName = "OtgWeeds.app"
             BlueprintName = "OtgWeeds"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C8CE0E0293A1EE9002284E9"
-            BuildableName = "OtgWeeds"
+            BuildableName = "OtgWeeds.app"
             BlueprintName = "OtgWeeds"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

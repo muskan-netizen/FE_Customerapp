@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>38956448130-fua6d1c08jjgd4e1gqa7nt83v5l17ne5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.38956448130-fua6d1c08jjgd4e1gqa7nt83v5l17ne5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>38956448130-8l8si4o089fkojqjqsc9f5cnidnf4ig3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC1KNG_ifx1rwlr6KGzw0XPh8bpT7kCi6k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>38956448130</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.viralclean.royoorder</string>
+	<key>PROJECT_ID</key>
+	<string>viralclean-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>viralclean-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:38956448130:ios:9b83d521edf0c1c8f9379b</string>
+</dict>
+</plist>

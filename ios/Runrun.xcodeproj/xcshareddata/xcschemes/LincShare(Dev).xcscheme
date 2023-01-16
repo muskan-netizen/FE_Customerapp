@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "98290E1F2946EE390050FCB0"
-               BuildableName = "LincShare"
+               BuildableName = "LincShare.app"
                BlueprintName = "LincShare"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98290E1F2946EE390050FCB0"
-            BuildableName = "LincShare"
+            BuildableName = "LincShare.app"
             BlueprintName = "LincShare"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98290E1F2946EE390050FCB0"
-            BuildableName = "LincShare"
+            BuildableName = "LincShare.app"
             BlueprintName = "LincShare"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

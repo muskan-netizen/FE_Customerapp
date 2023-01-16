@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C3FD09E294C84B700A59DD0"
-               BuildableName = "ZynoBidandRide"
+               BuildableName = "ZynoBidandRide.app"
                BlueprintName = "ZynoBidandRide"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C3FD09E294C84B700A59DD0"
-            BuildableName = "ZynoBidandRide"
+            BuildableName = "ZynoBidandRide.app"
             BlueprintName = "ZynoBidandRide"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C3FD09E294C84B700A59DD0"
-            BuildableName = "ZynoBidandRide"
+            BuildableName = "ZynoBidandRide.app"
             BlueprintName = "ZynoBidandRide"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C9D782A294C6C7700F15FF3"
-               BuildableName = "HectoHomes"
+               BuildableName = "HectoHomes.app"
                BlueprintName = "HectoHomes"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C9D782A294C6C7700F15FF3"
-            BuildableName = "HectoHomes"
+            BuildableName = "HectoHomes.app"
             BlueprintName = "HectoHomes"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C9D782A294C6C7700F15FF3"
-            BuildableName = "HectoHomes"
+            BuildableName = "HectoHomes.app"
             BlueprintName = "HectoHomes"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
