@@ -28,6 +28,7 @@ import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PaymentGateways from '../../Components/PaymentGateways';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -52,7 +53,9 @@ import stylesFun from './styles';
 
 export default function AddMoney({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  const [cardNumber, setCardNUmber] = useState()
+  const [cvc, setCvc] = useState()
+  const [expiryDate, setExpiryDate] = useState()
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -133,6 +136,35 @@ export default function AddMoney({navigation}) {
       .catch(errorMethod);
   };
 
+  const checkInputHandler = (type, data) => {
+    if (type === 'Card Number') {
+
+      let re = data.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
+      setCardNUmber(re)
+    }
+    if (type === 'ExpiryDate') {
+
+      let ed = data.replace(/^([1-9]\/|[2-9])$/g, '0$1/' // To handle 3/ > 03/
+      ).replace(
+        /^(0[1-9]{1}|1[0-2]{1})$/g, '$1/' // 11 > 11/
+      ).replace(
+        /^([0-1]{1})([3-9]{1})$/g, '0$1/$2' // 13 > 01/3
+      ).replace(
+        /^(\d)\/(\d\d)$/g, '0$1/$2' // To handle 1/11 > 01/11
+      ).replace(
+        /^(0?[1-9]{1}|1[0-2]{1})([0-9]{2})$/g, '$1/$2' // 141 > 01/41
+      ).replace(
+        /^([0]{1,})\/|[0]{1,}$/g, '0' // To handle 0/ > 0 and 00 > 0
+      ).replace(
+        /[^\d\/]|^[\/]{0,}$/g, '' // To allow only numbers and /
+      ).replace(
+        /\/\//g, '/').trim()
+      setExpiryDate(ed)
+    }
+    if(type === 'CVC'){
+      setCvc(data)
+    }
+  }
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'errorerrorerror');
@@ -306,6 +338,21 @@ export default function AddMoney({navigation}) {
               }}
             />
           )}
+                {!!(
+                    selectedPaymentMethod &&
+                    selectedPaymentMethod?.id == item.id &&
+                    selectedPaymentMethod?.off_site == 1 &&
+                    selectedPaymentMethod?.id === 49
+                  ) && (
+                      <PaymentGateways
+                        isCardNumber={cardNumber}
+                        cvc={cvc}
+                        expiryDate={expiryDate}
+                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                        onChangeText={(data) => checkInputHandler('Card Number', data)}
+                        onChangeCvcText={(data) => checkInputHandler('CVC',data)}
+                      />
+                    )}
       </>
     );
   };
@@ -451,8 +498,12 @@ export default function AddMoney({navigation}) {
       });
       return;
     }
-    if (selectedPaymentMethod?.off_site == 1) {
+    if (selectedPaymentMethod?.off_site == 1 && selectedPaymentMethod?.id !== 49) {
       _webPayment();
+      return;
+    }
+    if (selectedPaymentMethod?.id == 49) {
+      _paymentWithPlugnPayMethods()
       return;
     }
     _offineLinePayment();
@@ -514,7 +565,35 @@ export default function AddMoney({navigation}) {
     }
   };
   //flutter wave
+const _paymentWithPlugnPayMethods = () => {
 
+  let selectedMethod = selectedPaymentMethod.code;
+  let CardNumber = cardNumber.split(" ").join("")
+  actions
+  .openPaymentWebUrl(
+    `/${selectedMethod}?amount=${amount}&cv=${cvc}&dt=${expiryDate}&cno=${CardNumber}&action=wallet`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        }
+      )
+      .then((res) => {
+        console.log(res, "Response>>>>>");
+        if (
+          res &&
+          res?.status == 'Success' 
+         
+        ) {
+          navigation.navigate(navigationStrings.WALLET);
+        }
+      })
+      .catch((err) => {
+        console.log('Error>>>>>>>>>>>', err)
+        showError(err?.msg)
+      })
+  }
   const _checkoutPayment = (token) => {
     if (amount == '') {
       updateState({isLoadingB: false});

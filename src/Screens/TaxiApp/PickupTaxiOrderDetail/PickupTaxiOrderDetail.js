@@ -84,6 +84,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  console.log(paramData,'paramDataparamData')
   const [state, setState] = useState({
     isLoading: true,
     region: {

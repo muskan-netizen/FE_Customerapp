@@ -65,8 +65,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function ChooseCarTypeAndTime({ navigation, route }) {
   const paramData = route?.params?.promocodeDetail
-  ? route?.params?.promocodeDetail
-  : route?.params;
+    ? route?.params?.promocodeDetail
+    : route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
   const mapRef = useRef();
@@ -85,8 +85,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const distance_unit_for_time =
     appData?.profile?.preferences?.distance_unit_for_time;
   const total_distance = appData?.profile?.preferences?.distance_unit_for_time;
-  const {userData} = useSelector((state) => state?.auth);
-  const {pickUpTimeType, location} = useSelector((state) => state?.home);
+  const { userData } = useSelector((state) => state?.auth);
+  const { pickUpTimeType, location } = useSelector((state) => state?.home);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -96,26 +96,26 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const [state, setState] = useState({
     region: {
-      latitude: 
-      paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0]?.latitude)
-        : 30.7191,
-      longitude: 
-      paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0]?.longitude)
-        : 76.8107,
+      latitude:
+        paramData?.location[0]?.latitude
+          ? Number(paramData?.location[0]?.latitude)
+          : 30.7191,
+      longitude:
+        paramData?.location[0]?.longitude
+          ? Number(paramData?.location[0]?.longitude)
+          : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
     coordinate: {
-      latitude: 
-       paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0]?.latitude)
-        : 30.7191,
-      longitude: 
-      paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0]?.longitude)
-        : 76.8107,
+      latitude:
+        paramData?.location[0]?.latitude
+          ? Number(paramData?.location[0]?.latitude)
+          : 30.7191,
+      longitude:
+        paramData?.location[0]?.longitude
+          ? Number(paramData?.location[0]?.longitude)
+          : 76.8107,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
@@ -252,7 +252,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const [updateSeatNO, setUpdateSeatNo] = useState(1)
-  const [showFinalUpdatedSeatNo,setShowFinalUpdatedSeatNo]=useState(1)
+  const [showFinalUpdatedSeatNo, setShowFinalUpdatedSeatNo] = useState(1)
   console.log(paramData, 'paramDataparamDataparamData');
 
   useFocusEffect(
@@ -314,17 +314,19 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   ]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     _getAllCarAndPrices()
-  },[updateSeatNO])
+  }, [updateSeatNO])
 
 
 
   //Get list of all orders api
   const _getAllCarAndPrices = (showInitalModal = true) => {
     if (showInitalModal) {
-      updateState({ showCarModal: true,
-        btnLoader:true });
+      updateState({
+        showCarModal: true,
+        btnLoader: true
+      });
     }
 
     updateState({ isLoading: true, showVendorModal: false });
@@ -347,7 +349,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         }
       )
       .then((res) => {
-       
+        console.log('resssssss', res)
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -365,7 +367,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
-          btnLoader:false ,
+          btnLoader: false,
           productFaqQuestionAnswers: res?.data?.products?.data?.map(
             (item, index) => {
               return item;
@@ -378,13 +380,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
 
- const _onUpdateSeatNo = (type)=>{
-    if(type=='increase'){
-      setUpdateSeatNo(updateSeatNO+1)
-    }else{
-      setUpdateSeatNo(updateSeatNO-1)
+  const _onUpdateSeatNo = (type) => {
+    if (type == 'increase') {
+      setUpdateSeatNo(updateSeatNO + 1)
+    } else {
+      setUpdateSeatNo(updateSeatNO - 1)
     }
- }
+  }
 
 
   let redirectTimeout = useRef();
@@ -503,6 +505,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       isLoadingB: false,
       isRefreshing: false,
       indicatorLoader: false,
+      btnLoader: false,
       isModalVisibleForPayFlutterWave: false,
     });
     showError(error?.message || error?.error || error?.description);
@@ -631,7 +634,40 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         break;
     }
   };
+  const _paymentWithPlugnPayMethods = (extraData, response) => {
+    console.log(extraData, 'extradataextradata')
+    let selectedMethod = paramData?.selectedMethod?.code;
+    let CardNumber = paramData?.Card_Number.split(" ").join("")
+    actions
+      .openPaymentWebUrl(
+        `/${selectedMethod}?amount=${response?.data?.payable_amount}&cv=${paramData?.cvc}&dt=${paramData?.expiryDate}&cno=${CardNumber}&order_number=${response?.data?.order_number}&action=pickup_delivery`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        }
+      )
+      .then((res) => {
+        console.log(res, "Response>>>>>");
+        if (
+          res &&
+          res?.status == 'Success'
 
+        ) {
+          let newObj = extraData?.orderDetail;
+          newObj["dispatch_traking_url"] = res?.data?.data?.dispatch_traking_url;
+          extraData["orderDetail"] = newObj;
+          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS,
+            extraData
+          );
+        }
+      })
+      .catch((err) => {
+        console.log('Error>>>>>>>>>>>', err)
+        showError(err?.msg)
+      })
+  }
   const _finalPayment = (data) => {
     if (isEmpty(selectedPayment)) {
       // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
@@ -643,7 +679,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       isLoading: true,
       indicatorLoader: true,
     });
-   
+
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -664,7 +700,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             selectedCarOption: selectedCarOption?.sku,
           };
           console.log(extraData, data, "extraData, data");
-          checkPaymentOptions(extraData, data);
+          if (selectedPayment?.id == 49) { _paymentWithPlugnPayMethods(extraData, res) }
+          else { checkPaymentOptions(extraData, data); }
+
         } else {
           console.log(res, "res>>>>>");
           updateState({
@@ -684,13 +722,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data["task_type"] = scheduleDateTime?.selectedDateAndTime
       ? ""
       : pickUpTimeType
-      ? pickUpTimeType
-      : "";
+        ? pickUpTimeType
+        : "";
     data["schedule_time"] = scheduleDateTime?.selectedDateAndTime
       ? `${scheduleDateTime?.selectedDateAndTime}`
       : pickUpTimeType == "now"
-      ? ""
-      : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
+        ? ""
+        : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
     data["recipient_phone"] = "";
     data["recipient_email"] = "";
     data["task_description"] = taskInstruction;
@@ -997,13 +1035,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               color: isDarkMode ? colors.whiteOpacity77 : colors.black,
               marginTop: moderateScaleVertical(8),
             }}
-          >
+          >{
+              console.log(availableCarList, 'availableCarListavailableCarList')
+            }
             {availableCarList?.length > 0 ? strings.CHOOSE_A_TRIP : ""}
           </Text>
         </View>
         <View style={{ marginVertical: moderateScale(8) }}>
-          {console.log(availableVendors.length,"availableVendors")}
-         {availableVendors.length > 1 ? <FlatList
+          {console.log(availableVendors.length, "availableVendors")}
+          {availableVendors.length > 1 ? <FlatList
             horizontal
             data={availableVendors}
             renderItem={renderVendors}
@@ -1018,7 +1058,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               <View style={{ marginRight: moderateScale(16) }} />
             )}
             showsHorizontalScrollIndicator={false}
-          />:null}
+          /> : null}
         </View>
       </View>
     );
@@ -1032,8 +1072,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         isCabPooling={!!paramData?.is_cab_pooling}
         disabled={disableButton}
         isLoading={btnLoader}
-        _onUpdateSeatNo = {_onUpdateSeatNo}
-        updateSeatNo = {showFinalUpdatedSeatNo}
+        _onUpdateSeatNo={_onUpdateSeatNo}
+        updateSeatNo={showFinalUpdatedSeatNo}
         selectedCarOption={selectedCarOption}
         allListedDrivers={allListedDrivers}
         onPressPickUpNow={() => {
@@ -1082,7 +1122,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const uploadImage = async (img) => {
     console.log('selected image', img);
     let fileName = img.path.split("Pictures/")
-      console.log(fileName,"fileName...")
+    console.log(fileName, "fileName...")
     const imgData = new FormData();
     imgData.append('upload_photo', {
       uri: img.path,
@@ -1478,10 +1518,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 }}
                 onPress={_openDateTimeModal}
                 btnText={`${scheduleDateTime?.selectedDateAndTime
-                    ? `${scheduleDateTime?.selectedDateAndTime}`
-                    : slectedDate || selectedTime
-                      ? `${slectedDate} ${selectedTime}`
-                      : 'Schedule a ride'
+                  ? `${scheduleDateTime?.selectedDateAndTime}`
+                  : slectedDate || selectedTime
+                    ? `${slectedDate} ${selectedTime}`
+                    : 'Schedule a ride'
                   }`}
                 btnStyle={styles.scheduleBtnStyle}
               />

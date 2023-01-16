@@ -209,7 +209,7 @@ export default function OrderDetail({ navigation, route }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot
   );
-console.log(cartItems,'cartItem++++++')
+// console.log(cartItems,cartData,appData,paramData,'cartItem++++++')
   const { preferences } = appData?.profile;
   let businessType = preferences?.business_type;
   const { additional_preferences, digit_after_decimal } = preferences;
@@ -2751,7 +2751,8 @@ console.log(cartItems,'cartItem++++++')
                         </Text>
                       </TouchableOpacity>
                     );
-                  })}
+                  })
+                  }
 
                 {cartData?.payable_amount !== "0.00" && (
                   <TouchableOpacity

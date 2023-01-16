@@ -536,19 +536,19 @@ export function deviceCountryCode() {
   });
 }
 
-export const getPaymentGatewayResponseWithUri = async (Weburi) => {
-  try {
-    const response = await fetch(
-      Weburi, {
-      method: "GET",
-    }
-    );
-    const res = await response
-    return res;
-  } catch (error) {
-    return error
-  }
-};
+// export const getPaymentGatewayResponseWithUri = async (Weburi) => {
+//   try {
+//     const response = await fetch(
+//       Weburi, {
+//       method: "GET",
+//     }
+//     );
+//     const res = await response
+//     return res;
+//   } catch (error) {
+//     return error
+//   }
+// };
 
 
 export function redirectFromNotification(clickActionUrl = null) {

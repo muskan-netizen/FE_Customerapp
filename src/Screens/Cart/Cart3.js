@@ -1032,7 +1032,8 @@ function Cart({ navigation, route }) {
           res?.data?.vendors.length == 1
         ) {
           _getOrderDetail(res.data.vendors[0]);
-        } else {
+        }
+        else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
@@ -1137,14 +1138,20 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-  const _paymentWthOtherMethods = (res) => {
+  const _paymentWithPlugnPayMethods = (response) => {
 
-    let queryData = `/${selectedPayment?.code?.toLowerCase()}?amount=${Number(cartData?.total_payable_amount) +
-      (selectedTipAmount != null && selectedTipAmount != ""
-        ? Number(selectedTipAmount)
-        : 0)}&cv=${paramsData?.cvc}&dt=${paramsData?.expiryDate}&cno=${paramsData?.CardNumber.split(" ").join("")}&order_number=${res?.data?.order_number
-      }&from=cart`;
-console.log('guit8ohu',queryData)
+    let selectPaymentCode = selectedPayment?.code?.toLowerCase()
+    let CardNumber = paramsData?.CardNumber.split(" ").join("")
+    let ExpiryDate = paramsData?.expiryDate
+    let cvc = paramsData?.cvc
+    let Order_Number = response?.data?.order_number
+    let amount = Number(cartData?.total_payable_amount) +
+    (selectedTipAmount != null && selectedTipAmount != ""
+      ? Number(selectedTipAmount)
+      : 0)
+
+    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${ExpiryDate}&cno=${CardNumber}&order_number=${Order_Number}&action=cart`;
+    console.log('QueryData----------', queryData)
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1156,31 +1163,21 @@ console.log('guit8ohu',queryData)
         }
       )
       .then((res) => {
-        console.log(res, "wtwettewtwetwt>>>>>");
-        getPlugnPayUrlData(res)
+        console.log(res, "Response>>>>>");
+        if (res?.status == 'Success') {
+          updateState({ isLoadingB: false })
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: response?.data,
+          })();
+        }
+        // getPlugnPayUrlData(res)
       })
       .catch((err) => {
-        console.log('rgrtngrtjgn', err)
+        updateState({ isLoadingB: false })
+        console.log('Error>>>>>>>>>>>', err)
+        showError(err?.msg)
       })
   }
-
-  const getPlugnPayUrlData = (uri) => {
-    getPaymentGatewayResponseWithUri(uri).then((res) => {
-      console.log(res, "res is here for payment");
-      updateState({
-        placeLoader:false
-      })
-    }).catch((error) => {
-      console.log(error, "error is here");
-      updateState({
-        placeLoader:false
-      })
-    })
-  }
-
-
-
-
 
 
   const _directOrderPlace = () => {
@@ -1225,107 +1222,113 @@ console.log('guit8ohu',queryData)
       .placeOrder(data, headerData)
       .then((res) => {
         console.log(res, "placeOrder");
-        _paymentWthOtherMethods(res);
-              actions.reloadData(!reloadData);
+        if (selectedPayment?.id === 49) {
+          updateState({ isLoadingB: true })
+          _paymentWithPlugnPayMethods(res);
+        }
+        else {
+          checkPaymentOptions(res);
+        }
+        actions.reloadData(!reloadData);
+        setPickupDriverComment(null);
+        setDropOffDriverComment(null);
+        setVendorComment(null);
+        setLocalPickupDate(null);
+        setLocaleDropOffDate(null);
+        setSheduledpickupdate(null);
+        setModalType(null);
+        setSheduleddropoffdate(null);
+        updateState({
+          isLoadingB: false,
+          placeLoader: false,
+        });
+        console.log("payment res", res);
 
-              setPickupDriverComment(null);
-              setDropOffDriverComment(null);
-              setVendorComment(null);
-              setLocalPickupDate(null);
-              setLocaleDropOffDate(null);
-              setSheduledpickupdate(null);
-              setModalType(null);
-              setSheduleddropoffdate(null);
-              updateState({
-                isLoadingB: false,
-                placeLoader: false,
-              });
-              console.log("paymebnt res", res);
-              checkPaymentOptions(res);
-              if (
-                selectedPayment?.id != 32 &&
-                selectedPayment?.id != 17 &&
-                selectedPayment?.id != 4 &&
-                selectedPayment?.id != 27 &&
-                selectedPayment?.id != 26 &&
-                selectedPayment?.id != 30 &&
-                selectedPayment?.id != 29 &&
-                selectedPayment?.id != 37 &&
-                selectedPayment?.id != 21 &&
-                selectedPayment?.id != 36 &&
-                selectedPayment?.id != 39 &&
-                selectedPayment?.id != 34 &&
-                selectedPayment?.id != 41 &&
-                selectedPayment?.id != 44
-              ) {
-                setCartItems([]);
-                setCartData({});
-                actions.reloadData(!reloadData);
-                if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
-                  showSuccess(res?.message);
-                  return;
-                }
-                return;
-              }
-            })
-            .catch(errorMethod);
-        };
+        if (
+          selectedPayment?.id != 32 &&
+          selectedPayment?.id != 17 &&
+          selectedPayment?.id != 4 &&
+          selectedPayment?.id != 27 &&
+          selectedPayment?.id != 26 &&
+          selectedPayment?.id != 30 &&
+          selectedPayment?.id != 29 &&
+          selectedPayment?.id != 37 &&
+          selectedPayment?.id != 21 &&
+          selectedPayment?.id != 36 &&
+          selectedPayment?.id != 39 &&
+          selectedPayment?.id != 34 &&
+          selectedPayment?.id != 41 &&
+          selectedPayment?.id != 44 &&
+          selectedPayment?.id != 49
+        ) {
+          setCartItems([]);
+          setCartData({});
+          actions.reloadData(!reloadData);
+          if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
+            showSuccess(res?.message);
+            return;
+          }
+          return;
+        }
+      })
+      .catch(errorMethod);
+  };
 
-        const _getOrderDetail = ({ order_id, vendor_id }) => {
-          // return;
-          let data = {};
-          data["order_id"] = order_id;
-          data["vendor_id"] = vendor_id;
-          // updateState({ isLoading: true });
-          actions
-            .getOrderDetail(data, {
-              code: appData?.profile?.code,
-              currency: currencies?.primary_currency?.id,
-              language: languages?.primary_language?.id,
-              timezone: RNLocalize.getTimeZone(),
-              // systemuser: DeviceInfo.getUniqueId(),
-            })
-            .then((res) => {
-              console.log(res, "res===> order detail");
-              if (res?.data) {
-                if (
-                  !!businessType &&
-                  businessType == "home_service" &&
-                  res?.data?.vendors.length == 1 &&
-                  res?.data?.vendors[0]?.dispatch_traking_url
-                ) {
-                  setCartItems([]);
-                  setCartData({});
-                  actions.reloadData(!reloadData);
+  const _getOrderDetail = ({ order_id, vendor_id }) => {
+    // return;
+    let data = {};
+    data["order_id"] = order_id;
+    data["vendor_id"] = vendor_id;
+    // updateState({ isLoading: true });
+    actions
+      .getOrderDetail(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, "res===> order detail");
+        if (res?.data) {
+          if (
+            !!businessType &&
+            businessType == "home_service" &&
+            res?.data?.vendors.length == 1 &&
+            res?.data?.vendors[0]?.dispatch_traking_url
+          ) {
+            setCartItems([]);
+            setCartData({});
+            actions.reloadData(!reloadData);
 
-                  updateState({
-                    isLoadingB: false,
-                    placeLoader: false,
-                  });
-                  navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-                    orderId: order_id,
-                    fromVendorApp: true,
-                    selectedVendor: { id: vendor_id },
-                    orderDetail: res.data.vendors[0],
-                    showRating:
-                      res.data.vendors[0]?.order_status?.current_status?.id != 6
-                        ? false
-                        : true,
-                  });
-                  actions.cartItemQty({});
-                } else {
-                  moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                    orderDetail: res.data,
-                  })();
-                  setCartItems([]);
-                  setCartData({});
-                  actions.reloadData(!reloadData);
-                  updateState({
-                    isLoadingB: false,
-                    placeLoader: false,
-                  });
-                }
-              }
+            updateState({
+              isLoadingB: false,
+              placeLoader: false,
+            });
+            navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+              orderId: order_id,
+              fromVendorApp: true,
+              selectedVendor: { id: vendor_id },
+              orderDetail: res.data.vendors[0],
+              showRating:
+                res.data.vendors[0]?.order_status?.current_status?.id != 6
+                  ? false
+                  : true,
+            });
+            actions.cartItemQty({});
+          } else {
+            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+              orderDetail: res.data,
+            })();
+            setCartItems([]);
+            setCartData({});
+            actions.reloadData(!reloadData);
+            updateState({
+              isLoadingB: false,
+              placeLoader: false,
+            });
+          }
+        }
       })
       .catch(errorMethod);
   };

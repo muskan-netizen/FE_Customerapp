@@ -45,6 +45,7 @@ import {
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import Modal from 'react-native-modal';
+import PaymentGateways from '../../Components/PaymentGateways';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -60,7 +61,9 @@ export default function TipPaymentOptions({ navigation, route }) {
   const data = route?.params?.data;
   const userData = useSelector((state) => state?.auth?.userData);
   // console.log(selectedPaymentMethodHandler, 'selectedPaymentMethod');
-
+  const [cardNumber, setCardNUmber] = useState()
+  const [cvc, setCvc] = useState()
+  const [expiryDate, setExpiryDate] = useState()
   const [state, setState] = useState({
     isLoading: false,
 
@@ -296,7 +299,35 @@ export default function TipPaymentOptions({ navigation, route }) {
     }
   };
   //flutter wave
+  const checkInputHandler = (type, data) => {
+    if (type === 'Card Number') {
 
+      let re = data.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
+      setCardNUmber(re)
+    }
+    if (type === 'ExpiryDate') {
+
+      let ed = data.replace(/^([1-9]\/|[2-9])$/g, '0$1/' // To handle 3/ > 03/
+      ).replace(
+        /^(0[1-9]{1}|1[0-2]{1})$/g, '$1/' // 11 > 11/
+      ).replace(
+        /^([0-1]{1})([3-9]{1})$/g, '0$1/$2' // 13 > 01/3
+      ).replace(
+        /^(\d)\/(\d\d)$/g, '0$1/$2' // To handle 1/11 > 01/11
+      ).replace(
+        /^(0?[1-9]{1}|1[0-2]{1})([0-9]{2})$/g, '$1/$2' // 141 > 01/41
+      ).replace(
+        /^([0]{1,})\/|[0]{1,}$/g, '0' // To handle 0/ > 0 and 00 > 0
+      ).replace(
+        /[^\d\/]|^[\/]{0,}$/g, '' // To allow only numbers and /
+      ).replace(
+        /\/\//g, '/').trim()
+      setExpiryDate(ed)
+    }
+    if (type === 'CVC') {
+      setCvc(data)
+    }
+  }
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
     if (selectedPaymentMethod) {
@@ -343,12 +374,18 @@ export default function TipPaymentOptions({ navigation, route }) {
             isModalVisibleForPayFlutterWave: true,
             paymentDataFlutterWave: paymentData,
           });
-        } else {
-          setTimeout(() => {
-            updateState({ isLoading: false });
-            _webPayment(selectedPaymentMethod);
-          }, 1000);
-        }
+        } else
+          if (
+            selectedPaymentMethod?.id == 49 &&
+            selectedPaymentMethod?.off_site == 1
+          ) {
+            _paymentWithPlugnPayMethods()
+          } else {
+            setTimeout(() => {
+              updateState({ isLoading: false });
+              _webPayment(selectedPaymentMethod);
+            }, 1000);
+          }
       }
     } else {
       showError(strings.SELECTPAYEMNTMETHOD);
@@ -363,6 +400,40 @@ export default function TipPaymentOptions({ navigation, route }) {
         : updateState({ selectedPaymentMethod: data });
     }
   };
+
+
+  const _paymentWithPlugnPayMethods = () => {
+
+    let selectedMethod = selectedPaymentMethod.code;
+    let CardNumber = cardNumber.split(" ").join("")
+
+    let queryData = `/${selectedMethod}?amount=${data?.selectedTipAmount}&cv=${cvc}&dt=${expiryDate}&payment_option_id=${selectedPaymentMethod?.id}&cno=${CardNumber}&order_number=${data?.order_number}&action=tip`;
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        }
+      )
+      .then((res) => {
+        console.log(res, "Response>>>>>");
+        if (
+          res &&
+          res?.status == 'Success'
+
+        ) {
+          navigation.navigate(navigationStrings.ORDER_DETAIL);
+        }
+      })
+      .catch((err) => {
+        console.log('Error>>>>>>>>>>>', err)
+
+        showError(err?.msg)
+      })
+  }
 
   const _checkoutPayment = (token) => {
     console.log(token, 'tokenOfCheckout');
@@ -447,6 +518,21 @@ export default function TipPaymentOptions({ navigation, route }) {
                 }}
               />
             </View>
+          )}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 1 &&
+          selectedPaymentMethod?.id === 49
+        ) && (
+            <PaymentGateways
+              isCardNumber={cardNumber}
+              cvc={cvc}
+              expiryDate={expiryDate}
+              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+              onChangeText={(data) => checkInputHandler('Card Number', data)}
+              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+            />
           )}
         {!!(
           selectedPaymentMethod &&

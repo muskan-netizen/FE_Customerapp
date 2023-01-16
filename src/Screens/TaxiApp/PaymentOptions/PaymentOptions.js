@@ -16,6 +16,7 @@ import { useDarkMode } from "react-native-dark-mode";
 import { useSelector } from "react-redux";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";
+import PaymentGateways from "../../../Components/PaymentGateways";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -57,7 +58,9 @@ const PaymentOptions = ({ navigation, route }) => {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
-
+  const [cardNumber, setCardNUmber] = useState()
+  const [cvc, setCvc] = useState()
+  const [expiryDate, setExpiryDate] = useState()
   const {
     pageNo,
     limit,
@@ -94,7 +97,35 @@ const PaymentOptions = ({ navigation, route }) => {
       })
       .catch(errorMethod);
   };
+  const checkInputHandler = (type, data) => {
+    if (type === 'Card Number') {
 
+      let re = data.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
+      setCardNUmber(re)
+    }
+    if (type === 'ExpiryDate') {
+
+      let ed = data.replace(/^([1-9]\/|[2-9])$/g, '0$1/' // To handle 3/ > 03/
+      ).replace(
+        /^(0[1-9]{1}|1[0-2]{1})$/g, '$1/' // 11 > 11/
+      ).replace(
+        /^([0-1]{1})([3-9]{1})$/g, '0$1/$2' // 13 > 01/3
+      ).replace(
+        /^(\d)\/(\d\d)$/g, '0$1/$2' // To handle 1/11 > 01/11
+      ).replace(
+        /^(0?[1-9]{1}|1[0-2]{1})([0-9]{2})$/g, '$1/$2' // 141 > 01/41
+      ).replace(
+        /^([0]{1,})\/|[0]{1,}$/g, '0' // To handle 0/ > 0 and 00 > 0
+      ).replace(
+        /[^\d\/]|^[\/]{0,}$/g, '' // To allow only numbers and /
+      ).replace(
+        /\/\//g, '/').trim()
+      setExpiryDate(ed)
+    }
+    if(type === 'CVC'){
+      setCvc(data)
+    }
+  }
   const getWalletData = () => {
     actions
       .walletHistory(
@@ -144,6 +175,9 @@ const PaymentOptions = ({ navigation, route }) => {
     if (item?.id == 4) {
       return;
     }
+    if(item?.id == 49){
+      return;
+    }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       ...paramData,
       selectedMethod: item,
@@ -184,6 +218,16 @@ const PaymentOptions = ({ navigation, route }) => {
         //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
       }
     }
+    else if(selectedPaymentMethod?.id == 49 &&
+      selectedPaymentMethod?.off_site == 1){
+        navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+          ...paramData,
+          Card_Number: cardNumber,
+          cvc: cvc,
+          expiryDate: expiryDate,
+          selectedMethod: selectedPaymentMethod,
+        });
+      }
   };
 
   const _onChangeStripeData = (cardDetails) => {
@@ -265,6 +309,21 @@ const PaymentOptions = ({ navigation, route }) => {
             />
           </StripeProvider>
         )}
+        {!!(
+                    selectedPaymentMethod &&
+                    selectedPaymentMethod?.id == item.id &&
+                    selectedPaymentMethod?.off_site == 1 &&
+                    selectedPaymentMethod?.id === 49
+                  ) && (
+                      <PaymentGateways
+                        isCardNumber={cardNumber}
+                        cvc={cvc}
+                        expiryDate={expiryDate}
+                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                        onChangeText={(data) => checkInputHandler('Card Number', data)}
+                        onChangeCvcText={(data) => checkInputHandler('CVC',data)}
+                      />
+                    )}
       </View>
     );
   };
@@ -330,7 +389,7 @@ const PaymentOptions = ({ navigation, route }) => {
             keyExtractor={(item, index) => String(index)}
           />
         </View>
-        {selectedPaymentMethod?.id == 4 && (
+        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49) && (
           <GradientButton
             onPress={selectPaymentOption}
             containerStyle={{
