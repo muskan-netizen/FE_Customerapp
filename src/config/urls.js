@@ -27,7 +27,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-export const API_BASE_URL ='https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -395,6 +395,7 @@ export const API_BASE_URL ='https://sales.focushires.com/api/v1';
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
+export const API_BASE_URL = 'https://order.clickokart.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

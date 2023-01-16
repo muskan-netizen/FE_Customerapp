@@ -1,5 +1,5 @@
-import {cloneDeep, isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   I18nManager,
@@ -13,10 +13,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -33,19 +33,19 @@ import {
   cameraHandler,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import stylesFunc from './styles';
 import AddonModal from '../ProductDetail/AddonModal';
 import Modal from 'react-native-modal';
 
-export default function ReplaceOrder({navigation, route}) {
+export default function ReplaceOrder({ navigation, route }) {
   let actionSheet = useRef();
-  const {selectProductForRetrun, reasons} = route?.params;
+  const { selectProductForRetrun, reasons } = route?.params;
   // console.log(route, 'daskjfljkdsf');
   const {
     appData,
@@ -57,7 +57,7 @@ export default function ReplaceOrder({navigation, route}) {
     themeToggle,
   } = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -95,18 +95,18 @@ export default function ReplaceOrder({navigation, route}) {
     productQuantityForCart,
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFun({ fontFamily });
 
   useEffect(() => {
     getProductDetailByProductId();
   }, []);
 
   const getProductDetailByProductId = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .getProductDetailByProductId(
         `/${selectProductForRetrun?.product_id}`,
@@ -177,7 +177,7 @@ export default function ReplaceOrder({navigation, route}) {
       })
         .then((res) => {
           console.log(res, 'res?.data');
-          updateState({isLoading: true});
+          updateState({ isLoading: true });
           if (res && (res?.sourceURL || res?.path)) {
             console.log(res, 'response');
             let file = {
@@ -202,23 +202,23 @@ export default function ReplaceOrder({navigation, route}) {
               .then((res) => {
                 console.log(res, 'res>>>>>>uploadReturnOrderImage');
                 if (res && res.status == 'Success') {
-                  updateState({isLoading: false});
+                  updateState({ isLoading: false });
                   updateState({
                     imageArray: imageArray.length
                       ? [...imageArray, ...res?.data]
                       : res?.data,
                   });
                 } else {
-                  updateState({isLoading: false});
+                  updateState({ isLoading: false });
                   showError(res?.message);
                 }
               })
               .catch(errorMethod);
           } else {
-            updateState({isLoading: false});
+            updateState({ isLoading: false });
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -228,13 +228,13 @@ export default function ReplaceOrder({navigation, route}) {
     formdata.append('coments', returnText);
     formdata.append(
       'reason',
-      selectedReason ? selectedReason.value : returnReasons[0].label,
+      selectedReason ? selectedReason.value : returnReasons[0]?.label,
     );
 
     formdata.append(
       'product_a_price',
       Number(productPriceData?.price) * Number(productQuantityForCart) +
-        Number(getPriceOfSelectedAddons()),
+      Number(getPriceOfSelectedAddons()),
     );
 
     if (imageArray.length) {
@@ -255,7 +255,7 @@ export default function ReplaceOrder({navigation, route}) {
     }
 
     console.log(formdata, 'formdata....formdata');
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .submitProductForReplacement(formdata, {
         code: appData?.profile?.code,
@@ -265,7 +265,7 @@ export default function ReplaceOrder({navigation, route}) {
       })
       .then((res) => {
         console.log(res, 'res....res...res');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         navigation.goBack();
         route?.params?.getOrderDetail();
       })
@@ -274,19 +274,19 @@ export default function ReplaceOrder({navigation, route}) {
 
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
   };
 
   const updateReason = (item) => {
-    updateState({selectedReason: item});
+    updateState({ selectedReason: item });
   };
 
   const onChangeAddons = () => {
-    updateState({isVisibleAddonModal: true});
+    updateState({ isVisibleAddonModal: true });
   };
 
-  const renderVariantSet = ({item, index}) => {
+  const renderVariantSet = ({ item, index }) => {
     return (
       <View
         key={String(index)}
@@ -306,12 +306,12 @@ export default function ReplaceOrder({navigation, route}) {
   };
 
   const variantSetValue = (item) => {
-    const {options, type, variant_type_id} = item;
+    const { options, type, variant_type_id } = item;
     if (type == 1) {
       return (
         <View>
           <TouchableOpacity
-            onPress={() => updateState({selectedVariant: item})}
+            onPress={() => updateState({ selectedVariant: item })}
             style={{
               ...styles.dropDownStyle,
               backgroundColor: isDarkMode
@@ -341,7 +341,7 @@ export default function ReplaceOrder({navigation, route}) {
     return (
       <View>
         <TouchableOpacity
-          onPress={() => updateState({selectedVariant: item})}
+          onPress={() => updateState({ selectedVariant: item })}
           style={{
             ...styles.dropDownStyle,
             backgroundColor: isDarkMode
@@ -385,7 +385,7 @@ export default function ReplaceOrder({navigation, route}) {
         .filter((x) => x != undefined);
       console.log(variantSetData, 'variantSetData callback');
       if (variantSetData.length) {
-        updateState({btnLoader: true});
+        updateState({ btnLoader: true });
         getProductDetailBasedOnFilter(variantSetData);
       } else {
         getProductDetailByProductId();
@@ -429,7 +429,7 @@ export default function ReplaceOrder({navigation, route}) {
           margin: 0,
           justifyContent: 'flex-end',
         }}
-        onBackdropPress={() => updateState({selectedVariant: null})}>
+        onBackdropPress={() => updateState({ selectedVariant: null })}>
         <View
           style={{
             ...styles.modalView,
@@ -453,7 +453,7 @@ export default function ReplaceOrder({navigation, route}) {
             </Text>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => updateState({selectedVariant: null})}>
+              onPress={() => updateState({ selectedVariant: null })}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
@@ -488,7 +488,7 @@ export default function ReplaceOrder({navigation, route}) {
 
                         borderColor:
                           i?.value &&
-                          (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                            (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                             ? colors.textGrey
                             : i.hexacode,
                       },
@@ -511,8 +511,8 @@ export default function ReplaceOrder({navigation, route}) {
                       color: i?.value
                         ? themeColors.primary_color
                         : isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity43,
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
                       fontSize: textScale(14),
                       fontFamily: i.value
                         ? fontFamily.bold
@@ -555,7 +555,7 @@ export default function ReplaceOrder({navigation, route}) {
           margin: 0,
           justifyContent: 'flex-end',
         }}
-        onBackdropPress={() => updateState({selectedVariant: null})}>
+        onBackdropPress={() => updateState({ selectedVariant: null })}>
         <View
           style={{
             ...styles.modalView,
@@ -579,7 +579,7 @@ export default function ReplaceOrder({navigation, route}) {
             </Text>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => updateState({selectedVariant: null})}>
+              onPress={() => updateState({ selectedVariant: null })}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
@@ -621,8 +621,8 @@ export default function ReplaceOrder({navigation, route}) {
                       color: i?.value
                         ? themeColors.primary_color
                         : isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity43,
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
                       fontSize: textScale(14),
                       fontFamily: i.value
                         ? fontFamily.bold
@@ -657,7 +657,7 @@ export default function ReplaceOrder({navigation, route}) {
 
   const showAllVariants = () => {
     return (
-      <View style={{marginBottom: moderateScaleVertical(16)}}>
+      <View style={{ marginBottom: moderateScaleVertical(16) }}>
         <FlatList
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}
@@ -730,11 +730,11 @@ export default function ReplaceOrder({navigation, route}) {
         centerTitle={'Replace Product'}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.white }
         }
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       <ScrollView>
         <View
           style={{
@@ -765,21 +765,21 @@ export default function ReplaceOrder({navigation, route}) {
               <FastImage
                 source={
                   selectProductForRetrun?.image != '' &&
-                  selectProductForRetrun?.image != null
+                    selectProductForRetrun?.image != null
                     ? {
-                        uri: getImageUrl(
-                          selectProductForRetrun?.image?.proxy_url,
-                          selectProductForRetrun?.image?.image_path,
-                          '300/300',
-                        ),
-                        priority: FastImage.priority.high,
-                      }
+                      uri: getImageUrl(
+                        selectProductForRetrun?.image?.proxy_url,
+                        selectProductForRetrun?.image?.image_path,
+                        '300/300',
+                      ),
+                      priority: FastImage.priority.high,
+                    }
                     : imagePath.patternOne
                 }
                 style={styles.imageStyle}
               />
             </View>
-            <View style={{marginLeft: 10}}>
+            <View style={{ marginLeft: 10 }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -808,8 +808,8 @@ export default function ReplaceOrder({navigation, route}) {
                   {'    '}
                   {tokenConverterPlusCurrencyNumberFormater(
                     Number(productPriceData?.price) *
-                      Number(productQuantityForCart) +
-                      Number(getPriceOfSelectedAddons()),
+                    Number(productQuantityForCart) +
+                    Number(getPriceOfSelectedAddons()),
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,
@@ -818,7 +818,7 @@ export default function ReplaceOrder({navigation, route}) {
               </View>
 
               {selectProductForRetrun?.quantity && (
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text
                     style={{
                       color: isDarkMode
@@ -856,7 +856,7 @@ export default function ReplaceOrder({navigation, route}) {
           {!isEmpty(variantSet) ? showAllVariants() : null}
 
           {/* Upload image */}
-          <View style={{marginTop: moderateScaleVertical(10)}}>
+          <View style={{ marginTop: moderateScaleVertical(10) }}>
             <Text
               style={{
                 ...styles.uploadImage,
@@ -878,44 +878,44 @@ export default function ReplaceOrder({navigation, route}) {
                 }}>
                 <TouchableOpacity
                   onPress={showActionSheet}
-                  style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+                  style={[styles.viewOverImage2, { borderStyle: 'dashed' }]}>
                   <Image
                     source={imagePath.icCamIcon}
-                    style={{tintColor: colors.themeColor}}
+                    style={{ tintColor: colors.themeColor }}
                   />
                 </TouchableOpacity>
               </View>
 
               {imageArray && imageArray.length
                 ? imageArray.map((i, inx) => {
-                    return (
-                      <ImageBackground
-                        key={inx}
-                        source={{
-                          uri: i.img_path,
-                        }}
-                        style={styles.imageOrderStyle}
-                        imageStyle={styles.imageOrderStyle}>
-                        <View style={styles.viewOverImage}>
-                          <View
-                            style={{
-                              position: 'absolute',
-                              top: -10,
-                              right: -10,
-                            }}>
-                            <TouchableOpacity
-                              onPress={() => _removeImageFromList(i)}>
-                              <Image source={imagePath.icRemoveIcon} />
-                            </TouchableOpacity>
-                          </View>
+                  return (
+                    <ImageBackground
+                      key={inx}
+                      source={{
+                        uri: i.img_path,
+                      }}
+                      style={styles.imageOrderStyle}
+                      imageStyle={styles.imageOrderStyle}>
+                      <View style={styles.viewOverImage}>
+                        <View
+                          style={{
+                            position: 'absolute',
+                            top: -10,
+                            right: -10,
+                          }}>
+                          <TouchableOpacity
+                            onPress={() => _removeImageFromList(i)}>
+                            <Image source={imagePath.icRemoveIcon} />
+                          </TouchableOpacity>
                         </View>
-                      </ImageBackground>
-                    );
-                  })
+                      </View>
+                    </ImageBackground>
+                  );
+                })
                 : null}
             </View>
 
-            <View style={{marginTop: moderateScaleVertical(20)}}>
+            <View style={{ marginTop: moderateScaleVertical(20) }}>
               <Text
                 style={{
                   fontSize: moderateScale(14),
@@ -930,8 +930,8 @@ export default function ReplaceOrder({navigation, route}) {
 
             <DropDownPicker
               items={returnReasons}
-              defaultValue={returnReasons[0].label || returnReasons[0].name}
-              containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
+              defaultValue={returnReasons[0]?.label || returnReasons[0]?.name}
+              containerStyle={{ height: 40, marginTop: moderateScaleVertical(5) }}
               style={{
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.lightDark
@@ -944,7 +944,7 @@ export default function ReplaceOrder({navigation, route}) {
                 justifyContent: 'flex-start',
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
               }}
-              labelStyle={isDarkMode && {color: MyDarkTheme.colors.text}}
+              labelStyle={isDarkMode && { color: MyDarkTheme.colors.text }}
               zIndex={5000}
               dropDownStyle={{
                 backgroundColor: isDarkMode
@@ -958,7 +958,7 @@ export default function ReplaceOrder({navigation, route}) {
             />
 
             {/* Message Container    */}
-            <View style={{marginTop: moderateScaleVertical(20)}}>
+            <View style={{ marginTop: moderateScaleVertical(20) }}>
               <Text
                 style={{
                   ...styles.uploadImage,
@@ -978,7 +978,7 @@ export default function ReplaceOrder({navigation, route}) {
                   }}
                   multiline={true}
                   value={returnText}
-                  onChangeText={(text) => updateState({returnText: text})}
+                  onChangeText={(text) => updateState({ returnText: text })}
                   placeholderTextColor={
                     isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ
                   }
@@ -986,7 +986,7 @@ export default function ReplaceOrder({navigation, route}) {
               </View>
             </View>
 
-            <View style={{marginTop: moderateScaleVertical(20)}}>
+            <View style={{ marginTop: moderateScaleVertical(20) }}>
               <GradientButton
                 colorsArray={[
                   themeColors.primary_color,
@@ -1002,7 +1002,7 @@ export default function ReplaceOrder({navigation, route}) {
         <AddonModal
           productdetail={productDetailData}
           isVisible={isVisibleAddonModal}
-          onClose={() => updateState({isVisibleAddonModal: false})}
+          onClose={() => updateState({ isVisibleAddonModal: false })}
           // onPress={(data) => alert('123')}
           addonSet={addonSet}
           redirectedFrom={'replaceOrder'}

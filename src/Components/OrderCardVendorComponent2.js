@@ -32,6 +32,8 @@ import {
 } from "../utils/commonFunction";
 import { getImageUrl } from "../utils/helperFunctions";
 import ButtonWithLoader from "./ButtonWithLoader";
+import BannerLoader from './Loaders/BannerLoader';
+
 
 const OrderCardVendorComponent2 = ({
   data = {},
@@ -44,16 +46,16 @@ const OrderCardVendorComponent2 = ({
   updateLocalItem,
   showRepeatOrderButton,
   onRepeatOrderPress,
-  _onCustomerEditOrder = () => {},
-  _onDiscardCustomerEditOrder = () => {},
-  onReplaceOrder = () => {},
+  _onCustomerEditOrder = () => { },
+  _onDiscardCustomerEditOrder = () => { },
+  onReplaceOrder = () => { },
 }) => {
   const [reason, setReason] = useState("");
   const [cancellationItem, setCancellationItem] = useState(null);
   const [reasonError, setReasonError] = useState(false);
   const [cancelLoader, setLoader] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [orderCancelMessage,setOrderCancelMessage]= useState(null)
+  const [orderCancelMessage, setOrderCancelMessage] = useState(null)
   const [selectedCancelReason, setSelectedCancelReason] = useState({});
   const [cancelReasons, setCancelReasons] = useState([]);
   const [isCancelOrderContentLoader, setIsCancelOrderContentLoader] =
@@ -80,17 +82,17 @@ const OrderCardVendorComponent2 = ({
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
-          data.vendor.logo.image_fit,
-          data.vendor.logo.image_path,
-          "200/200"
-        )
+        data.vendor.logo.image_fit,
+        data.vendor.logo.image_path,
+        "200/200"
+      )
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesFunc({ fontFamily, themeColors });
 
   const onCancel = async () => {
-   if (selectedCancelReason?.id == 8 && reason == '') {
+    if (selectedCancelReason?.id == 8 && reason == '') {
       setReasonError(true);
       return;
     }
@@ -112,12 +114,12 @@ const OrderCardVendorComponent2 = ({
       });
       setLoader(false);
       updateLocalItem(data);
-     if(res?.status ==403){
-      setOrderCancelMessage(res?.message)
-     }else{
-      hideModal();
-     }
-     
+      if (res?.status == 403) {
+        setOrderCancelMessage(res?.message)
+      } else {
+        hideModal();
+      }
+
       console.log('cancellation res+++++', res);
     } catch (error) {
       // showError(error?.message || error?.error)
@@ -302,19 +304,19 @@ const OrderCardVendorComponent2 = ({
               style={
                 isDarkMode
                   ? [
-                      styles.orderLableStyle,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        marginVertical: moderateScaleVertical(5),
-                      },
-                    ]
+                    styles.orderLableStyle,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      marginVertical: moderateScaleVertical(5),
+                    },
+                  ]
                   : [
-                      styles.orderLableStyle,
-                      {
-                        marginVertical: moderateScaleVertical(5),
-                        color: colors.black,
-                      },
-                    ]
+                    styles.orderLableStyle,
+                    {
+                      marginVertical: moderateScaleVertical(5),
+                      color: colors.black,
+                    },
+                  ]
               }
             >
               {data?.date_time}
@@ -351,21 +353,21 @@ const OrderCardVendorComponent2 = ({
             ) : (
               <></>
             )}
-            {!!data?.is_edited&&
-             <View>
-             <Text
-               style={{
-                 fontFamily: fontFamily?.bold,
-                 fontSize: textScale(10),
-                 color: themeColors?.primary_color,
-               }}
-             >
-               Edited
-             </Text>
-           </View>
+            {!!data?.is_edited &&
+              <View>
+                <Text
+                  style={{
+                    fontFamily: fontFamily?.bold,
+                    fontSize: textScale(10),
+                    color: themeColors?.primary_color,
+                  }}
+                >
+                  Edited
+                </Text>
+              </View>
 
-             }
-           
+            }
+
             {/* {data?.order_status?.current_status?.title == strings.DELIVERED && (
             <TouchableOpacity
               activeOpacity={0.8}
@@ -393,9 +395,9 @@ const OrderCardVendorComponent2 = ({
                         style={
                           isDarkMode
                             ? [
-                                styles.orderLableStyle,
-                                { color: MyDarkTheme.colors.text },
-                              ]
+                              styles.orderLableStyle,
+                              { color: MyDarkTheme.colors.text },
+                            ]
                             : styles.orderLableStyle
                         }
                       >
@@ -407,12 +409,12 @@ const OrderCardVendorComponent2 = ({
                         style={
                           isDarkMode
                             ? [
-                                styles.qtyViewStyle,
-                                {
-                                  color: MyDarkTheme.colors.text,
-                                  fontSize: textScale(10),
-                                },
-                              ]
+                              styles.qtyViewStyle,
+                              {
+                                color: MyDarkTheme.colors.text,
+                                fontSize: textScale(10),
+                              },
+                            ]
                             : [styles.qtyViewStyle, { fontSize: textScale(10) }]
                         }
                       >
@@ -446,12 +448,12 @@ const OrderCardVendorComponent2 = ({
                 style={
                   isDarkMode
                     ? [
-                        styles.lableOrders,
-                        {
-                          paddingLeft: moderateScale(5),
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
+                      styles.lableOrders,
+                      {
+                        paddingLeft: moderateScale(5),
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
                     : [styles.lableOrders, { paddingLeft: moderateScale(5) }]
                 }
               >
@@ -595,100 +597,80 @@ const OrderCardVendorComponent2 = ({
                 </View>
               </View>
               <View
-              style={{
-                flex: 0.6,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-              }}>
-              {isEmpty(data?.exchanged_of_order) &&
-              data?.order_status?.current_status?.title !== strings.REJECTED ? (
-                <View>
-                  {data?.returnable ? (
-                    <TouchableOpacity
-                      onPress={onPressReturnOrder}
-                      // style={{flex:0.6}}
-                      style={{...styles.bottomSecondHalf, flex: 0}}>
-                      {appStyle?.homePageLayout === 4 ? null : (
-                        <View style={styles.orderAcceptAndReadyStyleSecond}>
-                          <Text style={styles.orderStatusStyleSecond}>
-                            {strings.RETURNORDER}
-                          </Text>
-                        </View>
-                      )}
-                    </TouchableOpacity>
-                  ) : data?.return_request_status == 1 ? (
-                    <Text
-                      style={{
-                        ...styles.returnRequestsTxt,
-                        color: colors.greenA,
-                      }}>
-                      {strings.RETURN_REQUEST} {strings.ACCEPTED}
-                    </Text>
-                  ) : data?.return_request_status == 2 ? (
-                    <Text
-                      style={{...styles.returnRequestsTxt, color: colors.redB}}>
-                      {strings.RETURN_REQUEST} {strings.REJECTED}
-                    </Text>
-                  ) : data?.return_request_status == 3 ? (
-                    <Text
-                      style={{
-                        ...styles.returnRequestsTxt,
-                        color: colors.blackB,
-                      }}>
-                      {strings.RETURN_REQUEST} {strings.PENDING}
-                    </Text>
-                  ) : (
-                    <></>
-                  )}
-                </View>
-              ) : (
-                <></>
-              )}
-
-              {isEmpty(data?.exchanged_of_order) &&
-              data?.is_exchanged_or_returned == 0 &&
-              data?.replaceable &&
-              data?.order_status?.current_status?.title !== strings.REJECTED ? (
-                <TouchableOpacity
-                  // onPress={onPressRateOrder}
-                  onPress={() => onReplaceOrder(data)}
-                  // style={{flex:0.6}}
-                  style={{
-                    ...styles.bottomSecondHalf,
-                    flex: 0,
-                    marginLeft: moderateScale(15),
-                  }}>
-                  {appStyle?.homePageLayout === 4 ? null : (
-                    <View style={styles.orderAcceptAndReadyStyleSecond}>
-                      <Text style={styles.orderStatusStyleSecond}>{strings.REPLACE}</Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-              ) : (
-                <></>
-              )}
-            </View>
-
-              {data?.vendor?.return_request &&
-              data?.order_status?.current_status?.title !== strings.REJECTED ? (
-                <TouchableOpacity
-                  // onPress={onPressRateOrder}
-                  onPress={onPressReturnOrder}
-                  // style={{flex:0.6}}
-                  style={styles.bottomSecondHalf}
-                >
-                  {appStyle?.homePageLayout === 4 ? null : (
-                    <View style={styles.orderAcceptAndReadyStyleSecond}>
-                      <Text style={styles.orderStatusStyleSecond}>
-                        {strings.RETURNORDER}
+                style={{
+                  flex: 0.6,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                }}>
+                {isEmpty(data?.exchanged_of_order) &&
+                  data?.order_status?.current_status?.title !== strings.REJECTED ? (
+                  <View>
+                    {data?.returnable ? (
+                      <TouchableOpacity
+                        onPress={onPressReturnOrder}
+                        // style={{flex:0.6}}
+                        style={{ ...styles.bottomSecondHalf, flex: 0 }}>
+                        {appStyle?.homePageLayout === 4 ? null : (
+                          <View style={styles.orderAcceptAndReadyStyleSecond}>
+                            <Text style={styles.orderStatusStyleSecond}>
+                              {strings.RETURNORDER}
+                            </Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    ) : data?.return_request_status == 1 ? (
+                      <Text
+                        style={{
+                          ...styles.returnRequestsTxt,
+                          color: colors.greenA,
+                        }}>
+                        {strings.RETURN_REQUEST} {strings.ACCEPTED}
                       </Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-              ) : (
-                <View style={{ flex: 0.6 }} />
-              )}
+                    ) : data?.return_request_status == 2 ? (
+                      <Text
+                        style={{ ...styles.returnRequestsTxt, color: colors.redB }}>
+                        {strings.RETURN_REQUEST} {strings.REJECTED}
+                      </Text>
+                    ) : data?.return_request_status == 3 ? (
+                      <Text
+                        style={{
+                          ...styles.returnRequestsTxt,
+                          color: colors.blackB,
+                        }}>
+                        {strings.RETURN_REQUEST} {strings.PENDING}
+                      </Text>
+                    ) : (
+                      <></>
+                    )}
+                  </View>
+                ) : (
+                  <></>
+                )}
+
+                {isEmpty(data?.exchanged_of_order) &&
+                  data?.is_exchanged_or_returned == 0 &&
+                  data?.replaceable &&
+                  data?.order_status?.current_status?.title !== strings.REJECTED ? (
+                  <TouchableOpacity
+                    // onPress={onPressRateOrder}
+                    onPress={() => onReplaceOrder(data)}
+                    // style={{flex:0.6}}
+                    style={{
+                      ...styles.bottomSecondHalf,
+                      flex: 0,
+                      marginLeft: moderateScale(15),
+                    }}>
+                    {appStyle?.homePageLayout === 4 ? null : (
+                      <View style={styles.orderAcceptAndReadyStyleSecond}>
+                        <Text style={styles.orderStatusStyleSecond}>{strings.REPLACE}</Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                ) : (
+                  <></>
+                )}
+              </View>
             </View>
           ) : (
             <View
@@ -717,8 +699,8 @@ const OrderCardVendorComponent2 = ({
               </View>
 
               {selectedTab &&
-              (selectedTab != strings.ACTIVE_ORDERS ||
-                selectedTab != strings.SCHEDULED_ORDERS) ? null : (
+                (selectedTab != strings.ACTIVE_ORDERS ||
+                  selectedTab != strings.SCHEDULED_ORDERS) ? null : (
                 <View style={styles.bottomSecondHalf}>
                   {data?.order_status?.current_status?.id == 1 ? (
                     <View style={{ flexDirection: "row" }}>
@@ -759,54 +741,54 @@ const OrderCardVendorComponent2 = ({
               )}
             </View>
           )}
-            {data?.vendor?.cancel_order_in_processing == 1 ? (
-          <View>
-            {(data?.order_status?.current_status?.id == 1 ||
-              data?.order_status?.current_status?.id == 2) &&
-            isEmpty(data?.cancel_request) ? (
-              <TouchableOpacity
-                onPress={() => onCancelOrder(data)}
-                activeOpacity={0.8}
-                style={{
-                  alignSelf: 'flex-start',
-                  marginLeft: moderateScale(10),
-                  marginTop: moderateScaleVertical(8),
-                }}>
+          {data?.vendor?.cancel_order_in_processing == 1 ? (
+            <View>
+              {(data?.order_status?.current_status?.id == 1 ||
+                data?.order_status?.current_status?.id == 2) &&
+                isEmpty(data?.cancel_request) ? (
+                <TouchableOpacity
+                  onPress={() => onCancelOrder(data)}
+                  activeOpacity={0.8}
+                  style={{
+                    alignSelf: 'flex-start',
+                    marginLeft: moderateScale(10),
+                    marginTop: moderateScaleVertical(8),
+                  }}>
+                  <Text
+                    style={{
+                      ...styles.orderStatusStyle,
+                      color: colors.redB,
+                      fontFamily: fontFamily.medium,
+                    }}>
+                    {strings.CANCEL_ORDER}
+                  </Text>
+                </TouchableOpacity>
+              ) : (data?.order_status?.current_status?.id == 1 ||
+                data?.order_status?.current_status?.id == 2) &&
+                !isEmpty(data?.cancel_request) ? (
                 <Text
                   style={{
-                    ...styles.orderStatusStyle,
-                    color: colors.redB,
-                    fontFamily: fontFamily.medium,
+                    ...styles.orderStatusStyleSecond,
+                    color:
+                      data?.cancel_request?.status_id == 0
+                        ? colors.blueB
+                        : data?.cancel_request?.status_id == 2
+                          ? colors.redB
+                          : colors.black,
+                    marginLeft: moderateScale(10),
                   }}>
-                  {strings.CANCEL_ORDER}
+                  {strings.CANCELLATION_REQUEST}
+                  {data?.cancel_request?.status_id == 0
+                    ? ' pending'
+                    : data?.cancel_request?.status_id == 2
+                      ? ' rejected'
+                      : ''}
                 </Text>
-              </TouchableOpacity>
-            ) : (data?.order_status?.current_status?.id == 1 ||
-                data?.order_status?.current_status?.id == 2) &&
-              !isEmpty(data?.cancel_request) ? (
-              <Text
-                style={{
-                  ...styles.orderStatusStyleSecond,
-                  color:
-                    data?.cancel_request?.status_id == 0
-                      ? colors.blueB
-                      : data?.cancel_request?.status_id == 2
-                      ? colors.redB
-                      : colors.black,
-                  marginLeft: moderateScale(10),
-                }}>
-                {strings.CANCELLATION_REQUEST}
-                {data?.cancel_request?.status_id == 0
-                  ? ' pending'
-                  : data?.cancel_request?.status_id == 2
-                  ? ' rejected'
-                  : ''}
-              </Text>
-            ) : null}
-          </View>
-        ) : (
-          <></>
-        )}
+              ) : null}
+            </View>
+          ) : (
+            <></>
+          )}
           {data?.order_status?.current_status?.id == 1 ? (
             <TouchableOpacity
               onPress={() => setCancellationItem(data)}
@@ -830,164 +812,164 @@ const OrderCardVendorComponent2 = ({
           ) : null}
         </View>
         <Modal
-        isVisible={!!cancellationItem ? true : false}
-        onBackdropPress={hideModal}
-        // animationIn="zoomIn"
-        // animationOut="zoomOut"
-        style={{
-          margin: 0,
-          justifyContent: 'flex-end',
-          marginBottom:
-            Platform.OS == 'ios' ? moderateScale(keyboardHeight) : 0,
-        }}>
-        <View
+          isVisible={!!cancellationItem ? true : false}
+          onBackdropPress={hideModal}
+          // animationIn="zoomIn"
+          // animationOut="zoomOut"
           style={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.white,
-            borderTopLeftRadius: moderateScale(8),
-            borderTopRightRadius: moderateScale(8),
-            overflow: 'hidden',
-            paddingHorizontal: moderateScale(16),
-            paddingVertical: moderateScale(12),
-            // height: moderateScaleVertical(300),
+            margin: 0,
+            justifyContent: 'flex-end',
+            marginBottom:
+              Platform.OS == 'ios' ? moderateScale(keyboardHeight) : 0,
           }}>
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+              borderTopLeftRadius: moderateScale(8),
+              borderTopRightRadius: moderateScale(8),
+              overflow: 'hidden',
+              paddingHorizontal: moderateScale(16),
+              paddingVertical: moderateScale(12),
+              // height: moderateScaleVertical(300),
             }}>
-            <Text />
-            {!isCancelOrderContentLoader && (
-              <Text
-                style={{
-                  fontSize: textScale(16),
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  alignSelf: 'center',
-                  fontFamily: fontFamily.medium,
-                }}>
-                {strings.SELECT_CANCELLATION_REASON}
-              </Text>
-            )}
-            <TouchableOpacity onPress={hideModal}>
-              <Image
-                style={isDarkMode && {tintColor: colors.white}}
-                source={imagePath.closeButton}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {isCancelOrderContentLoader ? (
-            <View style={{}}>
-              <BannerLoader
-                viewStyles={{
-                  marginTop: moderateScale(8),
-                  marginBottom: moderateScale(10),
-                  marginHorizontal: moderateScale(0),
-                }}
-                homeLoaderHeight={moderateScaleVertical(40)}
-              />
-              <BannerLoader
-                viewStyles={{
-                  marginBottom: moderateScale(10),
-                  marginHorizontal: moderateScale(0),
-                }}
-                homeLoaderHeight={moderateScaleVertical(40)}
-              />
-              <BannerLoader
-                viewStyles={{
-                  marginBottom: moderateScale(20),
-                  marginHorizontal: moderateScale(0),
-                }}
-                homeLoaderHeight={moderateScaleVertical(40)}
-              />
-            </View>
-          ) : (
-            <View>
-              {!!reasonError && selectedCancelReason?.id == 8 && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Text />
+              {!isCancelOrderContentLoader && (
                 <Text
                   style={{
-                    fontSize: textScale(12),
-                    color: colors.redB,
+                    fontSize: textScale(16),
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    alignSelf: 'center',
                     fontFamily: fontFamily.medium,
-                    marginTop: moderateScaleVertical(8),
                   }}>
-                  {strings.PLEASE_ENTER_CANCELLATION_REASON}*{' '}
+                  {strings.SELECT_CANCELLATION_REASON}
                 </Text>
               )}
-              <View style={{height: moderateScaleVertical(20)}} />
-              <ScrollView
-                style={{
-                  maxHeight: moderateScaleVertical(250),
-                }}>
-                {cancelReasons.map((item) => (
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() => setSelectedCancelReason(item)}
-                    style={{
-                      height: moderateScaleVertical(40),
-                      backgroundColor: colors.blackOpacity05,
-                      paddingHorizontal: moderateScale(10),
-                      alignItems: 'center',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginBottom: 4,
-                    }}>
-                    <Text> {item?.title}</Text>
-                    {selectedCancelReason?.id == item?.id ? (
-                      <Image source={imagePath.tick2} />
-                    ) : (
-                      <></>
-                    )}
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-
-              {selectedCancelReason?.id == 8 ? (
-                <View
-                  style={{
-                    // marginVertical: moderateScaleVertical(16),
-                    backgroundColor: isDarkMode
-                      ? colors.whiteOpacity15
-                      : colors.greyNew,
-                    height: moderateScale(82),
-                    borderRadius: moderateScale(4),
-                    paddingHorizontal: moderateScale(8),
-                    marginTop: reasonError
-                      ? moderateScaleVertical(8)
-                      : moderateScaleVertical(16),
-                  }}>
-                  <TextInput
-                    multiline
-                    value={reason}
-                    placeholder={strings.WRITE_YOUR_REASON_HERE}
-                    onChangeText={(val) => setReason(val)}
-                    style={{
-                      ...styles.reasonText,
-                      color: isDarkMode ? colors.textGreyB : colors.black,
-                      textAlignVertical: 'top',
-                    }}
-                    onSubmitEditing={Keyboard.dismiss}
-                    placeholderTextColor={
-                      isDarkMode ? colors.textGreyB : colors.blackOpacity40
-                    }
-                  />
-                </View>
-              ) : null}
-              <ButtonWithLoader
-                isLoading={cancelLoader}
-                btnText={strings.CANCEL}
-                btnStyle={{
-                  backgroundColor: themeColors.primary_color,
-                  borderWidth: 0,
-                }}
-                onPress={onCancel}
-              />
+              <TouchableOpacity onPress={hideModal}>
+                <Image
+                  style={isDarkMode && { tintColor: colors.white }}
+                  source={imagePath.closeButton}
+                />
+              </TouchableOpacity>
             </View>
-          )}
-        </View>
-      </Modal>
+
+            {isCancelOrderContentLoader ? (
+              <View style={{}}>
+                <BannerLoader
+                  viewStyles={{
+                    marginTop: moderateScale(8),
+                    marginBottom: moderateScale(10),
+                    marginHorizontal: moderateScale(0),
+                  }}
+                  homeLoaderHeight={moderateScaleVertical(40)}
+                />
+                <BannerLoader
+                  viewStyles={{
+                    marginBottom: moderateScale(10),
+                    marginHorizontal: moderateScale(0),
+                  }}
+                  homeLoaderHeight={moderateScaleVertical(40)}
+                />
+                <BannerLoader
+                  viewStyles={{
+                    marginBottom: moderateScale(20),
+                    marginHorizontal: moderateScale(0),
+                  }}
+                  homeLoaderHeight={moderateScaleVertical(40)}
+                />
+              </View>
+            ) : (
+              <View>
+                {!!reasonError && selectedCancelReason?.id == 8 && (
+                  <Text
+                    style={{
+                      fontSize: textScale(12),
+                      color: colors.redB,
+                      fontFamily: fontFamily.medium,
+                      marginTop: moderateScaleVertical(8),
+                    }}>
+                    {strings.PLEASE_ENTER_CANCELLATION_REASON}*{' '}
+                  </Text>
+                )}
+                <View style={{ height: moderateScaleVertical(20) }} />
+                <ScrollView
+                  style={{
+                    maxHeight: moderateScaleVertical(250),
+                  }}>
+                  {cancelReasons.map((item) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      onPress={() => setSelectedCancelReason(item)}
+                      style={{
+                        height: moderateScaleVertical(40),
+                        backgroundColor: colors.blackOpacity05,
+                        paddingHorizontal: moderateScale(10),
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginBottom: 4,
+                      }}>
+                      <Text> {item?.title}</Text>
+                      {selectedCancelReason?.id == item?.id ? (
+                        <Image source={imagePath.tick2} />
+                      ) : (
+                        <></>
+                      )}
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+
+                {selectedCancelReason?.id == 8 ? (
+                  <View
+                    style={{
+                      // marginVertical: moderateScaleVertical(16),
+                      backgroundColor: isDarkMode
+                        ? colors.whiteOpacity15
+                        : colors.greyNew,
+                      height: moderateScale(82),
+                      borderRadius: moderateScale(4),
+                      paddingHorizontal: moderateScale(8),
+                      marginTop: reasonError
+                        ? moderateScaleVertical(8)
+                        : moderateScaleVertical(16),
+                    }}>
+                    <TextInput
+                      multiline
+                      value={reason}
+                      placeholder={strings.WRITE_YOUR_REASON_HERE}
+                      onChangeText={(val) => setReason(val)}
+                      style={{
+                        ...styles.reasonText,
+                        color: isDarkMode ? colors.textGreyB : colors.black,
+                        textAlignVertical: 'top',
+                      }}
+                      onSubmitEditing={Keyboard.dismiss}
+                      placeholderTextColor={
+                        isDarkMode ? colors.textGreyB : colors.blackOpacity40
+                      }
+                    />
+                  </View>
+                ) : null}
+                <ButtonWithLoader
+                  isLoading={cancelLoader}
+                  btnText={strings.CANCEL}
+                  btnStyle={{
+                    backgroundColor: themeColors.primary_color,
+                    borderWidth: 0,
+                  }}
+                  onPress={onCancel}
+                />
+              </View>
+            )}
+          </View>
+        </Modal>
       </TouchableOpacity>
 
       {!!Number(data?.is_editable === 1) ? (
