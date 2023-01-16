@@ -507,7 +507,8 @@ const shortCodes = {
   viralClean: 'e3166f',
   stargaze: 'cc100d',
   messiaa: 'c326b3',
-  superApp: '041795'
+  superApp: '041795',
+  nounou: '7ab01a'
 };
 
 const appIds = {
@@ -2526,6 +2527,10 @@ const appIds = {
   superApp: Platform.select({
     ios: 'com.superapp.royoorder',
     android: 'com.superapp.royoorder',
+  }),
+  nounou: Platform.select({
+    ios: 'com.nounou.royoorder',
+    android: 'com.nounou.royoorder',
   }),
 };
 

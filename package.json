@@ -1010,6 +1010,8 @@
     "messiaaRelease": "cd android && ./gradlew assemblemessiaaRelease",
     "superApp": "react-native run-android --variant=superAppDebug --appIdSuffix=superApp",
     "superAppRelease": "cd android && ./gradlew assemblesuperAppRelease",
+    "nounou": "react-native run-android --variant=nounouDebug --appIdSuffix=nounou",
+    "nounouRelease": "cd android && ./gradlew assemblenounouRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
