@@ -1,13 +1,19 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '13.0'
+platform :ios, '12.0'
 
 abstract_target 'available_pods' do
   
   permissions_path = '../node_modules/react-native-permissions/ios'
   rn_maps_path = '../node_modules/react-native-maps'
    config = use_native_modules!
-   use_react_native!(:path => config["reactNativePath"])
+   
+   use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => false
+  )
+
    pod 'react-native-google-maps', :path => rn_maps_path
    pod 'react-native-restart', :path => '../node_modules/react-native-restart'
   #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
@@ -2379,6 +2385,7 @@ target 'Messiaa' do
 end
 
 post_install do |installer|
+  react_native_post_install(installer)
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
   end
