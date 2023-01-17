@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -395,7 +395,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
-export const API_BASE_URL = 'https://order.clickokart.com/api/v1'
+//export const API_BASE_URL = 'https://order.clickokart.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

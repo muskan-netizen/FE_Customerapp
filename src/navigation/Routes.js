@@ -50,10 +50,7 @@ export default function Routes() {
               component={
                 businessType === 4
                   ? TaxiTabRoutes
-                  : //  businessType === 8
-                    // ? TabRoutesP2p
-                    // :
-                    TabRoutes
+                  : TabRoutes
               }
               options={{gestureEnabled: false}}
             />

@@ -66,26 +66,26 @@ const App = () => {
 
   const appMainData = store.getState().home;
 
-  async function handleDynamicLink(deepLinkUrl) {
-    console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrl');
-    if (deepLinkUrl != null) {
-      setItem('deepLinkUrl', deepLinkUrl)
-        .then((res) => {
-          actions.setDeeplinkUrl(deepLinkUrl);
-        })
-        .catch((error) => {
-          console.log(error, 'erroror');
-        });
+  // async function handleDynamicLink(deepLinkUrl) {
+  //   console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrl');
+  //   if (deepLinkUrl != null) {
+  //     setItem('deepLinkUrl', deepLinkUrl)
+  //       .then((res) => {
+  //         actions.setDeeplinkUrl(deepLinkUrl);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error, 'erroror');
+  //       });
 
-      let routeName = getUrlRoutes(deepLinkUrl, 2);
-      console.log(routeName, 'routeName');
-      if (routeName === 'vendor') {
-        return;
-      } else if (routeName === 'track') {
-        openSpecificScreenByDeeplink(deepLinkUrl);
-      }
-    }
-  }
+  //     let routeName = getUrlRoutes(deepLinkUrl, 2);
+  //     console.log(routeName, 'routeName');
+  //     if (routeName === 'vendor') {
+  //       return;
+  //     } else if (routeName === 'track') {
+  //       openSpecificScreenByDeeplink(deepLinkUrl);
+  //     }
+  //   }
+  // }
 
   //open screens based on deep link url
   const openSpecificScreenByDeeplink = async (deepLinkUrl) => {
@@ -100,15 +100,15 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    Linking.getInitialURL().then((link) => handleDynamicLink(link));
-    Linking.addEventListener('url', (event) => handleDynamicLink(event.url));
-    return () => {
-      Linking.removeEventListener('url', (event) =>
-        handleDynamicLink(event.url),
-      );
-    };
-  }, [handleDynamicLink]);
+  // useEffect(() => {
+  //   Linking.getInitialURL().then((link) => handleDynamicLink(link));
+  //   Linking.addEventListener('url', (event) => handleDynamicLink(event.url));
+  //   return () => {
+  //     Linking.removeEventListener('url', (event) =>
+  //       handleDynamicLink(event.url),
+  //     );
+  //   };
+  // }, [handleDynamicLink]);
 
   const isDarkMode = useDarkMode();
   useEffect(() => {
