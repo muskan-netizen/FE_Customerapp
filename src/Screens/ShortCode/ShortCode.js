@@ -3142,6 +3142,19 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.laith:
+          updateState({
+            shortCode: shortCodes.laith,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.liverpoolEats:
+          updateState({
+            shortCode: shortCodes.liverpoolEats,
+            isShortcodePrefilled: true,
+          });
+          break;
+
       }
     })();
   }, []);

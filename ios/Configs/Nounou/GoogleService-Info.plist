@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>922192093745-5r3o2s9arpsdnujc6re878ro7f34rad6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.922192093745-5r3o2s9arpsdnujc6re878ro7f34rad6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>922192093745-04hoa914k112n76jq0dq978q93gvgg6m.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyADvXKe0dQzMRvGT8fM_98aeUEpBZULTlw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>922192093745</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nounou.royoorder</string>
+	<key>PROJECT_ID</key>
+	<string>nounou-orders</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nounou-orders.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:922192093745:ios:128eb94dff442341b86b10</string>
+</dict>
+</plist>

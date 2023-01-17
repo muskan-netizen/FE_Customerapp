@@ -508,7 +508,9 @@ const shortCodes = {
   stargaze: 'cc100d',
   messiaa: 'c326b3',
   superApp: '041795',
-  nounou: '7ab01a'
+  nounou: '7ab01a',
+  laith: 'f235c4',
+  liverpoolEats: '08e554'
 };
 
 const appIds = {
@@ -2531,6 +2533,14 @@ const appIds = {
   nounou: Platform.select({
     ios: 'com.nounou.royoorder',
     android: 'com.nounou.royoorder',
+  }),
+  laith: Platform.select({
+    ios: 'com.laith.royoorder',
+    android: 'com.laith.royoorder',
+  }),
+  liverpoolEats: Platform.select({
+    ios: 'com.liverpoolEats.royoorder',
+    android: 'com.liverpoolEats.royoorder',
   }),
 };
 
