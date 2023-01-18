@@ -67,7 +67,6 @@ const App = () => {
   const appMainData = store.getState().home;
 
   async function handleDynamicLink(deepLinkUrl) {
-    console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrl');
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl)
         .then((res) => {

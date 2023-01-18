@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import deviceInfoModule from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
@@ -19,11 +19,11 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {showError, showSuccess} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import { showError, showSuccess } from '../utils/helperFunctions';
 
-function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
-  const {cartItemCount} = useSelector((state) => state?.cart);
+function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
+  const { cartItemCount } = useSelector((state) => state?.cart);
   const {
     appData,
     themeColors,
@@ -33,19 +33,19 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const {dineInType} = useSelector((state) => state?.home);
+  const { dineInType } = useSelector((state) => state?.home);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
+  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
 
   const [state, setState] = useState({
     tabs: [],
   });
 
-  const {tabs} = state;
+  const { tabs } = state;
   console.log(appData, 'tabs------------');
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
     addAllTabs();
@@ -63,7 +63,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
       // if (serviceType == 'p2p') {
       //   selectedToggle(serviceType);
       // }
-      updateState({tabs: appData?.profile?.preferences?.vendorMode});
+      updateState({ tabs: appData?.profile?.preferences?.vendorMode });
     }
     return;
   };
@@ -92,7 +92,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx) },
     ]);
   };
 
@@ -120,7 +120,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
   };
 
   const renderItem = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <TouchableOpacity
           activeOpacity={1}
@@ -140,10 +140,10 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
               dineInType == item?.type && isDarkMode
                 ? MyDarkTheme.colors.white
                 : dineInType == item?.type && !isDarkMode
-                ? themeColors.primary_color
-                : isDarkMode
-                ? colors.blackOpacity0
-                : colors.greyColor1,
+                  ? themeColors.primary_color
+                  : isDarkMode
+                    ? colors.blackOpacity0
+                    : colors.greyColor1,
             width:
               tabs.length == 2
                 ? (width - moderateScale(16)) / 2
@@ -156,15 +156,15 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
                 item.isActive && isDarkMode
                   ? MyDarkTheme.colors.white
                   : item.isActive && !isDarkMode
-                  ? themeColors.primary_color
-                  : colors.greyLight,
+                    ? themeColors.primary_color
+                    : colors.greyLight,
             }}>
             {item?.name}
           </Text>
         </TouchableOpacity>
       );
     },
-    [tabs, appData, cartItemCount],
+    [tabs, appData, cartItemCount, dineInType],
   );
 
   const awesomeChildListKeyExtractor = useCallback(
@@ -197,10 +197,10 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
           renderItem={renderItem}
           keyExtractor={awesomeChildListKeyExtractor}
           ListFooterComponent={() => (
-            <View style={{marginLeft: moderateScale(16)}} />
+            <View style={{ marginLeft: moderateScale(16) }} />
           )}
           ListHeaderComponent={() => (
-            <View style={{marginRight: moderateScale(16)}} />
+            <View style={{ marginRight: moderateScale(16) }} />
           )}
         />
       </View>
@@ -208,7 +208,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
   );
 }
 
-export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
+export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
   const styles = StyleSheet.create({
     tabMainStyle: {
       borderRadius: moderateScale(10),

@@ -39,11 +39,12 @@ import {
   CHECK_VENDOR_PINCODE,
   GET_VENDOR_SHIPPING_SLOTS,
   GET_PRODUCT_DELIVERY_SLOTS_INTERVAL,
+  CHECK_SLOTS_LIMIT,
 } from '../../config/urls';
-import {apiGet, apiPost, setWalletData} from '../../utils/utils';
+import { apiGet, apiPost, setWalletData } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 // save vendor listing and category data
 export function saveProductListingAndCategoryInfo(data) {
@@ -53,7 +54,7 @@ export function saveProductListingAndCategoryInfo(data) {
   });
 }
 
-export function storeWishList(data) {}
+export function storeWishList(data) { }
 
 //Get all Products by Vendor id
 
@@ -539,12 +540,12 @@ export function getProductByVendorIdOptamizeV2(
   data = {},
   headers = {},
 ) {
-  
+
   return apiGet(VENDOR_OPTIMIZE_V2 + query, data, headers);
 }
 
 export function getMoreCategories(query = '', data = {}, headers = {}) {
- 
+
   return apiPost(GET_MORE_CATEGORIES + query, data, headers);
 }
 
@@ -562,4 +563,8 @@ export function getVendorShippingSlots(data = {}, headers = {}) {
 
 export function getProductDeliverySlotsInterval(data = {}, headers = {}) {
   return apiPost(GET_PRODUCT_DELIVERY_SLOTS_INTERVAL, data, headers);
+}
+
+export function checkSlotsLimit(data = {}, headers = {}) {
+  return apiPost(CHECK_SLOTS_LIMIT, data, headers);
 }

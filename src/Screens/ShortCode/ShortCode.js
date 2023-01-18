@@ -8,7 +8,6 @@ import { MaterialIndicator } from "react-native-indicators";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import Video from "react-native-video";
 import { useSelector } from "react-redux";
-import RNFetchBlob from "rn-fetch-blob-v2";
 import ButtonWithLoader from "../../Components/ButtonWithLoader";
 import { loaderOne } from "../../Components/Loaders/AnimatedLoaderFiles";
 import WrapperContainer from "../../Components/WrapperContainer";
@@ -34,7 +33,6 @@ import {
 import { getItem, setItem } from "../../utils/utils";
 import styles from "./styles";
 
-const fs = RNFetchBlob.fs;
 
 export default function ShortCode({ route, navigation }) {
   const shortCodeParam = route?.params?.shortCodeParam;
@@ -80,11 +78,6 @@ export default function ShortCode({ route, navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
-
-  const customColor = themeColors?.primary_color;
-
-  console.log(redirectedFrom, "redirectedFromredirectedFromredirectedFrom");
-
   useEffect(() => {
     (async () => {
       const saveShortCode = await getItem("saveShortCode");
@@ -3103,7 +3096,8 @@ export default function ShortCode({ route, navigation }) {
         case appIds.ondgoo:
           updateState({
             shortCode: shortCodes.ondgoo,
-            isShortcodePrefilled: true,})
+            isShortcodePrefilled: true,
+          })
 
         case appIds.zonesso:
           updateState({
@@ -3358,7 +3352,7 @@ export default function ShortCode({ route, navigation }) {
     }
   };
 
-  console.log(deepLinkUrl,"deepLinkUrl");
+  console.log(deepLinkUrl, "deepLinkUrl");
 
   const navigateToNextScreen = (res) => {
     getItem("firstTime").then((el) => {

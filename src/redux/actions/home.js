@@ -20,20 +20,18 @@ import {
   HOMEPAGE_DATA_URL_V2,
   SEARCH_V2,
 } from '../../config/urls';
-import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
+import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 
-const {dispatch} = store;
+const { dispatch } = store;
 
 //Get Homme banners and Category data
 export function homeData(data = {}, headers = {}, isShortCode = false) {
-  console.log(data, "jhhghffg");
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
 
       .then((res) => {
-        console.log(res, "jhhghffg>????????");
         if (!isShortCode) {
           dispatch({
             type: types.HOME_DATA,
@@ -137,7 +135,7 @@ export function profileAddress(res) {
         payload: res,
       });
     })
-    .catch((err) => {});
+    .catch((err) => { });
 }
 
 // export function updateProfileAddress(res) {

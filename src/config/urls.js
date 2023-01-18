@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -12,7 +12,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
 // export const API_BASE_URL = 'https://carryfood.org/api/v1';
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.130:9090/api/v1';
@@ -261,7 +261,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://rhondaisamazingtaxi.com/api/v1';
 
 //owais nor
-// export const API_BASE_URL = 'https://1204-112-196-88-218.ngrok.io/api/v1';
+// export const API_BASE_URL = 'https://f742-112-196-88-218.in.ngrok.io/api/v1';
 
 // // sabroson
 // export const API_BASE_URL = 'https://sabroson.com.mx/api/v1';
@@ -712,3 +712,5 @@ export const GET_DETAILS_OF_INFLUENCE_CATEGORY = getApiUrl(
 export const SAVE_INFULENCER_INFO = getApiUrl(
   '/influencer/save-influencer-form',
 );
+
+export const CHECK_SLOTS_LIMIT = getApiUrl('/cart/checkSlotOrders');

@@ -1,19 +1,19 @@
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking} from 'react-native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
-import {useDarkMode} from 'react-native-dark-mode';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dark-mode';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
@@ -24,7 +24,7 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
+import { chekLocationPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
@@ -42,7 +42,7 @@ import {
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
   const {
     appData,
@@ -55,14 +55,14 @@ export default function Home({route, navigation}) {
     allAddresss,
     redirectedFrom
   } = useSelector((state) => state?.initBoot);
-  const {location, appMainData, dineInType, isLocationSearched} = useSelector(
+  const { location, appMainData, dineInType, isLocationSearched } = useSelector(
     (state) => state?.home,
   );
   const isFocused = useIsFocused();
-  const {cartItemCount} = useSelector((state) => state?.cart);
+  const { cartItemCount } = useSelector((state) => state?.cart);
 
-  const {userData} = useSelector((state) => state?.auth);
-  const {pendingNotifications} = useSelector(
+  const { userData } = useSelector((state) => state?.auth);
+  const { pendingNotifications } = useSelector(
     (state) => state?.pendingNotifications,
   );
 
@@ -127,7 +127,7 @@ export default function Home({route, navigation}) {
     curLatLong,
   } = state;
 
-  const {profile} = appData;
+  const { profile } = appData;
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
@@ -145,7 +145,7 @@ export default function Home({route, navigation}) {
     }, []),
   );
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
   useEffect(() => {
@@ -175,19 +175,19 @@ export default function Home({route, navigation}) {
     useCallback(() => {
       if (!!userData?.auth_token) {
         getAllTempOrders();
-        
+
       }
     }, []),
   );
 
-  console.log(redirectedFrom,"redirectedFrom");
+  console.log(redirectedFrom, "redirectedFrom");
 
-  useEffect(()=>{
-    if(redirectedFrom =='from_deepLinking'){
-      navigation.navigate(navigationStrings.TRACKING) 
+  useEffect(() => {
+    if (redirectedFrom == 'from_deepLinking') {
+      navigation.navigate(navigationStrings.TRACKING)
     }
-  
-  },[redirectedFrom])
+
+  }, [redirectedFrom])
 
   useEffect(() => {
     chekLocationPermission(true)
@@ -201,7 +201,7 @@ export default function Home({route, navigation}) {
               });
 
               let locData = location?.latitude ? location : curLoc;
-              
+
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
@@ -215,26 +215,26 @@ export default function Home({route, navigation}) {
 
                         getNearestLocation(curLoc, filterAddress)
                           .then((nearestLoc) => {
-                            console.log(nearestLoc,"nearestLocnearestLoc")
+                            console.log(nearestLoc, "nearestLocnearestLoc")
 
                             // if NearestLocation dis. is greareter than 500m 
-                            if(nearestLoc?.distance >= 500){
-                              setNearestLocDis(nearestLoc) 
+                            if (nearestLoc?.distance >= 500) {
+                              setNearestLocDis(nearestLoc)
                               actions.locationData(curLoc);
                               homeData(curLoc);
                               // return
-                            }else{
-                            //ifTab selected
-                            setNearestLocDis(null)
-                            if (isLocationSearched || isRefreshing) {
-                              actions.locationData(locData);
-                              homeData(locData);
                             } else {
-                              actions.locationData(nearestLoc);
-                              homeData(nearestLoc);
+                              //ifTab selected
+                              setNearestLocDis(null)
+                              if (isLocationSearched || isRefreshing) {
+                                actions.locationData(locData);
+                                homeData(locData);
+                              } else {
+                                actions.locationData(nearestLoc);
+                                homeData(nearestLoc);
+                              }
                             }
-                          } 
-                        }
+                          }
                           )
                           .catch((error) => {
                             actions.locationData(locData);
@@ -303,7 +303,7 @@ export default function Home({route, navigation}) {
   }, [selectedTabType, appData, allAddresss]);
 
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   const _getLocationFromParams = () => {
@@ -335,7 +335,7 @@ export default function Home({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -367,7 +367,7 @@ export default function Home({route, navigation}) {
   const getAllAddress = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let res = await actions.getAddress({}, {code: appData?.profile?.code});
+        let res = await actions.getAddress({}, { code: appData?.profile?.code });
         if (!!res?.data) {
           resolve(res.data);
         } else {
@@ -403,7 +403,7 @@ export default function Home({route, navigation}) {
       return;
     }
     if (!!paramData) {
-      updateState({searchDataLoader: true});
+      updateState({ searchDataLoader: true });
     }
     let latlongObj = {};
 
@@ -421,9 +421,9 @@ export default function Home({route, navigation}) {
       best_vendor: selectedFilter?.id == 3 ? 1 : 0,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
-      updateState({singleVendor: true});
+      updateState({ singleVendor: true });
     } else {
-      updateState({singleVendor: false});
+      updateState({ singleVendor: false });
     }
 
     {
@@ -463,7 +463,7 @@ export default function Home({route, navigation}) {
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          updateState({searchDataLoader: false});
+          updateState({ searchDataLoader: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -511,14 +511,14 @@ export default function Home({route, navigation}) {
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -531,7 +531,7 @@ export default function Home({route, navigation}) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then((res) => {})
+      .then((res) => { })
       .catch((err) => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -585,7 +585,7 @@ export default function Home({route, navigation}) {
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY ||
       item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-      item?.redirect_to == staticStrings.LAUNDRY || 
+      item?.redirect_to == staticStrings.LAUNDRY ||
       item?.redirect_to == staticStrings.APPOINTMENT ||
       item?.redirect_to == staticStrings.RENTAL
     ) {
@@ -594,10 +594,10 @@ export default function Home({route, navigation}) {
         id: item.id,
         vendor:
           item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-          item.redirect_to == staticStrings.PRODUCT ||
-          item?.redirect_to == staticStrings.LAUNDRY || 
-          item?.redirect_to == staticStrings.APPOINTMENT ||
-          item?.redirect_to == staticStrings.RENTAL
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT ||
+            item?.redirect_to == staticStrings.RENTAL
             ? false
             : true,
         name: item.name,
@@ -639,21 +639,21 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-            fetchOffers: true,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -688,16 +688,16 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-              fetchOffers: true,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+            fetchOffers: true,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -764,16 +764,16 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
     initApiHit();
   };
 
@@ -809,7 +809,7 @@ export default function Home({route, navigation}) {
     homeData(location, selectedFilter);
   };
 
-  const onSpeechStartHandler = (e) => {};
+  const onSpeechStartHandler = (e) => { };
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -831,7 +831,7 @@ export default function Home({route, navigation}) {
     });
     try {
       await Voice.start(langType);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const _onVoiceStop = async () => {
@@ -1526,7 +1526,7 @@ export default function Home({route, navigation}) {
     });
   };
 
-  const {blurRef} = useRef();
+  const { blurRef } = useRef();
 
   return (
     <WrapperContainer

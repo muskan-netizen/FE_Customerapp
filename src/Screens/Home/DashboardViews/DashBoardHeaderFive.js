@@ -32,28 +32,25 @@ export default function DashBoardHeaderFive({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  _onVoiceListen = () => {},
+  _onVoiceListen = () => { },
   isVoiceRecord = false,
-  _onVoiceStop = () => {},
+  _onVoiceStop = () => { },
   showAboveView = true,
   currentLocation,
   nearestLoc,
   currentLoc,
 }) {
   const navigation = useNavigation();
-  console.log('currentLocation=>', currentLocation, );
-  const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
+  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
-  const { isLocationSearched} = useSelector(
-    (state) => state?.home,
-  );
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   const imageURI = getImageUrl(
     isDarkMode
@@ -128,15 +125,15 @@ export default function DashBoardHeaderFive({
                     <Text numberOfLines={1} style={styles.locationTypeTxt}>
                       {location?.type === 3
                         ? !!(
-                            location?.type_name != 0 &&
-                            location?.type != '0' &&
-                            location?.type_name !== null
-                          )
+                          location?.type_name != 0 &&
+                          location?.type != '0' &&
+                          location?.type_name !== null
+                        )
                           ? location?.type_name
                           : strings.UNKNOWN
                         : location?.type === 2
-                        ? strings.WORK
-                        : strings.HOME}
+                          ? strings.WORK
+                          : strings.HOME}
                     </Text>
                   )}
 
@@ -150,7 +147,7 @@ export default function DashBoardHeaderFive({
                           : colors.blackOpacity30,
                         fontFamily: fontFamily.medium,
                       },
-                    ]}> 
+                    ]}>
                     {location?.address}
                     {/* {console.log(nearestLoc,"nearestLocnearestLoc")} */}
                     {/* {!!nearestLoc  ? currentLocation?.address : nearestLoc?.address || location?.address} */}
@@ -168,7 +165,7 @@ export default function DashBoardHeaderFive({
               width: moderateScale(80),
             }}>
             <TouchableOpacity
-              style={{marginHorizontal: moderateScale(8)}}
+              style={{ marginHorizontal: moderateScale(8) }}
               onPress={() =>
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }>
@@ -193,19 +190,19 @@ export default function DashBoardHeaderFive({
                   autoPlay
                   loop
                   colorFilters={[
-                    {keypath: 'layers', color: themeColors.primary_color},
-                    {keypath: 'transparent2', color: themeColors.primary_color},
-                    {keypath: 'transparent1', color: themeColors.primary_color},
-                    {keypath: '01', color: themeColors.primary_color},
-                    {keypath: '02', color: themeColors.primary_color},
-                    {keypath: '03', color: themeColors.primary_color},
-                    {keypath: '04', color: themeColors.primary_color},
+                    { keypath: 'layers', color: themeColors.primary_color },
+                    { keypath: 'transparent2', color: themeColors.primary_color },
+                    { keypath: 'transparent1', color: themeColors.primary_color },
+                    { keypath: '01', color: themeColors.primary_color },
+                    { keypath: '02', color: themeColors.primary_color },
+                    { keypath: '03', color: themeColors.primary_color },
+                    { keypath: '04', color: themeColors.primary_color },
                   ]}
                 />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={{marginHorizontal: moderateScale(8)}}
+                style={{ marginHorizontal: moderateScale(8) }}
                 onPress={_onVoiceListen}>
                 <Image
                   source={imagePath.icVoice}

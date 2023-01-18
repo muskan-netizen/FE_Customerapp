@@ -1,6 +1,6 @@
-import {useScrollToTop} from '@react-navigation/native';
-import {isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useScrollToTop } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   FlatList,
@@ -12,18 +12,18 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {SvgUri} from 'react-native-svg';
-import {useSelector} from 'react-redux';
+import { SvgUri } from 'react-native-svg';
+import { useSelector } from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
@@ -45,8 +45,8 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -54,17 +54,17 @@ import {
 import stylesFunc from '../styles';
 
 export default function DashBoardEight({
-  handleRefresh = () => {},
-  bannerPress = () => {},
+  handleRefresh = () => { },
+  bannerPress = () => { },
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => {},
+  onPressCategory = () => { },
   navigation = {},
   toggleData = {},
-  onVendorFilterSeletion = () => {},
+  onVendorFilterSeletion = () => { },
   tempCartData = null,
-  onClose = () => {},
-  onPressSubscribe = () => {},
+  onClose = () => { },
+  onPressSubscribe = () => { },
   isSubscription = false,
   selectedFilterType = {},
 }) {
@@ -74,8 +74,8 @@ export default function DashBoardEight({
   const darkthemeusingDevice = useDarkMode();
   const isSingleVendor = appData?.profile?.preferences?.single_vendor;
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {bannerRef} = useRef();
-  const {appData, themeColors, appStyle} = useSelector(
+  const { bannerRef } = useRef();
+  const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -98,13 +98,13 @@ export default function DashBoardEight({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore} =
+  const { slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore } =
     state;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
@@ -142,15 +142,15 @@ export default function DashBoardEight({
 
   const homeAllFilters = () => {
     let homeFilter = [
-      {id: 1, type: strings.OPEN},
-      {id: 2, type: strings.CLOSE},
-      {id: 3, type: strings.BESTSELLER},
+      { id: 1, type: strings.OPEN },
+      { id: 2, type: strings.CLOSE },
+      { id: 3, type: strings.BESTSELLER },
     ];
 
     return homeFilter;
   };
 
-  const _homeCategory6 = ({item, index}) => {
+  const _homeCategory6 = ({ item, index }) => {
     return (
       <View
         style={{
@@ -166,12 +166,12 @@ export default function DashBoardEight({
     );
   };
 
-  const _renderVendors = ({item, index}) => (
-    <View style={{marginHorizontal: moderateScale(16)}}>
+  const _renderVendors = ({ item, index }) => (
+    <View style={{ marginHorizontal: moderateScale(16) }}>
       <MarketCard3
         data={item}
         onPress={() => onPressCategory(item)}
-        extraStyles={{margin: 2}}
+        extraStyles={{ margin: 2 }}
       />
     </View>
   );
@@ -201,14 +201,14 @@ export default function DashBoardEight({
             bannerData={appData?.mobile_banners}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
-            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
+            onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
             onPress={(item) => bannerPress(item)}
             isDarkMode={isDarkMode}
             isPagination={true}
-            paginationColor={{backgroundColor: themeColors.primary_color}}
+            paginationColor={{ backgroundColor: themeColors.primary_color }}
           />
         </View>
-        <Text
+        {!isEmpty(appMainData?.categories) && <Text
           style={{
             fontSize: textScale(14),
             fontFamily: fontFamily.medium,
@@ -217,7 +217,7 @@ export default function DashBoardEight({
             marginVertical: moderateScaleVertical(10),
           }}>
           {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
-        </Text>
+        </Text>}
         {appMainData &&
           appMainData?.categories &&
           !!appMainData?.categories?.length && (
@@ -234,13 +234,13 @@ export default function DashBoardEight({
                   showsHorizontalScrollIndicator={false}
                   renderItem={_homeCategory6}
                   ItemSeparatorComponent={() => (
-                    <View style={{marginTop: moderateScale(12)}} />
+                    <View style={{ marginTop: moderateScale(12) }} />
                   )}
                   ListHeaderComponent={() => (
-                    <View style={{marginLeft: moderateScale(12)}} />
+                    <View style={{ marginLeft: moderateScale(12) }} />
                   )}
                   ListFooterComponent={() => (
-                    <View style={{marginRight: moderateScale(12)}} />
+                    <View style={{ marginRight: moderateScale(12) }} />
                   )}
                 />
               )}
@@ -262,7 +262,7 @@ export default function DashBoardEight({
                         borderColor: colors.borderColorB,
                       }}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text
                           style={{
                             fontSize: textScale(10),
@@ -273,7 +273,7 @@ export default function DashBoardEight({
                         <Image
                           source={imagePath.icDropdown4}
                           style={{
-                            transform: [{rotate: seeMore ? '180deg' : '0deg'}],
+                            transform: [{ rotate: seeMore ? '180deg' : '0deg' }],
                             marginLeft: moderateScale(4),
                           }}
                         />
@@ -289,10 +289,10 @@ export default function DashBoardEight({
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
-  const renderBrands = ({item}) => {
+      () => {
+        navigation.navigate(screenName, { data });
+      };
+  const renderBrands = ({ item }) => {
     // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
     const imageURI = getImageUrl(
       item.image.proxy_url,
@@ -304,11 +304,11 @@ export default function DashBoardEight({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}
-        // style={{
-        //   ...getScaleTransformationStyle(scaleInAnimated),
-        // }}
-        // onPressIn={() => pressInAnimation(scaleInAnimated)}
-        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
+      // style={{
+      //   ...getScaleTransformationStyle(scaleInAnimated),
+      // }}
+      // onPressIn={() => pressInAnimation(scaleInAnimated)}
+      // onPressOut={() => pressOutAnimation(scaleInAnimated)}
       >
         {isSVG ? (
           <SvgUri
@@ -318,7 +318,7 @@ export default function DashBoardEight({
           />
         ) : (
           <FastImage
-            source={{uri: imageURI, priority: FastImage.priority.high}}
+            source={{ uri: imageURI, priority: FastImage.priority.high }}
             style={{
               height: moderateScale(96),
               width: moderateScale(96),
@@ -362,25 +362,25 @@ export default function DashBoardEight({
     );
   };
 
-  const renderFeaturedProducts = ({item}) => {
+  const renderFeaturedProducts = ({ item }) => {
     return (
       <ProductsComp
         item={item}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
         }
       />
     );
   };
 
-  const renderSale = ({item}) => {
+  const renderSale = ({ item }) => {
     return (
       <ProductsComp
         // isDiscount
         item={item}
-        imageStyle={{height: moderateScale(186)}}
+        imageStyle={{ height: moderateScale(186) }}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
         }
       />
     );
@@ -393,10 +393,10 @@ export default function DashBoardEight({
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
+        contentContainerStyle={{ flexGrow: 1 }}>
         <BannerLoader
           // isVendorLoader
-          viewStyles={{marginTop: moderateScale(12)}}
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
 
         {appStyle?.homePageLayout === 5 &&
@@ -427,16 +427,16 @@ export default function DashBoardEight({
             </View>
           )}
         <CategoryLoader2
-          viewStyles={{marginVertical: moderateScale(16)}}
+          viewStyles={{ marginVertical: moderateScale(16) }}
           radius={20}
         />
 
         <CategoryLoader2
-          viewStyles={{marginBottom: moderateScale(16)}}
+          viewStyles={{ marginBottom: moderateScale(16) }}
           radius={20}
         />
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <HeaderLoader
             widthLeft={moderateScale(180)}
             rectWidthLeft={moderateScale(180)}
@@ -457,15 +457,15 @@ export default function DashBoardEight({
 
         <BannerLoader
           // isVendorLoader
-          viewStyles={{marginTop: moderateScale(12)}}
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
         <BannerLoader
           // isVendorLoader
-          viewStyles={{marginTop: moderateScale(12)}}
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
         <BannerLoader
           // isVendorLoader
-          viewStyles={{marginTop: moderateScale(12)}}
+          viewStyles={{ marginTop: moderateScale(12) }}
         />
       </ScrollView>
     );
@@ -501,7 +501,7 @@ export default function DashBoardEight({
               <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
             </TouchableOpacity>
           )}
-          <Menu style={{alignSelf: 'flex-end'}}>
+          <Menu style={{ alignSelf: 'flex-end' }}>
             <MenuTrigger>
               <View style={styles.menuView}>
                 <Image
@@ -567,7 +567,7 @@ export default function DashBoardEight({
       orderDetail: {
         dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
       },
-      selectedVendor: {id: item?.vendors[0].vendor_id},
+      selectedVendor: { id: item?.vendors[0].vendor_id },
     });
   };
 
@@ -576,58 +576,58 @@ export default function DashBoardEight({
       <View>
         {tempCartData && tempCartData.length
           ? tempCartData.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => onPressViewEditAndReplace(item)}
-                  style={{
-                    padding: moderateScale(8),
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    // alignItems: 'center',
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors?.primary_color.substr(1),
-                      20,
-                    ),
-                    marginHorizontal: moderateScale(15),
-                    marginTop: moderateScale(15),
-                    borderRadius: moderateScale(5),
-                    borderWidth: moderateScale(0.5),
-                    borderColor: themeColors?.primary_color,
-                  }}>
-                  <View style={{flex: 0.7}}>
-                    <Text
-                      style={{
-                        fontSize: textScale(12),
-                        fontFamily: fontFamily.medium,
-                      }}>
-                      {strings.YOURDRIVERHASMODIFIED}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: textScale(12),
-                        paddingTop: moderateScale(5),
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      {strings.VIEW_DETAIL}
-                    </Text>
-                  </View>
-                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
-                    <Text
-                      style={{
-                        fontSize: textScale(14),
-                        fontFamily: fontFamily.medium,
-                      }}>{`#${item?.order_number}`}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })
+            return (
+              <TouchableOpacity
+                onPress={() => onPressViewEditAndReplace(item)}
+                style={{
+                  padding: moderateScale(8),
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  // alignItems: 'center',
+                  backgroundColor: getColorCodeWithOpactiyNumber(
+                    themeColors?.primary_color.substr(1),
+                    20,
+                  ),
+                  marginHorizontal: moderateScale(15),
+                  marginTop: moderateScale(15),
+                  borderRadius: moderateScale(5),
+                  borderWidth: moderateScale(0.5),
+                  borderColor: themeColors?.primary_color,
+                }}>
+                <View style={{ flex: 0.7 }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(12),
+                      fontFamily: fontFamily.medium,
+                    }}>
+                    {strings.YOURDRIVERHASMODIFIED}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(12),
+                      paddingTop: moderateScale(5),
+                      fontFamily: fontFamily.bold,
+                    }}>
+                    {strings.VIEW_DETAIL}
+                  </Text>
+                </View>
+                <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(14),
+                      fontFamily: fontFamily.medium,
+                    }}>{`#${item?.order_number}`}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })
           : null}
       </View>
     );
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {/* <SearchBar2
         placeHolderTxt={
           toggleData?.profile?.preferences?.search_nomenclature ||
@@ -638,7 +638,7 @@ export default function DashBoardEight({
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -687,7 +687,7 @@ export default function DashBoardEight({
                   </View>
                 )}
                 ItemSeparatorComponent={() => (
-                  <View style={{height: moderateScale(10)}} />
+                  <View style={{ height: moderateScale(10) }} />
                 )}
               />
 
@@ -705,13 +705,13 @@ export default function DashBoardEight({
                           renderItem={renderBrands}
                           keyExtractor={(item) => item.id.toString()}
                           ItemSeparatorComponent={() => (
-                            <View style={{marginRight: moderateScale(12)}} />
+                            <View style={{ marginRight: moderateScale(12) }} />
                           )}
                           ListHeaderComponent={() => (
-                            <View style={{marginLeft: moderateScale(16)}} />
+                            <View style={{ marginLeft: moderateScale(16) }} />
                           )}
                           ListFooterComponent={() => (
-                            <View style={{marginRight: moderateScale(16)}} />
+                            <View style={{ marginRight: moderateScale(16) }} />
                           )}
                         />
                       </>
@@ -740,13 +740,13 @@ export default function DashBoardEight({
                       renderItem={renderFeaturedProducts}
                       keyExtractor={(item) => item.id.toString()}
                       ItemSeparatorComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
+                        <View style={{ marginRight: moderateScale(16) }} />
                       )}
                       ListHeaderComponent={() => (
-                        <View style={{marginLeft: moderateScale(16)}} />
+                        <View style={{ marginLeft: moderateScale(16) }} />
                       )}
                       ListFooterComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
+                        <View style={{ marginRight: moderateScale(16) }} />
                       )}
                     />
                   </>
@@ -769,13 +769,13 @@ export default function DashBoardEight({
                         renderItem={renderFeaturedProducts}
                         keyExtractor={(item) => item.id.toString()}
                         ItemSeparatorComponent={() => (
-                          <View style={{marginRight: moderateScale(16)}} />
+                          <View style={{ marginRight: moderateScale(16) }} />
                         )}
                         ListHeaderComponent={() => (
-                          <View style={{marginLeft: moderateScale(16)}} />
+                          <View style={{ marginLeft: moderateScale(16) }} />
                         )}
                         ListFooterComponent={() => (
-                          <View style={{marginRight: moderateScale(16)}} />
+                          <View style={{ marginRight: moderateScale(16) }} />
                         )}
                       />
                     </>
