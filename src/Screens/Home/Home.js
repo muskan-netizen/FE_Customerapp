@@ -14,7 +14,6 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-
 import Voice from '@react-native-voice/voice';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
@@ -41,6 +40,7 @@ import {
   DashBoardTen,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
+import { openBrowser } from '../../utils/openNativeApp';
 
 export default function Home({ route, navigation }) {
   const paramData = route?.params;
@@ -180,13 +180,10 @@ export default function Home({ route, navigation }) {
     }, []),
   );
 
-  console.log(redirectedFrom, "redirectedFrom");
-
   useEffect(() => {
     if (redirectedFrom == 'from_deepLinking') {
       navigation.navigate(navigationStrings.TRACKING)
     }
-
   }, [redirectedFrom])
 
   useEffect(() => {
@@ -662,6 +659,10 @@ export default function Home({ route, navigation }) {
   //On Press banner
   const bannerPress = (data) => {
     let item = {};
+    if (data?.redirect_to == "Url") {
+      openBrowser(data?.link_url)
+      return
+    }
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {
         moveToNewScreen(navigationStrings.PRODUCT_LIST, {

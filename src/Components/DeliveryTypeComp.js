@@ -44,7 +44,6 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
   });
 
   const { tabs } = state;
-  console.log(appData, 'tabs------------');
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {

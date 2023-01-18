@@ -46,7 +46,6 @@ export default function Location({ route, navigation }) {
 
   const paramsDataForEditDropLocation = data;
 
-  console.log(data, "orderDropLocationsorderDropLocations");
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -226,7 +225,7 @@ export default function Location({ route, navigation }) {
             paramsDataForEditDropLocation?.editIndex
           ] = {
             ...allDropOffLocationsCollection[
-              paramsDataForEditDropLocation?.editIndex
+            paramsDataForEditDropLocation?.editIndex
             ],
             address: details?.formatted_address,
             latitude: details?.geometry?.location?.lat,
@@ -236,7 +235,7 @@ export default function Location({ route, navigation }) {
           navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
             ...paramsDataForEditDropLocation,
             orderDropLocations: allDropOffLocationsCollection,
-            showLocationUpdateButton:true
+            showLocationUpdateButton: true
           });
         }
       } catch (error) {
