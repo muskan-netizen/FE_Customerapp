@@ -71,6 +71,8 @@ import {
   getCurrentLocationFromApi,
 } from '../../../utils/googlePlaceApi';
 import useInterval from '../../../utils/useInterval';
+import * as RNLocalize from 'react-native-localize';
+import WrapperContainer from '../../../Components/WrapperContainer';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -84,6 +86,7 @@ export default function TaxiHomeDashbord({
   isDineInSelected = false,
   location = {},
   curLatLong = {},
+  currentLocation={}
 }) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -149,6 +152,7 @@ export default function TaxiHomeDashbord({
     isVisibleAddressModal: false,
     pickupAddress: {},
     allListedDrivers: [],
+    isComponentLoading:false
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -177,6 +181,7 @@ export default function TaxiHomeDashbord({
     fullMapShow,
     selectViaMap,
     allListedDrivers,
+    isComponentLoading
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
   console.log(appData, 'appDataappData');
@@ -198,6 +203,7 @@ export default function TaxiHomeDashbord({
       });
       if (!!userData?.auth_token) {
         getAllAddress();
+        getLiveLocation()
       }
     }, []),
   );
@@ -392,6 +398,122 @@ export default function TaxiHomeDashbord({
     }
   };
 
+
+/********************************** instunt booking funcationality module code starts here *****************************/
+
+const getLiveLocation = async () => {
+  const locPermissionDenied = await locationPermission();
+  if (locPermissionDenied) {
+    const {latitude, longitude} = await getCurrentLocationFromApi();
+    _getAllCarAndPrices(latitude, longitude);
+   
+  }
+};
+
+/********************************** get list of vichales based on the vendor and category *********************/
+
+
+
+
+/********************** instunt order place api code written here ************************/
+
+  console.log(currentLocation,"currentLocation");
+
+  const _onInstuntOrderPlace = ()=>{
+  
+    updateState({
+      isComponentLoading:true
+    })
+
+    const vendorIdForInstuntBooking = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.id;
+    const productIdForIstuntBooking = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.products[0]?.id
+    const locationForOrder = [{...currentLocation,pre_address:currentLocation?.address,task_type_id: 1}]
+    const productSKu =appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.products[0]?.sku
+
+  let data = {};
+  data['task_type'] =  'now';
+  data['schedule_time'] = ''
+  data['is_one_push_booking']=1;
+  data['recipient_phone'] = '';
+  data['recipient_email'] = '';
+  data['task_description'] = '';
+  data['amount'] = 0
+  data['tags_amount'] = 0;
+  data['tollamount'] = 0;
+  data['servicechargeamount'] = 0;
+  data['payment_option_id'] = 1;
+  data['vendor_id'] = vendorIdForInstuntBooking;
+  data['product_id'] = productIdForIstuntBooking;
+  data['currency_id'] = currencies?.primary_currency?.id;
+  data['tasks'] = locationForOrder;
+  data['images_array'] = [];
+  data['user_product_order_form'] =[];
+  data["is_postpay"]=''
+  data["order_time_zone"] = RNLocalize.getTimeZone();
+  data["bookingType"] = '';
+  (data[
+    "friendName"
+  ] = '')
+   
+  console.log(data,"datadatadatadatadatadata");
+
+  actions
+      .placeDelievryOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        if (res && res?.status == 200) {
+          let extraData = {
+            orderId: res?.data?.id,
+            fromVendorApp: true,
+            selectedVendor: {id: vendorIdForInstuntBooking},
+            orderDetail: res?.data,
+            fromCab: true,
+            pickup_taxi:navigationStrings.HOME,
+            totalDuration: 0,
+            selectedCarOption: productSKu,
+          };
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            extraData
+          );
+        }
+
+
+        showSuccess(res?.message)
+        updateState({
+          isComponentLoading:false
+        })
+    
+      })
+      .catch(errorMethod);
+    
+}
+
+
+
+  //error handling of api
+  const errorMethod = (error) => {
+    // alert("utyhtgyrtertcytfgh")
+    updateState({
+      isComponentLoading:false
+    })
+    console.log(error, "errorOccured");
+    showError(error?.message || error?.error || error?.description);
+  };
+
+
+
+    /*********************************************** instunt booking module code ends here *************************/
+
+
+
+
+
+
+
   const _renderItem = ({item}) => {
     return (
       <TaxiHomeCategoryCard
@@ -401,24 +523,7 @@ export default function TaxiHomeDashbord({
     );
   };
 
-  const latitudes = !!curLatLong?.latitude
-    ? parseFloat(curLatLong?.latitude)
-    : !!location?.latitude
-    ? parseFloat(location?.latitude)
-    : appData?.profile?.preferences?.Default_latitude;
 
-  const longitudes = !!curLatLong?.longitude
-    ? parseFloat(curLatLong?.longitude)
-    : !!location?.longitude
-    ? parseFloat(location?.longitude)
-    : appData?.profile?.preferences?.Default_latitude;
-
-  console.log(latitudes, 'latitudeslatitudes');
-  console.log(
-    appData?.profile?.preferences?.Default_latitude,
-    'latitudeslatitudeslongitudes',
-  );
-  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes');
 
   const _ModalMainView = () => {
     return (
@@ -675,13 +780,14 @@ export default function TaxiHomeDashbord({
   };
 
   return (
-    <View
+    <WrapperContainer
       style={{
         flex: 1,
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : colors.white,
-      }}>
+      }}
+      isLoading={isComponentLoading}>
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -806,7 +912,9 @@ export default function TaxiHomeDashbord({
                   />
                 </View>
               </TouchableOpacity>}
+            
             </View>
+          
             {allSavedAddress.length > 0 && userData?.auth_token ? (
               <></>
             ) : (
@@ -934,6 +1042,15 @@ export default function TaxiHomeDashbord({
                   </MapView>
                 }
               </TouchableOpacity>
+
+              {!!appData?.profile?.preferences?.is_one_push_book_enable &&
+               <GradientButton containerStyle={{
+                marginHorizontal:moderateScale(10),
+                marginTop:moderateScaleVertical(20)
+                }}  btnText={'Instunt Book'}
+                onPress={_onInstuntOrderPlace}/>
+              }
+             
             </View>
           </>
         )}
@@ -1082,6 +1199,6 @@ export default function TaxiHomeDashbord({
           </View>
         </View>
       </Modal>
-    </View>
+    </WrapperContainer>
   );
 }

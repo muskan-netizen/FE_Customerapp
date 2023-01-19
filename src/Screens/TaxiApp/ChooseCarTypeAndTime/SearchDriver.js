@@ -87,7 +87,7 @@ export default function ({
               width: moderateScale(100),
               // marginVertical: moderateScaleVertical(40),
             }}>
-            {(isWaitingOver)? (
+            {(isWaitingOver && !appData?.profile?.preferences?.is_one_push_book_enable)? (
               <View>
                 <Image
                   source={imagePath.icNoDrivers}

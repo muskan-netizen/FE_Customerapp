@@ -318,6 +318,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       updateState({showCarModal: true, btnLoader: true});
     }
 
+
+    console.log(paramData?.location,"paramData?.location");
     updateState({isLoading: true, showVendorModal: false});
     actions
       .getAllCarAndPrices(
