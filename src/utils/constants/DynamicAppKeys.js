@@ -2248,7 +2248,7 @@ const appIds = {
   }),
   carryfood: Platform.select({
     ios: 'com.carryfood.royoorders',
-    android: 'com.carryfood.royoorders',
+    android: 'com.carryFood',
   }),
   nhazi: Platform.select({
     ios: 'com.nhazi.royoorders',
