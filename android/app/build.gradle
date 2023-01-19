@@ -207,15 +207,15 @@ android {
 
 
     productFlavors{
-   uberWeeds{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.uberweeds.royoorders'
-            resValue "string", "app_name", "UberWeeds" 
-            resValue "string", "host_name", ""
+ gokab{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.gokab'
+                resValue "string", "app_name", "GoKab"
+                resValue "string", "host_name", ""
             }
 
     }
@@ -8280,6 +8280,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.etaim.royoorder'
     //             resValue "string", "app_name", "Etaim"
+    //             resValue "string", "host_name", ""
+    //         }
+    // dotTaxiApp{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.dotTaxiApp.royoorder'
+    //             resValue "string", "app_name", "Dot Taxi App"
     //             resValue "string", "host_name", ""
     //         }
             

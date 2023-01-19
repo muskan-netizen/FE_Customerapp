@@ -513,7 +513,8 @@ const shortCodes = {
   liverpoolEats: '08e554',
   oaks: 'db5f29',
   buzy: '5e7246',
-  etaim: '4b3283'
+  etaim: '4b3283',
+  dotTaxiApp: 'ba540d'
 };
 
 const appIds = {
@@ -2556,6 +2557,10 @@ const appIds = {
   etaim: Platform.select({
     ios: 'com.etaim.royoorder',
     android: 'com.etaim.royoorder',
+  }),
+  dotTaxiApp: Platform.select({
+    ios: 'com.dotTaxiApp.royoorder',
+    android: 'com.dotTaxiApp.royoorder',
   }),
 };
 

@@ -3172,6 +3172,12 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.dotTaxiApp:
+          updateState({
+            shortCode: shortCodes.dotTaxiApp,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();
