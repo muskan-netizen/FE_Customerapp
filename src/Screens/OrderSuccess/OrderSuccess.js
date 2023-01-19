@@ -16,7 +16,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getBuildId } from 'react-native-device-info';

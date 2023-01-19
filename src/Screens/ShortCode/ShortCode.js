@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, View } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 import { MaterialIndicator } from "react-native-indicators";

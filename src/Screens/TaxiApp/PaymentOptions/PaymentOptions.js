@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { useSelector } from "react-redux";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";

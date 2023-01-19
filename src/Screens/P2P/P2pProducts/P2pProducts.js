@@ -28,7 +28,7 @@ import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
 import {isEmpty} from 'lodash';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';

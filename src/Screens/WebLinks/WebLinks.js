@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import RenderHtml, {HTML} from 'react-native-render-html';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';

@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import Geocoder from "react-native-geocoding";
 import { useSelector } from "react-redux";

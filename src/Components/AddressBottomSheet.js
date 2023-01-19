@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';

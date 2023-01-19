@@ -37,7 +37,7 @@ import {
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function BrandProducts({route, navigation}) {

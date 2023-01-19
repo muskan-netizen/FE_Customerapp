@@ -2,7 +2,7 @@ import codes from 'country-calling-code';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';

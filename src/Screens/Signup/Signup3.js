@@ -32,7 +32,7 @@ import validations from '../../utils/validations';
 import stylesFun from './styles';
 import commonStylesFun from '../../styles/commonStyles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';

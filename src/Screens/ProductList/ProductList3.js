@@ -18,7 +18,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators';

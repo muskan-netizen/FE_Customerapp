@@ -10,7 +10,7 @@ import {
 } from '../styles/responsiveSize';
 import Elevations from 'react-native-elevation';
 import {BlurView} from '@react-native-community/blur';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 const CustomBottomTabBarFive = ({
   state,

@@ -37,7 +37,7 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function Products({route, navigation}) {

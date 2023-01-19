@@ -11,7 +11,7 @@ import {
   View,
   Modal,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import * as RNLocalize from 'react-native-localize';

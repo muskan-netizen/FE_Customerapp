@@ -1,7 +1,7 @@
 import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';

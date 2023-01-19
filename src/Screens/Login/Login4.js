@@ -24,7 +24,7 @@ import colors from '../../styles/colors';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import {

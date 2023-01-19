@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 

@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, Image, StatusBar} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';

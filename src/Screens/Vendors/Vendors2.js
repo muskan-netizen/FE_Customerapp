@@ -21,7 +21,7 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function Vendors2({route, navigation}) {

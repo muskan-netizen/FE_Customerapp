@@ -5,7 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Text, View } from 'react-native';
 import codePush from 'react-native-code-push';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import FlashMessage from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';

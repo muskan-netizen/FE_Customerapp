@@ -31,7 +31,7 @@ import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
 import {BlurView} from '@react-native-community/blur';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import Geolocation from 'react-native-geolocation-service';
 import {chekLocationPermission} from '../../../utils/permissions';

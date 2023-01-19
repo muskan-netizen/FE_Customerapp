@@ -42,7 +42,7 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 

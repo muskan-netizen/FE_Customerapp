@@ -25,7 +25,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';

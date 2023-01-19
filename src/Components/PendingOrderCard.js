@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';

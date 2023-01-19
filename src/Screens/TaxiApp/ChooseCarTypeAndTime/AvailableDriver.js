@@ -1,7 +1,7 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import React, { useRef } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import { UIActivityIndicator } from 'react-native-indicators';

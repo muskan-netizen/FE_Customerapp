@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import colors from '../../styles/colors';
 import {
   height,

@@ -3,7 +3,7 @@ import {StyleSheet, Image} from 'react-native';
 import {moderateScale} from '../styles/responsiveSize';
 import colors from '../styles/colors';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 const RoundImg = ({imgStyle = {}, img = {}, size = 76}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);

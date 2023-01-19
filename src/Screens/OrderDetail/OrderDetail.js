@@ -27,7 +27,7 @@ import {
 } from "react-native";
 
 import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 // import { showMessage } from 'react-native-flash-message';

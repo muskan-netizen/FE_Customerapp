@@ -23,7 +23,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function VendorDetail2({navigation, route}) {

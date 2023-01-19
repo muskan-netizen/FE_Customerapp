@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';

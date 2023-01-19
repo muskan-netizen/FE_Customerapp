@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Platform, Text, TouchableOpacity} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Shadow} from 'react-native-shadow-2';

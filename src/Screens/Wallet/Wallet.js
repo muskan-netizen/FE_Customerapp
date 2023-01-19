@@ -37,7 +37,7 @@ import {
 } from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import Modal from 'react-native-modal';
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';

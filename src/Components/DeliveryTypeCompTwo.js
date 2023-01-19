@@ -17,7 +17,7 @@ import {
   import {MyDarkTheme} from '../styles/theme';
   import colors from '../styles/colors';
   import imagePath from '../constants/imagePath';
-  import {useDarkMode} from 'react-native-dark-mode';
+  import {useDarkMode} from 'react-native-dynamic';
   import {isEmpty} from 'lodash';
   
   function DeliveryTypeCompTwo({selectedToggle = () => {}}) {

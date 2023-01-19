@@ -14,7 +14,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import stylesFunc from './styles';

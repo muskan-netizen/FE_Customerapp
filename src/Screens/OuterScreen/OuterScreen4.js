@@ -37,7 +37,7 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';

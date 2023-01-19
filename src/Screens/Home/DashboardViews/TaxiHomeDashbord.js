@@ -51,7 +51,7 @@ import {useNavigation} from '@react-navigation/native';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import actions from '../../../redux/actions';
 import BottomViewModal from '../../../Components/BottomViewModal';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';

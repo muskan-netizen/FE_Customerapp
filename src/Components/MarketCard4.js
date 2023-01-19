@@ -8,7 +8,7 @@ import {
     View,
 } from 'react-native';
 import { Grayscale } from 'react-native-color-matrix-image-filters';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';

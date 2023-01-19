@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';

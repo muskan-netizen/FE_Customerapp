@@ -37,7 +37,7 @@ import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import actions from '../../../redux/actions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {checkValueExistInAry} from '../../../utils/commonFunction';
 import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';

@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';

@@ -20,7 +20,7 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import VendorsDesign1 from './Vendors2';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function Vendors({route, navigation}) {

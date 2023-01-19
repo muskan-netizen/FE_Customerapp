@@ -29,7 +29,7 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 import IconTextRow from './IconTextRow';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import strings from '../constants/lang';
 import {string} from 'prop-types';
 import MarketCard3 from './MarketCard3';

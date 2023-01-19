@@ -38,7 +38,7 @@ import {
 import stylesFunc from "./styles";
 import { cloneDeep, isEmpty } from "lodash";
 import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import FastImage from "react-native-fast-image";
 import Modal from "react-native-modal";
 import navigationStrings from "../../../navigation/navigationStrings";

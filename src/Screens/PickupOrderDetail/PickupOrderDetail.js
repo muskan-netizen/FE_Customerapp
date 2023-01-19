@@ -19,7 +19,7 @@ import {useIsFocused} from '@react-navigation/native';
 import OrderDetailView from './OrderDetailView';
 import Communications from 'react-native-communications';
 import navigationStrings from '../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import SearchingForDriverView from '../TaxiApp/PickupTaxiOrderDetail/SearchingForDriverView';
 

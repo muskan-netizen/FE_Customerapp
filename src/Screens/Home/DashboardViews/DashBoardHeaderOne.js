@@ -26,7 +26,7 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {SvgUri} from 'react-native-svg';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderOne({navigation = {}, location = []}) {

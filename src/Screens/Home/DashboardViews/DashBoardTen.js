@@ -13,7 +13,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {

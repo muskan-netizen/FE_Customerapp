@@ -16,7 +16,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import FastImage from 'react-native-fast-image';
 import BlurImages from './BlurImages';

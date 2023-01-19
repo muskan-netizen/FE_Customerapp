@@ -28,7 +28,7 @@ import {
   TaxiHomeDashbord,
 } from '../DashboardViews/Index';
 import {MyDarkTheme, MyDefaultTheme} from '../../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';

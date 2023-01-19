@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {TextInput} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';

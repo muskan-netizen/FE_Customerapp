@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import Share from 'react-native-share';
 import {useSelector} from 'react-redux';

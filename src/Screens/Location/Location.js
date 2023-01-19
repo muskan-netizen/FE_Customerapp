@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
 import { useSelector } from "react-redux";
 import SearchPlaces from "../../Components/SearchPlaces";

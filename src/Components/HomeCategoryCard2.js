@@ -12,7 +12,7 @@ import {
 import {getImageUrl} from '../utils/helperFunctions';
 import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import {getBundleId} from 'react-native-device-info';
 import {appIds} from '../utils/constants/DynamicAppKeys';

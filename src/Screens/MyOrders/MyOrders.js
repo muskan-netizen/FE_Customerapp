@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import FastImage from "react-native-fast-image";
 import * as RNLocalize from "react-native-localize";
 import { useIsFocused } from "@react-navigation/native";
