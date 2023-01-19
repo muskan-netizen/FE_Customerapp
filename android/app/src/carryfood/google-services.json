@@ -1,41 +1,58 @@
 {
   "project_info": {
-    "project_number": "625240769618",
-    "project_id": "carry-food-f995c",
-    "storage_bucket": "carry-food-f995c.appspot.com"
+    "project_number": "1074119417344",
+    "project_id": "carry-food-c5c89",
+    "storage_bucket": "carry-food-c5c89.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:625240769618:android:a2ad5d064348d945c84b8b",
+        "mobilesdk_app_id": "1:1074119417344:android:3a25620dcab3fffde102e5",
         "android_client_info": {
-          "package_name": "com.carryfood.royoorders"
+          "package_name": "com.carryFood"
         }
       },
       "oauth_client": [
         {
-          "client_id": "625240769618-tpitc14q8iq842akrgth7m9mrrg56tmn.apps.googleusercontent.com",
+          "client_id": "1074119417344-d4hnu2ita64bm3kn3mh49064qdursqp2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carryFood",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1074119417344-mfv435nm4jac5m4tv61fbdmr7dlcgg80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carryFood",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1074119417344-rm302a4u5jpbaht8mtqdlqg2vdn04fng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carryFood",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1074119417344-qo3jl0dclba3tr3e35g3qr5d8ag9k6qg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBgvYJw0vmFzhC99ITX5P2qxxKwfDxa6hU"
+          "current_key": "AIzaSyDbjG3E3Ir2okrCdPNcxgSumXEzYJE4VM4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "625240769618-tpitc14q8iq842akrgth7m9mrrg56tmn.apps.googleusercontent.com",
+              "client_id": "1074119417344-qo3jl0dclba3tr3e35g3qr5d8ag9k6qg.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "625240769618-l444cmv9kgcejnqqni1fjpqa67i76k02.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.carryfood.royoorders"
-              }
             }
           ]
         }

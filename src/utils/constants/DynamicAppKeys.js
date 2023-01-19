@@ -1631,8 +1631,8 @@ const appIds = {
     android: 'com.airlinesRecruiter',
   }),
   nineOneTwo: Platform.select({
-    ios: 'com.nineOneTwo',
-    android: 'com.nineOneTwo',
+    ios: 'com.nineonetwo.order',
+    android: 'com.nineonetwo.order',
   }),
   trip: Platform.select({
     ios: 'com.app.trip',
@@ -2255,7 +2255,7 @@ const appIds = {
   }),
   carryfood: Platform.select({
     ios: 'com.carryfood.royoorders',
-    android: 'com.carryfood.royoorders',
+    android: 'com.carryFood',
   }),
   nhazi: Platform.select({
     ios: 'com.nhazi.royoorders',

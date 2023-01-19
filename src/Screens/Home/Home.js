@@ -438,7 +438,10 @@ export default function Home({route, navigation}) {
           }
         });
       }
+      console.log(selectedVendorType, defaultVendorType,
+        'defaultVendorType....defaultVendorType')
       if (!selectedVendorType) {
+  
         actions.dineInData(defaultVendorType);
       }
       console.log(
