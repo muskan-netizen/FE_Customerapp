@@ -205,16 +205,17 @@ android {
 
     flavorDimensions "appType"
 
+
     productFlavors{
-          liverpoolEats{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.liverpoolEats.royoorder'
-                resValue "string", "app_name", "Liverpool Eats"
-                resValue "string", "host_name", ""
+   uberWeeds{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.uberweeds.royoorders'
+            resValue "string", "app_name", "UberWeeds" 
+            resValue "string", "host_name", ""
             }
 
     }
@@ -8249,6 +8250,36 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.liverpoolEats.royoorder'
     //             resValue "string", "app_name", "Liverpool Eats"
+    //             resValue "string", "host_name", ""
+    //         }
+    // oaks{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.oaks.royoorder'
+    //             resValue "string", "app_name", "Oaks"
+    //             resValue "string", "host_name", ""
+    //         }
+    // buzy{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.buszy.royoorder'
+    //             resValue "string", "app_name", "Buzy"
+    //             resValue "string", "host_name", ""
+    //         }
+    // etaim{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.etaim.royoorder'
+    //             resValue "string", "app_name", "Etaim"
     //             resValue "string", "host_name", ""
     //         }
             

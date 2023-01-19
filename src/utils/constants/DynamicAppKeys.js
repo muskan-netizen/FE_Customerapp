@@ -510,7 +510,10 @@ const shortCodes = {
   superApp: '041795',
   nounou: '7ab01a',
   laith: 'f235c4',
-  liverpoolEats: '08e554'
+  liverpoolEats: '08e554',
+  oaks: 'db5f29',
+  buzy: '5e7246',
+  etaim: '4b3283'
 };
 
 const appIds = {
@@ -2541,6 +2544,18 @@ const appIds = {
   liverpoolEats: Platform.select({
     ios: 'com.liverpoolEats.royoorder',
     android: 'com.liverpoolEats.royoorder',
+  }),
+  oaks: Platform.select({
+    ios: 'com.oaks.royoorder',
+    android: 'com.oaks.royoorder',
+  }),
+  buzy: Platform.select({
+    ios: 'com.buszy.royoorder',
+    android: 'com.buszy.royoorder',
+  }),
+  etaim: Platform.select({
+    ios: 'com.etaim.royoorder',
+    android: 'com.etaim.royoorder',
   }),
 };
 

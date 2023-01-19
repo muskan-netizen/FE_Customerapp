@@ -3154,6 +3154,24 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.oaks:
+          updateState({
+            shortCode: shortCodes.oaks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.buzy:
+          updateState({
+            shortCode: shortCodes.buzy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.etaim:
+          updateState({
+            shortCode: shortCodes.etaim,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();
