@@ -341,6 +341,21 @@ const ProductCard3 = ({
                 )}
               </Text>
             )}
+
+          {!!data?.is_recurring_booking &&
+            <TouchableOpacity
+              onPress={addToCart}
+              activeOpacity={0.8}>
+              <Image
+                style={{
+                  tintColor: isDarkMode
+                    ? colors.white
+                    : themeColors.primary_color,
+                }}
+                source={imagePath.ic_calendar}
+              />
+            </TouchableOpacity>
+          }
         </View>
 
         <View style={{}}>
@@ -539,6 +554,7 @@ const ProductCard3 = ({
                         : colors.greyColor2,
                       width: moderateScale(100),
                       minHeight: moderateScaleVertical(35),
+                      marginTop: moderateScaleVertical(5),
                     }}>
                     {selectedItemID == data?.id ? (
                       <UIActivityIndicator
