@@ -121,8 +121,9 @@ const filtersData = [
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
-  // console.log(route.params, 'route.params');
   const { data } = route.params;
+
+  console.log(data, 'route.params');
 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
@@ -511,7 +512,7 @@ export default function Products({ route, navigation }) {
   const listHeaderComponent2 = () => {
     return (
       <View style={{height: height/2.4}}>
-        {data?.categoryExist ? (
+        {false? (
           <View
             // key={AnimatedHeaderValue}
             // duration={10}
@@ -3491,7 +3492,7 @@ export default function Products({ route, navigation }) {
             {((AnimatedHeaderValue && productListData.length > 6) ||
               (!!sectionListData?.length && AnimatedHeaderValue)) && (
           
-                <View
+               <View
                   style={{
                     ...styles.headerStyle,
                     marginBottom: moderateScale(12),
@@ -3581,47 +3582,48 @@ export default function Products({ route, navigation }) {
                       />
                     </View>
                   ) : (
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <TouchableOpacity
-                        activeOpacity={0.8}
-                        // onPress={() => updateState({isSearch: true})}
-                        onPress={moveToNewScreen(
-                          navigationStrings.SEARCHPRODUCTOVENDOR,
-                          {
-                            type: data?.vendor
-                              ? staticStrings.VENDOR
-                              : staticStrings.CATEGORY,
-                            id: data?.vendor ? data?.id : productListId?.id,
-                          },
-                        )}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                          }}
-                          source={
-                            !!data?.showAddToCart ? false : imagePath.icSearchb
-                          }
-                        />
-                      </TouchableOpacity>
-                      <View style={{ marginHorizontal: moderateScale(8) }} />
-                      <TouchableOpacity
-                        onPress={onShare}
-                        hitSlop={hitSlopProp}
-                        activeOpacity={0.8}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                          }}
-                          source={imagePath.icShareb}
-                        />
-                      </TouchableOpacity>
-                    </View>
+                    <></>
+                    // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    //   <TouchableOpacity
+                    //     activeOpacity={0.8}
+                    //     // onPress={() => updateState({isSearch: true})}
+                    //     onPress={moveToNewScreen(
+                    //       navigationStrings.SEARCHPRODUCTOVENDOR,
+                    //       {
+                    //         type: data?.vendor
+                    //           ? staticStrings.VENDOR
+                    //           : staticStrings.CATEGORY,
+                    //         id: data?.vendor ? data?.id : productListId?.id,
+                    //       },
+                    //     )}>
+                    //     <Image
+                    //       style={{
+                    //         tintColor: isDarkMode
+                    //           ? MyDarkTheme.colors.text
+                    //           : colors.black,
+                    //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    //       }}
+                    //       source={
+                    //         !!data?.showAddToCart ? false : imagePath.icSearchb
+                    //       }
+                    //     />
+                    //   </TouchableOpacity>
+                    //   <View style={{ marginHorizontal: moderateScale(8) }} />
+                    //   <TouchableOpacity
+                    //     onPress={onShare}
+                    //     hitSlop={hitSlopProp}
+                    //     activeOpacity={0.8}>
+                    //     <Image
+                    //       style={{
+                    //         tintColor: isDarkMode
+                    //           ? MyDarkTheme.colors.text
+                    //           : colors.black,
+                    //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    //       }}
+                    //       source={imagePath.icShareb}
+                    //     />
+                    //   </TouchableOpacity>
+                    // </View>
                   )}
                 
                 {isSearch ? (
@@ -3685,7 +3687,7 @@ export default function Products({ route, navigation }) {
                     </TouchableOpacity>
                   </View>
                 )}
-              </View>
+              </View> 
             )}
 
             {!!categoryInfo?.is_show_products_with_category ? (

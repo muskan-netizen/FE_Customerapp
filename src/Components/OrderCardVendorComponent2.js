@@ -59,7 +59,7 @@ const OrderCardVendorComponent2 = ({
   const [selectedCancelReason, setSelectedCancelReason] = useState({});
   const [cancelReasons, setCancelReasons] = useState([]);
   const [isCancelOrderContentLoader, setIsCancelOrderContentLoader] =
-    useState(true);
+    useState(false);
 
   const {
     appData,

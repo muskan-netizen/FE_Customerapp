@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
- export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -383,7 +383,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://swatirx.com/api/v1';
 // sxm2go
-//  export const API_BASE_URL = 'https://order.sxm2go.com/api/v1';
+ export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 // skyline
 // export const API_BASE_URL = 'https://skyline.royoorders.com/api/v1';
 //bliss
