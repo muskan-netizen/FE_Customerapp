@@ -207,27 +207,26 @@ android {
 
     productFlavors{
         
-        nineOneTwo{
+         speedyDelivery{ 
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.nineonetwo.order'
-            resValue "string", "app_name", "912 Clients"
+            applicationId 'com.speedydelivery.orders'
+            resValue "string", "app_name", "Speedy - Delivery & Pickup" 
             resValue "string", "host_name", ""
             }
-            carryfood{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.carryFood'
-            resValue "string", "app_name", "Carry Food" 
-            resValue "string", "host_name", ""
+     iPicknDrop{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.iPicknDrop.orderApp'
+                resValue "string", "app_name", "iPd - iPicknDrop"
+                resValue "string", "host_name", ""
             }
-
     }
 
     // productFlavors {
