@@ -3473,7 +3473,7 @@
 		2CFA608328D206810084347D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA608228D206790084347D /* GoogleService-Info.plist */; };
 		2EBBC8493E083614BC1101D9 /* libPods-available_pods-PointoneExpediteDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A53EF3E4B78F9AA515647318 /* libPods-available_pods-PointoneExpediteDelivery.a */; };
 		2F914C8F1E9CBFFF873D8E35 /* libPods-available_pods-Lopht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92304DF8170022B2D079E90 /* libPods-available_pods-Lopht.a */; };
-		2FC312120B6D7B1D7A1A578B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		2FC312120B6D7B1D7A1A578B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2FC5999547F78B9B017D6F71 /* libPods-available_pods-BKSTaxi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22C5050000527B57D0E95AC2 /* libPods-available_pods-BKSTaxi.a */; };
 		2FD7BD7EC2D1FF39DB1C0FCE /* libPods-available_pods-GoTech.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C693F4CF7C87BC7A36730A63 /* libPods-available_pods-GoTech.a */; };
 		2FF2B85A2D4427B5926D3B09 /* libPods-available_pods-Mozmarcas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DEB96F619582D0ADC2B145D /* libPods-available_pods-Mozmarcas.a */; };
@@ -7674,7 +7674,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -8495,7 +8495,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -11821,7 +11821,7 @@
 		9E6254E8125F7F0F8AE530D7 /* libPods-available_pods-Uven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F664AF6ED9F0E76582AF8A /* libPods-available_pods-Uven.a */; };
 		9E81BEE627CF256276E5BD91 /* libPods-available_pods-FresHest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559E126776F64BD00478ADBC /* libPods-available_pods-FresHest.a */; };
 		9EC8990BEE695CD0D357A4DB /* libPods-available_pods-CaribeClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B835C4010C61BF885A2BFB2 /* libPods-available_pods-CaribeClean.a */; };
-		9F7626E4A9B766B3349A6020 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9F7626E4A9B766B3349A6020 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		9FCDB017DCEFA069602CD2A3 /* libPods-available_pods-PaySic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6237883D58847A6645C0AF7 /* libPods-available_pods-PaySic.a */; };
 		A027DBD863A517500B06C5A9 /* libPods-available_pods-Holla.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE77533A9DBB0C68789E050 /* libPods-available_pods-Holla.a */; };
 		A03228E02C2A0D68AD0DCEA3 /* libPods-available_pods-Kwivar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D41B38C0CDC2BB69EBCE6FB7 /* libPods-available_pods-Kwivar.a */; };
@@ -11911,7 +11911,7 @@
 		CED3A705505FEE2F139A16D8 /* libPods-available_pods-EzMobileFuel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA14094F34CC24E616B7AAC7 /* libPods-available_pods-EzMobileFuel.a */; };
 		CF0E774C3E1D4A407CB32145 /* libPods-available_pods-Punnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06AD3B87A57DCFE87492F7B9 /* libPods-available_pods-Punnet.a */; };
 		D06919DE201FA30B4ECB8FA2 /* libPods-available_pods-IGoLux.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A8FBD79BA54895EA1849ACB /* libPods-available_pods-IGoLux.a */; };
-		D08FEB5F519DF8D8BF0536CC /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		D08FEB5F519DF8D8BF0536CC /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D150407F3EA2FCC3D4A55674 /* libPods-available_pods-Totum4U.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C72F0D6614A99C9D630B206A /* libPods-available_pods-Totum4U.a */; };
 		D19AAE1DC3772F004EA855F7 /* libPods-available_pods-Empire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F7C170D13A07711C5836CE7 /* libPods-available_pods-Empire.a */; };
 		D3637A0FFD2FC8956D855F04 /* libPods-available_pods-Xborne.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1DD166B58B76C441946C8B /* libPods-available_pods-Xborne.a */; };
@@ -19617,9 +19617,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FC312120B6D7B1D7A1A578B /* BuildFile in Frameworks */,
-				9F7626E4A9B766B3349A6020 /* BuildFile in Frameworks */,
-				D08FEB5F519DF8D8BF0536CC /* BuildFile in Frameworks */,
+				2FC312120B6D7B1D7A1A578B /* (null) in Frameworks */,
+				9F7626E4A9B766B3349A6020 /* (null) in Frameworks */,
+				D08FEB5F519DF8D8BF0536CC /* (null) in Frameworks */,
 				1480C60BA5F67130C88E2368 /* libPods-available_pods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -35549,7 +35549,6 @@
 				847AC1EF27CB5435008287C6 /* Frameworks */,
 				847AC1FA27CB5435008287C6 /* Resources */,
 				847AC21527CB5435008287C6 /* Bundle React Native code and images */,
-				847AC21627CB5435008287C6 /* ShellScript */,
 				694AAB7E742A5DDCCE990E0D /* ShellScript */,
 				959C00A4FEE266E343453C1B /* [CP] Embed Pods Frameworks */,
 				62DA1F225826572F12EB3EDD /* [CP] Copy Pods Resources */,
@@ -111754,26 +111753,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		847AC21627CB5435008287C6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-available_pods-InstaShop-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
-		};
 		847ACFEE27CB6F49008287C6 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -158187,7 +158166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -158281,7 +158260,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
