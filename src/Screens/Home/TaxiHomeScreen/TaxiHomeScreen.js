@@ -116,7 +116,7 @@ export default function TaxiHomeScreen({route, navigation}) {
                     longitude: appMainData?.reqData?.longitude,
                   };
                   actions.locationData(res);
-                  updateState({locationObj: res, isLoading: false});
+                  updateState({locationObj: res, isLoading: false,});
                 } else {
                   updateState({locationObj: res});
                   if (appData?.profile?.preferences?.is_hyperlocal) {
@@ -614,6 +614,7 @@ useEffect(()=>{
             selectedToggle={selectedToggle}
             toggleData={appData}
             location={locationObj}
+            currentLocation={locationObj}
           />
         );
       case 5:

@@ -88,6 +88,11 @@ export default function TaxiHomeDashbord({
   curLatLong = {},
   currentLocation={}
 }) {
+
+
+  console.log(currentLocation,"currentLocationcurrentLocationcurrentLocation");
+
+
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -203,7 +208,6 @@ export default function TaxiHomeDashbord({
       });
       if (!!userData?.auth_token) {
         getAllAddress();
-        getLiveLocation()
       }
     }, []),
   );
@@ -401,14 +405,7 @@ export default function TaxiHomeDashbord({
 
 /********************************** instunt booking funcationality module code starts here *****************************/
 
-const getLiveLocation = async () => {
-  const locPermissionDenied = await locationPermission();
-  if (locPermissionDenied) {
-    const {latitude, longitude} = await getCurrentLocationFromApi();
-    _getAllCarAndPrices(latitude, longitude);
-   
-  }
-};
+
 
 /********************************** get list of vichales based on the vendor and category *********************/
 
@@ -779,6 +776,8 @@ const getLiveLocation = async () => {
     );
   };
 
+  console.log(appData?.profile,"appData?.profile");
+
   return (
     <WrapperContainer
       style={{
@@ -1043,11 +1042,13 @@ const getLiveLocation = async () => {
                 }
               </TouchableOpacity>
 
-              {!!appData?.profile?.preferences?.is_one_push_book_enable &&
+              {!!appData?.profile?.preferences?.is_one_push_book_enable && 
+              !!userData?.auth_token &&
+              !!appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.id &&
                <GradientButton containerStyle={{
                 marginHorizontal:moderateScale(10),
                 marginTop:moderateScaleVertical(20)
-                }}  btnText={'Instunt Book'}
+                }}  btnText={'Book Now'}
                 onPress={_onInstuntOrderPlace}/>
               }
              

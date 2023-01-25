@@ -84,6 +84,7 @@ import GradientButton from '../../../Components/GradientButton';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
 import Header from '../../../Components/Header';
+import BidAcceptRejectCard from "../../../Components/Loaders/BidAcceptRejectCard";
 
 export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
@@ -170,6 +171,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     driverRatingData,
     orderCancelMessage,
   } = state;
+  const [allDriversList, setAllDriversList] = useState([])
+  const [bidExpiryDuration,setBidExpiryDuration]= useState(0)
+  const [bidBookModalVisible , setBidBookModalVisible]= useState(false)
 
   const [
     finalCollectionOfLocationsForPickAndDrop,
@@ -204,21 +208,21 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
-  const {profile} = appData;
+  const { profile } = appData;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
 
-  useEffect(()=>{
-   if(paramData?.showLocationUpdateButton){
-    setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
-   }
-  },[paramData])
+  useEffect(() => {
+    if (paramData?.showLocationUpdateButton) {
+      setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
+    }
+  }, [paramData])
 
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
   };
-  
+
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
   useEffect(() => {
@@ -307,12 +311,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           return item?.task_status < 2;
         }
       );
-
-      console.log(
-        allDropOffLocationsBeforeProcessing,
-        "allDropOffLocationsBeforeProcessing"
-      );
-
       setAllLocationsLatLongCollection(allLocationsLatLongCollection);
       setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing);
     }
@@ -352,12 +350,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     () => {
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
+        _onOrderBidRideDetails()
+   
       } else {
         updateState({ isLoading: false });
       }
     },
-    isFocused && orderStatus != "completed" ? 30000 : null
+    isFocused && orderStatus != "completed" ? 10000 : null
   );
+
+
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -366,6 +368,97 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     );
     return () => backHandler.remove();
   }, []);
+
+
+// *********************************** biding and instant booking funcationality implemented here ***************/
+
+
+const _onOrderBidRideDetails = () =>{
+  const data = {
+    order_id: !!paramData?.orderId ? paramData?.orderId : null,
+    task_type:'instant_booking'
+  }
+
+  const headerData = {
+    code: appData?.profile?.code,
+    currency: currencies?.primary_currency?.id,
+    language: languages?.primary_language?.id,
+  }
+
+  actions.orderRideBidDetails(data,headerData).then((res)=>{
+    console.log(res,"response for bid ride");
+    setAllDriversList(res?.data?.biddata)
+    setBidExpiryDuration(Number(res?.data?.bid_expire_time_limit_seconds))
+    if(!isEmpty(res?.data?.biddata)){
+      setBidBookModalVisible(true)
+    }else{
+      setBidBookModalVisible(false)
+    }
+  }).catch((error)=>{
+    console.log(error,"error in this api orderRideBidDetails");
+  })
+}
+
+
+
+
+
+
+const _onDeclineRideBid = (id) =>{
+const apiData = {
+  bid_id:id
+}
+const headerData= {
+  code: appData?.profile?.code,
+  currency: currencies?.primary_currency?.id,
+  language: languages?.primary_language?.id,
+}
+
+console.log(id,headerData,"decline bif funcation called");
+  actions.declineRideBid(apiData,headerData).then((res)=>{
+    console.log(res,"resposen bid decline");
+    _onOrderBidRideDetails()
+  }).catch((error)=>{
+    console.log(error,"errororororor for bide decline");
+  })
+}
+
+
+
+const _onAcceptRideBid = (id) =>{
+  const apiData = {
+    order_id: !!paramData?.orderId ? paramData?.orderId : null,
+    bid_id:id,
+    task_type:'instant_booking'
+  }
+  const headerData= {
+    code: appData?.profile?.code,
+    currency: currencies?.primary_currency?.id,
+    language: languages?.primary_language?.id,
+  }
+  
+  console.log(apiData,headerData,"accept bif funcation called");
+    actions.acceptRideBid(apiData,headerData).then((res)=>{
+      console.log(res,"resposen bid Accepted");
+      _onOrderBidRideDetails()
+      setBidBookModalVisible(false)
+      _updateDriverLocationLocation(urlValue);
+    }).catch((error)=>{
+      console.log(error,"errororororor for bide accept");
+    })
+  }
+
+
+
+
+
+
+// *********************************** biding and instant booking funcationality Ends here ***************/
+
+
+
+
+
 
   useEffect(() => {
     // console.log('driverStatus', driverStatus);
@@ -412,6 +505,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         console.log(res, "res---agent>>>>");
 
         if (!!res?.data) {
+         
           updateState({
             agent_location: res?.data?.agent_location,
             orderDetail: res?.data?.order,
@@ -449,6 +543,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
             productInfo: res?.data?.order_details?.products,
             tasks: res?.data?.tasks,
           });
+
+          
+
+
         }
       } catch (error) {
         updateState({
@@ -973,19 +1071,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         longitudeDelta: LONGITUDE_DELTA,
       };
     }, []);
-
-    // if (!!!agent_location?.lat) {
-    //   let x =
-    //   {
-    //     latitude: Number(agent_location?.lat),
-    //     longitude: Number(agent_location?.long),
-    //     latitudeDelta: LATITUDE_DELTA,
-    //     longitudeDelta: LONGITUDE_DELTA,
-    //   }
-
-    //   cords.push(x)
-    // }
-
     mapRef.current.fitToCoordinates(cords, {
       edgePadding: {
         right: moderateScale(20),
@@ -1117,6 +1202,21 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item } });
   };
 
+
+  // Instan Booking and bid and ride 
+  const renderDriverListCard = ({ item, index }) => {
+    return (
+      <BidAcceptRejectCard data={item} bidExpiryDuration={bidExpiryDuration} _onDeclineBid={_onDeclineRideBid} _onAcceptRideBid={_onAcceptRideBid}/>
+    )
+  }
+
+
+
+
+
+
+
+
   const createRoom = async (item, type) => {
     try {
       const apiData = {
@@ -1133,7 +1233,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         apiData.agent_id = orderFullDetail?.agent_location?.agent_id;
         apiData.agent_db = orderFullDetail?.agent_dbname;
       }
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
 
       console.log('sending api data room created', orderFullDetail);
       const res = await actions.onStartChat(apiData, {
@@ -1183,7 +1283,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               marginLeft: width / 5.5,
             }}
           />
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: 'center' }}>
             <HeaderLoader
               widthLeft={moderateScale(width / 1.2)}
               rectWidthLeft={moderateScale(width / 1.2)}
@@ -1464,8 +1564,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     }
                   >
                     {`${strings.ORDER_ID}: #${orderFullDetail?.order?.order_number
-                        ? orderFullDetail?.order?.order_number
-                        : paramData?.orderDetail?.order_number
+                      ? orderFullDetail?.order?.order_number
+                      : paramData?.orderDetail?.order_number
                       }`}
                   </Text>
 
@@ -1673,46 +1773,46 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           >
                             {val?.address || ""}
                           </Text>
-                        
+
                           {!!(
                             val?.task_type_id != 1 &&
                             profile?.preferences?.is_order_edit_enable &&
                             Number(val?.task_status) < 2 && orderStatus != "completed"
-                          )  && (
-                            <TouchableOpacity
-                              style={{
-                                borderColor: themeColors?.primary_color,
-                                borderWidth: 0.5,
-                                padding: moderateScale(5),
-                                paddingHorizontal: moderateScale(10),
-                                height: moderateScale(28),
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                              onPress={moveToNewScreen(
-                                navigationStrings.LOCATION,
-                                {
-                                  ...paramData,
-                                  orderDropLocations: !isEmpty(
-                                    paramData?.orderDropLocations
-                                  )
-                                    ? paramData?.orderDropLocations
-                                    : orderFullDetail?.tasks,
-                                  editIndex: i,
-                                  showLocationUpdateButton:showLocationUpdateButton
-                                }
-                              )}
-                            >
-                              <Text
+                          ) && (
+                              <TouchableOpacity
                                 style={{
-                                  fontFamily: fontFamily.regular,
-                                  fontSize: textScale(11),
+                                  borderColor: themeColors?.primary_color,
+                                  borderWidth: 0.5,
+                                  padding: moderateScale(5),
+                                  paddingHorizontal: moderateScale(10),
+                                  height: moderateScale(28),
+                                  alignItems: "center",
+                                  justifyContent: "center",
                                 }}
+                                onPress={moveToNewScreen(
+                                  navigationStrings.LOCATION,
+                                  {
+                                    ...paramData,
+                                    orderDropLocations: !isEmpty(
+                                      paramData?.orderDropLocations
+                                    )
+                                      ? paramData?.orderDropLocations
+                                      : orderFullDetail?.tasks,
+                                    editIndex: i,
+                                    showLocationUpdateButton: showLocationUpdateButton
+                                  }
+                                )}
                               >
-                                {"Change"}
-                              </Text>
-                            </TouchableOpacity>
-                          )}
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.regular,
+                                    fontSize: textScale(11),
+                                  }}
+                                >
+                                  {"Change"}
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                         </View>
                       </View>
                       {orderFullDetail.tasks.length - 1 !== i && (
@@ -1747,7 +1847,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     />
                   )}
 
-               
+
                 {!!orderFullDetail?.agent_location ? (
                   <View
                     style={{
@@ -2183,10 +2283,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                       fullStarColor={colors.ORANGE}
                                       starSize={25}
                                     />
-                                    {console.log(
-                                      productInfo[index]?.product_rating,
-                                      "productInfo[index]?.product_rating"
-                                    )}
+                                   
                                     {productInfo[index]?.product_rating && (
                                       <TouchableOpacity
                                         onPress={() => rateYourOrder(val)}
@@ -2654,6 +2751,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
             onPress={() => onCancelOrder(false)}
           />
         </View>
+      </Modal>
+      <Modal isVisible={bidBookModalVisible} style={{justifyContent:'flex-start',paddingTop:moderateScaleVertical(20)}}>
+        <View style={{width:width,alignSelf:'center'}}>
+        <FlatList
+          data={allDriversList}
+          renderItem={renderDriverListCard}
+        /></View>
       </Modal>
     </WrapperContainer>
   );

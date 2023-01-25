@@ -15,7 +15,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
- export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
+ //export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL = 'https://mealtime.menu/api/v1';
 // export const API_BASE_URL='https://jeevannapp.com/api/v1'
@@ -27,7 +27,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+ export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -712,3 +712,23 @@ export const GET_DETAILS_OF_INFLUENCE_CATEGORY = getApiUrl(
 export const SAVE_INFULENCER_INFO = getApiUrl(
   '/influencer/save-influencer-form',
 );
+
+
+// bid and ride and instant booking api here
+
+
+export const ORDER_RIDE_BID_DETAILS = getApiUrl(
+  '/order-ride-bid-details',
+);
+
+export const DECLINE_RIDE_BID = getApiUrl(
+  '/decline-ride-bid',
+);
+
+export const ACCEPT_RIDE_BID = getApiUrl(
+  '/accept-ride-bid',
+);
+
+
+
+
