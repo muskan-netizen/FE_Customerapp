@@ -143,6 +143,15 @@ export default function ProductDetail({ route, navigation }) {
   const [selectedProductInterval, setSelectedProductInterval] = useState({});
   const [isLoadingProductSlotIntervals, setIsLoadingProductSlotIntervals] =
     useState(false);
+  const [productPreferences, setProductPreferences] = useState({})
+  const [isAppointmentPicker, setAppointmentPicker] = useState(false)
+  const [appointmentSelectedDate, setAppointmentSelectedDate] = useState(null)
+  const [appointmentAvailableSlots, setAppointmentAvailableSlots] = useState([])
+  const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState({})
+  const [isAppointmentSlotsModal, setAppointmentSlotsModal] = useState(false)
+  const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null)
+
+
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -180,6 +189,7 @@ export default function ProductDetail({ route, navigation }) {
     offersList,
     isOffersModalVisible,
   } = state;
+
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
 
@@ -247,7 +257,6 @@ export default function ProductDetail({ route, navigation }) {
             const url1 = val?.image?.path?.image_fit || val.image.image_fit;
             const url2 = val?.image?.path?.image_path || val.image.image_path;
             let imageUri = getImageUrl(url1, url2, '600/800');
-            console.log('banner images', imageUri);
             FastImage.preload([{ uri: imageUri }]);
           });
         }
@@ -259,11 +268,12 @@ export default function ProductDetail({ route, navigation }) {
         //   '1000/1000',
         // )
         // : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
+        setProductPreferences(res?.data?.prefference)
         updateState({
           productAttributes: res?.data?.product_attribute,
           offersList: res?.data?.coupon_list,
           productDetailNew: res?.data?.products,
-          productDetailData: res.data.products,
+          productDetailData: res?.data?.products,
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
@@ -1503,7 +1513,33 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const onDateSelected = (date) => {
+
     setLoadingGetSlots(true);
+    if (isAppointmentPicker) {
+      actions.getAppointmentSlots({
+        cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+        product_id: productDetailData?.id
+      }, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+      },).then((res) => {
+        console.log(res, "<===res getAppointmentSlots")
+        setAppointmentAvailableSlots(res?.data?.time_slots)
+        setLoadingGetSlots(false);
+        setAppointmentPicker(false);
+        setSelectedAppointmentIndx(null);
+        setSelectedAppointmentSlot({})
+      }).catch((err) => {
+        console.log(err, "<==err getAppointmentSlots")
+        setLoadingGetSlots(false);
+        setAppointmentPicker(false);
+        errorMethod(err);
+      })
+
+      return
+    }
+
     setSelectedDate(date);
     actions
       .getVendorShippingSlots(
@@ -1579,13 +1615,6 @@ export default function ProductDetail({ route, navigation }) {
         alert(err?.error || err?.message);
       });
   };
-
-  {
-    console.log(
-      productAvailableIntervals,
-      'selectedProductInterval...selectedProductIntervals',
-    );
-  }
 
   const deliverSlotModalContent = () => {
     return (
@@ -1738,6 +1767,57 @@ export default function ProductDetail({ route, navigation }) {
       </View>
     );
   };
+
+
+  const AppointmentSlotMoadal = () => {
+    return <View style={{
+      backgroundColor: colors.white,
+      height: moderateScaleVertical(350),
+      borderTopRightRadius: moderateScale(10),
+      borderTopLeftRadius: moderateScale(10),
+      padding: moderateScale(12)
+    }}>
+      <View style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: moderateScale(10)
+      }}>
+        <Text style={{
+          fontFamily: fontFamily?.bold,
+          fontSize: textScale(14),
+        }}>Select slot</Text>
+        <TouchableOpacity onPress={() => setAppointmentSlotsModal(false)}>
+          <Text style={{
+            fontFamily: fontFamily.bold,
+            color: themeColors?.primary_color
+          }}>Done</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList data={appointmentAvailableSlots}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{
+          height: moderateScaleVertical(10)
+        }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
+          setSelectedAppointmentSlot(item)
+          setSelectedAppointmentIndx(index)
+        }} style={{
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 8,
+          borderWidth: 1,
+          borderColor: colors.borderColorB,
+          borderRadius: moderateScale(4)
+        }}>
+          <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+          <Text style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(13),
+            marginLeft: moderateScale(10)
+          }}>{item?.name}</Text>
+        </TouchableOpacity>} />
+    </View>
+  }
 
   return (
     <WrapperContainer
@@ -2263,6 +2343,59 @@ export default function ProductDetail({ route, navigation }) {
                   {strings.NOVARIANTPRODUCTAVAILABLE}
                 </Text>
               ) : null}
+              {
+                !!productPreferences?.appointment_check &&
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between"
+                }}>
+                  <View style={{
+                    flex: 0.45
+                  }}>
+                    <Text style={{
+                      fontFamily: fontFamily?.bold,
+                      color: colors.black,
+                      fontSize: textScale(14)
+                    }}>Appointment</Text>
+                    <TouchableOpacity onPress={() => setAppointmentPicker(true)} style={{
+                      backgroundColor: colors.backGroundGreyD,
+                      paddingVertical: moderateScaleVertical(8),
+                      paddingHorizontal: moderateScale(7),
+                      marginVertical: moderateScale(8),
+                      borderRadius: moderateScale(8)
+
+                    }}><Text style={{
+                      fontFamily: fontFamily?.regular,
+                      color: colors.black,
+                      fontSize: textScale(13)
+                    }}>{appointmentSelectedDate ? moment(appointmentSelectedDate).format("DD-MM-YYYY") : "Select Date"}</Text></TouchableOpacity>
+
+                  </View>
+                  {(!!appointmentSelectedDate) && <View style={{
+                    flex: 0.45
+                  }}>
+                    <Text style={{
+                      fontFamily: fontFamily?.bold,
+                      color: colors.black,
+                      fontSize: textScale(14)
+                    }}>Slots</Text>
+                    <TouchableOpacity onPress={() => setAppointmentSlotsModal(true)} style={{
+                      backgroundColor: colors.backGroundGreyD,
+                      paddingVertical: moderateScaleVertical(8),
+                      paddingHorizontal: moderateScale(7),
+                      marginVertical: moderateScale(8),
+                      borderRadius: moderateScale(8)
+                    }}><Text style={{
+                      fontFamily: fontFamily?.regular,
+                      color: colors.black,
+                      fontSize: textScale(13)
+                    }}>{(!isEmpty(selectedAppointmentSlot)) ? selectedAppointmentSlot?.name : "Select Slot"}</Text></TouchableOpacity>
+                  </View>}
+                </View>
+
+              }
+
 
               {/* Add to Cart button */}
               {(productDetailData?.has_inventory == 0 ||
@@ -2545,7 +2678,7 @@ export default function ProductDetail({ route, navigation }) {
       </Modal>
       <Modal
         key={'5'}
-        isVisible={isDatePicker}
+        isVisible={isDatePicker || isAppointmentPicker}
         style={{
           margin: 0,
           justifyContent: 'flex-end',
@@ -2570,8 +2703,14 @@ export default function ProductDetail({ route, navigation }) {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                setIsDatePicker(false);
-                setSelectedDate(null);
+                if (isAppointmentPicker) {
+                  setAppointmentPicker(false)
+                  setAppointmentSelectedDate('')
+                }
+                else {
+                  setIsDatePicker(false);
+                  setSelectedDate(null);
+                }
               }}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
@@ -2586,14 +2725,14 @@ export default function ProductDetail({ route, navigation }) {
           />
           <DatePicker
             locale={languages?.primary_language?.sort_code}
-            date={selectedDate || new Date()}
+            date={isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date())}
             textColor={isDarkMode ? colors.white : colors.blackB}
             mode="datetime"
             minimumDate={new Date()}
-            onDateChange={(value) => setSelectedDate(value)}
+            onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
           />
           <ButtonWithLoader
-            onPress={() => onDateSelected(selectedDate || new Date())}
+            onPress={() => onDateSelected(isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date()))}
             btnText="Done"
             isLoading={isLoadingGetSlots}
             btnStyle={{
@@ -2628,6 +2767,14 @@ export default function ProductDetail({ route, navigation }) {
           margin: 0,
         }}>
         {deliverSlotModalContent()}
+      </ReactNativeModal>
+      <ReactNativeModal
+        isVisible={isAppointmentSlotsModal}
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}>
+        <AppointmentSlotMoadal />
       </ReactNativeModal>
     </WrapperContainer>
   );

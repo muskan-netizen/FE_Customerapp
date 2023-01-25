@@ -40,6 +40,7 @@ import {
   GET_VENDOR_SHIPPING_SLOTS,
   GET_PRODUCT_DELIVERY_SLOTS_INTERVAL,
   CHECK_SLOTS_LIMIT,
+  GET_SLOTS_FOR_APPOINTMENT,
 } from '../../config/urls';
 import { apiGet, apiPost, setWalletData } from '../../utils/utils';
 import store from '../store';
@@ -567,4 +568,7 @@ export function getProductDeliverySlotsInterval(data = {}, headers = {}) {
 
 export function checkSlotsLimit(data = {}, headers = {}) {
   return apiPost(CHECK_SLOTS_LIMIT, data, headers);
+}
+export function getAppointmentSlots(data = {}, headers = {}) {
+  return apiPost(GET_SLOTS_FOR_APPOINTMENT, data, headers);
 }

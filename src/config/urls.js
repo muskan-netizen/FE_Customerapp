@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
-export const API_BASE_URL = 'http://192.168.102.70:8006/api/v1';
+// export const API_BASE_URL = 'http://192.168.102.70:8006/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
 // export const API_BASE_URL = 'https://kaypee.app//api/v1';
 // export const API_BASE_URL = 'https://jeevannapp.com/api/v1';
@@ -261,7 +261,7 @@ export const API_BASE_URL = 'http://192.168.102.70:8006/api/v1';
 // export const API_BASE_URL = 'https://rhondaisamazingtaxi.com/api/v1';
 
 //owais nor
-// export const API_BASE_URL = 'https://f742-112-196-88-218.in.ngrok.io/api/v1';
+export const API_BASE_URL = 'http://192.168.100.122:8001/api/v1';
 
 // // sabroson
 // export const API_BASE_URL = 'https://sabroson.com.mx/api/v1';
@@ -714,3 +714,4 @@ export const SAVE_INFULENCER_INFO = getApiUrl(
 );
 
 export const CHECK_SLOTS_LIMIT = getApiUrl('/cart/checkSlotOrders');
+export const GET_SLOTS_FOR_APPOINTMENT = getApiUrl('/getTimeSlotsForOndemand');
