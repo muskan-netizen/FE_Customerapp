@@ -3178,6 +3178,18 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.airvoltTaxi:
+          updateState({
+            shortCode: shortCodes.airvoltTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.melakPharmacy:
+          updateState({
+            shortCode: shortCodes.melakPharmacy,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();

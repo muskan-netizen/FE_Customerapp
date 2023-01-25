@@ -393,6 +393,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // mobi
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1';
 
+// ElCheRegio
+// export const API_BASE_URL = 'https://elcheregio.com.mx/api/v1';
+
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

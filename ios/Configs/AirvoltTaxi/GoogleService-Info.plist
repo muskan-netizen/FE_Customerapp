@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1026896910579-sct7dog6d0v8e1vdasan760hap0vjcer.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1026896910579-sct7dog6d0v8e1vdasan760hap0vjcer</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1026896910579-9oca19appm85ob2p44fjk0bj0k2bj0fj.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-PIOoi8oXx5XTXIsp9ZeHkn8CPBYdvVA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1026896910579</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.airvoltTaxi.royoorder</string>
+	<key>PROJECT_ID</key>
+	<string>airvolttaxi-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>airvolttaxi-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1026896910579:ios:e6bd20ebd4fcbba6c83f86</string>
+</dict>
+</plist>

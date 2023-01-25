@@ -514,7 +514,9 @@ const shortCodes = {
   oaks: 'db5f29',
   buzy: '5e7246',
   etaim: '4b3283',
-  dotTaxiApp: 'ba540d'
+  dotTaxiApp: 'ba540d',
+  airvoltTaxi: '41ca60',
+  melakPharmacy: '4dbfe1'
 };
 
 const appIds = {
@@ -2561,6 +2563,14 @@ const appIds = {
   dotTaxiApp: Platform.select({
     ios: 'com.dotTaxiApp.royoorder',
     android: 'com.dotTaxiApp.royoorder',
+  }),
+  airvoltTaxi: Platform.select({
+    ios: 'com.airvoltTaxi.royoorder',
+    android: 'com.airvoltTaxi.royoorder',
+  }),
+  melakPharmacy: Platform.select({
+    ios: 'com.melakPharmacy.royoorder',
+    android: 'com.melakPharmacy.royoorder',
   }),
 };
 

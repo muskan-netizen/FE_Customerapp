@@ -2398,6 +2398,22 @@ end
 target 'Etaim' do
 end
 
+#DotTaxiApp
+target 'DotTaxiApp' do
+end
+
+#AirvoltTaxi
+target 'AirvoltTaxi' do
+end
+
+#Laith
+target 'Laith' do
+end
+
+#MelakPharmacy
+target 'MelakPharmacy' do
+end
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

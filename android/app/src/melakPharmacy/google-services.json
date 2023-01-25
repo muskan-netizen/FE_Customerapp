@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "101313076271",
+    "project_id": "melakpharmacy-order",
+    "storage_bucket": "melakpharmacy-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101313076271:android:757b79f5c5d064175f3ada",
+        "android_client_info": {
+          "package_name": "com.melakPharmacy.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101313076271-d9vhllsljq1gtktkuuif5eqa37vtrogd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.melakPharmacy.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "101313076271-hp06ikt6usmim1np4t1tqj7qcs4tdpfs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.melakPharmacy.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "101313076271-j79aj1a1dtl88mekuubu7oje9sjdej27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.melakPharmacy.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "101313076271-r2uve3tpcd8l2mu30t5lv1pp3qbd3e9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1D27XgKGJPKj5solb3mP1BKSEyrh5W8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101313076271-r2uve3tpcd8l2mu30t5lv1pp3qbd3e9o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "101313076271-ln8v49vso60a7bjc6qqecsk2g3r5omp6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.melakPharmacy.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
