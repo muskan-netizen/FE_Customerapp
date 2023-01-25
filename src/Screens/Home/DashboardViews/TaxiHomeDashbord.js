@@ -1048,7 +1048,7 @@ export default function TaxiHomeDashbord({
                <GradientButton containerStyle={{
                 marginHorizontal:moderateScale(10),
                 marginTop:moderateScaleVertical(20)
-                }}  btnText={'Book Now'}
+                }}  btnText={'Instant Now'}
                 onPress={_onInstuntOrderPlace}/>
               }
              

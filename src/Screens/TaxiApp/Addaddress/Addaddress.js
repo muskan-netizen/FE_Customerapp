@@ -55,7 +55,7 @@ import {
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
 
-export default function Addaddress({navigation, route}) {
+export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
   const { userData } = useSelector((state) => state?.auth);
   const { pickUpTimeType } = useSelector((state) => state?.home);
@@ -118,7 +118,7 @@ export default function Addaddress({navigation, route}) {
     callingCode: "+91",
     showFriendListModal: false,
     allAddedFriends: [],
-    isBooking: "0",
+    isBookingType: "0",
     selectedFriendForRide: { id: 0 },
     staticLocation: [],
     selectedLoaction: [],
@@ -153,7 +153,7 @@ export default function Addaddress({navigation, route}) {
     selectedFriendForRide,
     staticLocation,
     selectedLoaction,
-    isBooking,
+    isBookingType,
     isLoading,
   } = state;
 
@@ -208,7 +208,7 @@ export default function Addaddress({navigation, route}) {
         });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -224,31 +224,30 @@ export default function Addaddress({navigation, route}) {
       .catch((error) => console.log("error while accessing location", error));
   }, []);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({
     fontFamily,
     themeColors,
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   const getAllPickUpVendors = (lat, lng) => {
-    console.log(appData, 'appDataappData......');
+    console.log(appData, "appDataappData......");
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
-          code: appData?.profile?.code,
-          latitude: lat,
-          longitude: lng,
-        }
+        code: appData?.profile?.code,
+        latitude: lat,
+        longitude: lng,
+      }
       : { code: appData?.profile?.code };
 
     actions
       .getDataByCategoryId(
-        `/${
-          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
         latlongData
@@ -356,6 +355,35 @@ export default function Addaddress({navigation, route}) {
     );
   };
 
+
+
+  /**********************************************  check ride booking type   ********************/
+
+
+  const checkBookingServiceType = (bookingType) => {
+
+    switch (bookingType) {
+      case 0:
+        return ('Booking')
+        break;
+      case 1:
+        return ('Pooling')
+        break;
+      case 2:
+        return ('bideRide')
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
+
+  /************************************ */
+
+
+
   const moveToNextScreenWithAddressData = () => {
     let location = [];
     if (
@@ -395,16 +423,15 @@ export default function Addaddress({navigation, route}) {
       (item) => item.pre_address !== ""
     );
 
-
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
-      id: paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id,
-      pickup_taxi: paramData?.cat?.pickup_taxi,
+      id: paramData?.data?.id,
+      pickup_taxi: paramData?.data?.pickup_taxi,
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
       pickUpTimeType: pickUpTimeType,
-      is_cab_pooling: isBooking == 1 ? 1 : 0,
+      rideType: checkBookingServiceType(isBookingType),
       friendBookingDetails: {
         bookingType: selectedFriendForRide?.id != 0 ? 1 : 0,
         firstName: selectedFriendForRide?.first_name
@@ -425,7 +452,7 @@ export default function Addaddress({navigation, route}) {
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const onShowHideFriendListModal = () => {
@@ -447,9 +474,9 @@ export default function Addaddress({navigation, route}) {
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const {latitude, longitude} = await getCurrentLocationFromApi();
+      const { latitude, longitude } = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({curLatLng: {latitude, longitude}});
+      updateState({ curLatLng: { latitude, longitude } });
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
@@ -465,7 +492,7 @@ export default function Addaddress({navigation, route}) {
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
-        updateState({dropLocationData: cloneArr});
+        updateState({ dropLocationData: cloneArr });
       }
     }
   };
@@ -480,16 +507,12 @@ export default function Addaddress({navigation, route}) {
       console.log("error raised", error);
     }
   };
-  const onBooking = () => {
+  const onBooking = (type) => {
     updateState({
-      isBooking: 0,
+      isBookingType: type,
     });
   };
-  const OnPooling = () => {
-    updateState({
-      isBooking: 1,
-    });
-  };
+
 
   const renderAddressess = (item) => {
     return (
@@ -514,7 +537,7 @@ export default function Addaddress({navigation, route}) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -547,13 +570,13 @@ export default function Addaddress({navigation, route}) {
       // updateAddress(place.description)
       const cloneArr = dropLocationData;
       cloneArr[searchResult.currentIndex].pre_address = place?.name;
-      updateState({dropLocationData: cloneArr});
+      updateState({ dropLocationData: cloneArr });
       try {
         let res = await getPlaceDetails(
           place.place_id,
           profile?.preferences?.map_key
         );
-        const {result} = res;
+        const { result } = res;
 
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
@@ -569,7 +592,7 @@ export default function Addaddress({navigation, route}) {
           result?.formatted_address;
         updateState({
           dropLocationData: cloneArr,
-          searchResult: {currentIndex: searchResult.currentIndex, data: []},
+          searchResult: { currentIndex: searchResult.currentIndex, data: [] },
         });
       } catch (error) {
         console.log("something wen't wrong");
@@ -598,7 +621,7 @@ export default function Addaddress({navigation, route}) {
         <View style={{ flex: 0.15 }}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -632,7 +655,7 @@ export default function Addaddress({navigation, route}) {
           return item;
         }
       });
-      updateState({dropLocationData: removeItem});
+      updateState({ dropLocationData: removeItem });
       return;
     }
 
@@ -655,7 +678,7 @@ export default function Addaddress({navigation, route}) {
           longitude: 0,
         });
         isFill = true;
-        updateState({dropLocationData: [...dropLocationData, ...x]});
+        updateState({ dropLocationData: [...dropLocationData, ...x] });
       }
     } else {
       alert(strings.PLEASE_FILL_ADDRESS);
@@ -665,13 +688,13 @@ export default function Addaddress({navigation, route}) {
   const updateCurValues = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
 
   const onClearAddress = (text, i) => {
     const cloneArr = dropLocationData;
     cloneArr[i].pre_address = text;
-    updateState({dropLocationData: cloneArr});
+    updateState({ dropLocationData: cloneArr });
   };
 
   const onClose = () => {
@@ -688,7 +711,7 @@ export default function Addaddress({navigation, route}) {
 
   const getAllRiderList = () => {
     actions
-      .getAllRiderList({}, {code: appData?.profile?.code})
+      .getAllRiderList({}, { code: appData?.profile?.code })
       .then((res) => {
         updateState({
           allAddedFriends: res?.riders,
@@ -700,7 +723,7 @@ export default function Addaddress({navigation, route}) {
   };
 
   const onLayout = (event) => {
-    const {x, y, height, width} = event.nativeEvent.layout;
+    const { x, y, height, width } = event.nativeEvent.layout;
 
     setModalLayoutHeight(height);
   };
@@ -712,7 +735,7 @@ export default function Addaddress({navigation, route}) {
         style={styles.friendListFooter}
       >
         <Image
-          style={{tintColor: themeColors?.primary_color}}
+          style={{ tintColor: themeColors?.primary_color }}
           source={imagePath.addRider}
         />
         <Text style={styles.addFriendText}>{strings.ADD_MANUALLY}</Text>
@@ -722,7 +745,7 @@ export default function Addaddress({navigation, route}) {
         style={styles.friendListFooter}
       >
         <Image
-          style={{tintColor: themeColors?.primary_color}}
+          style={{ tintColor: themeColors?.primary_color }}
           source={imagePath.addFriend}
         />
         <Text style={styles.addFriendText}>{strings.ADD_FROM_PHONEBOOK}</Text>
@@ -730,7 +753,7 @@ export default function Addaddress({navigation, route}) {
     </>
   );
 
-  const renderAllFriends = ({item, index}) => {
+  const renderAllFriends = ({ item, index }) => {
     return (
       <View style={{ padding: 5 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -752,7 +775,7 @@ export default function Addaddress({navigation, route}) {
           </TouchableOpacity>
           {item?.id == selectedFriendForRide?.id ? (
             <Image
-              style={{tintColor: themeColors?.primary_color}}
+              style={{ tintColor: themeColors?.primary_color }}
               source={imagePath.tickBlack}
             />
           ) : null}
@@ -792,7 +815,7 @@ export default function Addaddress({navigation, route}) {
             }}
           >
             <TouchableOpacity
-              style={{flex: 0.5}}
+              style={{ flex: 0.5 }}
               onPress={onShowHideFriendListModal}
               hitSlop={styles.hitSlop}
             >
@@ -822,14 +845,14 @@ export default function Addaddress({navigation, route}) {
         <View
           style={
             allAddedFriends.length >= 10
-              ? {height: moderateScaleVertical(height / 1.05)}
+              ? { height: moderateScaleVertical(height / 1.05) }
               : {}
           }
         >
           <FlatList
             showsVerticalScrollIndicator={false}
             data={allAddedFriends}
-            contentContainerStyle={{flexGrow: 1}}
+            contentContainerStyle={{ flexGrow: 1 }}
             ListHeaderComponent={() => (
               <View>
                 <View
@@ -847,7 +870,7 @@ export default function Addaddress({navigation, route}) {
                   </TouchableOpacity>
                   {selectedFriendForRide?.id == 0 ? (
                     <Image
-                      style={{tintColor: themeColors?.primary_color}}
+                      style={{ tintColor: themeColors?.primary_color }}
                       source={imagePath.tickBlack}
                     />
                   ) : null}
@@ -875,7 +898,7 @@ export default function Addaddress({navigation, route}) {
       case 0:
         updateState({
           showFriendListModal: false,
-          selectedFriendForRide: {id: type},
+          selectedFriendForRide: { id: type },
         });
         break;
       case 1:
@@ -1092,59 +1115,80 @@ export default function Addaddress({navigation, route}) {
           {appData?.profile?.preferences?.is_cab_pooling == 1 ? (
             <View
               style={{
-                width: "90%",
-                // position: 'absolute',
-                // bottom: 20,
+
                 marginHorizontal: moderateScale(16),
                 marginVertical: moderateScaleVertical(10),
                 flexDirection: "row",
+
               }}
             >
               <GradientButton
                 colorsArray={
-                  isBooking == 0
+                  isBookingType == 0
                     ? [themeColors.primary_color, themeColors.primary_color]
                     : [colors.white, colors.white]
                 }
                 textStyle={{
                   textTransform: "none",
-                  fontSize: textScale(13),
-                  color:
-                    isBooking == 0 ? colors.white : themeColors?.primary_color,
-                }}
-                onPress={onBooking}
-                btnText={"BOOKING"}
-                btnStyle={{
-                  borderRadius: moderateScale(5),
-                  flexDirection: "row",
-                  borderColor: colors.textGreyLight,
-                  borderWidth: moderateScale(0.5),
-                  marginRight: moderateScale(4),
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  width: moderateScale(width / 2.5),
-                }}
-              />
-              <GradientButton
-                colorsArray={
-                  isBooking == 0
-                    ? [colors.white, colors.white]
-                    : [themeColors.primary_color, themeColors.primary_color]
-                }
-                textStyle={{
-                  textTransform: "none",
                   fontSize: textScale(14),
                   color:
-                    isBooking == 0 ? themeColors?.primary_color : colors.white,
+                    isBookingType == 0 ? colors.white : themeColors?.primary_color,
                   marginHorizontal: moderateScale(5),
                 }}
-                onPress={OnPooling}
-                btnText={"Pooling"}
+                onPress={() => onBooking(0)}
+                btnText={"BOOKING"}
                 containerStyle={{ flex: 1 }}
                 btnStyle={{
                   borderRadius: moderateScale(4),
                   borderColor: colors.textGreyLight,
                   borderWidth: moderateScale(0.5),
+
+                }}
+              />
+              <GradientButton
+                colorsArray={
+                  isBookingType == 1
+                    ? [themeColors.primary_color, themeColors.primary_color] : [colors.white, colors.white]
+                }
+                textStyle={{
+                  textTransform: "none",
+                  fontSize: textScale(14),
+                  color:
+                    isBookingType == 1 ? colors.white : themeColors?.primary_color,
+                  marginHorizontal: moderateScale(5),
+                }}
+                onPress={() => onBooking(1)}
+                btnText={"POOLING"}
+                containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
+                btnStyle={{
+                  borderRadius: moderateScale(4),
+                  borderColor: colors.textGreyLight,
+                  borderWidth: moderateScale(0.5),
+
+                }}
+              />
+
+              <GradientButton
+                colorsArray={
+                  isBookingType == 2
+                    ? [themeColors.primary_color, themeColors.primary_color]
+                    : [colors.white, colors.white]
+                }
+                textStyle={{
+                  textTransform: "none",
+                  fontSize: textScale(14),
+                  color:
+                    isBookingType == 2 ? colors.white : themeColors?.primary_color,
+                  marginHorizontal: moderateScale(5),
+                }}
+                onPress={() => onBooking(2)}
+                btnText={"BIDE & RIDE"}
+                containerStyle={{ flex: 1 }}
+                btnStyle={{
+                  borderRadius: moderateScale(4),
+                  borderColor: colors.textGreyLight,
+                  borderWidth: moderateScale(0.5),
+
                 }}
               />
             </View>
@@ -1178,7 +1222,7 @@ export default function Addaddress({navigation, route}) {
                         {renderDotContainer(i)}
                       </View>
                       {i > 0 &&
-                      appData?.profile?.preferences?.is_static_dropoff ? (
+                        appData?.profile?.preferences?.is_static_dropoff ? (
                         <View
                           style={{ flex: 0.9, marginLeft: moderateScale(20) }}
                         >
@@ -1190,8 +1234,8 @@ export default function Addaddress({navigation, route}) {
                             data={staticLocation}
                             fetchValues={(val) => fetchValues(val, i)}
                             marginBottom={0}
-                            // onSelect={onPressAddress}
-                            // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+                          // onSelect={onPressAddress}
+                          // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
                           />
                         </View>
                       ) : (
@@ -1207,8 +1251,8 @@ export default function Addaddress({navigation, route}) {
                               i == 0
                                 ? strings.PICKUP_LOCATION
                                 : i == 1
-                                ? strings.WHERETO
-                                : strings.ADD_A_STOP
+                                  ? strings.WHERETO
+                                  : strings.ADD_A_STOP
                             }
                             value={val.pre_address} // instant update search value
                             mapKey={profile?.preferences?.map_key} //send here google Key

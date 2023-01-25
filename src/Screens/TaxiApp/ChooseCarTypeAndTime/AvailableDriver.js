@@ -212,7 +212,7 @@ export default function AvailableDriver({
           : colors.white,
       }}>
          {
-       isCabPooling && (<View
+       !!isCabPooling && (<View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

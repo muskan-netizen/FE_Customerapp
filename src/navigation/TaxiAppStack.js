@@ -20,6 +20,7 @@ import {
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 import Khalti from '../Screens/PaymentGateways/Khalti';
+import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
 
 import navigationStrings from './navigationStrings';
 // ChooseCarTypeAndTimeTaxi;
@@ -126,6 +127,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT_TAXI}
         component={VerifyAccount}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name={navigationStrings.BIDINGDRIVERSLIST}
+        component={BidingDriversList}
         options={{headerShown: false}}
       />
     </>

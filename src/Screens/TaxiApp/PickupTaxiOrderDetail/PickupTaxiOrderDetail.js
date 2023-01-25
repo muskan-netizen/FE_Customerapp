@@ -172,8 +172,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     orderCancelMessage,
   } = state;
   const [allDriversList, setAllDriversList] = useState([])
-  const [bidExpiryDuration,setBidExpiryDuration]= useState(0)
-  const [bidBookModalVisible , setBidBookModalVisible]= useState(false)
+  const [bidExpiryDuration, setBidExpiryDuration] = useState(0)
+  const [bidBookModalVisible, setBidBookModalVisible] = useState(false)
 
   const [
     finalCollectionOfLocationsForPickAndDrop,
@@ -351,7 +351,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
         _onOrderBidRideDetails()
-   
+
       } else {
         updateState({ isLoading: false });
       }
@@ -370,81 +370,32 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   }, []);
 
 
-// *********************************** biding and instant booking funcationality implemented here ***************/
+  // *********************************** biding and instant booking funcationality implemented here ***************/
 
 
-const _onOrderBidRideDetails = () =>{
-  const data = {
-    order_id: !!paramData?.orderId ? paramData?.orderId : null,
-    task_type:'instant_booking'
-  }
-
-  const headerData = {
-    code: appData?.profile?.code,
-    currency: currencies?.primary_currency?.id,
-    language: languages?.primary_language?.id,
-  }
-
-  actions.orderRideBidDetails(data,headerData).then((res)=>{
-    console.log(res,"response for bid ride");
-    setAllDriversList(res?.data?.biddata)
-    setBidExpiryDuration(Number(res?.data?.bid_expire_time_limit_seconds))
-    if(!isEmpty(res?.data?.biddata)){
-      setBidBookModalVisible(true)
-    }else{
-      setBidBookModalVisible(false)
+  const _onOrderBidRideDetails = () => {
+    const data = {
+      order_id: !!paramData?.orderId ? paramData?.orderId : null,
+      task_type: 'instant_booking'
     }
-  }).catch((error)=>{
-    console.log(error,"error in this api orderRideBidDetails");
-  })
-}
 
+    const headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
 
-
-
-
-
-const _onDeclineRideBid = (id) =>{
-const apiData = {
-  bid_id:id
-}
-const headerData= {
-  code: appData?.profile?.code,
-  currency: currencies?.primary_currency?.id,
-  language: languages?.primary_language?.id,
-}
-
-console.log(id,headerData,"decline bif funcation called");
-  actions.declineRideBid(apiData,headerData).then((res)=>{
-    console.log(res,"resposen bid decline");
-    _onOrderBidRideDetails()
-  }).catch((error)=>{
-    console.log(error,"errororororor for bide decline");
-  })
-}
-
-
-
-const _onAcceptRideBid = (id) =>{
-  const apiData = {
-    order_id: !!paramData?.orderId ? paramData?.orderId : null,
-    bid_id:id,
-    task_type:'instant_booking'
-  }
-  const headerData= {
-    code: appData?.profile?.code,
-    currency: currencies?.primary_currency?.id,
-    language: languages?.primary_language?.id,
-  }
-  
-  console.log(apiData,headerData,"accept bif funcation called");
-    actions.acceptRideBid(apiData,headerData).then((res)=>{
-      console.log(res,"resposen bid Accepted");
-      _onOrderBidRideDetails()
-      setBidBookModalVisible(false)
-      _updateDriverLocationLocation(urlValue);
-    }).catch((error)=>{
-      console.log(error,"errororororor for bide accept");
+    actions.orderRideBidDetails(data, headerData).then((res) => {
+      console.log(res, "response for bid ride");
+      setAllDriversList(res?.data?.biddata)
+      setBidExpiryDuration(Number(res?.data?.bid_expire_time_limit_seconds))
+      if (!isEmpty(res?.data?.biddata)) {
+        setBidBookModalVisible(true)
+      } else {
+        setBidBookModalVisible(false)
+      }
+    }).catch((error) => {
+      console.log(error, "error in this api orderRideBidDetails");
     })
   }
 
@@ -453,7 +404,56 @@ const _onAcceptRideBid = (id) =>{
 
 
 
-// *********************************** biding and instant booking funcationality Ends here ***************/
+  const _onDeclineRideBid = (id) => {
+    const apiData = {
+      bid_id: id
+    }
+    const headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+
+    console.log(id, headerData, "decline bif funcation called");
+    actions.declineRideBid(apiData, headerData).then((res) => {
+      console.log(res, "resposen bid decline");
+      _onOrderBidRideDetails()
+    }).catch((error) => {
+      console.log(error, "errororororor for bide decline");
+    })
+  }
+
+
+
+  const _onAcceptRideBid = (id) => {
+    const apiData = {
+      order_id: !!paramData?.orderId ? paramData?.orderId : null,
+      bid_id: id,
+      task_type: 'instant_booking'
+    }
+    const headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+
+    console.log(apiData, headerData, "accept bif funcation called");
+    actions.acceptRideBid(apiData, headerData).then((res) => {
+      console.log(res, "resposen bid Accepted");
+      _onOrderBidRideDetails()
+      setBidBookModalVisible(false)
+      _updateDriverLocationLocation(urlValue);
+    }).catch((error) => {
+      console.log(error, "errororororor for bide accept");
+    })
+  }
+
+
+
+
+
+
+  // *********************************** biding and instant booking funcationality Ends here ***************/
 
 
 
@@ -505,7 +505,7 @@ const _onAcceptRideBid = (id) =>{
         console.log(res, "res---agent>>>>");
 
         if (!!res?.data) {
-         
+
           updateState({
             agent_location: res?.data?.agent_location,
             orderDetail: res?.data?.order,
@@ -544,7 +544,7 @@ const _onAcceptRideBid = (id) =>{
             tasks: res?.data?.tasks,
           });
 
-          
+
 
 
         }
@@ -1206,15 +1206,14 @@ const _onAcceptRideBid = (id) =>{
   // Instan Booking and bid and ride 
   const renderDriverListCard = ({ item, index }) => {
     return (
-      <BidAcceptRejectCard data={item} bidExpiryDuration={bidExpiryDuration} _onDeclineBid={_onDeclineRideBid} _onAcceptRideBid={_onAcceptRideBid}/>
+      <BidAcceptRejectCard 
+      data={item} 
+      bidExpiryDuration={bidExpiryDuration}
+       _onDeclineBid={_onDeclineRideBid}
+        _onAcceptRideBid={_onAcceptRideBid} 
+        />
     )
   }
-
-
-
-
-
-
 
 
   const createRoom = async (item, type) => {
@@ -2283,7 +2282,7 @@ const _onAcceptRideBid = (id) =>{
                                       fullStarColor={colors.ORANGE}
                                       starSize={25}
                                     />
-                                   
+
                                     {productInfo[index]?.product_rating && (
                                       <TouchableOpacity
                                         onPress={() => rateYourOrder(val)}
@@ -2571,7 +2570,7 @@ const _onAcceptRideBid = (id) =>{
           </BottomSheetScrollView>
         </BottomSheet>
       </View>
-     
+
       <Modal
         isVisible={false}
         onBackdropPress={_modalClose}
@@ -2748,12 +2747,12 @@ const _onAcceptRideBid = (id) =>{
           />
         </View>
       </Modal>
-      <Modal isVisible={bidBookModalVisible} style={{justifyContent:'flex-start',paddingTop:moderateScaleVertical(20)}}>
-        <View style={{width:width,alignSelf:'center'}}>
-        <FlatList
-          data={allDriversList}
-          renderItem={renderDriverListCard}
-        /></View>
+      <Modal isVisible={bidBookModalVisible} style={{ justifyContent: 'flex-start', paddingTop: moderateScaleVertical(20) }}>
+        <View style={{ width: width, alignSelf: 'center' }}>
+          <FlatList
+            data={allDriversList}
+            renderItem={renderDriverListCard}
+          /></View>
       </Modal>
     </WrapperContainer>
   );

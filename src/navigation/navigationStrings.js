@@ -164,4 +164,5 @@ export default {
   CHAT_STACK: 'chatStack',
   MY_POSTS: 'myPosts',
   REFER_AND_EARN: 'referAndEarn',
+  BIDINGDRIVERSLIST :'BidingDriversList'
 };
