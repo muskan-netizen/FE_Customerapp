@@ -2571,11 +2571,7 @@ const _onAcceptRideBid = (id) =>{
           </BottomSheetScrollView>
         </BottomSheet>
       </View>
-      {/* <BottomViewModal
-        show={true}
-        mainContainView={_ModalMainView}
-        closeModal={_modalClose}
-      /> */}
+     
       <Modal
         isVisible={false}
         onBackdropPress={_modalClose}
