@@ -2474,11 +2474,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           </BottomSheetScrollView>
         </BottomSheet>
       </View>
-      {/* <BottomViewModal
-        show={true}
-        mainContainView={_ModalMainView}
-        closeModal={_modalClose}
-      /> */}
+     
       <Modal
         isVisible={false}
         onBackdropPress={_modalClose}

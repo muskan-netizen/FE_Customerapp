@@ -1320,6 +1320,47 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     }
   };
 
+
+  //
+    // fare price modal Main view
+
+
+    const _ModalFarePriceMainView = ()=>{
+      return (
+        <View>
+          <View style={{backgroundColor:getColorCodeWithOpactiyNumber(colors.blue.substring(1),20),
+                   width:moderateScale(width-40),alignItems:'center',paddingVertical:moderateScaleVertical(10),borderRadius:moderateScale(8)}}>
+            <Text style={{fontSize:textScale(14)}}>Recommended price 2000</Text>
+            <Text style={{fontSize:textScale(14)}}>Travel time ~ 3 hr 20 min</Text>
+          </View>
+          <View style={{flexDirection:'row',marginVertical:moderateScaleVertical(20)}}>
+             <View style={{backgroundColor:themeColors?.primary_color,
+                          flex:0.15,
+                          height:moderateScaleVertical(50),
+                          justifyContent:'center',alignItems:'center',borderRadius:moderateScale(8)}}><Text style={{color:colors.white,fontFamily:fontFamily?.bold}}>- 10</Text></View> 
+               <View style={{flex:0.7,marginHorizontal:moderateScale(10)}}>
+               <TextInputWithUnderlineAndLabel  placeholder={'Recommend fare,adjustable'}/>
+               </View>
+               <View style={{backgroundColor:themeColors?.primary_color,
+                          flex:0.15,
+                          height:moderateScaleVertical(50),
+                          justifyContent:'center',alignItems:'center',borderRadius:moderateScale(8)}}><Text style={{color:colors.white,fontFamily:fontFamily?.bold}}>+ 10</Text></View> 
+          </View>
+          <GradientButton
+                  colorsArray={[themeColors?.primary_color, themeColors?.primary_color]}
+                  textStyle={{
+                    textTransform: 'none',
+                    fontSize: textScale(13),
+                    color: colors.white,
+                  }}
+                  onPress={moveToNewScreen(navigationStrings.BIDINGDRIVERSLIST)}
+                  btnText={`Find Driver`}
+                  
+                />
+        </View>
+      )
+    }
+
   return (
     <View style={{...styles.container}}>
       <View style={{flex: 1}}>
@@ -1599,6 +1640,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           isDatetimePicker={true}
           show={isScheduleModalVisible}
           mainContainView={_ModalMainView}
+          closeModal={_modalClose}
+        />
+      )}
+      {false && (
+        <BottomViewModal
+          isDatetimePicker={true}
+          show={true}
+          mainContainView={_ModalFarePriceMainView}
           closeModal={_modalClose}
         />
       )}
