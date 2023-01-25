@@ -344,7 +344,11 @@ const ProductCard3 = ({
 
           {!!data?.is_recurring_booking &&
             <TouchableOpacity
-              onPress={addToCart}
+              style={{
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                marginHorizontal: moderateScale(8),
+              }}
+              onPress={onPress}
               activeOpacity={0.8}>
               <Image
                 style={{

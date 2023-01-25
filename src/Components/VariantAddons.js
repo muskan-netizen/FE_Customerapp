@@ -48,6 +48,8 @@ import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
 import { Calendar, CalendarList } from 'react-native-calendars';
 import { ScrollView } from 'react-native-gesture-handler';
+import BorderTextInputWithLable from './BorderTextInputWithLable';
+import Reccuring from './Reccuring';
 
 const VariantAddons = ({
   productdetail = null,
@@ -73,6 +75,26 @@ const VariantAddons = ({
   isVarientSelectLoading = false,
   productDetailNew = {},
   isProductAvailable = false,
+
+  planValues = ["Daily", "Weekly", "Custom", "Alternate Days"],
+  weekDays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+  quickSelection = ["Weekdays", "Weekends"],
+  showCalendar = false,
+  reccuringCheckBox = false,
+  selectedPlanValues = '',
+  selectedWeekDaysValues = [],
+  selectedQuickSelectionValue = '',
+  minimumDate = new Date().toJSON().slice(0, 10),
+  initDate = new Date(),
+  start = {},
+  end = {},
+  period = {},
+  disabledDaysIndexes = [],
+  selectedDaysIndexes = [],
+  date = new Date(),
+  showDateTimeModal = false,
+  slectedDate = new Date(),
+  updateAddonState = () => { },
 }) => {
   console.log("productDetailNew =>", productDetailNew,"\n productDetailData =>", productDetailData, "\n endDateRental =>",endDateRental);
   const {appData, themeColors, currencies, languages, appStyle, themeColor} =
@@ -83,32 +105,10 @@ const VariantAddons = ({
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
-  const [variantState, setVariantState] = useState({
-    planValues: ["Daily", "Weekly", "Monthly", "Alternate Days"],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    quickSelection: ["Weekdays", "Weekends"],
-    showCalendar: false,
-    reccuringCheckBox: false,
-    selectedPlanValues: '',
-    selectedWeekDaysValues: [],
-    selectedQuickSelectionValue: '',
-    minimumDate: new Date().toJSON().slice(0, 10),
-    initDate: new Date(),
-    start: {},
-    end: {},
-    period: {},
-    disabledDaysIndexes: [],
-    selectedDaysIndexes: [],
-  })
-
-  const { planValues, reccuringCheckBox, showCalendar, selectedPlanValues, minimumDate,
-    weekDays, quickSelection, start, end, period, selectedWeekDaysValues, selectedQuickSelectionValue, initDate,
-    disabledDaysIndexes, selectedDaysIndexes } = variantState
-  const updateAddonState = (data) => { setVariantState((state) => ({ ...state, ...data })) };
 
   const resetVariantState = () => {
     updateAddonState({
-      planValues: ["Daily", "Weekly", "Monthly", "Alternate Days"],
+      planValues: ["Daily", "Weekly","Alternate Days", "Custom"],
       weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
       quickSelection: ["Weekdays", "Weekends"],
       showCalendar: false,
@@ -122,6 +122,9 @@ const VariantAddons = ({
       period: {},
       disabledDaysIndexes: [],
       selectedDaysIndexes: [],
+      date: new Date(),
+      showDateTimeModal: false,
+      slectedDate: new Date(),
     })
   }
 
@@ -1349,635 +1352,8 @@ const VariantAddons = ({
       </View>
     );
   };
-  // reccuring 
-  const onPlanSelect = (itm) => {
-    updateAddonState({ selectedPlanValues: itm === selectedPlanValues ? '' : itm })
-    if (itm === 'Daily') {
-      updateAddonState({ showCalendar: itm === selectedPlanValues ? false : true })
-    } else if (itm === 'Monthly') {
-      updateAddonState({ showCalendar: itm === selectedPlanValues ? false : true })
-    }
-    else {
-      updateAddonState({ showCalendar: false })
-    }
-    updateAddonState({
-      selectedWeekDaysValues: [],
-      selectedQuickSelectionValue: '',
-      start: {},
-      end: {},
-      period: {},
-      disabledDaysIndexes: [],
-      selectedDaysIndexes: [],
-    })
-  }
+ 
 
-  const onSelectDayDelivery = (itm) => {
-
-    let selectedDays = [...selectedWeekDaysValues]
-
-    if (isEmpty(selectedDays)) {
-      selectedDays.push(itm)
-      updateAddonState({ showCalendar: true })
-    } else {
-      selectedDays.indexOf(itm) === -1 ?
-        insert(itm, selectedDays) :
-        selectedDays.splice(selectedDays.indexOf(itm), 1);
-    }
-    updateAddonState({ selectedWeekDaysValues: selectedDays, selectedQuickSelectionValue: '', period: {}, })
-    selectedDays.length < 1 && updateAddonState({ showCalendar: false, disabledDaysIndexes: [], selectedDaysIndexes: [] })
-    if (selectedDays.length > 0) {
-      const disabledDaysNumber = [...disabledDaysIndexes]
-      let selectedDaysNumber = [...selectedDaysIndexes]
-      const value = itm === "Mo" ? 1 :
-        itm === "Tu" ? 2 :
-          itm === "We" ? 3 :
-            itm === "Th" ? 4 :
-              itm === "Fr" ? 5 :
-                itm === "Sa" ? 6 :
-                  itm === "Su" && 7
-
-      if (isEmpty(selectedDaysNumber)) {
-        selectedDaysNumber.push(value)
-      } else {
-        selectedDaysNumber.indexOf(value) === -1 ?
-          insert(value, selectedDaysNumber) :
-          selectedDaysNumber.splice(selectedDaysNumber.indexOf(value), 1);
-      }
-      updateAddonState({ selectedDaysIndexes: selectedDaysNumber, })
-
-      const weekArr = [1, 2, 3, 4, 5, 6, 7]
-      console.log("disabledDaysIndexes =>", disabledDaysIndexes);
-      console.log("disabledDaysNumber =>", disabledDaysNumber);
-      const numberToDeleteSet = new Set(selectedDaysNumber);
-      const newArr = weekArr.filter((name) => {
-        // return those elements not in the namesToDeleteSet
-        return !numberToDeleteSet.has(name);
-      });
-      console.log("newArr =>", newArr);
-
-      updateAddonState({ disabledDaysIndexes: newArr })
-      getDisabledDays(
-        initDate.getMonth(),
-        initDate.getFullYear(),
-        newArr
-      )
-    }
-  }
-
-  const onSelectQuickSelection = (itm) => {
-    if (itm === 'Weekdays') {
-      selectedQuickSelectionValue === (itm) ?
-        updateAddonState({
-          selectedWeekDaysValues: [], selectedQuickSelectionValue: '', showCalendar: false, disabledDaysIndexes: [],
-          start: {},
-          end: {},
-          period: {},
-        })
-        :
-        (
-          updateAddonState({
-            selectedWeekDaysValues: ["Mo", "Tu", "We", "Th", "Fr"], selectedQuickSelectionValue: itm,
-            showCalendar: true, disabledDaysIndexes: [6, 7], start: {},
-            end: {},
-          }),
-          getDisabledDays(
-            initDate.getMonth(),
-            initDate.getFullYear(),
-            [6, 7]
-          )
-        )
-    }
-    if (itm === 'Weekends') {
-      selectedQuickSelectionValue === (itm) ?
-        updateAddonState({
-          selectedWeekDaysValues: [], selectedQuickSelectionValue: '', showCalendar: false, disabledDaysIndexes: [],
-          start: {},
-          end: {},
-        })
-        :
-        (
-          updateAddonState({
-            selectedWeekDaysValues: ["Sa", "Su"], selectedQuickSelectionValue: itm, showCalendar: true, disabledDaysIndexes: [1, 2, 3, 4, 5],
-            start: {},
-            end: {},
-            period: {},
-          }),
-          getDisabledDays(
-            initDate.getMonth(),
-            initDate.getFullYear(),
-            [1, 2, 3, 4, 5]
-          )
-        )
-    }
-  }
-
-  console.log(themeColors,"variantState =>", variantState);
-  const ShowReccuringView = () => {
-    const { timestamp: startTimeStamp } = start
-    const { timestamp: endTimeStamp } = end
-    return (
-      <View style={styles.mainView}>
-        <Text style={{
-          ...styles.productName,
-          color: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.black,
-          fontFamily: fontFamily.bold,
-        }}>Select your plan type</Text>
-        <View style={styles.elementInRows}>
-          {planValues.map((itm, inx) => {
-            return (
-              <TouchableOpacity key={String(inx)}
-                onPress={() => onPlanSelect(itm)}
-                style={{
-                  // width: moderateScale(50), 
-                  backgroundColor: selectedPlanValues === itm ? themeColors.bottomBarGradientA :
-                    getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 60),
-                  marginHorizontal: moderateScale(6),
-                  marginVertical: moderateScale(6),
-                  paddingHorizontal: moderateScale(16),
-                  paddingVertical: moderateScale(10),
-                  borderRadius: moderateScale(10),
-                }}>
-                <Text style={{
-                  ...styles.productName,
-                  color: isDarkMode
-                    ? colors.black :
-                    MyDarkTheme.colors.white,
-                  fontFamily: fontFamily.bold,
-                  fontSize: textScale(10)
-                }}>{itm}</Text>
-              </TouchableOpacity>
-            )
-          })}
-        </View>
-        {!isEmpty(selectedPlanValues) &&
-          <View>
-            <View style={{ marginVertical: moderateScaleVertical(8) }}>
-              {
-                selectedPlanValues === 'Daily' ?
-                  <View style={{ alignItems: 'flex-start' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text style={{  ...styles.dateText, marginRight: moderateScale(15) }}>
-                        Select Start Date:
-                      </Text>
-                      <Text style={{
-                        ...styles.productName, fontFamily: fontFamily.medium,
-                        fontSize: textScale(12), textAlign: 'center', marginVertical: moderateScaleVertical(4)
-                      }}>
-                        {startTimeStamp ? moment(startTimeStamp).format('MM/DD/YY') : 'Select Date'}
-                      </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', }}>
-                      <Text style={{  ...styles.dateText, marginRight: moderateScale(22) }}>
-                        Select End Date:
-                      </Text>
-                      <Text style={{
-                        ...styles.productName, textAlign: 'center', fontFamily: fontFamily.medium,
-                        fontSize: textScale(12), marginVertical: moderateScaleVertical(4)
-                      }}>
-                        {endTimeStamp ? moment(endTimeStamp).format('MM/DD/YY') : 'Select Date'}
-                      </Text>
-                    </View>
-                  </View>
-                  : selectedPlanValues === 'Weekly' ?
-                    <View style={{ alignItems: 'flex-start' }}>
-                      <Text>{`Select Day(s) of Delivery`}</Text>
-                      <View style={styles.elementInRows}>
-                        {weekDays.map((itm, inx) => {
-                          return (
-                            <TouchableOpacity key={String(inx)}
-                              onPress={() => onSelectDayDelivery(itm)}
-                              style={{
-                                // width: moderateScale(50), 
-                                backgroundColor: selectedWeekDaysValues.includes(itm) ? themeColors.bottomBarGradientA :
-                                  getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 60),
-                                marginHorizontal: moderateScale(6),
-                                marginVertical: moderateScale(6),
-                                paddingHorizontal: moderateScale(16),
-                                paddingVertical: moderateScale(10),
-                                borderRadius: moderateScale(10),
-                              }}>
-                              <Text style={{
-                                ...styles.productName,
-                                color: isDarkMode
-                                  ? colors.black :
-                                  MyDarkTheme.colors.white,
-                                fontFamily: fontFamily.bold,
-                                fontSize: textScale(10)
-                              }}>{itm}</Text>
-                            </TouchableOpacity>
-                          )
-                        })}
-                      </View>
-                      <View style={{}}>
-                        <Text>Quick Selection</Text>
-                        <View style={styles.elementInRows}>
-                        {quickSelection.map((itm, inx) => {
-                          return (
-                            <TouchableOpacity key={String(inx)}
-                              onPress={() => onSelectQuickSelection(itm)}
-                              style={{
-                                // width: moderateScale(50), 
-                                backgroundColor: selectedQuickSelectionValue.includes(itm) ? themeColors.bottomBarGradientA :
-                                  getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 60),
-                                marginHorizontal: moderateScale(6),
-                                marginVertical: moderateScale(6),
-                                paddingHorizontal: moderateScale(16),
-                                paddingVertical: moderateScale(10),
-                                borderRadius: moderateScale(10),
-                              }}>
-                              <Text style={{
-                                ...styles.productName,
-                                color: isDarkMode
-                                  ? colors.black :
-                                  MyDarkTheme.colors.white,
-                                fontFamily: fontFamily.bold,
-                                fontSize: textScale(10)
-                              }}>{itm}</Text>
-                            </TouchableOpacity>
-                          )
-                        })}
-                      </View>
-                      </View>
-                    </View>
-                    : selectedPlanValues === 'Monthly' ?
-                      <View>
-                        <Text>{`Select Day(s) for monthly delivery`}</Text>
-                      </View>
-                      : selectedPlanValues === 'Alternate Days' &&
-                      <View>
-                        <Text>{`Select Day(s) for monthly delivery`}</Text>
-                      </View>
-              }
-            </View>
-            {showCalendar &&
-              (
-                selectedPlanValues === 'Monthly' ?
-                  <Calendar
-                    initialDate={'2023-01-01'}
-                    horizontal={true}
-                    pagingEnabled={true}
-                    calendarWidth={width - moderateScale(38)}
-                    calendarHeight={height / 2.6}
-                    onDayPress={(value) => onMonthPress(value)}
-                    // minDate={minimumDate}
-                    markingType={'custom'}
-                    markedDates={period}
-                    // markedDates={{
-                    //   '2023-01-16': {selected: true, marked: true},
-                    //   '2023-01-17': {marked: true},
-                    //   '2023-01-19': {disabled: true}
-                    // }}
-                    hideExtraDays={true}
-                    hideArrows={true}
-                    hideDayNames={true}
-                    theme={{
-                      calendarBackground: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      dayTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                      monthTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                      textDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
-                      textSectionTitleDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
-                    }}
-                    disabledDaysIndexes={disabledDaysIndexes}
-                    renderHeader={date => {
-                      return (
-                        <></>
-                      )
-                    }}
-                  />
-                  :
-                  <Calendar
-                    horizontal={true}
-                    pagingEnabled={true}
-                    calendarWidth={width - moderateScale(38)}
-                    calendarHeight={height / 2.6}
-                    renderArrow={_renderArrow}
-                    hideArrows={false}
-                    onDayPress={(value) => onDayPress(value)}
-                    minDate={minimumDate}
-                    markingType={'period'}
-                    markedDates={period}
-                    theme={{
-                      calendarBackground: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      dayTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                      monthTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                      textDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
-                      textSectionTitleDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
-                    }}
-                    firstDay={1}
-                    disabledDaysIndexes={disabledDaysIndexes}
-                    disableAllTouchEventsForDisabledDays={true}
-                  />
-              )
-            }
-          </View>
-        }
-      </View>
-    )
-  }
-  function insert(element, array) {
-    array.push(element);
-    array.sort(function(a, b) {
-      const date1 = new Date(a);
-      const date2 = new Date(b);
-      return date1 - date2;
-    });
-    return array;
-  }
-  const toTimestamp = (strDate) => {
-    // const dt = moment(strDate).format("X");
-    const dt = Date.parse(strDate);
-    return dt;
-  }
-  const getDatesDiff = (start_date, end_date, date_format = "YYYY-MM-DD") => {
-    const getDateAsArray = date => {
-      return moment(date.split(/\D+/), date_format);
-    };
-    const diff = getDateAsArray(end_date).diff(getDateAsArray(start_date), "days") + 1;
-    const dates = [];
-    for (let i = 0; i < diff; i++) {
-      const nextDate = getDateAsArray(start_date).add(i, "day");
-      // for weekend
-      // const isWeekEndDay = nextDate.isoWeekday() > 5;
-      // if (!isWeekEndDay)
-      dates.push(nextDate.format(date_format))
-    }
-    return dates;
-  };
-
-  const getPeriod = (startTimestamp, endTimestamp, selectedPlanValues, oldperiodo) => {
-    const periodo = !isEmpty(oldperiodo) ? { ...oldperiodo } : {}
-    let currentTimestamp = startTimestamp
-    while (currentTimestamp < endTimestamp) {
-      if (selectedPlanValues === 'Weekly') {
-        if (periodo[currentTimestamp]?.disabled === true) {
-          periodo[currentTimestamp] = { color: isDarkMode ? colors.whiteOpacity22 : colors.greyA, startingDay: false, textColor: '#FFFFFF' }
-        } else {
-          const dateString = getDateString(currentTimestamp, selectedPlanValues)
-          if (dateString) {
-            periodo[dateString] = {
-              color: currentTimestamp === startTimestamp ? themeColors.primary_color : getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 25),
-              startingDay: currentTimestamp === startTimestamp,
-              textColor: colors.white
-            }
-          }
-        }
-      } else {
-        const dateString = getDateString(currentTimestamp)
-        periodo[dateString] = {
-          color: currentTimestamp === startTimestamp ? themeColors.primary_color : getColorCodeWithOpactiyNumber(themeColors.primary_color.substring(1), 25),
-          startingDay: currentTimestamp === startTimestamp,
-          textColor: colors.white
-        }
-      }
-      currentTimestamp += 24 * 60 * 60 * 1000
-    }
-    if (selectedPlanValues === 'Weekly') {
-      const dateString = getDateString(endTimestamp, selectedPlanValues)
-      if (dateString) {
-        periodo[dateString] = {
-          color: themeColors.primary_color,
-          endingDay: true,
-          textColor: colors.white
-        }
-      }
-    } else {
-      const dateString = getDateString(endTimestamp, selectedPlanValues)
-      periodo[dateString] = {
-        color: themeColors.primary_color,
-        endingDay: true,
-        textColor: colors.white
-      }
-    }
-    return periodo
-  }
-
-  const getDateString = (timestamp, selectedPlanValues = '') => {
-    const date = new Date(timestamp)
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-
-    let dateString = `${year}-`
-    if (month < 10) {
-      dateString += `0${month}-`
-    } else {
-      dateString += `${month}-`
-    }
-    if (day < 10) {
-      dateString += `0${day}`
-    } else {
-      dateString += day
-    }
-    if (selectedPlanValues || !isEmpty(selectedPlanValues)) {
-      let weekdayNumber = date.getDay()
-      weekdayNumber = weekdayNumber === 0 ? weekdayNumber + 7 :  weekdayNumber
-      console.log("weekdayNumber =>", weekdayNumber);
-      if (disabledDaysIndexes.includes(weekdayNumber)) {
-        return null;
-      } else {
-        return dateString
-      }
-    } else {
-      return dateString
-    }
-  }
-
-  const getDisabledDays = (month, year, daysIndexes) => {
-    let pivot = moment().month(month).year(year).startOf('month');
-    const end = moment().month(month).year(year).endOf('year');
-    let dates = {};
-    const disabled = { disabled: true, disableTouchEvent: true };
-    while (pivot.isBefore(end)) {
-      daysIndexes.forEach((day) => {
-        const copy = moment(pivot);
-        dates[copy.day(day).format('YYYY-MM-DD')] = disabled;
-      });
-      pivot.add(7, 'days');
-    }
-    console.log("getDisabledDays =>", dates);
-    updateAddonState({ period: dates })
-    return dates;
-  };
-
-  function insertProperty(obj, key, value) {
-    var result = {};
-    var counter = 0;
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        result[prop] = obj[prop];
-        counter++;
-      }
-    }
-    if (!(key in result)) {
-      result[key] = value;
-    }
-    return result;
-  };
-
-  const onMonthPress = (dayObj) => {
-    alert('onMonthPress')
-    const { dateString, day, month, year, } = dayObj
-
-    const periodIsEmpty = isEmpty(period)
-    if (periodIsEmpty) {
-      const periodo = {
-        [dateString]: {
-          color: themeColors.primary_color,
-          selected: true,
-          marked: true,
-          textColor: colors.white
-        },
-      }
-      updateAddonState({ period: periodo })
-    } else {
-      let periodo = {...period}
-      for (var prop in period) {
-        if (!period.hasOwnProperty(dateString)) {
-          periodo = {
-            ...periodo,
-            [dateString]: {
-              color: themeColors.primary_color,
-              selected: true,
-              marked: true,
-              textColor: colors.white
-            }
-          }
-        }else{
-          delete periodo[dateString]
-        }
-      }
-      console.log("periodo =>", periodo);
-      updateAddonState({ period: periodo })
-    }
-  }
-
-  const onDayPress = (dayObj) => {
-    alert('onDayPress')
-    const { dateString, day, month, year, } = dayObj
-    if (selectedPlanValues === ('Daily')) {
-      // timestamp returned by dayObj is in 12:00AM UTC 0, want local 12:00AM
-      const timestamp = new Date(year, month - 1, day).getTime()
-      const newDayObj = { ...dayObj, timestamp }
-      // if there is no start day, add start. or if there is already a end and start date, restart
-      const startIsEmpty = isEmpty(start)
-      if (startIsEmpty || !startIsEmpty && !isEmpty(end)) {
-        const periodo = {
-          [dateString]: {
-            color: themeColors.primary_color,
-            endingDay: true,
-            startingDay: true,
-            textColor: colors.white
-          },
-        }
-        updateAddonState({ start: newDayObj, period: periodo, end: {} })
-      } else {
-        // if end date is older than start date switch
-        const { timestamp: savedTimestamp } = start
-        if (savedTimestamp > timestamp) {
-          const periodo = getPeriod(timestamp, savedTimestamp)
-          updateAddonState({ start: newDayObj, end: start, period: periodo })
-
-        } else {
-          if (savedTimestamp === timestamp) {
-            updateAddonState({ start: {}, end: {}, period: {} })
-          }
-          else {
-            const periodo = getPeriod(savedTimestamp, timestamp)
-            updateAddonState({ end: newDayObj, start: start, period: periodo })
-          }
-
-        }
-      }
-    }
-
-    if (selectedPlanValues === ('Weekly')) {
-      // timestamp returned by dayObj is in 12:00AM UTC 0, want local 12:00AM
-      const statePeriodo = { ...period }
-      const timestamp = new Date(year, month - 1, day).getTime()
-      const newDayObj = { ...dayObj, timestamp }
-      // if there is no start day, add start. or if there is already a end and start date, restart
-      const startIsEmpty = isEmpty(start)
-      if (startIsEmpty || !startIsEmpty && !isEmpty(end)) {
-        const { timestamp: startTimeStamp } = start
-        const { timestamp: endTimeStamp } = end
-        let periodo1
-        if (startTimeStamp !== newDayObj.timestamp && endTimeStamp) {
-          const periodo2 = getDisabledDays(
-            initDate.getMonth(),
-            initDate.getFullYear(),
-            disabledDaysIndexes
-          )
-          periodo1 = insertProperty(periodo2, dateString, {
-            color: themeColors.primary_color,
-            endingDay: true,
-            startingDay: true,
-            textColor: colors.white
-          });
-          updateAddonState({ start: newDayObj, end: {}, period: periodo1 })
-        } else {
-          periodo1 = insertProperty(statePeriodo, dateString, {
-            color: themeColors.primary_color,
-            endingDay: true,
-            startingDay: true,
-            textColor: colors.white
-          });
-          updateAddonState({ start: newDayObj, period: periodo1, end: {} })
-        }
-
-      }
-      else {
-        // if end date is older than start date switch
-        const { timestamp: savedTimestamp } = start
-        if (savedTimestamp > timestamp) {
-          const periodo = getPeriod(timestamp, savedTimestamp, selectedPlanValues, statePeriodo)
-          updateAddonState({ start: newDayObj, end: start, period: periodo })
-        }
-        else {
-          if (savedTimestamp === timestamp) {
-            updateAddonState({ start: {}, end: {}, period: {} })
-            getDisabledDays(
-              initDate.getMonth(),
-              initDate.getFullYear(),
-              disabledDaysIndexes
-            )
-          }
-          else {
-            const periodo = getPeriod(savedTimestamp, timestamp, selectedPlanValues, statePeriodo)
-            updateAddonState({ end: newDayObj, start: start, period: periodo })
-          }
-        }
-      }
-
-    }
-  }
-  const _renderArrow = (direction) => {
-    if (direction == 'left') {
-      return (
-        <Image
-          source={imagePath.icgo3}
-          style={{
-            height: 25,
-            width: 25,
-            tintColor: themeColors.primary_color,
-            transform: [{ scaleX: -1 }],
-          }}
-        />
-      );
-    } else {
-      return (
-        <Image
-          source={imagePath.icgo3}
-          style={{ height: 25, width: 25, tintColor: themeColors.primary_color }}
-        />
-      );
-    }
-  };
   return (
     <View style={{flex: 1}}>
       {showShimmer ? (
@@ -2172,7 +1548,28 @@ const VariantAddons = ({
                   </TouchableOpacity>
                 </View>
               }
-              {reccuringCheckBox && ShowReccuringView()}
+              {reccuringCheckBox &&
+                <Reccuring
+                  planValues={planValues}
+                  weekDays={weekDays}
+                  quickSelection={quickSelection}
+                  showCalendar={showCalendar}
+                  reccuringCheckBox={reccuringCheckBox}
+                  selectedPlanValues={selectedPlanValues}
+                  selectedWeekDaysValues={selectedWeekDaysValues}
+                  selectedQuickSelectionValue={selectedQuickSelectionValue}
+                  minimumDate={minimumDate}
+                  initDate={initDate}
+                  start={start}
+                  end={end}
+                  period={period}
+                  disabledDaysIndexes={disabledDaysIndexes}
+                  selectedDaysIndexes={selectedDaysIndexes}
+                  date={date}
+                  showDateTimeModal={showDateTimeModal}
+                  slectedDate={slectedDate}
+                  updateAddonState={updateAddonState}
+                />}
           </ScrollView>
 
           <View style={{height: moderateScale(100)}} />
@@ -2188,6 +1585,17 @@ const VariantAddons = ({
         animationInTiming={600}>
         {renderImageZoomingView()}
       </Modal>
+      {/* <DatePicker
+        date={date}
+        mode={'date'}
+        minimumDate={new Date()}
+        style={{ width: width - 20, height: height / 3.5 }}
+        modal={true}
+        open={showDateTimeModal}
+        onConfirm={(date) => _onDateChange(date)}
+        onCancel={_selectTime}
+        androidVariant={'iosClone'}
+      /> */}
     </View>
   );
 };
