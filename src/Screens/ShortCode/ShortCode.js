@@ -3181,12 +3181,12 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: shortCode,
+        code: '2b7742',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: shortCode,
+        code: '2b7742',
       };
     }
 

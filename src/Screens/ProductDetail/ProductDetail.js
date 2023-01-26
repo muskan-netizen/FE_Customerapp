@@ -152,6 +152,9 @@ export default function ProductDetail({ route, navigation }) {
   const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null)
 
 
+  
+
+
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -1164,6 +1167,7 @@ export default function ProductDetail({ route, navigation }) {
       moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
     data['total_booking_time'] = rentalProductDuration;
+    
     data['additional_increments_hrs_min'] =
       rentalProductDuration -
       Number(productDetailNew?.product?.minimum_duration) * 60 +
@@ -1173,6 +1177,15 @@ export default function ProductDetail({ route, navigation }) {
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
+    console.log(selectedAppointmentSlot,appointmentSelectedDate,"appointmentSelectedDateappointmentSelectedDate");
+    if(dine_In_Type =='appointment'){
+      data ['schedule_slot']=selectedAppointmentSlot?.value,
+      data['scheduled_date_time']= String(
+        moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
+      );
+      
+    }
+    
     console.log(data, 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
@@ -2344,7 +2357,7 @@ export default function ProductDetail({ route, navigation }) {
                 </Text>
               ) : null}
               {
-                !!productPreferences?.appointment_check &&
+                !!productPreferences?.appointment_check && dine_In_Type =='appointment' &&
                 <View style={{
                   flexDirection: "row",
                   alignItems: "center",
