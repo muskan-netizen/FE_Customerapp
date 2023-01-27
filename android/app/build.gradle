@@ -209,7 +209,7 @@ android {
         
                           sxm2go{
                 dimension "appType"
-                versionCode 1
+                versionCode 4
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion         
