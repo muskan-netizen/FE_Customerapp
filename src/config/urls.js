@@ -168,7 +168,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 //  export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
 // export const API_BASE_URL = 'https://sabroson.com.mx/api/v1';
-//export const API_BASE_URL = 'https://dbairro.com/api/v1';
+export const API_BASE_URL = 'https://dbairro.com/api/v1';
 // export const API_BASE_URL = 'https://meltivers.com/api/v1';
 // export const API_BASE_URL = 'https://ourvalley.app/api/v1';
 // export const API_BASE_URL = 'https://fairexglobal.com/api/v1';
@@ -261,7 +261,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://rhondaisamazingtaxi.com/api/v1';
 
 //owais nor
-export const API_BASE_URL = 'http://192.168.100.122:8001/api/v1';
+//export const API_BASE_URL = 'http://192.168.100.122:8001/api/v1';
 
 // // sabroson
 // export const API_BASE_URL = 'https://sabroson.com.mx/api/v1';

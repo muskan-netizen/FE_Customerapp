@@ -2309,7 +2309,7 @@ export default function OrderDetail({ navigation, route }) {
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
-              rightText={cartData?.scheduled_date_time}
+              rightText={cartData?.scheduled_slot?`${!!cartData?.scheduled_date_time} (${cartData?.scheduled_slot})`:`${!!cartData?.scheduled_date_time}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
               leftTextStyle={{

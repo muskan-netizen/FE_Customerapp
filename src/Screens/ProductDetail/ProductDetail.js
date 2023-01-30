@@ -1177,7 +1177,6 @@ export default function ProductDetail({ route, navigation }) {
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
-    console.log(selectedAppointmentSlot,appointmentSelectedDate,"appointmentSelectedDateappointmentSelectedDate");
     if(dine_In_Type =='appointment'){
       data ['schedule_slot']=selectedAppointmentSlot?.value,
       data['scheduled_date_time']= String(
@@ -1526,7 +1525,6 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const onDateSelected = (date) => {
-
     setLoadingGetSlots(true);
     if (isAppointmentPicker) {
       actions.getAppointmentSlots({
@@ -1552,7 +1550,7 @@ export default function ProductDetail({ route, navigation }) {
 
       return
     }
-
+    
     setSelectedDate(date);
     actions
       .getVendorShippingSlots(
@@ -1782,7 +1780,7 @@ export default function ProductDetail({ route, navigation }) {
   };
 
 
-  const AppointmentSlotMoadal = () => {
+  const AppointmentSlotModal = () => {
     return <View style={{
       backgroundColor: colors.white,
       height: moderateScaleVertical(350),
@@ -2787,7 +2785,7 @@ export default function ProductDetail({ route, navigation }) {
           justifyContent: 'flex-end',
           margin: 0,
         }}>
-        <AppointmentSlotMoadal />
+        <AppointmentSlotModal />
       </ReactNativeModal>
     </WrapperContainer>
   );
