@@ -1138,6 +1138,14 @@ export default function ProductDetail({ route, navigation }) {
   }, [productDetailNew]);
 
   const _finalAddToCart = (addonSet = addonSet) => {
+
+
+    if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot) && isEmpty(appointmentSelectedDate)) {
+       alert('Please select appointment date and slot')
+      return
+    }
+
+
     const addon_ids = [];
     const addon_options = [];
     addonSet.map((i, inx) => {

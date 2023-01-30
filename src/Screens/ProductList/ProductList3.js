@@ -1343,6 +1343,8 @@ export default function Products({ route, navigation }) {
         
       }
 
+
+      console.log(data,"data for cart in single item");
    
       actions
         .addProductsToCart(data, {
@@ -3468,7 +3470,7 @@ export default function Products({ route, navigation }) {
         
       }
      
-      console.log(data, 'data for cart');
+      console.log(data, 'data for cart>>>>>>');
       updateState({ btnLoader: true });
       actions
         .addProductsToCart(data, {
