@@ -236,6 +236,7 @@ android {
                 resValue "string", "app_name", "RoyoOrder"
                 resValue "string", "host_name", "sales.royoorders.com"
             }
+         
           dbairro{
             dimension "appType"
             versionCode 2
