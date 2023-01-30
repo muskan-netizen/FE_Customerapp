@@ -207,6 +207,7 @@ export default function Products({ route, navigation }) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
+  console.log(currencies,"currenciescurrencies");
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences;
   let businessType = appData?.profile?.preferences?.business_type || null;
@@ -1502,6 +1503,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
+        
         const productTagsArr = res?.data?.map((el) => {
           return {
             ...el,

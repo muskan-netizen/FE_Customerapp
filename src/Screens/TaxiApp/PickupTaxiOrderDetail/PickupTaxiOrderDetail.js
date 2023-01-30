@@ -188,6 +188,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   ] = useState([]);
 
 
+  const isFocused = useIsFocused();
 
 
   const userData = useSelector((state) => state?.auth?.userData);

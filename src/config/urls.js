@@ -124,7 +124,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // torunz
 // export const API_BASE_URL = 'https://torunz.com/api/v1';
 
-// export const API_BASE_URL = 'https://empresas.go912.app/api/v1';
+export const API_BASE_URL = 'https://empresas.go912.app/api/v1';
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 // export const API_BASE_URL = 'https://toor.life/api/v1';
 // export const API_BASE_URL = 'https://10dollahollla.com/api/v1';
@@ -153,7 +153,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // lastminutedresss
 // export const API_BASE_URL = 'https://lastminutedress.com/api/v1';
 //Vishwas
-export const API_BASE_URL = 'https://speedy.com.do/api/v1';
+// export const API_BASE_URL = 'https://speedy.com.do/api/v1';
 // export const API_BASE_URL='https://pas41.net/api/v1'
 // export const API_BASE_URL = 'https://hitaxi.taxi/api/v1';
 // export const API_BASE_URL = 'https://pideunfleety.com/api/v1';
