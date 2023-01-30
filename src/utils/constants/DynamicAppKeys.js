@@ -516,7 +516,10 @@ const shortCodes = {
   etaim: '4b3283',
   dotTaxiApp: 'ba540d',
   airvoltTaxi: '41ca60',
-  melakPharmacy: '4dbfe1'
+  melakPharmacy: '4dbfe1',
+  wiEnergi: '39c65c',
+  nannyAfrica: 'a7dbf8'
+
 };
 
 const appIds = {
@@ -2385,8 +2388,8 @@ const appIds = {
     android: 'com.skyline',
   }),
   bliss: Platform.select({
-    ios: 'com.bliss.royoorders',
-    android: 'com.bliss',
+    ios: 'com.order.bliss',
+    android: 'com.order.bliss',
   }),
   rentzy: Platform.select({
     ios: 'com.rentzy.royoorders',
@@ -2571,6 +2574,14 @@ const appIds = {
   melakPharmacy: Platform.select({
     ios: 'com.melakPharmacy.royoorder',
     android: 'com.melakPharmacy.royoorder',
+  }),
+  wiEnergi: Platform.select({
+    ios: 'com.wienergi.royoorder',
+    android: 'com.wienergi.royoorder',
+  }),
+  nannyAfrica: Platform.select({
+    ios: 'com.nannyafrica',
+    android: 'com.nannyafrica',
   }),
 };
 

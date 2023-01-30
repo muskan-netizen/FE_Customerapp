@@ -205,7 +205,6 @@ android {
 
     flavorDimensions "appType"
 
-
  }
 
     productFlavors {
@@ -7834,7 +7833,7 @@ android {
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.bliss'
+                applicationId 'com.order.bliss'
                 resValue "string", "app_name", "Bliss"
                 resValue "string", "host_name", ""
             }
@@ -8300,6 +8299,27 @@ android {
                 resValue "string", "app_name", "Melak Pharmacy"
                 resValue "string", "host_name", ""
             }
+     wiEnergi{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.wienergi.royoorder'
+                resValue "string", "app_name", "Wi Energi"
+                resValue "string", "host_name", ""
+            }
+    NannyAfrica{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.nannyafrica'
+                resValue "string", "app_name", "Nanny Africa"
+                resValue "string", "host_name", ""
+            }
+    
             
     }
 

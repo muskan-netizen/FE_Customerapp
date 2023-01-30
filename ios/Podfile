@@ -2414,6 +2414,19 @@ end
 target 'MelakPharmacy' do
 end
 
+#WiEnergi
+target 'WiEnergi' do
+end
+
+#Bliss
+target 'Bliss' do
+end
+
+#NannyAfrica
+target 'NannyAfrica' do
+end
+
+
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"

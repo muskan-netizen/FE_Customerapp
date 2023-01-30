@@ -7,36 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1014225673698:android:53773d83be6b37bd7f6dbb",
+        "mobilesdk_app_id": "1:1014225673698:android:a154ac7c3635c6ad7f6dbb",
         "android_client_info": {
-          "package_name": "com.bliss"
+          "package_name": "com.order.bliss"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "1014225673698-1it6jdj37434ksdql4k29nr8q2pe67kg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bliss",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1014225673698-6r6a4csdr241patoqb97nrkgt4s2grf6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bliss",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1014225673698-dkijng5q0k7k6phdc0bv2135gi8jm315.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bliss",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
         {
           "client_id": "1014225673698-0g4idavkjesqjq4pmbm5qvjj9kkn88qh.apps.googleusercontent.com",
           "client_type": 3
@@ -53,6 +29,13 @@
             {
               "client_id": "1014225673698-0g4idavkjesqjq4pmbm5qvjj9kkn88qh.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1014225673698-165lv6483brpd2vhl2bmdj92v8b1dabp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.order.bliss"
+              }
             }
           ]
         }

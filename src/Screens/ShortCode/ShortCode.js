@@ -3190,6 +3190,18 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.wiEnergi:
+          updateState({
+            shortCode: shortCodes.wiEnergi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nannyAfrica:
+          updateState({
+            shortCode: shortCodes.nannyAfrica,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();
