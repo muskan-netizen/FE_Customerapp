@@ -332,6 +332,7 @@ export default function VendorProducts({route, navigation}) {
         }
         refreshing={isRefreshing}
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={(val) => console.log('indexed failed')}
         initialNumToRender={12}
         maxToRenderPerBatch={10}
         windowSize={10}

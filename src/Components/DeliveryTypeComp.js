@@ -194,6 +194,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
           initialScrollIndex={tabs.findIndex(
             (item) => item?.type == dineInType,
           )}
+          onScrollToIndexFailed={(val) => console.log('indexed failed')}
           renderItem={renderItem}
           keyExtractor={awesomeChildListKeyExtractor}
           ListFooterComponent={() => (

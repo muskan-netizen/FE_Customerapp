@@ -3706,7 +3706,8 @@ export default function Products({ route, navigation }) {
                 renderItem={renderSectionItem}
                 renderSectionHeader={renderSectionHeader}
                 renderSectionFooter={renderSectionFooter}
-                  getItemLayout={getItemLayout}
+                getItemLayout={getItemLayout}
+                onScrollToIndexFailed={(val) => console.log('indexed failed')}
                 ItemSeparatorComponent={()=> <View style={{height: moderateScale(8)}} />}
        
                 // contentContainerStyle={{
@@ -3714,7 +3715,7 @@ export default function Products({ route, navigation }) {
                 // }}
             
                 ListEmptyComponent={listEmptyComponent}
-                onScrollToIndexFailed={(val) => console.log('indexed failed')}
+
                 extraData={cloneSectionList}
               
                 // Performance settings

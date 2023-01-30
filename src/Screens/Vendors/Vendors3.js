@@ -244,7 +244,8 @@ export default function Vendors3({route, navigation}) {
               // titleColor="#fff"
             />
           }
-          getItemLayout={getItemLayout}
+            getItemLayout={getItemLayout}
+            onScrollToIndexFailed={(val) => console.log('indexed failed')}
           initialNumToRender={5}
           maxToRenderPerBatch={10}
           windowSize={10}

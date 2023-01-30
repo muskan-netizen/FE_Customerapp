@@ -174,6 +174,7 @@ export default function Vendors({route, navigation}) {
           />
         }
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={(val) => console.log('indexed failed')}
         initialNumToRender={5}
         maxToRenderPerBatch={10}
         windowSize={10}
