@@ -396,6 +396,8 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
 //export const API_BASE_URL = 'https://order.clickokart.com/api/v1'
+//TDC
+// export const API_BASE_URL='https://tdcrider.coop-move.net/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
