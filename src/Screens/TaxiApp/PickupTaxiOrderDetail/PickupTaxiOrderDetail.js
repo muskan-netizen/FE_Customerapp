@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
@@ -13,17 +13,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {useIsFocused} from '@react-navigation/native';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useIsFocused } from '@react-navigation/native';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import {
   getImageUrl,
@@ -33,17 +33,17 @@ import {
   showSuccess,
 } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
-const {height, width} = Dimensions.get('window');
-import {cloneDeep} from 'lodash';
+const { height, width } = Dimensions.get('window');
+import { cloneDeep } from 'lodash';
 import Communications from 'react-native-communications';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {MyDarkTheme} from '../../../styles/theme';
+import { MyDarkTheme } from '../../../styles/theme';
 import useInterval from '../../../utils/useInterval';
 import moment from 'moment';
-import {FlatList} from 'react-native';
+import { FlatList } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import CustomCallouts from '../../../Components/CustomCallouts';
@@ -54,9 +54,9 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 
 const ASPECT_RATIO = width / height;
@@ -78,8 +78,8 @@ import 'moment-timezone';
 import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import GradientButton from '../../../Components/GradientButton';
 
-export default function PickupTaxiOrderDetail({navigation, route}) {
-  const {themeColor, themeToggle} = useSelector((state) => state?.initBoot);
+export default function PickupTaxiOrderDetail({ navigation, route }) {
+  const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
@@ -161,27 +161,27 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     orderCancelMessage,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
-console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+  console.log(paramData?.pickup_taxi, "paramDataparamDataparamData");
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot,
   );
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences;
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
-  const {profile} = appData;
+  const { profile } = appData;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, isDarkMode, MyDarkTheme});
+  const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
   // const urlValue = paramData?.orderDetail?.dispatch_traking_url
   //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
   //       '/order/',
@@ -244,19 +244,19 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
       } else {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       }
     },
     isFocused && orderStatus != 'completed' ? 3000 : null,
   );
 
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => true,
-    );
-    return () => backHandler.remove();
-  }, []);
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     () => true,
+  //   );
+  //   return () => backHandler.remove();
+  // }, []);
 
   useEffect(() => {
     // console.log('driverStatus', driverStatus);
@@ -280,9 +280,9 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
   const new_dispatch_traking_url = !!paramData?.orderDetail
     ?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-        '/order/',
-        '/order-details/',
-      )
+      '/order/',
+      '/order-details/',
+    )
     : null;
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = async (url) => {
@@ -439,7 +439,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
     showError(error?.message || error?.error);
   };
   const _onRegionChange = (region) => {
-    updateState({region: region});
+    updateState({ region: region });
     // _getAddressBasedOnCoordinates(region);
     // animate(region);
   };
@@ -540,7 +540,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
           isVisible: false,
           isLoading: false,
         });
-        navigation.navigate(navigationStrings.RATEORDER, {item});
+        navigation.navigate(navigationStrings.RATEORDER, { item });
       })
       .catch((error) => {
         updateState({
@@ -581,7 +581,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
         }}>
         <TouchableOpacity
           onPress={_modalClose}
-          style={{position: 'absolute', right: 0, top: 0}}>
+          style={{ position: 'absolute', right: 0, top: 0 }}>
           <Image source={imagePath.cross} />
         </TouchableOpacity>
         <Text
@@ -597,7 +597,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
             {productInfo?.map((item, index) => {
               console.log(item, 'itemtmetmetmet');
               return (
-                <View style={{marginVertical: moderateScaleVertical(20)}}>
+                <View style={{ marginVertical: moderateScaleVertical(20) }}>
                   <View
                     style={{
                       width: moderateScale(width - 50),
@@ -653,7 +653,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     marginTop={moderateScaleVertical(10)}
                     marginBottom={moderateScaleVertical(10)}
                     btnText={strings.WRITE_A_REVIEW}
-                    btnStyle={{width: '80%'}}
+                    btnStyle={{ width: '80%' }}
                   />
                 </View>
               );
@@ -661,7 +661,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
           </ScrollView>
         )}
 
-        <View style={{marginVertical: moderateScaleVertical(10)}}>
+        <View style={{ marginVertical: moderateScaleVertical(10) }}>
           <Text
             style={{
               fontSize: textScale(16),
@@ -723,7 +723,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
               btnText={strings.WRITE_A_REVIEW}
-              btnStyle={{width: '80%'}}
+              btnStyle={{ width: '80%' }}
             />
           </View>
         </View>
@@ -844,7 +844,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
 
   const renderDotContainer = (i) => {
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={{ alignItems: 'center' }}>
         {i == 0 ? (
           <View
             style={{
@@ -893,7 +893,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
       return;
     }
 
-    updateState({isBtnLoader: true, cancelError: null});
+    updateState({ isBtnLoader: true, cancelError: null });
 
     const apiData = {
       order_id: paramData?.orderId,
@@ -960,7 +960,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
   };
 
   const onChat = (item) => {
-    navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item } });
   };
 
   const createRoom = async (item, type) => {
@@ -975,7 +975,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
         vendor_id: String(item?.vendor_id),
         order_id: String(item?.order_id),
       };
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
 
       console.log('sending api data', apiData);
       const res = await actions.onStartChat(apiData, {
@@ -984,14 +984,14 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
         language: languages?.primary_language?.id,
       });
       console.log('start chat res', res);
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
       if (!!res?.roomData) {
         onChat(res.roomData);
       }
     } catch (error) {
       console.log('error raised in start chat api', error);
       showError(error?.message);
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     }
   };
   console.log(orderStatus, 'orderStatus');
@@ -1003,7 +1003,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
       source={loaderOne}
       isLoadingB={isLoading}>
       <View
-        style={{flex: 1, marginVertical: moderateScale(16), marginBottom: 0}}>
+        style={{ flex: 1, marginVertical: moderateScale(16), marginBottom: 0 }}>
         <View
           style={{
             flexDirection: 'row',
@@ -1014,10 +1014,10 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.HOME)
+                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 : paramData?.pickup_taxi
-                ? () => navigation.navigate(navigationStrings.HOME)
-                : () => navigation.goBack()
+                  ? () => navigation.navigate(navigationStrings.HOME)
+                  : () => navigation.goBack()
             }
             activeOpacity={0.8}>
             <Image
@@ -1043,11 +1043,11 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
           </Text>
         </View>
 
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{height: height / 1.8, width: '100%'}}
+              style={{ height: height / 1.8, width: '100%' }}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -1090,11 +1090,11 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                 origin={
                   orderStatus !== 'completed' && orderStatus !== 'unassigned'
                     ? {
-                        latitude: Number(agent_location?.lat),
-                        longitude: Number(
-                          agent_location?.long || agent_location?.lng,
-                        ),
-                      }
+                      latitude: Number(agent_location?.lat),
+                      longitude: Number(
+                        agent_location?.long || agent_location?.lng,
+                      ),
+                    }
                     : tasks[0]
                 }
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
@@ -1110,7 +1110,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                 strokeWidth={4}
                 strokeColor={colors.black}
                 optimizeWaypoints={true}
-                onStart={(params) => {}}
+                onStart={(params) => { }}
                 precision={'high'}
                 timePrecision={'now'}
                 mode={'DRIVING'}
@@ -1171,7 +1171,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
             }}
             showsVerticalScrollIndicator={false}>
             {!!orderFullDetail && (
-              <View style={{marginBottom: moderateScaleVertical(16)}}>
+              <View style={{ marginBottom: moderateScaleVertical(16) }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -1183,29 +1183,28 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     style={
                       isDarkMode
                         ? [
-                            styles.orderLableStyle,
-                            {color: MyDarkTheme.colors.text},
-                          ]
+                          styles.orderLableStyle,
+                          { color: MyDarkTheme.colors.text },
+                        ]
                         : styles.orderLableStyle
                     }>
-                    {`${strings.ORDER_ID}: #${
-                      orderFullDetail?.order?.order_number
-                        ? orderFullDetail?.order?.order_number
-                        : paramData?.orderDetail?.order_number
-                    }`}
+                    {`${strings.ORDER_ID}: #${orderFullDetail?.order?.order_number
+                      ? orderFullDetail?.order?.order_number
+                      : paramData?.orderDetail?.order_number
+                      }`}
                   </Text>
 
                   {isWaitingOver && orderStatus == 'unassigned' ? (
                     <></>
                   ) : !!(
-                      orderStatus !== 'completed' ||
-                      orderStatus !== 'started' ||
-                      orderStatus !== 'arrived'
-                    ) ? (
+                    orderStatus !== 'completed' ||
+                    orderStatus !== 'started' ||
+                    orderStatus !== 'arrived'
+                  ) ? (
                     <TouchableOpacity
                       disabled={orderStatus == 'cancelled'}
                       activeOpacity={0.7}
-                      onPress={() => updateState({isCancleModal: true})}>
+                      onPress={() => updateState({ isCancleModal: true })}>
                       <Text
                         style={{
                           textAlign: 'right',
@@ -1214,8 +1213,8 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                         {orderStatus == 'cancelled'
                           ? strings.ORDER_CANCELLED
                           : orderStatus == 'completed'
-                          ? null
-                          : strings.CANCEL_ORDER}
+                            ? null
+                            : strings.CANCEL_ORDER}
                       </Text>
                     </TouchableOpacity>
                   ) : null}
@@ -1226,7 +1225,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     paddingVertical: moderateScaleVertical(10),
                   }}>
                   {!userData?.is_superadmin ? (
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       {!!appData?.profile?.socket_url ? (
                         <TouchableOpacity
                           onPress={() =>
@@ -1287,7 +1286,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     marginBottom: moderateScaleVertical(8),
                     marginHorizontal: moderateScale(16),
                   }}>
-                  <View style={{flex: 0.7}}>
+                  <View style={{ flex: 0.7 }}>
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
@@ -1332,7 +1331,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                 </View>
 
                 {!!orderFullDetail?.order.task_description && (
-                  <View style={{marginHorizontal: moderateScale(16)}}>
+                  <View style={{ marginHorizontal: moderateScale(16) }}>
                     <Text style={styles.datePriceText}>
                       {strings.DRIVER_DETAILS}:
                     </Text>
@@ -1363,16 +1362,16 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
 
                 {orderFullDetail?.tasks.map((val, i) => {
                   return (
-                    <View style={{marginHorizontal: moderateScale(16)}}>
+                    <View style={{ marginHorizontal: moderateScale(16) }}>
                       <View
                         style={{
                           flexDirection: 'row',
                           alignItems: 'center',
                         }}>
-                        <View style={{marginRight: moderateScaleVertical(8)}}>
+                        <View style={{ marginRight: moderateScaleVertical(8) }}>
                           {renderDotContainer(i)}
                         </View>
-                        <View style={{flex: 1}}>
+                        <View style={{ flex: 1 }}>
                           <Text
                             style={{
                               ...styles.statusText,
@@ -1420,13 +1419,13 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                         justifyContent: 'space-between',
                         alignItems: 'center',
                       }}>
-                      <View style={{flexDirection: 'row'}}>
+                      <View style={{ flexDirection: 'row' }}>
                         <RoundImg
                           img={orderFullDetail?.agent_image}
                           size={90}
                         />
-                        <View style={{flexDirection: 'column'}}>
-                          <View style={{flexDirection: 'row'}}>
+                        <View style={{ flexDirection: 'column' }}>
+                          <View style={{ flexDirection: 'row' }}>
                             <Text
                               style={{
                                 ...styles.statusText,
@@ -1469,7 +1468,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                               }}>
                               <Image
                                 source={imagePath.star}
-                                style={{tintColor: colors.yellowB}}
+                                style={{ tintColor: colors.yellowB }}
                               />
                               <Text
                                 style={{
@@ -1497,9 +1496,9 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                             {Array(
                               Math.max(
                                 4 -
-                                  String(orderFullDetail?.order?.driver_id)
-                                    .length +
-                                  1,
+                                String(orderFullDetail?.order?.driver_id)
+                                  .length +
+                                1,
                                 0,
                               ),
                             ).join(0) + orderFullDetail?.order?.driver_id}
@@ -1580,7 +1579,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                           starSize={25}
                         />
                         {submitedRatingToDriver ||
-                        orderFullDetail?.order_driver_rating?.rating ? (
+                          orderFullDetail?.order_driver_rating?.rating ? (
                           <TouchableOpacity
                             onPress={() =>
                               rateYourOrder({
@@ -1614,7 +1613,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                         </Text>
                         <FlatList
                           ItemSeparatorComponent={() => (
-                            <View style={{marginLeft: 8}} />
+                            <View style={{ marginLeft: 8 }} />
                           )}
                           horizontal
                           data={orderFullDetail?.tasks.filter((val) => {
@@ -1622,7 +1621,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                               return val;
                             }
                           })}
-                          renderItem={({item}) => {
+                          renderItem={({ item }) => {
                             return (
                               <View>
                                 <TouchableOpacity
@@ -1761,37 +1760,37 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                                 }}>
                                 {orderFullDetail.order_details.products.length >
                                   0 && (
-                                  <View
-                                    style={{
-                                      flexDirection: 'row',
-                                      marginBottom: moderateScaleVertical(5),
-                                    }}>
-                                    <Text
+                                    <View
                                       style={{
-                                        ...styles.statusText,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.black,
-                                        // marginLeft: moderateScale(10),
+                                        flexDirection: 'row',
+                                        marginBottom: moderateScaleVertical(5),
                                       }}>
-                                      {'No. of items:'}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        ...styles.statusText,
-                                        color: isDarkMode
-                                          ? MyDarkTheme.colors.text
-                                          : colors.black,
-                                        marginLeft: moderateScale(10),
-                                        fontFamily: fontFamily.bold,
-                                      }}>
-                                      {
-                                        orderFullDetail.order_details.products
-                                          .length
-                                      }
-                                    </Text>
-                                  </View>
-                                )}
+                                      <Text
+                                        style={{
+                                          ...styles.statusText,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                          // marginLeft: moderateScale(10),
+                                        }}>
+                                        {'No. of items:'}
+                                      </Text>
+                                      <Text
+                                        style={{
+                                          ...styles.statusText,
+                                          color: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                          marginLeft: moderateScale(10),
+                                          fontFamily: fontFamily.bold,
+                                        }}>
+                                        {
+                                          orderFullDetail.order_details.products
+                                            .length
+                                        }
+                                      </Text>
+                                    </View>
+                                  )}
                                 {orderStatus == 'completed' ? (
                                   <View
                                     style={{
@@ -1896,13 +1895,13 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     </View>
                   </View>
                 ) : (
-                  <View style={{marginBottom: moderateScaleVertical(24)}} />
+                  <View style={{ marginBottom: moderateScaleVertical(24) }} />
                 )}
 
-                <View style={{marginHorizontal: moderateScale(16)}}>
+                <View style={{ marginHorizontal: moderateScale(16) }}>
                   {!!orderFullDetail?.order_details?.delivery_fee &&
                     Number(orderFullDetail?.order_details?.delivery_fee) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DELIVERYFEE}
@@ -1923,7 +1922,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     )}
                   {!!orderFullDetail?.order_details?.subtotal_amount &&
                     Number(orderFullDetail?.order_details?.subtotal_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.SUBTOTAL}
@@ -1944,7 +1943,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     )}
                   {!!orderFullDetail?.order_details?.toll_amount &&
                     Number(orderFullDetail?.order_details?.toll_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={'Toll fee'}
@@ -1990,7 +1989,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
 
                   {!!orderFullDetail?.order_details?.discount_amount &&
                     Number(orderFullDetail?.order_details?.discount_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.DISCOUNT}
@@ -2002,8 +2001,8 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                             additional_preferences,
                             currencies?.primary_currency?.symbol,
                           )}`}
-                          leftTextStyle={{color: themeColors.primary_color}}
-                          rightTextStyle={{color: themeColors.primary_color}}
+                          leftTextStyle={{ color: themeColors.primary_color }}
+                          rightTextStyle={{ color: themeColors.primary_color }}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
@@ -2019,27 +2018,25 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                     ) !== 0 && (
                       <View>
                         <LeftRightText
-                          leftText={`${
-                            strings.SUBSCRIPTION_DISCOUNT
-                          } ${'('} ${tokenConverterPlusCurrencyNumberFormater(
-                            Number(subscription_percent),
-                            digit_after_decimal,
-                            additional_preferences,
-                            currencies?.primary_currency?.symbol,
-                          )} ${'%)'}`}
-                          rightText={` ${'-'} ${
-                            currencies?.primary_currency?.symbol
-                          } ${tokenConverterPlusCurrencyNumberFormater(
-                            Number(
-                              orderFullDetail?.order_details?.order_detail
-                                ?.subscription_discount,
-                            ),
-                            digit_after_decimal,
-                            additional_preferences,
-                            currencies?.primary_currency?.symbol,
-                          )} `}
-                          leftTextStyle={{color: themeColors.primary_color}}
-                          rightTextStyle={{color: themeColors.primary_color}}
+                          leftText={`${strings.SUBSCRIPTION_DISCOUNT
+                            } ${'('} ${tokenConverterPlusCurrencyNumberFormater(
+                              Number(subscription_percent),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol,
+                            )} ${'%)'}`}
+                          rightText={` ${'-'} ${currencies?.primary_currency?.symbol
+                            } ${tokenConverterPlusCurrencyNumberFormater(
+                              Number(
+                                orderFullDetail?.order_details?.order_detail
+                                  ?.subscription_discount,
+                              ),
+                              digit_after_decimal,
+                              additional_preferences,
+                              currencies?.primary_currency?.symbol,
+                            )} `}
+                          leftTextStyle={{ color: themeColors.primary_color }}
+                          rightTextStyle={{ color: themeColors.primary_color }}
                           isDarkMode={isDarkMode}
                           MyDarkTheme={MyDarkTheme}
                           marginBottom={0}
@@ -2053,7 +2050,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
                   )}
                   {!!orderFullDetail?.order_details?.taxable_amount &&
                     Number(orderFullDetail?.order_details?.taxable_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TAX_AMOUNT}
@@ -2075,7 +2072,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
 
                   {!!orderFullDetail?.order_details?.payable_amount &&
                     Number(orderFullDetail?.order_details?.payable_amount) !==
-                      0 && (
+                    0 && (
                       <View>
                         <LeftRightText
                           leftText={strings.TOTAL}
@@ -2114,7 +2111,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
       </Modal>
       <Modal
         isVisible={showModal}
-        onBackdropPress={() => updateState({showModal: false})}
+        onBackdropPress={() => updateState({ showModal: false })}
         animationIn="zoomIn"
         animationOut="zoomOut">
         <View
@@ -2141,12 +2138,12 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
               }}>
               {strings.PROOF}
             </Text>
-            <TouchableOpacity onPress={() => updateState({showModal: false})}>
+            <TouchableOpacity onPress={() => updateState({ showModal: false })}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
           <Image
-            source={{uri: `${baseUrl}/${selectedImg}`}}
+            source={{ uri: `${baseUrl}/${selectedImg}` }}
             style={{
               width: '100%',
               height: height / 3,
@@ -2197,13 +2194,13 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
             </Text>
             <TouchableOpacity onPress={hideModal}>
               <Image
-                style={isDarkMode && {tintColor: colors.white}}
+                style={isDarkMode && { tintColor: colors.white }}
                 source={imagePath.closeButton}
               />
             </TouchableOpacity>
           </View>
           {!!orderCancelMessage && (
-            <Text style={{alignSelf: 'center', color: colors.redB}}>
+            <Text style={{ alignSelf: 'center', color: colors.redB }}>
               {orderCancelMessage}
             </Text>
           )}
@@ -2246,7 +2243,7 @@ console.log(paramData?.pickup_taxi,"paramDataparamDataparamData");
               multiline
               value={reason}
               placeholder={strings.WRITE_YOUR_REASON_HERE}
-              onChangeText={(val) => updateState({reason: val})}
+              onChangeText={(val) => updateState({ reason: val })}
               style={{
                 ...styles.reasonText,
                 color: isDarkMode ? colors.textGreyB : colors.black,

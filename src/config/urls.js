@@ -396,6 +396,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // ElCheRegio
 // export const API_BASE_URL = 'https://elcheregio.com.mx/api/v1';
 
+// Bliss
+// export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
+
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

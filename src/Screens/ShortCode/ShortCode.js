@@ -3202,6 +3202,12 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.whatchaGotPickUp:
+          updateState({
+            shortCode: shortCodes.whatchaGotPickUp,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();

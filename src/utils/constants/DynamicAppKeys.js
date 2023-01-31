@@ -470,7 +470,7 @@ const shortCodes = {
   flybuilder: '7cd4bc',
   konectame: '1338c1',
   skyline: 'ce1ed6',
-  bliss: '6eb260',
+  bliss: 'ceeb2e',
   rentzy: 'd4fc07',
   todaysDeliverys: '6d055a',
   locate: 'f9f1f8',
@@ -518,8 +518,8 @@ const shortCodes = {
   airvoltTaxi: '41ca60',
   melakPharmacy: '4dbfe1',
   wiEnergi: '39c65c',
-  nannyAfrica: 'a7dbf8'
-
+  nannyAfrica: 'a7dbf8',
+  whatchaGotPickUp: '2c23b0'
 };
 
 const appIds = {
@@ -2582,6 +2582,10 @@ const appIds = {
   nannyAfrica: Platform.select({
     ios: 'com.nannyafrica',
     android: 'com.nannyafrica',
+  }),
+  whatchaGotPickUp: Platform.select({
+    ios: 'com.whatchaGotPickUp',
+    android: 'com.whatchaGotPickUp',
   }),
 };
 

@@ -2426,6 +2426,10 @@ end
 target 'NannyAfrica' do
 end
 
+#WhatchaGotPickUp
+target 'WhatchaGotPickUp' do
+end
+
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

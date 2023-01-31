@@ -1032,6 +1032,8 @@
     "wiEnergiRelease": "cd android && ./gradlew assemblewiEnergiRelease",
     "nannyAfrica": "react-native run-android --variant=nannyAfricaDebug --appIdSuffix=nannyAfrica",
     "nannyAfricaRelease": "cd android && ./gradlew assemblenannyAfricaRelease",
+    "whatchaGotPickUp": "react-native run-android --variant=whatchaGotPickUpDebug --appIdSuffix=whatchaGotPickUp",
+    "whatchaGotPickUpRelease": "cd android && ./gradlew assemblewhatchaGotPickUpRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
