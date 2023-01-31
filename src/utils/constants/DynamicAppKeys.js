@@ -470,7 +470,7 @@ const shortCodes = {
   flybuilder: '7cd4bc',
   konectame: '1338c1',
   skyline: 'ce1ed6',
-  bliss: '6eb260',
+  bliss: 'ceeb2e',
   rentzy: 'd4fc07',
   todaysDeliverys: '6d055a',
   locate: 'f9f1f8',
@@ -509,7 +509,18 @@ const shortCodes = {
   stargaze: 'cc100d',
   messiaa: 'c326b3',
   superApp: '041795',
-  nounou: '7ab01a'
+  nounou: '7ab01a',
+  laith: 'f235c4',
+  liverpoolEats: '08e554',
+  oaks: 'db5f29',
+  buzy: '5e7246',
+  etaim: '4b3283',
+  dotTaxiApp: 'ba540d',
+  airvoltTaxi: '41ca60',
+  melakPharmacy: '4dbfe1',
+  wiEnergi: '39c65c',
+  nannyAfrica: 'a7dbf8',
+  whatchaGotPickUp: '2c23b0'
 };
 
 const appIds = {
@@ -2378,8 +2389,8 @@ const appIds = {
     android: 'com.skyline',
   }),
   bliss: Platform.select({
-    ios: 'com.bliss.royoorders',
-    android: 'com.bliss',
+    ios: 'com.order.bliss',
+    android: 'com.order.bliss',
   }),
   rentzy: Platform.select({
     ios: 'com.rentzy.royoorders',
@@ -2536,6 +2547,50 @@ const appIds = {
   nounou: Platform.select({
     ios: 'com.nounou.royoorder',
     android: 'com.nounou.royoorder',
+  }),
+  laith: Platform.select({
+    ios: 'com.laith.royoorder',
+    android: 'com.laith.royoorder',
+  }),
+  liverpoolEats: Platform.select({
+    ios: 'com.liverpoolEats.royoorder',
+    android: 'com.liverpoolEats.royoorder',
+  }),
+  oaks: Platform.select({
+    ios: 'com.oaks.royoorder',
+    android: 'com.oaks.royoorder',
+  }),
+  buzy: Platform.select({
+    ios: 'com.buszy.royoorder',
+    android: 'com.buszy.royoorder',
+  }),
+  etaim: Platform.select({
+    ios: 'com.etaim.royoorder',
+    android: 'com.etaim.royoorder',
+  }),
+  dotTaxiApp: Platform.select({
+    ios: 'com.dotTaxiApp.royoorder',
+    android: 'com.dotTaxiApp.royoorder',
+  }),
+  airvoltTaxi: Platform.select({
+    ios: 'com.airvoltTaxi.royoorder',
+    android: 'com.airvoltTaxi.royoorder',
+  }),
+  melakPharmacy: Platform.select({
+    ios: 'com.melakPharmacy.royoorder',
+    android: 'com.melakPharmacy.royoorder',
+  }),
+  wiEnergi: Platform.select({
+    ios: 'com.wienergi.royoorder',
+    android: 'com.wienergi.royoorder',
+  }),
+  nannyAfrica: Platform.select({
+    ios: 'com.nannyafrica',
+    android: 'com.nannyafrica',
+  }),
+  whatchaGotPickUp: Platform.select({
+    ios: 'com.whatchaGotPickUp',
+    android: 'com.whatchaGotPickUp',
   }),
 };
 

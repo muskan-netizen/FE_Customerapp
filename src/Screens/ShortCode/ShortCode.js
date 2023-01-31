@@ -3154,6 +3154,73 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.laith:
+          updateState({
+            shortCode: shortCodes.laith,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.liverpoolEats:
+          updateState({
+            shortCode: shortCodes.liverpoolEats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.oaks:
+          updateState({
+            shortCode: shortCodes.oaks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.buzy:
+          updateState({
+            shortCode: shortCodes.buzy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.etaim:
+          updateState({
+            shortCode: shortCodes.etaim,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dotTaxiApp:
+          updateState({
+            shortCode: shortCodes.dotTaxiApp,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.airvoltTaxi:
+          updateState({
+            shortCode: shortCodes.airvoltTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.melakPharmacy:
+          updateState({
+            shortCode: shortCodes.melakPharmacy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.wiEnergi:
+          updateState({
+            shortCode: shortCodes.wiEnergi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nannyAfrica:
+          updateState({
+            shortCode: shortCodes.nannyAfrica,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.whatchaGotPickUp:
+          updateState({
+            shortCode: shortCodes.whatchaGotPickUp,
+            isShortcodePrefilled: true,
+          });
+          break;
+
       }
     })();
   }, []);

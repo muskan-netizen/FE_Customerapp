@@ -1284,7 +1284,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.HOME)
+                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 : paramData?.pickup_taxi
                   ? () => navigation.navigate(navigationStrings.HOME)
                   : () => navigation.goBack()

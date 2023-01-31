@@ -229,18 +229,19 @@ android {
             }
     }
 
+
     // productFlavors {
-            // royoorder {
-            //     dimension "appType"
-            //     versionCode 3
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion
-            //     // applicationIdSuffix ".royoorder"
-            //     applicationId 'com.codebrew.royoorder'
-            //     resValue "string", "app_name", "RoyoOrder"
-            //     resValue "string", "host_name", "sales.royoorders.com"
-            // }
+    //         royoorder {
+    //             dimension "appType"
+    //             versionCode 3
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".royoorder"
+    //             applicationId 'com.codebrew.royoorder'
+    //             resValue "string", "app_name", "RoyoOrder"
+    //             resValue "string", "host_name", "sales.royoorders.com"
+    //         }
     //         orderchekout{
     //             dimension "appType"
     //             versionCode 5
@@ -7855,7 +7856,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.bliss'
+    //             applicationId 'com.order.bliss'
     //             resValue "string", "app_name", "Bliss"
     //             resValue "string", "host_name", ""
     //         }
@@ -8251,8 +8252,109 @@ android {
     //             resValue "string", "app_name", "Laith"
     //             resValue "string", "host_name", ""
     //         }
+    // liverpoolEats{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.liverpoolEats.royoorder'
+    //             resValue "string", "app_name", "Liverpool Eats"
+    //             resValue "string", "host_name", ""
+    //         }
+    // oaks{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.oaks.royoorder'
+    //             resValue "string", "app_name", "Oaks"
+    //             resValue "string", "host_name", ""
+    //         }
+    // buzy{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.buszy.royoorder'
+    //             resValue "string", "app_name", "Buzy"
+    //             resValue "string", "host_name", ""
+    //         }
+    // etaim{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.etaim.royoorder'
+    //             resValue "string", "app_name", "Etaim"
+    //             resValue "string", "host_name", ""
+    //         }
+    // dotTaxiApp{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.dotTaxiApp.royoorder'
+    //             resValue "string", "app_name", "Dot Taxi App"
+    //             resValue "string", "host_name", ""
+    //         }
+    // airvoltTaxi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.airvoltTaxi.royoorder'
+    //             resValue "string", "app_name", "Airvolt Taxi"
+    //             resValue "string", "host_name", ""
+    //         }
+    // melakPharmacy{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.melakPharmacy.royoorder'
+    //             resValue "string", "app_name", "Melak Pharmacy"
+    //             resValue "string", "host_name", ""
+    //         }
+    //  wiEnergi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.wienergi.royoorder'
+    //             resValue "string", "app_name", "Wi Energi"
+    //             resValue "string", "host_name", ""
+    //         }
+    // nannyafrica{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.nannyafrica'
+    //             resValue "string", "app_name", "Nanny Africa"
+    //             resValue "string", "host_name", ""
+    //         }
+    //  whatchaGotPickUp{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.whatchaGotPickUp'
+    //             resValue "string", "app_name", "WhatchaGot Pick Up"
+    //             resValue "string", "host_name", ""
+    //         }
             
     // }
+
 
 }
    dependencies {

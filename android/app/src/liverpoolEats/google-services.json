@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "846996660175",
+    "project_id": "liverpooleats-order",
+    "storage_bucket": "liverpooleats-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846996660175:android:10b2c0d3d4bd5b84467cba",
+        "android_client_info": {
+          "package_name": "com.liverpoolEats.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846996660175-eg2r3h5aso7c417q14hegfglsvn5mf2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liverpoolEats.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "846996660175-qg955ajgk7r8erqh8rgoqksjrcsvj08q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liverpoolEats.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "846996660175-sq1pdq8p3hoitee7hnv1rjdqb0njslh5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.liverpoolEats.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "846996660175-nkeur454bm5rqthjjtf8ssietorrkvth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACMHO4YTe6GH8t7e4FMUrpzEzHAEVj8mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846996660175-nkeur454bm5rqthjjtf8ssietorrkvth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "846996660175-g74bq21hmos1a6221ljjp83ig3kt3c4v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.liverpoolEats.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

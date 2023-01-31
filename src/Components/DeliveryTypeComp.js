@@ -33,7 +33,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const {dineInType} = useSelector((state) => state?.home);
+  const { dineInType } = useSelector((state) => state?.home);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -43,9 +43,9 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
     tabs: [],
   });
 
-  const {tabs} = state;
+  const { tabs } = state;
   console.log(appData, 'tabs------------');
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
     addAllTabs();
@@ -92,7 +92,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx) },
     ]);
   };
 
@@ -120,7 +120,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
   };
 
   const renderItem = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <TouchableOpacity
           activeOpacity={1}
@@ -140,10 +140,10 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
               dineInType == item?.type && isDarkMode
                 ? MyDarkTheme.colors.white
                 : dineInType == item?.type && !isDarkMode
-                ? themeColors.primary_color
-                : isDarkMode
-                ? colors.blackOpacity0
-                : colors.greyColor1,
+                  ? themeColors.primary_color
+                  : isDarkMode
+                    ? colors.blackOpacity0
+                    : colors.greyColor1,
             width:
               tabs.length == 2
                 ? (width - moderateScale(16)) / 2
@@ -156,8 +156,8 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
                 item.isActive && isDarkMode
                   ? MyDarkTheme.colors.white
                   : item.isActive && !isDarkMode
-                  ? themeColors.primary_color
-                  : colors.greyLight,
+                    ? themeColors.primary_color
+                    : colors.greyLight,
             }}>
             {item?.name}
           </Text>
@@ -209,7 +209,7 @@ function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
   );
 }
 
-export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
+export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
   const styles = StyleSheet.create({
     tabMainStyle: {
       borderRadius: moderateScale(10),

@@ -11,7 +11,7 @@ abstract_target 'available_pods' do
    use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => true
+    :hermes_enabled => false
   )
 
    pod 'react-native-google-maps', :path => rn_maps_path
@@ -2383,6 +2383,59 @@ end
 #Messiaa
 target 'Messiaa' do
 end
+
+#Nounou
+target 'Nounou' do
+end
+
+#LiverpoolEats
+target 'LiverpoolEats' do
+end
+
+#Oaks
+target 'Oaks' do
+end
+
+#Buzy
+target 'Buzy' do
+end
+
+#Etaim
+target 'Etaim' do
+end
+
+#DotTaxiApp
+target 'DotTaxiApp' do
+end
+
+#AirvoltTaxi
+target 'AirvoltTaxi' do
+end
+
+#Laith
+target 'Laith' do
+end
+
+#MelakPharmacy
+target 'MelakPharmacy' do
+end
+
+#WiEnergi
+target 'WiEnergi' do
+end
+
+#Bliss
+target 'Bliss' do
+end
+
+#NannyAfrica
+target 'NannyAfrica' do
+end
+
+#WhatchaGotPickUp
+target 'WhatchaGotPickUp' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)

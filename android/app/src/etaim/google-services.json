@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1040868302752",
+    "project_id": "etaim-order",
+    "storage_bucket": "etaim-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040868302752:android:ac690741d8afd3fb534ec5",
+        "android_client_info": {
+          "package_name": "com.etaim.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040868302752-3lqo101i0to22otiogiat3rstqvrfvu1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etaim.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1040868302752-5dbtk7qedd2u48vfinjq8c09con7o5uc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etaim.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1040868302752-kjc5e705bbjp46marg94omc74vg7hjio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etaim.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1040868302752-rca55ecnc171bljca5dvqbs07f96iagb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsj8OyOHj69Gp37w1Qjufa_Ib509rImIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040868302752-rca55ecnc171bljca5dvqbs07f96iagb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1040868302752-sqngm8tne15uh5h2vbhkl64jg66h1pq7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.etaim.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

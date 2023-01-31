@@ -396,6 +396,19 @@ export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
 // export const API_BASE_URL = 'https://order.clickokart.com/api/v1'
 
+// uberweeds
+// export const API_BASE_URL = 'https://uber-weeds.com/api/v1';
+
+// mobi
+// export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1';
+
+// ElCheRegio
+// export const API_BASE_URL = 'https://elcheregio.com.mx/api/v1';
+
+// Bliss
+// export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
+
+
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
 export const SEND_OTP = getApiUrl('/auth/sendOtp');
