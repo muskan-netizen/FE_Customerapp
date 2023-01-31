@@ -26,6 +26,9 @@ import SearchingForDriverView from '../TaxiApp/PickupTaxiOrderDetail/SearchingFo
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function PickupOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

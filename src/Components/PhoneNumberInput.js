@@ -1,4 +1,3 @@
-import {callingCodes} from 'country-data';
 import React, {useState} from 'react';
 import {
   I18nManager,
@@ -79,7 +78,9 @@ const PhoneNumberInput = ({
         onPress={_openCountryPicker}>
         {showCountryCode && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text > +</Text>
+               <Text style={{ color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyOpcaity7}}>+ </Text>
             <Text
               style={{
                 fontFamily: fontFamily.medium,
@@ -98,7 +99,12 @@ const PhoneNumberInput = ({
 
         <Image
           source={imagePath.dropdownTriangle}
-          style={{...downArrowStyle}}
+          style={{
+            ...downArrowStyle,
+            tintColor: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.black,
+          }}
         />
       </TouchableOpacity>
       <TextInput

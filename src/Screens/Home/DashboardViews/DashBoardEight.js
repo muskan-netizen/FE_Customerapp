@@ -511,7 +511,7 @@ export default function DashBoardEight({
                     tintColor: themeColors.primary_color,
                   }}
                   resizeMode="contain"
-                  source={imagePath.sort}
+                  source={isDarkMode? imagePath.sortSelected: imagePath.sort}
                 />
                 <Text
                   style={{

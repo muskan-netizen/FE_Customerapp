@@ -45,6 +45,10 @@ import {checkIsAdmin} from '../../utils/utils';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function Login4({navigation}) {
   const navigation_ = useNavigation();
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(

@@ -424,6 +424,7 @@ export default {
   CONFIRM_PASSWORD: 'पासवर्ड की पुष्टि कीजिये',
   PASSWORD_NOT_MATCH: 'नया पासवर्ड और कन्फर्म पासवर्ड मेल नहीं खाता',
   MESSAGE: 'संदेश',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'आपका आदेश सबमिट कर दिया गया है!',
   YOUR_ORDER_NUMBER: 'आपका ऑर्डर नंबर है',
   ANY_RESTAURANT_REQUESTS:
@@ -620,6 +621,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'जब भी आपकी कार खराब हो जाती है,\\n हम आपके साथ हैं!',
   ENTER_YOUR: 'अपना भरें',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'पंजीकरण करवाना',
   ENTER_EMAIL_ADDRESS: 'यहां अपना ईमेल आईडी दर्ज करें',
   ENTER_PHONE_NUMBER: 'अपना फोन नंबर यहां दर्ज करें',

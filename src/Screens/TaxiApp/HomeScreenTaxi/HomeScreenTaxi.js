@@ -40,6 +40,9 @@ import BottomViewModal from '../../../Components/BottomViewModal';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 // import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 import DeviceInfo from 'react-native-device-info';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 

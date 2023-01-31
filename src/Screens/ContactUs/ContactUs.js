@@ -52,24 +52,36 @@ export default function ContactUs({navigation}) {
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(appData, 'appDataa');
 
+
+  
   const [state, setState] = useState({
-    callingCode:
-      !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
-        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
-            '-',
-            '',
-          )
-        : appData?.profile.country?.phonecode
-        ? appData?.profile?.country?.phonecode
-        : '91',
-    cca2:
-      !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
-        ? getPhonesCallingCodeAndCountryData[0].isoCode2
-        : appData?.profile?.country?.code
-        ? appData?.profile?.country?.code
-        : 'IN',
+    callingCode: userData?.dial_code
+    ? userData?.dial_code
+    : appData?.profile?.country?.phonecode
+    ? appData?.profile?.country?.phonecode
+    : '91',
+  cca2: userData?.cca2
+    ? userData?.cca2
+    : appData?.profile?.country?.code
+    ? appData?.profile?.country?.code
+    : 'IN',
+    // callingCode:
+    //   !isEmpty(getPhonesCallingCodeAndCountryData) &&
+    //   getBundleId() !== appIds.sxm2go
+    //     ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+    //         '-',
+    //         '',
+    //       )
+    //     : appData?.profile.country?.phonecode
+    //     ? appData?.profile?.country?.phonecode
+    //     : '91',
+    // cca2:
+    //   !isEmpty(getPhonesCallingCodeAndCountryData) &&
+    //   getBundleId() !== appIds.sxm2go
+    //     ? getPhonesCallingCodeAndCountryData[0].isoCode2
+    //     : appData?.profile?.country?.code
+    //     ? appData?.profile?.country?.code
+    //     : 'IN',
     name: userData && userData?.name ? userData?.name : '',
     email: userData && userData?.email ? userData?.email : '',
     phoneNumber:
@@ -85,29 +97,65 @@ export default function ContactUs({navigation}) {
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
   //Update states
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  useEffect(() => {
-    updateState({
-      cca2:
-        getPhonesCallingCodeAndCountryData &&
-        !!getPhonesCallingCodeAndCountryData?.length
-          ? getPhonesCallingCodeAndCountryData[0].isoCode2
-          : appData?.profile?.country?.code
-          ? appData?.profile?.country?.code
-          : 'IN',
-      callingCode:
-        getPhonesCallingCodeAndCountryData &&
-        !!getPhonesCallingCodeAndCountryData?.length
-          ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
-          : appData?.profile.country?.phonecode
-          ? appData?.profile?.country?.phonecode
-          : '91',
-    });
-  }, [appData]);
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  
+  // useEffect(() => {
+  //   updateState({
+  //     cca2:
+  //       getPhonesCallingCodeAndCountryData &&
+  //       !!getPhonesCallingCodeAndCountryData?.length
+  //         ? getPhonesCallingCodeAndCountryData[0].isoCode2
+  //         : appData?.profile?.country?.code
+  //         ? appData?.profile?.country?.code
+  //         : 'IN',
+  //     callingCode:
+  //       getPhonesCallingCodeAndCountryData &&
+  //       !!getPhonesCallingCodeAndCountryData?.length
+  //         ? getPhonesCallingCodeAndCountryData[0].countryCodes[0]
+  //         : appData?.profile.country?.phonecode
+  //         ? appData?.profile?.country?.phonecode
+  //         : '91',
+  //   });
+  // }, [appData]);
+
   //select the country
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
+  };
+
+
+
+  useEffect(() => {
+    getUserProfileData()
+  }, [])
+  
+  const getUserProfileData = () => {
+    actions
+      .getUserProfile(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(res => {
+        console.log("get user profile",res)
+        actions.updateProfile({...userData, ...res?.data});
+      })
+      .catch(errorMethod);
+  };
+
+
+
+  const errorMethod = error => {
+    console.log(error, 'in error method...');
+    updateState({
+      isLoading: false,
+
+    });
+    showError(error?.message || error?.error);
   };
 
   // on change text

@@ -54,6 +54,9 @@ import {
   locationPermission,
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;

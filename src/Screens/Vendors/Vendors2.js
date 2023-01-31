@@ -22,7 +22,10 @@ import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
 import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Vendors2({route, navigation}) {
   const [state, setState] = useState({

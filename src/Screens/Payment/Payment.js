@@ -16,6 +16,10 @@ import {
 } from '../../styles/responsiveSize';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function BuyProduct({navigation, route}) {
   const currentTheme = useSelector((state) => state.appTheme);
   const {appData, themeColors, appStyle} = useSelector(

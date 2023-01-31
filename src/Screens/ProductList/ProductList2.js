@@ -38,7 +38,11 @@ import {
   showSuccess,
 } from '../../utils/helperFunctions';
 import { useDarkMode } from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Products({route, navigation}) {
   const {data} = route.params;

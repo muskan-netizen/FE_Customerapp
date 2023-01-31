@@ -43,6 +43,10 @@ import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {

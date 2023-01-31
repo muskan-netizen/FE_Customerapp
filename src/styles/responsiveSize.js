@@ -17,7 +17,7 @@ const sliderWidth = width - 20;
 const itemWidth = width - 20;
 
 const isIPhoneX = () =>
-  Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS
+  Platform.OS === 'ios' && !Platform.isPad && !Platform.isTV
     ? (width === X_WIDTH && height === X_HEIGHT) ||
       (width === XSMAX_WIDTH && height === XSMAX_HEIGHT)
     : false;

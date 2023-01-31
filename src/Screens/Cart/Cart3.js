@@ -99,6 +99,10 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 function Cart({navigation, route}) {
   let paramsData = route?.params;
 

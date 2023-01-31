@@ -725,11 +725,11 @@ export default function DashBoardFive({
                       height: moderateScaleVertical(16),
                       width: moderateScale(16),
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? MyDarkTheme.colors.white
                         : colors.black,
                     }}
                     resizeMode="contain"
-                    source={imagePath.sort}
+                    source={isDarkMode? imagePath.sortSelected: imagePath.sort}
                   />
                   <Text
                     style={{

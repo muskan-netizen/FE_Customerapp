@@ -34,6 +34,10 @@ import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function Signup2({navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state?.initBoot);

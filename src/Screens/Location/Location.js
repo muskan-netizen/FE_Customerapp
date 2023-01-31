@@ -37,6 +37,10 @@ import {
 } from "../../utils/permissions";
 import stylesFun from "./styles";
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 navigator.geolocation = require("react-native-geolocation-service");
 
 export default function Location({ route, navigation }) {

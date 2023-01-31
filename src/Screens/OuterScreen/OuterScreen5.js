@@ -45,6 +45,9 @@ import {isEmpty} from 'lodash';
 import {getValuebyKeyInArray} from '../../utils/commonFunction';
 import {color} from 'react-native-reanimated';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OuterScreen5({navigation}) {
   const {

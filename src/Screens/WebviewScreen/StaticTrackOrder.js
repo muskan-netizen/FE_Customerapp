@@ -20,7 +20,10 @@ import {MyDarkTheme} from '../../styles/theme';
 import StepIndicators from '../../Components/StepIndicator';
 import {ScrollView} from 'react-native';
 import StepIndicators1 from '../../Components/StepIndicator1';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;

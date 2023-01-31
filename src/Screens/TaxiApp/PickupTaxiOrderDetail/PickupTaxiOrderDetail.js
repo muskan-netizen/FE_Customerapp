@@ -63,6 +63,10 @@ import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { mapStyleGrey } from "../../../utils/constants/MapStyle";
 import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;

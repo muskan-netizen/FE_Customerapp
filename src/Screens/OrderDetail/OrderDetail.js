@@ -87,6 +87,9 @@ import BannerLoader from "../../Components/Loaders/BannerLoader";
 import ButtonWithLoader from "../../Components/ButtonWithLoader";
 
 const { height, width } = Dimensions.get("window");
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OrderDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1306,8 +1309,14 @@ export default function OrderDetail({ navigation, route }) {
                                               {strings.QTY}
                                             </Text>
                                             <Text style={styles.cartItemWeight}>
-                                              {i?.quantity}
+                                              {i?.quantity} {'x'} {tokenConverterPlusCurrencyNumberFormater(
+                                            Number(i?.price),
+                                            digit_after_decimal,
+                                            additional_preferences,
+                                            currencies?.primary_currency?.symbol
+                                          )}
                                             </Text>
+                                            {' = '}
                                           </Text>
                                         </View>
                                       )}
@@ -3770,7 +3779,7 @@ export default function OrderDetail({ navigation, route }) {
                     <Text
                       style={{
                         ...styles.ariveTextStyle,
-                        color: colors.blackC,
+                        color: isDarkMode? colors.white: colors.blackC,
                       }}
                     >
                       {strings.YOUR_ORDER_WILL_ARRIVE_BY}{" "}

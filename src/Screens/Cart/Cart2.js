@@ -56,6 +56,9 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;

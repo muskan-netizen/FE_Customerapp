@@ -4,30 +4,19 @@ import {Alert, BackHandler, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 
-import WrapperContainer from '../../../Components/WrapperContainer';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {appIds, shortCodes} from '../../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
-  getParameterByName,
-  getUrlRoutes,
   showError,
 } from '../../../utils/helperFunctions';
 import {chekLocationPermission} from '../../../utils/permissions';
-import {setItem} from '../../../utils/utils';
 import {
-  DashBoardFive,
-  DashBoardFour,
-  DashBoardHeaderFive,
-  DashBoardHeaderOne,
-  DashBoardOne,
   TaxiHomeDashbord,
 } from '../DashboardViews/Index';
-import {MyDarkTheme, MyDefaultTheme} from '../../../styles/theme';
 import {useDarkMode} from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';

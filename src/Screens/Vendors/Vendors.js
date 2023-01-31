@@ -21,7 +21,10 @@ import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import VendorsDesign1 from './Vendors2';
 import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Vendors({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

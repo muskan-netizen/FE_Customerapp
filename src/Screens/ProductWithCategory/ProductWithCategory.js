@@ -68,6 +68,10 @@ import {
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 let timeOut = undefined;
 
 var tempQty = 0;

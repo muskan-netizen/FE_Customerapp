@@ -38,6 +38,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserData} from '../../utils/utils';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 export default function OuterScreen3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

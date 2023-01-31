@@ -45,6 +45,8 @@ import {getCurrentLocation} from '../../utils/helperFunctions';
 import {useFocusEffect} from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
 import {getBundleId} from 'react-native-device-info';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;

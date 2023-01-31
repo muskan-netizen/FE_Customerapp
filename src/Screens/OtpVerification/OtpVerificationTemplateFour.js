@@ -28,6 +28,9 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import { useDarkMode } from 'react-native-dynamic';
 import { getCartDetail } from '../../redux/actions/cart';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OtpVerificationTemplateFour({navigation, route}) {
   const paramData = route?.params;

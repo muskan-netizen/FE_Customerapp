@@ -436,6 +436,7 @@ export default {
   NEW_INCORRECT_PASSWORD: 'Yeni Şifre yanlış',
   PASSWORD_NOT_MATCH: 'Yeni Parola ve Parolayı Onayla eşleşmedi',
   MESSAGE: 'mesaj',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Siparişiniz gönderildi!',
   YOUR_ORDER_NUMBER: 'Sipariş numaranız',
   ANY_RESTAURANT_REQUESTS:
@@ -580,6 +581,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'Anytime your car breaks down,\n we are there for you !',
   ENTER_YOUR: 'Enter your',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Kaydolmak',
   ENTER_EMAIL_ADDRESS: 'E-posta Kimliğinizi buraya girin',
   ENTER_PHONE_NUMBER: 'Telefon numaranızı buraya girin',

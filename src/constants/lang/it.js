@@ -426,6 +426,7 @@ export default {
   CONFIRM_PASSWORD: 'Conferma password',
   PASSWORD_NOT_MATCH: 'Nuova password e Conferma password non corrispondono',
   MESSAGE: 'Messaggio',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Il tuo ordine è stato inviato!',
   YOUR_ORDER_NUMBER: "Il tuo numero d'ordine è",
   ANY_RESTAURANT_REQUESTS:
@@ -631,6 +632,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'Ogni volta che la tua auto si guasta,\\n siamo a tua disposizione!',
   ENTER_YOUR: 'Inserisci il tuo',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Registrati',
   ENTER_EMAIL_ADDRESS: 'Inserisci qui il tuo ID e-mail',
   ENTER_PHONE_NUMBER: 'Inserisci qui il tuo numero di telefono',

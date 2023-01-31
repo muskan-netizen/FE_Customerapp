@@ -134,7 +134,7 @@ const GradientCartView = ({
         <Animatable.View
           duration={400}
           animation={ifCartShow ? menuBtnAnimation : menuBtnAnimationReverse}>
-          {sectionListData.length > 1 && !isCategoryExist ? (
+          {sectionListData.length > 1 ? (
             <BrowseMenuButton
               fontFamily={fontFamily}
               onMenuTap={onMenuTap}

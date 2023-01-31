@@ -45,7 +45,9 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
-import {string} from 'is_js';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function MyProfile({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -395,6 +397,7 @@ export default function MyProfile({route, navigation}) {
       getAllAddress();
     }
   }, [del]);
+  
 
   //get All address
   const getAllAddress = () => {

@@ -68,6 +68,10 @@ import Clipboard from '@react-native-community/clipboard';
 import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function ProductDetail({ route, navigation }) {
   console.log('my route', route.params.data);
   const theme = useSelector((state) => state?.initBoot?.themeColor);

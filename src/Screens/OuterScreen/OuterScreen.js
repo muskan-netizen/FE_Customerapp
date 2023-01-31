@@ -42,7 +42,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
 import {setItem, setUserData} from '../../utils/utils';
 import {isEmpty} from 'lodash';
-import {getValuebyKeyInArray} from '../../utils/commonFunction';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OuterScreen({navigation}) {
   const {

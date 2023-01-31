@@ -41,6 +41,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setUserData } from '../../utils/utils';
 import { useNavigation } from '@react-navigation/native';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function Login2({ navigation }) {
   const navigation_ = useNavigation();
   var clonedState = {};

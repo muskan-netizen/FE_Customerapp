@@ -23,6 +23,10 @@ import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFuncti
 import {getImageUrl} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function OrderDetailView({
   isLoading = false,
   orderDetail = {},

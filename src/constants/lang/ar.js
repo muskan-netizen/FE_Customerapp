@@ -11,6 +11,8 @@ export default {
   OR_SIGNUP_WITH: 'أو تسجيل اشتراك من خلال',
   OR_LOGIN_WITH: 'أو تسجيل دخول من خلال',
   ALREADY_HAVE_AN_ACCOUNT: 'هل لديك حساب بالفعل؟',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   LOGIN: 'تسجيل دخول',
   SKIP: 'تخطى',
   VERIFIED: 'تم التحقق',

@@ -31,6 +31,9 @@ import {
 import { MyDarkTheme } from "../../../styles/theme";
 import { showError } from "../../../utils/helperFunctions";
 import stylesFun from "./styles";
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 const PaymentOptions = ({ navigation, route }) => {
   const [state, setState] = useState({

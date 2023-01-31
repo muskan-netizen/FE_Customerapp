@@ -57,7 +57,6 @@ export default function Wallet({navigation}) {
     walletHistory: [],
     isRefreshing: false,
     transferModal: false,
-    keyboardHeight: 0,
     transferEmail: '',
     transferAmount: '',
     verifiedUser: null,
@@ -87,7 +86,6 @@ export default function Wallet({navigation}) {
     wallet_amount,
     isRefreshing,
     transferModal,
-    keyboardHeight,
     transferAmount,
     transferEmail,
     verifiedUser,
@@ -102,26 +100,7 @@ export default function Wallet({navigation}) {
     }, [isRefreshing]),
   );
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      (event) => {
-        // console.log('my events', event);
-        updateState({keyboardHeight: event.endCoordinates.height});
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      (event) => {
-        // console.log('my events', event);
-        updateState({keyboardHeight: 0});
-      },
-    );
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+
 
   useEffect(() => {
     getWalletData();
@@ -642,15 +621,13 @@ export default function Wallet({navigation}) {
         />
       </View>
       <Modal
+        avoidKeyboard
         isVisible={transferModal}
         // isVisible={true}
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          marginBottom:
-            Platform.OS == 'ios'
-              ? moderateScale(keyboardHeight)
-              : moderateScale(0),
+          backgroundColor: isDarkMode ? colors.black : colors.white,
         }}
         onBackdropPress={modalClose}>
         <View

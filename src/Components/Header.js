@@ -96,9 +96,11 @@ const Header = ({
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
+                  
                   style={{
                     ...leftIconStyle,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}
                 />
               </TouchableOpacity>

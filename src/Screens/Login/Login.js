@@ -42,6 +42,10 @@ import validator from '../../utils/validations';
 import stylesFunc from './styles';
 import {isEmpty} from 'lodash';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
   .then((result) => {

@@ -273,6 +273,8 @@ export default {
   MYSTORES: 'Administra tus Tiendas Aficiinado',
   ORDERS: 'Pedidos',
   PRODUCTS: 'Productos',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REVENUE: 'Ingresos',
   RATEORDER: 'Calificar Pedido',
   UPLOAD_IMAGE: 'Subir imagen',

@@ -423,6 +423,7 @@ export default {
   CONFIRM_PASSWORD: 'Xác nhận mật khẩu',
   PASSWORD_NOT_MATCH: 'Mật khẩu mới và mật khẩu xác nhận không khớp',
   MESSAGE: 'Tin nhắn',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Đề xuất của bạn đã được chấp nhận!',
   YOUR_ORDER_NUMBER: 'Mã đơn đặt hàng của bạn là',
   ANY_RESTAURANT_REQUESTS:
@@ -619,6 +620,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'Bất cứ lúc nào xe của bạn bị hỏng,\n chúng tôi ở đây với bạn!',
   ENTER_YOUR: 'Nhập của bạn',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Đăng ký',
   ENTER_EMAIL_ADDRESS: ' Nhập ID EMAIL tại đây',
   ENTER_PHONE_NUMBER: ' Nhập số điện thoại tại đây',

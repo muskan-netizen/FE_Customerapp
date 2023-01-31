@@ -27,6 +27,9 @@ import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import {trim} from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
 import * as Animatable from 'react-native-animatable';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;

@@ -25,6 +25,9 @@ import {
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function VendorDetail2({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

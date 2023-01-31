@@ -21,7 +21,6 @@ import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -48,12 +47,10 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import {androidCameraPermission} from '../../utils/permissions';
-import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
-import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
-import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
-import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import {string} from 'is_js';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function MyProfile({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

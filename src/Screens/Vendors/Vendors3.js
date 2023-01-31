@@ -26,6 +26,9 @@ import ListEmptyVendors from './ListEmptyVendors';
 import * as Animatable from 'react-native-animatable';
 import Header2 from '../../Components/Header2';
 import Header from '../../Components/Header';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

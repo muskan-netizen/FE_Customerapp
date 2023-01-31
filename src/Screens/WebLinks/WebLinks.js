@@ -17,7 +17,6 @@ import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
-import HTMLView from 'react-native-htmlview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
@@ -49,14 +48,7 @@ import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
-import {WebView} from 'react-native-webview';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-  MenuProvider,
-} from 'react-native-popup-menu';
+import {MenuProvider} from 'react-native-popup-menu';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 let clickedIndx = null;
@@ -87,7 +79,7 @@ export default function WebLinks({navigation, route}) {
   const paramData = route?.params;
   // const [VendorLocation, setVendorLocation] = useState(address)
   // setVendorLocation(paramData?.formatted_address)
-  // console.log(paramData , "paramDataparamData" )
+  console.log(paramData , "paramDataparamData" )
   const [state, setState] = useState({
     isLoading: false,
     htmlContent: null,
@@ -1103,7 +1095,7 @@ export default function WebLinks({navigation, route}) {
                   onCountryChange={_onCountryChange}
                   onChangePhone={(phoneNumber) =>
                     updateState({
-                      phoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
+                      phoneNumber: phoneNumber.replace(/[^0-9]/g, '')
                     })
                   }
                   cca2={cca2}
@@ -1280,22 +1272,10 @@ export default function WebLinks({navigation, route}) {
                     {address != '' && address != null
                       ? `${address}`
                       : `${strings.ADDRESS}*`}
-                    {/* { address != '' && address != null ? address :  address == '' && address == null ? vendorAddress : strings.ADDRESS } */}
-                    {/* {if(address != '' && address != null) {
-                    `${address}`
-                  } else if (address = '') {
-                    `${vendorAdrees}`
-                  } else {
-                    `${strings.ADDRESS}`
-                  }
-                }} */}
+            
                   </Text>
                 </TouchableOpacity>
-                {/* <BorderTextInput
-              placeholder={`${strings.ADDRESS}*`}
-              onChangeText={_onChangeText('address')}
-              containerStyle={styles.containerStyle}
-            /> */}
+         
                 <BorderTextInput
                   placeholder={strings.WEBSITE}
                   onChangeText={_onChangeText('website')}
@@ -1391,7 +1371,7 @@ export default function WebLinks({navigation, route}) {
                   )}
                 </View>
 
-                {pageData?.is_seller_module && (
+                {!!pageData?.is_seller_module && (
                   <View
                     style={{
                       marginVertical: moderateScaleVertical(15),
@@ -1442,7 +1422,8 @@ export default function WebLinks({navigation, route}) {
                     />
                   </View>
                 )}
-                {pageData?.is_gst_required_for_vendor_registration && (
+                
+                {!!pageData?.is_gst_required_for_vendor_registration && (
                   <View>
                     <Text
                       style={{
@@ -1476,7 +1457,7 @@ export default function WebLinks({navigation, route}) {
                     />
                   </View>
                 )}
-                {pageData?.is_baking_required_for_vendor_registration && (
+                {!!pageData?.is_baking_required_for_vendor_registration && (
                   <View>
                     <Text
                       style={{
@@ -1532,6 +1513,7 @@ export default function WebLinks({navigation, route}) {
                     />
                   </View>
                 )}
+
                 {!isEmpty(vendorRegDocs) && (
                   <Text
                     style={{
@@ -1541,6 +1523,7 @@ export default function WebLinks({navigation, route}) {
                     Additional Details
                   </Text>
                 )}
+                
                 <View
                   style={{
                     marginHorizontal: moderateScale(5),

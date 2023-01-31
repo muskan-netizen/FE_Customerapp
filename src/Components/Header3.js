@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
+import commonStyles from '../styles/commonStyles';
 import {
   moderateScale,
   StatusBarHeight,
@@ -39,6 +40,12 @@ const Header3 = ({
         ...conatinerStyle,
       }}>
       <TouchableOpacity
+        hitSlop={{
+          top: 30,
+          right: 30,
+          left: 30,
+          bottom: 30,
+        }}
         style={{
           flex: 0.1,
         }}

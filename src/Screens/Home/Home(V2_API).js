@@ -26,7 +26,10 @@ import {
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
-import {DashBoardFiveV2Api, DashBoardHeaderFive} from './DashboardViews/Index';
+import { DashBoardFiveV2Api, DashBoardHeaderFive } from './DashboardViews/Index';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;

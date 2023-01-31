@@ -46,6 +46,9 @@ import ScaledImage from 'react-native-scalable-image';
 import {getImageUrl} from '../../utils/helperFunctions';
 import LanguageModal from '../../Components/LanguageModal';
 import {setItem, setUserData} from '../../utils/utils';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OuterScreen3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

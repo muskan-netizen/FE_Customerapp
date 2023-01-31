@@ -30,6 +30,9 @@ import {
 import navigationStrings from '../../../navigation/navigationStrings';
 import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import LottieView from 'lottie-react-native';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ({
   isLoading = false,

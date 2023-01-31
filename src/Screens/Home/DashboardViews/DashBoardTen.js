@@ -327,7 +327,7 @@ export default function DashBoardFive({
                         : colors.black,
                     }}
                     resizeMode="contain"
-                    source={imagePath.sort}
+                    source={isDarkMode? imagePath.sortSelected: imagePath.sort}
                   />
                   <Text
                     style={{

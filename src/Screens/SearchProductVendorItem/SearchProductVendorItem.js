@@ -23,6 +23,9 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function SearchProductVendorItem({navigation, route}) {
   const [state, setState] = useState({

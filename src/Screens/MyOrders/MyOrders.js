@@ -5,7 +5,6 @@ import {
   FlatList,
   Image,
   RefreshControl,
-  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -43,7 +42,10 @@ import stylesFun from './styles';
 import useInterval from '../../utils/useInterval';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 export default function MyOrders(props) {
   const { navigation, route } = props;

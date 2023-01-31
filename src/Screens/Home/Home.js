@@ -30,6 +30,8 @@ import DashBoardEight from './DashboardViews/DashBoardEight';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
+
+
 import {
   DashBoardFive,
   DashBoardFour,
@@ -41,6 +43,10 @@ import {
   DashBoardTen,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;

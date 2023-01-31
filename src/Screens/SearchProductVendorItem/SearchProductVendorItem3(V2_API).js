@@ -47,6 +47,8 @@ import Voice from '@react-native-voice/voice';
 import {getBundleId} from 'react-native-device-info';
 import Vi from '../../constants/lang/vi';
 import {isEmpty} from 'lodash';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;

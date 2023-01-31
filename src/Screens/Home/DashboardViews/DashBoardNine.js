@@ -817,7 +817,7 @@ export default function DashBoardNine({
                         : colors.black,
                     }}
                     resizeMode="contain"
-                    source={imagePath.sort}
+                    source={isDarkMode? imagePath.sortSelected: imagePath.sort}
                   />
                   <Text
                     style={{

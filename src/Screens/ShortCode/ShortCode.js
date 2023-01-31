@@ -8,7 +8,6 @@ import { MaterialIndicator } from "react-native-indicators";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import Video from "react-native-video";
 import { useSelector } from "react-redux";
-import RNFetchBlob from "rn-fetch-blob-v2";
 import ButtonWithLoader from "../../Components/ButtonWithLoader";
 import { loaderOne } from "../../Components/Loaders/AnimatedLoaderFiles";
 import WrapperContainer from "../../Components/WrapperContainer";
@@ -34,7 +33,9 @@ import {
 import { getItem, setItem } from "../../utils/utils";
 import styles from "./styles";
 
-const fs = RNFetchBlob.fs;
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ShortCode({ route, navigation }) {
   const shortCodeParam = route?.params?.shortCodeParam;
@@ -3198,29 +3199,28 @@ export default function ShortCode({ route, navigation }) {
 
     actions
       .initApp({}, header, false, null, null, true)
-
       .then((res) => {
         console.log("header response--->", res);
-        if (res.data.mobile_banners.length > 0) {
-          let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
-            return {
-              uri: getImageUrl(
-                item.image.image_fit,
-                item.image.image_path,
-                "800/600"
-              ),
-            };
-          });
-          FastImage.preload(preLoadBanners); //preload banners
-        }
-        if (res.data.dynamic_tutorial.length > 0) {
-          let preLoadTutorial = res.data.dynamic_tutorial.map((el, inx) => {
-            return {
-              uri: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
-            };
-          });
-          FastImage.preload(preLoadTutorial); //preload tutorial images
-        }
+        // if (res.data.mobile_banners.length > 0) {
+        //   let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
+        //     return {
+        //       uri: getImageUrl(
+        //         item.image.image_fit,
+        //         item.image.image_path,
+        //         "800/600"
+        //       ),
+        //     };
+        //   });
+        //   FastImage.preload(preLoadBanners); //preload banners
+        // }
+        // if (res.data.dynamic_tutorial.length > 0) {
+        //   let preLoadTutorial = res.data.dynamic_tutorial.map((el, inx) => {
+        //     return {
+        //       uri: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
+        //     };
+        //   });
+        //   FastImage.preload(preLoadTutorial); //preload tutorial images
+        // }
 
         updateState({ changeInShortCode: false });
         if (getBundleId() == appIds.royoorder) {
@@ -3311,52 +3311,6 @@ export default function ShortCode({ route, navigation }) {
     }
   };
 
-  async function handleDynamicLink(deepLinkUrl) {
-    if (deepLinkUrl != null) {
-      setItem("deepLinkUrl", deepLinkUrl);
-      let routeName = getUrlRoutes(deepLinkUrl, 1);
-      var data = deepLinkUrl?.split("=").pop();
-      console.log("checking deep link data >>> ", data);
-      let removePer = decodeURI(data);
-      let sendingData = JSON.parse(removePer);
-
-      let decodedUri = decodeURI(deepLinkUrl);
-      let vendorName = decodedUri.split("?")[1].split("&")[1].split("=")[1];
-      let vendorId = decodedUri.split("?")[1].split("&")[0].split("=")[1];
-
-      // return;
-      setTimeout(() => {
-        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-          screen: navigationStrings.HOMESTACK,
-          params: {
-            screen: navigationStrings.PRODUCT_LIST,
-            params: {
-              data: {
-                category_slug: "Restaurants",
-                id: vendorId,
-                name: vendorName,
-                vendor: true,
-                table_id: sendingData,
-              },
-            },
-          },
-        });
-      }, 1800);
-    } else {
-      actions.setAppSessionData("guest_login");
-    }
-  }
-
-  const handleNotiRedirectionForVendorApp = (deepLinkUrl) => {
-    if (deepLinkUrl != null) {
-      navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
-        screen: navigationStrings.ROYO_VENDOR_ORDER,
-        params: { index: 1 },
-      });
-    } else {
-      navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
-    }
-  };
 
   console.log(deepLinkUrl,"deepLinkUrl");
 

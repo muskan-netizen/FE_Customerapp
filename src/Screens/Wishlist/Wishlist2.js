@@ -15,6 +15,9 @@ import {height, moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Wishlist2({navigation}) {
   const {
