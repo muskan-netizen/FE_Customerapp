@@ -44,15 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-<<<<<<< HEAD:ios/Runrun.xcodeproj/xcshareddata/xcschemes/MovingWheelsDelivery.xcscheme
             BlueprintIdentifier = "18CC2D9E29598429009D24E3"
             BuildableName = "MovingWheelsDelivery"
             BlueprintName = "MovingWheelsDelivery"
-=======
-            BlueprintIdentifier = "189BC1772968045000F23A81"
-            BuildableName = "Junkerz.app"
-            BlueprintName = "Junkerz"
->>>>>>> 3cf32c83d255ad0b5306312331123d752d93e5af:ios/Runrun.xcodeproj/xcshareddata/xcschemes/Junkerz(Dev).xcscheme
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -67,15 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-<<<<<<< HEAD:ios/Runrun.xcodeproj/xcshareddata/xcschemes/MovingWheelsDelivery.xcscheme
             BlueprintIdentifier = "18CC2D9E29598429009D24E3"
             BuildableName = "MovingWheelsDelivery"
             BlueprintName = "MovingWheelsDelivery"
-=======
-            BlueprintIdentifier = "189BC1772968045000F23A81"
-            BuildableName = "Junkerz.app"
-            BlueprintName = "Junkerz"
->>>>>>> 3cf32c83d255ad0b5306312331123d752d93e5af:ios/Runrun.xcodeproj/xcshareddata/xcschemes/Junkerz(Dev).xcscheme
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

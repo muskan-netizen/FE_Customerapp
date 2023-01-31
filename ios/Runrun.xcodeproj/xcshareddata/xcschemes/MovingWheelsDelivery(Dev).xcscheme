@@ -44,13 +44,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-<<<<<<< HEAD
             BlueprintIdentifier = "18CC2D9E29598429009D24E3"
             BuildableName = "MovingWheelsDelivery"
-=======
-            BlueprintIdentifier = "184E0BD0296BE66300E87E64"
-            BuildableName = "MovingWheelsDelivery.app"
->>>>>>> 3cf32c83d255ad0b5306312331123d752d93e5af
             BlueprintName = "MovingWheelsDelivery"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -66,13 +61,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-<<<<<<< HEAD
             BlueprintIdentifier = "18CC2D9E29598429009D24E3"
             BuildableName = "MovingWheelsDelivery"
-=======
-            BlueprintIdentifier = "184E0BD0296BE66300E87E64"
-            BuildableName = "MovingWheelsDelivery.app"
->>>>>>> 3cf32c83d255ad0b5306312331123d752d93e5af
             BlueprintName = "MovingWheelsDelivery"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
