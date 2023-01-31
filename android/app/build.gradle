@@ -8309,7 +8309,7 @@ android {
                 resValue "string", "app_name", "Wi Energi"
                 resValue "string", "host_name", ""
             }
-    NannyAfrica{
+    nannyafrica{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
