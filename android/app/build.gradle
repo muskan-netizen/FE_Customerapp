@@ -215,8 +215,7 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-        
-                          sxm2go{
+            sxm2go{
                 dimension "appType"
                 versionCode 4
                 versionName "1.0"
@@ -226,7 +225,6 @@ android {
                 resValue "string", "app_name", "SXM2GO"
                 resValue "string", "host_name", ""
             }
-
     }
 
     // productFlavors {
