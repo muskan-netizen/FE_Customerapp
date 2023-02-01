@@ -420,6 +420,7 @@ export default {
     CONFIRM_PASSWORD: 'אשר סיסמה',
     PASSWORD_NOT_MATCH: 'סיסמה חדשה ואישור סיסמה לא התאימו',
     MESSAGE: 'הוֹדָעָה',
+    PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
     YOUR_ORDER_HAS_BEEN_SUBMITTED: 'ההזמנה שלך נשלחה!',
     YOUR_ORDER_NUMBER: 'מספר ההזמנה שלך הוא',
     ANY_RESTAURANT_REQUESTS:
@@ -627,6 +628,8 @@ export default {
     ANYTIME_YOUR_CAR_BREAKS:
         'בכל פעם שהמכונית שלך מתקלקלת,\n אנחנו שם בשבילך!',
     ENTER_YOUR: 'הכנס את',
+    ENTER_YOUR_NAME: "Enter your name",
+    ENTER_YOUR_EMAIL:"Enter your email",
     REGISTER: 'להירשם',
     ENTER_EMAIL_ADDRESS: 'הזן את זיהוי האימייל שלך כאן',
     ENTER_PHONE_NUMBER: 'הזן את מספר הטלפון שלך כאן',

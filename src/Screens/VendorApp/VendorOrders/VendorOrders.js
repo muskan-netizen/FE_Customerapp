@@ -29,7 +29,7 @@ import {
 } from '../../../styles/responsiveSize';
 import {showError} from '../../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import Modal from 'react-native-modal';
 import BorderTextInput from '../../../Components/BorderTextInput';

@@ -20,7 +20,7 @@ import {
 } from '../../../styles/responsiveSize';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import {
   BarIndicator,
@@ -30,6 +30,9 @@ import {
 import navigationStrings from '../../../navigation/navigationStrings';
 import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import LottieView from 'lottie-react-native';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ({
   isLoading = false,

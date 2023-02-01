@@ -421,6 +421,7 @@ export default {
   PASSWORD_NOT_MATCH: 'New Password and Confirm Password did not matched',
   MESSAGE: 'Message',
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Your order has been submitted!',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_NUMBER: 'Your order number is',
   ANY_RESTAURANT_REQUESTS:
     'Any restaurant requests? We’ll try our best to convey it ',
@@ -627,6 +628,8 @@ Amount`,
   ANYTIME_YOUR_CAR_BREAKS:
     'Anytime your car breaks down,\n we are there for you !',
   ENTER_YOUR: 'Enter your',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Register',
   ENTER_EMAIL_ADDRESS: 'Enter your Email Id here',
   ENTER_PHONE_NUMBER: 'Enter your phone number here',

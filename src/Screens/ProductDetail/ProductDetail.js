@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -67,6 +67,10 @@ import Toast from 'react-native-simple-toast';
 import Clipboard from '@react-native-community/clipboard';
 import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ProductDetail({ route, navigation }) {
   console.log('my route', route.params.data);

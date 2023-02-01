@@ -19,9 +19,8 @@ import {
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import styleFun from './styles';
-import PanoramaView from '@lightbase/react-native-panorama-view';
 import {isEmpty} from 'lodash';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import RenderHTML from 'react-native-render-html';
 import Carousel from 'react-native-snap-carousel';
@@ -178,48 +177,7 @@ const P2pProductDetail = ({navigation, route}) => {
   const renderItem = useCallback(({item, index}) => {
     return (
       <View style={styles.item}>
-        {item?.image?.media_type == 4 ? (
-          <View>
-            <PanoramaView
-              style={{
-                height: moderateScale(299),
-                width: width,
-              }}
-              enableTouchTracking={true}
-              dimensions={{height: moderateScale(299), width: width}}
-              inputType="mono"
-              imageUrl={getImageUrl(
-                item?.image?.path?.image_fit,
-                item?.image?.path?.image_path,
-                '400/400',
-              )}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                bottomSheetModalRef.current.present();
-                setSelectedPanoImg(item);
-              }}
-              style={{
-                position: 'absolute',
-                paddingVertical: moderateScaleVertical(5),
-                paddingHorizontal: moderateScale(5),
-                backgroundColor: themeColors?.primary_color,
-                borderRadius: moderateScale(6),
-                right: 0,
-                bottom: 50,
-                zIndex: 1,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fontFamily?.regular,
-                  color: colors.white,
-                  fontSize: textScale(12),
-                }}>
-                View in 360°
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
+      
           <FastImage
             source={{
               uri: getImageUrl(
@@ -233,7 +191,6 @@ const P2pProductDetail = ({navigation, route}) => {
               width: width,
             }}
           />
-        )}
       </View>
     );
   }, []);
@@ -302,22 +259,22 @@ const P2pProductDetail = ({navigation, route}) => {
             }}>
             <Image source={imagePath.back1} />
           </TouchableOpacity>
-          <PanoramaView
-            style={{
-              flex: 1,
+
+          <FastImage
+            source={{
+              uri: getImageUrl(
+                selectedPanoImg?.image?.path?.image_fit,
+                selectedPanoImg?.image?.path?.image_path,
+                '400/400',
+              ),
             }}
-            enableTouchTracking={true}
-            dimensions={{
+            style={{
               height: height - moderateScaleVertical(40),
               width: width,
             }}
-            inputType="mono"
-            imageUrl={getImageUrl(
-              selectedPanoImg?.image?.path?.image_fit,
-              selectedPanoImg?.image?.path?.image_path,
-              '400/400',
-            )}
           />
+          
+   
         </WrapperContainer>
       </View>
     );

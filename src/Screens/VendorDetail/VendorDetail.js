@@ -18,9 +18,12 @@ import {
 } from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import strings from '../../constants/lang';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;

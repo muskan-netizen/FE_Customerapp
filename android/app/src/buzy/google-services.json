@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "504840324287",
+    "project_id": "busy-order",
+    "storage_bucket": "busy-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504840324287:android:8d83dc2c78245a733c720a",
+        "android_client_info": {
+          "package_name": "com.buszy.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504840324287-6ln3j07akf0uks2kj83vagt2125b7tlm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buszy.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "504840324287-8sfmta32lipjfcu6dm97abpo06kdbffg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buszy.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "504840324287-n7tts5gi10tiehqc0qv7vrfmkg9jptka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buszy.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "504840324287-8lf5s9boorohuas4j7o0opkipjaa1soi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwbryme9IadtP795rTyUQVL98t_ZEaes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504840324287-8lf5s9boorohuas4j7o0opkipjaa1soi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "504840324287-67h4cg84d72mhs2bi2kio7gsjr4paivs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.buszy.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

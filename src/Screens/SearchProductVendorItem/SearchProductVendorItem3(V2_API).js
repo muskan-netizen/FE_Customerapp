@@ -29,7 +29,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -47,6 +47,8 @@ import Voice from '@react-native-voice/voice';
 import {getBundleId} from 'react-native-device-info';
 import Vi from '../../constants/lang/vi';
 import {isEmpty} from 'lodash';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;

@@ -26,7 +26,7 @@ import {
 } from '../../styles/responsiveSize';
 import stylesFun from './styles';
 import DeviceInfo from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import {

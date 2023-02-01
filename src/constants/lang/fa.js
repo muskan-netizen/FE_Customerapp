@@ -423,6 +423,7 @@ export default {
   CONFIRM_PASSWORD: 'تایید رمز عبور',
   PASSWORD_NOT_MATCH: 'رمز عبور جدید و رمز عبور تأیید مطابقت ندارند،',
   MESSAGE: 'پیام،',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'سفارش شما ارسال شده است!',
   YOUR_ORDER_NUMBER: 'شماره سفارش شما "،',
   ANY_RESTAURANT_REQUESTS:
@@ -621,6 +622,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'هر زمان که ماشین شما خراب شد،\\n ما در کنار شما هستیم!',
   ENTER_YOUR: 'وارد کن',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'ثبت نام',
   ENTER_EMAIL_ADDRESS: 'شناسه ایمیل خود را اینجا وارد کنید',
   ENTER_PHONE_NUMBER: 'شماره تلفن خود را اینجا وارد کنید',

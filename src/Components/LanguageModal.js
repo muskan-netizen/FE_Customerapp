@@ -9,7 +9,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import colors from '../styles/colors';
 import {MyDarkTheme} from '../styles/theme';
 import commonStylesFun from '../styles/commonStyles';

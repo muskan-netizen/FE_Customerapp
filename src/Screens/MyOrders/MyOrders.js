@@ -5,13 +5,12 @@ import {
   FlatList,
   Image,
   RefreshControl,
-  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import FastImage from "react-native-fast-image";
 import * as RNLocalize from "react-native-localize";
 import { useIsFocused } from "@react-navigation/native";
@@ -43,7 +42,10 @@ import stylesFun from './styles';
 import useInterval from '../../utils/useInterval';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 export default function MyOrders(props) {
   const { navigation, route } = props;

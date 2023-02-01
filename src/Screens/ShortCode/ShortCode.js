@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, View } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 import { MaterialIndicator } from "react-native-indicators";
@@ -32,6 +32,9 @@ import {
 } from "../../utils/helperFunctions";
 import { getItem, setItem } from "../../utils/utils";
 import styles from "./styles";
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 
 export default function ShortCode({ route, navigation }) {
@@ -3147,6 +3150,73 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.laith:
+          updateState({
+            shortCode: shortCodes.laith,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.liverpoolEats:
+          updateState({
+            shortCode: shortCodes.liverpoolEats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.oaks:
+          updateState({
+            shortCode: shortCodes.oaks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.buzy:
+          updateState({
+            shortCode: shortCodes.buzy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.etaim:
+          updateState({
+            shortCode: shortCodes.etaim,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dotTaxiApp:
+          updateState({
+            shortCode: shortCodes.dotTaxiApp,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.airvoltTaxi:
+          updateState({
+            shortCode: shortCodes.airvoltTaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.melakPharmacy:
+          updateState({
+            shortCode: shortCodes.melakPharmacy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.wiEnergi:
+          updateState({
+            shortCode: shortCodes.wiEnergi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nannyAfrica:
+          updateState({
+            shortCode: shortCodes.nannyAfrica,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.whatchaGotPickUp:
+          updateState({
+            shortCode: shortCodes.whatchaGotPickUp,
+            isShortcodePrefilled: true,
+          });
+          break;
+
       }
     })();
   }, []);
@@ -3197,26 +3267,26 @@ export default function ShortCode({ route, navigation }) {
       .initApp({}, header, false, null, null, true)
       .then((res) => {
         console.log("header response--->", res);
-        if (res.data.mobile_banners.length > 0) {
-          let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
-            return {
-              uri: getImageUrl(
-                item.image.image_fit,
-                item.image.image_path,
-                "800/600"
-              ),
-            };
-          });
-          FastImage.preload(preLoadBanners); //preload banners
-        }
-        if (res.data.dynamic_tutorial.length > 0) {
-          let preLoadTutorial = res.data.dynamic_tutorial.map((el, inx) => {
-            return {
-              uri: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
-            };
-          });
-          FastImage.preload(preLoadTutorial); //preload tutorial images
-        }
+        // if (res.data.mobile_banners.length > 0) {
+        //   let preLoadBanners = res.data.mobile_banners.map((item, inx) => {
+        //     return {
+        //       uri: getImageUrl(
+        //         item.image.image_fit,
+        //         item.image.image_path,
+        //         "800/600"
+        //       ),
+        //     };
+        //   });
+        //   FastImage.preload(preLoadBanners); //preload banners
+        // }
+        // if (res.data.dynamic_tutorial.length > 0) {
+        //   let preLoadTutorial = res.data.dynamic_tutorial.map((el, inx) => {
+        //     return {
+        //       uri: `${el.file_name.image_fit}800/1600${el.file_name.image_path}`,
+        //     };
+        //   });
+        //   FastImage.preload(preLoadTutorial); //preload tutorial images
+        // }
 
         updateState({ changeInShortCode: false });
         if (getBundleId() == appIds.royoorder) {
@@ -3307,52 +3377,6 @@ export default function ShortCode({ route, navigation }) {
     }
   };
 
-  async function handleDynamicLink(deepLinkUrl) {
-    if (deepLinkUrl != null) {
-      setItem("deepLinkUrl", deepLinkUrl);
-      let routeName = getUrlRoutes(deepLinkUrl, 1);
-      var data = deepLinkUrl?.split("=").pop();
-      console.log("checking deep link data >>> ", data);
-      let removePer = decodeURI(data);
-      let sendingData = JSON.parse(removePer);
-
-      let decodedUri = decodeURI(deepLinkUrl);
-      let vendorName = decodedUri.split("?")[1].split("&")[1].split("=")[1];
-      let vendorId = decodedUri.split("?")[1].split("&")[0].split("=")[1];
-
-      // return;
-      setTimeout(() => {
-        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-          screen: navigationStrings.HOMESTACK,
-          params: {
-            screen: navigationStrings.PRODUCT_LIST,
-            params: {
-              data: {
-                category_slug: "Restaurants",
-                id: vendorId,
-                name: vendorName,
-                vendor: true,
-                table_id: sendingData,
-              },
-            },
-          },
-        });
-      }, 1800);
-    } else {
-      actions.setAppSessionData("guest_login");
-    }
-  }
-
-  const handleNotiRedirectionForVendorApp = (deepLinkUrl) => {
-    if (deepLinkUrl != null) {
-      navigation.navigate(navigationStrings.TABROUTESVENDORNEW, {
-        screen: navigationStrings.ROYO_VENDOR_ORDER,
-        params: { index: 1 },
-      });
-    } else {
-      navigation.navigate(navigationStrings.TABROUTESVENDORNEW);
-    }
-  };
 
   const navigateToNextScreen = (res) => {
     getItem("firstTime").then((el) => {

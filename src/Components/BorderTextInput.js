@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dynamic';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import { hitSlopProp } from '../styles/commonStyles';

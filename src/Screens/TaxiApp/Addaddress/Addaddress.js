@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import Geocoder from "react-native-geocoding";
 import { useSelector } from "react-redux";
@@ -54,6 +54,9 @@ import {
   locationPermission,
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;

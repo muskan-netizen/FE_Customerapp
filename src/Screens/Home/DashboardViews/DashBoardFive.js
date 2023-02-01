@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import RNExitApp from 'react-native-exit-app';
@@ -727,11 +727,11 @@ export default function DashBoardFive({
                       height: moderateScaleVertical(16),
                       width: moderateScale(16),
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? MyDarkTheme.colors.white
                         : colors.black,
                     }}
                     resizeMode="contain"
-                    source={imagePath.sort}
+                    source={isDarkMode? imagePath.sortSelected: imagePath.sort}
                   />
                   <Text
                     style={{

@@ -419,6 +419,7 @@ export default {
   CONFIRM_PASSWORD: 'ПОДТВЕРДИТЬ ПАРОЛЬ ',
   PASSWORD_NOT_MATCH: 'НОВЫЙ ПАРОЛЬ И ПОДТВЕРЖДЕНИЕ ПАРОЛЯ НЕ СОВПАЛИ ',
   MESSAGE: 'СООБЩЕНИЕ',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: ' ВАШ ЗАКАЗ ОТПРАВЛЕН! ',
   YOUR_ORDER_NUMBER: 'ВАШ НОМЕР ЗАКАЗА',
   ANY_RESTAURANT_REQUESTS: -' КАКИЕ-НИБУДЬ ПОЖЕЛАНИЯ В РЕСТОРАН?',
@@ -623,6 +624,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'В ЛЮБОЕ ВРЕМЯ, КОГДА ВАША МАШИНА СЛОМАЕТСЯ, МЫ ВСЕГДА БУДЕМ РЯДОМ С ВАМИ!',
   ENTER_YOUR: 'ВВЕДИТЕ СВОЙ ',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'РЕГЕСТРАЦИЯ',
   ENTER_EMAIL_ADDRESS: 'ВВЕДИТЕ СВОЙ ИДЕНТИФИКАТОР ЭЛЕКТРОННОЙ ПОЧТЫ ',
   ENTER_PHONE_NUMBER: ' ВВЕДИТЕ НОМЕР ТЕЛЕФОНА ',

@@ -6,7 +6,7 @@ import strings from '../../constants/lang';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 
 export default function ListEmptyCart({
   isLoading = false,

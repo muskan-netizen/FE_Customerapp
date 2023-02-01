@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
@@ -56,6 +56,9 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;

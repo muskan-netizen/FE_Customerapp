@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>927854859351-1knb559b77a2atvnonqp6ci2hhg4clc0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.927854859351-1knb559b77a2atvnonqp6ci2hhg4clc0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>927854859351-1u74ksme6enrbe9e5cku2u02do4v55ft.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDGnIB0FB9SW0aOjEi27PYWNw-VwC5Ijsw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>927854859351</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nannyafrica</string>
+	<key>PROJECT_ID</key>
+	<string>nannyafrica-26282</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nannyafrica-26282.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:927854859351:ios:ea9ad97896abe49012bf12</string>
+</dict>
+</plist>

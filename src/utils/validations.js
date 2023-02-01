@@ -359,7 +359,7 @@ export default function (data) {
     } else {
       let minLengthValidation = checkMinLength(message, 6, strings.MESSAGE);
       if (minLengthValidation !== '') {
-        return minLengthValidation;
+        return strings.PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS;
       }
     }
   }

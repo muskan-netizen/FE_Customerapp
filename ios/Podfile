@@ -1,13 +1,19 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '13.0'
+platform :ios, '12.0'
 
 abstract_target 'available_pods' do
   
   permissions_path = '../node_modules/react-native-permissions/ios'
   rn_maps_path = '../node_modules/react-native-maps'
    config = use_native_modules!
-   use_react_native!(:path => config["reactNativePath"])
+   
+   use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => false
+  )
+
    pod 'react-native-google-maps', :path => rn_maps_path
    pod 'react-native-restart', :path => '../node_modules/react-native-restart'
   #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
@@ -2378,7 +2384,62 @@ end
 target 'Messiaa' do
 end
 
+#Nounou
+target 'Nounou' do
+end
+
+#LiverpoolEats
+target 'LiverpoolEats' do
+end
+
+#Oaks
+target 'Oaks' do
+end
+
+#Buzy
+target 'Buzy' do
+end
+
+#Etaim
+target 'Etaim' do
+end
+
+#DotTaxiApp
+target 'DotTaxiApp' do
+end
+
+#AirvoltTaxi
+target 'AirvoltTaxi' do
+end
+
+#Laith
+target 'Laith' do
+end
+
+#MelakPharmacy
+target 'MelakPharmacy' do
+end
+
+#WiEnergi
+target 'WiEnergi' do
+end
+
+#Bliss
+target 'Bliss' do
+end
+
+#NannyAfrica
+target 'NannyAfrica' do
+end
+
+#WhatchaGotPickUp
+target 'WhatchaGotPickUp' do
+end
+
+
 post_install do |installer|
+  react_native_post_install(installer)
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
   end

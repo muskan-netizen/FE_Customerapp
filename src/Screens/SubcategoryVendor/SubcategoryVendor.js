@@ -8,28 +8,24 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dark-mode';
-import FastImage from 'react-native-fast-image';
-import {
-  Menu, MenuOption, MenuOptions, MenuTrigger
-} from 'react-native-popup-menu';
-import { useSelector } from 'react-redux';
-import DeliveryTypeComp from '../../Components/DeliveryTypeComp';
+import WrapperContainer from '../../Components/WrapperContainer';
+import colors from '../../styles/colors';
+import {MyDarkTheme} from '../../styles/theme';
+import {useSelector} from 'react-redux';
+import {useDarkMode} from 'react-native-dynamic';
+import actions from '../../redux/actions';
 import Header3 from '../../Components/Header3';
 import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
 import BannerLoader from '../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../Components/MarketCard3';
-import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
-import actions from '../../redux/actions';
-import colors from '../../styles/colors';
+
+
 import {
   height,
   moderateScale,
@@ -37,7 +33,6 @@ import {
   textScale,
   width
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 

@@ -1,7 +1,7 @@
 import LottieView from 'lottie-react-native';
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 // import { getBundleId } from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';

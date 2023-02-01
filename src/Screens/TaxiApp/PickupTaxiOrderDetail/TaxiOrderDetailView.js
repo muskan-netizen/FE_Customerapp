@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import ScaledImage from 'react-native-scalable-image';
 import {useSelector} from 'react-redux';
@@ -22,6 +22,10 @@ import {MyDarkTheme} from '../../../styles/theme';
 import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function TaxiOrderDetailView({
   isLoading = false,

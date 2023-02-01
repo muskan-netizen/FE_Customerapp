@@ -24,8 +24,8 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
-import { Calendar } from 'react-native-calendars';
-import { useDarkMode } from 'react-native-dark-mode';
+import {Calendar} from 'react-native-calendars';
+import {useDarkMode} from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
@@ -100,7 +100,11 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
-function Cart({ navigation, route }) {
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
+function Cart({navigation, route}) {
   let paramsData = route?.params;
   console.log(paramsData, 'paramsDataparamsData')
   let actionSheet = useRef(null);

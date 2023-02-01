@@ -21,7 +21,7 @@ import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
 import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import {isEmpty} from 'lodash';

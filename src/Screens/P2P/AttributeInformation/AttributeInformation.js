@@ -1,4 +1,3 @@
-import PanoramaView from '@lightbase/react-native-panorama-view';
 import {isEmpty} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
@@ -10,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MultiSelect} from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -597,66 +596,7 @@ const AttributeInformation = ({route, navigation}) => {
                   </View>
                 </View>
 
-                <View
-                  style={{
-                    marginTop: moderateScaleVertical(10),
-                    paddingLeft: moderateScale(10),
-                  }}>
-                  <Text
-                    style={{
-                      ...styles.attributeTitle,
-                      fontFamily: fontFamily?.medium,
-                    }}>
-                    360° Media
-                  </Text>
-
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginTop: moderateScaleVertical(7),
-                      flexWrap: 'wrap',
-                    }}>
-                    {!isEmpty(product360Imgs) &&
-                      product360Imgs.map((itm, indx) => (
-                        <View style={String(indx)}>
-                          <PanoramaView
-                            style={{
-                              height: moderateScale(90),
-                              width: moderateScale(90),
-                              marginTop: moderateScaleVertical(7),
-                              marginRight: moderateScale(10),
-                            }}
-                            dimensions={{
-                              height: moderateScale(90),
-                              width: moderateScale(90),
-                            }}
-                            // enableTouchTracking={false}
-                            inputType="mono"
-                            imageUrl={itm?.uri}
-                          />
-                          <TouchableOpacity
-                            hitSlop={hitSlopProp}
-                            onPress={() => removeProductImg(itm, 2)}
-                            style={{position: 'absolute', right: 4, top: -2}}>
-                            <Image source={imagePath.icRemoveIcon} />
-                          </TouchableOpacity>
-                        </View>
-                      ))}
-                    <TouchableOpacity
-                      onPress={() => set360ImgPicker(true)}
-                      activeOpacity={0.7}>
-                      <Image
-                        source={imagePath.icPhoto}
-                        style={{
-                          marginTop: moderateScaleVertical(5),
-                          height: moderateScale(90),
-                          width: moderateScale(90),
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
+             
 
                 <View
                   style={{

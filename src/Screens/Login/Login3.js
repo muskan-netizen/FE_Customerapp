@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -41,7 +41,10 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import {isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()

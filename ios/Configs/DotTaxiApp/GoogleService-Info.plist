@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>14351280931-bab405ck8dfr6up6pa2krgqkd0jal3cr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.14351280931-bab405ck8dfr6up6pa2krgqkd0jal3cr</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>14351280931-h6s8bsopdvkahg2n3vtko71skm5op0e9.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBbVfz5ZeYKtncYGV0KihrCsebvwSm6l4A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>14351280931</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.dotTaxiApp.royoorder</string>
+	<key>PROJECT_ID</key>
+	<string>dottaxiapp-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dottaxiapp-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:14351280931:ios:ff10611be69d35b33cba96</string>
+</dict>
+</plist>

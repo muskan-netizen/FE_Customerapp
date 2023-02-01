@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
@@ -44,6 +44,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
   });
 
   const { tabs } = state;
+  console.log(appData, 'tabs------------');
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
@@ -193,6 +194,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
           initialScrollIndex={tabs.findIndex(
             (item) => item?.type == dineInType,
           )}
+          onScrollToIndexFailed={(val) => console.log('indexed failed')}
           renderItem={renderItem}
           keyExtractor={awesomeChildListKeyExtractor}
           ListFooterComponent={() => (

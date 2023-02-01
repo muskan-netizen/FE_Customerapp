@@ -14,7 +14,7 @@ import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import {

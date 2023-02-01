@@ -979,8 +979,10 @@ export default {
   VENDOR: 'Vendor',
   START_CHAT: 'Start Chat',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
-  ORDER: 'Orders',
+  ORDER: 'Pedidos',
   THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
   TOLL_FEE: 'Toll Fee',
   SERVICE_CHARGES: 'Service Charges',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
 };

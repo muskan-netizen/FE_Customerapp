@@ -20,7 +20,7 @@ import stylesFunc from '../styles';
 import { RadioButton } from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import { string } from 'prop-types';

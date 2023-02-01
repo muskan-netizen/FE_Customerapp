@@ -417,6 +417,7 @@ export default {
   PASSWORD_NOT_MATCH:
     'Le nouveau mot de passe et la confirmation du mot de passe ne correspondent pas',
   MESSAGE: 'un message',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   ITEM_NOT_DELIVERABLE:
     'Les articles spécifiques ne sont pas livrables à cette adresse. Veuillez supprimer les articles ou modifier l adresse',
   WORK: 'Travail',
@@ -616,6 +617,8 @@ montant`,
   ANYTIME_YOUR_CAR_BREAKS:
     'Chaque fois que votre voiture tombe en panne,\n nous sommes là pour vous!',
   ENTER_YOUR: 'Entrez votre',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Registre',
   ENTER_EMAIL_ADDRESS: 'Entrez votre adresse e-mail ici',
   ENTER_PHONE_NUMBER: 'Entrez votre numéro de téléphone ici',

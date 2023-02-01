@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {View} from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';

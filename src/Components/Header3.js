@@ -1,11 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
+import commonStyles from '../styles/commonStyles';
 import {
   moderateScale,
   StatusBarHeight,
@@ -18,6 +19,7 @@ const Header3 = ({
   leftIcon = imagePath.back,
   location = [],
   conatinerStyle = {},
+  showAddress = true
 }) => {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -39,6 +41,12 @@ const Header3 = ({
         ...conatinerStyle,
       }}>
       <TouchableOpacity
+        hitSlop={{
+          top: 30,
+          right: 30,
+          left: 30,
+          bottom: 30,
+        }}
         style={{
           flex: 0.1,
         }}
@@ -52,7 +60,7 @@ const Header3 = ({
           }}
         />
       </TouchableOpacity>
-      {!!appData?.profile?.preferences?.is_hyperlocal && (
+      {!!appData?.profile?.preferences?.is_hyperlocal && showAddress && (
         <TouchableOpacity
           style={{
             flexDirection: 'row',

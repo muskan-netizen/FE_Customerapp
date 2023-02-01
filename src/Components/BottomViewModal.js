@@ -6,7 +6,7 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import fontFamily from '../styles/fontFamily';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 
 import {
   moderateScaleVertical,

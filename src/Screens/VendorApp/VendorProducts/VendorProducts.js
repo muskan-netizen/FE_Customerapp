@@ -23,7 +23,7 @@ import {
 } from '../../../styles/responsiveSize';
 import {showError} from '../../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -332,6 +332,7 @@ export default function VendorProducts({route, navigation}) {
         }
         refreshing={isRefreshing}
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={(val) => console.log('indexed failed')}
         initialNumToRender={12}
         maxToRenderPerBatch={10}
         windowSize={10}

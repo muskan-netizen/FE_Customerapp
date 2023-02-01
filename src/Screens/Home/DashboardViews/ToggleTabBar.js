@@ -12,7 +12,7 @@ import {
 } from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
 import {showError, showSuccess} from '../../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';

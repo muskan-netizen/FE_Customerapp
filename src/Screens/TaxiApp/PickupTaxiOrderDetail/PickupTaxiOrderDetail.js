@@ -38,7 +38,7 @@ import {
 import stylesFunc from "./styles";
 import { cloneDeep, isEmpty } from "lodash";
 import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import FastImage from "react-native-fast-image";
 import Modal from "react-native-modal";
 import navigationStrings from "../../../navigation/navigationStrings";
@@ -62,6 +62,10 @@ import { tokenConverterPlusCurrencyNumberFormater } from "../../../utils/commonF
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { mapStyleGrey } from "../../../utils/constants/MapStyle";
 import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -1280,7 +1284,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.HOME)
+                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 : paramData?.pickup_taxi
                   ? () => navigation.navigate(navigationStrings.HOME)
                   : () => navigation.goBack()

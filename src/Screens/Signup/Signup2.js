@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
@@ -33,6 +33,10 @@ import {showError} from '../../utils/helperFunctions';
 import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Signup2({navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages} =

@@ -43,8 +43,11 @@ import {
   showSuccess,
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 import GradientCartView from '../../Components/GradientCartView';
 export default function ProductList({ route, navigation }) {

@@ -31,7 +31,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 import Communications from 'react-native-communications';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
@@ -53,6 +53,10 @@ import {appIds} from '../../../utils/constants/DynamicAppKeys';
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

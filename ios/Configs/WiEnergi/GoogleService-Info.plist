@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1078782262107-3j2f3licv0bqo4ppijgasbs3iv72v6c0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1078782262107-3j2f3licv0bqo4ppijgasbs3iv72v6c0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1078782262107-4gmqg2g1s5qnso1gu2i9m6do0llpjnrq.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA-i2-ssLRaiWHnLPkedCHQ5sCWaFH93OM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1078782262107</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wienergi.royoorder</string>
+	<key>PROJECT_ID</key>
+	<string>wienergi-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wienergi-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1078782262107:ios:56c108ff64204f9904387e</string>
+</dict>
+</plist>

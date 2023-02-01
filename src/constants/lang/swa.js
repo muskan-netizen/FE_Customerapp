@@ -429,6 +429,7 @@ export default {
   PASSWORD_NOT_MATCH:
     'Neno la Siri Jipya na Neno la Siri la Kuthibitisha havijafanana',
   MESSAGE: 'Meseji',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Oda yako imetumwa!',
   YOUR_ORDER_NUMBER: 'Namba ya oda yako ni',
   ANY_RESTAURANT_REQUESTS:
@@ -637,6 +638,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'Muda wowote gari lako likiharibika, \n tupo kwa ajili yako !',
   ENTER_YOUR: 'Ingiza taarifa yako ya',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Jiunge',
   ENTER_EMAIL_ADDRESS: 'Ingiza Barua pepe yako hapa',
   ENTER_PHONE_NUMBER: 'Ingiza namba yako ya simu hapa',

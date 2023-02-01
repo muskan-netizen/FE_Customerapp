@@ -5,7 +5,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform, Text, View } from 'react-native';
 import codePush from 'react-native-code-push';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import FlashMessage from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
@@ -15,7 +15,6 @@ import { Provider } from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
-import Container from './src/library/toastify-react-native';
 import Routes from './src/navigation/Routes';
 import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
@@ -423,12 +422,6 @@ const App = () => {
           <NotificationModal />
         </Provider>
       </MenuProvider>
-      <Container
-        width={width - 20}
-        position="top"
-        duration={2000}
-        positionValue={moderateScaleVertical(20)}
-      />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
     </SafeAreaProvider>

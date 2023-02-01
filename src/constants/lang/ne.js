@@ -427,6 +427,7 @@ export default {
   CONFIRM_PASSWORD: 'पासवर्ड सुनिश्चित गर्नुहोस',
   PASSWORD_NOT_MATCH: 'नयाँ पासवर्ड र कन्फर्म पासवर्ड मिलेन',
   MESSAGE: 'सन्देश',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'तपाईंको अर्डर पेश गरिएको छ!',
   YOUR_ORDER_NUMBER: 'तपाईको अर्डर नम्बर',
   ANY_RESTAURANT_REQUESTS:
@@ -629,6 +630,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'कुनै पनि बेला तपाईंको कार बिग्रन्छ,\n हामी तपाईंको लागि त्यहाँ छौं !',
   ENTER_YOUR: 'आफ्नो प्रविष्ट गर्नुहोस्',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'दर्ता गर्नुहोस्',
   ENTER_EMAIL_ADDRESS: 'यहाँ आफ्नो इमेल आईडी प्रविष्ट गर्नुहोस्',
   ENTER_PHONE_NUMBER: 'यहाँ आफ्नो फोन नम्बर प्रविष्ट गर्नुहोस्',

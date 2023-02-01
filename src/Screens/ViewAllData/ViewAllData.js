@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, TouchableOpacity, View, Image} from 'react-native';
+import {FlatList, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dark-mode';
-import {ActivityIndicator} from 'react-native-paper';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
@@ -22,7 +21,10 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ViewAllData({route, navigation}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
@@ -194,10 +196,11 @@ export default function ViewAllData({route, navigation}) {
           leftIcon={imagePath.icBackb}
           centerTitle={data?.name}
           rightIcon={imagePath.search}
-          location={location}
-          onPressRight={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }
+          showAddress={false}
+          // location={location}
+          // onPressRight={() =>
+          //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          // }
         />
         <View style={{alignItems: 'center'}}>
           <SearchLoader viewStyles={{marginVertical: moderateScale(17)}} />
@@ -275,22 +278,18 @@ export default function ViewAllData({route, navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Header3
+    
+    <Header3
           leftIcon={imagePath.icBackb}
-          centerTitle={data?.name}
+          showAddress={false}
           rightIcon={imagePath.search}
-          location={location}
+
+       
         />
         {/* <TouchableOpacity>
           <Image source={imagePath.filter} />
         </TouchableOpacity> */}
-      </View>
+  
       <SearchBar2 navigation={navigation} />
       <FlatList
         showsVerticalScrollIndicator={false}

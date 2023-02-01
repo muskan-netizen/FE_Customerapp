@@ -434,6 +434,7 @@ export default {
   PASSWORD_NOT_MATCH:
     'Neues Kennwort und Bestätigungskennwort stimmten nicht überein',
   MESSAGE: 'Nachricht',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Ihre Bestellung wurde abgeschickt!',
   YOUR_ORDER_NUMBER: 'Ihre Bestellnummer lautet',
   ANY_RESTAURANT_REQUESTS:
@@ -587,6 +588,8 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS:
     'Anytime your car breaks down,\n we are there for you !',
   ENTER_YOUR: 'Geben Sie Ihre',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Registrieren',
   ENTER_EMAIL_ADDRESS: 'Geben Sie hier Ihre E-Mail-ID ein',
   ENTER_PHONE_NUMBER: 'Geben Sie hier Ihre Telefonnummer ein',

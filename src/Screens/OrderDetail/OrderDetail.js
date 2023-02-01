@@ -27,7 +27,7 @@ import {
 } from "react-native";
 
 import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 // import { showMessage } from 'react-native-flash-message';
@@ -87,6 +87,9 @@ import BannerLoader from "../../Components/Loaders/BannerLoader";
 import ButtonWithLoader from "../../Components/ButtonWithLoader";
 
 const { height, width } = Dimensions.get("window");
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OrderDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1302,7 +1305,25 @@ export default function OrderDetail({ navigation, route }) {
                                                 : colors.textGrey,
                                             }}
                                           >
-                                            {strings.QTY}
+                                            <Text
+                                              style={{
+                                                ...styles.quantityStyles,
+                                                color: isDarkMode
+                                                  ? MyDarkTheme.colors.text
+                                                  : colors.textGrey,
+                                              }}
+                                            >
+                                              {strings.QTY}
+                                            </Text>
+                                            <Text style={styles.cartItemWeight}>
+                                              {i?.quantity} {'x'} {tokenConverterPlusCurrencyNumberFormater(
+                                            Number(i?.price),
+                                            digit_after_decimal,
+                                            additional_preferences,
+                                            currencies?.primary_currency?.symbol
+                                          )}
+                                            </Text>
+                                            {' = '}
                                           </Text>
                                           <Text style={styles.cartItemWeight}>
                                             {i?.quantity}
@@ -3802,7 +3823,7 @@ export default function OrderDetail({ navigation, route }) {
                     <Text
                       style={{
                         ...styles.ariveTextStyle,
-                        color: colors.blackC,
+                        color: isDarkMode? colors.white: colors.blackC,
                       }}
                     >
                       {strings.YOUR_ORDER_WILL_ARRIVE_BY}{" "}

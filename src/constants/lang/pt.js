@@ -424,6 +424,7 @@ export default {
   CONFIRM_PASSWORD: 'Confirmar Senha',
   PASSWORD_NOT_MATCH: 'A Senha Nova e a confirmação estão diferentes',
   MESSAGE: 'Menssagem',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Seu pedido foi enviado!',
   YOUR_ORDER_NUMBER: 'O número do seu pedido é',
   ANY_RESTAURANT_REQUESTS:
@@ -627,6 +628,8 @@ Amount`,
   ANYTIME_YOUR_CAR_BREAKS:
     'Sempre que seu carro quebrar,\n estamos lá para você !',
   ENTER_YOUR: 'Digite seu',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Registrar',
   ENTER_EMAIL_ADDRESS: 'Digite seu e-mail aqui',
   ENTER_PHONE_NUMBER: 'Digite seu número de telefone aqui',

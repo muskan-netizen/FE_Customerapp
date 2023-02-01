@@ -30,7 +30,7 @@ import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 
 // navigator.geolocation = require('@react-native-community/geolocation');

@@ -34,7 +34,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import FastImage from 'react-native-fast-image';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function ReturnOrder({navigation, route}) {

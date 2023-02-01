@@ -35,6 +35,9 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 
 import {useNavigation} from '@react-navigation/native';
 import RNOtpVerify from 'react-native-otp-verify';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OtpVerification({navigation, route}) {
   const navigation_ = useNavigation();

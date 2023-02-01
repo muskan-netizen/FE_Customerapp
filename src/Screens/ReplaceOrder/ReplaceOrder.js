@@ -35,7 +35,7 @@ import {
 } from '../../utils/commonFunction';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import { MyDarkTheme } from '../../styles/theme';

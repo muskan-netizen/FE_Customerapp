@@ -17,7 +17,7 @@ import {
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
@@ -96,9 +96,11 @@ const Header = ({
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
+                  
                   style={{
                     ...leftIconStyle,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}
                 />
               </TouchableOpacity>

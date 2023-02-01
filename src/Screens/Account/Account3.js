@@ -11,8 +11,8 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dark-mode';
-import { getBundleId } from 'react-native-device-info';
+import {useDarkMode} from 'react-native-dynamic';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
@@ -408,11 +408,9 @@ export default function Account3({ navigation }) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-          {!!userData?.auth_token && getBundleId() != appIds.sxm2go ? (
+          {!!userData?.auth_token && getBundleId()!=appIds.sxm2go?(
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -427,7 +425,7 @@ export default function Account3({ navigation }) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ) : null}
+          ):null}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>

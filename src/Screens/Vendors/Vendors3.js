@@ -1,7 +1,7 @@
 import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
@@ -26,6 +26,9 @@ import ListEmptyVendors from './ListEmptyVendors';
 import * as Animatable from 'react-native-animatable';
 import Header2 from '../../Components/Header2';
 import Header from '../../Components/Header';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -244,7 +247,8 @@ export default function Vendors3({route, navigation}) {
               // titleColor="#fff"
             />
           }
-          getItemLayout={getItemLayout}
+            getItemLayout={getItemLayout}
+            onScrollToIndexFailed={(val) => console.log('indexed failed')}
           initialNumToRender={5}
           maxToRenderPerBatch={10}
           windowSize={10}

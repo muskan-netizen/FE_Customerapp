@@ -8,7 +8,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 
 export default function ListEmptyCar({ isLoading = false }) {

@@ -3,7 +3,6 @@ import notifee, {
   AndroidStyle,
   EventType,
 } from '@notifee/react-native';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
 import {useEffect} from 'react';
 import {Platform} from 'react-native';

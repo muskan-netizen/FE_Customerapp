@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { AppearanceProvider } from 'react-native-appearance';
+
 import { useSelector } from 'react-redux';
 import {
   ChatRoom,
@@ -27,7 +27,6 @@ export default function Routes() {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
   return (
-    <AppearanceProvider>
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           {appSessionInfo == 'shortcode' ||
@@ -91,6 +90,5 @@ export default function Routes() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </AppearanceProvider>
   );
 }

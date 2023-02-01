@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect, useRef} from 'react';
 import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 import socketServices from '../../utils/scoketService';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import imagePath from '../../constants/imagePath';
 import Header from '../../Components/Header';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';

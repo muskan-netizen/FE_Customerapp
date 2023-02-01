@@ -542,6 +542,8 @@ export default {
   CONTINUE_IN: '继续',
   ANYTIME_YOUR_CAR_BREAKS: '任何时候你的车抛锚，\n 我们在那里为你！',
   ENTER_YOUR: '输入您的',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: '注册',
   ENTER_EMAIL_ADDRESS: '在此处输入您的电子邮件 ID',
   ENTER_PHONE_NUMBER: '在此处输入您的电话号码',
@@ -843,5 +845,6 @@ export default {
   START_CHAT: 'Start Chat',
   ORDER: 'Orders',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
-  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
+  THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters"
 };

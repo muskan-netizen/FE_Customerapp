@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useState, useEffect} from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import HTMLView from 'react-native-htmlview';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';

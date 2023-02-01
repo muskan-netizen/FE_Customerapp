@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
@@ -42,6 +42,10 @@ import {androidCameraPermission} from '../../utils/permissions';
 import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()

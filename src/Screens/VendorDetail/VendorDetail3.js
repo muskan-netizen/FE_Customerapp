@@ -19,7 +19,7 @@ import {
 } from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import strings from '../../constants/lang';
 import BrandCard2 from '../../Components/BrandCard2';
@@ -27,6 +27,9 @@ import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import {trim} from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
 import * as Animatable from 'react-native-animatable';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;

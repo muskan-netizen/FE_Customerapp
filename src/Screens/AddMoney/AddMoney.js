@@ -19,7 +19,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import Modal from 'react-native-modal';
 import RazorpayCheckout from 'react-native-razorpay';
 import {Colors} from 'react-native/Libraries/NewAppScreen';

@@ -12,7 +12,7 @@ import {
 import {GiftedChat, Send, InputToolbar} from 'react-native-gifted-chat';
 import socketServices from '../../utils/scoketService';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import imagePath from '../../constants/imagePath';
 import Header from '../../Components/Header';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';

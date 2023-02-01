@@ -423,6 +423,7 @@ export default {
   CONFIRM_PASSWORD: 'Bekräfta lösenord',
   PASSWORD_NOT_MATCH: 'Nytt lösenord och bekräfta lösenord matchade inte',
   MESSAGE: 'Meddelande',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Din beställning har skickats!',
   YOUR_ORDER_NUMBER: 'Ditt ordernummer är',
   ANY_RESTAURANT_REQUESTS:
@@ -615,6 +616,8 @@ export default {
   CONTINUE_IN: 'Fortsätt i',
   ANYTIME_YOUR_CAR_BREAKS: 'När din bil går sönder,\n Vi finns där för dig!',
   ENTER_YOUR: 'Ange din',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
   REGISTER: 'Registrera dig',
   ENTER_EMAIL_ADDRESS: 'Ange ditt e-post-ID här',
   ENTER_PHONE_NUMBER: 'Ange ditt telefonnummer här',

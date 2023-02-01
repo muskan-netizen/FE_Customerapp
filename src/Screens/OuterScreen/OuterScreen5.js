@@ -35,7 +35,7 @@ import {
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,6 +45,9 @@ import {isEmpty} from 'lodash';
 import {getValuebyKeyInArray} from '../../utils/commonFunction';
 import {color} from 'react-native-reanimated';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OuterScreen5({navigation}) {
   const {

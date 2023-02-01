@@ -297,7 +297,7 @@ export default function TabRoutes(props) {
           gestureEnabled: true,
         })}
       />
-      {(DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go) && (
+      {DeviceInfo.getBundleId() == appIds.dlvrd ||DeviceInfo.getBundleId()==appIds.sxm2go &&(
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}

@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { WebView } from 'react-native-webview';
 import { useSelector } from 'react-redux';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';

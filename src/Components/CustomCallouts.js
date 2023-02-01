@@ -1,7 +1,7 @@
 //import liraries
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {PulseIndicator} from 'react-native-indicators';
 import {Marker} from 'react-native-maps';
 import {useSelector} from 'react-redux';

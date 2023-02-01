@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
@@ -44,6 +44,9 @@ import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 import {v4 as uuidv4} from 'uuid';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
@@ -921,7 +924,7 @@ export default function Signup({navigation}) {
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 3})
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
                   }
                   style={{color: colors.themeColor}}>
                   {' '}
@@ -935,7 +938,7 @@ export default function Signup({navigation}) {
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                    navigation.navigate(navigationStrings.WEBLINKS, {id: 1})
                   }
                   style={{color: colors.themeColor}}>
                   {`${strings.PRICACY_POLICY}`}.
