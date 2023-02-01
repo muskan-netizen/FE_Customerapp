@@ -2558,7 +2558,9 @@ function Cart({navigation, route}) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
-                console.log('item=>>>', item);
+                console.log('************ start  render cart items ************* =>', item?.vendor_products);
+                const scheduleType = i?.recurring_booking_type == 1 ? "Daily" : i?.recurring_booking_type == 2 ? "Weekly" : i?.recurring_booking_type == 3 ? "Monthly" :
+                i?.recurring_booking_type == 6 ? "Alternate Days" : i?.recurring_booking_type == 4 ? "Custom" : null
                 return (
                   <Swipeable
                     ref={swipeRef}
@@ -3103,6 +3105,58 @@ function Cart({navigation, route}) {
                         </View>
                       ) : null}
                       {/* <View style={styles.dashedLine} /> */}
+                      {!!scheduleType ?
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginHorizontal: moderateScale(20),
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginBottom: 3,
+                          }}>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {'Schedule Type'}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {scheduleType}
+                            </Text>
+                          </View>
+                          {scheduleType !== "Custom" &&
+                            <View>
+                              <Text style={styles.startEndDateTitle}>
+                                {'Start and End Date'}
+                              </Text>
+                              <Text style={styles.startEndDateValueTxt}>
+                                {`${i?.recurring_day_data}`}
+                              </Text>
+                            </View>
+                          }
+                          {!isEmpty(i?.recurring_week_day) &&
+                            <View>
+                              <Text style={styles.startEndDateTitle}>
+                                {'Week Days'}
+                              </Text>
+                              <Text style={styles.startEndDateValueTxt}>
+                                {`${i?.recurring_week_day}`}
+                              </Text>
+                            </View>
+                          }
+                          {/* <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.SLOT_PRICE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {tokenConverterPlusCurrencyNumberFormater(
+                                Number(i?.product_delivery_slot?.price || 0),
+                                digit_after_decimal,
+                                additional_preferences,
+                                currencies?.primary_currency?.symbol,
+                              )}
+                            </Text>
+                          </View> */}
+                        </View>
+                        : null}
                     </Animated.View>
                   </Swipeable>
                 );

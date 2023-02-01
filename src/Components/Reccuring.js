@@ -59,7 +59,7 @@ const Reccuring = ({
     selectedPlanValues = '',
     selectedWeekDaysValues = [],
     selectedQuickSelectionValue = '',
-    minimumDate = new Date().toJSON().slice(0, 10),
+    minimumDate = moment(new Date()).add('days', 2).format("YYYY-MM-DD"),
     initDate = new Date(),
     start = {},
     end = {},
@@ -449,6 +449,7 @@ const Reccuring = ({
                                             monthTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                                             textDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
                                             textSectionTitleDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
+                                            todayTextColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA
                                         }}
                                         firstDay={1}
                                         disabledDaysIndexes={disabledDaysIndexes}

@@ -192,7 +192,7 @@ export default function ProductDetail({ route, navigation }) {
     selectedPlanValues: '',
     selectedWeekDaysValues: [],
     selectedQuickSelectionValue: '',
-    minimumDate: new Date().toJSON().slice(0, 10),
+    minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
     initDate: new Date(),
     start: {},
     end: {},
@@ -218,7 +218,7 @@ export default function ProductDetail({ route, navigation }) {
       selectedPlanValues: '',
       selectedWeekDaysValues: [],
       selectedQuickSelectionValue: '',
-      minimumDate: new Date().toJSON().slice(0, 10),
+      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
       initDate: new Date(),
       start: {},
       end: {},
@@ -1204,9 +1204,15 @@ export default function ProductDetail({ route, navigation }) {
     if (!isEmpty(period) && selectedPlanValues == "Custom") {
       Object.entries(period).map(([key, value])=> (selectedCustomDates.push(key)));
     }
-    let recurringformPost = {}
+    if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+      Object.entries(period).map(([key, value]) => {
+        console.log("=>", JSON.stringify(value));
+        ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+      });
+    }
+    const recurringformPost = {}
 
-    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 :
+    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
       selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
     recurringformPost['startDate'] = start.dateString ? start.dateString : ''
     recurringformPost['endDate'] = end.dateString ? end.dateString : ''
@@ -1283,23 +1289,25 @@ export default function ProductDetail({ route, navigation }) {
       showError('Rental product already added in cart!');
       return;
     }
-    if (isEmpty(selectedPlanValues)) {
-      showError('Plan type should not be empty!');
-      return;
-    }
-    if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
-      showError('Weekdays should not be empty!');
-      return;
-    }
-    if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
-      if (isEmpty(start) || isEmpty(end)) {
-        showError('Start date and End date should not be empty!');
+    if (data?.is_recurring_booking) {
+      if (isEmpty(selectedPlanValues)) {
+        showError('Plan type should not be empty!');
         return;
       }
-    } else {
-      if (isEmpty(period)) {
-        showError('Select dates in custom plan!');
+      if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+        showError('Weekdays should not be empty!');
         return;
+      }
+      if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+        if (isEmpty(start) || isEmpty(end)) {
+          showError('Start date and End date should not be empty!');
+          return;
+        }
+      } else {
+        if (isEmpty(period)) {
+          showError('Select dates in custom plan!');
+          return;
+        }
       }
     }
     {

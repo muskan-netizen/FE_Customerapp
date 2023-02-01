@@ -328,7 +328,7 @@ export default function Products({ route, navigation }) {
     selectedPlanValues: '',
     selectedWeekDaysValues: [],
     selectedQuickSelectionValue: '',
-    minimumDate: new Date().toJSON().slice(0, 10),
+    minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
     initDate: new Date(),
     start: {},
     end: {},
@@ -347,7 +347,7 @@ export default function Products({ route, navigation }) {
 
   const resetVariantState = () => {
     updateAddonState({
-      planValues: ["Daily", "Weekly","Alternate Days", "Custom"],
+      planValues: ["Daily", "Weekly", "Alternate Days", "Custom"],
       weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
       quickSelection: ["Weekdays", "Weekends"],
       reccuringCheckBox: false,
@@ -355,7 +355,7 @@ export default function Products({ route, navigation }) {
       selectedPlanValues: '',
       selectedWeekDaysValues: [],
       selectedQuickSelectionValue: '',
-      minimumDate: new Date().toJSON().slice(0, 10),
+      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
       initDate: new Date(),
       start: {},
       end: {},
@@ -430,7 +430,7 @@ export default function Products({ route, navigation }) {
           style={{
             marginHorizontal: moderateScale(16),
             // marginVertical: moderateScaleVertical(8),
-            height: moderateScale(50), 
+            height: moderateScale(50),
           }}>
           <Text
             style={{
@@ -556,7 +556,7 @@ export default function Products({ route, navigation }) {
       });
     });
   };
-  
+
 
   const listHeaderComponent2 = () => {
     return (
@@ -948,7 +948,7 @@ export default function Products({ route, navigation }) {
                       })}
                     </Text> : null} */}
 
-     
+
                   {!!desc && (
                     <Text
                       numberOfLines={2}
@@ -965,7 +965,7 @@ export default function Products({ route, navigation }) {
                       {desc}
                     </Text>
                   )}
-        
+
                 </View>
 
                 {!!categoryInfo?.closed_store_order_scheduled ? (
@@ -1304,6 +1304,28 @@ export default function Products({ route, navigation }) {
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
       console.log(item, 'chechItemm');
+      if (!!item.is_recurring_booking) {
+        if (isEmpty(selectedPlanValues)) {
+          showInfo('Click on Calendar icon to schedule the item!');
+          // showError('Plan type should not be empty!');
+          return;
+        }
+        if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+          showError('Weekdays should not be empty!');
+          return;
+        }
+        if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+          if (isEmpty(start) || isEmpty(end)) {
+            showError('Start date and End date should not be empty!');
+            return;
+          }
+        } else {
+          if (isEmpty(period)) {
+            showError('Select dates in custom plan!');
+            return;
+          }
+        }
+      }
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1360,12 +1382,17 @@ export default function Products({ route, navigation }) {
       if (!isEmpty(period) && selectedPlanValues == "Custom") {
         Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
       }
+      if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+        Object.entries(period).map(([key, value]) => {
+          console.log("=>", JSON.stringify(value));
+          ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+        });
+      }
 
+      const recurringformPost = {}
 
-      let recurringformPost = {}
-
-      recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 :
-        selectedPlanValues == "Alternate Days" ? 3 : selectedPlanValues == "Custom" ? 4 : 5
+      recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
+        selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
       recurringformPost['startDate'] = start.dateString ? start.dateString : ''
       recurringformPost['endDate'] = end.dateString ? end.dateString : ''
       recurringformPost['weekDay'] = weeDays
@@ -1761,13 +1788,13 @@ export default function Products({ route, navigation }) {
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
 
 
-    
+
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
 
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-   
+
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
@@ -2079,7 +2106,7 @@ export default function Products({ route, navigation }) {
     setLoading(false);
     if (error?.message == "Recurring booking type not be empty.") {
       showSuccess('Schedule the product in product detail page');
-    } else {  
+    } else {
       showError(error?.message || error?.error);
     }
     updateState({ loadMore: false });
@@ -2424,7 +2451,7 @@ export default function Products({ route, navigation }) {
       });
       if (error?.message == "Recurring booking type not be empty.") {
         showInfo('Schedule the product in product detail page');
-      } else {  
+      } else {
         showError(error?.message || error?.error);
       }
     }
@@ -3512,11 +3539,17 @@ export default function Products({ route, navigation }) {
     if (!isEmpty(period) && selectedPlanValues == "Custom") {
       Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
     }
+    if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+      Object.entries(period).map(([key, value]) => {
+        console.log("=>", JSON.stringify(value));
+        ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+      });
+    }
 
 
-    let recurringformPost = {}
+    const recurringformPost = {}
 
-    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 :
+    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
       selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
     recurringformPost['startDate'] = start.dateString ? start.dateString : ''
     recurringformPost['endDate'] = end.dateString ? end.dateString : ''
@@ -3639,7 +3672,7 @@ export default function Products({ route, navigation }) {
           <View style={{ flex: 1 }}>
             {((AnimatedHeaderValue && productListData.length > 6) ||
               (!!sectionListData?.length && AnimatedHeaderValue)) && (
-          
+
                 <View
                   style={{
                     ...styles.headerStyle,
@@ -3772,9 +3805,9 @@ export default function Products({ route, navigation }) {
                       </TouchableOpacity>
                     </View>
                   )}
-                
-                {isSearch ? (
-              
+
+                  {isSearch ? (
+
                     <SearchBar
                       containerStyle={{
                         marginHorizontal: moderateScale(18),
@@ -3791,54 +3824,54 @@ export default function Products({ route, navigation }) {
                       showRightIcon
                       rightIconPress={rightIconPress}
                     />
-                 
-                ) : (
+
+                  ) : (
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      // onPress={() => updateState({isSearch: true})}
-                      onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR,
-                        {
-                          type: data?.vendor
-                            ? staticStrings.VENDOR
-                            : staticStrings.CATEGORY,
-                          id: data?.vendor ? data?.id : productListId?.id,
-                        },
-                      )}>
-                      <Image
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        // onPress={() => updateState({isSearch: true})}
+                        onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR,
+                          {
+                            type: data?.vendor
+                              ? staticStrings.VENDOR
+                              : staticStrings.CATEGORY,
+                            id: data?.vendor ? data?.id : productListId?.id,
+                          },
+                        )}>
+                        <Image
+                          style={{
+                            tintColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                           transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                        }}
-                        source={
-                          !!data?.showAddToCart ? false : imagePath.icSearchb
-                        }
-                      />
-                    </TouchableOpacity>
+                          }}
+                          source={
+                            !!data?.showAddToCart ? false : imagePath.icSearchb
+                          }
+                        />
+                      </TouchableOpacity>
                     <View style={{marginHorizontal: moderateScale(8)}} />
-                    <TouchableOpacity
-                      onPress={onShare}
-                      hitSlop={hitSlopProp}
-                      activeOpacity={0.8}>
-                      <Image
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
+                      <TouchableOpacity
+                        onPress={onShare}
+                        hitSlop={hitSlopProp}
+                        activeOpacity={0.8}>
+                        <Image
+                          style={{
+                            tintColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                           transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                        }}
-                        source={imagePath.icShareb}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-            )}
+                          }}
+                          source={imagePath.icShareb}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+              )}
 
             {!!categoryInfo?.is_show_products_with_category ? (
-              
+
               <SectionList
                 onScroll={onScroll}
                 ref={sectionListRef}
@@ -3853,24 +3886,24 @@ export default function Products({ route, navigation }) {
                 renderItem={renderSectionItem}
                 renderSectionHeader={renderSectionHeader}
                 renderSectionFooter={renderSectionFooter}
-                  getItemLayout={getItemLayout}
+                getItemLayout={getItemLayout}
                 ItemSeparatorComponent={()=> <View style={{height: moderateScale(8)}} />}
-       
+
                 // contentContainerStyle={{
                 //   paddingBottom: moderateScale(60),
                 // }}
-            
+
                 ListEmptyComponent={listEmptyComponent}
                 onScrollToIndexFailed={(val) => console.log('indexed failed')}
                 extraData={cloneSectionList}
-              
+
                 // Performance settings
                 removeClippedSubviews={true} // Unmount components when outside of window
                 // initialNumToRender={2} // Reduce initial render amount
                 // maxToRenderPerBatch={10} // Redu ce number in each render batch
                 updateCellsBatchingPeriod={20} // Increase time between renders
-                // windowSize={7} // Reduce the window size
-         
+              // windowSize={7} // Reduce the window size
+
               />
             ) : (
               <FlatList
@@ -3946,7 +3979,7 @@ export default function Products({ route, navigation }) {
               )}
             </View>
           ) : (
-          
+
             <>
               {isVisibleModal ? (
                 <>

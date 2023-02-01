@@ -23,6 +23,7 @@ import {
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import FastImage from 'react-native-fast-image';
 import strings from '../../../constants/lang';
+import { MyDarkTheme } from '../../../styles/theme';
 
 
 export default function DashBoardHeaderFive({
