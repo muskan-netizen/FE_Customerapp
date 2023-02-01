@@ -47,15 +47,7 @@ export const androidCameraPermission = () =>
     }
   });
 
-// export const locationPermission = () => {
-//   if (Platform.OS === 'android' && Platform.Version > 22) {
-//     return PermissionsAndroid.request(
-//       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-//     );
-//   }
 
-//   return Promise.resolve('granted');
-// };
 
 export const locationPermission = () =>
   new Promise(async (resolve, reject) => {

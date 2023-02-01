@@ -412,8 +412,7 @@ export default function Account3({ navigation }) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && getBundleId() != appIds.sxm2go ? (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -428,7 +427,7 @@ export default function Account3({ navigation }) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          )}
+          ) : null}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>

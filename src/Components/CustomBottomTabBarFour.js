@@ -29,7 +29,6 @@ const CustomBottomTabBarFour = ({
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesData({fontFamily});
-
   return (
     <View style={[styles.tabBarStyle]}>
       {state.routes.map((route, index) => {

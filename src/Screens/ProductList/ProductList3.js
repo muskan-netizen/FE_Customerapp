@@ -125,8 +125,9 @@ const filtersData = [
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
-  // console.log(route.params, 'route.params');
   const { data } = route.params;
+
+  console.log(data, 'route.params');
 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
@@ -1281,7 +1282,7 @@ export default function Products({ route, navigation }) {
 
 
   const addSingleItem = useCallback(
-    async (item, section = null, inx ) => {
+    async (item, section = null, inx) => {
 
 
       if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot)) {
@@ -1335,17 +1336,17 @@ export default function Products({ route, navigation }) {
       data['product_variant_id'] = item?.variant[0].id;
       data['type'] = dine_In_Type;
       console.log('Sending api data', data);
-      if(dine_In_Type =='appointment'){
-        data ['schedule_slot']=selectedAppointmentSlot?.value,
-        data['scheduled_date_time']= String(
-          moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
-        );
-        
+      if (dine_In_Type == 'appointment') {
+        data['schedule_slot'] = selectedAppointmentSlot?.value,
+          data['scheduled_date_time'] = String(
+            moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
+          );
+
       }
 
 
-      console.log(data,"data for cart in single item");
-   
+      console.log(data, "data for cart in single item");
+
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
@@ -3462,14 +3463,14 @@ export default function Products({ route, navigation }) {
           Number(productDetailNew?.product?.minimum_duration_min);
       }
 
-      if(dine_In_Type =='appointment'){
-        data ['schedule_slot']=selectedAppointmentSlot?.value,
-        data['scheduled_date_time']= String(
-          moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
-        );
-        
+      if (dine_In_Type == 'appointment') {
+        data['schedule_slot'] = selectedAppointmentSlot?.value,
+          data['scheduled_date_time'] = String(
+            moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
+          );
+
       }
-     
+
       console.log(data, 'data for cart>>>>>>');
       updateState({ btnLoader: true });
       actions
@@ -3686,7 +3687,6 @@ export default function Products({ route, navigation }) {
           <View style={{ flex: 1 }}>
             {((AnimatedHeaderValue && productListData.length > 6) ||
               (!!sectionListData?.length && AnimatedHeaderValue)) && (
-
                 <View
                   style={{
                     ...styles.headerStyle,
@@ -3777,47 +3777,48 @@ export default function Products({ route, navigation }) {
                       />
                     </View>
                   ) : (
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <TouchableOpacity
-                        activeOpacity={0.8}
-                        // onPress={() => updateState({isSearch: true})}
-                        onPress={moveToNewScreen(
-                          navigationStrings.SEARCHPRODUCTOVENDOR,
-                          {
-                            type: data?.vendor
-                              ? staticStrings.VENDOR
-                              : staticStrings.CATEGORY,
-                            id: data?.vendor ? data?.id : productListId?.id,
-                          },
-                        )}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                          }}
-                          source={
-                            !!data?.showAddToCart ? false : imagePath.icSearchb
-                          }
-                        />
-                      </TouchableOpacity>
-                      <View style={{ marginHorizontal: moderateScale(8) }} />
-                      <TouchableOpacity
-                        onPress={onShare}
-                        hitSlop={hitSlopProp}
-                        activeOpacity={0.8}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                          }}
-                          source={imagePath.icShareb}
-                        />
-                      </TouchableOpacity>
-                    </View>
+                    <></>
+                    // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    //   <TouchableOpacity
+                    //     activeOpacity={0.8}
+                    //     // onPress={() => updateState({isSearch: true})}
+                    //     onPress={moveToNewScreen(
+                    //       navigationStrings.SEARCHPRODUCTOVENDOR,
+                    //       {
+                    //         type: data?.vendor
+                    //           ? staticStrings.VENDOR
+                    //           : staticStrings.CATEGORY,
+                    //         id: data?.vendor ? data?.id : productListId?.id,
+                    //       },
+                    //     )}>
+                    //     <Image
+                    //       style={{
+                    //         tintColor: isDarkMode
+                    //           ? MyDarkTheme.colors.text
+                    //           : colors.black,
+                    //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    //       }}
+                    //       source={
+                    //         !!data?.showAddToCart ? false : imagePath.icSearchb
+                    //       }
+                    //     />
+                    //   </TouchableOpacity>
+                    //   <View style={{ marginHorizontal: moderateScale(8) }} />
+                    //   <TouchableOpacity
+                    //     onPress={onShare}
+                    //     hitSlop={hitSlopProp}
+                    //     activeOpacity={0.8}>
+                    //     <Image
+                    //       style={{
+                    //         tintColor: isDarkMode
+                    //           ? MyDarkTheme.colors.text
+                    //           : colors.black,
+                    //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    //       }}
+                    //       source={imagePath.icShareb}
+                    //     />
+                    //   </TouchableOpacity>
+                    // </View>
                   )}
 
                   {isSearch ? (
@@ -3838,7 +3839,6 @@ export default function Products({ route, navigation }) {
                       showRightIcon
                       rightIconPress={rightIconPress}
                     />
-
                   ) : (
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <TouchableOpacity
@@ -4314,55 +4314,57 @@ export default function Products({ route, navigation }) {
           ) : null}
         </View>
       </View>
-      {isSocialMediaModal ? (
-        <BottomSheet
-          ref={bottomSheetRef}
-          index={0}
-          snapPoints={[200]}
-          // style={{minHeight: 100, maxHeight: 200}}
-          enablePanDownToClose
-          onChange={(index) => {
-            if (index == -1) {
-              setIsSocialMediaModal(false);
-            }
-            // playHapticEffect(hapticEffects.impactMedium);
-          }}
-          handleComponent={() => <></>}
-          containerStyle={{
-            backgroundColor: colors.blackOpacity66,
-          }}>
-          <View
-            style={{
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              alignItems: 'center',
-              flexWrap: 'wrap',
+      {
+        isSocialMediaModal ? (
+          <BottomSheet
+            ref={bottomSheetRef}
+            index={0}
+            snapPoints={[200]}
+            // style={{minHeight: 100, maxHeight: 200}}
+            enablePanDownToClose
+            onChange={(index) => {
+              if (index == -1) {
+                setIsSocialMediaModal(false);
+              }
+              // playHapticEffect(hapticEffects.impactMedium);
+            }}
+            handleComponent={() => <></>}
+            containerStyle={{
+              backgroundColor: colors.blackOpacity66,
             }}>
-            {!isEmpty(categoryInfo?.social_media_links)
-              ? categoryInfo?.social_media_links.map((item, index) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => onPressSocialMediaItem(item)}
-                    style={{
-                      width: '24%',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      paddingTop: 15,
-                    }}>
-                    <Image
-                      source={{ uri: item?.icon_url }}
+            <View
+              style={{
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}>
+              {!isEmpty(categoryInfo?.social_media_links)
+                ? categoryInfo?.social_media_links.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => onPressSocialMediaItem(item)}
                       style={{
-                        height: 40,
-                        width: 40,
-                      }}
-                    />
-                  </TouchableOpacity>
-                );
-              })
-              : null}
-          </View>
-        </BottomSheet>
-      ) : null}
+                        width: '24%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingTop: 15,
+                      }}>
+                      <Image
+                        source={{ uri: item?.icon_url }}
+                        style={{
+                          height: 40,
+                          width: 40,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  );
+                })
+                : null}
+            </View>
+          </BottomSheet>
+        ) : null
+      }
 
       <Modal
         key={'5'}
@@ -4442,6 +4444,6 @@ export default function Products({ route, navigation }) {
         }}>
         <AppointmentSlotModal />
       </ReactNativeModal>
-    </WrapperContainer>
+    </WrapperContainer >
   );
 }

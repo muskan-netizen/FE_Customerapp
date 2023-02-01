@@ -3352,8 +3352,6 @@ export default function ShortCode({ route, navigation }) {
     }
   };
 
-  console.log(deepLinkUrl, "deepLinkUrl");
-
   const navigateToNextScreen = (res) => {
     getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {

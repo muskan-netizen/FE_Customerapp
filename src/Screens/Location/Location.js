@@ -267,6 +267,27 @@ export default function Location({ route, navigation }) {
           details,
         });
       }
+       if (paramsDataForEditDropLocation) {
+          const allDropOffLocationsCollection = [
+            ...paramsDataForEditDropLocation?.orderDropLocations,
+          ];
+          allDropOffLocationsCollection[
+            paramsDataForEditDropLocation?.editIndex
+          ] = {
+            ...allDropOffLocationsCollection[
+              paramsDataForEditDropLocation?.editIndex
+            ],
+            address: details?.formatted_address,
+            latitude: details?.geometry?.location?.lat,
+            longitude: details?.geometry?.location?.lng,
+          };
+
+          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+            ...paramsDataForEditDropLocation,
+            orderDropLocations: allDropOffLocationsCollection,
+            showLocationUpdateButton:true
+          });
+        }
     }
   };
 

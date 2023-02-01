@@ -201,7 +201,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     additional_preferences,
     digit_after_decimal,
   } = appData?.profile?.preferences;
-  const positionposition = useIsFocused();
+  const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
   const {profile} = appData;
@@ -1677,8 +1677,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           {!!(
                             val?.task_type_id != 1 &&
                             profile?.preferences?.is_order_edit_enable &&
-                            Number(val?.task_status) < 2
-                          ) && (
+                            Number(val?.task_status) < 2 && orderStatus != "completed"
+                          )  && (
                             <TouchableOpacity
                               style={{
                                 borderColor: themeColors?.primary_color,

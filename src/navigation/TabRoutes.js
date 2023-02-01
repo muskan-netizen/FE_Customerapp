@@ -41,7 +41,7 @@ export default function TabRoutes(props) {
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
-
+console.log();
   // const checkForCeleb =
   //   allCategory &&
   //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
@@ -132,7 +132,7 @@ export default function TabRoutes(props) {
       />
     );
   }
-
+console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
@@ -298,7 +298,7 @@ export default function TabRoutes(props) {
           gestureEnabled: true,
         })}
       />
-      {DeviceInfo.getBundleId() == appIds.dlvrd && (
+      {DeviceInfo.getBundleId() == appIds.dlvrd || appIds.sxm2go && (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}

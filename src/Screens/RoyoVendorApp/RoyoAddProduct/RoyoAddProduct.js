@@ -1,57 +1,47 @@
-import {cloneDeep, isEmpty, update} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
-  Platform,
-  StyleSheet,
+  Platform, RefreshControl, StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  ScrollView,
-  RefreshControl,
-  TextInput,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ModalDropdown from 'react-native-modal-dropdown';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
-import CustomDropDownWIthLabel from '../../../Components/CustomDropDownWIthLabel';
 import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import ModalView from '../../../Components/Modal';
+import ModalDropDownComp from '../../../Components/ModalDropDown';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
-import strings, {changeLaguage} from '../../../constants/lang';
+import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import fontFamily from '../../../styles/fontFamily';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import {
-  cameraHandler,
-  checkValueExistInAry,
-  getValuebyKeyInArray,
+  cameraHandler, getValuebyKeyInArray
 } from '../../../utils/commonFunction';
 import {
   getImageUrl,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../../utils/helperFunctions';
-import ModalDropdown from 'react-native-modal-dropdown';
-import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
-import {hitSlopProp} from '../../../styles/commonStyles';
-import ModalDropDownComp from '../../../Components/ModalDropDown';
-import ModalView from '../../../Components/Modal';
-import {MultiSelect} from 'react-native-element-dropdown';
-import RadioGroup from 'react-native-radio-buttons-group';
 
 const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
