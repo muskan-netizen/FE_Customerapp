@@ -1059,7 +1059,6 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "^8.1.0",
     "@react-native-firebase/app": "^12.8.0",
-    "@react-native-firebase/crashlytics": "^12.8.0",
     "@react-native-firebase/messaging": "^12.8.0",
     "@react-native-firebase/crashlytics": "^12.8.0",
     "@react-native-google-signin/google-signin": "^6.0.0",
