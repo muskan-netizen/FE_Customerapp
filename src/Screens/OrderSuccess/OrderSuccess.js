@@ -38,7 +38,7 @@ export default function OrderSuccess({ navigation, route }) {
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   // const {themeColors, themeLayouts} = currentTheme;
-
+console.log(paramData?.orderDetail?.id,'paramData?.orderDetail?.idparamData?.orderDetail?.id')
   const viewOrderDetail = () => {
     
     navigation.navigate(navigationStrings.ORDER_DETAIL, {

@@ -32,7 +32,7 @@ export default function CheckoutPaymentView({
   );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
-
+console.log(appData,'appDataappData')
   return (
     <View style={{...styles.container, ...mainContainer}}>
       <Frames
@@ -41,10 +41,11 @@ export default function CheckoutPaymentView({
           publicKey: appData?.profile?.preferences?.checkout_public_key,
         }}
         cardTokenized={cardTokenized}
-        cardTokenizationFailed={cardTokenizationFailed}>
+        cardTokenizationFailed={cardTokenizationFailed}
+        >
         <CardNumber
           style={styles.cardNumber}
-          placeholder="4242 4242 4242 4242"
+          placeholder="Card Details"
           placeholderTextColor={colors.greyD}
           
     

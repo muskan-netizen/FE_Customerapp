@@ -210,7 +210,7 @@ export default function OrderDetail({ navigation, route }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot
   );
-
+  // console.log(cartItems,cartData,appData,paramData,'cartItem++++++')
   const { preferences } = appData?.profile;
   let businessType = preferences?.business_type;
   const { additional_preferences, digit_after_decimal } = preferences;
@@ -955,9 +955,9 @@ export default function OrderDetail({ navigation, route }) {
                         marginBottom: moderateScale(3),
                       }}
                     >{`${i?.product.delay_order_hrs > 0 ||
-                        i?.product.delay_order_min > 0
-                        ? strings.PREPARATION_TIME_IS
-                        : ""
+                      i?.product.delay_order_min > 0
+                      ? strings.PREPARATION_TIME_IS
+                      : ""
                       }${i?.product.delay_order_hrs > 0
                         ? ` ${i?.product.delay_order_hrs} hrs`
                         : ""
@@ -1840,7 +1840,8 @@ export default function OrderDetail({ navigation, route }) {
             </View>
           )}
 
-          {!!Number(item?.total_container_charges) && (
+
+          {!!Number(item?.total_container_charges) && (index == cartItems.length - 1) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
@@ -2233,8 +2234,8 @@ export default function OrderDetail({ navigation, route }) {
                       }}
                     >
                       {`${cartData?.address?.house_number === null
-                          ? ""
-                          : `${cartData?.address?.house_number}, `
+                        ? ""
+                        : `${cartData?.address?.house_number}, `
                         }`}
                       {cartData?.address?.address} {""}
                       {cartData?.address?.pincode}
@@ -2549,7 +2550,20 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {(cartData?.total_service_fee > 0 ||
+          {(cartData?.total_service_fee > 0) && (
+            <LeftRightText
+              leftText={'Service Fee'}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_service_fee),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol
+              )}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
+          {(cartData?.total_other_taxes > 0 ||
             Number(cartData?.taxable_amount) > 0) && (
               <LeftRightText
                 leftText={strings.TAXES_FEES}

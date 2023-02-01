@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
 import BrickList from '../../../Components/BrickList';
 import ImgCardForBrickList from '../../../Components/ImgCardForBrickList';
@@ -19,8 +19,8 @@ import CardLoader from '../../../Components/Loaders/CardLoader';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {
   height,
   itemWidth,
@@ -43,16 +43,16 @@ import {
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import actions from '../../../redux/actions';
 import BottomViewModal from '../../../Components/BottomViewModal';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../../styles/theme';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
 import SelectTimeModalView from '../../CourierService/ChooseCarTypeAndTime/SelectTimeModalView';
@@ -65,7 +65,7 @@ import Loader from '../../../Components/Loader';
 import staticStrings from '../../../constants/staticStrings';
 import Modal from 'react-native-modal';
 import Geocoder from 'react-native-geocoding';
-import {locationPermission} from '../../../utils/permissions';
+import { locationPermission } from '../../../utils/permissions';
 import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
@@ -73,12 +73,12 @@ import {
 import useInterval from '../../../utils/useInterval';
 
 export default function TaxiHomeDashbord({
-  handleRefresh = () => {},
-  bannerPress = () => {},
+  handleRefresh = () => { },
+  bannerPress = () => { },
   //   appMainData = {},
   isLoading = false,
   isRefreshing = false,
-  onPressCategory = () => {},
+  onPressCategory = () => { },
   selectedToggle,
   toggleData,
   isDineInSelected = false,
@@ -91,7 +91,7 @@ export default function TaxiHomeDashbord({
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, currencies, themeColors, appStyle, languages} = useSelector(
+  const { appData, currencies, themeColors, appStyle, languages } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -153,7 +153,7 @@ export default function TaxiHomeDashbord({
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
-  const {bannerRef} = useRef();
+  const { bannerRef } = useRef();
   const {
     slider1ActiveSlide,
     newCategoryData,
@@ -178,16 +178,16 @@ export default function TaxiHomeDashbord({
     selectViaMap,
     allListedDrivers,
   } = state;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
   console.log(appData, 'appDataappData');
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -246,7 +246,7 @@ export default function TaxiHomeDashbord({
   const fitPadding = (newArray) => {
     if (mapRef.current) {
       mapRef.current.fitToCoordinates([...newArray], {
-        edgePadding: {top: 100, right: 80, bottom: 80, left: 80},
+        edgePadding: { top: 100, right: 80, bottom: 80, left: 80 },
         animated: true,
       });
     }
@@ -319,7 +319,7 @@ export default function TaxiHomeDashbord({
         });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -356,7 +356,7 @@ export default function TaxiHomeDashbord({
 
   const addUpdateLocation = (childData) => {
     //setModalVisible(false);
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
 
     actions
       .addAddress(childData, {
@@ -364,22 +364,22 @@ export default function TaxiHomeDashbord({
       })
       .then((res) => {
         console.log(res, 'res>res>res');
-        updateState({del: del ? false : true});
+        updateState({ del: del ? false : true });
         showSuccess(res.message);
         setModalVisible(false);
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
 
   const openCloseMapAddress = (type) => {
-    updateState({selectViaMap: type == 1 ? true : false});
+    updateState({ selectViaMap: type == 1 ? true : false });
   };
 
   const setModalVisible = (visible, type, id, data) => {
-    updateState({selectViaMap: false});
+    updateState({ selectViaMap: false });
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,
@@ -392,7 +392,7 @@ export default function TaxiHomeDashbord({
     }
   };
 
-  const _renderItem = ({item}) => {
+  const _renderItem = ({ item }) => {
     return (
       <TaxiHomeCategoryCard
         data={item}
@@ -404,14 +404,14 @@ export default function TaxiHomeDashbord({
   const latitudes = !!curLatLong?.latitude
     ? parseFloat(curLatLong?.latitude)
     : !!location?.latitude
-    ? parseFloat(location?.latitude)
-    : appData?.profile?.preferences?.Default_latitude;
+      ? parseFloat(location?.latitude)
+      : appData?.profile?.preferences?.Default_latitude;
 
   const longitudes = !!curLatLong?.longitude
     ? parseFloat(curLatLong?.longitude)
     : !!location?.longitude
-    ? parseFloat(location?.longitude)
-    : appData?.profile?.preferences?.Default_latitude;
+      ? parseFloat(location?.longitude)
+      : appData?.profile?.preferences?.Default_latitude;
 
   console.log(latitudes, 'latitudeslatitudes');
   console.log(
@@ -465,12 +465,12 @@ export default function TaxiHomeDashbord({
                 }}
                 onPress={_modalClose}>
                 <Text
-                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
                   {strings.CANCEL}
                 </Text>
               </TouchableOpacity>
 
-              <View style={{marginHorizontal: 4}} />
+              <View style={{ marginHorizontal: 4 }} />
               <TouchableOpacity
                 style={{
                   flex: 1,
@@ -487,18 +487,18 @@ export default function TaxiHomeDashbord({
                   });
 
                   setTimeout(() => {
-                    updateState({isLoadingModal: false});
+                    updateState({ isLoadingModal: false });
                     actions.saveSchduleTime(
                       slectedDate || selectedTime ? '' : 'now',
                     );
                     navigation.navigate(navigationStrings.ADDADDRESS, {
                       cat: appMainData?.categories[0],
-                      datetime: {slectedDate, selectedTime},
+                      datetime: { slectedDate, selectedTime },
                     });
                   }, 2000);
                 }}>
                 <Text
-                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
                   {strings.SET}
                 </Text>
               </TouchableOpacity>
@@ -510,7 +510,7 @@ export default function TaxiHomeDashbord({
   };
 
   const moveToScreen = (details) => {
-    updateState({fullMapShow: false});
+    updateState({ fullMapShow: false });
     if (!!userData?.auth_token) {
       let prefillAdress = null;
       if (!!details) {
@@ -525,7 +525,7 @@ export default function TaxiHomeDashbord({
       actions.saveSchduleTime('now');
       navigation.navigate(navigationStrings.ADDADDRESS, {
         cat: appMainData?.categories[0],
-        datetime: {slectedDate, selectedTime},
+        datetime: { slectedDate, selectedTime },
         prefillAdress: !!prefillAdress ? prefillAdress : null,
       });
     } else {
@@ -540,7 +540,7 @@ export default function TaxiHomeDashbord({
         return (
           <ScrollView
             keyboardShouldPersistTaps={'handled'}
-            style={{width: width}}>
+            style={{ width: width }}>
             <TouchableOpacity
               key={inx}
               style={{
@@ -614,7 +614,7 @@ export default function TaxiHomeDashbord({
   };
   const savedPlaceView1 = (image) => {
     return (
-      <ScrollView keyboardShouldPersistTaps={'handled'} style={{width: width}}>
+      <ScrollView keyboardShouldPersistTaps={'handled'} style={{ width: width }}>
         <TouchableOpacity
           style={{
             flexDirection: 'row',
@@ -628,8 +628,8 @@ export default function TaxiHomeDashbord({
             actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                  data: appMainData?.categories[0],
-                })
+                data: appMainData?.categories[0],
+              })
               : actions.setAppSessionData('on_login');
           }}>
           <View
@@ -641,7 +641,7 @@ export default function TaxiHomeDashbord({
             <View>
               <Image source={image} />
             </View>
-            <View style={{marginHorizontal: moderateScale(10)}}>
+            <View style={{ marginHorizontal: moderateScale(10) }}>
               <Text
                 numberOfLines={2}
                 style={{
@@ -694,7 +694,7 @@ export default function TaxiHomeDashbord({
         }
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
-        style={{flex: 1, zIndex: 1000}}>
+        style={{ flex: 1, zIndex: 1000 }}>
         <>
           <TaxiBannerHome
             appStyle={appStyle}
@@ -703,10 +703,10 @@ export default function TaxiHomeDashbord({
             bannerData={[...appData?.mobile_banners]}
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
-            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
-            // onPress={(item) => bannerPress(item)}
+            onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
+          // onPress={(item) => bannerPress(item)}
           />
-          <View style={{height: moderateScaleVertical(5)}} />
+          <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
 
@@ -722,13 +722,13 @@ export default function TaxiHomeDashbord({
           keyExtractor={(item) => item.id.toString()}
           renderItem={_renderItem}
           ItemSeparatorComponent={() => (
-            <View style={{marginRight: moderateScale(12)}} />
+            <View style={{ marginRight: moderateScale(12) }} />
           )}
           ListHeaderComponent={() => (
-            <View style={{marginLeft: moderateScale(12)}} />
+            <View style={{ marginLeft: moderateScale(12) }} />
           )}
           ListFooterComponent={() => (
-            <View style={{marginRight: moderateScale(12)}} />
+            <View style={{ marginRight: moderateScale(12) }} />
           )}
         />
 
@@ -748,14 +748,14 @@ export default function TaxiHomeDashbord({
                 paddingHorizontal: moderateScale(10),
               }}>
               <TouchableOpacity
-                style={{flexBasis: 'auto', flexGrow: width / 2}}
+                style={{ flexBasis: 'auto', flexGrow: width / 2 }}
                 onPress={() => {
                   actions.saveSchduleTime('now');
                   userData?.auth_token
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                        cat: appMainData,
-                        datetime: {slectedDate, selectedTime},
-                      })
+                      cat: appMainData,
+                      datetime: { slectedDate, selectedTime },
+                    })
                     : actions.setAppSessionData('on_login');
                 }}>
                 <Text
@@ -767,12 +767,12 @@ export default function TaxiHomeDashbord({
                   {strings.WHERETO}
                 </Text>
               </TouchableOpacity>
-              { getBundleId()=== appIds.appi ? null :<TouchableOpacity
+              {getBundleId() === appIds.appi ? null : <TouchableOpacity
                 onPress={() => {
                   userData?.auth_token
                     ? updateState({
-                        isVisible: true,
-                      })
+                      isVisible: true,
+                    })
                     : actions.setAppSessionData('on_login');
                 }}
                 style={{
@@ -792,12 +792,12 @@ export default function TaxiHomeDashbord({
                     paddingHorizontal: moderateScale(5),
                   }}>
                   <Image source={imagePath.clock} />
-                  <Text style={{marginHorizontal: moderateScale(5)}}>
+                  <Text style={{ marginHorizontal: moderateScale(5) }}>
                     {strings.NOW}
                   </Text>
                   <Image
                     style={{
-                      transform: [{rotate: '90deg'}],
+                      transform: [{ rotate: '90deg' }],
                       height: moderateScaleVertical(8),
                       width: moderateScale(8),
                       resizeMode: 'contain',
@@ -834,7 +834,7 @@ export default function TaxiHomeDashbord({
                   <View>
                     <Image source={imagePath.plushRoundedBackground} />
                   </View>
-                  <View style={{marginHorizontal: moderateScale(10)}}>
+                  <View style={{ marginHorizontal: moderateScale(10) }}>
                     <Text
                       numberOfLines={2}
                       style={{
@@ -866,7 +866,7 @@ export default function TaxiHomeDashbord({
               {savedPlaceView1(imagePath.starRoundedBackground)}
             </View>
 
-            <View style={{marginHorizontal: moderateScale(20)}}>
+            <View style={{ marginHorizontal: moderateScale(20) }}>
               <Text
                 style={{
                   fontSize: textScale(14),
@@ -885,7 +885,7 @@ export default function TaxiHomeDashbord({
                   marginTop: moderateScaleVertical(20),
                   alignItems: 'center',
                 }}
-                onPress={() => updateState({fullMapShow: true})}>
+                onPress={() => updateState({ fullMapShow: true })}>
                 {
                   <MapView
                     ref={mapRef}
@@ -900,33 +900,33 @@ export default function TaxiHomeDashbord({
                       latitude: !!curLatLong?.latitude
                         ? parseFloat(curLatLong?.latitude)
                         : !!location?.latitude
-                        ? parseFloat(location?.latitude)
-                        : 30.733315,
+                          ? parseFloat(location?.latitude)
+                          : 30.733315,
                       longitude: !!curLatLong?.longitude
                         ? parseFloat(curLatLong?.longitude)
                         : !!location?.longitude
-                        ? parseFloat(location?.longitude)
-                        : 76.779419,
+                          ? parseFloat(location?.longitude)
+                          : 76.779419,
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
                     // initialRegion={region}
                     showsUserLocation={true}
-                    //showsMyLocationButton={true}
-                    // pointerEvents={'none'}
+                  //showsMyLocationButton={true}
+                  // pointerEvents={'none'}
                   >
                     <Marker
                       coordinate={{
                         latitude: !!curLatLong?.latitude
                           ? parseFloat(curLatLong?.latitude)
                           : !!location?.latitude
-                          ? parseFloat(location?.latitude)
-                          : 30.733315,
+                            ? parseFloat(location?.latitude)
+                            : 30.733315,
                         longitude: !!curLatLong?.longitude
                           ? parseFloat(curLatLong?.longitude)
                           : !!location?.longitude
-                          ? parseFloat(location?.longitude)
-                          : 76.779419,
+                            ? parseFloat(location?.longitude)
+                            : 76.779419,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
@@ -947,7 +947,7 @@ export default function TaxiHomeDashbord({
           />
         )}
 
-        <View style={{height: moderateScaleVertical(95)}} />
+        <View style={{ height: moderateScaleVertical(95) }} />
       </ScrollView>
       <AddressModal3
         navigation={navigation}
@@ -968,8 +968,8 @@ export default function TaxiHomeDashbord({
           margin: 0,
         }}
         animationInTiming={600}>
-        <View style={{flex: 1}}>
-          <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
             <MapView
               ref={mapRef}
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -977,26 +977,26 @@ export default function TaxiHomeDashbord({
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
               }
-              style={{...StyleSheet.absoluteFillObject}}
+              style={{ ...StyleSheet.absoluteFillObject }}
               region={{
                 latitude: !!curLatLong?.latitude
                   ? parseFloat(curLatLong?.latitude)
                   : !!location?.latitude
-                  ? parseFloat(location?.latitude)
-                  : 30.7333,
+                    ? parseFloat(location?.latitude)
+                    : 30.7333,
                 longitude: !!curLatLong?.longitude
                   ? parseFloat(curLatLong?.longitude)
                   : !!location?.longitude
-                  ? parseFloat(location?.longitude)
-                  : 76.7794,
+                    ? parseFloat(location?.longitude)
+                    : 76.7794,
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
               }}
               // initialRegion={region}
               showsUserLocation={true}
-              // onRegionChangeComplete={_onRegionChange}
-              // showsMyLocationButton={true}
-              // pointerEvents={'none'}
+            // onRegionChangeComplete={_onRegionChange}
+            // showsMyLocationButton={true}
+            // pointerEvents={'none'}
             >
               {allListedDrivers?.map((coordinate, index) => {
                 return (
@@ -1029,7 +1029,7 @@ export default function TaxiHomeDashbord({
             </MapView>
             <SafeAreaView>
               <TouchableOpacity
-                onPress={() => updateState({fullMapShow: false})}
+                onPress={() => updateState({ fullMapShow: false })}
                 style={{
                   marginTop: moderateScaleVertical(24),
                   height: moderateScale(40),

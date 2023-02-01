@@ -154,7 +154,7 @@ export default {
   CONEKTA: 'conekta',
   VERIFY_ACCOUNT_TAXI: 'VerifyAccountTaxi',
   VERIFY_ACCOUNT_COURIER: 'VerifyAccountCourier',
-  ORDER_TRACKING  :'OrderTracking',
+  ORDER_TRACKING: 'OrderTracking',
   POST: 'Post',
   POST_CATEGORY: 'PostCategory',
   P2P_PRODUCTS: 'p2pProducts',
@@ -164,4 +164,5 @@ export default {
   CHAT_STACK: 'chatStack',
   MY_POSTS: 'myPosts',
   REFER_AND_EARN: 'referAndEarn',
+  PLUGNPAY: 'PlugnPay'
 };

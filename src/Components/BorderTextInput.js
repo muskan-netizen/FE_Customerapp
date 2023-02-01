@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   I18nManager,
   Image,
@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
-import {useSelector} from 'react-redux';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {hitSlopProp} from '../styles/commonStyles';
-import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { hitSlopProp } from '../styles/commonStyles';
+import { moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 
 const BorderTextInput = ({
   containerStyle,
@@ -25,7 +25,7 @@ const BorderTextInput = ({
   value,
   placeholder = '',
   marginBottom = 20,
-  onPressRight = () => {},
+  onPressRight = () => { },
   withRef = false,
   secureTextEntry = false,
   borderWidth = 1,
@@ -43,14 +43,14 @@ const BorderTextInput = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const inputRef = useRef();
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const { appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   useEffect(() => {
     if (withRef && Platform.OS === 'android') {
       if (inputRef.current) {
         inputRef.current.setNativeProps({
-          style: {fontFamily: fontFamily.regular},
+          style: { fontFamily: fontFamily.regular },
         });
       }
     }
@@ -70,7 +70,7 @@ const BorderTextInput = ({
         ...containerStyle,
       }}>
       {leftIcon && (
-        <View style={{justifyContent: 'center', marginLeft: 10}}>
+        <View style={{ justifyContent: 'center', marginLeft: 10 }}>
           <Image source={leftIcon} />
         </View>
       )}
@@ -81,6 +81,7 @@ const BorderTextInput = ({
         placeholderTextColor={
           isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
         }
+        maxLength={maxLength}
         style={{
           flex: 1,
           opacity: 0.7,
@@ -99,13 +100,12 @@ const BorderTextInput = ({
         value={value}
         secureTextEntry={secureTextEntry}
         autoCapitalize={'none'}
-        maxLength={maxLength}
         {...props}
       />
 
       {rightIcon && (
         <TouchableOpacity
-          style={{justifyContent: 'center', marginRight: 10}}
+          style={{ justifyContent: 'center', marginRight: 10 }}
           hitSlop={hitSlopProp}
           onPress={onPressRight}>
           <Image

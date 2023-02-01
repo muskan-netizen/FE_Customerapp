@@ -79,6 +79,7 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   getParameterByName,
+  getPaymentGatewayResponseWithUri,
   showError,
   showInfo,
   showSuccess,
@@ -101,7 +102,7 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
 function Cart({ navigation, route }) {
   let paramsData = route?.params;
-
+  console.log(paramsData, 'paramsDataparamsData')
   let actionSheet = useRef(null);
   const bottomSheetRef = useRef(null);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
@@ -716,7 +717,7 @@ function Cart({ navigation, route }) {
       _directOrderPlace();
     }
   }, [paramsData?.transactionId]);
-
+  console.log(selectedPayment, 'selectedPaymentselectedPayment')
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
     // updateState({ isLoadingB: true });
@@ -1019,6 +1020,7 @@ function Cart({ navigation, route }) {
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         break;
 
+
       default:
         if (
           !!businessType &&
@@ -1026,7 +1028,8 @@ function Cart({ navigation, route }) {
           res?.data?.vendors.length == 1
         ) {
           _getOrderDetail(res.data.vendors[0]);
-        } else {
+        }
+        else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
@@ -1131,6 +1134,47 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
+  const _paymentWithPlugnPayMethods = (response) => {
+
+    let selectPaymentCode = selectedPayment?.code?.toLowerCase()
+    let CardNumber = paramsData?.CardNumber.split(" ").join("")
+    let ExpiryDate = paramsData?.expiryDate
+    let cvc = paramsData?.cvc
+    let Order_Number = response?.data?.order_number
+    let amount = Number(cartData?.total_payable_amount) +
+      (selectedTipAmount != null && selectedTipAmount != ""
+        ? Number(selectedTipAmount)
+        : 0)
+
+    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${ExpiryDate}&cno=${CardNumber}&order_number=${Order_Number}&action=cart`;
+    console.log('QueryData----------', queryData)
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        }
+      )
+      .then((res) => {
+        console.log(res, "Response>>>>>");
+        if (res?.status == 'Success') {
+          updateState({ isLoadingB: false })
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: response?.data,
+          })();
+        }
+        // getPlugnPayUrlData(res)
+      })
+      .catch((err) => {
+        updateState({ isLoadingB: false })
+        console.log('Error>>>>>>>>>>>', err)
+        showError(err?.msg)
+      })
+  }
+
 
   const _directOrderPlace = () => {
     let data = {};
@@ -1139,14 +1183,8 @@ function Cart({ navigation, route }) {
       dineInType != 'delivery'
         ? ''
         : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
-    data['payment_option_id'] =
-      Number(cartData?.total_payable_amount) +
-        (selectedTipAmount != null && selectedTipAmount != ''
-          ? Number(selectedTipAmount)
-          : 0) >
-        0
-        ? paramsData?.selectedPayment?.id || selectedPayment?.id
-        : 1;
+    data["payment_option_id"] =
+      paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
@@ -1157,7 +1195,11 @@ function Cart({ navigation, route }) {
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
     }
-    placeOrderData(data);
+    data['amount'] = Number(cartData?.total_payable_amount) +
+      (selectedTipAmount != null && selectedTipAmount != ""
+        ? Number(selectedTipAmount)
+        : 0),
+      placeOrderData(data);
   };
 
   const placeOrderData = (data) => {
@@ -1175,6 +1217,13 @@ function Cart({ navigation, route }) {
     actions
       .placeOrder(data, headerData)
       .then((res) => {
+        if (selectedPayment?.id === 49) {
+          updateState({ isLoadingB: true })
+          _paymentWithPlugnPayMethods(res);
+        }
+        else {
+          checkPaymentOptions(res);
+        }
         navigation.popToTop();
         actions.reloadData(!reloadData);
         actions.cartItemQty(0);
@@ -1190,8 +1239,6 @@ function Cart({ navigation, route }) {
           isLoadingB: false,
           placeLoader: false,
         });
-        console.log('paymebnt res', res);
-        checkPaymentOptions(res);
         if (
           selectedPayment?.id != 32 &&
           selectedPayment?.id != 17 &&
@@ -1206,7 +1253,8 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 39 &&
           selectedPayment?.id != 34 &&
           selectedPayment?.id != 41 &&
-          selectedPayment?.id != 44
+          selectedPayment?.id != 44 &&
+          selectedPayment?.id != 49
         ) {
           setCartItems([]);
           setCartData({});
@@ -1363,7 +1411,6 @@ function Cart({ navigation, route }) {
     // if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
     //   _offineLinePayment();
     //   return;
-
     if (
       selectedPayment?.id == 10 &&
       selectedPayment?.off_site == 0 &&
@@ -1385,7 +1432,9 @@ function Cart({ navigation, route }) {
     ) {
       _webPayment();
       return;
-    } else {
+    }
+
+    else {
       _directOrderPlace();
     }
 
@@ -1483,10 +1532,10 @@ function Cart({ navigation, route }) {
         });
       });
 
-      if (!isFAQsSubmitted) {
-        showInfo("Please fill all product's FAQs");
-        return;
-      }
+      // if (!isFAQsSubmitted) {
+      //   showInfo("Please fill all product's FAQs");
+      //   return;
+      // }
 
       updateState({ placeLoader: true });
       var d1 = new Date();
@@ -2548,7 +2597,6 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
-              console.log('item=>>>', item);
               return (
                 <Swipeable
                   ref={swipeRef}
@@ -2582,15 +2630,16 @@ function Cart({ navigation, route }) {
                               ? MyDarkTheme.colors.lightDark
                               : colors.white,
                           },
-                        ]}>
+                        ]}
+                      >
                         <FastImage
                           source={
-                            i?.cartImg != '' && i?.cartImg != null
+                            i?.cartImg != "" && i?.cartImg != null
                               ? {
                                 uri: getImageUrl(
                                   i?.cartImg?.path?.proxy_url,
                                   i?.cartImg?.path?.image_path,
-                                  '300/300',
+                                  "300/300"
                                 ),
                                 priority: FastImage.priority.high,
                                 cache: FastImage.cacheControl.immutable,
@@ -2836,22 +2885,23 @@ function Cart({ navigation, route }) {
                                           }
                                         // numberOfLines={1}
                                         >
-                                          {j.addon_title}{' '}
-                                          {`(${j.option_title})`} ={' '}
-                                          {tokenConverterPlusCurrencyNumberFormater(
-                                            Number(j.price),
-                                            digit_after_decimal,
-                                            additional_preferences,
-                                            currencies?.primary_currency
-                                              ?.symbol,
-                                          )}
-                                        </Text>
-                                      </View>
-                                    </View>
+                                          {j.addon_title}{" "}
+                                          {`(${j.option_title})`} ={" "}
+                                          {
+                                            tokenConverterPlusCurrencyNumberFormater(
+                                              Number(j.price),
+                                              digit_after_decimal,
+                                              additional_preferences,
+                                              currencies?.primary_currency?.symbol,
+                                            )
+                                          }
+                                        </Text >
+                                      </View >
+                                    </View >
                                   );
                                 })
                                 : null}
-                            </View>
+                            </View >
                             {!!(
                               !!i?.pvariant &&
                               Number(i?.pvariant?.container_charges)
@@ -2903,12 +2953,11 @@ function Cart({ navigation, route }) {
                                           >
                                             {tokenConverterPlusCurrencyNumberFormater(
                                               Number(
-                                                i?.pvariant?.container_charges,
+                                                i?.pvariant?.container_charges
                                               ) * Number(i?.quantity),
                                               digit_after_decimal,
                                               additional_preferences,
-                                              currencies?.primary_currency
-                                                ?.symbol,
+                                              currencies?.primary_currency?.symbol
                                             )}
                                           </Text>
                                         </View>
@@ -2973,8 +3022,8 @@ function Cart({ navigation, route }) {
                               </TouchableOpacity>
                             </View>
                           </View>
-                        </View>
-                      </View>
+                        </View >
+                      </View >
                       {!!cartData?.delay_date && (
                         <Text
                           style={{
@@ -2994,7 +3043,7 @@ function Cart({ navigation, route }) {
                               : ''
                             }`}</Text>
                       )}
-                    </View>
+                    </View >
                     {!!i?.is_processor_enable && (
                       <View>
                         <Text
@@ -3015,171 +3064,179 @@ function Cart({ navigation, route }) {
                         </Text>
                       </View>
                     )}
-                    {i?.luxury_option_id == 4 ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          marginHorizontal: moderateScale(20),
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                        }}>
-                        <View>
-                          <Text style={styles.startEndDateTitle}>
-                            {strings.START_DATE}
-                          </Text>
-                          <Text style={styles.startEndDateValueTxt}>
-                            {i?.start_date_time}
-                          </Text>
+                    {
+                      i?.luxury_option_id == 4 ? (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginHorizontal: moderateScale(20),
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.START_DATE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {i?.start_date_time}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.END_DATE}
+                            </Text >
+                            <Text style={styles.startEndDateValueTxt}>
+                              {i?.end_date_time}
+                            </Text>
+                          </View >
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.DURATION}
+                            </Text >
+                            <Text style={styles.startEndDateValueTxt}>
+                              {getHourAndMinutes(Number(i?.total_booking_time))}
+                            </Text>
+                          </View >
+                        </View >
+                      ) : null
+                    }
+                    {
+                      !!i?.delivery_date ? (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginHorizontal: moderateScale(20),
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginBottom: 3,
+                          }}>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.DELIVERY_DATE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {i?.delivery_date}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.DELIVERY_SLOT}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {`${i?.product_delivery_slot?.title} (${i?.product_delivery_slot?.start_time} - ${i?.product_delivery_slot?.end_time})`}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.SLOT_PRICE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {tokenConverterPlusCurrencyNumberFormater(
+                                Number(i?.product_delivery_slot?.price || 0),
+                                digit_after_decimal,
+                                additional_preferences,
+                                currencies?.primary_currency?.symbol,
+                              )}
+                            </Text>
+                          </View>
                         </View>
-                        <View>
-                          <Text style={styles.startEndDateTitle}>
-                            {strings.END_DATE}
-                          </Text>
-                          <Text style={styles.startEndDateValueTxt}>
-                            {i?.end_date_time}
-                          </Text>
-                        </View>
-                        <View>
-                          <Text style={styles.startEndDateTitle}>
-                            {strings.DURATION}
-                          </Text>
-                          <Text style={styles.startEndDateValueTxt}>
-                            {getHourAndMinutes(Number(i?.total_booking_time))}
-                          </Text>
-                        </View>
-                      </View>
-                    ) : null}
-                    {!!i?.delivery_date ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          marginHorizontal: moderateScale(20),
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          marginBottom: 3,
-                        }}>
-                        <View>
-                          <Text style={styles.startEndDateTitle}>
-                            {strings.DELIVERY_DATE}
-                          </Text>
-                          <Text style={styles.startEndDateValueTxt}>
-                            {i?.delivery_date}
-                          </Text>
-                        </View>
-                        <View>
-                          <Text style={styles.startEndDateTitle}>
-                            {strings.DELIVERY_SLOT}
-                          </Text>
-                          <Text style={styles.startEndDateValueTxt}>
-                            {`${i?.product_delivery_slot?.title} (${i?.product_delivery_slot?.start_time} - ${i?.product_delivery_slot?.end_time})`}
-                          </Text>
-                        </View>
-                        <View>
-                          <Text style={styles.startEndDateTitle}>
-                            {strings.SLOT_PRICE}
-                          </Text>
-                          <Text style={styles.startEndDateValueTxt}>
-                            {tokenConverterPlusCurrencyNumberFormater(
-                              Number(i?.product_delivery_slot?.price || 0),
-                              digit_after_decimal,
-                              additional_preferences,
-                              currencies?.primary_currency?.symbol,
-                            )}
-                          </Text>
-                        </View>
-                      </View>
-                    ) : null}
+                      ) : null
+                    }
                     {/* <View style={styles.dashedLine} /> */}
-                  </Animated.View>
-                </Swipeable>
+                  </Animated.View >
+                </Swipeable >
               );
             })
             : null}
           {/************ end render cart items *************/}
-          {item?.isDeliverable ? null : (
-            <View style={{ marginHorizontal: moderateScale(10) }}>
-              <Text
-                style={{
-                  fontSize: moderateScale(12),
-                  fontFamily: fontFamily.medium,
-                  color: colors.redFireBrick,
-                }}>
-                {strings.ITEM_NOT_DELIVERABLE}
-              </Text>
-            </View>
-          )}
+          {
+            item?.isDeliverable ? null : (
+              <View style={{ marginHorizontal: moderateScale(10) }}>
+                <Text
+                  style={{
+                    fontSize: moderateScale(12),
+                    fontFamily: fontFamily.medium,
+                    color: colors.redFireBrick,
+                  }}>
+                  {strings.ITEM_NOT_DELIVERABLE}
+                </Text>
+              </View>
+            )
+          }
 
           {/* offerview */}
-          {!!item?.is_promo_code_available && (
-            <TouchableOpacity
-              disabled={item?.couponData ? true : false}
-              onPress={() => _getAllOffers(item.vendor, cartData)}
-              style={styles.offersViewB}>
-              {item?.couponData ? (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
+          {
+            !!item?.is_promo_code_available && (
+              <TouchableOpacity
+                disabled={item?.couponData ? true : false}
+                onPress={() => _getAllOffers(item.vendor, cartData)}
+                style={styles.offersViewB}>
+                {item?.couponData ? (
                   <View
                     style={{
-                      flex: 0.7,
                       flexDirection: 'row',
-                      alignItems: 'center',
+                      justifyContent: 'space-between',
                     }}>
+                    <View
+                      style={{
+                        flex: 0.7,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <FastImage
+                        source={imagePath.percent}
+                        resizeMode="contain"
+                        style={{
+                          width: moderateScale(16),
+                          height: moderateScale(16),
+                          tintColor: themeColors.primary_color,
+                        }}
+                      />
+                      <Text
+                        numberOfLines={1}
+                        style={[
+                          styles.viewOffers,
+                          { marginLeft: moderateScale(10) },
+                        ]}>
+                        {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
+                      </Text>
+                    </View>
+                    <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
+                      {/* <Image source={imagePath.crossBlueB}  /> */}
+                      <Text
+                        onPress={() => _removeCoupon(item, cartData)}
+                        style={[
+                          styles.removeCoupon,
+                          { color: colors.cartItemPrice },
+                        ]}>
+                        {strings.REMOVE}
+                      </Text>
+                    </View>
+                  </View>
+                ) : (
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <FastImage
                       source={imagePath.percent}
                       resizeMode="contain"
                       style={{
-                        width: moderateScale(16),
-                        height: moderateScale(16),
+                        width: moderateScale(24),
+                        height: moderateScale(24),
                         tintColor: themeColors.primary_color,
                       }}
                     />
+
                     <Text
-                      numberOfLines={1}
                       style={[
                         styles.viewOffers,
                         { marginLeft: moderateScale(10) },
                       ]}>
-                      {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
+                      {strings.APPLY_PROMO_CODE}
                     </Text>
                   </View>
-                  <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
-                    {/* <Image source={imagePath.crossBlueB}  /> */}
-                    <Text
-                      onPress={() => _removeCoupon(item, cartData)}
-                      style={[
-                        styles.removeCoupon,
-                        { color: colors.cartItemPrice },
-                      ]}>
-                      {strings.REMOVE}
-                    </Text>
-                  </View>
-                </View>
-              ) : (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <FastImage
-                    source={imagePath.percent}
-                    resizeMode="contain"
-                    style={{
-                      width: moderateScale(24),
-                      height: moderateScale(24),
-                      tintColor: themeColors.primary_color,
-                    }}
-                  />
-
-                  <Text
-                    style={[
-                      styles.viewOffers,
-                      { marginLeft: moderateScale(10) },
-                    ]}>
-                    {strings.APPLY_PROMO_CODE}
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
-          )}
+                )}
+              </TouchableOpacity>
+            )
+          }
           {/* start amount view       */}
           <View
             style={{
@@ -3402,8 +3459,8 @@ function Cart({ navigation, route }) {
               </View>
             )}
           </View>
-        </View>
-      </View>
+        </View >
+      </View >
     );
   };
 
@@ -4225,7 +4282,7 @@ function Cart({ navigation, route }) {
           </View>
         )}
 
-        {cartData?.total_tax > 0 && (
+        {(cartData?.total_tax > 0 || cartData?.total_taxable_amount > 0) && (
           <Animatable.View
             style={{
               ...styles.bottomTabLableValue,
@@ -4265,15 +4322,20 @@ function Cart({ navigation, route }) {
                   : styles.priceItemLabel
               }>
               {tokenConverterPlusCurrencyNumberFormater(
-                Number(cartData?.total_tax ? cartData?.total_tax : 0),
+                Number(cartData?.total_tax ? cartData?.total_tax : 0)
+                + Number(cartData?.total_taxable_amount
+                  ? cartData?.total_taxable_amount
+                  : 0),
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol
               )}
             </Text>
           </Animatable.View>
-        )}
-        {!!preferences?.advance_booking_amount &&
+        )
+        }
+        {
+          !!preferences?.advance_booking_amount &&
           cartData?.advance_payable_amount > 0 && (
             <Animatable.View
               style={{
@@ -4320,48 +4382,52 @@ function Cart({ navigation, route }) {
                 )}
               </Text>
             </Animatable.View>
-          )}
-        {!!preferences?.advance_booking_amount && cartData?.pending_amount > 0 && (
-          <Animatable.View
-            style={{
-              ...styles.bottomTabLableValue,
-              marginTop: moderateScale(8),
-              marginBottom: moderateScale(2),
-            }}>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              hitSlop={hitSlopProp}
-              onPress={() => updateState({ showTaxFeeArea: !showTaxFeeArea })}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                  }}>
-                  {'Advance Payable Amount'}
-                </Text>
-              </View>
-            </TouchableOpacity>
+          )
+        }
+        {
+          !!preferences?.advance_booking_amount && cartData?.pending_amount > 0 && (
+            <Animatable.View
+              style={{
+                ...styles.bottomTabLableValue,
+                marginTop: moderateScale(8),
+                marginBottom: moderateScale(2),
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                hitSlop={hitSlopProp}
+                onPress={() => updateState({ showTaxFeeArea: !showTaxFeeArea })}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                    }}>
+                    {'Advance Payable Amount'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
 
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                  : styles.priceItemLabel
-              }>
-              {' '}
-              {tokenConverterPlusCurrencyNumberFormater(
-                Number(cartData?.pending_amount),
-                digit_after_decimal,
-                additional_preferences,
-                currencies?.primary_currency?.symbol,
-              )}
-            </Text>
-          </Animatable.View>
-        )}
-        {!!preferences?.advance_booking_amount &&
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>
+                {' '}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(cartData?.pending_amount),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
+            </Animatable.View>
+          )
+        }
+        {
+          !!preferences?.advance_booking_amount &&
           cartData?.total_amount > 0 && (
             <Animatable.View
               style={{
@@ -4401,18 +4467,20 @@ function Cart({ navigation, route }) {
                 )}{' '}
               </Text>
             </Animatable.View>
-          )}
+          )
+        }
 
-        {showTaxFeeArea && (
-          <View>
-            <Animatable.View
-              animation="fadeIn"
-              style={{
-                marginLeft: moderateScale(10),
-                borderWidth: moderateScale(0.4),
-                marginRight: moderateScale(5),
-              }}>
-              {/* {cartData?.total_service_fee > 0 && (
+        {
+          showTaxFeeArea && (
+            <View>
+              <Animatable.View
+                animation="fadeIn"
+                style={{
+                  marginLeft: moderateScale(10),
+                  borderWidth: moderateScale(0.4),
+                  marginRight: moderateScale(5),
+                }}>
+                {/* {cartData?.total_service_fee > 0 && (
                 <View
                   style={{...styles.bottomTabLableValue, marginVertical: 1}}>
                   <Text
@@ -4448,44 +4516,47 @@ function Cart({ navigation, route }) {
                 </View>
               )} */}
 
-              {!isEmpty(cartData?.specific_taxes) &&
-                cartData?.specific_taxes.map((val, index) => {
-                  return (
-                    <View>
-                      {val?.value > 0 && (
-                        <View
-                          style={{
-                            ...styles.bottomTabLableValue,
-                            marginVertical: 1,
-                          }}>
-                          <Text
-                            style={{
-                              ...styles.priceItemLabel,
-                              color: isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.textGreyB,
-                              fontSize: textScale(11),
-                            }}>
-                            {val?.label}
-                          </Text>
-                          <Text
-                            style={{
-                              ...styles.priceItemLabel,
-                              color: isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.textGreyB,
-                              fontSize: textScale(11),
-                            }}>{`${currencies?.primary_currency?.symbol
-                              }${Number(val?.value ? val?.value : 0).toFixed(
-                                appData?.profile?.preferences?.digit_after_decimal,
-                              )}`}</Text>
-                        </View>
-                      )}
-                    </View>
-                  );
-                })}
+                {
 
-              {/* {cartData?.tax_details.map((val) => {
+                  !isEmpty(cartData?.specific_taxes) &&
+                  cartData?.specific_taxes.map((val, index) => {
+                    return (
+                      <View>
+                        {val?.value > 0 && (
+                          <View
+                            style={{
+                              ...styles.bottomTabLableValue,
+                              marginVertical: 1,
+                            }}>
+                            <Text
+                              style={{
+                                ...styles.priceItemLabel,
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.textGreyB,
+                                fontSize: textScale(11),
+                              }}>
+                              {val?.label}
+                            </Text>
+                            <Text
+                              style={{
+                                ...styles.priceItemLabel,
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.textGreyB,
+                                fontSize: textScale(11),
+                              }}>{`${currencies?.primary_currency?.symbol
+                                }${Number(val?.value ? val?.value : 0).toFixed(
+                                  appData?.profile?.preferences?.digit_after_decimal,
+                                )}`}</Text>
+                          </View>
+                        )}
+                      </View>
+                    );
+                  })
+                }
+
+                {/* {cartData?.tax_details.map((val) => {
                 return (
                   <View>
                     {val?.value > 0 && (
@@ -4524,7 +4595,7 @@ function Cart({ navigation, route }) {
                   </View>
                 );
               })} */}
-              {/* {cartData?.total_tax > 0 && (
+                {/* {cartData?.total_tax > 0 && (
                 
                 <View
                   style={{ ...styles.bottomTabLableValue, marginVertical: 1 }}>
@@ -4553,9 +4624,10 @@ function Cart({ navigation, route }) {
                     )}`}</Text>
                 </View>
               )} */}
-            </Animatable.View>
-          </View>
-        )}
+              </Animatable.View >
+            </View >
+          )
+        }
 
         <View style={styles.amountPayable}>
           <Text
@@ -4583,7 +4655,8 @@ function Cart({ navigation, route }) {
           </Text>
         </View>
 
-        {cartData &&
+        {
+          cartData &&
           Number(cartData?.total_payable_amount) +
           (selectedTipAmount != null && selectedTipAmount != ''
             ? Number(selectedTipAmount)
@@ -4643,34 +4716,38 @@ function Cart({ navigation, route }) {
                 />
               </View>
             </TouchableOpacity>
-          )}
+          )
+        }
 
-        {!isEmpty(codMinAmount) && Number(orderAmount) <= Number(codMinAmount) && (
-          <View
-            style={styles.codmessageView}>
-            <Text
-              style={{
-                color: isDarkMode ? colors.white : colors.grayOpacity51,
+        {
+          !isEmpty(codMinAmount) && Number(orderAmount) <= Number(codMinAmount) && (
+            <View
+              style={styles.codmessageView}>
+              <Text
+                style={{
+                  color: isDarkMode ? colors.white : colors.grayOpacity51,
 
-                marginTop: moderateScale(-5),
-              }}>
-              {'*'}
-            </Text>
-            <Text
-              style={{
-                fontSize: textScale(10),
-                textAlign: 'left',
+                  marginTop: moderateScale(-5),
+                }}>
+                {'*'}
+              </Text>
+              <Text
+                style={{
+                  fontSize: textScale(10),
+                  textAlign: 'left',
 
-                color: isDarkMode ? colors.white : colors.grayOpacity51,
-              }}>{`Cash on delivery only available for amount greater then. ${codMinAmount}`}</Text>
-          </View>
-        )}
-        {!!(
-          userData?.auth_token &&
-          !appData?.profile?.preferences?.off_scheduling_at_cart &&
-          businessType !== 'laundry' &&
-          !cartData?.cart_error_message
-        ) &&
+                  color: isDarkMode ? colors.white : colors.grayOpacity51,
+                }}>{`Cash on delivery only available for amount greater then. ${codMinAmount}`}</Text>
+            </View>
+          )
+        }
+        {
+          !!(
+            userData?.auth_token &&
+            !appData?.profile?.preferences?.off_scheduling_at_cart &&
+            businessType !== 'laundry' &&
+            !cartData?.cart_error_message
+          ) &&
           !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
               style={{
@@ -4703,70 +4780,74 @@ function Cart({ navigation, route }) {
                 {strings.CLEAR_SCHEDULE_DATE}
               </Text>
             </TouchableOpacity>
-          )}
+          )
+        }
 
-        {!!(
-          cartData?.deliver_status || cartData?.closed_store_order_scheduled
-        ) && !cartData?.cart_error_message ? (
-          <View
-            pointerEvents={placeLoader ? 'none' : 'auto'}
-            style={styles.paymentView}>
+        {
+          !!(
+            cartData?.deliver_status || cartData?.closed_store_order_scheduled
+          ) && !cartData?.cart_error_message ? (
+            <View
+              pointerEvents={placeLoader ? 'none' : 'auto'}
+              style={styles.paymentView}>
 
-            {!!(
-              userData?.auth_token &&
-              !appData?.profile?.preferences?.off_scheduling_at_cart &&
-              businessType !== 'laundry'
-            ) && (
-                <ButtonComponent
-                  onPress={
-                    !!cartData?.editing_order?.id
-                      ? () =>
-                        Alert.alert('Info', "you can't reschedule this order", [
-                          {
-                            text: strings.CANCEL,
-                            onPress: () => console.log('Cancel Pressed'),
-                          },
-                          { text: strings.OK, onPress: () => console.log('') },
-                        ])
-                      : _selectTime
-                  }
-                  btnText={
-                    localeSheduledOrderDate
-                      ? localeSheduledOrderDate
-                      : strings.SCHEDULE_ORDER
-                  }
-                  borderRadius={moderateScale(13)}
-                  textStyle={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}
-                  containerStyle={{
-                    ...styles.placeOrderButtonStyle,
-                    backgroundColor: colors.transparent,
-                    borderColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    borderWidth: 0.8,
-                  }}
-                />
-              )}
+              {!!(
+                userData?.auth_token &&
+                !appData?.profile?.preferences?.off_scheduling_at_cart &&
+                businessType !== 'laundry'
+              ) && (
+                  <ButtonComponent
+                    onPress={
+                      !!cartData?.editing_order?.id
+                        ? () =>
+                          Alert.alert('Info', "you can't reschedule this order", [
+                            {
+                              text: strings.CANCEL,
+                              onPress: () => console.log('Cancel Pressed'),
+                            },
+                            { text: strings.OK, onPress: () => console.log('') },
+                          ])
+                        : _selectTime
+                    }
+                    btnText={
+                      localeSheduledOrderDate
+                        ? localeSheduledOrderDate
+                        : strings.SCHEDULE_ORDER
+                    }
+                    borderRadius={moderateScale(13)}
+                    textStyle={{
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}
+                    containerStyle={{
+                      ...styles.placeOrderButtonStyle,
+                      backgroundColor: colors.transparent,
+                      borderColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      borderWidth: 0.8,
+                    }}
+                  />
+                )}
 
-            <ButtonComponent
-              onPress={placeOrder}
-              btnText={strings.PLACE_ORDER}
-              borderRadius={moderateScale(13)}
-              textStyle={{ color: colors.white }}
-              containerStyle={styles.placeOrderButtonStyle}
-              placeLoader={placeLoader}
-            />
-          </View>
-        ) : cartData?.cart_error_message ? (
-          <View style={styles.cartErrorMessageContainer}>
-            <Text style={{ fontFamily: fontFamily.medium, color: colors.redB }}>
-              {cartData?.cart_error_message}
-            </Text>
-          </View>
-        ) : null}
-        {!!cartData &&
+              <ButtonComponent
+                onPress={placeOrder}
+                btnText={strings.PLACE_ORDER}
+                borderRadius={moderateScale(13)}
+                textStyle={{ color: colors.white }}
+                containerStyle={styles.placeOrderButtonStyle}
+                placeLoader={placeLoader}
+              />
+            </View>
+          ) : cartData?.cart_error_message ? (
+            <View style={styles.cartErrorMessageContainer}>
+              <Text style={{ fontFamily: fontFamily.medium, color: colors.redB }}>
+                {cartData?.cart_error_message}
+              </Text>
+            </View>
+          ) : null
+        }
+        {
+          !!cartData &&
           !!cartData?.upSell_products &&
           !!cartData?.upSell_products.length > 0 && (
             <View
@@ -4800,8 +4881,10 @@ function Cart({ navigation, route }) {
                 )}
               />
             </View>
-          )}
-        {!!cartData &&
+          )
+        }
+        {
+          !!cartData &&
           !!cartData?.crossSell_products &&
           !!cartData?.crossSell_products.length > 0 && (
             <View style={{ ...styles.suggetionView }}>
@@ -4831,14 +4914,15 @@ function Cart({ navigation, route }) {
                 )}
               />
             </View>
-          )}
+          )
+        }
         <View
           style={{
             height: moderateScaleVertical(80),
             backgroundColor: colors.transparent,
           }}
         />
-      </View>
+      </View >
     );
   };
 

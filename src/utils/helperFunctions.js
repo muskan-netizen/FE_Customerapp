@@ -1,21 +1,21 @@
 import * as React from 'react';
-import {Vibration} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import { Vibration } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import {BackHandler, Alert, Animated, Text} from 'react-native';
+import { BackHandler, Alert, Animated, Text } from 'react-native';
 import strings from './../constants/lang/index';
-import {callingCountries} from 'country-data';
+import { callingCountries } from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
-import {StatusBarHeight} from '../styles/responsiveSize';
-import {getDistance} from 'geolib';
-import {min} from 'moment';
+import { StatusBarHeight } from '../styles/responsiveSize';
+import { getDistance } from 'geolib';
+import { min } from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/core';
-import {selectContactPhone} from 'react-native-select-contact';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import { selectContactPhone } from 'react-native-select-contact';
 import codes from 'country-calling-code';
 import DeviceCountry, {
   TYPE_ANY,
@@ -59,20 +59,20 @@ const getCurrentLocation = (type) =>
         // alert(error.message)
         reject(error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
   });
 
 const getLocation = async (lat, lng, type) => {
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({lat, lng});
+      let res = await Geocoder.geocodePosition({ lat, lng });
       let addr = res[0].formattedAddress;
       return addr;
-    } catch (err) {}
+    } catch (err) { }
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({lat, lng});
+      let res = await Geocoder.geocodePosition({ lat, lng });
 
       let addr = res[0].formattedAddress;
 
@@ -98,9 +98,9 @@ const getLocation = async (lat, lng, type) => {
       };
 
       return data;
-    } catch (err) {}
+    } catch (err) { }
   } else {
-    return await Geocoder.geocodePosition({lat, lng});
+    return await Geocoder.geocodePosition({ lat, lng });
   }
 };
 
@@ -193,7 +193,7 @@ const androidBackButtonHandler = () => {
       onPress: () => null,
       style: 'cancel',
     },
-    {text: strings.YES, onPress: () => BackHandler.exitApp()},
+    { text: strings.YES, onPress: () => BackHandler.exitApp() },
   ]);
   return true;
 };
@@ -301,7 +301,7 @@ export const getScaleTransformationStyle = (
     outputRange: [startSize, endSize],
   });
   return {
-    transform: [{scale: interpolation}],
+    transform: [{ scale: interpolation }],
   };
 };
 
@@ -370,7 +370,7 @@ const getNearestLocation = async (currentLocation, savedLocations = []) => {
         latitude: currentLocation?.latitude,
         longitude: currentLocation?.longitude,
       },
-      {latitude: item?.latitude, longitude: item?.longitude},
+      { latitude: item?.latitude, longitude: item?.longitude },
     );
     var newAddressArray = Object.assign({}, indx);
     newAddressArray.distance = distance;
@@ -537,6 +537,21 @@ export function deviceCountryCode() {
   });
 }
 
+// export const getPaymentGatewayResponseWithUri = async (Weburi) => {
+//   try {
+//     const response = await fetch(
+//       Weburi, {
+//       method: "GET",
+//     }
+//     );
+//     const res = await response
+//     return res;
+//   } catch (error) {
+//     return error
+//   }
+// };
+
+
 export function redirectFromNotification(clickActionUrl = null) {
   if (!!clickActionUrl) {
     // redirectToData[0] for redirection to vendor or category
@@ -560,7 +575,7 @@ export function redirectFromNotification(clickActionUrl = null) {
                 id: redirectToData[2],
                 vendor:
                   redirectToData[0] == staticStrings.CATEGORY ||
-                  redirectToData[0] == staticStrings.VENDOR
+                    redirectToData[0] == staticStrings.VENDOR
                     ? true
                     : false,
                 name: redirectToData[1],

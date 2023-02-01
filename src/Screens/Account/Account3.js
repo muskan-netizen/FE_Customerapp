@@ -502,7 +502,7 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -532,7 +532,7 @@ export default function Account3({ navigation }) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -634,8 +634,8 @@ export default function Account3({ navigation }) {
           Platform.OS === 'android' &&
           !!appMainData?.is_admin ? (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
@@ -646,7 +646,7 @@ export default function Account3({ navigation }) {
                         .then(() => {
                           navigation.navigate(navigationStrings.ATTACH_PRINTER);
                         })
-                        .catch((err) => {});
+                        .catch((err) => { });
                     }
                   },
                   (err) => {
@@ -661,8 +661,8 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null} */}
 
