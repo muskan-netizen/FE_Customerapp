@@ -1180,7 +1180,9 @@ export default function ProductDetail({ route, navigation }) {
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
         updateState({ isLoadingC: false });
-        navigation.goBack();
+        navigation.navigate(navigationStrings.PRODUCT_LIST,{data:{item :data,
+          isLoading:true,
+          data:res?.data}});
       })
       .catch((error) => errorMethodSecond(error, addonSet));
   };
