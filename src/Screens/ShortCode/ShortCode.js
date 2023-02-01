@@ -3156,7 +3156,6 @@ export default function ShortCode({ route, navigation }) {
 
     actions
       .initApp({}, header, false, null, null, true)
-
       .then((res) => {
         console.log("header response--->", res);
         if (res.data.mobile_banners.length > 0) {
