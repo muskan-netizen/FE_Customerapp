@@ -143,7 +143,6 @@ export const tokenConverterPlusCurrencyNumberFormater = (
       additionalPreferences,
     );
 
-   
     // let tokenCurrency = 2;
     return currencyNumberFormatter(
       Number(price) * tokenCurrency,

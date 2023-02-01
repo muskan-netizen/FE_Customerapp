@@ -407,8 +407,8 @@ export default function Home({ route, navigation }) {
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
-        latitude: locationData?.latitude || '',
-        longitude: locationData?.longitude || '',
+        latitude: 30.7333 || '',
+        longitude: 76.7794 || '',
       };
     }
 
@@ -435,7 +435,10 @@ export default function Home({ route, navigation }) {
           }
         });
       }
+      console.log(selectedVendorType, defaultVendorType,
+        'defaultVendorType....defaultVendorType')
       if (!selectedVendorType) {
+
         actions.dineInData(defaultVendorType);
       }
       console.log(

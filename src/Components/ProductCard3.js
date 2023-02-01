@@ -80,7 +80,7 @@ const ProductCard3 = ({
 
   const isDarkMode = theme;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-
+console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurrenciescurrencies");
   const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
@@ -313,6 +313,7 @@ const ProductCard3 = ({
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
             }}>
+           
             {tokenConverterPlusCurrencyNumberFormater(
               data?.variant[0]?.price,
               digit_after_decimal,
@@ -333,6 +334,7 @@ const ProductCard3 = ({
                   textDecorationLine: 'line-through',
                   marginHorizontal: moderateScale(8),
                 }}>
+                  {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
                   data?.variant[0]?.compare_at_price,
                   digit_after_decimal,

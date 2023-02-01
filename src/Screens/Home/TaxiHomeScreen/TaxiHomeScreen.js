@@ -304,18 +304,26 @@ useEffect(()=>{
       };
     }
 
-    console.log(
-      {
-        type: dineInType ? dineInType : dineInType,
-        ...latlongObj,
-      },
-      'latlongObj>>Data',
-    );
-    console.log(dineInType, 'selectedTabType');
+    var selectedVendorType = null;
+    var defaultVendorType = null;
+
+    if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+      defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
+      appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
+        if (val?.type == dineInType) {
+          selectedVendorType = val.type;
+        }
+      });
+    }
+ 
+    if (!selectedVendorType) {
+
+      actions.dineInData(defaultVendorType);
+    }
     actions
       .homeData(
         {
-          type: dineInType ? dineInType : dineInType,
+          type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
           ...latlongObj,
         },
         {

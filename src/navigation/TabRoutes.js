@@ -1,10 +1,10 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text} from 'react-native';
-import {View} from 'react-native-animatable';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text } from 'react-native';
+import { View } from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
 import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
@@ -14,8 +14,8 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
-import {moderateScale, textScale} from '../styles/responsiveSize';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import { moderateScale, textScale } from '../styles/responsiveSize';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
@@ -31,9 +31,9 @@ let showBottomBar_ = true;
 
 export default function TabRoutes(props) {
   const [showBottomBar, setShowBottomBar] = useState(true);
-  const {cartItemCount} = useSelector((state) => state?.cart);
-  const {appMainData} = useSelector((state) => state?.home);
-  const {appStyle, appData, redirectedFrom} = useSelector(
+  const { cartItemCount } = useSelector((state) => state?.cart);
+  const { appMainData } = useSelector((state) => state?.home);
+  const { appStyle, appData, redirectedFrom } = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
@@ -41,7 +41,7 @@ export default function TabRoutes(props) {
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
-console.log();
+  console.log();
   // const checkForCeleb =
   //   allCategory &&
   //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
@@ -69,13 +69,13 @@ console.log();
       <Tab.Screen
         component={CelebrityStack}
         name={navigationStrings.CELEBRITY}
-        options={({route}) => ({
+        options={({ route }) => ({
           tabBarLabel: strings.CELEBRITY,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 3 && {height: 26, width: 26},
+                { tintColor: tintColor },
+                appStyle?.tabBarLayout === 3 && { height: 26, width: 26 },
               ]}
               source={
                 appStyle?.tabBarLayout === 4
@@ -83,12 +83,12 @@ console.log();
                     ? imagePath.celebActive
                     : imagePath.celebInActive
                   : appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.icCelebActive1
-                    : imagePath.icCelebInActive1
-                  : focused
-                  ? imagePath.tabDActive
-                  : imagePath.tabDInActive
+                    ? focused
+                      ? imagePath.icCelebActive1
+                      : imagePath.icCelebInActive1
+                    : focused
+                      ? imagePath.tabDActive
+                      : imagePath.tabDInActive
               }
             />
           ),
@@ -102,14 +102,14 @@ console.log();
       <Tab.Screen
         component={BrandStack}
         name={navigationStrings.BRANDS}
-        options={({route}) => ({
+        options={({ route }) => ({
           tabBarLabel: strings.BRANDS,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                {tintColor: tintColor},
+                { tintColor: tintColor },
                 appStyle?.tabBarLayout === 2 ||
-                  (appStyle?.tabBarLayout === 4 && {height: 20, width: 20}),
+                (appStyle?.tabBarLayout === 4 && { height: 20, width: 20 }),
               ]}
               source={
                 appStyle?.tabBarLayout === 4
@@ -117,14 +117,14 @@ console.log();
                     ? imagePath.icBrandActive
                     : imagePath.icBrandInActive
                   : appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.brandsActive1
-                    : imagePath.brandsInActive1
-                  : focused
-                  ? imagePath.tabCActive
-                  : imagePath.tabCInActive
+                    ? focused
+                      ? imagePath.brandsActive1
+                      : imagePath.brandsInActive1
+                    : focused
+                      ? imagePath.tabCActive
+                      : imagePath.tabCInActive
               }
-              // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
+            // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
             />
           ),
           //  unmountOnBlur: true,
@@ -132,7 +132,7 @@ console.log();
       />
     );
   }
-console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
+  console.log(appStyle?.tabBarLayout, "appStyle?.tabBarLayout");
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
@@ -170,7 +170,7 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
-        options={({route, navigation}) => ({
+        options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
@@ -178,11 +178,11 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                { tintColor: tintColor },
+                appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
               ]}
               source={
                 appStyle?.tabBarLayout === 5
@@ -190,12 +190,12 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
                     ? imagePath.homeActive
                     : imagePath.homeInActive
                   : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.homeRedActive
-                    : imagePath.homeRedInActive
-                  : focused
-                  ? imagePath.tabAActive
-                  : imagePath.tabAInActive
+                    ? focused
+                      ? imagePath.homeRedActive
+                      : imagePath.homeRedInActive
+                    : focused
+                      ? imagePath.tabAActive
+                      : imagePath.tabAInActive
               }
             />
           ),
@@ -208,16 +208,16 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
         <Tab.Screen
           component={SearchProductVendorStack}
           name={navigationStrings.SEARCH}
-          options={({route}) => ({
+          options={({ route }) => ({
             tabBarLabel: strings.SEARCH,
-            tabBarIcon: ({focused, tintColor}) => (
+            tabBarIcon: ({ focused, tintColor }) => (
               <Image
                 resizeMode="contain"
                 style={[
                   appStyle?.tabBarLayout === 2 || appStyle?.tabBarLayout === 1
-                    ? {tintColor: 'white'}
-                    : {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                    ? { tintColor: 'white' }
+                    : { tintColor: tintColor },
+                  appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
                 ]}
                 source={
                   appStyle?.tabBarLayout === 5
@@ -225,12 +225,12 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
                       ? imagePath.search
                       : imagePath.search1
                     : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.search
-                      : imagePath.search1
-                    : focused
-                    ? imagePath.search
-                    : imagePath.search1
+                      ? focused
+                        ? imagePath.search
+                        : imagePath.search1
+                      : focused
+                        ? imagePath.search
+                        : imagePath.search1
                 }
               />
             ),
@@ -242,14 +242,14 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
       <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
-        options={({route, navigation}) => ({
+        options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
           ]),
           tabBarLabel: strings.CART,
-          tabBarIcon: ({focused, tintColor}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, tintColor }) => (
+            <View style={{ alignItems: 'center' }}>
               {cartItemCount?.data?.item_count ? (
                 <View
                   style={{
@@ -274,8 +274,8 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
               ) : null}
               <Image
                 style={[
-                  {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                  { tintColor: tintColor },
+                  appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
                 ]}
                 source={
                   appStyle?.tabBarLayout === 5
@@ -283,42 +283,41 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
                       ? imagePath.ordersActive
                       : imagePath.ordersInActive
                     : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.cartRedActive
-                      : imagePath.cartRedInActive
-                    : focused
-                    ? imagePath.cartActive
-                    : imagePath.cartInActive
+                      ? focused
+                        ? imagePath.cartRedActive
+                        : imagePath.cartRedInActive
+                      : focused
+                        ? imagePath.cartActive
+                        : imagePath.cartInActive
                 }
               />
             </View>
           ),
           unmountOnBlur: true,
-          // unmountOnBlur: cartItemCount?.data?.item_count ? false : true,
           gestureEnabled: true,
         })}
       />
-      {DeviceInfo.getBundleId() == appIds.dlvrd || appIds.sxm2go && (
+      {(DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go) && (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}
-          options={({route}) => ({
+          options={({ route }) => ({
             tabBarLabel: strings.ORDERS,
-            tabBarIcon: ({focused, tintColor}) => (
+            tabBarIcon: ({ focused, tintColor }) => (
               <Image
                 resizeMode="contain"
                 style={[
-                  {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                  { tintColor: tintColor },
+                  appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
                 ]}
                 source={
                   appStyle?.tabBarLayout === 5
                     ? imagePath.myOrder2
                     : appStyle?.tabBarLayout === 4
-                    ? imagePath.myOrder2
-                    : focused
-                    ? imagePath.tabEActive
-                    : imagePath.tabEInActive
+                      ? imagePath.myOrder2
+                      : focused
+                        ? imagePath.tabEActive
+                        : imagePath.tabEInActive
                 }
               />
             ),
@@ -332,14 +331,14 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
-        options={({route}) => ({
+        options={({ route }) => ({
           tabBarLabel: strings.ACCOUNTS,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               resizeMode="contain"
               style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                { tintColor: tintColor },
+                appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
               ]}
               source={
                 appStyle?.tabBarLayout === 5
@@ -347,12 +346,12 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
                     ? imagePath.profileActive
                     : imagePath.profileInActive
                   : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.accountRedActive
-                    : imagePath.accountRedInActive
-                  : focused
-                  ? imagePath.tabEActive
-                  : imagePath.tabEInActive
+                    ? focused
+                      ? imagePath.accountRedActive
+                      : imagePath.accountRedInActive
+                    : focused
+                      ? imagePath.tabEActive
+                      : imagePath.tabEInActive
               }
             />
           ),
@@ -364,7 +363,7 @@ console.log(appStyle?.tabBarLayout,"appStyle?.tabBarLayout");
 }
 
 export function stylesData(params) {
-  const {themeColors, appStyle} = useSelector((state) => state.initBoot);
+  const { themeColors, appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = StyleSheet.create({

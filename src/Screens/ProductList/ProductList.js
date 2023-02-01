@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, debounce } from 'lodash';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -10,13 +10,13 @@ import {
   Vibration,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header from '../../Components/Header';
 import Header2 from '../../Components/Header2';
 
 import IconTextColumn from '../../Components/IconTextColumn';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import ProductLoader from '../../Components/Loaders/ProductLoader';
 import ProductCard from '../../Components/ProductCard';
@@ -43,12 +43,12 @@ import {
   showSuccess,
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default function Products({route, navigation}) {
-  const {data} = route.params;
-  console.log(data, 'data>data >>>>PARAMS');
+import GradientCartView from '../../Components/GradientCartView';
+export default function ProductList({ route, navigation }) {
+  const { data } = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -134,6 +134,8 @@ export default function Products({route, navigation}) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
+  const { additional_preferences, digit_after_decimal } =
+    appData?.profile?.preferences;
   const {
     isLoading,
     isOffline,
@@ -162,7 +164,7 @@ export default function Products({route, navigation}) {
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -174,17 +176,17 @@ export default function Products({route, navigation}) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  
+
 
   useFocusEffect(
     React.useCallback(() => {
-      
+
       getAllListItems();
     }, [
       pageNo,
@@ -216,8 +218,8 @@ export default function Products({route, navigation}) {
 
     {
       filterExist
-        ? updateState({showFilterSlectedIcon: true})
-        : updateState({showFilterSlectedIcon: false});
+        ? updateState({ showFilterSlectedIcon: true })
+        : updateState({ showFilterSlectedIcon: false });
     }
 
     if (data?.vendor) {
@@ -225,8 +227,8 @@ export default function Products({route, navigation}) {
         filterExist
           ? getAllProductsVendorFilter()
           : data?.vendorData
-          ? getAllProductsByVendorCategory()
-          : getAllProductsByVendor();
+            ? getAllProductsByVendorCategory()
+            : getAllProductsByVendor();
       }
     } else {
       {
@@ -255,7 +257,7 @@ export default function Products({route, navigation}) {
         },
       ];
 
-   
+
     }
 
     // Price filter
@@ -461,8 +463,7 @@ export default function Products({route, navigation}) {
     console.log('api hit getAllProducts');
     actions
       .getProductByCategoryId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${
-          data?.rootProducts ? true : false
+        `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }`,
         {},
         {
@@ -494,7 +495,7 @@ export default function Products({route, navigation}) {
   const _onAddtoWishlist = (item) => {
     playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -512,7 +513,7 @@ export default function Products({route, navigation}) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
     }
   };
 
@@ -523,32 +524,32 @@ export default function Products({route, navigation}) {
       if (i.id == item.id) {
         if (item.inwishlist) {
           i.inwishlist = null;
-          return {...i, inwishlist: null};
+          return { ...i, inwishlist: null };
         } else {
-          return {...i, inwishlist: {product_id: i.id}};
+          return { ...i, inwishlist: { product_id: i.id } };
         }
       } else {
         return i;
       }
     });
-    updateState({productListData: newArray, isLoadingB: false});
+    updateState({ productListData: newArray, isLoadingB: false });
   };
 
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
+    updateState({ isLoading: false, isRefreshing: false, isLoadingB: false });
     showError(error?.message || error?.error);
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({ pageNo: 1, isRefreshing: true });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
+  const onEndReached = ({ distanceFromEnd }) => {
     if (categoryInfo.vendor_templete_id !== 5) {
-      updateState({pageNo: pageNo + 1});
+      updateState({ pageNo: pageNo + 1 });
     }
   };
 
@@ -563,8 +564,8 @@ export default function Products({route, navigation}) {
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 
-  const renderProduct = ({item, index}) => {
-    const {isSelectItem} = state;
+  const renderProduct = ({ item, index }) => {
+    const { isSelectItem } = state;
     return (
       <ProductCard
         data={item}
@@ -576,10 +577,10 @@ export default function Products({route, navigation}) {
   };
 
   const openModal = () => {
-    updateState({isVisibleModal: true});
+    updateState({ isVisibleModal: true });
   };
   const closeModal = () => {
-    updateState({isVisibleModal: false});
+    updateState({ isVisibleModal: false });
   };
 
   const onPressChildCards = (item) => {
@@ -589,8 +590,8 @@ export default function Products({route, navigation}) {
       selectedSbCategoryID: item.id,
     });
     return;
-    updateState({selectedSbCategoryID: item.id});
-    navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
+    updateState({ selectedSbCategoryID: item.id });
+    navigation.push(navigationStrings.PRODUCT_LIST, { data: item });
   };
 
   // we set the height of item is fixed
@@ -631,7 +632,7 @@ export default function Products({route, navigation}) {
                           '200/200',
                         ),
                       }}
-                      imageStyle={{height: 40, width: 40, borderRadius: 40 / 2}}
+                      imageStyle={{ height: 40, width: 40, borderRadius: 40 / 2 }}
                       // url={getImageUrl(item.icon.proxy_url, item.icon.image_path, '200/200') }
                       onPress={() => onPressChildCards(item)}
                       text={item?.category.translation[0]?.name}
@@ -653,7 +654,7 @@ export default function Products({route, navigation}) {
           {/* <Text style={{ ...commonStyles.futuraBtHeavyFont16 }}>
       All Products
     </Text> */}
-          <View style={{flex: 0.4}} />
+          <View style={{ flex: 0.4 }} />
           <View
             style={{
               flex: 0.6,
@@ -716,7 +717,7 @@ export default function Products({route, navigation}) {
                   : staticStrings.CATEGORY,
                 id: data?.vendor ? data?.id : productListId?.id,
               })}
-              style={{marginLeft: 10}}>
+              style={{ marginLeft: 10 }}>
               <Image
                 style={{
                   tintColor: isDarkMode
@@ -728,7 +729,7 @@ export default function Products({route, navigation}) {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{marginTop: moderateScaleVertical(20)}} />
+        <View style={{ marginTop: moderateScaleVertical(20) }} />
       </Fragment>
     );
   };
@@ -753,7 +754,7 @@ export default function Products({route, navigation}) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
 
       <View
         style={{
@@ -774,18 +775,18 @@ export default function Products({route, navigation}) {
         keyboardShouldPersistTaps="always"
         numColumns={2}
         showsVerticalScrollIndicator={false}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,
         }}
-        ItemSeparatorComponent={() => <View style={{height: 20}} />}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         columnWrapperStyle={{
           justifyContent: 'space-between',
           marginHorizontal: moderateScale(14),
         }}
         refreshing={isRefreshing}
         getItemLayout={getItemLayout}
-        onScrollToIndexFailed={()=>console.log("")}
+        onScrollToIndexFailed={() => console.log("")}
         initialNumToRender={12}
         maxToRenderPerBatch={10}
         windowSize={10}
@@ -799,10 +800,45 @@ export default function Products({route, navigation}) {
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => (
-          <View style={{height: moderateScaleVertical(65)}} />
+          <View style={{ height: moderateScaleVertical(65) }} />
         )}
         ListEmptyComponent={<EmptyListLoader />}
       />
+      {data?.isLoading &&
+
+
+        <GradientCartView
+          onPress={() => {
+            playHapticEffect(hapticEffects.notificationSuccess);
+            navigation.navigate(navigationStrings.CART);
+          }}
+          btnText={
+            data && data.data && data.data.item_count
+              ? `${data.data.item_count} ${data.data.item_count == 1
+                ? strings.ITEM
+                : strings.ITEMS
+              } | ${tokenConverterPlusCurrencyNumberFormater(
+                Number(data?.data?.gross_paybale_amount),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}`
+              : ''
+          }
+          ifCartShow={true}
+          isMenuBtnShow={categoryInfo?.is_show_products_with_category}
+          // onMenuTap={onMenuTap}
+          // isLoading={btnLoader}
+          // sectionListData={sectionListData}
+          // isCategoryExist={!!data?.categoryExist}
+          btnStyle={
+            appStyle?.tabBarLayout == 4 && {
+              marginBottom: moderateScale(160),
+              backgroundColor: 'red'
+            }
+          }
+        />
+      }
     </WrapperContainer>
   );
 }

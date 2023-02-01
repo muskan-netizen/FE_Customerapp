@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>566830771264-4m25aj8n2dn4rcnnhnec2u9tmj9ki4gv.apps.googleusercontent.com</string>
+	<string>485470767618-k1a49tfrlmq2ti8brsvemj8vir0vme6m.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.566830771264-4m25aj8n2dn4rcnnhnec2u9tmj9ki4gv</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>566830771264-75hauvqmt2krmo6udmquevh039spf09s.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.485470767618-k1a49tfrlmq2ti8brsvemj8vir0vme6m</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC2UaG9_fjp2TAG6SL7iR27Bd1iZsgLCDg</string>
+	<string>AIzaSyA0MdQC5pdvrb6nQB0-9TALCOTvC2aCtPA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>566830771264</string>
+	<string>485470767618</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hairRun.order</string>
+	<string>com.hairrun.orders</string>
 	<key>PROJECT_ID</key>
-	<string>hairrun-1e6c0</string>
+	<string>hair-run-113fb</string>
 	<key>STORAGE_BUCKET</key>
-	<string>hairrun-1e6c0.appspot.com</string>
+	<string>hair-run-113fb.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:566830771264:ios:c54aa8cc44a1dab22ac3a5</string>
+	<string>1:485470767618:ios:f7eb8011aa7d381453b51b</string>
 </dict>
 </plist>

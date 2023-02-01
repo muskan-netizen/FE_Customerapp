@@ -120,11 +120,11 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // myfarma
 // export const API_BASE_URL = 'https://compra.livian.app/api/v1';
-
+// export const API_BASE_URL = "https://shelf.ae/api/v1";
 // torunz
 // export const API_BASE_URL = 'https://torunz.com/api/v1';
 
-// export const API_BASE_URL = 'https://todo.go912.app/en/api/v1';
+// export const API_BASE_URL = 'https://empresas.go912.app/api/v1';
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 // export const API_BASE_URL = 'https://toor.life/api/v1';
 // export const API_BASE_URL = 'https://10dollahollla.com/api/v1';

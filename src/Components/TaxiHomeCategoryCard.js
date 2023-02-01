@@ -45,9 +45,10 @@ const TaxiHomeCategoryCard = ({
       style={{
         // shadowOpacity: 0.5,
         // width: width / moderateScale(3),
-        width: appIds.hezniTaxi
-          ? width / moderateScale(3)
-          : width / moderateScale(5.4),
+        // backgroundColor:'red',
+        // width: appIds.hezniTaxi
+        //   ? width / moderateScale(3)
+        //   : 0,
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',

@@ -396,7 +396,7 @@ const shortCodes = {
   axxi: 'bc1119',
   pets: '8e0436',
   getDress: '7d11ac',
-  shelf: '345974',
+  shelf: '245bae',
   baly: '3ae3ec',
   nuvoni: '0f3d8d',
   syloMart: 'f5358d',
@@ -1632,8 +1632,8 @@ const appIds = {
     android: 'com.airlinesRecruiter',
   }),
   nineOneTwo: Platform.select({
-    ios: 'com.nineOneTwo',
-    android: 'com.nineOneTwo',
+    ios: 'com.nineonetwo.order',
+    android: 'com.nineonetwo.order',
   }),
   trip: Platform.select({
     ios: 'com.app.trip',

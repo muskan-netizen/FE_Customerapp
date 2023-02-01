@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-NineOneTwo/Pods-available_pods-NineOneTwo.debug.xcconfig"
 
-PROJECT_APPLE_ID = 1615915477
-PROJECT_BUNDLE_ID =com.nineOneTwo
+PROJECT_APPLE_ID = 1665817654
+PROJECT_BUNDLE_ID =com.nineonetwo.order
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 6
-PROJECT_APP_NAME = 912
-PROJECT_GOOGLE_CLIENT_ID =73964634041-u962dfipsobg51rfa7gqrres0fj8um6o.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.73964634041-u962dfipsobg51rfa7gqrres0fj8um6o
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = 912 Clients
+PROJECT_GOOGLE_CLIENT_ID =926206471570-l05vk816uii32ksp26lubr08j92bodqs.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.926206471570-l05vk816uii32ksp26lubr08j92bodqs
 PROJECT_FACEBOOK_ID = 3258295831116205
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =NineOneTwoInfo

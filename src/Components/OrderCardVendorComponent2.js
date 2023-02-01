@@ -789,27 +789,6 @@ const OrderCardVendorComponent2 = ({
           ) : (
             <></>
           )}
-          {data?.order_status?.current_status?.id == 1 ? (
-            <TouchableOpacity
-              onPress={() => setCancellationItem(data)}
-              activeOpacity={0.8}
-              style={{
-                alignSelf: "flex-start",
-                marginLeft: moderateScale(10),
-                marginTop: moderateScaleVertical(8),
-              }}
-            >
-              <Text
-                style={{
-                  ...styles.orderStatusStyle,
-                  color: colors.redB,
-                  fontFamily: fontFamily.medium,
-                }}
-              >
-                {strings.CANCEL_ORDER}
-              </Text>
-            </TouchableOpacity>
-          ) : null}
         </View>
         <Modal
           isVisible={!!cancellationItem ? true : false}
@@ -899,6 +878,7 @@ const OrderCardVendorComponent2 = ({
                   </Text>
                 )}
                 <View style={{ height: moderateScaleVertical(20) }} />
+
                 <ScrollView
                   style={{
                     maxHeight: moderateScaleVertical(250),

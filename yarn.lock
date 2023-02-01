@@ -2909,7 +2909,7 @@
   "resolved" "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
   "version" "1.1.0"
 
-"code-push@^4.1.0":
+"code-push@^4.0.5":
   "integrity" "sha512-vzaW9HpLFPREbrURdF430ImKDivBGQOGjoo7zL22hXvWM+jbApQiPCvUB8eQdvD8Wce1yPdfd7ccp6T4b2Holw=="
   "resolved" "https://registry.npmjs.org/code-push/-/code-push-4.1.0.tgz"
   "version" "4.1.0"
@@ -8197,11 +8197,11 @@
     "prop-types" "^15.5.10"
 
 "react-native-code-push@^7.0.5":
-  "integrity" "sha512-ZBc4166cbdPUP0m/013IzVZBVwrHdyFAp/JJCYuVyL0G6ki3Yp8a9f7zGm6xTvMzanOT6cm051iYqqNznvGiCA=="
-  "resolved" "https://registry.npmjs.org/react-native-code-push/-/react-native-code-push-7.1.0.tgz"
-  "version" "7.1.0"
+  "integrity" "sha512-0+xqxHS7onpvE/pFvKB0rN/ijLzXgNGAnmC4THxiSPvlLY7EABzeOQh1XHCSNhIBiecnTjHG36Yb15luSuqBtQ=="
+  "resolved" "https://registry.npmjs.org/react-native-code-push/-/react-native-code-push-7.0.5.tgz"
+  "version" "7.0.5"
   dependencies:
-    "code-push" "^4.1.0"
+    "code-push" "^4.0.5"
     "glob" "^7.1.7"
     "hoist-non-react-statics" "^3.3.2"
     "inquirer" "^8.1.5"

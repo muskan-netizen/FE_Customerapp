@@ -1,6 +1,6 @@
-import {BlurView} from '@react-native-community/blur';
-import {useNavigation} from '@react-navigation/native';
-import React, {useRef} from 'react';
+import { BlurView } from '@react-native-community/blur';
+import { useNavigation } from '@react-navigation/native';
+import React, { useRef } from 'react';
 import {
   Animated,
   Image,
@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
@@ -29,12 +29,12 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 import IconTextRow from './IconTextRow';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import strings from '../constants/lang';
-import {string} from 'prop-types';
+import { string } from 'prop-types';
 import MarketCard3 from './MarketCard3';
-const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+const MarketCard = ({ data = {}, onPress = () => { }, activeOpacity = 1 }) => {
+  const { appStyle } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -47,8 +47,8 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
   // };
   const viewRef = useRef();
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily});
-  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   return (
     <TouchableOpacity
@@ -73,9 +73,9 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
             borderRadius: 4,
             backgroundColor: isDarkMode ? colors.white : null,
           }}
-          imageStyle={{borderRadius: 4}}>
+          imageStyle={{ borderRadius: 4 }}>
           <LinearGradient
-            style={{flex: 1, borderRadius: 4, justifyContent: 'space-between'}}
+            style={{ flex: 1, borderRadius: 4, justifyContent: 'space-between' }}
             colors={[
               colors.blackOpacity10,
               colors.blackOpacity43,
@@ -103,7 +103,7 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
                   borderWidth: 1,
                 }}>
                 <BlurView
-                  style={styles.absolute}
+                  // style={styles.absolute}
                   viewRef={viewRef}
                   blurType="dark"
                   blurAmount={2}
@@ -143,8 +143,8 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
                     backgroundColor: data?.show_slot
                       ? colors.green
                       : data?.slot && data?.slot.length
-                      ? colors.green
-                      : colors.redB,
+                        ? colors.green
+                        : colors.redB,
                     marginRight: moderateScale(5),
                   }}
                 />
@@ -155,14 +155,14 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
                     color: data?.show_slot
                       ? colors.green
                       : data?.slot && data?.slot.length
-                      ? colors.green
-                      : colors.redB,
+                        ? colors.green
+                        : colors.redB,
                   }}>
                   {data?.show_slot
                     ? strings.OPEN
                     : data?.slot && data?.slot.length
-                    ? strings.OPEN
-                    : strings.CLOSE}
+                      ? strings.OPEN
+                      : strings.CLOSE}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -173,7 +173,7 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
                 justifyContent: 'space-between',
                 marginBottom: 10,
               }}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 {/* <IconTextRow
                   containerStyle={{marginRight: 10}}
                   icon={imagePath.time}
@@ -220,7 +220,7 @@ const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
   );
 };
 
-export function stylesFunc({fontFamily}) {
+export function stylesFunc({ fontFamily }) {
   const styles = StyleSheet.create({
     blurContainer: {
       position: 'absolute',
@@ -239,12 +239,12 @@ export function stylesFunc({fontFamily}) {
       position: 'absolute',
       alignItems: 'center',
       justifyContent: 'center',
-      height: moderateScaleVertical(54),
+      // height: moderateScaleVertical(54),
       top: 0,
       left: 0,
       bottom: 0,
       right: 0,
-      borderRadius: moderateScaleVertical(5),
+      // borderRadius: moderateScaleVertical(5),
     },
   });
   return styles;
