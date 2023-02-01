@@ -8,8 +8,6 @@
 #import "RNSplashScreen.h"  
 #import <React/RCTLinkingManager.h> //deeplinking
 #import <Firebase.h>
-#import <UserNotifications/UserNotifications.h>
-#import <RNCPushNotificationIOS.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <CodePush/CodePush.h>
 @import GooglePlaces;
@@ -18,23 +16,6 @@
  
 @implementation AppDelegate
 
-
-//- (void)documentsPathForFileName
-//{
-//  UIImage *image = [UIImage imageNamed:@"Splash"];
-//  NSData *pngData = UIImagePNGRepresentation(image);
-//  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//  NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-//  NSString *filePath = [documentsPath stringByAppendingPathComponent:@"Splash.png"]; //Add the file name
-//  [pngData writeToFile:filePath atomically:YES]; //Write the file
-//
-//  NSArray *paths_ = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//  NSString *documentsPath_ = [paths objectAtIndex:0];
-//
-//  NSString *tt = [documentsPath_ stringByAppendingPathComponent:@"Splash.png"];
-//  
-//  NSLog(@"Checking Image splash image path >>>  :: %@", tt);
-//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -66,23 +47,8 @@
   [self.window makeKeyAndVisible];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
-  
 
   [RNSplashScreen show];
-//  
-//    for (NSString* family in [UIFont familyNames])
-//    {
-//        NSLog(@"%@", family);
-//  
-//        for (NSString* name in [UIFont fontNamesForFamilyName: family])
-//        {
-//            NSLog(@"  %@", name);
-//        }
-//    }
- // Define UNUserNotificationCenter
-  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-  center.delegate = self;
-  
   return YES;
 }
 
@@ -110,35 +76,6 @@
 #else
 return [CodePush bundleURL];
 #endif
-}
-
-// Required for the register event.
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
- [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-}
-// Required for the notification event. You must call the completion handler after handling the remote notification.
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-  [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-}
-// Required for the registrationError event.
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
- [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
-}
-// Required for localNotification event
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center
-didReceiveNotificationResponse:(UNNotificationResponse *)response
-         withCompletionHandler:(void (^)(void))completionHandler
-{
-  [RNCPushNotificationIOS didReceiveNotificationResponse:response];
-}
-//Called when a notification is delivered to a foreground app.
--(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
-{
-  completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
 }
 
 //deeplinking
