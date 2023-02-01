@@ -39,7 +39,6 @@ import {
   requestUserPermission,
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
-import notifee, { EventType } from '@notifee/react-native';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
