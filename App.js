@@ -154,7 +154,7 @@ const App = () => {
       }
       const getAppData = await getItem('appData');
 
-      if (!!getAppData) {
+      if (!!getAppData && getAppData.themeColors) {
         setPrimaryColor(getAppData.themeColors.primary_color);
       }
       dispatch({

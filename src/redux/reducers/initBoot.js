@@ -46,7 +46,7 @@ export default function (state = initial_state, action) {
         appData: data?.appData,
         themeColors: {
           ...state.themeColors,
-          ...data.themeColors,
+          ...data?.themeColors,
         },
         appStyle: {
           ...state.appStyle,
