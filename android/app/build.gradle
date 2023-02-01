@@ -217,24 +217,14 @@ android {
             resValue "string", "app_name", "Speedy - Delivery & Pickup" 
             resValue "string", "host_name", ""
             }
-     iPicknDrop{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.iPicknDrop.orderApp'
-                resValue "string", "app_name", "iPd - iPicknDrop"
-                resValue "string", "host_name", ""
-            }
-                           nittosadai{
+       nineOneTwo{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.nittosadai.orders'
-            resValue "string", "app_name", "Nittosadai" 
+            applicationId 'com.nineonetwo.order'
+            resValue "string", "app_name", "912  clients"
             resValue "string", "host_name", ""
             }
     }
