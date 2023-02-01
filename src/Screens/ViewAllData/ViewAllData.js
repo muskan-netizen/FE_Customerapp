@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, TouchableOpacity, View, Image} from 'react-native';
+import {FlatList, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dynamic';
-import {ActivityIndicator} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
@@ -197,6 +196,7 @@ export default function ViewAllData({route, navigation}) {
           leftIcon={imagePath.icBackb}
           centerTitle={data?.name}
           rightIcon={imagePath.search}
+          showAddress={false}
           // location={location}
           // onPressRight={() =>
           //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -281,7 +281,7 @@ export default function ViewAllData({route, navigation}) {
     
     <Header3
           leftIcon={imagePath.icBackb}
-
+          showAddress={false}
           rightIcon={imagePath.search}
 
        

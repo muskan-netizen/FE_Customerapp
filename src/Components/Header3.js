@@ -19,6 +19,7 @@ const Header3 = ({
   leftIcon = imagePath.back,
   location = [],
   conatinerStyle = {},
+  showAddress = true
 }) => {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -59,7 +60,7 @@ const Header3 = ({
           }}
         />
       </TouchableOpacity>
-      {!!appData?.profile?.preferences?.is_hyperlocal && (
+      {!!appData?.profile?.preferences?.is_hyperlocal && showAddress && (
         <TouchableOpacity
           style={{
             flexDirection: 'row',
