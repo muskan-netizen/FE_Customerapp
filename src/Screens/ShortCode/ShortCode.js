@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
-import FastImage from "react-native-fast-image";
 import { MaterialIndicator } from "react-native-indicators";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import Video from "react-native-video";
@@ -13,8 +12,6 @@ import { loaderOne } from "../../Components/Loaders/AnimatedLoaderFiles";
 import WrapperContainer from "../../Components/WrapperContainer";
 import imagePath from "../../constants/imagePath";
 import strings from "../../constants/lang";
-import * as NavigationService from "../../navigation/NavigationService";
-import navigationStrings from "../../navigation/navigationStrings";
 import actions from "../../redux/actions";
 import store from "../../redux/store";
 import colors from "../../styles/colors";
@@ -25,11 +22,7 @@ import {
 } from "../../styles/responsiveSize";
 import { MyDarkTheme } from "../../styles/theme";
 import { appIds, shortCodes } from "../../utils/constants/DynamicAppKeys";
-import {
-  getImageUrl,
-  getUrlRoutes,
-  showError
-} from "../../utils/helperFunctions";
+import {showError} from "../../utils/helperFunctions";
 import { getItem, setItem } from "../../utils/utils";
 import styles from "./styles";
 
@@ -38,7 +31,7 @@ enableFreeze(true);
 
 
 export default function ShortCode({ route, navigation }) {
-  const shortCodeParam = route?.params?.shortCodeParam;
+alert("ShortCode Screen")
 
   const [state, setState] = useState({
     email: "",
@@ -3462,7 +3455,7 @@ export default function ShortCode({ route, navigation }) {
         >
           <View style={{ position: "absolute", bottom: moderateScale(100) }}>
             {LoadingScreen && (
-              <MaterialIndicator size={50} color={colors.greyMedium} />
+              <MaterialIndicator size={50} color={'black'} />
             )}
           </View>
         </View>
