@@ -14,7 +14,7 @@ abstract_target 'available_pods' do
     :hermes_enabled => false
   )
 
-   pod 'react-native-google-maps', :path => rn_maps_path
+
    pod 'react-native-restart', :path => '../node_modules/react-native-restart'
   #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"

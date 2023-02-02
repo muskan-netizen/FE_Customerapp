@@ -3,12 +3,9 @@ import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
-import { Linking, Platform, Text, View } from 'react-native';
-import codePush from 'react-native-code-push';
+import { Linking, Platform } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import FlashMessage from 'react-native-flash-message';
-import Modal from 'react-native-modal';
-import * as Progress from 'react-native-progress';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
@@ -20,18 +17,10 @@ import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
-import colors from './src/styles/colors';
-import fontFamily from './src/styles/fontFamily';
-
 import { getBundleId } from 'react-native-device-info';
 import { MenuProvider } from 'react-native-popup-menu';
 import actions from './src/redux/actions';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from './src/styles/responsiveSize';
+
 import { appIds } from './src/utils/constants/DynamicAppKeys';
 import ForegroundHandler from './src/utils/ForegroundHandler';
 import { getUrlRoutes } from './src/utils/helperFunctions';
@@ -41,11 +30,9 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 
-let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
 const App = () => {
-  const [progress, setProgress] = useState(false);
-  const [primaryColor, setPrimaryColor] = useState('black');
+
 
   const ConnectBTFunction = async () => {
     await AsyncStorage.removeItem('autoConnectEnabled');
@@ -63,7 +50,6 @@ const App = () => {
 
   const [internetConnection, setInternet] = useState(true);
 
-  const appMainData = store.getState().home;
 
   // async function handleDynamicLink(deepLinkUrl) {
   //   console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrl');
@@ -99,17 +85,8 @@ const App = () => {
     }
   };
 
-  // useEffect(() => {
-  //   Linking.getInitialURL().then((link) => handleDynamicLink(link));
-  //   Linking.addEventListener('url', (event) => handleDynamicLink(event.url));
-  //   return () => {
-  //     Linking.removeEventListener('url', (event) =>
-  //       handleDynamicLink(event.url),
-  //     );
-  //   };
-  // }, [handleDynamicLink]);
 
-  const isDarkMode = useDarkMode();
+  // const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splashs screen from loading
     if (
@@ -144,128 +121,130 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
-      notificationConfig();
+
+      // notificationConfig();
+
       const { dispatch } = store;
-      if (userData && !!userData.auth_token) {
+      if (userData && !!userData?.auth_token) {
         dispatch({
           type: types.LOGIN,
           payload: userData,
         });
       }
-      const getAppData = await getItem('appData');
+      // const getAppData = await getItem('appData');
 
-      if (!!getAppData && getAppData.themeColors) {
-        setPrimaryColor(getAppData.themeColors.primary_color);
-      }
-      dispatch({
-        type: types.APP_INIT,
-        payload: getAppData,
-      });
+      // if (!!getAppData && !!getAppData?.themeColors) {
+      //   setPrimaryColor(getAppData.themeColors.primary_color);
+      // }
+      // dispatch({
+      //   type: types.APP_INIT,
+      //   payload: getAppData,
+      // });
 
-      const locationData = await getItem('location');
-      dispatch({
-        type: types.LOCATION_DATA,
-        payload: locationData,
-      });
+      // const locationData = await getItem('location');
+      // dispatch({
+      //   type: types.LOCATION_DATA,
+      //   payload: locationData,
+      // });
 
-      const profileAddress = await getItem('profileAddress');
+      // const profileAddress = await getItem('profileAddress');
 
-      dispatch({
-        type: types.PROFILE_ADDRESS,
-        payload: profileAddress,
-      });
+      // dispatch({
+      //   type: types.PROFILE_ADDRESS,
+      //   payload: profileAddress,
+      // });
 
-      const cartItemCount = await getItem('cartItemCount');
-      if (cartItemCount) {
-        dispatch({
-          type: types.CART_ITEM_COUNT,
-          payload: cartItemCount,
-        });
-      }
+      // const cartItemCount = await getItem('cartItemCount');
+      // if (cartItemCount) {
+      //   dispatch({
+      //     type: types.CART_ITEM_COUNT,
+      //     payload: cartItemCount,
+      //   });
+      // }
 
-      const allUserAddress = await getItem('saveUserAddress');
-      if (allUserAddress) {
-        dispatch({
-          type: types.SAVE_ALL_ADDRESS,
-          payload: allUserAddress,
-        });
-      }
+      // const allUserAddress = await getItem('saveUserAddress');
+      // if (allUserAddress) {
+      //   dispatch({
+      //     type: types.SAVE_ALL_ADDRESS,
+      //     payload: allUserAddress,
+      //   });
+      // }
 
-      const walletData = await getItem('walletData');
-      if (walletData) {
-        dispatch({
-          type: types.WALLET_DATA,
-          payload: walletData,
-        });
-      }
+      // const walletData = await getItem('walletData');
+      // if (walletData) {
+      //   dispatch({
+      //     type: types.WALLET_DATA,
+      //     payload: walletData,
+      //   });
+      // }
 
-      const selectedAddress = await getItem('saveSelectedAddress');
-      if (selectedAddress) {
-        dispatch({
-          type: types.SELECTED_ADDRESS,
-          payload: selectedAddress,
-        });
-      }
+      // const selectedAddress = await getItem('saveSelectedAddress');
+      // if (selectedAddress) {
+      //   dispatch({
+      //     type: types.SELECTED_ADDRESS,
+      //     payload: selectedAddress,
+      //   });
+      // }
 
-      const dine_in_type = await getItem('dine_in_type');
-      if (dine_in_type) {
-        dispatch({
-          type: types.DINE_IN_DATA,
-          payload: dine_in_type,
-        });
-      }
-      const theme = await getItem('theme');
-      const themeToggle = await getItem('istoggle');
-      if (JSON.parse(themeToggle)) {
-        dispatch({
-          type: types.THEME,
-          payload: isDarkMode,
-        });
-        dispatch({
-          type: types.THEME_TOGGLE,
-          payload: JSON.parse(themeToggle),
-        });
-      } else {
-        dispatch({
-          type: types.THEME_TOGGLE,
-          payload: JSON.parse(themeToggle),
-        });
-        if (JSON.parse(theme)) {
-          dispatch({
-            type: types.THEME,
-            payload: true,
-          });
-        } else {
-          dispatch({
-            type: types.THEME,
-            payload: false,
-          });
-        }
-      }
+      // const dine_in_type = await getItem('dine_in_type');
+      // if (dine_in_type) {
+      //   dispatch({
+      //     type: types.DINE_IN_DATA,
+      //     payload: dine_in_type,
+      //   });
+      // }
+      // const theme = await getItem('theme');
+      // const themeToggle = await getItem('istoggle');
+      // if (JSON.parse(themeToggle)) {
+      //   dispatch({
+      //     type: types.THEME,
+      //     payload: isDarkMode,
+      //   });
+      //   dispatch({
+      //     type: types.THEME_TOGGLE,
+      //     payload: JSON.parse(themeToggle),
+      //   });
+      // } else {
+      //   dispatch({
+      //     type: types.THEME_TOGGLE,
+      //     payload: JSON.parse(themeToggle),
+      //   });
+      //   if (JSON.parse(theme)) {
+      //     dispatch({
+      //       type: types.THEME,
+      //       payload: true,
+      //     });
+      //   } else {
+      //     dispatch({
+      //       type: types.THEME,
+      //       payload: false,
+      //     });
+      //   }
+      // }
 
-      const searchResult = await getItem('searchResult');
+      // const searchResult = await getItem('searchResult');
 
-      if (searchResult) {
-        dispatch({
-          type: types.ALL_RECENT_SEARCH,
-          payload: searchResult,
-        });
-      }
+      // if (searchResult) {
+      //   dispatch({
+      //     type: types.ALL_RECENT_SEARCH,
+      //     payload: searchResult,
+      //   });
+      // }
 
-      //Language
-      const getLanguage = await getItem('language');
-      if (getLanguage) {
-        strings.setLanguage(getLanguage);
-      }
+      // //Language
+      // const getLanguage = await getItem('language');
+      // if (getLanguage) {
+      //   strings.setLanguage(getLanguage);
+      // }
 
-      //saveShortCode
-      const saveShortCode = await getItem('saveShortCode');
-      if (saveShortCode) {
-        dispatch({
-          type: types.SAVE_SHORT_CODE,
-          payload: saveShortCode,
-        });
-      }
+      // //saveShortCode
+      // const saveShortCode = await getItem('saveShortCode');
+      // if (saveShortCode) {
+      //   dispatch({
+      //     type: types.SAVE_SHORT_CODE,
+      //     payload: saveShortCode,
+      //   });
+      // }
       //Gamil configure
       GoogleSignin.configure();
 
@@ -287,137 +266,14 @@ const App = () => {
     return () => removeNetInfoSubscription();
   }, []);
   const { blurRef } = useRef();
-  // let isVal = store.getState().pendingNotifications.isVendorNotification
 
-  useEffect(() => {
-    codePush.sync(
-      {
-        installMode: codePush.InstallMode.IMMEDIATE,
-        updateDialog: true,
-      },
-      codePushStatusDidChange,
-      codePushDownloadDidProgress,
-    );
-  }, []);
 
-  function codePushStatusDidChange(syncStatus) {
-    switch (syncStatus) {
-      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-        console.log('codepush status Checking for update');
-        break;
-      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        console.log('codepush status Downloading package');
-        break;
-      case codePush.SyncStatus.AWAITING_USER_ACTION:
-        console.log('codepush status Awaiting user action');
-        break;
-      case codePush.SyncStatus.INSTALLING_UPDATE:
-        console.log('codepush status Installing update');
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UP_TO_DATE:
-        console.log('codepush status App up to date');
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UPDATE_IGNORED:
-        console.log('codepush status Update cancelled by user');
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log(
-          'codepush status Update installed and will be applied on restart',
-        );
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UNKNOWN_ERROR:
-        console.log('codepush status An unknown error occurred.');
-        setProgress(false);
-        break;
-    }
-  }
-
-  function codePushDownloadDidProgress(progress) {
-    console.log('codepush status progress status', progress);
-    setProgress(progress);
-  }
-
-  const progressView = () => {
-    return (
-      <View>
-        <Modal isVisible={true}>
-          <View
-            style={{
-              backgroundColor: colors.white,
-              borderRadius: moderateScale(8),
-              padding: moderateScale(16),
-            }}>
-            <Text
-              style={{
-                alignSelf: 'center',
-                fontFamily: fontFamily.medium,
-                color: colors.blackOpacity70,
-                fontSize: textScale(14),
-              }}>
-              In Progress...
-            </Text>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(12),
-                marginBottom: moderateScaleVertical(4),
-              }}>
-              <Text
-                style={{
-                  fontFamily: fontFamily.medium,
-                  color: colors.blackOpacity70,
-                  fontSize: textScale(12),
-                }}>{`${(Number(progress?.receivedBytes) / 1048576).toFixed(
-                  2,
-                )}MB/${(Number(progress.totalBytes) / 1048576).toFixed(
-                  2,
-                )}MB`}</Text>
-
-              <Text
-                style={{
-                  color: primaryColor,
-                  fontFamily: fontFamily.medium,
-                  fontSize: textScale(12),
-                }}>
-                {(
-                  (Number(progress?.receivedBytes) /
-                    Number(progress.totalBytes)) *
-                  100
-                ).toFixed(0)}
-                %
-              </Text>
-            </View>
-
-            <Progress.Bar
-              progress={
-                (
-                  (Number(progress?.receivedBytes) /
-                    Number(progress.totalBytes)) *
-                  100
-                ).toFixed(0) / 100
-              }
-              width={width / 1.2}
-              color={primaryColor}
-            />
-          </View>
-        </Modal>
-      </View>
-    );
-  };
 
   return (
     <SafeAreaProvider>
       <MenuProvider>
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
-          {progress ? progressView() : null}
           <Routes />
           <NotificationModal />
         </Provider>
@@ -428,4 +284,4 @@ const App = () => {
   );
 };
 
-export default codePush(CodePushOptions)(App);
+export default App
