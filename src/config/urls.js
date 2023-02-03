@@ -218,6 +218,9 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 //Harbans
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+//sandeep
+ export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
+
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // ottoweed
 // export const API_BASE_URL = 'order.ottoweed.com/api/v1';
@@ -400,7 +403,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://tdcrider.coop-move.net/api/v1'
 
 //tdc order
-export const API_BASE_URL = 'https://tdcrider.rostaging.com/api/v1'
+// export const API_BASE_URL = 'https://tdcrider.rostaging.com/api/v1'
 
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;

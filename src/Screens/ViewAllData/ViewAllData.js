@@ -23,6 +23,8 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import LottieView from 'lottie-react-native';
+import FooterLoader from '../../Components/FooterLoader';
 
 export default function ViewAllData({route, navigation}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
@@ -266,7 +268,12 @@ export default function ViewAllData({route, navigation}) {
   };
 
   const listFooterComponent = () => {
-    return <View style={{height: moderateScale(100)}}></View>;
+    return <View style={{height: moderateScale(100)}}>
+      {
+        !!loadMore && <FooterLoader style={{color:themeColors?.primary_color}}  />  
+      }
+       
+    </View>;
   };
 
   return (

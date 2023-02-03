@@ -544,7 +544,6 @@ export function getProductByVendorIdOptamizeV2(
 }
 
 export function getMoreCategories(query = '', data = {}, headers = {}) {
- 
   return apiPost(GET_MORE_CATEGORIES + query, data, headers);
 }
 

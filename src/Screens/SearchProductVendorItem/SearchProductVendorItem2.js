@@ -702,13 +702,17 @@ export default function SearchProductVendorItem2({navigation, route}) {
               )}
               extraData={searchData}
               ListFooterComponent={
+              ()=>{
+               return (
                 isLoadMore ? (
-                  <View style={styles.bottomLoader}>
-                    <FooterLoader />
+                  <View style={{height:moderateScaleVertical(100)}}>
+                    <FooterLoader style={{color:themeColors?.primary_color}}  />
                   </View>
                 ) : (
                   <View style={{height: moderateScale(80)}} />
                 )
+               )
+              }
               }
             />
           )}

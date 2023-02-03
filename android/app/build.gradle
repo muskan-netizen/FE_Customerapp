@@ -226,6 +226,16 @@ android {
                 resValue "string", "app_name", "Carry Food"
                 resValue "string", "host_name", "sales.royoorders.com"
             }
+            qdelo{
+dimension "appType"
+versionCode 1
+versionName "1.0"
+minSdkVersion rootProject.ext.minSdkVersion
+targetSdkVersion rootProject.ext.targetSdkVersion
+applicationId 'com.qdelo.order'
+resValue "string", "app_name", "Qdelo"
+resValue "string", "host_name", ""
+}
     }
   
 

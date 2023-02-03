@@ -1,10 +1,13 @@
 import React from 'react';
-import {UIActivityIndicator} from 'react-native-indicators';
 import colors from '../styles/colors';
+import {ActivityIndicator} from 'react-native-paper';
 
-const FooterLoader = ({style = {}}) => {
+const FooterLoader = ({style = {
+  size:30,
+  color:colors.themeColor
+}}) => {
   return (
-    <UIActivityIndicator style={style} size={40} color={colors.themeColor} />
+    <ActivityIndicator size={style?.size} color={style?.color}/>
   );
 };
 

@@ -80,6 +80,7 @@ import {
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
+import { ActivityIndicator } from 'react-native-paper';
 
 let timeOut = undefined;
 
@@ -295,6 +296,7 @@ export default function Products({ route, navigation }) {
   const [tagFilteredData, setTagFilteredData] = useState([]);
   const [isFilteredData, setIsFilteredData] = useState(false);
   const [isSocialMediaModal, setIsSocialMediaModal] = useState(false);
+  const [isLoadMoreData,setIsLoadMoreData] = useState(false)
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
@@ -1720,6 +1722,7 @@ export default function Products({ route, navigation }) {
           setSectionListData(resData);
           setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
+
           setCategoryInfo(res?.data?.vendor);
           fetchTags(resData);
           setLoading(false);
@@ -3211,6 +3214,9 @@ export default function Products({ route, navigation }) {
 
     console.log('currentPagecurrentPage', currentPage);
     console.log('dataaa>>>', selectedFilters);
+
+    setIsLoadMoreData(true)
+
     try {
       let vendorId = !!data?.vendorData
         ? data?.vendorData.id
@@ -3260,6 +3266,10 @@ export default function Products({ route, navigation }) {
       dummyData[section.index].data = arry;
       console.log('append last data', dummyData);
 
+       if(res?.data){
+        setIsLoadMoreData(false)
+       }
+
       if (!!searchInput) {
         onSearchWithinMenu(searchInput, dummyData, true);
         //  console.log(' i am here');
@@ -3278,8 +3288,11 @@ export default function Products({ route, navigation }) {
     } catch (error) {
       console.log('error riased', error);
       showError(error?.message);
+      setIsLoadMoreData(false)
     }
   };
+
+  console.log(cloneSectionList,"cloneSectionList");
 
   const getAdditionalPriceOfAddons = () => {
     // console.log(
@@ -3442,11 +3455,40 @@ export default function Products({ route, navigation }) {
 
   const renderSectionFooter = (props) => {
     const { section } = props;
-
-    return section?.data.length !== section?.data_count &&
-      section?.data.length !== 0 &&
-      searchInput &&
-      productDataLengthAfterViewMoreSearch?.length != 0 ? (
+   
+  
+    return (
+    //   section?.data.length >= 15 && searchInput =='' && section?.data.length !== section?.data_count  ?
+    //   <View style={{height: moderateScale(50)}}>
+    //   <TouchableOpacity
+    //     onPress={() => appendData(section)}
+    //     style={{
+    //       // alignSelf: 'center',
+    //       padding: moderateScale(6),
+    //       borderRadius: moderateScale(5),
+    //       marginHorizontal: moderateScale(20),
+    //       borderWidth: 1,
+    //       borderColor: themeColors?.primary_color,
+    //       // backgroundColor: colors?.greyColor3,
+    //       justifyContent: 'center',
+    //       flexDirection:'row',
+    //       alignItems:'center'
+    //     }}>
+    //      {!!isLoadMoreData &&<ActivityIndicator size={20} color={themeColors?.primary_color} />}
+    //       <Text
+    //         style={{
+    //           textAlign: 'center',
+    //           color: themeColors?.primary_color,
+    //           fontSize: textScale(12),
+    //           fontFamily: fontFamily?.medium,
+    //           marginHorizontal:moderateScale(10)
+    //         }}>
+    //         View More
+    //       </Text> 
+    //   </TouchableOpacity>
+    // </View>:
+      section?.data.length !== section?.data_count &&
+      section?.data.length >= 15  ? (
       <View style={{height: moderateScale(50)}}>
         <TouchableOpacity
           onPress={() => appendData(section)}
@@ -3459,7 +3501,10 @@ export default function Products({ route, navigation }) {
             borderColor: themeColors?.primary_color,
             // backgroundColor: colors?.greyColor3,
             justifyContent: 'center',
+            flexDirection:'row',
+            alignItems:'center'
           }}>
+           {!!isLoadMoreData &&<ActivityIndicator size={20} color={themeColors?.primary_color} />}
           {section?.data.length !== section?.data_count ? (
             <Text
               style={{
@@ -3467,13 +3512,15 @@ export default function Products({ route, navigation }) {
                 color: themeColors?.primary_color,
                 fontSize: textScale(12),
                 fontFamily: fontFamily?.medium,
+                marginHorizontal:moderateScale(10)
               }}>
               View More
             </Text>
           ) : null}
         </TouchableOpacity>
       </View>
-    ) : <View style={{height: moderateScale(50)}}/>;
+    ) : <View style={{height: moderateScale(50)}}/>
+    )
   };
 
   return (
@@ -3688,6 +3735,8 @@ export default function Products({ route, navigation }) {
               </View>
             )}
 
+         
+
             {!!categoryInfo?.is_show_products_with_category ? (
               
               <SectionList
@@ -3704,7 +3753,7 @@ export default function Products({ route, navigation }) {
                 renderItem={renderSectionItem}
                 renderSectionHeader={renderSectionHeader}
                 renderSectionFooter={renderSectionFooter}
-                  getItemLayout={getItemLayout}
+                getItemLayout={getItemLayout}
                 ItemSeparatorComponent={()=> <View style={{height: moderateScale(8)}} />}
        
                 // contentContainerStyle={{
