@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
-import { MaterialIndicator } from "react-native-indicators";
+// import { MaterialIndicator } from "react-native-indicators";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import Video from "react-native-video";
 import { useSelector } from "react-redux";
@@ -31,7 +31,7 @@ enableFreeze(true);
 
 
 export default function ShortCode({ route, navigation }) {
-alert("ShortCode Screen")
+
 
   const [state, setState] = useState({
     email: "",
@@ -3454,9 +3454,9 @@ alert("ShortCode Screen")
           }}
         >
           <View style={{ position: "absolute", bottom: moderateScale(100) }}>
-            {LoadingScreen && (
+            {/* {LoadingScreen && (
               <MaterialIndicator size={50} color={'black'} />
-            )}
+            )} */}
           </View>
         </View>
         <Image source={{ uri: "Splash" }} style={{ flex: 1, zIndex: -1 }} />

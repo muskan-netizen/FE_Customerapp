@@ -1,5 +1,5 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import Clipboard from '@react-native-community/clipboard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
@@ -16,7 +16,7 @@ import Routes from './src/navigation/Routes';
 import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
-// import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
+import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import { getBundleId } from 'react-native-device-info';
 import { MenuProvider } from 'react-native-popup-menu';
 import actions from './src/redux/actions';
@@ -30,25 +30,32 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({ 
+  dsn: 'https://1da68544ed374cabbd1a9782739dbe6b@o4504612036411392.ingest.sentry.io/4504616014708736', 
+});
+
+
 
 const App = () => {
   const isDarkMode = useDarkMode();
   const [internetConnection, setInternet] = useState(true);
 
-  // const ConnectBTFunction = async () => {
-  //   await AsyncStorage.removeItem('autoConnectEnabled');
+  const ConnectBTFunction = async () => {
+    await AsyncStorage.removeItem('autoConnectEnabled');
 
-  //   const temp = new PrinterScreen();
+    const temp = new PrinterScreen();
 
-  //   AsyncStorage.getItem('BleDevice2').then((res) => {
-  //     const tt = JSON.parse(res);
-  //     temp.connectBTFunc({
-  //       address: tt.boundAddress,
-  //       name: tt.name,
-  //     });
-  //   });
-  //   AsyncStorage.removeItem('BleDevice2');
-  // };
+    AsyncStorage.getItem('BleDevice2').then((res) => {
+      const tt = JSON.parse(res);
+      temp.connectBTFunc({
+        address: tt.boundAddress,
+        name: tt.name,
+      });
+    });
+    AsyncStorage.removeItem('BleDevice2');
+  };
 
 
 
@@ -107,13 +114,13 @@ const App = () => {
       }, 3000);
     }
 
-    // AsyncStorage.getItem('autoConnectEnabled').then((res) => {
-    //   if (res !== null) {
-    //     if (Platform.OS == 'android') {
-    //       ConnectBTFunction();
-    //     }
-    //   }
-    // });
+    AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+      if (res !== null) {
+        if (Platform.OS == 'android') {
+          ConnectBTFunction();
+        }
+      }
+    });
   }, []);
 
   const notificationConfig = () => {
@@ -136,9 +143,7 @@ const App = () => {
       }
       const getAppData = await getItem('appData');
 
-      if (!!getAppData && !!getAppData?.themeColors) {
-        setPrimaryColor(getAppData.themeColors.primary_color);
-      }
+   
       if (!!getAppData) {
         dispatch({
           type: types.APP_INIT,
@@ -257,12 +262,12 @@ const App = () => {
         });
       }
       //Gamil configure
-      // GoogleSignin.configure();
+      GoogleSignin.configure();
 
       // clip copy issue
-      // if (__DEV__) {
-      //   Clipboard.setString('');
-      // }
+      if (__DEV__) {
+        Clipboard.setString('');
+      }
     })();
     return () => { };
   }, []);
@@ -295,4 +300,4 @@ const App = () => {
   );
 };
 
-export default App
+export default Sentry.wrap(App);
