@@ -69,7 +69,7 @@ export default function OuterScreen2({navigation}) {
 
   const {getLanguage, isLoading} = state;
   const {apple_login, fb_login, twitter_login, google_login} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =

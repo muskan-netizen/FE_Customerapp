@@ -76,7 +76,7 @@ const VariantAddons = ({
   const {appData, themeColors, currencies, languages, appStyle, themeColor} =
     useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;

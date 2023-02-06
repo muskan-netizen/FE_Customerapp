@@ -31,16 +31,12 @@ import {
 } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-
-import {useNavigation} from '@react-navigation/native';
 import RNOtpVerify from 'react-native-otp-verify';
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
 export default function OtpVerification({navigation, route}) {
-  const navigation_ = useNavigation();
   const paramData = route?.params;
   console.log(paramData, 'paramData...paramData');
 
@@ -53,7 +49,7 @@ export default function OtpVerification({navigation, route}) {
   const {timer, phoneOTP, emailOTP, isLoading} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {currencies, languages} = useSelector((state) => state?.initBoot);
+  const {currencies, languages} = useSelector((state) => state?.initBoot || {});
   useEffect(() => {
     let timerId;
     if (timer > 0) {
@@ -184,7 +180,7 @@ export default function OtpVerification({navigation, route}) {
   };
 
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer isLoading={isLoading}>
       <View
         style={{
           flexDirection: 'row',

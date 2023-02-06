@@ -1,63 +1,79 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
 import { useSelector } from 'react-redux';
 import {
-  ChatRoom,
-  ChatRoomForVendor,
-  ChatScreen,
-  ChatScreenForVendor
+  // ChatRoom,
+  // ChatRoomForVendor,
+  // ChatScreen,
+  // ChatScreenForVendor,
+  Signup
 } from '../Screens';
-import AppIntro from '../Screens/AppIntro';
+// import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
 import AuthStack from './AuthStack';
-import CourierStack from './CourierStack';
+// import CourierStack from './CourierStack';
 import { navigationRef } from './NavigationService';
 import navigationStrings from './navigationStrings';
-import TabRoutes from './TabRoutes';
-import TabRoutesVendor from './TabRoutesVendor';
-import TaxiAppStack from './TaxiAppStack';
-import TaxiTabRoutes from './TaxiTabRoutes';
-import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
-const Stack = createStackNavigator();
+// import TabRoutes from './TabRoutes';
+// import TabRoutesVendor from './TabRoutesVendor';
+// import TaxiAppStack from './TaxiAppStack';
+// import TaxiTabRoutes from './TaxiTabRoutes';
+// import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
+import { View, Text, TouchableOpacity } from 'react-native';
+
+const Stack = createNativeStackNavigator();
+
+const HelloWorld = ({ navigation }) => {
+  return (
+    <View style={{ flex: 1, backgroundColor: 'pink', alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(navigationStrings.SHORT_CODE)}
+      >
+        <Text>Go To Short code(Test)</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 export default function Routes() {
-  const {userData, appSessionInfo} = useSelector((state) => state?.auth);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
+  const { appStyle } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
   return (
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          {appSessionInfo == 'shortcode' ||
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+
+
+        <Stack.Screen
+          name={'HelloWorld'}
+          component={HelloWorld}
+        />
+
+        <Stack.Screen
+          name={navigationStrings.SHORT_CODE}
+          component={ShortCode}
+        />
+
+        {AuthStack(Stack, appStyle)}
+
+
+
+        {/* {appSessionInfo == 'shortcode' ||
           appSessionInfo == 'show_shortcode' ? (
-         
-            <Stack.Screen
-              name={navigationStrings.SHORT_CODE}
-              component={ShortCode}
-            />
-         
-          ) : appSessionInfo == 'app_intro' ? (
-            <Stack.Screen
-              name={navigationStrings.APP_INTRO}
-              component={AppIntro}
-              options={{gestureEnabled: false}}
-            />
-          ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
-            <Stack.Screen
-              name={navigationStrings.TAB_ROUTES}
-              component={
-                businessType === 4
-                  ? TaxiTabRoutes
-                  : TabRoutes
-              }
-              options={{gestureEnabled: false}}
-            />
-           
-          ) : (
-            AuthStack(Stack, appStyle)
-          )}
-          {CourierStack(Stack)}
+
+          <Stack.Screen
+            name={navigationStrings.SHORT_CODE}
+            component={ShortCode}
+          />
+
+        ) : (
+          AuthStack(Stack, appStyle)
+        )} */}
+
+        {/* {CourierStack(Stack)}
 
           {TaxiAppStack(Stack)}
 
@@ -87,8 +103,8 @@ export default function Routes() {
             name={navigationStrings.TABROUTESVENDORNEW}
             component={TabRoutesVendorNewTemplate}
             options={{gestureEnabled: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

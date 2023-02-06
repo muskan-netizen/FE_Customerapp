@@ -13,7 +13,7 @@ const ButtonWithLoader = ({
   color = colors.white,
   disabled = false,
 }) => {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
   return (

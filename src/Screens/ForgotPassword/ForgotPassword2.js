@@ -1,27 +1,25 @@
-import React, {useState} from 'react';
-import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
-import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
-import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 
-export default function ForgotPassword2({navigation}) {
+export default function ForgotPassword2({ navigation }) {
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '1',
@@ -32,19 +30,19 @@ export default function ForgotPassword2({navigation}) {
     phoneNumber: '',
     deviceToken: '',
   });
-  const {email, isLoading} = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { email, isLoading } = state;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { appData, appStyle } = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily });
 
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
   //Validated form
@@ -67,30 +65,30 @@ export default function ForgotPassword2({navigation}) {
     let data = {
       email: email,
     };
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .forgotApi(data, {
         code: appData.profile.code,
       })
       .then((res) => {
         showSuccess(res.success);
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         console.log(res, 'forget password responses ');
-        moveToNewScreen(navigationStrings.RESET_PASSWORD, {email: email})();
+        moveToNewScreen(navigationStrings.RESET_PASSWORD, { email: email })();
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
 
   //On change in textinput field
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer isLoading={isLoading}>
       <Header
         leftIcon={imagePath.backArrow}
         centerTitle={strings.FORGOT_PASSWORD}
@@ -101,8 +99,8 @@ export default function ForgotPassword2({navigation}) {
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1}}>
-          <View style={{marginTop: moderateScaleVertical(130)}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ marginTop: moderateScaleVertical(130) }}>
             <View style={styles.forgetDesc}>
               <Text style={styles.txtSmall}>{strings.FORGOT_DESCRIPTION}</Text>
             </View>
@@ -117,14 +115,21 @@ export default function ForgotPassword2({navigation}) {
               label={strings.YOUR_EMAIL}
               onChangeText={_onChangeText('email')}
               keyboardType={'email-address'}
-              containerStyle={{marginBottom: moderateScale(20)}}
+              containerStyle={{ marginBottom: moderateScale(20) }}
             />
 
-            <GradientButton
+            <ButtonWithLoader
+              btnText={strings.FORGOT_PASSWORD}
+              btnStyle={{ marginTop: moderateScaleVertical(10) }}
+              onPress={onForget}
+            />
+            
+
+            {/* <GradientButton
               onPress={onForget}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.FORGOT_PASSWORD}
-            />
+            /> */}
             {/* <PhoneNumberInput /> */}
           </View>
         </View>

@@ -122,7 +122,7 @@ export default ({fontFamily, buttonTextColor}) => {
     buttonTextWhite: {
       fontFamily: fontFamily?.bold ? fontFamily?.bold : 'SFProText-Bold',
       textTransform: 'uppercase',
-      color: buttonTextColor?.secondary_color
+      color: !!buttonTextColor?.secondary_color
         ? buttonTextColor?.secondary_color
         : colors.white,
       textAlign: 'center',

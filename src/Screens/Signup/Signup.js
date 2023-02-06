@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
-import {cloneDeep, isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -11,41 +11,41 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
+
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {cameraHandler} from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import {androidCameraPermission} from '../../utils/permissions';
-import {setUserData} from '../../utils/utils';
+import { MyDarkTheme } from '../../styles/theme';
+import { cameraHandler } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { showError } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
+import { setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import {v4 as uuidv4} from 'uuid';
-import { enableFreeze } from "react-native-screens";
-enableFreeze(true);
+import { v4 as uuidv4 } from 'uuid';
+// import { enableFreeze } from "react-native-screens";
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
+// enableFreeze(true);
 
 
 var getPhonesCallingCodeAndCountryData = null;
@@ -61,9 +61,10 @@ DeviceCountry.getCountryCode()
 
 let addtionSelectedImageIndex = null;
 
-export default function Signup({navigation}) {
+export default function Signup({ navigation }) {
   const [accept, isAccept] = useState(false);
   const {
+    appStyle,
     appData,
     themeColors,
     themeLayouts,
@@ -72,8 +73,8 @@ export default function Signup({navigation}) {
     themeColor,
     themeToggle,
     redirectedFrom,
-  } = useSelector((state) => state?.initBoot);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
+
   const {
     is_user_kyc_for_registration,
     concise_signup,
@@ -86,10 +87,10 @@ export default function Signup({navigation}) {
     bank_name,
     upi_id,
     ifsc_code,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
-  const styles = stylesFun({fontFamily});
+
+  const styles = stylesFun({ fontFamily });
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -98,21 +99,21 @@ export default function Signup({navigation}) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery )
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
-            '-',
-            '',
-          )
+          '-',
+          '',
+        )
         : getBundleId() == appIds.speedyDelivery ? "1" : appData?.profile?.country?.code
-        ? appData?.profile?.country?.phonecode
-        : '91',
+          ? appData?.profile?.country?.phonecode
+          : '91',
     cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery )
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
         ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
         : getBundleId() == appIds.speedyDelivery ? "DO" : appData?.profile?.country?.code
-        ? appData?.profile?.country?.code
-        : 'IN',
+          ? appData?.profile?.country?.code
+          : 'IN',
     name: '',
     email: '',
     password: '',
@@ -160,14 +161,14 @@ export default function Signup({navigation}) {
   } = state;
   const [pickerType, setPickerType] = useState(0);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
   const isValidData = () => {
@@ -241,11 +242,11 @@ export default function Signup({navigation}) {
 
     const checkValid = isValidData();
     if (!checkValid) {
-      
+
       return;
     }
 
-    if (is_user_kyc_for_registration) {
+    if (!!is_user_kyc_for_registration) {
       const checkValidKyc = isKycValidData();
       if (!checkValidKyc) {
         return;
@@ -278,7 +279,7 @@ export default function Signup({navigation}) {
       showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
       return;
     }
-    
+
     {
       !!concise_signup
         ? formdata.append('name', phoneNumber)
@@ -313,8 +314,7 @@ export default function Signup({navigation}) {
         } else if (i?.is_required) {
           if (isRequired) {
             showError(
-              `${
-                strings.PLEASE_ENTER
+              `${strings.PLEASE_ENTER
               } ${i?.translations[0].name.toLowerCase()}`,
             );
             isRequired = false;
@@ -332,18 +332,17 @@ export default function Signup({navigation}) {
             i?.translations[0].slug,
             i?.file_type == 'Image'
               ? {
-                  uri: i.fileData.path,
-                  name: i.fileData.filename,
-                  filename: i.fileData.filename,
-                  type: i.fileData.mime,
-                }
+                uri: i.fileData.path,
+                name: i.fileData.filename,
+                filename: i.fileData.filename,
+                type: i.fileData.mime,
+              }
               : i?.fileData,
           );
         } else if (i?.is_required) {
           if (isRequired) {
             showError(
-              `${
-                strings.PLEASE_UPLOAD
+              `${strings.PLEASE_UPLOAD
               } ${i?.translations[0].name.toLowerCase()}`,
             );
             isRequired = false;
@@ -354,7 +353,7 @@ export default function Signup({navigation}) {
     }
 
     if (!isRequired) {
-     
+
       return;
     }
     if (!accept) {
@@ -362,7 +361,7 @@ export default function Signup({navigation}) {
       return;
     }
     console.log(formdata, 'formdata>><');
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
 
     actions
       .signUpApi(formdata, {
@@ -374,7 +373,7 @@ export default function Signup({navigation}) {
       })
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
 
         if (!!res.data) {
           checkEmailPhoneVerified(res.data);
@@ -410,17 +409,17 @@ export default function Signup({navigation}) {
     });
   };
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
     console.log(error);
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const showHidePassword = () => {
-    updateState({isShowPassword: !isShowPassword});
+    updateState({ isShowPassword: !isShowPassword });
   };
 
   let actionSheet = useRef();
@@ -434,7 +433,7 @@ export default function Signup({navigation}) {
     data[index].id = type?.id;
     data[index].file_type = type?.file_type;
     data[index].label_name = type?.translations[0]?.name;
-    updateState({addtionalTextInputs: data});
+    updateState({ addtionalTextInputs: data });
   };
 
   //Get TextInput
@@ -465,10 +464,10 @@ export default function Signup({navigation}) {
           onPress={() => updateImages(type, index)}
           style={styles.imageUpload}>
           {addtionalImages[index].value != undefined &&
-          addtionalImages[index].value != null &&
-          addtionalImages[index].value != '' ? (
+            addtionalImages[index].value != null &&
+            addtionalImages[index].value != '' ? (
             <Image
-              source={{uri: addtionalImages[index].value}}
+              source={{ uri: addtionalImages[index].value }}
               style={styles.imageStyle2}
             />
           ) : (
@@ -477,7 +476,7 @@ export default function Signup({navigation}) {
         </TouchableOpacity>
         <Text
           numberOfLines={2}
-          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          style={{ ...styles.label3, minHeight: moderateScale(25) }}>
           {type?.translations[0]?.name}
           {type.is_required ? '*' : ''}
         </Text>
@@ -495,7 +494,7 @@ export default function Signup({navigation}) {
         data[index].value = res[0].uri;
         data[index].filename = res[0].name;
         data[index].fileData = res[0];
-        updateState({addtionalPdfs: data});
+        updateState({ addtionalPdfs: data });
       }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -509,7 +508,7 @@ export default function Signup({navigation}) {
   const getPdfView = (type, index) => {
     return (
       <View
-        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        style={{ marginRight: moderateScale(20), marginTop: moderateScale(20) }}>
         <TouchableOpacity
           onPress={() => getDoc(type, index)}
           style={{
@@ -522,8 +521,8 @@ export default function Signup({navigation}) {
           }}>
           <Text style={styles.uploadStyle}>
             {addtionalPdfs[index].value != undefined &&
-            addtionalPdfs[index].value != null &&
-            addtionalPdfs[index].value != ''
+              addtionalPdfs[index].value != null &&
+              addtionalPdfs[index].value != ''
               ? `${addtionalPdfs[index].filename}`
               : `+ ${strings.UPLOAD}`}
           </Text>
@@ -577,7 +576,7 @@ export default function Signup({navigation}) {
             let data = cloneDeep(addtionalImages);
             data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
             data[addtionSelectedImageIndex].fileData = res;
-            updateState({addtionalImages: data});
+            updateState({ addtionalImages: data });
           })
           .catch((err) => {
             console.log(err, 'err>>>>');
@@ -604,7 +603,7 @@ export default function Signup({navigation}) {
   return (
     <WrapperContainer
       isLoadingB={isLoading}
-      source={loaderOne}
+      // source={loaderOne}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View
         style={{
@@ -614,7 +613,7 @@ export default function Signup({navigation}) {
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={
               appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
@@ -624,10 +623,10 @@ export default function Signup({navigation}) {
             style={
               isDarkMode
                 ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  tintColor: MyDarkTheme.colors.text,
+                }
+                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
             }
           />
         </TouchableOpacity>
@@ -639,12 +638,12 @@ export default function Signup({navigation}) {
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1}}>
-          <View style={{marginTop: moderateScaleVertical(50)}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ marginTop: moderateScaleVertical(50) }}>
             <Text
               style={
                 isDarkMode
-                  ? [styles.header, {color: MyDarkTheme.colors.text}]
+                  ? [styles.header, { color: MyDarkTheme.colors.text }]
                   : styles.header
               }>
               {strings.CREATE_YOUR_ACCOUNT}
@@ -652,7 +651,7 @@ export default function Signup({navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
                   : styles.txtSmall
               }>
               {strings.ENTER_DETAILS_BELOW}
@@ -686,7 +685,7 @@ export default function Signup({navigation}) {
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
-                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+                updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
               }
               cca2={cca2}
               phoneNumber={phoneNumber}
@@ -696,7 +695,7 @@ export default function Signup({navigation}) {
               keyboardType={'phone-pad'}
               color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
-            <View style={{height: moderateScaleVertical(20)}} />
+            <View style={{ height: moderateScaleVertical(20) }} />
             <BorderTextInput
               secureTextEntry={isShowPassword ? false : true}
               onChangeText={_onChangeText('password')}
@@ -715,11 +714,11 @@ export default function Signup({navigation}) {
               require
               returnKeyType={'next'}
             />
-            {!appData?.profile?.preferences?.concise_signup &&  appIds.sxm2go !=getBundleId() && (
+            {!appData?.profile?.preferences?.concise_signup && appIds.sxm2go != getBundleId() && (
               <BorderTextInput
                 onChangeText={_onChangeText('referralCode')}
                 placeholder={
-                  referral_code ? referral_code : strings.ENTERREFERALCODE
+                  !!referral_code ? referral_code : strings.ENTERREFERALCODE
                 }
                 value={referralCode}
                 returnKeyType={'next'}
@@ -760,7 +759,7 @@ export default function Signup({navigation}) {
                     {!isEmpty(aadharFront) ? (
                       <View>
                         <Image
-                          source={{uri: aadharFront?.uri}}
+                          source={{ uri: aadharFront?.uri }}
                           style={{
                             height: 115,
                             width: 115,
@@ -801,15 +800,15 @@ export default function Signup({navigation}) {
 
                     <Text
                       numberOfLines={2}
-                      style={{...styles.label3, minHeight: moderateScale(25)}}>
-                      {aadhaar_front || strings.AADHAR_FRONT}*
+                      style={{ ...styles.label3, minHeight: moderateScale(25) }}>
+                      {!!aadhaar_front ? aadhaar_front : strings.AADHAR_FRONT}*
                     </Text>
                   </View>
                   <View>
                     {!isEmpty(aadharBack) ? (
                       <View>
                         <Image
-                          source={{uri: aadharBack?.uri}}
+                          source={{ uri: aadharBack?.uri }}
                           style={{
                             height: 115,
                             width: 115,
@@ -850,48 +849,48 @@ export default function Signup({navigation}) {
 
                     <Text
                       numberOfLines={2}
-                      style={{...styles.label3, minHeight: moderateScale(25)}}>
-                      {aadhaar_back || strings.AADHAR_BACK}*
+                      style={{ ...styles.label3, minHeight: moderateScale(25) }}>
+                      {!!aadhaar_back ? aadhaar_back : strings.AADHAR_BACK}*
                     </Text>
                   </View>
                 </View>
                 <BorderTextInput
-                  placeholder={`${aadhaar_number || strings.AADHAR_NUMBER}*`}
+                  placeholder={`${!!aadhaar_number ? aadhaar_number : strings.AADHAR_NUMBER}*`}
                   onChangeText={_onChangeText('aadharNumber')}
                   value={aadharNumber}
                   keyboardType={'number-pad'}
                   maxLength={12}
                 />
                 <BorderTextInput
-                  placeholder={`${upi_id || strings.UPI_ID}*`}
+                  placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
                   onChangeText={_onChangeText('upiId')}
                   value={upiId}
                 />
                 <BorderTextInput
                   value={bankName}
-                  placeholder={`${bank_name || strings.BANK_NAME}*`}
+                  placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME}*`}
                   onChangeText={_onChangeText('bankName')}
                 />
                 <BorderTextInput
                   value={beneficiaryName}
-                  placeholder={`${account_name || strings.BENEFICIARY_NAME}*`}
+                  placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME}*`}
                   onChangeText={_onChangeText('beneficiaryName')}
                 />
                 <BorderTextInput
                   value={accountNumber}
-                  placeholder={`${account_number || strings.ACCOUNT_NUMBER}*`}
+                  placeholder={`${!!account_number ? account_number : strings.ACCOUNT_NUMBER}*`}
                   onChangeText={_onChangeText('accountNumber')}
                   keyboardType={'number-pad'}
                 />
                 <BorderTextInput
                   value={ifscCode}
-                  placeholder={`${ifsc_code || strings.IFSC_CODE}*`}
+                  placeholder={`${!!ifsc_code ? ifsc_code : strings.IFSC_CODE}*`}
                   onChangeText={_onChangeText('ifscCode')}
                   maxLength={12}
                 />
               </View>
             ) : null}
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={_isCheck}
                 style={{
@@ -915,7 +914,7 @@ export default function Signup({navigation}) {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
-              <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                 <Text
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
@@ -924,9 +923,9 @@ export default function Signup({navigation}) {
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                    navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
                   }
-                  style={{color: colors.themeColor}}>
+                  style={{ color: colors.themeColor }}>
                   {' '}
                   {`${strings.TERMS_CONDITIONS} `}
                 </Text>
@@ -938,26 +937,31 @@ export default function Signup({navigation}) {
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 1})
+                    navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
                   }
-                  style={{color: colors.themeColor}}>
+                  style={{ color: colors.themeColor }}>
                   {`${strings.PRICACY_POLICY}`}.
                 </Text>
               </View>
             </View>
 
-            <GradientButton
+            <ButtonWithLoader
+              btnText={strings.SIGNUP_AN_ACCOUNT}
+              btnStyle={{marginTop: moderateScaleVertical(10)}}
+              onPress={onSignup}
+            />
+            {/* <GradientButton
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.SIGNUP_AN_ACCOUNT}
-            />
+            /> */}
           </View>
           <View style={styles.bottomContainer}>
             <Text
               style={
                 isDarkMode
-                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                  : {...styles.txtSmall, color: colors.textGreyLight}
+                  ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
+                  : { ...styles.txtSmall, color: colors.textGreyLight }
               }>
               {strings.ALREADY_HAVE_AN_ACCOUNT}
               <Text

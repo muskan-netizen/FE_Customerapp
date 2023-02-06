@@ -70,7 +70,7 @@ const RoyoHome = (props) => {
     (state) => state.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   console.log(languages, 'languagessssssssss');
 
   const [state, setState] = useState({

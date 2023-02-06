@@ -65,7 +65,7 @@ export default function AddonModal({
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 

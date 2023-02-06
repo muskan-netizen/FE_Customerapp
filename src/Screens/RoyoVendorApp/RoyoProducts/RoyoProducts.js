@@ -54,11 +54,11 @@ const RoyoProducts = (props) => {
   const {storeSelectedVendor} = useSelector((state) => state?.order);
  
   const { appData, themeColors, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
 
   const { additional_preferences, digit_after_decimal } =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   console.log('store selected vendor', storeSelectedVendor);
 

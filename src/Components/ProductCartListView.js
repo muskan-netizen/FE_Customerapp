@@ -25,7 +25,7 @@ const ProductCartListView = ({
     (state) => state?.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);

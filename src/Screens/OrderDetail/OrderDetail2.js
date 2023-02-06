@@ -75,7 +75,7 @@ export default function OrderDetail({navigation, route}) {
   );
 
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   console.log(languages, 'i am here>>>>>>');
 

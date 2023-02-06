@@ -62,7 +62,7 @@ export default function ReferAndEarn() {
     bank_name,
     upi_id,
     ifsc_code,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});

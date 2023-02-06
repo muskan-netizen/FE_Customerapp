@@ -41,7 +41,7 @@ export default function OrderDetailView({
     (state) => state?.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);

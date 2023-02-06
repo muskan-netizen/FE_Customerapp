@@ -66,7 +66,7 @@ const P2pProducts = ({route, navigation}) => {
   } = useSelector((state) => state?.initBoot);
   const {userData} = useSelector((state) => state?.auth);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;

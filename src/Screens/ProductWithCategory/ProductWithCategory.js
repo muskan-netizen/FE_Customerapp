@@ -165,7 +165,7 @@ export default function ProductWithCategory({route, navigation}) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {

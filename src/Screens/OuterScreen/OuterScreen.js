@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   I18nManager,
   Image,
@@ -8,23 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings, {changeLaguage} from '../../constants/lang/index';
+import strings, { changeLaguage } from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {hitSlopProp} from '../../styles/commonStyles';
+import { hitSlopProp } from '../../styles/commonStyles';
 import RNRestart from 'react-native-restart';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 
 import {
   fbLogin,
@@ -35,19 +34,19 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
-import {setItem, setUserData} from '../../utils/utils';
-import {isEmpty} from 'lodash';
+import { setItem, setUserData } from '../../utils/utils';
+import { isEmpty } from 'lodash';
 import { getValuebyKeyInArray } from '../../utils/commonFunction';
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-export default function OuterScreen({navigation}) {
+export default function OuterScreen({ navigation }) {
   const {
     appData,
     currencies,
@@ -58,7 +57,7 @@ export default function OuterScreen({navigation}) {
     themeToggle,
     themeColor,
     redirectedFrom,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -71,7 +70,7 @@ export default function OuterScreen({navigation}) {
   });
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
 
   const {
     getLanguage,
@@ -86,14 +85,14 @@ export default function OuterScreen({navigation}) {
     twitter_login,
     google_login,
     additional_preferences,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
     let userStaticName = DeviceInfo.getBundleId();
@@ -133,7 +132,7 @@ export default function OuterScreen({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (!!res.data) {
           checkEmailPhoneVerified(res?.data);
           getCartDetail();
@@ -170,7 +169,7 @@ export default function OuterScreen({navigation}) {
 
   //error handling
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.error || error?.message);
   };
 
@@ -189,12 +188,12 @@ export default function OuterScreen({navigation}) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     handleAppleLogin()
       .then((res) => {
         _saveSocailLogin(res, 'apple');
@@ -204,36 +203,36 @@ export default function OuterScreen({navigation}) {
       })
       .catch((err) => {
         console.log(err, 'error');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     googleLogin()
       .then((res) => {
         if (res?.user) {
           console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   const _responseInfoCallback = (error, result) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     if (error) {
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     } else {
       if (result && result?.id) {
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       }
     }
   };
@@ -250,11 +249,11 @@ export default function OuterScreen({navigation}) {
         if (res) {
           _saveSocailLogin(res, 'twitter');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
@@ -265,11 +264,11 @@ export default function OuterScreen({navigation}) {
   };
 
   const _selectLang = () => {
-    updateState({isSelectLanguageModal: true});
+    updateState({ isSelectLanguageModal: true });
   };
 
   const _onBackdropPress = () => {
-    updateState({isSelectLanguageModal: false});
+    updateState({ isSelectLanguageModal: false });
   };
 
   useEffect(() => {
@@ -351,15 +350,15 @@ export default function OuterScreen({navigation}) {
   };
 
   const _updateLang = (selectedLangTitle) => {
-    updateState({isSelectLanguageModal: false});
+    updateState({ isSelectLanguageModal: false });
     updateLanguage(selectedLangTitle);
   };
 
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+      isLoading={isLoading}
+    >
       {console.log(shortCodeStatus, 'shortCodeStatus>>')}
       {shortCodeStatus ? (
         <Header
@@ -367,8 +366,8 @@ export default function OuterScreen({navigation}) {
             appStyle?.homePageLayout === 2
               ? imagePath.backArrow
               : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
+                ? imagePath.icBackb
+                : imagePath.back
           }
           onPressLeft={() => actions.setAppSessionData('guest_login')}
           isRightText
@@ -386,11 +385,11 @@ export default function OuterScreen({navigation}) {
             justifyContent: 'center',
           }}
           onPressRightTxt={_selectLang}
-          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
           headerStyle={
             isDarkMode
-              ? {backgroundColor: MyDarkTheme.colors.background}
-              : {backgroundColor: colors.white}
+              ? { backgroundColor: MyDarkTheme.colors.background }
+              : { backgroundColor: colors.white }
           }
         />
       ) : (
@@ -411,11 +410,11 @@ export default function OuterScreen({navigation}) {
             justifyContent: 'center',
           }}
           onPressRightTxt={_selectLang}
-          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
           headerStyle={
             isDarkMode
-              ? {backgroundColor: MyDarkTheme.colors.background}
-              : {backgroundColor: colors.white}
+              ? { backgroundColor: MyDarkTheme.colors.background }
+              : { backgroundColor: colors.white }
           }
         />
       )}
@@ -431,12 +430,12 @@ export default function OuterScreen({navigation}) {
             style={
               isDarkMode
                 ? [
-                    styles.header,
-                    {
-                      color: MyDarkTheme.colors.text,
-                      backgroundColor: MyDarkTheme.colors.background,
-                    },
-                  ]
+                  styles.header,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    backgroundColor: MyDarkTheme.colors.background,
+                  },
+                ]
                 : styles.header
             }>
             Login Your Account
@@ -446,25 +445,25 @@ export default function OuterScreen({navigation}) {
             style={
               isDarkMode
                 ? [
-                    styles.header,
-                    {
-                      color: MyDarkTheme.colors.text,
-                      backgroundColor: MyDarkTheme.colors.background,
-                    },
-                  ]
+                  styles.header,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    backgroundColor: MyDarkTheme.colors.background,
+                  },
+                ]
                 : styles.header
             }>
             {strings.CREATE_YOUR_ACCOUNT}
           </Text>
         )}
-        <View style={{marginHorizontal: moderateScale(24)}}>
+        <View style={{ marginHorizontal: moderateScale(24) }}>
           {appData?.profile?.preferences?.home_tag_line ? (
-            <View style={{marginHorizontal: moderateScaleVertical(30)}}>
+            <View style={{ marginHorizontal: moderateScaleVertical(30) }}>
               <Text
                 numberOfLines={2}
                 style={
                   isDarkMode
-                    ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                    ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
                     : styles.txtSmall
                 }>
                 {appData?.profile?.preferences?.home_tag_line
@@ -474,7 +473,23 @@ export default function OuterScreen({navigation}) {
             </View>
           ) : null}
 
-          <GradientButton
+
+
+          <ButtonWithLoader
+            btnText={
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? 'Login to Your Account'
+                : strings.CREATE_AN_ACCOUNT
+            }
+            btnStyle={{ marginTop: moderateScaleVertical(10) }}
+            onPress={moveToNewScreen(
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? navigationStrings.LOGIN
+                : navigationStrings.SIGN_UP,
+            )}
+          />
+
+          {/* <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={
               getValuebyKeyInArray('is_phone_signup', additional_preferences)
@@ -486,7 +501,7 @@ export default function OuterScreen({navigation}) {
                 ? navigationStrings.LOGIN
                 : navigationStrings.SIGN_UP,
             )}
-          />
+          /> */}
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
             btnTextStyle={{
@@ -497,17 +512,17 @@ export default function OuterScreen({navigation}) {
             onPress={() => onGuestLogin()}
             btnText={strings.GUEST_LOGIN}
           />
-          <View style={{marginTop: moderateScaleVertical(50)}}>
+          <View style={{ marginTop: moderateScaleVertical(50) }}>
             {!!google_login ||
-            !!fb_login ||
-            !!twitter_login ||
-            !!apple_login ? (
+              !!fb_login ||
+              !!twitter_login ||
+              !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.orText, {color: MyDarkTheme.colors.text}]
+                      ? [styles.orText, { color: MyDarkTheme.colors.text }]
                       : styles.orText
                   }>
                   {strings.OR_SIGNUP_WITH}
@@ -521,7 +536,7 @@ export default function OuterScreen({navigation}) {
                 flexDirection: 'column',
               }}>
               {!!google_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
+                <View style={{ marginTop: moderateScaleVertical(15) }}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_google2}
                     btnText={strings.CONTINUE_GOOGLE}
@@ -541,7 +556,7 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!fb_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
+                <View style={{ marginTop: moderateScaleVertical(15) }}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_fb2}
                     btnText={strings.CONTINUE_FACEBOOK}
@@ -561,7 +576,7 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!twitter_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
+                <View style={{ marginTop: moderateScaleVertical(15) }}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_twitter2}
                     btnText={strings.CONTINUE_TWITTER}
@@ -582,7 +597,7 @@ export default function OuterScreen({navigation}) {
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
+                <View style={{ marginTop: moderateScaleVertical(15) }}>
                   <TransparentButtonWithTxtAndIcon
                     icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                     btnText={strings.CONTINUE_APPLE}

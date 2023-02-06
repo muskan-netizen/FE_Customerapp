@@ -80,17 +80,17 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     appStyle,
     themeToggle,
     themeColor,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
   console.log(paramData, 'appDataappDataappData');
   const distance_unit_for_time =
     appData?.profile?.preferences?.distance_unit_for_time;
   const total_distance = appData?.profile?.preferences?.distance_unit_for_time;
-  const { userData } = useSelector((state) => state?.auth);
-  const { pickUpTimeType, location } = useSelector((state) => state?.home);
+  const { userData } = useSelector((state) => state?.auth || {});
+  const { pickUpTimeType, location } = useSelector((state) => state?.home || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { profile } = appData;
+  const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
 

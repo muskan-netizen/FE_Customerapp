@@ -24,14 +24,12 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
-import {getReturnOrderDetailData} from '../../redux/actions/order';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -71,7 +69,7 @@ export default function WebLinks({navigation, route}) {
     languages,
     themeColor,
     themeToggle,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
   console.log(appData, 'appData>>>>>>>');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -1001,8 +999,9 @@ export default function WebLinks({navigation, route}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+      isLoading={isLoading}
+
+      >
       <MenuProvider>
         <Header
           leftIcon={
@@ -1592,14 +1591,14 @@ export default function WebLinks({navigation, route}) {
                   </TouchableOpacity>
                 </View>
 
-                <GradientButton
+                {/* <GradientButton
                   textStyle={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
                   }}
                   onPress={_onSubmit}
                   marginTop={moderateScaleVertical(5)}
                   btnText={strings.SUBMIT}
-                />
+                /> */}
                 <View
                   style={{
                     height: moderateScaleVertical(24),
@@ -2155,14 +2154,14 @@ export default function WebLinks({navigation, route}) {
                 renderItem={_renderFields}
               />
 
-              <GradientButton
+              {/* <GradientButton
                 textStyle={{
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
                 }}
                 onPress={_onSubmit}
                 marginTop={moderateScaleVertical(10)}
                 btnText={strings.SUBMIT}
-              />
+              /> */}
               <View
                 style={{
                   height: moderateScaleVertical(24),

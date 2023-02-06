@@ -83,12 +83,11 @@ export default function SelectPaymentModalView({
   console.log(updatedPrice, "updatedPrice");
   console.log(loyalityAmount, "loyalityAmount");
   const { appData, themeColors, appStyle } = useSelector(
-    (state) => state?.initBoot
+    (state) => state?.initBoot || {}
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData;

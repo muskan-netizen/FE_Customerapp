@@ -138,7 +138,7 @@ export default function ProductList({ route, navigation }) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const {
     isLoading,
     isOffline,

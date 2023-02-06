@@ -32,7 +32,7 @@ export default function MyP2pPosts({route, navigation}) {
     (state) => state?.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const {userData} = useSelector((state) => state?.auth);
 
   const [allPosts, setAllPosts] = useState([]);

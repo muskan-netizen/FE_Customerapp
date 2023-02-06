@@ -47,9 +47,9 @@ const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
   const productDetailParam = paramData?.productDetail;
   const {appData, themeColors, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
-  const {additional_preferences} = appData?.profile?.preferences;
+  const {additional_preferences} = appData?.profile?.preferences || {};
   const [state, setState] = useState({
     isLoading: true,
     isLoadingB: false,

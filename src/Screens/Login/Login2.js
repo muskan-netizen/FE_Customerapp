@@ -63,7 +63,7 @@ export default function Login2({ navigation }) {
     (state) => state?.initBoot,
   );
   const { apple_login, fb_login, twitter_login, google_login } = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
+    (state) => state?.initBoot?.appData?.profile?.preferences || {},
   );
 
   const fontFamily = appStyle?.fontSizeData;

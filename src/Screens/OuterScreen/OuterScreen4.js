@@ -84,7 +84,7 @@ export default function OuterScreen3({navigation}) {
     allLangs,
   } = state;
   const {apple_login, fb_login, twitter_login, google_login} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   const {bannerRef} = useRef();
 

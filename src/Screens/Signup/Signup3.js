@@ -30,7 +30,6 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import commonStylesFun from '../../styles/commonStyles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
@@ -40,19 +39,16 @@ import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWith
 import {checkIsAdmin} from '../../utils/utils';
 import {useNavigation} from '@react-navigation/native';
 
-import { enableFreeze } from "react-native-screens";
-enableFreeze(true);
+// import { enableFreeze } from "react-native-screens";
+// enableFreeze(true);
 
 
 export default function SignupTemplateThree({navigation}) {
   const navigation_ = useNavigation();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
-  const {appData, themeColors, themeLayouts, currencies, languages} =
-    useSelector((state) => state?.initBoot);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData, themeColors, currencies, languages} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily});
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);

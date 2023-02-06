@@ -98,13 +98,13 @@ export default function Subscriptions2({ navigation, route }) {
   console.log(selectedPlan, selectedPaymentMethod, currentSubscription, 'selectedPlanselectedPlan')
   //Redux Store Data
   const { appData, themeColors, appStyle, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
   const [cardNumber, setCardNUmber] = useState()
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
   const { additional_preferences, digit_after_decimal } =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const { preferences } = appData?.profile;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;

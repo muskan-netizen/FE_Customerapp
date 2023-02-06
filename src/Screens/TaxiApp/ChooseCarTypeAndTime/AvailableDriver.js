@@ -33,9 +33,9 @@ export default function AvailableDriver({
   _onUpdateSeatNo=()=>{},
 }) {
   const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } =
-    useSelector((state) => state?.initBoot);
+    useSelector((state) => state?.initBoot || {});
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
