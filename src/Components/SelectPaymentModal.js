@@ -4,7 +4,7 @@ import {
   createPaymentMethod,
   createToken,
   initStripe,
-  StripeProvider,
+  StripeProvider
 } from '@stripe/stripe-react-native';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -15,11 +15,11 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
@@ -35,7 +35,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import HomeLoader from './Loaders/HomeLoader';
@@ -44,8 +44,6 @@ export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => { },
   dineInType,
-  codMinAmount = '',
-  amount = '',
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const navigation = useNavigation();
@@ -63,7 +61,7 @@ export default function SelectPaymentModal({
   let [expiryDate, setExpiryDate] = useState()
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
-  console.log(codMinAmount, amount, 'codMinAmount');
+
   const [state, setState] = useState({
     isLoading: false,
     payementMethods: [],
@@ -275,7 +273,7 @@ export default function SelectPaymentModal({
         : updateState({ selectedPaymentMethod: data });
     }
   };
-
+  
   const checkInputHandler = (type, data) => {
     if (type === 'Card Number') {
 
@@ -284,510 +282,298 @@ export default function SelectPaymentModal({
     }
     if (type === 'ExpiryDate') {
 
-      if (isLoading) {
-        return (
-          <WrapperContainer
-            bgColor={
-              isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-            }
-            statusBarColor={colors.backgroundGrey}
-            source={loaderOne}
-          // isLoadingB={isLoading}
-          >
-            <View
-              style={{
-                height: 1,
-                backgroundColor: colors.borderLight,
-              }}
-            />
-
-            <HomeLoader
-              width={width / 1.1}
-              height={24}
-              rectHeight={24}
-              rectWidth={width / 1.1}
-              viewStyles={{
-                marginHorizontal: moderateScale(16),
-                marginVertical: moderateScaleVertical(16),
-              }}
-            />
-            <HomeLoader
-              width={width / 1.1}
-              height={24}
-              rectHeight={24}
-              rectWidth={width / 1.1}
-              viewStyles={{
-                marginHorizontal: moderateScale(16),
-                marginBottom: moderateScaleVertical(16),
-              }}
-            />
-            <HomeLoader
-              width={width / 1.1}
-              height={24}
-              rectHeight={24}
-              rectWidth={width / 1.1}
-              viewStyles={{
-                marginBottom: moderateScaleVertical(16),
-                marginHorizontal: moderateScale(16),
-              }}
-            />
-            <HomeLoader
-              width={width / 1.1}
-              height={24}
-              rectHeight={24}
-              rectWidth={width / 1.1}
-              viewStyles={{
-                marginBottom: moderateScaleVertical(16),
-                marginHorizontal: moderateScale(16),
-              }}
-            />
-          </WrapperContainer>
-        );
-      }
-
-      // const mainView = () => {
-      //   return (
-      //     <>
-      //       <ScrollView
-      //         style={{
-      //           marginHorizontal: moderateScaleVertical(20),
-      //           marginTop: moderateScaleVertical(10),
-
-      //         }}>
-      //         {!isEmpty(payementMethods)
-      //           ? payementMethods.map((item, index) => {
-      //               console.log(amount, codMinAmount, 'item>>>>');
-      //               return (
-      //                 <>
-      //                   <Animatable.View
-      //                     // animation={'slideInUp'}
-      //                     // duration={200}
-      //                     style={{flex: 1}}>
-      //                     {Number(amount) >= Number(codMinAmount) ? (
-      //                       <TouchableOpacity
-      //                         onPress={() => selectPaymentMethod(item, index)}
-      //                         key={index}
-      //                         style={[
-      //                           styles.caseOnDeliveryView,
-      //                           //  {...getAndCheckStyle(item)}
-      //                         ]}>
-      //                         <Image
-      //                           source={
-      //                             selectedPaymentMethod &&
-      //                             selectedPaymentMethod?.id == item.id
-      //                               ? imagePath.radioActive
-      //                               : imagePath.radioInActive
-      //                           }
-      //                         />
-      //                         {/* {strings.CASE_ON_DELIVERY} */}
-      //                         <Text
-      //                           style={
-      //                             isDarkMode
-      //                               ? [
-      //                                   styles.caseOnDeliveryText,
-      //                                   {color: MyDarkTheme.colors.text},
-      //                                 ]
-      //                               : styles.caseOnDeliveryText
-      //                           }>
-      //                           {item?.title_lng ? item?.title_lng : item?.title}
-      //                         </Text>
-      //                       </TouchableOpacity>
-      //                     ) : (
-      //                       item.code !== 'cod' && (
-      //                         <TouchableOpacity
-      //                           onPress={() => selectPaymentMethod(item, index)}
-      //                           key={index}
-      //                           style={[
-      //                             styles.caseOnDeliveryView,
-      //                             //  {...getAndCheckStyle(item)}
-      //                           ]}>
-      //                           <Image
-      //                             source={
-      //                               selectedPaymentMethod &&
-      //                               selectedPaymentMethod?.id == item.id
-      //                                 ? imagePath.radioActive
-      //                                 : imagePath.radioInActive
-      //                             }
-      //                           />
-      //                           {/* {strings.CASE_ON_DELIVERY} */}
-      //                           <Text
-      //                             style={
-      //                               isDarkMode
-      //                                 ? [
-      //                                     styles.caseOnDeliveryText,
-      //                                     {color: MyDarkTheme.colors.text},
-      //                                   ]
-      //                                 : styles.caseOnDeliveryText
-      //                             }>
-      //                             {item?.title_lng ? item?.title_lng : item?.title}
-      //                           </Text>
-      //                         </TouchableOpacity>
-      //                       )
-      //                     )}
-      //                     {!!(
-      //                       selectedPaymentMethod &&
-      //                       selectedPaymentMethod?.id == item.id &&
-      //                       selectedPaymentMethod?.off_site == 0 &&
-      //                       selectedPaymentMethod?.id === 4
-      //                     ) && (
-      //                       <View>
-      //                         <CardField
-      //                           postalCodeEnabled={false}
-      //                           placeholder={{
-      //                             number: '4242 4242 4242 4242',
-      //                           }}
-      //                           cardStyle={{
-      //                             backgroundColor: colors.white,
-      //                             textColor: colors.black,
-      //                           }}
-      //                           style={{
-      //                             width: '100%',
-      //                             height: 50,
-      //                             marginVertical: 10,
-      //                           }}
-      //                           onCardChange={(cardDetails) => {
-      //                             _onChangeStripeData(cardDetails);
-      //                           }}
-      //                           onFocus={(focusedField) => {
-      //                             console.log('focusField', focusedField);
-      //                           }}
-      //                           onBlur={() => {
-      //                             Keyboard.dismiss();
-      //                           }}
-      //                         />
-      //                       </View>
-      //                     )}
-      //                     {!!(
-      //                       selectedPaymentMethod &&
-      //                       selectedPaymentMethod?.id == item.id &&
-      //                       selectedPaymentMethod?.off_site == 0 &&
-      //                       selectedPaymentMethod?.id === 17
-      //                     ) && (
-      //                       <CheckoutPaymentView
-      //                         cardTokenized={(e) => {
-      //                           updateState({isLoading: false});
-      //                           if (e.token) {
-      //                             onSelectPayment({
-      //                               selectedPaymentMethod,
-      //                               cardInfo: e.token,
-      //                             });
-      //                             paymentModalClose();
-      //                           }
-      //                         }}
-      //                         cardTokenizationFailed={(e) => {
-      //                           setTimeout(() => {
-      //                             updateState({isLoading: false});
-      //                             alert(strings.INVALID_CARD_DETAILS);
-      //                             // showError(strings.INVALID_CARD_DETAILS);
-      //                           }, 1000);
-      //                         }}
-      //                         onPressSubmit={(res) => {
-      //                           updateState({
-      //                             isLoading: true,
-      //                           });
-      //                         }}
-      //                         btnTitle={strings.SELECT}
-      //                         isSubmitBtn
-      //                         submitBtnStyle={{
-      //                           width: '100%',
-      //                           height: moderateScale(45),
-      //                         }}
-      //                       />
-      //                     )}
-      //                   </Animatable.View>
-      //                   <View style={{marginBottom: moderateScaleVertical(16)}} />
-      //                 </>
-      //               );
-      //             })
-      //           : !isLoading && (
-      //               <Text style={{textAlign: 'center'}}>
-      //                 {strings.NO_PAYMENT_METHOD}
-      //               </Text>
-      //             )}
-      //       </ScrollView>
-      //       </>
-      //   )}
-
-      const _onChangeStripeData = (cardDetails) => {
-        console.log('_onChangeStripeData_onChangeStripeData', cardDetails);
-        if (cardDetails?.complete) {
-          // updateState({
-          //   cardInfo: {
-          //     brand: cardDetails.brand,
-          //     complete: true,
-          //     expiryMonth: cardDetails?.expiryMonth,
-          //     expiryYear: cardDetails?.expiryYear,
-          //     last4: cardDetails?.last4,
-          //     // name:userData?.name
-          //     // postalCode: cardDetails?.postalCode,
-          //   },
-          // });
-          updateState({
-            cardInfo: cardDetails,
-          });
-        } else {
-          updateState({ cardInfo: null });
-        }
-      };
-
-
-      return (
-        <WrapperContainer
-          bgColor={
-            isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-          }
-          statusBarColor={colors.backgroundGrey}
-          source={loaderOne}
-        // isLoadingB={isLoading}
-        >
-          <View style={{ height: 1, backgroundColor: colors.borderLight }} />
-
-          <HomeLoader
-            width={width / 1.1}
-            height={24}
-            rectHeight={24}
-            rectWidth={width / 1.1}
-            viewStyles={{
-              marginHorizontal: moderateScale(16),
-              marginVertical: moderateScaleVertical(16),
-            }}
-          />
-          <HomeLoader
-            width={width / 1.1}
-            height={24}
-            rectHeight={24}
-            rectWidth={width / 1.1}
-            viewStyles={{
-              marginHorizontal: moderateScale(16),
-              marginBottom: moderateScaleVertical(16),
-            }}
-          />
-          <HomeLoader
-            width={width / 1.1}
-            height={24}
-            rectHeight={24}
-            rectWidth={width / 1.1}
-            viewStyles={{
-              marginBottom: moderateScaleVertical(16),
-              marginHorizontal: moderateScale(16),
-            }}
-          />
-          <HomeLoader
-            width={width / 1.1}
-            height={24}
-            rectHeight={24}
-            rectWidth={width / 1.1}
-            viewStyles={{
-              marginBottom: moderateScaleVertical(16),
-              marginHorizontal: moderateScale(16),
-            }}
-          />
-        </WrapperContainer>
-      );
+      let ed = data.replace(/^([1-9]\/|[2-9])$/g, '0$1/' // To handle 3/ > 03/
+      ).replace(
+        /^(0[1-9]{1}|1[0-2]{1})$/g, '$1/' // 11 > 11/
+      ).replace(
+        /^([0-1]{1})([3-9]{1})$/g, '0$1/$2' // 13 > 01/3
+      ).replace(
+        /^(\d)\/(\d\d)$/g, '0$1/$2' // To handle 1/11 > 01/11
+      ).replace(
+        /^(0?[1-9]{1}|1[0-2]{1})([0-9]{2})$/g, '$1/$2' // 141 > 01/41
+      ).replace(
+        /^([0]{1,})\/|[0]{1,}$/g, '0' // To handle 0/ > 0 and 00 > 0
+      ).replace(
+        /[^\d\/]|^[\/]{0,}$/g, '' // To allow only numbers and /
+      ).replace(
+        /\/\//g, '/').trim()
+      setExpiryDate(ed)
     }
-
-    const mainView = () => {
-      return (
-        <>
-          <ScrollView
-            style={{
-              marginHorizontal: moderateScaleVertical(20),
-              marginTop: moderateScaleVertical(10),
-            }}>
-            {!isEmpty(payementMethods)
-              ? payementMethods.map((item, index) => {
-                console.log(item, 'item>>>>');
-                return (
-                  <>
-                    <Animatable.View
-                      // animation={'slideInUp'}
-                      // duration={200}
-                      style={{ flex: 1 }}>
-                      <TouchableOpacity
-                        onPress={() => selectPaymentMethod(item, index)}
-                        key={index}
-                        style={[
-                          styles.caseOnDeliveryView,
-                          //  {...getAndCheckStyle(item)}
-                        ]}>
-                        <Image
-                          source={
-                            selectedPaymentMethod &&
-                              selectedPaymentMethod?.id == item.id
-                              ? imagePath.radioActive
-                              : imagePath.radioInActive
-                          }
-                        />
-                        {/* {strings.CASE_ON_DELIVERY} */}
-                        <Text
-                          style={
-                            isDarkMode
-                              ? [
-                                styles.caseOnDeliveryText,
-                                { color: MyDarkTheme.colors.text },
-                              ]
-                              : styles.caseOnDeliveryText
-                          }>
-                          {item?.title_lng ? item?.title_lng : item?.title}
-                        </Text>
-                      </TouchableOpacity>
-                      {!!(
-                        selectedPaymentMethod &&
-                        selectedPaymentMethod?.id == item.id &&
-                        selectedPaymentMethod?.off_site == 0 &&
-                        selectedPaymentMethod?.id === 4
-                      ) && (
-                          <View>
-                            <CardField
-                              postalCodeEnabled={false}
-                              placeholder={{
-                                number: '4242 4242 4242 4242',
-                              }}
-                              cardStyle={{
-                                backgroundColor: colors.white,
-                                textColor: colors.black,
-                              }}
-                              style={{
-                                width: '100%',
-                                height: 50,
-                                marginVertical: 10,
-                              }}
-                              onCardChange={(cardDetails) => {
-                                _onChangeStripeData(cardDetails);
-                              }}
-                              onFocus={(focusedField) => {
-                                console.log('focusField', focusedField);
-                              }}
-                              onBlur={() => {
-                                Keyboard.dismiss();
-                              }}
-                            />
-                          </View>
-                        )}
-                      {!!(
-                        selectedPaymentMethod &&
-                        selectedPaymentMethod?.id == item.id &&
-                        selectedPaymentMethod?.off_site == 1 &&
-                        selectedPaymentMethod?.id === 49
-                      ) && (
-                          <PaymentGateways
-                            isCardNumber={cardNumber}
-                            cvc={cvc}
-                            expiryDate={expiryDate}
-                            onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                            onChangeText={(data) => checkInputHandler('Card Number', data)}
-                            onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                          />
-                        )}
-                      {!!(
-                        selectedPaymentMethod &&
-                        selectedPaymentMethod?.id == item.id &&
-                        selectedPaymentMethod?.off_site == 0 &&
-                        selectedPaymentMethod?.id === 17
-                      ) && (
-                          <CheckoutPaymentView
-                            cardTokenized={(e) => {
-                              updateState({ isLoading: false });
-                              if (e.token) {
-                                onSelectPayment({
-                                  selectedPaymentMethod,
-                                  cardInfo: e.token,
-                                });
-                                paymentModalClose();
-                              }
-                            }}
-                            cardTokenizationFailed={(e) => {
-                              setTimeout(() => {
-                                updateState({ isLoading: false });
-                                alert(strings.INVALID_CARD_DETAILS);
-                                // showError(strings.INVALID_CARD_DETAILS);
-                              }, 1000);
-                            }}
-                            onPressSubmit={(res) => {
-                              updateState({
-                                isLoading: true,
-                              });
-                            }}
-                            btnTitle={strings.SELECT}
-                            isSubmitBtn
-                            submitBtnStyle={{
-                              width: '100%',
-                              height: moderateScale(45),
-                            }}
-                          />
-                        )}
-                    </Animatable.View>
-                    <View style={{ marginBottom: moderateScaleVertical(16) }} />
-                  </>
-                );
-              })
-              : !isLoading && (
-                <Text style={{ textAlign: 'center' }}>
-                  {strings.NO_PAYMENT_METHOD}
-                </Text>
-              )}
-          </ScrollView>
-
-          <View
-            style={{
-              marginHorizontal: moderateScaleVertical(20),
-              marginBottom:
-                keyboardHeight == 0
-                  ? keyboardHeight
-                  : moderateScale(keyboardHeight - 80),
-            }}>
-            {selectedPaymentMethod == null || selectedPaymentMethod.id != 17 ? (
-              <GradientButton
-                onPress={selectPaymentOption}
-                marginTop={moderateScaleVertical(10)}
-                marginBottom={height / 9}
-                btnText={strings.SELECT}
-                indicator={btnLoader}
-                indicatorColor={colors.white}
-              />
-            ) : (
-              <></>
-            )}
-          </View>
-        </>
-      );
-    };
-
-    return (
-      <WrapperContainer
-        bgColor={
-          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-        }
-        statusBarColor={colors.backgroundGrey}
-        source={loaderOne}
-      // isLoadingB={isLoading}
-      >
-        <Header
-          leftIcon={
-            appStyle?.homePageLayout === 2
-              ? imagePath.backArrow
-              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-                ? imagePath.icBackb
-                : imagePath.back
-          }
-          onPressLeft={paymentModalClose}
-          centerTitle={strings.PAYMENT}
-          headerStyle={
-            isDarkMode
-              ? { backgroundColor: MyDarkTheme.colors.background }
-              : { backgroundColor: colors.backgroundGrey }
-          }
-        />
-        <View style={{ height: 1, backgroundColor: colors.borderLight }} />
-
-        <StripeProvider
-          publishableKey={preferences?.stripe_publishable_key}
-          merchantIdentifier="merchant.identifier">
-          {mainView()}
-        </StripeProvider>
-      </WrapperContainer>
-    );
+    if(type === 'CVC'){
+      setCvc(data)
+    }
   }
+
+
+const _onChangeStripeData = (cardDetails) => {
+  console.log('_onChangeStripeData_onChangeStripeData', cardDetails);
+  if (cardDetails?.complete) {
+    // updateState({
+    //   cardInfo: {
+    //     brand: cardDetails.brand,
+    //     complete: true,
+    //     expiryMonth: cardDetails?.expiryMonth,
+    //     expiryYear: cardDetails?.expiryYear,
+    //     last4: cardDetails?.last4,
+    //     // name:userData?.name
+    //     // postalCode: cardDetails?.postalCode,
+    //   },
+    // });
+    updateState({
+      cardInfo: cardDetails,
+    });
+  } else {
+    updateState({ cardInfo: null });
+  }
+};
+
+if (isLoading) {
+  return (
+    <WrapperContainer
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
+      statusBarColor={colors.backgroundGrey}
+      source={loaderOne}
+    // isLoadingB={isLoading}
+    >
+   
+      <View
+        style={{
+          height: 1,
+          backgroundColor: colors.borderLight,
+        }}
+      />
+
+      <HomeLoader
+        width={width / 1.1}
+        height={24}
+        rectHeight={24}
+        rectWidth={width / 1.1}
+        viewStyles={{
+          marginHorizontal: moderateScale(16),
+          marginVertical: moderateScaleVertical(16),
+        }}
+      />
+      <HomeLoader
+        width={width / 1.1}
+        height={24}
+        rectHeight={24}
+        rectWidth={width / 1.1}
+        viewStyles={{
+          marginHorizontal: moderateScale(16),
+          marginBottom: moderateScaleVertical(16),
+        }}
+      />
+      <HomeLoader
+        width={width / 1.1}
+        height={24}
+        rectHeight={24}
+        rectWidth={width / 1.1}
+        viewStyles={{
+          marginBottom: moderateScaleVertical(16),
+          marginHorizontal: moderateScale(16),
+        }}
+      />
+      <HomeLoader
+        width={width / 1.1}
+        height={24}
+        rectHeight={24}
+        rectWidth={width / 1.1}
+        viewStyles={{
+          marginBottom: moderateScaleVertical(16),
+          marginHorizontal: moderateScale(16),
+        }}
+      />
+    </WrapperContainer>
+  );
+}
+
+const mainView = () => {
+  return (
+    <>
+      <ScrollView
+        style={{
+          marginHorizontal: moderateScaleVertical(20),
+          marginTop: moderateScaleVertical(10),
+        }}>
+        {!isEmpty(payementMethods)
+          ? payementMethods.map((item, index) => {
+            console.log(item, 'item>>>>');
+            return (
+              <>
+                <Animatable.View
+                  // animation={'slideInUp'}
+                  // duration={200}
+                  style={{ flex: 1 }}>
+                  <TouchableOpacity
+                    onPress={() => selectPaymentMethod(item, index)}
+                    key={index}
+                    style={[
+                      styles.caseOnDeliveryView,
+                      //  {...getAndCheckStyle(item)}
+                    ]}>
+                    <Image
+                      source={
+                        selectedPaymentMethod &&
+                          selectedPaymentMethod?.id == item.id
+                          ? imagePath.radioActive
+                          : imagePath.radioInActive
+                      }
+                    />
+                    {/* {strings.CASE_ON_DELIVERY} */}
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                            styles.caseOnDeliveryText,
+                            { color: MyDarkTheme.colors.text },
+                          ]
+                          : styles.caseOnDeliveryText
+                      }>
+                      {item?.title_lng ? item?.title_lng : item?.title}
+                    </Text>
+                  </TouchableOpacity>
+                  {!!(
+                    selectedPaymentMethod &&
+                    selectedPaymentMethod?.id == item.id &&
+                    selectedPaymentMethod?.off_site == 0 &&
+                    selectedPaymentMethod?.id === 4
+                  ) && (
+                      <View>
+                        <CardField
+                          postalCodeEnabled={false}
+                          placeholder={{
+                            number: '4242 4242 4242 4242',
+                          }}
+                          cardStyle={{
+                            backgroundColor: colors.white,
+                            textColor: colors.black,
+                          }}
+                          style={{
+                            width: '100%',
+                            height: 50,
+                            marginVertical: 10,
+                          }}
+                          onCardChange={(cardDetails) => {
+                            _onChangeStripeData(cardDetails);
+                          }}
+                          onFocus={(focusedField) => {
+                            console.log('focusField', focusedField);
+                          }}
+                          onBlur={() => {
+                            Keyboard.dismiss();
+                          }}
+                        />
+                      </View>
+                    )}
+                  {!!(
+                    selectedPaymentMethod &&
+                    selectedPaymentMethod?.id == item.id &&
+                    selectedPaymentMethod?.off_site == 1 &&
+                    selectedPaymentMethod?.id === 49
+                  ) && (
+                      <PaymentGateways
+                        isCardNumber={cardNumber}
+                        cvc={cvc}
+                        expiryDate={expiryDate}
+                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                        onChangeText={(data) => checkInputHandler('Card Number', data)}
+                        onChangeCvcText={(data) => checkInputHandler('CVC',data)}
+                      />
+                    )}
+                  {!!(
+                    selectedPaymentMethod &&
+                    selectedPaymentMethod?.id == item.id &&
+                    selectedPaymentMethod?.off_site == 0 &&
+                    selectedPaymentMethod?.id === 17
+                  ) && (
+                      <CheckoutPaymentView
+                        cardTokenized={(e) => {
+                          updateState({ isLoading: false });
+                          if (e.token) {
+                            onSelectPayment({
+                              selectedPaymentMethod,
+                              cardInfo: e.token,
+                            });
+                            paymentModalClose();
+                          }
+                        }}
+                        cardTokenizationFailed={(e) => {
+                          setTimeout(() => {
+                            updateState({ isLoading: false });
+                            alert(strings.INVALID_CARD_DETAILS);
+                            // showError(strings.INVALID_CARD_DETAILS);
+                          }, 1000);
+                        }}
+                        onPressSubmit={(res) => {
+                          updateState({
+                            isLoading: true,
+                          });
+                        }}
+                        btnTitle={strings.SELECT}
+                        isSubmitBtn
+                        submitBtnStyle={{
+                          width: '100%',
+                          height: moderateScale(45),
+                        }}
+                      />
+                    )}
+                </Animatable.View>
+                <View style={{ marginBottom: moderateScaleVertical(16) }} />
+              </>
+            );
+          })
+          : !isLoading && (
+            <Text style={{ textAlign: 'center' }}>
+              {strings.NO_PAYMENT_METHOD}
+            </Text>
+          )}
+      </ScrollView>
+
+      <View
+        style={{
+          marginHorizontal: moderateScaleVertical(20),
+          marginBottom:
+            keyboardHeight == 0
+              ? keyboardHeight
+              : moderateScale(keyboardHeight - 80),
+        }}>
+        {selectedPaymentMethod == null || selectedPaymentMethod.id != 17 ? (
+          <GradientButton
+            onPress={selectPaymentOption}
+            marginTop={moderateScaleVertical(10)}
+            marginBottom={height / 9}
+            btnText={strings.SELECT}
+            indicator={btnLoader}
+            indicatorColor={colors.white}
+          />
+        ) : (
+          <></>
+        )}
+      </View>
+    </>
+  );
+};
+
+return (
+  <WrapperContainer
+    bgColor={
+      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+    }
+    statusBarColor={colors.backgroundGrey}
+  isLoading={isLoading}
+  >
+   
+    <View style={{ height: 1, backgroundColor: colors.borderLight }} />
+
+    <StripeProvider
+      publishableKey={preferences?.stripe_publishable_key}
+      merchantIdentifier="merchant.identifier">
+      {mainView()}
+    </StripeProvider>
+  </WrapperContainer>
+);
 }
 
 const stylesFun = ({ fontFamily, themeColors }) => {

@@ -139,16 +139,16 @@ export default function ResetPassword({navigation, route}) {
               secureTextEntry={true}
             />
 
-<ButtonWithLoader
+{/* <ButtonWithLoader
               btnText={strings.RESET_PASSWORD}
               btnStyle={{ marginTop: moderateScaleVertical(10) }}
               onPress={onResetPassword}
-            />
-            {/* <GradientButton
+            /> */}
+            <GradientButton
               onPress={onResetPassword}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.RESET_PASSWORD}
-            /> */}
+            />
           </View>
         </View>
       </KeyboardAwareScrollView>

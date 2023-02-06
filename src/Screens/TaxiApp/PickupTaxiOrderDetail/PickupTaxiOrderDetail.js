@@ -26,7 +26,7 @@ import colors from "../../../styles/colors";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import DeviceInfo, { getBundleId } from "react-native-device-info";
-import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, { Marker, Polyline, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from "react-native-maps-directions";
 import {
   getImageUrl,
@@ -88,6 +88,7 @@ import GradientButton from '../../../Components/GradientButton';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
 import Header from '../../../Components/Header';
+import { Platform } from "react-native";
 
 export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
@@ -1319,7 +1320,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         <View style={{ flex: 1 }}>
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
               style={{ height: height / 1.8, width: "100%" }}
               initialRegion={region}
               ref={mapRef}

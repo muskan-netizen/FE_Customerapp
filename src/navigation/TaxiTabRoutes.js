@@ -49,6 +49,7 @@ export default function TaxiTabRoutes(props) {
   return (
     <Tab.Navigator
       backBehavior={'initialRoute'}
+      screenOptions={{headerShown:false}}
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:

@@ -1,10 +1,10 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {MyOrders, OrderDetail} from '../Screens';
 import navigationStrings from './navigationStrings';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 export default function ({navigation}) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
 

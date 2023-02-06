@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
+import {cloneDeep} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
@@ -15,6 +16,7 @@ import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import GradientButton from '../../Components/GradientButton';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -533,13 +535,12 @@ export default function Login3({navigation}) {
               </Text>
             </View>
           )}
-          {/* <GradientButton
+          <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(18)}}
             colorsArray={['#FC7049', '#FD312C']}
             onPress={_onLogin}
             btnText={strings.SIGN_IN}
-            textStyle={{color: isDarkMode? colors.white: 'black'}}
-          /> */}
+          />
           <TouchableOpacity
             onPress={() => setwithEmail(!withEmail)}
             activeOpacity={0.7}

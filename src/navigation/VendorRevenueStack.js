@@ -1,9 +1,9 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import {VendorList, VendorRevenue} from '../Screens';
 import navigationStrings from './navigationStrings';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 export default function () {
   return (
     <Stack.Navigator

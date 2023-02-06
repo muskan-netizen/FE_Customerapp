@@ -708,17 +708,17 @@ export default function Signup4({ navigation }) {
               </View>
             )}
 
-            <ButtonWithLoader
+            {/* <ButtonWithLoader
               btnText={strings.CONTINUE}
               btnStyle={{ marginTop: moderateScaleVertical(10) }}
               onPress={onSignup}
-            />
+            /> */}
 
-            {/* <GradientButton
+            <GradientButton
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.CONTINUE}
-            /> */}
+            />
           </View>
         </View>
       </KeyboardAwareScrollView>

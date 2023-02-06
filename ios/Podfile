@@ -15,11 +15,9 @@ abstract_target 'available_pods' do
   )
 
 
-   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
   #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
  
 
 ##RoyoOrder Target
@@ -31,7 +29,6 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
-  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
 
 end
 

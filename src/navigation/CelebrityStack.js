@@ -1,4 +1,4 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {
@@ -24,7 +24,7 @@ import {
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 export default function () {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
   const checkSearchProductVendorItemLayout = (layout) => {

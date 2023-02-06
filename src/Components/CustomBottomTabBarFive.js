@@ -22,7 +22,7 @@ const CustomBottomTabBarFive = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
 

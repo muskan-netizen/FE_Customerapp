@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   BackHandler,
+  Platform,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
@@ -26,7 +27,7 @@ import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {Marker, Callout, PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useIsFocused} from '@react-navigation/native';
 
 import Communications from 'react-native-communications';
@@ -495,7 +496,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         {!isLoading && (
           <>
             <MapView
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
               style={styles.map}
               region={region}
               // initialRegion={region}

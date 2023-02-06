@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar, View} from 'react-native';
 import colors from '../styles/colors';
-// import Loader from './Loader';
+import Loader from './Loader';
 import {useSelector} from 'react-redux';
 import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
@@ -35,7 +35,7 @@ const WrapperContainer = ({
         barStyle={isDarkMode ? 'light-content' : barStyle}
       />
       <View style={{backgroundColor: bgColor, flex: 1}}>{children}</View>
-      {/* <Loader isLoading={isLoading} withModal={withModal} /> */}
+      <Loader isLoading={isLoading} withModal={withModal} />
     </SafeAreaView>
   );
 };

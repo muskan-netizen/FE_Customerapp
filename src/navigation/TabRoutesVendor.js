@@ -18,6 +18,7 @@ export default function TabRoutesVendor(props) {
   return (
     <Tab.Navigator
       backBehavior={'initialRoute'}
+      screenOptions={{headerShown:false}}
       tabBar={(props) => {
         // return <CustomBottomTabBarTwo {...props} />;
         return <CustomBottomTabBar {...props} />;

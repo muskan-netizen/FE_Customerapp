@@ -1591,14 +1591,14 @@ export default function WebLinks({navigation, route}) {
                   </TouchableOpacity>
                 </View>
 
-                {/* <GradientButton
+                <GradientButton
                   textStyle={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
                   }}
                   onPress={_onSubmit}
                   marginTop={moderateScaleVertical(5)}
                   btnText={strings.SUBMIT}
-                /> */}
+                />
                 <View
                   style={{
                     height: moderateScaleVertical(24),
@@ -2154,14 +2154,14 @@ export default function WebLinks({navigation, route}) {
                 renderItem={_renderFields}
               />
 
-              {/* <GradientButton
+              <GradientButton
                 textStyle={{
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
                 }}
                 onPress={_onSubmit}
                 marginTop={moderateScaleVertical(10)}
                 btnText={strings.SUBMIT}
-              /> */}
+              />
               <View
                 style={{
                   height: moderateScaleVertical(24),

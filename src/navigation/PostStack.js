@@ -1,9 +1,9 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import navigationStrings from './navigationStrings';
 import * as Screens from '../Screens';
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function () {
   return (

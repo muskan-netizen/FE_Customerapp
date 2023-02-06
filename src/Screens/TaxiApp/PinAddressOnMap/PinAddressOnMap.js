@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Platform,
 } from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import stylesFun from './styles';
@@ -14,6 +15,7 @@ import MapView, {
   AnimatedRegion,
   Marker,
   PROVIDER_GOOGLE,
+  PROVIDER_DEFAULT
 } from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import imagePath from '../../../constants/imagePath';
@@ -261,7 +263,8 @@ export default function HomeScreenTaxi({navigation, route}) {
     <>
       <MapView
         ref={mapRef}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
         style={styles.map}
         // region={region}
         initialRegion={region}

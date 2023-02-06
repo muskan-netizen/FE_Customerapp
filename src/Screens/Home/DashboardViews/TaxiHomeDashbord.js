@@ -10,6 +10,7 @@ import {
   View,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
@@ -33,6 +34,7 @@ import {
 import MapView, {
   AnimatedRegion,
   Marker,
+  PROVIDER_DEFAULT,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import {
@@ -889,7 +891,7 @@ export default function TaxiHomeDashbord({
                 {
                   <MapView
                     ref={mapRef}
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                     // customMapStyle={mapStyleGrey}
                     style={{
                       ...StyleSheet.absoluteFillObject,
@@ -972,7 +974,7 @@ export default function TaxiHomeDashbord({
           <View style={{ flex: 1 }}>
             <MapView
               ref={mapRef}
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
               // customMapStyle={mapStyleGrey}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey

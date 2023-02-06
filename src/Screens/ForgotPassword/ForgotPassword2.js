@@ -118,18 +118,18 @@ export default function ForgotPassword2({ navigation }) {
               containerStyle={{ marginBottom: moderateScale(20) }}
             />
 
-            <ButtonWithLoader
+            {/* <ButtonWithLoader
               btnText={strings.FORGOT_PASSWORD}
               btnStyle={{ marginTop: moderateScaleVertical(10) }}
               onPress={onForget}
-            />
+            /> */}
             
 
-            {/* <GradientButton
+            <GradientButton
               onPress={onForget}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.FORGOT_PASSWORD}
-            /> */}
+            />
             {/* <PhoneNumberInput /> */}
           </View>
         </View>

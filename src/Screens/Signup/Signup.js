@@ -945,16 +945,16 @@ export default function Signup({ navigation }) {
               </View>
             </View>
 
-            <ButtonWithLoader
+            {/* <ButtonWithLoader
               btnText={strings.SIGNUP_AN_ACCOUNT}
               btnStyle={{marginTop: moderateScaleVertical(10)}}
               onPress={onSignup}
-            />
-            {/* <GradientButton
+            /> */}
+            <GradientButton
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.SIGNUP_AN_ACCOUNT}
-            /> */}
+            />
           </View>
           <View style={styles.bottomContainer}>
             <Text

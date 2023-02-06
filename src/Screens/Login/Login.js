@@ -645,18 +645,18 @@ export default function Login({ navigation }) {
           </View>
         )}
 
-        <ButtonWithLoader
+        {/* <ButtonWithLoader
           btnText={strings.LOGIN_ACCOUNT}
           btnStyle={{ marginTop: moderateScaleVertical(10) }}
           onPress={_onLogin}
-        />
+        /> */}
 
-        {/* 
+        
         <GradientButton
           containerStyle={{marginTop: moderateScaleVertical(10)}}
           onPress={_onLogin}
           btnText={strings.LOGIN_ACCOUNT}
-        /> */}
+        />
         <View style={{ marginTop: moderateScaleVertical(30) }}>
           {(!!google_login ||
             !!fb_login ||

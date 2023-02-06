@@ -22,7 +22,7 @@ const CustomBottomTabBarTwo = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot || {});
   console.log(themeColors, "themeColorsthemeColorsthemeColors");
 
   const fontFamily = appStyle?.fontSizeData;

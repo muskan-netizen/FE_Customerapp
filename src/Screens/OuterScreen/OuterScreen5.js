@@ -437,17 +437,9 @@ export default function OuterScreen5({ navigation }) {
             />
           )}
 
-          <ButtonWithLoader
-            btnText={'Create new Account'}
-            btnStyle={{ marginTop: moderateScaleVertical(10) }}
-            onPress={moveToNewScreen(
-              getValuebyKeyInArray('is_phone_signup', additional_preferences)
-                ? navigationStrings.LOGIN
-                : navigationStrings.SIGN_UP,
-            )}
-          />
+      
 
-          {/* <GradientButton
+          <GradientButton
             containerStyle={{
               marginTop: moderateScaleVertical(100),
             }}
@@ -465,7 +457,7 @@ export default function OuterScreen5({ navigation }) {
                 ? navigationStrings.LOGIN
                 : navigationStrings.SIGN_UP,
             )}
-          /> */}
+          />
 
           <TouchableOpacity
             onPress={() => onGuestLogin()}

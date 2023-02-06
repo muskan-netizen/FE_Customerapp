@@ -48,6 +48,7 @@ export default function TabRoutesP2p(props) {
 
   return (
     <Tab.Navigator
+    screenOptions={{headerShown:false}}
       backBehavior={navigationStrings.HOMESTACK}
       tabBar={(props) => {
         if (showBottomBar_) {

@@ -160,18 +160,18 @@ export default function ForgotPassword({ navigation }) {
               value={email}
               keyboardType={'email-address'}
             />
-
+{/* 
             <ButtonWithLoader
               btnText={strings.FORGOT_PASSWORD}
               btnStyle={{ marginTop: moderateScaleVertical(10) }}
               onPress={onForget}
-            />
+            /> */}
 
-            {/* <GradientButton
+            <GradientButton
               onPress={onForget}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.FORGOT_PASSWORD}
-            /> */}
+            />
             {/* <PhoneNumberInput /> */}
           </View>
         </View>

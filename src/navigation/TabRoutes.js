@@ -1,5 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+
+
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
@@ -16,12 +18,15 @@ import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import { moderateScale, textScale } from '../styles/responsiveSize';
 import { appIds } from '../utils/constants/DynamicAppKeys';
+
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
 import MyOrdersStack from './MyOrdersStack';
+
+
 import navigationStrings from './navigationStrings';
 import SearchProductVendorStack from './SearchProductVendorStack';
 
@@ -30,12 +35,10 @@ const Tab = createBottomTabNavigator();
 let showBottomBar_ = true;
 
 export default function TabRoutes(props) {
-  const [showBottomBar, setShowBottomBar] = useState(true);
-  const { cartItemCount } = useSelector((state) => state?.cart);
-  const { appMainData } = useSelector((state) => state?.home);
-  const { appStyle, appData, redirectedFrom } = useSelector(
-    (state) => state?.initBoot,
-  );
+
+  const { cartItemCount } = useSelector((state) => state?.cart || {});
+  const { appMainData } = useSelector((state) => state?.home) || {};
+  const { appStyle, appData, redirectedFrom } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
 
@@ -136,6 +139,7 @@ export default function TabRoutes(props) {
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
+      screenOptions={{headerShown:false}}
       tabBar={(props) => {
         if (showBottomBar_) {
           switch (appStyle?.tabBarLayout) {

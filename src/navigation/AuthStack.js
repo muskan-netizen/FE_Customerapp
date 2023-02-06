@@ -7,6 +7,8 @@ import {
   Signup,
   Signup4,
   VerifyAccount,
+  OuterScreen5,
+  OuterScreen,
   WebLinks
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
@@ -15,13 +17,11 @@ import navigationStrings from './navigationStrings';
 export default function (Stack, appStyle) {
   return (
     <>
-
-      {/* <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
         component={appStyle?.homePageLayout === 8 ? OuterScreen5 : OuterScreen}
         options={{headerShown: false}}
-      /> */}
-
+      />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
         component={appStyle?.homePageLayout === 8 ? Signup4 : Signup}
@@ -62,6 +62,7 @@ export default function (Stack, appStyle) {
         component={VerifyAccount}
         options={{ headerShown: false }}
       />
+     
     </>
   );
 }

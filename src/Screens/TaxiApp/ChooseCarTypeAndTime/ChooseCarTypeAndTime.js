@@ -10,12 +10,13 @@ import {
   TouchableOpacity,
   View,
   Modal,
+  Platform,
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import * as RNLocalize from 'react-native-localize';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, { PROVIDER_GOOGLE, Marker, PROVIDER_DEFAULT } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import RazorpayCheckout from 'react-native-razorpay';
 import { useSelector } from 'react-redux';
@@ -1363,7 +1364,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         {!!paramData?.location.length > 0 && (
           <MapView
             ref={mapRef}
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
             customMapStyle={
               appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
             }
