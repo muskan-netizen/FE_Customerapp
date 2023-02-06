@@ -133,8 +133,7 @@ const HomeServiceVariantAddons = ({
   const isDarkMode = theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;

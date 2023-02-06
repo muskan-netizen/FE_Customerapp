@@ -38,7 +38,7 @@ export default function LaundryAvailableVendors({navigation, route}) {
     themeColors,
   } = useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;

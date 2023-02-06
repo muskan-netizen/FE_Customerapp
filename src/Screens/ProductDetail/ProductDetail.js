@@ -86,7 +86,7 @@ export default function ProductDetail({ route, navigation }) {
     digit_after_decimal,
     seller_sold_title,
     seller_platform_logo,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
   const { productListData } = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });

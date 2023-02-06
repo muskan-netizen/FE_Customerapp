@@ -9,6 +9,7 @@
 #import <React/RCTLinkingManager.h> //deeplinking
 #import <Firebase.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <CodePush/CodePush.h>
 
 @import GooglePlaces;
 @import GoogleMaps;
@@ -74,7 +75,7 @@
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
-return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+return [CodePush bundleURL];
 #endif
 }
 

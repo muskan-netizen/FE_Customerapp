@@ -124,7 +124,7 @@ export default function Cart2({navigation, route}) {
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const selectedLanguage = languages?.primary_language?.sort_code;
 
   const fontFamily = appStyle?.fontSizeData;

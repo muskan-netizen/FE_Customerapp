@@ -76,7 +76,7 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
             />
           ) : null}
         </View>
-        {appData?.profile?.preferences?.is_hyperlocal ? (
+        {!!appData?.profile?.preferences?.is_hyperlocal ? (
           <View style={{flex: 1}}>
             <TouchableOpacity
               activeOpacity={1}

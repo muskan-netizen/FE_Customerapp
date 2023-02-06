@@ -42,8 +42,7 @@ const ProductCard = ({
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
   const { themeColors, themeLayouts } = currentTheme;

@@ -72,7 +72,7 @@ export default function Addaddress({navigation, route}) {
   } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { book_for_friend } = appData?.profile?.preferences;
+  const { book_for_friend } = appData?.profile?.preferences || {};
   console.log(appData, "paramDataparamData");
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({

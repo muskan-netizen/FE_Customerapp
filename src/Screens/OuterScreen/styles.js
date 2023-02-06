@@ -63,10 +63,10 @@ export default ({fontFamily, themeColors}) => {
     },
     guestBtn: {
       marginTop: moderateScaleVertical(20),
-      backgroundColor: getColorCodeWithOpactiyNumber(
-        themeColors.primary_color.substr(1),
-        20,
-      ),
+      // backgroundColor: getColorCodeWithOpactiyNumber(
+      //   themeColors?.primary_color.substr(1),
+      //   20,
+      // ),
       borderWidth: 0,
     },
     orText: {

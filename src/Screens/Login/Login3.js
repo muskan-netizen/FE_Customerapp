@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
-import {cloneDeep} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
@@ -16,9 +15,7 @@ import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -57,8 +54,7 @@ DeviceCountry.getCountryCode()
   .catch((e) => {
     console.log(e);
   });
-// import {mobile} from 'is_js';
-import {useNavigation} from '@react-navigation/native';
+
 import RNOtpVerify from 'react-native-otp-verify';
 import {setUserData} from '../../utils/utils';
 import {getValuebyKeyInArray} from '../../utils/commonFunction';
@@ -73,7 +69,7 @@ export default function Login3({navigation}) {
     appStyle,
     themeColor,
     themeToggle,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
 
   const {
     apple_login,
@@ -81,7 +77,7 @@ export default function Login3({navigation}) {
     twitter_login,
     google_login,
     additional_preferences,
-  } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences);
+  } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
   const darkthemeusingDevice = useDarkMode();
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -397,8 +393,7 @@ export default function Login3({navigation}) {
 
   return (
     <WrapperContainer
-      isLoadingB={isLoading}
-      source={loaderOne}
+      isLoading={isLoading}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
@@ -538,12 +533,13 @@ export default function Login3({navigation}) {
               </Text>
             </View>
           )}
-          <GradientButton
+          {/* <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(18)}}
             colorsArray={['#FC7049', '#FD312C']}
             onPress={_onLogin}
             btnText={strings.SIGN_IN}
-          />
+            textStyle={{color: isDarkMode? colors.white: 'black'}}
+          /> */}
           <TouchableOpacity
             onPress={() => setwithEmail(!withEmail)}
             activeOpacity={0.7}

@@ -40,8 +40,7 @@ const ProductCard2 = ({
   const {appStyle, themeColors, appData} = useSelector(
     (state) => state?.initBoot,
   );
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
 

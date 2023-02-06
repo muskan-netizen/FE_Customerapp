@@ -14,7 +14,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -37,9 +36,7 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 
 export default function VerifyAccount({navigation, route}) {
-  const {themeColor, themeToggle, appData, appStyle, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {themeColor, themeToggle, appData, appStyle, themeColors} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
 
   const darkthemeusingDevice = useDarkMode();
@@ -372,8 +369,7 @@ export default function VerifyAccount({navigation, route}) {
 
   return (
     <WrapperContainer
-      isLoadingB={isLoading}
-      source={loaderOne}
+      isLoading={isLoading}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity

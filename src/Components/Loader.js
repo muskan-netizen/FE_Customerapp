@@ -6,8 +6,7 @@ import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 
 const LoadingComponent = ({loaderStyle = {}}) => {
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const {themeColors, appStyle} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
 

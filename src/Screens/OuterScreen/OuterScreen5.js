@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   I18nManager,
   Image,
@@ -8,23 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings, {changeLaguage} from '../../constants/lang/index';
+import strings, { changeLaguage } from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {hitSlopProp} from '../../styles/commonStyles';
+import { hitSlopProp } from '../../styles/commonStyles';
 import RNRestart from 'react-native-restart';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 
 import {
   fbLogin,
@@ -32,24 +31,24 @@ import {
   handleAppleLogin,
   _twitterSignIn,
 } from '../../utils/socialLogin';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
-import {setItem, setUserData} from '../../utils/utils';
-import {isEmpty} from 'lodash';
-import {getValuebyKeyInArray} from '../../utils/commonFunction';
-import {color} from 'react-native-reanimated';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { setItem, setUserData } from '../../utils/utils';
+import { isEmpty } from 'lodash';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
+import { color } from 'react-native-reanimated';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-export default function OuterScreen5({navigation}) {
+export default function OuterScreen5({ navigation }) {
   const {
     appData,
     currencies,
@@ -60,7 +59,7 @@ export default function OuterScreen5({navigation}) {
     themeToggle,
     themeColor,
     redirectedFrom,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -73,7 +72,7 @@ export default function OuterScreen5({navigation}) {
   });
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
 
   const {
     getLanguage,
@@ -88,14 +87,14 @@ export default function OuterScreen5({navigation}) {
     twitter_login,
     google_login,
     additional_preferences,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
     let userStaticName = DeviceInfo.getBundleId();
@@ -135,7 +134,7 @@ export default function OuterScreen5({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (!!res.data) {
           checkEmailPhoneVerified(res?.data);
           getCartDetail();
@@ -172,7 +171,7 @@ export default function OuterScreen5({navigation}) {
 
   //error handling
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.error || error?.message);
   };
 
@@ -191,12 +190,12 @@ export default function OuterScreen5({navigation}) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     handleAppleLogin()
       .then((res) => {
         _saveSocailLogin(res, 'apple');
@@ -206,36 +205,36 @@ export default function OuterScreen5({navigation}) {
       })
       .catch((err) => {
         console.log(err, 'error');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     googleLogin()
       .then((res) => {
         if (res?.user) {
           console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   const _responseInfoCallback = (error, result) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     if (error) {
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     } else {
       if (result && result?.id) {
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       }
     }
   };
@@ -252,11 +251,11 @@ export default function OuterScreen5({navigation}) {
         if (res) {
           _saveSocailLogin(res, 'twitter');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
@@ -267,11 +266,11 @@ export default function OuterScreen5({navigation}) {
   };
 
   const _selectLang = () => {
-    updateState({isSelectLanguageModal: true});
+    updateState({ isSelectLanguageModal: true });
   };
 
   const _onBackdropPress = () => {
-    updateState({isSelectLanguageModal: false});
+    updateState({ isSelectLanguageModal: false });
   };
 
   useEffect(() => {
@@ -353,15 +352,15 @@ export default function OuterScreen5({navigation}) {
   };
 
   const _updateLang = (selectedLangTitle) => {
-    updateState({isSelectLanguageModal: false});
+    updateState({ isSelectLanguageModal: false });
     updateLanguage(selectedLangTitle);
   };
 
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+      isLoading={isLoading}
+    >
       {/* <Image source={imagePath.nature} /> */}
 
       {shortCodeStatus ? (
@@ -383,11 +382,11 @@ export default function OuterScreen5({navigation}) {
             justifyContent: 'center',
           }}
           onPressRightTxt={_selectLang}
-          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
           headerStyle={
             isDarkMode
-              ? {backgroundColor: MyDarkTheme.colors.background}
-              : {backgroundColor: colors.white}
+              ? { backgroundColor: MyDarkTheme.colors.background }
+              : { backgroundColor: colors.white }
           }
         />
       ) : (
@@ -408,11 +407,11 @@ export default function OuterScreen5({navigation}) {
             justifyContent: 'center',
           }}
           onPressRightTxt={_selectLang}
-          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
           headerStyle={
             isDarkMode
-              ? {backgroundColor: MyDarkTheme.colors.background}
-              : {backgroundColor: colors.white}
+              ? { backgroundColor: MyDarkTheme.colors.background }
+              : { backgroundColor: colors.white }
           }
         />
       )}
@@ -437,7 +436,18 @@ export default function OuterScreen5({navigation}) {
               }}
             />
           )}
-          <GradientButton
+
+          <ButtonWithLoader
+            btnText={'Create new Account'}
+            btnStyle={{ marginTop: moderateScaleVertical(10) }}
+            onPress={moveToNewScreen(
+              getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                ? navigationStrings.LOGIN
+                : navigationStrings.SIGN_UP,
+            )}
+          />
+
+          {/* <GradientButton
             containerStyle={{
               marginTop: moderateScaleVertical(100),
             }}
@@ -455,7 +465,7 @@ export default function OuterScreen5({navigation}) {
                 ? navigationStrings.LOGIN
                 : navigationStrings.SIGN_UP,
             )}
-          />
+          /> */}
 
           <TouchableOpacity
             onPress={() => onGuestLogin()}
@@ -474,11 +484,11 @@ export default function OuterScreen5({navigation}) {
             </Text>
           </TouchableOpacity>
 
-          <View style={{marginTop: moderateScaleVertical(70)}}>
+          <View style={{ marginTop: moderateScaleVertical(70) }}>
             {!!google_login ||
-            !!fb_login ||
-            !!twitter_login ||
-            !!apple_login ? (
+              !!fb_login ||
+              !!twitter_login ||
+              !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
                 <Text
@@ -504,21 +514,21 @@ export default function OuterScreen5({navigation}) {
               {!!google_login && (
                 <TouchableOpacity
                   onPress={() => openGmailLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.gmail} />
                 </TouchableOpacity>
               )}
               {!!fb_login && (
                 <TouchableOpacity
                   onPress={() => openFacebookLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.facebook} />
                 </TouchableOpacity>
               )}
               {!!twitter_login && (
                 <TouchableOpacity
                   onPress={() => openTwitterLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.twitterIcon} />
                 </TouchableOpacity>
               )}
@@ -526,7 +536,7 @@ export default function OuterScreen5({navigation}) {
               {!!apple_login && Platform.OS == 'ios' && (
                 <TouchableOpacity
                   onPress={() => openAppleLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.apple1} />
                 </TouchableOpacity>
               )}

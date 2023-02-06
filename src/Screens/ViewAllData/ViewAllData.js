@@ -80,7 +80,7 @@ export default function ViewAllData({route, navigation}) {
         {id: 2, type: strings.CLOSE},
         {id: 3, type: strings.BESTSELLER},
       ];
-      if (appData?.profile?.preferences?.is_hyperlocal) {
+      if (!!appData?.profile?.preferences?.is_hyperlocal) {
         homeFilter.push({id: 4, type: strings.NEAR_BY});
       } else {
         if (homeFilter.length > 3) {
@@ -94,7 +94,7 @@ export default function ViewAllData({route, navigation}) {
   //Home data
   const apiHit = (pageNo) => {
     let latlongObj = {};
-    if (appData?.profile?.preferences?.is_hyperlocal) {
+    if (!!appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         latitude: location?.latitude,
         longitude: location?.longitude,

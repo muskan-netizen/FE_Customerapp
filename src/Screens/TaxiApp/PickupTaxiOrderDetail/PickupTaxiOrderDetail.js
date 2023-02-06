@@ -200,12 +200,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
-    (state) => state.initBoot
+    (state) => state.initBoot || {}
   );
   const {
     additional_preferences,
     digit_after_decimal,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
   const { profile } = appData;

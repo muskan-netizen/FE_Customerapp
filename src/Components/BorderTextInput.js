@@ -43,7 +43,7 @@ const BorderTextInput = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const inputRef = useRef();
-  const { appStyle } = useSelector((state) => state.initBoot);
+  const { appStyle } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
 
   useEffect(() => {

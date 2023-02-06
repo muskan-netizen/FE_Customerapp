@@ -55,7 +55,7 @@ export default function Login4({navigation}) {
     (state) => state?.initBoot,
   );
   const {apple_login, fb_login, twitter_login, google_login} = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
+    (state) => state?.initBoot?.appData?.profile?.preferences|| {},
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
