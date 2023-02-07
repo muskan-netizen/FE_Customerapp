@@ -2298,8 +2298,8 @@ const appIds = {
     android: 'com.stabex.royoorders',
   }),
   uberWeeds: Platform.select({
-    ios: 'com.uberweeds.royoorders',
-    android: 'com.uberweeds.royoorders',
+    ios: 'com.uberweeds',
+    android: 'com.uberweeds',
   }),
   cabPro: Platform.select({
     ios: 'com.cabpro.royoorders',

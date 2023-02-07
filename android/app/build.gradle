@@ -207,25 +207,16 @@ android {
 
     productFlavors{
         
-         speedyDelivery{ 
-            dimension "appType"
-            versionCode 3
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.speedydelivery.orders'
-            resValue "string", "app_name", "Speedy - Delivery & Pickup" 
-            resValue "string", "host_name", ""
-            }
-       shelf{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.shelf.order'
-            resValue "string", "app_name", "shelf" 
-            resValue "string", "host_name", ""
+                        iCare {
+                dimension "appType"
+                versionCode 3
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.codebrew.ICare'
+                resValue "string", "app_name", "iCare"
+                resValue "string", "host_name", ""
             }
     }
 
@@ -240,6 +231,17 @@ android {
             //     applicationId 'com.codebrew.royoorder'
             //     resValue "string", "app_name", "RoyoOrder"
             //     resValue "string", "host_name", "sales.royoorders.com"
+            // }
+                        // iCare {
+            //     dimension "appType"
+            //     versionCode 3
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion
+            //     // applicationIdSuffix ".royoorder"
+            //     applicationId 'com.codebrew.ICare'
+            //     resValue "string", "app_name", "iCare"
+            //     resValue "string", "host_name", ""
             // }
     //         orderchekout{
     //             dimension "appType"
@@ -7685,7 +7687,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.uberweeds.royoorders'
+    //         applicationId 'com.uberweeds'
     //         resValue "string", "app_name", "UberWeeds" 
     //         resValue "string", "host_name", ""
     //         }
