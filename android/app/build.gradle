@@ -148,7 +148,7 @@ android {
     defaultConfig {
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion 31 
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
