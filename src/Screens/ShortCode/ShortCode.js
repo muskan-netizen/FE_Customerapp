@@ -3258,13 +3258,13 @@ export default function ShortCode({ route, navigation }) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: 'd162a7',
-        code: '041795',
+        code: '046761',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: 'd162a7',
-        code: '041795',
+        code: '046761',
       };
     }
 
