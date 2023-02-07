@@ -205,24 +205,24 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     additional_preferences,
     digit_after_decimal,
   } = appData?.profile?.preferences;
-  const positionposition = useIsFocused();
+  const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
-  const {profile} = appData;
+  const { profile } = appData;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
 
-  useEffect(()=>{
-   if(paramData?.showLocationUpdateButton){
-    setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
-   }
-  },[paramData])
+  useEffect(() => {
+    if (paramData?.showLocationUpdateButton) {
+      setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
+    }
+  }, [paramData])
 
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
   };
-  
+
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
   useEffect(() => {
@@ -1137,7 +1137,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         apiData.agent_id = orderFullDetail?.agent_location?.agent_id;
         apiData.agent_db = orderFullDetail?.agent_dbname;
       }
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
 
       console.log('sending api data room created', orderFullDetail);
       const res = await actions.onStartChat(apiData, {
@@ -1187,7 +1187,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               marginLeft: width / 5.5,
             }}
           />
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: 'center' }}>
             <HeaderLoader
               widthLeft={moderateScale(width / 1.2)}
               rectWidthLeft={moderateScale(width / 1.2)}
@@ -1468,8 +1468,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     }
                   >
                     {`${strings.ORDER_ID}: #${orderFullDetail?.order?.order_number
-                        ? orderFullDetail?.order?.order_number
-                        : paramData?.orderDetail?.order_number
+                      ? orderFullDetail?.order?.order_number
+                      : paramData?.orderDetail?.order_number
                       }`}
                   </Text>
 
@@ -1677,46 +1677,46 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                           >
                             {val?.address || ""}
                           </Text>
-                        
+
                           {!!(
                             val?.task_type_id != 1 &&
                             profile?.preferences?.is_order_edit_enable &&
                             Number(val?.task_status) < 2
                           ) && (
-                            <TouchableOpacity
-                              style={{
-                                borderColor: themeColors?.primary_color,
-                                borderWidth: 0.5,
-                                padding: moderateScale(5),
-                                paddingHorizontal: moderateScale(10),
-                                height: moderateScale(28),
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
-                              onPress={moveToNewScreen(
-                                navigationStrings.LOCATION,
-                                {
-                                  ...paramData,
-                                  orderDropLocations: !isEmpty(
-                                    paramData?.orderDropLocations
-                                  )
-                                    ? paramData?.orderDropLocations
-                                    : orderFullDetail?.tasks,
-                                  editIndex: i,
-                                  showLocationUpdateButton:showLocationUpdateButton
-                                }
-                              )}
-                            >
-                              <Text
+                              <TouchableOpacity
                                 style={{
-                                  fontFamily: fontFamily.regular,
-                                  fontSize: textScale(11),
+                                  borderColor: themeColors?.primary_color,
+                                  borderWidth: 0.5,
+                                  padding: moderateScale(5),
+                                  paddingHorizontal: moderateScale(10),
+                                  height: moderateScale(28),
+                                  alignItems: "center",
+                                  justifyContent: "center",
                                 }}
+                                onPress={moveToNewScreen(
+                                  navigationStrings.LOCATION,
+                                  {
+                                    ...paramData,
+                                    orderDropLocations: !isEmpty(
+                                      paramData?.orderDropLocations
+                                    )
+                                      ? paramData?.orderDropLocations
+                                      : orderFullDetail?.tasks,
+                                    editIndex: i,
+                                    showLocationUpdateButton: showLocationUpdateButton
+                                  }
+                                )}
                               >
-                                {"Change"}
-                              </Text>
-                            </TouchableOpacity>
-                          )}
+                                <Text
+                                  style={{
+                                    fontFamily: fontFamily.regular,
+                                    fontSize: textScale(11),
+                                  }}
+                                >
+                                  {"Change"}
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                         </View>
                       </View>
                       {orderFullDetail.tasks.length - 1 !== i && (
@@ -1751,7 +1751,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     />
                   )}
 
-               
+
                 {!!orderFullDetail?.agent_location ? (
                   <View
                     style={{

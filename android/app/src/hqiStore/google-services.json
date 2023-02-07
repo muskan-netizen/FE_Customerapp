@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "529513151632",
+    "project_id": "hqistore-order",
+    "storage_bucket": "hqistore-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529513151632:android:91d4ff3533d092fd9d6c15",
+        "android_client_info": {
+          "package_name": "com.hqiStore.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529513151632-3p0hqe7n8drlvm3m3a7cdcr51hgnnrab.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hqiStore.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "529513151632-s919rk0cs0nriau9pposjqrd95ep6hqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hqiStore.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "529513151632-vgqoro3pud4ibe93vtspluf01m0de8hb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hqiStore.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "529513151632-ih1tclavehnh0fc3mggl59i67gdg6ibu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPF9C-9rVOT3OtDi8dMnUMN7PPiv_rn-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529513151632-ih1tclavehnh0fc3mggl59i67gdg6ibu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2436,6 +2436,22 @@ end
 target 'WhatchaGotPickUp' do
 end
 
+#SuperApp
+target 'SuperApp' do
+end
+
+#HqiStore
+target 'HqiStore' do
+end
+
+#Tkaff
+target 'Tkaff' do
+end
+
+#GoKart
+target 'GoKart' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)

@@ -1,5 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+
+// export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
+
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -389,7 +392,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 //Rentzy
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://sxm2go.com/api/v1';
+// export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
@@ -408,6 +411,11 @@ export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 // Bliss
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 
+// goKart
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+
+// Etaim
+// export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

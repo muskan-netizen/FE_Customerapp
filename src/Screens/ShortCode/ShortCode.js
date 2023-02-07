@@ -3104,7 +3104,8 @@ export default function ShortCode({ route, navigation }) {
         case appIds.ondgoo:
           updateState({
             shortCode: shortCodes.ondgoo,
-            isShortcodePrefilled: true,})
+            isShortcodePrefilled: true,
+          })
 
         case appIds.zonesso:
           updateState({
@@ -3220,6 +3221,24 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gokart:
+          updateState({
+            shortCode: shortCodes.goKart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hqiStore:
+          updateState({
+            shortCode: shortCodes.hqiStore,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tkaff:
+          updateState({
+            shortCode: shortCodes.tkaff,
+            isShortcodePrefilled: true,
+          });
+          break;
 
       }
     })();
@@ -3255,11 +3274,13 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
+        // code: 'd162a7',
         code: shortCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
+        // code: 'd162a7',
         code: shortCode,
       };
     }
@@ -3379,7 +3400,7 @@ export default function ShortCode({ route, navigation }) {
   };
 
 
-  console.log(deepLinkUrl,"deepLinkUrl");
+  console.log(deepLinkUrl, "deepLinkUrl");
 
   const navigateToNextScreen = (res) => {
     getItem("firstTime").then((el) => {
