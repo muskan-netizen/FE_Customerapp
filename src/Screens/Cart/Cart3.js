@@ -1264,7 +1264,11 @@ function Cart({navigation, route}) {
           setCartData({});
           actions.reloadData(!reloadData);
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
+            
             showSuccess(res?.message);
+            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+              orderDetail: res.data,
+            })();
             return;
           }
           return;
