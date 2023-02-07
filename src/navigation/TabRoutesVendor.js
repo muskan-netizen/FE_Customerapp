@@ -18,21 +18,20 @@ export default function TabRoutesVendor(props) {
   return (
     <Tab.Navigator
       backBehavior={'initialRoute'}
-      screenOptions={{headerShown:false}}
-      tabBar={(props) => {
-        // return <CustomBottomTabBarTwo {...props} />;
-        return <CustomBottomTabBar {...props} />;
-      }}
-      tabBarOptions={{
-        labelStyle: {
+      screenOptions={{
+        headerShown:false,
+        tabBarLabelStyle:{
           textTransform: 'capitalize',
           fontFamily: fontFamily.medium,
           fontSize: textScale(12),
           color: colors.white,
-        },
-
-        // showLabel: false,
-      }}>
+        }
+      }}
+      tabBar={(props) => {
+        // return <CustomBottomTabBarTwo {...props} />;
+        return <CustomBottomTabBar {...props} />;
+      }}
+>
       <Tab.Screen
         component={VendorOrderStack}
         name={navigationStrings.VENDOR_ORDER}

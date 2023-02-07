@@ -49,7 +49,15 @@ export default function TaxiTabRoutes(props) {
   return (
     <Tab.Navigator
       backBehavior={'initialRoute'}
-      screenOptions={{headerShown:false}}
+      screenOptions={{
+        headerShown:false,
+        tabBarLabelStyle:{
+          textTransform: 'capitalize',
+          fontFamily: fontFamily?.medium,
+          fontSize: textScale(12),
+          color: colors.white,
+        }
+      }}
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:
@@ -63,16 +71,6 @@ export default function TaxiTabRoutes(props) {
           case 5:
             return <CustomBottomTabBarFive {...props} />;
         }
-      }}
-      tabBarOptions={{
-        labelStyle: {
-          textTransform: 'capitalize',
-          fontFamily: fontFamily?.medium,
-          fontSize: textScale(12),
-          color: colors.white,
-        },
-
-        // showLabel: false,
       }}>
       <Tab.Screen
         component={HomeStack}

@@ -43,7 +43,7 @@ export default function ShortCode({ route, navigation }) {
   const [state, setState] = useState({
     email: "",
     password: "",
-    shortCode: "ceeb2e",
+    shortCode: "041795",
     isShortcodePrefilled: true,
     isBtnDisabled: true,
     isLoading: false,
@@ -3228,7 +3228,6 @@ export default function ShortCode({ route, navigation }) {
 
 
 
-
   useEffect(() => {
     if (shortCode && isShortcodePrefilled) {
       checkScreen();
@@ -3258,12 +3257,14 @@ export default function ShortCode({ route, navigation }) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: shortCode,
+        // code: 'd162a7',
+        code: '041795',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: shortCode,
+        // code: 'd162a7',
+        code: '041795',
       };
     }
 

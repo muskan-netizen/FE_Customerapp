@@ -521,7 +521,10 @@ const shortCodes = {
   melakPharmacy: '4dbfe1',
   wiEnergi: '39c65c',
   nannyAfrica: 'a7dbf8',
-  whatchaGotPickUp: '2c23b0'
+  whatchaGotPickUp: '2c23b0',
+  goKart: 'd162a7',
+  hqiStore: 'f949d8',
+  tkaff: 'abae0e'
 };
 
 const appIds = {
@@ -2593,6 +2596,18 @@ const appIds = {
   whatchaGotPickUp: Platform.select({
     ios: 'com.whatchaGotPickUp',
     android: 'com.whatchaGotPickUp',
+  }),
+  gokart: Platform.select({
+    ios: 'com.gokart.order',
+    android: 'com.gokart.order',
+  }),
+  hqiStore: Platform.select({
+    ios: 'com.hqiStore.order',
+    android: 'com.hqiStore.order',
+  }),
+  tkaff: Platform.select({
+    ios: 'com.tkaff.order',
+    android: 'com.tkaff.order',
   }),
 };
 

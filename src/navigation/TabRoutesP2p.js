@@ -48,7 +48,15 @@ export default function TabRoutesP2p(props) {
 
   return (
     <Tab.Navigator
-    screenOptions={{headerShown:false}}
+    screenOptions={{
+      headerShown:false,
+      tabBarLabelStyle:{
+        textTransform: 'capitalize',
+        fontFamily: fontFamily?.medium,
+        fontSize: textScale(12),
+        color: colors.white,
+      }
+    }}
       backBehavior={navigationStrings.HOMESTACK}
       tabBar={(props) => {
         if (showBottomBar_) {
@@ -61,15 +69,7 @@ export default function TabRoutesP2p(props) {
           : redirectedFrom == 'p2pPost'
           ? navigationStrings.POST
           : navigationStrings.HOMESTACK
-      }
-      tabBarOptions={{
-        labelStyle: {
-          textTransform: 'capitalize',
-          fontFamily: fontFamily?.medium,
-          fontSize: textScale(12),
-          color: colors.white,
-        },
-      }}>
+      }>
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}

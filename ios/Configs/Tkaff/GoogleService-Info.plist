@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>222017750953-a4s3tls4sr323o96etthdf8hodkf134u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.222017750953-a4s3tls4sr323o96etthdf8hodkf134u</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>222017750953-ac06esgik9uilpjrbc6ndqmrl35gg6po.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD5aTsMcEv2LqOXAN_rpKMjMmAALb0VYtI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>222017750953</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tkaff.order</string>
+	<key>PROJECT_ID</key>
+	<string>tkaff-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tkaff-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:222017750953:ios:d6f3db4a904bcaaf2d66b8</string>
+</dict>
+</plist>

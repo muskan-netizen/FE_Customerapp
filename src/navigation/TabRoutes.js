@@ -139,7 +139,15 @@ export default function TabRoutes(props) {
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
-      screenOptions={{headerShown:false}}
+      screenOptions={{
+        headerShown:false,
+        tabBarLabelStyle:{
+          textTransform: 'capitalize',
+          fontFamily: fontFamily?.medium,
+          fontSize: textScale(12),
+          color: colors.white,
+        }
+      }}
       tabBar={(props) => {
         if (showBottomBar_) {
           switch (appStyle?.tabBarLayout) {
@@ -161,16 +169,7 @@ export default function TabRoutes(props) {
           ? navigationStrings.CART
           : navigationStrings.HOMESTACK
       }
-      tabBarOptions={{
-        labelStyle: {
-          textTransform: 'capitalize',
-          fontFamily: fontFamily?.medium,
-          fontSize: textScale(12),
-          color: colors.white,
-        },
-
-        // showLabel: false,
-      }}>
+      >
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}

@@ -218,15 +218,14 @@ android {
     flavorDimensions "appType"
 
     productFlavors{
-
-           bliss {
+         laith{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.order.bliss'
-                resValue "string", "app_name", "Bliss"
+                applicationId 'com.laith.royoorder'
+                resValue "string", "app_name", "Laith"
                 resValue "string", "host_name", ""
             }
 
@@ -8365,7 +8364,36 @@ android {
     //             resValue "string", "app_name", "WhatchaGot Pick Up"
     //             resValue "string", "host_name", ""
     //         }
-            
+    // goKart{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.gokart.order'
+    //             resValue "string", "app_name", "GoKart"
+    //             resValue "string", "host_name", ""
+    //         }
+    // hqiStore{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.hqiStore.order'
+    //             resValue "string", "app_name", "Hqi Store"
+    //             resValue "string", "host_name", ""
+    //         }
+    // tkaff{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.tkaff.order'
+    //             resValue "string", "app_name", "Tkaff"
+    //             resValue "string", "host_name", ""
+    //         }       
     // }
 
 
