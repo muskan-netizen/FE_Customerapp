@@ -92,7 +92,7 @@ export default function ShortCode({ route, navigation }) {
       const saveShortCode = await getItem("saveShortCode");
 
       switch (getBundleId()) {
-        
+
         case appIds.royoorder:
           if (appSessionInfo == "show_shortcode") {
             updateState({ shortCode: "", isShortcodePrefilled: false });
@@ -3265,13 +3265,13 @@ export default function ShortCode({ route, navigation }) {
     if (!!res?.primary_language?.id) {
       header = {
         // code: 'd162a7',
-        code: '046761',
+        code: '607c84',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
         // code: 'd162a7',
-        code: '046761',
+        code: '607c84',
       };
     }
 
@@ -3280,7 +3280,7 @@ export default function ShortCode({ route, navigation }) {
       .then((res) => {
         console.log("header response--->", res);
 
-  
+
         updateState({ changeInShortCode: false });
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
