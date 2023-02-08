@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Image, View } from "react-native";
 import { getBundleId } from "react-native-device-info";
 import { useDarkMode } from "react-native-dynamic";
@@ -30,14 +30,13 @@ export default function ShortCode() {
   const videoRef = useRef();
 
   const [state, setState] = useState({
-    shortCode: "",
     LoadingScreen: true,
     videoDurationEnded: false,
     allAppData: null,
     initapiresponse: false,
   });
 
-  const { shortCode, LoadingScreen, videoDurationEnded, allAppData, initapiresponse } = state;
+  const { LoadingScreen, videoDurationEnded, allAppData, initapiresponse } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
@@ -47,25 +46,28 @@ export default function ShortCode() {
 
   const initApiHit = async () => {
     const res = await getItem("setPrimaryLanguage");
+    const prevCode = await getItem("saveShortCode");
+    const appCode = !!prevCode ? prevCode : getAppCode()
+
+    console.log("appCodeappCodeappCodeappCode", appCode)
     let header = {};
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: getAppCode(),
+        code: appCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: getAppCode(),
+        code: appCode,
       };
     }
 
     actions.initApp({}, header, false, null, null, true)
       .then((res) => {
         console.log("header response--->", res);
-        if (getBundleId() == appIds.royoorder) {
-          actions.saveShortCode(shortCode);
-        }
+        actions.saveShortCode(appCode);
+
         if (
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.muvpod ||
@@ -110,26 +112,24 @@ export default function ShortCode() {
 
   };
 
-  const _renderSplash = () => {
+  
+  const _renderSplash = useCallback(()=>{
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
-      // case appIds.iPicknDrop:
-      //   return animatedSplash();
       case appIds.muvpod:
         return animatedSplash();
       case appIds.hezniTaxi:
         return animatedSplash();
       case appIds.flank:
         return animatedSplash();
-      // case appIds.zonesso:
-      //   return animatedSplash();
       default:
         return imageSplash();
-    }
-  };
+    } 
+  },[])
+  
 
-  const imageSplash = () => {
+  const imageSplash = useCallback(() => {
     return (
       <View style={{ flex: 1 }}>
         <View
@@ -152,8 +152,9 @@ export default function ShortCode() {
         </View>
         <Image source={{ uri: "Splash" }} style={{ flex: 1, zIndex: -1 }} />
       </View>
-    );
-  };
+    )
+  }, [LoadingScreen])
+
 
   const animationVideo = () => {
     switch (getBundleId()) {

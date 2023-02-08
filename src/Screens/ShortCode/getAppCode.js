@@ -3,7 +3,7 @@ import { appIds, shortCodes } from "../../utils/constants/DynamicAppKeys";
 
 
 export const getAppCode = () => {
-    
+
     switch (getBundleId()) {
 
         case appIds.tranzit: return shortCodes.tranzit
