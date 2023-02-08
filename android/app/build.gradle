@@ -219,27 +219,17 @@ android {
 
     productFlavors{
 
-           bliss {
+
+               sxm2go{
                 dimension "appType"
-                versionCode 1
+                versionCode 5
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.order.bliss'
-                resValue "string", "app_name", "Bliss"
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.sxm2go.userapp'
+                resValue "string", "app_name", "SXM2GO"
                 resValue "string", "host_name", ""
             }
-
-            //    sxm2go{
-            //     dimension "appType"
-            //     versionCode 5
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion         
-            //     applicationId 'com.sxm2go.userapp'
-            //     resValue "string", "app_name", "SXM2GO"
-            //     resValue "string", "host_name", ""
-            // }
     }
 
 

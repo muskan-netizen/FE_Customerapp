@@ -17,7 +17,7 @@ import FastImage from 'react-native-fast-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-import ZendeskChat from 'react-native-zendesk-chat';
+import ZendeskChat from '../../library/react-native-zendesk-chat';
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
@@ -27,7 +27,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-
+import DeviceInfo from 'react-native-device-info';
 import { useRef } from 'react';
 import {
   moderateScale,
@@ -143,24 +143,31 @@ export default function Account3({ navigation }) {
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
     );
+    
   }, [
     preferences?.customer_support_application_id,
     preferences?.customer_support_key,
   ]);
 
+
+
   const onStartSupportChat = () => {
     ZendeskChat.setVisitorInfo({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
+      
     });
     ZendeskChat.startChat({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
-      messagingOptions: {},
+      messagingOptions: {botName:`${DeviceInfo.getApplicationName()} Support`},
+      
     });
   };
+
+
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
 
@@ -745,7 +752,8 @@ export default function Account3({ navigation }) {
             />
           )}
 
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && preferences?.customer_support_application_id&&
+    preferences?.customer_support_key &&(
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}

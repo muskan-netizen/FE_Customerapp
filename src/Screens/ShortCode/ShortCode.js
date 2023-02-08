@@ -43,7 +43,7 @@ export default function ShortCode({ route, navigation }) {
   const [state, setState] = useState({
     email: "",
     password: "",
-    shortCode: "ceeb2e",
+    shortCode: "b6e6e8",
     isShortcodePrefilled: true,
     isBtnDisabled: true,
     isLoading: false,
