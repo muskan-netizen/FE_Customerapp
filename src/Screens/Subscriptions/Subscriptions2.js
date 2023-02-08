@@ -100,6 +100,9 @@ export default function Subscriptions2({ navigation, route }) {
   const { appData, themeColors, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
+  const [year, setYear] = useState()
+  const [date, setDate] = useState()
+
   const [cardNumber, setCardNUmber] = useState()
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
@@ -176,9 +179,18 @@ export default function Subscriptions2({ navigation, route }) {
       ).replace(
         /\/\//g, '/').trim()
       setExpiryDate(ed)
+
     }
     if (type === 'CVC') {
       setCvc(data)
+    }
+    if (type === 'Year') {
+      let year = data.replace(/^\d{5}$/).trim()
+      setYear(year)
+    }
+    if (type === 'Date') {
+      let year = data.replace(/^([1-9]\/|[2-9])$/g, '0$1').trim()
+      setDate(year)
     }
   }
   //Get list of all payment method
@@ -232,6 +244,11 @@ export default function Subscriptions2({ navigation, route }) {
               ? res?.data?.payment_options
               : [],
           });
+          setYear("")
+          setDate("")
+          setCardNUmber("")
+          setCvc('')
+          setExpiryDate("")
         } else {
           showError(res?.message);
           updateState({
@@ -346,6 +363,11 @@ export default function Subscriptions2({ navigation, route }) {
       selectedPaymentMethod && selectedPaymentMethod?.id == item?.id
         ? updateState({ selectedPaymentMethod: null })
         : updateState({ selectedPaymentMethod: item });
+        setCardNUmber("")
+        setYear("")
+        setDate("")
+        setExpiryDate("")
+        setCvc("")
     }
   };
 
@@ -456,15 +478,20 @@ export default function Subscriptions2({ navigation, route }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           // selectedPaymentMethod?.off_site == 1 &&
-          selectedPaymentMethod?.id === 49
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
         ) && (
             <PaymentGateways
-              isCardNumber={cardNumber}
-              cvc={cvc}
-              expiryDate={expiryDate}
-              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-              onChangeText={(data) => checkInputHandler('Card Number', data)}
-              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+            isCardNumber={cardNumber}
+            cvc={cvc}
+            expiryDate={expiryDate}
+            year={year}
+            onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+            onChangeText={(data) => checkInputHandler('Card Number', data)}
+            onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+            onChangeYearText={(data) => checkInputHandler('Year', data)}
+            onChangeDateText={(data) => checkInputHandler('Date', data)}
+            paymentid={selectedPaymentMethod?.id}
+            eDate={date}
             />
           )}
         {!!(
@@ -743,7 +770,7 @@ export default function Subscriptions2({ navigation, route }) {
             paymentDataFlutterWave: paymentData,
           });
         }, 1000);
-      } else if (selectedPaymentMethod?.id == 49) {
+      } else if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
         _paymentWithPlugnPayMethods()
       } else {
         _webPayment();
@@ -756,7 +783,16 @@ export default function Subscriptions2({ navigation, route }) {
 
     let selectedMethod = selectedPaymentMethod.code;
     let CardNumber = cardNumber.split(" ").join("")
-    let queryData = `/${selectedMethod}?amount=${planPrice}&cv=${cvc}&dt=${expiryDate}&subscription_id=${selectedPlan?.slug}&cno=${CardNumber}&action=subscription`;
+    let expirydate
+    if (selectedPaymentMethod?.id == 50) {
+
+      expirydate = year.concat(date)
+      console.log(expirydate, 'expirydate')
+    }
+    else {
+      expirydate = expiryDate
+    }
+    let queryData = `/${selectedMethod}?amount=${planPrice}&cv=${cvc}&dt=${expirydate}&subscription_id=${selectedPlan?.slug}&cno=${CardNumber}&action=subscription`;
     actions
       .openPaymentWebUrl(
         queryData,

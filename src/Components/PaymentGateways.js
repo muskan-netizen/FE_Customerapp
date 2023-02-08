@@ -14,12 +14,17 @@ export default function PaymentGateways({
   isCardNumber,
   cvc,
   expiryDate,
-  onChangeText=()=>{},
-  onChangeExpiryDateText=()=>{},
-  onChangeCvcText =()=>{}
+  onChangeText = () => { },
+  onChangeExpiryDateText = () => { },
+  onChangeCvcText = () => { },
+  eDate,
+  paymentid= 49,
+  onChangeYearText=()=>{},
+  onChangeDateText=()=>{},
+  year,
 }) {
   return (
-    <View style={{marginTop:moderateScaleVertical(15)}}> 
+    <View style={{ marginTop: moderateScaleVertical(15) }}>
       <BorderTextInput
         onChangeText={onChangeText}
         placeholder={'Card Number'}
@@ -34,6 +39,7 @@ export default function PaymentGateways({
       <View style={{ flexDirection: 'row', flex: 1, justifyContent: "space-between" }}>
 
         <View style={{ flex: .5 }}>
+          {paymentid == 49 ? 
           <BorderTextInput
             onChangeText={onChangeExpiryDateText}
             placeholder={'MM/YY'}
@@ -43,11 +49,37 @@ export default function PaymentGateways({
             autoFocus={true}
             returnKeyType={'next'}
             maxLength={5}
-          />
+          /> :
+            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+              <View style={{flex:.5}}>
+              <BorderTextInput
+                onChangeText={onChangeYearText}
+                placeholder={'YYYY'}
+                value={year}
+                keyboardType={'numeric'}
+                autoCapitalize={'none'}
+                autoFocus={true}
+                returnKeyType={'next'}
+                maxLength={4}
+              />
+                </View>
+                <View style={{flex:.4}}>
+              <BorderTextInput
+                onChangeText={onChangeDateText}
+                placeholder={'MM'}
+                value={eDate}
+                keyboardType={'numeric'}
+                autoCapitalize={'none'}
+                autoFocus={true}
+                returnKeyType={'next'}
+                maxLength={2}
+              /></View>
+            </View>
+          }
         </View>
         <View style={{ flex: .4 }}>
           <BorderTextInput
-          secureTextEntry={true}
+            secureTextEntry={true}
             onChangeText={onChangeCvcText}
             placeholder={'CVC'}
             value={cvc}
