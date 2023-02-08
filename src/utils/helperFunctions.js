@@ -538,6 +538,7 @@ export function deviceCountryCode() {
 }
 
 export function redirectFromNotification(clickActionUrl = null) {
+  console.log('i am calling');
   if (!!clickActionUrl) {
     // redirectToData[0] for redirection to vendor or category
     //redirectToData[1] for name of vendor or category

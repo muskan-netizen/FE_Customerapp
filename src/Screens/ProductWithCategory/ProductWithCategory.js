@@ -1418,10 +1418,10 @@ export default function ProductWithCategory({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProductsByCategoryId = (pageNo) => {
-    console.log('api hit getProductByCategoryId', data);
+    console.log('api hit getProductByCategoryId', data,productListId);
     actions
       .getProductByCategoryIdOptamize(
-        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
+        `/${data?.item?.data?.category_detail?.id}?limit=${limit}&page=${pageNo}&product_list=${
           data?.rootProducts ? true : false
         }`,
         {},

@@ -125,10 +125,11 @@ export default function Products({ route, navigation }) {
   // console.log(route.params, 'route.params');
   const { data } = route.params;
 
+  console.log(data,"datadatadatadata>>>>>>>parmas");
+
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
@@ -296,7 +297,8 @@ export default function Products({ route, navigation }) {
   const [tagFilteredData, setTagFilteredData] = useState([]);
   const [isFilteredData, setIsFilteredData] = useState(false);
   const [isSocialMediaModal, setIsSocialMediaModal] = useState(false);
-  const [isLoadMoreData,setIsLoadMoreData] = useState(false)
+  const [isLoadMoreData,setIsLoadMoreData] = useState(false);
+  const [hideViewMore,setHideViewMore]=useState(true)
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
@@ -1300,7 +1302,7 @@ export default function Products({ route, navigation }) {
         ? Number(item?.minimum_order_count)
         : 1;
       data['product_variant_id'] = item?.variant[0].id;
-      data['type'] = dine_In_Type;
+      data['type'] = dineInType;
       console.log('Sending api data', data);
       actions
         .addProductsToCart(data, {
@@ -1824,10 +1826,10 @@ export default function Products({ route, navigation }) {
   };
   /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
-    console.log('api hit getProductByCategoryId', data);
+  const productWithCategoryId = data?.productWithSingleCategory  ? data?.id  :productListId?.id
     actions
       .getProductByCategoryIdOptamize(
-        `/${productListId?.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }&type=${dineInType} `,
         {},
         {
@@ -3257,13 +3259,21 @@ export default function Products({ route, navigation }) {
       console.log('sending header', headers);
       const res = await actions.getMoreCategories(apiData, data, headers);
       console.log('get more cat res', res.data.products);
+         if(res.data.products.data.length == 0){
+           setHideViewMore(false)
+         }
+     
       console.log('res++++', res);
       let cloneArry = cloneSectionList[section.index];
       console.log('append clonearry', cloneArry.data);
       let arry = [...cloneArry?.data, ...res?.data.products.data];
+
+      let uniqueProductsArray = [
+        ...new Map(arry.map((item) => [item["id"], item])).values(),
+    ];
       console.log('append item', arry);
       let dummyData = cloneSectionList;
-      dummyData[section.index].data = arry;
+      dummyData[section.index].data = uniqueProductsArray;
       console.log('append last data', dummyData);
 
        if(res?.data){
@@ -3397,7 +3407,7 @@ export default function Products({ route, navigation }) {
       data['sku'] = productSku;
       data['quantity'] = productQuantityForCart;
       data['product_variant_id'] = productVariantId;
-      data['type'] = dine_In_Type;
+      data['type'] = dineInType;
       if (addonSet && addonSet.length) {
         // console.log(addonSetData, 'addonSetData');
         data['addon_ids'] = addon_ids;
@@ -3488,7 +3498,7 @@ export default function Products({ route, navigation }) {
     //   </TouchableOpacity>
     // </View>:
       section?.data.length !== section?.data_count &&
-      section?.data.length >= 15  ? (
+      section?.data.length >= 15 && hideViewMore ? (
       <View style={{height: moderateScale(50)}}>
         <TouchableOpacity
           onPress={() => appendData(section)}

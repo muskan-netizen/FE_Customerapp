@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -219,7 +219,11 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //Harbans
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
 //sandeep
- export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
+//  export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
+
+ //Rajat
+ //export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
+
 
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // ottoweed
@@ -721,3 +725,10 @@ export const GET_DETAILS_OF_INFLUENCE_CATEGORY = getApiUrl(
 export const SAVE_INFULENCER_INFO = getApiUrl(
   '/influencer/save-influencer-form',
 );
+
+// get products for spotdeals and selected products by admin on dashnoard
+export const GET_PRODUCTS_ON_DASHBOARD = getApiUrl(
+  '/v2/get_products',
+);
+
+

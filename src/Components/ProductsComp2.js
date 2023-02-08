@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -19,8 +19,8 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -28,10 +28,19 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
-  const {themeColors, appStyle, currencies, themeColor, themeToggle} =
+const ProductsComp = ({
+  isDiscount,
+  item,
+  imageStyle,
+  onPress = () => { },
+  mainContainerStyle = {},
+  showRating = true,
+  productNameStyle={},
+  numberOfLines=1
+}) => {
+  const { themeColors, appStyle, currencies, themeColor, themeToggle } =
     useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} = useSelector(
+  const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
   const darkthemeusingDevice = useDarkMode();
@@ -45,8 +54,9 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
     category = {},
     media = [],
     vendor = {},
-    variant = [],
+    variants = [],
   } = item;
+  console.log(item, "iteiteiteitietietietiet");
 
   const imageUrl = getImageUrl(
     media[0]?.image?.path?.image_fit,
@@ -54,22 +64,25 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
     '600/600',
   );
 
+  console.log(imageUrl,"imageUrlimageUrl");
+
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
       style={{
         width: width / 2.5,
-        backgroundColor: colors.white,
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
         elevation: 1,
         marginVertical: 2,
         borderRadius: 5,
         ...getScaleTransformationStyle(scaleInAnimated),
+        ...mainContainerStyle
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
-        resizeMode="contain"
+        resizeMode='contain'
         source={{
           uri: imageUrl,
           cache: FastImage.cacheControl.immutable,
@@ -88,7 +101,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && item?.averageRating !== '0.0' && (
+        {!!item?.averageRating && item?.averageRating !== '0.0' && showRating && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{
@@ -105,9 +118,9 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
           </View>
         )}
       </FastImage>
-      <View style={{marginVertical: moderateScaleVertical(6)}}>
+      <View style={{ marginVertical: moderateScaleVertical(6) }}>
         <Text
-          numberOfLines={1}
+          numberOfLines={numberOfLines}
           style={{
             fontSize: textScale(12),
             fontFamily: fontFamily.medium,
@@ -115,8 +128,9 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
             textAlign: 'left',
             lineHeight: moderateScale(16),
             marginLeft: moderateScale(5),
+            ...productNameStyle
           }}>
-          {translation[0]?.title || item?.title}
+          {translation[0]?.title || item?.title || item?.sku}
         </Text>
         <Text
           numberOfLines={1}
@@ -131,8 +145,8 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
           {vendor?.name}
         </Text>
         {!isDiscount ? (
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <View style={{flex: 0.5, alignItems: 'flex-start'}}>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <View style={{ flex: 0.5, alignItems: 'flex-start' }}>
               {category?.category_detail?.translation[0]?.name && (
                 <Text
                   numberOfLines={1}
@@ -149,9 +163,9 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                 </Text>
               )}
             </View>
-            <View style={{marginHorizontal: 10}} />
+            <View style={{ marginHorizontal: 10 }} />
 
-            <View style={{flex: 0.5, alignItems: 'flex-end'}}>
+            <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
               <Text
                 numberOfLines={1}
                 style={{
@@ -162,7 +176,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                 }}>
                 <Text>
                   {tokenConverterPlusCurrencyNumberFormater(
-                    variant[0]?.price,
+                    variants[0]?.price,
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,
@@ -198,7 +212,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                   color: colors.green,
                   marginVertical: moderateScaleVertical(8),
                 }}>
-                {currencies?.primary_currency.symbol} {variant[0]?.price}
+                {currencies?.primary_currency.symbol} {variants[0]?.price}
               </Text>
               <Text
                 numberOfLines={2}
@@ -209,7 +223,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                     : colors.blackOpacity40,
                   marginLeft: moderateScale(12),
                 }}>
-                {currencies?.primary_currency.symbol} {variant[0]?.price}
+                {currencies?.primary_currency.symbol} {variants[0]?.price}
               </Text>
             </View>
           </View>

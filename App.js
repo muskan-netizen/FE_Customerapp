@@ -42,6 +42,8 @@ import {
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
 
+import messaging from '@react-native-firebase/messaging';
+
 let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
 const App = () => {
@@ -140,7 +142,13 @@ const App = () => {
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
+
+    
   };
+
+  
+
+ 
 
   useEffect(() => {
     (async () => {

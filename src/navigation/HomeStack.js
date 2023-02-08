@@ -26,12 +26,14 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductWithCategory,
   ScrollableCategory,
   SearchProductVendorItem,
   SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   ShippingDetails,
+  SpotdealProductAndSelectedProducts,
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
@@ -255,6 +257,14 @@ export default function () {
         name={navigationStrings.P2P_PRODUCT_DETAIL}
         component={P2pProductDetail}
       />
+
+  <Stack.Screen
+        name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
+        component={SpotdealProductAndSelectedProducts}
+      />
+
+
+       
        
     
     </Stack.Navigator>

@@ -94,7 +94,7 @@ export default function ProductDetail({ route, navigation }) {
     isLoading: true,
     isLoadingB: false,
     isLoadingC: false,
-    productId: data?.item?.id || data?.id,
+    productId: data?.products?.id|| data?.item?.id || data?.id,
     productDetailData: null,
     productPriceData: null,
     variantSet: [],

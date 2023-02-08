@@ -59,9 +59,8 @@ const UserDetail = ({
   };
 
   const onWhatsapp = async () => {
-    let url = `whatsapp://send?phone= ${userData?.dial_code}${
-      data?.vendor?.phone_no || data?.order?.phone_number
-    }`;
+    const vendorPhoneNumber = data?.vendor?.phone_no.replace(/\s/g, "") || data?.order?.phone_number.replace(/\s/g, "")
+    let url = `whatsapp://send?phone=${data?.vendor?.dial_code}${vendorPhoneNumber}`;
     Linking.openURL(url)
       .then((data) => {
         console.log("WhatsApp Opened successfully " + data); //<---Success

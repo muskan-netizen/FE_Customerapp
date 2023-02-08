@@ -46,10 +46,11 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
 import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
+import RazorpayCheckout from 'react-native-razorpay';
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
@@ -664,6 +665,8 @@ export default function Subscriptions2({navigation, route}) {
   //flutter wave
 
   const payAmount = () => {
+
+    console.log(selectedPaymentMethod,"selectedPaymentMethod");
     updateState({isModalVisibleForPayment: false});
     if (!!selectedPaymentMethod) {
       if (selectedPaymentMethod?.id == 4) {
@@ -691,7 +694,12 @@ export default function Subscriptions2({navigation, route}) {
             paymentDataFlutterWave: paymentData,
           });
         }, 1000);
-      } else {
+      }else if (
+        selectedPaymentMethod?.id == 10 ) {
+        _renderRazor(planPrice);
+        return;
+      }
+       else {
         _webPayment();
       }
     } else {
@@ -898,6 +906,46 @@ export default function Subscriptions2({navigation, route}) {
     } else {
       updateState({isLoading: false});
     }
+  };
+
+  const _renderRazor = (planPrice) => {
+    updateState({isLoadingB: true});
+    let options = {
+      description: 'Payment for your order',
+      image: getImageUrl(
+        appData?.profile?.logo?.image_fit,
+        appData?.profile?.logo?.image_path,
+        '1000/1000',
+      ),
+      currency: currencies?.primary_currency?.iso_code,
+      key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
+      amount: (
+        (Number(planPrice)
+            ? Number(planPrice)
+            : 0) *
+        100
+      ).toFixed(0),
+      name: appData?.profile?.company_name,
+      prefill: {
+        email: userData?.email,
+        contact: userData?.phone_number || '',
+        name: userData?.name,
+      },
+      theme: {color: themeColors.primary_color},
+    };
+
+    console.log(options, 'optios');
+    RazorpayCheckout.open(options)
+      .then((res) => {
+        console.log(res,"resresres for razorepay");
+        getAllSubscriptions(true);
+        updateState({
+          isLoadingB: false,
+          isLoading: false,
+          isRefreshing: false,
+        });
+      })
+      .catch((error)=>{console.log(error,"errorororoor>>>")});
   };
 
   const modalBottomContent = () => {

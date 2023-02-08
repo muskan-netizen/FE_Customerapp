@@ -24,5 +24,12 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       actions.isVendorNotification(true);
     }
   }
+
+  
+  
+
+
 });
+
+
 AppRegistry.registerComponent(appName, () => App);
