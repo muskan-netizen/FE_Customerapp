@@ -3602,6 +3602,13 @@ export default function ShortCode({ route, navigation }) {
           });
           return;
 
+          case appIds.laith:
+            updateState({
+              shortCode: shortCodes.laith,
+              isShortcodePrefilled: true,
+            });
+            return;
+
         case appIds.nounou:
           updateState({
             shortCode: shortCodes.nounou,
@@ -3609,12 +3616,27 @@ export default function ShortCode({ route, navigation }) {
           });
           return;
 
-        case appIds.laith:
+        case appIds.nannyAfrica:
           updateState({
-            shortCode: shortCodes.laith,
+            shortCode: shortCodes.nannyAfrica,
             isShortcodePrefilled: true,
           });
-          return;
+        return;
+
+        // case appIds.whatchaGotPickUp:
+        //   updateState({
+        //     shortCode: shortCodes.whatchaGotPickUp,
+        //     isShortcodePrefilled: true,
+        //   });
+        //   return;
+
+        // case appIds.etaim: //rejected
+        //   updateState({
+        //     shortCode: shortCodes.etaim,
+        //     isShortcodePrefilled: true,
+        //   });
+        //   return;
+ 
 
         // case appIds.liverpoolEats:
         //   updateState({
@@ -3633,13 +3655,6 @@ export default function ShortCode({ route, navigation }) {
         // case appIds.buzy:
         //   updateState({
         //     shortCode: shortCodes.buzy,
-        //     isShortcodePrefilled: true,
-        //   });
-        //   return;
-
-        // case appIds.etaim:
-        //   updateState({
-        //     shortCode: shortCodes.etaim,
         //     isShortcodePrefilled: true,
         //   });
         //   return;
@@ -3668,20 +3683,6 @@ export default function ShortCode({ route, navigation }) {
         // case appIds.wiEnergi:
         //   updateState({
         //     shortCode: shortCodes.wiEnergi,
-        //     isShortcodePrefilled: true,
-        //   });
-        //   return;
-
-        // case appIds.nannyAfrica:
-        //   updateState({
-        //     shortCode: shortCodes.nannyAfrica,
-        //     isShortcodePrefilled: true,
-        //   });
-        //   return;
-
-        // case appIds.whatchaGotPickUp:
-        //   updateState({
-        //     shortCode: shortCodes.whatchaGotPickUp,
         //     isShortcodePrefilled: true,
         //   });
         //   return;
