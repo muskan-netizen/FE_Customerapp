@@ -17,6 +17,7 @@ import { getItem } from "../../utils/utils";
 
 import { enableFreeze } from "react-native-screens";
 import { getAppCode } from "./getAppCode";
+import styles from "./styles";
 enableFreeze(true);
 
 
@@ -112,7 +113,6 @@ export default function ShortCode() {
 
   };
 
-  
   const _renderSplash = useCallback(()=>{
     switch (getBundleId()) {
       case appIds.masa:
@@ -132,22 +132,9 @@ export default function ShortCode() {
   const imageSplash = useCallback(() => {
     return (
       <View style={{ flex: 1 }}>
-        <View
-          style={{
-            flex: 1,
-            position: "absolute",
-            zIndex: 99,
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.5)",
-          }}
-        >
+        <View style={styles.splashStyle}>
           <View style={{ position: "absolute", bottom: moderateScale(100) }}>
-            {LoadingScreen && (
-              <MaterialIndicator size={50} color={colors.greyMedium} />
-            )}
+            {LoadingScreen && (<MaterialIndicator size={50} color={colors.greyMedium} />)}
           </View>
         </View>
         <Image source={{ uri: "Splash" }} style={{ flex: 1, zIndex: -1 }} />
@@ -176,24 +163,11 @@ export default function ShortCode() {
 
   const animatedSplash = () => {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: colors.white,
-        }}
-      >
+      <View style={styles.videoView}>
         <Video
           ref={videoRef}
           source={animationVideo()} // Can be a URL or a local file.
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-          }}
+          style={styles.videoStyle}
           resizeMode={getBundleId() == appIds.muvpod ? "contain" : "cover"}
           onEnd={() => onVideoDurationEnded()}
           muted={true}
@@ -203,24 +177,17 @@ export default function ShortCode() {
   };
 
   const checkNavigationState = (apiRes, videoEnd) => {
-    console.log("api res+++++++", apiRes);
-    console.log("videoEnd res+++++++", videoEnd);
-    if (apiRes && videoEnd) {
-      navigateToNextScreen(allAppData);
-    }
+    if (apiRes && videoEnd) { navigateToNextScreen(allAppData)}
   };
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : colors.white,
+        backgroundColor: isDarkMode? MyDarkTheme.colors.background: colors.white,
       }}
     >
       {_renderSplash()}
-
     </View>
   );
 }
