@@ -217,52 +217,18 @@ android {
 
     flavorDimensions "appType"
 
-    productFlavors{
-
-    nannyafrica{
+      productFlavors {
+            weedLomo{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.nannyafrica'
-                resValue "string", "app_name", "Nanny Africa"
+                applicationId 'com.weedLomo.order'
+                resValue "string", "app_name", "WeedLomo"
                 resValue "string", "host_name", ""
             }
-                        
-            // eatHalal{
-            // dimension "appType"
-            // versionCode 1
-            // versionName "1.0"
-            // minSdkVersion rootProject.ext.minSdkVersion
-            // targetSdkVersion rootProject.ext.targetSdkVersion
-            // applicationId 'com.eathalal.royoorders'
-            // resValue "string", "app_name", "Eat Halal" 
-            // resValue "string", "host_name", ""
-            // }
-        //  laith{
-        //         dimension "appType"
-        //         versionCode 1
-        //         versionName "1.0"
-        //         minSdkVersion rootProject.ext.minSdkVersion
-        //         targetSdkVersion rootProject.ext.targetSdkVersion
-        //         applicationId 'com.laith.royoorder'
-        //         resValue "string", "app_name", "Laith"
-        //         resValue "string", "host_name", ""
-        //     }
-
-            //    sxm2go{
-            //     dimension "appType"
-            //     versionCode 5
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion         
-            //     applicationId 'com.sxm2go.userapp'
-            //     resValue "string", "app_name", "SXM2GO"
-            //     resValue "string", "host_name", ""
-            // }
-    }
-
+}
 
     // productFlavors {
     //         royoorder {
@@ -8415,7 +8381,70 @@ android {
     //             applicationId 'com.tkaff.order'
     //             resValue "string", "app_name", "Tkaff"
     //             resValue "string", "host_name", ""
-    //         }       
+    //         }    
+
+
+      // nool{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.nool.order'
+    //             resValue "string", "app_name", "Nool"
+    //             resValue "string", "host_name", ""
+    //         }   
+    // rally{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.rally.order'
+    //             resValue "string", "app_name", "Rally"
+    //             resValue "string", "host_name", ""
+    //         }   
+    // shipSmart{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.shipSmart.order'
+    //             resValue "string", "app_name", "Ship Smart"
+    //             resValue "string", "host_name", ""
+    //         }   
+    // weemoov{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.weemoov.order'
+    //             resValue "string", "app_name", "Weemoov"
+    //             resValue "string", "host_name", ""
+    //         }   
+    // weedLomo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.weedLomo.order'
+    //             resValue "string", "app_name", "WeedLomo"
+    //             resValue "string", "host_name", ""
+    //         }
+    // ngoal{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ngoal.order'
+    //             resValue "string", "app_name", "NGoal"
+    //             resValue "string", "host_name", ""
+    //         }
+
     // }
 
 

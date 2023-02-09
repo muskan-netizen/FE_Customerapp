@@ -518,7 +518,14 @@ export const getAppCode = () => {
         case appIds.airvoltTaxi: return shortCodes.airvoltTaxi;
         case appIds.melakPharmacy: return shortCodes.melakPharmacy;
         case appIds.wiEnergi: return shortCodes.wiEnergi;
+        case appIds.nool: return shortCodes.nool;
+        case appIds.rally: return shortCodes.rally;
+        case appIds.shipSmart: return shortCodes.shipSmart;
+        case appIds.weemoov: return shortCodes.weemoov;
+        case appIds.weedLomo: return shortCodes.weedLomo;
+        case appIds.ngoal: return shortCodes.ngoal;
         
+
         default: return ''
     }
 }

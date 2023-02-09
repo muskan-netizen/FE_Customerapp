@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1287388165",
+    "project_id": "rally-order",
+    "storage_bucket": "rally-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1287388165:android:8edf1cbe6dad617a2a306c",
+        "android_client_info": {
+          "package_name": "com.rally.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1287388165-el680o885fqo9se7t6olu3p7pulupnu5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rally.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1287388165-i8bo76gt5s3d4o6k8rghegor75ueje9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rally.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1287388165-rjfnrjrvfcgu4mqhn0q1gvbiss1hoadk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rally.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1287388165-3u9rvvpjsikvou704t9k5poisv887jkp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRcRkQHP3fzwiZh3bUn7i56-txM9gWC2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1287388165-3u9rvvpjsikvou704t9k5poisv887jkp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1287388165-j92ktfjunsba15s7p7hic8ak9l2m9pn9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rally.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

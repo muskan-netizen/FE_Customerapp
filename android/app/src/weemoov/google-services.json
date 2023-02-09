@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "497239409475",
+    "project_id": "weemoov-order",
+    "storage_bucket": "weemoov-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497239409475:android:367740999d134a261c25f6",
+        "android_client_info": {
+          "package_name": "com.weemoov.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497239409475-7fg1a43abio140iu1hiv152nvugc56lt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weemoov.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "497239409475-dem4aau19gm4srbnkmarhk2son9s4qep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weemoov.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "497239409475-p186g8q98it0d9ilnc2ijir2mub66if7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weemoov.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "497239409475-df2ql8tlcokuohhr1sanrve148q3umt0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg27GfC6fF7yvloXiJJ1TF_lz5-KJY8kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497239409475-df2ql8tlcokuohhr1sanrve148q3umt0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "497239409475-ns7v1mo5su5vitni8bhm10r0g8qt2k14.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.weemoov.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

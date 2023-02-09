@@ -524,7 +524,13 @@ const shortCodes = {
   whatchaGotPickUp: '2c23b0',
   goKart: 'd162a7',
   hqiStore: 'f949d8',
-  tkaff: 'abae0e'
+  tkaff: 'abae0e',
+  nool: '5de7c7',
+  rally: 'b860de',
+  shipSmart: 'bbfdee',
+  weemoov: '23808d',
+  weedLomo: '7e6463',
+  ngoal: 'c05ddc'
 };
 
 const appIds = {
@@ -2608,6 +2614,30 @@ const appIds = {
   tkaff: Platform.select({
     ios: 'com.tkaff.order',
     android: 'com.tkaff.order',
+  }),
+  nool: Platform.select({
+    ios: 'com.nool.order',
+    android: 'com.nool.order',
+  }),
+  rally: Platform.select({
+    ios: 'com.rally.order',
+    android: 'com.rally.order',
+  }),
+  shipSmart: Platform.select({
+    ios: 'com.shipSmart.order',
+    android: 'com.shipSmart.order',
+  }),
+  weemoov: Platform.select({
+    ios: 'com.weemoov.order',
+    android: 'com.weemoov.order',
+  }),
+  weedLomo: Platform.select({
+    ios: 'com.weedLomo.order',
+    android: 'com.weedLomo.order',
+  }),
+  ngoal: Platform.select({
+    ios: 'com.ngoal.order',
+    android: 'com.ngoal.order',
   }),
 };
 
