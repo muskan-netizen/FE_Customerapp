@@ -149,7 +149,7 @@ export default function Products({ route, navigation }) {
 
   let sectionListRef = useRef(null);
 
-  const [listHeight, setListHeight] = useState(height/4)
+  const [listHeight, setListHeight] = useState(height/3.2)
 
   const [state, setState] = useState({
     sortFilters: filtersData,

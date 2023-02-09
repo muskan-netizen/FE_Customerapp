@@ -1,5 +1,3 @@
-import {requireNativeComponent} from 'react-native';
-
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
   fb: require('../assets/images/ic_facebook.png'),
@@ -565,7 +563,6 @@ export default {
 
   //p2p
   icP2pMore: require('../assets/images/p2p/ic_more.png'),
-  icChatP2p: require('../assets/images/p2p/ic_chat_p2p.png'),
   icCallP2p: require('../assets/images/p2p/ic_call_p2p.png'),
   icAddPostP2p: require('../assets/images/p2p/ic_add_post.png'),
   icHomeP2p: require('../assets/images/p2p/ic_home_new.png'),

@@ -2635,7 +2635,7 @@ const appIds = {
     ios: 'com.weedLomo.order',
     android: 'com.weedLomo.order',
   }),
-  weedLngoalomo: Platform.select({
+  ngoal: Platform.select({
     ios: 'com.ngoal.order',
     android: 'com.ngoal.order',
   }),

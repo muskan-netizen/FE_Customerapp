@@ -1,21 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Alert} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useSelector} from 'react-redux';
-import MaterialTabs from 'react-native-material-tabs';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Alert, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import colors from '../../../styles/colors';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-} from '../../../styles/responsiveSize';
+import {moderateScaleVertical,textScale,} from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
-import {showError, showSuccess} from '../../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
+import { showError, showSuccess } from '../../../utils/helperFunctions';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../../styles/theme';
 import strings from '../../../constants/lang';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+
 
 export default function ToggleTabBar({
   selcetedToggle,
@@ -33,21 +28,21 @@ export default function ToggleTabBar({
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const [selectedTab, setSelectedTab] = useState(0);
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors, currencies, languages} = useSelector(
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { appData, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   // const cartItemType = useSelector((state) => state?.cart?.cartItemType);
 
-  const {selectedIndex, tabs} = state;
+  const { selectedIndex, tabs } = state;
   useEffect(() => {
     addAllTabs();
     getSelectedTab();
   }, [appData]);
 
-// console.log(toggleData,"toggleDatatoggleData")
-console.log(dine_In_Type,"toggleDatatoggleData")
+  // console.log(toggleData,"toggleDatatoggleData")
+  console.log(dine_In_Type, "toggleDatatoggleData")
 
   useEffect(() => {
     if (dine_In_Type == 'dine_in') {
@@ -260,7 +255,7 @@ console.log(dine_In_Type,"toggleDatatoggleData")
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart2()},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart2() },
     ]);
   };
 
@@ -282,9 +277,23 @@ console.log(dine_In_Type,"toggleDatatoggleData")
       .catch(errorMethod);
   };
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
+
+
+  console.log("tabs++++++++", tabs)
+
+
+  const MaterialTabsClone = (item, index) => {
+    return (
+      <View key={String(index)}>
+        <Text>{item}</Text>
+      </View>
+    )
+  }
+
+
   return (
     <>
       {tabs.length > 1 ? (
@@ -294,7 +303,45 @@ console.log(dine_In_Type,"toggleDatatoggleData")
             borderRadius: 15,
             overflow: 'hidden',
           }}>
-          <MaterialTabs
+
+          <View style={{
+            flexDirection: "row",
+            height: moderateScaleVertical(42),
+            backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.greyColor2,
+            marginBottom: 16,
+            justifyContent: 'space-around',
+            // alignItems:'center'
+          }}>
+            {tabs.map((val, i) => {
+              return (
+                <TouchableOpacity
+                  key={String(i)}
+                  style={{ justifyContent: 'space-between' }}
+                  activeOpacity={0.8}
+                  onPress={!(
+                    cartItemCount?.message == null &&
+                    cartItemCount?.data?.item_count > 0
+                  )
+                    ? () => setSelectedTab(i)
+                    : dineInFunction}
+                >
+                  <View />
+                  <Text style={{
+                    fontSize: textScale(10),
+                    textTransform: 'uppercase',
+                    color: selectedTab == i ? themeColors.primary_color : isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF
+                  }}>{val}</Text>
+                  <View style={{
+                    height: 3,
+                    backgroundColor: selectedTab == i ? themeColors.primary_color : 'transparent'
+                  }} />
+                </TouchableOpacity>
+              )
+            })}
+
+          </View>
+
+          {/* <MaterialTabs
             items={tabs}
             selectedIndex={selectedTab}
             onChange={
@@ -315,8 +362,8 @@ console.log(dine_In_Type,"toggleDatatoggleData")
               isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF
             }
             indicatorHeight={3}
-            textStyle={{fontSize: textScale(10)}}
-          />
+            textStyle={{ fontSize: textScale(10) }}
+          /> */}
         </View>
       ) : null}
     </>
