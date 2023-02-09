@@ -839,7 +839,7 @@ export default function WebLinks({navigation, route}) {
       });
     } else {
       navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-        url: pageData?.terms_and_conditions,
+        url: pageData?.privacy_policy,
       });
     }
   };
