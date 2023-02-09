@@ -21,14 +21,35 @@ import styles from "./styles";
 enableFreeze(true);
 
 
+interface initBootInterface {
+  auth: object,
+  themeToggle: boolean,
+  themeColor:boolean,
+  deepLinkUrl: string
+}
+interface IRootState {
+  initBoot: initBootInterface,
+  auth: userDataInterface,
+}
+
+interface userDataInterface{
+  auth_token: string,
+  userData: object
+}
+
+
 export default function ShortCode() {
-  const { deepLinkUrl } = useSelector((state) => state?.initBoot || {});
-  const { userData } = useSelector((state) => state.auth || {});
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const { deepLinkUrl, auth, themeColor,themeToggle } = useSelector((state: IRootState) => state?.initBoot || {});
+  
+
+
+  const theme = themeColor;
+  const toggleTheme = themeToggle
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
+
+  console.log("toggleThemetoggleThemetoggleTheme",toggleTheme)
 
   const [state, setState] = useState({
     LoadingScreen: true,
@@ -36,9 +57,10 @@ export default function ShortCode() {
     allAppData: null,
     initapiresponse: false,
   });
+  
 
   const { LoadingScreen, videoDurationEnded, allAppData, initapiresponse } = state;
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data:object) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
     initApiHit()
@@ -55,12 +77,12 @@ export default function ShortCode() {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: appCode,
+        code: 'b6e6e8',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: appCode,
+        code: 'b6e6e8',
       };
     }
 
@@ -96,14 +118,14 @@ export default function ShortCode() {
   };
 
 
-  const navigateToNextScreen = (res) => {
+  const navigateToNextScreen = (res:object) => {
     getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
         actions.setAppSessionData("app_intro");
       } else {
-        if (userData?.auth_token) {
+        if (!!auth?.userData && !!auth?.userData?.auth_token) {
           actions.setAppSessionData("guest_login");
-        } else if (deepLinkUrl && !userData?.auth_token) {
+        } else if (deepLinkUrl && !auth?.userData?.auth_token) {
           actions.setAppSessionData("on_login");
         } else {
           actions.setAppSessionData("guest_login");
@@ -152,7 +174,7 @@ export default function ShortCode() {
       case appIds?.hezniTaxi:
         return imagePath.HezniSplash;
       case appIds?.flank:
-        return imagePath.flanksplash;
+        // return imagePath.flanksplash;
     }
   };
 
@@ -176,7 +198,7 @@ export default function ShortCode() {
     );
   };
 
-  const checkNavigationState = (apiRes, videoEnd) => {
+  const checkNavigationState = (apiRes:unknown, videoEnd:unknown) => {
     if (apiRes && videoEnd) { navigateToNextScreen(allAppData)}
   };
 
