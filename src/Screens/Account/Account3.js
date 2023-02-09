@@ -238,7 +238,7 @@ export default function Account3({ navigation }) {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
 
-        {shortCodeStatus ? (
+        {shortCodeStatus == '245bae' ? (
           <Header
             noLeftIcon={false}
             customLeft={() => (

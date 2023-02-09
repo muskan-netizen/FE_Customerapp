@@ -1,11 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
-import PushNotification, { Importance } from 'react-native-push-notification';
 import {navigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
-import {redirectFromNotification} from './helperFunctions';
+
 import {getItem} from './utils';
 
 
@@ -198,24 +197,7 @@ const manageRedirections = async (data) => {
 //   return null;
 // };
 
-createDefaultChannels();
 
-function createDefaultChannels() {
-  
-  PushNotification.createChannel(
-    {
-      channelId: 'default-channel-id', // (required)
-      channelName: `Default channel`, // (required)
-      channelDescription: 'A default channel', // (optional) default: undefined.
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-      vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    },
-    created =>
-      console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-  );
-  
-}
 
 
 export const notificationListener = async () => {

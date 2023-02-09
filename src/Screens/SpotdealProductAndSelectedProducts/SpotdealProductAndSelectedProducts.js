@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import actions from '../../redux/actions';
 import deviceInfoModule from 'react-native-device-info';
 import { MyDarkTheme } from '../../styles/theme';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import WrapperContainer from '../../Components/WrapperContainer';
 import colors from '../../styles/colors';
 import Header from '../../Components/Header';

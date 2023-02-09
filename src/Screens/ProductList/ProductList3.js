@@ -121,6 +121,8 @@ const filtersData = [
 ];
 
 import { enableFreeze } from "react-native-screens";
+import DatePicker from 'react-native-date-picker';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 enableFreeze(true);
 
 
@@ -133,6 +135,7 @@ export default function Products({ route, navigation }) {
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
