@@ -43,10 +43,10 @@ const RoyoOrderDetail = (props) => {
   const userData = useSelector((state) => state?.auth?.userData);
   const { data, selectedVendor } = props.route.params;
   const { appData, appStyle, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const {preferences} = appData?.profile;
 
   const navigation = useNavigation();

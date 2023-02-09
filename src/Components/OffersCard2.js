@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 
 import {
   moderateScale,

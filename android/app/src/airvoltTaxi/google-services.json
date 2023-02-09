@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1026896910579",
+    "project_id": "airvolttaxi-order",
+    "storage_bucket": "airvolttaxi-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026896910579:android:eaf7bb1203bdb6e3c83f86",
+        "android_client_info": {
+          "package_name": "com.airvoltTaxi.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026896910579-9oca19appm85ob2p44fjk0bj0k2bj0fj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airvoltTaxi.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1026896910579-qteodugu2e0ifs6jougb9ltp9kpkfeul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airvoltTaxi.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1026896910579-rrvpjvm0gton5a3i5tl7g0dgj2r6g004.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airvoltTaxi.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1026896910579-1aiac9amv2cav2opt5bhftvokfpvmjmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAocuctel-of_BL2Eing_ukVTzMz_teBPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026896910579-1aiac9amv2cav2opt5bhftvokfpvmjmo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1026896910579-sct7dog6d0v8e1vdasan760hap0vjcer.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.airvoltTaxi.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

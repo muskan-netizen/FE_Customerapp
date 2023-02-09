@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
-import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { I18nManager, Image, Text, TouchableOpacity, View } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -13,10 +14,11 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-export default function SendRefferal({navigation}) {
+export default function SendRefferal({ navigation }) {
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '1',
@@ -27,21 +29,21 @@ export default function SendRefferal({navigation}) {
     phoneNumber: '',
     deviceToken: '',
   });
-  const {phoneNumber, callingCode, cca2, name, email, isLoading, password} =
+  const { phoneNumber, callingCode, cca2, name, email, isLoading, password } =
     state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily });
 
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
   const isValidData = () => {
     const error = validations({
@@ -61,7 +63,7 @@ export default function SendRefferal({navigation}) {
     let data = {
       email: email,
     };
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .sendRefferalCode(data, {
         code: appData.profile.code,
@@ -69,18 +71,18 @@ export default function SendRefferal({navigation}) {
       .then((res) => {
         console.log(res, 'res>>>');
         showSuccess(res?.message);
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         // moveToNewScreen(navigationStrings.RESET_PASSWORD, {email: email})();
         navigation.goBack();
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   return (
@@ -93,10 +95,10 @@ export default function SendRefferal({navigation}) {
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={imagePath.back}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
           />
         </TouchableOpacity>
       </View>
@@ -106,13 +108,13 @@ export default function SendRefferal({navigation}) {
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               marginTop: moderateScaleVertical(50),
               marginHorizontal: moderateScale(24),
             }}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Text style={styles.header}>{strings.SENDREFFERAL}</Text>
             </View>
 
@@ -132,7 +134,7 @@ export default function SendRefferal({navigation}) {
             }}>
             <BorderTextInput
               onChangeText={_onChangeText('email')}
-              placeholder={strings.YOUR_EMAIL}
+              placeholder={getBundleId() === appIds.qdelo ? strings.ENTER_FRIEND_EMAIL : strings.YOUR_EMAIL}
               value={email}
             />
             <GradientButton

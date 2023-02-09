@@ -23,7 +23,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';

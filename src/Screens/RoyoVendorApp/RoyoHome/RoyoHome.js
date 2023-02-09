@@ -70,7 +70,7 @@ const RoyoHome = (props) => {
     (state) => state.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   console.log(languages, 'languagessssssssss');
 
   const [state, setState] = useState({
@@ -146,7 +146,7 @@ const RoyoHome = (props) => {
     };
     try {
       const res = await actions.storeVendors(query, headers);
-      console.log('available vendors res', isEmpty(res?.data?.data));
+      console.log('available vendors res', res);
       if (!!res?.data && res?.data?.data?.length > 0) {
         let firstVendor = !!currentVendor ? currentVendor : res?.data?.data[0];
         setAvailVendor(res.data.data);

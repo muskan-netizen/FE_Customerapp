@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>747426793643-iph40u2ks9cdpqfkqlibep1ru722sh6d.apps.googleusercontent.com</string>
+	<string>787954871391-88ilb2dcb06jqhsua7qp4l0av68jsu1s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.747426793643-iph40u2ks9cdpqfkqlibep1ru722sh6d</string>
+	<string>com.googleusercontent.apps.787954871391-88ilb2dcb06jqhsua7qp4l0av68jsu1s</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>747426793643-2ilcrg4a57t8oio7cnj0dl45g9i5j2kn.apps.googleusercontent.com</string>
+	<string>787954871391-6ort3tc0cii1350kgp8m7sn4dij1is3m.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDWWaH7Uo6RxFuIDW9z2yKdiRboJCuri_8</string>
+	<string>AIzaSyBlj0ZZY2bNKbdmxwBbVuVPG2iVsrqvAtM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>747426793643</string>
+	<string>787954871391</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.speedydelivery.royoorders</string>
+	<string>com.speedydelivery.orders</string>
 	<key>PROJECT_ID</key>
-	<string>speedy-delivery-db50d</string>
+	<string>speedy-delivery-18230</string>
 	<key>STORAGE_BUCKET</key>
-	<string>speedy-delivery-db50d.appspot.com</string>
+	<string>speedy-delivery-18230.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:747426793643:ios:c5c4fae143749393ed0fee</string>
+	<string>1:787954871391:ios:1c451cc8cc73693f04ffea</string>
 </dict>
 </plist>

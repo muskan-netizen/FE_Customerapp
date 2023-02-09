@@ -10,7 +10,7 @@ import {
 } from '../styles/responsiveSize';
 import Elevations from 'react-native-elevation';
 import {BlurView} from '@react-native-community/blur';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 const CustomBottomTabBarFive = ({
   state,
@@ -22,7 +22,7 @@ const CustomBottomTabBarFive = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
 

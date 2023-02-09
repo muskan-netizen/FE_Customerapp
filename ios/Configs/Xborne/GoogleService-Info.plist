@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1085852268942-itgi3v2dgl56iaslpon4cb807ud35p19.apps.googleusercontent.com</string>
+	<string>63973116556-6co9dc1541g7d3h8m034ogtmavrtch7r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1085852268942-itgi3v2dgl56iaslpon4cb807ud35p19</string>
+	<string>com.googleusercontent.apps.63973116556-6co9dc1541g7d3h8m034ogtmavrtch7r</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1085852268942-11b0696r6mepm2f85rhr596j4bdn24vc.apps.googleusercontent.com</string>
+	<string>63973116556-2gf50gigbt3cl2432rf6vnprjtg0knuk.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD5CFh0wiOiPNGFxHtZvSYyynKozMA1-GY</string>
+	<string>AIzaSyCU01tweKSywqE2ayoervRLyT9XU7XOAi4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1085852268942</string>
+	<string>63973116556</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.xborne</string>
+	<string>com.xborne.order</string>
 	<key>PROJECT_ID</key>
-	<string>xborne-275b6</string>
+	<string>xborne-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>xborne-275b6.appspot.com</string>
+	<string>xborne-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1085852268942:ios:4d936f6afc32efc4dc8cdf</string>
+	<string>1:63973116556:ios:0d9b7ff9a6bc307b2489a9</string>
 </dict>
 </plist>

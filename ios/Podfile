@@ -1,19 +1,23 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 abstract_target 'available_pods' do
   
   permissions_path = '../node_modules/react-native-permissions/ios'
   rn_maps_path = '../node_modules/react-native-maps'
    config = use_native_modules!
-   use_react_native!(:path => config["reactNativePath"])
-   pod 'react-native-google-maps', :path => rn_maps_path
-   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+   
+   use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => false
+  )
+
+
   #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
  
 
 ##RoyoOrder Target
@@ -25,7 +29,6 @@ target 'RoyoOrder' do
 #Runrun Target
 target 'Runrun' do
   
-  pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
 
 end
 
@@ -2240,9 +2243,225 @@ end
 #Fly Builder
 target 'FlyBuilder' do
 end
+
+#TodaysDeliverys
+target 'TodaysDeliverys' do
+end
+
+#Rumbella
+target 'Rumbella' do
+end
+
+#Locate
+target 'Locate' do
+end
+
+#OtgWeeds
+target 'OtgWeeds' do
+end
+
+#LvlUp
+target 'LvlUp' do
+end
+
+#LvlUp
+target 'LincShare' do
+end
+
+#Glavour
+target 'Glavour' do
+end
+
+#Shipmoe
+target 'Shipmoe' do
+end
+
+#BigBayong
+target 'BigBayong' do
+end
+
+#Efectibo
+target 'Efectibo' do
+end
+
+#Sooq
+target 'Sooq' do
+end
+
+#HectoHomes
+target 'HectoHomes' do
+end
+
+#ZynoBidandRide
+target 'ZynoBidandRide' do
+end
+
+#Glamguide
+target 'Glamguide' do
+end
+
+#Solace
+target 'Solace' do
+end
+
+#Superpana
+target 'Superpana' do
+end
+
+#Kero
+target 'Kero' do
+end
+
+#HousingSubsidies
+target 'HousingSubsidies' do
+end
+
+#GodamPAY
+target 'GodamPAY' do
+end
+
+#Bocch
+target 'Bocch' do
+end
+
+#Potolo
+target 'Potolo' do
+end
+
+#EarnApp
+target 'EarnApp' do
+end
+
+#Aredoo
+target 'Aredoo' do
+end
+
+#Dot
+target 'Dot' do
+end
+
+#Bukam
+target 'Bukam' do
+end
+
+#WizSonic
+target 'WizSonic' do
+end
+
+#Udkay
+target 'Udkay' do
+end
+
+#HattaFoodHub
+target 'HattaFoodHub' do
+end
+
+#Ondgoo
+target 'Ondgoo' do
+end
+
+#Junkerz
+target 'Junkerz' do
+end
+
+#Shopcart
+target 'Shopcart' do
+end
+
+
+#ViralClean
+target 'ViralClean' do
+end
+
+#Stargaze
+target 'Stargaze' do
+end
+
+#Messiaa
+target 'Messiaa' do
+end
+
+#Nounou
+target 'Nounou' do
+end
+
+#LiverpoolEats
+target 'LiverpoolEats' do
+end
+
+#Oaks
+target 'Oaks' do
+end
+
+#Buzy
+target 'Buzy' do
+end
+
+#Etaim
+target 'Etaim' do
+end
+
+#DotTaxiApp
+target 'DotTaxiApp' do
+end
+
+#AirvoltTaxi
+target 'AirvoltTaxi' do
+end
+
+#Laith
+target 'Laith' do
+end
+
+#MelakPharmacy
+target 'MelakPharmacy' do
+end
+
+#WiEnergi
+target 'WiEnergi' do
+end
+
+#Bliss
+target 'Bliss' do
+end
+
+#NannyAfrica
+target 'NannyAfrica' do
+end
+
+#WhatchaGotPickUp
+target 'WhatchaGotPickUp' do
+end
+
+#SuperApp
+target 'SuperApp' do
+end
+
+#HqiStore
+target 'HqiStore' do
+end
+
+#Tkaff
+target 'Tkaff' do
+end
+
+#GoKart
+target 'GoKart' do
+end
+
+
 post_install do |installer|
+  react_native_post_install(installer)
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+  end
+  installer.pods_project.targets.each do |target|
+    if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+      target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+      end
+    end
   end
   installer.pods_project.targets.each do |target|
     if target.name == "React-Core.common-AccessibilityResources"
@@ -2250,5 +2469,6 @@ post_install do |installer|
     end
   end
 end
+
 
 end

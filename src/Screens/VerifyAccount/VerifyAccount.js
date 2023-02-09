@@ -1,5 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
-import codes from 'country-calling-code';
 import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
@@ -10,18 +8,15 @@ import {
   View,
 } from 'react-native';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {useDarkMode} from 'react-native-dark-mode';
-import DeviceCountry from 'react-native-device-country';
+import {useDarkMode} from 'react-native-dynamic';
 import {TextInput} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
@@ -39,28 +34,16 @@ import {
 import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-var getPhonesCallingCodeAndCountryData = null;
-DeviceCountry.getCountryCode()
-  .then((result) => {
-    // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(
-      (x) => x.isoCode2 == result.code.toUpperCase(),
-    );
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+
 export default function VerifyAccount({navigation, route}) {
-  const {themeColor, themeToggle, appData, appStyle, themeColors} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {themeColor, themeToggle, appData, appStyle, themeColors} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   let paramsData = route?.params?.data;
-console.log('paramsDataparamsData',paramsData);
+  console.log('paramsDataparamsData', paramsData);
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
@@ -107,6 +90,8 @@ console.log('paramsDataparamsData',paramsData);
     countryPickerModalVisible,
   } = state;
 
+
+
   const sendOTP = (type, resendType) => {
     let data = {};
     if (type == 'phone') {
@@ -125,7 +110,7 @@ console.log('paramsDataparamsData',paramsData);
         authorization: paramsData?.auth_token,
       })
       .then((res) => {
-        console.log(res, 'resresres');
+        console.log(res, 'resend otp resresres');
         showSuccess(res?.message);
         if (type == 'phone') {
           updateState({
@@ -384,8 +369,7 @@ console.log('paramsDataparamsData',paramsData);
 
   return (
     <WrapperContainer
-      isLoadingB={isLoading}
-      source={loaderOne}
+      isLoading={isLoading}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity

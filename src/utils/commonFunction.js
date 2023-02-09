@@ -142,6 +142,7 @@ export const tokenConverterPlusCurrencyNumberFormater = (
       'token_currency',
       additionalPreferences,
     );
+
     // let tokenCurrency = 2;
     return currencyNumberFormatter(
       Number(price) * tokenCurrency,
@@ -153,6 +154,11 @@ export const tokenConverterPlusCurrencyNumberFormater = (
       digitAfterDecimal,
     )}`;
   }
+};
+
+export const checkValueExistInAry = (item = {}, arr2 = []) => {
+  let found = arr2.includes(item?.id);
+  return found;
 };
 
 export {cameraHandler, currencyNumberFormatter};

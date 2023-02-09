@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
@@ -35,7 +35,7 @@ const ProductCard4 = ({
     (state) => state?.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const {themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});

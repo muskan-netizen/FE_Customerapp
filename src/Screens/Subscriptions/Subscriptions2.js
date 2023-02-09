@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
@@ -95,10 +95,10 @@ export default function Subscriptions2({ navigation, route }) {
   } = state;
   //update your state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  console.log(selectedPlan, selectedPaymentMethod,currentSubscription,'selectedPlanselectedPlan')
+  console.log(selectedPlan, selectedPaymentMethod, currentSubscription, 'selectedPlanselectedPlan')
   //Redux Store Data
   const { appData, themeColors, appStyle, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
   const [year, setYear] = useState()
   const [date, setDate] = useState()
@@ -107,7 +107,7 @@ export default function Subscriptions2({ navigation, route }) {
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
   const { additional_preferences, digit_after_decimal } =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const { preferences } = appData?.profile;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
@@ -412,7 +412,7 @@ export default function Subscriptions2({ navigation, route }) {
 
   //render pyaments icons
   const _renderItemPayments = ({ item, index }) => {
-    console.log(item,'itemmmmmmmmmmmmm')
+    console.log(item, 'itemmmmmmmmmmmmm')
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -571,7 +571,7 @@ export default function Subscriptions2({ navigation, route }) {
           <Text style={styles.title}>{selectedPlan?.title}</Text>
           <Text style={[styles.title2, { marginTop: moderateScale(10) }]}>
             {tokenConverterPlusCurrencyNumberFormater(
-              Number(selectedPlan?.price) / Number(7),
+              Number(selectedPlan?.price) || Number(selectedPlan?.frequency),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
@@ -818,9 +818,9 @@ export default function Subscriptions2({ navigation, route }) {
       })
       .catch((err) => {
         console.log('Error>>>>>>>>>>>', err)
-          setCardNUmber('')
-          setCvc('')
-          setExpiryDate('')
+        setCardNUmber('')
+        setCvc('')
+        setExpiryDate('')
         showError(err?.msg)
       })
   }

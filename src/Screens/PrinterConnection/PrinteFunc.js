@@ -3,12 +3,12 @@ import {
   BluetoothManager,
 } from '@brooons/react-native-bluetooth-escpos-printer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Platform} from 'react-native';
-import RNFetchBlob from 'rn-fetch-blob-v2';
-import {appData, language} from './PrinterScreen';
+import { Platform } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
+import { appData, language } from './PrinterScreen';
 import actions from '../../redux/actions';
 import BackgroundService from 'react-native-background-actions';
-import {getItem} from '../../utils/utils';
+import { getItem } from '../../utils/utils';
 import strings from '../../constants/lang';
 import moment from 'moment';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
@@ -134,7 +134,7 @@ function getBase64Image(img) {
       .then((base64Data) => {
         // here's base64 encoded image
         // remove the file from storage
-        resolve({url: imagePath, base64String: base64Data});
+        resolve({ url: imagePath, base64String: base64Data });
         // return fs.unlink(imagePath);
       });
   });
@@ -212,8 +212,7 @@ export const printReciept = async (data) => {
 
             if (detail.scheduled_date_time !== null) {
               await BluetoothEscposPrinter.printText(
-                `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
-                  strings.ORDER_PLACE_ON
+                `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${strings.ORDER_PLACE_ON
                 }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
                   'YYYY-MM-DD [at] hh:mm A',
                 )}`}\r\n${strings.TOBE_PREPARED}: ${moment(
@@ -221,19 +220,16 @@ export const printReciept = async (data) => {
                   'DD-MM-YYYY hh:mm',
                 ).format(
                   'YYYY-MM-DD [at] hh:mm A',
-                )}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${
-                  detail.address ? detail.address.address : ''
+                )}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${detail.address ? detail.address.address : ''
                 }\r\n----------------------------------------------\r\n`,
                 {},
               );
             } else {
               await BluetoothEscposPrinter.printText(
-                `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
-                  strings.ORDER_PLACE_ON
+                `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${strings.ORDER_PLACE_ON
                 }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
                   'YYYY-MM-DD [at] hh:mm A',
-                )}`}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${
-                  detail.address ? detail.address.address : ''
+                )}`}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${detail.address ? detail.address.address : ''
                 }\r\n----------------------------------------------\r\n`,
                 {},
               );
@@ -458,8 +454,7 @@ export const printRecieptWithSunmi = async (data) => {
 
       if (detail.scheduled_date_time !== null) {
         await SunmiV2Printer.printOriginalText(
-          `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
-            strings.ORDER_PLACE_ON
+          `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${strings.ORDER_PLACE_ON
           }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
             'YYYY-MM-DD [at] hh:mm A',
           )}`}\r\n${strings.TOBE_PREPARED}: ${moment(
@@ -467,18 +462,15 @@ export const printRecieptWithSunmi = async (data) => {
             'DD-MM-YYYY hh:mm',
           ).format(
             'YYYY-MM-DD [at] hh:mm A',
-          )}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${
-            detail.address ? detail.address.address : ''
+          )}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${detail.address ? detail.address.address : ''
           }\r\n----------------------------------------------\r\n`,
         );
       } else {
         await SunmiV2Printer.printOriginalText(
-          `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
-            strings.ORDER_PLACE_ON
+          `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${strings.ORDER_PLACE_ON
           }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
             'YYYY-MM-DD [at] hh:mm A',
-          )}`}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${
-            detail.address ? detail.address.address : ''
+          )}`}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${detail.address ? detail.address.address : ''
           }\r\n----------------------------------------------\r\n`,
         );
       }

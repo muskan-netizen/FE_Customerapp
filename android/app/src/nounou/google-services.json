@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "922192093745",
+    "project_id": "nounou-orders",
+    "storage_bucket": "nounou-orders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922192093745:android:12b3baad5cabb1a1b86b10",
+        "android_client_info": {
+          "package_name": "com.nounou.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922192093745-04hoa914k112n76jq0dq978q93gvgg6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nounou.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "922192093745-3anijkr7ngn6rloaldueu7rpqhi22sb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nounou.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "922192093745-4rptk8r4hen08tmnuseaiadsojjus0c1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nounou.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "922192093745-sb6lpt6pkft7n4lbn5ven02oefuj28bd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5uvPyUWjTa_2WFbvTLAFvVg2QVLAAMh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922192093745-sb6lpt6pkft7n4lbn5ven02oefuj28bd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

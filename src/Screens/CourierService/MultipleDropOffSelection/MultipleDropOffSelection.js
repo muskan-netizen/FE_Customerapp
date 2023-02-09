@@ -1,5 +1,4 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {wrap} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -11,7 +10,6 @@ import {
   Keyboard,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import {abs} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import GooglePlaceInput from '../../../Components/GooglePlaceInput';
 import GradientButton from '../../../Components/GradientButton';
@@ -33,7 +31,7 @@ import {
 import {getAddressComponent, showError} from '../../../utils/helperFunctions';
 import {chekLocationPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 
 export default function MultipleDropOffSelection({navigation, route}) {

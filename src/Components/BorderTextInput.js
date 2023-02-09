@@ -1,5 +1,4 @@
-import {concat} from 'lodash';
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   I18nManager,
   Image,
@@ -8,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {hitSlopProp} from '../styles/commonStyles';
-import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { hitSlopProp } from '../styles/commonStyles';
+import { moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 
 const BorderTextInput = ({
   containerStyle,
@@ -24,9 +23,9 @@ const BorderTextInput = ({
   rightIcon,
   onChangeText,
   value,
-  placeholder,
+  placeholder = '',
   marginBottom = 20,
-  onPressRight = () => {},
+  onPressRight = () => { },
   withRef = false,
   secureTextEntry = false,
   borderWidth = 1,
@@ -34,6 +33,7 @@ const BorderTextInput = ({
   isShowPassword,
   rightIconStyle = {},
   require = false,
+  keyboardType = 'default',
   maxLength,
   ...props
 }) => {
@@ -43,14 +43,14 @@ const BorderTextInput = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const inputRef = useRef();
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const { appStyle } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
 
   useEffect(() => {
     if (withRef && Platform.OS === 'android') {
       if (inputRef.current) {
         inputRef.current.setNativeProps({
-          style: {fontFamily: fontFamily.regular},
+          style: { fontFamily: fontFamily.regular },
         });
       }
     }
@@ -70,7 +70,7 @@ const BorderTextInput = ({
         ...containerStyle,
       }}>
       {leftIcon && (
-        <View style={{justifyContent: 'center', marginLeft: 10}}>
+        <View style={{ justifyContent: 'center', marginLeft: 10 }}>
           <Image source={leftIcon} />
         </View>
       )}
@@ -89,12 +89,11 @@ const BorderTextInput = ({
           fontFamily: fontFamily.medium,
           fontSize: textScale(14),
           paddingHorizontal: 8,
-          paddingTop: 0,
-          paddingBottom: 0,
           textAlign: I18nManager.isRTL ? 'right' : 'left',
           ...textInputStyle,
         }}
         ref={inputRef}
+        keyboardType={keyboardType}
         // numberOfLines
         blurOnSubmit
         onChangeText={onChangeText}
@@ -106,7 +105,7 @@ const BorderTextInput = ({
 
       {rightIcon && (
         <TouchableOpacity
-          style={{justifyContent: 'center', marginRight: 10}}
+          style={{ justifyContent: 'center', marginRight: 10 }}
           hitSlop={hitSlopProp}
           onPress={onPressRight}>
           <Image

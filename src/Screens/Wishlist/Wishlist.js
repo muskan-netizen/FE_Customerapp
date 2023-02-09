@@ -15,8 +15,11 @@ import {moderateScale} from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import {useDarkMode} from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Wishlist({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

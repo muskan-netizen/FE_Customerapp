@@ -14,10 +14,9 @@ import {
 } from 'react-native';
 import RenderHtml, {HTML} from 'react-native-render-html';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
-import HTMLView from 'react-native-htmlview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
@@ -25,14 +24,12 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
-import {getReturnOrderDetailData} from '../../redux/actions/order';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -49,28 +46,16 @@ import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import Accordion from 'react-native-collapsible/Accordion';
-import {WebView} from 'react-native-webview';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-  MenuProvider,
-} from 'react-native-popup-menu';
+import {MenuProvider} from 'react-native-popup-menu';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 let clickedIndx = null;
 let clickedItem = null;
 let isVendorLogo = false;
 
-const SECTIONS = [
-  {
-    name: 'First',
-    content: 'Lorem ipsum...',
-  },
-  {
-    name: 'Second',
-    content: 'Lorem ipsum...',
-  },
+let vendorTypes = [
+  {label: 'Shopper', value: 'vendor'},
+  {label: 'ClickOKartPartner', value: 'seller'},
 ];
 
 export default function WebLinks({navigation, route}) {
@@ -84,7 +69,7 @@ export default function WebLinks({navigation, route}) {
     languages,
     themeColor,
     themeToggle,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
   console.log(appData, 'appData>>>>>>>');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -92,7 +77,7 @@ export default function WebLinks({navigation, route}) {
   const paramData = route?.params;
   // const [VendorLocation, setVendorLocation] = useState(address)
   // setVendorLocation(paramData?.formatted_address)
-  // console.log(paramData , "paramDataparamData" )
+  console.log(paramData , "paramDataparamData" )
   const [state, setState] = useState({
     isLoading: false,
     htmlContent: null,
@@ -121,7 +106,7 @@ export default function WebLinks({navigation, route}) {
     isDelivery: false,
     vendorRegDocs: [],
     vendorRegisterationDocs: [],
-    driverRegDocs: [],
+    pageData: [],
     driverPic: '',
     driverName: '',
     driverPhoneNumber: '',
@@ -165,7 +150,6 @@ export default function WebLinks({navigation, route}) {
   const {location, appMainData, dineInType} = useSelector(
     (state) => state?.home,
   );
-  console.log(location, 'locationlocation');
 
   const {
     cca2,
@@ -183,7 +167,7 @@ export default function WebLinks({navigation, route}) {
     isLoading,
     htmlContent,
     vendorRegisterationDocs,
-    driverRegDocs,
+    pageData,
     driverPic,
     driverName,
     driverPhoneNumber,
@@ -214,17 +198,16 @@ export default function WebLinks({navigation, route}) {
     isProfilePhoto,
   } = state;
 
-  useEffect(() => {
-    //  isDineIn: false,
-    // isTakeaway: false,
-    // isDelivery: false,
-  }, []);
+  const [selectedVendorType, setVendorType] = useState({});
+  const [companyName, setCompanyName] = useState('');
+  const [gstNumber, setGstNumber] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [ifscCode, setIfscCode] = useState('');
 
   useEffect(() => {
     _getLocationFromParams();
-    // if (addressSearch) {
-    //   _getLocationFromParams();
-    // }
   }, [paramData?.details]);
 
   useEffect(() => {
@@ -248,7 +231,7 @@ export default function WebLinks({navigation, route}) {
         updateState({
           htmlContent: res?.data?.page_detail?.primary?.description,
           vendorRegDocs: res?.data?.vendor_registration_documents,
-          driverRegDocs: res?.data,
+          pageData: res?.data,
           driverTagsAry: res?.data?.tags,
         });
       })
@@ -269,9 +252,9 @@ export default function WebLinks({navigation, route}) {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
   };
-  console.log(driverRegDocs, 'driverRegDocsdriverRegDocs');
+  console.log(pageData, 'pageData');
   const isValidData = () => {
-    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+    if (pageData?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
         name: driverName,
         phoneNumber: driverPhoneNumber,
@@ -312,16 +295,15 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _onSubmit = () => {
-    console.log(driverRegistrationDocs, 'driverRegistrationDocs');
     const checkValid = isValidData();
     if (!checkValid) {
       return;
     }
 
-    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+    if (pageData?.page_detail?.primary?.type_of_form == 2) {
       // var isRequired = true;
 
-      // driverRegDocs?.driver_registration_documents.map((itm, indx) => {
+      // pageData?.driver_registration_documents.map((itm, indx) => {
       //   if (itm.is_required) {
       //     if (isRequired) {
       //       if (isEmpty(driverRegistrationDocs)) {
@@ -360,6 +342,7 @@ export default function WebLinks({navigation, route}) {
         'vehicle_type_id',
         !!driverTransportType ? driverTransportType?.value : '',
       );
+
       formData.append('upload_photo', {
         uri: driverPic.path,
         name: driverPic.filename,
@@ -383,6 +366,7 @@ export default function WebLinks({navigation, route}) {
         );
       });
       console.log(formData, 'formDataaaaaa');
+
       updateState({isLoading: true});
       actions
         .driverRegisteration(formData, {
@@ -423,6 +407,16 @@ export default function WebLinks({navigation, route}) {
       formData.append('takeaway', isTakeaway ? 1 : 0);
       formData.append('countryData', cca2);
       formData.append('check_conditions', isTermsConditions ? 1 : 0);
+      formData.append(
+        'vendor_type',
+        selectedVendorType?.value == 'vendor' ? 0 : 1,
+      );
+      formData.append('company_name', companyName);
+      formData.append('gst_number', gstNumber);
+      formData.append('account_name', accountName);
+      formData.append('bank_name', bankName);
+      formData.append('account_number', accountNumber);
+      formData.append('ifsc_code', ifscCode);
       formData.append('upload_logo', {
         uri: vendorLogo.path,
         name: vendorLogo.filename,
@@ -484,7 +478,6 @@ export default function WebLinks({navigation, route}) {
         );
       });
 
-      console.log(formData, 'formData>>>>>>');
       console.log(JSON.stringify(formData), 'formDatastringfy');
       actions
         .vendorRegisteration(formData, {
@@ -502,14 +495,12 @@ export default function WebLinks({navigation, route}) {
           showSuccess(res.message);
           navigation.goBack();
         })
-        .catch((err) => {
-          console.log(err, 'err......1');
-        });
+        .catch(errorMethod);
     }
   };
 
   const _dynamicTextInputChange = (item, indx, mainItem) => {
-    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+    if (pageData?.page_detail?.primary?.type_of_form == 2) {
       const driverRegistrationDocsAry = [...driverRegistrationDocs];
       driverRegistrationDocsAry[indx] = {
         item: mainItem,
@@ -540,7 +531,7 @@ export default function WebLinks({navigation, route}) {
           type: DocumentPicker.types.pdf,
         });
 
-        if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+        if (pageData?.page_detail?.primary?.type_of_form == 2) {
           const driverRegistrationDocsAry = [...driverRegistrationDocs];
           driverRegistrationDocsAry[indx] = {
             item: item,
@@ -579,9 +570,11 @@ export default function WebLinks({navigation, route}) {
 
   console.log(clickedIndx, 'clickedIndx');
   const cameraHandle = async (index) => {
+    console.log('calloing....1');
     const permissionStatus = await androidCameraPermission();
     console.log(index, 'indxxxxxx');
     if (permissionStatus) {
+      console.log('calloing....');
       if (index == 0 || index == 1) {
         cameraHandler(index, {
           width: 300,
@@ -593,7 +586,7 @@ export default function WebLinks({navigation, route}) {
           .then((res) => {
             console.log(res, 'ressifIndx');
             if (res && res.data) {
-              if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
+              if (pageData?.page_detail?.primary?.type_of_form == 2) {
                 // console.log(clickedIndx,"clickedIndx")
                 if (clickedIndx != null && isProfilePhoto) {
                   {
@@ -702,7 +695,7 @@ export default function WebLinks({navigation, route}) {
                     ? MyDarkTheme.colors.text
                     : colors.borderLight,
                 }}>
-                {driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                {pageData?.page_detail?.primary?.type_of_form == 2
                   ? driverRegistrationDocs[index]?.fileData
                     ? driverRegistrationDocs[index]?.fileData?.name
                     : strings.NO_FILE_CHOSEN
@@ -711,10 +704,6 @@ export default function WebLinks({navigation, route}) {
                   : strings.NO_FILE_CHOSEN}
               </Text>
             </View>
-          )}
-          {console.log(
-            driverRegistrationDocs[1]?.fileData?.path,
-            'driverRegistrationDocs[index]?.fileData?.path',
           )}
           {item?.file_type == 'Image' && (
             <TouchableOpacity
@@ -727,7 +716,7 @@ export default function WebLinks({navigation, route}) {
               }}>
               <Image
                 source={
-                  driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                  pageData?.page_detail?.primary?.type_of_form == 2
                     ? driverRegistrationDocs[index]?.fileData?.path
                       ? {
                           uri: driverRegistrationDocs[index]?.fileData?.path,
@@ -741,7 +730,7 @@ export default function WebLinks({navigation, route}) {
                 }
                 style={{
                   // tintColor:
-                  //   driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                  //   pageData?.page_detail?.primary?.type_of_form == 2
                   //     ? !driverRegistrationDocs[index]?.fileData?.path
                   //       ? themeColors.primary_color
                   //       : null
@@ -749,7 +738,7 @@ export default function WebLinks({navigation, route}) {
                   //     ? themeColors.primary_color
                   //     : null,
                   height:
-                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                    pageData?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? height / 6 - moderateScale(15)
                         : 30
@@ -757,7 +746,7 @@ export default function WebLinks({navigation, route}) {
                       ? height / 6 - moderateScale(15)
                       : 30,
                   width:
-                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
+                    pageData?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? width - moderateScale(80)
                         : 30
@@ -846,17 +835,17 @@ export default function WebLinks({navigation, route}) {
   const _onLinkPress = (route) => {
     if (route == 'terms') {
       navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-        url: driverRegDocs?.terms_and_conditions,
+        url: pageData?.terms_and_conditions,
       });
     } else {
       navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-        url: driverRegDocs?.terms_and_conditions,
+        url: pageData?.terms_and_conditions,
       });
     }
   };
 
   const onSearchTags = (text) => {
-    const driverTagsNewAry = [...driverRegDocs?.tags];
+    const driverTagsNewAry = [...pageData?.tags];
     let searchedAry;
     if (text) {
       searchedAry = driverTagsNewAry.filter((item) => {
@@ -864,7 +853,7 @@ export default function WebLinks({navigation, route}) {
       });
       updateState({driverTagsAry: searchedAry});
     } else {
-      updateState({driverTagsAry: driverRegDocs?.tags});
+      updateState({driverTagsAry: pageData?.tags});
     }
   };
 
@@ -930,7 +919,7 @@ export default function WebLinks({navigation, route}) {
     });
   };
 
-  if (driverRegDocs?.page_detail?.primary?.type_of_form == 3) {
+  if (pageData?.page_detail?.primary?.type_of_form == 3) {
     return (
       <WrapperContainer
         bgColor={colors.backGroundGreyD}
@@ -958,7 +947,7 @@ export default function WebLinks({navigation, route}) {
           }}
           showsVerticalScrollIndicator={false}>
           <Accordion
-            sections={driverRegDocs?.faq_data}
+            sections={pageData?.faq_data}
             activeSections={activeSections}
             renderSectionTitle={_renderSectionTitle}
             renderHeader={_renderHeader}
@@ -1010,8 +999,9 @@ export default function WebLinks({navigation, route}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+      isLoading={isLoading}
+
+      >
       <MenuProvider>
         <Header
           leftIcon={
@@ -1029,7 +1019,6 @@ export default function WebLinks({navigation, route}) {
           }
         />
         <View style={{...commonStyles.headerTopLine}} />
-        {console.log(I18nManager.isRTL, 'I18nManager.isRTL')}
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
@@ -1039,8 +1028,8 @@ export default function WebLinks({navigation, route}) {
           <View
             style={{
               marginTop: moderateScaleVertical(20),
-              marginHorizontal: moderateScale(20),
-
+              marginBottom: moderateScaleVertical(25),
+              marginHorizontal: moderateScale(18),
               justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
               flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
@@ -1052,9 +1041,17 @@ export default function WebLinks({navigation, route}) {
                 tagsStyles={{
                   p: {
                     color: isDarkMode ? colors.white : colors.black,
-                    // alignSelf: I18nManager.isRTL ? 'left' : 'right',
-                    // textAlign: I18nManager.isRTL ? 'left' : 'right',
-                    // textAlign:'right',
+                    width: height / 2,
+                    paddingHorizontal: 5
+                  },
+                  h2: {
+                    width: height / 2
+                  },
+                  td: {
+                    width: height / 2,
+                  },
+                  tr: {
+                    width: height / 2,
                   },
                 }}
               />
@@ -1066,404 +1063,553 @@ export default function WebLinks({navigation, route}) {
             )}
           </View>
 
-          {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
+          {pageData?.page_detail?.primary?.type_of_form == 1 && (
             <View style={styles.mainView}>
-              <View
-                style={{
-                  marginBottom: moderateScaleVertical(12),
-                  flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                  alignSelf: 'flex-start',
-                }}>
-                <Text style={styles.detailStyle}>
-                  {strings.PERSONAL_DETAILS}
-                </Text>
-              </View>
-              <BorderTextInput
-                placeholder={`${strings.YOUR_NAME}*`}
-                onChangeText={_onChangeText('fullname')}
-                containerStyle={styles.containerStyle}
-              />
-
-              <BorderTextInput
-                placeholder={`${strings.YOUR_EMAIL}*`}
-                onChangeText={_onChangeText('email')}
-                containerStyle={styles.containerStyle}
-                keyboardType={'email-address'}
-              />
-              <PhoneNumberInput
-                onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) =>
-                  updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
-                }
-                cca2={cca2}
-                phoneNumber={phoneNumber}
-                callingCode={state.callingCode}
-                placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
-                keyboardType={'phone-pad'}
-                containerStyle={styles.containerStyle}
-              />
-
-              <BorderTextInput
-                placeholder={strings.ENTER_TITLE}
-                label={'Title'}
-                onChangeText={_onChangeText('title')}
-                containerStyle={styles.containerStyle}
-              />
-
-              <BorderTextInput
-                secureTextEntry={true}
-                placeholder={`${strings.ENTER_PASSWORD}*`}
-                onChangeText={_onChangeText('password')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                secureTextEntry={true}
-                placeholder={`${strings.CONFIRM_PASSWORD}*`}
-                onChangeText={_onChangeText('confirm_password')}
-                containerStyle={styles.containerStyle}
-              />
-              <View style={{marginVertical: moderateScaleVertical(10)}}>
+              <KeyboardAwareScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}>
                 <View
                   style={{
+                    marginBottom: moderateScaleVertical(12),
                     flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
                     alignSelf: 'flex-start',
                   }}>
                   <Text style={styles.detailStyle}>
-                    {strings.STORE_DETAILS}
+                    {strings.PERSONAL_DETAILS}
                   </Text>
                 </View>
-                <View style={{marginVertical: moderateScaleVertical(20)}}>
-                  <View style={{flexDirection: 'row'}}>
-                    <View
-                      style={{
-                        width: width / 2 - moderateScale(22),
-                      }}>
-                      <Text style={styles.uploadText}>
-                        {strings.UPLOAD_LOGO}*
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          isVendorLogo = true;
-                          actionSheet.current.show();
+                <BorderTextInput
+                  placeholder={`${strings.YOUR_NAME}*`}
+                  onChangeText={_onChangeText('fullname')}
+                  containerStyle={styles.containerStyle}
+                />
+
+                <BorderTextInput
+                  placeholder={`${strings.YOUR_EMAIL}*`}
+                  onChangeText={_onChangeText('email')}
+                  containerStyle={styles.containerStyle}
+                  keyboardType={'email-address'}
+                />
+                <PhoneNumberInput
+                  onCountryChange={_onCountryChange}
+                  onChangePhone={(phoneNumber) =>
+                    updateState({
+                      phoneNumber: phoneNumber.replace(/[^0-9]/g, '')
+                    })
+                  }
+                  cca2={cca2}
+                  phoneNumber={phoneNumber}
+                  callingCode={state.callingCode}
+                  placeholder={`${strings.YOUR_PHONE_NUMBER}*`}
+                  keyboardType={'phone-pad'}
+                  containerStyle={styles.containerStyle}
+                />
+
+                <BorderTextInput
+                  placeholder={strings.ENTER_TITLE}
+                  label={'Title'}
+                  onChangeText={_onChangeText('title')}
+                  containerStyle={styles.containerStyle}
+                />
+
+                <BorderTextInput
+                  secureTextEntry={true}
+                  placeholder={`${strings.ENTER_PASSWORD}*`}
+                  onChangeText={_onChangeText('password')}
+                  containerStyle={styles.containerStyle}
+                />
+                <BorderTextInput
+                  secureTextEntry={true}
+                  placeholder={`${strings.CONFIRM_PASSWORD}*`}
+                  onChangeText={_onChangeText('confirm_password')}
+                  containerStyle={styles.containerStyle}
+                />
+                <View style={{marginVertical: moderateScaleVertical(10)}}>
+                  <View
+                    style={{
+                      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                      alignSelf: 'flex-start',
+                    }}>
+                    <Text style={styles.detailStyle}>
+                      {strings.STORE_DETAILS}
+                    </Text>
+                  </View>
+                  <View style={{marginVertical: moderateScaleVertical(20)}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={{
+                          width: width / 2 - moderateScale(22),
                         }}>
+                        <Text style={styles.uploadText}>
+                          {strings.UPLOAD_LOGO}*
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            isVendorLogo = true;
+                            actionSheet.current.show();
+                          }}>
+                          <View style={styles.imageView}>
+                            <View
+                              style={[
+                                styles.viewOverImage2,
+                                {borderStyle: 'dashed'},
+                              ]}>
+                              <Image
+                                source={
+                                  vendorLogo?.path
+                                    ? {uri: vendorLogo.path}
+                                    : imagePath.icCamIcon
+                                }
+                                // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
+                                style={{
+                                  // tintColor: vendorLogo.path
+                                  //   ? null
+                                  //   : themeColors.primary_color,
+                                  height: vendorLogo.path
+                                    ? height / 6 - 10
+                                    : 30,
+                                  width: vendorLogo.path
+                                    ? width / 2 - moderateScale(62)
+                                    : moderateScale(30),
+                                }}
+                                resizeMode="cover"
+                              />
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          width: width / 2 - moderateScale(22),
+                        }}>
+                        <Text style={styles.uploadText}>
+                          {strings.UPLOAD_BANNER}
+                        </Text>
+
                         <View style={styles.imageView}>
-                          <View
+                          <TouchableOpacity
+                            onPress={() => {
+                              isVendorLogo = false;
+
+                              actionSheet.current.show();
+                            }}
                             style={[
                               styles.viewOverImage2,
                               {borderStyle: 'dashed'},
                             ]}>
                             <Image
                               source={
-                                vendorLogo?.path
-                                  ? {uri: vendorLogo.path}
+                                vendorBanner.path
+                                  ? {uri: vendorBanner.path}
                                   : imagePath.icCamIcon
                               }
-                              // source={{uri:'file:///storage/emulated/0/Android/data/com.donepacked/files/Pictures/111fa92e-6b97-46e9-a459-a50b57c91641.jpg'}}
                               style={{
-                                // tintColor: vendorLogo.path
+                                // tintColor: vendorBanner.path
                                 //   ? null
                                 //   : themeColors.primary_color,
-                                height: vendorLogo.path ? height / 6 - 10 : 30,
-                                width: vendorLogo.path
+                                height: vendorBanner.path
+                                  ? height / 6 - 10
+                                  : moderateScale(30),
+                                width: vendorBanner.path
                                   ? width / 2 - moderateScale(62)
                                   : moderateScale(30),
                               }}
                               resizeMode="cover"
                             />
-                          </View>
+                          </TouchableOpacity>
                         </View>
-                      </TouchableOpacity>
-                    </View>
-                    <View
-                      style={{
-                        width: width / 2 - moderateScale(22),
-                      }}>
-                      <Text style={styles.uploadText}>
-                        {strings.UPLOAD_BANNER}
-                      </Text>
-
-                      <View style={styles.imageView}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            isVendorLogo = false;
-
-                            actionSheet.current.show();
-                          }}
-                          style={[
-                            styles.viewOverImage2,
-                            {borderStyle: 'dashed'},
-                          ]}>
-                          <Image
-                            source={
-                              vendorBanner.path
-                                ? {uri: vendorBanner.path}
-                                : imagePath.icCamIcon
-                            }
-                            style={{
-                              // tintColor: vendorBanner.path
-                              //   ? null
-                              //   : themeColors.primary_color,
-                              height: vendorBanner.path
-                                ? height / 6 - 10
-                                : moderateScale(30),
-                              width: vendorBanner.path
-                                ? width / 2 - moderateScale(62)
-                                : moderateScale(30),
-                            }}
-                            resizeMode="cover"
-                          />
-                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
                 </View>
-              </View>
 
-              <BorderTextInput
-                placeholder={`${strings.VENDOR_NAME}*`}
-                onChangeText={_onChangeText('vendor_name')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                placeholder={`${strings.DESCRIPTION}*`}
-                onChangeText={_onChangeText('description')}
-                containerStyle={styles.containerStyle}
-              />
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() =>
-                  navigation.navigate(navigationStrings.LOCATION, {
-                    type: 'vendorRegistration',
-                  })
-                }
-                style={{
-                  flexDirection: 'row',
-                  height: moderateScaleVertical(49),
-                  color: colors.white,
-                  borderWidth: 1,
-                  borderRadius: 13,
-                  borderColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.borderLight,
-                  marginBottom: 20,
-                  overflow: 'hidden',
-                  alignItems: 'center',
-                  ...styles.containerStyle,
-                }}>
-                <Text
-                  style={{
-                    flex: 1,
-                    opacity: 0.7,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                    fontFamily: fontFamily.medium,
-                    fontSize: textScale(14),
-                    paddingHorizontal: 8,
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                    textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  }}>
-                  {address != '' && address != null
-                    ? `${address}`
-                    : `${strings.ADDRESS}*`}
-                  {/* { address != '' && address != null ? address :  address == '' && address == null ? vendorAddress : strings.ADDRESS } */}
-                  {/* {if(address != '' && address != null) {
-                    `${address}`
-                  } else if (address = '') {
-                    `${vendorAdrees}`
-                  } else {
-                    `${strings.ADDRESS}`
-                  }
-                }} */}
-                </Text>
-              </TouchableOpacity>
-              {/* <BorderTextInput
-              placeholder={`${strings.ADDRESS}*`}
-              onChangeText={_onChangeText('address')}
-              containerStyle={styles.containerStyle}
-            /> */}
-              <BorderTextInput
-                placeholder={strings.WEBSITE}
-                onChangeText={_onChangeText('website')}
-                containerStyle={styles.containerStyle}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-
-                  marginHorizontal: moderateScale(10),
-                  marginVertical: moderateScaleVertical(16),
-                }}>
-                {!!appData?.profile?.preferences?.dinein_check && (
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        marginBottom: moderateScaleVertical(8),
-                        fontFamily: fontFamily.medium,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7,
-                      }}>
-                      {strings.DINE_IN}
-                    </Text>
-                    <ToggleSwitch
-                      isOn={isDineIn}
-                      onColor={themeColors.primary_color}
-                      offColor={
-                        isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.borderLight
-                      }
-                      size="small"
-                      onToggle={() => updateState({isDineIn: !isDineIn})}
-                    />
-                  </View>
-                )}
-                {!!appData?.profile?.preferences?.takeaway_check && (
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        marginBottom: moderateScaleVertical(8),
-                        fontFamily: fontFamily.medium,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7,
-                      }}>
-                      {strings.TAKEAWAY}
-                    </Text>
-                    <ToggleSwitch
-                      isOn={isTakeaway}
-                      onColor={themeColors.primary_color}
-                      offColor={
-                        isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.borderLight
-                      }
-                      size="small"
-                      onToggle={() => updateState({isTakeaway: !isTakeaway})}
-                    />
-                  </View>
-                )}
-                {!!appData?.profile?.preferences?.delivery_check && (
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        marginBottom: moderateScaleVertical(8),
-                        fontFamily: fontFamily.medium,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7,
-                      }}>
-                      {strings.DELIVERY}
-                    </Text>
-                    <ToggleSwitch
-                      isOn={isDelivery}
-                      onColor={themeColors.primary_color}
-                      offColor={
-                        isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.borderLight
-                      }
-                      size="small"
-                      onToggle={() => updateState({isDelivery: !isDelivery})}
-                    />
-                  </View>
-                )}
-              </View>
-              <View
-                style={{
-                  marginHorizontal: moderateScale(5),
-                }}>
-                <FlatList
-                  keyExtractor={(itm, indx) => indx.toString()}
-                  data={vendorRegDocs}
-                  renderItem={_renderFields}
+                <BorderTextInput
+                  placeholder={`${strings.VENDOR_NAME}*`}
+                  onChangeText={_onChangeText('vendor_name')}
+                  containerStyle={styles.containerStyle}
                 />
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  marginVertical: moderateScale(10),
-                  alignItems: 'center',
-                }}>
+                <BorderTextInput
+                  placeholder={`${strings.DESCRIPTION}*`}
+                  onChangeText={_onChangeText('description')}
+                  containerStyle={styles.containerStyle}
+                />
                 <TouchableOpacity
+                  activeOpacity={1}
                   onPress={() =>
-                    updateState({isTermsConditions: !isTermsConditions})
-                  }>
-                  <Image
-                    source={
-                      isTermsConditions ? imagePath.check : imagePath.unCheck
-                    }
-                  />
-                </TouchableOpacity>
-                <Text
+                    navigation.navigate(navigationStrings.LOCATION, {
+                      type: 'vendorRegistration',
+                    })
+                  }
                   style={{
-                    fontFamily: fontFamily.regular,
-                    marginLeft: moderateScale(3),
-                    color: isDarkMode ? colors.white : colors.black,
+                    flexDirection: 'row',
+                    height: moderateScaleVertical(49),
+                    color: colors.white,
+                    borderWidth: 1,
+                    borderRadius: 13,
+                    borderColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.borderLight,
+                    marginBottom: 20,
+                    overflow: 'hidden',
+                    alignItems: 'center',
+                    ...styles.containerStyle,
                   }}>
-                  {strings.I_ACCEPT}{' '}
-                </Text>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => _onLinkPress('terms')}>
                   <Text
                     style={{
-                      fontFamily: fontFamily.regular,
-                      color: colors.blueColor,
+                      flex: 1,
+                      opacity: 0.7,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(14),
+                      paddingHorizontal: 8,
+                      paddingTop: 0,
+                      paddingBottom: 0,
+                      textAlign: I18nManager.isRTL ? 'right' : 'left',
                     }}>
-                    {/* {strings.TERMS_CONDITIONS} */}
+                    {address != '' && address != null
+                      ? `${address}`
+                      : `${strings.ADDRESS}*`}
+            
                   </Text>
                 </TouchableOpacity>
-                <Text
+         
+                <BorderTextInput
+                  placeholder={strings.WEBSITE}
+                  onChangeText={_onChangeText('website')}
+                  containerStyle={styles.containerStyle}
+                />
+                <View
                   style={{
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode ? colors.white : colors.black,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginHorizontal: moderateScale(10),
+                    marginVertical: moderateScaleVertical(16),
                   }}>
-                  {' '}
-                  {strings.HAVE_READ}{' '}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => _onLinkPress('privacy')}
-                  activeOpacity={0.7}>
-                  <Text
-                    style={{
-                      fontFamily: fontFamily.regular,
-                      color: colors.blueColor,
-                    }}>
-                    {strings.PRIVACY_POLICY}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                  {!!appData?.profile?.preferences?.dinein_check && (
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          marginBottom: moderateScaleVertical(8),
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGreyOpcaity7,
+                        }}>
+                        {strings.DINE_IN}
+                      </Text>
+                      <ToggleSwitch
+                        isOn={isDineIn}
+                        onColor={themeColors.primary_color}
+                        offColor={
+                          isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.borderLight
+                        }
+                        size="small"
+                        onToggle={() => updateState({isDineIn: !isDineIn})}
+                      />
+                    </View>
+                  )}
+                  {!!appData?.profile?.preferences?.takeaway_check && (
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text
+                        style={{
+                          marginBottom: moderateScaleVertical(8),
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGreyOpcaity7,
+                        }}>
+                        {strings.TAKEAWAY}
+                      </Text>
+                      <ToggleSwitch
+                        isOn={isTakeaway}
+                        onColor={themeColors.primary_color}
+                        offColor={
+                          isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.borderLight
+                        }
+                        size="small"
+                        onToggle={() => updateState({isTakeaway: !isTakeaway})}
+                      />
+                    </View>
+                  )}
+                  {!!appData?.profile?.preferences?.delivery_check && (
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text
+                        style={{
+                          marginBottom: moderateScaleVertical(8),
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGreyOpcaity7,
+                        }}>
+                        {strings.DELIVERY}
+                      </Text>
+                      <ToggleSwitch
+                        isOn={isDelivery}
+                        onColor={themeColors.primary_color}
+                        offColor={
+                          isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.borderLight
+                        }
+                        size="small"
+                        onToggle={() => updateState({isDelivery: !isDelivery})}
+                      />
+                    </View>
+                  )}
+                </View>
 
-              <GradientButton
-                textStyle={{
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
-                }}
-                onPress={_onSubmit}
-                marginTop={moderateScaleVertical(5)}
-                btnText={strings.SUBMIT}
-              />
-              <View
-                style={{
-                  height: moderateScaleVertical(24),
-                  marginBottom: moderateScaleVertical(44),
-                }}
-              />
+                {!!pageData?.is_seller_module && (
+                  <View
+                    style={{
+                      marginVertical: moderateScaleVertical(15),
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                        fontSize: textScale(14),
+                      }}>
+                      Vendor Type
+                    </Text>
+
+                    <DropDownPicker
+                      items={vendorTypes}
+                      // defaultValue={vendorTypes[0].label}
+                      containerStyle={{
+                        height: 40,
+                        marginTop: moderateScaleVertical(5),
+                      }}
+                      style={{
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.lightDark
+                          : '#fafafa',
+                        zIndex: 5000,
+                        flexDirection: I18nManager.isRTL
+                          ? 'row-reverse'
+                          : 'row',
+                      }}
+                      itemStyle={{
+                        justifyContent: 'flex-start',
+                        flexDirection: I18nManager.isRTL
+                          ? 'row-reverse'
+                          : 'row',
+                      }}
+                      labelStyle={
+                        isDarkMode && {color: MyDarkTheme.colors.text}
+                      }
+                      zIndex={5000}
+                      dropDownStyle={{
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.lightDark
+                          : '#fafafa',
+
+                        width: width - moderateScale(40),
+                        alignSelf: 'center',
+                      }}
+                      onChangeItem={(item) => setVendorType(item)}
+                    />
+                  </View>
+                )}
+                
+                {!!pageData?.is_gst_required_for_vendor_registration && (
+                  <View>
+                    <Text
+                      style={{
+                        ...styles.detailStyle,
+                        marginTop: moderateScale(5),
+                      }}>
+                      GST Details
+                    </Text>
+                    <BorderTextInput
+                      // secureTextEntry={true}
+                      placeholder={`Company Name`}
+                      value={companyName}
+                      onChangeText={(txt) => setCompanyName(txt)}
+                      containerStyle={{
+                        ...styles.containerStyle,
+                        marginBottom: 0,
+                        marginTop: moderateScale(10),
+                      }}
+                    />
+                    <BorderTextInput
+                      // secureTextEntry={true}
+                      placeholder={`GST Number`}
+                      value={gstNumber}
+                      onChangeText={(txt) => setGstNumber(txt)}
+                      // onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+                      containerStyle={{
+                        ...styles.containerStyle,
+                        marginBottom: moderateScaleVertical(15),
+                        marginTop: moderateScale(10),
+                      }}
+                    />
+                  </View>
+                )}
+                {!!pageData?.is_baking_required_for_vendor_registration && (
+                  <View>
+                    <Text
+                      style={{
+                        ...styles.detailStyle,
+                        marginTop: moderateScale(5),
+                      }}>
+                      Banking Details
+                    </Text>
+                    <BorderTextInput
+                      // secureTextEntry={true}
+                      placeholder={`Account Name`}
+                      value={accountName}
+                      onChangeText={(txt) => setAccountName(txt)}
+                      containerStyle={{
+                        ...styles.containerStyle,
+                        marginBottom: 0,
+                        marginTop: moderateScale(10),
+                      }}
+                    />
+                    <BorderTextInput
+                      // secureTextEntry={true}
+                      placeholder={`Bank Name`}
+                      value={bankName}
+                      onChangeText={(txt) => setBankName(txt)}
+                      containerStyle={{
+                        ...styles.containerStyle,
+                        marginBottom: 0,
+                        marginTop: moderateScale(10),
+                      }}
+                    />
+                    <BorderTextInput
+                      // secureTextEntry={true}
+                      placeholder={`Account Number`}
+                      keyboardType={'number-pad'}
+                      value={accountNumber}
+                      onChangeText={(txt) => setAccountNumber(txt)}
+                      containerStyle={{
+                        ...styles.containerStyle,
+                        marginBottom: 0,
+                        marginTop: moderateScale(10),
+                      }}
+                    />
+                    <BorderTextInput
+                      // secureTextEntry={true}
+                      placeholder={`IFSC Code`}
+                      value={ifscCode}
+                      onChangeText={(txt) => setIfscCode(txt)}
+                      containerStyle={{
+                        ...styles.containerStyle,
+                        marginBottom: moderateScaleVertical(10),
+                        marginTop: moderateScale(10),
+                      }}
+                    />
+                  </View>
+                )}
+
+                {!isEmpty(vendorRegDocs) && (
+                  <Text
+                    style={{
+                      ...styles.detailStyle,
+                      marginTop: moderateScale(10),
+                    }}>
+                    Additional Details
+                  </Text>
+                )}
+                
+                <View
+                  style={{
+                    marginHorizontal: moderateScale(5),
+                  }}>
+                  <FlatList
+                    keyExtractor={(itm, indx) => indx.toString()}
+                    data={vendorRegDocs}
+                    renderItem={_renderFields}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    marginVertical: moderateScale(10),
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      updateState({isTermsConditions: !isTermsConditions})
+                    }>
+                    <Image
+                      source={
+                        isTermsConditions ? imagePath.check : imagePath.unCheck
+                      }
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.regular,
+                      marginLeft: moderateScale(3),
+                      color: isDarkMode ? colors.white : colors.black,
+                    }}>
+                    {strings.I_ACCEPT}{' '}
+                  </Text>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => _onLinkPress('terms')}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.regular,
+                        color: colors.blueColor,
+                      }}>
+                      {/* {strings.TERMS_CONDITIONS} */}
+                    </Text>
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode ? colors.white : colors.black,
+                    }}>
+                    {' '}
+                    {strings.HAVE_READ}{' '}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => _onLinkPress('privacy')}
+                    activeOpacity={0.7}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.regular,
+                        color: colors.blueColor,
+                      }}>
+                      {strings.PRIVACY_POLICY}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <GradientButton
+                  textStyle={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
+                  }}
+                  onPress={_onSubmit}
+                  marginTop={moderateScaleVertical(5)}
+                  btnText={strings.SUBMIT}
+                />
+                <View
+                  style={{
+                    height: moderateScaleVertical(24),
+                    marginBottom: moderateScaleVertical(44),
+                  }}
+                />
+              </KeyboardAwareScrollView>
             </View>
           )}
 
-          {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
+          {pageData?.page_detail?.primary?.type_of_form == 2 && (
             <View style={styles.mainView}>
               <View
                 style={{
@@ -1494,7 +1640,6 @@ export default function WebLinks({navigation, route}) {
                   marginHorizontal: 0,
                   marginBottom: moderateScaleVertical(14),
                 }}>
-                {console.log(driverPic, 'driverPicdriverPicdriverPic')}
                 <Image
                   source={
                     !!driverPic ? {uri: driverPic.path} : imagePath.icCamIcon
@@ -1702,9 +1847,9 @@ export default function WebLinks({navigation, route}) {
                       shadowOffset: {width: 0, height: 1},
                       shadowOpacity: 0.1,
                     }}>
-                    {driverRegDocs?.teams.length > 0 ? (
+                    {pageData?.teams.length > 0 ? (
                       <View>
-                        {driverRegDocs?.teams.map((itm, indx) => {
+                        {pageData?.teams.map((itm, indx) => {
                           return (
                             <TouchableOpacity
                               key={indx}
@@ -1770,7 +1915,7 @@ export default function WebLinks({navigation, route}) {
                       marginTop: Platform.OS == 'android' ? moderateScaleVertical(45) : 0
                     }}
                   >
-                  {driverRegDocs?.teams.map((itm, indx) => {
+                  {pageData?.teams.map((itm, indx) => {
                       console.log(itm, driverTypes, "itmitmitmitm")
 
                       return (
@@ -1981,7 +2126,7 @@ export default function WebLinks({navigation, route}) {
                 onChangeText={_onChangeText('driverColor')}
                 containerStyle={styles.containerStyle}
               />
-              {!!driverRegDocs && (
+              {!!pageData && (
                 <Text
                   style={{
                     color: isDarkMode
@@ -1996,19 +2141,16 @@ export default function WebLinks({navigation, route}) {
               )}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
-                data={driverRegDocs?.transport_types}
+                data={pageData?.transport_types}
                 horizontal={true}
                 ItemSeparatorComponent={() => <View style={{width: 10}} />}
                 renderItem={_renderTransportTypes}
               />
 
-              {console.log(
-                driverRegDocs?.driver_registration_documents,
-                'driverRegDocsdriverRegDocs',
-              )}
+              {console.log(pageData?.driver_registration_documents, 'pageData')}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
-                data={driverRegDocs?.driver_registration_documents}
+                data={pageData?.driver_registration_documents}
                 renderItem={_renderFields}
               />
 
@@ -2029,14 +2171,14 @@ export default function WebLinks({navigation, route}) {
             </View>
           )}
         </KeyboardAwareScrollView>
-        <ActionSheet
-          ref={actionSheet}
-          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={2}
-          onPress={(index) => cameraHandle(index)}
-        />
       </MenuProvider>
+      <ActionSheet
+        ref={actionSheet}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 }

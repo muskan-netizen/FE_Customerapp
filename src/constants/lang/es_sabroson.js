@@ -425,7 +425,8 @@ export default {
     CONFIRM_PASSWORD: 'Confirmar contraseña',
     PASSWORD_NOT_MATCH:
       'Nueva contraseña y la confirmación de la contraseña no coinciden',
-    MESSAGE: 'Mensaje',
+  MESSAGE: 'Mensaje',
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
     YOUR_ORDER_HAS_BEEN_SUBMITTED: '¡Tu pedido ha sido enviado!',
     YOUR_ORDER_NUMBER: 'tu número de orden es',
     ANY_RESTAURANT_REQUESTS:
@@ -631,7 +632,9 @@ export default {
     CONTINUE_IN: 'Continuar en',
     ANYTIME_YOUR_CAR_BREAKS:
       'Cada vez que su automóvil se descompone,\n ¡Estamos aquí para ayudarlo!',
-    ENTER_YOUR: 'Entra tu',
+  ENTER_YOUR: 'Entra tu',
+  ENTER_YOUR_NAME: "Enter your name",
+  ENTER_YOUR_EMAIL:"Enter your email",
     REGISTER: 'Registrarse',
     ENTER_EMAIL_ADDRESS: 'Ingrese su ID de correo electrónico aquí',
     ENTER_PHONE_NUMBER: 'Ingrese su número de teléfono aquí',

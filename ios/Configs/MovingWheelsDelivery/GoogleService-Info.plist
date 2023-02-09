@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>480971606443-lnlqjf6hpd25drvkpcm6rqlk7oh60tob.apps.googleusercontent.com</string>
+	<string>827521394866-01lvvs0hsmrssaosva8tbcmhpsh63pu8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.480971606443-lnlqjf6hpd25drvkpcm6rqlk7oh60tob</string>
+	<string>com.googleusercontent.apps.827521394866-01lvvs0hsmrssaosva8tbcmhpsh63pu8</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>480971606443-e88u8l04oqv0ds3avoeioq4uma87gul8.apps.googleusercontent.com</string>
+	<string>827521394866-1q825vtfhsr9a4lk50ah8ht9o02okifv.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCEnNZuiu-xPFCyMnCqs_ZKZcqhCBfgq4c</string>
+	<string>AIzaSyDFSHqlPxq9NeTKF4qdj4LmW7zNLikF8A4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>480971606443</string>
+	<string>827521394866</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.movingwheelsdelivery</string>
+	<string>com.movingwheelsdelivery.orderapp</string>
 	<key>PROJECT_ID</key>
-	<string>moving-wheels-delivery</string>
+	<string>moving-wheels-order-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>moving-wheels-delivery.appspot.com</string>
+	<string>moving-wheels-order-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:480971606443:ios:d276e9321772c7adf9aaee</string>
+	<string>1:827521394866:ios:624f1e16c3211ccd1c81ab</string>
 </dict>
 </plist>

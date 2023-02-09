@@ -15,7 +15,7 @@ import {
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 const ThreeColumnCard2 = ({
   data = {},

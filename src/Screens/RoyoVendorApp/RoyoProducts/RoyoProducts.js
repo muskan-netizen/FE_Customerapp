@@ -1,5 +1,5 @@
-import {cloneDeep, debounce, isEmpty, update} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep, debounce, isEmpty, update } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -12,8 +12,8 @@ import {
   Platform,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import {SwipeListView} from 'react-native-swipe-list-view';
-import {useSelector} from 'react-redux';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
 import MultiScreen from '../../../Components/MultiScreen';
@@ -39,25 +39,26 @@ import ModalView from '../../../Components/Modal';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import GradientButton from '../../../Components/GradientButton';
 import strings from '../../../constants/lang';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import Modal from 'react-native-modal';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import FastImage from 'react-native-fast-image';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 
 let dataLimit = 20;
 let vendorLimit = 50;
 
 const RoyoProducts = (props) => {
-  const {navigation} = props;
+  const { navigation } = props;
 
   const {storeSelectedVendor} = useSelector((state) => state?.order);
-  const {appData, themeColors, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
+ 
+  const { appData, themeColors, currencies, languages } = useSelector(
+    (state) => state?.initBoot || {},
   );
 
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const { additional_preferences, digit_after_decimal } =
+    appData?.profile?.preferences || {};
 
   console.log('store selected vendor', storeSelectedVendor);
 
@@ -107,7 +108,7 @@ const RoyoProducts = (props) => {
     isVendorSelectModal,
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //all these ref.. using for pagination
 
@@ -189,10 +190,10 @@ const RoyoProducts = (props) => {
       let meregeData =
         dataPage.current == 1 ? res.data.data : [...data, ...res.data.data];
       setData(meregeData);
-      updateState({isLoading: false, isRefreshing: false});
+      updateState({ isLoading: false, isRefreshing: false });
     } catch (error) {
       console.log('error riased', error);
-      updateState({isLoading: false, isRefreshing: false});
+      updateState({ isLoading: false, isRefreshing: false });
     }
   };
 
@@ -219,10 +220,10 @@ const RoyoProducts = (props) => {
     vendorLoadMore.current = true;
     dataLoadMore.current = true;
     setAvailCategory(item);
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     await getCategoryProducts(storeSelectedVendor, item);
-    updateState({activeIndex: 0, headerText: 'Products'});
-    updateState({isLoading: false});
+    updateState({ activeIndex: 0, headerText: 'Products' });
+    updateState({ isLoading: false });
   };
 
   const getCategoryProducts = async (vendor, category) => {
@@ -236,7 +237,7 @@ const RoyoProducts = (props) => {
       console.log('sending query get allvendor data', query);
       const res = await actions.allVendorData(query, header);
       console.log('res data+++++', res);
-      updateState({isLoading: false, isRefreshing: false});
+      updateState({ isLoading: false, isRefreshing: false });
       if (res.data.data.length == 0) {
         // if data empty then we stop pagination
         dataLoadMore.current = false;
@@ -244,10 +245,10 @@ const RoyoProducts = (props) => {
       let meregeData =
         dataPage.current == 1 ? res.data.data : [...data, ...res.data.data];
       setData(meregeData);
-      updateState({isLoading: false, isRefreshing: false});
+      updateState({ isLoading: false, isRefreshing: false });
     } catch (error) {
       console.log('error riased', error);
-      updateState({isLoading: false, isRefreshing: false});
+      updateState({ isLoading: false, isRefreshing: false });
     }
   };
 
@@ -282,7 +283,7 @@ const RoyoProducts = (props) => {
   };
 
   const renderItem = (data, rowMap) => {
-    const {item} = data;
+    const { item } = data;
     return (
       <View style={styles.itemBox}>
         <TouchableOpacity
@@ -292,7 +293,7 @@ const RoyoProducts = (props) => {
               isVendor: true,
             })
           }
-          style={{alignSelf: 'center'}}>
+          style={{ alignSelf: 'center' }}>
           {!isEmpty(item?.media) && (
             <FastImage
               style={styles.imageStyle}
@@ -308,17 +309,17 @@ const RoyoProducts = (props) => {
             />
           )}
         </TouchableOpacity>
-        <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             {/* <View style={{flex: 1, }}> */}
             <Text
               numberOfLines={1}
-              style={[styles.font16medium, {textTransform: 'capitalize'}]}>
+              style={[styles.font16medium, { textTransform: 'capitalize' }]}>
               {item.translation[0]?.title}
             </Text>
 
             {/* </View> */}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.font16Semibold}>{strings.IN_STOCK}</Text>
               <TouchableOpacity
                 onPress={() => updateIsLiveStatus(item?.id, item?.is_live)}>
@@ -339,7 +340,7 @@ const RoyoProducts = (props) => {
             </Text>
           ) : null}
 
-          <View style={{marginTop: 10}}>
+          <View style={{ marginTop: 10 }}>
             <HTMLView
               value={
                 item?.translation[0]?.body_html
@@ -370,9 +371,9 @@ const RoyoProducts = (props) => {
 
   const selectedOrder = (index) => {
     if (index == 0) {
-      updateState({activeIndex: index, headerText: 'Products'});
+      updateState({ activeIndex: index, headerText: 'Products' });
     } else {
-      updateState({activeIndex: index, headerText: 'Categories'});
+      updateState({ activeIndex: index, headerText: 'Categories' });
       getAllvendorCategories();
     }
   };
@@ -394,11 +395,11 @@ const RoyoProducts = (props) => {
     vendorLoadMore.current = true;
     dataLoadMore.current = true;
     getAllVendorData(storeSelectedVendor);
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
+  const onEndReached = ({ distanceFromEnd }) => {
     if (dataLoadMore.current) {
       dataPage.current = dataPage.current + 1;
       getAllVendorData(storeSelectedVendor);
@@ -410,7 +411,7 @@ const RoyoProducts = (props) => {
     trailing: false,
   });
 
-  const renderCatogry = ({item, index}) => (
+  const renderCatogry = ({ item, index }) => (
     <View
       key={index}
       style={{
@@ -421,10 +422,9 @@ const RoyoProducts = (props) => {
               ? moderateScale(10)
               : 0
             : index % 3
-            ? moderateScale(10)
-            : 0,
+              ? moderateScale(10)
+              : 0,
       }}>
-      {console.log(item)}
       <TouchableOpacity
         // disabled
         onPress={() => selectedCategory(item)}
@@ -445,10 +445,10 @@ const RoyoProducts = (props) => {
           source={
             item.cat_image && item.cat_image.proxy_url
               ? {
-                  uri: `${item.cat_image.proxy_url}200/200${item.cat_image.image_path}`,
-                  cache: FastImage.cacheControl.immutable,
-                  priority: FastImage.priority.high,
-                }
+                uri: `${item.cat_image.proxy_url}200/200${item.cat_image.image_path}`,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }
               : imagePath.testingImageRoyo
           }
         />
@@ -469,7 +469,7 @@ const RoyoProducts = (props) => {
 
   const _reDirectToVendorList = () => {
     vendorPage.current = 1;
-    updateState({isVendorSelectModal: true});
+    updateState({ isVendorSelectModal: true });
   };
 
   const onCloseModal = () => {
@@ -572,13 +572,13 @@ const RoyoProducts = (props) => {
                 productSlug: text.replace(/ /g, ''),
               });
             }}
-            mainStyle={{flex: 1}}
+            mainStyle={{ flex: 1 }}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
             autoFocus
           />
         </View>
-        <View style={{marginBottom: moderateScale(12)}}>
+        <View style={{ marginBottom: moderateScale(12) }}>
           <Text style={styles.labelStyle}>{strings.CATEGORY}</Text>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -611,11 +611,11 @@ const RoyoProducts = (props) => {
                         }
                         style={styles.categoryItm}
                         key={String(indx)}>
-                        <Text style={{flex: 0.95}}>{itm?.hierarchy}</Text>
+                        <Text style={{ flex: 0.95 }}>{itm?.hierarchy}</Text>
                         {selectedVendorCategory.id == itm.id && (
                           <Image
                             source={imagePath.tick2}
-                            style={{tintColor: themeColors.primary_color}}
+                            style={{ tintColor: themeColors.primary_color }}
                           />
                         )}
                       </TouchableOpacity>
@@ -653,7 +653,7 @@ const RoyoProducts = (props) => {
           }}
           placeholderTextColor={colors.textGreyB}
           txtInputStyle={styles.textInputStyle}
-          mainStyle={{marginTop: moderateScale(5)}}
+          mainStyle={{ marginTop: moderateScale(5) }}
         />
         <TextInputWithUnderlineAndLabel
           label={strings.URL_SLUG}
@@ -667,7 +667,7 @@ const RoyoProducts = (props) => {
           }}
           placeholderTextColor={colors.textGreyB}
           txtInputStyle={styles.textInputStyle}
-          mainStyle={{marginTop: moderateScale(5)}}
+          mainStyle={{ marginTop: moderateScale(5) }}
         />
         <ButtonWithLoader
           isLoading={isAddProductLoading}
@@ -686,14 +686,14 @@ const RoyoProducts = (props) => {
     );
   };
 
-  const onProductDelete = ({item}) => {
+  const onProductDelete = ({ item }) => {
     updateState({
       isLoading: true,
     });
 
     actions
       .deleteVendorProduct(
-        {product_id: item?.id},
+        { product_id: item?.id },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -720,7 +720,7 @@ const RoyoProducts = (props) => {
     // vendorPage.current = 1
     // vendorLoadMore.current = true
 
-    updateState({isVendorSelectModal: false});
+    updateState({ isVendorSelectModal: false });
     if (activeIndex == 0) {
       getAllVendorData(item);
     } else {
@@ -742,9 +742,8 @@ const RoyoProducts = (props) => {
   return (
     <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
       <Header
-        centerTitle={`${headerText} ${
-          !isEmpty(storeSelectedVendor) ? `| ${storeSelectedVendor?.name}` : ''
-        } `}
+        centerTitle={`${headerText} ${!isEmpty(storeSelectedVendor) ? `| ${storeSelectedVendor?.name}` : ''
+          } `}
         noLeftIcon
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
@@ -754,7 +753,7 @@ const RoyoProducts = (props) => {
 
       <View style={styles.container}>
         <MultiScreen
-          tabTextStyle={{marginTop: moderateScaleVertical(0)}}
+          tabTextStyle={{ marginTop: moderateScaleVertical(0) }}
           screenName={topTabs}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
@@ -827,17 +826,20 @@ const RoyoProducts = (props) => {
               disableRightSwipe
               rightOpenValue={-moderateScale(100)}
             />
-            <ButtonWithLoader
-              onPress={() =>
-                updateState({
-                  isAddProductModal: true,
-                  skuDefault: `${storeSelectedVendor.name.replace(/ /g, '')}.`,
-                })
-              }
-              btnStyle={styles.productBtn}
-              btnTextStyle={{color: colors.black}}
-              btnText={`+ ${strings.PRODUCT}`}
-            />
+            {!!storeSelectedVendor?.name &&
+              <ButtonWithLoader
+                onPress={() =>
+                  updateState({
+                    isAddProductModal: true,
+                    skuDefault: `${storeSelectedVendor?.name ? storeSelectedVendor?.name.replace(/ /g, '') : ''}.`,
+                  })
+                }
+                btnStyle={styles.productBtn}
+                btnTextStyle={{ color: colors.black }}
+                btnText={`+ ${strings.PRODUCT}`}
+              />
+            }
+
           </View>
         ) : null}
         {activeIndex == 1 ? (
@@ -876,7 +878,7 @@ const RoyoProducts = (props) => {
         topCustomComponent={false}
         leftIcon={false}
         rightIcon={imagePath.ic_cross}
-        rightIconStyle={{tintColor: colors.black}}
+        rightIconStyle={{ tintColor: colors.black }}
       />
 
       <Modal
@@ -884,10 +886,10 @@ const RoyoProducts = (props) => {
         style={{
           margin: 0,
         }}>
-        <View style={{flex: 1, backgroundColor: colors.white}}>
+        <View style={{ flex: 1, backgroundColor: colors.white }}>
           <SelectVendorListModal
             vendorList={availVendor}
-            onCloseModal={() => updateState({isVendorSelectModal: false})}
+            onCloseModal={() => updateState({ isVendorSelectModal: false })}
             onVendorSelect={(item) => onVendorSelect(item)}
             selectedVendor={storeSelectedVendor}
             onEndReachedVendor={onEndReachedVendor}

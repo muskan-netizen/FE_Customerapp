@@ -34,7 +34,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import FastImage from 'react-native-fast-image';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function ReturnOrder({navigation, route}) {
@@ -209,6 +209,7 @@ export default function ReturnOrder({navigation, route}) {
         console.log(res, 'res>>>>>>submitReturnOrder');
         updateState({isLoading: false});
         navigation.goBack();
+        route?.params?.getOrderDetail();
       })
       .catch(errorMethod);
   };
@@ -251,7 +252,9 @@ export default function ReturnOrder({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5 ? imagePath.icBackb : imagePath.back
+          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.RETURNORDER}
         headerStyle={

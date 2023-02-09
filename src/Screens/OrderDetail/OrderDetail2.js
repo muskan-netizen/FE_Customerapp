@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -75,7 +75,7 @@ export default function OrderDetail({navigation, route}) {
   );
 
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   console.log(languages, 'i am here>>>>>>');
 

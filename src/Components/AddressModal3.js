@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
@@ -524,7 +524,6 @@ const AddressModal3 = ({
     }
 
     data['is_primary'] = type == 'addAddress' ? 1 : is_primary;
-    console.log('passLocationpassLocation>>>', data);
     passLocation(data);
   };
 

@@ -15,7 +15,7 @@ import {
 } from '../utils/helperFunctions';
 import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 
@@ -45,9 +45,10 @@ const TaxiHomeCategoryCard = ({
       style={{
         // shadowOpacity: 0.5,
         // width: width / moderateScale(3),
-        width: appIds.hezniTaxi
-          ? width / moderateScale(3)
-          : width / moderateScale(5.4),
+        // backgroundColor:'red',
+        // width: appIds.hezniTaxi
+        //   ? width / moderateScale(3)
+        //   : 0,
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',

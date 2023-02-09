@@ -87,7 +87,7 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
       // height: 42,
-      marginTop: 5,
+      // marginTop: 5,
     },
 
     HeaderInsideTextStyle: {

@@ -43,10 +43,10 @@ export default function ShippingDetails({navigation, route}) {
   const paramData = route?.params;
   console.log(paramData, 'paramData>>>>>');
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   const {pickUpTimeType} = useSelector((state) => state?.home);
 

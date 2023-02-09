@@ -17,7 +17,7 @@ export default function DashBoardTwo({
   isLoading = true,
   isRefreshing = false,
   onPressCategory = () => {},
-  updateCircleData,
+ 
   // appMainData = {},
 }) {
   const [state, setState] = useState({
@@ -61,7 +61,8 @@ export default function DashBoardTwo({
             <FastImage
               style={styles.circularListImage}
               source={{
-                uri: getImageUrl(
+                uri:
+                 getImageUrl(
                   item.icon.image_fit,
                   item.icon.image_path,
                   '600/360',
@@ -76,9 +77,9 @@ export default function DashBoardTwo({
     );
   };
 
-  useEffect(() => {
-    updateCircleData(appMainData?.categories);
-  }, [appMainData]);
+  // useEffect(() => {
+  //   updateCircleData(appMainData?.categories);
+  // }, [appMainData]);
 
   return (
     <View
@@ -88,9 +89,9 @@ export default function DashBoardTwo({
         justifyContent: 'center',
       }}>
       <View style={styles.container}>
-        {!!(updatedData && updatedData.length) && (
+        {/* {!!(updatedData && updatedData.length) && ( */}
           <CircleList
-            data={updatedData.slice(0, 6)}
+            data={appMainData?.categories.slice(0, 6)}
             elementCount={6}
             key={unique_key}
             keyExtractor={(item) => item.id}
@@ -103,7 +104,7 @@ export default function DashBoardTwo({
             visibilityPadding={5}
             selectedItemScale={1}
           />
-        )}
+        {/* )} */}
         <View style={styles.circularListCenterImage}>
           <Image source={imagePath.carlitooFace} />
         </View>

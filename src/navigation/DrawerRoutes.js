@@ -18,18 +18,18 @@ import CustomDrawerContent from '../Components/CustomDrawerContent';
 import {View} from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
+import TabRoutesP2p from './TabRoutesP2p';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
- 
   const {shortCodeStatus, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
- 
-  const businessType = appStyle?.homePageLayout;  
+
+  const businessType = appStyle?.homePageLayout;
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
@@ -92,23 +92,15 @@ export default function DrawerRoutes(props) {
       // hideStatusBar={true}
       drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      {/* <Drawer.Screen
-        component={TabRoutes}
-        name={navigationStrings.HOMESTACK}
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.HOME,
-          drawerIcon: ({focused}) => (
-            <Image
-              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
-            />
-          ),
-        }}
-      /> */}
-
       <Drawer.Screen
-        component={businessType === 4 ? TaxiTabRoutes : TabRoutes}
+        component={
+          businessType === 4
+            ? TaxiTabRoutes
+            : //  businessType === 8
+              // ? TabRoutesP2p
+              // :
+              TabRoutes
+        }
         name={
           businessType === 4
             ? navigationStrings.TAXITABROUTES

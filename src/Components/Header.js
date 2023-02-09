@@ -17,7 +17,7 @@ import {
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
@@ -52,6 +52,7 @@ const Header = ({
   isShareIcon,
   onShare,
   shareIconStyle = {},
+  centerTitleViewStyle = {},
 }) => {
   const {appStyle, themeColors, themeToggle, themeColor, redirectedFrom} =
     useSelector((state) => state?.initBoot);
@@ -74,7 +75,7 @@ const Header = ({
         <View
           style={{
             alignItems: 'flex-start',
-            flex: 0.2,
+            flex: 0.4,
             ...rightViewStyle,
           }}>
           {!noLeftIcon &&
@@ -95,19 +96,23 @@ const Header = ({
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
+                  
                   style={{
                     ...leftIconStyle,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}
                 />
               </TouchableOpacity>
             ))}
         </View>
         <View
-          style={{flex: 0.8, alignItems: 'center', justifyContent: 'center'}}>
+          style={{
+            flex: 0.8,
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...centerTitleViewStyle,
+          }}>
           <View
             style={{
               flexDirection: 'row',

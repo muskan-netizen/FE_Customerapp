@@ -4,31 +4,20 @@ import {Alert, BackHandler, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 
-import WrapperContainer from '../../../Components/WrapperContainer';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {appIds, shortCodes} from '../../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
-  getParameterByName,
-  getUrlRoutes,
   showError,
 } from '../../../utils/helperFunctions';
 import {chekLocationPermission} from '../../../utils/permissions';
-import {setItem} from '../../../utils/utils';
 import {
-  DashBoardFive,
-  DashBoardFour,
-  DashBoardHeaderFive,
-  DashBoardHeaderOne,
-  DashBoardOne,
   TaxiHomeDashbord,
 } from '../DashboardViews/Index';
-import {MyDarkTheme, MyDefaultTheme} from '../../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
@@ -53,6 +42,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     isDineInSelected,
     themeColor,
     themeToggle,
+    redirectedFrom
   } = useSelector((state) => state?.initBoot);
   const {userData} = useSelector((state) => state?.auth);
   const darkthemeusingDevice = useDarkMode();
@@ -252,8 +242,16 @@ export default function TaxiHomeScreen({route, navigation}) {
     React.useCallback(() => {
       // homeData();
       getAllAddress();
+      
     }, []),
   );
+
+useEffect(()=>{
+  if(redirectedFrom =='from_deepLinking'){
+    navigation.navigate(navigationStrings.TRACKING) 
+  }
+
+},[redirectedFrom])
 
   // useEffect(() => {
   //   homeData();
@@ -295,18 +293,26 @@ export default function TaxiHomeScreen({route, navigation}) {
       };
     }
 
-    console.log(
-      {
-        type: dineInType ? dineInType : dineInType,
-        ...latlongObj,
-      },
-      'latlongObj>>Data',
-    );
-    console.log(latlongObj, 'selectedTabType');
+    var selectedVendorType = null;
+    var defaultVendorType = null;
+
+    if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
+      defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
+      appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
+        if (val?.type == dineInType) {
+          selectedVendorType = val.type;
+        }
+      });
+    }
+ 
+    if (!selectedVendorType) {
+
+      actions.dineInData(defaultVendorType);
+    }
     actions
       .homeData(
         {
-          type: dineInType ? dineInType : dineInType,
+          type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
           ...latlongObj,
         },
         {
@@ -588,10 +594,6 @@ export default function TaxiHomeScreen({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
-
-  {
-    console.log(locationObj, 'locationObjlocationObj');
-  }
 
   const renderHomeScreen = () => {
     const case_ = 5;

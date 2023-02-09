@@ -1,55 +1,42 @@
+import { isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
   Linking,
-  ScrollView,
-  StyleSheet,
-  Text,
+  ScrollView, Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, {useState, useEffect, useCallback} from 'react';
 import WrapperContainer from '../../Components/WrapperContainer';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import actions from '../../redux/actions';
 import Header3 from '../../Components/Header3';
+import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
+import BannerLoader from '../../Components/Loaders/BannerLoader';
+import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import MarketCard3 from '../../Components/MarketCard3';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import staticStrings from '../../constants/staticStrings';
+import navigationStrings from '../../navigation/navigationStrings';
+
+
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../styles/responsiveSize';
-import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
-import * as Animatable from 'react-native-animatable';
-import FastImage from 'react-native-fast-image';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
-import strings from '../../constants/lang';
-import {getBundleId} from 'react-native-device-info';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import MarketCard3 from '../../Components/MarketCard3';
-import staticStrings from '../../constants/staticStrings';
-import navigationStrings from '../../navigation/navigationStrings';
-import AppLink from 'react-native-app-link';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
-import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import BannerLoader from '../../Components/Loaders/BannerLoader';
-import {isEmpty} from 'lodash';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import DeliveryTypeComp from '../../Components/DeliveryTypeComp';
 
-export default function SubcategoryVendor({navigation, route}) {
+export default function SubcategoryVendor({ navigation, route }) {
   console.log(route, 'route>>>>route');
   const paramData = route?.params?.data;
   const {
@@ -62,15 +49,15 @@ export default function SubcategoryVendor({navigation, route}) {
     themeToggle,
     themeColors,
   } = useSelector((state) => state?.initBoot);
-  const {appMainData, dineInType, location} = useSelector(
+  const { appMainData, dineInType, location } = useSelector(
     (state) => state?.home,
   );
-  const {userData} = useSelector((state) => state?.auth);
+  const { userData } = useSelector((state) => state?.auth);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   const [subcategoryVendorData, setSubcategoryVendorData] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -80,9 +67,9 @@ export default function SubcategoryVendor({navigation, route}) {
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useEffect(() => {
     getSubCategoryVendors();
@@ -147,7 +134,7 @@ export default function SubcategoryVendor({navigation, route}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        actions.setAppSessionData('on_login')
+        actions.setAppSessionData('on_login');
       }
     } else if (!!item?.is_show_category) {
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -181,8 +168,8 @@ export default function SubcategoryVendor({navigation, route}) {
           item.redirect_to == staticStrings.ONDEMANDSERVICE
             ? false
             : item.redirect_to == staticStrings.PRODUCT
-            ? false
-            : true,
+              ? false
+              : true,
         name: item.name,
         isVendorList: false,
       })();
@@ -195,7 +182,7 @@ export default function SubcategoryVendor({navigation, route}) {
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
-        actions.setAppSessionData('on_login')
+        actions.setAppSessionData('on_login');
       }
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
@@ -203,20 +190,20 @@ export default function SubcategoryVendor({navigation, route}) {
     } else if (item.redirect_to == staticStrings.BRAND) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-          })()
+          item,
+          rootProducts: true,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-            fetchOffers: true,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
     }
   };
 
@@ -231,7 +218,7 @@ export default function SubcategoryVendor({navigation, route}) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then((res) => {})
+      .then((res) => { })
       .catch((err) => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -246,7 +233,7 @@ export default function SubcategoryVendor({navigation, route}) {
     });
   };
 
-  const _renderItem = useCallback(({item, index}) => {
+  const _renderItem = useCallback(({ item, index }) => {
     return (
       <HomeCategoryCard2
         data={item}
@@ -256,7 +243,7 @@ export default function SubcategoryVendor({navigation, route}) {
     );
   }, []);
 
-  const renderBanners = useCallback(({item}) => {
+  const renderBanners = useCallback(({ item }) => {
     const imageUrl = getImageUrl(item.image_fit, item.image_path, '400/600');
     return (
       <FastImage
@@ -291,7 +278,7 @@ export default function SubcategoryVendor({navigation, route}) {
     }
     return (
       <View key={Math.random()}>
-        <View style={{...styles.viewAllVeiw}}>
+        <View style={{ ...styles.viewAllVeiw }}>
           <Text
             numberOfLines={1}
             style={{
@@ -306,12 +293,12 @@ export default function SubcategoryVendor({navigation, route}) {
 
           {!isEmpty(subcategoryVendorData?.vendors) && (
             <TouchableOpacity
-              style={{marginHorizontal: moderateScale(4)}}
-              onPress={() => onViewAll('vendor', appMainData.vendors)}>
+              style={{ marginHorizontal: moderateScale(4) }}
+              onPress={() => onViewAll('vendor', appMainData?.vendors)}>
               <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
             </TouchableOpacity>
           )}
-          <Menu style={{alignSelf: 'flex-end'}}>
+          <Menu style={{ alignSelf: 'flex-end' }}>
             <MenuTrigger>
               <View style={styles.menuView}>
                 <Image
@@ -344,9 +331,9 @@ export default function SubcategoryVendor({navigation, route}) {
                 },
               }}>
               {[
-                {id: 1, type: strings.OPEN},
-                {id: 2, type: strings.CLOSE},
-                {id: 3, type: strings.BESTSELLER},
+                { id: 1, type: strings.OPEN },
+                { id: 2, type: strings.CLOSE },
+                { id: 3, type: strings.BESTSELLER },
               ]?.map((item, index) => {
                 return (
                   <View key={index}>
@@ -374,12 +361,12 @@ export default function SubcategoryVendor({navigation, route}) {
     );
   }, [selectedFilter, subcategoryVendorData]);
   const _renderVendors = useCallback(
-    ({item, index}) => (
-      <View style={{marginHorizontal: moderateScale(16)}}>
+    ({ item, index }) => (
+      <View style={{ marginHorizontal: moderateScale(16) }}>
         <MarketCard3
           data={item}
           onPress={() => onPressVendor(item)}
-          extraStyles={{margin: 2}}
+          extraStyles={{ margin: 2 }}
         />
       </View>
     ),
@@ -418,10 +405,10 @@ export default function SubcategoryVendor({navigation, route}) {
           contentContainerStyle={{
             flexGrow: 1,
           }}>
-          <CategoryLoader2 viewStyles={{marginVertical: moderateScale(16)}} />
+          <CategoryLoader2 viewStyles={{ marginVertical: moderateScale(16) }} />
 
           {appStyle?.homePageLayout === 5 ? (
-            <CategoryLoader2 viewStyles={{marginBottom: moderateScale(16)}} />
+            <CategoryLoader2 viewStyles={{ marginBottom: moderateScale(16) }} />
           ) : null}
           {appStyle?.homePageLayout === 5 ? (
             <View
@@ -449,7 +436,7 @@ export default function SubcategoryVendor({navigation, route}) {
               />
             </View>
           ) : (
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <HeaderLoader
                 viewStyles={{
                   marginTop: moderateScaleVertical(8),
@@ -492,7 +479,7 @@ export default function SubcategoryVendor({navigation, route}) {
             </View>
           )}
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <HeaderLoader
               widthLeft={moderateScale(180)}
               rectWidthLeft={moderateScale(180)}
@@ -513,19 +500,19 @@ export default function SubcategoryVendor({navigation, route}) {
 
           <BannerLoader
             // isVendorLoader
-            viewStyles={{marginTop: moderateScale(12)}}
+            viewStyles={{ marginTop: moderateScale(12) }}
           />
           <BannerLoader
             // isVendorLoader
-            viewStyles={{marginTop: moderateScale(12)}}
+            viewStyles={{ marginTop: moderateScale(12) }}
           />
           <BannerLoader
             // isVendorLoader
-            viewStyles={{marginTop: moderateScale(12)}}
+            viewStyles={{ marginTop: moderateScale(12) }}
           />
         </ScrollView>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
           <Animatable.View animation={'fadeInUp'} delay={200}>
             {!isEmpty(subcategoryVendorData?.categories) && (
               <View
@@ -541,13 +528,13 @@ export default function SubcategoryVendor({navigation, route}) {
                   showsHorizontalScrollIndicator={false}
                   renderItem={_renderItem}
                   ItemSeparatorComponent={() => (
-                    <View style={{marginTop: moderateScale(24)}} />
+                    <View style={{ marginTop: moderateScale(24) }} />
                   )}
                   ListHeaderComponent={() => (
-                    <View style={{marginLeft: moderateScale(12)}} />
+                    <View style={{ marginLeft: moderateScale(12) }} />
                   )}
                   ListFooterComponent={() => (
-                    <View style={{marginRight: moderateScale(12)}} />
+                    <View style={{ marginRight: moderateScale(12) }} />
                   )}
                 />
               </View>
@@ -564,13 +551,13 @@ export default function SubcategoryVendor({navigation, route}) {
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}
                 ItemSeparatorComponent={() => (
-                  <View style={{marginRight: moderateScale(12)}} />
+                  <View style={{ marginRight: moderateScale(12) }} />
                 )}
                 ListHeaderComponent={() => (
-                  <View style={{marginLeft: moderateScale(16)}} />
+                  <View style={{ marginLeft: moderateScale(16) }} />
                 )}
                 ListFooterComponent={() => (
-                  <View style={{marginRight: moderateScale(16)}} />
+                  <View style={{ marginRight: moderateScale(16) }} />
                 )}
               />
             </View>
@@ -609,7 +596,7 @@ export default function SubcategoryVendor({navigation, route}) {
                 </View>
               )}
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
+                <View style={{ height: moderateScale(10) }} />
               )}
             />
           </Animatable.View>

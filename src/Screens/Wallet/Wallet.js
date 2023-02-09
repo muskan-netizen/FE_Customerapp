@@ -37,7 +37,7 @@ import {
 } from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import Modal from 'react-native-modal';
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
@@ -46,7 +46,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import {showMessage} from 'react-native-flash-message';
 import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
-import {color} from 'react-native-reanimated';
+
 import BorderTextInput from '../../Components/BorderTextInput';
 
 export default function Wallet({navigation}) {
@@ -57,7 +57,6 @@ export default function Wallet({navigation}) {
     walletHistory: [],
     isRefreshing: false,
     transferModal: false,
-    keyboardHeight: 0,
     transferEmail: '',
     transferAmount: '',
     verifiedUser: null,
@@ -67,9 +66,9 @@ export default function Wallet({navigation}) {
   });
 
   const {appData, themeColors, currencies, themeColor, themeToggle, appStyle} =
-    useSelector((state) => state?.initBoot);
+    useSelector((state) => state?.initBoot || {});
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -87,7 +86,6 @@ export default function Wallet({navigation}) {
     wallet_amount,
     isRefreshing,
     transferModal,
-    keyboardHeight,
     transferAmount,
     transferEmail,
     verifiedUser,
@@ -102,26 +100,7 @@ export default function Wallet({navigation}) {
     }, [isRefreshing]),
   );
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      (event) => {
-        // console.log('my events', event);
-        updateState({keyboardHeight: event.endCoordinates.height});
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      (event) => {
-        // console.log('my events', event);
-        updateState({keyboardHeight: 0});
-      },
-    );
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
+
 
   useEffect(() => {
     getWalletData();
@@ -642,15 +621,13 @@ export default function Wallet({navigation}) {
         />
       </View>
       <Modal
+        avoidKeyboard
         isVisible={transferModal}
         // isVisible={true}
         style={{
           margin: 0,
           justifyContent: 'flex-end',
-          marginBottom:
-            Platform.OS == 'ios'
-              ? moderateScale(keyboardHeight)
-              : moderateScale(0),
+          backgroundColor: isDarkMode ? colors.black : colors.white,
         }}
         onBackdropPress={modalClose}>
         <View

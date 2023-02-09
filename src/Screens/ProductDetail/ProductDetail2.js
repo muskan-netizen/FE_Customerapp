@@ -42,8 +42,13 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
+import WrapperContainer from '../../Components/WrapperContainer';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ProductDetail2({route, navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
@@ -590,10 +595,14 @@ export default function ProductDetail2({route, navigation}) {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
-      }}>
+    <WrapperContainer
+    bgColor={
+      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+    }
+    statusBarColor={colors.backgroundGrey}
+    source={loaderOne}
+    // isLoadingB={deliveryFeeLoader}
+    >
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -964,6 +973,6 @@ export default function ProductDetail2({route, navigation}) {
           />
         </ScrollView>
       </View>
-    </View>
+    </WrapperContainer>
   );
 }

@@ -16,7 +16,7 @@ const SubscriptionModal = ({
  
  
 }) => {
-  const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
+  const {themeColors, appStyle} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
 
   return (

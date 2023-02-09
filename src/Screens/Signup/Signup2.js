@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
@@ -34,9 +34,12 @@ import {setUserData} from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 
+// import { enableFreeze } from "react-native-screens";
+// enableFreeze(true);
+
+
 export default function Signup2({navigation}) {
-  const {appData, themeColors, themeLayouts, currencies, languages} =
-    useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies, languages} = useSelector((state) => state?.initBoot || {});
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -59,9 +62,8 @@ export default function Signup2({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
 
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily});
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});

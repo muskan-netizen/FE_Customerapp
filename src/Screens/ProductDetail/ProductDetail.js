@@ -11,21 +11,22 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Modal from 'react-native-modal';
+import Modal, { ReactNativeModal } from 'react-native-modal';
 import RenderHtml from 'react-native-render-html';
 import Share from 'react-native-share';
 import { Pagination } from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
 import Banner2 from '../../Components/Banner2';
+import BottomSlideModal from '../../Components/BottomSlideModal';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
@@ -43,25 +44,33 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../../styles/responsiveSize';
 
 import { MyDarkTheme } from '../../styles/theme';
 import {
   addRemoveMinutes,
   getHourAndMinutes,
-  tokenConverterPlusCurrencyNumberFormater
+  tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
-  showSuccess
+  showSuccess,
 } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import Toast from 'react-native-simple-toast';
+import Clipboard from '@react-native-community/clipboard';
+import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function ProductDetail({ route, navigation }) {
   console.log('my route', route.params.data);
@@ -72,15 +81,18 @@ export default function ProductDetail({ route, navigation }) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
-  const {productListData} = useSelector((state) => state?.product);
+  const {
+    additional_preferences,
+    digit_after_decimal,
+    seller_sold_title,
+    seller_platform_logo,
+  } = appData?.profile?.preferences || {};
+  const { productListData } = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
   const commonStyles = commonStylesFunc({ fontFamily });
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const { data } = route.params;
-  console.log(data, 'dataaaaaa');
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -113,7 +125,40 @@ export default function ProductDetail({ route, navigation }) {
     rentalProductDuration: null,
     productDetailNew: {},
     isProductAvailable: false,
+    productAttributes: [],
+    offersList: [],
+    isOffersModalVisible: false,
   });
+  const [pinCode, setPinCode] = useState('');
+  const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
+  const [isPincodeValid, setIsPincodeValid] = useState(false);
+  const [isDatePicker, setIsDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [availableVendorSlots, setAvailableVendorSlots] = useState([]);
+  const [isLoadingPinCode, setLoadingPinCode] = useState(false);
+  const [isLoadingGetSlots, setLoadingGetSlots] = useState(false);
+  const [selectedVendorDeliverySlot, setSelectedVendorDeliverySlot] = useState(
+    {},
+  );
+  const [isTimeIntervals, setIsTimeIntervals] = useState(false);
+  const [productAvailableIntervals, setProductAvailableIntervals] = useState(
+    [],
+  );
+  const [selectedProductInterval, setSelectedProductInterval] = useState({});
+  const [isLoadingProductSlotIntervals, setIsLoadingProductSlotIntervals] =
+    useState(false);
+  const [productPreferences, setProductPreferences] = useState({})
+  const [isAppointmentPicker, setAppointmentPicker] = useState(false)
+  const [appointmentSelectedDate, setAppointmentSelectedDate] = useState(null)
+  const [appointmentAvailableSlots, setAppointmentAvailableSlots] = useState([])
+  const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState({})
+  const [isAppointmentSlotsModal, setAppointmentSlotsModal] = useState(false)
+  const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null)
+
+
+  
+
+
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -147,31 +192,13 @@ export default function ProductDetail({ route, navigation }) {
     rentalProductDuration,
     productDetailNew,
     isProductAvailable,
+    productAttributes,
+    offersList,
+    isOffersModalVisible,
   } = state;
 
-  const customRight = () => {
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image source={imagePath.search} />
-      </View>
-    );
-  };
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
-  //Naviagtion to specific screen
-  const moveToNewScreen =
-    (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-
-  // useEffect(() => {
-  //   updateState({
-  //     productQuantityForCart: !!productDetailData?.minimum_order_count
-  //       ? productDetailData?.minimum_order_count
-  //       : 1,
-  //   });
-  // }, [productQuantityForCart]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -200,7 +227,6 @@ export default function ProductDetail({ route, navigation }) {
   useEffect(() => {
     getProductDetail();
   }, [state.productId, state.isLoadingB]);
-  console.log(productDetailData, 'productDetailDataproductDetailData')
   const onShare = () => {
     console.log('onShare', appData);
     if (!!productDetailData?.share_link) {
@@ -238,7 +264,6 @@ export default function ProductDetail({ route, navigation }) {
             const url1 = val?.image?.path?.image_fit || val.image.image_fit;
             const url2 = val?.image?.path?.image_path || val.image.image_path;
             let imageUri = getImageUrl(url1, url2, '600/800');
-            console.log('banner images', imageUri);
             FastImage.preload([{ uri: imageUri }]);
           });
         }
@@ -250,10 +275,12 @@ export default function ProductDetail({ route, navigation }) {
         //   '1000/1000',
         // )
         // : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
-
+        setProductPreferences(res?.data?.prefference)
         updateState({
+          productAttributes: res?.data?.product_attribute,
+          offersList: res?.data?.coupon_list,
           productDetailNew: res?.data?.products,
-          productDetailData: res.data.products,
+          productDetailData: res?.data?.products,
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
@@ -273,7 +300,7 @@ export default function ProductDetail({ route, navigation }) {
             Number(res?.data?.products?.minimum_duration_min),
           endDateRental: addRemoveMinutes(
             Number(res?.data?.products?.minimum_duration) * 60 +
-              Number(res?.data?.products?.minimum_duration_min),
+            Number(res?.data?.products?.minimum_duration_min),
           ),
           startDateRental: new Date(),
         });
@@ -285,7 +312,7 @@ export default function ProductDetail({ route, navigation }) {
           updateState({ variantSet: res.data.products.variant_set });
         }
       })
-      .catch((error) => console.log(error, 'error'));
+      .catch(errorMethod);
   };
 
   //Get Product detail based on varint selection
@@ -323,6 +350,7 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const errorMethod = (error) => {
+    setLoadingPinCode(false);
     if (error?.message?.alert == 1) {
       updateState({
         isLoading: false,
@@ -489,7 +517,6 @@ export default function ProductDetail({ route, navigation }) {
           }
         })
         .filter((x) => x != undefined);
-      console.log(variantSetData, 'variantSetData callback');
       if (variantSetData.length) {
         updateState({ btnLoader: true });
         getProductDetailBasedOnFilter(variantSetData);
@@ -500,7 +527,6 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const checkProductAvailibility = () => {
-    console.log(productDetailNew, 'productDetailNew....productDetailNew');
     // actions
     //   .checkProductAvailibility(
     //     {
@@ -535,19 +561,19 @@ export default function ProductDetail({ route, navigation }) {
   const onDateChange = (val) => {
     isRentalEndDatePicker
       ? updateState({
-          endDateRental: val,
-        })
+        endDateRental: val,
+      })
       : updateState({
-          startDateRental: val,
-          endDateRental: addRemoveMinutes(
-            Number(productDetailData?.minimum_duration) * 60 +
-              Number(productDetailData?.minimum_duration_min),
-            val,
-          ),
-          rentalProductDuration:
-            Number(productDetailData?.minimum_duration * 60) +
-            Number(productDetailData?.minimum_duration_min),
-        });
+        startDateRental: val,
+        endDateRental: addRemoveMinutes(
+          Number(productDetailData?.minimum_duration) * 60 +
+          Number(productDetailData?.minimum_duration_min),
+          val,
+        ),
+        rentalProductDuration:
+          Number(productDetailData?.minimum_duration * 60) +
+          Number(productDetailData?.minimum_duration_min),
+      });
   };
 
   const addRemoveDuration = (key) => {
@@ -559,7 +585,7 @@ export default function ProductDetail({ route, navigation }) {
           Number(productDetailData?.additional_increments_min),
         endDateRental: addRemoveMinutes(
           Number(productDetailData?.additional_increments) * 60 +
-            Number(productDetailData?.additional_increments_min),
+          Number(productDetailData?.additional_increments_min),
           endDateRental,
         ),
       });
@@ -568,7 +594,7 @@ export default function ProductDetail({ route, navigation }) {
       if (
         Number(rentalProductDuration) !=
         Number(productDetailData.minimum_duration) * 60 +
-          Number(productDetailData.minimum_duration_min)
+        Number(productDetailData.minimum_duration_min)
       ) {
         updateState({
           rentalProductDuration:
@@ -577,7 +603,7 @@ export default function ProductDetail({ route, navigation }) {
               Number(productDetailData?.additional_increments_min)),
           endDateRental: addRemoveMinutes(
             Number(productDetailData?.additional_increments) * 60 +
-              Number(productDetailData?.additional_increments_min),
+            Number(productDetailData?.additional_increments_min),
             endDateRental,
             '-',
           ),
@@ -589,7 +615,7 @@ export default function ProductDetail({ route, navigation }) {
   const variantSetValue = (item) => {
     const { options, type, variant_type_id } = item;
     console.log('variantSetValuevariantSetValue', item);
-    if (type == 1) {
+    if (type == 1 || type == 2) {
       return (
         <View>
           <TouchableOpacity
@@ -627,7 +653,7 @@ export default function ProductDetail({ route, navigation }) {
                   marginVertical: moderateScaleVertical(10),
                 }}>
                 <TouchableOpacity
-                  onPress={() => updateState({isRentalStartDatePicker: true})}>
+                  onPress={() => updateState({ isRentalStartDatePicker: true })}>
                   <Text
                     style={{
                       fontSize: moderateScale(13),
@@ -652,7 +678,7 @@ export default function ProductDetail({ route, navigation }) {
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => updateState({isRentalEndDatePicker: true})}>
+                  onPress={() => updateState({ isRentalEndDatePicker: true })}>
                   <Text
                     style={{
                       fontSize: moderateScale(13),
@@ -793,10 +819,6 @@ export default function ProductDetail({ route, navigation }) {
                 </Text>{' '}
                 min
               </Text>
-              {/* {console.log(
-                productDetailNew,
-                'productDetailNew....productDetailNew',
-              )} */}
             </View>
           ) : null}
         </View>
@@ -1120,11 +1142,18 @@ export default function ProductDetail({ route, navigation }) {
   }, [productDetailNew]);
 
   const _finalAddToCart = (addonSet = addonSet) => {
+
+
+    if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot) && isEmpty(appointmentSelectedDate)) {
+       alert('Please select appointment date and slot')
+      return
+    }
+
+
     const addon_ids = [];
     const addon_options = [];
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
         if (j?.value == true) {
           addon_ids.push(j?.addon_id);
           addon_options.push(j?.id);
@@ -1137,6 +1166,12 @@ export default function ProductDetail({ route, navigation }) {
     data['quantity'] = productQuantityForCart;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
+    if (!isEmpty(selectedProductInterval)) {
+      data['sele_slot_id'] = selectedProductInterval?.id;
+      data['sele_slot_price'] = selectedProductInterval?.price;
+      data['delivery_date'] = moment(selectedDate).format('YYYY-MM-DD');
+    }
+
     data['start_date_time'] = String(
       moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
@@ -1144,6 +1179,7 @@ export default function ProductDetail({ route, navigation }) {
       moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
     data['total_booking_time'] = rentalProductDuration;
+    
     data['additional_increments_hrs_min'] =
       rentalProductDuration -
       Number(productDetailNew?.product?.minimum_duration) * 60 +
@@ -1153,6 +1189,14 @@ export default function ProductDetail({ route, navigation }) {
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
+    if(dine_In_Type =='appointment'){
+      data ['schedule_slot']=selectedAppointmentSlot?.value,
+      data['scheduled_date_time']= String(
+        moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
+      );
+      
+    }
+    
     console.log(data, 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
@@ -1170,7 +1214,9 @@ export default function ProductDetail({ route, navigation }) {
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
         updateState({ isLoadingC: false });
-        navigation.goBack();
+        navigation.navigate(navigationStrings.PRODUCT_LIST,{data:{item :data,
+          isLoading:true,
+          data:res?.data}});
       })
       .catch((error) => errorMethodSecond(error, addonSet));
   };
@@ -1194,7 +1240,6 @@ export default function ProductDetail({ route, navigation }) {
   const myRef = useRef(null);
 
   const productIncrDecreamentForCart = (type) => {
-
     let quantityToIncreaseDecrease = !!productDetailData?.batch_count
       ? Number(productDetailData?.batch_count)
       : 1;
@@ -1328,6 +1373,476 @@ export default function ProductDetail({ route, navigation }) {
       </View>
     );
   };
+
+  // const renderProductAttributes = ({ item, index }) => {
+  //   return (
+  //     <View
+  //       style={{
+  //         flexDirection: 'row',
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //       }}>
+  //       <Text
+  //         style={{
+  //           fontFamily: fontFamily.bold,
+  //           fontSize: textScale(14),
+  //         }}>
+  //         {item?.title}
+  //       </Text>
+  //       <Text
+  //         style={{
+  //           fontFamily: fontFamily.regular,
+  //           fontSize: textScale(14),
+  //         }}>
+  //         {item?.value}
+  //       </Text>
+  //     </View>)
+  // }
+  const RenderOfferView = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: textScale(14),
+            paddingHorizontal: moderateScale(15),
+            fontFamily: fontFamily.regular,
+          }}>
+          {strings.AVAILABLE_OFFERS}
+        </Text>
+        <View
+          style={{
+            width: '100%',
+            height: 1,
+            backgroundColor: colors.greyMedium,
+            marginVertical: moderateScaleVertical(10),
+          }}
+        />
+        <ScrollView style={{ width: '100%' }}>
+          {offersList?.length > 0 &&
+            offersList.map((el, indx) => {
+              // console.log(el);
+              return (
+                <View
+                  key={indx}
+                  style={{
+                    borderBottomWidth: 1,
+                    paddingHorizontal: moderateScale(15),
+                    width: '100%',
+                    borderBottomColor: colors.greyMedium,
+                    marginBottom: moderateScale(10),
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(13),
+                      marginBottom: moderateScale(5),
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.name ? el.name : ''}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      marginBottom: moderateScale(5),
+                      color: colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.short_desc ? el.short_desc : ''}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      borderTopWidth: 1,
+                      borderTopColor: colors.greyMedium,
+                      alignItems: 'center',
+                      paddingTop: moderateScaleVertical(15),
+                      marginTop: moderateScale(8),
+                      paddingBottom: moderateScale(15),
+                    }}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderColor: themeColors.primary_color,
+                        borderRadius: moderateScale(3),
+                        paddingHorizontal: moderateScale(7),
+                        paddingVertical: moderateScale(4),
+                        borderStyle: 'dashed',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          fontFamily: fontFamily.regular,
+                          textTransform: 'uppercase',
+                        }}>
+                        {el.name ? el.name : ''}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Clipboard.setString(`${el.name ? el.name : ''}`);
+                        Toast.show(strings.COPIED);
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          color: themeColors.primary_color,
+                          fontFamily: fontFamily.regular,
+                        }}>
+                        {strings.TAP_TO_COPY}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const onChangePinCode = (text) => {
+    if (text.length === 6) {
+      onCheckVendorPinCode(text);
+      setLoadingPinCode(true);
+    }
+    setSelectedVendorDeliverySlot({});
+    setSelectedDate(null);
+    setPinCode(text);
+  };
+
+  const onCheckVendorPinCode = (pin_code) => {
+    actions
+      .checkVendorPincode(
+        {
+          vendor_id: productDetailData?.vendor?.id,
+          pincode: pin_code,
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res....res');
+        setLoadingPinCode(false);
+        if (!!res?.data) {
+          setIsPincodeValid(true);
+        } else {
+          setIsPincodeValid(false);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const onDateSelected = (date) => {
+    setLoadingGetSlots(true);
+    if (isAppointmentPicker) {
+      actions.getAppointmentSlots({
+        cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+        product_id: productDetailData?.id
+      }, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+      },).then((res) => {
+        console.log(res, "<===res getAppointmentSlots")
+        setAppointmentAvailableSlots(res?.data?.time_slots)
+        setLoadingGetSlots(false);
+        setAppointmentPicker(false);
+        setSelectedAppointmentIndx(null);
+        setSelectedAppointmentSlot({})
+      }).catch((err) => {
+        console.log(err, "<==err getAppointmentSlots")
+        setLoadingGetSlots(false);
+        setAppointmentPicker(false);
+        errorMethod(err);
+      })
+
+      return
+    }
+    
+    setSelectedDate(date);
+    actions
+      .getVendorShippingSlots(
+        {
+          delivery_date: moment(date).format('YYYY-MM-DD'),
+          product_id: productDetailData?.id,
+          vendor_cutoff_time: moment(date).format('hh:mm A'),
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, '<===res');
+        setIsDatePicker(false);
+        setLoadingGetSlots(false);
+        if (!isEmpty(res?.data)) {
+          setAvailableVendorSlots(res?.data);
+          setTimeout(() => {
+            setAvailableSlotsModal(true);
+          }, 700);
+        } else {
+          setTimeout(() => {
+            showError('No available slots found!');
+          }, 700);
+        }
+      })
+      .catch((err) => {
+        setLoadingGetSlots(false);
+        setIsDatePicker(false);
+        errorMethod(err);
+      });
+  };
+
+  const onDoneDeliverySlot = () => {
+    if (isTimeIntervals) {
+      if (isEmpty(selectedProductInterval)) {
+        alert('Please select a slot interval');
+        return;
+      }
+      setAvailableSlotsModal(false);
+      setIsTimeIntervals(false);
+      return;
+    }
+    setSelectedProductInterval({});
+    if (isEmpty(selectedVendorDeliverySlot)) {
+      alert('Please select a slot');
+      return;
+    }
+    setIsLoadingProductSlotIntervals(true);
+    actions
+      .getProductDeliverySlotsInterval(
+        {
+          slot_id: selectedVendorDeliverySlot?.delivery_slot?.id,
+        },
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        setProductAvailableIntervals(res?.data);
+        setIsTimeIntervals(true);
+        setIsLoadingProductSlotIntervals(false);
+
+        console.log(res, 'res.............');
+      })
+      .catch((err) => {
+        setIsLoadingProductSlotIntervals(false);
+        alert(err?.error || err?.message);
+      });
+  };
+
+  const deliverSlotModalContent = () => {
+    return (
+      <View
+        style={{
+          minHeight: height / 3,
+          backgroundColor: colors.white,
+          borderTopLeftRadius: moderateScale(10),
+          borderTopRightRadius: moderateScale(10),
+          padding: moderateScale(10),
+          maxHeight: height / 1.7,
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <Text
+            style={{
+              fontFamily: fontFamily?.bold,
+              fontSize: textScale(16),
+            }}>
+            Select delivery slot {isTimeIntervals ? 'interval' : ''}
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+          }}>
+          {isTimeIntervals ? (
+            <FlatList
+              data={productAvailableIntervals}
+              ItemSeparatorComponent={() => (
+                <View style={{ height: moderateScaleVertical(10) }} />
+              )}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => setSelectedProductInterval(item)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 8,
+                    borderWidth: 1,
+                    borderColor:
+                      selectedProductInterval?.id == item?.id
+                        ? themeColors?.primary_color
+                        : colors.borderColorB,
+                    borderRadius: moderateScale(6),
+                  }}>
+                  <Image
+                    style={{
+                      tintColor:
+                        selectedProductInterval?.id == item?.id
+                          ? themeColors?.primary_color
+                          : colors.borderColorB,
+                      height: 15,
+                      width: 15,
+                    }}
+                    source={
+                      selectedProductInterval?.id == item?.id
+                        ? imagePath.radioNewActive
+                        : imagePath.radioNewInActive
+                    }
+                  />
+                  <Text
+                    style={{
+                      fontFamily: fontFamily?.regular,
+                      marginLeft: moderateScale(10),
+                    }}>
+                    {`${item?.title} (${item?.start_time} - ${item?.end_time} ${currencies?.primary_currency?.symbol}${item?.price})`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              ListFooterComponent={() => (
+                <View
+                  style={{
+                    height: 10,
+                  }}
+                />
+              )}
+            />
+          ) : (
+            <FlatList
+              data={availableVendorSlots}
+              ItemSeparatorComponent={() => (
+                <View style={{ height: moderateScaleVertical(10) }} />
+              )}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => setSelectedVendorDeliverySlot(item)}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 8,
+                    borderWidth: 1,
+                    borderColor:
+                      selectedVendorDeliverySlot?.id == item?.id
+                        ? themeColors?.primary_color
+                        : colors.borderColorB,
+                    borderRadius: moderateScale(6),
+                  }}>
+                  <Image
+                    style={{
+                      tintColor:
+                        selectedVendorDeliverySlot?.id == item?.id
+                          ? themeColors?.primary_color
+                          : colors.borderColorB,
+                      height: 15,
+                      width: 15,
+                    }}
+                    source={
+                      selectedVendorDeliverySlot?.id == item?.id
+                        ? imagePath.radioNewActive
+                        : imagePath.radioNewInActive
+                    }
+                  />
+                  <Text
+                    style={{
+                      fontFamily: fontFamily?.regular,
+                      marginLeft: moderateScale(10),
+                    }}>
+                    {`${item?.delivery_slot?.title} (${item?.delivery_slot?.start_time} - ${item?.delivery_slot?.end_time} ${currencies?.primary_currency?.symbol}${item?.delivery_slot?.price})`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              ListFooterComponent={() => (
+                <View
+                  style={{
+                    height: 10,
+                  }}
+                />
+              )}
+            />
+          )}
+          <ButtonWithLoader
+            onPress={onDoneDeliverySlot}
+            btnText="Done"
+            isLoading={isLoadingProductSlotIntervals}
+            btnStyle={{
+              backgroundColor: themeColors?.primary_color,
+              borderWidth: 0,
+              position: 'absolute',
+              width: '100%',
+              bottom: 0,
+            }}
+          />
+        </View>
+      </View>
+    );
+  };
+
+
+  const AppointmentSlotModal = () => {
+    return <View style={{
+      backgroundColor: colors.white,
+      height: moderateScaleVertical(350),
+      borderTopRightRadius: moderateScale(10),
+      borderTopLeftRadius: moderateScale(10),
+      padding: moderateScale(12)
+    }}>
+      <View style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: moderateScale(10)
+      }}>
+        <Text style={{
+          fontFamily: fontFamily?.bold,
+          fontSize: textScale(14),
+        }}>Select slot</Text>
+        <TouchableOpacity onPress={() => setAppointmentSlotsModal(false)}>
+          <Text style={{
+            fontFamily: fontFamily.bold,
+            color: themeColors?.primary_color
+          }}>Done</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList data={appointmentAvailableSlots}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{
+          height: moderateScaleVertical(10)
+        }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
+          setSelectedAppointmentSlot(item)
+          setSelectedAppointmentIndx(index)
+        }} style={{
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 8,
+          borderWidth: 1,
+          borderColor: colors.borderColorB,
+          borderRadius: moderateScale(4)
+        }}>
+          <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+          <Text style={{
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(13),
+            marginLeft: moderateScale(10)
+          }}>{item?.name}</Text>
+        </TouchableOpacity>} />
+    </View>
+  }
 
   return (
     <WrapperContainer
@@ -1480,39 +1995,74 @@ export default function ProductDetail({ route, navigation }) {
                       }>
                       {productDetailData?.translation[0]?.title}
                     </Text>
-                    {getBundleId()!== appIds.danielleBejjani ||  Number(productPriceData?.price) !== 0 ?<Text
-                      style={{
-                        ...styles.productPrice,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
-                      {tokenConverterPlusCurrencyNumberFormater(
-                        Number(productPriceData?.price) *
+                    {getBundleId() !== appIds.danielleBejjani ||
+                      Number(productPriceData?.price) !== 0 ? (
+                      <Text
+                        style={{
+                          ...styles.productPrice,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {tokenConverterPlusCurrencyNumberFormater(
+                          Number(productPriceData?.price) *
                           Number(productQuantityForCart),
-                        digit_after_decimal,
-                        additional_preferences,
-                        currencies?.primary_currency?.symbol,
-                      )}
-                    </Text>
-                    :null}
+                          digit_after_decimal,
+                          additional_preferences,
+                          currencies?.primary_currency?.symbol,
+                        )}
+                      </Text>
+                    ) : null}
                   </View>
                 </View>
 
                 <View style={styles.flexView}>
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont12,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity43,
-                    }}>
-                    {strings.IN}{' '}
-                    {
-                      productDetailData?.category?.category_detail
-                        ?.translation[0]?.name
-                    }
-                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont12,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
+                      }}>
+                      {strings.IN}{' '}
+                      {
+                        productDetailData?.category?.category_detail
+                          ?.translation[0]?.name
+                      }
+                    </Text>
+                    {!!productDetailData?.vendor?.is_seller && (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          marginTop: moderateScaleVertical(6),
+                        }}>
+                        <Image
+                          source={{
+                            uri: getImageUrl(
+                              seller_platform_logo?.proxy_url,
+                              seller_platform_logo?.image_path,
+                              '200/200',
+                            ),
+                          }}
+                          resizeMode="contain"
+                          style={{
+                            height: 30,
+                            width: 30,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            marginLeft: moderateScale(7),
+                            fontFamily: fontFamily?.regular,
+                            color: colors.black,
+                          }}>
+                          {seller_sold_title}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
 
                   {productDetailData?.averageRating !== null && (
                     <View
@@ -1528,9 +2078,9 @@ export default function ProductDetail({ route, navigation }) {
                       <StarRating
                         disabled={false}
                         maxStars={5}
-                        rating={Number(
-                          productDetailData?.averageRating,
-                        ).toFixed(1)}
+                        rating={parseInt(
+                          Number(productDetailData?.averageRating).toFixed(1),
+                        )}
                         fullStarColor={colors.yellowB}
                         starSize={8}
                         containerStyle={{ width: width / 9 }}
@@ -1538,8 +2088,6 @@ export default function ProductDetail({ route, navigation }) {
                     </View>
                   )}
                 </View>
-                {console.log(typeId, 'typeId....typeId')}
-
                 {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{ justifyContent: 'center' }}>
                     <Text
@@ -1560,6 +2108,76 @@ export default function ProductDetail({ route, navigation }) {
                   </View>
                 )}
               </View>
+              {productDetailData?.replaceable ||
+                productDetailData?.returnable ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: moderateScaleVertical(10),
+                    marginHorizontal: moderateScale(10),
+                  }}>
+                  <Image source={imagePath.icRefundable} />
+                  <Text
+                    style={{
+                      marginLeft: moderateScale(10),
+                      fontFamily: fontFamily.regular,
+                      fontSize: textScale(12),
+                      color: colors.textGrey,
+                    }}>
+                    We have{' '}
+                    {productDetailData?.is_return_days
+                      ? productDetailData?.return_days + ' days '
+                      : ''}
+                    {productDetailData?.replaceable ? 'replaceable' : ''}
+                    {productDetailData?.replaceable &&
+                      productDetailData?.returnable
+                      ? ' and '
+                      : ''}
+                    {productDetailData?.returnable ? 'returnable' : ''} policy
+                    on this product!
+                  </Text>
+                </View>
+              ) : null}
+
+              {!isEmpty(offersList) ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    updateState({ isOffersModalVisible: !isOffersModalVisible })
+                  }
+                  activeOpacity={0.7}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingTop: moderateScaleVertical(16),
+                    borderTopWidth: 1,
+                    borderColor: '#EBEBEB',
+                    marginTop: moderateScaleVertical(10),
+                  }}>
+                  <Text
+                    style={{
+                      ...styles.milesTxt,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      opacity: 1,
+                      fontSize: textScale(10),
+                    }}>
+                    All Offers
+                  </Text>
+                  <Image
+                    source={imagePath.icBackb}
+                    style={{
+                      transform: [{ rotate: '-180deg' }],
+                      width: moderateScale(11),
+                      height: moderateScale(11),
+                      resizeMode: 'contain',
+                      marginLeft: moderateScale(6),
+                    }}
+                  />
+                </TouchableOpacity>
+              ) : null}
+
               {/* 
                {!!productDetailData?.delaySlot ?
                     <Text style={{
@@ -1619,6 +2237,122 @@ export default function ProductDetail({ route, navigation }) {
                 </>
               ) : null}
 
+              {(!!productDetailData?.vendor?.hyper_local_delivery ||
+                !!productDetailData?.vendor?.next_day_delivery ||
+                !!productDetailData?.vendor?.same_day_delivery) && (
+                  <View
+                    style={{
+                      marginBottom: moderateScaleVertical(15),
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily?.bold,
+                        fontSize: textScale(12),
+                        color: colors.black,
+                      }}>
+                      Enter Pincode for hassale free timely delivery
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flex: 1,
+                        justifyContent: 'space-between',
+                        marginTop: moderateScaleVertical(10),
+                      }}>
+                      <View
+                        style={{
+                          flex: 0.48,
+                        }}>
+                        <BorderTextInput
+                          onChangeText={onChangePinCode}
+                          value={pinCode}
+                          placeholder={'Enter Pincode'}
+                          containerStyle={{
+                            flex: 1,
+                            borderRadius: moderateScale(10),
+                            height: moderateScaleVertical(40),
+                          }}
+                          keyboardType={'number-pad'}
+                          marginBottom={0}
+                        />
+                        {!isPincodeValid &&
+                          pinCode.length == 6 &&
+                          !isLoadingPinCode && (
+                            <Text
+                              style={{
+                                textAlign: 'right',
+                                color: colors.redB,
+                                marginRight: 5,
+                                fontSize: textScale(10),
+                              }}>
+                              Enter valid pincode
+                            </Text>
+                          )}
+                      </View>
+                      {isLoadingPinCode && pinCode.length == 6 ? (
+                        <Text
+                          style={{
+                            flex: 0.48,
+                            color: colors.black,
+                          }}>
+                          Loading...
+                        </Text>
+                      ) : (
+                        <View
+                          style={{
+                            flex: 0.48,
+                          }}>
+                          {isPincodeValid && pinCode.length == 6 && (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setAvailableVendorSlots([]);
+                                setSelectedVendorDeliverySlot({});
+                                setIsDatePicker(true);
+                              }}
+                              style={{
+                                borderWidth: 1,
+                                borderColor: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.borderLight,
+                                flex: 1,
+                                height: moderateScaleVertical(40),
+                                paddingHorizontal: moderateScale(5),
+                                borderRadius: moderateScale(10),
+                                justifyContent: 'center',
+                              }}>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily?.regular,
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.textGreyB,
+                                }}>
+                                {selectedDate
+                                  ? moment(selectedDate).format(
+                                    'YYYY-MM-DD hh:mm A',
+                                  )
+                                  : 'Select Date'}
+                              </Text>
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      )}
+                    </View>
+                    {!isEmpty(selectedProductInterval) &&
+                      isPincodeValid &&
+                      pinCode.length == 6 && (
+                        <Text
+                          style={{
+                            fontSize: textScale(11),
+                            textAlign: 'right',
+                            marginRight: moderateScale(5),
+                            marginTop: moderateScale(5),
+                          }}>{`${selectedProductInterval?.title} (${selectedProductInterval?.start_time} - ${selectedProductInterval?.end_time} ${currencies?.primary_currency?.symbol}${selectedProductInterval?.price})`}</Text>
+                      )}
+                  </View>
+                )}
+
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}
               {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
@@ -1634,6 +2368,59 @@ export default function ProductDetail({ route, navigation }) {
                   {strings.NOVARIANTPRODUCTAVAILABLE}
                 </Text>
               ) : null}
+              {
+                !!productPreferences?.appointment_check && dine_In_Type =='appointment' &&
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between"
+                }}>
+                  <View style={{
+                    flex: 0.45
+                  }}>
+                    <Text style={{
+                      fontFamily: fontFamily?.bold,
+                      color: colors.black,
+                      fontSize: textScale(14)
+                    }}>Appointment</Text>
+                    <TouchableOpacity onPress={() => setAppointmentPicker(true)} style={{
+                      backgroundColor: colors.backGroundGreyD,
+                      paddingVertical: moderateScaleVertical(8),
+                      paddingHorizontal: moderateScale(7),
+                      marginVertical: moderateScale(8),
+                      borderRadius: moderateScale(8)
+
+                    }}><Text style={{
+                      fontFamily: fontFamily?.regular,
+                      color: colors.black,
+                      fontSize: textScale(13)
+                    }}>{appointmentSelectedDate ? moment(appointmentSelectedDate).format("DD-MM-YYYY") : "Select Date"}</Text></TouchableOpacity>
+
+                  </View>
+                  {(!!appointmentSelectedDate) && <View style={{
+                    flex: 0.45
+                  }}>
+                    <Text style={{
+                      fontFamily: fontFamily?.bold,
+                      color: colors.black,
+                      fontSize: textScale(14)
+                    }}>Slots</Text>
+                    <TouchableOpacity onPress={() => setAppointmentSlotsModal(true)} style={{
+                      backgroundColor: colors.backGroundGreyD,
+                      paddingVertical: moderateScaleVertical(8),
+                      paddingHorizontal: moderateScale(7),
+                      marginVertical: moderateScale(8),
+                      borderRadius: moderateScale(8)
+                    }}><Text style={{
+                      fontFamily: fontFamily?.regular,
+                      color: colors.black,
+                      fontSize: textScale(13)
+                    }}>{(!isEmpty(selectedAppointmentSlot)) ? selectedAppointmentSlot?.name : "Select Slot"}</Text></TouchableOpacity>
+                  </View>}
+                </View>
+
+              }
+
 
               {/* Add to Cart button */}
               {(productDetailData?.has_inventory == 0 ||
@@ -1645,7 +2432,8 @@ export default function ProductDetail({ route, navigation }) {
                     style={{
                       marginBottom: moderateScaleVertical(25),
                     }}>
-                    {Number(productPriceData?.price) !== 0  || getBundleId() == appIds.danielleBejjani ? (
+                    {Number(productPriceData?.price) !== 0 ||
+                      getBundleId() == appIds.danielleBejjani ? (
                       <View
                         style={{
                           flexDirection: 'row',
@@ -1656,45 +2444,8 @@ export default function ProductDetail({ route, navigation }) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
-                        {getBundleId() !== appIds.danielleBejjani ? <View
-                          style={{
-                            ...commonStyles.buttonRect,
-                            ...styles.incDecBtnStyle,
-                            backgroundColor: getColorCodeWithOpactiyNumber(
-                              themeColors.primary_color.substr(1),
-                              15,
-                            ),
-                            flex: 0.3,
-                            borderColor: themeColors?.primary_color,
-                            height: moderateScale(38),
-                            justifyContent: 'space-between',
-                            marginRight: moderateScale(8),
-                           
-                          }}
-                        // onPress={onPress}
-                        >
-                          <TouchableOpacity
-                            disabled={
-                              !productDetailData?.vendor?.show_slot &&
-                              !!productDetailData?.vendor?.is_vendor_closed
-                            }
-                            onPress={() => productIncrDecreamentForCart(2)}
-                            // hitSlop={hitSlopProp}
-                            // style={{
-                            //   flex: 0.2,
-                              
-                            // }}
-                            >
-                            <Text
-                              style={{
-                                ...commonStyles.mediumFont14,
-                                color: themeColors?.primary_color,
-                                fontFamily: fontFamily.bold,
-                              }}>
-                              -
-                            </Text>
-                          </TouchableOpacity>
-                          <TextInput
+                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 ?
+                          <View
                             style={{
                               ...commonStyles.buttonRect,
                               ...styles.incDecBtnStyle,
@@ -1702,55 +2453,83 @@ export default function ProductDetail({ route, navigation }) {
                                 themeColors.primary_color.substr(1),
                                 15,
                               ),
-                              //  flex: 0.28,
+                              flex: 0.3,
                               borderColor: themeColors?.primary_color,
                               height: moderateScale(38),
                               justifyContent: 'space-between',
-                              marginLeft: moderateScale(8),
-                          
-                            }}
-                            value={`${productQuantityForCart.toString()}`}
-                            onChangeText={(value) =>
-                              updateState({
-                                productQuantityForCart:
-                                  value == '' ? '' : Number(value),
-                              })
-                            }
-                            // onPress={onPress}
-                          />
+                              marginRight: moderateScale(8),
 
-                 
+                            }}
+                          // onPress={onPress}
+                          >
                             <TouchableOpacity
                               disabled={
                                 !productDetailData?.vendor?.show_slot &&
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
-                            
-                            value={`${productQuantityForCart.toString()}`}
-                            onChangeText={(value) =>
-                              updateState({
-                                productQuantityForCart:
-                                  value == '' ? '' : Number(value),
-                              })
-                            }
-                            
-                          />
-                        
-                          <TouchableOpacity
-                            disabled={
-                              !productDetailData?.vendor?.show_slot &&
-                              !!productDetailData?.vendor?.is_vendor_closed
-                            }
-                           
-                            onPress={() => productIncrDecreamentForCart(1)}
-                            hitSlop={hitSlopProp}>
-                            <Text
-                              
-                              >
-                              +
-                            </Text>
-                          </TouchableOpacity>
-                        </View> : null}
+                              onPress={() => productIncrDecreamentForCart(2)}
+                            // hitSlop={hitSlopProp}
+                            // style={{
+                            //   flex: 0.2,
+
+                            // }}
+                            >
+                              <Text
+                                style={{
+                                  ...commonStyles.mediumFont14,
+                                  color: themeColors?.primary_color,
+                                  fontFamily: fontFamily.bold,
+                                }}>
+                                -
+                              </Text>
+                            </TouchableOpacity>
+                            <TextInput
+                              style={{
+                                ...commonStyles.buttonRect,
+                                ...styles.incDecBtnStyle,
+                                backgroundColor: getColorCodeWithOpactiyNumber(
+                                  themeColors.primary_color.substr(1),
+                                  15,
+                                ),
+                                flex: 0.3,
+                                borderColor: themeColors?.primary_color,
+                                height: moderateScale(38),
+                                justifyContent: 'space-between',
+                                marginRight: moderateScale(8),
+                              }}
+                              value={`${productQuantityForCart.toString()}`}
+                            />
+                            <TouchableOpacity
+                              disabled={
+                                !productDetailData?.vendor?.show_slot &&
+                                !!productDetailData?.vendor?.is_vendor_closed
+                              }
+
+
+                              onChangeText={(value) =>
+                                updateState({
+                                  productQuantityForCart:
+                                    value == '' ? '' : Number(value),
+                                })
+                              }
+
+                            />
+
+                            <TouchableOpacity
+                              disabled={
+                                !productDetailData?.vendor?.show_slot &&
+                                !!productDetailData?.vendor?.is_vendor_closed
+                              }
+                              onPress={() => productIncrDecreamentForCart(1)}
+                              hitSlop={hitSlopProp}>
+                              <Text
+                                style={{
+                                  ...commonStyles.mediumFont14,
+                                  color: themeColors?.primary_color,
+                                  fontFamily: fontFamily.bold,
+                                }}>+</Text>
+                            </TouchableOpacity>
+                          </View> : null}
 
                         <View />
                         <View style={{ flex: 1 }}>
@@ -1772,18 +2551,17 @@ export default function ProductDetail({ route, navigation }) {
                               textTransform: 'capitalize',
                               color: isDarkMode
                                 ? MyDarkTheme.colors.text
-                                : themeColors.secondary_color,
+                                : colors.white,
                             }}
                             onPress={addToCart}
-                            btnText={`${
-                              strings.ADD
-                            }  ${tokenConverterPlusCurrencyNumberFormater(
-                              Number(productPriceData?.price) *
+                            btnText={`${strings.ADD
+                              }  ${tokenConverterPlusCurrencyNumberFormater(
+                                Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
-                              digit_after_decimal,
-                              additional_preferences,
-                              currencies?.primary_currency?.symbol,
-                            )}`}
+                                digit_after_decimal,
+                                additional_preferences,
+                                currencies?.primary_currency?.symbol,
+                              )}`}
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
@@ -1918,11 +2696,111 @@ export default function ProductDetail({ route, navigation }) {
             date={isRentalStartDatePicker ? startDateRental : endDateRental}
             textColor={isDarkMode ? colors.white : colors.blackB}
             mode="datetime"
-            minimumDate={new Date()}
+            minimumDate={isRentalEndDatePicker ? startDateRental : new Date()}
             onDateChange={(value) => onDateChange(value)}
           />
         </View>
       </Modal>
+      <Modal
+        key={'5'}
+        isVisible={isDatePicker || isAppointmentPicker}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+        }}
+        onBackdropPress={() => {
+          setIsDatePicker(false);
+          setSelectedDate(null);
+        }}>
+        <View
+          style={{
+            ...styles.modalView,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                if (isAppointmentPicker) {
+                  setAppointmentPicker(false)
+                  setAppointmentSelectedDate('')
+                }
+                else {
+                  setIsDatePicker(false);
+                  setSelectedDate(null);
+                }
+              }}>
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              ...styles.horizontalLine,
+              borderBottomColor: isDarkMode
+                ? colors.whiteOpacity22
+                : colors.lightGreyBg,
+            }}
+          />
+          <DatePicker
+            locale={languages?.primary_language?.sort_code}
+            date={isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date())}
+            textColor={isDarkMode ? colors.white : colors.blackB}
+            mode="datetime"
+            minimumDate={new Date()}
+            onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
+          />
+          <ButtonWithLoader
+            onPress={() => onDateSelected(isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date()))}
+            btnText="Done"
+            isLoading={isLoadingGetSlots}
+            btnStyle={{
+              backgroundColor: themeColors?.primary_color,
+              borderWidth: 0,
+            }}
+          />
+        </View>
+      </Modal>
+      <BottomSlideModal
+        mainContainView={RenderOfferView}
+        isModalVisible={isOffersModalVisible}
+        mainContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+          maxHeight: moderateScale(450),
+        }}
+        innerViewContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+        }}
+        onBackdropPress={() =>
+          updateState({ isOffersModalVisible: !isOffersModalVisible })
+        }
+      />
+      <ReactNativeModal
+        isVisible={isAvailableSlotsModal}
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}>
+        {deliverSlotModalContent()}
+      </ReactNativeModal>
+      <ReactNativeModal
+        isVisible={isAppointmentSlotsModal}
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}>
+        <AppointmentSlotModal />
+      </ReactNativeModal>
     </WrapperContainer>
   );
 }

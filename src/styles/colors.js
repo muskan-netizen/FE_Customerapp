@@ -34,7 +34,8 @@ export default {
   blackOpacity86: 'rgba(0,0,0,0.86)',
   blackOpacity66: 'rgba(0,0,0,0.66)',
   green: '#3B9D38',
-  orange: '#E9610B',
+  orange: '#FC7A56',
+  orange1: '#E9610B',
   orangeB: '#F44746',
   lightGreyBorder: '#E2E2E2',
   textGreyB: '#8E9193',
@@ -130,4 +131,5 @@ export default {
   redG: '#E02020',
   statusbarColor: '#F4F8FB',
   whiteOpacity85: 'rgba(255,255,255,0.85)',
+  grey1: '#E5E5E5',
 };

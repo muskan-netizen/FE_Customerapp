@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>319613511523-303fifdbbn48q64a2mhs87ks4sclibht.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.319613511523-303fifdbbn48q64a2mhs87ks4sclibht</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>319613511523-1q4q4smffqqe346ctvmp260977vpjsam.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyABcvf2Xtqfdnv2GYjWZ0lMj4OGTkNjcrU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>319613511523</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.efectibo.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>efectibo-b7fff</string>
+	<key>STORAGE_BUCKET</key>
+	<string>efectibo-b7fff.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:319613511523:ios:97c7f8c5cdf305550e1556</string>
+</dict>
+</plist>

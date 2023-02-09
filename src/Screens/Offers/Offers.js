@@ -14,7 +14,7 @@ import colors from '../../styles/colors';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import { showError, showSuccess } from '../../utils/helperFunctions';
 import ListEmptyOffers from './ListEmptyOffers';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
 import OffersCard2 from '../../Components/OffersCard2';
 import {

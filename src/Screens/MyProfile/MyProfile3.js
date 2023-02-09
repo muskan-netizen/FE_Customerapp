@@ -1,5 +1,4 @@
 import {useFocusEffect} from '@react-navigation/native';
-import codes from 'country-calling-code';
 import {cloneDeep, isEmpty} from 'lodash';
 import React, {useRef, useState} from 'react';
 import {
@@ -12,15 +11,13 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
-import DeviceCountry from 'react-native-device-country';
+import {useDarkMode} from 'react-native-dynamic';
+import {getBundleId} from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import AddressBottomSheet from '../../Components/AddressBottomSheet';
-import AddressModal3 from '../../Components/AddressModal3';
-import BottomSheetModal from '../../Components/BottomSheetModal';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
@@ -34,6 +31,8 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
+import validator from 'is_js';
+
 import {
   height,
   moderateScale,
@@ -43,6 +42,7 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {cameraHandler} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -52,21 +52,11 @@ import {
 import {androidCameraPermission} from '../../utils/permissions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-var getPhonesCallingCodeAndCountryData = null;
-DeviceCountry.getCountryCode()
-  .then((result) => {
-    // {"code": "BY", "type": "telephony"}
-    getPhonesCallingCodeAndCountryData = codes.filter(
-      (x) => x.isoCode2 == result.code.toUpperCase(),
-    );
-  })
-  .catch((e) => {
-    console.log(e);
-  });
 
 var addtionSelectedImageIndex = null;
-var addtionSelectedImage = null;
-// var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
+
+import {enableFreeze} from 'react-native-screens';
+enableFreeze(true);
 
 export default function MyProfile3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();
@@ -78,8 +68,11 @@ export default function MyProfile3({route, navigation}) {
     themeToggle,
     appData,
     currencies,
-  } = useSelector((state) => state?.initBoot);
-  const {userData} = useSelector((state) => state?.auth);
+  } = useSelector(state => state?.initBoot);
+  const { userData } = useSelector(state => state?.auth);
+  
+
+  console.log("userDatauserDatauserData+++",userData)
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -162,14 +155,14 @@ export default function MyProfile3({route, navigation}) {
     addtionalPdfs,
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = data => setState(state => ({...state, ...data}));
 
-  const profileAddress = useSelector((state) => state?.home?.profileAddress);
+  const profileAddress = useSelector(state => state?.home?.profileAddress);
   const moveToNewScreen = (screenName, data) => () => {
     navigation.navigate(screenName, {data});
   };
 
-  const openCloseMapAddress = (type) => {
+  const openCloseMapAddress = type => {
     updateState({selectViaMap: type == 1 ? true : false});
   };
   useFocusEffect(
@@ -194,7 +187,8 @@ export default function MyProfile3({route, navigation}) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
+        console.log("get user profile",res)
         actions.updateProfile({...userData, ...res?.data});
       })
       .catch(errorMethod);
@@ -202,13 +196,13 @@ export default function MyProfile3({route, navigation}) {
 
   const getUserDocs = () => {
     let textInputs = cloneDeep(
-      userData?.user_document?.filter((x) => x?.file_type == 'Text'),
+      userData?.user_document?.filter(x => x?.file_type == 'Text'),
     );
     let images = cloneDeep(
-      userData?.user_document?.filter((x) => x?.file_type == 'Image'),
+      userData?.user_document?.filter(x => x?.file_type == 'Image'),
     );
     let pdfs = cloneDeep(
-      userData?.user_document?.filter((x) => x?.file_type == 'Pdf'),
+      userData?.user_document?.filter(x => x?.file_type == 'Pdf'),
     );
     textInputs.map((item, index) => {
       textInputs[index].contents = item?.user_document?.file_name;
@@ -229,12 +223,12 @@ export default function MyProfile3({route, navigation}) {
   };
 
   // changeTab function
-  const changeTab = (tabData) => {
+  const changeTab = tabData => {
     // if (tabData.title == strings.ADDRESS) {
     //   updateState({isLoading: true});
     // }
     let clonedArray = cloneDeep(tabBarData);
-    clonedArray.map((item) => {
+    clonedArray.map(item => {
       if (item.title == tabData.title) {
         item.isActive = true;
         return item;
@@ -250,13 +244,14 @@ export default function MyProfile3({route, navigation}) {
   };
 
   //select tje country
-  const _onCountryChange = (data) => {
+  const _onCountryChange = data => {
+    console.log("_onCountryChange_onCountryChange",data)
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
   };
 
   // on change text
-  const _onChangeText = (key) => (val) => {
+  const _onChangeText = key => val => {
     updateState({[key]: val});
   };
 
@@ -275,15 +270,41 @@ export default function MyProfile3({route, navigation}) {
     return true;
   };
 
+  const checkValidation = () => {
+    if (name == '') {
+      showError(strings.ENTER_YOUR_NAME);
+      return false;
+    }
+    if (email == '') {
+      showError(strings.ENTER_YOUR_EMAIL);
+      return false;
+    }
+ 
+    if (!validator.email(email)) { 
+      showError(strings.PLEASE_ENTER_VALID_EMAIL);
+      return false;
+    }
+
+    if (phoneNumber == '') {
+      showError(strings.ENTER_PHONE_NUMBER);
+      return false;
+    }
+    return true;
+  };
   const saveUserInfo = () => {
     let formdata = new FormData();
+    let isValid = checkValidation();
+
+    if (!isValid) {
+      return;
+    }
+ 
 
     if (!!userData?.auth_token) {
       // const checkValid = isValidDataOfBasicInfo();
       // if (!checkValid) {
       //   return;
       // }
-
       formdata.append('name', name);
       formdata.append('email', email);
       formdata.append('phone_number', phoneNumber);
@@ -347,7 +368,7 @@ export default function MyProfile3({route, navigation}) {
           code: appData?.profile?.code,
           'Content-Type': 'multipart/form-data',
         })
-        .then((res) => {
+        .then(res => {
           console.log(res, 'res>>>>>');
           let obj = {};
           obj['name'] = res.data.name;
@@ -357,6 +378,11 @@ export default function MyProfile3({route, navigation}) {
           obj['dial_code'] = res.data.callingCode || callingCode;
           obj['user_document'] = res.data.user_document || '';
 
+          obj['verify_details'] = {
+            ['is_email_verified']: res.data.is_email_verified,
+            ['is_phone_verified']: res.data.is_phone_verified,
+          };
+          console.log("obj+++++++++",obj)
           actions.updateProfile({...userData, ...obj});
           updateState({isLoading: false});
           // navigation.goBack()
@@ -369,7 +395,7 @@ export default function MyProfile3({route, navigation}) {
     }
   };
 
-  const errorMethod = (error) => {
+  const errorMethod = error => {
     console.log(error, 'in error method...');
     updateState({
       isLoading: false,
@@ -381,7 +407,7 @@ export default function MyProfile3({route, navigation}) {
     showError(error?.message || error?.error);
   };
 
-  const addUpdateLocation = (childData) => {
+  const addUpdateLocation = childData => {
     console.log(childData, 'childDatachildDatachildDatachildData');
     updateState({
       selectViaMap: false,
@@ -394,10 +420,10 @@ export default function MyProfile3({route, navigation}) {
           code: appData?.profile?.code,
           language: languages?.primary_language?.id,
         })
-        .then((res) => {
+        .then(res => {
           const allAddresses = address;
           const previousPrimaryItem = allAddresses.find(
-            (itm) => itm?.is_primary == 1,
+            itm => itm?.is_primary == 1,
           );
 
           if (!!previousPrimaryItem) {
@@ -412,7 +438,7 @@ export default function MyProfile3({route, navigation}) {
           });
           showSuccess(res.message);
         })
-        .catch((error) => {
+        .catch(error => {
           updateState({isLoading: false});
           showError(error?.message || error?.error);
         });
@@ -423,11 +449,9 @@ export default function MyProfile3({route, navigation}) {
           code: appData?.profile?.code,
           language: languages?.primary_language?.id,
         })
-        .then((res) => {
+        .then(res => {
           const allAddresses = address;
-          const objForIndx = allAddresses.find(
-            (item) => item?.id == selectedId,
-          );
+          const objForIndx = allAddresses.find(item => item?.id == selectedId);
           const indexToUpdateItem = allAddresses.indexOf(objForIndx);
           allAddresses[indexToUpdateItem] = res?.data;
           updateState({
@@ -470,7 +494,7 @@ export default function MyProfile3({route, navigation}) {
         .changePassword(data, {
           code: appData?.profile?.code,
         })
-        .then((res) => {
+        .then(res => {
           // showSuccess(res.message)
           updateState({isLoading: false});
           showSuccess(res.message);
@@ -480,14 +504,14 @@ export default function MyProfile3({route, navigation}) {
             confirmPassword: '',
           });
         })
-        .catch((err) => {});
+        .catch(err => {});
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
   };
 
   //Select Primary Address
-  const setPrimaryLocation = (item) => {
+  const setPrimaryLocation = item => {
     updateState({isLoading: true});
     let data = {};
     let query = `/${item?.id}`;
@@ -495,11 +519,11 @@ export default function MyProfile3({route, navigation}) {
       .setPrimaryAddress(query, data, {
         code: appData?.profile?.code,
       })
-      .then((res) => {
+      .then(res => {
         const allAddresses = address;
         const indxToUpdateItem = allAddresses.indexOf(item);
         const previousPrimaryItem = allAddresses.find(
-          (itm) => itm.is_primary === 1,
+          itm => itm.is_primary === 1,
         );
         if (!!previousPrimaryItem) {
           const indxToUpdatePrimary = allAddresses.indexOf(previousPrimaryItem);
@@ -513,7 +537,7 @@ export default function MyProfile3({route, navigation}) {
         });
         showSuccess(res.message);
       })
-      .catch((error) => {
+      .catch(error => {
         updateState({isLoading: false});
         showError(error?.message || error?.error);
       });
@@ -529,7 +553,7 @@ export default function MyProfile3({route, navigation}) {
   };
 
   // this funtion use for camera handle
-  const cameraHandle = async (index) => {
+  const cameraHandle = async index => {
     const permissionStatus = await androidCameraPermission();
     if (permissionStatus) {
       if (index == 0 || index == 1) {
@@ -540,7 +564,7 @@ export default function MyProfile3({route, navigation}) {
           cropperCircleOverlay: true,
           mediaType: 'photo',
         })
-          .then((res) => {
+          .then(res => {
             if (addtionSelectedImageIndex !== null) {
               let data = cloneDeep(addtionalImages);
 
@@ -558,7 +582,7 @@ export default function MyProfile3({route, navigation}) {
                 .uploadProfileImage(data, {
                   code: appData?.profile?.code,
                 })
-                .then((res) => {
+                .then(res => {
                   console.log(res, 'resresres');
                   const source = {
                     uri: getImageUrl(
@@ -574,13 +598,13 @@ export default function MyProfile3({route, navigation}) {
                   updateState({isLoading: false});
                   showSuccess(res.message);
                 })
-                .catch((err) => {
+                .catch(err => {
                   console.log(err, 'err>>.inAPI');
                   updateState({isLoading: false});
                 });
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err, 'err>>.cameraPicker');
             updateState({isLoading: false});
           });
@@ -598,7 +622,7 @@ export default function MyProfile3({route, navigation}) {
           code: appData?.profile?.code,
         },
       )
-      .then((res) => {
+      .then(res => {
         actions.saveAllUserAddress(res.data);
         updateState({address: res.data, isLoading: false, indicator: false});
       })
@@ -616,7 +640,7 @@ export default function MyProfile3({route, navigation}) {
   };
 
   //Delete address
-  const delAddress = (item) => {
+  const delAddress = item => {
     Alert.alert('', strings.DELETE_ADDRESS_CONFIRM_MSG, [
       {
         text: strings.NO,
@@ -626,7 +650,7 @@ export default function MyProfile3({route, navigation}) {
     ]);
   };
 
-  const onPressDelete = (item) => {
+  const onPressDelete = item => {
     updateState({isLoading: true});
     let data = {};
     let query = `/${item?.id}`;
@@ -636,7 +660,7 @@ export default function MyProfile3({route, navigation}) {
         code: appData?.profile?.code,
         language: languages?.primary_language?.id,
       })
-      .then((res) => {
+      .then(res => {
         const allAddresses = address;
         const indexToDeleteItem = allAddresses.indexOf(item);
         allAddresses.splice(indexToDeleteItem, 1);
@@ -649,7 +673,7 @@ export default function MyProfile3({route, navigation}) {
 
         showSuccess(res.message);
       })
-      .catch((error) => {
+      .catch(error => {
         updateState({isLoading: false});
         showError(error?.message || error?.error);
       });
@@ -675,7 +699,7 @@ export default function MyProfile3({route, navigation}) {
   const getTextInputField = (type, index) => {
     return (
       <TextInputWithUnderlineAndLabel
-        onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
+        onChangeText={text => handleDynamicTxtInput(text, index, type)}
         value={type?.contents}
         label={type?.primary?.name || ''}
         autoCapitalize={'none'}
@@ -793,7 +817,9 @@ export default function MyProfile3({route, navigation}) {
           height: height / 2,
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {userData?.refferal_code && userData?.refferal_code != '' ? (
+          {userData?.refferal_code &&
+          userData?.refferal_code != '' &&
+          appIds.sxm2go != getBundleId() ? (
             <View
               style={{
                 flexDirection: 'row',
@@ -877,7 +903,7 @@ export default function MyProfile3({route, navigation}) {
           <PhoneNumberInputWithUnderline
             onCountryChange={_onCountryChange}
             placeholder={strings.PHONE_NUMBER}
-            onChangePhone={(phoneNumber) =>
+            onChangePhone={phoneNumber =>
               updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
             }
             cca2={cca2}
@@ -1324,7 +1350,7 @@ export default function MyProfile3({route, navigation}) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             tabBarItems={tabBarData}
-            onPress={(tabData) => changeTab(tabData)}
+            onPress={tabData => changeTab(tabData)}
             numberOfLines={1}
             // containerStyle={{  width: width / 3}}
             textTabWidth={width / 2.8}
@@ -1349,7 +1375,7 @@ export default function MyProfile3({route, navigation}) {
           options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
           cancelButtonIndex={2}
           destructiveButtonIndex={2}
-          onPress={(index) => cameraHandle(index)}
+          onPress={index => cameraHandle(index)}
         />
       </KeyboardAwareScrollView>
       {isVisible ? (
@@ -1358,7 +1384,7 @@ export default function MyProfile3({route, navigation}) {
           updateData={updateData}
           indicator={indicator}
           type={type}
-          passLocation={(data) => addUpdateLocation(data)}
+          passLocation={data => addUpdateLocation(data)}
           openCloseMapAddress={openCloseMapAddress}
           selectViaMap={selectViaMap}
           onCloseSheet={onModalClose}

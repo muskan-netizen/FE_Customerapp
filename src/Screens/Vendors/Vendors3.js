@@ -1,7 +1,7 @@
 import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
@@ -26,6 +26,9 @@ import ListEmptyVendors from './ListEmptyVendors';
 import * as Animatable from 'react-native-animatable';
 import Header2 from '../../Components/Header2';
 import Header from '../../Components/Header';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -50,6 +53,7 @@ export default function Vendors3({route, navigation}) {
 
   const {isLoading, pageNo, isRefreshing, limit, listData} = state;
   const {data} = route.params;
+  console.log(data,"datadatadata");
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -75,7 +79,7 @@ export default function Vendors3({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('vendor data', res);
+        console.log('vendor data', res,location);
         updateState({isLoading: false, isRefreshing: false});
         updateState({
           listData:
@@ -83,14 +87,6 @@ export default function Vendors3({route, navigation}) {
               ? res.data.listData.data
               : [...listData, ...res.data.listData.data],
         });
-        // const vendorData = {
-        //   category: res.data.category,
-        //   listData:
-        //     pageNo == 1
-        //       ? res.data.listData.data
-        //       : [...categoryData?.listData, ...res.data.listData.data],
-        // };
-        // actions.saveVendorListingAndCategoryInfo(vendorData);
       })
       .catch(errorMethod);
   }, [pageNo, isRefreshing]);
@@ -251,7 +247,8 @@ export default function Vendors3({route, navigation}) {
               // titleColor="#fff"
             />
           }
-          getItemLayout={getItemLayout}
+            getItemLayout={getItemLayout}
+            onScrollToIndexFailed={(val) => console.log('indexed failed')}
           initialNumToRender={5}
           maxToRenderPerBatch={10}
           windowSize={10}

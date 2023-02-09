@@ -18,7 +18,7 @@ import {
   View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';

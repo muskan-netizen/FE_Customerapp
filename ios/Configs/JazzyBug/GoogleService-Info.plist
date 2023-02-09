@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>737290127256-a4ul9mfjbfajfslpob05eb5sgu8h0dao.apps.googleusercontent.com</string>
+	<string>486018419538-0q4rm05hg4d2r3uplru0kogoh7ma2io2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.737290127256-a4ul9mfjbfajfslpob05eb5sgu8h0dao</string>
+	<string>com.googleusercontent.apps.486018419538-0q4rm05hg4d2r3uplru0kogoh7ma2io2</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>737290127256-g0lujsipbd8rdhjmrigk2kl2pacphnfo.apps.googleusercontent.com</string>
+	<string>486018419538-ibhug91raqfqdr37an86kci0ufq8e7ns.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAJMnEkM7vsY0GLuw_zC727QWGhu-rE2RU</string>
+	<string>AIzaSyBb1oW5aK9FGl6em_b-g4uR1jOeLyiTmeI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>737290127256</string>
+	<string>486018419538</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.jazzyBug</string>
+	<string>com.jazzyBugOrder</string>
 	<key>PROJECT_ID</key>
-	<string>jazzybug</string>
+	<string>jazzybug-c5574</string>
 	<key>STORAGE_BUCKET</key>
-	<string>jazzybug.appspot.com</string>
+	<string>jazzybug-c5574.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:737290127256:ios:4e6ee91feee5ab18f3cded</string>
+	<string>1:486018419538:ios:bd8c9b3785e0dd2248888b</string>
 </dict>
 </plist>

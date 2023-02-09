@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  I18nManager,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -11,14 +10,9 @@ import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../styles/responsiveSize';
+import {moderateScale,moderateScaleVertical,} from '../styles/responsiveSize';
 import {TextInput} from 'react-native-paper';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import { getBundleId } from 'react-native-device-info';
 import { appIds } from '../utils/constants/DynamicAppKeys';
@@ -86,7 +80,7 @@ const PhoneNumberInputWithUnderline = ({
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            width: moderateScale(70),
+            width: moderateScale(84),
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.lightDark
               : colors.textGreyK,

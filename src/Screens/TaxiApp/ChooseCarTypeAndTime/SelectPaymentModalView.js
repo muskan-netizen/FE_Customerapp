@@ -1,19 +1,21 @@
-import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {isEmpty} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
   FlatList,
   I18nManager,
   Image,
-  Keyboard, KeyboardAvoidingView, Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import ImagePicker from "react-native-image-crop-picker";
 import Modal from "react-native-modal";
@@ -33,12 +35,13 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getImageUrl } from '../../../utils/helperFunctions';
-import { androidCameraPermission } from '../../../utils/permissions';
+import {MyDarkTheme} from '../../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import {getImageUrl} from '../../../utils/helperFunctions';
+import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 
 export default function SelectPaymentModalView({
@@ -70,8 +73,6 @@ export default function SelectPaymentModalView({
   isCabPooling = false,
   _openDateTimeModal = () => {},
 }) {
-  console.log(couponInfo, "couponInfo");
-  console.log(selectedTime, "selectedTime+++++++");
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -82,12 +83,11 @@ export default function SelectPaymentModalView({
   console.log(updatedPrice, "updatedPrice");
   console.log(loyalityAmount, "loyalityAmount");
   const { appData, themeColors, appStyle } = useSelector(
-    (state) => state?.initBoot
+    (state) => state?.initBoot || {}
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData;
@@ -259,17 +259,12 @@ export default function SelectPaymentModalView({
 
   return (
     <View
-      style={
-        isDarkMode
-          ? [
-              styles.bottomView,
-              {
-                backgroundColor: MyDarkTheme.colors.background,
-              },
-            ]
-          : styles.bottomView
-      }
-    >
+      style={{
+        ...styles.bottomView,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+      }}>
       <Text
         style={{
           fontSize: textScale(26),
@@ -302,15 +297,10 @@ export default function SelectPaymentModalView({
       >
         <View style={{ flex: 0.33 }}>
           <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.distanceDurationDeliveryLable,
-                    {color: MyDarkTheme.colors.text},
-                  ]
-                : styles.distanceDurationDeliveryLable
-            }
-          >
+            style={{
+              ...styles.distanceDurationDeliveryLable,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ,
+            }}>
             {strings.DISTANCE}
           </Text>
           <Text
@@ -509,8 +499,8 @@ export default function SelectPaymentModalView({
           </View>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: 'row',
+              alignItems: 'center',
               marginVertical: 8,
               justifyContent: "space-between",
             }}

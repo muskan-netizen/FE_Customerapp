@@ -72,10 +72,11 @@ const VariantAddons = ({
   productDetailNew = {},
   isProductAvailable = false,
 }) => {
+  console.log("productDetailNew =>", productDetailNew,"\n productDetailData =>", productDetailData, "\n endDateRental =>",endDateRental);
   const {appData, themeColors, currencies, languages, appStyle, themeColor} =
     useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
@@ -106,8 +107,8 @@ const VariantAddons = ({
   const getProductDetailBasedOnFilter = (variantSetData) => {
     console.log('api hit getProductDetailBasedOnFilter', variantSetData);
     let data = {};
-    data['variants'] = variantSetData.map((i) => i.variant_id);
-    data['options'] = variantSetData.map((i) => i.optionId);
+    data['variants'] = variantSetData?.map((i) => i.variant_id);
+    data['options'] = variantSetData?.map((i) => i.optionId);
     actions
       .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
         code: appData.profile.code,
@@ -201,7 +202,7 @@ const VariantAddons = ({
           selectEndDate: String(
             moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
           ),
-          variant_option_id: productDetailNew?.set[0]?.variant_option_id,
+          variant_option_id: productDetailNew && productDetailNew?.set?.length && productDetailNew?.set[0]?.variant_option_id,
           product_id: productDetailNew?.product?.id,
         },
         {
@@ -211,7 +212,6 @@ const VariantAddons = ({
         },
       )
       .then((res) => {
-        console.log(res, 'res......res...res');
         updateState({
           isProductAvailable: true,
         });
@@ -238,7 +238,6 @@ const VariantAddons = ({
                     incrementedValue = incrementedValue + 1;
                   }
                 });
-                console.log(incrementedValue, 'incrementedValue');
                 if (incrementedValue == vi?.max_select && !j.value) {
                   return {
                     ...j,
@@ -407,7 +406,6 @@ const VariantAddons = ({
   };
 
   const selectSpecificOptions = (options, i) => {
-    console.log(options, i, 'ksjdhkfjsdfkh');
     let newArray = cloneDeep(options);
     let modifyVariants = variantSet.map((vi, vnx) => {
       if (vi.variant_type_id == i.variant_id) {
@@ -449,7 +447,6 @@ const VariantAddons = ({
           }
         })
         .filter((x) => x != undefined);
-      console.log(variantSetData, 'variantSetData callback');
       if (variantSetData.length) {
         updateState({isVarientSelectLoading: true});
         getProductDetailBasedOnFilter(variantSetData);
@@ -570,7 +567,7 @@ const VariantAddons = ({
                         ? MyDarkTheme.colors.text
                         : colors.black,
                     }}>
-                    Start Date
+                    {strings.START_DATE}
                   </Text>
                   <Text
                     style={{
@@ -595,7 +592,7 @@ const VariantAddons = ({
                         ? MyDarkTheme.colors.text
                         : colors.black,
                     }}>
-                    End Date
+                    {strings.END_DATE}
                   </Text>
                   <Text
                     style={{
@@ -617,7 +614,7 @@ const VariantAddons = ({
                   fontFamily: fontFamily.bold,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                Duration:
+                {strings.DURATION}:
               </Text>
               <View
                 style={{
@@ -676,21 +673,21 @@ const VariantAddons = ({
                     currencies?.primary_currency?.symbol,
                   )}
                 </Text>{' '}
-                for first{' '}
+                {strings.FOR_FIRST}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
                   }}>
                   {productDetailNew?.product?.minimum_duration}
                 </Text>{' '}
-                hour{' '}
+                {strings.HOUR}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
                   }}>
                   {productDetailNew?.product?.minimum_duration_min}
                 </Text>{' '}
-                min
+                {strings.MIN}
               </Text>
               <Text
                 style={{
@@ -698,7 +695,7 @@ const VariantAddons = ({
                   fontFamily: fontFamily.regular,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                Extra duration will be charged{' '}
+                {strings.EXTRA_DURATION_CHARGES}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
@@ -710,14 +707,14 @@ const VariantAddons = ({
                     currencies?.primary_currency?.symbol,
                   )}
                 </Text>{' '}
-                per{' '}
+                {strings.PER}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
                   }}>
                   {productDetailNew?.product?.additional_increments}
                 </Text>{' '}
-                hour{' '}
+                {strings.HOUR}{' '}
                 <Text
                   style={{
                     fontFamily: fontFamily.bold,
@@ -725,12 +722,8 @@ const VariantAddons = ({
                   {' '}
                   {productDetailNew?.product?.additional_increments_min}
                 </Text>{' '}
-                min
+                {strings.MIN}
               </Text>
-              {/* {console.log(
-                productDetailNew,
-                'productDetailNew....productDetailNew',
-              )} */}
             </View>
           ) : null}
           <Modal

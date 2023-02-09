@@ -8,7 +8,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 
 const CustomBottomTabBarFour = ({
@@ -29,7 +29,6 @@ const CustomBottomTabBarFour = ({
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesData({fontFamily});
-
   return (
     <View style={[styles.tabBarStyle]}>
       {state.routes.map((route, index) => {

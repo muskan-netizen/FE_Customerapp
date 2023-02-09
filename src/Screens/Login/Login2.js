@@ -34,12 +34,16 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setUserData } from '../../utils/utils';
 import { useNavigation } from '@react-navigation/native';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Login2({ navigation }) {
   const navigation_ = useNavigation();
@@ -59,7 +63,7 @@ export default function Login2({ navigation }) {
     (state) => state?.initBoot,
   );
   const { apple_login, fb_login, twitter_login, google_login } = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
+    (state) => state?.initBoot?.appData?.profile?.preferences || {},
   );
 
   const fontFamily = appStyle?.fontSizeData;

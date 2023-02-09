@@ -30,7 +30,6 @@ export default ({fontFamily}) => {
     },
 
     bottomContainer: {
-      flex: 1,
       justifyContent: 'flex-end',
       marginBottom: moderateScaleVertical(30),
     },

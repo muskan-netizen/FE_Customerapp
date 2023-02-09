@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
-import {cloneDeep, isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -11,37 +11,42 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
+
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {cameraHandler} from '../../utils/commonFunction';
-import {showError} from '../../utils/helperFunctions';
-import {androidCameraPermission} from '../../utils/permissions';
-import {setUserData} from '../../utils/utils';
+import { MyDarkTheme } from '../../styles/theme';
+import { cameraHandler } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { showError } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
+import { setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
+import { v4 as uuidv4 } from 'uuid';
+// import { enableFreeze } from "react-native-screens";
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
+// enableFreeze(true);
+
 
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
@@ -49,15 +54,6 @@ DeviceCountry.getCountryCode()
     getPhonesCallingCodeAndCountryData = codes.filter(
       (x) => x.isoCode2 == result.code.toUpperCase(),
     );
-
-    // [
-    //   {
-    //     country: 'United States',
-    //     countryCodes: [''],
-    //     isoCode2: 'US',
-    //     isoCode3: 'USA',
-    //   },
-    // ];
   })
   .catch((e) => {
     console.log(e);
@@ -65,14 +61,10 @@ DeviceCountry.getCountryCode()
 
 let addtionSelectedImageIndex = null;
 
-// alert("SignUp")
-let addtionSelectedImage = null;
-
-export default function Signup({navigation}) {
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const userData = useSelector((state) => state.auth.userData);
+export default function Signup({ navigation }) {
   const [accept, isAccept] = useState(false);
   const {
+    appStyle,
     appData,
     themeColors,
     themeLayouts,
@@ -81,31 +73,47 @@ export default function Signup({navigation}) {
     themeColor,
     themeToggle,
     redirectedFrom,
-  } = useSelector((state) => state?.initBoot);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
+
+  const {
+    is_user_kyc_for_registration,
+    concise_signup,
+    referral_code,
+    aadhaar_back,
+    aadhaar_front,
+    aadhaar_number,
+    account_name,
+    account_number,
+    bank_name,
+    upi_id,
+    ifsc_code,
+  } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
-  const styles = stylesFun({fontFamily});
+
+  const styles = stylesFun({ fontFamily });
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(
-    getPhonesCallingCodeAndCountryData,
-    ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
-  );
+
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: !isEmpty(getPhonesCallingCodeAndCountryData)
-      ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace('-', '')
-      : appData?.profile.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
-    cca2: !isEmpty(getPhonesCallingCodeAndCountryData)
-      ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
-      : appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+    callingCode:
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
+        ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
+          '-',
+          '',
+        )
+        : getBundleId() == appIds.speedyDelivery ? "1" : appData?.profile?.country?.code
+          ? appData?.profile?.country?.phonecode
+          : '91',
+    cca2:
+      !isEmpty(getPhonesCallingCodeAndCountryData) &&
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
+        ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
+        : getBundleId() == appIds.speedyDelivery ? "DO" : appData?.profile?.country?.code
+          ? appData?.profile?.country?.code
+          : 'IN',
     name: '',
     email: '',
     password: '',
@@ -118,6 +126,14 @@ export default function Signup({navigation}) {
     addtionalPdfs: [],
     appHashKey: '',
     subscriptionPopup: false,
+    aadharFront: {},
+    aadharBack: {},
+    aadharNumber: '',
+    upiId: '',
+    bankName: '',
+    beneficiaryName: '',
+    accountNumber: '',
+    ifscCode: '',
   });
   const {
     phoneNumber,
@@ -134,21 +150,51 @@ export default function Signup({navigation}) {
     addtionalPdfs,
     appHashKey,
     subscriptionPopup,
+    aadharFront,
+    aadharBack,
+    aadharNumber,
+    upiId,
+    bankName,
+    beneficiaryName,
+    accountNumber,
+    ifscCode,
   } = state;
+  const [pickerType, setPickerType] = useState(0);
+
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
   const _onCountryChange = (data) => {
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
   const isValidData = () => {
     const error = validations({
-      // email: email,
+      email: email,
       password: password,
       callingCode: callingCode,
       phoneNumber: phoneNumber,
+    });
+    if (error) {
+      showError(error);
+      return;
+    }
+    return true;
+  };
+
+  const isKycValidData = () => {
+    const error = validations({
+      aadharFrontImg: aadharFront,
+      aadharBackImg: aadharBack,
+      aadharNumber: aadharNumber,
+      upiId: upiId,
+      bankName: bankName,
+      beneficiaryName: beneficiaryName,
+      accountNumber: accountNumber,
+      ifscCode: ifscCode,
     });
     if (error) {
       showError(error);
@@ -191,28 +237,60 @@ export default function Signup({navigation}) {
 
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
-    let formdata = new FormData();
     let fcmToken = await AsyncStorage.getItem('fcmToken');
+    let formdata = new FormData();
 
     const checkValid = isValidData();
     if (!checkValid) {
+
       return;
+    }
+
+    if (!!is_user_kyc_for_registration) {
+      const checkValidKyc = isKycValidData();
+      if (!checkValidKyc) {
+        return;
+      }
+      formdata.append('kyc', 1);
+      formdata.append('account_name', beneficiaryName);
+      formdata.append('bank_name', bankName);
+      formdata.append('account_number', accountNumber);
+      formdata.append('ifsc_code', ifscCode);
+
+      if (!isEmpty(aadharFront)) {
+        formdata.append('adhar_front', {
+          name: aadharFront.name,
+          type: aadharFront.type,
+          uri: aadharFront.uri,
+        });
+      }
+      if (!isEmpty(aadharBack)) {
+        formdata.append('adhar_back', {
+          name: aadharBack.name,
+          type: aadharBack.type,
+          uri: aadharBack.uri,
+        });
+      }
+      formdata.append('adhar_number', aadharNumber);
+      formdata.append('upi_id', upiId);
     }
 
     if (!email && !phoneNumber) {
       showError(strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE);
       return;
     }
+
     {
-      !!appData?.profile?.preferences?.concise_signup
+      !!concise_signup
         ? formdata.append('name', phoneNumber)
         : formdata.append('name', name);
     }
+
     formdata.append('phone_number', phoneNumber);
     formdata.append('dial_code', callingCode.toString());
     formdata.append('country_code', cca2);
     {
-      !!appData?.profile?.preferences?.concise_signup
+      !!concise_signup
         ? formdata.append('email', `${phoneNumber}${'@gmail.com'}`)
         : formdata.append('email', email);
     }
@@ -236,8 +314,7 @@ export default function Signup({navigation}) {
         } else if (i?.is_required) {
           if (isRequired) {
             showError(
-              `${
-                strings.PLEASE_ENTER
+              `${strings.PLEASE_ENTER
               } ${i?.translations[0].name.toLowerCase()}`,
             );
             isRequired = false;
@@ -255,18 +332,17 @@ export default function Signup({navigation}) {
             i?.translations[0].slug,
             i?.file_type == 'Image'
               ? {
-                  uri: i.fileData.path,
-                  name: i.fileData.filename,
-                  filename: i.fileData.filename,
-                  type: i.fileData.mime,
-                }
+                uri: i.fileData.path,
+                name: i.fileData.filename,
+                filename: i.fileData.filename,
+                type: i.fileData.mime,
+              }
               : i?.fileData,
           );
         } else if (i?.is_required) {
           if (isRequired) {
             showError(
-              `${
-                strings.PLEASE_UPLOAD
+              `${strings.PLEASE_UPLOAD
               } ${i?.translations[0].name.toLowerCase()}`,
             );
             isRequired = false;
@@ -277,34 +353,33 @@ export default function Signup({navigation}) {
     }
 
     if (!isRequired) {
+
       return;
     }
-    console.log(formdata, '>>formdata<');
-    updateState({isLoading: true});
-
-    if (accept) {
-      actions
-        .signUpApi(formdata, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-          'Content-Type': 'multipart/form-data',
-        })
-        .then((res) => {
-          console.log(res, 'THIS IS RESPONSE');
-          updateState({isLoading: false});
-
-          if (!!res.data) {
-          
-            checkEmailPhoneVerified(res.data);
-          }
-        })
-        .catch(errorMethod);
-    } else {
-      showError('The term and condition must be accepted.');
-      updateState({isLoading: false});
+    if (!accept) {
+      showError(strings.ACCEPT_TERMS_AND_CONDITIONS);
+      return;
     }
+    console.log(formdata, 'formdata>><');
+    updateState({ isLoading: true });
+
+    actions
+      .signUpApi(formdata, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+        'Content-Type': 'multipart/form-data',
+      })
+      .then((res) => {
+        console.log(res, 'THIS IS RESPONSE');
+        updateState({ isLoading: false });
+
+        if (!!res.data) {
+          checkEmailPhoneVerified(res.data);
+        }
+      })
+      .catch(errorMethod);
   };
 
   const checkEmailPhoneVerified = (data) => {
@@ -334,17 +409,17 @@ export default function Signup({navigation}) {
     });
   };
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     showError(error?.message || error?.error);
     console.log(error);
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const showHidePassword = () => {
-    updateState({isShowPassword: !isShowPassword});
+    updateState({ isShowPassword: !isShowPassword });
   };
 
   let actionSheet = useRef();
@@ -358,14 +433,13 @@ export default function Signup({navigation}) {
     data[index].id = type?.id;
     data[index].file_type = type?.file_type;
     data[index].label_name = type?.translations[0]?.name;
-    updateState({addtionalTextInputs: data});
+    updateState({ addtionalTextInputs: data });
   };
 
   //Get TextInput
   const getTextInputField = (type, index) => {
     return (
       <BorderTextInput
-        // secureTextEntry={true}
         placeholder={type?.translations[0]?.name || ''}
         onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
       />
@@ -375,7 +449,6 @@ export default function Signup({navigation}) {
   //Update Images
   const updateImages = (type, index) => {
     addtionSelectedImageIndex = index;
-    addtionSelectedImage = type;
     showActionSheet(false);
   };
 
@@ -391,10 +464,10 @@ export default function Signup({navigation}) {
           onPress={() => updateImages(type, index)}
           style={styles.imageUpload}>
           {addtionalImages[index].value != undefined &&
-          addtionalImages[index].value != null &&
-          addtionalImages[index].value != '' ? (
+            addtionalImages[index].value != null &&
+            addtionalImages[index].value != '' ? (
             <Image
-              source={{uri: addtionalImages[index].value}}
+              source={{ uri: addtionalImages[index].value }}
               style={styles.imageStyle2}
             />
           ) : (
@@ -403,7 +476,7 @@ export default function Signup({navigation}) {
         </TouchableOpacity>
         <Text
           numberOfLines={2}
-          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          style={{ ...styles.label3, minHeight: moderateScale(25) }}>
           {type?.translations[0]?.name}
           {type.is_required ? '*' : ''}
         </Text>
@@ -421,7 +494,7 @@ export default function Signup({navigation}) {
         data[index].value = res[0].uri;
         data[index].filename = res[0].name;
         data[index].fileData = res[0];
-        updateState({addtionalPdfs: data});
+        updateState({ addtionalPdfs: data });
       }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -435,7 +508,7 @@ export default function Signup({navigation}) {
   const getPdfView = (type, index) => {
     return (
       <View
-        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        style={{ marginRight: moderateScale(20), marginTop: moderateScale(20) }}>
         <TouchableOpacity
           onPress={() => getDoc(type, index)}
           style={{
@@ -448,8 +521,8 @@ export default function Signup({navigation}) {
           }}>
           <Text style={styles.uploadStyle}>
             {addtionalPdfs[index].value != undefined &&
-            addtionalPdfs[index].value != null &&
-            addtionalPdfs[index].value != ''
+              addtionalPdfs[index].value != null &&
+              addtionalPdfs[index].value != ''
               ? `${addtionalPdfs[index].filename}`
               : `+ ${strings.UPLOAD}`}
           </Text>
@@ -475,19 +548,35 @@ export default function Signup({navigation}) {
           mediaType: 'photo',
         })
           .then((res) => {
-            console.log(res, 'res>>><>>>');
-            let data = cloneDeep(addtionalImages);
+            if (pickerType == 0) {
+              let file = {
+                id: uuidv4(),
+                name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                type: res?.mime,
+                uri: res?.path,
+              };
+              updateState({
+                aadharFront: file,
+              });
+              return;
+            }
+            if (pickerType == 1) {
+              let file = {
+                id: uuidv4(),
+                name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                type: res?.mime,
+                uri: res?.path,
+              };
+              updateState({
+                aadharBack: file,
+              });
+              return;
+            }
 
+            let data = cloneDeep(addtionalImages);
             data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
             data[addtionSelectedImageIndex].fileData = res;
-            // data[addtionSelectedImageIndex].filename1 =
-            //   addtionSelectedImage?.translations[0]?.name;
-            // data[addtionSelectedImageIndex].file_type =
-            //   addtionSelectedImage?.file_type;
-            // data[addtionSelectedImageIndex].id = addtionSelectedImage?.id;
-            // data[addtionSelectedImageIndex].mime = res?.mime;
-
-            updateState({addtionalImages: data});
+            updateState({ addtionalImages: data });
           })
           .catch((err) => {
             console.log(err, 'err>>>>');
@@ -495,6 +584,7 @@ export default function Signup({navigation}) {
       }
     }
   };
+
   const _closeModal = () => {
     updateState({
       subscriptionPopup: false,
@@ -513,7 +603,7 @@ export default function Signup({navigation}) {
   return (
     <WrapperContainer
       isLoadingB={isLoading}
-      source={loaderOne}
+      // source={loaderOne}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View
         style={{
@@ -523,7 +613,7 @@ export default function Signup({navigation}) {
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={
               appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
@@ -533,10 +623,10 @@ export default function Signup({navigation}) {
             style={
               isDarkMode
                 ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  tintColor: MyDarkTheme.colors.text,
+                }
+                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
             }
           />
         </TouchableOpacity>
@@ -548,12 +638,12 @@ export default function Signup({navigation}) {
         style={{
           flex: 1,
         }}>
-        <View style={{flex: 1}}>
-          <View style={{marginTop: moderateScaleVertical(50)}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ marginTop: moderateScaleVertical(50) }}>
             <Text
               style={
                 isDarkMode
-                  ? [styles.header, {color: MyDarkTheme.colors.text}]
+                  ? [styles.header, { color: MyDarkTheme.colors.text }]
                   : styles.header
               }>
               {strings.CREATE_YOUR_ACCOUNT}
@@ -561,7 +651,7 @@ export default function Signup({navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
                   : styles.txtSmall
               }>
               {strings.ENTER_DETAILS_BELOW}
@@ -573,7 +663,7 @@ export default function Signup({navigation}) {
               marginTop: moderateScaleVertical(50),
               marginHorizontal: moderateScale(24),
             }}>
-            {!appData?.profile?.preferences?.concise_signup && (
+            {!concise_signup && (
               <BorderTextInput
                 onChangeText={_onChangeText('name')}
                 placeholder={strings.YOUR_NAME}
@@ -581,7 +671,7 @@ export default function Signup({navigation}) {
                 returnKeyType={'next'}
               />
             )}
-            {!appData?.profile?.preferences?.concise_signup && (
+            {!concise_signup && (
               <BorderTextInput
                 // autoCapitalize={'none'}
                 onChangeText={_onChangeText('email')}
@@ -595,7 +685,7 @@ export default function Signup({navigation}) {
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
               onChangePhone={(phoneNumber) =>
-                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+                updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
               }
               cca2={cca2}
               phoneNumber={phoneNumber}
@@ -605,7 +695,7 @@ export default function Signup({navigation}) {
               keyboardType={'phone-pad'}
               color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
-            <View style={{height: moderateScaleVertical(20)}} />
+            <View style={{ height: moderateScaleVertical(20) }} />
             <BorderTextInput
               secureTextEntry={isShowPassword ? false : true}
               onChangeText={_onChangeText('password')}
@@ -624,13 +714,11 @@ export default function Signup({navigation}) {
               require
               returnKeyType={'next'}
             />
-            {!appData?.profile?.preferences?.concise_signup && (
+            {!appData?.profile?.preferences?.concise_signup && appIds.sxm2go != getBundleId() && (
               <BorderTextInput
                 onChangeText={_onChangeText('referralCode')}
                 placeholder={
-                  appData?.profile?.preferences?.referral_code
-                    ? appData?.profile?.preferences?.referral_code
-                    : strings.ENTERREFERALCODE
+                  !!referral_code ? referral_code : strings.ENTERREFERALCODE
                 }
                 value={referralCode}
                 returnKeyType={'next'}
@@ -657,7 +745,152 @@ export default function Signup({navigation}) {
                 })}
               </View>
             )}
-            <View style={{flexDirection: 'row'}}>
+            {!!is_user_kyc_for_registration ? (
+              <View>
+                <View
+                  style={{
+                    marginTop: moderateScale(10),
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginHorizontal: 20,
+                  }}>
+                  <View>
+                    {!isEmpty(aadharFront) ? (
+                      <View>
+                        <Image
+                          source={{ uri: aadharFront?.uri }}
+                          style={{
+                            height: 115,
+                            width: 115,
+                            borderRadius: moderateScale(5),
+                          }}
+                        />
+                        <TouchableOpacity
+                          onPress={() =>
+                            updateState({
+                              aadharFront: {},
+                            })
+                          }
+                          style={{
+                            position: 'absolute',
+                            right: -10,
+                            top: -10,
+                          }}>
+                          <Image
+                            source={imagePath.crossB}
+                            style={{
+                              height: 20,
+                              width: 20,
+                              tintColor: colors.black,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          showActionSheet();
+                          setPickerType(0);
+                        }}
+                        style={styles.imageUpload}>
+                        <Image source={imagePath?.icPhoto} />
+                      </TouchableOpacity>
+                    )}
+
+                    <Text
+                      numberOfLines={2}
+                      style={{ ...styles.label3, minHeight: moderateScale(25) }}>
+                      {!!aadhaar_front ? aadhaar_front : strings.AADHAR_FRONT}*
+                    </Text>
+                  </View>
+                  <View>
+                    {!isEmpty(aadharBack) ? (
+                      <View>
+                        <Image
+                          source={{ uri: aadharBack?.uri }}
+                          style={{
+                            height: 115,
+                            width: 115,
+                            borderRadius: moderateScale(5),
+                          }}
+                        />
+                        <TouchableOpacity
+                          onPress={() =>
+                            updateState({
+                              aadharBack: {},
+                            })
+                          }
+                          style={{
+                            position: 'absolute',
+                            right: -10,
+                            top: -10,
+                          }}>
+                          <Image
+                            source={imagePath.crossB}
+                            style={{
+                              height: 20,
+                              width: 20,
+                              tintColor: colors.black,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          showActionSheet();
+                          setPickerType(1);
+                        }}
+                        style={styles.imageUpload}>
+                        <Image source={imagePath?.icPhoto} />
+                      </TouchableOpacity>
+                    )}
+
+                    <Text
+                      numberOfLines={2}
+                      style={{ ...styles.label3, minHeight: moderateScale(25) }}>
+                      {!!aadhaar_back ? aadhaar_back : strings.AADHAR_BACK}*
+                    </Text>
+                  </View>
+                </View>
+                <BorderTextInput
+                  placeholder={`${!!aadhaar_number ? aadhaar_number : strings.AADHAR_NUMBER}*`}
+                  onChangeText={_onChangeText('aadharNumber')}
+                  value={aadharNumber}
+                  keyboardType={'number-pad'}
+                  maxLength={12}
+                />
+                <BorderTextInput
+                  placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
+                  onChangeText={_onChangeText('upiId')}
+                  value={upiId}
+                />
+                <BorderTextInput
+                  value={bankName}
+                  placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME}*`}
+                  onChangeText={_onChangeText('bankName')}
+                />
+                <BorderTextInput
+                  value={beneficiaryName}
+                  placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME}*`}
+                  onChangeText={_onChangeText('beneficiaryName')}
+                />
+                <BorderTextInput
+                  value={accountNumber}
+                  placeholder={`${!!account_number ? account_number : strings.ACCOUNT_NUMBER}*`}
+                  onChangeText={_onChangeText('accountNumber')}
+                  keyboardType={'number-pad'}
+                />
+                <BorderTextInput
+                  value={ifscCode}
+                  placeholder={`${!!ifsc_code ? ifsc_code : strings.IFSC_CODE}*`}
+                  onChangeText={_onChangeText('ifscCode')}
+                  maxLength={12}
+                />
+              </View>
+            ) : null}
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={_isCheck}
                 style={{
@@ -681,18 +914,18 @@ export default function Signup({navigation}) {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
-              <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                 <Text
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  {strings.I_ACCEPT_THE}
+                  {strings.I_ACCEPT}
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 3})
+                    navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
                   }
-                  style={{color: colors.themeColor}}>
+                  style={{ color: colors.themeColor }}>
                   {' '}
                   {`${strings.TERMS_CONDITIONS} `}
                 </Text>
@@ -700,18 +933,23 @@ export default function Signup({navigation}) {
                   style={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                 { strings.AND_HAVE_READ_THE}
+                  {strings.HAVE_READ}
                 </Text>
                 <Text
                   onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, {id: 2})
+                    navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
                   }
-                  style={{color: colors.themeColor}}>
+                  style={{ color: colors.themeColor }}>
                   {`${strings.PRICACY_POLICY}`}.
                 </Text>
               </View>
             </View>
 
+            {/* <ButtonWithLoader
+              btnText={strings.SIGNUP_AN_ACCOUNT}
+              btnStyle={{marginTop: moderateScaleVertical(10)}}
+              onPress={onSignup}
+            /> */}
             <GradientButton
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
@@ -722,15 +960,17 @@ export default function Signup({navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
-                  : {...styles.txtSmall, color: colors.textGreyLight}
+                  ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
+                  : { ...styles.txtSmall, color: colors.textGreyLight }
               }>
               {strings.ALREADY_HAVE_AN_ACCOUNT}
               <Text
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}
                 style={{
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontFamily: fontFamily.futuraBtHeavy,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : themeColors?.primary_color,
+                  fontFamily: fontFamily.bold,
                 }}>
                 {strings.LOGIN}
               </Text>

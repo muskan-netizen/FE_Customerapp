@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   BackHandler,
+  Platform,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
@@ -26,16 +27,15 @@ import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {Marker, Callout, PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useIsFocused} from '@react-navigation/native';
 
 import Communications from 'react-native-communications';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
-import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
 import {cloneDeep} from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
@@ -54,6 +54,10 @@ import {appIds} from '../../../utils/constants/DynamicAppKeys';
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -446,7 +450,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     </View>
   );
 
-  console.log(productInfo, 'productInfo');
   //order detail View
   const _selectOrderDetailView = () => {
     return (
@@ -493,7 +496,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         {!isLoading && (
           <>
             <MapView
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
               style={styles.map}
               region={region}
               // initialRegion={region}

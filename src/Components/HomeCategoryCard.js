@@ -7,7 +7,7 @@ import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 const HomeCategoryCard = ({data = {}, onPress = () => {}}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);

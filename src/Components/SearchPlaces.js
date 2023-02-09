@@ -9,7 +9,7 @@ import {
   I18nManager,
   Text,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
@@ -53,6 +53,7 @@ const SearchPlaces = ({
   const {appData, currencies, languages, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -103,7 +104,7 @@ const SearchPlaces = ({
 
   const modalMainContent = () => {
     return (
-      <View style={{flex: 1, backgroundColor: 'green'}}>
+      <View style={{flex: 1, }}>
         <SelctFromMap
           addressDone={addressDone}
           mapClose={mapClose} //address map close

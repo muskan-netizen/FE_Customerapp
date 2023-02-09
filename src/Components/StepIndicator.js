@@ -95,7 +95,7 @@ const StepIndicators_ = ({
           width: moderateScale(30),
           height: moderateScale(30),
         }}
-        source={{uri: dispatcherStatus.dispatcher_status_icons[position]}}
+        source={{uri: dispatcherStatus?.dispatcher_status_icons[position]}}
       />
     );
   };
@@ -113,7 +113,7 @@ const StepIndicators_ = ({
     <StepIndicator
       stepCount={dispatcherStatus.vendor_dispatcher_status_count} //showing step indicators dynamically
       customStyles={thirdIndicatorStyles}
-      currentPosition={dispatcherStatus.vendor_dispatcher_status.length - 1}
+      currentPosition={dispatcherStatus?.vendor_dispatcher_status?.length - 1}
       renderStepIndicator={renderStepIndicator}
       // renderLabel={renderLabel}
       //labels={labels}

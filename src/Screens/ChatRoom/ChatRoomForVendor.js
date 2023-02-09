@@ -2,7 +2,7 @@ import React, {useState, useCallback, useRef} from 'react';
 import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 import socketServices from '../../utils/scoketService';
 import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import imagePath from '../../constants/imagePath';
 import Header from '../../Components/Header';
 import {useFocusEffect, useIsFocused} from '@react-navigation/native';
@@ -25,11 +25,14 @@ export default function ChatRoomForVendor({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+
+  const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, 'paramData...paramData');
   const styles = stylesFun({fontFamily, isDarkMode});
   const [state, setState] = useState({roomData: [], isLoading: true});
   const {roomData, isLoading} = state;
@@ -39,18 +42,24 @@ export default function ChatRoomForVendor({navigation, route}) {
 
   useFocusEffect(
     useCallback(() => {
+      if (!userData?.auth_token) {
+        actions.setAppSessionData('on_login');
+        return;
+      }
       fetchData();
     }, [navigation]),
   );
   useFocusEffect(
     useCallback(() => {
-      socketServices.on('new-app-message', (data) => {
-        console.log('listen in roomChat screen');
-        fetchData();
-      });
-      return () => {
-        socketServices.removeListener('new-app-message');
-      };
+      if (!!userData?.auth_token) {
+        socketServices.on('new-app-message', (data) => {
+          console.log('listen in roomChat screen');
+          fetchData();
+        });
+        return () => {
+          socketServices.removeListener('new-app-message');
+        };
+      }
     }, [navigation]),
   );
   console.log('paramDataparamData', appData);
@@ -61,6 +70,7 @@ export default function ChatRoomForVendor({navigation, route}) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       };
+
       let apiData = {
         sub_domain: '192.168.101.88', //this is static value
         type: 'vendor_to_user',
@@ -68,6 +78,7 @@ export default function ChatRoomForVendor({navigation, route}) {
         client_id: String(appData?.profile.id),
         order_user_id: String(userData?.id),
       };
+
       console.log('api data+++', apiData);
       const res = await actions.fetchUserChat(apiData, headerData);
       updateState({isLoading: false});

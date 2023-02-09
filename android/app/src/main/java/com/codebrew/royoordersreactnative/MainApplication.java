@@ -13,8 +13,8 @@ import java.lang.reflect.InvocationTargetException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import java.util.List;
-// import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.microsoft.codepush.react.CodePush;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -24,10 +24,11 @@ public class MainApplication extends Application implements ReactApplication {
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
         }
-       @Override
+        @Override
         protected String getJSBundleFile() {
             return CodePush.getJSBundleFile();
         }
+   
         @Override
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")

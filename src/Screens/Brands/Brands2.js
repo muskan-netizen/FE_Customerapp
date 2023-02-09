@@ -15,7 +15,7 @@ import {
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import ListEmptyBrands from './ListEmptyBrands';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import stylesFunc from './styles';
@@ -199,7 +199,7 @@ export default function Brand2({navigation}) {
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
 
       <FlatList
-        data={isLoading ? [] : appMainData.brands}
+        data={isLoading ? [] : appMainData?.brands}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<View style={{height: 10}} />}
         keyExtractor={(item, index) => String(index)}

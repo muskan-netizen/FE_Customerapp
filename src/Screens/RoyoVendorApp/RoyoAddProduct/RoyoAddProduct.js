@@ -1,61 +1,55 @@
-import {cloneDeep, isEmpty, update} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
-  Platform,
-  StyleSheet,
+  Platform, RefreshControl, StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  ScrollView,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ModalDropdown from 'react-native-modal-dropdown';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
-import CustomDropDownWIthLabel from '../../../Components/CustomDropDownWIthLabel';
 import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import ModalView from '../../../Components/Modal';
+import ModalDropDownComp from '../../../Components/ModalDropDown';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
-import strings, {changeLaguage} from '../../../constants/lang';
+import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import fontFamily from '../../../styles/fontFamily';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import {
-  cameraHandler,
-  getValuebyKeyInArray,
+  cameraHandler, getValuebyKeyInArray
 } from '../../../utils/commonFunction';
 import {
   getImageUrl,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../../utils/helperFunctions';
-import ModalDropdown from 'react-native-modal-dropdown';
-import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
-import {hitSlopProp} from '../../../styles/commonStyles';
-import ModalDropDownComp from '../../../Components/ModalDropDown';
-import ModalView from '../../../Components/Modal';
 
 const RoyoAddProduct = ({route, navigation}) => {
   const paramData = route.params;
   const productDetailParam = paramData?.productDetail;
-  console.log(productDetailParam, 'productDetailParamproductDetailParam');
   const {appData, themeColors, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
-  const {additional_preferences} = appData?.profile?.preferences;
+  const {additional_preferences} = appData?.profile?.preferences || {};
   const [state, setState] = useState({
     isLoading: true,
     isLoadingB: false,
@@ -111,7 +105,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     price: '',
     compareAtPrice: '',
     isTrackInventory: false,
-
     isNew: false,
     isFeatured: false,
     isInquiryOnly: false,
@@ -142,6 +135,9 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantImages: [],
     isVarientImageDeleted: false,
     tempImg: '',
+    isRefreshing: false,
+    costPrice: '',
+    vendorInfo: {},
   });
   const {
     isLoading,
@@ -206,6 +202,9 @@ const RoyoAddProduct = ({route, navigation}) => {
     variantImages,
     isVarientImageDeleted,
     tempImg,
+    isRefreshing,
+    costPrice,
+    vendorInfo,
   } = state;
 
   useEffect(() => {
@@ -215,11 +214,9 @@ const RoyoAddProduct = ({route, navigation}) => {
   }, [isLoading, isVarientImageDeleted]);
 
   const getVendorProductDetailByID = () => {
-    console.log('productDetailParamproductDetailParam', productDetailParam);
     actions
       .getVendorProductDetail(
         {
-          // product_id: '233',
           product_id: productDetailParam?.id || '',
         },
         {
@@ -229,9 +226,10 @@ const RoyoAddProduct = ({route, navigation}) => {
         },
       )
       .then((res) => {
+        console.log(res, '<===response');
         const productInfo = res?.data?.product_detail;
-
         updateState({
+          isRefreshing: false,
           isLoading: false,
           isLoadingB: false,
           addons: res?.data?.addons,
@@ -320,6 +318,7 @@ const RoyoAddProduct = ({route, navigation}) => {
               : '',
           selectedProductStatus:
             productInfo?.is_live == 0 ? productStatus[0] : productStatus[1],
+          vendorInfo: productInfo?.vendor,
         });
       })
       .catch(errorMethod);
@@ -330,6 +329,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     updateState({
       isLoading: false,
       isLoadingB: false,
+      isRefreshing: false,
     });
     showError(error?.message || error?.error);
   };
@@ -341,8 +341,6 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const onUpdateProduct = () => {
-    console.log('paramDataparamData', productDetailParam);
-    console.log('paramDataparamData', productDetailParam);
     updateState({isLoadingB: true});
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
@@ -407,6 +405,9 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('delay_order_hrs', delayHrs);
     formData.append('delay_order_min', delayMinutes);
     formData.append('category_id', productDetailParam?.category_id);
+    console.log(formData, 'formData....formData');
+    formData.append('cost_price', costPrice);
+
     // formData.append('country_origin_id', itm);
     // formData.append('weight', itm);
     // formData.append('weight_unit', itm);
@@ -423,8 +424,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     // formData.append('celebrities[]', itm);
     // formData.append('cost_price', itm);
 
-    console.log(formData, 'formData>>>Sending');
-
     actions
       .updateVendorProduct(formData, {
         code: appData?.profile?.code,
@@ -437,12 +436,11 @@ const RoyoAddProduct = ({route, navigation}) => {
         updateState({
           isLoadingB: false,
         });
-        console.log('asdasdsd', productDetailParam);
 
         await paramData?.onCallBack();
         setTimeout(() => {
           navigation.goBack();
-        }, 2000);
+        }, 1000);
         setTimeout(() => {
           paramData?.onCallBack();
         }, 5000);
@@ -497,8 +495,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     actionSheet.current.show();
   };
 
-  console.log(variantImages, 'variantImagesvariantImages>>>');
-
   const cameraHandle = (index) => {
     if (index == 0 || index == 1) {
       cameraHandler(index, {
@@ -546,7 +542,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
     formData.append('media_id', selectdImage?.media_id);
-    console.log(formData, 'formData>>>removeImage');
     actions
       .deleteProductImage(formData, {
         code: appData?.profile?.code,
@@ -562,20 +557,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         });
       })
       .catch(errorMethod);
-  };
-
-  const onSelect = (idx, value) => {
-    console.log(idx);
-  };
-
-  const renderRowComponent = (item, sdf) => {
-    console.log(item, 'itemitem', sdf);
-    return (
-      <TouchableHighlight
-        style={{
-          height: moderateScale(35),
-        }}></TouchableHighlight>
-    );
   };
 
   const onProductVariant = (parent_variant, child_variant) => {
@@ -651,8 +632,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     );
   };
 
-  console.log(selectedAddons, 'selectedAddons>>>>');
-
   const onMakeVariantSet = () => {
     updateState({
       isLoadingB: true,
@@ -666,10 +645,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     optionsSet.map((itm) => {
       formData.append('optionIds[]', itm);
     });
-    console.log(variantSet, 'variantSet>>>>');
-    console.log(optionsSet, 'optionsSet>>>>');
-    console.log(formData, 'formData>>>');
-
     actions
       .createProductVariant(formData, {
         code: appData?.profile?.code,
@@ -677,7 +652,6 @@ const RoyoAddProduct = ({route, navigation}) => {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, '>>>>>responseFromServer');
         updateState({isLoadingB: false, createdVariantSets: res?.data});
       })
       .catch(errorMethod);
@@ -753,8 +727,6 @@ const RoyoAddProduct = ({route, navigation}) => {
           style={{
             ...styles.flexRowStyle,
           }}>
-          {console.log(item, 'itemitemitem>>')}
-
           <TouchableOpacity
             activeOpacity={0.7}
             style={{alignItems: 'center'}}
@@ -912,8 +884,6 @@ const RoyoAddProduct = ({route, navigation}) => {
   };
 
   const addProductImages = (formData) => {
-    console.log(formData, 'formData>>>>');
-
     updateState({isLoadingB: true});
     actions
       .addProductImage(formData, {
@@ -928,13 +898,11 @@ const RoyoAddProduct = ({route, navigation}) => {
           isLoadingB: false,
           productImages: res?.data,
         });
-        console.log(res, 'responseFromServer');
       })
       .catch(errorMethod);
   };
 
   const _removeImageFromLocalList = (localImage) => {
-    console.log(localImage, 'localImage>>');
     const variantImagesAry = [...variantImages];
     const filteredVariantImages = variantImagesAry.filter(
       (itm) => itm?.image_id != localImage?.image_id,
@@ -1032,6 +1000,12 @@ const RoyoAddProduct = ({route, navigation}) => {
       </View>
     );
   };
+
+  const handleRefresh = () => {
+    updateState({isRefreshing: true});
+    getVendorProductDetailByID();
+  };
+
   return (
     <WrapperContainer source={loaderOne} isLoadingB={isLoading || isLoadingB}>
       <Header
@@ -1039,6 +1013,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         centerTitle={productDetailParam?.title || ''}
         customRight={customRight}
       />
+
       <View style={{...styles.stepBarView, marginTop: moderateScale(10)}}>
         {stepPoints.map(renderStepIndicator)}
       </View>
@@ -1046,8 +1021,15 @@ const RoyoAddProduct = ({route, navigation}) => {
       <KeyboardAwareScrollView
         // scrollEnabled={!isLangugaeDropDown}
         showsVerticalScrollIndicator={false}
-        style={styles.container}
-        bounces={false}>
+        refreshing={isRefreshing}
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }>
         {currentStepIndex == 0 ? (
           <View>
             <View style={styles.mainViewStyle}>
@@ -1236,6 +1218,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 ? productImages.map((i, inx) => {
                     return (
                       <ImageBackground
+                        key={String(inx)}
                         source={{
                           uri: getImageUrl(
                             i.image?.path?.image_fit,
@@ -1278,34 +1261,57 @@ const RoyoAddProduct = ({route, navigation}) => {
                 ...styles.flexRowStyle,
                 marginTop: moderateScale(20),
               }}>
-              <TextInputWithUnderlineAndLabel
-                label={strings.PRICE}
-                labelStyle={styles.labelStyle}
-                placeholder={'200'}
-                onChangeText={(value) =>
-                  updateState({
-                    price: value,
-                  })
-                }
-                value={price}
-                mainStyle={{flex: 0.2}}
-                placeholderTextColor={colors.textGreyB}
-                txtInputStyle={styles.textInputStyle}
-              />
-              <TextInputWithUnderlineAndLabel
-                label={strings.COMPARE_AT_PRICE}
-                placeholder={'200'}
-                onChangeText={(value) =>
-                  updateState({
-                    compareAtPrice: value,
-                  })
-                }
-                value={compareAtPrice}
-                mainStyle={{flex: 0.4}}
-                labelStyle={styles.labelStyle}
-                placeholderTextColor={colors.textGreyB}
-                txtInputStyle={styles.textInputStyle}
-              />
+              {vendorInfo?.is_seller == 1 ? (
+                <TextInputWithUnderlineAndLabel
+                  label={strings.COST_PRICE}
+                  placeholder={'200'}
+                  onChangeText={(value) =>
+                    updateState({
+                      costPrice: value,
+                    })
+                  }
+                  value={costPrice}
+                  mainStyle={{flex: 0.4}}
+                  labelStyle={styles.labelStyle}
+                  placeholderTextColor={colors.textGreyB}
+                  txtInputStyle={styles.textInputStyle}
+                />
+              ) : (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flex: 1,
+                  }}>
+                  <TextInputWithUnderlineAndLabel
+                    label={strings.PRICE}
+                    labelStyle={styles.labelStyle}
+                    placeholder={'200'}
+                    onChangeText={(value) =>
+                      updateState({
+                        price: value,
+                      })
+                    }
+                    value={price}
+                    mainStyle={{flex: 0.3}}
+                    placeholderTextColor={colors.textGreyB}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                  <TextInputWithUnderlineAndLabel
+                    label={strings.COMPARE_AT_PRICE}
+                    placeholder={'200'}
+                    onChangeText={(value) =>
+                      updateState({
+                        compareAtPrice: value,
+                      })
+                    }
+                    value={compareAtPrice}
+                    mainStyle={{flex: 0.65, marginLeft: moderateScale(10)}}
+                    labelStyle={styles.labelStyle}
+                    placeholderTextColor={colors.textGreyB}
+                    txtInputStyle={styles.textInputStyle}
+                  />
+                </View>
+              )}
               <View style={{flex: 0.31}}>
                 <Text style={styles.labelStyle}>{strings.TRACK_INVENTORY}</Text>
                 <ToggleSwitch

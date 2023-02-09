@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -10,8 +10,9 @@ import {
   View,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
 import BrickList from '../../../Components/BrickList';
 import ImgCardForBrickList from '../../../Components/ImgCardForBrickList';
@@ -19,8 +20,8 @@ import CardLoader from '../../../Components/Loaders/CardLoader';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {
   height,
   itemWidth,
@@ -33,6 +34,7 @@ import {
 import MapView, {
   AnimatedRegion,
   Marker,
+  PROVIDER_DEFAULT,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import {
@@ -43,15 +45,15 @@ import {
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import actions from '../../../redux/actions';
 import BottomViewModal from '../../../Components/BottomViewModal';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
@@ -65,7 +67,7 @@ import Loader from '../../../Components/Loader';
 import staticStrings from '../../../constants/staticStrings';
 import Modal from 'react-native-modal';
 import Geocoder from 'react-native-geocoding';
-import {locationPermission} from '../../../utils/permissions';
+import { locationPermission } from '../../../utils/permissions';
 import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
@@ -73,12 +75,12 @@ import {
 import useInterval from '../../../utils/useInterval';
 
 export default function TaxiHomeDashbord({
-  handleRefresh = () => {},
-  bannerPress = () => {},
+  handleRefresh = () => { },
+  bannerPress = () => { },
   //   appMainData = {},
   isLoading = false,
   isRefreshing = false,
-  onPressCategory = () => {},
+  onPressCategory = () => { },
   selectedToggle,
   toggleData,
   isDineInSelected = false,
@@ -91,7 +93,7 @@ export default function TaxiHomeDashbord({
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, currencies, themeColors, appStyle, languages} = useSelector(
+  const { appData, currencies, themeColors, appStyle, languages } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -152,9 +154,8 @@ export default function TaxiHomeDashbord({
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log(appMainData, 'appMainDataappMainData');
   const fontFamily = appStyle?.fontSizeData;
-  const {bannerRef} = useRef();
+  const { bannerRef } = useRef();
   const {
     slider1ActiveSlide,
     newCategoryData,
@@ -179,16 +180,16 @@ export default function TaxiHomeDashbord({
     selectViaMap,
     allListedDrivers,
   } = state;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
   console.log(appData, 'appDataappData');
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -247,7 +248,7 @@ export default function TaxiHomeDashbord({
   const fitPadding = (newArray) => {
     if (mapRef.current) {
       mapRef.current.fitToCoordinates([...newArray], {
-        edgePadding: {top: 100, right: 80, bottom: 80, left: 80},
+        edgePadding: { top: 100, right: 80, bottom: 80, left: 80 },
         animated: true,
       });
     }
@@ -320,7 +321,7 @@ export default function TaxiHomeDashbord({
         });
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -357,7 +358,7 @@ export default function TaxiHomeDashbord({
 
   const addUpdateLocation = (childData) => {
     //setModalVisible(false);
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
 
     actions
       .addAddress(childData, {
@@ -365,22 +366,22 @@ export default function TaxiHomeDashbord({
       })
       .then((res) => {
         console.log(res, 'res>res>res');
-        updateState({del: del ? false : true});
+        updateState({ del: del ? false : true });
         showSuccess(res.message);
         setModalVisible(false);
       })
       .catch((error) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
 
   const openCloseMapAddress = (type) => {
-    updateState({selectViaMap: type == 1 ? true : false});
+    updateState({ selectViaMap: type == 1 ? true : false });
   };
 
   const setModalVisible = (visible, type, id, data) => {
-    updateState({selectViaMap: false});
+    updateState({ selectViaMap: false });
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,
@@ -393,7 +394,7 @@ export default function TaxiHomeDashbord({
     }
   };
 
-  const _renderItem = ({item}) => {
+  const _renderItem = ({ item }) => {
     return (
       <TaxiHomeCategoryCard
         data={item}
@@ -403,21 +404,23 @@ export default function TaxiHomeDashbord({
   };
 
   const latitudes = !!curLatLong?.latitude
-  ? parseFloat(curLatLong?.latitude)
-  : !!location?.latitude
-  ? parseFloat(location?.latitude)
-  : appData?.profile?.preferences?.Default_latitude
+    ? parseFloat(curLatLong?.latitude)
+    : !!location?.latitude
+      ? parseFloat(location?.latitude)
+      : appData?.profile?.preferences?.Default_latitude;
 
+  const longitudes = !!curLatLong?.longitude
+    ? parseFloat(curLatLong?.longitude)
+    : !!location?.longitude
+      ? parseFloat(location?.longitude)
+      : appData?.profile?.preferences?.Default_latitude;
 
-const longitudes =  !!curLatLong?.longitude
-  ? parseFloat(curLatLong?.longitude)
-  : !!location?.longitude
-  ? parseFloat(location?.longitude)
-  : appData?.profile?.preferences?.Default_latitude
-
-  console.log(latitudes, 'latitudeslatitudes')
-  console.log(appData?.profile?.preferences?.Default_latitude, 'latitudeslatitudeslongitudes')
-  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes')
+  console.log(latitudes, 'latitudeslatitudes');
+  console.log(
+    appData?.profile?.preferences?.Default_latitude,
+    'latitudeslatitudeslongitudes',
+  );
+  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes');
 
   const _ModalMainView = () => {
     return (
@@ -464,12 +467,12 @@ const longitudes =  !!curLatLong?.longitude
                 }}
                 onPress={_modalClose}>
                 <Text
-                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
                   {strings.CANCEL}
                 </Text>
               </TouchableOpacity>
 
-              <View style={{marginHorizontal: 4}} />
+              <View style={{ marginHorizontal: 4 }} />
               <TouchableOpacity
                 style={{
                   flex: 1,
@@ -486,18 +489,18 @@ const longitudes =  !!curLatLong?.longitude
                   });
 
                   setTimeout(() => {
-                    updateState({isLoadingModal: false});
+                    updateState({ isLoadingModal: false });
                     actions.saveSchduleTime(
                       slectedDate || selectedTime ? '' : 'now',
                     );
                     navigation.navigate(navigationStrings.ADDADDRESS, {
                       cat: appMainData?.categories[0],
-                      datetime: {slectedDate, selectedTime},
+                      datetime: { slectedDate, selectedTime },
                     });
                   }, 2000);
                 }}>
                 <Text
-                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
                   {strings.SET}
                 </Text>
               </TouchableOpacity>
@@ -509,7 +512,7 @@ const longitudes =  !!curLatLong?.longitude
   };
 
   const moveToScreen = (details) => {
-    updateState({fullMapShow: false});
+    updateState({ fullMapShow: false });
     if (!!userData?.auth_token) {
       let prefillAdress = null;
       if (!!details) {
@@ -524,7 +527,7 @@ const longitudes =  !!curLatLong?.longitude
       actions.saveSchduleTime('now');
       navigation.navigate(navigationStrings.ADDADDRESS, {
         cat: appMainData?.categories[0],
-        datetime: {slectedDate, selectedTime},
+        datetime: { slectedDate, selectedTime },
         prefillAdress: !!prefillAdress ? prefillAdress : null,
       });
     } else {
@@ -539,7 +542,7 @@ const longitudes =  !!curLatLong?.longitude
         return (
           <ScrollView
             keyboardShouldPersistTaps={'handled'}
-            style={{width: width}}>
+            style={{ width: width }}>
             <TouchableOpacity
               key={inx}
               style={{
@@ -613,7 +616,7 @@ const longitudes =  !!curLatLong?.longitude
   };
   const savedPlaceView1 = (image) => {
     return (
-      <ScrollView keyboardShouldPersistTaps={'handled'} style={{width: width}}>
+      <ScrollView keyboardShouldPersistTaps={'handled'} style={{ width: width }}>
         <TouchableOpacity
           style={{
             flexDirection: 'row',
@@ -627,8 +630,8 @@ const longitudes =  !!curLatLong?.longitude
             actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                  data: appMainData?.categories[0],
-                })
+                data: appMainData?.categories[0],
+              })
               : actions.setAppSessionData('on_login');
           }}>
           <View
@@ -640,7 +643,7 @@ const longitudes =  !!curLatLong?.longitude
             <View>
               <Image source={image} />
             </View>
-            <View style={{marginHorizontal: moderateScale(10)}}>
+            <View style={{ marginHorizontal: moderateScale(10) }}>
               <Text
                 numberOfLines={2}
                 style={{
@@ -693,7 +696,7 @@ const longitudes =  !!curLatLong?.longitude
         }
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
-        style={{flex: 1, zIndex: 1000}}>
+        style={{ flex: 1, zIndex: 1000 }}>
         <>
           <TaxiBannerHome
             appStyle={appStyle}
@@ -702,10 +705,10 @@ const longitudes =  !!curLatLong?.longitude
             bannerData={[...appData?.mobile_banners]}
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
-            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
-            // onPress={(item) => bannerPress(item)}
+            onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
+          // onPress={(item) => bannerPress(item)}
           />
-          <View style={{height: moderateScaleVertical(5)}} />
+          <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
 
@@ -721,13 +724,13 @@ const longitudes =  !!curLatLong?.longitude
           keyExtractor={(item) => item.id.toString()}
           renderItem={_renderItem}
           ItemSeparatorComponent={() => (
-            <View style={{marginRight: moderateScale(12)}} />
+            <View style={{ marginRight: moderateScale(12) }} />
           )}
           ListHeaderComponent={() => (
-            <View style={{marginLeft: moderateScale(12)}} />
+            <View style={{ marginLeft: moderateScale(12) }} />
           )}
           ListFooterComponent={() => (
-            <View style={{marginRight: moderateScale(12)}} />
+            <View style={{ marginRight: moderateScale(12) }} />
           )}
         />
 
@@ -745,17 +748,16 @@ const longitudes =  !!curLatLong?.longitude
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingHorizontal: moderateScale(10),
-                justifyContent: 'space-between',
               }}>
               <TouchableOpacity
-                style={{width: width - width / 3}}
+                style={{ flexBasis: 'auto', flexGrow: width / 2 }}
                 onPress={() => {
                   actions.saveSchduleTime('now');
                   userData?.auth_token
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                        cat: appMainData?.categories[0],
-                        datetime: {slectedDate, selectedTime},
-                      })
+                      cat: appMainData,
+                      datetime: { slectedDate, selectedTime },
+                    })
                     : actions.setAppSessionData('on_login');
                 }}>
                 <Text
@@ -767,18 +769,23 @@ const longitudes =  !!curLatLong?.longitude
                   {strings.WHERETO}
                 </Text>
               </TouchableOpacity>
-             {getBundleId() == appIds.appi ? null :<TouchableOpacity
+              {getBundleId() === appIds.appi ? null : <TouchableOpacity
                 onPress={() => {
                   userData?.auth_token
                     ? updateState({
-                        isVisible: true,
-                      })
+                      isVisible: true,
+                    })
                     : actions.setAppSessionData('on_login');
+                }}
+                style={{
+                  flexBasis: 'auto',
+                  flexGrow: width / 20,
+                  alignItems: 'flex-end',
                 }}>
                 <View
                   style={{
                     backgroundColor: colors.white,
-                    width: moderateScale(80),
+
                     height: moderateScaleVertical(26),
                     borderRadius: 20,
                     justifyContent: 'space-around',
@@ -787,12 +794,15 @@ const longitudes =  !!curLatLong?.longitude
                     paddingHorizontal: moderateScale(5),
                   }}>
                   <Image source={imagePath.clock} />
-                  <Text>{strings.NOW}</Text>
+                  <Text style={{ marginHorizontal: moderateScale(5) }}>
+                    {strings.NOW}
+                  </Text>
                   <Image
                     style={{
-                      transform: [{rotate: '90deg'}],
+                      transform: [{ rotate: '90deg' }],
                       height: moderateScaleVertical(8),
                       width: moderateScale(8),
+                      resizeMode: 'contain',
                     }}
                     source={imagePath.goRight}
                   />
@@ -826,7 +836,7 @@ const longitudes =  !!curLatLong?.longitude
                   <View>
                     <Image source={imagePath.plushRoundedBackground} />
                   </View>
-                  <View style={{marginHorizontal: moderateScale(10)}}>
+                  <View style={{ marginHorizontal: moderateScale(10) }}>
                     <Text
                       numberOfLines={2}
                       style={{
@@ -858,7 +868,7 @@ const longitudes =  !!curLatLong?.longitude
               {savedPlaceView1(imagePath.starRoundedBackground)}
             </View>
 
-            <View style={{marginHorizontal: moderateScale(20)}}>
+            <View style={{ marginHorizontal: moderateScale(20) }}>
               <Text
                 style={{
                   fontSize: textScale(14),
@@ -877,21 +887,11 @@ const longitudes =  !!curLatLong?.longitude
                   marginTop: moderateScaleVertical(20),
                   alignItems: 'center',
                 }}
-                onPress={() => updateState({fullMapShow: true})}>
-                {/* <View
-                  pointerEvents="none"
-                  style={{
-                    height: height / 4,
-                    width: width - 45,
-                    borderRadius: 12,
-                    marginTop: moderateScaleVertical(20),
-                    alignItems: 'center',
-                  }}> */}
-                
-                {!!location && (
+                onPress={() => updateState({ fullMapShow: true })}>
+                {
                   <MapView
                     ref={mapRef}
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                     // customMapStyle={mapStyleGrey}
                     style={{
                       ...StyleSheet.absoluteFillObject,
@@ -902,41 +902,39 @@ const longitudes =  !!curLatLong?.longitude
                       latitude: !!curLatLong?.latitude
                         ? parseFloat(curLatLong?.latitude)
                         : !!location?.latitude
-                        ? parseFloat(location?.latitude)
-                        : 30.733315,
+                          ? parseFloat(location?.latitude)
+                          : 30.733315,
                       longitude: !!curLatLong?.longitude
                         ? parseFloat(curLatLong?.longitude)
                         : !!location?.longitude
-                        ? parseFloat(location?.longitude)
-                        : 76.779419,
+                          ? parseFloat(location?.longitude)
+                          : 76.779419,
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
-                    
                     // initialRegion={region}
                     showsUserLocation={true}
-                    //showsMyLocationButton={true}
-                    // pointerEvents={'none'}
+                  //showsMyLocationButton={true}
+                  // pointerEvents={'none'}
                   >
                     <Marker
                       coordinate={{
                         latitude: !!curLatLong?.latitude
                           ? parseFloat(curLatLong?.latitude)
                           : !!location?.latitude
-                          ? parseFloat(location?.latitude)
-                          : 30.733315,
+                            ? parseFloat(location?.latitude)
+                            : 30.733315,
                         longitude: !!curLatLong?.longitude
                           ? parseFloat(curLatLong?.longitude)
                           : !!location?.longitude
-                          ? parseFloat(location?.longitude)
-                          : 76.779419,
+                            ? parseFloat(location?.longitude)
+                            : 76.779419,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
                     />
                   </MapView>
-                )}
-                {/* </View> */}
+                }
               </TouchableOpacity>
             </View>
           </>
@@ -951,7 +949,7 @@ const longitudes =  !!curLatLong?.longitude
           />
         )}
 
-        <View style={{height: moderateScaleVertical(95)}} />
+        <View style={{ height: moderateScaleVertical(95) }} />
       </ScrollView>
       <AddressModal3
         navigation={navigation}
@@ -972,35 +970,35 @@ const longitudes =  !!curLatLong?.longitude
           margin: 0,
         }}
         animationInTiming={600}>
-        <View style={{flex: 1}}>
-          <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
             <MapView
               ref={mapRef}
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
               // customMapStyle={mapStyleGrey}
               customMapStyle={
                 appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
               }
-              style={{...StyleSheet.absoluteFillObject}}
+              style={{ ...StyleSheet.absoluteFillObject }}
               region={{
                 latitude: !!curLatLong?.latitude
                   ? parseFloat(curLatLong?.latitude)
                   : !!location?.latitude
-                  ? parseFloat(location?.latitude)
-                  : 30.7333,
+                    ? parseFloat(location?.latitude)
+                    : 30.7333,
                 longitude: !!curLatLong?.longitude
                   ? parseFloat(curLatLong?.longitude)
                   : !!location?.longitude
-                  ? parseFloat(location?.longitude)
-                  : 76.7794,
+                    ? parseFloat(location?.longitude)
+                    : 76.7794,
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
               }}
               // initialRegion={region}
               showsUserLocation={true}
-              // onRegionChangeComplete={_onRegionChange}
-              // showsMyLocationButton={true}
-              // pointerEvents={'none'}
+            // onRegionChangeComplete={_onRegionChange}
+            // showsMyLocationButton={true}
+            // pointerEvents={'none'}
             >
               {allListedDrivers?.map((coordinate, index) => {
                 return (
@@ -1033,7 +1031,7 @@ const longitudes =  !!curLatLong?.longitude
             </MapView>
             <SafeAreaView>
               <TouchableOpacity
-                onPress={() => updateState({fullMapShow: false})}
+                onPress={() => updateState({ fullMapShow: false })}
                 style={{
                   marginTop: moderateScaleVertical(24),
                   height: moderateScale(40),

@@ -11,8 +11,8 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dark-mode';
-import { getBundleId } from 'react-native-device-info';
+import {useDarkMode} from 'react-native-dynamic';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
@@ -56,6 +56,7 @@ export default function Account3({ navigation }) {
     languages,
   } = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
+  const { dineInType, appMainData } = useSelector((state) => state?.home);
 
   const [allVendors, setAllVendors] = useState([]);
 
@@ -64,6 +65,8 @@ export default function Account3({ navigation }) {
   });
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
+
+  console.log("appDataappDataappData", appData)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -79,7 +82,6 @@ export default function Account3({ navigation }) {
       };
 
   const userData = useSelector((state) => state.auth.userData);
-  const appMainData = useSelector((state) => state?.home?.appMainData);
 
   //Share your app
 
@@ -109,7 +111,7 @@ export default function Account3({ navigation }) {
     }
   };
 
-  console.log(userData, "appDataappData")
+  console.log(userData, 'appDataappData');
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -368,6 +370,7 @@ export default function Account3({ navigation }) {
             />
           </TouchableOpacity>
         )} */}
+
           {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
@@ -387,6 +390,42 @@ export default function Account3({ navigation }) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
+
+          {!!userData?.auth_token &&
+            dineInType == 'p2p' &&
+            !!appMainData?.is_admin &&
+            (businessType == 4 ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
+                  isBack: true,
+                })}
+                iconLeft={imagePath.icMyPosts}
+                centerHeading={strings.MY_POSTS}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            ))}
+          {!!userData?.auth_token && getBundleId()!=appIds.sxm2go?(
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={moveToNewScreen(navigationStrings.REFER_AND_EARN)}
+              iconLeft={imagePath.share1}
+              centerHeading={strings.REFER_AND_EARN}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ):null}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>
@@ -530,7 +569,9 @@ export default function Account3({ navigation }) {
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
-            centerHeading={strings.LINKS}
+            centerHeading={
+              getBundleId() == appIds.sxm2go ? strings.JOIN : strings.LINKS
+            }
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
@@ -587,9 +628,9 @@ export default function Account3({ navigation }) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
-          {!!userData?.auth_token &&
-            Platform.OS === 'android' &&
-            !!appMainData?.is_admin ? (
+          {/* {!!userData?.auth_token &&
+          Platform.OS === 'android' &&
+          !!appMainData?.is_admin ? (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -621,7 +662,7 @@ export default function Account3({ navigation }) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ) : null}
+          ) : null} */}
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
@@ -740,7 +781,8 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token &&
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
             !!appMainData?.is_admin &&
             businessType != 4 &&
             !!appData?.profile?.socket_url && (
@@ -760,30 +802,15 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={() => goToChatRoom('agent_chat')}
-              iconLeft={imagePath.icDriverChat}
-              centerHeading={strings.DRIVER_CHAT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            />
-          )}
-
-          {!!userData?.auth_token &&
-            !!appMainData?.is_admin &&
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
             !!appData?.profile?.socket_url && (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={() => goToChatRoom('vendor_chat')}
-                iconLeft={imagePath.icUserChat}
-                centerHeading={strings.USER_CHAT}
+                onPress={() => goToChatRoom('agent_chat')}
+                iconLeft={imagePath.icDriverChat}
+                centerHeading={strings.DRIVER_CHAT}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -792,20 +819,40 @@ export default function Account3({ navigation }) {
               />
             )}
 
-          {!!userData?.auth_token && !!appData?.profile?.socket_url && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={() => goToChatRoom('user_chat')}
-              iconLeft={imagePath.icVendorChat}
-              centerHeading={strings.VENDOR_CHAT}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            />
-          )}
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
+            !!appMainData?.is_admin &&
+            !!appData?.profile?.socket_url && (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={() => goToChatRoom('vendor_chat')}
+                iconLeft={imagePath.icUserChat}
+                centerHeading={strings.VENDOR_CHAT}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
+
+          {dineInType !== 'p2p' &&
+            !!userData?.auth_token &&
+            !!appData?.profile?.socket_url && (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={() => goToChatRoom('user_chat')}
+                iconLeft={imagePath.icVendorChat}
+                centerHeading={strings.USER_CHAT}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
           {!!userData?.auth_token ? null : (
             <View style={styles.loginView}>
               <TouchableOpacity

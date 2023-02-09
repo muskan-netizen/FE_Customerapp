@@ -36,8 +36,7 @@ const OrderCard = (props) => {
     themeToggle,
   } = useSelector((state) => state?.initBoot);
 
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   console.log(item,"itemm>>")

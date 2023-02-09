@@ -37,8 +37,12 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
@@ -269,7 +273,7 @@ export default function Products({route, navigation}) {
               ? res.data.products.data
               : [...productListData, ...res?.data?.products?.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -440,7 +444,7 @@ export default function Products({route, navigation}) {
                 : [...productListData, ...res.data.products.data],
           });
         }
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
         updateState({
           isRefreshing: false,
           categoryInfo: res.data.vendor,
@@ -478,7 +482,7 @@ export default function Products({route, navigation}) {
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
     // }
@@ -769,6 +773,7 @@ export default function Products({route, navigation}) {
         ItemSeparatorComponent={() => <View style={{height: 10}} />}
         refreshing={isRefreshing}
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={()=>console.log("")}
         initialNumToRender={12}
         maxToRenderPerBatch={10}
         windowSize={10}

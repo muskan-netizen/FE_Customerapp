@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Platform,
 } from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import stylesFun from './styles';
@@ -14,6 +15,7 @@ import MapView, {
   AnimatedRegion,
   Marker,
   PROVIDER_GOOGLE,
+  PROVIDER_DEFAULT
 } from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import imagePath from '../../../constants/imagePath';
@@ -31,7 +33,7 @@ import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
 import {BlurView} from '@react-native-community/blur';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import Geolocation from 'react-native-geolocation-service';
 import {chekLocationPermission} from '../../../utils/permissions';
@@ -261,7 +263,8 @@ export default function HomeScreenTaxi({navigation, route}) {
     <>
       <MapView
         ref={mapRef}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
         style={styles.map}
         // region={region}
         initialRegion={region}

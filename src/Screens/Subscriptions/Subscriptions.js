@@ -31,7 +31,7 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function Subscriptions({navigation, route}) {
@@ -287,7 +287,8 @@ export default function Subscriptions({navigation, route}) {
   const _renderItemPayments = ({item, index}) => {
     return (
       <>
-        <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
+        <TouchableOpacity 
+            onPress={() => _selectPaymentMethod(item)}>
           <View
             style={{
               flexDirection: 'row',
@@ -343,7 +344,7 @@ export default function Subscriptions({navigation, route}) {
                 Keyboard.dismiss();
               }}
             />
-          )}
+        )}
       </>
     );
   };

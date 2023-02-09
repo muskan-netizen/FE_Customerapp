@@ -1,32 +1,40 @@
 import {
+  ACCEPTREJECTDRIVERUPDATE,
   ACCEPT_REJECT_ORDER,
+  ALL_VENDOR_ORDERS,
+  CANCEL_ORDER,
+  DISPATCHER_URL,
+  GENERATE_INVOICE,
   GET_ALL_ORDERS,
   GET_ALL_VENDOR_ORDERS,
+  GET_CANCEL_REASONS,
+  GET_DETAIL_OF_PRODUCT_FOR_REPLACE,
+  GET_DRIVER_RATING_DETAIL,
   GET_ORDER_DETAIL,
+  GET_ORDER_DETAIL_FOR_BILLING,
+  GET_PRODUCTS_FOR_REPLACE,
   GET_RATING_DETAIL,
-  GIVE_RATING_REVIEWS,
-  GET_VENDOR_REVENUE,
   GET_RETURN_ORDER_DETAIL,
   GET_RETURN_PRODUCT_DETAIL,
-  UPLOAD_PRODUCT_IMAGE,
-  SUBMIT_RETURN_ORDER,
-  MY_PENDING_ORDERS,
-  GET_ORDER_DETAIL_FOR_BILLING,
-  DISPATCHER_URL,
-  CANCEL_ORDER,
-  REPEAT_ORDER,
-  ACCEPTREJECTDRIVERUPDATE,
-  GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_PROFILE,
+  GET_VENDOR_REVENUE,
+  GET_VENDOR_REVENUE_DASHBOARD_DATA,
   GET_VENDOR_TRANSACTIONS,
+  GIVE_RATING_REVIEWS,
+  MY_PENDING_ORDERS,
   RATE_TO_DRIVER,
+  REPEAT_ORDER,
+  RESCHDULE_ORDER,
   SOTRE_VENDORS,
   STORE_VENDOR_COUNT,
-  ALL_VENDOR_ORDERS,
-  RESCHDULE_ORDER,
-  GENERATE_INVOICE,
+  SUBMIT_PRODUCT_FOR_REPLACEMENT,
+  SUBMIT_RETURN_ORDER,
+  UPLOAD_PRODUCT_IMAGE,
   VENDER_UPDATE_ORDER,
-  GET_DRIVER_RATING_DETAIL,
+  ORDER_TRACING_DEEPLINKING,
+  EDIT_CUSTOMER_ORDER,
+  DISCARD_EDIT_CUSTOMER_ORDER,
+  DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -349,6 +357,22 @@ export function venderUpdateOrder(data = {}, headers = {}) {
       });
   });
 }
+
+
+export function orderTracingForDeepLinking(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(ORDER_TRACING_DEEPLINKING, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+
 export function storeVendors(query, headers = {}) {
   return apiGet(SOTRE_VENDORS + query, {}, headers);
 }
@@ -363,4 +387,33 @@ export function allVendorOrders(query, headers = {}) {
 
 export function rescheduleOrder(data = {}, headers = {}) {
   return apiPost(RESCHDULE_ORDER, data, headers);
+}
+
+export function customerEditOrder(data = {}, headers = {}) {
+  return apiPost(EDIT_CUSTOMER_ORDER, data, headers);
+}
+
+export function discardCustomerEditOrder(data = {}, headers = {}) {
+  return apiPost(DISCARD_EDIT_CUSTOMER_ORDER, data, headers);
+}
+
+export function dropLocationChangeAfterOrderPlace(data = {}, headers = {}) {
+  return apiPost(DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE, data, headers);
+}
+
+//Replace Product
+export function getProductsForReplace(url, data = {}, headers = {}) {
+  return apiGet(GET_PRODUCTS_FOR_REPLACE + url, data, headers);
+}
+
+export function getDetailOfProductToReplace(url = '', data = {}, headers = {}) {
+  return apiGet(GET_DETAIL_OF_PRODUCT_FOR_REPLACE + url, data, headers);
+}
+
+export function submitProductForReplacement(data = {}, headers = {}) {
+  return apiPost(SUBMIT_PRODUCT_FOR_REPLACEMENT, data, headers);
+}
+
+export function getCancellationReason(data = {}, headers = {}) {
+  return apiGet(GET_CANCEL_REASONS, data, headers);
 }

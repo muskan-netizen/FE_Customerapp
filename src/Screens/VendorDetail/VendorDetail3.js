@@ -19,7 +19,7 @@ import {
 } from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import strings from '../../constants/lang';
 import BrandCard2 from '../../Components/BrandCard2';
@@ -27,6 +27,9 @@ import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import {trim} from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
 import * as Animatable from 'react-native-animatable';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;
@@ -85,6 +88,7 @@ export default function VendorDetail3({navigation, route}) {
   const commonStyles = commonStylesFun({fontFamily});
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
+
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
     if (item?.redirect_to == 'Pickup/Delivery') {
@@ -100,12 +104,12 @@ export default function VendorDetail3({navigation, route}) {
     if (!!item?.redirect_to && item?.redirect_to == staticStrings.PRODUCT) {
       navigation.navigate(navigationStrings.PRODUCT_LIST, {
         data: {
-          id: item.id,
+          id: item?.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
           vendorData: vendorParams?.item,
           categoryInfo: item,
-          name: item.name,
+          name: item?.name,
           isVendorList: false,
           category_slug: item?.slug,
           categoryExist: item?.id || null,
@@ -116,7 +120,7 @@ export default function VendorDetail3({navigation, route}) {
     if (!!item?.type && item?.type.redirect_to == staticStrings.PRODUCT) {
       navigation.navigate(navigationStrings.PRODUCT_LIST, {
         data: {
-          id: item.id,
+          id: item?.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
           vendorData: vendorParams?.item,
@@ -141,7 +145,7 @@ export default function VendorDetail3({navigation, route}) {
 
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
-        id: item.id,
+        id: item?.id,
         rootProducts: vendorParams?.rootProducts,
         vendor: vendorParams?.rootProducts ? true : false,
         vendorData: vendorParams?.item,
@@ -165,7 +169,7 @@ export default function VendorDetail3({navigation, route}) {
         {},
         {
           code: appData.profile.code,
-          currency: currencies.primary_currency.id,
+          currency: currencies?.primary_currency?.id,
           language: languages.primary_language.id,
         },
       )

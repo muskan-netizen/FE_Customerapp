@@ -19,7 +19,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import Modal from 'react-native-modal';
 import RazorpayCheckout from 'react-native-razorpay';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -81,12 +81,8 @@ export default function AddMoney({ navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Redux Store Data
-  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
-  );
-  const { additional_preferences, digit_after_decimal } =
-    appData?.profile?.preferences;
- 
+  const { appData, themeColors, appStyle, currencies, languages } = useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
   const userData = useSelector((state) => state.auth.userData);
   const { preferences } = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
@@ -190,7 +186,7 @@ export default function AddMoney({ navigation }) {
       isRefreshing: false,
       isModalVisibleForPayFlutterWave: false,
     });
-    showError(error?.message || error?.error);
+    showError(error?.error?.reason|| error?.message || error?.error);
   };
 
   //Navigation to specific screen
@@ -499,7 +495,7 @@ export default function AddMoney({ navigation }) {
     // }
     if (
       selectedPaymentMethod?.off_site == 0 &&
-      selectedPaymentMethod?.id == 1
+      selectedPaymentMethod?.id == 10
     ) {
       renderRazorPay();
       return;

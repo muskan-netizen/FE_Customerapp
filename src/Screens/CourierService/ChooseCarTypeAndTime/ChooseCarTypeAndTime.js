@@ -21,7 +21,7 @@ import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
 import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import {isEmpty} from 'lodash';
@@ -36,7 +36,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData>>>>>');
+  console.log(paramData?.cabVendors[0], 'paramData>>>>>');
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -197,7 +197,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res, 'res>>>>>>>>>>>>>>>>>>>>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(

@@ -27,7 +27,7 @@ import {
 import {getUserData} from '../../../utils/utils';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
 import navigationStrings from '../../../navigation/navigationStrings';

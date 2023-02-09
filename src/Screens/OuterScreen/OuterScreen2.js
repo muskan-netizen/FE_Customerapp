@@ -37,11 +37,15 @@ import DeviceInfo from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
 import Header2 from '../../Components/Header2';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setUserData} from '../../utils/utils';
+import { setUserData } from '../../utils/utils';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function OuterScreen2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -65,7 +69,7 @@ export default function OuterScreen2({navigation}) {
 
   const {getLanguage, isLoading} = state;
   const {apple_login, fb_login, twitter_login, google_login} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =

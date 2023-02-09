@@ -5,9 +5,8 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 
-const LoadingComponent = () => {
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+const LoadingComponent = ({loaderStyle = {}}) => {
+  const {themeColors, appStyle} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
 
@@ -16,7 +15,6 @@ const LoadingComponent = () => {
       style={{
         ...commonStyles.loader,
         backgroundColor: colors.whiteOpacity5,
-        elevation: 5,
       }}>
       <BarIndicator size={25} color={themeColors.primary_color} />
     </View>

@@ -1,58 +1,64 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import React, {useEffect, useRef, useState} from 'react';
-import {Linking, Text, View} from 'react-native';
-import codePush from 'react-native-code-push';
-import {useDarkMode} from 'react-native-dark-mode';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import React, { useEffect, useRef, useState } from 'react';
+// import { Linking, Platform } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import FlashMessage from 'react-native-flash-message';
-import Modal from 'react-native-modal';
-import * as Progress from 'react-native-progress';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
-import Container from './src/library/toastify-react-native';
-import * as NavigationService from './src/navigation/NavigationService';
-import navigationStrings from './src/navigation/navigationStrings';
 import Routes from './src/navigation/Routes';
-import {updateInternetConnection} from './src/redux/actions/auth';
+import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
-import colors from './src/styles/colors';
-import fontFamily from './src/styles/fontFamily';
+import { getBundleId } from 'react-native-device-info';
+import { MenuProvider } from 'react-native-popup-menu';
+import actions from './src/redux/actions';
 
-import {getBundleId} from 'react-native-device-info';
-import {MenuProvider} from 'react-native-popup-menu';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from './src/styles/responsiveSize';
-import {appIds} from './src/utils/constants/DynamicAppKeys';
+import { appIds } from './src/utils/constants/DynamicAppKeys';
 import ForegroundHandler from './src/utils/ForegroundHandler';
-import {getUrlRoutes} from './src/utils/helperFunctions';
+// import { getUrlRoutes } from './src/utils/helperFunctions';
 import {
   notificationListener,
   requestUserPermission,
 } from './src/utils/notificationService';
-import {getItem, getUserData, setItem} from './src/utils/utils';
-import notifee, {EventType} from '@notifee/react-native';
+import { getItem, getUserData, setItem } from './src/utils/utils';
 
-let CodePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
+import * as Sentry from '@sentry/react-native';
+import { View,Text } from 'react-native';
+
+import codePush from 'react-native-code-push';
+import * as Progress from 'react-native-progress';
+import Modal from 'react-native-modal';
+import colors from './src/styles/colors';
+import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
+
+Sentry.init({ 
+  dsn: 'https://1da68544ed374cabbd1a9782739dbe6b@o4504612036411392.ingest.sentry.io/4504616014708736', 
+  attachScreenshot: true,
+});
+
+
+
+let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
 const App = () => {
+  const isDarkMode = useDarkMode();
+  const [internetConnection, setInternet] = useState(true);
   const [progress, setProgress] = useState(false);
-  const [primaryColor, setPrimaryColor] = useState('black');
+  const [primaryColor, setPrimaryColor] = useState('red');
+
   const ConnectBTFunction = async () => {
     await AsyncStorage.removeItem('autoConnectEnabled');
 
     const temp = new PrinterScreen();
+
     AsyncStorage.getItem('BleDevice2').then((res) => {
       const tt = JSON.parse(res);
       temp.connectBTFunc({
@@ -64,57 +70,53 @@ const App = () => {
   };
 
 
-  const [internetConnection, setInternet] = useState(true);
 
-  const appMainData = store.getState().home;
 
-  async function handleDynamicLink(deepLinkUrl) {
-    if (deepLinkUrl != null) {
-      setItem('deepLinkUrl', deepLinkUrl);
-      ('https://sales.royoorders.com/vendor/la-fresca-de-italia?id=2&name=La%20Fresca%20de%20Italia&table=2');
-      let routeName = getUrlRoutes(deepLinkUrl, 1);
-      if (routeName === 'vendor') {
-        return;
-      }
-      var data = deepLinkUrl?.split('=').pop();
-      let removePer = decodeURI(data);
-      let sendingData = JSON.parse(removePer);
+  // async function handleDynamicLink(deepLinkUrl) {
+  //   console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrsssl');
+  //   if (deepLinkUrl != null) {
+  //     setItem('deepLinkUrl', deepLinkUrl)
+  //       .then((res) => {
+  //         actions.setDeeplinkUrl(deepLinkUrl);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error, 'erroror');
+  //       });
 
-      // return;
+  //     let routeName = getUrlRoutes(deepLinkUrl, 2);
+  //     console.log(routeName, 'routeName');
+  //     if (routeName === 'vendor') {
+  //       return;
+  //     } else if (routeName === 'track') {
+  //       openSpecificScreenByDeeplink(deepLinkUrl);
+  //     }
+  //   }
+  // }
+
+  //open screens based on deep link url
+  const openSpecificScreenByDeeplink = async (deepLinkUrl) => {
+    const userData = await getUserData();
+    if (userData?.auth_token && deepLinkUrl) {
+      actions.setRedirection('from_deepLinking');
+      actions.setAppSessionData('shortcode');
+    } else {
       setTimeout(() => {
-        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-          screen: navigationStrings.HOMESTACK,
-          params: {
-            screen: navigationStrings.PRODUCT_LIST,
-            params: {
-              data: {
-                category_slug: 'Restaurants',
-                id: 2,
-                name: 'La Fresca de Italia',
-                vendor: true,
-                table_id: sendingData,
-              },
-            },
-          },
-        });
-      }, 1800);
+        actions.setAppSessionData('on_login');
+      }, 1000);
     }
-  }
+  };
 
-  useEffect(() => {
-    Linking.getInitialURL().then((link) => handleDynamicLink(link));
-    Linking.addEventListener('url', (event) => handleDynamicLink(event.url));
-    return () => {
-      Linking.removeEventListener('url', (event) =>
-        handleDynamicLink(event.url),
-      );
-    };
-  }, [handleDynamicLink]);
 
-  const isDarkMode = useDarkMode();
+  
+
   useEffect(() => {
     //stop splashs screen from loading
-    if (  ( getBundleId() == appIds.masa)  || ( getBundleId() == appIds.muvpod) || ( getBundleId() == appIds.hezniTaxi) || (getBundleId() == appIds.flank)){
+    if (
+      getBundleId() == appIds.masa ||
+      getBundleId() == appIds.muvpod ||
+      getBundleId() == appIds.hezniTaxi ||
+      getBundleId() == appIds.flank
+    ) {
       setTimeout(() => {
         SplashScreen.hide();
       }, 200);
@@ -126,7 +128,9 @@ const App = () => {
 
     AsyncStorage.getItem('autoConnectEnabled').then((res) => {
       if (res !== null) {
-        ConnectBTFunction();
+        if (Platform.OS == 'android') {
+          ConnectBTFunction();
+        }
       }
     });
   }, []);
@@ -139,9 +143,11 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
+
       notificationConfig();
-      const {dispatch} = store;
-      if (userData && !!userData.auth_token) {
+
+      const { dispatch } = store;
+      if (userData && !!userData?.auth_token) {
         dispatch({
           type: types.LOGIN,
           payload: userData,
@@ -149,29 +155,34 @@ const App = () => {
       }
       const getAppData = await getItem('appData');
 
+   
       if (!!getAppData) {
-        setPrimaryColor(getAppData.themeColors.primary_color);
+        dispatch({
+          type: types.APP_INIT,
+          payload: getAppData,
+        });
       }
-      dispatch({
-        type: types.APP_INIT,
-        payload: getAppData,
-      });
 
       const locationData = await getItem('location');
+      if(!!locationData){
       dispatch({
         type: types.LOCATION_DATA,
         payload: locationData,
       });
+    }
 
       const profileAddress = await getItem('profileAddress');
 
+      if(!!profileAddress){
       dispatch({
         type: types.PROFILE_ADDRESS,
         payload: profileAddress,
       });
+    }
 
       const cartItemCount = await getItem('cartItemCount');
-      if (cartItemCount) {
+
+      if (!!cartItemCount) {
         dispatch({
           type: types.CART_ITEM_COUNT,
           payload: cartItemCount,
@@ -179,7 +190,8 @@ const App = () => {
       }
 
       const allUserAddress = await getItem('saveUserAddress');
-      if (allUserAddress) {
+
+      if (!!allUserAddress) {
         dispatch({
           type: types.SAVE_ALL_ADDRESS,
           payload: allUserAddress,
@@ -187,7 +199,7 @@ const App = () => {
       }
 
       const walletData = await getItem('walletData');
-      if (walletData) {
+      if (!!walletData) {
         dispatch({
           type: types.WALLET_DATA,
           payload: walletData,
@@ -195,7 +207,7 @@ const App = () => {
       }
 
       const selectedAddress = await getItem('saveSelectedAddress');
-      if (selectedAddress) {
+      if (!!selectedAddress) {
         dispatch({
           type: types.SELECTED_ADDRESS,
           payload: selectedAddress,
@@ -203,7 +215,7 @@ const App = () => {
       }
 
       const dine_in_type = await getItem('dine_in_type');
-      if (dine_in_type) {
+      if (!!dine_in_type) {
         dispatch({
           type: types.DINE_IN_DATA,
           payload: dine_in_type,
@@ -218,12 +230,12 @@ const App = () => {
         });
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: JSON.parse(themeToggle),
+          payload: !!themeToggle? JSON.parse(themeToggle): {},
         });
       } else {
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: JSON.parse(themeToggle),
+          payload: !!themeToggle? JSON.parse(themeToggle): {},
         });
         if (JSON.parse(theme)) {
           dispatch({
@@ -240,7 +252,7 @@ const App = () => {
 
       const searchResult = await getItem('searchResult');
 
-      if (searchResult) {
+      if (!!searchResult) {
         dispatch({
           type: types.ALL_RECENT_SEARCH,
           payload: searchResult,
@@ -249,13 +261,13 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
-      if (getLanguage) {
+      if (!!getLanguage) {
         strings.setLanguage(getLanguage);
       }
 
       //saveShortCode
       const saveShortCode = await getItem('saveShortCode');
-      if (saveShortCode) {
+      if (!!saveShortCode) {
         dispatch({
           type: types.SAVE_SHORT_CODE,
           payload: saveShortCode,
@@ -269,7 +281,7 @@ const App = () => {
         Clipboard.setString('');
       }
     })();
-    return () => {};
+    return () => { };
   }, []);
 
   //Check internet connection
@@ -281,8 +293,10 @@ const App = () => {
     });
     return () => removeNetInfoSubscription();
   }, []);
-  const {blurRef} = useRef();
-  // let isVal = store.getState().pendingNotifications.isVendorNotification
+  const { blurRef } = useRef();
+
+
+
 
   useEffect(() => {
     codePush.sync(
@@ -311,7 +325,7 @@ const App = () => {
         setProgress(false);
         break;
       case codePush.SyncStatus.UP_TO_DATE:
-        console.log('codepush status App up to date');
+        console.log('codepush status App up to date+++');
         setProgress(false);
         break;
       case codePush.SyncStatus.UPDATE_IGNORED:
@@ -349,7 +363,7 @@ const App = () => {
             <Text
               style={{
                 alignSelf: 'center',
-                fontFamily: fontFamily.medium,
+      
                 color: colors.blackOpacity70,
                 fontSize: textScale(14),
               }}>
@@ -366,19 +380,18 @@ const App = () => {
               }}>
               <Text
                 style={{
-                  fontFamily: fontFamily.medium,
                   color: colors.blackOpacity70,
                   fontSize: textScale(12),
                 }}>{`${(Number(progress?.receivedBytes) / 1048576).toFixed(
-                2,
-              )}MB/${(Number(progress.totalBytes) / 1048576).toFixed(
-                2,
-              )}MB`}</Text>
+                  2,
+                )}MB/${(Number(progress.totalBytes) / 1048576).toFixed(
+                  2,
+                )}MB`}</Text>
 
               <Text
                 style={{
                   color: primaryColor,
-                  fontFamily: fontFamily.medium,
+     
                   fontSize: textScale(12),
                 }}>
                 {(
@@ -399,7 +412,7 @@ const App = () => {
                 ).toFixed(0) / 100
               }
               width={width / 1.2}
-              color={primaryColor}
+              color={'red'}
             />
           </View>
         </Modal>
@@ -413,20 +426,16 @@ const App = () => {
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
           {progress ? progressView() : null}
+        
           <Routes />
           <NotificationModal />
         </Provider>
       </MenuProvider>
-      <Container
-        width={width - 20}
-        position="top"
-        duration={2000}
-        positionValue={moderateScaleVertical(20)}
-      />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
     </SafeAreaProvider>
   );
 };
 
-export default codePush(CodePushOptions)(App);
+
+export default codePush(CodePushOptions)(Sentry.wrap(App));

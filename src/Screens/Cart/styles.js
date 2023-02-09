@@ -490,7 +490,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: 'left',
     },
     insctructionText: {
-      flex: 1,
+      // flex: 1,
       fontFamily: fontFamily.medium,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
@@ -539,6 +539,19 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontSize: moderateScale(11),
       fontFamily: fontFamily.regular,
       color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
+    }, 
+     cartErrorMessageContainer:{
+      padding: moderateScale(10),
+      paddingVertical: moderateScaleVertical(15),
+      marginVertical:moderateScaleVertical(20),
+      marginHorizontal:moderateScale(20),
+      backgroundColor:getColorCodeWithOpactiyNumber(colors.redB.substring(1),20),
+      borderRadius:moderateScale(5)
+    },
+    codmessageView: {
+      flexDirection: 'row',
+      paddingVertical: moderateScaleVertical(5),
+      paddingHorizontal: moderateScale(16),
     },
   });
   return styles;

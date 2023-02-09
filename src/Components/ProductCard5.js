@@ -87,7 +87,7 @@ const ProductCard5 = ({
     (state) => state?.initBoot,
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleData({themeColors, fontFamily});
 

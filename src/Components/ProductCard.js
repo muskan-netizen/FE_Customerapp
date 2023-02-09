@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
@@ -42,8 +42,7 @@ const ProductCard = ({
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
   const { themeColors, themeLayouts } = currentTheme;
@@ -102,6 +101,9 @@ const ProductCard = ({
             {data?.translation[0]?.title}
           </Text>
         </View>
+
+       {console.log(additional_preferences,"additional_preferences")}
+
         {getBundleId() !== appIds.danielleBejjani || Number(data?.variant[0]?.price) !==0? <View
           style={{
             // height: 30,
@@ -117,10 +119,10 @@ const ProductCard = ({
               color: themeColors.currencyRed,
             }}>
             {`${tokenConverterPlusCurrencyNumberFormater(
-              Number(data?.variant[0]?.multiplier) *
+              Number(10) *
                 Number(data?.variant[0]?.price),
               digit_after_decimal,
-              additional_preferences,
+              Number(additional_preferences),
               currencies?.primary_currency?.symbol,
             )}`}
           </Text>

@@ -31,7 +31,7 @@ import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
 import {BlurView} from '@react-native-community/blur';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 import Geolocation from 'react-native-geolocation-service';
 import {chekLocationPermission} from '../../../utils/permissions';
@@ -39,6 +39,9 @@ import {getCurrentLocation} from '../../../utils/helperFunctions';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 // import {appIds} from '../../../utils/constants/DynamicAppKeys';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
 
 import DeviceInfo from 'react-native-device-info';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';

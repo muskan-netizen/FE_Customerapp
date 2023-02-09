@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "222017750953",
+    "project_id": "tkaff-order",
+    "storage_bucket": "tkaff-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222017750953:android:d6f1c34a979d713d2d66b8",
+        "android_client_info": {
+          "package_name": "com.tkaff.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222017750953-ac06esgik9uilpjrbc6ndqmrl35gg6po.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tkaff.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "222017750953-cuam63fpqf7kfhc8t1jhhaai8n05qnef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tkaff.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "222017750953-uadqr879jmh56n0fgsap2bbuft9ilehn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tkaff.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "222017750953-13tgcb7lio3rhtvusbk4337atkpo7cfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqUpRfD-fsRlHzoMee_4_Z3JHEsoYgHd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222017750953-13tgcb7lio3rhtvusbk4337atkpo7cfr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "222017750953-a4s3tls4sr323o96etthdf8hodkf134u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tkaff.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

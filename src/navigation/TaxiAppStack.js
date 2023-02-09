@@ -1,9 +1,7 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {
   Addaddress,
   AddNewRider,
-  AllContacts,
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
@@ -17,12 +15,12 @@ import {
   PinAddressOnMap,
   RateOrder,
   VerifyAccount,
+  Location
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 import Khalti from '../Screens/PaymentGateways/Khalti';
 
-import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
 // ChooseCarTypeAndTimeTaxi;
 
@@ -66,6 +64,11 @@ export default function (Stack) {
         name={navigationStrings.OFFERS2}
         component={Offers}
         options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.LOCATION}
+        component={Location}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PICKUPTAXIORDERDETAILS}

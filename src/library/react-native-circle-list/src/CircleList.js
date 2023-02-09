@@ -697,6 +697,7 @@ export class CircleList extends PureComponent {
         state={this.state}
         theta={theta}
         visibleDataBounds={visibleDataBounds}
+        
       />
     );
   }

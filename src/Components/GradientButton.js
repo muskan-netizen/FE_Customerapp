@@ -1,13 +1,16 @@
 import React from 'react';
-import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
+import { ActivityIndicator, Image, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 
 const GradientButton = ({
   containerStyle,
   btnStyle = {},
-  //colorsArray = [themeColors?.primary_color, themeColors?.primary_color],
+  // colorsArray = [themeColors?.primary_color, themeColors?.primary_color],
   borderRadius = 13,
   onPress,
   btnText,
@@ -20,14 +23,19 @@ const GradientButton = ({
   colorsArray = null,
   indicatorColor = '#0000ff',
   disabled = false,
+  textImgViewStyle = {},
+  isImgWithTxt = false,
+  leftImgSrc = imagePath.icChatP2p,
+  leftImgStyle = {},
 }) => {
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
-  const commonStyles = commonStylesFun({fontFamily, themeColors});
+  const commonStyles = commonStylesFun({ fontFamily, themeColors });
 
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       disabled={disabled}
       style={{
         ...commonStyles.buttonRect,
@@ -38,8 +46,8 @@ const GradientButton = ({
       }}
       onPress={onPress}>
       <LinearGradient
-        start={{x: 0.0, y: -1.5}}
-        end={{x: 0.5, y: 1.0}}
+        start={{ x: 0.0, y: -1.5 }}
+        end={{ x: 0.5, y: 1.0 }}
         // end={endcolor}
         style={{
           height: '100%',
@@ -50,16 +58,26 @@ const GradientButton = ({
           ...btnStyle,
         }}
         colors={
-          colorsArray
+          !!colorsArray
             ? colorsArray
-            : [themeColors?.primary_color, themeColors?.primary_color]
+            : [!!themeColors?.primary_color ? themeColors?.primary_color : colors.themeColor, !!themeColors?.primary_color ? themeColors?.primary_color : colors.themeColor]
         }>
         {!!indicator ? (
           <ActivityIndicator size="small" color={indicatorColor} />
         ) : (
-          <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
-            {btnText}
-          </Text>
+          <View style={{ ...textImgViewStyle }}>
+            {isImgWithTxt && (
+              <Image
+                source={leftImgSrc}
+                style={{
+                  ...leftImgStyle,
+                }}
+              />
+            )}
+            <Text style={{ ...commonStyles.buttonTextWhite, ...textStyle }}>
+              {btnText}
+            </Text>
+          </View>
         )}
       </LinearGradient>
     </TouchableOpacity>

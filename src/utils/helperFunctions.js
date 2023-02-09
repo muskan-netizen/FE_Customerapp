@@ -10,7 +10,7 @@ import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
-import { StatusBarHeight } from '../styles/responsiveSize';
+import { moderateScaleVertical, StatusBarHeight } from '../styles/responsiveSize';
 import { getDistance } from 'geolib';
 import { min } from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
@@ -109,7 +109,10 @@ const showError = (message) => {
   showMessage({
     type: 'danger',
     icon: 'danger',
+    floating: true,
+    animated: true,
     message,
+    style: { marginTop: moderateScaleVertical(16) },
   });
   // Toast.show(message);
 };
@@ -118,6 +121,9 @@ const showSuccess = (message) => {
   showMessage({
     type: 'success',
     icon: 'success',
+    floating: true,
+    animated: true,
+    style: { marginTop: moderateScaleVertical(16) },
     message,
   });
 
@@ -364,7 +370,7 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
 };
 
 const getNearestLocation = async (currentLocation, savedLocations = []) => {
-  const points = savedLocations.map((item, indx) => {
+  const points = savedLocations?.map((item, indx) => {
     const distance = getDistance(
       {
         latitude: currentLocation?.latitude,
@@ -379,7 +385,8 @@ const getNearestLocation = async (currentLocation, savedLocations = []) => {
     newAddressArray.address = item?.address;
     newAddressArray.type = item?.type;
     newAddressArray.type_name = item?.type_name;
-    return newAddressArray;
+    
+    return   newAddressArray;
   });
 
   const minDistance = Math.min.apply(

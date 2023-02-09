@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Image, Platform, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {View} from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dark-mode';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {useDarkMode} from 'react-native-dynamic';
+import MapView, {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -170,7 +170,7 @@ export default function PinAddressOnMap({
     <BottomSheetModal snapPoints={[height]}>
       <MapView
         ref={mapRef}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
         style={{
           ...StyleSheet.absoluteFillObject,
         }}

@@ -21,4 +21,27 @@ export default StyleSheet.create({
     // backgroundColor: colors.white,
     borderWidth: 0,
   },
+  splashStyle: {
+    flex: 1,
+    position: "absolute",
+    zIndex: 99,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  videoView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.white,
+  },
+  videoStyle:{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  }
 });

@@ -4,22 +4,22 @@ buildscript {
     ext {
         buildToolsVersion = "30.0.2"
         minSdkVersion = 21
-        compileSdkVersion = 31
-        targetSdkVersion = 31
+        compileSdkVersion = 33
+        targetSdkVersion = 33
         googlePlayServicesAuthVersion = "16.0.1" // <--- use this version or newer
         playServicesVersion='17.0.0'
         kotlin_version = '1.6.10'
+        ndkVersion = "21.4.7075529"
     }
     repositories {
         google()
-//        jcenter()
         mavenCentral()
-        // gradlePluginPortal( )
     }
     dependencies {
-        classpath('com.android.tools.build:gradle:4.2.0')
+        classpath('com.android.tools.build:gradle:4.2.2')
         classpath 'com.google.gms:google-services:4.3.10'// <--- use this version or newer
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -28,7 +28,7 @@ buildscript {
 
 allprojects {
     repositories { 
-        mavenLocal()
+ 
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
@@ -40,10 +40,15 @@ allprojects {
           //zendesk Repo
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
         google()
-        mavenCentral()
-       
         jcenter()
-        // gradlePluginPortal( )
+        mavenCentral {
+            // We don't want to fetch react-native from Maven Central as there are
+            // older versions over there.
+            content {
+                excludeGroup "com.facebook.react"
+            }
+        }
+       
         maven { url 'https://www.jitpack.io' }
         
       

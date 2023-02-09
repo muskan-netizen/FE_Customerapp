@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>286667135462-1a7t0olg57lom05suga9hia8vbv4d10t.apps.googleusercontent.com</string>
+	<string>741358483100-82epmcq9nukao3knmrrg4n0m97g0rv4u.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.286667135462-1a7t0olg57lom05suga9hia8vbv4d10t</string>
+	<string>com.googleusercontent.apps.741358483100-82epmcq9nukao3knmrrg4n0m97g0rv4u</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>286667135462-brb4grn9m7bt70vpurkvoucodu01ff4a.apps.googleusercontent.com</string>
+	<string>741358483100-1dpomt1cdlfmu96j7n5a2sblfm1hu0jo.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDWgALSbeuvJaVfBvCPt86MogVA3OPchrU</string>
+	<string>AIzaSyD_vB3VtIJ3YZIBYn60JGAg2cnewRRhQNo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>286667135462</string>
+	<string>741358483100</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.smokeRun.order</string>
 	<key>PROJECT_ID</key>
-	<string>smoke-run-ea0ba</string>
+	<string>smoke-run-21af5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>smoke-run-ea0ba.appspot.com</string>
+	<string>smoke-run-21af5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:286667135462:ios:971bd2b53750cf4724de27</string>
+	<string>1:741358483100:ios:019c2434aa4f537fde5f59</string>
 </dict>
 </plist>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import ScaledImage from 'react-native-scalable-image';
 import {useSelector} from 'react-redux';
@@ -23,6 +23,10 @@ import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFun
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 export default function TaxiOrderDetailView({
   isLoading = false,
   orderDetail = {},
@@ -34,10 +38,10 @@ export default function TaxiOrderDetailView({
 }) {
   //   console.log(selectedCarOption, 'selectedCarOption');
   const {appData, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
+    (state) => state?.initBoot || {},
   );
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);

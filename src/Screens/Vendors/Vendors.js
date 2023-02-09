@@ -20,8 +20,11 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import VendorsDesign1 from './Vendors2';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import {useDarkMode} from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Vendors({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -174,6 +177,7 @@ export default function Vendors({route, navigation}) {
           />
         }
         getItemLayout={getItemLayout}
+        onScrollToIndexFailed={(val) => console.log('indexed failed')}
         initialNumToRender={5}
         maxToRenderPerBatch={10}
         windowSize={10}

@@ -10,6 +10,9 @@ import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {moderateScale} from '../../styles/responsiveSize';
 import stylesFun from './styles';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function WebviewScreen({navigation, route}) {
   const paramData = route?.params;

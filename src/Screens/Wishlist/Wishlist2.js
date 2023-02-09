@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import WishlistCard from '../../Components/WishlistCard';
@@ -15,6 +15,9 @@ import {height, moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function Wishlist2({navigation}) {
   const {

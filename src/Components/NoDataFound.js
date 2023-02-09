@@ -5,7 +5,7 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import commonStylesFunc from '../styles/commonStyles';
 import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
 import {appIds} from '../utils/constants/DynamicAppKeys';

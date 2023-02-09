@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "172182880759",
+    "project_id": "otg-weeds",
+    "storage_bucket": "otg-weeds.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172182880759:android:99ace116b0686762386ef2",
+        "android_client_info": {
+          "package_name": "com.otgweeds.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172182880759-dilb67r26p5i2spnr1oe34dg1d2j7pv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.otgweeds.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "172182880759-n2gethc58ij5je9gqjei8kigcv346dp1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.otgweeds.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "172182880759-rr97bnnp15h3pqdgbki7nppbak193u96.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.otgweeds.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "172182880759-cnl2lhu1m2tll4r4vi9hjgg7pfkab2ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpctZfKujZhGwdNW8yLrp1R9GYoRsiqf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172182880759-cnl2lhu1m2tll4r4vi9hjgg7pfkab2ev.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "172182880759-paubptla166rgo96c3glbf7id28pmamm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.otgweeds.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

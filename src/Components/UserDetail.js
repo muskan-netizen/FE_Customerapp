@@ -20,7 +20,7 @@ import {
   textScale,
 } from "../styles/responsiveSize";
 import { MyDarkTheme } from "../styles/theme";
-import { useDarkMode } from "react-native-dark-mode";
+import { useDarkMode } from "react-native-dynamic";
 import { getImageUrl } from "../utils/helperFunctions";
 import { appIds } from "../utils/constants/DynamicAppKeys";
 import { getBundleId } from "react-native-device-info";
@@ -223,7 +223,7 @@ const UserDetail = ({
           )}
         </View>
 
-        {getBundleId() == appIds.masa || appIds.hokitch
+        {getBundleId() == ( appIds.masa || appIds.hokitch)
           ? null
           : (data?.vendor?.phone_no || data?.order?.phone_number) && (
               <View style={{ flexDirection: "row" }}>

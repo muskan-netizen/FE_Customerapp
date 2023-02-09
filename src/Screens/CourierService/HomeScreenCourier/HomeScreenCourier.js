@@ -74,8 +74,6 @@ export default function HomeScreenCourier({navigation, route}) {
     } else {
       moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, paramData.data)();
     }
-
-    // MultipleDropOffSelection
   };
   return (
     <WrapperContainer

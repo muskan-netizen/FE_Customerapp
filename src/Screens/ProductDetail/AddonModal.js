@@ -1,8 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import HTMLView from 'react-native-htmlview';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
@@ -35,24 +35,37 @@ export default function AddonModal({
   onPress,
   resizeMode = 'cover',
   imagestyle = {},
+  redirectedFrom = '',
+  updateAddonOnReplaceProduct = () => {},
 }) {
   const navigation = useNavigation();
-
   const [state, setState] = useState({
     addonSetData: addonSet,
     viewHeight: 0,
     maxLimitAddon: 0,
   });
+
+  useEffect(() => {
+    setState({addonSetData: addonSet, viewHeight: 0, maxLimitAddon: 0});
+  }, [addonSet]);
+
   const {addonSetData, viewHeight, maxLimitAddon} = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    appStyle,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -60,11 +73,7 @@ export default function AddonModal({
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
-    console.log(i, 'i>>>i');
-    console.log(newArray, 'newArray>>>newArray');
-    console.log(addonSetData, 'addonSetData>>>addonSetData');
     let find = addonSetData.find((x) => x?.addon_id == i?.addon_id);
-    console.log(find, 'find>>>find');
 
     updateState({
       addonSetData: addonSetData.map((vi, vnx) => {
@@ -79,7 +88,6 @@ export default function AddonModal({
                     incrementedValue = incrementedValue + 1;
                   }
                 });
-                console.log(incrementedValue, 'incrementedValue');
                 if (incrementedValue == vi?.max_select && !j.value) {
                   return {
                     ...j,
@@ -272,6 +280,11 @@ export default function AddonModal({
     const checkIsError = addonSetData.findIndex((el) => el.errorShow);
     if (checkIsError == -1) {
       onClose();
+      if (redirectedFrom == 'replaceOrder') {
+        console.log(addonSetData, 'addonSetData...');
+        updateAddonOnReplaceProduct(addonSetData);
+        return;
+      }
       navigation.navigate(navigationStrings.PRODUCTDETAIL, {
         data: {
           addonSetData: addonSetData,
@@ -379,7 +392,9 @@ export default function AddonModal({
           onPress={addToCart}
           marginTop={moderateScaleVertical(10)}
           marginBottom={moderateScaleVertical(10)}
-          btnText={strings.ADDTOCART}
+          btnText={
+            redirectedFrom == 'replaceOrder' ? 'Select' : strings.ADDTOCART
+          }
         />
       </View>
     </Modal>

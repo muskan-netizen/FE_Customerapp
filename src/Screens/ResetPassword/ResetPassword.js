@@ -3,8 +3,8 @@ import {Image, Text, TouchableOpacity, View, I18nManager} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -25,8 +25,7 @@ export default function ResetPassword({navigation, route}) {
     confirmPassword: '',
   });
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
-  const userData = useSelector((state) => state.auth.userData);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -82,7 +81,7 @@ export default function ResetPassword({navigation, route}) {
 
   const {newPassword, confirmPassword, isLoading, otp} = state;
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer isLoadingB={isLoading}>
       <View
         style={{
           height: moderateScaleVertical(60),
@@ -139,6 +138,12 @@ export default function ResetPassword({navigation, route}) {
               value={confirmPassword}
               secureTextEntry={true}
             />
+
+{/* <ButtonWithLoader
+              btnText={strings.RESET_PASSWORD}
+              btnStyle={{ marginTop: moderateScaleVertical(10) }}
+              onPress={onResetPassword}
+            /> */}
             <GradientButton
               onPress={onResetPassword}
               marginTop={moderateScaleVertical(10)}

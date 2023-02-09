@@ -25,7 +25,7 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 
 const CustomBottomTabBarThree = ({
@@ -54,7 +54,7 @@ const CustomBottomTabBarThree = ({
     deviceWidth: width,
     bottom: 30,
   });
-  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const {appMainData} = useSelector((state) => state?.home);
 
   const {minHeight, minWidth, deviceHeight} = tabThreeStyle;
   const updateState = (data) =>

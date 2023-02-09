@@ -16,7 +16,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
@@ -67,6 +67,10 @@ import {
 } from '../../utils/helperFunctions';
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 let timeOut = undefined;
 
@@ -161,7 +165,7 @@ export default function ProductWithCategory({route, navigation}) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
@@ -1184,7 +1188,7 @@ export default function ProductWithCategory({route, navigation}) {
             ? res.data.products.data
             : [...productListData, ...res?.data?.products?.data],
         );
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
       .catch(errorMethod);
   };
@@ -1335,7 +1339,10 @@ export default function ProductWithCategory({route, navigation}) {
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          updateBrandAndCategoryFilter(
+            res.data.filterData,
+            appMainData?.brands,
+          );
         }
       })
       .catch(errorMethod);
@@ -1403,7 +1410,10 @@ export default function ProductWithCategory({route, navigation}) {
           }
         }
         if (res?.data) {
-          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+          updateBrandAndCategoryFilter(
+            res.data.filterData,
+            appMainData?.brands,
+          );
         }
       })
       .catch(errorMethod);
@@ -1460,7 +1470,7 @@ export default function ProductWithCategory({route, navigation}) {
         }
         setLoading(false);
         // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData?.brands);
       })
 
       .catch(errorMethod);

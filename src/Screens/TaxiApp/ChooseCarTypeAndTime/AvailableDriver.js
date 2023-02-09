@@ -1,7 +1,7 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import React, { useRef } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import { UIActivityIndicator } from 'react-native-indicators';
@@ -22,8 +22,8 @@ import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
 export default function AvailableDriver({
-  isCabPooling=false,
-  isLoading ,
+  isCabPooling = false,
+  isLoading,
   disabled,
   updateSeatNo,
   availableCarList = [],
@@ -33,9 +33,9 @@ export default function AvailableDriver({
   _onUpdateSeatNo=()=>{},
 }) {
   const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } =
-    useSelector((state) => state?.initBoot);
+    useSelector((state) => state?.initBoot || {});
   const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences;
+    appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -88,7 +88,7 @@ export default function AvailableDriver({
                 ),
               }}
             />
-            
+
             <View
               style={{
                 marginLeft: moderateScale(16),
@@ -125,7 +125,6 @@ export default function AvailableDriver({
                 {item?.translation[0]?.meta_description}
               </Text>
             </View>
-           
           </View>
 
           <Text
@@ -218,17 +217,14 @@ export default function AvailableDriver({
             flexDirection: 'row',
             justifyContent: 'space-between',
             // flex: 1,
-            margin: moderateScale(20)
+            margin: moderateScale(20),
           }}>
           <View>
-
             <Text
               numberOfLines={1}
               style={{
                 ...styles.priceItemLabel2,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.textGreyB,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
                 fontSize: textScale(13),
                 fontFamily: fontFamily.medium,
                 width: width / 2.1,
@@ -253,16 +249,17 @@ export default function AvailableDriver({
 
           <View
             // pointerEvents={btnLoader ? 'none' : 'auto'}
-            style={{ minWidth: moderateScale(74) }}>
-            <View style={{
-              backgroundColor: themeColors.primary_color,
-              borderRadius: moderateScale(16),
-              paddingHorizontal: moderateScale(6),
-              paddingVertical: moderateScaleVertical(4),
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+            style={{minWidth: moderateScale(74)}}>
+            <View
+              style={{
+                backgroundColor: themeColors.primary_color,
+                borderRadius: moderateScale(16),
+                paddingHorizontal: moderateScale(6),
+                paddingVertical: moderateScaleVertical(4),
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
                 disabled={updateSeatNo == 1 || disabled?true :false}
@@ -283,17 +280,18 @@ export default function AvailableDriver({
                   height: moderateScale(20),
                   justifyContent: 'center',
                 }}>
-                { isLoading ? (
+                {isLoading ? (
                   <UIActivityIndicator
                     size={moderateScale(16)}
                     color={colors.white}
                   />
                 ) : (
-                  <Text style={{
-                    fontFamily: fontFamily.bold,
-                    fontSize: moderateScale(12),
-                    color: colors.white,
-                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.bold,
+                      fontSize: moderateScale(12),
+                      color: colors.white,
+                    }}>
                     {updateSeatNo}
                   </Text>
                 )}
@@ -313,8 +311,8 @@ export default function AvailableDriver({
               </TouchableOpacity>
             </View>
           </View>
-        </View>)
-      }
+        </View>
+      )}
       <BottomSheetFlatList
         // scrollEnabled={false}
         data={availableCarList}

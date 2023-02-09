@@ -1,4 +1,3 @@
-import {callingCodes} from 'country-data';
 import React, {useState} from 'react';
 import {
   I18nManager,
@@ -13,7 +12,7 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../styles/theme';
 import {getBundleId} from 'react-native-device-info';
 import {appIds} from '../utils/constants/DynamicAppKeys';
@@ -42,7 +41,7 @@ const PhoneNumberInput = ({
     countryPickerModalVisible: false,
   });
 
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
 
@@ -79,7 +78,9 @@ const PhoneNumberInput = ({
         onPress={_openCountryPicker}>
         {showCountryCode && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text > +</Text>
+               <Text style={{ color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyOpcaity7}}>+ </Text>
             <Text
               style={{
                 fontFamily: fontFamily.medium,
@@ -98,7 +99,12 @@ const PhoneNumberInput = ({
 
         <Image
           source={imagePath.dropdownTriangle}
-          style={{...downArrowStyle}}
+          style={{
+            ...downArrowStyle,
+            tintColor: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.black,
+          }}
         />
       </TouchableOpacity>
       <TextInput

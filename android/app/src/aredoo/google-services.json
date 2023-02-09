@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "798063307599",
+    "project_id": "aredoo-f18fe",
+    "storage_bucket": "aredoo-f18fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798063307599:android:2ab21c1b1663bb4256f33a",
+        "android_client_info": {
+          "package_name": "com.aredoo.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798063307599-4q02joic932fgv1don5vh55lbme1f7cl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aredoo.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "798063307599-9k38kqjh86g5u4p90o1sqpba785um3on.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aredoo.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "798063307599-i1kg6ehk41khqhp5fgpgo3vccm2e06c3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aredoo.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "798063307599-v3hv9k1ldia4rqpv2339ieljgj8ldhi4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBghN86JUp7aY_MwL1hfu5I6L7jH8cjih0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798063307599-v3hv9k1ldia4rqpv2339ieljgj8ldhi4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

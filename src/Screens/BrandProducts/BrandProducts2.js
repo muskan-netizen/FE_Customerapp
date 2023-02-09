@@ -10,7 +10,7 @@ import {
   Vibration,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
@@ -343,12 +343,12 @@ export default function BrandProducts2({route, navigation}) {
       filterDataNew = filterData.map((i, inx) => {
         return {
           id: i.variant_type_id,
-          label: i.title,
-          value: i.options.map((j, jnx) => {
+          label: i?.title,
+          value: i?.options.map((j, jnx) => {
             return {
-              id: j.id,
-              parent: i.title,
-              label: j.title,
+              id: j?.id,
+              parent: i?.title,
+              label: j?.title,
               variant_type_id: i.variant_type_id,
             };
           }),
@@ -1195,7 +1195,7 @@ export default function BrandProducts2({route, navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={brand.name || brand.translation[0].title}
+        centerTitle={brand?.name || brand?.translation[0]?.title}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}
@@ -1379,6 +1379,7 @@ export default function BrandProducts2({route, navigation}) {
               }}
               ItemSeparatorComponent={() => <View style={{height: 18}} />}
               getItemLayout={getItemLayout}
+              onScrollToIndexFailed={()=>console.log("")}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
               windowSize={10}

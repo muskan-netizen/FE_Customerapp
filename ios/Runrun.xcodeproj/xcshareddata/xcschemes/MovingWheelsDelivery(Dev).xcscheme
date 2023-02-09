@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1320"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8482FC5B2773073700A5EF06"
+               BlueprintIdentifier = "184E0BD0296BE66300E87E64"
                BuildableName = "MovingWheelsDelivery.app"
                BlueprintName = "MovingWheelsDelivery"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -42,9 +42,9 @@
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
-         <BuildableReference
+        <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8482FC5B2773073700A5EF06"
+            BlueprintIdentifier = "184E0BD0296BE66300E87E64"
             BuildableName = "MovingWheelsDelivery.app"
             BlueprintName = "MovingWheelsDelivery"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -59,9 +59,9 @@
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
-         <BuildableReference
+          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8482FC5B2773073700A5EF06"
+            BlueprintIdentifier = "184E0BD0296BE66300E87E64"
             BuildableName = "MovingWheelsDelivery.app"
             BlueprintName = "MovingWheelsDelivery"
             ReferencedContainer = "container:Runrun.xcodeproj">

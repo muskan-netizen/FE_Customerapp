@@ -35,14 +35,17 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageModal from '../../Components/LanguageModal';
 import {setItem, setUserData} from '../../utils/utils';
 import {isEmpty} from 'lodash';
-import {getValuebyKeyInArray} from '../../utils/commonFunction';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
 
 export default function OuterScreen({navigation}) {
   const {
@@ -55,7 +58,7 @@ export default function OuterScreen({navigation}) {
     themeToggle,
     themeColor,
     redirectedFrom,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -83,7 +86,7 @@ export default function OuterScreen({navigation}) {
     twitter_login,
     google_login,
     additional_preferences,
-  } = appData?.profile?.preferences;
+  } = appData?.profile?.preferences || {};
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =
@@ -355,8 +358,8 @@ export default function OuterScreen({navigation}) {
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+      isLoading={isLoading}
+      >
       {console.log(shortCodeStatus, 'shortCodeStatus>>')}
       {shortCodeStatus ? (
         <Header
@@ -625,7 +628,9 @@ export default function OuterScreen({navigation}) {
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}>
                 <Text
                   style={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : themeColors?.primary_color,
                     fontFamily: fontFamily.bold,
                   }}>
                   {strings.LOGIN}

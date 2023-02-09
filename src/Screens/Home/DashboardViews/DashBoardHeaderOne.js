@@ -26,7 +26,7 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {SvgUri} from 'react-native-svg';
-import {useDarkMode} from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dynamic';
 import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderOne({navigation = {}, location = []}) {
@@ -76,7 +76,7 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
             />
           ) : null}
         </View>
-        {appData?.profile?.preferences?.is_hyperlocal ? (
+        {!!appData?.profile?.preferences?.is_hyperlocal ? (
           <View style={{flex: 1}}>
             <TouchableOpacity
               activeOpacity={1}

@@ -41,6 +41,7 @@ const TabRoutesVendorNewTemplate = ({barColor = colors.themeColor2}) => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
+    screenOptions={{headerShown:false}}
       tabBar={(props) => {
         return Platform.OS === 'ios' ? (
           <View style={styles.navigatorContainer}>

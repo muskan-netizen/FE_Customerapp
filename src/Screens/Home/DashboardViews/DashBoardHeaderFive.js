@@ -1,41 +1,30 @@
-import React, {createRef, useEffect, useRef, useState} from 'react';
-import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
-import deviceInfoModule from 'react-native-device-info';
-import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
-import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import FastImage from 'react-native-fast-image';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import {RadioButton} from 'react-native-paper';
 
-import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import strings from '../../../constants/lang';
-import {string} from 'prop-types';
-import {BlurView} from '@react-native-community/blur';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import ScaledImage from 'react-native-scalable-image';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import {
   loaderOne,
-  voiceListen,
+  voiceListen
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import LottieView from 'lottie-react-native';
-import HomeLoader from '../../../Components/Loaders/HomeLoader';
-import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
+import FastImage from 'react-native-fast-image';
+import strings from '../../../constants/lang';
+import { MyDarkTheme } from '../../../styles/theme';
+
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -44,22 +33,25 @@ export default function DashBoardHeaderFive({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  _onVoiceListen = () => {},
+  _onVoiceListen = () => { },
   isVoiceRecord = false,
-  _onVoiceStop = () => {},
+  _onVoiceStop = () => { },
   showAboveView = true,
+  currentLocation,
+  nearestLoc,
+  currentLoc,
 }) {
   const navigation = useNavigation();
-
-  const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
+  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   const imageURI = getImageUrl(
     isDarkMode
@@ -134,15 +126,15 @@ export default function DashBoardHeaderFive({
                     <Text numberOfLines={1} style={styles.locationTypeTxt}>
                       {location?.type === 3
                         ? !!(
-                            location?.type_name != 0 &&
-                            location?.type != '0' &&
-                            location?.type_name !== null
-                          )
+                          location?.type_name != 0 &&
+                          location?.type != '0' &&
+                          location?.type_name !== null
+                        )
                           ? location?.type_name
                           : strings.UNKNOWN
                         : location?.type === 2
-                        ? strings.WORK
-                        : strings.HOME}
+                          ? strings.WORK
+                          : strings.HOME}
                     </Text>
                   )}
 
@@ -158,6 +150,8 @@ export default function DashBoardHeaderFive({
                       },
                     ]}>
                     {location?.address}
+                    {/* {console.log(nearestLoc,"nearestLocnearestLoc")} */}
+                    {/* {!!nearestLoc  ? currentLocation?.address : nearestLoc?.address || location?.address} */}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -172,7 +166,7 @@ export default function DashBoardHeaderFive({
               width: moderateScale(80),
             }}>
             <TouchableOpacity
-              style={{marginHorizontal: moderateScale(8)}}
+              style={{ marginHorizontal: moderateScale(8) }}
               onPress={() =>
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }>
@@ -197,19 +191,19 @@ export default function DashBoardHeaderFive({
                   autoPlay
                   loop
                   colorFilters={[
-                    {keypath: 'layers', color: themeColors.primary_color},
-                    {keypath: 'transparent2', color: themeColors.primary_color},
-                    {keypath: 'transparent1', color: themeColors.primary_color},
-                    {keypath: '01', color: themeColors.primary_color},
-                    {keypath: '02', color: themeColors.primary_color},
-                    {keypath: '03', color: themeColors.primary_color},
-                    {keypath: '04', color: themeColors.primary_color},
+                    { keypath: 'layers', color: themeColors.primary_color },
+                    { keypath: 'transparent2', color: themeColors.primary_color },
+                    { keypath: 'transparent1', color: themeColors.primary_color },
+                    { keypath: '01', color: themeColors.primary_color },
+                    { keypath: '02', color: themeColors.primary_color },
+                    { keypath: '03', color: themeColors.primary_color },
+                    { keypath: '04', color: themeColors.primary_color },
                   ]}
                 />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={{marginHorizontal: moderateScale(8)}}
+                style={{ marginHorizontal: moderateScale(8) }}
                 onPress={_onVoiceListen}>
                 <Image
                   source={imagePath.icVoice}
@@ -229,7 +223,12 @@ export default function DashBoardHeaderFive({
         </View>
       ) : null}
 
-      <DeliveryTypeComp selectedToggle={selcetedToggle} />
+      <DeliveryTypeComp
+        selectedToggle={selcetedToggle}
+        tabMainStyle={{
+          marginBottom: 0,
+        }}
+      />
 
       <CustomAnimatedLoader
         source={loaderOne}
