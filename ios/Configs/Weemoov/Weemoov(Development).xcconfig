@@ -1,0 +1,12 @@
+#include "Pods/Target Support Files/Pods-available_pods-Weemoov/Pods-available_pods-Weemoov.debug.xcconfig"
+PROJECT_APPLE_ID = 1670564639
+PROJECT_BUNDLE_ID = com.weemoov.order
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Weemoov
+PROJECT_GOOGLE_CLIENT_ID =497239409475-ns7v1mo5su5vitni8bhm10r0g8qt2k14.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.497239409475-ns7v1mo5su5vitni8bhm10r0g8qt2k14
+PROJECT_FACEBOOK_ID = 736924144696327
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =WeemoovInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

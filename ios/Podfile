@@ -2449,6 +2449,22 @@ end
 target 'GoKart' do
 end
 
+#Weemoov
+target 'Weemoov' do
+end
+
+#Rally
+target 'Rally' do
+end
+
+#Nool
+target 'Nool' do
+end
+
+#ShipSmart
+target 'ShipSmart' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)
