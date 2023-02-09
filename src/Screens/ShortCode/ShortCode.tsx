@@ -77,12 +77,12 @@ export default function ShortCode() {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: 'b6e6e8',
+        code: appCode,
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: 'b6e6e8',
+        code: appCode,
       };
     }
 
