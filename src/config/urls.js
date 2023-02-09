@@ -223,6 +223,13 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 //Harbans
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+//sandeep
+//  export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
+
+ //Rajat
+ //export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
+
+
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // ottoweed
 // export const API_BASE_URL = 'order.ottoweed.com/api/v1';

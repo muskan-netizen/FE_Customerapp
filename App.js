@@ -138,7 +138,13 @@ const App = () => {
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
+
+    
   };
+
+  
+
+ 
 
   useEffect(() => {
     (async () => {

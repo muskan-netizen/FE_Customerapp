@@ -2598,6 +2598,19 @@ export default function OrderDetail({ navigation, route }) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+           {(cartData?.total_service_fee > 0) && (
+            <LeftRightText
+              leftText={'Service Fee'}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_service_fee),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol
+              )}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           {!!cartData?.loyalty_amount_saved &&
             cartData?.loyalty_amount_saved > 0 && (
               <LeftRightText

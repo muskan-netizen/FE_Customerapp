@@ -528,6 +528,7 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
+
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
       return;
@@ -903,6 +904,24 @@ export default function Home({route, navigation}) {
     }
   };
 
+
+
+  const showAllProducts = (item) =>{
+    moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+      id: item?.data?.category_detail?.id,
+      vendor: false,
+      name: item?.data?.category_detail?.title||item?.data?.category_detail?.slug,
+      isVendorList: false,
+      fetchOffers: false,
+      productWithSingleCategory:true
+    })();
+  }
+
+  const showAllSpotDealAndSelectedProducts = (item) =>{
+    console.log(item,"selected product for spoatdeals");
+    moveToNewScreen(navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS, item)();
+  }
+
   const onHideModal = () => {
     setIsOnPressed(false);
     setLaundryAddonModal(false);
@@ -962,6 +981,8 @@ export default function Home({route, navigation}) {
           onPressSubscribe={_onPressSubscribe}
           isSubscription={isSubscription}
           selectedFilterType={selectedFilterType}
+          showAllProducts={showAllProducts}
+          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
         />
       </>
     );

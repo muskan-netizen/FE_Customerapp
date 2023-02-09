@@ -55,7 +55,7 @@ import {
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 
-export default function DashBoardFiveV2Api({
+const DashBoardFiveV2Api = ({
   handleRefresh = () => { },
   bannerPress = () => { },
   isLoading = true,
@@ -68,7 +68,9 @@ export default function DashBoardFiveV2Api({
   onClose = () => { },
   onPressSubscribe = () => { },
   isSubscription = false,
-}) {
+  showAllProducts = () => { },
+  showAllSpotDealAndSelectedProducts = () => { }
+}) => {
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
@@ -549,8 +551,8 @@ export default function DashBoardFiveV2Api({
   const showAllTempCartOrders = () => {
     return (
       <View>
-        {tempCartData && tempCartData.length
-          ? tempCartData.map((item, index) => {
+        {!isEmpty(tempCartData) && tempCartData?.length
+          ? tempCartData?.map((item, index) => {
             return (
               <TouchableOpacity
                 onPress={() => onPressViewEditAndReplace(item)}
@@ -604,26 +606,87 @@ export default function DashBoardFiveV2Api({
   const _renderProducts = ({ item, index }) => {
     return (
       <ProductsComp2
+        mainContainerStyle={{
+          width: moderateScale(width / 4),
+          marginHorizontal: moderateScale(10),
+          marginVertical: moderateScaleVertical(8),
+          borderRadius: moderateScale(20),
+          overflow: 'hidden',
+          height: moderateScaleVertical(130),
+          elevation: 0,
+
+        }}
+        showRating={false}
+        imageStyle={{ width: moderateScale(width / 4), height: moderateScaleVertical(80), resizeMode: 'cover' }}
         item={item}
         onPress={() =>
           navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
         }
+        productNameStyle={{ textAlign: 'center', fontSize: textScale(10), marginBottom: moderateScaleVertical(5) }}
+        numberOfLines={2}
       />
+
     );
   };
 
   const ProductsThemeView = ({ item }) => {
     return !isEmpty(item?.data) ? (
       <View>
-        <TitleViewHome item={item} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <TitleViewHome item={{ title: item?.data?.category_detail?.slug }} />
+          {item?.data?.category_detail?.products?.length >= 9 && <TouchableOpacity onPress={() => showAllProducts(item)}>
+            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>View All</Text>
+          </TouchableOpacity>}
+        </View>
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          // horizontal
+          style={{ width: width, alignItems: 'center' }}
+          numColumns={3}
+          data={item?.data?.category_detail?.products}
+          renderItem={_renderProducts}
+          keyExtractor={(item) => item?.id?.toString()}
+          ListFooterComponent={() => (
+            <View style={{ marginRight: moderateScale(16) }} />
+          )}
+        />
+      </View>
+    ) : (
+      <React.Fragment />
+    );
+  };
+
+  const _renderSelectedProducts = ({ item, index }) => {
+    console.log(item," selected");
+    return (
+      <ProductsComp2
+        item={item?.products}
+        onPress={() =>
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        }
+        numberOfLines={2}
+
+      />
+    )
+  }
+
+  const SelectedProductsThemeView = ({ item }) => {
+    return !isEmpty(item?.data) ? (
+      <View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <TitleViewHome item={item} />
+          {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
+            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>View All</Text>
+          </TouchableOpacity>}
+        </View>
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal
           data={item?.data}
-          renderItem={_renderProducts}
+          renderItem={_renderSelectedProducts}
           keyExtractor={(item) => item?.id?.toString()}
           ItemSeparatorComponent={() => (
-            <View style={{ marginRight: moderateScale(16) }} />
+            <View style={{ marginRight: moderateScale(12) }} />
           )}
           ListHeaderComponent={() => (
             <View style={{ marginLeft: moderateScale(16) }} />
@@ -637,6 +700,7 @@ export default function DashBoardFiveV2Api({
       <React.Fragment />
     );
   };
+
 
   const CategoriesView = ({ item }) => {
     return !isEmpty(item?.data) ? (
@@ -893,12 +957,32 @@ export default function DashBoardFiveV2Api({
     );
   };
 
-  const _renderSpotlightDeals = (item) => { };
+  const _renderSpotlightDeals = ({ item }) => {
+    return (
+      <ProductsComp2
+        item={item}
+        onPress={() =>
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        }
+        numberOfLines={2}
+
+      />
+    )
+  };
+
+
 
   const SpotlightDealsView = ({ item }) => {
     return !isEmpty(item?.data) ? (
       <View>
-        <TitleViewHome item={item} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <TitleViewHome item={item} />
+          {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
+            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>View All</Text>
+          </TouchableOpacity>}
+        </View>
+
+
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -942,6 +1026,7 @@ export default function DashBoardFiveV2Api({
   };
 
   const renderHomePageItems = ({ item, index }) => {
+    console.log(item?.slug, "itemitemitemitem");
     return (
       <View>
         {item?.slug == 'new_products' ||
@@ -960,10 +1045,14 @@ export default function DashBoardFiveV2Api({
             <SpotlightDealsView item={item} />
           ) : item?.slug == 'banner' ? (
             <BannersView item={item} />
+          ) : item?.slug == 'selected_products' ? (
+            <SelectedProductsThemeView item={item} />
           ) :
             <React.Fragment />
         }
       </View>
+
+
     );
   };
 
@@ -1132,3 +1221,6 @@ export default function DashBoardFiveV2Api({
     </View>
   );
 }
+
+
+export default React.memo(DashBoardFiveV2Api);

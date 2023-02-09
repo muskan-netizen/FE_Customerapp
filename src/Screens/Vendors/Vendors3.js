@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, View} from 'react-native';
 import {useDarkMode} from 'react-native-dynamic';
 import {useSelector} from 'react-redux';
-import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../Components/MarketCard3';
@@ -22,13 +21,12 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
-import ListEmptyVendors from './ListEmptyVendors';
 import * as Animatable from 'react-native-animatable';
-import Header2 from '../../Components/Header2';
 import Header from '../../Components/Header';
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
+import FooterLoader from '../../Components/FooterLoader';
 
 export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -41,6 +39,8 @@ export default function Vendors3({route, navigation}) {
     limit: 5,
     isRefreshing: false,
     listData: [],
+    loadMore: true,
+    totalProduct: 0,
   });
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
@@ -51,7 +51,7 @@ export default function Vendors3({route, navigation}) {
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const {isLoading, pageNo, isRefreshing, limit, listData} = state;
+  const {isLoading, pageNo, isRefreshing, limit, listData,loadMore,totalProduct} = state;
   const {data} = route.params;
   console.log(data,"datadatadata");
   //update state
@@ -79,8 +79,12 @@ export default function Vendors3({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('vendor data', res,location);
+       
         updateState({isLoading: false, isRefreshing: false});
+
+        if (totalProduct == 0) {
+          updateState({totalProduct: res?.data?.listData.total});
+        }
         updateState({
           listData:
             pageNo == 1
@@ -102,8 +106,12 @@ export default function Vendors3({route, navigation}) {
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    if (totalProduct !== listData.length) {
+      updateState({ pageNo: pageNo + 1, loadMore: true });
+    } else {
+      updateState({ loadMore: false });
+    }
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -148,6 +156,15 @@ export default function Vendors3({route, navigation}) {
     offset: (width - moderateScale(32)) * index,
     index,
   });
+
+  const listFooterComponent = () => {
+    return <View style={{height: moderateScale(100)}}>
+      {
+        !!loadMore && <FooterLoader style={{color:themeColors?.primary_color}}  />  
+      }
+       
+    </View>;
+  };
 
   return (
     <WrapperContainer
@@ -268,7 +285,7 @@ export default function Vendors3({route, navigation}) {
               </View>
             )
           }
-          ListFooterComponent={() => <View style={{height: 100}} />}
+          ListFooterComponent={listFooterComponent}
         />
       )}
     </WrapperContainer>

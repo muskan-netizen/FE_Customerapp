@@ -81,9 +81,7 @@ import {
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 import Modal, { ReactNativeModal } from 'react-native-modal';
-import DatePicker from 'react-native-date-picker';
 
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 let timeOut = undefined;
 
@@ -130,13 +128,11 @@ export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
   const { data } = route.params;
-
   console.log(data, 'route.params');
 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
@@ -308,6 +304,8 @@ export default function Products({ route, navigation }) {
   const [tagFilteredData, setTagFilteredData] = useState([]);
   const [isFilteredData, setIsFilteredData] = useState(false);
   const [isSocialMediaModal, setIsSocialMediaModal] = useState(false);
+  const [isLoadMoreData,setIsLoadMoreData] = useState(false);
+  const [hideViewMore,setHideViewMore]=useState(true)
 
 
 
@@ -1346,7 +1344,7 @@ export default function Products({ route, navigation }) {
         ? Number(item?.minimum_order_count)
         : 1;
       data['product_variant_id'] = item?.variant[0].id;
-      data['type'] = dine_In_Type;
+      data['type'] = dineInType;
       console.log('Sending api data', data);
       if (dine_In_Type == 'appointment') {
         data['schedule_slot'] = selectedAppointmentSlot?.value,
@@ -1791,6 +1789,7 @@ export default function Products({ route, navigation }) {
           setSectionListData(resData);
           setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
+
           setCategoryInfo(res?.data?.vendor);
           fetchTags(resData);
           setLoading(false);
@@ -1892,10 +1891,10 @@ export default function Products({ route, navigation }) {
   };
   /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
-    console.log('api hit getProductByCategoryId', data);
+  const productWithCategoryId = data?.productWithSingleCategory  ? data?.id  :productListId?.id
     actions
       .getProductByCategoryIdOptamize(
-        `/${productListId?.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }&type=${dineInType} `,
         {},
         {
@@ -3285,6 +3284,9 @@ export default function Products({ route, navigation }) {
 
     console.log('currentPagecurrentPage', currentPage);
     console.log('dataaa>>>', selectedFilters);
+
+    setIsLoadMoreData(true)
+
     try {
       let vendorId = !!data?.vendorData
         ? data?.vendorData.id
@@ -3325,14 +3327,26 @@ export default function Products({ route, navigation }) {
       console.log('sending header', headers);
       const res = await actions.getMoreCategories(apiData, data, headers);
       console.log('get more cat res', res.data.products);
+         if(res.data.products.data.length == 0){
+           setHideViewMore(false)
+         }
+     
       console.log('res++++', res);
       let cloneArry = cloneSectionList[section.index];
       console.log('append clonearry', cloneArry.data);
       let arry = [...cloneArry?.data, ...res?.data.products.data];
+
+      let uniqueProductsArray = [
+        ...new Map(arry.map((item) => [item["id"], item])).values(),
+    ];
       console.log('append item', arry);
       let dummyData = cloneSectionList;
-      dummyData[section.index].data = arry;
+      dummyData[section.index].data = uniqueProductsArray;
       console.log('append last data', dummyData);
+
+       if(res?.data){
+        setIsLoadMoreData(false)
+       }
 
       if (!!searchInput) {
         onSearchWithinMenu(searchInput, dummyData, true);
@@ -3352,8 +3366,11 @@ export default function Products({ route, navigation }) {
     } catch (error) {
       console.log('error riased', error);
       showError(error?.message);
+      setIsLoadMoreData(false)
     }
   };
+
+  console.log(cloneSectionList,"cloneSectionList");
 
   const getAdditionalPriceOfAddons = () => {
     // console.log(
@@ -3466,7 +3483,7 @@ export default function Products({ route, navigation }) {
       data['sku'] = productSku;
       data['quantity'] = productQuantityForCart;
       data['product_variant_id'] = productVariantId;
-      data['type'] = dine_In_Type;
+      data['type'] = dineInType;
       if (addonSet && addonSet.length) {
         // console.log(addonSetData, 'addonSetData');
         data['addon_ids'] = addon_ids;
@@ -3662,12 +3679,41 @@ export default function Products({ route, navigation }) {
 
   const renderSectionFooter = (props) => {
     const { section } = props;
-
-    return section?.data.length !== section?.data_count &&
-      section?.data.length !== 0 &&
-      searchInput &&
-      productDataLengthAfterViewMoreSearch?.length != 0 ? (
-      <View style={{ height: moderateScale(50) }}>
+   
+  
+    return (
+    //   section?.data.length >= 15 && searchInput =='' && section?.data.length !== section?.data_count  ?
+    //   <View style={{height: moderateScale(50)}}>
+    //   <TouchableOpacity
+    //     onPress={() => appendData(section)}
+    //     style={{
+    //       // alignSelf: 'center',
+    //       padding: moderateScale(6),
+    //       borderRadius: moderateScale(5),
+    //       marginHorizontal: moderateScale(20),
+    //       borderWidth: 1,
+    //       borderColor: themeColors?.primary_color,
+    //       // backgroundColor: colors?.greyColor3,
+    //       justifyContent: 'center',
+    //       flexDirection:'row',
+    //       alignItems:'center'
+    //     }}>
+    //      {!!isLoadMoreData &&<ActivityIndicator size={20} color={themeColors?.primary_color} />}
+    //       <Text
+    //         style={{
+    //           textAlign: 'center',
+    //           color: themeColors?.primary_color,
+    //           fontSize: textScale(12),
+    //           fontFamily: fontFamily?.medium,
+    //           marginHorizontal:moderateScale(10)
+    //         }}>
+    //         View More
+    //       </Text> 
+    //   </TouchableOpacity>
+    // </View>:
+      section?.data.length !== section?.data_count &&
+      section?.data.length >= 15 && hideViewMore ? (
+      <View style={{height: moderateScale(50)}}>
         <TouchableOpacity
           onPress={() => appendData(section)}
           style={{
@@ -3679,7 +3725,10 @@ export default function Products({ route, navigation }) {
             borderColor: themeColors?.primary_color,
             // backgroundColor: colors?.greyColor3,
             justifyContent: 'center',
+            flexDirection:'row',
+            alignItems:'center'
           }}>
+           {!!isLoadMoreData &&<UIActivityIndicator size={20} color={themeColors?.primary_color} />}
           {section?.data.length !== section?.data_count ? (
             <Text
               style={{
@@ -3687,13 +3736,15 @@ export default function Products({ route, navigation }) {
                 color: themeColors?.primary_color,
                 fontSize: textScale(12),
                 fontFamily: fontFamily?.medium,
+                marginHorizontal:moderateScale(10)
               }}>
               View More
             </Text>
           ) : null}
         </TouchableOpacity>
       </View>
-    ) : <View style={{ height: moderateScale(50) }} />;
+    ) : <View style={{height: moderateScale(50)}}/>
+    )
   };
 
   return (
@@ -3908,6 +3959,8 @@ export default function Products({ route, navigation }) {
                 )}
               </View> 
             )}
+
+         
 
             {!!categoryInfo?.is_show_products_with_category ? (
 

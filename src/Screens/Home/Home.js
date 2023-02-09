@@ -218,8 +218,6 @@ export default function Home({route, navigation}) {
 
                         getNearestLocation(curLoc, filterAddress)
                           .then((nearestLoc) => {
-                            console.log(nearestLoc, "nearestLocnearestLoc")
-
                             // if NearestLocation dis. is greareter than 500m 
                             if (nearestLoc?.distance >= 500) {
                               setNearestLocDis(nearestLoc)
@@ -263,6 +261,7 @@ export default function Home({route, navigation}) {
               } else {
                 //In case of guest user
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                  console.log(locData,"locDatalocData");
                   //YES
                   actions.locationData(locData);
                   homeData(locData);

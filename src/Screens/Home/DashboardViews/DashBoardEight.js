@@ -355,7 +355,7 @@ export default function DashBoardEight({
 
         {!!isViewAll && !!vendorsData && vendorsData.length > 1 && (
           <TouchableOpacity onPress={() => onViewAll(type, data)}>
-            <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
+            <Text style={styles.viewAllText}>{strings.VIEW_ALL}  </Text>
           </TouchableOpacity>
         )}
       </View>
@@ -497,8 +497,9 @@ export default function DashBoardEight({
 
           {!!vendorsData && vendorsData.length > 1 && (
             <TouchableOpacity
+            
               onPress={() => onViewAll('vendor', appMainData?.vendors)}>
-              <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
+              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {getBundleId()===appIds.qdelo&& 'Stores'}</Text>
             </TouchableOpacity>
           )}
           <Menu style={{ alignSelf: 'flex-end' }}>

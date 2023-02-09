@@ -164,5 +164,6 @@ export default {
   CHAT_STACK: 'chatStack',
   MY_POSTS: 'myPosts',
   REFER_AND_EARN: 'referAndEarn',
-  PLUGNPAY: 'PlugnPay'
+  PLUGNPAY: 'PlugnPay',
+  SPOTDEALPRODUCTSANDSELECTEDPRODUCTS :'SpotdealProductAndSelectedProducts'
 };

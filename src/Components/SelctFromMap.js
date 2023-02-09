@@ -131,9 +131,11 @@ export default function SelctFromMap({
   useEffect(() => {
     chekLocationPermission()
       .then((result) => {
+      
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
+              console.log(res,"resultresultresultresult");
               Geolocation.getCurrentPosition(
                 //Will give you the current location
                 (position) => {
