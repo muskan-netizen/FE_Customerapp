@@ -1,4 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
+// export const API_BASE_URL='https://hattafoodhub.com/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 
@@ -392,7 +393,6 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 //Rentzy
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
-export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
@@ -422,6 +422,9 @@ export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 
 // Etaim
 // export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
+
+//uberweeds
+export const API_BASE_URL='https://uber-weeds.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

@@ -7686,7 +7686,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.uberweeds.royoorders'
+    //         applicationId 'com.uberweeds'
     //         resValue "string", "app_name", "UberWeeds" 
     //         resValue "string", "host_name", ""
     //         }

@@ -102,13 +102,13 @@ const MarketCard = ({ data = {}, onPress = () => { }, activeOpacity = 1 }) => {
                   borderColor: colors.white,
                   borderWidth: 1,
                 }}>
-                <BlurView
-                  // style={styles.absolute}
+                {/* <BlurView
+                  style={styles.absolute}
                   viewRef={viewRef}
                   blurType="dark"
                   blurAmount={2}
                   blurRadius={2}
-                />
+                /> */}
 
                 <Text
                   numberOfLines={1}
