@@ -148,7 +148,7 @@ android {
     defaultConfig {
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion 31 
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -218,14 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-   ngoal{
+             rxnow{
                 dimension "appType"
-                versionCode 5
+                versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ngoal.order'
-                resValue "string", "app_name", "NGoal"
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.rxnow'
+                resValue "string", "app_name", "RX Now"
                 resValue "string", "host_name", ""
             }
 }
