@@ -526,6 +526,6 @@ export const getAppCode = () => {
         case appIds.ngoal: return shortCodes.ngoal;
         
 
-        default: return ''
+        default: return '245bae'
     }
 }

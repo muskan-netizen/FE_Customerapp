@@ -499,7 +499,7 @@ export default function DashBoardEight({
             <TouchableOpacity
             
               onPress={() => onViewAll('vendor', appMainData?.vendors)}>
-              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {getBundleId()===appIds.qdelo&& 'Stores'}</Text>
+              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId()===appIds.qdelo&& 'Stores'}</Text>
             </TouchableOpacity>
           )}
           <Menu style={{ alignSelf: 'flex-end' }}>

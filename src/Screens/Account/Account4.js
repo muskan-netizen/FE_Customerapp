@@ -93,6 +93,9 @@ export default function Account4({navigation}) {
       alert(error.message);
     }
   };
+  const onJoinUS =()=>{
+    if(deviceInfoModule.getBundleId()== appIds.jazzyBug){}
+  }
   //Logout function
   const userlogout = () => {
     if (!!userData?.auth_token) {
