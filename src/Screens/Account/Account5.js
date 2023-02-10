@@ -163,7 +163,7 @@ export default function Account5({navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
-      {shortCodeStatus ? (
+        {shortCodeStatus == '245bae' ? (
         <Header
           noLeftIcon={false}
           customLeft={() => (

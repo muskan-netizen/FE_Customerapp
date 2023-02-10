@@ -7,8 +7,8 @@ import {
   initStripe,
   StripeProvider,
 } from '@stripe/stripe-react-native';
-import {PayWithFlutterwave} from 'flutterwave-react-native';
-import React, {useEffect, useState} from 'react';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -22,12 +22,12 @@ import {
 import {useDarkMode} from 'react-native-dynamic';
 import Modal from 'react-native-modal';
 import RazorpayCheckout from 'react-native-razorpay';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useSelector} from 'react-redux';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PaymentGateways from '../../Components/PaymentGateways';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -42,30 +42,33 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   currencyNumberFormatter,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
-import {generateTransactionRef, payWithCard} from '../../utils/paystackMethod';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import stylesFun from './styles';
 
-export default function AddMoney({navigation}) {
+export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const [cardNumber, setCardNUmber] = useState()
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
+  console.log(expiryDate, 'expiryDateexpiryDate')
+
+
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     amount: '',
     data: [
-      {id: 0, amount: 10},
-      {id: 1, amount: 20},
-      {id: 2, amount: 50},
-      {id: 3, amount: 100},
+      { id: 0, amount: 10 },
+      { id: 1, amount: 20 },
+      { id: 2, amount: 50 },
+      { id: 3, amount: 100 },
     ],
     allAvailAblePaymentMethods: [],
     selectedPaymentMethod: null,
@@ -75,19 +78,18 @@ export default function AddMoney({navigation}) {
     paymentDataFlutterWave: null,
   });
   //update your state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Redux Store Data
-  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences || {};
+  const { appData, themeColors, appStyle, currencies, languages } = useSelector((state) => state?.initBoot);
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
   const userData = useSelector((state) => state.auth.userData);
-  const {preferences} = appData?.profile;
+  const { preferences } = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFun({ fontFamily, themeColors });
+  const [year, setYear] = useState()
+  const [date, setDate] = useState()
+  const commonStyles = commonStylesFun({ fontFamily });
   const {
     allAvailAblePaymentMethods,
     selectedPaymentMethod,
@@ -128,9 +130,9 @@ export default function AddMoney({navigation}) {
       )
       .then((res) => {
         console.log('payment list options', res.data);
-        updateState({isLoadingB: false, isRefreshing: false});
+        updateState({ isLoadingB: false, isRefreshing: false });
         if (res && res?.data) {
-          updateState({allAvailAblePaymentMethods: res?.data});
+          updateState({ allAvailAblePaymentMethods: res?.data });
         }
       })
       .catch(errorMethod);
@@ -160,11 +162,21 @@ export default function AddMoney({navigation}) {
       ).replace(
         /\/\//g, '/').trim()
       setExpiryDate(ed)
+
     }
-    if(type === 'CVC'){
+    if (type === 'CVC') {
       setCvc(data)
     }
+    if (type === 'Year') {
+      let year = data.replace(/^\d{5}$/).trim()
+      setYear(year)
+    }
+    if (type === 'Date') {
+      let year = data.replace(/^([1-9]\/|[2-9])$/g, '0$1').trim()
+      setDate(year)
+    }
   }
+
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'errorerrorerror');
@@ -179,21 +191,21 @@ export default function AddMoney({navigation}) {
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
   //Onchange Texinput function
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Select Amount
   const chooseAmount = (item) => {
     let addedAmount = item.amount;
-    updateState({amount: addedAmount});
+    updateState({ amount: addedAmount });
   };
 
   //Render all Available amounts
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={() => chooseAmount(item)}>
         <View
@@ -208,19 +220,19 @@ export default function AddMoney({navigation}) {
             style={
               isDarkMode
                 ? [
-                    styles.selectAmountCon,
-                    {
-                      backgroundColor: MyDarkTheme.colors.lightDark,
-                      borderColor: MyDarkTheme.colors.text,
-                    },
-                  ]
+                  styles.selectAmountCon,
+                  {
+                    backgroundColor: MyDarkTheme.colors.lightDark,
+                    borderColor: MyDarkTheme.colors.text,
+                  },
+                ]
                 : styles.selectAmountCon
             }>
             <Text
               numberOfLines={1}
               style={
                 isDarkMode
-                  ? [styles.chooseAddMoney, {color: MyDarkTheme.colors.text}]
+                  ? [styles.chooseAddMoney, { color: MyDarkTheme.colors.text }]
                   : styles.chooseAddMoney
               }>
               {`+ ${currencies?.primary_currency?.symbol}`}{' '}
@@ -237,11 +249,17 @@ export default function AddMoney({navigation}) {
   const _selectPaymentMethod = (item) => {
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == item?.id
-        ? updateState({selectedPaymentMethod: null})
-        : updateState({selectedPaymentMethod: item});
+        ? updateState({ selectedPaymentMethod: null })
+        : updateState({ selectedPaymentMethod: item });
+        setCardNUmber("")
+        setYear("")
+        setDate("")
+        setExpiryDate("")
+        setCvc("")
     }
   };
-  const _renderItemPayments = ({item, index}) => {
+  const _renderItemPayments = ({ item, index }) => {
+    console.log(item, 'itemmmmmmmm')
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -264,7 +282,7 @@ export default function AddMoney({navigation}) {
                 {
                   color:
                     selectedPaymentMethod &&
-                    selectedPaymentMethod?.id == item.id
+                      selectedPaymentMethod?.id == item.id
                       ? isDarkMode
                         ? colors.white
                         : colors.blackC
@@ -321,7 +339,7 @@ export default function AddMoney({navigation}) {
               }}
               cardTokenizationFailed={(e) => {
                 setTimeout(() => {
-                  updateState({isLoadingB: false});
+                  updateState({ isLoadingB: false });
                   showError(strings.INVALID_CARD_DETAILS);
                 }, 1000);
               }}
@@ -338,21 +356,26 @@ export default function AddMoney({navigation}) {
               }}
             />
           )}
-                {!!(
-                    selectedPaymentMethod &&
-                    selectedPaymentMethod?.id == item.id &&
-                    selectedPaymentMethod?.off_site == 1 &&
-                    selectedPaymentMethod?.id === 49
-                  ) && (
-                      <PaymentGateways
-                        isCardNumber={cardNumber}
-                        cvc={cvc}
-                        expiryDate={expiryDate}
-                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                        onChangeText={(data) => checkInputHandler('Card Number', data)}
-                        onChangeCvcText={(data) => checkInputHandler('CVC',data)}
-                      />
-                    )}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 1 &&
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+        ) && (
+            <PaymentGateways
+              isCardNumber={cardNumber}
+              cvc={cvc}
+              expiryDate={expiryDate}
+              year={year}
+              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+              onChangeText={(data) => checkInputHandler('Card Number', data)}
+              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+              onChangeYearText={(data) => checkInputHandler('Year', data)}
+              onChangeDateText={(data) => checkInputHandler('Date', data)}
+              paymentid={selectedPaymentMethod?.id}
+              eDate={date}
+            />
+          )}
       </>
     );
   };
@@ -363,7 +386,7 @@ export default function AddMoney({navigation}) {
         cardInfo: cardDetails,
       });
     } else {
-      updateState({cardInfo: null});
+      updateState({ cardInfo: null });
     }
   };
 
@@ -384,7 +407,7 @@ export default function AddMoney({navigation}) {
         contact: userData?.phone_number || '',
         name: userData?.name,
       },
-      theme: {color: themeColors.primary_color},
+      theme: { color: themeColors.primary_color },
     };
 
     RazorpayCheckout.open(options)
@@ -498,11 +521,11 @@ export default function AddMoney({navigation}) {
       });
       return;
     }
-    if (selectedPaymentMethod?.off_site == 1 && selectedPaymentMethod?.id !== 49) {
+    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50)) {
       _webPayment();
       return;
     }
-    if (selectedPaymentMethod?.id == 49) {
+    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
       _paymentWithPlugnPayMethods()
       return;
     }
@@ -516,7 +539,7 @@ export default function AddMoney({navigation}) {
     clearTimeout(redirectTimeout);
     redirectTimeout = setTimeout(() => {
       // do something with the result
-      updateState({isModalVisibleForPayFlutterWave: false});
+      updateState({ isModalVisibleForPayFlutterWave: false });
     }, 200);
     try {
       if (data && data?.transaction_id) {
@@ -545,7 +568,7 @@ export default function AddMoney({navigation}) {
             } else {
               redirectTimeout = setTimeout(() => {
                 // do something with the result
-                updateState({isModalVisibleForPayFlutterWave: false});
+                updateState({ isModalVisibleForPayFlutterWave: false });
               }, 200);
             }
           })
@@ -553,25 +576,34 @@ export default function AddMoney({navigation}) {
       } else {
         redirectTimeout = setTimeout(() => {
           // do something with the result
-          updateState({isModalVisibleForPayFlutterWave: false});
+          updateState({ isModalVisibleForPayFlutterWave: false });
         }, 200);
       }
     } catch (error) {
       console.log('error raised', error);
       redirectTimeout = setTimeout(() => {
         // do something with the result
-        updateState({isModalVisibleForPayFlutterWave: false});
+        updateState({ isModalVisibleForPayFlutterWave: false });
       }, 200);
     }
   };
   //flutter wave
-const _paymentWithPlugnPayMethods = () => {
+  const _paymentWithPlugnPayMethods = () => {
 
-  let selectedMethod = selectedPaymentMethod.code;
-  let CardNumber = cardNumber.split(" ").join("")
-  actions
-  .openPaymentWebUrl(
-    `/${selectedMethod}?amount=${amount}&cv=${cvc}&dt=${expiryDate}&cno=${CardNumber}&action=wallet`,
+    let selectedMethod = selectedPaymentMethod.code;
+    let CardNumber = cardNumber.split(" ").join("")
+    let expirydate
+    if (selectedPaymentMethod?.id == 50) {
+
+      expirydate = year.concat(date)
+      console.log(expirydate, 'expirydate')
+    }
+    else {
+      expirydate = expiryDate
+    }
+    actions
+      .openPaymentWebUrl(
+        `/${selectedMethod}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&action=wallet&come_from=app`,
         {},
         {
           code: appData?.profile?.code,
@@ -583,8 +615,8 @@ const _paymentWithPlugnPayMethods = () => {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success' 
-         
+          res?.status == 'Success'
+
         ) {
           navigation.navigate(navigationStrings.WALLET);
         }
@@ -596,7 +628,7 @@ const _paymentWithPlugnPayMethods = () => {
   }
   const _checkoutPayment = (token) => {
     if (amount == '') {
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
     } else {
       let selectedMethod = selectedPaymentMethod.title.toLowerCase();
@@ -612,7 +644,7 @@ const _paymentWithPlugnPayMethods = () => {
         )
         .then((res) => {
           console.log(res, 'resresresresres');
-          updateState({isLoadingB: false, isRefreshing: false});
+          updateState({ isLoadingB: false, isRefreshing: false });
           if (res && res?.status == 'Success' && res?.data) {
             Alert.alert('', strings.PAYMENT_SUCCESS, [
               {
@@ -629,11 +661,12 @@ const _paymentWithPlugnPayMethods = () => {
   };
 
   const _webPayment = () => {
+
     let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .openPaymentWebUrl(
         `/${selectedMethod}?amount=${amount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet`,
@@ -645,7 +678,7 @@ const _paymentWithPlugnPayMethods = () => {
         },
       )
       .then((res) => {
-        updateState({isLoadingB: false, isRefreshing: false});
+        updateState({ isLoadingB: false, isRefreshing: false });
         // const URL = queryString.parseUrl(res.data);
         console.log('res==>>>>', res);
         if (
@@ -700,7 +733,7 @@ const _paymentWithPlugnPayMethods = () => {
               .then(async (res) => {
                 console.log(res, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
-                  const {paymentIntent, error} = await handleCardAction(
+                  const { paymentIntent, error } = await handleCardAction(
                     res?.client_secret,
                   );
                   if (paymentIntent) {
@@ -729,19 +762,19 @@ const _paymentWithPlugnPayMethods = () => {
                                 // style: 'destructive',
                               },
                             ]);
-                            updateState({isLoadingB: false});
+                            updateState({ isLoadingB: false });
                             navigation.navigate(navigationStrings.WALLET);
                           }
                         })
                         .catch(errorMethod);
                     }
                   } else {
-                    updateState({isLoadingB: false});
+                    updateState({ isLoadingB: false });
                     console.log(error, 'error');
                     showError(error?.message || 'payment failed');
                   }
                 } else {
-                  updateState({isLoadingB: false});
+                  updateState({ isLoadingB: false });
                 }
               })
               .catch(errorMethod);
@@ -755,13 +788,13 @@ const _paymentWithPlugnPayMethods = () => {
   const _offineLinePayment = async () => {
     if (cardInfo) {
       console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
-      updateState({isLoadingB: true});
-      await createToken({...cardInfo, type: 'Card'})
+      updateState({ isLoadingB: true });
+      await createToken({ ...cardInfo, type: 'Card' })
         .then((res) => {
           console.log(res, 'res>>STRIpe');
           if (!!res?.error && !!res?.error?.localizedMessage) {
             showError(res?.error?.localizedMessage);
-            updateState({isLoadingB: false});
+            updateState({ isLoadingB: false });
             return;
           }
 
@@ -835,30 +868,30 @@ const _paymentWithPlugnPayMethods = () => {
   const mainView = () => {
     return (
       <>
-        <View style={{...commonStyles.headerTopLine}} />
+        <View style={{ ...commonStyles.headerTopLine }} />
         <View
           style={
             isDarkMode
               ? [
-                  styles.addMoneyTopCon,
-                  {backgroundColor: MyDarkTheme.colors.background},
-                ]
+                styles.addMoneyTopCon,
+                { backgroundColor: MyDarkTheme.colors.background },
+              ]
               : styles.addMoneyTopCon
           }>
           <View
             style={
               isDarkMode
                 ? [
-                    styles.inputAmountCon,
-                    {backgroundColor: MyDarkTheme.colors.background},
-                  ]
+                  styles.inputAmountCon,
+                  { backgroundColor: MyDarkTheme.colors.background },
+                ]
                 : styles.inputAmountCon
             }>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.inputAmountText, {color: MyDarkTheme.colors.text}]
+                    ? [styles.inputAmountText, { color: MyDarkTheme.colors.text }]
                     : styles.inputAmountText
                 }>
                 {strings.INPUT_AMOUNT}
@@ -887,13 +920,13 @@ const _paymentWithPlugnPayMethods = () => {
                 style={
                   isDarkMode
                     ? [
-                        styles.addMoneyInputField,
-                        {
-                          marginLeft: moderateScale(10),
-                          width: width - 50,
-                          color: MyDarkTheme.colors.text,
-                        },
-                      ]
+                      styles.addMoneyInputField,
+                      {
+                        marginLeft: moderateScale(10),
+                        width: width - 50,
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
                     : styles.addMoneyInputField
                 }
                 value={`${state.amount}`}
@@ -906,7 +939,7 @@ const _paymentWithPlugnPayMethods = () => {
               />
             </View>
           </View>
-          <View style={{marginTop: 10}}>
+          <View style={{ marginTop: 10 }}>
             <FlatList
               data={state.data}
               showsVerticalScrollIndicator={false}
@@ -923,9 +956,9 @@ const _paymentWithPlugnPayMethods = () => {
             />
           </View>
         </View>
-        <View style={{...commonStyles.headerTopLine}} />
+        <View style={{ ...commonStyles.headerTopLine }} />
 
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View
             style={{
               marginTop: moderateScaleVertical(20),
@@ -934,15 +967,15 @@ const _paymentWithPlugnPayMethods = () => {
             {!!(
               allAvailAblePaymentMethods && allAvailAblePaymentMethods.length
             ) && (
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.debitFrom, {color: MyDarkTheme.colors.text}]
-                    : styles.debitFrom
-                }>
-                {strings.DEBIT_FROM}
-              </Text>
-            )}
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.debitFrom, { color: MyDarkTheme.colors.text }]
+                      : styles.debitFrom
+                  }>
+                  {strings.DEBIT_FROM}
+                </Text>
+              )}
 
             <FlatList
               data={allAvailAblePaymentMethods}
@@ -950,7 +983,7 @@ const _paymentWithPlugnPayMethods = () => {
               showsHorizontalScrollIndicator={false}
               keyboardShouldPersistTaps={'handled'}
               // horizontal
-              style={{marginTop: moderateScaleVertical(10)}}
+              style={{ marginTop: moderateScaleVertical(10) }}
               keyExtractor={(item, index) => String(index)}
               renderItem={_renderItemPayments}
               ListFooterComponent={listFooterComp}
@@ -974,7 +1007,7 @@ const _paymentWithPlugnPayMethods = () => {
   };
 
   const _confirmCardPayment = async (paymentData) => {
-    const {paymentIntent, error} = await handleCardAction(
+    const { paymentIntent, error } = await handleCardAction(
       paymentData?.clientSecret,
     );
     if (paymentIntent) {
@@ -998,14 +1031,14 @@ const _paymentWithPlugnPayMethods = () => {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.ADD_MONEY}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: Colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: Colors.white }
         }
       />
       {preferences?.stripe_publishable_key ? (
@@ -1020,7 +1053,7 @@ const _paymentWithPlugnPayMethods = () => {
 
       <Modal
         onBackdropPress={() =>
-          updateState({isModalVisibleForPayFlutterWave: false})
+          updateState({ isModalVisibleForPayFlutterWave: false })
         }
         isVisible={isModalVisibleForPayFlutterWave}
         style={{
@@ -1037,7 +1070,7 @@ const _paymentWithPlugnPayMethods = () => {
           }}>
           <PayWithFlutterwave
             onAbort={() =>
-              updateState({isModalVisibleForPayFlutterWave: false})
+              updateState({ isModalVisibleForPayFlutterWave: false })
             }
             onRedirect={handleOnRedirect}
             options={{

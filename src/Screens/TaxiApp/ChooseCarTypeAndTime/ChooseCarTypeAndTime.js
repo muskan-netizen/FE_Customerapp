@@ -626,13 +626,25 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         break;
     }
   };
-  const _paymentWithPlugnPayMethods = (extraData, response) => {
-    console.log(extraData, 'extradataextradata')
+  const _paymentWithPlugnPayMethods = (extraData, response,data) => {
+    
+    console.log(extraData,response,paramData, 'extradataextradata')
     let selectedMethod = paramData?.selectedMethod?.code;
     let CardNumber = paramData?.Card_Number.split(" ").join("")
+    let expirydate
+    
+    if (paramData?.selectedMethod?.id == 50) {
+
+      expirydate = paramData?.year.concat(paramData?.date)
+      console.log(expirydate,paramData?.year,paramData?.date, 'expirydate')
+    }
+    else {
+      expirydate = paramData?.expiryDate
+    }
+  
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${response?.data?.payable_amount}&cv=${paramData?.cvc}&dt=${paramData?.expiryDate}&cno=${CardNumber}&order_number=${response?.data?.order_number}&action=pickup_delivery`,
+        `/${selectedMethod}?amount=${response?.data?.payable_amount || data?.amount}&cv=${paramData?.cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${response?.data?.order_number}&action=pickup_delivery`,
         {},
         {
           code: appData?.profile?.code,
@@ -691,12 +703,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             selectedCarOption: selectedCarOption?.sku,
           };
           console.log(extraData, data, "extraData, data");
-          if (selectedPayment?.id == 49) {
-            _paymentWithPlugnPayMethods(extraData, res)
-          }
-          else {
-            checkPaymentOptions(extraData, data);
-          }
+          if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res,data) }
+          else { checkPaymentOptions(extraData, data); }
 
         } else {
           console.log(res, "res>>>>>");

@@ -19,6 +19,7 @@ import {
   GET_SUBCATEGORY_VENDORS,
   HOMEPAGE_DATA_URL_V2,
   SEARCH_V2,
+  GET_PRODUCTS_ON_DASHBOARD,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
 import store from '../store';
@@ -328,6 +329,7 @@ export function homeDataV2(data = {}, headers = {}, isShortCode = false) {
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL_V2, data, headers)
       .then((res) => {
+        console.log(res,"homePage2");
         if (!isShortCode) {
           dispatch({
             type: types.HOME_DATA,
@@ -354,3 +356,18 @@ export function onGlobalSearchV2(query = '', data = {}, headers = {}) {
       });
   });
 }
+
+export function onGetProductsOnHomePage(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_PRODUCTS_ON_DASHBOARD, data, headers)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+

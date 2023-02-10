@@ -8,7 +8,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 16,
         // marginTop: moderateScaleVertical(12),
-        height: moderateScale(80)
+        height: moderateScale(100)
       },
 
 });

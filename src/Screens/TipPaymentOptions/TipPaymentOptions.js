@@ -49,13 +49,15 @@ import PaymentGateways from '../../Components/PaymentGateways';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  const [year, setYear] = useState()
+  const [date, setDate] = useState()
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(year,date,'year,date')
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily });
   const data = route?.params?.data;
@@ -323,9 +325,18 @@ export default function TipPaymentOptions({ navigation, route }) {
       ).replace(
         /\/\//g, '/').trim()
       setExpiryDate(ed)
+
     }
     if (type === 'CVC') {
       setCvc(data)
+    }
+    if (type === 'Year') {
+      let year = data.replace(/^\d{5}$/).trim()
+      setYear(year)
+    }
+    if (type === 'Date') {
+      let year = data.replace(/^([1-9]\/|[2-9])$/g, '0$1').trim()
+      setDate(year)
     }
   }
   //Change Payment method/ Navigate to payment screen
@@ -376,7 +387,7 @@ export default function TipPaymentOptions({ navigation, route }) {
           });
         } else
           if (
-            selectedPaymentMethod?.id == 49 &&
+            (selectedPaymentMethod?.id == 49 ||selectedPaymentMethod?.id == 50 ) &&
             selectedPaymentMethod?.off_site == 1
           ) {
             _paymentWithPlugnPayMethods()
@@ -406,8 +417,16 @@ export default function TipPaymentOptions({ navigation, route }) {
 
     let selectedMethod = selectedPaymentMethod.code;
     let CardNumber = cardNumber.split(" ").join("")
+    let expirydate
+    if (selectedPaymentMethod?.id == 50) {
 
-    let queryData = `/${selectedMethod}?amount=${data?.selectedTipAmount}&cv=${cvc}&dt=${expiryDate}&payment_option_id=${selectedPaymentMethod?.id}&cno=${CardNumber}&order_number=${data?.order_number}&action=tip`;
+      expirydate = year.concat(date)
+      console.log(expirydate, 'expirydate')
+    }
+    else {
+      expirydate = expiryDate
+    }
+    let queryData = `/${selectedMethod}?amount=${data?.selectedTipAmount}&cv=${cvc}&dt=${expirydate}&payment_option_id=${selectedPaymentMethod?.id}&cno=${CardNumber}&order_number=${data?.order_number}&action=tip`;
     actions
       .openPaymentWebUrl(
         queryData,
@@ -523,15 +542,20 @@ export default function TipPaymentOptions({ navigation, route }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
-          selectedPaymentMethod?.id === 49
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
         ) && (
             <PaymentGateways
-              isCardNumber={cardNumber}
-              cvc={cvc}
-              expiryDate={expiryDate}
-              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-              onChangeText={(data) => checkInputHandler('Card Number', data)}
-              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+            isCardNumber={cardNumber}
+            cvc={cvc}
+            expiryDate={expiryDate}
+            year={year}
+            onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+            onChangeText={(data) => checkInputHandler('Card Number', data)}
+            onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+            onChangeYearText={(data) => checkInputHandler('Year', data)}
+            onChangeDateText={(data) => checkInputHandler('Date', data)}
+            paymentid={selectedPaymentMethod?.id}
+            eDate={date}
             />
           )}
         {!!(

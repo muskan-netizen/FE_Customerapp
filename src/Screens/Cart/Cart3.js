@@ -1142,7 +1142,16 @@ function Cart({navigation, route}) {
 
     let selectPaymentCode = selectedPayment?.code?.toLowerCase()
     let CardNumber = paramsData?.CardNumber.split(" ").join("")
-    let ExpiryDate = paramsData?.expiryDate
+    
+    let expirydate
+    if (selectedPayment?.id == 50) {
+
+      expirydate = paramsData?.year.concat(paramsData?.date)
+      console.log(expirydate, 'expirydate')
+    }
+    else {
+      expirydate = paramsData?.expiryDate
+    }
     let cvc = paramsData?.cvc
     let Order_Number = response?.data?.order_number
     let amount = Number(cartData?.total_payable_amount) +
@@ -1150,7 +1159,7 @@ function Cart({navigation, route}) {
         ? Number(selectedTipAmount)
         : 0)
 
-    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${ExpiryDate}&cno=${CardNumber}&order_number=${Order_Number}&action=cart`;
+    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${Order_Number}&action=cart`;
     console.log('QueryData----------', queryData)
     actions
       .openPaymentWebUrl(
@@ -1221,7 +1230,8 @@ function Cart({navigation, route}) {
     actions
       .placeOrder(data, headerData)
       .then((res) => {
-        if (selectedPayment?.id === 49) {
+        console.log(res, "placeOrder");
+        if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
           updateState({ isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
         }
@@ -4188,6 +4198,7 @@ function Cart({navigation, route}) {
             </Text>
           </View>
         )}
+        {console.log(cartData?.total_service_fee,"cartData?.total_service_fee")}
 
         {!!Number(cartData?.total_service_fee) > 0 && (
           <View style={styles.bottomTabLableValue}>

@@ -1,5 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL='https://hattafoodhub.com/api/v1'
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
@@ -203,7 +204,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1';
-
+// export const API_BASE_URL='https://uber-weeds.com/api/v1'
 // export const API_BASE_URL = 'https://glamsouq.com/api/v1';
 // export const API_BASE_URL = 'https://getfix.com.my/api/v1';
 // export const API_BASE_URL = 'https://grn.green/api/v1';
@@ -222,6 +223,13 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //Harbans
 // export const API_BASE_URL = 'http://192.168.99.124:8000/api/v1';
+//sandeep
+//  export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
+
+ //Rajat
+ //export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
+
+
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // ottoweed
 // export const API_BASE_URL = 'order.ottoweed.com/api/v1';
@@ -392,7 +400,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 //Rentzy
 //export const API_BASE_URL = 'https://rentzy.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://sxm2go.com/api/v1';
 
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
@@ -422,6 +429,9 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // Etaim
 // export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
+
+//uberweeds
+export const API_BASE_URL='https://uber-weeds.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

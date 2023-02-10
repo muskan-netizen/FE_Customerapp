@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {sessionHandler} from './helperFunctions';
+import { sessionHandler } from './helperFunctions';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
@@ -46,8 +46,12 @@ export function saveShortCodeData(data) {
 }
 
 export function setItem(key, data) {
-  data = JSON.stringify(data);
-  return AsyncStorage.setItem(key, data);
+  if (!!data) {
+    data = JSON.stringify(data);
+    return AsyncStorage.setItem(key, data);
+  }else{
+    return {}
+  }
 }
 
 export function getItem(key) {
@@ -119,10 +123,10 @@ export async function apiReq(
     console.log('header sending--->', headers);
     console.log('data sending ---->', data);
     //
-    axios[method](endPoint, data, {headers})
+    axios[method](endPoint, data, { headers })
       .then((result) => {
-        console.log("core result",result)
-        const {data} = result;
+        console.log("core result", result)
+        const { data } = result;
 
         if (data.status === false) {
           return rej(data);
@@ -145,7 +149,7 @@ export async function apiReq(
           }
           return rej(error.response.data);
         } else {
-          return rej({error: 'Network Error', message: 'Network Error'});
+          return rej({ error: 'Network Error', message: 'Network Error' });
         }
         return rej(error);
       });
@@ -183,7 +187,7 @@ export function randomString(len = 5) {
 export const verticalAnimation = {
   gestureDirection: 'vertical',
   headerShown: false,
-  cardStyleInterpolator: ({current, layouts}) => {
+  cardStyleInterpolator: ({ current, layouts }) => {
     return {
       cardStyle: {
         transform: [

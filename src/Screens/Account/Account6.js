@@ -162,7 +162,7 @@ export default function AccountTemplateFive({navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
-      {shortCodeStatus ? (
+        {shortCodeStatus == '245bae' ? (
         <Header
           noLeftIcon={false}
           customLeft={() => (

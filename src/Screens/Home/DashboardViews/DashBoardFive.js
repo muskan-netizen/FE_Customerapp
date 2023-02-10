@@ -1,6 +1,6 @@
 import { useScrollToTop } from '@react-navigation/native';
 import _, { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import RNExitApp from 'react-native-exit-app';
@@ -123,6 +123,51 @@ export default function DashBoardFive({
   }, [appMainData?.vendors]);
 
 
+
+  const _renderVendors = useCallback(({ item, index }) => {
+    return (
+      <View style={{ marginHorizontal: moderateScale(16) }}>
+        <MarketCard3
+          data={item}
+          onPress={() => onPressVendor(item)}
+          extraStyles={{ margin: 2 }}
+        />
+      </View>
+    )
+  }, [vendorsData])
+
+  const listEmptyComponent = useCallback(() => {
+    return (
+      <Fragment>
+        <FastImage
+          source={imagePath.noDataFound}
+          resizeMode="contain"
+          style={{
+            width: moderateScale(140),
+            height: moderateScale(140),
+            alignSelf: 'center',
+            marginTop: moderateScaleVertical(30),
+          }}
+        />
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: textScale(11),
+            fontFamily: fontFamily.regular,
+            marginHorizontal: moderateScale(10),
+            lineHeight: moderateScale(20),
+            marginTop: moderateScale(5),
+          }}>
+          {businessType == 'home_service'
+            ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+            : `${strings.SORRY_MSG}`}
+        </Text>
+      </Fragment>
+    )
+  }, [vendorsData])
+
+
+
   useEffect(() => {
     if (!!appMainData?.categories && appMainData?.categories.length) {
       if (appStyle?.homePageLayout == 5) {
@@ -223,16 +268,6 @@ export default function DashBoardFive({
     );
   };
 
-  const _renderVendors = ({ item, index }) => (
-    <View style={{ marginHorizontal: moderateScale(16) }}>
-      <MarketCard3
-        data={item}
-        onPress={() => onPressVendor(item)}
-        extraStyles={{ margin: 2 }}
-      />
-    </View>
-  );
-
   const seeMoreCategories = () => {
     updateState({
       categoriesData: !seeMore
@@ -242,7 +277,7 @@ export default function DashBoardFive({
     });
   };
 
-  const renderBanners = ({ item }) => {
+  const renderBanners = useCallback(({ item }) => {
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
@@ -253,7 +288,7 @@ export default function DashBoardFive({
           : '400/600',
     );
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
+      <TouchableOpacity style={{marginTop:moderateScaleVertical(16)}} activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -282,7 +317,8 @@ export default function DashBoardFive({
         />
       </TouchableOpacity>
     );
-  };
+  }, [appMainData?.mobile_banners || appData?.mobile_banners])
+
 
   const renderLaundryBanners = ({ item }) => {
     const imageUrl = getImageUrl(
@@ -666,122 +702,125 @@ export default function DashBoardFive({
   }
 
   const vendorHeader = () => {
-    if (appData?.profile?.preferences?.single_vendor) {
-      return (
-        <View
-          style={{
-            marginBottom: moderateScaleVertical(24),
-            marginTop: moderateScaleVertical(8),
-          }}
-        />
-      );
-    }
     return (
-      <View
-        key={Math.random()}
-        style={{
-          marginBottom:
-            getBundleId() == appIds.muvpod ? moderateScaleVertical(10) : 0,
-        }}>
-        {getBundleId() == appIds.muvpod ? null : (
-          <View style={{ ...styles.viewAllVeiw }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                ...styles.exploreStoresTxt,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginTop: 0,
-                flex: 1,
-              }}>
-              {getBundleId() == appIds.quickLube
-                ? vendorsData.length > 1
-                  ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`
-                  : strings.BOOK_HERE
-                : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
-              {/* {strings.EXPLORE_STORES}{' '}
-            {appData?.profile?.preferences?.vendors_nomenclature} */}
-            </Text>
-
-            {!!vendorsData && vendorsData.length > 1 && (
-              <TouchableOpacity
-                style={{ marginHorizontal: moderateScale(4) }}
-                onPress={() => onViewAll('vendor', appMainData?.vendors)}>
+      <Fragment>
+        {showAllTempCartOrders()}
+        {!!isGetEstimation ? laundryCategoriesBanners() : categoriesBanners()}
+        {!!appData?.profile?.preferences?.single_vendor ?
+          <View
+            style={{
+              marginBottom: moderateScaleVertical(24),
+              marginTop: moderateScaleVertical(8),
+            }}
+          /> :
+          <View
+            key={Math.random()}
+            style={{
+              marginBottom:
+                getBundleId() == appIds.muvpod ? moderateScaleVertical(10) : 0,
+            }}>
+            {getBundleId() == appIds.muvpod ? null : (
+              <View style={{ ...styles.viewAllVeiw }}>
                 <Text
+                  numberOfLines={1}
                   style={{
-                    ...styles.viewAllText,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : themeColors.primary_color,
+                    ...styles.exploreStoresTxt,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    marginTop: 0,
+                    flex: 1,
                   }}>
-                  {getBundleId() == appIds.qdelo
-                    ? `${strings.VIEW_ALL} ${strings.STORES}`
-                    : strings.VIEW_ALL}
+                  {getBundleId() == appIds.quickLube
+                    ? vendorsData.length > 1
+                      ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`
+                      : strings.BOOK_HERE
+                    : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
+                  {/* {strings.EXPLORE_STORES}{' '}
+           {appData?.profile?.preferences?.vendors_nomenclature} */}
                 </Text>
-              </TouchableOpacity>
-            )}
-            <Menu style={{ alignSelf: 'flex-end' }}>
-              <MenuTrigger>
-                <View style={styles.menuView}>
-                  <FastImage
-                    style={{
-                      height: moderateScaleVertical(16),
-                      width: moderateScale(16),
-                      tintColor: isDarkMode
-                        ? MyDarkTheme.colors.white
-                        : colors.black,
-                    }}
-                    resizeMode="contain"
-                    source={isDarkMode? imagePath.sortSelected: imagePath.sort}
-                  />
-                  <Text
-                    style={{
-                      fontSize: textScale(12),
-                      marginHorizontal: moderateScale(5),
-                      fontFamily: fontFamily.regular,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {!currSelectedFilter
-                      ? strings.RELEVANCE
-                      : currSelectedFilter?.type}
-                  </Text>
-                </View>
-              </MenuTrigger>
-              <MenuOptions
-                customStyles={{
-                  optionsContainer: {
-                    marginTop: moderateScaleVertical(36),
-                    width: moderateScale(100),
-                  },
-                }}>
-                {homeAllFilters()?.map((item, index) => {
-                  return (
-                    <View key={index}>
-                      <MenuOption
-                        onSelect={() => onSelectedFilter(item)}
-                        key={String(index)}
-                        text={item?.type}
+
+                {!!vendorsData && vendorsData.length > 1 && (
+                  <TouchableOpacity
+                    style={{ marginHorizontal: moderateScale(4) }}
+                    onPress={() => onViewAll('vendor', appMainData?.vendors)}>
+                    <Text
+                      style={{
+                        ...styles.viewAllText,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : themeColors.primary_color,
+                      }}>
+                      {getBundleId() == appIds.qdelo
+                        ? `${strings.VIEW_ALL} ${strings.STORES}`
+                        : strings.VIEW_ALL}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+                <Menu style={{ alignSelf: 'flex-end' }}>
+                  <MenuTrigger>
+                    <View style={styles.menuView}>
+                      <FastImage
                         style={{
-                          marginVertical: moderateScaleVertical(5),
+                          height: moderateScaleVertical(16),
+                          width: moderateScale(16),
+                          tintColor: isDarkMode
+                            ? MyDarkTheme.colors.white
+                            : colors.black,
                         }}
+                        resizeMode="contain"
+                        source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
                       />
-                      <View
+                      <Text
                         style={{
-                          borderBottomWidth: 1,
-                          borderBottomColor: colors.greyColor,
-                        }}
-                      />
+                          fontSize: textScale(12),
+                          marginHorizontal: moderateScale(5),
+                          fontFamily: fontFamily.regular,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {!currSelectedFilter
+                          ? strings.RELEVANCE
+                          : currSelectedFilter?.type}
+                      </Text>
                     </View>
-                  );
-                })}
-              </MenuOptions>
-            </Menu>
+                  </MenuTrigger>
+                  <MenuOptions
+                    customStyles={{
+                      optionsContainer: {
+                        marginTop: moderateScaleVertical(36),
+                        width: moderateScale(100),
+                      },
+                    }}>
+                    {homeAllFilters()?.map((item, index) => {
+                      return (
+                        <View key={index}>
+                          <MenuOption
+                            onSelect={() => onSelectedFilter(item)}
+                            key={String(index)}
+                            text={item?.type}
+                            style={{
+                              marginVertical: moderateScaleVertical(5),
+                            }}
+                          />
+                          <View
+                            style={{
+                              borderBottomWidth: 1,
+                              borderBottomColor: colors.greyColor,
+                            }}
+                          />
+                        </View>
+                      );
+                    })}
+                  </MenuOptions>
+                </Menu>
+              </View>
+            )}
           </View>
-        )}
-      </View>
+        }
+      </Fragment>
     );
   };
+
 
   const onPressViewEditAndReplace = (item) => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -921,112 +960,81 @@ export default function DashBoardFive({
     );
   };
 
-  return (
-    <View style={{ flex: 1 }}>
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-          />
-        }>
-        {showAllTempCartOrders()}
-        <Animatable.View animation={'fadeInUp'} delay={200}>
-          {!!isGetEstimation ? laundryCategoriesBanners() : categoriesBanners()}
-          {
-            <>
-              <FlatList
-                scrollEnabled={false}
-                ListHeaderComponent={vendorHeader()}
-                showsVerticalScrollIndicator={false}
-                alwaysBounceVertical={true}
-                // ref={ref}
-                data={vendorsData}
-                keyExtractor={(item) => item?.id?.toString()}
-                showsHorizontalScrollIndicator={false}
-                renderItem={_renderVendors}
-                ListEmptyComponent={() => (
-                  <View>
-                    <FastImage
-                      source={imagePath.noDataFound}
-                      resizeMode="contain"
-                      style={{
-                        width: moderateScale(140),
-                        height: moderateScale(140),
-                        alignSelf: 'center',
-                        marginTop: moderateScaleVertical(30),
-                      }}
-                    />
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        fontSize: textScale(11),
-                        fontFamily: fontFamily.regular,
-                        marginHorizontal: moderateScale(10),
-                        lineHeight: moderateScale(20),
-                        marginTop: moderateScale(5),
-                      }}>
-                      {businessType == 'home_service'
-                        ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
-                        : `${strings.SORRY_MSG}`}
-                    </Text>
-                  </View>
-                )}
-                ItemSeparatorComponent={() => (
-                  <View style={{ height: moderateScale(10) }} />
-                )}
-              />
-
-              {checkForBrand && (
-                <View style={{}}>
-                  {appMainData &&
-                    appMainData?.brands &&
-                    !!appMainData?.brands.length && (
-                      <>
-                        <View>{listHeader(strings.POPULAR_BRANDS)}</View>
-                        <FlatList
-                          showsHorizontalScrollIndicator={false}
-                          horizontal
-                          data={appMainData?.brands}
-                          renderItem={renderBrands}
-                          keyExtractor={(item) => item?.id?.toString()}
-                          ItemSeparatorComponent={() => (
-                            <View style={{ marginRight: moderateScale(12) }} />
-                          )}
-                          ListHeaderComponent={() => (
-                            <View style={{ marginLeft: moderateScale(16) }} />
-                          )}
-                          ListFooterComponent={() => (
-                            <View style={{ marginRight: moderateScale(16) }} />
-                          )}
-                        />
-                      </>
+  const listFooterComponent = () => {
+    return (
+      <Fragment>
+        {checkForBrand && (
+          <View style={{}}>
+            {appMainData &&
+              appMainData?.brands &&
+              !!appMainData?.brands.length && (
+                <>
+                  <View>{listHeader(strings.POPULAR_BRANDS)}</View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.brands}
+                    renderItem={renderBrands}
+                    keyExtractor={(item) => item?.id?.toString()}
+                    ItemSeparatorComponent={() => (
+                      <View style={{ marginRight: moderateScale(12) }} />
                     )}
-                </View>
+                    ListHeaderComponent={() => (
+                      <View style={{ marginLeft: moderateScale(16) }} />
+                    )}
+                    ListFooterComponent={() => (
+                      <View style={{ marginRight: moderateScale(16) }} />
+                    )}
+                  />
+                </>
               )}
-            </>
-          }
+          </View>
+        )}
+        {businessType !== 'laundry' && (
+          <View style={{}}>
+            {appMainData &&
+              appMainData?.featured_products &&
+              !!appMainData?.featured_products.length && (
+                <>
+                  {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+                    <View>{listHeader(strings.ALCOHAL)}</View>
+                  ) : (
+                    <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  )}
 
-          {businessType !== 'laundry' && (
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.featured_products}
+                    renderItem={renderFeaturedProducts}
+                    keyExtractor={(item) => item?.id?.toString()}
+                    ItemSeparatorComponent={() => (
+                      <View style={{ marginRight: moderateScale(16) }} />
+                    )}
+                    ListHeaderComponent={() => (
+                      <View style={{ marginLeft: moderateScale(16) }} />
+                    )}
+                    ListFooterComponent={() => (
+                      <View style={{ marginRight: moderateScale(16) }} />
+                    )}
+                  />
+                </>
+              )}
+          </View>
+        )}
+
+        {businessType !== 'laundry' &&
+          appIds.orderchekout != DeviceInfo.getBundleId() && (
             <View style={{}}>
               {appMainData &&
-                appMainData?.featured_products &&
-                !!appMainData?.featured_products.length && (
+                appMainData?.new_products &&
+                !!appMainData?.new_products.length && (
                   <>
-                    {appIds.orderchekout == DeviceInfo.getBundleId() ? (
-                      <View>{listHeader(strings.ALCOHAL)}</View>
-                    ) : (
-                      <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
-                    )}
-
+                    <View>{listHeader(strings.NEW_PRODUCTS)}</View>
                     <FlatList
                       showsHorizontalScrollIndicator={false}
                       horizontal
-                      data={appMainData?.featured_products}
+                      data={appMainData?.new_products}
                       renderItem={renderFeaturedProducts}
                       keyExtractor={(item) => item?.id?.toString()}
                       ItemSeparatorComponent={() => (
@@ -1044,36 +1052,7 @@ export default function DashBoardFive({
             </View>
           )}
 
-          {businessType !== 'laundry' &&
-            appIds.orderchekout != DeviceInfo.getBundleId() && (
-              <View style={{}}>
-                {appMainData &&
-                  appMainData?.new_products &&
-                  !!appMainData?.new_products.length && (
-                    <>
-                      <View>{listHeader(strings.NEW_PRODUCTS)}</View>
-                      <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        data={appMainData?.new_products}
-                        renderItem={renderFeaturedProducts}
-                        keyExtractor={(item) => item?.id?.toString()}
-                        ItemSeparatorComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
-                        )}
-                        ListHeaderComponent={() => (
-                          <View style={{ marginLeft: moderateScale(16) }} />
-                        )}
-                        ListFooterComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
-                        )}
-                      />
-                    </>
-                  )}
-              </View>
-            )}
-
-          {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+        {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
             <></>
           ) : (
             <View>
@@ -1102,104 +1081,134 @@ export default function DashBoardFive({
                 )}
             </View>
           )} */}
-        </Animatable.View>
+
+
+        {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={isConfirmAgeModal}
+            // onRequestClose={() => {
+            //   Alert.alert("Modal has been closed.");
+            //   setModalVisible(!modalVisible);
+            // }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                }}>
+                <View style={styles.innerAgeModaleView}>
+                  <TouchableOpacity
+                    style={{
+                      alignSelf: 'center',
+                      marginBottom: moderateScale(10),
+                    }}>
+                    <Image
+                      style={{
+                        height: moderateScaleVertical(25),
+                        width: moderateScale(25),
+                      }}
+                      source={imagePath.icCross18}
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={[
+                      styles.ageModalText,
+                      { color: isDarkMode ? colors.white : colors.black },
+                    ]}>
+                    {strings.AGE_VERIFICATION}
+                  </Text>
+                  {/* <View style={styles.horizontalLine} /> */}
+                  <View style={styles.horizontalLine}>
+                    <DashedLine
+                      dashLength={5}
+                      dashThickness={1}
+                      dashGap={2}
+                      dashColor={colors.black}
+                      style={{ marginTop: moderateScale(7) }}
+                    />
+                  </View>
+                  <Text style={styles.ageConfirmationText}>
+                    {strings.YOU_MUST_BE_18}
+                  </Text>
+                  <View
+                    style={{
+                      marginVertical: moderateScaleVertical(10),
+                      width: '70%',
+                    }}>
+                    <GradientButton
+                      colorsArray={[
+                        themeColors.primary_color,
+                        themeColors.primary_color,
+                      ]}
+                      textStyle={{
+                        fontFamily: fontFamily.medium,
+                        color: colors.white,
+                      }}
+                      onPress={() => {
+                        onConfirmAge(false);
+                      }}
+                      borderRadius={moderateScale(5)}
+                      btnText={strings.YES_I_AM_ABOVE_18}
+                      containerStyle={{
+                        width: '100%',
+                      }}
+                    />
+                  </View>
+
+                  <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle}>
+                    {strings.TAKE_ME_OUT}
+                  </Text>
+                </View>
+              </View>
+            </Modal>
+          </View>
+        )}
         <View
           style={{
             height:
               Platform.OS == 'ios' ? moderateScale(60) : moderateScale(90),
           }}
         />
-      </ScrollView>
+      </Fragment>
+    )
+  }
 
-      {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isConfirmAgeModal}
-          // onRequestClose={() => {
-          //   Alert.alert("Modal has been closed.");
-          //   setModalVisible(!modalVisible);
-          // }}
-          >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,0.5)',
-              }}>
-              <View style={styles.innerAgeModaleView}>
-                <TouchableOpacity
-                  style={{
-                    alignSelf: 'center',
-                    marginBottom: moderateScale(10),
-                  }}>
-                  <Image
-                    style={{
-                      height: moderateScaleVertical(25),
-                      width: moderateScale(25),
-                    }}
-                    source={imagePath.icCross18}
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={[
-                    styles.ageModalText,
-                    { color: isDarkMode ? colors.white : colors.black },
-                  ]}>
-                  {strings.AGE_VERIFICATION}
-                </Text>
-                {/* <View style={styles.horizontalLine} /> */}
-                <View style={styles.horizontalLine}>
-                  <DashedLine
-                    dashLength={5}
-                    dashThickness={1}
-                    dashGap={2}
-                    dashColor={colors.black}
-                    style={{ marginTop: moderateScale(7) }}
-                  />
-                </View>
-                <Text style={styles.ageConfirmationText}>
-                  {strings.YOU_MUST_BE_18}
-                </Text>
-                <View
-                  style={{
-                    marginVertical: moderateScaleVertical(10),
-                    width: '70%',
-                  }}>
-                  <GradientButton
-                    colorsArray={[
-                      themeColors.primary_color,
-                      themeColors.primary_color,
-                    ]}
-                    textStyle={{
-                      fontFamily: fontFamily.medium,
-                      color: colors.white,
-                    }}
-                    onPress={() => {
-                      onConfirmAge(false);
-                    }}
-                    borderRadius={moderateScale(5)}
-                    btnText={strings.YES_I_AM_ABOVE_18}
-                    containerStyle={{
-                      width: '100%',
-                    }}
-                  />
-                </View>
-
-                <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle}>
-                  {strings.TAKE_ME_OUT}
-                </Text>
-              </View>
-            </View>
-          </Modal>
-        </View>
-      )}
+  return (
+    <View style={{ flex: 1 }}>
+        <Animatable.View animation={'fadeInUp'} delay={200}>
+          <FlatList
+            ref={scrollRef}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+              />
+            }
+            ListHeaderComponent={vendorHeader()}
+            showsVerticalScrollIndicator={false}
+            alwaysBounceVertical={true}
+            data={vendorsData}
+            keyExtractor={(item) => item?.id?.toString()}
+            showsHorizontalScrollIndicator={false}
+            renderItem={_renderVendors}
+            ListEmptyComponent={listEmptyComponent}
+            ItemSeparatorComponent={() => (
+              <View style={{ height: moderateScale(10) }} />
+            )}
+            ListFooterComponent={listFooterComponent}
+          />
+        </Animatable.View>
+  
       {!!userData?.auth_token &&
         !!appData?.profile?.preferences?.show_subscription_plan_popup && (
           <SubscriptionModal
