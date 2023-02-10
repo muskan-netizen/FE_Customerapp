@@ -354,6 +354,10 @@ export default function Products({ route, navigation }) {
 
   //usecallback functions
 
+  const goToProductDetail = (data) =>{
+    navigation.navigate(navigationStrings.PRODUCTDETAIL, {data, isProductList: true})
+  }
+
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
       console.log(item, 'renderSectionItem=>');
@@ -365,7 +369,7 @@ export default function Products({ route, navigation }) {
           <ProductCard3
             data={item}
             index={index}
-            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+            onPress={()=>goToProductDetail(item)}
             onAddtoWishlist={() => _onAddtoWishlist(item)}
             addToCart={() => addSingleItem(item, section, index, selectedAppointmentSlot)}
             onIncrement={() => checkIsCustomize(item, section, index, 1)}
@@ -503,7 +507,7 @@ export default function Products({ route, navigation }) {
           <ProductCard3
             data={item}
             index={index}
-            onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+            onPress={()=>goToProductDetail(item)}
             onAddtoWishlist={() => _onAddtoWishlist(item)}
             addToCart={() => addSingleItem(item, null, index, selectedAppointmentSlot)}
             onIncrement={() => checkIsCustomize(item, null, index, 1)}
