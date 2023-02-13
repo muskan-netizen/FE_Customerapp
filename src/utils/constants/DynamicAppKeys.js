@@ -129,7 +129,7 @@ const shortCodes = {
   ridetci: '89e246',
   noki: '779cb6',
   driveree: '1ead91',
-  rxnow: '476dfb',
+  rxnow: '58e790',
   seachangevending: 'caacbc',
   ored: 'fb0df5',
   orderchekout: 'f6cd9d',
