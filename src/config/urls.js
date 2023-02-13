@@ -45,7 +45,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1' // surivendor sir
 // export const API_BASE_URL='https://myevplus.com/api/v1'
 // export const API_BASE_URL = 'https://choizez.com/api/v1';
-// export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1';
+export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 //export const API_BASE_URL = 'https://sales.focushires.com/api/v1'; //sales demo
@@ -431,7 +431,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
 
 //uberweeds
-export const API_BASE_URL='https://uber-weeds.com/api/v1'
+// export const API_BASE_URL='https://uber-weeds.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
