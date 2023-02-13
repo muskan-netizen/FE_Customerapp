@@ -28,7 +28,7 @@
 
  function SwipeableSection(props) {
  
-    const {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData} = props;
+    const {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,strings} = props;
     return (
             <>
             {item?.vendor_products.length > 0

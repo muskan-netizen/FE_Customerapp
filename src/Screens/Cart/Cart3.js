@@ -2637,6 +2637,7 @@ function Cart({navigation, route}) {
             currencies={currencies}
             MyDarkTheme={MyDarkTheme}
             cartData={cartData}
+            strings={strings}
 
           />
           {/************ end render cart items *************/}
