@@ -1,8 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
-
+// export const API_BASE_URL='https://vduonline.co.in/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
 
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
@@ -226,8 +226,8 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //sandeep
 //  export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
 
- //Rajat
- //export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
+//Rajat
+//export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
 
 
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
@@ -431,7 +431,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
 
 //uberweeds
-export const API_BASE_URL='https://uber-weeds.com/api/v1'
+// export const API_BASE_URL='https://uber-weeds.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -751,3 +751,6 @@ export const SAVE_INFULENCER_INFO = getApiUrl(
 
 export const CHECK_SLOTS_LIMIT = getApiUrl('/cart/checkSlotOrders');
 export const GET_SLOTS_FOR_APPOINTMENT = getApiUrl('/getTimeSlotsForOndemand');
+
+
+export const GET_PRODUCTS_ON_DASHBOARD = getApiUrl('/v2/get_products')

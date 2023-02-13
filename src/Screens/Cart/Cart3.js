@@ -7259,7 +7259,7 @@ function Cart({navigation, route}) {
           failOffsetX={[-5, 5]}
           animateOnMount={true}
           handleComponent={null}>
-          <Header
+          {/* <Header
             leftIcon={
               appStyle?.homePageLayout === 2
                 ? imagePath.backArrow
@@ -7275,7 +7275,7 @@ function Cart({navigation, route}) {
                 ? { backgroundColor: MyDarkTheme.colors.background }
                 : { backgroundColor: colors.backgroundGrey }
             }
-          />
+          /> */}
           <BottomSheetScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
