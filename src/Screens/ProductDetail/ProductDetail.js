@@ -92,13 +92,15 @@ export default function ProductDetail({ route, navigation }) {
   const styles = stylesFunc({ themeColors, fontFamily });
   const commonStyles = commonStylesFunc({ fontFamily });
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
-  const { data } = route.params;
+  const { data, isProductList = false } = route.params;
+
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
     isLoadingB: false,
     isLoadingC: false,
-    productId: data?.products?.id|| data?.item?.id || data?.id,
+    productId: data?.products?.id || data?.item?.id || data?.id,
     productDetailData: null,
     productPriceData: null,
     variantSet: [],
@@ -156,7 +158,7 @@ export default function ProductDetail({ route, navigation }) {
   const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null)
 
 
-  
+
 
 
   //Saving the initial state
@@ -1145,7 +1147,7 @@ export default function ProductDetail({ route, navigation }) {
 
 
     if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot) && isEmpty(appointmentSelectedDate)) {
-       alert('Please select appointment date and slot')
+      alert('Please select appointment date and slot')
       return
     }
 
@@ -1179,7 +1181,7 @@ export default function ProductDetail({ route, navigation }) {
       moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
     data['total_booking_time'] = rentalProductDuration;
-    
+
     data['additional_increments_hrs_min'] =
       rentalProductDuration -
       Number(productDetailNew?.product?.minimum_duration) * 60 +
@@ -1189,14 +1191,14 @@ export default function ProductDetail({ route, navigation }) {
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
-    if(dine_In_Type =='appointment'){
-      data ['schedule_slot']=selectedAppointmentSlot?.value,
-      data['scheduled_date_time']= String(
-        moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
-      );
-      
+    if (dine_In_Type == 'appointment') {
+      data['schedule_slot'] = selectedAppointmentSlot?.value,
+        data['scheduled_date_time'] = String(
+          moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
+        );
+
     }
-    
+
     console.log(data, 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
@@ -1214,11 +1216,18 @@ export default function ProductDetail({ route, navigation }) {
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
         updateState({ isLoadingC: false });
-        navigation.navigate(navigationStrings.PRODUCT_LIST,{data:{item :data,
-          isLoading:true,
-          data:res?.data}});
-      })
-      .catch((error) => errorMethodSecond(error, addonSet));
+        if (!!isProductList) {
+          navigation.navigate(navigationStrings.PRODUCT_LIST, {
+            data: {
+              item: data,
+              isLoading: true,
+              data: res?.data
+            }
+          });
+        }else{
+          navigation.goBack()
+        }
+      }).catch((error) => errorMethodSecond(error, addonSet));
   };
   const addToCart = () => {
     if (isProductAvailable) {
@@ -1564,7 +1573,7 @@ export default function ProductDetail({ route, navigation }) {
 
       return
     }
-    
+
     setSelectedDate(date);
     actions
       .getVendorShippingSlots(
@@ -2369,7 +2378,7 @@ export default function ProductDetail({ route, navigation }) {
                 </Text>
               ) : null}
               {
-                !!productPreferences?.appointment_check && dine_In_Type =='appointment' &&
+                !!productPreferences?.appointment_check && dine_In_Type == 'appointment' &&
                 <View style={{
                   flexDirection: "row",
                   alignItems: "center",

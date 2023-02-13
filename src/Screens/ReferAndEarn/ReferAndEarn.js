@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
-import {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import { isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -13,14 +13,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {MultiSelect} from 'react-native-element-dropdown';
+import { useDarkMode } from 'react-native-dynamic';
+import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-simple-toast';
-import {Row, Rows, Table} from 'react-native-table-component';
-import {useSelector} from 'react-redux';
-import {v4 as uuidv4} from 'uuid';
+import { Row, Rows, Table } from 'react-native-table-component';
+import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../Components/GallaryCameraImgPicker';
@@ -36,9 +36,10 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {cameraHandler, checkValueExistInAry} from '../../utils/commonFunction';
-import {showError} from '../../utils/helperFunctions';
-import {androidCameraPermission} from '../../utils/permissions';
+import { MyDarkTheme } from '../../styles/theme';
+import { cameraHandler, checkValueExistInAry } from '../../utils/commonFunction';
+import { showError } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
 import validations from '../../utils/validations';
 
 export default function ReferAndEarn() {
@@ -65,7 +66,7 @@ export default function ReferAndEarn() {
   } = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
 
   const [availableInfluencerTypes, setAvailableInfluencerTypes] = useState([]);
   const [isInfluencerCategoryForm, setInfluencerCategoryForm] = useState(false);
@@ -350,7 +351,7 @@ export default function ReferAndEarn() {
             setIsImagePickerModal(false);
           }
         })
-        .catch(() => {}, setIsImagePickerModal(false));
+        .catch(() => { }, setIsImagePickerModal(false));
     }
   };
 
@@ -411,7 +412,7 @@ export default function ReferAndEarn() {
   );
 
   const renderItem = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <TouchableOpacity
           onPress={() => onInfluencerCategory(item)}
@@ -494,7 +495,7 @@ export default function ReferAndEarn() {
                               setIsImagePickerModal(true);
                             }}>
                             <Image
-                              source={{uri: aadharFrontImg?.uri}}
+                              source={{ uri: aadharFrontImg?.uri }}
                               style={{
                                 height: moderateScaleVertical(100),
                                 width: '95%',
@@ -545,7 +546,7 @@ export default function ReferAndEarn() {
                               setIsImagePickerModal(true);
                             }}>
                             <Image
-                              source={{uri: aadharBackImg?.uri}}
+                              source={{ uri: aadharBackImg?.uri }}
                               style={{
                                 height: moderateScaleVertical(100),
                                 width: '95%',
@@ -703,7 +704,7 @@ export default function ReferAndEarn() {
   };
 
   const renderAttributeOptions = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <View
           style={{
@@ -755,9 +756,9 @@ export default function ReferAndEarn() {
 
   const InfluncerHistoryView = () => {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         {influencerRegistredUsers?.is_approved == 0 ||
-        influencerRegistredUsers?.is_approved == 2 ? (
+          influencerRegistredUsers?.is_approved == 2 ? (
           <View
             style={{
               flex: 1,
@@ -888,7 +889,11 @@ export default function ReferAndEarn() {
   };
 
   return (
-    <WrapperContainer isLoading={isLoading}>
+    <WrapperContainer
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
+      isLoading={isLoading}>
       {!isInfluencerCategoryForm ? (
         <KeyboardAwareScrollView
           refreshControl={
@@ -909,16 +914,20 @@ export default function ReferAndEarn() {
                 flexGrow: 1,
                 marginHorizontal: moderateScale(10),
               }}>
-              <Text style={styles.selectCategoryTxt}>
+              <Text style={{
+                ...styles.selectCategoryTxt, color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyJ,
+              }}>
                 {strings.SELECT_INFLUENCER_CATEGORY}
               </Text>
               <FlatList
                 data={availableInfluencerTypes}
                 renderItem={renderItem}
                 numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
+                columnWrapperStyle={{ justifyContent: 'space-between' }}
                 ItemSeparatorComponent={() => (
-                  <View style={{height: moderateScaleVertical(12)}} />
+                  <View style={{ height: moderateScaleVertical(12) }} />
                 )}
                 ListEmptyComponent={() =>
                   !isLoading && (
@@ -927,7 +936,9 @@ export default function ReferAndEarn() {
                         source={imagePath.noDataFound}
                         style={styles.noDataFoundImg}
                       />
-                      <Text style={styles.noDataFoundTxt}>
+                      <Text style={{...styles.noDataFoundTxt, color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyJ,}}>
                         {strings.NODATAFOUND}
                       </Text>
                     </View>
@@ -954,10 +965,10 @@ export default function ReferAndEarn() {
   );
 }
 
-const stylesFunc = ({fontFamily, themeColors}) => {
+const stylesFunc = ({ fontFamily, themeColors }) => {
   const styles = StyleSheet.create({
-    head: {height: 40, backgroundColor: '#f1f8ff'},
-    text: {margin: 6, textAlign: 'center'},
+    head: { height: 40, backgroundColor: '#f1f8ff' },
+    text: { margin: 6, textAlign: 'center' },
     attributeTitle: {
       fontFamily: fontFamily?.regular,
       fontSize: textScale(14),

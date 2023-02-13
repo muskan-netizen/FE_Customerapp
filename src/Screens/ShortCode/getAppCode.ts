@@ -3,6 +3,7 @@ import { appIds, shortCodes } from "../../utils/constants/DynamicAppKeys";
 
 export const getAppCode = () => {
     switch (getBundleId()) {
+        case appIds.royoorder: return shortCodes.royoorder;
         case appIds.tranzit: return shortCodes.tranzit
         case appIds.runrun: return shortCodes.runrun;
         case appIds.hmoobhub: return shortCodes.hmoobhub;
@@ -526,6 +527,6 @@ export const getAppCode = () => {
         case appIds.ngoal: return shortCodes.ngoal;
         
 
-        default: return ''
+        default: return '245bae'
     }
 }
