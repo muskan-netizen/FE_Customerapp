@@ -50,6 +50,7 @@ const PaymentOptions = ({ navigation, route }) => {
   const { appData, appStyle, themeColors } = useSelector(
     (state) => state.initBoot
   );
+  const { profile } = appData;
   const [year, setYear] = useState()
   const [date, setDate] = useState()
 

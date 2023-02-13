@@ -513,26 +513,28 @@ export default function TaxiHomeDashbord({
 
   const moveToScreen = (details) => {
     updateState({ fullMapShow: false });
-    if (!!userData?.auth_token) {
-      let prefillAdress = null;
-      if (!!details) {
-        prefillAdress = {
-          longitude: Number(details?.longitude),
-          latitude: Number(details?.latitude),
-          address: details?.address,
-          task_type_id: 1,
-          pre_address: details?.address,
-        };
+    setTimeout(() => {
+      if (!!userData?.auth_token) {
+        let prefillAdress = null;
+        if (!!details) {
+          prefillAdress = {
+            longitude: Number(details?.longitude),
+            latitude: Number(details?.latitude),
+            address: details?.address,
+            task_type_id: 1,
+            pre_address: details?.address,
+          };
+        }
+        actions.saveSchduleTime('now');
+        navigation.navigate(navigationStrings.ADDADDRESS, {
+          cat: appMainData?.categories[0],
+          datetime: { slectedDate, selectedTime },
+          prefillAdress: !!prefillAdress ? prefillAdress : null,
+        });
+      } else {
+        actions.setAppSessionData('on_login');
       }
-      actions.saveSchduleTime('now');
-      navigation.navigate(navigationStrings.ADDADDRESS, {
-        cat: appMainData?.categories[0],
-        datetime: { slectedDate, selectedTime },
-        prefillAdress: !!prefillAdress ? prefillAdress : null,
-      });
-    } else {
-      actions.setAppSessionData('on_login');
-    }
+    }, 800);
   };
 
   const addressView = (image) => {
