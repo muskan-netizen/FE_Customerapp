@@ -186,7 +186,7 @@ export default function Settings({ route, navigation }) {
           await AsyncStorage.setItem('autoConnectEnabled', 'true');
           await AsyncStorage.setItem('BleDevice2', btData);
           console.log('++++++22', btData);
-          if (lang === 'ar') {
+          if (lang === 'ar' || lang === 'he') {
             I18nManager.forceRTL(true);
             setItem('language', lang);
             changeLaguage(lang);
@@ -201,7 +201,7 @@ export default function Settings({ route, navigation }) {
             (s) => { },
           );
         } else {
-          if (lang === 'ar') {
+          if (lang === 'ar' || lang === 'he') {
             I18nManager.forceRTL(true);
             setItem('language', lang);
             changeLaguage(lang);

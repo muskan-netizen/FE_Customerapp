@@ -46,12 +46,8 @@ export function saveShortCodeData(data) {
 }
 
 export function setItem(key, data) {
-  if (!!data) {
-    data = JSON.stringify(data);
+  data = JSON.stringify(data);
     return AsyncStorage.setItem(key, data);
-  }else{
-    return {}
-  }
 }
 
 export function getItem(key) {
