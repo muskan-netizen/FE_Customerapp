@@ -144,7 +144,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //classicab
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 
-export const API_BASE_URL = 'https://pas41.net/api/v1';
+// export const API_BASE_URL = 'https://pas41.net/api/v1';
 //export const API_BASE_URL='https://rhondaisamazingtaxi.com/api/v1'
 // export const API_BASE_URL = 'https://jiffex.in/api/v1'
 
@@ -191,7 +191,7 @@ export const API_BASE_URL = 'https://pas41.net/api/v1';
 // export const API_BASE_URL = 'https://heybuddy.com.mx/api/v1';
 
 //myjazzybug
-// export const API_BASE_URL = 'https://myjazzybug.club/api/v1';
+export const API_BASE_URL = 'https://myjazzybug.club/api/v1';
 
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
 // export const API_BASE_URL = 'https://dimahalal.com/api/v1'; // dimaVega

@@ -227,7 +227,7 @@ const shortCodes = {
   kampick: 'd12c28',
   cabio: '476cf3',
   tumbak: '59944a',
-  iPicknDrop: '245bae',
+  iPicknDrop: 'f9cf93',
   bluebolt: 'e5a64c',
   onthego: '5e0900',
   mylaglobal: 'a35cd8',
