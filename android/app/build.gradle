@@ -218,7 +218,7 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-        boozeBrothers{
+       boozeBrothers{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
@@ -8464,7 +8464,7 @@ android {
     //             resValue "string", "app_name", "LivraiZoo"
     //             resValue "string", "host_name", ""
     //         }
-      // boozeBrothers{
+    // boozeBrothers{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8472,6 +8472,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.boozeBrothers.order'
     //             resValue "string", "app_name", "Booze Brothers"
+    //             resValue "string", "host_name", ""
+    //         }
+    // magicalBookings{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.magicalBookings.order'
+    //             resValue "string", "app_name", "Magical Bookings"
     //             resValue "string", "host_name", ""
     //         }
 

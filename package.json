@@ -1058,6 +1058,8 @@
     "livraiZooRelease": "cd android && ./gradlew assemblelivraiZooRelease",
     "boozeBrothers": "react-native run-android --variant=boozeBrothersDebug --appIdSuffix=boozeBrothers",
     "boozeBrothersRelease": "cd android && ./gradlew assembleboozeBrothersRelease",
+    "magicalBookings": "react-native run-android --variant=magicalBookingsDebug --appIdSuffix=magicalBookings",
+    "magicalBookingsRelease": "cd android && ./gradlew assemblemagicalBookingsRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
