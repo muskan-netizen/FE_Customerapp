@@ -226,8 +226,8 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //sandeep
 //  export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
 
- //Rajat
- //export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
+//Rajat
+//export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
 
 
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
@@ -381,7 +381,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://ritenowdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://rxnowweb.com/api/v1';
-// export const API_BASE_URL = 'https://order.mml.mobi/api/v1';
+export const API_BASE_URL = 'https://order.mml.mobi/api/v1';
 
 // export const API_BASE_URL = 'https://martinionwheelsllc.org/api/v1';
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';
@@ -431,7 +431,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
 
 //uberweeds
-export const API_BASE_URL='https://uber-weeds.com/api/v1'
+// export const API_BASE_URL='https://uber-weeds.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

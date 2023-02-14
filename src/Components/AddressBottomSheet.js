@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
@@ -28,10 +28,10 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getPlaceDetails} from '../utils/googlePlaceApi';
-import {getAddressComponent} from '../utils/helperFunctions';
-import {chekLocationPermission} from '../utils/permissions';
+import { MyDarkTheme } from '../styles/theme';
+import { getPlaceDetails } from '../utils/googlePlaceApi';
+import { getAddressComponent } from '../utils/helperFunctions';
+import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
@@ -48,7 +48,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const AddressBottomSheet = ({
   updateData,
-  onClose = () => {},
+  onClose = () => { },
   type,
   passLocation,
   toggleModal,
@@ -56,20 +56,20 @@ const AddressBottomSheet = ({
   indicator,
   navigation,
   selectViaMap = false,
-  openCloseMapAddress = () => {},
+  openCloseMapAddress = () => { },
   constCurrLoc,
-  onCloseSheet = () => {},
+  onCloseSheet = () => { },
 }) => {
-  const {appData, themeColor, themeToggle, themeColors, appStyle} = useSelector(
+  const { appData, themeColor, themeToggle, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const {location} = useSelector((state) => state?.home);
+  const { location } = useSelector((state) => state?.home);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const {profile} = appData;
+  const { profile } = appData;
 
   const [state, setState] = useState({
     dropDownData: [],
@@ -93,8 +93,8 @@ const AddressBottomSheet = ({
         lable: strings.HOME,
         icon: imagePath.home,
       },
-      {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
-      {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
+      { id: 2, lable: strings.WORK, icon: imagePath.workInActive },
+      { id: 3, lable: strings.OTHERS, icon: imagePath.workInActive },
     ],
     address_type: updateData?.type ? updateData?.type : 1,
     country_code: '',
@@ -116,7 +116,7 @@ const AddressBottomSheet = ({
     isAddress: false,
   });
 
-  const styles = stylesData({fontFamily, themeColors});
+  const styles = stylesData({ fontFamily, themeColors });
 
   //To update the states
   useEffect(() => {
@@ -172,17 +172,17 @@ const AddressBottomSheet = ({
     isAddress,
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
   }, []);
 
   const _onChangeText = (key) => (val) => {
     if (key == 'address') {
       getPlacesPrediction(val);
     }
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Cleaer all state
@@ -209,8 +209,8 @@ const AddressBottomSheet = ({
             lable: strings.HOME,
             icon: imagePath.home,
           },
-          {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
-          {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
+          { id: 2, lable: strings.WORK, icon: imagePath.workInActive },
+          { id: 3, lable: strings.OTHERS, icon: imagePath.workInActive },
         ],
         address_type: updateData?.type ? updateData?.type : 1,
         houseNo: '',
@@ -224,20 +224,20 @@ const AddressBottomSheet = ({
     // console.log(data, 'data>>>>');
     RNGooglePlaces.getAutocompletePredictions(data)
       .then((results) => {
-        updateState({dropDownData: results});
+        updateState({ dropDownData: results });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   /*************************** On Text Change
    */ const addressHelper = (results) => {
-    let clonedArrayData = {...state};
-    clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
+    let clonedArrayData = { ...state };
+    clonedArrayData = { ...clonedArrayData, ...results, showDialogBox: false };
     updateState(clonedArrayData);
   };
 
   const handleAddressOnKeyUp = (text) => {
-    updateState({address: text});
+    updateState({ address: text });
   };
 
   /*************************** Place Id look Up
@@ -245,9 +245,9 @@ const AddressBottomSheet = ({
     if (data?.placeID) {
       RNGooglePlaces.lookUpPlaceByID(data.placeID)
         .then((results) =>
-          addressHelper({...results, address: data.fullText || data.address}),
+          addressHelper({ ...results, address: data.fullText || data.address }),
         )
-        .catch((error) => {});
+        .catch((error) => { });
     } else {
     }
   };
@@ -275,10 +275,10 @@ const AddressBottomSheet = ({
     if (
       error ==
       strings.PLEASE_ENTER +
-        ' ' +
-        strings.YOUR +
-        ' ' +
-        strings.ENTER_NEW_ADDRESS
+      ' ' +
+      strings.YOUR +
+      ' ' +
+      strings.ENTER_NEW_ADDRESS
     ) {
       updateState({
         isAddress: true,
@@ -354,7 +354,7 @@ const AddressBottomSheet = ({
     //     isAddress: false,
     //   });
     // }
-     else {
+    else {
       return;
     }
   };
@@ -431,7 +431,7 @@ const AddressBottomSheet = ({
           .catch((error) => console.log(error, 'errro geocode'));
       },
       (error) => console.log(error.message),
-      {enableHighAccuracy: true, timeout: 20000},
+      { enableHighAccuracy: true, timeout: 20000 },
     );
   };
 
@@ -439,10 +439,10 @@ const AddressBottomSheet = ({
   const getTextInputStyle = (input, type) => {
     return input != '' && input != undefined
       ? {
-          ...styles.textInput,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-        }
-      : {fontSize: textScale(12)};
+        ...styles.textInput,
+        color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+      }
+      : { fontSize: textScale(12) };
   };
 
   const updateAddress_ = async (data_) => {
@@ -450,7 +450,7 @@ const AddressBottomSheet = ({
       data_.place_id,
       profile?.preferences?.map_key,
     );
-    const {result} = res;
+    const { result } = res;
 
     let addressData = getAddressComponent(result);
 
@@ -501,7 +501,7 @@ const AddressBottomSheet = ({
           place.place_id,
           profile?.preferences?.map_key,
         );
-        const {result} = res;
+        const { result } = res;
 
         let addressData = getAddressComponent(result);
 
@@ -564,10 +564,10 @@ const AddressBottomSheet = ({
             : colors.lightGreyBg,
         }}
         onPress={() => onPressAddress(item)}>
-        <View style={{flex: 0.15}}>
+        <View style={{ flex: 0.15 }}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -587,11 +587,11 @@ const AddressBottomSheet = ({
   return (
     <BottomSheetModal snapPoints={[height]}>
       <TouchableOpacity style={styles.closeBtn} onPress={onCloseSheet}>
-        <Image style={{tintColor: colors.white}} source={imagePath.crossB} />
+        <Image style={{ tintColor: colors.white }} source={imagePath.crossB} />
       </TouchableOpacity>
 
       {selectViaMap ? (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <SelctFromMap
             doneBtnStyle={{
               bottom: 80,
@@ -631,21 +631,21 @@ const AddressBottomSheet = ({
             </Text>
             <View>
               <View style={styles.searchPlaceContainer}>
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                   <SearchPlaces
-                    containerStyle={{backgroundColor: 'transparent'}}
+                    containerStyle={{ backgroundColor: 'transparent' }}
                     showRightImg={false}
                     curLatLng={`${constCurrLoc?.latitude}-${constCurrLoc?.longitude}`}
                     placeHolder={strings.SEARCH_LOCATION}
                     value={address} // instant update search value
                     mapKey={profile?.preferences?.map_key} //send here google Key
                     fetchArrayResult={(data) =>
-                      updateState({searchResult: data})
+                      updateState({ searchResult: data })
                     }
-                    setValue={(text) => updateState({address: text})} //return & update on change text value
-                    _moveToNextScreen={() => {}}
+                    setValue={(text) => updateState({ address: text })} //return & update on change text value
+                    _moveToNextScreen={() => { }}
                     placeHolderColor={colors.textGreyB}
-                    onClear={() => updateState({address: '', searchResult: []})}
+                    onClear={() => updateState({ address: '', searchResult: [] })}
                     textStyle={{
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
@@ -656,7 +656,7 @@ const AddressBottomSheet = ({
                   />
                 </View>
 
-                <View style={{marginHorizontal: moderateScale(6)}} />
+                <View style={{ marginHorizontal: moderateScale(6) }} />
                 <TouchableOpacity
                   style={styles.mapCloseBtn}
                   onPress={() => openCloseMapAddress(1)} //address map open
@@ -674,7 +674,7 @@ const AddressBottomSheet = ({
                 </TouchableOpacity>
               </View>
 
-              <View style={{width: '100%'}}>
+              <View style={{ width: '100%' }}>
                 {searchResult?.map((item, i) => {
                   return renderSearchItem(item, i);
                 })}
@@ -689,7 +689,7 @@ const AddressBottomSheet = ({
               }}
             />
             {isAddress && (
-              <Text style={{color: colors.redB}}>
+              <Text style={{ color: colors.redB }}>
                 {strings.PLEASE_ENTER +
                   ' ' +
                   strings.YOUR +
@@ -734,8 +734,8 @@ const AddressBottomSheet = ({
                 multiline={false}
                 borderWidth={0}
                 marginBottomTxt={0}
-                containerStyle={{borderBottomWidth: 1}}
-                mainStyle={{marginTop: 10}}
+                containerStyle={{ borderBottomWidth: 1 }}
+                mainStyle={{ marginTop: 10 }}
                 labelStyle={styles.labelStyle}
                 returnKeyType={'next'}
               />
@@ -747,7 +747,7 @@ const AddressBottomSheet = ({
                 value={street}
                 borderWidth={0}
                 marginBottomTxt={0}
-                containerStyle={{borderBottomWidth: 1}}
+                containerStyle={{ borderBottomWidth: 1 }}
                 returnKeyType={'next'}
               />
               {isStreet && (
@@ -772,7 +772,7 @@ const AddressBottomSheet = ({
                 value={city}
                 borderWidth={0}
                 marginBottomTxt={0}
-                containerStyle={{borderBottomWidth: 1}}
+                containerStyle={{ borderBottomWidth: 1 }}
                 returnKeyType={'next'}
               />
               {isCity && (
@@ -797,7 +797,7 @@ const AddressBottomSheet = ({
                 value={states}
                 borderWidth={0}
                 marginBottomTxt={0}
-                containerStyle={{borderBottomWidth: 1}}
+                containerStyle={{ borderBottomWidth: 1 }}
                 returnKeyType={'next'}
               />
               {isState && (
@@ -820,7 +820,7 @@ const AddressBottomSheet = ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{flex: 0.48}}>
+                <View style={{ flex: 0.48 }}>
                   <View
                     style={{
                       ...styles.countryContainer,
@@ -902,7 +902,7 @@ const AddressBottomSheet = ({
                 value={extra_instruction}
                 borderWidth={0}
                 marginBottomTxt={0}
-                containerStyle={{borderBottomWidth: 1}}
+                containerStyle={{ borderBottomWidth: 1 }}
                 returnKeyType={'next'}
               />
 
@@ -920,7 +920,7 @@ const AddressBottomSheet = ({
                   return (
                     <View key={index}>
                       <TouchableOpacity
-                        onPress={() => updateState({address_type: item.id})}
+                        onPress={() => updateState({ address_type: item.id })}
                         style={{
                           ...styles.addressHomeOrOfficeView,
                           backgroundColor: isDarkMode
@@ -980,7 +980,7 @@ const AddressBottomSheet = ({
               marginTop={moderateScaleVertical(10)}
               btnText={strings.SAVE_ADDRESS}
               indicator={indicator}
-              containerStyle={{marginTop: moderateScale(20)}}
+              containerStyle={{ marginTop: moderateScale(20) }}
             />
           </View>
         </KeyboardAwareScrollView>
@@ -989,8 +989,8 @@ const AddressBottomSheet = ({
   );
 };
 
-export function stylesData({fontFamily, themeColors}) {
-  const commonStyles = commonStylesFun({fontFamily});
+export function stylesData({ fontFamily, themeColors }) {
+  const commonStyles = commonStylesFun({ fontFamily });
 
   const styles = StyleSheet.create({
     addressTypeView: {
@@ -1029,7 +1029,7 @@ export function stylesData({fontFamily, themeColors}) {
       backgroundColor: colors.white,
       shadowOpacity: 0.2,
       justifyContent: 'center',
-      shadowOffset: {width: 0, height: 0.1},
+      shadowOffset: { width: 0, height: 0.1 },
     },
     labelStyle: {
       ...commonStyles.mediumTxtGreyD14,
