@@ -218,14 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-              jazzyBug{
+              vdu{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.jazzyBugOrder'
-            resValue "string", "app_name", "Jazzy Bug"
+            applicationId 'com.vdu.order'
+            resValue "string", "app_name", "VDU" 
             resValue "string", "host_name", ""
             }
 }

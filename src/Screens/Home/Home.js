@@ -64,6 +64,7 @@ export default function Home({route, navigation}) {
   const { location, appMainData, dineInType, isLocationSearched } = useSelector(
     (state) => state?.home,
   );
+  
   const isFocused = useIsFocused();
   const { cartItemCount } = useSelector((state) => state?.cart);
 
@@ -574,6 +575,8 @@ export default function Home({route, navigation}) {
   };
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item,'itemmmmmmmmm')
+ 
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
       return;

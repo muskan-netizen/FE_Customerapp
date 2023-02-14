@@ -1325,9 +1325,9 @@ export default function OrderDetail({ navigation, route }) {
                                             </Text>
                                             {' = '}
                                           </Text>
-                                          <Text style={styles.cartItemWeight}>
+                                          {/* <Text style={styles.cartItemWeight}>
                                             {i?.quantity}
-                                          </Text>
+                                          </Text> */}
                                         </Text>
                                       </View>
                                     )}

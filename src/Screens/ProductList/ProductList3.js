@@ -542,9 +542,11 @@ export default function Products({ route, navigation }) {
     data.map((item) => {
       item?.data.map((val) => {
         if (val?.media?.length > 0) {
-          const url1 = val?.media[0]?.image?.path?.image_fit;
-          const url2 = val?.media[0]?.image?.path?.image_path;
-          FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
+          const url1 = !!val?.media[0]?.image ?val?.media[0]?.image?.path?.image_fit: null;
+          const url2 = !!val?.media[0]?.image ? val?.media[0]?.image?.path?.image_path: null;
+          if(!!url1 && !!url2){
+            FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
+          }
         }
       });
     });
@@ -791,8 +793,8 @@ export default function Products({ route, navigation }) {
                         }}>
                         {data?.name || categoryInfo?.name || ''}
                       </Text>
-
-                      {!!categoryInfo &&
+{console.log(categoryInfo,'categoryInfocategoryInfocategoryInfo')}
+                      {/* {!!categoryInfo &&
                         !!categoryInfo?.product_avg_average_rating && (
                           <View
                             style={[
@@ -819,7 +821,7 @@ export default function Products({ route, navigation }) {
                               resizeMode="contain"
                             />
                           </View>
-                        )}
+                        )} */}
                     </View>
                     <View
                       style={{
@@ -1095,7 +1097,7 @@ export default function Products({ route, navigation }) {
           showsHorizontalScrollIndicator={false}
           style={{
             paddingHorizontal: moderateScale(12),
-            marginBottom: ProductTags.length> 0 ? moderateScale(15): 0,
+            marginBottom: ProductTags?.length> 0 ? moderateScale(15): 0,
           }}
           contentContainerStyle={{ alignItems: 'center' }}>
           {ProductTags &&
@@ -1770,6 +1772,7 @@ export default function Products({ route, navigation }) {
       )
       .then(async (res) => {
         console.log('get all products by vendor res', res?.data);
+        setLoading(false);
         // return;
 
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
@@ -1778,6 +1781,7 @@ export default function Products({ route, navigation }) {
               setListHeight(height/2.8)
             }
         }
+       
         if (res?.data?.vendor) {
           FastImage.preload([
             {
@@ -1791,19 +1795,22 @@ export default function Products({ route, navigation }) {
             },
           ]); //category banner preload
         }
+  
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
+          
+          console.log("resDataresDataresData",resData)
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
-
+          
           setCategoryInfo(res?.data?.vendor);
           fetchTags(resData);
           setLoading(false);
         } else {
           if (res?.data) {
-            if (res.data.products.data.length == 0) {
+            if (!!res?.data && !!res?.data?.products && res?.data?.products?.data?.length == 0) {
               updateState({ loadMore: false });
             }
             setCategoryInfo(res?.data?.vendor);
@@ -1872,7 +1879,7 @@ export default function Products({ route, navigation }) {
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
-            if (res.data.products.data.length == 0) {
+            if (res.data.products.data?.length == 0) {
               updateState({ loadMore: false });
             }
             setCategoryInfo(res?.data?.vendor);
@@ -1977,7 +1984,7 @@ export default function Products({ route, navigation }) {
       .then((res) => {
         setLoading(false);
 
-        if (res.data.data.length == 0) {
+        if (res.data.data?.length == 0) {
           updateState({ loadMore: false });
         }
         console.log("productListData ++++", productListData);
@@ -1997,7 +2004,7 @@ export default function Products({ route, navigation }) {
   }, []);
 
   const fetchTags = (filterArray) => {
-    if (filterArray && filterArray.length > 0) {
+    if (filterArray && filterArray?.length > 0) {
       let tagsArr = [];
       filterArray.forEach((el) => {
         // console.log('checking data for tags >>>', el);
@@ -2528,7 +2535,7 @@ export default function Products({ route, navigation }) {
     try {
       const res = await actions.differentAddOns(apiData, header);
       console.log('res+++++++', res);
-      if (res?.data.length > 1) {
+      if (res?.data?.length > 1) {
         setDifferentAddsOns(res?.data || []);
         setSelectedDiffAdsOnItem(item);
         setSelectedDiffAdsOnSection(section);
@@ -2690,7 +2697,7 @@ export default function Products({ route, navigation }) {
 
   useEffect(() => {
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
-    if (EnabledTags.length > 0) {
+    if (EnabledTags?.length > 0) {
       setApiHitAgain(true);
       // appendData(null,1)
       newVendorFilter(1, true);
@@ -2700,7 +2707,7 @@ export default function Products({ route, navigation }) {
             el.data &&
             el.data.filter((item) => {
               if (
-                item.tags.length > 0 &&
+                item.tags?.length > 0 &&
                 checkIfItemExist(item.tags[0], EnabledTags)
               )
                 return item;
@@ -2708,7 +2715,7 @@ export default function Products({ route, navigation }) {
           const newObj = {
             ...el,
           };
-          if (records && records.length) {
+          if (records && records?.length) {
             newObj.data = records;
             return newObj;
           } else {
@@ -2869,7 +2876,7 @@ export default function Products({ route, navigation }) {
                         ? fontFamily.medium
                         : fontFamily.regular,
                   }}>
-                  {el.data.length}
+                  {el.data?.length}
                 </Text>
               </TouchableOpacity>
             );
@@ -3246,8 +3253,8 @@ export default function Products({ route, navigation }) {
     const { nativeEvent } = props;
     if (
       productListData &&
-      productListData.length &&
-      productListData.length < 6
+      productListData?.length &&
+      productListData?.length < 6
     ) {
       return;
     }
@@ -3336,7 +3343,7 @@ export default function Products({ route, navigation }) {
       console.log('sending header', headers);
       const res = await actions.getMoreCategories(apiData, data, headers);
       console.log('get more cat res', res.data.products);
-         if(res.data.products.data.length == 0){
+         if(res.data.products.data?.length == 0){
            setHideViewMore(false)
          }
      
@@ -3441,7 +3448,7 @@ export default function Products({ route, navigation }) {
 
   const checkIfMaxReached = (minVal, Arr) => {
     const SelectedItems = Arr.filter((el) => el.value);
-    if (SelectedItems.length >= minVal) {
+    if (SelectedItems?.length >= minVal) {
       return true;
     }
     return false;
@@ -3493,7 +3500,7 @@ export default function Products({ route, navigation }) {
       data['quantity'] = productQuantityForCart;
       data['product_variant_id'] = productVariantId;
       data['type'] = dineInType;
-      if (addonSet && addonSet.length) {
+      if (addonSet && addonSet?.length) {
         // console.log(addonSetData, 'addonSetData');
         data['addon_ids'] = addon_ids;
         data['addon_options'] = addon_options;
@@ -3720,8 +3727,8 @@ export default function Products({ route, navigation }) {
     //       </Text> 
     //   </TouchableOpacity>
     // </View>:
-      section?.data.length !== section?.data_count &&
-      section?.data.length >= 15 && hideViewMore ? (
+      section?.data?.length !== section?.data_count &&
+      section?.data?.length >= 15 && hideViewMore ? (
       <View style={{height: moderateScale(50)}}>
         <TouchableOpacity
           onPress={() => appendData(section)}
@@ -3738,7 +3745,7 @@ export default function Products({ route, navigation }) {
             alignItems:'center'
           }}>
            {!!isLoadMoreData &&<UIActivityIndicator size={20} color={themeColors?.primary_color} />}
-          {section?.data.length !== section?.data_count ? (
+          {section?.data?.length !== section?.data_count ? (
             <Text
               style={{
                 textAlign: 'center',
@@ -3768,7 +3775,7 @@ export default function Products({ route, navigation }) {
             // paddingVertical: moderateScale(16),
           }}>
           <View style={{ flex: 1 }}>
-            {((AnimatedHeaderValue && productListData.length > 6) ||
+            {((AnimatedHeaderValue && productListData?.length > 6) ||
               (!!sectionListData?.length && AnimatedHeaderValue)) && (
           
                <View
@@ -4369,7 +4376,7 @@ export default function Products({ route, navigation }) {
             />
           ) : null}
 
-          {!!differentAddsOns && differentAddsOns.length > 1 ? (
+          {!!differentAddsOns && differentAddsOns?.length > 1 ? (
             <DifferentAddOns
               differentAddsOnsModal={differentAddsOnsModal}
               data={differentAddsOns}
