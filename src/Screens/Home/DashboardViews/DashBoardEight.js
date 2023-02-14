@@ -10,12 +10,11 @@ import {
   ScrollView,
   Text,
   View,
+  TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
-import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   Menu,
   MenuOption,
