@@ -36,6 +36,7 @@ import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
+
 import {
   itemWidth,
   moderateScale,
@@ -51,6 +52,7 @@ import {
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
+import FastImage from 'react-native-fast-image';
 
 export default function DashBoardEight({
   handleRefresh = () => { },
