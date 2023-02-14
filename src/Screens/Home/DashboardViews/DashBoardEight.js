@@ -496,7 +496,7 @@ export default function DashBoardEight({
 
           {!!vendorsData && vendorsData.length > 1 && (
             <TouchableOpacity
-            
+
               onPress={() => onViewAll('vendor', appMainData?.vendors)}>
               <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId()===appIds.qdelo&& 'Stores'}</Text>
             </TouchableOpacity>
@@ -511,7 +511,7 @@ export default function DashBoardEight({
                     tintColor: themeColors.primary_color,
                   }}
                   resizeMode="contain"
-                  source={isDarkMode? imagePath.sortSelected: imagePath.sort}
+                  source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
                 />
                 <Text
                   style={{

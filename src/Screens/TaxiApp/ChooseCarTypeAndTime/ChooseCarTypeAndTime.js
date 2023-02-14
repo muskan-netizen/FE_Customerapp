@@ -65,6 +65,8 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function ChooseCarTypeAndTime({ navigation, route }) {
+
+
   const paramData = route?.params?.promocodeDetail
     ? route?.params?.promocodeDetail
     : route?.params;
@@ -890,14 +892,19 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     }
   }, [selectedCarOption?.tags]);
 
+  console.log("selectedCarOptionselectedCarOption",selectedCarOption)
+
   const getAllDrivers = () => {
+
+
+    let driverPayload = {
+      latitude: myCurrentLocationDetails?.latitude,
+      longitude: myCurrentLocationDetails?.longitude,
+      tag: selectedCarOption?.tags,
+    }
+    console.log("all driver payload",driverPayload)
     actions
-      .getAllNearByDrivers(
-        {
-          latitude: myCurrentLocationDetails?.latitude,
-          longitude: myCurrentLocationDetails?.longitude,
-          tag: selectedCarOption?.tags,
-        },
+      .getAllNearByDrivers(driverPayload,
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
