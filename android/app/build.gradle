@@ -218,26 +218,16 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-            weedLomo{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.weedLomo.order'
-                resValue "string", "app_name", "WeedLomo"
-                resValue "string", "host_name", ""
+              jazzyBug{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jazzyBugOrder'
+            resValue "string", "app_name", "Jazzy Bug"
+            resValue "string", "host_name", ""
             }
-            //  rxnow{
-            //     dimension "appType"
-            //     versionCode 1
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion         
-            //     applicationId 'com.rxnow'
-            //     resValue "string", "app_name", "RX Now"
-            //     resValue "string", "host_name", ""
-            // }
 }
 
     // productFlavors {

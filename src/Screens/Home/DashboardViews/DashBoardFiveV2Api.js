@@ -658,16 +658,28 @@ const DashBoardFiveV2Api = ({
 
   const _renderSelectedProducts = ({ item, index }) => {
     console.log(item," selected");
-    return (
-      <ProductsComp2
-        item={item?.products}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
-        numberOfLines={2}
+    return( 
+    <ProductsComp2
+      mainContainerStyle={{
+        width: moderateScale(width / 4),
+        marginHorizontal: moderateScale(10),
+        marginVertical: moderateScaleVertical(8),
+        borderRadius: moderateScale(20),
+        overflow: 'hidden',
+        height: moderateScaleVertical(130),
+        elevation: 0,
 
-      />
-    )
+      }}
+      showRating={false}
+      imageStyle={{ width: moderateScale(width / 4), height: moderateScaleVertical(80), resizeMode: 'cover' }}
+      item={item?.products}
+      onPress={() =>
+        navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+      }
+      productNameStyle={{ textAlign: 'center', fontSize: textScale(10), marginBottom: moderateScaleVertical(5) }}
+      numberOfLines={2}
+    />)
+   
   }
 
   const SelectedProductsThemeView = ({ item }) => {
@@ -681,16 +693,12 @@ const DashBoardFiveV2Api = ({
         </View>
         <FlatList
           showsHorizontalScrollIndicator={false}
-          horizontal
+          // horizontal
+          style={{ width: width, alignItems: 'center' }}
+          numColumns={3}
           data={item?.data}
           renderItem={_renderSelectedProducts}
           keyExtractor={(item) => item?.id?.toString()}
-          ItemSeparatorComponent={() => (
-            <View style={{ marginRight: moderateScale(12) }} />
-          )}
-          ListHeaderComponent={() => (
-            <View style={{ marginLeft: moderateScale(16) }} />
-          )}
           ListFooterComponent={() => (
             <View style={{ marginRight: moderateScale(16) }} />
           )}

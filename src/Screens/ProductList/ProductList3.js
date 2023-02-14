@@ -502,6 +502,7 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = useCallback(
     ({ item, index }) => {
+    
       return (
         <View key={String(index)} style={{ flex: 1 }}>
           <ProductCard3
@@ -1898,11 +1899,12 @@ export default function Products({ route, navigation }) {
   };
   /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
-  const productWithCategoryId = data?.productWithSingleCategory  ? data?.id  :productListId?.id
+    const productWithCategoryId = data?.productWithSingleCategory ? data?.id : productListId?.id
+    const rootproduct = data?.rootProducts || data?.productWithSingleCategory ? true : false
+    console.log(data?.productWithSingleCategory, productListId?.id, data?.id, "fdsfdsfdsfdsfdsfdfs");
     actions
       .getProductByCategoryIdOptamize(
-        `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
-        }&type=${dineInType} `,
+        `/${productWithCategoryId}?page=${pageNo}&product_list=${rootproduct}&type=${dineInType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -1912,9 +1914,9 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        // console.log(res, 'resres');
+         console.log(res, 'resres');
         if (!!res?.data) {
-          console.log(res, 'res getProductByCategoryId');
+       
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
