@@ -1866,7 +1866,7 @@ const appIds = {
   }),
   busTaMove: Platform.select({
     ios: 'com.bustamove',
-    android: 'com.bustamove',
+    android: 'com.bustamove.order',
   }),
   atasktt: Platform.select({
     ios: 'com.atasktt',
