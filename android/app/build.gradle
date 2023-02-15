@@ -218,7 +218,6 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-<<<<<<< HEAD
                     busTaMove{
             dimension "appType"
             versionCode 1
@@ -228,17 +227,6 @@ android {
             applicationId 'com.bustamove.order'
             resValue "string", "app_name", "busTaMove"
             resValue "string", "host_name", ""
-=======
-       boozeBrothers{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.boozeBrothers.order'
-                resValue "string", "app_name", "Booze Brothers"
-                resValue "string", "host_name", ""
->>>>>>> 4a6a030c85779cd89d0051c5c0c13b988da3b7e3
             }
             //  rxnow{
             //     dimension "appType"
