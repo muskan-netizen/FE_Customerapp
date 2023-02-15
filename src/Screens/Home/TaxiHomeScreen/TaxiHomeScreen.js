@@ -595,10 +595,9 @@ useEffect(()=>{
     }
   };
 
+
   const renderHomeScreen = () => {
-    const case_ = 5;
     switch (appStyle?.homePageLayout) {
-      // switch (case_) {
       case 4:
         return (
           <TaxiHomeDashbord

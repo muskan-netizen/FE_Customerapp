@@ -77,12 +77,12 @@ export default function ShortCode() {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: appCode,
+        code: '806be0',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: appCode,
+        code: '806be0',
       };
     }
 
@@ -118,7 +118,7 @@ export default function ShortCode() {
   };
 
 
-  const navigateToNextScreen = (res:object) => {
+  const navigateToNextScreen = (res:any) => {
     getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
         actions.setAppSessionData("app_intro");

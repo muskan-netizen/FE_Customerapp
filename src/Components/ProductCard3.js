@@ -242,7 +242,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
           <Text
             style={{
               ...commonStyles.futuraBtHeavyFont14,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? colors.white : colors.black,
               fontFamily: fontFamily.regular,
               fontSize: textScale(12),
               width: width / 2.5,
@@ -254,7 +254,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
             <Text
               style={{
                 fontSize: textScale(9),
-                color: colors.grayOpacity51,
+                color: isDarkMode ? colors.white : colors.grayOpacity51,
                 marginVertical: moderateScaleVertical(4),
                 textAlign: 'left',
               }}>
@@ -268,7 +268,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
               style={{
                 ...styles.inTextStyle,
                 color: isDarkMode
-                  ? MyDarkTheme.colors.text
+                  ?colors.white
                   : colors.blackOpacity40,
               }}>
               {strings.IN}
@@ -311,7 +311,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
             numberOfLines={1}
             style={{
               ...commonStyles.mediumFont14,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? colors.white : colors.black,
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
             }}>
@@ -330,7 +330,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                 numberOfLines={1}
                 style={{
                   ...commonStyles.mediumFont14,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                  color: isDarkMode ? colors.white : colors.redB,
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                   textDecorationLine: 'line-through',
@@ -358,7 +358,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                   fontFamily: fontFamily.regular,
                   lineHeight: moderateScale(14),
                   color: isDarkMode
-                    ? MyDarkTheme.colors.text
+                    ? colors.white
                     : colors.blackOpacity66,
                   textAlign: 'left',
                 }}>
@@ -577,7 +577,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                     ...styles.customTextStyle,
                     textTransform: 'lowercase',
                     color: isDarkMode
-                      ? colors.whiteOpacity77
+                      ? colors.white
                       : colors.blackOpacity40,
                   }}>
                   {strings.CUSTOMISABLE}
