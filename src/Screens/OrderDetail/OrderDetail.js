@@ -2142,7 +2142,8 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
-  Number(cartData?.total_service_fee) + Number(cartData?.taxable_amount);
+ 
+  
   const getFooter = () => {
     return (
       <View
