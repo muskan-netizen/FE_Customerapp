@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
   Animated,
@@ -76,6 +77,7 @@ const ProductCard3 = ({
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
@@ -92,8 +94,8 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
 
   const commonStyles = commonStylesFunc({ fontFamily });
 
-  const url1 = data?.media[0]?.image?.path.image_fit;
-  const url2 = data?.media[0]?.image?.path.image_path;
+  const url1 = !isEmpty(data?.media)&& data?.media[0]?.image?.path.image_fit;
+  const url2 =!isEmpty(data?.media)&& data?.media[0]?.image?.path.image_path;
 
   const getImage = (quality) => getImageUrl(url1, url2, quality);
 
@@ -245,7 +247,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
               fontSize: textScale(12),
               width: width / 2.5,
             }}>
-            {data?.translation[0]?.title || data?.title || data?.sku}
+            {!isEmpty(data?.translation)?data?.translation[0]?.title :  data?.title || data?.sku}
           </Text>
 
           {data?.vendor?.name && (

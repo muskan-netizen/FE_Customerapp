@@ -216,6 +216,8 @@ export default function Addaddress({ navigation, route }) {
       });
   };
 
+
+
   useEffect(() => {
     chekLocationPermission()
       .then((result) => {
@@ -237,6 +239,8 @@ export default function Addaddress({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData;
 
+  console.log("profile data++",profile?.preferences)
+  
   const getAllPickUpVendors = (lat, lng) => {
     console.log(appData, 'appDataappData......');
     const latlongData = appData?.profile?.preferences

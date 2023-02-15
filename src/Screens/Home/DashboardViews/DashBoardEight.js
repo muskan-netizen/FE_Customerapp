@@ -10,12 +10,12 @@ import {
   ScrollView,
   Text,
   View,
+  TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dynamic';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   Menu,
   MenuOption,
@@ -499,7 +499,7 @@ export default function DashBoardEight({
             <TouchableOpacity
 
               onPress={() => onViewAll('vendor', appMainData?.vendors)}>
-              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {getBundleId() === appIds.qdelo && 'Stores'}</Text>
+              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId() === appIds.qdelo && 'Stores'}</Text>
             </TouchableOpacity>
           )}
           <Menu style={{ alignSelf: 'flex-end' }}>
