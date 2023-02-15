@@ -525,7 +525,10 @@ export const getAppCode = () => {
         case appIds.weemoov: return shortCodes.weemoov;
         case appIds.weedLomo: return shortCodes.weedLomo;
         case appIds.ngoal: return shortCodes.ngoal;
-        
+        case appIds.livraiZoo: return shortCodes.livraiZoo;
+        case appIds.boozeBrothers: return shortCodes.boozeBrothers;
+
+
 
         default: return '245bae'
     }

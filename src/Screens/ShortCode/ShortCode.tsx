@@ -118,7 +118,7 @@ export default function ShortCode() {
   };
 
 
-  const navigateToNextScreen = (res:object) => {
+  const navigateToNextScreen = (res:any) => {
     getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
         actions.setAppSessionData("app_intro");

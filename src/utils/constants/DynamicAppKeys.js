@@ -227,7 +227,7 @@ const shortCodes = {
   kampick: 'd12c28',
   cabio: '476cf3',
   tumbak: '59944a',
-  iPicknDrop: '245bae',
+  iPicknDrop: 'f9cf93',
   bluebolt: 'e5a64c',
   onthego: '5e0900',
   mylaglobal: 'a35cd8',
@@ -530,7 +530,9 @@ const shortCodes = {
   shipSmart: 'bbfdee',
   weemoov: '23808d',
   weedLomo: '7e6463',
-  ngoal: 'c05ddc'
+  ngoal: 'c05ddc',
+  livraiZoo: '007f7a',
+  boozeBrothers: '8006b6'
 };
 
 const appIds = {
@@ -2638,6 +2640,14 @@ const appIds = {
   ngoal: Platform.select({
     ios: 'com.ngoal.order',
     android: 'com.ngoal.order',
+  }),
+  livraiZoo: Platform.select({
+    ios: 'com.liverso.order',
+    android: 'com.liverso.order',
+  }),
+  boozeBrothers: Platform.select({
+    ios: 'com.boozeBrothers.order',
+    android: 'com.boozeBrothers.order',
   }),
 };
 

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "37237959791",
+    "project_id": "boozebrothers-order",
+    "storage_bucket": "boozebrothers-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37237959791:android:3234bf9802e1f00502719a",
+        "android_client_info": {
+          "package_name": "com.boozeBrothers.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "37237959791-38sbgrie3b3f1hql0o8jb8qq3adqovts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boozeBrothers.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "37237959791-d1h1okt95besveto2kh7mftm2gdggo2p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boozeBrothers.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "37237959791-dl4s1andao23puofa1kqcvd338g6t9bn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boozeBrothers.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "37237959791-v76md020olr3h7fpg65t3dalt1tqk7md.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuiLHH5sxbFNuNzN4ARdHqPRMqJEZQ6OY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "37237959791-v76md020olr3h7fpg65t3dalt1tqk7md.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "37237959791-m8almsklprg6i0cf8lr6kf7r9jqvb3pn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.boozeBrothers.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

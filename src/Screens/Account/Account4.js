@@ -160,7 +160,11 @@ export default function Account4({navigation}) {
     }
   };
   return (
-    <WrapperContainer>
+    <WrapperContainer
+    bgColor={
+      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+    }
+    >
       <Text
         style={{
           color: colors.black2Color,
@@ -173,7 +177,10 @@ export default function Account4({navigation}) {
         {strings.ACCOUNT}
       </Text>
 
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ 
+        flex: 1,
+        backgroundColor:  isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+         }} showsVerticalScrollIndicator={false}>
         {!!userData?.auth_token && (
           <>
             <View
