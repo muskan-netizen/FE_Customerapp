@@ -2,7 +2,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
-export const API_BASE_URL='https://vduonline.co.in/api/v1'
+// export const API_BASE_URL='https://vduonline.co.in/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
 
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
@@ -149,7 +149,7 @@ export const API_BASE_URL='https://vduonline.co.in/api/v1'
 // export const API_BASE_URL = 'https://jiffex.in/api/v1'
 
 // export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1';
-// export const API_BASE_URL='https://shophairrun.app/api/v1'
+export const API_BASE_URL='https://shophairrun.app/api/v1'
 // export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL='https://ipickndrop.com/api/v1'
