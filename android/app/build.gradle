@@ -218,14 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-       boozeBrothers{
+        livraiZoo{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.boozeBrothers.order'
-                resValue "string", "app_name", "Booze Brothers"
+                applicationId 'com.liverso.order'
+                resValue "string", "app_name", "Livraizoo"
                 resValue "string", "host_name", ""
             }
             //  rxnow{
@@ -8461,7 +8461,7 @@ android {
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.liverso.order'
-    //             resValue "string", "app_name", "LivraiZoo"
+    //             resValue "string", "app_name", "Livraizoo"
     //             resValue "string", "host_name", ""
     //         }
     // boozeBrothers{
