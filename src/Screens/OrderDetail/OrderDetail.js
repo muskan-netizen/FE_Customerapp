@@ -1325,9 +1325,6 @@ export default function OrderDetail({ navigation, route }) {
                                             </Text>
                                             {' = '}
                                           </Text>
-                                          {/* <Text style={styles.cartItemWeight}>
-                                            {i?.quantity}
-                                          </Text> */}
                                         </Text>
                                       </View>
                                     )}
@@ -2145,7 +2142,8 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
-  Number(cartData?.total_service_fee) + Number(cartData?.taxable_amount);
+ 
+  
   const getFooter = () => {
     return (
       <View

@@ -15,8 +15,6 @@ import {
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
-import FastImage from 'react-native-fast-image';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   Menu,
   MenuOption,
@@ -38,6 +36,7 @@ import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
+
 import {
   itemWidth,
   moderateScale,
@@ -53,6 +52,7 @@ import {
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
+import FastImage from 'react-native-fast-image';
 
 export default function DashBoardEight({
   handleRefresh = () => { },
@@ -498,10 +498,8 @@ export default function DashBoardEight({
 
           {!!vendorsData && vendorsData.length > 1 && (
             <TouchableOpacity
-            
-              onPress={() => onViewAll('vendor', appMainData?.vendors)}
-              
-              >
+
+              onPress={() => onViewAll('vendor', appMainData?.vendors)}>
               <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId()===appIds.qdelo&& 'Stores'}</Text>
             </TouchableOpacity>
           )}
@@ -515,7 +513,7 @@ export default function DashBoardEight({
                     tintColor: themeColors.primary_color,
                   }}
                   resizeMode="contain"
-                  source={isDarkMode? imagePath.sortSelected: imagePath.sort}
+                  source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
                 />
                 <Text
                   style={{

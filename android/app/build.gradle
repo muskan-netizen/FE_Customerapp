@@ -218,14 +218,24 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-              vdu{
+        stabex{ 
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.vdu.order'
-            resValue "string", "app_name", "VDU" 
+            applicationId 'com.stabex.orders'
+            resValue "string", "app_name", "Stabex" 
+            resValue "string", "host_name", ""
+            }
+            giftyLeaf{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.giftyleaf.royoorders'
+            resValue "string", "app_name", "Gifty Leaf" 
             resValue "string", "host_name", ""
             }
 }
@@ -7676,7 +7686,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.stabex.royoorders'
+    //         applicationId 'com.stabex.orders'
     //         resValue "string", "app_name", "Stabex" 
     //         resValue "string", "host_name", ""
     //         }
@@ -8442,6 +8452,36 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.ngoal.order'
     //             resValue "string", "app_name", "NGoal"
+    //             resValue "string", "host_name", ""
+    //         }
+     // livraiZoo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.liverso.order'
+    //             resValue "string", "app_name", "LivraiZoo"
+    //             resValue "string", "host_name", ""
+    //         }
+    // boozeBrothers{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.boozeBrothers.order'
+    //             resValue "string", "app_name", "Booze Brothers"
+    //             resValue "string", "host_name", ""
+    //         }
+    // magicalBookings{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.magicalBookings.order'
+    //             resValue "string", "app_name", "Magical Bookings"
     //             resValue "string", "host_name", ""
     //         }
 

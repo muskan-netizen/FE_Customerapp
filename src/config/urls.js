@@ -1,4 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
+export const API_BASE_URL="https://order.sta.ug/api/v1"
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
@@ -13,7 +14,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://mywaysride.com/api/v1';
 // export const API_BASE_URL = 'https://kaypee.app/api/v1';
 // export const API_BASE_URL = 'https://shophairrun.app/api/v1';
-// export const API_BASE_URL = 'https://nittosadai.com/api/v1';xw
+// export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
 // export const API_BASE_URL = 'https://carryfood.org/api/v1';
@@ -149,7 +150,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://jiffex.in/api/v1'
 
 // export const API_BASE_URL = 'https://butlerdeliveryusa.com/api/v1';
-export const API_BASE_URL='https://shophairrun.app/api/v1'
+// export const API_BASE_URL='https://shophairrun.app/api/v1'
 // export const API_BASE_URL = 'https://shoorafresh.com.au/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
 // export const API_BASE_URL='https://ipickndrop.com/api/v1'

@@ -530,7 +530,10 @@ const shortCodes = {
   shipSmart: 'bbfdee',
   weemoov: '23808d',
   weedLomo: '7e6463',
-  ngoal: 'c05ddc'
+  ngoal: 'c05ddc',
+  livraiZoo: '007f7a',
+  boozeBrothers: '8006b6',
+  magicalBookings: 'e6bd3a'
 };
 
 const appIds = {
@@ -2316,7 +2319,7 @@ const appIds = {
   }),
   stabex: Platform.select({
     ios: 'com.stabex.royoorders',
-    android: 'com.stabex.royoorders',
+    android: 'com.stabex.orders',
   }),
   uberWeeds: Platform.select({
     ios: 'com.uberweeds',
@@ -2638,6 +2641,18 @@ const appIds = {
   ngoal: Platform.select({
     ios: 'com.ngoal.order',
     android: 'com.ngoal.order',
+  }),
+  livraiZoo: Platform.select({
+    ios: 'com.liverso.order',
+    android: 'com.liverso.order',
+  }),
+  boozeBrothers: Platform.select({
+    ios: 'com.boozeBrothers.order',
+    android: 'com.boozeBrothers.order',
+  }),
+  magicalBookings: Platform.select({
+    ios: 'com.magicalBookings.order',
+    android: 'com.magicalBookings.order',
   }),
 };
 
