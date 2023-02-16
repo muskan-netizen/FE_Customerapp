@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import Geolocation from 'react-native-geolocation-service';
+import { google_map_key } from '../constants/constants';
 
 export const googlePlacesApi = async (data, key, latLng, region) => {
     // console.log("key", key)
@@ -17,7 +18,7 @@ export const googlePlacesApi = async (data, key, latLng, region) => {
             }
         );
 
-        
+
         let response = await res.json();
         console.log("ressss", response)
         return response
@@ -50,9 +51,11 @@ export const placesGeoCoding = async (lat, long, key) => {
     }
 }
 
-export const nearbySearch = async (latlng, key) => {
+export const nearbySearch = async (latlng, key = google_map_key, type = "city", radius = 5000) => {
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latlng}&types=${type}&radius=${radius}&key=${key}`
+    console.log(url, "url>>>>>>url")
     try {
-        let res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latlng}&types=city&radius=5000&key=${key}`, {
+        let res = await fetch(url, {
             method: 'GET',
         });
         let response = await res.json();

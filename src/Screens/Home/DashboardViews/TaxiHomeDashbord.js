@@ -53,8 +53,8 @@ import { useNavigation } from '@react-navigation/native';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import actions from '../../../redux/actions';
 import BottomViewModal from '../../../Components/BottomViewModal';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../../styles/theme';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
 import SelectTimeModalView from '../../CourierService/ChooseCarTypeAndTime/SelectTimeModalView';
@@ -73,6 +73,11 @@ import {
   getCurrentLocationFromApi,
 } from '../../../utils/googlePlaceApi';
 import useInterval from '../../../utils/useInterval';
+import { nearbySearch } from '../../../utils/googlePlaceApi';
+import { isEmpty } from 'lodash';
+import { google_map_key } from '../../../constants/constants';
+
+
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -152,6 +157,9 @@ export default function TaxiHomeDashbord({
     pickupAddress: {},
     allListedDrivers: [],
   });
+  const [searchType, setSearchType] = useState('')
+  const [nearByPlacesByType, setNearByPlacesByType] = useState([])
+
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
@@ -415,13 +423,6 @@ export default function TaxiHomeDashbord({
       ? parseFloat(location?.longitude)
       : appData?.profile?.preferences?.Default_latitude;
 
-  console.log(latitudes, 'latitudeslatitudes');
-  console.log(
-    appData?.profile?.preferences?.Default_latitude,
-    'latitudeslatitudeslongitudes',
-  );
-  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes');
-
   const _ModalMainView = () => {
     return (
       <View style={styles.modalContainer}>
@@ -678,6 +679,28 @@ export default function TaxiHomeDashbord({
     );
   };
 
+  const onSearchType = (type) => {
+    setSearchType(type)
+    let locations = !!curLatLong?.latitude
+      ? `${curLatLong.latitude},${curLatLong.longitude}`
+      : `${location.latitude},${location.longitude}`
+
+    nearbySearch(
+      latlng = locations,
+      key = appData?.profile?.preferences?.map_key || google_map_key,
+      type = type,
+    ).then((res) => {
+      if (!isEmpty(res?.results)) {
+        setNearByPlacesByType(res?.results)
+      }
+      else {
+        showError("No near by places found!")
+      }
+    }).catch((err) => {
+      console.log(err, "err>>>>>>err>")
+    })
+  }
+
   return (
     <View
       style={{
@@ -686,6 +709,7 @@ export default function TaxiHomeDashbord({
           ? MyDarkTheme.colors.background
           : colors.white,
       }}>
+
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -713,7 +737,38 @@ export default function TaxiHomeDashbord({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
+        <View style={{
+          marginTop: moderateScaleVertical(10),
+          marginHorizontal: moderateScale(15),
+          flexDirection: "row",
+          alignItems: "center",
 
+
+        }}>
+          <TouchableOpacity onPress={() => onSearchType("hotel")} style={{
+            flexDirection: "row",
+            alignItems: "center"
+          }}>
+            <Image source={searchType == "hotel" ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              marginLeft: moderateScale(4),
+              fontSize: textScale(17)
+            }}>Hotel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => onSearchType("airport")} style={{
+            marginLeft: moderateScale(40),
+            flexDirection: "row",
+            alignItems: "center"
+          }}>
+            <Image source={searchType == "airport" ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              marginLeft: moderateScale(4),
+              fontSize: textScale(17)
+            }}>Airport</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={appMainData?.categories}
@@ -759,6 +814,7 @@ export default function TaxiHomeDashbord({
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
                       cat: appMainData,
                       datetime: { slectedDate, selectedTime },
+                      type: searchType
                     })
                     : actions.setAppSessionData('on_login');
                 }}>
@@ -919,7 +975,19 @@ export default function TaxiHomeDashbord({
                   //showsMyLocationButton={true}
                   // pointerEvents={'none'}
                   >
-                    <Marker
+
+                    {!isEmpty(nearByPlacesByType) && searchType !== '' ? nearByPlacesByType?.map((item, index) => {
+                      return (
+                        <Marker
+                          coordinate={{
+                            latitude: item?.geometry?.location?.lat,
+                            longitude: item?.geometry?.location?.lng,
+                            latitudeDelta: 0.015,
+                            longitudeDelta: 0.0121,
+                          }}
+                        />
+                      )
+                    }) : <Marker
                       coordinate={{
                         latitude: !!curLatLong?.latitude
                           ? parseFloat(curLatLong?.latitude)
@@ -934,7 +1002,8 @@ export default function TaxiHomeDashbord({
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                    />
+                    />}
+
                   </MapView>
                 }
               </TouchableOpacity>

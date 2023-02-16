@@ -1,6 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
@@ -97,7 +97,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://foodnests.com/api/v1';
 // export const API_BASE_URL = 'https://hiperabasto.mx/api/v1';
 // export const API_BASE_URL = 'https://abberides.com/api/v1'
-// export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
+export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1'
 // export const API_BASE_URL = 'https://bluebundles.org/api/v1'
 // export const API_BASE_URL = 'https://boltdeliveries.com/api/v1';
 // export const API_BASE_URL = 'https://bimol.in/api/v1';
@@ -381,7 +381,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ritenowdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://hellodeliver.in/api/v1';
 // export const API_BASE_URL = 'https://rxnowweb.com/api/v1';
-// export const API_BASE_URL = 'https://order.mml.mobi/api/v1';
 
 // export const API_BASE_URL = 'https://martinionwheelsllc.org/api/v1';
 // export const API_BASE_URL = 'https://groupystore.com/api/v1';

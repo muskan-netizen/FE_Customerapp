@@ -73,7 +73,7 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { book_for_friend } = appData?.profile?.preferences || {};
-  console.log(appData, "paramDataparamData");
+  console.log(paramData, "paramDataparamData");
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -239,8 +239,8 @@ export default function Addaddress({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData;
 
-  console.log("profile data++",profile?.preferences)
-  
+  console.log("profile data++", profile?.preferences)
+
   const getAllPickUpVendors = (lat, lng) => {
     console.log(appData, 'appDataappData......');
     const latlongData = appData?.profile?.preferences
@@ -456,7 +456,7 @@ export default function Addaddress({ navigation, route }) {
       const { latitude, longitude } = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
       updateState({ curLatLng: { latitude, longitude } });
-      getNearByAddress(`${latitude}, ${longitude}`);
+      getNearByAddress(`${latitude},${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
         const res = await getAddressFromLatLong(
@@ -478,7 +478,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key);
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type);
       updateState({
         nearByAddressess: res.results,
       });
