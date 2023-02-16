@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { cloneDeep, isEmpty } from 'lodash';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 
 import {
   height,
@@ -21,14 +22,14 @@ import {
 } from '../../../styles/responsiveSize';
 /**
 * SwipeableSection Part
-* @param {ideleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,placeLoader,ButtonComponent,localeSheduledOrderDate,_selectTime,placeOrder,strings} props 
+* @param {ideleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,placeLoader,ButtonComponent,localeSheduledOrderDate,_selectTime,placeOrder,strings,selectedTipvalue} props 
 * @returns 
 */
 
 
 function Footer(props) {
 
-  const {instruction,preferences,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,strings,businessType,localeDropOffDate,appData,placeLoader,ButtonComponent,_selectTime,localeSheduledOrderDate,placeOrder} = props;
+  const {instruction,preferences,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,strings,businessType,localeDropOffDate,appData,placeLoader,ButtonComponent,_selectTime,localeSheduledOrderDate,placeOrder,selectedTipvalue} = props;
     return (
       <View style={{}}>
         {!!cartData?.category_kyc_count && !!userData?.auth_token && (
