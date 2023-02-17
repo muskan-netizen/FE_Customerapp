@@ -10,13 +10,13 @@
   } from '../../../styles/responsiveSize';
 /**
  * PromoCodeAvailableSection Part
- * @param {item ,colors,styles,FastImage,imagePath,cartData,strings} props 
+ * @param {item ,colors,styles,FastImage,imagePath,cartData,strings,themeColors} props 
  * @returns 
  */
 
  function PromoCodeAvailableSection(props) {
  
-    const {item ,colors,styles,FastImage,imagePath,cartData,strings} = props;
+    const {item ,colors,styles,FastImage,imagePath,cartData,strings,themeColors} = props;
     return (
             <>
             {/* offerview */}

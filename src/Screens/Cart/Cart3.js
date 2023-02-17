@@ -23,7 +23,6 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import * as Animatable from 'react-native-animatable';
 import {Calendar} from 'react-native-calendars';
 import {useDarkMode} from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
@@ -2643,7 +2642,7 @@ function Cart({navigation, route}) {
           <DeliverableSection item={item} colors={colors}  styles={styles} />
 
           {/* offerview */}
-            <PromoCodeAvailableSection item={item} colors={colors}  styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings} />
+            <PromoCodeAvailableSection  themeColors={themeColors} item={item} colors={colors}  styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings} />
           {/* offerview end */}
 
           {/* start amount view       */}
@@ -2735,6 +2734,10 @@ function Cart({navigation, route}) {
           localeSheduledOrderDate={localeSheduledOrderDate}
           placeOrder={placeOrder}
           strings={strings}
+          _onGiftBoxSelection={_onGiftBoxSelection}
+          themeColors={themeColors}
+          isGiftBoxSelected={isGiftBoxSelected}
+          hitSlopProp={hitSlopProp}
           />
         )
   };
