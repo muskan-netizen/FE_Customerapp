@@ -922,7 +922,7 @@
   resolved "https://registry.yarnpkg.com/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz#d7ebd21b19f1c6b0395e50d78da4416941c57f7c"
   integrity sha512-Doz2bfiPndXYFPMRwPyGa1k5QaKDVpY806UJj570epIiMzWaYyCtobasyfC++qfIXVb5Ocy7r3tP9d62hAQ7IQ==
 
-"@gorhom/bottom-sheet@^4.4.3":
+"@gorhom/bottom-sheet@^4.4.5":
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.4.5.tgz#b9041b01ce1af9a936e7c0fc1d78f026d759eebe"
   integrity sha512-Z5Z20wshLUB8lIdtMKoJaRnjd64wBR/q8EeVPThrg+skrcBwBPHfUwZJ2srB0rEszA/01ejSJy/ixyd7Ra7vUA==
@@ -8098,10 +8098,10 @@ react-native-dashed-line@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-dashed-line/-/react-native-dashed-line-1.1.0.tgz#dd586dbeabee3bc7d51aef0b8ae0d9fda418b1fc"
   integrity sha512-eO1YxTSYuE/1eaOO/mnV/DSQ45e7LQ690D6iv24Oyl9FcZFFiIIwoCurHnS+myJQvydppsshY1d0WwaQroNx/Q==
 
-react-native-date-picker@^4.1.0:
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.6.tgz#3fb118c141401dcdebb3472ee1c69a0c1c8ff612"
-  integrity sha512-qnSLefvCInFp1etQ27AsDzpCJgvi0Q0eIYRtIzjBp5WC5hzINIY7WWeQESAA/QUPbwFJU7Vk06ouQc51dC1Qaw==
+react-native-date-picker@^4.2.8:
+  version "4.2.8"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.8.tgz#f7ca9a65e7e7261b1116697c5f38ecd6fb09b51a"
+  integrity sha512-3sVIceiB7SjayGh1t0IE06K8ExWqPAFFPDzvk+lmaiL2ahH0UUZ2IpVERVk0/lyClHBmDZgVUn8nZJKwRndmGA==
   dependencies:
     prop-types "^15.8.1"
 
