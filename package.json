@@ -1098,6 +1098,7 @@
     "axios": "^1.3.0",
     "country-calling-code": "^0.0.3",
     "country-data": "0.0.31",
+    "deprecated-react-native-prop-types": "^4.0.0",
     "entities": "^2.2.0",
     "flutterwave-react-native": "^1.0.2",
     "frames-react-native": "^1.1.1",

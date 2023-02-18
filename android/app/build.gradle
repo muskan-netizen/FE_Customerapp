@@ -218,24 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-       boozeBrothers{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.boozeBrothers.order'
-                resValue "string", "app_name", "Booze Brothers"
-                resValue "string", "host_name", ""
-            }
-            giftyLeaf{ 
+                  ragiomigo{ 
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.giftyleaf.royoorders'
-            resValue "string", "app_name", "Gifty Leaf" 
+            applicationId 'com.ragiomigo.royoorders'
+            resValue "string", "app_name", "RagioMigo" 
             resValue "string", "host_name", ""
             }
 }
