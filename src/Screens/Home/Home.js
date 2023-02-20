@@ -135,7 +135,7 @@ export default function Home({route, navigation}) {
   } = state;
 
   const { profile } = appData;
-
+console.log(appData,'appDataappDataappDataappData')
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
       socketServices.initializeSocket(appData?.profile?.socket_url);
@@ -979,7 +979,7 @@ export default function Home({route, navigation}) {
   };
 
   const renderHomeScreen = () => {
-    switch (appStyle?.homePageLayout) {
+    switch (5) {
       case 1:
         return (
           <>

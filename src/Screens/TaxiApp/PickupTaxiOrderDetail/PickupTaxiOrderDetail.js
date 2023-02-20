@@ -1435,7 +1435,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 3.4, height]}
+          snapPoints={[height / 2, height/1.5]}
           animateOnMount={true}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}
           handleComponent={bottomSheetHeader}

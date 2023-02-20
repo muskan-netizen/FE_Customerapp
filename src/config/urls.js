@@ -1,7 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL="https://order.sta.ug/api/v1"
+// export const API_BASE_URL='https://tiimollc.com/api/v1'
+// export const API_BASE_URL="https://order.sta.ug/api/v1"
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';

@@ -635,7 +635,8 @@ export default function Account3({ navigation }) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
-          {/* {!!userData?.auth_token &&
+          {console.log(appMainData,'appMainDataappMainData')}
+          {!!userData?.auth_token &&
           Platform.OS === 'android' &&
           !!appMainData?.is_admin ? (
             <ListItemHorizontal
@@ -669,7 +670,7 @@ export default function Account3({ navigation }) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ) : null} */}
+          ) : null}
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&

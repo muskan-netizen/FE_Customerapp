@@ -702,9 +702,10 @@ export default function AddMoney({ navigation }) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
+    console.log(cardInfo,res2,'hgreutiergtry')
     if (res2) {
       await createPaymentMethod({
-        type: 'Card',
+        paymentMethodType: 'Card',
         card: cardInfo,
         token: res2,
       })
@@ -731,14 +732,14 @@ export default function AddMoney({ navigation }) {
                 },
               )
               .then(async (res) => {
-                console.log(res, 'getStripePaymentIntent response');
+                console.log(res?.client_secret, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
                   const { paymentIntent, error } = await handleCardAction(
                     res?.client_secret,
                   );
                   if (paymentIntent) {
                     console.log(paymentIntent, 'paymentIntent');
-                    if (paymentIntent) {
+                    if (paymentIntent) {                  
                       actions
                         .confirmPaymentIntentStripe(
                           {
@@ -791,7 +792,7 @@ export default function AddMoney({ navigation }) {
       updateState({ isLoadingB: true });
       await createToken({ ...cardInfo, type: 'Card' })
         .then((res) => {
-          console.log(res, 'res>>STRIpe');
+          console.log(res, 'z');
           if (!!res?.error && !!res?.error?.localizedMessage) {
             showError(res?.error?.localizedMessage);
             updateState({ isLoadingB: false });
