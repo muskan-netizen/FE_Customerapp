@@ -47,7 +47,7 @@ export default function ShortCode() {
   const toggleTheme = themeToggle
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const videoRef = useRef();
+  const videoRef = useRef<any>(null);
 
   console.log("toggleThemetoggleThemetoggleTheme",toggleTheme)
 

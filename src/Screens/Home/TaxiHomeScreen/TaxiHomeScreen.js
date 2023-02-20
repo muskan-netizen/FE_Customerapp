@@ -22,6 +22,7 @@ import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
 import Loader from '../../../Components/Loader';
+import { getNearByPlacesMarker } from '../../../utils/googlePlaceApi';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -74,6 +75,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     selectedTabType,
     locationObj,
   } = state;
+
   useFocusEffect(
     React.useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -92,7 +94,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           if (result !== 'goback') {
             getCurrentLocation('home')
               .then((res) => {
-                console.log('current lcoation', res);
+                console.log('current lcoation', locationObj);
                 if (
                   appMainData &&
                   typeof appMainData?.reqData == 'object' &&
@@ -164,9 +166,14 @@ export default function TaxiHomeScreen({route, navigation}) {
   //     })
   //     .catch((error) => console.log('error while accessing location', error));
   // }, []);
+const _getAllNearHosptital =async()=>{
+ const res= await getNearByPlacesMarker(locationObj?.latitude,locationObj?.longitude, "1500",['restaurant'],'AIzaSyDHPQM4OBs2I7ngqFOWk0Wk9Ke4AA034VI')
+console.log(res, "res>>>>>>>>>")
 
+}
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
+    _getAllNearHosptital();
   }, [appMainData]);
 
   useEffect(() => {

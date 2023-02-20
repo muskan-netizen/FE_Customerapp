@@ -4,6 +4,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
+// export const API_BASE_URL = 'https://groupystore.com/api/v1';
 
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.70:8006/api/v1';

@@ -53,7 +53,7 @@ export default function Vendors3({route, navigation}) {
 
   const {isLoading, pageNo, isRefreshing, limit, listData,loadMore,totalProduct} = state;
   const {data} = route.params;
-  console.log(data,"datadatadata");
+  console.log(data,"Vendors3 => datadatadata");
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 

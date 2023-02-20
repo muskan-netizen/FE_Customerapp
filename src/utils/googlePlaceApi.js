@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import Geolocation from 'react-native-geolocation-service';
+import { log } from 'react-native-reanimated';
 
 export const googlePlacesApi = async (data, key, latLng, region) => {
     // console.log("key", key)
@@ -107,3 +108,36 @@ export const getAddressFromLatLong = (latlng, mapKey) =>
             error;
             console.log("error==>>>", error)
         });
+
+        export const getNearByPlacesMarker = async(lat,long,radius,places, key='AIzaSyDHPQM4OBs2I7ngqFOWk0Wk9Ke4AA034VI') =>{
+
+            try {
+                let res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=${radius}&type=${places}&keyword=cruise&key=${key}`, {
+                    method: 'GET',
+                });
+                let response = await res.json();
+                console.log(response, "response")
+                return response
+            } catch (e) {
+                console.log("erorr in goole place", e)
+            }
+    // axios({
+    //     url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=${radius}&type=restaurant&keyword=cruise&key=${key}`,
+    // })
+        // .then(response => {
+        //     console.log("success resp==>>", response)
+        //     if (response.data.results && response.data.results.length > 0) {
+
+        //         const dataToSend = {
+        //             address: response.data.results[0].formatted_address,
+        //         };
+
+        //         return dataToSend;
+        //     }
+        //     return '';
+        // })
+        // .catch(error => {
+        //     error;
+        //     console.log("error==>>>", error)
+        // });
+    }
