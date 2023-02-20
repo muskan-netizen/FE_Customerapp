@@ -14,15 +14,15 @@ import { MyDarkTheme } from "../../styles/theme";
 import { appIds } from "../../utils/constants/DynamicAppKeys";
 import { showError } from "../../utils/helperFunctions";
 import { getItem } from "../../utils/utils";
-
-import { enableFreeze } from "react-native-screens";
 import { getAppCode } from "./getAppCode";
 import styles from "./styles";
+
+import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
 interface initBootInterface {
-  auth: object,
+  auth: any,
   themeToggle: boolean,
   themeColor:boolean,
   deepLinkUrl: string

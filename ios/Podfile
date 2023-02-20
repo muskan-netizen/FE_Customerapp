@@ -2481,6 +2481,10 @@ end
 target 'BoozeBrothers' do
 end
 
+#MagicalBookings
+target 'MagicalBookings' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)

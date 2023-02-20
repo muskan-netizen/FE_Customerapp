@@ -532,7 +532,8 @@ const shortCodes = {
   weedLomo: '7e6463',
   ngoal: 'c05ddc',
   livraiZoo: '007f7a',
-  boozeBrothers: '8006b6'
+  boozeBrothers: '8006b6',
+  magicalBookings: 'e6bd3a'
 };
 
 const appIds = {
@@ -2648,6 +2649,10 @@ const appIds = {
   boozeBrothers: Platform.select({
     ios: 'com.boozeBrothers.order',
     android: 'com.boozeBrothers.order',
+  }),
+  magicalBookings: Platform.select({
+    ios: 'com.magicalBookings.order',
+    android: 'com.magicalBookings.order',
   }),
 };
 
