@@ -328,11 +328,15 @@ export default function TaxiHomeDashbord({
           };
         }
         actions.saveSchduleTime('now');
-        navigation.navigate(navigationStrings.ADDADDRESS, {
-          cat: appMainData?.categories[0],
-          datetime: { slectedDate, selectedTime },
-          prefillAdress: !!prefillAdress ? prefillAdress : null,
-        });
+        
+        console.log("datails+++++++++++",prefillAdress)
+        goToAddress({prefillAdress})
+        // navigation.navigate(navigationStrings.ADDADDRESS, {
+        //   cat: appMainData?.categories[0],
+        //   datetime: { slectedDate, selectedTime },
+
+        // });
+
       } else {
         actions.setAppSessionData('on_login');
       }
@@ -480,7 +484,11 @@ export default function TaxiHomeDashbord({
     );
   };
 
-  const onPressWhereTo = (fromMap = false, scheduleDate = null) => {
+  const goToAddress = ({
+    fromMap = false, 
+    scheduleDate = null, 
+    prefillAdress = null
+  }) => {
     let item = appMainData.categories[0]
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
@@ -488,14 +496,16 @@ export default function TaxiHomeDashbord({
       setTimeout(() => {
         userData?.auth_token
           ? navigation.navigate(navigationStrings.ADDADDRESS, {
-            item
+            item,
+            prefillAdress: !!prefillAdress ? prefillAdress : null,
           })
           : actions.setAppSessionData('on_login');
       }, 800);
     } else {
       userData?.auth_token
         ? navigation.navigate(navigationStrings.ADDADDRESS, {
-          item
+          item,
+          prefillAdress: !!prefillAdress ? prefillAdress : null,
         })
         : actions.setAppSessionData('on_login');
     }
@@ -508,7 +518,7 @@ export default function TaxiHomeDashbord({
     });
     setTimeout(() => {
       updateState({ isLoadingModal: false });
-      onPressWhereTo(false, date)
+      goToAddress({scheduleDate: date})
     }, 2000);
   }
 
@@ -587,7 +597,7 @@ export default function TaxiHomeDashbord({
               }}>
               <TouchableOpacity
                 style={{ flexBasis: 'auto', flexGrow: width / 2 }}
-                onPress={() => onPressWhereTo(false)} //from map is false
+                onPress={() => goToAddress({fromMap:false})} //from map is false
               >
                 <Text
                   style={{
@@ -901,7 +911,7 @@ export default function TaxiHomeDashbord({
             }}>
             <SafeAreaView>
               <TouchableOpacity
-                onPress={() => onPressWhereTo(true)}
+                onPress={() => goToAddress({fromMap:true})}
                 style={{
                   height: moderateScale(48),
                   backgroundColor: isDarkMode

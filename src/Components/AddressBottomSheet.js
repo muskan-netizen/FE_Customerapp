@@ -40,6 +40,7 @@ import GradientButton from './GradientButton';
 import SearchPlaces from './SearchPlaces';
 import SelctFromMap from './SelctFromMap';
 
+
 navigator.geolocation = require('react-native-geolocation-service');
 
 const ASPECT_RATIO = width / height;

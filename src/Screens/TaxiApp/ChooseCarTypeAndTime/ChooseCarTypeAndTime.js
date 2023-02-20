@@ -32,12 +32,13 @@ import DatePicker from 'react-native-date-picker';
 import { chekLocationPermission } from '../../../utils/permissions';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { generateTransactionRef } from '../../../utils/paystackMethod';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function ChooseCarTypeAndTime({ navigation, route }) {
+ function ChooseCarTypeAndTime({ navigation, route }) {
 
   const paramData = !!route?.params?.promocodeDetail ? route?.params?.promocodeDetail : route?.params;
   const bottomSheetRef = useRef(null);
@@ -1436,3 +1437,5 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     </View>
   );
 }
+
+export default gestureHandlerRootHOC(ChooseCarTypeAndTime)

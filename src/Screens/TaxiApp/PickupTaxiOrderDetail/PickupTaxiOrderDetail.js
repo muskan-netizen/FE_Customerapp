@@ -1,10 +1,8 @@
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Animated,
   BackHandler,
-  Dimensions,
   Image,
   Keyboard,
   Linking,
@@ -26,7 +24,7 @@ import colors from "../../../styles/colors";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import DeviceInfo, { getBundleId } from "react-native-device-info";
-import MapView, { Marker, Polyline, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from "react-native-maps-directions";
 import {
   getImageUrl,
@@ -62,6 +60,7 @@ import { tokenConverterPlusCurrencyNumberFormater } from "../../../utils/commonF
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { mapStyleGrey } from "../../../utils/constants/MapStyle";
 import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -71,26 +70,13 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const CANCLE_TASK_TIME = 45000;
-// import 'moment/locale/fr';
-// import 'moment/locale/ar';
-// import 'moment/locale/de';
-// import 'moment/locale/es';
-// import 'moment/locale/hi';
-// import 'moment/locale/pt';
-// import 'moment/locale/ru';
-// import 'moment/locale/sv';
-// import 'moment/locale/tr';
-// import 'moment/locale/vi';
-// import 'moment/locale/ar';
 import 'moment-timezone';
 import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import GradientButton from '../../../Components/GradientButton';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
-import Header from '../../../Components/Header';
 import { Platform } from "react-native";
 
-export default function PickupTaxiOrderDetail({ navigation, route }) {
+function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -353,6 +339,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   //     updateState({ isLoading: false });
   //   }
   // }, []);
+
+  useEffect(() => {
+    if (urlValue) {
+      _updateDriverLocationLocation(urlValue);
+    }
+  }, [])
+
   useInterval(
     () => {
       if (urlValue) {
@@ -1160,108 +1153,152 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
   if (isLoading) {
     return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: colors.white,
-          alignItems: 'center',
-        }}>
-        <View>
-          <HeaderLoader
-            widthLeft={moderateScale(30)}
-            rectWidthLeft={moderateScale(30)}
-            heightLeft={moderateScaleVertical(30)}
-            rectHeightLeft={moderateScaleVertical(30)}
-            widthRight={moderateScale(200)}
-            rectWidthRight={moderateScale(200)}
-            heightRight={moderateScale(20)}
-            rectHeightRight={moderateScale(20)}
-            isRight={true}
-            rx={5}
-            ry={5}
-            viewStyles={{
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              width: width - moderateScale(30),
+      <WrapperContainer
+        bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+        statusBarColor={colors.white}
+        source={loaderOne}
+        isLoadingB={isLoading}
+      >
+        <View style={{ flex: 1, marginVertical: moderateScale(16), marginBottom: 0 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: moderateScaleVertical(16),
+              marginHorizontal: moderateScale(16),
             }}
-            rightViewStyle={{
-              marginLeft: width / 5.5,
-            }}
-          />
-          <View style={{ alignItems: 'center' }}>
-            <HeaderLoader
-              widthLeft={moderateScale(width / 1.2)}
-              rectWidthLeft={moderateScale(width / 1.2)}
-              heightLeft={height / 3}
-              rectHeightLeft={height / 3}
-              isRight={false}
-              rx={15}
-              ry={15}
-              viewStyles={{
-                marginTop: moderateScaleVertical(20),
+          >
+            <TouchableOpacity
+              onPress={
+                paramData?.fromCab
+                  ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                  : paramData?.pickup_taxi
+                    ? () => navigation.navigate(navigationStrings.HOME)
+                    : () => navigation.goBack()
+              }
+              activeOpacity={0.8}
+            >
+              <Image
+                style={{
+                  tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+                source={imagePath.backArrowCourier}
+              />
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                fontSize: moderateScale(16),
+                fontFamily: fontFamily.medium,
+                textAlign: "left",
+                marginLeft: moderateScale(8),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}
-            />
+            >
+              {orderStatus == "unassigned"
+                ? appIds.jiffex == getBundleId()
+                  ? strings.YOUR_ORDER_WILL_START_SOON
+                  : strings.YOUR_RIDE_WILL_START_SOON
+                : strings.INVOICE}
+            </Text>
           </View>
+          <View>
 
-          <HeaderLoader
-            widthLeft={width / 3}
-            rectWidthLeft={moderateScale(80)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
-            isRight={false}
-            rx={5}
-            ry={5}
-            viewStyles={{
-              alignSelf: 'flex-start',
-              marginTop: moderateScaleVertical(40),
-              paddingBottom: moderateScaleVertical(40),
-            }}
-          />
+            <View style={{ alignItems: 'center' }}>
+              <HeaderLoader
+                widthLeft={width}
+                rectWidthLeft={width}
+                heightLeft={height / 1.75}
+                rectHeightLeft={height / 1.75}
+                isRight={false}
+              />
+            </View>
 
-          <HeaderLoader
-            widthLeft={moderateScale(80)}
-            rectWidthLeft={moderateScale(80)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
-            widthRight={moderateScale(40)}
-            rectWidthRight={moderateScale(40)}
-            heightRight={moderateScale(20)}
-            rectHeightRight={moderateScale(20)}
-            isRight={true}
-            rx={5}
-            ry={5}
-            viewStyles={{
-              alignItems: 'center',
-              width: width - moderateScale(30),
-              marginTop: moderateScaleVertical(10),
-            }}
-            rightViewStyle={{
-              marginLeft: width / 5.5,
-            }}
-          />
-          <HeaderLoader
-            widthLeft={moderateScale(80)}
-            rectWidthLeft={moderateScale(80)}
-            heightLeft={moderateScaleVertical(20)}
-            rectHeightLeft={moderateScaleVertical(20)}
-            widthRight={moderateScale(40)}
-            rectWidthRight={moderateScale(40)}
-            heightRight={moderateScale(20)}
-            rectHeightRight={moderateScale(20)}
-            isRight={true}
-            rx={5}
-            ry={5}
-            viewStyles={{
-              alignItems: 'center',
-              width: width - moderateScale(30),
-              marginTop: moderateScaleVertical(10),
-            }}
-            rightViewStyle={{
-              marginLeft: width / 5.5,
-            }}
-          />
+            <View style={{ alignSelf: 'center' }}>
+              <HeaderLoader
+                widthLeft={moderateScale(60)}
+                rectWidthLeft={moderateScale(60)}
+                heightLeft={moderateScale(8)}
+                rectHeightLeft={moderateScale(8)}
+                isRight={false}
+                viewStyles={{ marginTop: moderateScale(10) }}
+                rx={0}
+                ry={0}
+              />
+            </View>
+
+            <HeaderLoader
+                  widthLeft={moderateScale(140)}
+                  rectWidthLeft={moderateScale(140)}
+                  heightLeft={moderateScale(10)}
+                  rectHeightLeft={moderateScale(10)}
+                  isRight={false}
+                  viewStyles={{ marginTop: moderateScaleVertical(24) }}
+                  rx={0}
+                  ry={0}
+                />
+                <HeaderLoader
+                  widthLeft={moderateScale(100)}
+                  rectWidthLeft={moderateScale(100)}
+                  heightLeft={moderateScale(10)}
+                  rectHeightLeft={moderateScale(10)}
+                  isRight={false}
+                  viewStyles={{ marginTop: 10 }}
+                  rx={0}
+                  ry={0}
+                /> 
+
+            <View style={styles.loaderStyle}>
+              <View>
+                <HeaderLoader
+                  widthLeft={moderateScale(180)}
+                  rectWidthLeft={moderateScale(140)}
+                  heightLeft={moderateScale(10)}
+                  rectHeightLeft={moderateScale(10)}
+                  isRight={false}
+                  rx={0}
+                  ry={0}
+                />
+                <HeaderLoader
+                  widthLeft={moderateScale(100)}
+                  rectWidthLeft={moderateScale(100)}
+                  heightLeft={moderateScale(10)}
+                  rectHeightLeft={moderateScale(10)}
+                  isRight={false}
+                  viewStyles={{ marginTop: 10 }}
+                  rx={0}
+                  ry={0}
+                />
+              </View>
+
+              <View>
+                <HeaderLoader
+                  widthLeft={moderateScale(140)}
+                  rectWidthLeft={moderateScale(140)}
+                  heightLeft={moderateScale(10)}
+                  rectHeightLeft={moderateScale(10)}
+                  isRight={false}
+
+                  rx={0}
+                  ry={0}
+                />
+                <HeaderLoader
+                  widthLeft={moderateScale(100)}
+                  rectWidthLeft={moderateScale(100)}
+                  heightLeft={moderateScale(10)}
+                  rectHeightLeft={moderateScale(10)}
+                  isRight={false}
+                  viewStyles={{ marginTop: 10 }}
+                  rx={0}
+                  ry={0}
+                />
+              </View>
+
+            </View>
+
+          </View>
         </View>
-      </SafeAreaView>
+      </WrapperContainer>
     );
   }
   return (
@@ -1321,7 +1358,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
-              style={{ height: '64%', width: "100%" }}
+              style={{ height:'100%', width: "100%" }}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -1415,10 +1452,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           <BottomSheet
             ref={bottomSheetRef}
             index={0}
-            snapPoints={[height / 3.4, height]}
+            snapPoints={['40%', '100%']}
             animateOnMount={true}
             onChange={() => playHapticEffect(hapticEffects.impactMedium)}
-            handleComponent={bottomSheetHeader}
           >
             <BottomSheetScrollView
               style={{
@@ -2646,3 +2682,5 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     </WrapperContainer>
   );
 }
+
+export default gestureHandlerRootHOC(PickupTaxiOrderDetail)

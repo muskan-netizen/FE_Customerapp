@@ -478,6 +478,8 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
+      }else{
+        
       }
     }
   };
