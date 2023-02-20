@@ -343,6 +343,25 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                 )}
               </Text>
             )}
+
+          {!!data?.is_recurring_booking &&
+            <TouchableOpacity
+              style={{
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                marginHorizontal: moderateScale(8),
+              }}
+              onPress={onPress}
+              activeOpacity={0.8}>
+              <Image
+                style={{
+                  tintColor: isDarkMode
+                    ? colors.white
+                    : themeColors.primary_color,
+                }}
+                source={imagePath.ic_calendar}
+              />
+            </TouchableOpacity>
+          }
         </View>
 
         <View style={{}}>
@@ -541,6 +560,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                         : colors.greyColor2,
                       width: moderateScale(100),
                       minHeight: moderateScaleVertical(35),
+                      marginTop: moderateScaleVertical(5),
                     }}>
                     {selectedItemID == data?.id ? (
                       <UIActivityIndicator

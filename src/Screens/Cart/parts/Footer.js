@@ -489,8 +489,8 @@ function Footer(props) {
             }>
             {strings.SUBTOTAL}
           </Text>
-
-          <Text
+          {/* V2 APi  */}
+          {/* <Text
             style={
               isDarkMode
                 ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
@@ -507,7 +507,26 @@ function Footer(props) {
               additional_preferences,
               currencies?.primary_currency?.symbol,
             )}
-          </Text>
+          </Text> */}
+      {/* V1 APi  */}
+        <Text
+            style={
+            isDarkMode
+            ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+            : styles.priceItemLabel
+            }>
+            {tokenConverterPlusCurrencyNumberFormater(
+            Number(cartData?.gross_paybale_amount) +
+            Number(
+            cartData?.total_container_charges
+            ? cartData?.total_container_charges
+            : 0
+            ),
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+            )}
+        </Text>
         </View>
         {Number(cartData?.delivery_slot_amount) > 0 && (
           <View style={styles.bottomTabLableValue}>

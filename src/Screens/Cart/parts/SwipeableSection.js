@@ -20,15 +20,17 @@
     width,
   } from '../../../styles/responsiveSize';
   import { getBundleId } from 'react-native-device-info';
+  import { cloneDeep, isEmpty } from 'lodash';
+
 /**
  * SwipeableSection Part
- * @param {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData} props 
+ * @param {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,scheduleType} props 
  * @returns 
  */
 
  function SwipeableSection(props) {
  
-    const {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,strings} = props;
+    const {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,strings,scheduleType} = props;
     return (
             <>
             {item?.vendor_products.length > 0
@@ -192,7 +194,12 @@
                                     marginTop: moderateScaleVertical(4),
                                     fontFamily: fontFamily.regular,
                                     }}>
-                                    {i?.quantity} X{' '}
+                                    {i?.quantity} X 
+
+                                    {(i?.recurring_day_data != undefined && i?.recurring_day_data != null)  &&
+                                        <Text> ({(i?.recurring_day_data.match(/,/g) || []).length+1})Days </Text>
+                                    }
+                                    X{' '}
                                 </Text>
                                 <Text
                                     style={{
@@ -579,6 +586,59 @@
                         ) : null
                         }
                         {/* <View style={styles.dashedLine} /> */}
+
+                        {!!scheduleType ?
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginHorizontal: moderateScale(20),
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginBottom: 3,
+                          }}>
+                          <View >
+                            <Text style={styles.startEndDateTitle}>
+                              {'Schedule Type'}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {scheduleType}
+                            </Text>
+                          </View>
+                          {scheduleType !== "Custom" &&
+                            <View style={{ width:moderateScale(200) }}>
+                              <Text style={styles.startEndDateTitle}>
+                                {'Start and End Date'}
+                              </Text>
+                              <Text  style={styles.startEndDateValueTxt}>
+                                {`${i?.recurring_day_data}`}
+                              </Text>
+                            </View>
+                          }
+                          {!isEmpty(i?.recurring_week_day) &&
+                            <View>
+                              <Text style={styles.startEndDateTitle}>
+                                {'Week Days'}
+                              </Text>
+                              <Text style={styles.startEndDateValueTxt}>
+                                {`${i?.recurring_week_day}`}
+                              </Text>
+                            </View>
+                          }
+                          {/* <View>
+                            <Text style={styles.startEndDateTitle}>
+                              {strings.SLOT_PRICE}
+                            </Text>
+                            <Text style={styles.startEndDateValueTxt}>
+                              {tokenConverterPlusCurrencyNumberFormater(
+                                Number(i?.product_delivery_slot?.price || 0),
+                                digit_after_decimal,
+                                additional_preferences,
+                                currencies?.primary_currency?.symbol,
+                              )}
+                            </Text>
+                          </View> */}
+                        </View>
+                        : null}
                     </Animated.View >
                     </Swipeable >
                     );

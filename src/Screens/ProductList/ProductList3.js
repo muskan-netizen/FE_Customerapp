@@ -76,6 +76,7 @@ import {
   hapticEffects,
   playHapticEffect,
   showError,
+  showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
@@ -351,6 +352,55 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => {
     setState((state) => ({ ...state, ...data }));
   };
+
+  const [variantState, setVariantState] = useState({
+    planValues: ["Daily", "Weekly", "Custom", "Alternate Days"],
+    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    quickSelection: ["Weekdays", "Weekends"],
+    showCalendar: false,
+    reccuringCheckBox: false,
+    selectedPlanValues: '',
+    selectedWeekDaysValues: [],
+    selectedQuickSelectionValue: '',
+    minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+    initDate: new Date(),
+    start: {},
+    end: {},
+    period: {},
+    disabledDaysIndexes: [],
+    selectedDaysIndexes: [],
+    date: new Date(),
+    showDateTimeModal: false,
+    slectedDate: new Date(),
+  })
+
+  const { planValues, reccuringCheckBox, showCalendar, selectedPlanValues, minimumDate,
+    weekDays, quickSelection, start, end, period, selectedWeekDaysValues, selectedQuickSelectionValue, initDate,
+    disabledDaysIndexes, selectedDaysIndexes, date, showDateTimeModal, slectedDate } = variantState
+  const updateAddonState = (data) => { setVariantState((state) => ({ ...state, ...data })) };
+
+  const resetVariantState = () => {
+    updateAddonState({
+      planValues: ["Daily", "Weekly", "Alternate Days", "Custom"],
+      weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      quickSelection: ["Weekdays", "Weekends"],
+      reccuringCheckBox: false,
+      showCalendar: false,
+      selectedPlanValues: '',
+      selectedWeekDaysValues: [],
+      selectedQuickSelectionValue: '',
+      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+      initDate: new Date(),
+      start: {},
+      end: {},
+      period: {},
+      disabledDaysIndexes: [],
+      selectedDaysIndexes: [],
+      date: new Date(),
+      showDateTimeModal: false,
+      slectedDate: new Date(),
+    })
+  }
 
   //usecallback functions
 
@@ -926,7 +976,21 @@ export default function Products({ route, navigation }) {
                   paddingHorizontal: moderateScale(16)
                 }}>
                 <View>
-             
+                  {/* { !isEmpty(sectionListData) ?  <Text
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: 0,
+                      }}
+                      numberOfLines={1}>
+                      {sectionListData.map((val) => {
+                        return <Text>{ val?.translation[0]?.name || val.title} </Text>;
+                      })}
+                    </Text> : null} */}
+
+
                   {!!desc && (
                     <Text
                       numberOfLines={2}
@@ -1307,6 +1371,29 @@ export default function Products({ route, navigation }) {
         return
       }
 
+      console.log(item, 'chechItemm');
+      if (!!item.is_recurring_booking) {
+        if (isEmpty(selectedPlanValues)) {
+          showInfo('Click on Calendar icon to schedule the item!');
+          // showError('Plan type should not be empty!');
+          return;
+        }
+        if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+          showError('Weekdays should not be empty!');
+          return;
+        }
+        if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+          if (isEmpty(start) || isEmpty(end)) {
+            showError('Start date and End date should not be empty!');
+            return;
+          }
+        } else {
+          if (isEmpty(period)) {
+            showError('Select dates in custom plan!');
+            return;
+          }
+        }
+      }
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1345,6 +1432,41 @@ export default function Products({ route, navigation }) {
         return;
       }
 
+      const weeDays = []
+      const selectedCustomDates = []
+
+      if (selectedWeekDaysValues.length) {
+        selectedWeekDaysValues.map((itm, inx) => {
+          const value = itm === "Mo" ? 1 :
+            itm === "Tu" ? 2 :
+              itm === "We" ? 3 :
+                itm === "Th" ? 4 :
+                  itm === "Fr" ? 5 :
+                    itm === "Sa" ? 6 :
+                      itm === "Su" && 0
+          weeDays.push(value)
+        })
+      }
+      if (!isEmpty(period) && selectedPlanValues == "Custom") {
+        Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
+      }
+      if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+        Object.entries(period).map(([key, value]) => {
+          console.log("=>", JSON.stringify(value));
+          ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+        });
+      }
+
+      const recurringformPost = {}
+
+      recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
+        selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
+      recurringformPost['startDate'] = start.dateString ? start.dateString : ''
+      recurringformPost['endDate'] = end.dateString ? end.dateString : ''
+      recurringformPost['weekDay'] = weeDays
+      recurringformPost['selected_custom_dates'] = selectedCustomDates
+
+
       let data = {};
       data['sku'] = item.sku;
       data['quantity'] = !!item?.minimum_order_count
@@ -1364,6 +1486,11 @@ export default function Products({ route, navigation }) {
 
       console.log(data, "data for cart in single item");
 
+      data['type'] = dine_In_Type;
+
+      data['recurringformPost'] = recurringformPost
+
+      console.log('Sending api data', data, "data for cart");
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
@@ -2074,7 +2201,11 @@ export default function Products({ route, navigation }) {
       btnLoader: false,
     });
     setLoading(false);
-    showError(error?.message || error?.error);
+    if (error?.message == "Recurring booking type not be empty.") {
+      showSuccess('Schedule the product in product detail page');
+    } else {
+      showError(error?.message || error?.error);
+    }
     updateState({ loadMore: false });
   };
 
@@ -2107,6 +2238,7 @@ export default function Products({ route, navigation }) {
   const onCloseModal = () => {
     setIsVisibleModal(false);
     setShowShimmer(true);
+    resetVariantState()
   };
 
   const addDeleteCartItems = async (
@@ -2414,7 +2546,11 @@ export default function Products({ route, navigation }) {
         selectedItemID: -1,
         btnLoader: false,
       });
-      showError(error?.message || error?.error);
+      if (error?.message == "Recurring booking type not be empty.") {
+        showInfo('Schedule the product in product detail page');
+      } else {
+        showError(error?.message || error?.error);
+      }
     }
   };
 
@@ -3185,7 +3321,10 @@ export default function Products({ route, navigation }) {
   const bottomSheetHeader = () => {
     return (
       <TouchableOpacity
-        onPress={() => setIsVisibleModal(false)}
+        onPress={() => {
+          setIsVisibleModal(false)
+          resetVariantState()
+        }}
         style={{ alignSelf: 'center', marginBottom: moderateScaleVertical(16) }}>
         <Image source={imagePath.icClose4} />
       </TouchableOpacity>
@@ -3458,6 +3597,25 @@ export default function Products({ route, navigation }) {
       showError('Product varient is not availabel!');
       return;
     }
+    if (isEmpty(selectedPlanValues)) {
+      showError('Plan type should not be empty!');
+      return;
+    }
+    if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+      showError('Weekdays should not be empty!');
+      return;
+    }
+    if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+      if (isEmpty(start) || isEmpty(end)) {
+        showError('Start date and End date should not be empty!');
+        return;
+      }
+    } else {
+      if (isEmpty(period)) {
+        showError('Select dates in custom plan!');
+        return;
+      }
+    }
 
     playHapticEffect(hapticEffects.rigid);
     console.log('add on set', addonSet);
@@ -3485,7 +3643,45 @@ export default function Products({ route, navigation }) {
     });
 
     const checkIsError = addonSet.findIndex((el) => el.errorShow);
+
+    const weeDays = []
+    const selectedCustomDates = []
+
+    if (selectedWeekDaysValues.length) {
+      selectedWeekDaysValues.map((itm, inx) => {
+        const value = itm === "Mo" ? 1 :
+          itm === "Tu" ? 2 :
+            itm === "We" ? 3 :
+              itm === "Th" ? 4 :
+                itm === "Fr" ? 5 :
+                  itm === "Sa" ? 6 :
+                    itm === "Su" && 0
+        weeDays.push(value)
+      })
+    }
+    if (!isEmpty(period) && selectedPlanValues == "Custom") {
+      Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
+    }
+    if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+      Object.entries(period).map(([key, value]) => {
+        console.log("=>", JSON.stringify(value));
+        ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+      });
+    }
+
+
+    const recurringformPost = {}
+
+    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
+      selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
+    recurringformPost['startDate'] = start.dateString ? start.dateString : ''
+    recurringformPost['endDate'] = end.dateString ? end.dateString : ''
+    recurringformPost['weekDay'] = weeDays
+    recurringformPost['selected_custom_dates'] = selectedCustomDates
+
+
     let data = {};
+
     if (checkIsError == -1) {
       data['sku'] = productSku;
       data['quantity'] = productQuantityForCart;
@@ -3519,6 +3715,9 @@ export default function Products({ route, navigation }) {
       }
 
       console.log(data, 'data for cart>>>>>>');
+      data['recurringformPost'] = recurringformPost
+
+      console.log(JSON.stringify(data), 'data for cart');
       updateState({ btnLoader: true });
       actions
         .addProductsToCart(data, {
@@ -3768,8 +3967,8 @@ export default function Products({ route, navigation }) {
           <View style={{ flex: 1 }}>
             {((AnimatedHeaderValue && productListData.length > 6) ||
               (!!sectionListData?.length && AnimatedHeaderValue)) && (
-          
-               <View
+
+                <View
                   style={{
                     ...styles.headerStyle,
                     marginBottom: moderateScale(12),
@@ -3902,9 +4101,9 @@ export default function Products({ route, navigation }) {
                     //   </TouchableOpacity>
                     // </View>
                   )}
-                
-                {isSearch ? (
-              
+
+                  {isSearch ? (
+
                     <SearchBar
                       containerStyle={{
                         marginHorizontal: moderateScale(18),
@@ -3921,42 +4120,42 @@ export default function Products({ route, navigation }) {
                       showRightIcon
                       rightIconPress={rightIconPress}
                     />
-                 
-                ) : (
+
+                  ) : (
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      // onPress={() => updateState({isSearch: true})}
-                      onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR,
-                        {
-                          type: data?.vendor
-                            ? staticStrings.VENDOR
-                            : staticStrings.CATEGORY,
-                          id: data?.vendor ? data?.id : productListId?.id,
-                        },
-                      )}>
-                      <Image
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        // onPress={() => updateState({isSearch: true})}
+                        onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR,
+                          {
+                            type: data?.vendor
+                              ? staticStrings.VENDOR
+                              : staticStrings.CATEGORY,
+                            id: data?.vendor ? data?.id : productListId?.id,
+                          },
+                        )}>
+                        <Image
+                          style={{
+                            tintColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                           transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                        }}
-                        source={
-                          !!data?.showAddToCart ? false : imagePath.icSearchb
-                        }
-                      />
-                    </TouchableOpacity>
+                          }}
+                          source={
+                            !!data?.showAddToCart ? false : imagePath.icSearchb
+                          }
+                        />
+                      </TouchableOpacity>
                     <View style={{marginHorizontal: moderateScale(8)}} />
-                    <TouchableOpacity
-                      onPress={onShare}
-                      hitSlop={hitSlopProp}
-                      activeOpacity={0.8}>
-                      <Image
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
+                      <TouchableOpacity
+                        onPress={onShare}
+                        hitSlop={hitSlopProp}
+                        activeOpacity={0.8}>
+                        <Image
+                          style={{
+                            tintColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                           transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                         }}
                         source={imagePath.icShareb}
@@ -3988,7 +4187,7 @@ export default function Products({ route, navigation }) {
                 getItemLayout={getItemLayout}
                 onScrollToIndexFailed={(val) => console.log('indexed failed')}
                 ItemSeparatorComponent={()=> <View style={{height: moderateScale(8)}} />}
-       
+
                 // contentContainerStyle={{
                 //   paddingBottom: moderateScale(60),
                 // }}
@@ -4146,6 +4345,26 @@ export default function Products({ route, navigation }) {
                         isVarientSelectLoading={isVarientSelectLoading}
                         productDetailNew={productDetailNew}
                         isProductAvailable={isProductAvailable}
+
+                        planValues={planValues}
+                        weekDays={weekDays}
+                        quickSelection={quickSelection}
+                        showCalendar={showCalendar}
+                        reccuringCheckBox={reccuringCheckBox}
+                        selectedPlanValues={selectedPlanValues}
+                        selectedWeekDaysValues={selectedWeekDaysValues}
+                        selectedQuickSelectionValue={selectedQuickSelectionValue}
+                        minimumDate={minimumDate}
+                        initDate={initDate}
+                        start={start}
+                        end={end}
+                        period={period}
+                        disabledDaysIndexes={disabledDaysIndexes}
+                        selectedDaysIndexes={selectedDaysIndexes}
+                        date={date}
+                        showDateTimeModal={showDateTimeModal}
+                        slectedDate={slectedDate}
+                        updateAddonState={updateAddonState}
                       />
                     </BottomSheetScrollView>
                   </BottomSheet>

@@ -2636,6 +2636,7 @@ function Cart({navigation, route}) {
             MyDarkTheme={MyDarkTheme}
             cartData={cartData}
             strings={strings}
+            scheduleType={scheduleType}
 
           />
           {/************ end render cart items *************/}

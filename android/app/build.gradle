@@ -228,7 +228,32 @@ android {
                 resValue "string", "app_name", "WeedLomo"
                 resValue "string", "host_name", ""
             }
+<<<<<<< HEAD
 }
+=======
+        greenhippo{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.greenhippo.royoorders'
+            resValue "string", "app_name", "GreenHippo" 
+            resValue "string", "host_name", ""
+        }
+        grub {
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.customer.grub'
+            resValue "string", "app_name", "Grub"
+            resValue "string", "host_name", ""
+        }
+
+    }
+>>>>>>> feature_reccuring_green_hipo
 
     // productFlavors {
     //         royoorder {
