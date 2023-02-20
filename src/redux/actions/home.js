@@ -22,6 +22,7 @@ import {
   ORDER_RIDE_BID_DETAILS,
   DECLINE_RIDE_BID,
   ACCEPT_RIDE_BID,
+  ACCEPT_RIDE_FOR_BID,
 } from '../../config/urls';
 import {apiPost, setItem, getItem, apiGet} from '../../utils/utils';
 import store from '../store';
@@ -398,4 +399,19 @@ export const acceptRideBid = (data, headers = {}) => {
       });
   });
 };
+
+export const acceptRideForBid = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ACCEPT_RIDE_FOR_BID, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
+
 

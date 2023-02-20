@@ -39,6 +39,7 @@ import {
   CHECK_VENDOR_PINCODE,
   GET_VENDOR_SHIPPING_SLOTS,
   GET_PRODUCT_DELIVERY_SLOTS_INTERVAL,
+  CREATE_BID_REQUEST,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -563,3 +564,10 @@ export function getVendorShippingSlots(data = {}, headers = {}) {
 export function getProductDeliverySlotsInterval(data = {}, headers = {}) {
   return apiPost(GET_PRODUCT_DELIVERY_SLOTS_INTERVAL, data, headers);
 }
+
+
+// create bid request>>>>>>>>>>
+export function createBidRequest(data = {}, headers = {}) {
+  return apiPost(CREATE_BID_REQUEST, data, headers);
+}
+

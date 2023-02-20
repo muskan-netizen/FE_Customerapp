@@ -69,8 +69,8 @@ export default function Addaddress({ navigation, route }) {
   } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { book_for_friend } = appData?.profile?.preferences;
-  console.log(appData, "paramDataparamData");
+  const { book_for_friend, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences;
+  console.log(appData?.profile?.preferences, "paramDataparamData");
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -355,11 +355,6 @@ export default function Addaddress({ navigation, route }) {
     );
   };
 
-
-
-  /**********************************************  check ride booking type   ********************/
-
-
   const checkBookingServiceType = (bookingType) => {
 
     switch (bookingType) {
@@ -377,12 +372,6 @@ export default function Addaddress({ navigation, route }) {
         break;
     }
   }
-
-
-
-  /************************************ */
-
-
 
   const moveToNextScreenWithAddressData = () => {
     let location = [];
@@ -422,6 +411,8 @@ export default function Addaddress({ navigation, route }) {
     let checkEmptyTask = dropLocationData.filter(
       (item) => item.pre_address !== ""
     );
+
+
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
@@ -1112,7 +1103,7 @@ export default function Addaddress({ navigation, route }) {
               )}
             </View>
           </View>
-          {appData?.profile?.preferences?.is_cab_pooling == 1 ? (
+          {is_cab_pooling || is_bid_ride_enable ? (
             <View
               style={{
 
@@ -1122,75 +1113,83 @@ export default function Addaddress({ navigation, route }) {
 
               }}
             >
-              <GradientButton
-                colorsArray={
-                  isBookingType == 0
-                    ? [themeColors.primary_color, themeColors.primary_color]
-                    : [colors.white, colors.white]
-                }
-                textStyle={{
-                  textTransform: "none",
-                  fontSize: textScale(14),
-                  color:
-                    isBookingType == 0 ? colors.white : themeColors?.primary_color,
-                  marginHorizontal: moderateScale(5),
-                }}
-                onPress={() => onBooking(0)}
-                btnText={"BOOKING"}
-                containerStyle={{ flex: 1 }}
-                btnStyle={{
-                  borderRadius: moderateScale(4),
-                  borderColor: colors.textGreyLight,
-                  borderWidth: moderateScale(0.5),
+              {!!(is_cab_pooling || is_bid_ride_enable) &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 0
+                      ? [themeColors.primary_color, themeColors.primary_color]
+                      : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 0 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(0)}
+                  btnText={"BOOKING"}
+                  containerStyle={{ flex: 1 ,  marginHorizontal:moderateScale(5)}}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
+                  
+                  }}
+                />
+              }
 
-                }}
-              />
-              <GradientButton
-                colorsArray={
-                  isBookingType == 1
-                    ? [themeColors.primary_color, themeColors.primary_color] : [colors.white, colors.white]
-                }
-                textStyle={{
-                  textTransform: "none",
-                  fontSize: textScale(14),
-                  color:
-                    isBookingType == 1 ? colors.white : themeColors?.primary_color,
-                  marginHorizontal: moderateScale(5),
-                }}
-                onPress={() => onBooking(1)}
-                btnText={"POOLING"}
-                containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
-                btnStyle={{
-                  borderRadius: moderateScale(4),
-                  borderColor: colors.textGreyLight,
-                  borderWidth: moderateScale(0.5),
+              {!!is_cab_pooling &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 1
+                      ? [themeColors.primary_color, themeColors.primary_color] : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 1 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(1)}
+                  btnText={"POOLING"}
+                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
 
-                }}
-              />
+                  }}
+                />
+              }
 
-              <GradientButton
-                colorsArray={
-                  isBookingType == 2
-                    ? [themeColors.primary_color, themeColors.primary_color]
-                    : [colors.white, colors.white]
-                }
-                textStyle={{
-                  textTransform: "none",
-                  fontSize: textScale(14),
-                  color:
-                    isBookingType == 2 ? colors.white : themeColors?.primary_color,
-                  marginHorizontal: moderateScale(5),
-                }}
-                onPress={() => onBooking(2)}
-                btnText={"BIDE & RIDE"}
-                containerStyle={{ flex: 1 }}
-                btnStyle={{
-                  borderRadius: moderateScale(4),
-                  borderColor: colors.textGreyLight,
-                  borderWidth: moderateScale(0.5),
+              {!!is_bid_ride_enable &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 2
+                      ? [themeColors.primary_color, themeColors.primary_color]
+                      : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 2 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(2)}
+                  btnText={"BIDE & RIDE"}
+                  containerStyle={{ flex: 1 }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
 
-                }}
-              />
+                  }}
+                />
+              }
+
             </View>
           ) : null}
 

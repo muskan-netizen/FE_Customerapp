@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.56:8000/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -394,7 +394,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //zonesso
 // export const API_BASE_URL = 'https://dev.zonesso.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.101.214:9002/api/v1';
+export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
 //export const API_BASE_URL = 'https://order.clickokart.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
@@ -716,6 +716,11 @@ export const SAVE_INFULENCER_INFO = getApiUrl(
 
 // bid and ride and instant booking api here
 
+//create bid request 
+export const CREATE_BID_REQUEST = getApiUrl(
+  "/create/user/bid_ride_request"
+);
+
 
 export const ORDER_RIDE_BID_DETAILS = getApiUrl(
   '/order-ride-bid-details',
@@ -728,7 +733,9 @@ export const DECLINE_RIDE_BID = getApiUrl(
 export const ACCEPT_RIDE_BID = getApiUrl(
   '/accept-ride-bid',
 );
-
+export const ACCEPT_RIDE_FOR_BID = getApiUrl(
+  '/accept-ride-bid-request',
+);
 
 
 

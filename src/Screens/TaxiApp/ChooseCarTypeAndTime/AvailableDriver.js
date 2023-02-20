@@ -22,6 +22,7 @@ import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
 export default function AvailableDriver({
+  rideType,
   isCabPooling = false,
   isLoading,
   disabled,
@@ -31,6 +32,7 @@ export default function AvailableDriver({
   selectedCarOption = null,
   allListedDrivers,
   _onUpdateSeatNo=()=>{},
+  _onShowBidePriceModal=()=>{}
 }) {
   const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } =
     useSelector((state) => state?.initBoot);
@@ -127,27 +129,48 @@ export default function AvailableDriver({
             </View>
           </View>
 
-          <Text
-            numberOfLines={1}
-            style={{
-              color: isDarkMode
-                ? selectedCarOption?.id == item?.id
-                  ? colors.white
-                  : colors.whiteOpacity50
-                : selectedCarOption?.id == item?.id
-                  ? colors.black
-                  : colors.blackC,
-              fontFamily: fontFamily.medium,
-              fontSize: textScale(14),
-              textAlign: 'left',
-            }}>
-            {tokenConverterPlusCurrencyNumberFormater(
-               Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
-              digit_after_decimal,
-              additional_preferences,
-              currencies?.primary_currency?.symbol,
-            )}
-          </Text>
+          {rideType == 'bideRide' ?
+             <TouchableOpacity
+             onPress={()=>_onShowBidePriceModal(item)}
+             style={{
+               backgroundColor:themeColors.primary_color,  
+               padding: moderateScale(8),
+               borderRadius: moderateScale(4),
+               borderColor: themeColors.primary_color,
+             }}>
+             <Text
+               style={{
+                 fontSize: textScale(12),
+                 fontFamily: fontFamily.regular,
+                 color:colors.white,
+               }}>
+               {'Bid Now'}
+             </Text>
+           </TouchableOpacity>
+            :
+            <Text
+              numberOfLines={1}
+              style={{
+                color: isDarkMode
+                  ? selectedCarOption?.id == item?.id
+                    ? colors.white
+                    : colors.whiteOpacity50
+                  : selectedCarOption?.id == item?.id
+                    ? colors.black
+                    : colors.blackC,
+                fontFamily: fontFamily.medium,
+                fontSize: textScale(14),
+                textAlign: 'left',
+              }}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
+
+          }
         </TouchableOpacity>
         {selectedCarOption?.id == item?.id && allListedDrivers?.length ? (
           <Text
