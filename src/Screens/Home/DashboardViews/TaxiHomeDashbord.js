@@ -686,9 +686,9 @@ export default function TaxiHomeDashbord({
       : `${location.latitude},${location.longitude}`
 
     nearbySearch(
-      latlng = locations,
-      key = appData?.profile?.preferences?.map_key || google_map_key,
-      type = type,
+      locations,
+      appData?.profile?.preferences?.map_key || google_map_key,
+      type,
     ).then((res) => {
       if (!isEmpty(res?.results)) {
         setNearByPlacesByType(res?.results)
@@ -737,7 +737,7 @@ export default function TaxiHomeDashbord({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
-        <View style={{
+        {getBundleId() == appIds.hezniTaxic && <View style={{
           marginTop: moderateScaleVertical(10),
           marginHorizontal: moderateScale(15),
           flexDirection: "row",
@@ -768,7 +768,7 @@ export default function TaxiHomeDashbord({
               fontSize: textScale(17)
             }}>Airport</Text>
           </TouchableOpacity>
-        </View>
+        </View>}
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={appMainData?.categories}
@@ -985,6 +985,7 @@ export default function TaxiHomeDashbord({
                             latitudeDelta: 0.015,
                             longitudeDelta: 0.0121,
                           }}
+
                         />
                       )
                     }) : <Marker

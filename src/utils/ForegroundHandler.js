@@ -2,20 +2,21 @@ import notifee, {
   AndroidColor,
   AndroidStyle,
   EventType,
+  AndroidImportance
 } from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
-import {useEffect} from 'react';
-import {Platform} from 'react-native';
+import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import actions from '../redux/actions';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
-import {redirectFromNotification} from './helperFunctions';
+import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
+import { redirectFromNotification } from './helperFunctions';
 
 // let arr = []
 // let canEnablePrinter = true
 
 const ForegroundHandler = (props) => {
   useEffect(() => {
-    return notifee.onForegroundEvent(({type, detail}) => {
+    return notifee.onForegroundEvent(({ type, detail }) => {
       switch (type) {
         case EventType.DISMISSED:
           console.log('User dismissed notification', detail.notification);
@@ -33,7 +34,7 @@ const ForegroundHandler = (props) => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log('remote message foreground', remoteMessage);
 
-      const {data, messageId, notification} = remoteMessage;
+      const { data, messageId, notification } = remoteMessage;
 
       /// Create a channel (required for Android)
 
@@ -43,6 +44,8 @@ const ForegroundHandler = (props) => {
         vibration: true,
         lightColor: AndroidColor.YELLOW,
         sound: 'customnotii',
+        importance: AndroidImportance.HIGH,
+
       });
 
       // if (Platform.OS == 'ios') {
@@ -70,9 +73,10 @@ const ForegroundHandler = (props) => {
                 },
               ],
             },
-            data: {...data},
+            data: { ...data },
           };
         } else {
+
           displayNotificationData = {
             title: data?.title || notification?.title || '',
             body: data?.body || notification?.body || '',
@@ -82,16 +86,18 @@ const ForegroundHandler = (props) => {
               pressAction: {
                 id: 'default',
               },
+              importance: AndroidImportance.HIGH,
               style: {
                 type: AndroidStyle.BIGPICTURE,
                 picture: notification?.android?.imageUrl,
               },
             },
 
-            data: {...data},
+            data: { ...data },
           };
         }
       } else {
+
         displayNotificationData = {
           title: data?.title || notification?.title || '',
           body: data?.body || notification?.body || '',
@@ -101,9 +107,10 @@ const ForegroundHandler = (props) => {
             pressAction: {
               id: 'default',
             },
+            importance: AndroidImportance.HIGH
           },
 
-          data: {...data},
+          data: { ...data },
         };
       }
 
@@ -139,7 +146,7 @@ const ForegroundHandler = (props) => {
       ) {
         actions.isVendorNotification(true);
         actions.refreshNotification(messageId);
-        const {data} = remoteMessage.data;
+        const { data } = remoteMessage.data;
         let _data = JSON.parse(data);
         console.log(
           'foreground notification listener checking data >>>>',

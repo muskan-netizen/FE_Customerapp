@@ -52,8 +52,7 @@ export const placesGeoCoding = async (lat, long, key) => {
 }
 
 export const nearbySearch = async (latlng, key = google_map_key, type = "city", radius = 5000) => {
-    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latlng}&types=${type}&radius=${radius}&key=${key}`
-    console.log(url, "url>>>>>>url")
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latlng}&type=${type}&radius=${radius}&key=${key}`
     try {
         let res = await fetch(url, {
             method: 'GET',

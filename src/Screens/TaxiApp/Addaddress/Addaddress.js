@@ -9,11 +9,12 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
+import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import DropDown from "../../../Components/DropDown";
 import GradientButton from "../../../Components/GradientButton";
@@ -32,7 +33,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from "../../../styles/responsiveSize";
 import { MyDarkTheme } from "../../../styles/theme";
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
@@ -40,21 +41,20 @@ import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
-  nearbySearch,
+  nearbySearch
 } from "../../../utils/googlePlaceApi";
 import {
   getAddressComponent,
   getPhoneNumberFromPhoneBook,
   getRandomColor,
-  showError,
+  showError
 } from "../../../utils/helperFunctions";
 import {
   checkContactPermission,
   chekLocationPermission,
-  locationPermission,
+  locationPermission
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -73,7 +73,6 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { book_for_friend } = appData?.profile?.preferences || {};
-  console.log(paramData, "paramDataparamData");
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -170,6 +169,8 @@ export default function Addaddress({ navigation, route }) {
       getAllAddress();
     }
   }, [paramData]);
+
+
   useEffect(() => {
     getStaticLocations();
   }, []);
@@ -478,7 +479,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type);
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type || 'city');
       updateState({
         nearByAddressess: res.results,
       });
@@ -939,6 +940,7 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const onSelectAddressViaMap = (prefillAdress) => {
+    getNearByAddress(`${prefillAdress?.latitude},${prefillAdress?.longitude}`)
     const cloneArr = dropLocationData;
     cloneArr[searchResult.currentIndex].pre_address =
       prefillAdress?.pre_address;

@@ -53,7 +53,6 @@ export default {
   home: require('../assets/images/ic_home2.png'),
   add: require('../assets/images/ic_add.png'),
   cart: require('../assets/images/ic_cart.png'),
-  card: require('../assets/images/ic_card2.png'),
   call: require('../assets/images/ic_call.png'),
   info: require('../assets/images/ic_info.png'),
   orderprofile: require('../assets/images/ic_profile2.png'),
@@ -368,7 +367,6 @@ export default {
   close2: require('../assets/images/TAXIAPPIMAGES/ic_close1.png'),
   calendarA: require('../assets/images/TAXIAPPIMAGES/ic_calendar2.png'),
   calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
-  calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
   icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
   discount2: require('../assets/images/TAXIAPPIMAGES/ic_discount.png'),
 
@@ -424,7 +422,6 @@ export default {
   cameraRoyo: require('../assets/images/royoTab/ic_camera2.png'),
 
   testingImageRoyo: require('../assets/images/royoTab/Food-Pizza-Basil-Tomato-removebg-preview.png'),
-  icAdd: require('../assets/images/RoyoorderNewImages/ic_add3.png'),
   printer: require('../assets/images/RoyoorderNewImages/ic_print.png'),
   bluetooth: require('../assets/images/RoyoorderNewImages/bluetooth.png'),
   rightArrowAngle: require('../assets/images/RoyoorderNewImages/right-arrow-angle.png'),
