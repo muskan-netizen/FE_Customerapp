@@ -497,7 +497,7 @@ function Footer(props) {
                 : styles.priceItemLabel
             }>
             {tokenConverterPlusCurrencyNumberFormater(
-              Number(cartData?.gross_paybale_amount) +
+              Number(cartData?.sub_total) +
               Number(
                 cartData?.total_container_charges
                   ? cartData?.total_container_charges
