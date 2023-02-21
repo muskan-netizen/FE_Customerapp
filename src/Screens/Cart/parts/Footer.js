@@ -518,7 +518,7 @@ function Footer(props) {
               : styles.priceItemLabel
           }>
           {tokenConverterPlusCurrencyNumberFormater(
-            Number(cartData?.gross_paybale_amount) +
+            Number(cartData?.gross_paybale_amount ? cartData?.gross_paybale_amount : cartData?.sub_total ? cartData?.sub_total : 0 ) +
             Number(
               cartData?.total_container_charges
                 ? cartData?.total_container_charges
@@ -583,7 +583,8 @@ function Footer(props) {
       ) : null}
 
       {/* total_delivery_fee */}
-      {!!cartData?.total_delivery_fee ? (
+      {/* V1 v2 changes */}
+      {!! (cartData?.total_delivery_fee) || !!(cartData?.delivery_charges)   ? (
         <View style={styles.bottomTabLableValue}>
           <Text
             style={
@@ -605,7 +606,8 @@ function Footer(props) {
               Number(
                 cartData?.total_delivery_fee
                   ? cartData?.total_delivery_fee
-                  : 0,
+                  :  cartData?.delivery_charges
+                  ? cartData?.delivery_charges : 0,
               ),
               digit_after_decimal,
               additional_preferences,

@@ -197,9 +197,9 @@
                                     {i?.quantity} X 
 
                                     {(i?.recurring_day_data != undefined && i?.recurring_day_data != null)  &&
-                                        <Text> ({(i?.recurring_day_data.match(/,/g) || []).length+1})Days </Text>
+                                        <Text> ({(i?.recurring_day_data.match(/,/g) || []).length+1}) Days  X{' '}</Text>
                                     }
-                                    X{' '}
+                                   
                                 </Text>
                                 <Text
                                     style={{
@@ -586,8 +586,8 @@
                         ) : null
                         }
                         {/* <View style={styles.dashedLine} /> */}
-
-                        {!!scheduleType ?
+                        
+                        { i.is_recurring_booking==1 &&  !!scheduleType ?
                         <View
                           style={{
                             flexDirection: 'row',
