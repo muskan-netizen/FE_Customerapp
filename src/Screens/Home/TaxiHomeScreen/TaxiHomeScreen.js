@@ -611,6 +611,7 @@ useEffect(()=>{
             selectedToggle={selectedToggle}
             toggleData={appData}
             location={locationObj}
+            currentLocation={locationObj}
           />
         );
       case 5:
