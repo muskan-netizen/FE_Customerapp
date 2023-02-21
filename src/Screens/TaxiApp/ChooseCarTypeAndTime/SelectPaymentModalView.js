@@ -41,19 +41,17 @@ import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
-import {UIActivityIndicator} from 'react-native-indicators';
 
 
-export default function SelectPaymentModalView({
+
+ function SelectPaymentModalView({
   isLoading = false,
   onPressBack,
 
   _confirmAndPay,
   slectedDate = "",
   selectedTime = "",
-  totalDistance = 0,
   distnce_unit = "",
-  totalDuration = 0,
   selectedCarOption,
   navigation = navigation,
   couponInfo = null,
@@ -309,7 +307,7 @@ export default function SelectPaymentModalView({
               { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
             ]}
           >
-            {`${totalDistance} ${
+            {`${selectedCarOption?.distance || '0'} ${
               getBundleId() === appIds?.weTogether ||
               getBundleId() === appIds?.taxiolgy
                 ? "Miles"
@@ -336,9 +334,9 @@ export default function SelectPaymentModalView({
               { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
             ]}
           >
-            {totalDuration < 60
-              ? `${totalDuration} mins`
-              : `${(totalDuration / 60).toFixed(2)} hrs`}
+            {!!selectedCarOption?.duration < 60
+              ? `${selectedCarOption?.duration} mins`
+              : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
           </Text>
         </View>
         <View style={{ flex: 0.33 }}>
@@ -492,9 +490,9 @@ export default function SelectPaymentModalView({
                 })
               }
             >
-              {totalDuration < 60
-                ? `${totalDuration} mins`
-                : `${(totalDuration / 60).toFixed(2)} hrs`}
+             {!!selectedCarOption?.duration < 60
+              ? `${selectedCarOption?.duration} mins`
+              : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
             </Text>
           </View>
           <View
@@ -1154,3 +1152,5 @@ export default function SelectPaymentModalView({
     </View>
   );
 }
+
+export default React.memo(SelectPaymentModalView)

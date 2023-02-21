@@ -38,7 +38,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
- function ChooseCarTypeAndTime({ navigation, route }) {
+function ChooseCarTypeAndTime({ navigation, route }) {
 
   const paramData = !!route?.params?.promocodeDetail ? route?.params?.promocodeDetail : route?.params;
   const bottomSheetRef = useRef(null);
@@ -741,7 +741,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   }, []);
 
 
-  const _selectedProductForDrivers = (item) => {updateState({selectedCarOption: item})};
+  const _selectedProductForDrivers = (item) => { updateState({ selectedCarOption: item }) };
 
   useEffect(() => {
     if (
@@ -928,7 +928,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   }, [showPaymentModal, isDarkMode, availableVendors, availableCarList])
 
 
-  const SelectPaymentView = React.memo(function () {
+  const selectPaymentView = () => {
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}
@@ -970,10 +970,9 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
         allScreenParamsData={paramData}
         distnce_unit={distance_unit_for_time}
       />
-    );
-  })
-
-  const SelectCarModalView = React.memo(function () {
+    )
+  }
+  const selectCarModalView = () => {
     return (
       <AvailableDriver
         onPressAvailableCar={_selectedProductForDrivers}
@@ -1016,7 +1015,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
         navigation={navigation}
       />
     )
-  })
+  }
 
 
   const _redirectToPayement = () => {
@@ -1261,8 +1260,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
                 : colors.white,
             }}
           >
-            {!!showCarModal && <SelectCarModalView />}
-            {!!showPaymentModal && <SelectPaymentView />}
+            {!!showCarModal && selectCarModalView()}
+            {!!showPaymentModal && selectPaymentView()}
 
           </View>
         </BottomSheet>
@@ -1417,23 +1416,23 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
           </View>
         </Modal>
       )}
-      <PaymentProcessingModal isModalVisible={isModalVisible} updateModalState={_updateState}/>
-        <DatePicker
-          modal
-          open={isScheduleModalVisible}
-          date={scheduleDateTime?.date ? scheduleDateTime?.date : new Date()}
-          locale={
-            languages?.primary_language?.sort_code
-              ? languages?.primary_language?.sort_code
-              : "en"
-          }
-          mode="datetime"
-          textColor={isDarkMode ? colors.black : colors.blackB}
-          minimumDate={new Date()}
-          style={{width: width - 20,height: height / 4.4}}
-          onConfirm={date => onDateSet(date)}
-          onCancel={() => updateState({ isScheduleModalVisible: false })}
-        />
+      <PaymentProcessingModal isModalVisible={isModalVisible} updateModalState={_updateState} />
+      <DatePicker
+        modal
+        open={isScheduleModalVisible}
+        date={scheduleDateTime?.date ? scheduleDateTime?.date : new Date()}
+        locale={
+          languages?.primary_language?.sort_code
+            ? languages?.primary_language?.sort_code
+            : "en"
+        }
+        mode="datetime"
+        textColor={isDarkMode ? colors.black : colors.blackB}
+        minimumDate={new Date()}
+        style={{ width: width - 20, height: height / 4.4 }}
+        onConfirm={date => onDateSet(date)}
+        onCancel={() => updateState({ isScheduleModalVisible: false })}
+      />
     </View>
   );
 }

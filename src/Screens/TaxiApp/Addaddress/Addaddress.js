@@ -84,6 +84,8 @@ export default function Addaddress({ navigation, route }) {
 
 
   const fontFamily = appStyle?.fontSizeData;
+  const [currentFocus, setCurrentFocus] = useState(1)
+
   const [state, setState] = useState({
     pageNo: 1,
     limit: 5,
@@ -1214,8 +1216,8 @@ export default function Addaddress({ navigation, route }) {
                         >
                           <SearchPlaces
                             curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                            autoFocus={
-                              i == dropLocationData.length - 1 ? true : false
+                            autoFocus={i == dropLocationData.length - 1 ? true : 
+                              false
                             }
                             placeHolder={
                               i == 0
@@ -1224,7 +1226,7 @@ export default function Addaddress({ navigation, route }) {
                                   ? strings.WHERETO
                                   : strings.ADD_A_STOP
                             }
-                            value={val.pre_address} // instant update search value
+                            value={val?.pre_address} // instant update search value
                             mapKey={profile?.preferences?.map_key} //send here google Key
                             fetchArrayResult={(data) =>
                               updateState({
