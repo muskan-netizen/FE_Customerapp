@@ -241,7 +241,7 @@ const ProductCard3 = ({
           <Text
             style={{
               ...commonStyles.futuraBtHeavyFont14,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? colors.white : colors.black,
               fontFamily: fontFamily.regular,
               fontSize: textScale(12),
               width: width / 2.5,
@@ -253,7 +253,7 @@ const ProductCard3 = ({
             <Text
               style={{
                 fontSize: textScale(9),
-                color: colors.grayOpacity51,
+                color: isDarkMode ? colors.white : colors.grayOpacity51,
                 marginVertical: moderateScaleVertical(4),
                 textAlign: 'left',
               }}>
@@ -267,7 +267,7 @@ const ProductCard3 = ({
               style={{
                 ...styles.inTextStyle,
                 color: isDarkMode
-                  ? MyDarkTheme.colors.text
+                  ?colors.white
                   : colors.blackOpacity40,
               }}>
               {strings.IN}
@@ -310,7 +310,7 @@ const ProductCard3 = ({
             numberOfLines={1}
             style={{
               ...commonStyles.mediumFont14,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? colors.white : colors.black,
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
             }}>
@@ -329,7 +329,7 @@ const ProductCard3 = ({
                 numberOfLines={1}
                 style={{
                   ...commonStyles.mediumFont14,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                  color: isDarkMode ? colors.white : colors.redB,
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                   textDecorationLine: 'line-through',
@@ -357,7 +357,7 @@ const ProductCard3 = ({
                   fontFamily: fontFamily.regular,
                   lineHeight: moderateScale(14),
                   color: isDarkMode
-                    ? MyDarkTheme.colors.text
+                    ? colors.white
                     : colors.blackOpacity66,
                   textAlign: 'left',
                 }}>
@@ -576,7 +576,7 @@ const ProductCard3 = ({
                     ...styles.customTextStyle,
                     textTransform: 'lowercase',
                     color: isDarkMode
-                      ? colors.whiteOpacity77
+                      ? colors.white
                       : colors.blackOpacity40,
                   }}>
                   {strings.CUSTOMISABLE}

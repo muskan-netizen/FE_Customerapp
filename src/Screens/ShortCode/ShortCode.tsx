@@ -1,30 +1,30 @@
-import {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Image, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
-import {MaterialIndicator} from 'react-native-indicators';
-import Video from 'react-native-video';
-import {useSelector} from 'react-redux';
-import imagePath from '../../constants/imagePath';
-import actions from '../../redux/actions';
-import colors from '../../styles/colors';
-import {moderateScale} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import {getItem} from '../../utils/utils';
+import { isEmpty } from "lodash";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Image, View } from "react-native";
+import { getBundleId } from "react-native-device-info";
+import { useDarkMode } from "react-native-dynamic";
+import { MaterialIndicator } from "react-native-indicators";
+import Video from "react-native-video";
+import { useSelector } from "react-redux";
+import imagePath from "../../constants/imagePath";
+import actions from "../../redux/actions";
+import colors from "../../styles/colors";
+import { moderateScale } from "../../styles/responsiveSize";
+import { MyDarkTheme } from "../../styles/theme";
+import { appIds } from "../../utils/constants/DynamicAppKeys";
+import { showError } from "../../utils/helperFunctions";
+import { getItem } from "../../utils/utils";
+import { getAppCode } from "./getAppCode";
+import styles from "./styles";
 
-import {enableFreeze} from 'react-native-screens';
-import {getAppCode} from './getAppCode';
-import styles from './styles';
+import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 interface initBootInterface {
-  auth: object;
-  themeToggle: boolean;
-  themeColor: boolean;
-  deepLinkUrl: string;
+  auth: any,
+  themeToggle: boolean,
+  themeColor:boolean,
+  deepLinkUrl: string
 }
 interface IRootState {
   initBoot: initBootInterface;
@@ -116,8 +116,9 @@ export default function ShortCode() {
       });
   };
 
-  const navigateToNextScreen = (res: object) => {
-    getItem('firstTime').then(el => {
+
+  const navigateToNextScreen = (res:any) => {
+    getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
         actions.setAppSessionData('app_intro');
       } else {

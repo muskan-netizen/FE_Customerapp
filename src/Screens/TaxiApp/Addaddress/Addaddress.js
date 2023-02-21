@@ -73,6 +73,16 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { book_for_friend } = appData?.profile?.preferences || {};
+
+  
+
+  const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
+
+
+
+  console.log(categoryId, "categoryIdcategoryIdcategoryId");
+
+
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -164,6 +174,8 @@ export default function Addaddress({ navigation, route }) {
 
   const [pickDropData, setPickDropData] = useState({});
 
+
+  console.log("routeroute++++++", route.params)
   useEffect(() => {
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
@@ -253,10 +265,8 @@ export default function Addaddress({ navigation, route }) {
       }
       : { code: appData?.profile?.code };
 
-    actions
-      .getDataByCategoryId(
-        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
-        }?limit=${limit}&page=${pageNo}`,
+    actions.getDataByCategoryId(
+        `/${categoryId}?limit=${limit}&page=${pageNo}`,
         {},
         latlongData
       )
@@ -294,9 +304,6 @@ export default function Addaddress({ navigation, route }) {
     });
   };
 
-  const moveToNewScreen = (screenName, data = {}) => () => {
-    navigation.navigate(screenName, { data });
-  };
 
   const renderbtn = () => {
     switch (getBundleId()) {
@@ -405,7 +412,7 @@ export default function Addaddress({ navigation, route }) {
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
-      id: paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id,
+      id: categoryId,
       pickup_taxi: paramData?.cat?.pickup_taxi,
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
@@ -457,7 +464,7 @@ export default function Addaddress({ navigation, route }) {
       const { latitude, longitude } = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
       updateState({ curLatLng: { latitude, longitude } });
-      getNearByAddress(`${latitude},${longitude}`);
+      getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
         const res = await getAddressFromLatLong(
@@ -473,6 +480,8 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
+      }else{
+        
       }
     }
   };

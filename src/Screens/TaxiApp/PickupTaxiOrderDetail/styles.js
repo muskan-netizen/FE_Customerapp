@@ -429,6 +429,12 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       alignSelf:'center',
       marginVertical:moderateScaleVertical(10)
     },
+    loaderStyle: {
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'space-between',
+      marginTop:moderateScaleVertical(24)
+    }
   });
   return styles;
 };

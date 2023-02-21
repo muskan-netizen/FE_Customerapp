@@ -527,8 +527,8 @@ export const getAppCode = () => {
         case appIds.ngoal: return shortCodes.ngoal;
         case appIds.livraiZoo: return shortCodes.livraiZoo;
         case appIds.boozeBrothers: return shortCodes.boozeBrothers;
-
-
+        case appIds.magicalBookings: return shortCodes.magicalBookings;
+        case appIds.tkaff: return shortCodes.tkaff;
 
         default: return '245bae'
     }
