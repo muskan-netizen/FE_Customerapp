@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   Animated,
   FlatList,
@@ -9,11 +9,12 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
+import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import DropDown from "../../../Components/DropDown";
 import GradientButton from "../../../Components/GradientButton";
@@ -32,7 +33,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from "../../../styles/responsiveSize";
 import { MyDarkTheme } from "../../../styles/theme";
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
@@ -40,21 +41,20 @@ import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
-  nearbySearch,
+  nearbySearch
 } from "../../../utils/googlePlaceApi";
 import {
   getAddressComponent,
   getPhoneNumberFromPhoneBook,
   getRandomColor,
-  showError,
+  showError
 } from "../../../utils/helperFunctions";
 import {
   checkContactPermission,
   chekLocationPermission,
-  locationPermission,
+  locationPermission
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -74,16 +74,16 @@ export default function Addaddress({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { book_for_friend } = appData?.profile?.preferences || {};
 
-  
-
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
+  const fontFamily = appStyle?.fontSizeData;
 
-
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   console.log(categoryId, "categoryIdcategoryIdcategoryId");
 
 
-  const fontFamily = appStyle?.fontSizeData;
+
   const [currentFocus, setCurrentFocus] = useState(1)
 
   const [state, setState] = useState({
@@ -177,12 +177,16 @@ export default function Addaddress({ navigation, route }) {
   const [pickDropData, setPickDropData] = useState({});
 
 
+
+
   console.log("routeroute++++++", route.params)
   useEffect(() => {
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
   }, [paramData]);
+
+
   useEffect(() => {
     getStaticLocations();
   }, []);
@@ -230,8 +234,7 @@ export default function Addaddress({ navigation, route }) {
   };
 
 
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     chekLocationPermission()
       .then((result) => {
         if (result === "goback") {
@@ -239,7 +242,9 @@ export default function Addaddress({ navigation, route }) {
         }
         Geocoder.init(profile?.preferences?.map_key, { language: "en" }); // set the language
       })
-      .catch((error) => console.log("error while accessing location", error));
+      .catch((error) =>{
+        console.log("error while accessing location", error)
+      });
   }, []);
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -249,8 +254,7 @@ export default function Addaddress({ navigation, route }) {
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+
 
   console.log("profile data++", profile?.preferences)
 
@@ -294,7 +298,7 @@ export default function Addaddress({ navigation, route }) {
     };
     updateState({
       searchResult: { ...searchResult, currentIndex: updateIndex },
-      isLoading: true,
+      // isLoading: true,
     });
     setIsPinAddressOnMapModal(true);
     setPickDropData({
@@ -488,7 +492,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key);
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type || 'city');
       updateState({
         nearByAddressess: res.results,
       });
@@ -935,7 +939,6 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const fetchValues = (item, i) => {
-    console.log(i, "itemmmmm");
     updateState({
       // selectedLoaction[i]:item?.address
       selectedLoaction: [...selectedLoaction, item?.address],
@@ -946,12 +949,11 @@ export default function Addaddress({ navigation, route }) {
     cloneArr[i].latitude = item?.latitude;
     cloneArr[i].longitude = item?.longitude;
     cloneArr[i].task_type_id = 2;
-
-    console.log(cloneArr, "cloneArrcloneArr");
     updateState({ dropLocationData: cloneArr });
   };
 
   const onSelectAddressViaMap = (prefillAdress) => {
+    getNearByAddress(`${prefillAdress?.latitude},${prefillAdress?.longitude}`)
     const cloneArr = dropLocationData;
     cloneArr[searchResult.currentIndex].pre_address =
       prefillAdress?.pre_address;

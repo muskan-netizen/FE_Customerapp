@@ -1186,7 +1186,7 @@
     "react-native-photo-view-ex": "^1.1.0",
     "react-native-popup-menu": "^0.15.12",
     "react-native-progress": "^5.0.0",
-    "react-native-ratings": "github:vinaygoyal20/react-native-ratings",
+    "react-native-ratings": "^8.1.0",
     "react-native-razorpay": "^2.2.8",
     "react-native-reanimated": "^2.14.1",
     "react-native-render-html": "^6.3.4",

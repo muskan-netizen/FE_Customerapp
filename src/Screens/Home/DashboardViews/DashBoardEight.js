@@ -13,8 +13,9 @@ import {
   TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
 import {
   Menu,
   MenuOption,
@@ -52,7 +53,7 @@ import {
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import FastImage from 'react-native-fast-image';
+
 
 export default function DashBoardEight({
   handleRefresh = () => { },
@@ -500,7 +501,7 @@ export default function DashBoardEight({
             <TouchableOpacity
 
               onPress={() => onViewAll('vendor', appMainData?.vendors)}>
-              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId()===appIds.qdelo&& 'Stores'}</Text>
+              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId() === appIds.qdelo && 'Stores'}</Text>
             </TouchableOpacity>
           )}
           <Menu style={{ alignSelf: 'flex-end' }}>
