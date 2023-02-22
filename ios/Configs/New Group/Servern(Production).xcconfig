@@ -1,9 +1,9 @@
 #include "Pods/Target Support Files/Pods-available_pods-Servern/Pods-available_pods-Servern.release.xcconfig"
 
 PROJECT_APPLE_ID = 6444889222
-PROJECT_BUNDLE_ID =com.servern.order
-PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 5
+PROJECT_BUNDLE_ID =com.servern.orderapp
+PROJECT_APP_VERSION = 1.1
+PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Servern
 PROJECT_GOOGLE_CLIENT_ID =719999216993-ajekfkqhdmbqtp202qmolg0giihoskfv.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.719999216993-ajekfkqhdmbqtp202qmolg0giihoskfv
