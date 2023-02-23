@@ -3,6 +3,7 @@ import { appIds, shortCodes } from "../../utils/constants/DynamicAppKeys";
 
 export const getAppCode = () => {
     switch (getBundleId()) {
+        case appIds.royoorder: return shortCodes.royoorder;
         case appIds.tranzit: return shortCodes.tranzit
         case appIds.runrun: return shortCodes.runrun;
         case appIds.hmoobhub: return shortCodes.hmoobhub;
@@ -524,7 +525,18 @@ export const getAppCode = () => {
         case appIds.weemoov: return shortCodes.weemoov;
         case appIds.weedLomo: return shortCodes.weedLomo;
         case appIds.ngoal: return shortCodes.ngoal;
-        
+        case appIds.livraiZoo: return shortCodes.livraiZoo;
+        case appIds.boozeBrothers: return shortCodes.boozeBrothers;
+        case appIds.magicalBookings: return shortCodes.magicalBookings;
+        case appIds.tkaff: return shortCodes.tkaff;
+        case appIds.ebay: return shortCodes.ebay;
+        case appIds.readyToRent: return shortCodes.readyToRent;
+        case appIds.theGenie: return shortCodes.theGenie;
+
+
+
+
+
 
         default: return '245bae'
     }

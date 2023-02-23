@@ -2465,6 +2465,38 @@ end
 target 'ShipSmart' do
 end
 
+#WeedLomo
+target 'WeedLomo' do
+end
+
+#NGoal
+target 'NGoal' do
+end
+
+#LivraiZoo
+target 'LivraiZoo' do
+end
+
+#BoozeBrothers
+target 'BoozeBrothers' do
+end
+
+#MagicalBookings
+target 'MagicalBookings' do
+end
+
+#Ebay
+target 'Ebay' do
+end
+
+#ReadyToRent
+target 'ReadyToRent' do
+end
+
+#TheGenie
+target 'TheGenie' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)

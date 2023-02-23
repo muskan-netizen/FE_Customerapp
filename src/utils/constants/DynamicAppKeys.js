@@ -129,7 +129,7 @@ const shortCodes = {
   ridetci: '89e246',
   noki: '779cb6',
   driveree: '1ead91',
-  rxnow: '476dfb',
+  rxnow: '58e790',
   seachangevending: 'caacbc',
   ored: 'fb0df5',
   orderchekout: 'f6cd9d',
@@ -530,7 +530,13 @@ const shortCodes = {
   shipSmart: 'bbfdee',
   weemoov: '23808d',
   weedLomo: '7e6463',
-  ngoal: 'c05ddc'
+  ngoal: 'c05ddc',
+  livraiZoo: '007f7a',
+  boozeBrothers: '8006b6',
+  magicalBookings: 'e6bd3a',
+  ebay:'e82ca7',
+  readyToRent:'3c5b8c',
+  theGenie:'f7d4a1'
 };
 
 const appIds = {
@@ -2638,6 +2644,30 @@ const appIds = {
   ngoal: Platform.select({
     ios: 'com.ngoal.order',
     android: 'com.ngoal.order',
+  }),
+  livraiZoo: Platform.select({
+    ios: 'com.liverso.order',
+    android: 'com.liverso.order',
+  }),
+  boozeBrothers: Platform.select({
+    ios: 'com.boozeBrothers.order',
+    android: 'com.boozeBrothers.order',
+  }),
+  magicalBookings: Platform.select({
+    ios: 'com.magicalBookings.order',
+    android: 'com.magicalBookings.order',
+  }),
+  ebay: Platform.select({
+    ios: 'com.ebay.order',
+    android: 'com.ebay.order',
+  }),
+  readyToRent: Platform.select({
+    ios: 'com.readyToRent.order',
+    android: 'com.readyToRent.order',
+  }),
+  theGenie: Platform.select({
+    ios: 'com.theGenie.order',
+    android: 'com.theGenie.order',
   }),
 };
 

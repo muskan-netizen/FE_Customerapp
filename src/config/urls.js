@@ -1,5 +1,14 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
+<<<<<<< HEAD
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+=======
+// export const API_BASE_URL='https://hattafoodhub.com/api/v1'
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
+
+// export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
+
+>>>>>>> 841b9a5592d30782a96a5637a87a172d41f9b80d
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.70:8006/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -221,8 +230,8 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 //sandeep
 //  export const API_BASE_URL = 'http://192.168.102.70:8004/api/v1';
 
- //Rajat
- //export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
+//Rajat
+//export const API_BASE_URL = 'http://192.168.101.196:8001/api/v1';
 
 
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
@@ -427,6 +436,20 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 //uberweeds
 // export const API_BASE_URL='https://uber-weeds.com/api/v1'
+<<<<<<< HEAD
+=======
+
+//bukam
+// export const API_BASE_URL = 'https://bukam.app/api/v1';
+//stabex
+// export const API_BASE_URL = 'https://order.sta.ug/api/v1';
+// Ebay
+// export const API_BASE_URL = 'https://ebay.royoorders.com/api/v1';
+// ReadyToRent
+// export const API_BASE_URL = 'https://readytorent.focushires.com/api/v1';
+
+
+>>>>>>> 841b9a5592d30782a96a5637a87a172d41f9b80d
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

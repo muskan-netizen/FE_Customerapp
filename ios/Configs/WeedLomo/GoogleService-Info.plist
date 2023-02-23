@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>841566888882-bs9g4qht4mcbeld3vi12ebv5jstb6vh0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.841566888882-bs9g4qht4mcbeld3vi12ebv5jstb6vh0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>841566888882-aficgrvvi9g7kkevgnrhsor8maepisgi.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBkzspUgCIM-9dkl-K4s35XR9qh8YNoAbk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>841566888882</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.weedLomo.order</string>
+	<key>PROJECT_ID</key>
+	<string>weedlomo-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>weedlomo-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:841566888882:ios:85e5118d683b83805ebaab</string>
+</dict>
+</plist>
