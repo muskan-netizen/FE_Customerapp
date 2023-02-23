@@ -533,7 +533,10 @@ const shortCodes = {
   ngoal: 'c05ddc',
   livraiZoo: '007f7a',
   boozeBrothers: '8006b6',
-  magicalBookings: 'e6bd3a'
+  magicalBookings: 'e6bd3a',
+  ebay:'e82ca7',
+  readyToRent:'3c5b8c',
+  theGenie:'f7d4a1'
 };
 
 const appIds = {
@@ -2653,6 +2656,18 @@ const appIds = {
   magicalBookings: Platform.select({
     ios: 'com.magicalBookings.order',
     android: 'com.magicalBookings.order',
+  }),
+  ebay: Platform.select({
+    ios: 'com.ebay.order',
+    android: 'com.ebay.order',
+  }),
+  readyToRent: Platform.select({
+    ios: 'com.readyToRent.order',
+    android: 'com.readyToRent.order',
+  }),
+  theGenie: Platform.select({
+    ios: 'com.theGenie.order',
+    android: 'com.theGenie.order',
   }),
 };
 

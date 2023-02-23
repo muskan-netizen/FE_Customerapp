@@ -528,6 +528,12 @@ export const getAppCode = () => {
         case appIds.livraiZoo: return shortCodes.livraiZoo;
         case appIds.boozeBrothers: return shortCodes.boozeBrothers;
         case appIds.magicalBookings: return shortCodes.magicalBookings;
+        case appIds.tkaff: return shortCodes.tkaff;
+        case appIds.ebay: return shortCodes.ebay;
+        case appIds.readyToRent: return shortCodes.readyToRent;
+        case appIds.theGenie: return shortCodes.theGenie;
+
+
 
 
 

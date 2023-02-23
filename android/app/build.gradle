@@ -218,14 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-        livraiZoo{
+                       ondgoo {
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.liverso.order'
-                resValue "string", "app_name", "Livraizoo"
+                applicationId 'com.ondgoo.royoorders'
+                resValue "string", "app_name", "Ondgoo"
                 resValue "string", "host_name", ""
             }
             //  rxnow{
@@ -8482,6 +8482,46 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.magicalBookings.order'
     //             resValue "string", "app_name", "Magical Bookings"
+    //             resValue "string", "host_name", ""
+    //         }
+    // magicalBookings{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.magicalBookings.order'
+    //             resValue "string", "app_name", "Magical Bookings"
+    //             resValue "string", "host_name", ""
+    //         }
+    // ebay{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ebay.order'
+    //             resValue "string", "app_name", "Ebay"
+    //             resValue "string", "host_name", ""
+    //         }
+    // readyToRent{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.readyToRent.order'
+    //             resValue "string", "app_name", "Ready to rent"
+    //             resValue "string", "host_name", ""
+    //         }
+    // theGenie{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.theGenie.order'
+    //             resValue "string", "app_name", "The Genie"
     //             resValue "string", "host_name", ""
     //         }
 
