@@ -1,14 +1,10 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-<<<<<<< HEAD
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-=======
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
 
->>>>>>> 841b9a5592d30782a96a5637a87a172d41f9b80d
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.70:8006/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
@@ -21,7 +17,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
 //export const API_BASE_URL = 'https://carryfood.org/api/v1';
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
  //export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
@@ -36,7 +32,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-  export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+ // export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -436,8 +432,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 //uberweeds
 // export const API_BASE_URL='https://uber-weeds.com/api/v1'
-<<<<<<< HEAD
-=======
 
 //bukam
 // export const API_BASE_URL = 'https://bukam.app/api/v1';
@@ -449,7 +443,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://readytorent.focushires.com/api/v1';
 
 
->>>>>>> 841b9a5592d30782a96a5637a87a172d41f9b80d
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

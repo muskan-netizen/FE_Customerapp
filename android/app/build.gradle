@@ -228,6 +228,16 @@ android {
                 resValue "string", "app_name", "Ondgoo"
                 resValue "string", "host_name", ""
             }
+               sultanCenter{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.sultanCenter.order'
+                resValue "string", "app_name", "Sultan Center"
+                resValue "string", "host_name", ""
+            }
             //  rxnow{
             //     dimension "appType"
             //     versionCode 1
@@ -8522,6 +8532,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.theGenie.order'
     //             resValue "string", "app_name", "The Genie"
+    //             resValue "string", "host_name", ""
+    //         }
+    // sultanCenter{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.sultanCenter.order'
+    //             resValue "string", "app_name", "Sultan Center"
     //             resValue "string", "host_name", ""
     //         }
 

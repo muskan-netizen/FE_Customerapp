@@ -532,12 +532,7 @@ export const getAppCode = () => {
         case appIds.ebay: return shortCodes.ebay;
         case appIds.readyToRent: return shortCodes.readyToRent;
         case appIds.theGenie: return shortCodes.theGenie;
-
-
-
-
-
-
+        case appIds.sultanCenter: return shortCodes.sultanCenter;
         default: return '245bae'
     }
 }

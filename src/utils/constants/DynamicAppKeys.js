@@ -536,7 +536,8 @@ const shortCodes = {
   magicalBookings: 'e6bd3a',
   ebay:'e82ca7',
   readyToRent:'3c5b8c',
-  theGenie:'f7d4a1'
+  theGenie:'f7d4a1',
+  sultanCenter:'478879'
 };
 
 const appIds = {
@@ -2668,6 +2669,10 @@ const appIds = {
   theGenie: Platform.select({
     ios: 'com.theGenie.order',
     android: 'com.theGenie.order',
+  }),
+  sultanCenter: Platform.select({
+    ios: 'com.sultanCenter.order',
+    android: 'com.sultanCenter.order',
   }),
 };
 
