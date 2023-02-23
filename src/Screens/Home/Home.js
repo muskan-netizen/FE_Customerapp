@@ -136,9 +136,9 @@ export default function Home({ route, navigation }) {
   const { profile } = appData;
 
   useEffect(() => {
-    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      socketServices.initializeSocket(appData?.profile?.socket_url);
-    }
+    // if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+    //   socketServices.initializeSocket(appData?.profile?.socket_url);
+    // }
   }, [appData]);
 
   useFocusEffect(

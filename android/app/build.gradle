@@ -218,16 +218,17 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                  weTogether{
+                    hezniTaxi{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.weTogether'
-            resValue "string", "app_name", "WeTogether"
+            applicationId 'com.heznitaxi.royoorders'
+            resValue "string", "app_name", "Hezni Taxi" 
             resValue "string", "host_name", ""
             }
+               
             //       ragiomigo{ 
             // dimension "appType"
             // versionCode 1
