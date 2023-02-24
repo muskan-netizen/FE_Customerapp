@@ -55,6 +55,7 @@ import useInterval from '../../../utils/useInterval';
 import { nearbySearch } from '../../../utils/googlePlaceApi';
 import { isEmpty } from 'lodash';
 import { google_map_key } from '../../../constants/constants';
+import ButtonComponent from '../../../Components/ButtonComponent';
 
 
 
@@ -93,6 +94,8 @@ export default function TaxiHomeDashbord({
   });
   const [searchType, setSearchType] = useState('')
   const [nearByPlacesByType, setNearByPlacesByType] = useState([])
+  const [isHotelAirportModal, setIsHotelAirportModal] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState({})
 
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -250,6 +253,11 @@ export default function TaxiHomeDashbord({
   };
 
   const continueWithNaxtScreen = (item) => {
+    if (item?.slug.includes("airport") && getBundleId() === appIds.hezniTaxi) {
+      setIsHotelAirportModal(true)
+      setSelectedCategory(item)
+      return
+    }
     onPressCategory(item);
   };
 
@@ -313,13 +321,6 @@ export default function TaxiHomeDashbord({
       ? parseFloat(location?.longitude)
       : appData?.profile?.preferences?.Default_latitude;
 
-  console.log(latitudes, 'latitudeslatitudes');
-  console.log(
-    appData?.profile?.preferences?.Default_latitude,
-    'latitudeslatitudeslongitudes',
-  );
-  console.log(appMainData, 'appMainDataappMainDataappMainDataappMainData');
-
 
   const moveToScreen = (details) => {
     updateState({ fullMapShow: false });
@@ -336,14 +337,9 @@ export default function TaxiHomeDashbord({
           };
         }
         actions.saveSchduleTime('now');
-        
-        console.log("datails+++++++++++",prefillAdress)
-        goToAddress({prefillAdress})
-        // navigation.navigate(navigationStrings.ADDADDRESS, {
-        //   cat: appMainData?.categories[0],
-        //   datetime: { slectedDate, selectedTime },
 
-        // });
+        console.log("datails+++++++++++", prefillAdress)
+        goToAddress({ prefillAdress })
 
       } else {
         actions.setAppSessionData('on_login');
@@ -494,28 +490,25 @@ export default function TaxiHomeDashbord({
 
   const onSearchType = (type) => {
     setSearchType(type)
-    let locations = !!curLatLong?.latitude
-      ? `${curLatLong.latitude},${curLatLong.longitude}`
-      : `${location.latitude},${location.longitude}`
 
-    nearbySearch(
-      locations,
-      appData?.profile?.preferences?.map_key || google_map_key,
-      type,
-    ).then((res) => {
-      if (!isEmpty(res?.results)) {
-        setNearByPlacesByType(res?.results)
-      }
-      else {
-        showError("No near by places found!")
-      }
-    }).catch((err) => {
-      console.log(err, "err>>>>>>err>")
-    })
+    // nearbySearch(
+    //   locations,
+    //   appData?.profile?.preferences?.map_key || google_map_key,
+    //   type,
+    // ).then((res) => {
+    //   if (!isEmpty(res?.results)) {
+    //     setNearByPlacesByType(res?.results)
+    //   }
+    //   else {
+    //     showError("No near by places found!")
+    //   }
+    // }).catch((err) => {
+    //   console.log(err, "err>>>>>>err>")
+    // })
   }
   const goToAddress = ({
-    fromMap = false, 
-    scheduleDate = null, 
+    fromMap = false,
+    scheduleDate = null,
     prefillAdress = null
   }) => {
     let item = appMainData.categories[0]
@@ -547,9 +540,10 @@ export default function TaxiHomeDashbord({
     });
     setTimeout(() => {
       updateState({ isLoadingModal: false });
-      goToAddress({scheduleDate: date})
+      goToAddress({ scheduleDate: date })
     }, 2000);
   }
+
 
   return (
     <View
@@ -587,38 +581,7 @@ export default function TaxiHomeDashbord({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
-        {getBundleId() == appIds.hezniTaxic && <View style={{
-          marginTop: moderateScaleVertical(10),
-          marginHorizontal: moderateScale(15),
-          flexDirection: "row",
-          alignItems: "center",
 
-
-        }}>
-          <TouchableOpacity onPress={() => onSearchType("hotel")} style={{
-            flexDirection: "row",
-            alignItems: "center"
-          }}>
-            <Image source={searchType == "hotel" ? imagePath.radioActive : imagePath.radioInActive} />
-            <Text style={{
-              fontFamily: fontFamily?.bold,
-              marginLeft: moderateScale(4),
-              fontSize: textScale(17)
-            }}>Hotel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => onSearchType("airport")} style={{
-            marginLeft: moderateScale(40),
-            flexDirection: "row",
-            alignItems: "center"
-          }}>
-            <Image source={searchType == "airport" ? imagePath.radioActive : imagePath.radioInActive} />
-            <Text style={{
-              fontFamily: fontFamily?.bold,
-              marginLeft: moderateScale(4),
-              fontSize: textScale(17)
-            }}>Airport</Text>
-          </TouchableOpacity>
-        </View>}
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={appMainData?.categories}
@@ -658,7 +621,7 @@ export default function TaxiHomeDashbord({
               }}>
               <TouchableOpacity
                 style={{ flexBasis: 'auto', flexGrow: width / 2 }}
-                onPress={() => goToAddress({fromMap:false})} //from map is false
+                onPress={() => goToAddress({ fromMap: false })} //from map is false
               >
                 <Text
                   style={{
@@ -986,7 +949,7 @@ export default function TaxiHomeDashbord({
             }}>
             <SafeAreaView>
               <TouchableOpacity
-                onPress={() => goToAddress({fromMap:true})}
+                onPress={() => goToAddress({ fromMap: true })}
                 style={{
                   height: moderateScale(48),
                   backgroundColor: isDarkMode
@@ -1008,6 +971,49 @@ export default function TaxiHomeDashbord({
               </TouchableOpacity>
             </SafeAreaView>
           </View>
+        </View>
+      </Modal>
+
+      <Modal isVisible={isHotelAirportModal} onBackdropPress={() => setIsHotelAirportModal(false)} style={{
+        justifyContent: "flex-end",
+        margin: 0
+      }} >
+        <View style={styles.modalHotelAirportContainer}>
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            marginBottom: moderateScaleVertical(22)
+          }}>{strings.SELECT_TYPE_OR_SKIP}</Text>
+          <View style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: moderateScaleVertical(16)
+          }}>
+            <TouchableOpacity onPress={() => onSearchType("hotel")} style={{
+              ...styles.airportHotelBtns,
+              backgroundColor: searchType == "hotel" ? themeColors?.primary_color : colors.white,
+            }}>
+              <Image source={imagePath.icHotel} style={{
+                tintColor: searchType == "hotel" ? colors.white : colors.black
+              }} />
+              <Text style={{ ...styles.hotelAirportTxt, color: searchType == "hotel" ? colors.white : colors.black }}>{strings.HOTEL}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onSearchType("airport")} style={{
+              ...styles.airportHotelBtns,
+              backgroundColor: searchType == "airport" ? themeColors?.primary_color : colors.white,
+            }}>
+              <Image source={imagePath.icAirport} style={{
+                tintColor: searchType == "airport" ? colors.white : colors.black
+              }} />
+              <Text style={{ ...styles.hotelAirportTxt, color: searchType == "airport" ? colors.white : colors.black }}>{strings.AIRPORT}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity onPress={() => {
+            setIsHotelAirportModal(false)
+            onPressCategory({ ...selectedCategory, type: searchType })
+          }} style={styles.roundContinueBtn}>
+            <Image source={imagePath.goRight} />
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>

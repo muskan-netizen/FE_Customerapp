@@ -74,7 +74,7 @@ export default function Addaddress({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { book_for_friend } = appData?.profile?.preferences || {};
 
-  
+
 
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
 
@@ -266,10 +266,10 @@ export default function Addaddress({ navigation, route }) {
       : { code: appData?.profile?.code };
 
     actions.getDataByCategoryId(
-        `/${categoryId}?limit=${limit}&page=${pageNo}`,
-        {},
-        latlongData
-      )
+      `/${categoryId}?limit=${limit}&page=${pageNo}`,
+      {},
+      latlongData
+    )
       .then((res) => {
         console.log(res, 'resss>>>>>>>>>');
         updateState({
@@ -458,11 +458,12 @@ export default function Addaddress({ navigation, route }) {
     }, [])
   );
 
+
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
       const { latitude, longitude } = await getCurrentLocationFromApi();
-      // console.log("get live location after 4 second")
+      console.log("get live location after 4 second")
       updateState({ curLatLng: { latitude, longitude } });
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
@@ -480,15 +481,16 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
-      }else{
-        
+      } else {
+
       }
     }
   };
 
+
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type || 'city');
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.data?.type || 'city');
       updateState({
         nearByAddressess: res.results,
       });
