@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   Animated,
   FlatList,
@@ -74,16 +74,18 @@ export default function Addaddress({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { book_for_friend } = appData?.profile?.preferences || {};
 
-
-
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
+  const fontFamily = appStyle?.fontSizeData;
 
-
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   console.log(categoryId, "categoryIdcategoryIdcategoryId");
 
 
-  const fontFamily = appStyle?.fontSizeData;
+
+  const [currentFocus, setCurrentFocus] = useState(1)
+
   const [state, setState] = useState({
     pageNo: 1,
     limit: 5,
@@ -175,6 +177,8 @@ export default function Addaddress({ navigation, route }) {
   const [pickDropData, setPickDropData] = useState({});
 
 
+
+
   console.log("routeroute++++++", route.params)
   useEffect(() => {
     if (!!(userData && userData?.auth_token)) {
@@ -230,8 +234,7 @@ export default function Addaddress({ navigation, route }) {
   };
 
 
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     chekLocationPermission()
       .then((result) => {
         if (result === "goback") {
@@ -239,7 +242,9 @@ export default function Addaddress({ navigation, route }) {
         }
         Geocoder.init(profile?.preferences?.map_key, { language: "en" }); // set the language
       })
-      .catch((error) => console.log("error while accessing location", error));
+      .catch((error) => {
+        console.log("error while accessing location", error)
+      });
   }, []);
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -249,8 +254,7 @@ export default function Addaddress({ navigation, route }) {
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+
 
   console.log("profile data++", profile?.preferences)
 
@@ -1216,8 +1220,8 @@ export default function Addaddress({ navigation, route }) {
                         >
                           <SearchPlaces
                             curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                            autoFocus={
-                              i == dropLocationData.length - 1 ? true : false
+                            autoFocus={i == dropLocationData.length - 1 ? true :
+                              false
                             }
                             placeHolder={
                               i == 0
@@ -1226,7 +1230,7 @@ export default function Addaddress({ navigation, route }) {
                                   ? strings.WHERETO
                                   : strings.ADD_A_STOP
                             }
-                            value={val.pre_address} // instant update search value
+                            value={val?.pre_address} // instant update search value
                             mapKey={profile?.preferences?.map_key} //send here google Key
                             fetchArrayResult={(data) =>
                               updateState({

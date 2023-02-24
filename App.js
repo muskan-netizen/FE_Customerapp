@@ -115,7 +115,8 @@ const App = () => {
       getBundleId() == appIds.masa ||
       getBundleId() == appIds.muvpod ||
       getBundleId() == appIds.hezniTaxi ||
-      getBundleId() == appIds.flank
+      getBundleId() == appIds.flank || 
+      getBundleId() == appIds.parcelworks
     ) {
       setTimeout(() => {
         SplashScreen.hide();

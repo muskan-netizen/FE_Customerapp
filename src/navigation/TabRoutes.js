@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
@@ -44,10 +45,7 @@ export default function TabRoutes(props) {
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
-  console.log();
-  // const checkForCeleb =
-  //   allCategory &&
-  //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
+
   const checkForBrand =
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
@@ -55,10 +53,10 @@ export default function TabRoutes(props) {
   var celebTab = null;
   var brandTab = null;
 
-  const getTabBarVisibility = (route, navigation, screen) => {
+  const getTabBarVisibility = (route, navigation, screens = []) => {
     if (navigation && navigation.isFocused && navigation.isFocused()) {
       const route_name = getFocusedRouteNameFromRoute(route);
-      if (screen.includes(route_name)) {
+      if (screens.includes(route_name)) {
         showBottomBar_ = false;
         return false;
       }
@@ -67,39 +65,138 @@ export default function TabRoutes(props) {
     }
   };
 
+  const getCustomTabBar = (props) => {
+    if (showBottomBar_) {
+      switch (appStyle?.tabBarLayout) {
+        case 1:
+          return <CustomBottomTabBar {...props} />;
+        case 2:
+          return <CustomBottomTabBarTwo {...props} />;
+        case 3:
+          return <CustomBottomTabBarThree {...props} />;
+        case 4:
+          return <CustomBottomTabBarFour {...props} />;
+        case 5:
+          return <CustomBottomTabBarFive {...props} />;
+        default:
+          return <CustomBottomTabBar {...props} />;
+      }
+    }
+
+  }
+
+  const getHomeIcons = (focused = false) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.homeActive
+          : imagePath.homeInActive;
+      case 4:
+        return focused
+          ? imagePath.homeRedActive
+          : imagePath.homeRedInActive;
+      case 1:
+        return focused
+          ? imagePath.ic_home2NewTab
+          : imagePath.ic_home2NewTab;
+      default:
+        return focused
+          ? imagePath.tabAActive
+          : imagePath.tabAInActive;
+    }
+  }
+
+  const getMyOrderIcons = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return imagePath.myOrder2;
+      case 4:
+        return imagePath.myOrder2;
+
+      default:
+        return focused
+          ? imagePath.tabEActive
+          : imagePath.tabEInActive;
+    }
+  }
+
+  const getAccountIcons = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.profileActive
+          : imagePath.profileInActive;
+      case 4:
+        return focused
+          ? imagePath.accountRedActive
+          : imagePath.accountRedInActive;
+      case 1:
+        return focused
+          ? imagePath.ic_account2NewTab
+          : imagePath.ic_account2NewTab
+
+      default:
+        return focused
+          ? imagePath.tabEActive
+          : imagePath.tabEInActive
+    }
+  }
+
+  const getSearchProductIcons = (focused = false) => {
+    switch (appStyle?.tabBarLayout) {
+      default:
+        return focused
+          ? imagePath.tabEActive
+          : imagePath.tabEInActive
+    }
+  }
+
+  const getCelebrityIcons = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.ic_celeb2NewTab
+          : imagePath.ic_celeb2NewTab;
+      case 4:
+        return focused
+          ? imagePath.celebActive
+          : imagePath.celebInActive
+      case 1:
+        return focused
+          ? imagePath.icCelebActive1
+          : imagePath.icCelebInActive1;
+      default:
+        return focused
+          ? imagePath.tabDActive
+          : imagePath.tabDInActive
+    }
+  }
+
+  const getTintColor = (focused = false) => {
+    return appStyle?.tabBarLayout === 1 && focused ? colors.white : colors.whiteOpacity77
+  }
+
+
   if (checkForCeleb) {
     celebTab = (
       <Tab.Screen
         component={CelebrityStack}
         name={navigationStrings.CELEBRITY}
-        options={({ route }) => ({
+        options={() => ({
           tabBarLabel: strings.CELEBRITY,
-          tabBarIcon: ({ focused, tintColor }) => (
-            <Image
-              style={[
-                { tintColor: tintColor },
-                appStyle?.tabBarLayout === 3 && { height: 26, width: 26 },
-              ]}
-              source={
-                appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.celebActive
-                    : imagePath.celebInActive
-                  : appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.icCelebActive1
-                      : imagePath.icCelebInActive1
-                    : focused
-                      ? imagePath.tabDActive
-                      : imagePath.tabDInActive
-              }
+          tabBarIcon: ({ focused }) => (
+            <FastImage
+              tintColor={getTintColor(focused)}
+              style={styles.iconStyle}
+              source={getCelebrityIcons(focused)}
             />
           ),
-          // unmountOnBlur: true,
         })}
       />
     );
   }
+
+
   if (checkForBrand) {
     brandTab = (
       <Tab.Screen
@@ -109,11 +206,7 @@ export default function TabRoutes(props) {
           tabBarLabel: strings.BRANDS,
           tabBarIcon: ({ focused, tintColor }) => (
             <Image
-              style={[
-                { tintColor: tintColor },
-                appStyle?.tabBarLayout === 2 ||
-                (appStyle?.tabBarLayout === 4 && { height: 20, width: 20 }),
-              ]}
+              style={styles.iconStyle}
               source={
                 appStyle?.tabBarLayout === 4
                   ? focused
@@ -123,55 +216,36 @@ export default function TabRoutes(props) {
                     ? focused
                       ? imagePath.brandsActive1
                       : imagePath.brandsInActive1
-                    : focused
-                      ? imagePath.tabCActive
-                      : imagePath.tabCInActive
+                    : appStyle?.tabBarLayout === 1
+                      ? focused
+                        ? imagePath.ic_tag2NewTab
+                        : imagePath.ic_tag2NewTab
+                      : focused
+                        ? imagePath.tabCActive
+                        : imagePath.tabCInActive
               }
-            // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
             />
           ),
-          //  unmountOnBlur: true,
         })}
       />
     );
   }
-  console.log(appStyle?.tabBarLayout, "appStyle?.tabBarLayout");
+
+
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
       screenOptions={{
-        headerShown:false,
-        tabBarLabelStyle:{
-          textTransform: 'capitalize',
-          fontFamily: fontFamily?.medium,
-          fontSize: textScale(12),
-          color: colors.white,
-        }
+        headerShown: false,
+        tabBarLabelStyle: styles.tabBarLabelStyle
       }}
-      tabBar={(props) => {
-        if (showBottomBar_) {
-          switch (appStyle?.tabBarLayout) {
-            case 1:
-              return <CustomBottomTabBar {...props} />;
-            case 2:
-              return <CustomBottomTabBarTwo {...props} />;
-            case 3:
-              return <CustomBottomTabBarThree {...props} />;
-            case 4:
-              return <CustomBottomTabBarFour {...props} />;
-            case 5:
-              return <CustomBottomTabBarFive {...props} />;
-            default: 
-            return <CustomBottomTabBar {...props} />;
-          }
-        }
-      }}
+      tabBar={getCustomTabBar}
       initialRouteName={
         redirectedFrom == 'cart'
           ? navigationStrings.CART
           : navigationStrings.HOMESTACK
       }
-      >
+    >
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
@@ -183,29 +257,13 @@ export default function TabRoutes(props) {
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({ focused, tintColor }) => (
-            <Image
-              style={[
-                { tintColor: tintColor },
-                appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
-              ]}
-              source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.homeActive
-                    : imagePath.homeInActive
-                  : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.homeRedActive
-                      : imagePath.homeRedInActive
-                    : focused
-                      ? imagePath.tabAActive
-                      : imagePath.tabAInActive
-              }
+          tabBarIcon: ({ focused }) => (
+            <FastImage
+              style={{ ...styles.iconStyle }}
+              tintColor={getTintColor(focused)}
+              source={getHomeIcons(focused)}
             />
           ),
-
-          // unmountOnBlur: true,
         })}
       />
 
@@ -213,33 +271,15 @@ export default function TabRoutes(props) {
         <Tab.Screen
           component={SearchProductVendorStack}
           name={navigationStrings.SEARCH}
-          options={({ route }) => ({
+          options={() => ({
             tabBarLabel: strings.SEARCH,
-            tabBarIcon: ({ focused, tintColor }) => (
-              <Image
-                resizeMode="contain"
-                style={[
-                  appStyle?.tabBarLayout === 2 || appStyle?.tabBarLayout === 1
-                    ? { tintColor: 'white' }
-                    : { tintColor: tintColor },
-                  appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
-                ]}
-                source={
-                  appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.search
-                      : imagePath.search1
-                    : appStyle?.tabBarLayout === 4
-                      ? focused
-                        ? imagePath.search
-                        : imagePath.search1
-                      : focused
-                        ? imagePath.search
-                        : imagePath.search1
-                }
+            tabBarIcon: ({ focused }) => (
+              <FastImage
+                tintColor={getTintColor(focused)}
+                style={styles.iconStyle}
+                source={getSearchProductIcons(focused)}
               />
             ),
-            //  unmountOnBlur: true,
           })}
         />
       )}
@@ -262,11 +302,11 @@ export default function TabRoutes(props) {
                     width:
                       cartItemCount?.data?.item_count > 999
                         ? moderateScale(23)
-                        : moderateScale(18),
+                        : moderateScale(20),
                     height:
                       cartItemCount?.data?.item_count > 999
                         ? moderateScale(23)
-                        : moderateScale(18),
+                        : moderateScale(20),
                     top: cartItemCount?.data?.item_count > 999 ? -10 : -7,
                     right: cartItemCount?.data?.item_count > 999 ? -13 : -8,
                   }}>
@@ -279,7 +319,7 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={[
-                  { tintColor: tintColor },
+                  { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
                   appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
                 ]}
                 source={
@@ -291,9 +331,13 @@ export default function TabRoutes(props) {
                       ? focused
                         ? imagePath.cartRedActive
                         : imagePath.cartRedInActive
-                      : focused
-                        ? imagePath.cartActive
-                        : imagePath.cartInActive
+                      : appStyle?.tabBarLayout === 1
+                        ? focused
+                          ? imagePath.ic_cart2NewTab
+                          : imagePath.ic_cart2NewTab :
+                        focused
+                          ? imagePath.cartActive
+                          : imagePath.cartInActive
                 }
               />
             </View>
@@ -302,65 +346,40 @@ export default function TabRoutes(props) {
           gestureEnabled: true,
         })}
       />
-      {DeviceInfo.getBundleId() == appIds.dlvrd ||DeviceInfo.getBundleId()==appIds.sxm2go &&(
+
+
+      {DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go && (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}
-          options={({ route }) => ({
+          options={() => ({
             tabBarLabel: strings.ORDERS,
-            tabBarIcon: ({ focused, tintColor }) => (
-              <Image
-                resizeMode="contain"
-                style={[
-                  { tintColor: tintColor },
-                  appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
-                ]}
-                source={
-                  appStyle?.tabBarLayout === 5
-                    ? imagePath.myOrder2
-                    : appStyle?.tabBarLayout === 4
-                      ? imagePath.myOrder2
-                      : focused
-                        ? imagePath.tabEActive
-                        : imagePath.tabEInActive
-                }
+            tabBarIcon: ({ focused }) => (
+              <FastImage
+                style={styles.iconStyle}
+                tintColor={getTintColor(focused)}
+                source={getMyOrderIcons(focused)}
               />
             ),
-            //  unmountOnBlur: true,
           })}
         />
       )}
 
       {brandTab}
       {celebTab}
+
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
-        options={({ route }) => ({
+        options={() => ({
           tabBarLabel: strings.ACCOUNTS,
-          tabBarIcon: ({ focused, tintColor }) => (
-            <Image
-              resizeMode="contain"
-              style={[
-                { tintColor: tintColor },
-                appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
-              ]}
-              source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.profileActive
-                    : imagePath.profileInActive
-                  : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.accountRedActive
-                      : imagePath.accountRedInActive
-                    : focused
-                      ? imagePath.tabEActive
-                      : imagePath.tabEInActive
-              }
+          tabBarIcon: ({ focused }) => (
+            <FastImage
+              style={styles.iconStyle}
+              tintColor={getTintColor(focused)}
+              source={getAccountIcons(focused)}
             />
           ),
-          //  unmountOnBlur: true,
         })}
       />
     </Tab.Navigator>
@@ -387,6 +406,16 @@ export function stylesData(params) {
       color: colors.white,
       fontSize: textScale(8),
     },
+    tabBarLabelStyle: {
+      textTransform: 'capitalize',
+      fontFamily: fontFamily?.medium,
+      fontSize: textScale(12),
+      color: colors.white,
+    },
+    iconStyle: {
+      height: moderateScale(20),
+      width: moderateScale(20)
+    }
   });
   return styles;
 }

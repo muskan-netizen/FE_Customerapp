@@ -1,4 +1,3 @@
-import {isEmpty} from 'lodash';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Image, View} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
@@ -16,50 +15,19 @@ import {showError} from '../../utils/helperFunctions';
 import {getItem} from '../../utils/utils';
 import {getAppCode} from './getAppCode';
 import styles from './styles';
-
-import {enableFreeze} from 'react-native-screens';
-enableFreeze(true);
-
-interface initBootInterface {
-  auth: any;
-  themeToggle: boolean;
-  themeColor: boolean;
-  deepLinkUrl: string;
-}
-interface IRootState {
-  initBoot: initBootInterface;
-  auth: userDataInterface;
-}
-
-interface userDataInterface {
-  auth_token: string;
-  userData: object;
-}
+import {IRootState} from './interfaces';
 
 export default function ShortCode() {
   const {deepLinkUrl, auth, themeColor, themeToggle} = useSelector(
     (state: IRootState) => state?.initBoot || {},
   );
-
   const theme = themeColor;
   const toggleTheme = themeToggle;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const videoRef = useRef();
+  let apiRes: any = useRef(null); // we using useRef to get latest values immediately
 
-  console.log('toggleThemetoggleThemetoggleTheme', toggleTheme);
-
-  const [state, setState] = useState({
-    LoadingScreen: true,
-    videoDurationEnded: false,
-    allAppData: null,
-    initapiresponse: false,
-  });
-
-  const {LoadingScreen, videoDurationEnded, allAppData, initapiresponse} =
-    state;
-  const updateState = (data: object) =>
-    setState(state => ({...state, ...data}));
+  const [loadingScreen, setLoadingScreen] = useState(false);
 
   useEffect(() => {
     initApiHit();
@@ -69,69 +37,56 @@ export default function ShortCode() {
     const res = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     const appCode = !!prevCode ? prevCode : getAppCode();
-
-    console.log('appCodeappCodeappCodeappCode', appCode);
     let header = {};
-
     if (!!res?.primary_language?.id) {
-      header = {
-        code: appCode,
-        language: res?.primary_language?.id,
-      };
+      header = {code: appCode, language: res?.primary_language?.id};
     } else {
-      header = {
-        code: appCode,
-      };
+      header = {code: appCode};
     }
-
     actions
       .initApp({}, header, false, null, null, true)
       .then(res => {
         console.log('header response--->', res);
         actions.saveShortCode(appCode);
-
+        apiRes = res; // save response in reference to get the latest value immediately
         if (
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
-          getBundleId() == appIds.flank
+          getBundleId() == appIds.parcelworks
         ) {
-          updateState({
-            LoadingScreen: false,
-            allAppData: res,
-            initapiresponse: true,
-          });
-          checkNavigationState(true, videoDurationEnded);
+          setLoadingScreen(false);
         } else {
-          updateState({isLoading: false, LoadingScreen: false});
+          setLoadingScreen(false);
           navigateToNextScreen(res);
         }
       })
       .catch(error => {
         console.log(error, 'error>>>>>error');
-        updateState({shortCode: ''});
         setTimeout(() => {
           showError(error?.message || error?.error);
         }, 500);
       });
   };
-
-  const navigateToNextScreen = (res: any) => {
-    getItem('firstTime').then(el => {
-      if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
-        actions.setAppSessionData('app_intro');
-      } else {
-        if (!!auth?.userData && !!auth?.userData?.auth_token) {
-          actions.setAppSessionData('guest_login');
-        } else if (deepLinkUrl && !auth?.userData?.auth_token) {
-          actions.setAppSessionData('on_login');
+  const navigateToNextScreen = useCallback(
+    (res: any) => {
+      console.log('finally navigate screen+++', res);
+      getItem('firstTime').then(el => {
+        if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
+          actions.setAppSessionData('app_intro');
         } else {
-          actions.setAppSessionData('guest_login');
+          if (!!auth?.userData && !!auth?.userData?.auth_token) {
+            actions.setAppSessionData('guest_login');
+          } else if (deepLinkUrl && !auth?.userData?.auth_token) {
+            actions.setAppSessionData('on_login');
+          } else {
+            actions.setAppSessionData('guest_login');
+          }
         }
-      }
-    });
-  };
-
+      });
+    },
+    [auth, deepLinkUrl],
+  );
   const _renderSplash = useCallback(() => {
     switch (getBundleId()) {
       case appIds.masa:
@@ -140,29 +95,13 @@ export default function ShortCode() {
         return animatedSplash();
       case appIds.hezniTaxi:
         return animatedSplash();
-      case appIds.flank:
+      case appIds.parcelworks:
         return animatedSplash();
       default:
         return imageSplash();
     }
   }, []);
-
-  const imageSplash = useCallback(() => {
-    return (
-      <View style={{flex: 1}}>
-        <View style={styles.splashStyle}>
-          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
-            {LoadingScreen && (
-              <MaterialIndicator size={50} color={colors.greyMedium} />
-            )}
-          </View>
-        </View>
-        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
-      </View>
-    );
-  }, [LoadingScreen]);
-
-  const animationVideo = () => {
+  const animationVideo = useCallback(() => {
     switch (getBundleId()) {
       case appIds?.masa:
         return imagePath.masa;
@@ -170,34 +109,43 @@ export default function ShortCode() {
         return imagePath.muvpod;
       case appIds?.hezniTaxi:
         return imagePath.HezniSplash;
-      case appIds?.flank:
-      // return imagePath.flanksplash;
+      case appIds?.parcelworks:
+        return imagePath.parcelWorksSplash;
     }
-  };
-
-  const onVideoDurationEnded = () => {
-    updateState({videoDurationEnded: true});
-    checkNavigationState(true, true);
-  };
-
+  }, []);
+  const imageSplash = useCallback(() => {
+    return (
+      <View style={{flex: 1}}>
+        <View style={styles.splashStyle}>
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
+            {loadingScreen && (
+              <MaterialIndicator size={50} color={colors.greyMedium} />
+            )}
+          </View>
+        </View>
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+      </View>
+    );
+  }, [loadingScreen]);
   const animatedSplash = () => {
     return (
       <View style={styles.videoView}>
         <Video
-          ref={videoRef}
-          source={animationVideo()} // Can be a URL or a local file.
+          source={animationVideo()}
           style={styles.videoStyle}
           resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
-          onEnd={() => onVideoDurationEnded()}
+          onEnd={onVideoDurationEnded}
           muted={true}
         />
       </View>
     );
   };
-
-  const checkNavigationState = (apiRes: unknown, videoEnd: unknown) => {
-    if (apiRes && videoEnd) {
-      navigateToNextScreen(allAppData);
+  const onVideoDurationEnded = useCallback(() => {
+    checkNavigationState(true);
+  }, []);
+  const checkNavigationState = (videoEnd: boolean) => {
+    if (videoEnd) {
+      navigateToNextScreen(apiRes);
     }
   };
 

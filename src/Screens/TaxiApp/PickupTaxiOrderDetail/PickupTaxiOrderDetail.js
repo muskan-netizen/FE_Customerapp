@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Alert,
   Animated,
   BackHandler,
+  Dimensions,
   Image,
   Keyboard,
   Linking,
@@ -15,7 +16,6 @@ import {
   FlatList
 } from "react-native";
 import { useSelector } from "react-redux";
-import { loaderOne } from "../../../Components/Loaders/AnimatedLoaderFiles";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -43,6 +43,7 @@ import navigationStrings from "../../../navigation/navigationStrings";
 import { MyDarkTheme } from "../../../styles/theme";
 import useInterval from "../../../utils/useInterval";
 import moment from "moment";
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 import StarRating from "react-native-star-rating";
 import ButtonWithLoader from "../../../Components/ButtonWithLoader";
@@ -60,7 +61,6 @@ import { tokenConverterPlusCurrencyNumberFormater } from "../../../utils/commonF
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { mapStyleGrey } from "../../../utils/constants/MapStyle";
 import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -70,10 +70,23 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const CANCLE_TASK_TIME = 45000;
+// import 'moment/locale/fr';
+// import 'moment/locale/ar';
+// import 'moment/locale/de';
+// import 'moment/locale/es';
+// import 'moment/locale/hi';
+// import 'moment/locale/pt';
+// import 'moment/locale/ru';
+// import 'moment/locale/sv';
+// import 'moment/locale/tr';
+// import 'moment/locale/vi';
+// import 'moment/locale/ar';
 import 'moment-timezone';
 import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import GradientButton from '../../../Components/GradientButton';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
+import Header from '../../../Components/Header';
 import { Platform } from "react-native";
 
 function PickupTaxiOrderDetail({ navigation, route }) {
@@ -332,19 +345,13 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   //   }, [currencies, languages, paramData]),
   // );
 
-  // useEffect(() => {
-  //   if (urlValue) {
-  //     _updateDriverLocationLocation(urlValue);
-  //   } else {
-  //     updateState({ isLoading: false });
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (urlValue) {
       _updateDriverLocationLocation(urlValue);
+    } else {
+      updateState({ isLoading: false });
     }
-  }, [])
+  }, []);
 
   useInterval(
     () => {
@@ -994,32 +1001,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     });
   };
 
-  const renderDotContainer = (i) => {
-    return (
-      <View style={{ alignItems: "center" }}>
-        {i == 0 ? (
-          <View
-            style={{
-              height: moderateScale(8),
-              width: moderateScale(8),
-              borderRadius: moderateScale(8 / 2),
-              backgroundColor: themeColors.primary_color,
-            }}
-          />
-        ) : (
-          <Image
-            style={{
-              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              // height: moderateScale(5),
-              // width: moderateScale(5),
-              // borderRadius: orderFullDetail.tasks.length - 1 == i ? 0 : moderateScale(5 / 2),
-            }}
-            source={imagePath.location2}
-          />
-        )}
-      </View>
-    );
-  };
 
   const hideModal = () => {
     updateState({
@@ -1156,7 +1137,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       <WrapperContainer
         bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
         statusBarColor={colors.white}
-        source={loaderOne}
         isLoadingB={isLoading}
       >
         <View style={{ flex: 1, marginVertical: moderateScale(16), marginBottom: 0 }}>
@@ -1228,25 +1208,25 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             </View>
 
             <HeaderLoader
-                  widthLeft={moderateScale(140)}
-                  rectWidthLeft={moderateScale(140)}
-                  heightLeft={moderateScale(10)}
-                  rectHeightLeft={moderateScale(10)}
-                  isRight={false}
-                  viewStyles={{ marginTop: moderateScaleVertical(24) }}
-                  rx={0}
-                  ry={0}
-                />
-                <HeaderLoader
-                  widthLeft={moderateScale(100)}
-                  rectWidthLeft={moderateScale(100)}
-                  heightLeft={moderateScale(10)}
-                  rectHeightLeft={moderateScale(10)}
-                  isRight={false}
-                  viewStyles={{ marginTop: 10 }}
-                  rx={0}
-                  ry={0}
-                /> 
+              widthLeft={moderateScale(140)}
+              rectWidthLeft={moderateScale(140)}
+              heightLeft={moderateScale(10)}
+              rectHeightLeft={moderateScale(10)}
+              isRight={false}
+              viewStyles={{ marginTop: moderateScaleVertical(24) }}
+              rx={0}
+              ry={0}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(100)}
+              rectWidthLeft={moderateScale(100)}
+              heightLeft={moderateScale(10)}
+              rectHeightLeft={moderateScale(10)}
+              isRight={false}
+              viewStyles={{ marginTop: 10 }}
+              rx={0}
+              ry={0}
+            />
 
             <View style={styles.loaderStyle}>
               <View>
@@ -1301,11 +1281,11 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       </WrapperContainer>
     );
   }
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
-      source={loaderOne}
       isLoadingB={isLoading}
     >
       <View
@@ -1358,7 +1338,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
-              style={{ height:'100%', width: "100%" }}
+              style={{ height: '100%', width: "100%" }}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -1452,9 +1432,10 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           <BottomSheet
             ref={bottomSheetRef}
             index={0}
-            snapPoints={['40%', '100%']}
+            snapPoints={[height / 3.4, height]}
             animateOnMount={true}
             onChange={() => playHapticEffect(hapticEffects.impactMedium)}
+            handleComponent={bottomSheetHeader}
           >
             <BottomSheetScrollView
               style={{
@@ -1669,7 +1650,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                     ? paramData?.orderDropLocations
                     : orderFullDetail?.tasks
                   ).map((val, i) => {
-                    console.log(val, "val for locations is here");
                     return (
                       <View style={{ marginHorizontal: moderateScale(16) }}>
                         <View
@@ -1679,7 +1659,28 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           }}
                         >
                           <View style={{ marginRight: moderateScaleVertical(8) }}>
-                            {renderDotContainer(i)}
+                            <View style={{ alignItems: "center" }}>
+                              {i == 0 ? (
+                                <View
+                                  style={{
+                                    height: moderateScale(8),
+                                    width: moderateScale(8),
+                                    borderRadius: moderateScale(8 / 2),
+                                    backgroundColor: themeColors.primary_color,
+                                  }}
+                                />
+                              ) : (
+                                <Image
+                                  style={{
+                                    tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                                    // height: moderateScale(5),
+                                    // width: moderateScale(5),
+                                    // borderRadius: orderFullDetail.tasks.length - 1 == i ? 0 : moderateScale(5 / 2),
+                                  }}
+                                  source={imagePath.location2}
+                                />
+                              )}
+                            </View>
                           </View>
                           <View style={{ flex: 1, flexDirection: "row" }}>
                             <Text
@@ -2682,5 +2683,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     </WrapperContainer>
   );
 }
+
 
 export default gestureHandlerRootHOC(PickupTaxiOrderDetail)
