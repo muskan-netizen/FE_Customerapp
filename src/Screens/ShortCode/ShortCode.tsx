@@ -94,7 +94,8 @@ export default function ShortCode() {
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
-          getBundleId() == appIds.flank
+          getBundleId() == appIds.flank || 
+          getBundleId() == appIds.parcelworks
         ) {
           updateState({
             LoadingScreen: false,
@@ -143,6 +144,8 @@ export default function ShortCode() {
         return animatedSplash();
       case appIds.flank:
         return animatedSplash();
+        case appIds.parcelworks:
+          return animatedSplash();
       default:
         return imageSplash();
     }
@@ -173,6 +176,8 @@ export default function ShortCode() {
         return imagePath.HezniSplash;
       case appIds?.flank:
       // return imagePath.flanksplash;
+      case appIds?.parcelworks:
+      return imagePath.parcelWorksSplash;
     }
   };
 

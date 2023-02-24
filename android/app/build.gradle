@@ -218,15 +218,15 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-            tiimo{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.tiimo.royoorders'
-            resValue "string", "app_name", "Tiimo" 
-            resValue "string", "host_name", ""
+               goKart{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.gokart.order'
+                resValue "string", "app_name", "GoKart"
+                resValue "string", "host_name", ""
             }
             // weTogether{
             // dimension "appType"
@@ -7867,7 +7867,7 @@ android {
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.parcelworks.royoorders'
-    //             resValue "string", "app_name", "Parcelworks" 
+    //             resValue "string", "app_name", "ParcelWorks" 
     //             resValue "string", "host_name", ""
     //         }
     //         skyline {

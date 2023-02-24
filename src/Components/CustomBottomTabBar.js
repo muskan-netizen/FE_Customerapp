@@ -1,12 +1,11 @@
-import React, {Fragment} from 'react';
-import {Text, TouchableOpacity, Platform} from 'react-native';
+import React, { Fragment } from 'react';
+import { Platform, Text, TouchableOpacity } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
 
 const CustomBottomTabBar = ({
   state,
@@ -21,6 +20,9 @@ const CustomBottomTabBar = ({
     (state) => state.initBoot,
   );
 
+  {
+    console.log(insets.bottom,"fdnfksjdf")
+  }
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
@@ -28,7 +30,7 @@ const CustomBottomTabBar = ({
       start={{x: 0, y: 1}}
       end={{x: 1, y: 1}}
       style={{
-        height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
+        height: Platform.OS === 'ios' ? 45 + insets.bottom : 55 + insets.bottom,
         flexDirection: 'row',
         paddingBottom: insets.bottom,
         // borderTopLeftRadius: 10,

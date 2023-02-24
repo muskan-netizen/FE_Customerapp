@@ -35323,9 +35323,9 @@
 				18C7E10F2994CC1D003E10F6 /* Frameworks */,
 				18C7E1112994CC1D003E10F6 /* Resources */,
 				18C7E12C2994CC1D003E10F6 /* Bundle React Native code and images */,
-				18C7E12D2994CC1D003E10F6 /* ShellScript */,
 				25D9C92B10F557FDB3363433 /* [CP] Embed Pods Frameworks */,
 				11C3846545DCA6AE6E70A214 /* [CP] Copy Pods Resources */,
+				FEBD0D8629A602600014B7C3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -73775,25 +73775,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n\n/bin/sh ../node_modules/@sentry/react-native/scripts/collect-modules.sh\n";
-		};
-		18C7E12D2994CC1D003E10F6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Rally/Pods-available_pods-Rally-frameworks.sh\"\n";
 		};
 		18C7E1372994CC4F003E10F6 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -127636,6 +127617,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Trucxi/Pods-available_pods-Trucxi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FEBD0D8629A602600014B7C3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Rally/Pods-available_pods-Rally-frameworks.sh\"\n";
+		};
 		FED0517F27B2A10800FE97EB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -139059,6 +139057,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6FXUMT5X23;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -139078,6 +139077,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = "Rally order";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Rally order";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
