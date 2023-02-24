@@ -597,6 +597,7 @@ useEffect(()=>{
 
 
   const renderHomeScreen = () => {
+  
     switch (appStyle?.homePageLayout) {
       case 4:
         return (

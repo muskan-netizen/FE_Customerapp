@@ -20,7 +20,6 @@ import styles from "./styles";
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
-
 interface initBootInterface {
   auth: any,
   themeToggle: boolean,
@@ -28,28 +27,27 @@ interface initBootInterface {
   deepLinkUrl: string
 }
 interface IRootState {
-  initBoot: initBootInterface,
-  auth: userDataInterface,
+  initBoot: initBootInterface;
+  auth: userDataInterface;
 }
 
-interface userDataInterface{
-  auth_token: string,
-  userData: object
+interface userDataInterface {
+  auth_token: string;
+  userData: object;
 }
-
 
 export default function ShortCode() {
-  const { deepLinkUrl, auth, themeColor,themeToggle } = useSelector((state: IRootState) => state?.initBoot || {});
-  
-
+  const {deepLinkUrl, auth, themeColor, themeToggle} = useSelector(
+    (state: IRootState) => state?.initBoot || {},
+  );
 
   const theme = themeColor;
-  const toggleTheme = themeToggle
+  const toggleTheme = themeToggle;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const videoRef = useRef();
 
-  console.log("toggleThemetoggleThemetoggleTheme",toggleTheme)
+  console.log('toggleThemetoggleThemetoggleTheme', toggleTheme);
 
   const [state, setState] = useState({
     LoadingScreen: true,
@@ -57,22 +55,22 @@ export default function ShortCode() {
     allAppData: null,
     initapiresponse: false,
   });
-  
 
-  const { LoadingScreen, videoDurationEnded, allAppData, initapiresponse } = state;
-  const updateState = (data:object) => setState((state) => ({ ...state, ...data }));
+  const {LoadingScreen, videoDurationEnded, allAppData, initapiresponse} =
+    state;
+  const updateState = (data: object) =>
+    setState(state => ({...state, ...data}));
 
   useEffect(() => {
-    initApiHit()
+    initApiHit();
   }, []);
 
-
   const initApiHit = async () => {
-    const res = await getItem("setPrimaryLanguage");
-    const prevCode = await getItem("saveShortCode");
-    const appCode = !!prevCode ? prevCode : getAppCode()
+    const res = await getItem('setPrimaryLanguage');
+    const prevCode = await getItem('saveShortCode');
+    const appCode = !!prevCode ? prevCode : getAppCode();
 
-    console.log("appCodeappCodeappCodeappCode", appCode)
+    console.log('appCodeappCodeappCodeappCode', appCode);
     let header = {};
 
     if (!!res?.primary_language?.id) {
@@ -86,9 +84,10 @@ export default function ShortCode() {
       };
     }
 
-    actions.initApp({}, header, false, null, null, true)
-      .then((res) => {
-        console.log("header response--->", res);
+    actions
+      .initApp({}, header, false, null, null, true)
+      .then(res => {
+        console.log('header response--->', res);
         actions.saveShortCode(appCode);
 
         if (
@@ -104,13 +103,13 @@ export default function ShortCode() {
           });
           checkNavigationState(true, videoDurationEnded);
         } else {
-          updateState({ isLoading: false, LoadingScreen: false });
+          updateState({isLoading: false, LoadingScreen: false});
           navigateToNextScreen(res);
         }
       })
-      .catch((error) => {
-        console.log(error, "error>>>>>error");
-        updateState({ shortCode: "" });
+      .catch(error => {
+        console.log(error, 'error>>>>>error');
+        updateState({shortCode: ''});
         setTimeout(() => {
           showError(error?.message || error?.error);
         }, 500);
@@ -121,21 +120,20 @@ export default function ShortCode() {
   const navigateToNextScreen = (res:any) => {
     getItem("firstTime").then((el) => {
       if (!el && !isEmpty(res?.data?.dynamic_tutorial)) {
-        actions.setAppSessionData("app_intro");
+        actions.setAppSessionData('app_intro');
       } else {
         if (!!auth?.userData && !!auth?.userData?.auth_token) {
-          actions.setAppSessionData("guest_login");
+          actions.setAppSessionData('guest_login');
         } else if (deepLinkUrl && !auth?.userData?.auth_token) {
-          actions.setAppSessionData("on_login");
+          actions.setAppSessionData('on_login');
         } else {
-          actions.setAppSessionData("guest_login");
+          actions.setAppSessionData('guest_login');
         }
       }
     });
-
   };
 
-  const _renderSplash = useCallback(()=>{
+  const _renderSplash = useCallback(() => {
     switch (getBundleId()) {
       case appIds.masa:
         return animatedSplash();
@@ -147,23 +145,23 @@ export default function ShortCode() {
         return animatedSplash();
       default:
         return imageSplash();
-    } 
-  },[])
-  
+    }
+  }, []);
 
   const imageSplash = useCallback(() => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View style={styles.splashStyle}>
-          <View style={{ position: "absolute", bottom: moderateScale(100) }}>
-            {LoadingScreen && (<MaterialIndicator size={50} color={colors.greyMedium} />)}
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
+            {LoadingScreen && (
+              <MaterialIndicator size={50} color={colors.greyMedium} />
+            )}
           </View>
         </View>
-        <Image source={{ uri: "Splash" }} style={{ flex: 1, zIndex: -1 }} />
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
       </View>
-    )
-  }, [LoadingScreen])
-
+    );
+  }, [LoadingScreen]);
 
   const animationVideo = () => {
     switch (getBundleId()) {
@@ -174,12 +172,12 @@ export default function ShortCode() {
       case appIds?.hezniTaxi:
         return imagePath.HezniSplash;
       case appIds?.flank:
-        // return imagePath.flanksplash;
+      // return imagePath.flanksplash;
     }
   };
 
   const onVideoDurationEnded = () => {
-    updateState({ videoDurationEnded: true });
+    updateState({videoDurationEnded: true});
     checkNavigationState(initapiresponse, true);
   };
 
@@ -190,7 +188,7 @@ export default function ShortCode() {
           ref={videoRef}
           source={animationVideo()} // Can be a URL or a local file.
           style={styles.videoStyle}
-          resizeMode={getBundleId() == appIds.muvpod ? "contain" : "cover"}
+          resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
           onEnd={() => onVideoDurationEnded()}
           muted={true}
         />
@@ -198,17 +196,20 @@ export default function ShortCode() {
     );
   };
 
-  const checkNavigationState = (apiRes:unknown, videoEnd:unknown) => {
-    if (apiRes && videoEnd) { navigateToNextScreen(allAppData)}
+  const checkNavigationState = (apiRes: unknown, videoEnd: unknown) => {
+    if (apiRes && videoEnd) {
+      navigateToNextScreen(allAppData);
+    }
   };
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: isDarkMode? MyDarkTheme.colors.background: colors.white,
-      }}
-    >
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+      }}>
       {_renderSplash()}
     </View>
   );
