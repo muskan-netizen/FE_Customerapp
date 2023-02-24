@@ -510,11 +510,10 @@ export default {
   //Video
   // flank: require('../assets/flankSplash.mp4'),
   masa: require('../assets/masa.mp4'),
-  ipd: require('../assets/ipd.mp4'),
+
   icCar: require('../assets/images/ic_topviewcar.png'),
   muvpod: require('../assets/muvpod.mp4'),
   // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
-  sabroson: require('../assets/sabroson.mp4'),
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   subscribe: require('../assets/images/subscribe.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
@@ -552,7 +551,6 @@ export default {
   back2: require('../assets/images/ic_back2.png'),
   heart3: require('../assets/images/ic_heart3.png'),
   heart4: require('../assets/images/ic_heart4.png'),
-  zonessoSplash: require('../assets/zonessoSplash.mp4'),
   back_dark: require('../assets/images/ic_back_dark.png'),
   icRefundable: require('../assets/images/refundable.png'),
   post: require('../assets/images/ic_post.png'),
