@@ -2497,6 +2497,14 @@ end
 target 'TheGenie' do
 end
 
+#Reedas
+target 'Reedas' do
+end
+
+#OneBasket
+target 'OneBasket' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)

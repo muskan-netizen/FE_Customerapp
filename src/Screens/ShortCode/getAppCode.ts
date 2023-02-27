@@ -533,6 +533,10 @@ export const getAppCode = () => {
         case appIds.readyToRent: return shortCodes.readyToRent;
         case appIds.theGenie: return shortCodes.theGenie;
         case appIds.sultanCenter: return shortCodes.sultanCenter;
+        case appIds.reedas: return shortCodes.reedas;
+        case appIds.onebasket: return shortCodes.onebasket;
+        case appIds.zozozi: return shortCodes.zozozi;
+        case appIds.ekobridge: return shortCodes.ekobridge;
         default: return '245bae'
     }
 }

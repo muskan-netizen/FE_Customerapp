@@ -218,26 +218,26 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                       ondgoo {
+         ekobridge{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ondgoo.royoorders'
-                resValue "string", "app_name", "Ondgoo"
+                applicationId 'com.ekobridge.order'
+                resValue "string", "app_name", "Ekobridge"
                 resValue "string", "host_name", ""
             }
-               sultanCenter{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.sultanCenter.order'
-                resValue "string", "app_name", "Sultan Center"
-                resValue "string", "host_name", ""
-            }
+    //            sultanCenter{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.sultanCenter.order'
+    //             resValue "string", "app_name", "Sultan Center"
+    //             resValue "string", "host_name", ""
+    //         }
             //  rxnow{
             //     dimension "appType"
             //     versionCode 1
@@ -8542,6 +8542,46 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.sultanCenter.order'
     //             resValue "string", "app_name", "Sultan Center"
+    //             resValue "string", "host_name", ""
+    //         }
+    // reedas{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.reedas.order'
+    //             resValue "string", "app_name", "Reedas"
+    //             resValue "string", "host_name", ""
+    //         }
+    // onebasket{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.onerbasket.order'
+    //             resValue "string", "app_name", "OneBasket"
+    //             resValue "string", "host_name", ""
+    //         }
+    // zozozi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zozozi.order'
+    //             resValue "string", "app_name", "Zozozi"
+    //             resValue "string", "host_name", ""
+    //         }
+     // ekobridge{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ekobridge.order'
+    //             resValue "string", "app_name", "Ekobridge"
     //             resValue "string", "host_name", ""
     //         }
 
