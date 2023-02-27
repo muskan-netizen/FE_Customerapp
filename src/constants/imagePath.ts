@@ -53,7 +53,6 @@ export default {
   home: require('../assets/images/ic_home2.png'),
   add: require('../assets/images/ic_add.png'),
   cart: require('../assets/images/ic_cart.png'),
-  card: require('../assets/images/ic_card2.png'),
   call: require('../assets/images/ic_call.png'),
   info: require('../assets/images/ic_info.png'),
   orderprofile: require('../assets/images/ic_profile2.png'),
@@ -368,7 +367,6 @@ export default {
   close2: require('../assets/images/TAXIAPPIMAGES/ic_close1.png'),
   calendarA: require('../assets/images/TAXIAPPIMAGES/ic_calendar2.png'),
   calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
-  calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
   icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
   discount2: require('../assets/images/TAXIAPPIMAGES/ic_discount.png'),
 
@@ -424,7 +422,6 @@ export default {
   cameraRoyo: require('../assets/images/royoTab/ic_camera2.png'),
 
   testingImageRoyo: require('../assets/images/royoTab/Food-Pizza-Basil-Tomato-removebg-preview.png'),
-  icAdd: require('../assets/images/RoyoorderNewImages/ic_add3.png'),
   printer: require('../assets/images/RoyoorderNewImages/ic_print.png'),
   bluetooth: require('../assets/images/RoyoorderNewImages/bluetooth.png'),
   rightArrowAngle: require('../assets/images/RoyoorderNewImages/right-arrow-angle.png'),
@@ -513,11 +510,10 @@ export default {
   //Video
   // flank: require('../assets/flankSplash.mp4'),
   masa: require('../assets/masa.mp4'),
-  ipd: require('../assets/ipd.mp4'),
+
   icCar: require('../assets/images/ic_topviewcar.png'),
   muvpod: require('../assets/muvpod.mp4'),
   // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
-  sabroson: require('../assets/sabroson.mp4'),
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   subscribe: require('../assets/images/subscribe.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
@@ -555,7 +551,6 @@ export default {
   back2: require('../assets/images/ic_back2.png'),
   heart3: require('../assets/images/ic_heart3.png'),
   heart4: require('../assets/images/ic_heart4.png'),
-  zonessoSplash: require('../assets/zonessoSplash.mp4'),
   back_dark: require('../assets/images/ic_back_dark.png'),
   icRefundable: require('../assets/images/refundable.png'),
   post: require('../assets/images/ic_post.png'),
@@ -578,4 +573,11 @@ export default {
   icTapToCopy: require('../assets/images/p2p/ic_tap_to_copy.png'),
   icAwaitingApproval: require('../assets/images/p2p/ic_waiting_apporval.gif'),
   icApprovalRejected: require('../assets/images/p2p/ic_approval_rejected.gif'),
+  parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
+
+  ic_home2NewTab: require('../assets/tabbariconsnew/ic_home2.png'),
+  ic_account2NewTab: require('../assets/tabbariconsnew/ic_account2.png'),
+  ic_cart2NewTab: require('../assets/tabbariconsnew/ic_cart2.png'),
+  ic_celeb2NewTab: require('../assets/tabbariconsnew/ic_celeb2.png'),
+  ic_tag2NewTab: require('../assets/tabbariconsnew/ic_tag2.png'),
 };

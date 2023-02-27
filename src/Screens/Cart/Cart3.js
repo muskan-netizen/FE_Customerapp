@@ -24,8 +24,8 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import * as Animatable from 'react-native-animatable';
-import {Calendar} from 'react-native-calendars';
-import {useDarkMode} from 'react-native-dynamic';
+import { Calendar } from 'react-native-calendars';
+import { useDarkMode } from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
@@ -104,7 +104,7 @@ import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-function Cart({navigation, route}) {
+function Cart({ navigation, route }) {
   let paramsData = route?.params;
   console.log(paramsData, 'paramsDataparamsData')
   let actionSheet = useRef(null);
@@ -1142,7 +1142,7 @@ function Cart({navigation, route}) {
 
     let selectPaymentCode = selectedPayment?.code?.toLowerCase()
     let CardNumber = paramsData?.CardNumber.split(" ").join("")
-    
+
     let expirydate
     if (selectedPayment?.id == 50) {
 
@@ -1231,13 +1231,7 @@ function Cart({navigation, route}) {
       .placeOrder(data, headerData)
       .then((res) => {
         console.log(res, "placeOrder");
-        if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
-          updateState({ isLoadingB: true })
-          _paymentWithPlugnPayMethods(res);
-        }
-        else {
-          checkPaymentOptions(res);
-        }
+
         navigation.popToTop();
         actions.reloadData(!reloadData);
         actions.cartItemQty(0);
@@ -1249,6 +1243,13 @@ function Cart({navigation, route}) {
         setSheduledpickupdate(null);
         setModalType(null);
         setSheduleddropoffdate(null);
+        if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
+          updateState({ isLoadingB: true })
+          _paymentWithPlugnPayMethods(res);
+        }
+        else {
+          checkPaymentOptions(res);
+        }
         updateState({
           isLoadingB: false,
           placeLoader: false,
@@ -1274,7 +1275,7 @@ function Cart({navigation, route}) {
           setCartData({});
           actions.reloadData(!reloadData);
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
-            
+
             showSuccess(res?.message);
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
@@ -4198,7 +4199,7 @@ function Cart({navigation, route}) {
             </Text>
           </View>
         )}
-        {console.log(cartData?.total_service_fee,"cartData?.total_service_fee")}
+        {console.log(cartData?.total_service_fee, "cartData?.total_service_fee")}
 
         {!!Number(cartData?.total_service_fee) > 0 && (
           <View style={styles.bottomTabLableValue}>

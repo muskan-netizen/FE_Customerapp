@@ -95,7 +95,7 @@ const shortCodes = {
   vecto: '39f6fd',
   goody: '397840',
   // grub: '2f3120',
-  grub: '2d98b5',
+  grub: "245bae",
   gusto: 'd1b1a0',
   gokab: 'fb78f0', // live
   // gokab: '578b33', // staging
@@ -201,7 +201,8 @@ const shortCodes = {
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
   mozmarcas: '53ea8a',
-  myfiji: 'a0c80e',
+  // myfiji: 'a0c80e',
+  myfiji: '245bae',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',

@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -13,22 +13,22 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {SvgUri} from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 
 const TaxiHomeCategoryCard = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   isLoading = false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const { appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
@@ -46,9 +46,9 @@ const TaxiHomeCategoryCard = ({
         // shadowOpacity: 0.5,
         // width: width / moderateScale(3),
         // backgroundColor:'red',
-        // width: appIds.hezniTaxi
-        //   ? width / moderateScale(3)
-        //   : 0,
+        width: appIds.hezniTaxi
+          ? width / moderateScale(3)
+          : undefined,
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',
