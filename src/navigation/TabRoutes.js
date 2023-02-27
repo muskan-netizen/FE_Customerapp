@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
@@ -134,7 +134,6 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.ic_account2NewTab
           : imagePath.ic_account2NewTab
-
       default:
         return focused
           ? imagePath.tabEActive
@@ -172,6 +171,27 @@ export default function TabRoutes(props) {
     }
   }
 
+  const getBrandsIcon = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.brandsActive1
+          : imagePath.brandsInActive1
+      case 4:
+        return focused
+          ? imagePath.icBrandActive
+          : imagePath.icBrandInActive
+      case 1:
+        return focused
+          ? imagePath.ic_tag2NewTab
+          : imagePath.ic_tag2NewTab
+      default:
+        return focused
+          ? imagePath.tabCActive
+          : imagePath.tabCInActive
+    }
+  }
+
   const getTintColor = (focused = false) => {
     return appStyle?.tabBarLayout === 1 && focused ? colors.white : colors.whiteOpacity77
   }
@@ -184,13 +204,13 @@ export default function TabRoutes(props) {
         name={navigationStrings.CELEBRITY}
         options={() => ({
           tabBarLabel: strings.CELEBRITY,
-          tabBarIcon: ({ focused }) => (
-            <FastImage
+          tabBarIcon: ({ focused }) => {
+            return <FastImage
               tintColor={getTintColor(focused)}
               style={styles.iconStyle}
               source={getCelebrityIcons(focused)}
             />
-          ),
+          },
         })}
       />
     );
@@ -204,28 +224,15 @@ export default function TabRoutes(props) {
         name={navigationStrings.BRANDS}
         options={({ route }) => ({
           tabBarLabel: strings.BRANDS,
-          tabBarIcon: ({ focused, tintColor }) => (
-            <Image
-              style={styles.iconStyle}
-              source={
-                appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.icBrandActive
-                    : imagePath.icBrandInActive
-                  : appStyle?.tabBarLayout === 5
-                    ? focused
-                      ? imagePath.brandsActive1
-                      : imagePath.brandsInActive1
-                    : appStyle?.tabBarLayout === 1
-                      ? focused
-                        ? imagePath.ic_tag2NewTab
-                        : imagePath.ic_tag2NewTab
-                      : focused
-                        ? imagePath.tabCActive
-                        : imagePath.tabCInActive
-              }
-            />
-          ),
+          tabBarIcon: ({ focused, tintColor }) => {
+            return (
+              <FastImage
+                tintColor={getTintColor(focused)}
+                style={styles.iconStyle}
+                source={getBrandsIcon(focused)}
+              />
+            )
+          },
         })}
       />
     );
@@ -257,13 +264,15 @@ export default function TabRoutes(props) {
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({ focused }) => (
-            <FastImage
-              style={{ ...styles.iconStyle }}
-              tintColor={getTintColor(focused)}
-              source={getHomeIcons(focused)}
-            />
-          ),
+          tabBarIcon: ({ focused }) => {
+            return (
+              <FastImage
+                style={styles.iconStyle}
+                tintColor={getTintColor(focused)}
+                source={getHomeIcons(focused)}
+              />
+            )
+          },
         })}
       />
 
