@@ -228,17 +228,17 @@ android {
                 resValue "string", "app_name", "royoorder"
                 resValue "string", "host_name", ""
             }
-            //  carryFood {
-            //     dimension "appType"
-            //     versionCode 1
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion
-            //     // applicationIdSuffix ".royoorder"
-            //     applicationId 'com.carryFood'
-            //     resValue "string", "app_name", "Carry Food"
-            //     resValue "string", "host_name", "sales.royoorders.com"
-            // }
+             mobi {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.mobi.orders'
+                resValue "string", "app_name", "Mobi"
+                resValue "string", "host_name", "sales.royoorders.com"
+            }
     }
   
 

@@ -409,12 +409,12 @@ export default function Home({route, navigation}) {
       updateState({ searchDataLoader: true });
     }
     let latlongObj = {};
-
+console.log(locationData,"locationData?.address");
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
-        latitude: 30.7333 || '',
-        longitude: 76.7794 || '',
+        latitude:locationData?.latitude || 30.7333 || '',
+        longitude:locationData?.longitude|| 76.7794 || '',
       };
     }
 
