@@ -21,6 +21,7 @@ import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
 import { View, Text, TouchableOpacity } from 'react-native';
+import TabRoutesP2p from './TabRoutesP2p';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,43 +30,45 @@ export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
   const { appStyle } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
+
+  console.log(businessType, "businessType>>>>>businessType")
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{
-        headerShown:false
+        headerShown: false
       }} >
 
-          {appSessionInfo == 'shortcode' ||
+        {appSessionInfo == 'shortcode' ||
           appSessionInfo == 'show_shortcode' ? (
-         
-            <Stack.Screen
-              name={navigationStrings.SHORT_CODE}
-              component={ShortCode}
-            />
-         
-          ) : appSessionInfo == 'app_intro' ? (
-            <Stack.Screen
-              name={navigationStrings.APP_INTRO}
-              component={AppIntro}
-              options={{gestureEnabled: false}}
-            />
-          ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
-            <Stack.Screen
-              name={navigationStrings.TAB_ROUTES}
-              component={
-                businessType === 4
-                  ? TaxiTabRoutes
-                  : //  businessType === 8
-                    // ? TabRoutesP2p
-                    // :
-                    TabRoutes
-              }
-              options={{gestureEnabled: false}}
-            />
-           
-          ) : (
-            AuthStack(Stack, appStyle)
-          )}
+
+          <Stack.Screen
+            name={navigationStrings.SHORT_CODE}
+            component={ShortCode}
+          />
+
+        ) : appSessionInfo == 'app_intro' ? (
+          <Stack.Screen
+            name={navigationStrings.APP_INTRO}
+            component={AppIntro}
+            options={{ gestureEnabled: false }}
+          />
+        ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
+          <Stack.Screen
+            name={navigationStrings.TAB_ROUTES}
+            component={
+              businessType === 4
+                ? TaxiTabRoutes
+                : businessType === 8
+                  ? TabRoutesP2p
+                  :
+                  TabRoutes
+            }
+            options={{ gestureEnabled: false }}
+          />
+
+        ) : (
+          AuthStack(Stack, appStyle)
+        )}
 
         {CourierStack(Stack)}
 

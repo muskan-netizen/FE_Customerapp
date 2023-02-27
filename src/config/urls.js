@@ -418,7 +418,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 
 // goKart
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://ebay.royoorders.com/api/v1';
 
 // Etaim
 // export const API_BASE_URL = 'https://order.etiamstore.com/api/v1';
