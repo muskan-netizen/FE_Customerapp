@@ -208,6 +208,7 @@ export default function Products({ route, navigation }) {
     productDetailNew: {},
     isProductAvailable: false,
     loadMore: false,
+    wrapperListLoader: false,
   });
   const {
     appData,
@@ -268,6 +269,7 @@ export default function Products({ route, navigation }) {
     isVarientSelectLoading,
     productDetailNew,
     isProductAvailable,
+    wrapperListLoader
   } = state;
   const [showShimmer, setShowShimmer] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -382,6 +384,7 @@ export default function Products({ route, navigation }) {
             animateText={animateText}
             section={section}
             CartItems={CartItems}
+            wrapperListLoader={wrapperListLoader}
           />
         </View>
       );
@@ -395,7 +398,8 @@ export default function Products({ route, navigation }) {
       categoryInfo,
       CartItems,
       selectedAppointmentSlot,
-      appointmentSelectedDate
+      appointmentSelectedDate,
+      wrapperListLoader
     ],
   );
 
@@ -2075,6 +2079,7 @@ export default function Products({ route, navigation }) {
       updateQtyLoader: false,
       selectedItemID: -1,
       btnLoader: false,
+      wrapperListLoader: false,
     });
     setLoading(false);
     showError(error?.message || error?.error);
@@ -2181,6 +2186,7 @@ export default function Products({ route, navigation }) {
             selectedItemID: itemToUpdate.id,
             btnLoader: true,
             selectedItemIndx: index,
+            wrapperListLoader: true,
           });
           let data = {};
           data['cart_id'] = isExistCartId;
@@ -2211,6 +2217,7 @@ export default function Products({ route, navigation }) {
                 updateQtyLoader: false,
                 selectedItemID: -1,
                 btnLoader: false,
+                wrapperListLoader: false,
               });
             })
             .catch(async () => {
@@ -2227,6 +2234,7 @@ export default function Products({ route, navigation }) {
           updateState({
             selectedItemID: itemToUpdate?.id,
             btnLoader: false,
+            wrapperListLoader: false,
           });
           removeItem('selectedTable');
           removeProductFromCart(itemToUpdate, section, isExistproductId);
@@ -2396,6 +2404,7 @@ export default function Products({ route, navigation }) {
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
+        wrapperListLoader: false,
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
@@ -2416,6 +2425,7 @@ export default function Products({ route, navigation }) {
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
+        wrapperListLoader: false,
       });
       showError(error?.message || error?.error);
     }
@@ -2762,13 +2772,15 @@ export default function Products({ route, navigation }) {
         const newObj = {
           ...el,
         };
-
         newObj.data = records;
+   
         return newObj;
         console.log('checking products >>>>>', records);
         // Arr.push(...records)
       });
+    
       setCloneSectionList(newArr);
+
     } else {
       getAllProductsByVendor();
     }
@@ -3758,7 +3770,7 @@ export default function Products({ route, navigation }) {
   };
 
   return (
-    <WrapperContainer isLoading={false}>
+    <WrapperContainer isLoading={wrapperListLoader}>
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -3970,7 +3982,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-
+{console.log(tagFilteredData,'tagFilteredData=>',cloneSectionList)}
 
             {!!categoryInfo?.is_show_products_with_category ? (
 

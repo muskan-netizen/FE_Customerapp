@@ -435,10 +435,10 @@ export default function SelectPaymentModal({
                   <Animatable.View
                     // animation={'slideInUp'}
                     // duration={200}
+                    key={String(index)}
                     style={{ flex: 1 }}>
                     <TouchableOpacity
                       onPress={() => selectPaymentMethod(item, index)}
-                      key={index}
                       style={[
                         styles.caseOnDeliveryView,
                         //  {...getAndCheckStyle(item)}

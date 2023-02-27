@@ -429,7 +429,7 @@ const ProductCard3 = ({
             <View
               style={{
                 marginTop:
-                  selectedIndex == index ? moderateScaleVertical(8) : 0,
+                  selectedIndex == index ? moderateScaleVertical(8) : moderateScaleVertical(8),
                 alignItems: 'center',
               }}>
               {((!!data?.check_if_in_cart_app &&

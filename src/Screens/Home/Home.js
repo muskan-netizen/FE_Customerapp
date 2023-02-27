@@ -137,7 +137,7 @@ export default function Home({ route, navigation }) {
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      socketServices.initializeSocket(appData?.profile?.socket_url);
+      // socketServices.initializeSocket(appData?.profile?.socket_url);
     }
   }, [appData]);
 
@@ -412,8 +412,8 @@ export default function Home({ route, navigation }) {
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
-        latitude: 30.7333 || '',
-        longitude: 76.7794 || '',
+        latitude: locationData?.latitude || 30.7333 || '',
+        longitude: locationData?.longitude || 76.7794 || '',
       };
     }
 

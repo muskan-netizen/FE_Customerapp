@@ -218,16 +218,26 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-               goKart{
+            qdelo{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.gokart.order'
-                resValue "string", "app_name", "GoKart"
+                applicationId 'com.qdelo.order'
+                resValue "string", "app_name", "Qdelo"
                 resValue "string", "host_name", ""
             }
+            //    goKart{
+            //     dimension "appType"
+            //     versionCode 1
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion
+            //     applicationId 'com.gokart.order'
+            //     resValue "string", "app_name", "GoKart"
+            //     resValue "string", "host_name", ""
+            // }
             // weTogether{
             // dimension "appType"
             // versionCode 1
