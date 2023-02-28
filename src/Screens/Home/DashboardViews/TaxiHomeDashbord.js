@@ -92,11 +92,6 @@ export default function TaxiHomeDashbord({
     pickupAddress: {},
     allListedDrivers: [],
   });
-  const [searchType, setSearchType] = useState('')
-  const [nearByPlacesByType, setNearByPlacesByType] = useState([])
-  const [isHotelAirportModal, setIsHotelAirportModal] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState({})
-
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
@@ -253,11 +248,6 @@ export default function TaxiHomeDashbord({
   };
 
   const continueWithNaxtScreen = (item) => {
-    if (item?.slug.includes("airport") && getBundleId() === appIds.hezniTaxi) {
-      setIsHotelAirportModal(true)
-      setSelectedCategory(item)
-      return
-    }
     onPressCategory(item);
   };
 
@@ -488,24 +478,7 @@ export default function TaxiHomeDashbord({
     );
   };
 
-  const onSearchType = (type) => {
-    setSearchType(type)
 
-    // nearbySearch(
-    //   locations,
-    //   appData?.profile?.preferences?.map_key || google_map_key,
-    //   type,
-    // ).then((res) => {
-    //   if (!isEmpty(res?.results)) {
-    //     setNearByPlacesByType(res?.results)
-    //   }
-    //   else {
-    //     showError("No near by places found!")
-    //   }
-    // }).catch((err) => {
-    //   console.log(err, "err>>>>>>err>")
-    // })
-  }
   const goToAddress = ({
     fromMap = false,
     scheduleDate = null,
@@ -780,20 +753,7 @@ export default function TaxiHomeDashbord({
                   //showsMyLocationButton={true}
                   // pointerEvents={'none'}
                   >
-
-                    {!isEmpty(nearByPlacesByType) && searchType !== '' ? nearByPlacesByType?.map((item, index) => {
-                      return (
-                        <Marker
-                          coordinate={{
-                            latitude: item?.geometry?.location?.lat,
-                            longitude: item?.geometry?.location?.lng,
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121,
-                          }}
-
-                        />
-                      )
-                    }) : <Marker
+                    <Marker
                       coordinate={{
                         latitude: !!curLatLong?.latitude
                           ? parseFloat(curLatLong?.latitude)
@@ -808,8 +768,7 @@ export default function TaxiHomeDashbord({
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                    />}
-
+                    />
                   </MapView>
                 }
               </TouchableOpacity>
@@ -974,48 +933,8 @@ export default function TaxiHomeDashbord({
         </View>
       </Modal>
 
-      <Modal isVisible={isHotelAirportModal} onBackdropPress={() => setIsHotelAirportModal(false)} style={{
-        justifyContent: "flex-end",
-        margin: 0
-      }} >
-        <View style={styles.modalHotelAirportContainer}>
-          <Text style={{
-            fontFamily: fontFamily?.bold,
-            marginBottom: moderateScaleVertical(22)
-          }}>{strings.SELECT_TYPE_OR_SKIP}</Text>
-          <View style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: moderateScaleVertical(16)
-          }}>
-            <TouchableOpacity onPress={() => onSearchType("hotel")} style={{
-              ...styles.airportHotelBtns,
-              backgroundColor: searchType == "hotel" ? themeColors?.primary_color : colors.white,
-            }}>
-              <Image source={imagePath.icHotel} style={{
-                tintColor: searchType == "hotel" ? colors.white : colors.black
-              }} />
-              <Text style={{ ...styles.hotelAirportTxt, color: searchType == "hotel" ? colors.white : colors.black }}>{strings.HOTEL}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => onSearchType("airport")} style={{
-              ...styles.airportHotelBtns,
-              backgroundColor: searchType == "airport" ? themeColors?.primary_color : colors.white,
-            }}>
-              <Image source={imagePath.icAirport} style={{
-                tintColor: searchType == "airport" ? colors.white : colors.black
-              }} />
-              <Text style={{ ...styles.hotelAirportTxt, color: searchType == "airport" ? colors.white : colors.black }}>{strings.AIRPORT}</Text>
-            </TouchableOpacity>
-          </View>
 
-          <TouchableOpacity onPress={() => {
-            setIsHotelAirportModal(false)
-            onPressCategory({ ...selectedCategory, type: searchType })
-          }} style={styles.roundContinueBtn}>
-            <Image source={imagePath.goRight} />
-          </TouchableOpacity>
-        </View>
-      </Modal>
+
     </View>
   );
 }

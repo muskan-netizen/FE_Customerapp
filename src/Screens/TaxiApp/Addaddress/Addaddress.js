@@ -80,7 +80,6 @@ export default function Addaddress({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData;
 
-  console.log(categoryId, "categoryIdcategoryIdcategoryId");
 
 
 
@@ -256,7 +255,6 @@ export default function Addaddress({ navigation, route }) {
   });
 
 
-  console.log("profile data++", profile?.preferences)
 
   const getAllPickUpVendors = (lat, lng) => {
     console.log(appData, 'appDataappData......');
@@ -494,7 +492,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.data?.type || 'city');
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, 'city');
       updateState({
         nearByAddressess: res.results,
       });
