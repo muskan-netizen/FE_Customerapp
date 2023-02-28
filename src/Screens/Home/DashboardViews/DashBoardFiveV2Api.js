@@ -485,7 +485,7 @@ const DashBoardFiveV2Api = ({
                         : colors.black,
                     }}
                     resizeMode="contain"
-                    source={isDarkMode? imagePath.sortSelected: imagePath.sort}
+                    source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
                   />
                   <Text
                     style={{
@@ -657,29 +657,29 @@ const DashBoardFiveV2Api = ({
   };
 
   const _renderSelectedProducts = ({ item, index }) => {
-    console.log(item," selected");
-    return( 
-    <ProductsComp2
-      mainContainerStyle={{
-        width: moderateScale(width / 4),
-        marginHorizontal: moderateScale(10),
-        marginVertical: moderateScaleVertical(8),
-        borderRadius: moderateScale(20),
-        overflow: 'hidden',
-        height: moderateScaleVertical(130),
-        elevation: 0,
+    console.log(item, " selected");
+    return (
+      <ProductsComp2
+        mainContainerStyle={{
+          width: moderateScale(width / 4),
+          marginHorizontal: moderateScale(10),
+          marginVertical: moderateScaleVertical(8),
+          borderRadius: moderateScale(20),
+          overflow: 'hidden',
+          height: moderateScaleVertical(130),
+          elevation: 0,
 
-      }}
-      showRating={false}
-      imageStyle={{ width: moderateScale(width / 4), height: moderateScaleVertical(80), resizeMode: 'cover' }}
-      item={item?.products}
-      onPress={() =>
-        navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-      }
-      productNameStyle={{ textAlign: 'center', fontSize: textScale(10), marginBottom: moderateScaleVertical(5) }}
-      numberOfLines={2}
-    />)
-   
+        }}
+        showRating={false}
+        imageStyle={{ width: moderateScale(width / 4), height: moderateScaleVertical(80), resizeMode: 'cover' }}
+        item={item?.products}
+        onPress={() =>
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        }
+        productNameStyle={{ textAlign: 'center', fontSize: textScale(10), marginBottom: moderateScaleVertical(5) }}
+        numberOfLines={2}
+      />)
+
   }
 
   const SelectedProductsThemeView = ({ item }) => {
@@ -1034,7 +1034,6 @@ const DashBoardFiveV2Api = ({
   };
 
   const renderHomePageItems = ({ item, index }) => {
-    console.log(item?.slug, "itemitemitemitem");
     return (
       <View>
         {item?.slug == 'new_products' ||

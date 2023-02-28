@@ -1,14 +1,14 @@
-import React, {Fragment} from 'react';
-import {Platform, Text, TouchableOpacity} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import React, { Fragment } from 'react';
+import { Platform, Text, TouchableOpacity } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Shadow} from 'react-native-shadow-2';
-import {useSelector} from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Shadow } from 'react-native-shadow-2';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
-import {moderateScaleVertical, width} from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { moderateScaleVertical, width } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 
 const CustomBottomTabBar = ({
   state,
@@ -19,7 +19,7 @@ const CustomBottomTabBar = ({
   ...props
 }) => {
   const insets = useSafeAreaInsets();
-  const {themeColors, themeToggle, themeColor, appStyle} = useSelector(
+  const { themeColors, themeToggle, themeColor, appStyle } = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
@@ -32,21 +32,21 @@ const CustomBottomTabBar = ({
         height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
         flexDirection: 'row',
         paddingBottom: insets.bottom,
-        paddingTop: 10,
         width: width,
         backgroundColor: isDarkMode
           ? MyDarkTheme?.colors?.lightDark
           : colors.white,
+        alignItems: "center"
       }}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
@@ -74,15 +74,15 @@ const CustomBottomTabBar = ({
                 justifyContent: 'space-between',
                 height: moderateScaleVertical(50),
               }}>
-              {options.tabBarIcon({focused: isFocused})}
+              {options.tabBarIcon({ focused: isFocused })}
               <Text
                 style={{
                   ...props.labelStyle,
                   color: isFocused
                     ? themeColors.primary_color
                     : isDarkMode
-                    ? colors.white
-                    : colors.black,
+                      ? colors.white
+                      : colors.black,
                   opacity: isFocused ? 1 : 0.6,
                   fontFamily: isFocused
                     ? fontFamily?.bold

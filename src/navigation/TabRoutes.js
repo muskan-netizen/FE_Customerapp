@@ -65,6 +65,7 @@ export default function TabRoutes(props) {
     }
   };
 
+
   const getCustomTabBar = (props) => {
     if (showBottomBar_) {
       switch (appStyle?.tabBarLayout) {
@@ -93,7 +94,7 @@ export default function TabRoutes(props) {
           : imagePath.homeInActive;
       case 4:
         return focused
-          ? imagePath.homeRedAsctive
+          ? imagePath.homeRedActive
           : imagePath.homeRedInActive;
       case 1:
         return focused

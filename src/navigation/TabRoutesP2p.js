@@ -1,14 +1,15 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, Text} from 'react-native';
-import {View} from 'react-native-animatable';
-import {useSelector} from 'react-redux';
+import { Image, StyleSheet, Text } from 'react-native';
+import { View } from 'react-native-animatable';
+import { useDarkMode } from 'react-native-dynamic';
+import { useSelector } from 'react-redux';
 import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import {moderateScale, textScale} from '../styles/responsiveSize';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 import AccountStack from './AccountStack';
 import CartStack from './CartStack';
 import ChatStack from './ChatStack';
@@ -21,7 +22,7 @@ const Tab = createBottomTabNavigator();
 let showBottomBar_ = true;
 
 export default function TabRoutesP2p(props) {
-  const {cartItemCount} = useSelector((state) => state?.cart);
+  const { cartItemCount } = useSelector((state) => state?.cart);
   const {
     appStyle,
     appData,
@@ -30,6 +31,8 @@ export default function TabRoutesP2p(props) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
+  const darkthemeusingDevice = useDarkMode();
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -48,15 +51,15 @@ export default function TabRoutesP2p(props) {
 
   return (
     <Tab.Navigator
-    screenOptions={{
-      headerShown:false,
-      tabBarLabelStyle:{
-        textTransform: 'capitalize',
-        fontFamily: fontFamily?.medium,
-        fontSize: textScale(12),
-        color: colors.white,
-      }
-    }}
+      screenOptions={{
+        headerShown: false,
+        tabBarLabelStyle: {
+          textTransform: 'capitalize',
+          fontFamily: fontFamily?.medium,
+          fontSize: textScale(12),
+          color: colors.white,
+        }
+      }}
       backBehavior={navigationStrings.HOMESTACK}
       tabBar={(props) => {
         if (showBottomBar_) {
@@ -67,13 +70,13 @@ export default function TabRoutesP2p(props) {
         redirectedFrom == 'cart'
           ? navigationStrings.CART
           : redirectedFrom == 'p2pPost'
-          ? navigationStrings.POST
-          : navigationStrings.HOMESTACK
+            ? navigationStrings.POST
+            : navigationStrings.HOMESTACK
       }>
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
-        options={({route, navigation}) => ({
+        options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
@@ -83,15 +86,15 @@ export default function TabRoutesP2p(props) {
             navigationStrings.P2P_PRODUCT_DETAIL,
           ]),
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
                 {
                   tintColor: focused
                     ? themeColors?.primary_color
                     : isDarkMode
-                    ? colors.whiteOpacity50
-                    : colors.blackOpacity43,
+                      ? colors.whiteOpacity50
+                      : colors.blackOpacity43,
                 },
               ]}
               source={
@@ -105,20 +108,20 @@ export default function TabRoutesP2p(props) {
       <Tab.Screen
         component={ChatStack}
         name={navigationStrings.CHAT_STACK}
-        options={({route, navigation}) => ({
+        options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.CHAT_SCREEN,
           ]),
           tabBarLabel: strings.CHATS,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               resizeMode="contain"
               style={{
                 tintColor: focused
                   ? themeColors?.primary_color
                   : isDarkMode
-                  ? colors.whiteOpacity50
-                  : colors.blackOpacity43,
+                    ? colors.whiteOpacity50
+                    : colors.blackOpacity43,
               }}
               source={
                 focused ? imagePath.icChatP2p : imagePath.icChatP2pInActive
@@ -131,42 +134,33 @@ export default function TabRoutesP2p(props) {
       <Tab.Screen
         component={PostStack}
         name={navigationStrings.POST}
-        options={({route, navigation}) => ({
+        options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, []),
           tabBarLabel: strings.POST,
-          tabBarIcon: ({focused, tintColor}) => (
-            <View style={{}}>
-              <Image
-                style={{
-                  position: 'absolute',
-                  top: -37,
-                  left: -21,
-                  height: 65,
-                  width: 65,
-                }}
-                source={imagePath.icAddPostP2p}
-              />
-              <View
-                style={{
-                  height: 25,
-                  width: 25,
-                }}></View>
-            </View>
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Image
+              resizeMode="contain"
+              style={{
+                height: moderateScale(30), width: moderateScale(30),
+
+              }}
+              source={imagePath.icAddPostP2p}
+            />
           ),
         })}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
-        options={({route, navigation}) => ({
+        options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
           ]),
           tabBarLabel: strings.CART,
-          tabBarIcon: ({focused, tintColor}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, tintColor }) => (
+            <View style={{ alignItems: 'center' }}>
               {cartItemCount?.data?.item_count ? (
                 <View
                   style={{
@@ -194,8 +188,8 @@ export default function TabRoutesP2p(props) {
                   tintColor: focused
                     ? themeColors?.primary_color
                     : isDarkMode
-                    ? colors.whiteOpacity50
-                    : colors.blackOpacity43,
+                      ? colors.whiteOpacity50
+                      : colors.blackOpacity43,
                 }}
                 source={
                   focused ? imagePath.icCartP2p : imagePath.icCartP2pInActive
@@ -206,22 +200,22 @@ export default function TabRoutesP2p(props) {
           unmountOnBlur: true,
           gestureEnabled: true,
         })}
-      />
+      /> */}
 
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
-        options={({route}) => ({
+        options={({ route }) => ({
           tabBarLabel: strings.ACCOUNTS,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               resizeMode="contain"
               style={{
                 tintColor: focused
                   ? themeColors?.primary_color
                   : isDarkMode
-                  ? colors.whiteOpacity50
-                  : colors.blackOpacity43,
+                    ? colors.whiteOpacity50
+                    : colors.blackOpacity43,
               }}
               source={
                 focused
@@ -237,7 +231,7 @@ export default function TabRoutesP2p(props) {
 }
 
 export function stylesData(params) {
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const { appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = StyleSheet.create({

@@ -188,7 +188,6 @@ const PaymentOptions = ({ navigation, route }) => {
   };
 
   const _onPressPaymentOption = (item) => {
-    console.log(item, "itemitemitemitemitemitem");
     updateState({
       selectedPaymentMethod: item,
     });
@@ -196,7 +195,7 @@ const PaymentOptions = ({ navigation, route }) => {
     if (item?.id == 4 && !profile?.preferences?.is_postpay_enable) {
       return;
     }
-    if(item?.id == 49 || item?.id == 50){
+    if (item?.id == 49 || item?.id == 50) {
       return;
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
@@ -238,18 +237,18 @@ const PaymentOptions = ({ navigation, route }) => {
         //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
       }
     }
-    else if((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
-      selectedPaymentMethod?.off_site == 1){
-        navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
-          ...paramData,
-          Card_Number: cardNumber,
-          cvc: cvc,
-          expiryDate: expiryDate,
-          selectedMethod: selectedPaymentMethod,
-          year:year,
-          date:date
-        });
-      }
+    else if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
+      selectedPaymentMethod?.off_site == 1) {
+      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+        ...paramData,
+        Card_Number: cardNumber,
+        cvc: cvc,
+        expiryDate: expiryDate,
+        selectedMethod: selectedPaymentMethod,
+        year: year,
+        date: date
+      });
+    }
   };
 
   const _onChangeStripeData = (cardDetails) => {
@@ -334,25 +333,25 @@ const PaymentOptions = ({ navigation, route }) => {
             </StripeProvider>
           )}
         {!!(
-                    selectedPaymentMethod &&
-                    selectedPaymentMethod?.id == item.id &&
-                    selectedPaymentMethod?.off_site == 1 &&
-                    (selectedPaymentMethod?.id === 49 ||selectedPaymentMethod?.id === 50  )
-                  ) && (
-                      <PaymentGateways
-                      isCardNumber={cardNumber}
-                      cvc={cvc}
-                      expiryDate={expiryDate}
-                      year={year}
-                      onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                      onChangeText={(data) => checkInputHandler('Card Number', data)}
-                      onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                      onChangeYearText={(data) => checkInputHandler('Year', data)}
-                      onChangeDateText={(data) => checkInputHandler('Date', data)}
-                      paymentid={selectedPaymentMethod?.id}
-                      eDate={date}
-                      />
-                    )}
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 1 &&
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+        ) && (
+            <PaymentGateways
+              isCardNumber={cardNumber}
+              cvc={cvc}
+              expiryDate={expiryDate}
+              year={year}
+              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+              onChangeText={(data) => checkInputHandler('Card Number', data)}
+              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+              onChangeYearText={(data) => checkInputHandler('Year', data)}
+              onChangeDateText={(data) => checkInputHandler('Date', data)}
+              paymentid={selectedPaymentMethod?.id}
+              eDate={date}
+            />
+          )}
       </View>
     );
   };
