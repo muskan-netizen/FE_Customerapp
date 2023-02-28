@@ -93,7 +93,7 @@ export default function TabRoutes(props) {
           : imagePath.homeInActive;
       case 4:
         return focused
-          ? imagePath.homeRedActive
+          ? imagePath.homeRedAsctive
           : imagePath.homeRedInActive;
       case 1:
         return focused
@@ -154,8 +154,8 @@ export default function TabRoutes(props) {
     switch (appStyle?.tabBarLayout) {
       case 5:
         return focused
-          ? imagePath.ic_celeb2NewTab
-          : imagePath.ic_celeb2NewTab;
+          ? imagePath.icCelebActive1
+          : imagePath.icCelebInActive1;
       case 4:
         return focused
           ? imagePath.celebActive
@@ -192,8 +192,8 @@ export default function TabRoutes(props) {
     }
   }
 
-  const getTintColor = (focused = false) => {
-    return appStyle?.tabBarLayout === 1 && focused ? colors.white : colors.whiteOpacity77
+  const getTintColor = (focused = false, tintColor) => {
+    return appStyle?.tabBarLayout === 1 ? focused ? colors.white : colors.whiteOpacity77 : tintColor
   }
 
 
@@ -204,9 +204,9 @@ export default function TabRoutes(props) {
         name={navigationStrings.CELEBRITY}
         options={() => ({
           tabBarLabel: strings.CELEBRITY,
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({ focused, tintColor }) => {
             return <FastImage
-              tintColor={getTintColor(focused)}
+              tintColor={getTintColor(focused, tintColor)}
               style={styles.iconStyle}
               source={getCelebrityIcons(focused)}
             />
@@ -227,7 +227,7 @@ export default function TabRoutes(props) {
           tabBarIcon: ({ focused, tintColor }) => {
             return (
               <FastImage
-                tintColor={getTintColor(focused)}
+                tintColor={getTintColor(focused, tintColor)}
                 style={styles.iconStyle}
                 source={getBrandsIcon(focused)}
               />
@@ -264,11 +264,11 @@ export default function TabRoutes(props) {
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
           ]),
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({ focused, tintColor }) => {
             return (
               <FastImage
                 style={styles.iconStyle}
-                tintColor={getTintColor(focused)}
+                tintColor={getTintColor(focused, tintColor)}
                 source={getHomeIcons(focused)}
               />
             )
@@ -282,9 +282,9 @@ export default function TabRoutes(props) {
           name={navigationStrings.SEARCH}
           options={() => ({
             tabBarLabel: strings.SEARCH,
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({ focused, tintColor }) => (
               <FastImage
-                tintColor={getTintColor(focused)}
+                tintColor={getTintColor(focused, tintColor)}
                 style={styles.iconStyle}
                 source={getSearchProductIcons(focused)}
               />
@@ -363,10 +363,10 @@ export default function TabRoutes(props) {
           name={navigationStrings.MYORDERSSTACK}
           options={() => ({
             tabBarLabel: strings.ORDERS,
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({ focused, tintColor }) => (
               <FastImage
                 style={styles.iconStyle}
-                tintColor={getTintColor(focused)}
+                tintColor={getTintColor(focused, tintColor)}
                 source={getMyOrderIcons(focused)}
               />
             ),
@@ -382,10 +382,10 @@ export default function TabRoutes(props) {
         name={navigationStrings.ACCOUNTS}
         options={() => ({
           tabBarLabel: strings.ACCOUNTS,
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <FastImage
               style={styles.iconStyle}
-              tintColor={getTintColor(focused)}
+              tintColor={getTintColor(focused, tintColor)}
               source={getAccountIcons(focused)}
             />
           ),
