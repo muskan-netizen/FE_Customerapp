@@ -208,6 +208,7 @@ export default function Products({ route, navigation }) {
     productDetailNew: {},
     isProductAvailable: false,
     loadMore: false,
+    wrapperListLoader: false,
   });
   const {
     appData,
@@ -268,6 +269,7 @@ export default function Products({ route, navigation }) {
     isVarientSelectLoading,
     productDetailNew,
     isProductAvailable,
+    wrapperListLoader
   } = state;
   const [showShimmer, setShowShimmer] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -382,6 +384,7 @@ export default function Products({ route, navigation }) {
             animateText={animateText}
             section={section}
             CartItems={CartItems}
+            wrapperListLoader={wrapperListLoader}
           />
         </View>
       );
@@ -395,7 +398,8 @@ export default function Products({ route, navigation }) {
       categoryInfo,
       CartItems,
       selectedAppointmentSlot,
-      appointmentSelectedDate
+      appointmentSelectedDate,
+      wrapperListLoader
     ],
   );
 
@@ -1743,7 +1747,7 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
-
+    updateState({wrapperListLoader:true})
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
@@ -1772,6 +1776,7 @@ export default function Products({ route, navigation }) {
       .then(async (res) => {
         console.log('get all products by vendor res', res?.data);
         // return;
+        updateState({wrapperListLoader:false})
 
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
           let detail = res?.data?.vendor
@@ -2074,6 +2079,7 @@ export default function Products({ route, navigation }) {
       updateQtyLoader: false,
       selectedItemID: -1,
       btnLoader: false,
+      wrapperListLoader: false,
     });
     setLoading(false);
     showError(error?.message || error?.error);
@@ -2180,6 +2186,7 @@ export default function Products({ route, navigation }) {
             selectedItemID: itemToUpdate.id,
             btnLoader: true,
             selectedItemIndx: index,
+            wrapperListLoader: true,
           });
           let data = {};
           data['cart_id'] = isExistCartId;
@@ -2210,6 +2217,7 @@ export default function Products({ route, navigation }) {
                 updateQtyLoader: false,
                 selectedItemID: -1,
                 btnLoader: false,
+                wrapperListLoader: false,
               });
             })
             .catch(async () => {
@@ -2226,6 +2234,7 @@ export default function Products({ route, navigation }) {
           updateState({
             selectedItemID: itemToUpdate?.id,
             btnLoader: false,
+            wrapperListLoader: false,
           });
           removeItem('selectedTable');
           removeProductFromCart(itemToUpdate, section, isExistproductId);
@@ -2395,6 +2404,7 @@ export default function Products({ route, navigation }) {
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
+        wrapperListLoader: false,
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
@@ -2415,6 +2425,7 @@ export default function Products({ route, navigation }) {
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
+        wrapperListLoader: false,
       });
       showError(error?.message || error?.error);
     }
@@ -2749,11 +2760,11 @@ export default function Products({ route, navigation }) {
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;
-
-      const newArr = searchItems.map((el) => {
+      const searchData =[]
+      const newArr = searchItems?.map((el) => {
         const records =
-          el.data &&
-          el.data.filter((item) => {
+          el?.data &&
+          el?.data.filter((item) => {
             return item?.translation[0]?.title
               .toLowerCase()
               .includes(text.toLowerCase());
@@ -2761,13 +2772,22 @@ export default function Products({ route, navigation }) {
         const newObj = {
           ...el,
         };
-
         newObj.data = records;
+
         return newObj;
         console.log('checking products >>>>>', records);
         // Arr.push(...records)
       });
-      setCloneSectionList(newArr);
+
+      newArr?.map((item) => {
+        if (item?.data?.length != 0) {
+            searchData?.push(item)
+          }
+      })
+      console.log('checking products >>>>>', searchData);
+
+      setCloneSectionList(searchData);
+
     } else {
       getAllProductsByVendor();
     }
@@ -3754,7 +3774,7 @@ export default function Products({ route, navigation }) {
   };
 
   return (
-    <WrapperContainer isLoading={false}>
+    <WrapperContainer isLoading={wrapperListLoader}>
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -3966,7 +3986,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-
+{console.log(tagFilteredData,'tagFilteredData=>',cloneSectionList)}
 
             {!!categoryInfo?.is_show_products_with_category ? (
 

@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { handleCardAction, StripeProvider } from '@stripe/stripe-react-native';
+import { handleNextAction, StripeProvider } from '@stripe/stripe-react-native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
@@ -596,13 +596,7 @@ function Cart({ navigation, route }) {
     }
   };
 
-  const _handleComponent = () => {
-    return (
-      <>
-        <Text>asdfi</Text>
-      </>
-    );
-  };
+
   //decrementing/removeing products from cart
   const removeProductFromCart = (item) => {
     let data = {};
@@ -627,12 +621,14 @@ function Cart({ navigation, route }) {
           updateState({
             isLoadingB: false,
             btnLoader: false,
+            deliveryFeeLoader: false,
           });
         } else {
           actions.cartItemQty({});
           updateState({
             isLoadingB: false,
             btnLoader: false,
+            deliveryFeeLoader: false,
           });
         }
         showSuccess(res?.message);
@@ -847,6 +843,7 @@ function Cart({ navigation, route }) {
 
   //flutter wave
   const checkPaymentOptions = (res) => {
+
     updateState({ placeLoader: true });
 
     let paymentId = res?.data?.payment_option_id;
@@ -880,35 +877,34 @@ function Cart({ navigation, route }) {
       return;
     }
 
+    console.log("paymentIdpaymentIdpaymentIdpaymentId",paymentId)
     switch (paymentId) {
-      case 4:
-        // updateState({ placeLoader: false });
-        _offineLinePayment(order_number);
-        break;
+      case 4: _offineLinePayment(order_number);
+        return;
       case 5: //Paystack Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYSTACK, paymentData);
-        break;
+        return;
       case 6: //Payfast Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
-        break;
+        return;
       case 7: //Mobbex Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.MOBBEX, paymentData);
-        break;
+        return;
       case 8: //Yoco Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.YOCO, paymentData);
-        break;
+        return;
       case 9: //Pyalink Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
-        break;
+        return;
       case 12: //Simplify Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SIMPLIFY, paymentData);
-        break;
+        return;
       case 13: //Square Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SQUARE, paymentData);
@@ -916,53 +912,51 @@ function Cart({ navigation, route }) {
       case 15: //Pagarme Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAGARME, paymentData);
-        break;
+        return;
       case 17: //Checkout Payment Getway
         updateState({ placeLoader: false });
         checkoutPayment(paymentData);
-        break;
+        return;
       case 18: //AuthorizeNet Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.AuthorizeNet, paymentData);
-        break;
+        return;
       case 19: //FPX Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.FPX, paymentData);
-        break;
+        return;
       case 20: //AuthorizeNet Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KONGOPAY, paymentData);
-        break;
+        return;
 
       case 22: //AuthorizeNet Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.AVENUE, paymentData);
-        break;
+        return;
       case 24: //Cashfree Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.CASH_FREE, paymentData);
-        break;
+        return;
       case 25: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.EASEBUZZ, paymentData);
-        break;
+        return;
       case 28: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.VNPAY, paymentData);
+        return;
       case 26: //ToyyibPay Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.TOYYIAPAY, paymentData);
-        break;
+        return;
       case 36: //ToyyibPay Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.MYCASH, paymentData);
-        break;
+        return;
       case 27: //Paytab Payment Getway
-        // updateState({ placeLoader: false });
-
         openPayTabs(paymentData);
-
-        break;
+        return;
 
       case 30: //Paytab Payment Getway
         // updateState({ placeLoader: false });
@@ -973,58 +967,57 @@ function Cart({ navigation, route }) {
 
         // openPayTabs(paymentData)
 
-        break;
+        return;
 
       case 29: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.MPAISA, paymentData);
-        break;
+        return;
 
       case 34: //Easebuzz Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.WINDCAVE, paymentData);
-        break;
+        return;
 
       case 32: //PAYPHONE Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYPHONE, paymentData);
-        break;
+        return;
 
       case 37: //STRIPEOXXO Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.STRIPEOXXO, paymentData);
-        break;
+        return;
 
       case 39: //STRIPEOXXO Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.STRIPEIDEAL, paymentData);
-        break;
+        return;
 
       case 21: //VIVAWALLET Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.VIVAWALLET, paymentData);
-        break;
+        return;
       case 40: //USEREDE Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.USEREDE, paymentData);
-        break;
+        return;
       case 41: //OPENPAY Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.OPENPAY, paymentData);
-        break;
+        return;
       case 42: //Direct Pay Online Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.DIRECTPAYONLINE, paymentData);
-        break;
+        return;
       case 44: //Conekta Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.CONEKTA, paymentData);
-        break;
+        return;
       case 46: //Direct Pay Online Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
-        break;
-
+        return;
 
       default:
         if (
@@ -1040,7 +1033,7 @@ function Cart({ navigation, route }) {
           })();
           actions.cartItemQty({});
         }
-        break;
+        return;
     }
   };
 
@@ -1244,17 +1237,16 @@ function Cart({ navigation, route }) {
         setSheduledpickupdate(null);
         setModalType(null);
         setSheduleddropoffdate(null);
+
+        console.log("selectedPayment?.idselectedPayment?.id",selectedPayment?.id)
         if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
           updateState({ isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
+          return;
         }
         else {
           checkPaymentOptions(res);
         }
-        updateState({
-          isLoadingB: false,
-          placeLoader: false,
-        });
         if (
           selectedPayment?.id != 32 &&
           selectedPayment?.id != 17 &&
@@ -1276,7 +1268,10 @@ function Cart({ navigation, route }) {
           setCartData({});
           actions.reloadData(!reloadData);
           if (selectedPayment?.id == 1 || res?.data?.payable_amount == 0) {
-
+            updateState({
+              isLoadingB: false,
+              placeLoader: false,
+            });
             showSuccess(res?.message);
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
@@ -1616,10 +1611,10 @@ function Cart({ navigation, route }) {
   const swipeRef = useRef(null);
 
   const openDeleteView = async (item) => {
+    updateState({ deliveryFeeLoader: true });
     let itemToUpdate = cloneDeep(item);
     removeItem('selectedTable');
     removeProductFromCart(itemToUpdate);
-    // updateState({ isLoadingB: true });
     // if (!!swipeRef && swipeRef?.current) {
     //     swipeRef?.current.openRight()
     // }
@@ -1747,7 +1742,7 @@ function Cart({ navigation, route }) {
   //             .then(async (res) => {
   //               console.log(res, 'getStripePaymentIntent response');
   //               if (res && res?.client_secret) {
-  //                 const {paymentIntent, error} = await handleCardAction(
+  //                 const {paymentIntent, error} = await handleNextAction(
   //                   res?.client_secret,
   //                 );
   //                 if (paymentIntent) {
@@ -1841,14 +1836,16 @@ function Cart({ navigation, route }) {
   //       .catch(errorMethod);
   //   }
   // };
+
+
+
   const _paymentWithStripe = async (
     cardInfo,
     tokenInfo,
     paymentMethodId,
     order_number,
   ) => {
-    actions
-      .getStripePaymentIntent(
+    actions.getStripePaymentIntent(
         // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
         {
           payment_option_id: selectedPayment?.id,
@@ -1870,13 +1867,12 @@ function Cart({ navigation, route }) {
       )
       .then(async (res) => {
         if (res && res?.client_secret) {
-          const { paymentIntent, error } = await handleCardAction(
+          const { paymentIntent, error } = await handleNextAction(
             res?.client_secret,
           );
           if (paymentIntent) {
             if (paymentIntent) {
-              actions
-                .confirmPaymentIntentStripe(
+              actions.confirmPaymentIntentStripe(
                   {
                     order_number: order_number,
                     payment_option_id: selectedPayment?.id,
@@ -1963,84 +1959,9 @@ function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
+    console.log("payment method id++++",paymentMethodId)
     if (!!paymentMethodId) {
-      // _createPaymentMethod(cardInfo, tokenInfo);
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
-      // let selectedMethod = selectedPayment.code.toLowerCase();
-      // actions
-      //   .openPaymentWebUrl(
-      //     `/${selectedMethod}?tip=${
-      //       selectedTipAmount && selectedTipAmount != ''
-      //         ? Number(selectedTipAmount)
-      //         : 0
-      //     }&amount=${
-      //       Number(cartData?.total_payable_amount) +
-      //       (selectedTipAmount != null && selectedTipAmount != ''
-      //         ? Number(selectedTipAmount)
-      //         : 0)
-      //     }&auth_token=${userData?.auth_token}&address_id=${
-      //       selectedAddressData?.id
-      //     }&payment_option_id=${
-      //       selectedPayment?.id
-      //     }&action=cart&stripe_token=${tokenInfo}`,
-      //     {},
-      //     {
-      //       code: appData?.profile?.code,
-      //       currency: currencies?.primary_currency?.id,
-      //       language: languages?.primary_language?.id,
-      //     },
-      //   )
-
-      //   .then((res) => {
-      //     updateState({isRefreshing: false});
-      //     if (res && res?.status == 'Success' && res?.data) {
-      //       // updateState({allAvailAblePaymentMethods: res?.data});
-      //       actions.cartItemQty({});
-      //       setCartItems([]);
-      //       setCartData({});
-      //       setSelectedPayment({
-      //         id: 1,
-      //         off_site: 0,
-      //         title: 'Cash On Delivery',
-      //         title_lng: strings.CASH_ON_DELIVERY,
-      //       });
-      //       setPickupDriverComment(null);
-      //       setDropOffDriverComment(null);
-      //       setVendorComment(null);
-      //       setLocalPickupDate(null);
-      //       setLocaleDropOffDate(null);
-      //       setModalType(null);
-      //       setSheduledpickupdate(null);
-
-      //       updateState({
-      //         isLoadingB: false,
-      //         placeLoader: false,
-      //       });
-      //       moveToNewScreen(navigationStrings.ORDERSUCESS, {
-      //         orderDetail: res.data,
-      //       })();
-      //       showSuccess(res?.message);
-      //     } else {
-      //       setSelectedPayment({
-      //         id: 1,
-      //         off_site: 0,
-      //         title: 'Cash On Delivery',
-      //         title_lng: strings.CASH_ON_DELIVERY,
-      //       });
-      //       updateState({
-      //         isLoadingB: false,
-      //         placeLoader: false,
-      //       });
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     showError(err.message);
-      //     updateState({
-      //       isLoadingB: false,
-      //       placeLoader: false,
-      //     });
-      //     console.log(err, 'errorInPlaceOrder');
-      //   });
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
@@ -5490,7 +5411,8 @@ function Cart({ navigation, route }) {
           isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
         }
         statusBarColor={colors.backgroundGrey}
-        source={loaderOne}>
+        source={loaderOne}
+        >
         <Header
           centerTitle={strings.CART}
           noLeftIcon
@@ -6759,7 +6681,7 @@ function Cart({ navigation, route }) {
       }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
-      isLoadingB={deliveryFeeLoader}>
+      isLoading={deliveryFeeLoader}>
       <Header
         centerTitle={strings.CART}
         leftIcon={imagePath.icBackb}
