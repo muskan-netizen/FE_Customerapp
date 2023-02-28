@@ -1374,7 +1374,7 @@ export default function Products({ route, navigation }) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
-          console.log(res.data, 'add single item addProductsToCart');
+          console.log(res, 'add single item addProductsToCart');
           actions.cartItemQty(res);
           updateState({ cartId: res.data.id });
           setSelectedAppointmentSlot({})
@@ -1902,7 +1902,6 @@ export default function Products({ route, navigation }) {
   const getAllProductsByCategoryId = (pageNo) => {
     const productWithCategoryId = data?.productWithSingleCategory ? data?.id : productListId?.id
     const rootproduct = data?.rootProducts || data?.productWithSingleCategory ? true : false
-    console.log(data?.productWithSingleCategory, productListId?.id, data?.id, "fdsfdsfdsfdsfdsfdfs");
     actions
       .getProductByCategoryIdOptamize(
         `/${productWithCategoryId}?page=${pageNo}&product_list=${rootproduct}&type=${dineInType}`,
@@ -3680,9 +3679,6 @@ export default function Products({ route, navigation }) {
         </TouchableOpacity>} />
     </View>
   }
-
-
-
 
 
 
