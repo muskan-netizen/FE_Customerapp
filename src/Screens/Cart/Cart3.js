@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { handleCardAction, StripeProvider } from '@stripe/stripe-react-native';
+import { handleNextAction, StripeProvider } from '@stripe/stripe-react-native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
@@ -1749,7 +1749,7 @@ function Cart({ navigation, route }) {
   //             .then(async (res) => {
   //               console.log(res, 'getStripePaymentIntent response');
   //               if (res && res?.client_secret) {
-  //                 const {paymentIntent, error} = await handleCardAction(
+  //                 const {paymentIntent, error} = await handleNextAction(
   //                   res?.client_secret,
   //                 );
   //                 if (paymentIntent) {
@@ -1872,7 +1872,7 @@ function Cart({ navigation, route }) {
       )
       .then(async (res) => {
         if (res && res?.client_secret) {
-          const { paymentIntent, error } = await handleCardAction(
+          const { paymentIntent, error } = await handleNextAction(
             res?.client_secret,
           );
           if (paymentIntent) {
