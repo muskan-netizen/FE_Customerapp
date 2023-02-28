@@ -6,7 +6,7 @@ import {
   Linking,
   ScrollView, Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import WrapperContainer from '../../Components/WrapperContainer';
 import colors from '../../styles/colors';
@@ -35,6 +35,15 @@ import {
 } from '../../styles/responsiveSize';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
+import DeliveryTypeComp from '../../Components/DeliveryTypeComp';
+import * as Animatable from 'react-native-animatable';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import FastImage from 'react-native-fast-image';
 
 export default function SubcategoryVendor({ navigation, route }) {
   console.log(route, 'route>>>>route');

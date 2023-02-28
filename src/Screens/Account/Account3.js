@@ -487,10 +487,11 @@ export default function Account3({ navigation }) {
             <View></View>
           )} */}
 
-          {!!userData?.auth_token &&
+          {/* {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
-            appData?.profile?.preferences?.subscription_mode == 1 && (
+            appData?.profile?.preferences?.subscription_mode == 1 && ( */}
+          {true &&(
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}

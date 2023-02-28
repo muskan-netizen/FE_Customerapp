@@ -627,12 +627,14 @@ function Cart({ navigation, route }) {
           updateState({
             isLoadingB: false,
             btnLoader: false,
+            deliveryFeeLoader: false,
           });
         } else {
           actions.cartItemQty({});
           updateState({
             isLoadingB: false,
             btnLoader: false,
+            deliveryFeeLoader: false,
           });
         }
         showSuccess(res?.message);
@@ -1616,10 +1618,10 @@ function Cart({ navigation, route }) {
   const swipeRef = useRef(null);
 
   const openDeleteView = async (item) => {
+    updateState({ deliveryFeeLoader: true });
     let itemToUpdate = cloneDeep(item);
     removeItem('selectedTable');
     removeProductFromCart(itemToUpdate);
-    // updateState({ isLoadingB: true });
     // if (!!swipeRef && swipeRef?.current) {
     //     swipeRef?.current.openRight()
     // }
@@ -6759,7 +6761,7 @@ function Cart({ navigation, route }) {
       }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
-      isLoadingB={deliveryFeeLoader}>
+      isLoading={deliveryFeeLoader}>
       <Header
         centerTitle={strings.CART}
         leftIcon={imagePath.icBackb}
