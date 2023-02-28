@@ -2505,6 +2505,14 @@ end
 target 'OneBasket' do
 end
 
+#Zozozi
+target 'Zozozi' do
+end
+
+#Ekobridge
+target 'Ekobridge' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)

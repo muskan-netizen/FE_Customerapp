@@ -218,14 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-         ekobridge{
+       onebasket{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ekobridge.order'
-                resValue "string", "app_name", "Ekobridge"
+                applicationId 'com.onerbasket.order'
+                resValue "string", "app_name", "OneBasket"
                 resValue "string", "host_name", ""
             }
     //            sultanCenter{
@@ -8482,16 +8482,6 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.boozeBrothers.order'
     //             resValue "string", "app_name", "Booze Brothers"
-    //             resValue "string", "host_name", ""
-    //         }
-    // magicalBookings{
-    //             dimension "appType"
-    //             versionCode 1
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.magicalBookings.order'
-    //             resValue "string", "app_name", "Magical Bookings"
     //             resValue "string", "host_name", ""
     //         }
     // magicalBookings{

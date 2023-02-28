@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import commonStylesFun from '../styles/commonStyles';
-import {isEmpty} from 'lodash';
-import {moderateScale} from '../styles/responsiveSize';
+import { isEmpty } from 'lodash';
+import { moderateScale } from '../styles/responsiveSize';
 
 export default function GradientView({
   colorsArray = [],
@@ -12,14 +12,14 @@ export default function GradientView({
   textStyle = {},
   btnStyle = {},
 }) {
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
-  const commonStyles = commonStylesFun({fontFamily, themeColors});
+  const commonStyles = commonStylesFun({ fontFamily, themeColors });
   return (
     <LinearGradient
-      start={{x: 0.0, y: -1.5}}
-      end={{x: 0.5, y: 1.0}}
+      start={{ x: 0.0, y: -1.5 }}
+      end={{ x: 0.5, y: 1.0 }}
       style={{
         borderRadius: moderateScale(8),
         padding: moderateScale(6),
@@ -34,7 +34,7 @@ export default function GradientView({
       }>
       <Text
         numberOfLines={1}
-        style={{...commonStyles.buttonTextWhite, ...textStyle}}>
+        style={{ ...commonStyles.buttonTextWhite, ...textStyle }}>
         {title}
       </Text>
     </LinearGradient>
