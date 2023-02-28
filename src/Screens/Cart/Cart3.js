@@ -1834,7 +1834,7 @@ function Cart({ navigation, route }) {
   //         }
   //       })
   //       .catch(errorMethod);
-  //   }
+  //   }ONS
   // };
 
 
