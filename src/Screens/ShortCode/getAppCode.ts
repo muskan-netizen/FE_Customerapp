@@ -529,7 +529,14 @@ export const getAppCode = () => {
         case appIds.boozeBrothers: return shortCodes.boozeBrothers;
         case appIds.magicalBookings: return shortCodes.magicalBookings;
         case appIds.tkaff: return shortCodes.tkaff;
-
+        case appIds.ebay: return shortCodes.ebay;
+        case appIds.readyToRent: return shortCodes.readyToRent;
+        case appIds.theGenie: return shortCodes.theGenie;
+        case appIds.sultanCenter: return shortCodes.sultanCenter;
+        case appIds.reedas: return shortCodes.reedas;
+        case appIds.onebasket: return shortCodes.onebasket;
+        case appIds.zozozi: return shortCodes.zozozi;
+        case appIds.ekobridge: return shortCodes.ekobridge;
         default: return '245bae'
     }
 }

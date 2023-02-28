@@ -30,6 +30,7 @@ import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 
+import DashBoardTwo from './DashboardViews/DashBoardTwo';
 
 import {
   DashBoardFive,
@@ -136,9 +137,9 @@ export default function Home({ route, navigation }) {
   const { profile } = appData;
 
   useEffect(() => {
-    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      socketServices.initializeSocket(appData?.profile?.socket_url);
-    }
+    // if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+    //   socketServices.initializeSocket(appData?.profile?.socket_url);
+    // }
   }, [appData]);
 
   useFocusEffect(
@@ -409,11 +410,14 @@ export default function Home({ route, navigation }) {
     }
     let latlongObj = {};
 
+
+    console.log("locationDatalocationData",locationData)
+
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
-        latitude: 30.7333 || '',
-        longitude: 76.7794 || '',
+        latitude: locationData?.latitude || 30.7333,
+        longitude: locationData?.longitude || 76.7794
       };
     }
 
@@ -1084,6 +1088,7 @@ export default function Home({ route, navigation }) {
                   toggleData={appData}
                   location={location}
                   curLatLong={curLatLong}
+                  currentLocation={currentLocation}
                 />
               ) : (
                 <DashBoardNine
@@ -1143,6 +1148,7 @@ export default function Home({ route, navigation }) {
                   toggleData={appData}
                   location={location}
                   curLatLong={curLatLong}
+                  currentLocation={currentLocation}
                 />
               ) : (
                 <DashBoardFive
@@ -1169,30 +1175,7 @@ export default function Home({ route, navigation }) {
                   selectedHomeCategory={selectedHomeCategory}
                   selectedFilterType={selectedFilterType}
                 />
-                // <DashBoardFive2
-                //   handleRefresh={() => handleRefresh()}
-                //   bannerPress={(item) => bannerPress(item)}
-                //   isLoading={isLoading}
-                //   isRefreshing={isRefreshing}
-                //   appMainData={appMainData}
-                //   onPressCategory={(item) => {
-                //     onPressCategory(item);
-                //   }}
-                //   onPressVendor={(item) => {
-                //     onPressVendor(item);
-                //   }}
-                //   isDineInSelected={isDineInSelected}
-                //   selcetedToggle={selcetedToggle}
-                //   tempCartData={tempCartData}
-                //   toggleData={appData}
-                //   navigation={navigation}
-                //   onVendorFilterSeletion={onVendorFilterSeletion}
-                //   singleVendor={singleVendor}
-                //   onPressAddLaundryItem={onPressAddLaundryItem}
-                //   isLoadingAddons={isLoadingAddons}
-                //   selectedHomeCategory={selectedHomeCategory}
-                //   selectedFilterType={selectedFilterType}
-                // />
+
               )}
             </>
           );
@@ -1220,6 +1203,7 @@ export default function Home({ route, navigation }) {
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardSix
@@ -1276,6 +1260,7 @@ export default function Home({ route, navigation }) {
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardFive
@@ -1305,33 +1290,7 @@ export default function Home({ route, navigation }) {
                 isSubscription={isSubscription}
                 selectedFilterType={selectedFilterType}
               />
-              // <DashBoardFive2
-              //   handleRefresh={() => handleRefresh()}
-              //   bannerPress={(item) => bannerPress(item)}
-              //   isLoading={isLoading}
-              //   isRefreshing={isRefreshing}
-              //   appMainData={appMainData}
-              //   onPressCategory={(item) => {
-              //     onPressCategory(item);
-              //   }}
-              //   onPressVendor={(item) => {
-              //     onPressVendor(item);
-              //   }}
-              //   isDineInSelected={isDineInSelected}
-              //   selcetedToggle={selcetedToggle}
-              //   tempCartData={tempCartData}
-              //   toggleData={appData}
-              //   navigation={navigation}
-              //   onVendorFilterSeletion={onVendorFilterSeletion}
-              //   singleVendor={singleVendor}
-              //   onPressAddLaundryItem={onPressAddLaundryItem}
-              //   isLoadingAddons={isLoadingAddons}
-              //   selectedHomeCategory={selectedHomeCategory}
-              //   onClose={_closeModal}
-              //   onPressSubscribe={_onPressSubscribe}
-              //   isSubscription={isSubscription}
-              //   selectedFilterType={selectedFilterType}
-              // />
+
             )}
           </>
         );
@@ -1364,6 +1323,7 @@ export default function Home({ route, navigation }) {
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardEight
@@ -1422,6 +1382,7 @@ export default function Home({ route, navigation }) {
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardNine

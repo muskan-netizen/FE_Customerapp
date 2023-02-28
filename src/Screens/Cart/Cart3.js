@@ -297,6 +297,7 @@ function Cart({ navigation, route }) {
   );
 
   const androidBackButtonHandler = () => {
+    updateState({paymentModal: false})
     return true;
   };
 
@@ -3350,7 +3351,7 @@ function Cart({ navigation, route }) {
                         : colors.textGreyB,
                       marginBottom: moderateScaleVertical(8),
                     }}>
-                    {strings.DELIVERY_CHARGES}:
+                    {strings.DELIVERY_FEE}:
                   </Text>
                 ) : null}
 
@@ -3395,19 +3396,28 @@ function Cart({ navigation, route }) {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
-                    }}>
-                    {strings.DELIVERY_CHARGES}:
+                    }}
+                    >
+                    {strings.DELIVERY_FEE}:
                   </Text>
                 ) : null}
 
                 {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
-                  <Text>{`${item?.delivery_types[0]?.courier_name
+                  <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}
+                  >{`${item?.delivery_types[0]?.courier_name
                     } ${tokenConverterPlusCurrencyNumberFormater(
                       Number(item?.delivery_types[0]?.rate),
                       digit_after_decimal,
                       additional_preferences,
                       currencies?.primary_currency?.symbol,
                     )}`}</Text>
+                    
                 ) : !!item?.delivery_types &&
                   item?.delivery_types.length > 0 ? (
                   <ModalDropdown

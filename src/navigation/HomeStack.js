@@ -121,6 +121,8 @@ export default function () {
     }
   };
 
+console.log("businessTypebusinessTypebusinessType",businessType)
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -128,7 +130,7 @@ export default function () {
       }}>
       <Stack.Screen
         name={
-          businessType === 4
+          businessType === 4 ||        businessType === 3
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
@@ -224,7 +226,7 @@ export default function () {
         component={CategoryBrands}
       />
       <Stack.Screen
-        name={navigationStrings.CART_SCREEN}
+        name={navigationStrings.CHAT_SCREEN}
         component={ChatScreen}
         options={{gestureEnabled: true}}
       />

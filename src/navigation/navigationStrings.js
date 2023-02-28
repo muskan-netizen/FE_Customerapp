@@ -165,5 +165,6 @@ export default {
   MY_POSTS: 'myPosts',
   REFER_AND_EARN: 'referAndEarn',
   PLUGNPAY: 'PlugnPay',
-  SPOTDEALPRODUCTSANDSELECTEDPRODUCTS :'SpotdealProductAndSelectedProducts'
+  SPOTDEALPRODUCTSANDSELECTEDPRODUCTS :'SpotdealProductAndSelectedProducts',
+  BIDINGDRIVERSLIST :'BidingDriversList'
 };

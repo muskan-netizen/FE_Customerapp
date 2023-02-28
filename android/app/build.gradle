@@ -218,28 +218,27 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-               royoorder {
+       onebasket{
                 dimension "appType"
                 versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".royoorder"
-                applicationId 'com.codebrew.royoorder'
-                resValue "string", "app_name", "RoyoOrder"
-                resValue "string", "host_name", "sales.royoorders.com"
+                applicationId 'com.onerbasket.order'
+                resValue "string", "app_name", "OneBasket"
+                resValue "string", "host_name", ""
             }
-        // servern{
-        //     dimension "appType"
-        //     versionCode 1
-        //     versionName "1.0"
-        //     minSdkVersion rootProject.ext.minSdkVersion
-        //     targetSdkVersion rootProject.ext.targetSdkVersion
-        //     applicationId 'com.servern.orderapp'
-        //     resValue "string", "app_name", "Servern"
-        //     resValue "string", "host_name", ""
-        //     }
-            //    goKart{
+    //            sultanCenter{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.sultanCenter.order'
+    //             resValue "string", "app_name", "Sultan Center"
+    //             resValue "string", "host_name", ""
+    //         }
+            //  rxnow{
             //     dimension "appType"
             //     versionCode 1
             //     versionName "1.0"
@@ -8502,7 +8501,7 @@ android {
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.liverso.order'
-    //             resValue "string", "app_name", "LivraiZoo"
+    //             resValue "string", "app_name", "Livraizoo"
     //             resValue "string", "host_name", ""
     //         }
     // boozeBrothers{
@@ -8523,6 +8522,86 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.magicalBookings.order'
     //             resValue "string", "app_name", "Magical Bookings"
+    //             resValue "string", "host_name", ""
+    //         }
+    // ebay{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ebay.order'
+    //             resValue "string", "app_name", "Ebay"
+    //             resValue "string", "host_name", ""
+    //         }
+    // readyToRent{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.readyToRent.order'
+    //             resValue "string", "app_name", "Ready to rent"
+    //             resValue "string", "host_name", ""
+    //         }
+    // theGenie{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.theGenie.order'
+    //             resValue "string", "app_name", "The Genie"
+    //             resValue "string", "host_name", ""
+    //         }
+    // sultanCenter{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.sultanCenter.order'
+    //             resValue "string", "app_name", "Sultan Center"
+    //             resValue "string", "host_name", ""
+    //         }
+    // reedas{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.reedas.order'
+    //             resValue "string", "app_name", "Reedas"
+    //             resValue "string", "host_name", ""
+    //         }
+    // onebasket{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.onerbasket.order'
+    //             resValue "string", "app_name", "OneBasket"
+    //             resValue "string", "host_name", ""
+    //         }
+    // zozozi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zozozi.order'
+    //             resValue "string", "app_name", "Zozozi"
+    //             resValue "string", "host_name", ""
+    //         }
+     // ekobridge{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ekobridge.order'
+    //             resValue "string", "app_name", "Ekobridge"
     //             resValue "string", "host_name", ""
     //         }
 

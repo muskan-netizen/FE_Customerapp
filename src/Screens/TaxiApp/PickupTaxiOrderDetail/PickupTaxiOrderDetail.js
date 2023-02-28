@@ -13,7 +13,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  FlatList
+  FlatList,
+  Platform
 } from "react-native";
 import { useSelector } from "react-redux";
 import WrapperContainer from "../../../Components/WrapperContainer";
@@ -87,7 +88,7 @@ import GradientButton from '../../../Components/GradientButton';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
 import Header from '../../../Components/Header';
-import { Platform } from "react-native";
+import BidAcceptRejectCard from "../../../Components/Loaders/BidAcceptRejectCard";
 
 function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
@@ -98,7 +99,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   console.log(paramData, 'paramDataparamDataparamData');
 
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  console.log(paramData, 'paramDataparamData')
+
   const [state, setState] = useState({
     isLoading: true,
     region: {
@@ -175,6 +176,9 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     driverRatingData,
     orderCancelMessage,
   } = state;
+  const [allDriversList, setAllDriversList] = useState([])
+  const [bidExpiryDuration, setBidExpiryDuration] = useState(0)
+  const [bidBookModalVisible, setBidBookModalVisible] = useState(false)
 
   const [
     finalCollectionOfLocationsForPickAndDrop,
@@ -194,7 +198,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
 
 
 
-
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -208,7 +211,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   } = appData?.profile?.preferences || {};
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
-  const { profile } = appData;
+  const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
@@ -311,12 +314,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           return item?.task_status < 2;
         }
       );
-
-      console.log(
-        allDropOffLocationsBeforeProcessing,
-        "allDropOffLocationsBeforeProcessing"
-      );
-
       setAllLocationsLatLongCollection(allLocationsLatLongCollection);
       setAllDropOffLocationCollection(allDropOffLocationsBeforeProcessing);
     }
@@ -357,12 +354,16 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     () => {
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
+        _onOrderBidRideDetails()
+
       } else {
         updateState({ isLoading: false });
       }
     },
-    isFocused && orderStatus != "completed" ? 30000 : null
+    isFocused && orderStatus != "completed" ? 10000 : null
   );
+
+
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -371,6 +372,97 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     );
     return () => backHandler.remove();
   }, []);
+
+
+  // *********************************** biding and instant booking funcationality implemented here ***************/
+
+
+  const _onOrderBidRideDetails = () => {
+    const data = {
+      order_id: !!paramData?.orderId ? paramData?.orderId : null,
+      task_type: 'instant_booking'
+    }
+
+    const headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+
+    actions.orderRideBidDetails(data, headerData).then((res) => {
+      console.log(res, "response for bid ride");
+      setAllDriversList(res?.data?.biddata)
+      setBidExpiryDuration(Number(res?.data?.bid_expire_time_limit_seconds))
+      if (!isEmpty(res?.data?.biddata)) {
+        setBidBookModalVisible(true)
+      } else {
+        setBidBookModalVisible(false)
+      }
+    }).catch((error) => {
+      console.log(error, "error in this api orderRideBidDetails");
+    })
+  }
+
+
+
+
+
+
+  const _onDeclineRideBid = (id) => {
+    const apiData = {
+      bid_id: id
+    }
+    const headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+
+    console.log(id, headerData, "decline bif funcation called");
+    actions.declineRideBid(apiData, headerData).then((res) => {
+      console.log(res, "resposen bid decline");
+      _onOrderBidRideDetails()
+    }).catch((error) => {
+      console.log(error, "errororororor for bide decline");
+    })
+  }
+
+
+
+  const _onAcceptRideBid = (id) => {
+    const apiData = {
+      order_id: !!paramData?.orderId ? paramData?.orderId : null,
+      bid_id: id,
+      task_type: 'instant_booking'
+    }
+    const headerData = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+
+    console.log(apiData, headerData, "accept bif funcation called");
+    actions.acceptRideBid(apiData, headerData).then((res) => {
+      console.log(res, "resposen bid Accepted");
+      _onOrderBidRideDetails()
+      setBidBookModalVisible(false)
+      _updateDriverLocationLocation(urlValue);
+    }).catch((error) => {
+      console.log(error, "errororororor for bide accept");
+    })
+  }
+
+
+
+
+
+
+  // *********************************** biding and instant booking funcationality Ends here ***************/
+
+
+
+
+
 
   useEffect(() => {
     // console.log('driverStatus', driverStatus);
@@ -417,6 +509,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         console.log(res, "res---agent>>>>");
 
         if (!!res?.data) {
+
           updateState({
             agent_location: res?.data?.agent_location,
             orderDetail: res?.data?.order,
@@ -454,6 +547,10 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             productInfo: res?.data?.order_details?.products,
             tasks: res?.data?.tasks,
           });
+
+
+
+
         }
       } catch (error) {
         updateState({
@@ -978,19 +1075,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         longitudeDelta: LONGITUDE_DELTA,
       };
     }, []);
-
-    // if (!!!agent_location?.lat) {
-    //   let x =
-    //   {
-    //     latitude: Number(agent_location?.lat),
-    //     longitude: Number(agent_location?.long),
-    //     latitudeDelta: LATITUDE_DELTA,
-    //     longitudeDelta: LONGITUDE_DELTA,
-    //   }
-
-    //   cords.push(x)
-    // }
-
     mapRef.current.fitToCoordinates(cords, {
       edgePadding: {
         right: moderateScale(20),
@@ -1095,6 +1179,20 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   const onChat = (item) => {
     navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item } });
   };
+
+
+  // Instan Booking and bid and ride 
+  const renderDriverListCard = ({ item, index }) => {
+    return (
+      <BidAcceptRejectCard
+        data={item}
+        bidExpiryDuration={bidExpiryDuration}
+        _onDeclineBid={_onDeclineRideBid}
+        _onAcceptRideBid={_onAcceptRideBid}
+      />
+    )
+  }
+
 
   const createRoom = async (item, type) => {
     try {
@@ -1282,6 +1380,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     );
   }
 
+  console.log("taskstaskstaskstaskstasks", tasks)
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -1378,7 +1478,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                   </Marker.Animated>
                 )}
 
-              <MapViewDirections
+              {!!tasks && tasks.length > 0 ?<MapViewDirections
                 resetOnChange={false}
                 origin={
                   orderStatus !== "completed" && orderStatus !== "unassigned"
@@ -1425,7 +1525,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                 onError={(errorMessage) => {
                   //
                 }}
-              />
+              />: null}
             </MapView>
           )}
 
@@ -1651,7 +1751,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                     : orderFullDetail?.tasks
                   ).map((val, i) => {
                     return (
-                      <View style={{ marginHorizontal: moderateScale(16) }}>
+                      <View key={String(i)} style={{ marginHorizontal: moderateScale(16) }}>
                         <View
                           style={{
                             flexDirection: "row",
@@ -2031,6 +2131,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                 </View>
                               );
                             }}
+                            keyExtractor={(item, index) => !!item?.id ? String(item?.id) : String(index)}
                           />
                         </View>
                       )}
@@ -2057,7 +2158,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           (val, index) => {
                             console.log(val, "valvalvalval");
                             return (
-                              <View>
+                              <View key={String(index)}>
                                 <View
                                   style={{
                                     flexDirection: "row",
@@ -2182,61 +2283,66 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                               .length
                                           }
                                         </Text>
-                                      </View>
-                                    )}
-                                  {orderStatus == "completed" ? (
-                                    <View
-                                      style={{
-                                        width: width / 3,
-                                        marginVertical: moderateScaleVertical(10),
-                                        alignSelf: "center",
-                                      }}
-                                    >
-                                      <StarRating
-                                        maxStars={5}
-                                        rating={
-                                          productInfo[index]?.product_rating
-                                            ?.rating
-                                        }
-                                        selectedStar={(rating) =>
-                                          onStarRatingPress(val, rating)
-                                        }
-                                        fullStarColor={colors.ORANGE}
-                                        starSize={25}
-                                      />
-                                      {console.log(
-                                        productInfo[index]?.product_rating,
-                                        "productInfo[index]?.product_rating"
-                                      )}
-                                      {productInfo[index]?.product_rating && (
-                                        <TouchableOpacity
-                                          onPress={() => rateYourOrder(val)}
-                                        >
-                                          <Text
-                                            style={{
-                                              alignSelf: "center",
-                                              marginVertical: moderateScaleVertical(
-                                                10
-                                              ),
-                                              fontSize: textScale(13),
-                                              fontFamily: fontFamily?.bold,
-                                              color: themeColors?.primary_color,
-                                            }}
+                                      </View >
+                                    )
+                                  }
+                                  {
+                                    orderStatus == "completed" ? (
+                                      <View
+                                        style={{
+                                          width: width / 3,
+                                          marginVertical: moderateScaleVertical(10),
+                                          alignSelf: "center",
+                                        }}
+                                      >
+                                        <StarRating
+                                          maxStars={5}
+                                          rating={
+                                            productInfo[index]?.product_rating
+                                              ?.rating
+                                          }
+                                          selectedStar={(rating) =>
+                                            onStarRatingPress(val, rating)
+                                          }
+                                          fullStarColor={colors.ORANGE}
+                                          starSize={25}
+                                        />
+                                        {console.log(
+                                          productInfo[index]?.product_rating,
+                                          "productInfo[index]?.product_rating"
+                                        )}
+                                        {productInfo[index]?.product_rating && (
+                                          <TouchableOpacity
+                                            onPress={() => rateYourOrder(val)}
                                           >
-                                            {strings.WRITE_A_REVIEW}
-                                          </Text>
-                                        </TouchableOpacity>
-                                      )}
-                                    </View>
-                                  ) : null}
+                                            <Text
+                                              style={{
+                                                alignSelf: "center",
+                                                marginVertical: moderateScaleVertical(
+                                                  10
+                                                ),
+                                                fontSize: textScale(13),
+                                                fontFamily: fontFamily?.bold,
+                                                color: themeColors?.primary_color,
+                                              }}
+                                            >
+                                              {strings.WRITE_A_REVIEW}
+                                            </Text>
+                                          </TouchableOpacity>
+                                        )}
+                                      </View>
+                                    ) : null
+                                  }
 
-                                  {val.user_product_order_form &&
+                                  {
+                                    val.user_product_order_form &&
                                     JSON.parse(val.user_product_order_form)
                                       .length > 0 &&
                                     JSON.parse(val.user_product_order_form).map(
-                                      (el) => {
+                                      (el, index) => {
                                         return (
                                           <View
+                                            key={String(index)}
                                             style={{
                                               flexDirection: "row",
                                             }}
@@ -2270,9 +2376,10 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                           </View>
                                         );
                                       }
-                                    )}
-                                </View>
-                              </View>
+                                    )
+                                  }
+                                </View >
+                              </View >
                             );
                           }
                         )}
@@ -2294,8 +2401,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                             {`${orderDetail?.color || ""}`}
                           </Text>
                         </View>
-                      </View>
-                    </View>
+                      </View >
+                    </View >
                   ) : (
                     <View style={{ marginBottom: moderateScaleVertical(24) }} />
                   )}
@@ -2490,20 +2597,16 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                         </View>
                       )}
                   </View>
-                </View>
+                </View >
               )}
-            </BottomSheetScrollView>
-          </BottomSheet>
+            </BottomSheetScrollView >
+          </BottomSheet >
 
-        </View>
+        </View >
 
 
-      </View>
-      {/* <BottomViewModal
-        show={true}
-        mainContainView={_ModalMainView}
-        closeModal={_modalClose}
-      /> */}
+      </View >
+
       <Modal
         isVisible={false}
         onBackdropPress={_modalClose}
@@ -2680,7 +2783,15 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           />
         </View>
       </Modal>
-    </WrapperContainer>
+      <Modal isVisible={bidBookModalVisible} style={{ justifyContent: 'flex-start', paddingTop: moderateScaleVertical(20) }}>
+        <View style={{ width: width, alignSelf: 'center' }}>
+          <FlatList
+            data={allDriversList}
+            renderItem={renderDriverListCard}
+            keyExtractor={(item, index) => !!item?.id ? String(item?.id) : String(index)}
+          /></View>
+      </Modal>
+    </WrapperContainer >
   );
 }
 
