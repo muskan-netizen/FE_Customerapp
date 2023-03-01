@@ -1,5 +1,5 @@
-import {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import { isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {MultiSelect} from 'react-native-element-dropdown';
+import { useDarkMode } from 'react-native-dynamic';
+import { MultiSelect } from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
 import WebView from 'react-native-webview';
-import {useSelector} from 'react-redux';
-import {v4 as uuidv4} from 'uuid';
+import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 import GradientButton from '../../../Components/GradientButton';
@@ -27,7 +27,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {hitSlopProp} from '../../../styles/commonStyles';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -39,11 +39,11 @@ import {
   cameraHandler,
   checkValueExistInAry,
 } from '../../../utils/commonFunction';
-import {showError} from '../../../utils/helperFunctions';
-import {androidCameraPermission} from '../../../utils/permissions';
+import { showError } from '../../../utils/helperFunctions';
+import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
 
-const AttributeInformation = ({route, navigation}) => {
+const AttributeInformation = ({ route, navigation }) => {
   let paramData = route?.params;
   console.log(paramData, '<===paramData');
   const darkthemeusingDevice = useDarkMode();
@@ -60,7 +60,7 @@ const AttributeInformation = ({route, navigation}) => {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -360,7 +360,7 @@ const AttributeInformation = ({route, navigation}) => {
   );
 
   const renderAttributeOptions = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <View>
           <Text
@@ -430,11 +430,11 @@ const AttributeInformation = ({route, navigation}) => {
           backgroundColor: colors.white,
         }}>
         <Header
-          centerTitle={'Attribute Information'}
-          leftIcon={imagePath.back1}
+          centerTitle={paramData?.category_name}
+          leftIcon={imagePath.icBackb}
         />
         {isLoadingAttributes ? (
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             {['', '', '', '', '', '', '', '', ''].map((itm, indx) => (
               <View
                 key={String(indx)}
@@ -529,9 +529,7 @@ const AttributeInformation = ({route, navigation}) => {
                     placeholder="Enter price"
                     onChangeText={(text) => setPrice(text)}
                     keyboardType="number-pad"
-                    style={{
-                      flex: 1,
-                    }}
+                    style={{ ...styles.textInput, backgroundColor: colors.transparent }}
                   />
                 </View>
                 <Text
@@ -571,12 +569,12 @@ const AttributeInformation = ({route, navigation}) => {
                               width: moderateScale(90),
                               marginRight: moderateScale(10),
                             }}
-                            source={{uri: itm?.uri}}
+                            source={{ uri: itm?.uri }}
                           />
                           <TouchableOpacity
                             hitSlop={hitSlopProp}
                             onPress={() => removeProductImg(itm, 1)}
-                            style={{position: 'absolute', right: 4, top: -2}}>
+                            style={{ position: 'absolute', right: 4, top: -2 }}>
                             <Image source={imagePath.icRemoveIcon} />
                           </TouchableOpacity>
                         </View>
@@ -595,9 +593,6 @@ const AttributeInformation = ({route, navigation}) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-
-             
-
                 <View
                   style={{
                     marginTop: moderateScaleVertical(16),
@@ -617,7 +612,7 @@ const AttributeInformation = ({route, navigation}) => {
                     renderItem={renderAttributeOptions}
                     ListFooterComponent={listFooterComponent}
                   />
-                  <View style={{height: moderateScaleVertical(65)}} />
+                  <View style={{ height: moderateScaleVertical(65) }} />
                 </View>
               </View>
             ) : (
@@ -670,7 +665,7 @@ const AttributeInformation = ({route, navigation}) => {
               setIsProductAddedModal(false);
               navigation.goBack();
             }}
-            containerStyle={{width: '50%', marginTop: moderateScaleVertical(5)}}
+            containerStyle={{ width: '50%', marginTop: moderateScaleVertical(5) }}
             colorsArray={['#FC7049', '#FD312C']}
           />
         </View>
@@ -681,7 +676,7 @@ const AttributeInformation = ({route, navigation}) => {
 
 export default AttributeInformation;
 
-function stylesFunc({fontFamily, themeColors}) {
+function stylesFunc({ fontFamily, themeColors }) {
   const styles = StyleSheet.create({
     header: {
       marginTop: moderateScale(32),
@@ -740,7 +735,7 @@ function stylesFunc({fontFamily, themeColors}) {
       marginVertical: moderateScale(12),
       fontFamily: fontFamily.regular,
     },
-    linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '5%'},
+    linkButton: { flex: 1, justifyContent: 'flex-end', marginBottom: '5%' },
     labelStyle: {
       fontFamily: fontFamily.bold,
       color: colors.blackOpacity43,
