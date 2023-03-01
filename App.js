@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
-// import NetInfo from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 // import { Linking, Platform } from 'react-native';
@@ -288,15 +288,15 @@ const App = () => {
     return () => { };
   }, []);
 
-  //Check internet connection
-  // useEffect(() => {
-  //   const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-  //     const netStatus = state.isConnected;
-  //     setInternet(netStatus);
-  //     updateInternetConnection(netStatus);
-  //   });
-  //   return () => removeNetInfoSubscription();
-  // }, []);
+  // Check internet connection
+  useEffect(() => {
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      const netStatus = state.isConnected;
+      setInternet(netStatus);
+      updateInternetConnection(netStatus);
+    });
+    return () => removeNetInfoSubscription();
+  }, []);
 
   const { blurRef } = useRef();
 
