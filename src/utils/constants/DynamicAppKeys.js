@@ -289,7 +289,7 @@ const shortCodes = {
   trip: '89e246',
   aauJau: '326d8e',
   mediPick: 'b92261',
-  meltivers: 'deca6f',
+  meltivers: '245bae',
   ensoDigitalAgency: '419dc9',
   hiperAbasto: '50cb7f',
   redglee: '9e185e',
