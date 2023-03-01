@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
-import NetInfo from '@react-native-community/netinfo';
+// import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 // import { Linking, Platform } from 'react-native';
@@ -115,7 +115,7 @@ const App = () => {
       getBundleId() == appIds.masa ||
       getBundleId() == appIds.muvpod ||
       getBundleId() == appIds.hezniTaxi ||
-      getBundleId() == appIds.flank || 
+      getBundleId() == appIds.flank ||
       getBundleId() == appIds.parcelworks
     ) {
       setTimeout(() => {
@@ -126,21 +126,18 @@ const App = () => {
         SplashScreen.hide();
       }, 3000);
     }
-
-    AsyncStorage.getItem('autoConnectEnabled').then((res) => {
-      if (res !== null) {
-        if (Platform.OS == 'android') {
+    if (Platform.OS == 'android') {
+      AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+        if (res !== null) {
           ConnectBTFunction();
         }
-      }
-    });
+      });
+    }
   }, []);
 
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-
-
   };
 
 
@@ -292,14 +289,15 @@ const App = () => {
   }, []);
 
   //Check internet connection
-  useEffect(() => {
-    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-      const netStatus = state.isConnected;
-      setInternet(netStatus);
-      updateInternetConnection(netStatus);
-    });
-    return () => removeNetInfoSubscription();
-  }, []);
+  // useEffect(() => {
+  //   const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+  //     const netStatus = state.isConnected;
+  //     setInternet(netStatus);
+  //     updateInternetConnection(netStatus);
+  //   });
+  //   return () => removeNetInfoSubscription();
+  // }, []);
+
   const { blurRef } = useRef();
 
 
