@@ -974,7 +974,7 @@ export default function Home({ route, navigation }) {
   };
 
   const renderHomeScreen = () => {
-    switch (3) {
+    switch (appStyle?.homePageLayout) {
       case 1:
         return (
           <>

@@ -34,12 +34,12 @@ export default function ShortCode() {
   }, []);
 
   const initApiHit = async () => {
-    const res = await getItem('setPrimaryLanguage');
+    const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     const appCode = !!prevCode ? prevCode : getAppCode();
     let header = {};
-    if (!!res?.primary_language?.id) {
-      header = {code: appCode, language: res?.primary_language?.id};
+    if (!!lang?.primary_language?.id) {
+      header = {code: appCode, language: lang?.primary_language?.id};
     } else {
       header = {code: appCode};
     }
