@@ -537,6 +537,11 @@ export const getAppCode = () => {
         case appIds.onebasket: return shortCodes.onebasket;
         case appIds.zozozi: return shortCodes.zozozi;
         case appIds.ekobridge: return shortCodes.ekobridge;
+        case appIds.ambosSafariExpress: return shortCodes.ambosSafariExpress;
+        case appIds.zulbrand: return shortCodes.zulbrand;
+        
+
+
         default: return '245bae'
     }
 }
