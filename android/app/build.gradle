@@ -218,14 +218,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-       onebasket{
+      zulbrand{
                 dimension "appType"
                 versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.onerbasket.order'
-                resValue "string", "app_name", "OneBasket"
+                applicationId 'com.zulbrand.order'
+                resValue "string", "app_name", "Zulbrand"
                 resValue "string", "host_name", ""
             }
     //            sultanCenter{
@@ -8594,7 +8594,7 @@ android {
     //             resValue "string", "app_name", "Zozozi"
     //             resValue "string", "host_name", ""
     //         }
-     // ekobridge{
+    // ekobridge{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8604,7 +8604,26 @@ android {
     //             resValue "string", "app_name", "Ekobridge"
     //             resValue "string", "host_name", ""
     //         }
-
+    // ambosSafariExpress{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ambosSafariExpress.order'
+    //             resValue "string", "app_name", "Ambos Safari Express"
+    //             resValue "string", "host_name", ""
+    //         }
+    // zulbrand{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zulbrand.order'
+    //             resValue "string", "app_name", "Zulbrand"
+    //             resValue "string", "host_name", ""
+    //         }
     // }
 
 

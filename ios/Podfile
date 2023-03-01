@@ -2513,6 +2513,14 @@ end
 target 'Ekobridge' do
 end
 
+#AmbosSafariExpress
+target 'AmbosSafariExpress' do
+end
+
+#Zulbrand
+target 'Zulbrand' do
+end
+
 
 post_install do |installer|
   react_native_post_install(installer)
