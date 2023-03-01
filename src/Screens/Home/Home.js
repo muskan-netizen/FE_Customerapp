@@ -411,7 +411,7 @@ export default function Home({ route, navigation }) {
     let latlongObj = {};
 
 
-    console.log("locationDatalocationData",locationData)
+    console.log("locationDatalocationData", locationData)
 
     if (!!locationData) {
       latlongObj = {
@@ -444,17 +444,12 @@ export default function Home({ route, navigation }) {
           }
         });
       }
-      console.log(selectedVendorType, defaultVendorType,
-        'defaultVendorType....defaultVendorType')
+
       if (!selectedVendorType) {
 
         actions.dineInData(defaultVendorType);
       }
-      console.log(
-        selectedVendorType,
-        defaultVendorType,
-        'selectedVendorTypeselectedVendorType',
-      );
+
 
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
