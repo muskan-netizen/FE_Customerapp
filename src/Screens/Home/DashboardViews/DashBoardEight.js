@@ -10,12 +10,12 @@ import {
   ScrollView,
   Text,
   View,
+  TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dynamic';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   Menu,
   MenuOption,
@@ -37,6 +37,7 @@ import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
+
 import {
   itemWidth,
   moderateScale,
@@ -52,6 +53,7 @@ import {
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
+
 
 export default function DashBoardEight({
   handleRefresh = () => { },
@@ -497,9 +499,9 @@ export default function DashBoardEight({
 
           {!!vendorsData && vendorsData.length > 1 && (
             <TouchableOpacity
-            
+
               onPress={() => onViewAll('vendor', appMainData?.vendors)}>
-              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {getBundleId()===appIds.qdelo&& 'Stores'}</Text>
+              <Text style={styles.viewAllText}>{strings.VIEW_ALL} {DeviceInfo.getBundleId() === appIds.qdelo && 'Stores'}</Text>
             </TouchableOpacity>
           )}
           <Menu style={{ alignSelf: 'flex-end' }}>
@@ -512,7 +514,7 @@ export default function DashBoardEight({
                     tintColor: themeColors.primary_color,
                   }}
                   resizeMode="contain"
-                  source={isDarkMode? imagePath.sortSelected: imagePath.sort}
+                  source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
                 />
                 <Text
                   style={{

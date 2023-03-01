@@ -38,6 +38,7 @@ import {
   width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { showError } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
 import PaymentGateways from './PaymentGateways';
 export default function SelectPaymentModal({
@@ -172,9 +173,9 @@ export default function SelectPaymentModal({
     console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
     if (res2) {
       await createPaymentMethod({
-        type: 'Card',
         token: res2,
         card: cardInfo,
+        paymentMethodType:'Card',
         billing_details: {
           name: 'Jenny Rosen',
         },
@@ -419,6 +420,7 @@ export default function SelectPaymentModal({
     );
   }
 
+  console.log("payementMethodspayementMethodspayementMethods",selectedPaymentMethod)
   const mainView = () => {
     return (
       <>
@@ -435,10 +437,10 @@ export default function SelectPaymentModal({
                   <Animatable.View
                     // animation={'slideInUp'}
                     // duration={200}
+                    key={String(index)}
                     style={{ flex: 1 }}>
                     <TouchableOpacity
                       onPress={() => selectPaymentMethod(item, index)}
-                      key={index}
                       style={[
                         styles.caseOnDeliveryView,
                         //  {...getAndCheckStyle(item)}

@@ -71,12 +71,14 @@ export default function SpotdealProductAndSelectedProducts(props) {
 
         setIsLoading(true)
         actions.onGetProductsOnHomePage(apiData, apiHeader).then((res) => {
+            console.log(res,'resss')
             setProductListData(pageNo == 1
                 ? res.data.data
                 : [...productListData, ...res?.data?.data])
             setIsLoading(false)
             setIsRefreshing(false)
         }).catch((error) => {
+            console.log(error,'errorerror')
             showError(error?.message || error?.error);
             setIsLoading(false)
             setIsRefreshing(false)
@@ -101,6 +103,7 @@ export default function SpotdealProductAndSelectedProducts(props) {
 
 
     const renderProduct = useCallback(({ item, index }) => {
+        console.log(item,'itemmmmmmmmmmmm')
         return (
             <ProductsComp2
                 mainContainerStyle={{
@@ -110,11 +113,10 @@ export default function SpotdealProductAndSelectedProducts(props) {
                     overflow: 'hidden',
                     height: moderateScaleVertical(163)
                 }}
-                item={item}
+                item={parmasData?.slug == 'selected_products'? item?.products:item}
                 onPress={() =>
                     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
                 }
-
                 imageStyle={{ width: moderateScale(width / 3.8), height: moderateScaleVertical(90), resizeMode: 'cover' }}
 
             />

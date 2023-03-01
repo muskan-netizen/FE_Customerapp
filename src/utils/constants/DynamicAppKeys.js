@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
-  royoorder: '245bae',
+  royoorder: 'e82ca7',
   runrun: 'bf8608',
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
@@ -95,7 +95,7 @@ const shortCodes = {
   vecto: '39f6fd',
   goody: '397840',
   // grub: '2f3120',
-  grub: '2d98b5',
+  grub: "245bae",
   gusto: 'd1b1a0',
   gokab: 'fb78f0', // live
   // gokab: '578b33', // staging
@@ -129,7 +129,7 @@ const shortCodes = {
   ridetci: '89e246',
   noki: '779cb6',
   driveree: '1ead91',
-  rxnow: '476dfb',
+  rxnow: '58e790',
   seachangevending: 'caacbc',
   ored: 'fb0df5',
   orderchekout: 'f6cd9d',
@@ -201,7 +201,8 @@ const shortCodes = {
   stitchesonsite: '5bdfee',
   easyu: '20b62b',
   mozmarcas: '53ea8a',
-  myfiji: 'a0c80e',
+  // myfiji: 'a0c80e',
+  myfiji: '245bae',
   fastmikes: 'd89823',
   citysuds: 'aaedee',
   homeTownDelivery: 'c49349',
@@ -227,7 +228,7 @@ const shortCodes = {
   kampick: 'd12c28',
   cabio: '476cf3',
   tumbak: '59944a',
-  iPicknDrop: '245bae',
+  iPicknDrop: 'f9cf93',
   bluebolt: 'e5a64c',
   onthego: '5e0900',
   mylaglobal: 'a35cd8',
@@ -530,7 +531,20 @@ const shortCodes = {
   shipSmart: 'bbfdee',
   weemoov: '23808d',
   weedLomo: '7e6463',
-  ngoal: 'c05ddc'
+  ngoal: 'c05ddc',
+  livraiZoo: '007f7a',
+  boozeBrothers: '8006b6',
+  magicalBookings: 'e6bd3a',
+  ebay: 'e82ca7',
+  readyToRent: '3c5b8c',
+  theGenie: 'f7d4a1',
+  sultanCenter: '478879',
+  reedas: 'de142d',
+  onebasket: '58bec9',
+  zozozi: '980515',
+  ekobridge: '04468e',
+  ambosSafariExpress: 'ec16dd',
+  zulbrand: '873380'
 };
 
 const appIds = {
@@ -2638,6 +2652,58 @@ const appIds = {
   ngoal: Platform.select({
     ios: 'com.ngoal.order',
     android: 'com.ngoal.order',
+  }),
+  livraiZoo: Platform.select({
+    ios: 'com.liverso.order',
+    android: 'com.liverso.order',
+  }),
+  boozeBrothers: Platform.select({
+    ios: 'com.boozeBrothers.order',
+    android: 'com.boozeBrothers.order',
+  }),
+  magicalBookings: Platform.select({
+    ios: 'com.magicalBookings.order',
+    android: 'com.magicalBookings.order',
+  }),
+  ebay: Platform.select({
+    ios: 'com.ebay.order',
+    android: 'com.ebay.order',
+  }),
+  readyToRent: Platform.select({
+    ios: 'com.readyToRent.order',
+    android: 'com.readyToRent.order',
+  }),
+  theGenie: Platform.select({
+    ios: 'com.theGenie.order',
+    android: 'com.theGenie.order',
+  }),
+  sultanCenter: Platform.select({
+    ios: 'com.sultanCenter.order',
+    android: 'com.sultanCenter.order',
+  }),
+  reedas: Platform.select({
+    ios: 'com.reedas.order',
+    android: 'com.reedas.order',
+  }),
+  onebasket: Platform.select({
+    ios: 'com.onerbasket.order',
+    android: 'com.onerbasket.order',
+  }),
+  zozozi: Platform.select({
+    ios: 'com.zozozi.order',
+    android: 'com.zozozi.order',
+  }),
+  ekobridge: Platform.select({
+    ios: 'com.ekobridge.order',
+    android: 'com.ekobridge.order',
+  }),
+  ambosSafariExpress: Platform.select({
+    ios: 'com.ambosSafariExpress.order',
+    android: 'com.ambosSafariExpress.order',
+  }),
+  zulbrand: Platform.select({
+    ios: 'com.zulbrand.order',
+    android: 'com.zulbrand.order',
   }),
 };
 

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "979083854596",
+    "project_id": "magicalbookings-order",
+    "storage_bucket": "magicalbookings-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979083854596:android:4ade25eb0002abc1114651",
+        "android_client_info": {
+          "package_name": "com.magicalBookings.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979083854596-7ngcg9q64lmedclt3tgb2u8bdi9jvahg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magicalBookings.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "979083854596-csa94cl6kjinmlpevruajdu5lfv9s0vh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magicalBookings.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "979083854596-m08nrdi6kkf9mng61u19118rij2i19dc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magicalBookings.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "979083854596-pr2g9eb8i8r39vu7jfa6m8oi725hqid1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY4h_w2AibTJ20KMIMxa0Aw1dJLNALo_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979083854596-pr2g9eb8i8r39vu7jfa6m8oi725hqid1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "979083854596-khfn0cfrupcti9h1dr8squr4jd5oqnlh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.magicalBookings.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

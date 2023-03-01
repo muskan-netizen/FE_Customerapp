@@ -4,8 +4,7 @@ import {
   AddNewRider,
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
-  HomeScreenTaxi,
-  Offers,
+  HomeScreenTaxi, Location, Offers,
   OrderDetail,
   Payfast,
   PaymentOptions,
@@ -14,8 +13,7 @@ import {
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
-  VerifyAccount,
-  Location
+  VerifyAccount
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';

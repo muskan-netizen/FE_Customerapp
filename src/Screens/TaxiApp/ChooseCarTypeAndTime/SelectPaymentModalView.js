@@ -42,16 +42,11 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import stylesFun from './styles';
 
-export default function SelectPaymentModalView({
-  isLoading = false,
-  onPressBack,
 
+ function SelectPaymentModalView({
   _confirmAndPay,
-  slectedDate = '',
-  selectedTime = '',
-  totalDistance = 0,
-  distnce_unit = '',
-  totalDuration = 0,
+  slectedDate = "",
+  selectedTime = "",
   selectedCarOption,
   navigation = navigation,
   couponInfo = null,
@@ -68,32 +63,18 @@ export default function SelectPaymentModalView({
   onQuestionAnswerSubmit,
   allScreenParamsData,
   indicatorLoader = false,
-  isCabPooling = false,
-  _openDateTimeModal = () => { },
   paymentInfoAfterBidAccept = {}
 }) {
-  console.log(couponInfo, 'couponInfo');
-  console.log(selectedTime, 'selectedTime+++++++');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  console.log(selectedCarOption, 'selectedCarOption');
-  console.log(slectedDate, 'slectedDate');
-  console.log(updatedPrice, 'updatedPrice');
-  console.log(loyalityAmount, 'loyalityAmount');
-  const { appData, themeColors, appStyle } = useSelector(
-    (state) => state?.initBoot || {}
-  );
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences || {};
+  const { appData, themeColors, appStyle } = useSelector((state) => state?.initBoot || {});
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
-  const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const userData = useSelector((state) => state?.auth?.userData);
+  const currencies = useSelector((state) => state?.initBoot?.currencies || {});
   const [image, setImage] = useState([]);
   const [taskInstruction, setInstruction] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -104,9 +85,7 @@ export default function SelectPaymentModalView({
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-  // const [updateSeatNo, setUpdateSeatNo] = useState(1)
 
-  //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
       () => {
@@ -329,8 +308,10 @@ export default function SelectPaymentModalView({
             style={[
               styles.distanceDurationDeliveryLable,
               { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
-            ]}>
-            {`${totalDistance} ${getBundleId() === appIds?.weTogether ||
+            ]}
+          >
+            {`${selectedCarOption?.distance || '0'} ${
+              getBundleId() === appIds?.weTogether ||
               getBundleId() === appIds?.taxiolgy
               ? 'Miles'
               : 'km'
@@ -353,10 +334,11 @@ export default function SelectPaymentModalView({
             style={[
               styles.distanceDurationDeliveryLable,
               { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
-            ]}>
-            {totalDuration < 60
-              ? `${totalDuration} mins`
-              : `${(totalDuration / 60).toFixed(2)} hrs`}
+            ]}
+          >
+            {!!selectedCarOption?.duration < 60
+              ? `${selectedCarOption?.duration} mins`
+              : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
           </Text>
         </View>
         <View style={{ flex: 0.33 }}>
@@ -512,10 +494,11 @@ export default function SelectPaymentModalView({
                   marginTop: moderateScale(5),
                   color: '#ACB1C0',
                 })
-              }>
-              {totalDuration < 60
-                ? `${totalDuration} mins`
-                : `${(totalDuration / 60).toFixed(2)} hrs`}
+              }
+            >
+             {!!selectedCarOption?.duration < 60
+              ? `${selectedCarOption?.duration} mins`
+              : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
             </Text>
           </View>
           <View
@@ -1124,3 +1107,5 @@ export default function SelectPaymentModalView({
     </View>
   );
 }
+
+export default React.memo(SelectPaymentModalView)

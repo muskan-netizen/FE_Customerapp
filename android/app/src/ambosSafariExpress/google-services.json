@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "329857733040",
+    "project_id": "ambossafariexpress-order",
+    "storage_bucket": "ambossafariexpress-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329857733040:android:35dd5cbde42a27e55b8675",
+        "android_client_info": {
+          "package_name": "com.ambosSafariExpress.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329857733040-032s9rj6il0kodgbsh8nulfj300qgv3f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ambosSafariExpress.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "329857733040-isui5vl1nbopus6mh9kr30vip55thuju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ambosSafariExpress.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "329857733040-k3ap7pr3j5tu3vrqvn1milbvii7a4r1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ambosSafariExpress.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "329857733040-dokftmabngh70daugu15msdh0qu32ek8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWooIWmgiFMb5Y4UTk06uLFGWyBrKtDoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329857733040-dokftmabngh70daugu15msdh0qu32ek8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "329857733040-rnq0sgf1icqs9n4nim6dvia0j69lrpno.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ambosSafariExpress.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
-import NetInfo from '@react-native-community/netinfo';
+// import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 // import { Linking, Platform } from 'react-native';
@@ -31,7 +31,7 @@ import {
 import { getItem, getUserData, setItem } from './src/utils/utils';
 
 import * as Sentry from '@sentry/react-native';
-import { View,Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 import codePush from 'react-native-code-push';
 import * as Progress from 'react-native-progress';
@@ -39,8 +39,8 @@ import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
 
-Sentry.init({ 
-  dsn: 'https://1da68544ed374cabbd1a9782739dbe6b@o4504612036411392.ingest.sentry.io/4504616014708736', 
+Sentry.init({
+  dsn: 'https://1da68544ed374cabbd1a9782739dbe6b@o4504612036411392.ingest.sentry.io/4504616014708736',
   attachScreenshot: true,
 });
 
@@ -107,7 +107,7 @@ const App = () => {
   };
 
 
-  
+
 
   useEffect(() => {
     //stop splashs screen from loading
@@ -115,7 +115,8 @@ const App = () => {
       getBundleId() == appIds.masa ||
       getBundleId() == appIds.muvpod ||
       getBundleId() == appIds.hezniTaxi ||
-      getBundleId() == appIds.flank
+      getBundleId() == appIds.flank ||
+      getBundleId() == appIds.parcelworks
     ) {
       setTimeout(() => {
         SplashScreen.hide();
@@ -125,26 +126,23 @@ const App = () => {
         SplashScreen.hide();
       }, 3000);
     }
-
-    AsyncStorage.getItem('autoConnectEnabled').then((res) => {
-      if (res !== null) {
-        if (Platform.OS == 'android') {
+    if (Platform.OS == 'android') {
+      AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+        if (res !== null) {
           ConnectBTFunction();
         }
-      }
-    });
+      });
+    }
   }, []);
 
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-
-    
   };
 
-  
 
- 
+
+
 
   useEffect(() => {
     (async () => {
@@ -161,7 +159,7 @@ const App = () => {
       }
       const getAppData = await getItem('appData');
 
-   
+
       if (!!getAppData) {
         dispatch({
           type: types.APP_INIT,
@@ -170,21 +168,21 @@ const App = () => {
       }
 
       const locationData = await getItem('location');
-      if(!!locationData){
-      dispatch({
-        type: types.LOCATION_DATA,
-        payload: locationData,
-      });
-    }
+      if (!!locationData) {
+        dispatch({
+          type: types.LOCATION_DATA,
+          payload: locationData,
+        });
+      }
 
       const profileAddress = await getItem('profileAddress');
 
-      if(!!profileAddress){
-      dispatch({
-        type: types.PROFILE_ADDRESS,
-        payload: profileAddress,
-      });
-    }
+      if (!!profileAddress) {
+        dispatch({
+          type: types.PROFILE_ADDRESS,
+          payload: profileAddress,
+        });
+      }
 
       const cartItemCount = await getItem('cartItemCount');
 
@@ -236,12 +234,12 @@ const App = () => {
         });
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: !!themeToggle? JSON.parse(themeToggle): {},
+          payload: !!themeToggle ? JSON.parse(themeToggle) : {},
         });
       } else {
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: !!themeToggle? JSON.parse(themeToggle): {},
+          payload: !!themeToggle ? JSON.parse(themeToggle) : {},
         });
         if (JSON.parse(theme)) {
           dispatch({
@@ -291,14 +289,15 @@ const App = () => {
   }, []);
 
   //Check internet connection
-  useEffect(() => {
-    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-      const netStatus = state.isConnected;
-      setInternet(netStatus);
-      updateInternetConnection(netStatus);
-    });
-    return () => removeNetInfoSubscription();
-  }, []);
+  // useEffect(() => {
+  //   const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+  //     const netStatus = state.isConnected;
+  //     setInternet(netStatus);
+  //     updateInternetConnection(netStatus);
+  //   });
+  //   return () => removeNetInfoSubscription();
+  // }, []);
+
   const { blurRef } = useRef();
 
 
@@ -369,7 +368,7 @@ const App = () => {
             <Text
               style={{
                 alignSelf: 'center',
-      
+
                 color: colors.blackOpacity70,
                 fontSize: textScale(14),
               }}>
@@ -397,7 +396,7 @@ const App = () => {
               <Text
                 style={{
                   color: primaryColor,
-     
+
                   fontSize: textScale(12),
                 }}>
                 {(
@@ -432,7 +431,6 @@ const App = () => {
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
           {progress ? progressView() : null}
-        
           <Routes />
           <NotificationModal />
         </Provider>

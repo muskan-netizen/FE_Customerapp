@@ -1,5 +1,6 @@
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -11,6 +12,7 @@ import {
   View,
   Modal,
   Platform,
+  Pressable,
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
@@ -27,7 +29,6 @@ import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import commonStylesFun from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -51,32 +52,27 @@ import {
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
 import AvailableDriver from './AvailableDriver';
 import SelectPaymentModalView from './SelectPaymentModalView';
-import SelectTimeModalView from './SelectTimeModalView';
-import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import DatePicker from 'react-native-date-picker';
 import { chekLocationPermission } from '../../../utils/permissions';
-import useInterval from '../../../utils/useInterval';
-// import Modal from '../../../Components/Modal';
 import { FlutterwaveButton, PayWithFlutterwave } from 'flutterwave-react-native';
 import { generateTransactionRef } from '../../../utils/paystackMethod';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
-import fa from '../../../constants/lang/fa';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function ChooseCarTypeAndTime({ navigation, route }) {
+function ChooseCarTypeAndTime({ navigation, route }) {
   const paramData = route?.params?.promocodeDetail
     ? route?.params?.promocodeDetail
     : route?.params;
   console.log('my route', paramData);
   const bottomSheetRef = useRef(null);
   const mapRef = useRef();
-  const markerRef = useRef(null);
 
   const {
     appData,
@@ -87,13 +83,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot || {});
-  const { additional_preferences, digit_after_decimal, distance_unit_for_time } = appData?.profile?.preferences||{};
+  const { additional_preferences, digit_after_decimal, distance_unit_for_time } = appData?.profile?.preferences || {};
   console.log(appData?.profile?.preferences, "appData?.profile?.preferences");
-  const { userData } = useSelector((state) => state?.auth);
-  const { pickUpTimeType, location } = useSelector((state) => state?.home);
+  const { userData } = useSelector((state) => state?.auth || {});
+  const { pickUpTimeType, location } = useSelector((state) => state?.home || {});
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { profile } = appData ||{};
+  const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
 
@@ -108,42 +104,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
-    coordinate: {
-      latitude: paramData?.location[0]?.latitude
-        ? Number(paramData?.location[0]?.latitude)
-        : 30.7191,
-      longitude: paramData?.location[0]?.longitude
-        ? Number(paramData?.location[0]?.longitude)
-        : 76.8107,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA,
-    },
     isLoading: false,
-    addressLabel: 'Glenpark',
     formattedAddress: '8502 Preston Rd. Inglewood, Maine 98380',
     availableVendors: !isEmpty(paramData?.cabVendors)
       ? paramData?.cabVendors
       : [],
     availableCarList: [],
-    availAbleTimes: [
-      {
-        id: 1,
-        label: 'in 20 min.',
-      },
-      {
-        id: 2,
-        label: 'in 50 min.',
-      },
-      {
-        id: 3,
-        label: 'in 80 min.',
-      },
-    ],
     selectedCarOption: null,
-    selectedAvailableTimeOption: null,
-    showVendorModal: false,
+
     showCarModal: true,
-    showTimeModal: false,
     showPaymentModal: false,
     redirectFromNow: false,
     date: new Date(),
@@ -155,35 +124,25 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       : null,
 
     isModalVisible: false,
-
-    selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
-      'H:MM',
-    )}`,
     selectedVendorOption: !isEmpty(paramData?.cabVendors)
       ? paramData?.cabVendors[0]
       : null,
     pageNo: 1,
     limit: 12,
     uploadImages: [],
-    isLoadingB: false,
     totalDistance: 0,
     totalDuration: 0,
     updatedAmount: null,
     couponInfo: null,
     loyalityAmount: null,
-    isTimerPickerModal: false,
-    formatedTime: moment().format('hh:mm A'),
-    isDatePickerModal: false,
     pickedUpTime: paramData?.datetime?.selectedTime
       ? paramData?.datetime?.selectedTime
       : null,
-    selectedDate: moment().format('YYY-MM-DD'),
     pickedUpDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
       : null,
     selectedPayment: {},
     taskInstruction: '',
-    productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,
     indicatorLoader: false,
     defaultDeviceCountryCode: null,
@@ -193,7 +152,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     allListedDrivers: [],
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
-    btnLoader: false,
     disableButton: false,
     showBidPriceModal: false
   });
@@ -203,21 +161,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updatedAmount,
     totalDistance,
     totalDuration,
-    showVendorModal,
-    selectedDateAndTime,
-
     isModalVisible,
     isLoading,
-    addressLabel,
-    formattedAddress,
     region,
-    coordinate,
     availableCarList,
     selectedCarOption,
-    selectedAvailableTimeOption,
     showCarModal,
-    showTimeModal,
-    availAbleTimes,
     showPaymentModal,
     redirectFromNow,
     slectedDate,
@@ -227,17 +176,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     availableVendors,
     pageNo,
     limit,
-    isLoadingB,
     loyalityAmount,
-    isTimerPickerModal,
-    formatedTime,
-    isDatePickerModal,
     pickedUpTime,
-    selectedDate,
     pickedUpDate,
     uploadImages,
     taskInstruction,
-    productFaqQuestionAnswers,
     allSubmittedAnswers,
     indicatorLoader,
     defaultDeviceCountryCode,
@@ -247,7 +190,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     allListedDrivers,
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
-    btnLoader,
     disableButton,
     showBidPriceModal
   } = state;
@@ -256,15 +198,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const [showFinalUpdatedSeatNo, setShowFinalUpdatedSeatNo] = useState(1);
   const [bidRidePrice, setBidRidePrice] = useState(0);
   const [bideRequestLoading, setBideRequestLoading] = useState(false);
-  
-
 
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
         updateState({ selectedPayment: paramData?.selectedMethod });
       }
-      // updateState({isLoadingB: true});
     }, [paramData]),
   );
   useEffect(() => {
@@ -274,13 +213,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     }, 3000);
   }, []);
 
-  const _onRegionChange = (region) => {
-    updateState({ region: region });
-    _getAddressBasedOnCoordinates(region);
-    markerRef.current.showCallout();
 
-    // animate(region);
-  };
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -314,36 +247,75 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     });
   }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
 
+  console.log("paramDataparamDataparamDataparamData", paramData)
+
   useEffect(() => {
-    _getAllCarAndPrices();
+    //if pickupTimeType is now then we hit direct api withhout schedule date 
+    //otherwise we pass the shcedule date onDateSet function and hit api accordingly
+    !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
   }, [updateSeatNO]);
 
+  const onDateSet = useCallback((date) => {
+    let time = moment(date).format("HH:mm ");
+    let dateSelectd = moment(date).format("YYYY-MM-DD");
+    updateState({
+      isLoading: true,
+      scheduleDateTime: {
+        selectedDateAndTime: `${dateSelectd} ${time}`,
+        slectedDate: dateSelectd,
+        selectedTime: moment(date).format("HH:mm"),
+        date: date,
+        isScheduleModalVisible: false,
+      },
+    });
+    updateState({ isScheduleModalVisible: false });
+    _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
+  }, [date])
+
+  console.log("slectedDateslectedDate", slectedDate)
+
+  const clearScheduleDate = useCallback(() => {
+    actions.saveSchduleTime('now');
+    updateState({
+      isLoading: true,
+      scheduleDateTime: {}
+    });
+    _getAllCarAndPrices(false, { selectedDateAndTime: null });
+  }, [])
+
+
+
   //Get list of all orders api
-  const _getAllCarAndPrices = (showInitalModal = true) => {
+  const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null) => {
     if (showInitalModal) {
-      updateState({ showCarModal: true, btnLoader: true });
+      updateState({ showCarModal: true });
     }
 
-    updateState({ isLoading: true, showVendorModal: false });
+    updateState({ isLoading: true });
+
+    const apiQuery = `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`
+    const apiData = {
+      locations: paramData?.location,
+      schedule_date_delivery: scheduleDateTime?.selectedDateAndTime
+        ? scheduleDateTime?.selectedDateAndTime
+        : `${pickedUpDate ? pickedUpDate : ''} ${pickedUpTime ? pickedUpTime : ''
+        }`,
+      is_cab_pooling: !!paramData?.rideType == 'Pooling' ? 1 : 0,
+      no_seats_for_pooling: updateSeatNO,
+    }
+
+    const apiHeader = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+
+    console.log(apiData, "apiDataapiDataapiData");
+
     actions
-      .getAllCarAndPrices(
-        `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`,
-        {
-          locations: paramData?.location,
-          schedule_date_delivery: scheduleDateTime?.selectedDateAndTime
-            ? scheduleDateTime?.selectedDateAndTime
-            : `${pickedUpDate ? pickedUpDate : ''} ${pickedUpTime ? pickedUpTime : ''
-            }`,
-          is_cab_pooling: !!paramData?.rideType == 'Pooling' ? 1 : 0,
-          no_seats_for_pooling: updateSeatNO,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      .getAllCarAndPrices(apiQuery, apiData, apiHeader)
       .then((res) => {
+        console.log(res, "resresresresres");
         const bidModalStatus = paramData?.rideType == 'bideRide' ? true : false
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
@@ -357,19 +329,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               : [...availableCarList, ...res?.data?.products?.data],
           selectedCarOption: res?.data?.products?.data[0],
           showBidPriceModal: (res?.data?.products?.data[0] && bidModalStatus) ? true : false,
-
-          // selectedCarOption
-          //   ? selectedCarOption
-          //   : res?.data?.products?.data[0],
-          isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
-          btnLoader: false,
-          productFaqQuestionAnswers: res?.data?.products?.data?.map(
-            (item, index) => {
-              return item;
-            },
-          ),
         });
         setShowFinalUpdatedSeatNo(updateSeatNO);
         setBidRidePrice(Number(res?.data?.products?.data[0]?.tags_price))
@@ -498,7 +459,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     console.log(error, 'errorOccured');
     updateState({
       isLoading: false,
-      isLoadingB: false,
       isRefreshing: false,
       indicatorLoader: false,
       isModalVisibleForPayFlutterWave: false,
@@ -506,35 +466,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     showError(error?.message || error?.error || error?.description);
   };
 
-  const _getAddressBasedOnCoordinates = (region) => {
-    Geocoder.from({
-      latitude: region.latitude,
-      longitude: region.longitude,
-    })
-      .then((json) => {
-        // console.log(json, 'json');
-        var addressComponent = json.results[0].formatted_address;
-        updateState({
-          formattedAddress: addressComponent,
-        });
-      })
-      .catch((error) => console.log(error, 'errro geocode'));
-  };
-
-  const _selectTime = () => {
-    updateState({ showTimeModal: false, showPaymentModal: true });
-  };
 
   const sendStripeToken = (extraData, data) => {
-    console.log(' i amhere>>>>>>>');
+
     data['order_number'] = extraData?.orderDetail?.order_number;
     data['action'] = 'pickup_delivery';
     data['stripe_token'] = paramData?.tokenInfo;
     data['card_last_four_digit'] = paramData?.cardInfo?.last4;
     data['card_expiry_month'] = paramData?.cardInfo?.expiryMonth;
     data['card_expiry_year'] = paramData?.cardInfo?.expiryYear;
-
-    console.log(data, 'extraData....');
 
     actions
       .openPaymentWebUrlPost(`/${selectedPayment?.code}`, data, {
@@ -629,22 +569,22 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         break;
     }
   };
-  const _paymentWithPlugnPayMethods = (extraData, response,data) => {
-    
-    console.log(extraData,response,paramData, 'extradataextradata')
+  const _paymentWithPlugnPayMethods = (extraData, response, data) => {
+
+    console.log(extraData, response, paramData, 'extradataextradata')
     let selectedMethod = paramData?.selectedMethod?.code;
     let CardNumber = paramData?.Card_Number.split(" ").join("")
     let expirydate
-    
+
     if (paramData?.selectedMethod?.id == 50) {
 
       expirydate = paramData?.year.concat(paramData?.date)
-      console.log(expirydate,paramData?.year,paramData?.date, 'expirydate')
+      console.log(expirydate, paramData?.year, paramData?.date, 'expirydate')
     }
     else {
       expirydate = paramData?.expiryDate
     }
-  
+
     actions
       .openPaymentWebUrl(
         `/${selectedMethod}?amount=${response?.data?.payable_amount || data?.amount}&cv=${paramData?.cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${response?.data?.order_number}&action=pickup_delivery`,
@@ -707,7 +647,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             selectedCarOption: selectedCarOption?.sku,
           };
           console.log(extraData, data, "extraData, data");
-          if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res,data) }
+          if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res, data) }
           else { checkPaymentOptions(extraData, data); }
 
         } else {
@@ -757,7 +697,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['currency_id'] = currencies?.primary_currency?.id;
     data['tasks'] = paramData?.tasks;
     data['images_array'] = uploadImages;
-    data['agent_id']=paramData?.bidData?.driver_id
+    data['agent_id'] = paramData?.bidData?.driver_id
     data['user_product_order_form'] = allSubmittedAnswers
       ? allSubmittedAnswers
       : [];
@@ -862,7 +802,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({
       selectedCarOption: item,
       showBidPriceModal: paramData?.rideType == 'bideRide' ? true : false
-      
+
     });
     setBidRidePrice(Number(item?.tags_price))
   };
@@ -956,7 +896,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 onPress={() =>
                   redirectFromNow
                     ? updateState({ showCarModal: true, showPaymentModal: false })
-                    : updateState({ showTimeModal: true, showPaymentModal: false })
+                    : updateState({ showPaymentModal: false })
                 }>
                 <Image
                   style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
@@ -1058,10 +998,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const _selectCarModalView = () => {
     return (
       <AvailableDriver
+        isCabPooling={!!paramData?.rideType && paramData?.rideType == 'Pooling' ? true : false}
         onPressAvailableCar={_selectedProductForDrivers}
         rideType={paramData?.rideType}
         disabled={disableButton}
-        isLoading={btnLoader}
+        isLoading={isLoading}
         _onUpdateSeatNo={_onUpdateSeatNo}
         updateSeatNo={showFinalUpdatedSeatNo}
         selectedCarOption={selectedCarOption}
@@ -1076,12 +1017,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
-        // isLoading={isLoading}
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
               // pickUpTimeType: 'schedule',
-              showTimeModal: true,
               redirectFromNow: false,
               showCarModal: false,
             })
@@ -1095,11 +1034,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             ? _getAllCarAndPrices(true)
             : showError(strings.PLEASE_SELECT_OPTION);
         }}
-        // isLoading={isLoading}
         availableVendors={availableVendors}
         navigation={navigation}
         _onShowBidePriceModal={_onShowBidePriceModal}
       />
+
     );
   };
 
@@ -1148,86 +1087,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     });
   };
 
-  const _onDateChange = (date) => {
-    console.log(date, 'date');
-    let time = moment(date).format('HH:mm ');
-    let dateSelectd = moment(date).format('YYYY-MM-DD');
-
-    console.log(time, 'time');
-    console.log(dateSelectd, 'dateSelectd');
-    updateState({
-      scheduleDateTime: {
-        selectedDateAndTime: `${dateSelectd} ${time}`,
-        slectedDate: dateSelectd,
-        selectedTime: moment(date).format('HH:mm'),
-        date: date,
-        isScheduleModalVisible: false,
-      },
-    });
-  };
-
-
-  const _ModalMainView = () => {
-    return (
-      <View style={styles.modalContainer}>
-        <View>
-          <View
-            style={{
-              alignItems: 'center',
-              height: height / 3.5,
-            }}>
-            <DatePicker
-              date={
-                scheduleDateTime?.date ? scheduleDateTime?.date : new Date()
-              }
-              locale={
-                languages?.primary_language?.sort_code
-                  ? languages?.primary_language?.sort_code
-                  : 'en'
-              }
-              mode="datetime"
-              textColor={isDarkMode ? colors.black : colors.blackB}
-              minimumDate={new Date()}
-              style={{
-                width: width - 20,
-                height: height / 4.4,
-              }}
-              onDateChange={(value) => _onDateChange(value)}
-            />
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: 16,
-                marginBottom: 24,
-              }}>
-              <TouchableOpacity
-                style={styles.scheduleModalBtnStyle}
-                onPress={_modalClose}>
-                <Text
-                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                  {strings.CANCEL}
-                </Text>
-              </TouchableOpacity>
-
-              <View style={{ marginHorizontal: 4 }} />
-              <TouchableOpacity
-                style={styles.scheduleModalBtnStyle}
-                onPress={_modalCloseModal}>
-                <Text
-                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                  {strings.SET}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
-
   //Biding Rice Funcationality>>>>>>>>>>>>>>>>>>
 
   const _onRidePriceIncerimentDecrimentPrice = async (type) => {
@@ -1259,8 +1118,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       vendor_id: selectedCarOption?.vendor_id,
       tasks: paramData?.tasks,
       requested_price: Number(bidRidePrice).toFixed(2),
-      min_requested_price: selectedCarOption?.min_tags_price||0,
-      max_requested_price: selectedCarOption?.max_tags_price||0
+      min_requested_price: selectedCarOption?.min_tags_price || 0,
+      max_requested_price: selectedCarOption?.max_tags_price || 0
     }
 
     const apiHeader = {
@@ -1268,7 +1127,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
     }
-   console.log(apiData,apiHeader,"apiHeaderapiHeaderapiHeader");
+    console.log(apiData, apiHeader, "apiHeaderapiHeaderapiHeader");
     actions.createBidRequest(apiData, apiHeader).then((res) => {
       const apiResponseData = res?.data
       showSuccess(res?.message)
@@ -1293,7 +1152,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   // bid price modal show hide
   const _onShowBidePriceModal = (selectedCar) => {
     updateState({
-      selectedCarOption:selectedCar,
+      selectedCarOption: selectedCar,
       showBidPriceModal: true
     })
   }
@@ -1342,7 +1201,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </TouchableOpacity>
           <View style={{ flex: 0.7, marginHorizontal: moderateScale(10) }}>
             <TextInputWithUnderlineAndLabel
-            txtInputStyle={{textAlign:'center'}}
+              txtInputStyle={{ textAlign: 'center' }}
               isEditable={false}
               placeholder={'Recommend fare,adjustable'}
               onChangeText={(text) => setBidRidePrice(text)}
@@ -1359,8 +1218,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </TouchableOpacity>
         </View>
         <GradientButton
-        indicator={bideRequestLoading}
-        indicatorColor={colors.white}
+          indicator={bideRequestLoading}
+          indicatorColor={colors.white}
           colorsArray={[themeColors?.primary_color, themeColors?.primary_color]}
           textStyle={{
             textTransform: 'none',
@@ -1414,7 +1273,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         onPressBack={() =>
           redirectFromNow
             ? updateState({ showCarModal: true, showPaymentModal: false })
-            : updateState({ showTimeModal: true, showPaymentModal: false })
+            : updateState({ showPaymentModal: false })
         }
         totalDistance={totalDistance}
         totalDuration={totalDuration}
@@ -1471,13 +1330,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   }, []);
 
 
-
-
-
-
-
   const onPressPickUpNow = () => {
-      _onMoveNextToPaymentScreen()
+    _onMoveNextToPaymentScreen()
   };
 
   const _onMoveNextToPaymentScreen = () => {
@@ -1646,6 +1500,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             {!!showPaymentModal && _selectPaymentView()}
           </View>
         </BottomSheet>
+
+
         {!!(showCarModal && paramData?.rideType != 'bideRide') && (
           <View
             style={{
@@ -1655,24 +1511,43 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               marginHorizontal: moderateScale(16),
               flexDirection: 'row',
             }}>
-            {availableCarList?.length > 0 && (
-              <GradientButton
-                colorsArray={[colors.white, colors.white]}
-                textStyle={{
-                  textTransform: "none",
-                  fontSize: textScale(13),
-                  color: themeColors?.primary_color,
-                }}
-                onPress={_openDateTimeModal}
-                btnText={`${scheduleDateTime?.selectedDateAndTime
-                  ? `${scheduleDateTime?.selectedDateAndTime}`
-                  : slectedDate || selectedTime
-                    ? `${slectedDate} ${selectedTime}`
-                    : 'Schedule a ride'
-                  }`}
-                btnStyle={styles.scheduleBtnStyle}
-              />
+
+
+            {availableCarList?.length > 0 && getBundleId() != appIds.appi && (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {!!scheduleDateTime?.selectedDateAndTime ? <Pressable
+                  onPress={clearScheduleDate}
+                  hitSlop={{
+                    left: 40,
+                    right: 40,
+                    top: 40,
+                    bottom: 40
+                  }}
+                >
+                  <Image style={{
+                    tintColor: colors.redColor,
+                    marginRight: moderateScale(8)
+                  }} source={imagePath.closeButton} />
+                </Pressable> : null}
+                <GradientButton
+                  colorsArray={[colors.white, colors.white]}
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(13),
+                    color: themeColors?.primary_color,
+                  }}
+                  onPress={_openDateTimeModal}
+                  btnText={`${scheduleDateTime?.selectedDateAndTime
+                    ? `${scheduleDateTime?.selectedDateAndTime}`
+                    : slectedDate || selectedTime
+                      ? `${slectedDate} ${selectedTime}`
+                      : 'Schedule a ride'
+                    }`}
+                  btnStyle={styles.scheduleBtnStyle}
+                />
+              </View>
             )}
+
 
             {availableCarList?.length > 0 && (
               <GradientButton
@@ -1779,20 +1654,24 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </View>
         </Modal>
       )}
-      <PaymentProcessingModal
-        isModalVisible={isModalVisible}
-        updateModalState={_updateState}
+      <PaymentProcessingModal isModalVisible={isModalVisible} updateModalState={_updateState} />
+
+      <DatePicker
+        modal
+        open={isScheduleModalVisible}
+        date={scheduleDateTime?.date ? scheduleDateTime?.date : new Date()}
+        locale={
+          languages?.primary_language?.sort_code
+            ? languages?.primary_language?.sort_code
+            : "en"
+        }
+        mode="datetime"
+        textColor={isDarkMode ? colors.black : colors.blackB}
+        minimumDate={new Date()}
+        style={{ width: width - 20, height: height / 4.4 }}
+        onConfirm={date => onDateSet(date)}
+        onCancel={() => updateState({ isScheduleModalVisible: false })}
       />
-
-      {isScheduleModalVisible && (
-        <BottomViewModal
-          isDatetimePicker={true}
-          show={isScheduleModalVisible}
-          mainContainView={_ModalMainView}
-          closeModal={_modalClose}
-        />
-      )}
-
 
 
       {showBidPriceModal && (
@@ -1810,3 +1689,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     </View>
   );
 }
+
+
+export default gestureHandlerRootHOC(ChooseCarTypeAndTime)
