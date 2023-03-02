@@ -7,7 +7,7 @@ import {
   ChatRoom,
   ChatRoomForVendor,
   ChatScreen,
-  ChatScreenForVendor,
+  ChatScreenForVendor
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -16,19 +16,18 @@ import CourierStack from './CourierStack';
 import { navigationRef } from './NavigationService';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
-import { View, Text, TouchableOpacity } from 'react-native';
-import TabRoutesP2p from './TabRoutesP2p';
 
 const Stack = createNativeStackNavigator();
 
 
 export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
-  const { appStyle } = useSelector((state) => state?.initBoot || {});
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
   return (
     <NavigationContainer ref={navigationRef}>

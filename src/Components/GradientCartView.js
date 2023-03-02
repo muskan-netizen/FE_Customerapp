@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Image, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
-import {moderateScale, width} from '../styles/responsiveSize';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
+import { moderateScale, width } from '../styles/responsiveSize';
+import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 import BrowseMenuButton from './BrowseMenuButton';
-import {MaterialIndicator} from 'react-native-indicators';
+import { MaterialIndicator } from 'react-native-indicators';
 
 const GradientCartView = ({
   containerStyle,
@@ -34,11 +34,11 @@ const GradientCartView = ({
   sectionListData = [],
   isCategoryExist = false,
 }) => {
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
 
-  const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
   const [zoomIn, setZoomIn] = useState(true);
   const [showText, setShowText] = useState(false);
 
@@ -128,6 +128,9 @@ const GradientCartView = ({
     },
   };
 
+  const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
+
+
   return (
     <View>
       {isMenuBtnShow ? (
@@ -138,7 +141,7 @@ const GradientCartView = ({
             <BrowseMenuButton
               fontFamily={fontFamily}
               onMenuTap={onMenuTap}
-              // containerStyle={{ marginBottom: moderateScale(-58) }}
+            // containerStyle={{ marginBottom: moderateScale(-58) }}
             />
           ) : null}
         </Animatable.View>
@@ -160,8 +163,8 @@ const GradientCartView = ({
             animation={zoomIn ? zoomOut : expand}
             duration={500}>
             <LinearGradient
-              start={{x: 0.0, y: -1.5}}
-              end={{x: 0.5, y: 1.0}}
+              start={{ x: 0.0, y: -1.5 }}
+              end={{ x: 0.5, y: 1.0 }}
               // end={endcolor}
               style={{
                 height: '100%',
@@ -179,12 +182,12 @@ const GradientCartView = ({
                 colorsArray
                   ? colorsArray
                   : [
-                      themeColors?.primary_color,
-                      getColorCodeWithOpactiyNumber(
-                        themeColors?.primary_color.substr(1),
-                        70,
-                      ),
-                    ]
+                    themePrimaryColor,
+                    getColorCodeWithOpactiyNumber(
+                      themePrimaryColor.substr(1),
+                      70,
+                    ),
+                  ]
               }>
               {showText && (
                 <Animatable.Text
@@ -214,7 +217,7 @@ const GradientCartView = ({
                 {isLoading && (
                   <MaterialIndicator
                     color="#fff"
-                    style={{position: 'absolute', opacity: 0.8}}
+                    style={{ position: 'absolute', opacity: 0.8 }}
                     size={moderateScale(55)}
                     trackWidth={moderateScale(4.5)}
                   />

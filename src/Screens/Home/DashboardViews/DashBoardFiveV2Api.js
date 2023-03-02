@@ -14,27 +14,23 @@ import {
   View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
-import {
-  Menu,
-  MenuOption,
-  MenuOptions,
-  MenuTrigger
-} from 'react-native-popup-menu';
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp2 from '../../../Components/ProductsComp2';
+import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -71,6 +67,8 @@ const DashBoardFiveV2Api = ({
   showAllProducts = () => { },
   showAllSpotDealAndSelectedProducts = () => { }
 }) => {
+
+
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
@@ -189,7 +187,7 @@ const DashBoardFiveV2Api = ({
           marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
           width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
         }}>
-        <HomeCategoryCard2
+        <HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
           isLoading={isLoading}
@@ -473,7 +471,7 @@ const DashBoardFiveV2Api = ({
                 </Text>
               </TouchableOpacity>
             )}
-            <Menu style={{ alignSelf: 'flex-end' }}>
+            {/* <Menu style={{ alignSelf: 'flex-end' }}>
               <MenuTrigger>
                 <View style={styles.menuView}>
                   <FastImage
@@ -530,7 +528,7 @@ const DashBoardFiveV2Api = ({
                   );
                 })}
               </MenuOptions>
-            </Menu>
+            </Menu> */}
           </View>
         )}
       </View>
@@ -606,6 +604,18 @@ const DashBoardFiveV2Api = ({
   const _renderProducts = ({ item, index }) => {
     return (
       <ProductsComp2
+        item={item}
+        onPress={() =>
+          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        }
+      />
+
+    );
+  };
+
+  const _renderSingleCategoryProducts = ({ item, index }) => {
+    return (
+      <SingleCategoryProducts
         mainContainerStyle={{
           width: moderateScale(width / 4),
           marginHorizontal: moderateScale(10),
@@ -632,19 +642,44 @@ const DashBoardFiveV2Api = ({
   const ProductsThemeView = ({ item }) => {
     return !isEmpty(item?.data) ? (
       <View>
+        <TitleViewHome item={item} />
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={item?.data}
+          renderItem={_renderProducts}
+          keyExtractor={(item) => item?.id?.toString()}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginRight: moderateScale(16) }} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{ marginLeft: moderateScale(16) }} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{ marginRight: moderateScale(16) }} />
+          )}
+        />
+      </View>
+    ) : (
+      <React.Fragment />
+    );
+  };
+
+  const SingleCategoryProductsView = ({ item }) => {
+    return !isEmpty(item?.data) ? (
+      <View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={{ title: item?.data?.category_detail?.slug }} />
           {item?.data?.category_detail?.products?.length >= 9 && <TouchableOpacity onPress={() => showAllProducts(item)}>
-            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>View All</Text>
+            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
         </View>
         <FlatList
           showsHorizontalScrollIndicator={false}
-          // horizontal
-          style={{ width: width, alignItems: 'center' }}
+
           numColumns={3}
           data={item?.data?.category_detail?.products}
-          renderItem={_renderProducts}
+          renderItem={_renderSingleCategoryProducts}
           keyExtractor={(item) => item?.id?.toString()}
           ListFooterComponent={() => (
             <View style={{ marginRight: moderateScale(16) }} />
@@ -688,7 +723,7 @@ const DashBoardFiveV2Api = ({
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
-            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>View All</Text>
+            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
         </View>
         <FlatList
@@ -734,8 +769,9 @@ const DashBoardFiveV2Api = ({
             keyExtractor={(item) => item?.id?.toString()}
             showsHorizontalScrollIndicator={false}
             renderItem={_renderCategories}
+
             ItemSeparatorComponent={() => (
-              <View style={{ marginTop: moderateScale(24) }} />
+              <View style={{ marginTop: moderateScale(24), }} />
             )}
             ListHeaderComponent={() => (
               <View style={{ marginLeft: moderateScale(12) }} />
@@ -951,7 +987,7 @@ const DashBoardFiveV2Api = ({
     );
   };
 
-  const TitleViewHome = ({ item }) => {
+  const TitleViewHome = ({ item, titleViewStyle = {} }) => {
     return (
       <Text
         style={{
@@ -959,8 +995,9 @@ const DashBoardFiveV2Api = ({
           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           marginHorizontal: moderateScale(16),
           marginVertical: moderateScaleVertical(15),
+          ...titleViewStyle
         }}>
-        {item?.title}
+        {!isEmpty(item?.translations) ? (item?.translations[0]?.title || item?.title) : item?.title}
       </Text>
     );
   };
@@ -979,18 +1016,15 @@ const DashBoardFiveV2Api = ({
   };
 
 
-
   const SpotlightDealsView = ({ item }) => {
     return !isEmpty(item?.data) ? (
       <View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
-            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>View All</Text>
+            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
         </View>
-
-
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -1036,11 +1070,10 @@ const DashBoardFiveV2Api = ({
   const renderHomePageItems = ({ item, index }) => {
     return (
       <View>
-        {item?.slug == 'new_products' ||
+        {(item?.slug == 'new_products' ||
           item?.slug == 'featured_products' ||
           item?.slug == 'on_sale' ||
-          item?.slug == 'most_popular_products' ||
-          item?.slug == 'single_category_products' ? <ProductsThemeView item={item} /> : item?.slug == 'vendors' ?
+          item?.slug == 'most_popular_products') ? <ProductsThemeView item={item} /> : item?.slug == 'vendors' ?
           <VendorsView item={item} />
           : item?.slug == 'nav_categories' ? (
             <CategoriesView item={item} />
@@ -1054,7 +1087,7 @@ const DashBoardFiveV2Api = ({
             <BannersView item={item} />
           ) : item?.slug == 'selected_products' ? (
             <SelectedProductsThemeView item={item} />
-          ) :
+          ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
             <React.Fragment />
         }
       </View>
@@ -1098,7 +1131,7 @@ const DashBoardFiveV2Api = ({
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, }}>
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}

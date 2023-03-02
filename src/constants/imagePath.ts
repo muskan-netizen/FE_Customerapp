@@ -571,6 +571,12 @@ export default {
   icDefaultImg: require('../assets/images/p2p/default_image.jpg'),
   icMyPosts: require('../assets/images/p2p/ic_my_posts.png'),
   icTapToCopy: require('../assets/images/p2p/ic_tap_to_copy.png'),
+  icAddPostActive: require('../assets/images/p2p/ic_add.png'),
+  icAddPostInactive: require('../assets/images/p2p/ic_add2.png'),
+  icAwaitingApproval: require('../assets/images/p2p/ic_waiting_apporval.gif'),
+  icApprovalRejected: require('../assets/images/p2p/ic_approval_rejected.gif'),
+  //
+
   icAirport: require('../assets/images/ic_airport.png'),
   icHotel: require('../assets/images/ic_hotel.png'),
   ic_home2NewTab: require('../assets/tabbariconsnew/ic_home2.png'),
@@ -578,7 +584,6 @@ export default {
   ic_cart2NewTab: require('../assets/tabbariconsnew/ic_cart2.png'),
   ic_celeb2NewTab: require('../assets/tabbariconsnew/ic_celeb2.png'),
   ic_tag2NewTab: require('../assets/tabbariconsnew/ic_tag2.png'),
-  icAwaitingApproval: require('../assets/images/p2p/ic_waiting_apporval.gif'),
-  icApprovalRejected: require('../assets/images/p2p/ic_approval_rejected.gif'),
+
   parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
 };

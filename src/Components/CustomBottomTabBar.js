@@ -17,12 +17,14 @@ const CustomBottomTabBar = ({
 }) => {
 
   const insets = useSafeAreaInsets();
-  const { themeColors, themeToggle, themeColor, appStyle } = useSelector(
-    (state) => state.initBoot,
-  );
+  const { themeColors, themeToggle, themeColor, appStyle } = useSelector((state) => state.initBoot || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
+
+  const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
+
   return (
     <LinearGradient
       start={{ x: 0, y: 1 }}
@@ -35,10 +37,11 @@ const CustomBottomTabBar = ({
       colors={
         isDarkMode
           ? [MyDarkTheme.colors.lightDark, MyDarkTheme.colors.lightDark]
-          : [themeColors.primary_color, themeColors.primary_color]
-      }>
-      {state.routes.map((route, index) => {
+          : [themePrimaryColor, themePrimaryColor]
+      }
 
+    >
+      {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const label =
@@ -47,7 +50,6 @@ const CustomBottomTabBar = ({
             : options.title !== undefined
               ? options.title
               : route.name;
-
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',

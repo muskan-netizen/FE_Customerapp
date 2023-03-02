@@ -72,18 +72,14 @@ export default function Addaddress({ navigation, route }) {
   } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { book_for_friend } = appData?.profile?.preferences || {};
 
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
+  const { book_for_friend, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
 
   const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+  const { profile } = appData || {};
 
-
-
-
-  const [currentFocus, setCurrentFocus] = useState(1)
 
   const [state, setState] = useState({
     pageNo: 1,
@@ -131,7 +127,7 @@ export default function Addaddress({ navigation, route }) {
     callingCode: "+91",
     showFriendListModal: false,
     allAddedFriends: [],
-    isBooking: "0",
+    isBookingType: "0",
     selectedFriendForRide: { id: 0 },
     staticLocation: [],
     selectedLoaction: [],
@@ -166,7 +162,7 @@ export default function Addaddress({ navigation, route }) {
     selectedFriendForRide,
     staticLocation,
     selectedLoaction,
-    isBooking,
+    isBookingType,
     isLoading,
   } = state;
 
@@ -257,7 +253,7 @@ export default function Addaddress({ navigation, route }) {
 
 
   const getAllPickUpVendors = (lat, lng) => {
-    console.log(appData, 'appDataappData......');
+    console.log(appData, "appDataappData......");
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
@@ -355,22 +351,16 @@ export default function Addaddress({ navigation, route }) {
         );
     }
   };
-  const renderDotContainer = (i) => {
-    return (
-      <View>
-        <Image
-          style={{
-            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            height: moderateScale(5),
-            width: moderateScale(5),
-            borderRadius:
-              dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
-          }}
-          source={imagePath.blackSquare}
-        />
-      </View>
-    );
-  };
+
+  const checkBookingServiceType = (bookingType) => {
+
+    switch (bookingType) {
+      case 0: return ('Booking')
+      case 1: return ('Pooling')
+      case 2: return ('bideRide')
+      default: return ('Booking')
+    }
+  }
 
   const moveToNextScreenWithAddressData = () => {
     let location = [];
@@ -412,6 +402,7 @@ export default function Addaddress({ navigation, route }) {
     );
 
 
+
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
       id: categoryId,
@@ -420,7 +411,7 @@ export default function Addaddress({ navigation, route }) {
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
       pickUpTimeType: pickUpTimeType,
-      is_cab_pooling: isBooking == 1 ? 1 : 0,
+      rideType: checkBookingServiceType(isBookingType),
       friendBookingDetails: {
         bookingType: selectedFriendForRide?.id != 0 ? 1 : 0,
         firstName: selectedFriendForRide?.first_name
@@ -438,10 +429,6 @@ export default function Addaddress({ navigation, route }) {
 
   const saveAddressAndRedirect = () => {
     moveToNextScreenWithAddressData();
-  };
-
-  const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
   };
 
   const onShowHideFriendListModal = () => {
@@ -470,13 +457,10 @@ export default function Addaddress({ navigation, route }) {
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
-        const res = await getAddressFromLatLong(
-          `${latitude}, ${longitude}`,
+        const res = await getAddressFromLatLong(`${latitude}, ${longitude}`,
           appData.profile.preferences?.map_key
         );
-        console.log("get address+++++", res);
-        // alert("inner")
-        let cloneArr = dropLocationData;
+        let cloneArr = [...dropLocationData];
         cloneArr[0].pre_address = res.address;
         cloneArr[0].address = res.address;
         cloneArr[0].latitude = latitude;
@@ -484,7 +468,13 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
       } else {
-
+        let cloneArr = [...dropLocationData];
+        cloneArr[0].pre_address = paramData?.prefillAdress?.address || '';
+        cloneArr[0].address = paramData?.prefillAdress?.address || '';
+        cloneArr[0].latitude = paramData?.prefillAdress?.latitude || '';
+        cloneArr[0].longitude = paramData?.prefillAdress?.longitude || '';
+        cloneArr[0].task_type_id = 1;
+        updateState({ dropLocationData: cloneArr });
       }
     }
   };
@@ -500,16 +490,12 @@ export default function Addaddress({ navigation, route }) {
       console.log("error raised", error);
     }
   };
-  const onBooking = () => {
+  const onBooking = (type) => {
     updateState({
-      isBooking: 0,
+      isBookingType: type,
     });
   };
-  const OnPooling = () => {
-    updateState({
-      isBooking: 1,
-    });
-  };
+
 
   const renderAddressess = (item) => {
     return (
@@ -565,7 +551,7 @@ export default function Addaddress({ navigation, route }) {
     // return;
     if (!!place.place_id && !!place?.name) {
       // updateAddress(place.description)
-      const cloneArr = dropLocationData;
+      let cloneArr = [...dropLocationData];
       cloneArr[searchResult.currentIndex].pre_address = place?.name;
       updateState({ dropLocationData: cloneArr });
       try {
@@ -943,7 +929,7 @@ export default function Addaddress({ navigation, route }) {
       // selectedLoaction[i]:item?.address
       selectedLoaction: [...selectedLoaction, item?.address],
     });
-    let cloneArr = dropLocationData;
+    let cloneArr = [...dropLocationData];
     cloneArr[i].pre_address = item.address;
     cloneArr[i].address = item.address;
     cloneArr[i].latitude = item?.latitude;
@@ -952,9 +938,11 @@ export default function Addaddress({ navigation, route }) {
     updateState({ dropLocationData: cloneArr });
   };
 
+
+
   const onSelectAddressViaMap = (prefillAdress) => {
     getNearByAddress(`${prefillAdress?.latitude},${prefillAdress?.longitude}`)
-    const cloneArr = dropLocationData;
+    let cloneArr = [...dropLocationData];
     cloneArr[searchResult.currentIndex].pre_address =
       prefillAdress?.pre_address;
     cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude;
@@ -1107,64 +1095,93 @@ export default function Addaddress({ navigation, route }) {
               )}
             </View>
           </View>
-          {appData?.profile?.preferences?.is_cab_pooling == 1 ? (
+          {is_cab_pooling || is_bid_ride_enable ? (
             <View
               style={{
-                width: "90%",
-                // position: 'absolute',
-                // bottom: 20,
+
                 marginHorizontal: moderateScale(16),
                 marginVertical: moderateScaleVertical(10),
                 flexDirection: "row",
+
               }}
             >
-              <GradientButton
-                colorsArray={
-                  isBooking == 0
-                    ? [themeColors.primary_color, themeColors.primary_color]
-                    : [colors.white, colors.white]
-                }
-                textStyle={{
-                  textTransform: "none",
-                  fontSize: textScale(13),
-                  color:
-                    isBooking == 0 ? colors.white : themeColors?.primary_color,
-                }}
-                onPress={onBooking}
-                btnText={"BOOKING"}
-                btnStyle={{
-                  borderRadius: moderateScale(5),
-                  flexDirection: "row",
-                  borderColor: colors.textGreyLight,
-                  borderWidth: moderateScale(0.5),
-                  marginRight: moderateScale(4),
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  width: moderateScale(width / 2.5),
-                }}
-              />
-              <GradientButton
-                colorsArray={
-                  isBooking == 0
-                    ? [colors.white, colors.white]
-                    : [themeColors.primary_color, themeColors.primary_color]
-                }
-                textStyle={{
-                  textTransform: "none",
-                  fontSize: textScale(14),
-                  color:
-                    isBooking == 0 ? themeColors?.primary_color : colors.white,
-                  marginHorizontal: moderateScale(5),
-                }}
-                onPress={OnPooling}
-                btnText={"Pooling"}
-                containerStyle={{ flex: 1 }}
-                btnStyle={{
-                  borderRadius: moderateScale(4),
-                  borderColor: colors.textGreyLight,
-                  borderWidth: moderateScale(0.5),
-                }}
-              />
+              {!!(is_cab_pooling || is_bid_ride_enable) &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 0
+                      ? [themeColors.primary_color, themeColors.primary_color]
+                      : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 0 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(0)}
+                  btnText={"BOOKING"}
+                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
+
+                  }}
+                />
+              }
+
+              {!!is_cab_pooling &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 1
+                      ? [themeColors.primary_color, themeColors.primary_color] : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 1 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(1)}
+                  btnText={"POOLING"}
+                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
+
+                  }}
+                />
+              }
+
+              {!!is_bid_ride_enable &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 2
+                      ? [themeColors.primary_color, themeColors.primary_color]
+                      : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 2 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(2)}
+                  btnText={"BIDE & RIDE"}
+                  containerStyle={{ flex: 1 }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
+
+                  }}
+                />
+              }
+
             </View>
           ) : null}
 
@@ -1193,7 +1210,18 @@ export default function Addaddress({ navigation, route }) {
                       }}
                     >
                       <View style={{ flex: 0.05, alignItems: "center" }}>
-                        {renderDotContainer(i)}
+                        <View>
+                          <Image
+                            style={{
+                              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                              height: moderateScale(5),
+                              width: moderateScale(5),
+                              borderRadius:
+                                dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
+                            }}
+                            source={imagePath.blackSquare}
+                          />
+                        </View>
                       </View>
                       {i > 0 &&
                         appData?.profile?.preferences?.is_static_dropoff ? (

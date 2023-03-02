@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -19,8 +19,8 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -28,15 +28,15 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
+const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const {additional_preferences, digit_after_decimal} = useSelector(
+  const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {themeColors, appStyle, currencies, appData} = useSelector(
+  const { themeColors, appStyle, currencies, appData } = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
@@ -66,7 +66,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
-        resizeMode="contain"
+        resizeMode="cover"
         source={{
           uri: imageUrl,
           cache: FastImage.cacheControl.immutable,
@@ -102,7 +102,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
           </View>
         )}
       </FastImage>
-      <View style={{marginVertical: moderateScaleVertical(6)}}>
+      <View style={{ marginVertical: moderateScaleVertical(6) }}>
         <Text
           numberOfLines={1}
           style={{
@@ -126,8 +126,8 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
           {vendor?.name}
         </Text>
         {!isDiscount ? (
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <View style={{flex: 0.5, alignItems: 'flex-start'}}>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <View style={{ flex: 0.5, alignItems: 'flex-start' }}>
               {category?.category_detail?.translation[0]?.name && (
                 <Text
                   numberOfLines={1}
@@ -143,9 +143,9 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                 </Text>
               )}
             </View>
-            <View style={{marginHorizontal: 10}} />
+            <View style={{ marginHorizontal: 10 }} />
 
-            <View style={{flex: 0.5, alignItems: 'flex-end'}}>
+            <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
               <Text
                 numberOfLines={1}
                 style={{
@@ -176,7 +176,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
               }}>
               {strings.IN} {category?.category_detail?.translation[0]?.name}
             </Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text
                 style={{
                   fontSize: textScale(12),

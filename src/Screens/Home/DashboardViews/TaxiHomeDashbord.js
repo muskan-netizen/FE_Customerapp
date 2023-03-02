@@ -1,23 +1,32 @@
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import {
   FlatList,
-  Image,
-  RefreshControl,
-  ScrollView,
+  Image, Platform, RefreshControl, SafeAreaView, ScrollView,
   StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  Platform,
+  Text, TouchableOpacity, View
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import * as RNLocalize from 'react-native-localize';
+import MapView, {
+  Marker,
+  PROVIDER_DEFAULT,
+  PROVIDER_GOOGLE
+} from 'react-native-maps';
+import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
+import AddressModal3 from '../../../Components/AddressModal3';
+import GradientButton from '../../../Components/GradientButton';
+import Loader from '../../../Components/Loader';
+import TaxiBannerHome from '../../../Components/TaxiBannerHome';
+import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {
   height,
   itemWidth,
@@ -25,39 +34,18 @@ import {
   moderateScaleVertical,
   sliderWidth,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import MapView, {
-  Marker,
-  PROVIDER_DEFAULT,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../../utils/helperFunctions';
-import stylesFunc from '../styles';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
-import navigationStrings from '../../../navigation/navigationStrings';
-import { useNavigation } from '@react-navigation/native';
-import actions from '../../../redux/actions';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../../styles/theme';
-import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
-import TaxiBannerHome from '../../../Components/TaxiBannerHome';
-import moment from 'moment';
-import DatePicker from 'react-native-date-picker';
-import AddressModal3 from '../../../Components/AddressModal3';
-import Loader from '../../../Components/Loader';
-import Modal from 'react-native-modal';
 import useInterval from '../../../utils/useInterval';
-import { nearbySearch } from '../../../utils/googlePlaceApi';
-import { isEmpty } from 'lodash';
-import { google_map_key } from '../../../constants/constants';
-import ButtonComponent from '../../../Components/ButtonComponent';
-
-
+import stylesFunc from '../styles';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -65,7 +53,9 @@ export default function TaxiHomeDashbord({
   onPressCategory = () => { },
   location = {},
   curLatLong = {},
+  currentLocation = {}
 }) {
+
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -83,8 +73,6 @@ export default function TaxiHomeDashbord({
     updateData: {},
     indicator: false,
     type: 'addAddress',
-    selectedTime: null,
-    slectedDate: null,
     newAddressAdded: null,
     isLoadingModal: false,
     fullMapShow: false,
@@ -101,8 +89,6 @@ export default function TaxiHomeDashbord({
     allSavedAddress,
     isVisible,
     date,
-    selectedTime,
-    slectedDate,
     isVisible1,
     updateData,
     indicator,
@@ -118,10 +104,6 @@ export default function TaxiHomeDashbord({
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({
-        selectedTime: null,
-        slectedDate: null,
-      });
       if (!!userData?.auth_token) {
         getAllAddress();
       }
@@ -290,26 +272,95 @@ export default function TaxiHomeDashbord({
     }
   };
 
-  const _renderItem = ({ item }) => {
-    return (
-      <TaxiHomeCategoryCard
-        data={item}
-        onPress={() => continueWithNaxtScreen(item)}
-      />
-    );
+
+  /********************************** instant booking funcationality module code starts here *****************************/
+
+
+
+  /********************************** get list of vichales based on the vendor and category *********************/
+
+
+
+
+  /********************** instunt order place api code written here ************************/
+
+  console.log(currentLocation, "currentLocation");
+
+  const _onInstuntOrderPlace = () => {
+
+    const vendorIdForInstuntBooking = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.id;
+    const productIdForIstuntBooking = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.products[0]?.id
+    const locationForOrder = [{ ...currentLocation, pre_address: currentLocation?.address, task_type_id: 1 }]
+    const productSKu = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.products[0]?.sku
+
+    let data = {};
+    data['task_type'] = 'now';
+    data['schedule_time'] = ''
+    data['is_one_push_booking'] = 1;
+    data['recipient_phone'] = '';
+    data['recipient_email'] = '';
+    data['task_description'] = '';
+    data['amount'] = 0
+    data['tags_amount'] = 0;
+    data['tollamount'] = 0;
+    data['servicechargeamount'] = 0;
+    data['payment_option_id'] = 1;
+    data['vendor_id'] = vendorIdForInstuntBooking;
+    data['product_id'] = productIdForIstuntBooking;
+    data['currency_id'] = currencies?.primary_currency?.id;
+    data['tasks'] = locationForOrder;
+    data['images_array'] = [];
+    data['user_product_order_form'] = [];
+    data["is_postpay"] = ''
+    data["order_time_zone"] = RNLocalize.getTimeZone();
+    data["bookingType"] = '';
+    (data["friendName"] = '')
+
+    console.log(data, "datadatadatadatadatadata");
+
+    actions
+      .placeDelievryOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+
+        console.log("res+++++++", res)
+        if (res && res?.status == 200) {
+          let extraData = {
+            orderId: res?.data?.id,
+            fromVendorApp: true,
+            selectedVendor: { id: vendorIdForInstuntBooking },
+            orderDetail: res?.data,
+            fromCab: true,
+            pickup_taxi: navigationStrings.HOME,
+            totalDuration: 0,
+            selectedCarOption: productSKu,
+          };
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            extraData
+          );
+        }
+        showSuccess(res?.message)
+      })
+      .catch(errorMethod);
+
+  }
+
+  const errorMethod = (error) => {
+    console.log(error, "errorOccured");
+    showError(error?.message || error?.error || error?.description);
   };
 
-  const latitudes = !!curLatLong?.latitude
-    ? parseFloat(curLatLong?.latitude)
-    : !!location?.latitude
-      ? parseFloat(location?.latitude)
-      : appData?.profile?.preferences?.Default_latitude;
+  /*********************************************** instunt booking module code ends here *************************/
 
-  const longitudes = !!curLatLong?.longitude
-    ? parseFloat(curLatLong?.longitude)
-    : !!location?.longitude
-      ? parseFloat(location?.longitude)
-      : appData?.profile?.preferences?.Default_latitude;
+  const _renderItem = useCallback(({ item }) => {
+    return (
+      <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} />
+    );
+  }, [appMainData?.categories || []])
 
 
   const moveToScreen = (details) => {
@@ -327,10 +378,7 @@ export default function TaxiHomeDashbord({
           };
         }
         actions.saveSchduleTime('now');
-
-        console.log("datails+++++++++++", prefillAdress)
         goToAddress({ prefillAdress })
-
       } else {
         actions.setAppSessionData('on_login');
       }
@@ -343,6 +391,7 @@ export default function TaxiHomeDashbord({
       allSavedAddress.map((itm, inx) => {
         return (
           <ScrollView
+            key={String(inx)}
             keyboardShouldPersistTaps={'handled'}
             style={{ width: width }}>
             <TouchableOpacity
@@ -371,7 +420,7 @@ export default function TaxiHomeDashbord({
                   style={{
                     marginHorizontal: moderateScale(10),
                   }}>
-                  <Text
+                  {!!itm?.street ? <Text
                     numberOfLines={2}
                     style={{
                       ...styles.addressTitle,
@@ -380,7 +429,7 @@ export default function TaxiHomeDashbord({
                         : colors.black,
                     }}>
                     {itm?.street}
-                  </Text>
+                  </Text> : null}
                   <Text
                     numberOfLines={2}
                     style={{
@@ -416,6 +465,7 @@ export default function TaxiHomeDashbord({
       })
     );
   };
+
   const savedPlaceView1 = (image) => {
     return (
       <ScrollView keyboardShouldPersistTaps={'handled'} style={{ width: width }}>
@@ -519,7 +569,7 @@ export default function TaxiHomeDashbord({
 
 
   return (
-    <View
+    <WrapperContainer
       style={{
         flex: 1,
         backgroundColor: isDarkMode
@@ -557,14 +607,14 @@ export default function TaxiHomeDashbord({
 
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
-          data={appMainData?.categories}
+          data={appMainData?.categories || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
           style={{
             marginTop: moderateScaleVertical(10),
             // marginHorizontal: moderateScale(10),
           }}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => !!item?.id ? String(item.id) : String(index)}
           renderItem={_renderItem}
           ItemSeparatorComponent={() => (
             <View style={{ marginRight: moderateScale(12) }} />
@@ -644,7 +694,9 @@ export default function TaxiHomeDashbord({
                   />
                 </View>
               </TouchableOpacity>}
+
             </View>
+
             {allSavedAddress.length > 0 && userData?.auth_token ? (
               <></>
             ) : (
@@ -772,6 +824,16 @@ export default function TaxiHomeDashbord({
                   </MapView>
                 }
               </TouchableOpacity>
+
+              {!!userData?.auth_token && !!appData?.profile?.preferences?.is_one_push_book_enable &&
+                !!appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.id &&
+                <GradientButton containerStyle={{
+                  marginHorizontal: moderateScale(10),
+                  marginTop: moderateScaleVertical(20)
+                }} btnText={'Instant Now'}
+                  onPress={_onInstuntOrderPlace} />
+              }
+
             </View>
           </>
         )}
@@ -932,9 +994,6 @@ export default function TaxiHomeDashbord({
           </View>
         </View>
       </Modal>
-
-
-
-    </View>
+    </WrapperContainer>
   );
 }

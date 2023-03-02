@@ -2,8 +2,8 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -16,18 +16,17 @@ import { MyDarkTheme } from '../../styles/theme';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
+import { enableFreeze } from "react-native-screens";
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
   getNearestLocation,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import socketServices from '../../utils/scoketService';
 import { DashBoardFiveV2Api, DashBoardHeaderFive } from './DashboardViews/Index';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -423,7 +422,7 @@ export default function Home({ route, navigation }) {
         .homeDataV2(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          updateState({ searchDataLoader: false });
+          updateState({ searchDataLoader: false, isRefreshing: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -456,7 +455,6 @@ export default function Home({ route, navigation }) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'erro>>>>>>errorerrorr');
     setLoadingAddons(false);
     updateState({
       isLoading: false,
@@ -500,7 +498,6 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressVendor = (item) => {
-    console.log(item, "item>>>>>>>>>>>")
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -721,7 +718,7 @@ export default function Home({ route, navigation }) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({ isRefreshing: false });
+
       })
       .catch((error) => {
         updateState({ isRefreshing: false });
