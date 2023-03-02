@@ -7,6 +7,7 @@
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "gokab": "react-native run-android --variant=gokabDebug --appIdSuffix=gokab",
     "gokabRelease": "cd android && ./gradlew assembleGoKabRelease",
+    "grub": "react-native run-android --variant=grubDebug --appIdSuffix=grub",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
