@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "runIos":"npx react-native run-ios --scheme 'RoyoOrder(Dev)' --simulator 'iPhone 14 Pro'",
     "runrun": "react-native run-android --variant=runrunDebug --appIdSuffix=runrun",
     "royoorder": "react-native run-android --variant=royoorderDebug --appIdSuffix=royoorder",
     "tranzit": "react-native run-android --variant=tranzitDebug --appIdSuffix=tranzit",
