@@ -1,4 +1,4 @@
-import {APP_INITIAL_SETTINGS} from '../../config/urls';
+import { APP_INITIAL_SETTINGS } from '../../config/urls';
 import {
   apiGet,
   apiPost,
@@ -9,12 +9,12 @@ import {
   setAppData,
   setItem,
 } from '../../utils/utils';
-import {LIST_OF_CMS, CMS_PAGE_DETAIL} from '../../config/urls';
+import { LIST_OF_CMS, CMS_PAGE_DETAIL } from '../../config/urls';
 import store from '../store';
 import types from '../types';
-import {changeLaguage} from '../../constants/lang';
-import {I18nManager} from 'react-native';
-const {dispatch} = store;
+import { changeLaguage } from '../../constants/lang';
+import { I18nManager } from 'react-native';
+const { dispatch } = store;
 import RNRestart from 'react-native-restart';
 
 export function initApp(
@@ -25,6 +25,9 @@ export function initApp(
   primary_language,
   refreshlang = false,
 ) {
+
+
+
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
@@ -32,25 +35,25 @@ export function initApp(
 
         const currencies = !!data?.currencies
           ? data?.currencies.map((x) => {
-              return {
-                id: x?.currency?.id,
-                label: x?.currency?.name,
-                value: x?.currency?.name,
-                symbol: x?.currency?.symbol,
-                iso_code: x?.currency?.iso_code,
-              };
-            })
+            return {
+              id: x?.currency?.id,
+              label: x?.currency?.name,
+              value: x?.currency?.name,
+              symbol: x?.currency?.symbol,
+              iso_code: x?.currency?.iso_code,
+            };
+          })
           : {};
 
         const languages = !!data?.languages
           ? data?.languages.map((x) => {
-              return {
-                id: x?.language?.id,
-                label: x?.language?.nativeName || x?.language?.name,
-                value: x?.language?.nativeName || x?.language?.name,
-                sort_code: x?.language?.sort_code,
-              };
-            })
+            return {
+              id: x?.language?.id,
+              label: x?.language?.nativeName || x?.language?.name,
+              value: x?.language?.nativeName || x?.language?.name,
+              sort_code: x?.language?.sort_code,
+            };
+          })
           : {};
 
         let fontSizeData = {};
@@ -78,23 +81,23 @@ export function initApp(
         currenciesData['all_currencies'] = currencies;
         currenciesData['primary_currency'] =
           reload &&
-          primary_curreny?.id &&
-          data?.currencies.find((x) => x?.currency?.id == primary_curreny?.id)
+            primary_curreny?.id &&
+            data?.currencies.find((x) => x?.currency?.id == primary_curreny?.id)
             ? primary_curreny
             : data?.currencies
-            ? data?.currencies.filter((x) => x?.is_primary)[0]?.currency
-            : {};
+              ? data?.currencies.filter((x) => x?.is_primary)[0]?.currency
+              : {};
 
         let languagesData = {};
         languagesData['all_languages'] = languages;
         languagesData['primary_language'] =
           reload &&
-          primary_language?.id &&
-          data?.languages.find((x) => x?.language?.id == primary_language?.id)
+            primary_language?.id &&
+            data?.languages.find((x) => x?.language?.id == primary_language?.id)
             ? primary_language
             : data?.languages
-            ? data?.languages.filter((x) => x?.is_primary)[0]?.language
-            : {};
+              ? data?.languages.filter((x) => x?.is_primary)[0]?.language
+              : {};
 
         let appData = {
           appData: data,
