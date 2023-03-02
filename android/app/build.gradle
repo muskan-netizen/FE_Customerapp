@@ -219,16 +219,28 @@ android {
 
       productFlavors {
 
-    weedLomo{
+        royoorder {
                 dimension "appType"
-                versionCode 1
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.weedLomo.order'
-                resValue "string", "app_name", "WeedLomo"
-                resValue "string", "host_name", ""
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.codebrew.royoorder'
+                resValue "string", "app_name", "RoyoOrder"
+                resValue "string", "host_name", "sales.royoorders.com"
             }
+
+    // weedLomo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.weedLomo.order'
+    //             resValue "string", "app_name", "WeedLomo"
+    //             resValue "string", "host_name", ""
+    //         }
             // ngoal{
             //     dimension "appType"
             //     versionCode 1
@@ -312,17 +324,17 @@ android {
 }
 
     // productFlavors {
-    //         royoorder {
-    //             dimension "appType"
-    //             versionCode 3
-    //             versionName "1.0"
-    //             minSdkVersion rootProject.ext.minSdkVersion
-    //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             // applicationIdSuffix ".royoorder"
-    //             applicationId 'com.codebrew.royoorder'
-    //             resValue "string", "app_name", "RoyoOrder"
-    //             resValue "string", "host_name", "sales.royoorders.com"
-    //         }
+            // royoorder {
+            //     dimension "appType"
+            //     versionCode 3
+            //     versionName "1.0"
+            //     minSdkVersion rootProject.ext.minSdkVersion
+            //     targetSdkVersion rootProject.ext.targetSdkVersion
+            //     // applicationIdSuffix ".royoorder"
+            //     applicationId 'com.codebrew.royoorder'
+            //     resValue "string", "app_name", "RoyoOrder"
+            //     resValue "string", "host_name", "sales.royoorders.com"
+            // }
     //         orderchekout{
     //             dimension "appType"
     //             versionCode 5
