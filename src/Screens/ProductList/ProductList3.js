@@ -479,7 +479,7 @@ export default function Products({ route, navigation }) {
           <Text
             style={{
               ...styles.hdrTitleTxt,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? colors.white : colors.black,
             }}>
             {section?.translation[0]?.name}
           </Text>
@@ -516,7 +516,7 @@ export default function Products({ route, navigation }) {
             <Text
               style={{
                 fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                color: isDarkMode ? colors.white : colors.black,
               }}>
               {translation[0]?.name}
             </Text>
@@ -629,7 +629,7 @@ export default function Products({ route, navigation }) {
                 <Image
                   style={{
                     tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
+                      ? colors.white
                       : colors.black,
                     transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                   }}
@@ -662,7 +662,7 @@ export default function Products({ route, navigation }) {
                       numberOfLines={1}
                       style={{
                         color: isDarkMode
-                          ? MyDarkTheme.colors.text
+                          ? colors.white
                           : colors.black,
                         fontSize: moderateScale(14),
                         fontFamily: fontFamily.medium,
@@ -710,7 +710,7 @@ export default function Products({ route, navigation }) {
                   <Image
                     style={{
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     }}
@@ -730,7 +730,7 @@ export default function Products({ route, navigation }) {
                   <Image
                     style={{
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     }}
@@ -839,7 +839,7 @@ export default function Products({ route, navigation }) {
                           textAlign: 'left',
                           fontSize: textScale(15),
                           color: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.white,
                         }}>
                         {data?.name || categoryInfo?.name || ''}
@@ -897,7 +897,7 @@ export default function Products({ route, navigation }) {
                             fontFamily: fontFamily.regular,
                             textAlign: 'left',
                             color: isDarkMode
-                              ? MyDarkTheme.colors.text
+                              ? colors.white
                               : colors.white,
                             width: width / 1.5,
                           }}>
@@ -984,7 +984,7 @@ export default function Products({ route, navigation }) {
                       style={{
                         ...styles.milesTxt,
                         color: isDarkMode
-                          ? MyDarkTheme.colors.text
+                          ? colors.white
                           : colors.black,
                         marginLeft: 0,
                       }}
@@ -1002,7 +1002,7 @@ export default function Products({ route, navigation }) {
                           ...styles.milesTxt,
                           marginLeft: 0,
                           color: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.black,
                           marginVertical: moderateScaleVertical(4),
                           fontSize: textScale(10.5),
@@ -1075,7 +1075,7 @@ export default function Products({ route, navigation }) {
                   <Text
                     style={{
                       ...styles.milesTxt,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode ? colors.white : colors.black,
                       opacity: 1,
                       fontSize: textScale(10),
                     }}>
@@ -1104,7 +1104,7 @@ export default function Products({ route, navigation }) {
                         style={{
                           ...styles.milesTxt,
                           color: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.black,
                           opacity: 1,
                           fontSize: textScale(10),
@@ -1137,7 +1137,7 @@ export default function Products({ route, navigation }) {
                   <Text
                     style={{
                       ...styles.milesTxt,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode ? colors.white : colors.black,
                       opacity: 1,
                       fontSize: textScale(10),
                     }}>
@@ -1179,7 +1179,7 @@ export default function Products({ route, navigation }) {
                     isOn={el.isSelected}
                     onColor={colors.green}
                     offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                      isDarkMode ? colors.white : colors.borderLight
                     }
                     size="small"
                     onToggle={() => {
@@ -1206,7 +1206,7 @@ export default function Products({ route, navigation }) {
                       fontFamily: fontFamily.regular,
                       marginLeft: moderateScale(7),
                       color: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.textGrey,
                     }}>
                     {!!el?.translations?.length > 0
@@ -1278,14 +1278,14 @@ export default function Products({ route, navigation }) {
                     source={imagePath.filter}
                     style={{
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                     }}
                   />
                   <Text
                     style={{
                       color: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                       fontSize: moderateScale(16),
                       fontFamily: fontFamily.regular,
@@ -1305,7 +1305,7 @@ export default function Products({ route, navigation }) {
                   source={imagePath.filter}
                   style={{
                     tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
+                      ? colors.white
                       : colors.black,
                   }}
                 />
@@ -4009,7 +4009,7 @@ export default function Products({ route, navigation }) {
                       <Image
                         style={{
                           tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.black,
                           transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                         }}
@@ -4038,7 +4038,7 @@ export default function Products({ route, navigation }) {
                             numberOfLines={1}
                             style={{
                               color: isDarkMode
-                                ? MyDarkTheme.colors.text
+                                ? colors.white
                                 : colors.black,
                               fontSize: moderateScale(14),
                               fontFamily: fontFamily.medium,
@@ -4049,7 +4049,7 @@ export default function Products({ route, navigation }) {
                             numberOfLines={1}
                             style={{
                               color: isDarkMode
-                                ? MyDarkTheme.colors.text
+                                ? colors.white
                                 : colors.blackOpacity43,
                               fontSize: moderateScale(12),
                               fontFamily: fontFamily.regular,
@@ -4098,7 +4098,7 @@ export default function Products({ route, navigation }) {
                     //     <Image
                     //       style={{
                     //         tintColor: isDarkMode
-                    //           ? MyDarkTheme.colors.text
+                    //           ? colors.white
                     //           : colors.black,
                     //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     //       }}
@@ -4115,7 +4115,7 @@ export default function Products({ route, navigation }) {
                     //     <Image
                     //       style={{
                     //         tintColor: isDarkMode
-                    //           ? MyDarkTheme.colors.text
+                    //           ? colors.white
                     //           : colors.black,
                     //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     //       }}
@@ -4160,7 +4160,7 @@ export default function Products({ route, navigation }) {
                         <Image
                           style={{
                             tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
+                              ? colors.white
                               : colors.black,
                             transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                           }}
@@ -4177,7 +4177,7 @@ export default function Products({ route, navigation }) {
                         <Image
                           style={{
                             tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
+                              ? colors.white
                               : colors.black,
                             transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                           }}
@@ -4448,7 +4448,7 @@ export default function Products({ route, navigation }) {
                                   style={{
                                     ...commonStyles.mediumFont14,
                                     color: isDarkMode
-                                      ? MyDarkTheme.colors.text
+                                      ? colors.white
                                       : colors.black,
                                   }}>
                                   {productQuantityForCart}
