@@ -27,7 +27,7 @@ export default function ShortCode() {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let apiRes: any = useRef(null); // we using useRef to get latest values immediately
 
-  const [loadingScreen, setLoadingScreen] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(true);
 
   useEffect(() => {
     initApiHit();
@@ -129,6 +129,7 @@ export default function ShortCode() {
       </View>
     );
   }, [loadingScreen]);
+  
   const animatedSplash = () => {
     return (
       <View style={styles.videoView}>

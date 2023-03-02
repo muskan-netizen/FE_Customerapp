@@ -22,6 +22,7 @@ import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
 import Loader from '../../../Components/Loader';
+import socketServices from '../../../utils/scoketService';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -74,6 +75,15 @@ export default function TaxiHomeScreen({route, navigation}) {
     selectedTabType,
     locationObj,
   } = state;
+
+
+  useEffect(() => {
+    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+      socketServices.initializeSocket(appData?.profile?.socket_url);
+    }
+  }, [appData]);
+
+
   useFocusEffect(
     React.useCallback(() => {
       const backHandler = BackHandler.addEventListener(

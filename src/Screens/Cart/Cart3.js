@@ -2648,6 +2648,7 @@ function Cart({ navigation, route }) {
         setInstruction={setInstruction}
         selectedTipvalue={selectedTipvalue}
         setSelectedTipAmount={setSelectedTipAmount}
+        clearSceduleDate={clearSceduleDate}
       />
     )
   };
