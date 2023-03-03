@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>329857733040-rnq0sgf1icqs9n4nim6dvia0j69lrpno.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.329857733040-rnq0sgf1icqs9n4nim6dvia0j69lrpno</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>329857733040-032s9rj6il0kodgbsh8nulfj300qgv3f.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD0vKFgpNx07oynfpf3J5R_vYw9Un0oEDU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>329857733040</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ambosSafariExpress.order</string>
+	<key>PROJECT_ID</key>
+	<string>ambossafariexpress-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ambossafariexpress-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:329857733040:ios:956793b1f5db386f5b8675</string>
+</dict>
+</plist>

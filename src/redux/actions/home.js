@@ -20,6 +20,10 @@ import {
   HOMEPAGE_DATA_URL_V2,
   SEARCH_V2,
   GET_PRODUCTS_ON_DASHBOARD,
+  ORDER_RIDE_BID_DETAILS,
+  DECLINE_RIDE_BID,
+  ACCEPT_RIDE_BID,
+  ACCEPT_RIDE_FOR_BID,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
 import store from '../store';
@@ -367,7 +371,59 @@ export function onGetProductsOnHomePage(data = {}, headers = {}) {
         reject(error);
       });
   });
+
 }
+
+export const orderRideBidDetails = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ORDER_RIDE_BID_DETAILS, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+
+};
+
+
+export const declineRideBid = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(DECLINE_RIDE_BID, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const acceptRideBid = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ACCEPT_RIDE_BID, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const acceptRideForBid = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(ACCEPT_RIDE_FOR_BID, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 
 
 

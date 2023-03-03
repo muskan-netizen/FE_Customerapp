@@ -1,0 +1,12 @@
+#include "Pods/Target Support Files/Pods-available_pods-AmbosSafariExpress/Pods-available_pods-AmbosSafariExpress.debug.xcconfig"
+PROJECT_APPLE_ID = 6445909252
+PROJECT_BUNDLE_ID = com.ambosSafariExpress.order
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Ambos Safari Express
+PROJECT_GOOGLE_CLIENT_ID =329857733040-rnq0sgf1icqs9n4nim6dvia0j69lrpno.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.329857733040-rnq0sgf1icqs9n4nim6dvia0j69lrpno
+PROJECT_FACEBOOK_ID = 133961016259387
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =AmbosSafariExpressInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

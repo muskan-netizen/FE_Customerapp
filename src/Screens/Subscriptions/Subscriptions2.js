@@ -34,9 +34,9 @@ import {
   CardField,
   createPaymentMethod,
   createToken,
-  handleCardAction,
   initStripe,
   StripeProvider,
+  handleNextAction
 } from '@stripe/stripe-react-native';
 import {
   height,
@@ -46,7 +46,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
@@ -883,7 +883,7 @@ export default function Subscriptions2({ navigation, route }) {
     console.log(cardInfo, res2, 'cardInfo');
     if (res2) {
       await createPaymentMethod({
-        type: 'Card',
+        paymentMethodType: 'Card',
         token: res2,
         card: cardInfo,
         billing_details: {
@@ -917,7 +917,7 @@ export default function Subscriptions2({ navigation, route }) {
               .then(async (res) => {
                 console.log(res, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
-                  const { paymentIntent, error } = await handleCardAction(
+                  const { paymentIntent, error } = await handleNextAction(
                     res?.client_secret,
                   );
 

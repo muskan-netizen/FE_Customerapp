@@ -76,6 +76,7 @@ import {
   hapticEffects,
   playHapticEffect,
   showError,
+  showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
@@ -208,6 +209,7 @@ export default function Products({ route, navigation }) {
     productDetailNew: {},
     isProductAvailable: false,
     loadMore: false,
+    wrapperListLoader: false,
   });
   const {
     appData,
@@ -268,6 +270,7 @@ export default function Products({ route, navigation }) {
     isVarientSelectLoading,
     productDetailNew,
     isProductAvailable,
+    wrapperListLoader
   } = state;
   const [showShimmer, setShowShimmer] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -352,6 +355,55 @@ export default function Products({ route, navigation }) {
     setState((state) => ({ ...state, ...data }));
   };
 
+  const [variantState, setVariantState] = useState({
+    planValues: ["Daily", "Weekly", "Custom", "Alternate Days"],
+    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    quickSelection: ["Weekdays", "Weekends"],
+    showCalendar: false,
+    reccuringCheckBox: false,
+    selectedPlanValues: '',
+    selectedWeekDaysValues: [],
+    selectedQuickSelectionValue: '',
+    minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+    initDate: new Date(),
+    start: {},
+    end: {},
+    period: {},
+    disabledDaysIndexes: [],
+    selectedDaysIndexes: [],
+    date: new Date(),
+    showDateTimeModal: false,
+    slectedDate: new Date(),
+  })
+
+  const { planValues, reccuringCheckBox, showCalendar, selectedPlanValues, minimumDate,
+    weekDays, quickSelection, start, end, period, selectedWeekDaysValues, selectedQuickSelectionValue, initDate,
+    disabledDaysIndexes, selectedDaysIndexes, date, showDateTimeModal, slectedDate } = variantState
+  const updateAddonState = (data) => { setVariantState((state) => ({ ...state, ...data })) };
+
+  const resetVariantState = () => {
+    updateAddonState({
+      planValues: ["Daily", "Weekly", "Alternate Days", "Custom"],
+      weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      quickSelection: ["Weekdays", "Weekends"],
+      reccuringCheckBox: false,
+      showCalendar: false,
+      selectedPlanValues: '',
+      selectedWeekDaysValues: [],
+      selectedQuickSelectionValue: '',
+      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+      initDate: new Date(),
+      start: {},
+      end: {},
+      period: {},
+      disabledDaysIndexes: [],
+      selectedDaysIndexes: [],
+      date: new Date(),
+      showDateTimeModal: false,
+      slectedDate: new Date(),
+    })
+  }
+
   //usecallback functions
 
   const goToProductDetail = (data) => {
@@ -382,6 +434,7 @@ export default function Products({ route, navigation }) {
             animateText={animateText}
             section={section}
             CartItems={CartItems}
+            wrapperListLoader={wrapperListLoader}
           />
         </View>
       );
@@ -395,7 +448,8 @@ export default function Products({ route, navigation }) {
       categoryInfo,
       CartItems,
       selectedAppointmentSlot,
-      appointmentSelectedDate
+      appointmentSelectedDate,
+      wrapperListLoader
     ],
   );
 
@@ -425,7 +479,7 @@ export default function Products({ route, navigation }) {
           <Text
             style={{
               ...styles.hdrTitleTxt,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? colors.white : colors.black,
             }}>
             {section?.translation[0]?.name}
           </Text>
@@ -462,7 +516,7 @@ export default function Products({ route, navigation }) {
             <Text
               style={{
                 fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                color: isDarkMode ? colors.white : colors.black,
               }}>
               {translation[0]?.name}
             </Text>
@@ -474,7 +528,7 @@ export default function Products({ route, navigation }) {
   );
 
   const awesomeChildListKeyExtractor = useCallback(
-    (item) => `awesome-child-key-${item?.id}`,
+    (item) => `awesome - child - key - ${item?.id} `,
     [productListData, cloneSectionList],
   );
 
@@ -502,7 +556,6 @@ export default function Products({ route, navigation }) {
 
   const renderProduct = useCallback(
     ({ item, index }) => {
-
       return (
         <View key={String(index)} style={{ flex: 1 }}>
           <ProductCard3
@@ -542,15 +595,14 @@ export default function Products({ route, navigation }) {
     data.map((item) => {
       item?.data.map((val) => {
         if (val?.media?.length > 0) {
-          const url1 = !!val?.media[0]?.image ? val?.media[0]?.image?.path?.image_fit : null;
-          const url2 = !!val?.media[0]?.image ? val?.media[0]?.image?.path?.image_path : null;
-          if (!!url1 && !!url2) {
-            FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
-          }
+          const url1 = val?.media[0]?.image?.path?.image_fit;
+          const url2 = val?.media[0]?.image?.path?.image_path;
+          FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
         }
       });
     });
   };
+
 
   const listHeaderComponent2 = () => {
     return (
@@ -577,7 +629,7 @@ export default function Products({ route, navigation }) {
                 <Image
                   style={{
                     tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
+                      ? colors.white
                       : colors.black,
                     transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                   }}
@@ -610,7 +662,7 @@ export default function Products({ route, navigation }) {
                       numberOfLines={1}
                       style={{
                         color: isDarkMode
-                          ? MyDarkTheme.colors.text
+                          ? colors.white
                           : colors.black,
                         fontSize: moderateScale(14),
                         fontFamily: fontFamily.medium,
@@ -658,7 +710,7 @@ export default function Products({ route, navigation }) {
                   <Image
                     style={{
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     }}
@@ -678,7 +730,7 @@ export default function Products({ route, navigation }) {
                   <Image
                     style={{
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     }}
@@ -787,7 +839,7 @@ export default function Products({ route, navigation }) {
                           textAlign: 'left',
                           fontSize: textScale(15),
                           color: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.white,
                         }}>
                         {data?.name || categoryInfo?.name || ''}
@@ -845,7 +897,7 @@ export default function Products({ route, navigation }) {
                             fontFamily: fontFamily.regular,
                             textAlign: 'left',
                             color: isDarkMode
-                              ? MyDarkTheme.colors.text
+                              ? colors.white
                               : colors.white,
                             width: width / 1.5,
                           }}>
@@ -928,6 +980,20 @@ export default function Products({ route, navigation }) {
                     paddingHorizontal: moderateScale(16)
                   }}>
                   <View>
+                    {/* { !isEmpty(sectionListData) ?  <Text
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? colors.white
+                          : colors.black,
+                        marginLeft: 0,
+                      }}
+                      numberOfLines={1}>
+                      {sectionListData.map((val) => {
+                        return <Text>{ val?.translation[0]?.name || val.title} </Text>;
+                      })}
+                    </Text> : null} */}
+
 
                     {!!desc && (
                       <Text
@@ -936,7 +1002,7 @@ export default function Products({ route, navigation }) {
                           ...styles.milesTxt,
                           marginLeft: 0,
                           color: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.black,
                           marginVertical: moderateScaleVertical(4),
                           fontSize: textScale(10.5),
@@ -1009,7 +1075,7 @@ export default function Products({ route, navigation }) {
                   <Text
                     style={{
                       ...styles.milesTxt,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode ? colors.white : colors.black,
                       opacity: 1,
                       fontSize: textScale(10),
                     }}>
@@ -1038,7 +1104,7 @@ export default function Products({ route, navigation }) {
                         style={{
                           ...styles.milesTxt,
                           color: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.black,
                           opacity: 1,
                           fontSize: textScale(10),
@@ -1071,7 +1137,7 @@ export default function Products({ route, navigation }) {
                   <Text
                     style={{
                       ...styles.milesTxt,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode ? colors.white : colors.black,
                       opacity: 1,
                       fontSize: textScale(10),
                     }}>
@@ -1113,7 +1179,7 @@ export default function Products({ route, navigation }) {
                     isOn={el.isSelected}
                     onColor={colors.green}
                     offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                      isDarkMode ? colors.white : colors.borderLight
                     }
                     size="small"
                     onToggle={() => {
@@ -1140,7 +1206,7 @@ export default function Products({ route, navigation }) {
                       fontFamily: fontFamily.regular,
                       marginLeft: moderateScale(7),
                       color: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.textGrey,
                     }}>
                     {!!el?.translations?.length > 0
@@ -1212,14 +1278,14 @@ export default function Products({ route, navigation }) {
                     source={imagePath.filter}
                     style={{
                       tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                     }}
                   />
                   <Text
                     style={{
                       color: isDarkMode
-                        ? MyDarkTheme.colors.text
+                        ? colors.white
                         : colors.black,
                       fontSize: moderateScale(16),
                       fontFamily: fontFamily.regular,
@@ -1239,7 +1305,7 @@ export default function Products({ route, navigation }) {
                   source={imagePath.filter}
                   style={{
                     tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
+                      ? colors.white
                       : colors.black,
                   }}
                 />
@@ -1309,6 +1375,30 @@ export default function Products({ route, navigation }) {
         return
       }
 
+      console.log(item, 'chechItemm');
+      
+      if (!!item.is_recurring_booking) {
+        if (isEmpty(selectedPlanValues)) {
+          showInfo('Click on Calendar icon to schedule the item!');
+          // showError('Plan type should not be empty!');
+          return;
+        }
+        if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+          showError('Weekdays should not be empty!');
+          return;
+        }
+        if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+          if (isEmpty(start) || isEmpty(end)) {
+            showError('Start date and End date should not be empty!');
+            return;
+          }
+        } else {
+          if (isEmpty(period)) {
+            showError('Select dates in custom plan!');
+            return;
+          }
+        }
+      }
       if (
         !!categoryInfo?.is_vendor_closed &&
         !categoryInfo?.show_slot &&
@@ -1347,6 +1437,41 @@ export default function Products({ route, navigation }) {
         return;
       }
 
+      const weeDays = []
+      const selectedCustomDates = []
+
+      if (selectedWeekDaysValues.length) {
+        selectedWeekDaysValues.map((itm, inx) => {
+          const value = itm === "Mo" ? 1 :
+            itm === "Tu" ? 2 :
+              itm === "We" ? 3 :
+                itm === "Th" ? 4 :
+                  itm === "Fr" ? 5 :
+                    itm === "Sa" ? 6 :
+                      itm === "Su" && 0
+          weeDays.push(value)
+        })
+      }
+      if (!isEmpty(period) && selectedPlanValues == "Custom") {
+        Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
+      }
+      if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+        Object.entries(period).map(([key, value]) => {
+          console.log("=>", JSON.stringify(value));
+          ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+        });
+      }
+
+      const recurringformPost = {}
+
+      recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
+        selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
+      recurringformPost['startDate'] = start.dateString ? start.dateString : ''
+      recurringformPost['endDate'] = end.dateString ? end.dateString : ''
+      recurringformPost['weekDay'] = weeDays
+      recurringformPost['selected_custom_dates'] = selectedCustomDates
+
+
       let data = {};
       data['sku'] = item.sku;
       data['quantity'] = !!item?.minimum_order_count
@@ -1366,6 +1491,11 @@ export default function Products({ route, navigation }) {
 
       console.log(data, "data for cart in single item");
 
+      data['type'] = dine_In_Type;
+
+      data['recurringformPost'] = recurringformPost
+
+      console.log('Sending api data', data, "data for cart");
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
@@ -1374,7 +1504,7 @@ export default function Products({ route, navigation }) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
-          console.log(res.data, 'add single item addProductsToCart');
+          console.log(res, 'add single item addProductsToCart');
           actions.cartItemQty(res);
           updateState({ cartId: res.data.id });
           setSelectedAppointmentSlot({})
@@ -1617,7 +1747,7 @@ export default function Products({ route, navigation }) {
   const getAllVendorFilters = () => {
     actions
       .getVendorFilters(
-        `/${productListId?.id}`,
+        `/ ${productListId?.id} `,
         {},
         {
           code: appData?.profile?.code,
@@ -1655,7 +1785,7 @@ export default function Products({ route, navigation }) {
     console.log('api hit getAllProductsByVendorCategory', data);
     actions
       .getProductByVendorCategoryId(
-        `/${data?.vendorData?.slug}/${data?.categoryInfo?.slug}?page=${pageNo}`,
+        `/ ${data?.vendorData?.slug} /${data?.categoryInfo?.slug}?page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
@@ -1743,7 +1873,7 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
-
+    updateState({wrapperListLoader:true})
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
@@ -1772,6 +1902,7 @@ export default function Products({ route, navigation }) {
       .then(async (res) => {
         console.log('get all products by vendor res', res?.data);
         // return;
+        updateState({wrapperListLoader:false})
 
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
           let detail = res?.data?.vendor
@@ -1902,10 +2033,10 @@ export default function Products({ route, navigation }) {
   const getAllProductsByCategoryId = (pageNo) => {
     const productWithCategoryId = data?.productWithSingleCategory ? data?.id : productListId?.id
     const rootproduct = data?.rootProducts || data?.productWithSingleCategory ? true : false
-    console.log(data?.productWithSingleCategory, productListId?.id, data?.id, "fdsfdsfdsfdsfdsfdfs");
     actions
       .getProductByCategoryIdOptamize(
-        `/${productWithCategoryId}?page=${pageNo}&product_list=${rootproduct}&type=${dineInType}`,
+        `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        }&type=${dineInType} `,
         {},
         {
           code: appData?.profile?.code,
@@ -1915,9 +2046,9 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'resres');
+        // console.log(res, 'resres');
         if (!!res?.data) {
-
+          console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
           // setCategoryInfo(res.data.category);
@@ -2075,9 +2206,14 @@ export default function Products({ route, navigation }) {
       updateQtyLoader: false,
       selectedItemID: -1,
       btnLoader: false,
+      wrapperListLoader: false,
     });
     setLoading(false);
-    showError(error?.message || error?.error);
+    if (error?.message == "Recurring booking type not be empty.") {
+      showSuccess('Schedule the product in product detail page');
+    } else {
+      showError(error?.message || error?.error);
+    }
     updateState({ loadMore: false });
   };
 
@@ -2110,6 +2246,7 @@ export default function Products({ route, navigation }) {
   const onCloseModal = () => {
     setIsVisibleModal(false);
     setShowShimmer(true);
+    resetVariantState()
   };
 
   const addDeleteCartItems = async (
@@ -2181,6 +2318,7 @@ export default function Products({ route, navigation }) {
             selectedItemID: itemToUpdate.id,
             btnLoader: true,
             selectedItemIndx: index,
+            wrapperListLoader: true,
           });
           let data = {};
           data['cart_id'] = isExistCartId;
@@ -2211,6 +2349,7 @@ export default function Products({ route, navigation }) {
                 updateQtyLoader: false,
                 selectedItemID: -1,
                 btnLoader: false,
+                wrapperListLoader: false,
               });
             })
             .catch(async () => {
@@ -2227,6 +2366,7 @@ export default function Products({ route, navigation }) {
           updateState({
             selectedItemID: itemToUpdate?.id,
             btnLoader: false,
+            wrapperListLoader: false,
           });
           removeItem('selectedTable');
           removeProductFromCart(itemToUpdate, section, isExistproductId);
@@ -2396,6 +2536,7 @@ export default function Products({ route, navigation }) {
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
+        wrapperListLoader: false,
       });
       setLoading(false);
       // showError(error?.message?.error || error?.error);
@@ -2416,8 +2557,13 @@ export default function Products({ route, navigation }) {
         isLoadingC: false,
         selectedItemID: -1,
         btnLoader: false,
+        wrapperListLoader: false,
       });
-      showError(error?.message || error?.error);
+      if (error?.message == "Recurring booking type not be empty.") {
+        showInfo('Schedule the product in product detail page');
+      } else {
+        showError(error?.message || error?.error);
+      }
     }
   };
 
@@ -2750,11 +2896,11 @@ export default function Products({ route, navigation }) {
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;
-
-      const newArr = searchItems.map((el) => {
+      const searchData =[]
+      const newArr = searchItems?.map((el) => {
         const records =
-          el.data &&
-          el.data.filter((item) => {
+          el?.data &&
+          el?.data.filter((item) => {
             return item?.translation[0]?.title
               .toLowerCase()
               .includes(text.toLowerCase());
@@ -2762,13 +2908,22 @@ export default function Products({ route, navigation }) {
         const newObj = {
           ...el,
         };
-
         newObj.data = records;
+
         return newObj;
         console.log('checking products >>>>>', records);
         // Arr.push(...records)
       });
-      setCloneSectionList(newArr);
+
+      newArr?.map((item) => {
+        if (item?.data?.length != 0) {
+            searchData?.push(item)
+          }
+      })
+      console.log('checking products >>>>>', searchData);
+
+      setCloneSectionList(searchData);
+
     } else {
       getAllProductsByVendor();
     }
@@ -3188,7 +3343,10 @@ export default function Products({ route, navigation }) {
   const bottomSheetHeader = () => {
     return (
       <TouchableOpacity
-        onPress={() => setIsVisibleModal(false)}
+        onPress={() => {
+          setIsVisibleModal(false)
+          resetVariantState()
+        }}
         style={{ alignSelf: 'center', marginBottom: moderateScaleVertical(16) }}>
         <Image source={imagePath.icClose4} />
       </TouchableOpacity>
@@ -3461,6 +3619,29 @@ export default function Products({ route, navigation }) {
       showError('Product varient is not availabel!');
       return;
     }
+    if(!!productDetailData.is_recurring_bookin){
+      if (isEmpty(selectedPlanValues)) {
+        showError('Plan type should not be empty!');
+        return;
+      }
+      if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+        showError('Weekdays should not be empty!');
+        return;
+      }
+      if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+        if (isEmpty(start) || isEmpty(end)) {
+          showError('Start date and End date should not be empty!');
+          return;
+        }
+      } else {
+        if (isEmpty(period)) {
+          showError('Select dates in custom plan!');
+          return;
+        }
+      }
+    }
+   
+    
 
     playHapticEffect(hapticEffects.rigid);
     console.log('add on set', addonSet);
@@ -3488,7 +3669,45 @@ export default function Products({ route, navigation }) {
     });
 
     const checkIsError = addonSet.findIndex((el) => el.errorShow);
+
+    const weeDays = []
+    const selectedCustomDates = []
+
+    if (selectedWeekDaysValues.length) {
+      selectedWeekDaysValues.map((itm, inx) => {
+        const value = itm === "Mo" ? 1 :
+          itm === "Tu" ? 2 :
+            itm === "We" ? 3 :
+              itm === "Th" ? 4 :
+                itm === "Fr" ? 5 :
+                  itm === "Sa" ? 6 :
+                    itm === "Su" && 0
+        weeDays.push(value)
+      })
+    }
+    if (!isEmpty(period) && selectedPlanValues == "Custom") {
+      Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
+    }
+    if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+      Object.entries(period).map(([key, value]) => {
+        console.log("=>", JSON.stringify(value));
+        ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+      });
+    }
+
+
+    const recurringformPost = {}
+
+    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
+      selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
+    recurringformPost['startDate'] = start.dateString ? start.dateString : ''
+    recurringformPost['endDate'] = end.dateString ? end.dateString : ''
+    recurringformPost['weekDay'] = weeDays
+    recurringformPost['selected_custom_dates'] = selectedCustomDates
+
+
     let data = {};
+
     if (checkIsError == -1) {
       data['sku'] = productSku;
       data['quantity'] = productQuantityForCart;
@@ -3522,6 +3741,9 @@ export default function Products({ route, navigation }) {
       }
 
       console.log(data, 'data for cart>>>>>>');
+      data['recurringformPost'] = recurringformPost
+
+      console.log(JSON.stringify(data), 'data for cart');
       updateState({ btnLoader: true });
       actions
         .addProductsToCart(data, {
@@ -3684,9 +3906,6 @@ export default function Products({ route, navigation }) {
 
 
 
-
-
-
   const renderSectionFooter = (props) => {
     const { section } = props;
 
@@ -3758,7 +3977,7 @@ export default function Products({ route, navigation }) {
   };
 
   return (
-    <WrapperContainer isLoading={false}>
+    <WrapperContainer isLoading={wrapperListLoader}>
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -3790,7 +4009,7 @@ export default function Products({ route, navigation }) {
                       <Image
                         style={{
                           tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
+                            ? colors.white
                             : colors.black,
                           transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                         }}
@@ -3819,7 +4038,7 @@ export default function Products({ route, navigation }) {
                             numberOfLines={1}
                             style={{
                               color: isDarkMode
-                                ? MyDarkTheme.colors.text
+                                ? colors.white
                                 : colors.black,
                               fontSize: moderateScale(14),
                               fontFamily: fontFamily.medium,
@@ -3830,7 +4049,7 @@ export default function Products({ route, navigation }) {
                             numberOfLines={1}
                             style={{
                               color: isDarkMode
-                                ? MyDarkTheme.colors.text
+                                ? colors.white
                                 : colors.blackOpacity43,
                               fontSize: moderateScale(12),
                               fontFamily: fontFamily.regular,
@@ -3879,7 +4098,7 @@ export default function Products({ route, navigation }) {
                     //     <Image
                     //       style={{
                     //         tintColor: isDarkMode
-                    //           ? MyDarkTheme.colors.text
+                    //           ? colors.white
                     //           : colors.black,
                     //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     //       }}
@@ -3896,7 +4115,7 @@ export default function Products({ route, navigation }) {
                     //     <Image
                     //       style={{
                     //         tintColor: isDarkMode
-                    //           ? MyDarkTheme.colors.text
+                    //           ? colors.white
                     //           : colors.black,
                     //         transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     //       }}
@@ -3941,7 +4160,7 @@ export default function Products({ route, navigation }) {
                         <Image
                           style={{
                             tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
+                              ? colors.white
                               : colors.black,
                             transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                           }}
@@ -3958,7 +4177,7 @@ export default function Products({ route, navigation }) {
                         <Image
                           style={{
                             tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
+                              ? colors.white
                               : colors.black,
                             transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                           }}
@@ -3970,7 +4189,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-
+{console.log(tagFilteredData,'tagFilteredData=>',cloneSectionList)}
 
             {!!categoryInfo?.is_show_products_with_category ? (
 
@@ -4149,6 +4368,26 @@ export default function Products({ route, navigation }) {
                         isVarientSelectLoading={isVarientSelectLoading}
                         productDetailNew={productDetailNew}
                         isProductAvailable={isProductAvailable}
+
+                        planValues={planValues}
+                        weekDays={weekDays}
+                        quickSelection={quickSelection}
+                        showCalendar={showCalendar}
+                        reccuringCheckBox={reccuringCheckBox}
+                        selectedPlanValues={selectedPlanValues}
+                        selectedWeekDaysValues={selectedWeekDaysValues}
+                        selectedQuickSelectionValue={selectedQuickSelectionValue}
+                        minimumDate={minimumDate}
+                        initDate={initDate}
+                        start={start}
+                        end={end}
+                        period={period}
+                        disabledDaysIndexes={disabledDaysIndexes}
+                        selectedDaysIndexes={selectedDaysIndexes}
+                        date={date}
+                        showDateTimeModal={showDateTimeModal}
+                        slectedDate={slectedDate}
+                        updateAddonState={updateAddonState}
                       />
                     </BottomSheetScrollView>
                   </BottomSheet>
@@ -4209,7 +4448,7 @@ export default function Products({ route, navigation }) {
                                   style={{
                                     ...commonStyles.mediumFont14,
                                     color: isDarkMode
-                                      ? MyDarkTheme.colors.text
+                                      ? colors.white
                                       : colors.black,
                                   }}>
                                   {productQuantityForCart}

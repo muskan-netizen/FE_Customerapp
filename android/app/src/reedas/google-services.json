@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1029808003786",
+    "project_id": "reedas-order",
+    "storage_bucket": "reedas-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029808003786:android:17404e7c694c2fa2e4f233",
+        "android_client_info": {
+          "package_name": "com.reedas.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1029808003786-10fls2bkpi1fg7g69mr9eb5s3u389nfg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reedas.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1029808003786-80dmjiq5hj70jmrnibvoeomtqvq8v0ms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reedas.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1029808003786-u3kthd4krllbilb3s42bl5aajrma6qh3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reedas.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1029808003786-72mtod6sj789hgknsm6q8tcm23g1okgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0N_e03cgnumEiIkPtraWZaY8ToG7nXPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029808003786-72mtod6sj789hgknsm6q8tcm23g1okgq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1029808003786-m196p220opvacqt39u6v5s6aca3cmcqj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reedas.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

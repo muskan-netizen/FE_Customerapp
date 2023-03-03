@@ -1,6 +1,6 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
@@ -11,11 +11,11 @@ import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
-import {Image, Text, StyleSheet} from 'react-native';
-import {moderateScale, textScale} from '../styles/responsiveSize';
+import { Image, Text, StyleSheet } from 'react-native';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 import fontFamily from '../styles/fontFamily';
 import CustomDrawerContent from '../Components/CustomDrawerContent';
-import {View} from 'react-native-animatable';
+import { View } from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesP2p from './TabRoutesP2p';
@@ -25,7 +25,7 @@ export default function DrawerRoutes(props) {
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  const {shortCodeStatus, appStyle, appData} = useSelector(
+  const { shortCodeStatus, appStyle, appData } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -54,7 +54,7 @@ export default function DrawerRoutes(props) {
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,
           drawerLabel: strings.CELEBRITY,
-          drawerIcon: ({focused}) => (
+          drawerIcon: ({ focused }) => (
             <Image
               source={focused ? imagePath.tabDActive : imagePath.tabDInActive}
             />
@@ -73,7 +73,7 @@ export default function DrawerRoutes(props) {
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,
           drawerLabel: strings.BRANDS,
-          drawerIcon: ({focused}) => (
+          drawerIcon: ({ focused }) => (
             <Image
               source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
             />
@@ -90,15 +90,15 @@ export default function DrawerRoutes(props) {
       drawerType={'front'}
       overlayColor={'rgba(0,0,0,0.6)'}
       // hideStatusBar={true}
-      drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
+      drawerStyle={{ width: '75%', backgroundColor: colors.blueHeaderColor }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         component={
           businessType === 4
             ? TaxiTabRoutes
-            : //  businessType === 8
-              // ? TabRoutesP2p
-              // :
+            : businessType === 8
+              ? TabRoutesP2p
+              :
               TabRoutes
         }
         name={
@@ -110,7 +110,7 @@ export default function DrawerRoutes(props) {
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,
           drawerLabel: strings.HOME,
-          drawerIcon: ({focused}) => (
+          drawerIcon: ({ focused }) => (
             <Image
               source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
             />
@@ -124,8 +124,8 @@ export default function DrawerRoutes(props) {
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,
           drawerLabel: strings.CART,
-          drawerIcon: ({focused}) => (
-            <View style={{alignItems: 'center'}}>
+          drawerIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center' }}>
               {cartItemCount?.data?.item_count ? (
                 <View style={[styles.cartItemCountView]}>
                   <Text style={styles.cartItemCountNumber}>
@@ -149,7 +149,7 @@ export default function DrawerRoutes(props) {
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,
           drawerLabel: strings.ACCOUNTS,
-          drawerIcon: ({focused}) => (
+          drawerIcon: ({ focused }) => (
             <Image
               source={focused ? imagePath.tabEActive : imagePath.tabEInActive}
             />

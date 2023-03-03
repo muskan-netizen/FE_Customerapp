@@ -115,7 +115,7 @@ const App = () => {
       getBundleId() == appIds.masa ||
       getBundleId() == appIds.muvpod ||
       getBundleId() == appIds.hezniTaxi ||
-      getBundleId() == appIds.flank || 
+      getBundleId() == appIds.flank ||
       getBundleId() == appIds.parcelworks
     ) {
       setTimeout(() => {
@@ -126,21 +126,18 @@ const App = () => {
         SplashScreen.hide();
       }, 3000);
     }
-
-    AsyncStorage.getItem('autoConnectEnabled').then((res) => {
-      if (res !== null) {
-        if (Platform.OS == 'android') {
+    if (Platform.OS == 'android') {
+      AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+        if (res !== null) {
           ConnectBTFunction();
         }
-      }
-    });
+      });
+    }
   }, []);
 
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-
-
   };
 
 
@@ -291,7 +288,7 @@ const App = () => {
     return () => { };
   }, []);
 
-  //Check internet connection
+  // Check internet connection
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const netStatus = state.isConnected;
@@ -300,6 +297,7 @@ const App = () => {
     });
     return () => removeNetInfoSubscription();
   }, []);
+
   const { blurRef } = useRef();
 
 
