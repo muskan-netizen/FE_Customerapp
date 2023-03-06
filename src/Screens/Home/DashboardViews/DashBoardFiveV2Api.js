@@ -1,6 +1,6 @@
 import { useScrollToTop } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -51,6 +51,7 @@ import {
 } from '../../../utils/helperFunctions';
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
+import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
 
 const DashBoardFiveV2Api = ({
   handleRefresh = () => { },
@@ -117,22 +118,6 @@ const DashBoardFiveV2Api = ({
     });
   }, [appMainData?.categories]);
 
-  const { currSelectedFilter } = state;
-
-  const onSelectedFilter = (selectedFilter) => {
-    updateState({ showMenu: false, currSelectedFilter: selectedFilter });
-    onVendorFilterSeletion(selectedFilter);
-  };
-
-  const homeAllFilters = () => {
-    let homeFilter = [
-      { id: 1, type: strings.OPEN },
-      { id: 2, type: strings.CLOSE },
-      { id: 3, type: strings.BESTSELLER },
-    ];
-
-    return homeFilter;
-  };
 
   const OnTakeMeOut = () => {
     RNExitApp.exitApp();
@@ -181,46 +166,30 @@ const DashBoardFiveV2Api = ({
       console.log(error, 'error');
     }
   };
-  const _renderCategories = ({ item, index }) => {
+  const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <HomeCategoryCard4
-        data={item}
-        onPress={() => onPressCategory(item)}
-        isLoading={isLoading}
-      />
-
+      <View style={{ width: width / 4 }}>
+        <HomeCategoryCard4
+          data={item}
+          onPress={() => onPressCategory(item)}
+          isLoading={isLoading}
+          applyRadius={false}
+        />
+      </View>
     );
-  };
+  }, [])
 
-  const _renderVendors = ({ item, index }) => (
-    <View
-      style={{
-        width: width - width / 3.5,
-      }}>
+  const _renderVendors = useCallback(({ item, index }) => (
+    <View style={{ width: width - width / 3.5 }}>
       <MarketCard3
         data={item}
         onPress={() => onPressVendor(item)}
         extraStyles={{ margin: 2 }}
       />
     </View>
-  );
+  ), [])
 
-  const seeMoreCategories = () => {
-    updateState({
-      categoriesData: !seeMore
-        ? appMainData?.categories
-        : appMainData?.categories.filter((item, indx) => indx < 8),
-      seeMore: !seeMore,
-    });
-  };
-
-  const moveToNewScreen =
-    (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-
-  const _renderBrands = ({ item }) => {
+  const _renderBrands = useCallback(({ item }) => {
     const imageURI = item?.image?.proxy_url
       ? getImageUrl(item.image.proxy_url, item.image.image_path, '800/600')
       : item?.image_url;
@@ -228,14 +197,6 @@ const DashBoardFiveV2Api = ({
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        style={
-          {
-            // elevation: 1,
-            // marginVertical: 1,
-            // borderRadius: 2,
-            // backgroundColor: colors.white
-          }
-        }
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
         {isSVG ? (
           <SvgUri
@@ -260,102 +221,16 @@ const DashBoardFiveV2Api = ({
         )}
       </TouchableOpacity>
     );
-  };
+  }, [])
 
-  const onViewAll = (type, data) => {
-    console.log(data, 'type+++++', type);
+  const onViewAll = useCallback((type, data) => {
     navigation.navigate(navigationStrings.VIEW_ALL_DATA, {
       data: data,
       type: type,
     });
-  };
+  }, [])
 
-  const scrollRef = React.useRef(null);
-  useScrollToTop(scrollRef);
-
-  if (isLoading) {
-    return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}>
-        <CategoryLoader2 />
-        <View style={{ flexDirection: 'row', marginTop: moderateScaleVertical(16) }}>
-          <HeaderLoader
-            viewStyles={{
-              marginTop: moderateScaleVertical(8),
-              marginBottom: moderateScaleVertical(16),
-            }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-          <HeaderLoader
-            viewStyles={{
-              marginTop: moderateScaleVertical(8),
-              marginBottom: moderateScaleVertical(16),
-            }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-          <HeaderLoader
-            viewStyles={{
-              marginTop: moderateScaleVertical(8),
-              marginBottom: moderateScaleVertical(16),
-            }}
-            widthLeft={moderateScale(150)}
-            rectWidthLeft={moderateScale(150)}
-            heightLeft={moderateScaleVertical(240)}
-            rectHeightLeft={moderateScaleVertical(240)}
-            isRight={false}
-            rx={15}
-            ry={15}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <HeaderLoader
-            widthLeft={moderateScale(180)}
-            rectWidthLeft={moderateScale(180)}
-            rectHeightLeft={moderateScaleVertical(60)}
-            isRight={false}
-            rx={4}
-            ry={4}
-          />
-          <HeaderLoader
-            widthLeft={moderateScale(100)}
-            rectWidthLeft={moderateScale(100)}
-            rectHeightLeft={moderateScaleVertical(60)}
-            isRight={false}
-            rx={4}
-            ry={4}
-          />
-        </View>
-
-        <BannerLoader
-          // isVendorLoader
-          viewStyles={{ marginTop: moderateScale(12) }}
-        />
-        <BannerLoader
-          // isVendorLoader
-          viewStyles={{ marginTop: moderateScale(12) }}
-        />
-        <BannerLoader
-          // isVendorLoader
-          viewStyles={{ marginTop: moderateScale(12) }}
-        />
-      </ScrollView>
-    );
-  }
-
-  const vendorHeader = (item) => {
+  const vendorHeader = useCallback((item) => {
     if (appData?.profile?.preferences?.single_vendor) {
       return (
         <View
@@ -410,9 +285,9 @@ const DashBoardFiveV2Api = ({
         )}
       </View>
     );
-  };
+  }, [appData, isDarkMode, appMainData])
 
-  const onPressViewEditAndReplace = (item) => {
+  const onPressViewEditAndReplace = useCallback((item) => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       orderId: item?.vendors[0].order_id,
       orderDetail: {
@@ -420,9 +295,44 @@ const DashBoardFiveV2Api = ({
       },
       selectedVendor: { id: item?.vendors[0].vendor_id },
     });
-  };
+  }, [])
 
-  const showAllTempCartOrders = () => {
+  const scrollRef = React.useRef(null);
+  useScrollToTop(scrollRef);
+
+  const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) }
+
+
+  const renderHomePageItems = useCallback(({ item, index }) => {
+    return (
+      <View key={String(item?.id)}>
+        {
+          item?.slug == 'banner' ? (
+            <BannersView item={item} showTitle={false} />
+          ) :
+            (item?.slug == 'new_products' ||
+              item?.slug == 'featured_products' ||
+              item?.slug == 'on_sale' ||
+              item?.slug == 'most_popular_products') ? <ProductsThemeView item={item} /> : item?.slug == 'vendors' ?
+              <VendorsView item={item} />
+              : item?.slug == 'nav_categories' ? (
+                <CategoriesView item={item} showTitle={false} />
+              ) : item?.slug == 'best_sellers' ? (
+                <BestSellersView item={item} />
+              ) : item?.slug == 'brands' ? (
+                <BrandsView item={item} />
+              ) : item?.slug == 'spotlight_deals' ? (
+                <SpotlightDealsView item={item} />
+              ) : item?.slug == 'selected_products' ? (
+                <SelectedProductsThemeView item={item} />
+              ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
+                <React.Fragment />
+        }
+      </View>
+    );
+  }, [])
+
+  const showAllTempCartOrders = useCallback(() => {
     return (
       <View>
         {!isEmpty(tempCartData) && tempCartData?.length
@@ -475,9 +385,9 @@ const DashBoardFiveV2Api = ({
           : null}
       </View>
     );
-  };
+  }, [fontFamily, themeColors, tempCartData])
 
-  const _renderProducts = ({ item, index }) => {
+  const _renderProducts = useCallback(({ item, index }) => {
     return (
       <ProductsComp3
         item={item}
@@ -487,9 +397,9 @@ const DashBoardFiveV2Api = ({
       />
 
     );
-  };
+  }, [])
 
-  const _renderSingleCategoryProducts = ({ item, index }) => {
+  const _renderSingleCategoryProducts = useCallback(({ item, index }) => {
     return (
       <SingleCategoryProducts
         mainContainerStyle={{
@@ -513,12 +423,12 @@ const DashBoardFiveV2Api = ({
       />
 
     );
-  };
+  }, [])
 
-  const ProductsThemeView = ({ item }) => {
+  const ProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         <TitleViewHome item={item} />
         <FlatList
@@ -541,12 +451,12 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [])
 
-  const SingleCategoryProductsView = ({ item }) => {
+  const SingleCategoryProductsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={{ title: item?.data?.category_detail?.slug }} />
@@ -569,9 +479,9 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [themeColors, fontFamily])
 
-  const _renderSelectedProducts = ({ item, index }) => {
+  const _renderSelectedProducts = useCallback(({ item, index }) => {
     console.log(item, " selected");
     return (
       <ProductsComp2
@@ -595,12 +505,12 @@ const DashBoardFiveV2Api = ({
         numberOfLines={2}
       />)
 
-  }
+  }, [])
 
-  const SelectedProductsThemeView = ({ item }) => {
+  const SelectedProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
@@ -624,42 +534,37 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [themeColors, fontFamily])
 
-
-  const CategoriesView = ({ item }) => {
+  const CategoriesView = useCallback(({ item, showTitle }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0),
+
       }}>
-        <TitleViewHome item={item} />
+        {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
         <FlatList
           key={'6'}
-          horizontal
+          // horizontal
           data={item?.data}
           keyExtractor={(item) => item?.id?.toString()}
           showsHorizontalScrollIndicator={false}
+          numColumns={4}
           renderItem={_renderCategories}
           ItemSeparatorComponent={() => (
-            <View style={{ width: moderateScale(16) }} />
-          )}
-          ListHeaderComponent={() => (
-            <View style={{ marginLeft: moderateScale(16) }} />
-          )}
-          ListFooterComponent={() => (
-            <View style={{ marginRight: moderateScale(12) }} />
+            <View style={{ height: moderateScale(8) }} />
           )}
         />
       </View>
     ) : (
       <React.Fragment />
     );
-  };
+  }, [])
 
-  const VendorsView = ({ item }) => {
+  const VendorsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         {vendorHeader(item)}
         <FlatList
@@ -710,9 +615,9 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [])
 
-  const _renderBestVendors = ({ item, index }) => {
+  const _renderBestVendors = useCallback(({ item, index }) => {
     return (
       <TouchableOpacity
         onPress={() => onPressVendor(item)}
@@ -768,12 +673,12 @@ const DashBoardFiveV2Api = ({
         </Text>
       </TouchableOpacity>
     );
-  };
+  }, [])
 
-  const BestSellersView = ({ item }) => {
+  const BestSellersView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         <TitleViewHome item={item} />
         <FlatList
@@ -796,12 +701,12 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [])
 
-  const BrandsView = ({ item }) => {
+  const BrandsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         <TitleViewHome item={item} />
         <FlatList
@@ -824,43 +729,39 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [])
 
-  const TitleViewHome = ({ item, titleViewStyle = {} }) => {
+  const TitleViewHome = useCallback(({ item, titleViewStyle = {} }) => {
     return (
       <Text
         style={{
           ...styles.exploreStoresTxt,
           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           marginHorizontal: moderateScale(16),
-          marginBottom: moderateScaleVertical(12),
-          fontSize: textScale(16),
-
-          ...titleViewStyle
+          marginVertical: moderateScaleVertical(6),
+          // fontSize: textScale(14),
+          // ...titleViewStyle
         }}>
         {!isEmpty(item?.translations) ? (item?.translations[0]?.title || item?.title) : item?.title}
       </Text>
     );
-  };
+  }, [isDarkMode, MyDarkTheme])
 
-  const _renderSpotlightDeals = ({ item }) => {
+
+  const _renderSpotlightDeals = useCallback(({ item }) => {
     return (
       <ProductsComp2
         item={item}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
+        onPress={() => navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })}
         numberOfLines={2}
-
       />
     )
-  };
+  }, [])
 
-
-  const SpotlightDealsView = ({ item }) => {
+  const SpotlightDealsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginBottom: moderateScaleVertical(32)
+        marginBottom: moderateScaleVertical(0)
       }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
@@ -888,13 +789,13 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  };
+  }, [themeColors, fontFamily])
 
-  const BannersView = ({ item }) => {
+  const BannersView = useCallback(({ item = {}, showTitle = true }) => {
     return !isEmpty(item?.banner_images) ? <View style={{
-      marginBottom: moderateScaleVertical(32)
+      marginBottom: moderateScaleVertical(0)
     }}>
-      <TitleViewHome item={item} />
+      {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
       <Carousel
         autoplay={true}
         loop={true}
@@ -907,39 +808,13 @@ const DashBoardFiveV2Api = ({
         renderItem={renderBanners}
         sliderWidth={width}
         itemWidth={width - moderateScale(32)}
+
       />
     </View> : <React.Fragment />
+  }, [appMainData, appData])
 
-  };
 
-  const renderHomePageItems = ({ item, index }) => {
-    return (
-      <View>
-        {(item?.slug == 'new_products' ||
-          item?.slug == 'featured_products' ||
-          item?.slug == 'on_sale' ||
-          item?.slug == 'most_popular_products') ? <ProductsThemeView item={item} /> : item?.slug == 'vendors' ?
-          <VendorsView item={item} />
-          : item?.slug == 'nav_categories' ? (
-            <CategoriesView item={item} />
-          ) : item?.slug == 'best_sellers' ? (
-            <BestSellersView item={item} />
-          ) : item?.slug == 'brands' ? (
-            <BrandsView item={item} />
-          ) : item?.slug == 'spotlight_deals' ? (
-            <SpotlightDealsView item={item} />
-          ) : item?.slug == 'banner' ? (
-            <BannersView item={item} />
-          ) : item?.slug == 'selected_products' ? (
-            <SelectedProductsThemeView item={item} />
-          ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
-            <React.Fragment />
-        }
-      </View>
-    );
-  };
-
-  const renderBanners = ({ item }) => {
+  const renderBanners = useCallback(({ item }) => {
     const imageUrl =
       item?.banner_image_url ||
       getImageUrl(
@@ -952,7 +827,9 @@ const DashBoardFiveV2Api = ({
             : '400/600',
       );
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={() => bannerPress(item)}>
+      <TouchableOpacity style={{
+
+      }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -965,44 +842,41 @@ const DashBoardFiveV2Api = ({
             borderRadius: moderateScale(16),
             backgroundColor: isDarkMode
               ? colors.whiteOpacity15
-              : colors.greyColor,
+              : colors.grayOpacity51,
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
       </TouchableOpacity>
     );
-  };
+  }, [])
+
+  const keyExtractorUnique = useCallback((item, index) => !!item?.id ? String(item.id) : String(index))
+
+  if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
 
   return (
     <View style={{ flex: 1, }}>
-      <ScrollView
-        ref={scrollRef}
+      {showAllTempCartOrders()}
+      <FlatList
+        data={!!appMainData?.homePageLabels ? appMainData?.homePageLabels || [] : []}
+        renderItem={renderHomePageItems}
         showsVerticalScrollIndicator={false}
-
+        windowSize={10}
+        keyExtractor={keyExtractorUnique}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
           />
-        }>
-        {showAllTempCartOrders()}
-        <Animatable.View animation={'fadeInUp'} delay={200}>
-          <FlatList
-            data={appMainData?.homePageLabels}
-            renderItem={renderHomePageItems}
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-          />
-        </Animatable.View>
-        <View
-          style={{
-            height:
-              Platform.OS == 'ios' ? moderateScale(60) : moderateScale(90),
-          }}
-        />
-      </ScrollView>
-
+        }
+      />
+      <View
+        style={{
+          height:
+            Platform.OS == 'ios' ? moderateScale(10) : moderateScale(20),
+        }}
+      />
       {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
         <View
           style={{

@@ -266,10 +266,6 @@ export default function () {
         component={SpotdealProductAndSelectedProducts}
       />
 
-
-
-
-
     </Stack.Navigator>
   );
 }

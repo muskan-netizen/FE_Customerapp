@@ -161,6 +161,7 @@ export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
 export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
+export {default as Category} from './Category/Category'
 
 // P2p template
 export {default as Post} from './P2P/Post/PostCategory';

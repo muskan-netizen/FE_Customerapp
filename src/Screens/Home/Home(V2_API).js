@@ -43,18 +43,13 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType, isLocationSearched } = useSelector(
-    (state) => state?.home,
-  );
-  console.log(appMainData, '<===appMainData');
+  const { location, appMainData, dineInType, isLocationSearched } = useSelector((state) => state?.home || {});
 
   const isFocused = useIsFocused();
   const { cartItemCount } = useSelector((state) => state?.cart);
 
   const { userData } = useSelector((state) => state?.auth);
-  const { pendingNotifications } = useSelector(
-    (state) => state?.pendingNotifications,
-  );
+  const { pendingNotifications } = useSelector((state) => state?.pendingNotifications || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;

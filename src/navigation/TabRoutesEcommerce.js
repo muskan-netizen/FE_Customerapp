@@ -1,8 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
-import { Image, Platform, StyleSheet, Text } from 'react-native';
-import { View } from 'react-native-animatable';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
@@ -16,13 +15,13 @@ import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
+// import CategoryStack from './CategoryStack';
 
 
 import navigationStrings from './navigationStrings';
 
 const Tab = createBottomTabNavigator();
 
-let showBottomBar_ = true;
 
 export default function TabRoutesEcommerce(props) {
 
@@ -35,9 +34,11 @@ export default function TabRoutesEcommerce(props) {
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
-  const checkForBrand =
-    allCategory &&
-    allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
+  const checkLayout = appMainData?.homePageLabels || []
+  const isEnableCategory = checkLayout.find(layout => layout?.slug == 'nav_categories')
+
+  const checkForBrand = allCategory && allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
+
 
   var celebTab = null;
   var brandTab = null;
@@ -98,11 +99,15 @@ export default function TabRoutesEcommerce(props) {
       />
     );
   }
+
+
+
   const insets = useSafeAreaInsets();
 
   const getTextStyle = (focused) => {
     return { ...styles.tabBarLabelStyle, color: !!focused ? themeColors?.primary_color : colors.inactiveText }
   }
+
 
 
   return (
@@ -111,15 +116,16 @@ export default function TabRoutesEcommerce(props) {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: Platform.OS === 'ios' ? moderateScaleVertical(55) + insets.bottom : moderateScaleVertical(86) + insets.bottom,
-          backgroundColor: colors.white,
-          borderTopLeftRadius: moderateScale(32),
-          borderTopRightRadius: moderateScale(32),
-          paddingVertical: 5,
-          position: "absolute",
-          bottom: 0,
-          borderColor: colors.borderStroke,
-          borderWidth: 1
+          // height: Platform.OS === 'ios' ? moderateScaleVertical(55) + insets.bottom : moderateScaleVertical(64) + insets.bottom,
+          // backgroundColor: colors.white,
+          // borderTopLeftRadius: moderateScale(24),
+          // borderTopRightRadius: moderateScale(24),
+          // paddingVertical: 5,
+          // // position: "absolute",
+          // bottom: 0,
+          // borderColor: colors.borderStroke,
+          // borderWidth: 1,
+          // paddingVertical:moderateScaleVertical(8)
           // elevation: 1
         },
       }}
@@ -172,13 +178,13 @@ export default function TabRoutesEcommerce(props) {
                     ...styles.cartItemCountView,
                     width:
                       cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(20),
+                        ? moderateScale(12)
+                        : moderateScale(12),
                     height:
                       cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(20),
-                    top: cartItemCount?.data?.item_count > 999 ? -10 : -7,
+                        ? moderateScale(12)
+                        : moderateScale(12),
+                    top: cartItemCount?.data?.item_count > 999 ? -10 : 6,
                     right: cartItemCount?.data?.item_count > 999 ? -13 : -8,
                   }}>
                   <Text style={styles.cartItemCountNumber}>
@@ -204,6 +210,26 @@ export default function TabRoutesEcommerce(props) {
 
       {brandTab}
       {celebTab}
+
+{/* 
+      {!!isEnableCategory ? <Tab.Screen
+        component={CategoryStack}
+        name={navigationStrings.CATEGORY}
+        options={({ route }) => ({
+          tabBarLabel: ({ focused }) => <Text style={getTextStyle(focused)}>{strings.CATEGORY}</Text>,
+          tabBarIcon: ({ focused, tintColor }) => {
+            return (
+              <FastImage
+                style={styles.iconStyle}
+                tintColor={!!focused ? themeColors?.primary_color : colors.inactiveText}
+                source={!!focused
+                  ? imagePath.icEcomBrand
+                  : imagePath.icEcomBrandInactive}
+              />
+            )
+          },
+        })}
+      /> : null} */}
 
       <Tab.Screen
         component={AccountStack}
@@ -234,9 +260,9 @@ export function stylesData(params) {
       position: 'absolute',
       zIndex: 100,
       backgroundColor: colors.cartItemPrice,
-      borderRadius: moderateScale(50),
+      borderRadius: moderateScale(6),
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     cartItemCountNumber: {
       fontFamily: fontFamily?.bold,
@@ -246,13 +272,14 @@ export function stylesData(params) {
     tabBarLabelStyle: {
       textTransform: 'capitalize',
       fontFamily: fontFamily?.medium,
-      fontSize: textScale(12),
+      fontSize: textScale(8),
       color: colors.black,
-      marginBottom: moderateScaleVertical(6)
+      marginVertical: moderateScaleVertical(4)
     },
     iconStyle: {
-      height: moderateScale(40),
-      width: moderateScale(40),
+      height: moderateScale(24),
+      width: moderateScale(24),
+      marginTop: moderateScaleVertical(8),
     }
   });
   return styles;

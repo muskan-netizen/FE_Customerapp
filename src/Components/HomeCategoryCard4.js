@@ -17,7 +17,9 @@ const HomeCategoryCard3 = ({
   data = {},
   onPress = () => { },
   isLoading = false,
+  applyRadius = true
 }) => {
+
   const { themeColor, themeToggle, themeColors, appStyle } = useSelector((state) => state?.initBoot);
 
   const darkthemeusingDevice = useDarkMode();
@@ -27,7 +29,7 @@ const HomeCategoryCard3 = ({
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
     data?.icon?.image_path,
-    '160/160',
+    '120/120',
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
@@ -36,7 +38,7 @@ const HomeCategoryCard3 = ({
 
   let imgHeight = moderateScale(50);
   let imgWidth = moderateScale(50);
-  let imgRadius = moderateScale(25);
+  let imgRadius = moderateScale(applyRadius ? 25 : 0);
 
   return (
     <TouchableOpacity
@@ -80,7 +82,7 @@ const HomeCategoryCard3 = ({
                 cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.high,
               }}
-              resizeMode="cover"
+              resizeMode="contain"
               onLoad={onLoad}
             />
           </View>
@@ -91,7 +93,7 @@ const HomeCategoryCard3 = ({
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.medium,
-            fontSize: textScale(12),
+            fontSize: textScale(11),
             textAlign: 'center',
             marginTop: moderateScaleVertical(4),
             width: moderateScale(80),
@@ -103,4 +105,4 @@ const HomeCategoryCard3 = ({
   );
 };
 export default React.memo(HomeCategoryCard3);
-const styles = StyleSheet.create({});
+

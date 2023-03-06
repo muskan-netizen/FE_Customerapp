@@ -27,7 +27,7 @@ import {
   pressInAnimation,
   pressOutAnimation
 } from '../utils/helperFunctions';
-let imageHeight = parseInt(moderateScale(144))
+let imageHeight = parseInt(moderateScale(140))
 let imageWidth = parseInt(moderateScale(140))
 
 const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
@@ -53,10 +53,10 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
   const imageUrl = getImageUrl(
     media[0]?.image?.path?.proxy_url,
     media[0]?.image?.path?.image_path,
-    `${260}/${imageWidth}`,
+    `${imageHeight}/${imageWidth}`,
   );
 
-  console.log(imageUrl, "imageUrl>>>>>>>>imageUrl")
+
 
   return (
     <TouchableOpacity
@@ -69,7 +69,10 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         width: imageWidth,
         borderRadius: moderateScale(5),
         borderColor: colors.borderStroke,
+        // padding: moderateScale(6),
+        // width: imageWidth,
         ...getScaleTransformationStyle(scaleInAnimated),
+   
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
@@ -85,8 +88,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           height: imageHeight,
           width: imageWidth,
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
-          borderTopLeftRadius: moderateScale(5),
-          borderTopRightRadius: moderateScale(5),
+          // borderTopLeftRadius: moderateScale(5),
+          // borderTopRightRadius: moderateScale(5),
           ...imageStyle,
         }}
         imageStyle={{
