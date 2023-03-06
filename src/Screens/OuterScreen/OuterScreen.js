@@ -336,7 +336,7 @@ export default function OuterScreen({navigation}) {
       showAlertMessageError(strings.SELECT);
       return;
     } else {
-      if (lang === 'ar') {
+      if (lang === 'ar' || lang === 'he' ) {
         I18nManager.forceRTL(true);
         setItem('language', lang);
         changeLaguage(lang);

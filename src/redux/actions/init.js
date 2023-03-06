@@ -132,7 +132,7 @@ export function initApp(
             }
             if (
               refreshlang &&
-              getPrimaryLanguage?.primary_language?.sort_code == 'ar'
+              getPrimaryLanguage?.primary_language?.sort_code == 'ar' || getPrimaryLanguage?.primary_language?.sort_code == 'he'
             ) {
               I18nManager.forceRTL(true);
               // alert(JSON.stringify(I18nManager), 'I18nManager');
@@ -147,7 +147,7 @@ export function initApp(
             setLanguage(languagesData);
             changeLaguage(languagesData?.primary_language?.sort_code);
 
-            if (primaryLang.sort_code == 'ar') {
+            if (primaryLang.sort_code == 'ar' || primaryLang.sort_code == 'he') {
               if (!I18nManager.isRTL) {
                 I18nManager.forceRTL(true);
                 RNRestart.Restart();
