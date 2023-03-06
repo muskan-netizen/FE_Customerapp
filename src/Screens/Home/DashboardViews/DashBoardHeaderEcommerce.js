@@ -76,7 +76,6 @@ export default function DashBoardHeaderEcommerce({
           paddingHorizontal: moderateScale(16),
           alignItems: 'center',
           marginTop: moderateScaleVertical(4),
-          marginBottom: moderateScaleVertical(30),
         }}>
         <View
           style={{

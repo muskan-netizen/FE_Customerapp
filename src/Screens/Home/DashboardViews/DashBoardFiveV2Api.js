@@ -861,7 +861,6 @@ const DashBoardFiveV2Api = ({
         data={!!appMainData?.homePageLabels ? appMainData?.homePageLabels || [] : []}
         renderItem={renderHomePageItems}
         showsVerticalScrollIndicator={false}
-        windowSize={10}
         keyExtractor={keyExtractorUnique}
         refreshControl={
           <RefreshControl
@@ -870,13 +869,15 @@ const DashBoardFiveV2Api = ({
             tintColor={themeColors.primary_color}
           />
         }
+        ListHeaderComponent={()=><View style={{height: moderateScale(10)}} />}
+        ListFooterComponent={()=><View
+          style={{
+            height:
+              Platform.OS == 'ios' ? moderateScale(10) : moderateScale(20),
+          }}
+        />}
       />
-      <View
-        style={{
-          height:
-            Platform.OS == 'ios' ? moderateScale(10) : moderateScale(20),
-        }}
-      />
+    
       {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
         <View
           style={{
