@@ -9,6 +9,7 @@ import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
+import CustomBottomTabBarEcommerce from '../Components/CustomBottomTabBarEcommerce';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
 import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
 import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
@@ -42,6 +43,8 @@ export default function TabRoutes(props) {
   const { appStyle, appData, redirectedFrom } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
+  const businessType = appStyle?.homePageLayout;
+
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
@@ -66,8 +69,11 @@ export default function TabRoutes(props) {
   };
 
 
+  console.log(appStyle?.tabBarLayout, "fdsjfadjsfhsadf")
+
   const getCustomTabBar = (props) => {
     if (showBottomBar_) {
+
       switch (appStyle?.tabBarLayout) {
         case 1:
           return <CustomBottomTabBar {...props} />;

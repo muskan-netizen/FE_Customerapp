@@ -116,12 +116,13 @@ export default function () {
         return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
+      case 10:
+        return SearchProductVendorItem3V2;
       default:
         return SearchProductVendorItem2;
     }
   };
 
-  console.log(businessType, "businessType>>>>>businessType")
 
   return (
     <Stack.Navigator

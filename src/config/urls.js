@@ -110,7 +110,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://palmettoplusdelivered.com/api/v1';
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
-export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
+export const API_BASE_URL = 'https://emart.rostaging.com/api/v1';
 // // export const API_BASE_URL = 'https://masaapp.ae/api/v1';
 // export const API_BASE_URL = 'https://movingwheelsdeliveryservices.com/api/v1';
 // export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
@@ -119,7 +119,6 @@ export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
 
 // dishefs
 // export const API_BASE_URL = 'https://order.dishefs.com/api/v1';
-
 // bustamovepartybus
 // export const API_BASE_URL = 'https://order.bustamovepartybus.com/api/v1';
 

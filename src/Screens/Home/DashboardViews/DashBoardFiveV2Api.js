@@ -23,13 +23,14 @@ import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
-import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp2 from '../../../Components/ProductsComp2';
+import ProductsComp3 from '../../../Components/ProductsComp3';
 import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import imagePath from '../../../constants/imagePath';
@@ -182,17 +183,12 @@ const DashBoardFiveV2Api = ({
   };
   const _renderCategories = ({ item, index }) => {
     return (
-      <View
-        style={{
-          marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
-          width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
-        }}>
-        <HomeCategoryCard4
-          data={item}
-          onPress={() => onPressCategory(item)}
-          isLoading={isLoading}
-        />
-      </View>
+      <HomeCategoryCard4
+        data={item}
+        onPress={() => onPressCategory(item)}
+        isLoading={isLoading}
+      />
+
     );
   };
 
@@ -237,6 +233,7 @@ const DashBoardFiveV2Api = ({
             // elevation: 1,
             // marginVertical: 1,
             // borderRadius: 2,
+            // backgroundColor: colors.white
           }
         }
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}>
@@ -256,6 +253,8 @@ const DashBoardFiveV2Api = ({
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
                 : colors.greyColor,
+              borderWidth: 1,
+              borderColor: colors.borderStroke
             }}
           />
         )}
@@ -279,118 +278,48 @@ const DashBoardFiveV2Api = ({
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}>
-        {!!isGetEstimation ? (
-          <BannerLoader />
-        ) : (
-          <CategoryLoader2 viewStyles={{ marginVertical: moderateScale(16) }} />
-        )}
-
-        {!!isGetEstimation && (
-          <View>
-            <HeaderLoader
-              widthLeft={moderateScale(180)}
-              rectWidthLeft={moderateScale(180)}
-              rectHeightLeft={moderateScaleVertical(60)}
-              isRight={false}
-              rx={4}
-              ry={4}
-              viewStyles={{
-                marginVertical: moderateScale(20),
-              }}
-            />
-            <BannerLoader homeLoaderHeight={moderateScaleVertical(80)} />
-            <BannerLoader
-              viewStyles={{ marginTop: moderateScale(8) }}
-              homeLoaderHeight={moderateScaleVertical(80)}
-            />
-            <BannerLoader
-              viewStyles={{ marginTop: moderateScale(8) }}
-              homeLoaderHeight={moderateScaleVertical(80)}
-            />
-            <BannerLoader
-              viewStyles={{
-                marginTop: moderateScale(8),
-                marginBottom: moderateScale(20),
-              }}
-              homeLoaderHeight={moderateScaleVertical(80)}
-            />
-          </View>
-        )}
-
-        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
-          <CategoryLoader2 viewStyles={{ marginBottom: moderateScale(16) }} />
-        ) : null}
-        {!isGetEstimation && appStyle?.homePageLayout === 5 ? (
-          <View
-            style={{
-              flexDirection: 'row',
+        <CategoryLoader2 />
+        <View style={{ flexDirection: 'row', marginTop: moderateScaleVertical(16) }}>
+          <HeaderLoader
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
               marginBottom: moderateScaleVertical(16),
-            }}>
-            <HeaderLoader
-              widthLeft={moderateScale(width / 1.2)}
-              rectWidthLeft={moderateScale(width / 1.2)}
-              heightLeft={moderateScaleVertical(140)}
-              rectHeightLeft={moderateScaleVertical(140)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-            <HeaderLoader
-              widthLeft={moderateScale(width / 1.2)}
-              rectWidthLeft={moderateScale(width / 1.2)}
-              heightLeft={moderateScaleVertical(140)}
-              rectHeightLeft={moderateScaleVertical(140)}
-              isRight={false}
-              rx={15}
-              ry={15}
-            />
-          </View>
-        ) : (
-          !isGetEstimation && (
-            <View style={{ flexDirection: 'row' }}>
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                }}
-                widthLeft={moderateScale(150)}
-                rectWidthLeft={moderateScale(150)}
-                heightLeft={moderateScaleVertical(240)}
-                rectHeightLeft={moderateScaleVertical(240)}
-                isRight={false}
-                rx={15}
-                ry={15}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                }}
-                widthLeft={moderateScale(150)}
-                rectWidthLeft={moderateScale(150)}
-                heightLeft={moderateScaleVertical(240)}
-                rectHeightLeft={moderateScaleVertical(240)}
-                isRight={false}
-                rx={15}
-                ry={15}
-              />
-              <HeaderLoader
-                viewStyles={{
-                  marginTop: moderateScaleVertical(8),
-                  marginBottom: moderateScaleVertical(16),
-                }}
-                widthLeft={moderateScale(150)}
-                rectWidthLeft={moderateScale(150)}
-                heightLeft={moderateScaleVertical(240)}
-                rectHeightLeft={moderateScaleVertical(240)}
-                isRight={false}
-                rx={15}
-                ry={15}
-              />
-            </View>
-          )
-        )}
-
+            }}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
+              marginBottom: moderateScaleVertical(16),
+            }}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
+              marginBottom: moderateScaleVertical(16),
+            }}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <HeaderLoader
             widthLeft={moderateScale(180)}
@@ -440,13 +369,19 @@ const DashBoardFiveV2Api = ({
     return (
       <View key={Math.random()}>
         {getBundleId() == appIds.muvpod ? null : (
-          <View style={{ ...styles.viewAllVeiw }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginHorizontal: moderateScale(16),
+            marginBottom: moderateScaleVertical(15),
+          }}>
             <Text
               numberOfLines={1}
               style={{
                 ...styles.exploreStoresTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginTop: 0,
+
                 flex: 1,
               }}>
               {getBundleId() == appIds.quickLube
@@ -471,64 +406,6 @@ const DashBoardFiveV2Api = ({
                 </Text>
               </TouchableOpacity>
             )}
-            {/* <Menu style={{ alignSelf: 'flex-end' }}>
-              <MenuTrigger>
-                <View style={styles.menuView}>
-                  <FastImage
-                    style={{
-                      height: moderateScaleVertical(16),
-                      width: moderateScale(16),
-                      tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}
-                    resizeMode="contain"
-                    source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
-                  />
-                  <Text
-                    style={{
-                      fontSize: textScale(12),
-                      marginHorizontal: moderateScale(5),
-                      fontFamily: fontFamily.regular,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {!currSelectedFilter
-                      ? strings.RELEVANCE
-                      : currSelectedFilter?.type}
-                  </Text>
-                </View>
-              </MenuTrigger>
-              <MenuOptions
-                customStyles={{
-                  optionsContainer: {
-                    marginTop: moderateScaleVertical(36),
-                    width: moderateScale(100),
-                  },
-                }}>
-                {homeAllFilters()?.map((item, index) => {
-                  return (
-                    <View key={index}>
-                      <MenuOption
-                        onSelect={() => onSelectedFilter(item)}
-                        key={String(index)}
-                        text={item?.type}
-                        style={{
-                          marginVertical: moderateScaleVertical(5),
-                        }}
-                      />
-                      <View
-                        style={{
-                          borderBottomWidth: 1,
-                          borderBottomColor: colors.greyColor,
-                        }}
-                      />
-                    </View>
-                  );
-                })}
-              </MenuOptions>
-            </Menu> */}
           </View>
         )}
       </View>
@@ -538,7 +415,6 @@ const DashBoardFiveV2Api = ({
   const onPressViewEditAndReplace = (item) => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       orderId: item?.vendors[0].order_id,
-      // fromVendorApp: true,
       orderDetail: {
         dispatch_traking_url: item?.vendors[0].dispatch_traking_url,
       },
@@ -603,7 +479,7 @@ const DashBoardFiveV2Api = ({
 
   const _renderProducts = ({ item, index }) => {
     return (
-      <ProductsComp2
+      <ProductsComp3
         item={item}
         onPress={() =>
           navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
@@ -641,7 +517,9 @@ const DashBoardFiveV2Api = ({
 
   const ProductsThemeView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <TitleViewHome item={item} />
         <FlatList
           showsHorizontalScrollIndicator={false}
@@ -667,7 +545,9 @@ const DashBoardFiveV2Api = ({
 
   const SingleCategoryProductsView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={{ title: item?.data?.category_detail?.slug }} />
           {item?.data?.category_detail?.products?.length >= 9 && <TouchableOpacity onPress={() => showAllProducts(item)}>
@@ -719,7 +599,9 @@ const DashBoardFiveV2Api = ({
 
   const SelectedProductsThemeView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
@@ -747,76 +629,27 @@ const DashBoardFiveV2Api = ({
 
   const CategoriesView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <TitleViewHome item={item} />
-        {appStyle?.homePageLayout === 5 ? (
-          <FlatList
-            key={'7'}
-            numColumns={4}
-            data={item?.data}
-            keyExtractor={(item) => item?.id?.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderCategories}
-            ItemSeparatorComponent={() => (
-              <View style={{ marginTop: moderateScale(24) }} />
-            )}
-          />
-        ) : (
-          <FlatList
-            key={'6'}
-            horizontal
-            data={item?.data}
-            keyExtractor={(item) => item?.id?.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderCategories}
-
-            ItemSeparatorComponent={() => (
-              <View style={{ marginTop: moderateScale(24), }} />
-            )}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(12) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginRight: moderateScale(12) }} />
-            )}
-          />
-        )}
-        <View>
-          {item?.data?.length > 8 && appStyle?.homePageLayout === 5 && (
-            <TouchableOpacity
-              onPress={seeMoreCategories}
-              activeOpacity={0.8}
-              style={{
-                borderWidth: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingVertical: moderateScaleVertical(6),
-                marginHorizontal: moderateScale(8),
-                borderRadius: moderateScale(6),
-                marginTop: moderateScaleVertical(16),
-                borderColor: colors.borderColorB,
-              }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text
-                  style={{
-                    fontSize: textScale(10),
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode ? colors.white : colors.black,
-                  }}>
-                  {!seeMore ? strings.SEE_MORE : strings.SEE_LESS}
-                </Text>
-                <Image
-                  source={imagePath.icDropdown4}
-                  style={{
-                    tintColor: isDarkMode ? colors.white : colors.black,
-                    transform: [{ rotate: seeMore ? '180deg' : '0deg' }],
-                    marginLeft: moderateScale(4),
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
+        <FlatList
+          key={'6'}
+          horizontal
+          data={item?.data}
+          keyExtractor={(item) => item?.id?.toString()}
+          showsHorizontalScrollIndicator={false}
+          renderItem={_renderCategories}
+          ItemSeparatorComponent={() => (
+            <View style={{ width: moderateScale(16) }} />
           )}
-        </View>
+          ListHeaderComponent={() => (
+            <View style={{ marginLeft: moderateScale(16) }} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{ marginRight: moderateScale(12) }} />
+          )}
+        />
       </View>
     ) : (
       <React.Fragment />
@@ -825,7 +658,9 @@ const DashBoardFiveV2Api = ({
 
   const VendorsView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         {vendorHeader(item)}
         <FlatList
           horizontal
@@ -903,7 +738,7 @@ const DashBoardFiveV2Api = ({
             ...StyleSheet.absoluteFill,
             height: moderateScaleVertical(140),
             width: width - width / 3.5,
-            backgroundColor: colors.blackOpacity43,
+            backgroundColor: colors.blackOpacity66,
           }}
         />
         {!!item?.rating !== '0.0' && (
@@ -937,7 +772,9 @@ const DashBoardFiveV2Api = ({
 
   const BestSellersView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <TitleViewHome item={item} />
         <FlatList
           showsHorizontalScrollIndicator={false}
@@ -963,7 +800,9 @@ const DashBoardFiveV2Api = ({
 
   const BrandsView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <TitleViewHome item={item} />
         <FlatList
           showsHorizontalScrollIndicator={false}
@@ -994,7 +833,9 @@ const DashBoardFiveV2Api = ({
           ...styles.exploreStoresTxt,
           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           marginHorizontal: moderateScale(16),
-          marginVertical: moderateScaleVertical(15),
+          marginBottom: moderateScaleVertical(12),
+          fontSize: textScale(16),
+
           ...titleViewStyle
         }}>
         {!isEmpty(item?.translations) ? (item?.translations[0]?.title || item?.title) : item?.title}
@@ -1018,7 +859,9 @@ const DashBoardFiveV2Api = ({
 
   const SpotlightDealsView = ({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View>
+      <View style={{
+        marginBottom: moderateScaleVertical(32)
+      }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
@@ -1048,7 +891,9 @@ const DashBoardFiveV2Api = ({
   };
 
   const BannersView = ({ item }) => {
-    return !isEmpty(item?.banner_images) ? <View>
+    return !isEmpty(item?.banner_images) ? <View style={{
+      marginBottom: moderateScaleVertical(32)
+    }}>
       <TitleViewHome item={item} />
       <Carousel
         autoplay={true}
@@ -1061,7 +906,7 @@ const DashBoardFiveV2Api = ({
         }
         renderItem={renderBanners}
         sliderWidth={width}
-        itemWidth={width - moderateScale(30)}
+        itemWidth={width - moderateScale(32)}
       />
     </View> : <React.Fragment />
 
@@ -1091,8 +936,6 @@ const DashBoardFiveV2Api = ({
             <React.Fragment />
         }
       </View>
-
-
     );
   };
 
@@ -1135,7 +978,7 @@ const DashBoardFiveV2Api = ({
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
+
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -1144,7 +987,6 @@ const DashBoardFiveV2Api = ({
           />
         }>
         {showAllTempCartOrders()}
-
         <Animatable.View animation={'fadeInUp'} delay={200}>
           <FlatList
             data={appMainData?.homePageLabels}

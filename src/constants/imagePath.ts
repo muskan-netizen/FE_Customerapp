@@ -586,4 +586,19 @@ export default {
   ic_tag2NewTab: require('../assets/tabbariconsnew/ic_tag2.png'),
 
   parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
+
+  //Ecommerce Template
+  icEcomHome: require('../assets/images/Ecommerce/ic_home_01.png'),
+  icEcomHomeInactive: require('../assets/images/Ecommerce/ic_home_02.png'),
+  icEcomCart: require('../assets/images/Ecommerce/ic_cart_01.png'),
+  icEcomCartInactive: require('../assets/images/Ecommerce/ic_cart_02.png'),
+  icEcomCeleb: require('../assets/images/Ecommerce/ic_celebrity_01.png'),
+  icEcomCelebInactive: require('../assets/images/Ecommerce/ic_celebrity_02.png'),
+  icEcomBrand: require('../assets/images/Ecommerce/ic_brand_01.png'),
+  icEcomBrandInactive: require('../assets/images/Ecommerce/ic_brand_02.png'),
+  icEcomAccount: require('../assets/images/Ecommerce/ic_account_01.png'),
+  icEcomAccountInactive: require('../assets/images/Ecommerce/ic_account_02.png'),
+  icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
+  icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
+  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01.png'),
 };

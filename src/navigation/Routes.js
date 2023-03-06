@@ -16,6 +16,7 @@ import CourierStack from './CourierStack';
 import { navigationRef } from './NavigationService';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TabRoutesEcommerce from './TabRoutesEcommerce';
 import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
@@ -56,8 +57,8 @@ export default function Routes() {
               businessType === 4
                 ? TaxiTabRoutes
                 : businessType === 8
-                  ? TabRoutesP2p
-                  : TabRoutes
+                  ? TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
+                    : TabRoutes
             }
             options={{ gestureEnabled: false }}
           />

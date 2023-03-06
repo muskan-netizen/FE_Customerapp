@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
@@ -12,19 +11,17 @@ import {
   textScale
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
-import { appIds } from '../utils/constants/DynamicAppKeys';
-import { getImageUrl } from '../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
 
-const HomeCategoryCard2 = ({
+const HomeCategoryCard3 = ({
   data = {},
   onPress = () => { },
   isLoading = false,
 }) => {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const { themeColor, themeToggle, themeColors, appStyle } = useSelector((state) => state?.initBoot);
+
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 
   const imageURI = getImageUrl(
@@ -37,44 +34,31 @@ const HomeCategoryCard2 = ({
 
   const onLoad = (evl) => { };
 
-  let imgHeight =
-    appStyle?.homePageLayout === 5
-      ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel
-        ? moderateScale(70)
-        : moderateScale(50);
-  let imgWidth =
-    appStyle?.homePageLayout === 5
-      ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel
-        ? moderateScale(70)
-        : moderateScale(50);
-  let imgRadius =
-    appStyle?.homePageLayout === 5
-      ? moderateScale(30)
-      : getBundleId() === appIds.onTheWheel
-        ? moderateScale(35)
-        : moderateScale(25);
-
+  let imgHeight = moderateScale(50);
+  let imgWidth = moderateScale(50);
+  let imgRadius = moderateScale(25);
 
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
       style={{
-        marginVertical: moderateScale(1),
+        marginVertical: moderateScale(0),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.white,
-        borderRadius: moderateScale(8),
-        height: moderateScaleVertical(100),
-        width: moderateScale(80)
       }}>
       <View
         style={{
-          borderRadius: moderateScale(40),
+          flex: 0.8,
+          borderRadius: moderateScale(8),
+          width: moderateScale(80),
+          height: moderateScale(80),
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: getColorCodeWithOpactiyNumber(
+            themeColors.primary_color.substring(1),
+            10,
+          )
         }}>
         {isSVG ? (
           <SvgUri
@@ -82,7 +66,6 @@ const HomeCategoryCard2 = ({
             width={imgWidth}
             uri={imageURI}
             style={{}}
-
           />
         ) : (
           <View>
@@ -103,21 +86,21 @@ const HomeCategoryCard2 = ({
           </View>
         )}
       </View>
-
-      <Text
-        // numberOfLines={1}
-        style={{
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
-          fontFamily: fontFamily.regular,
-          fontSize: textScale(9),
-          textAlign: 'center',
-          marginVertical: moderateScale(10)
-        }}>
-        {data?.name || (data?.translation && data?.translation[0]?.name)}
-      </Text>
-
+      <View style={{ flex: 0.2 }}>
+        <Text
+          style={{
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
+            fontFamily: fontFamily.medium,
+            fontSize: textScale(12),
+            textAlign: 'center',
+            marginTop: moderateScaleVertical(4),
+            width: moderateScale(80),
+          }}>
+          {data.name}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
-export default React.memo(HomeCategoryCard2);
+export default React.memo(HomeCategoryCard3);
 const styles = StyleSheet.create({});
