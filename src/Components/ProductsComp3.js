@@ -53,7 +53,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
   const imageUrl = getImageUrl(
     media[0]?.image?.path?.proxy_url,
     media[0]?.image?.path?.image_path,
-    `${imageHeight}/${imageWidth}`,
+    `${500}/${500}`,
   );
 
 
@@ -64,13 +64,19 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       activeOpacity={1}
       style={{
         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
-        elevation: 1,
-        marginVertical: 2,
-        width: imageWidth,
-        borderRadius: moderateScale(5),
-        borderColor: colors.borderStroke,
+        // elevation: 1,
+        // marginVertical: 2,
+        // width: imageWidth,
+        // borderRadius: moderateScale(5),
+        // borderColor: colors.borderStroke,
         // padding: moderateScale(6),
         // width: imageWidth,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 1},
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 4,
+        margin:1,
         ...getScaleTransformationStyle(scaleInAnimated),
    
       }}

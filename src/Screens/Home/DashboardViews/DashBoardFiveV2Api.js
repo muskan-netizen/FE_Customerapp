@@ -33,6 +33,7 @@ import ProductsComp2 from '../../../Components/ProductsComp2';
 import ProductsComp3 from '../../../Components/ProductsComp3';
 import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
+import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -168,7 +169,7 @@ const DashBoardFiveV2Api = ({
   };
   const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <View style={{ width: width / 4 }}>
+      <View style={{width: width / 4.2}}>
         <HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
@@ -401,15 +402,15 @@ const DashBoardFiveV2Api = ({
 
   const _renderSingleCategoryProducts = useCallback(({ item, index }) => {
     return (
+    
       <SingleCategoryProducts
         mainContainerStyle={{
-          width: moderateScale(width / 4),
-          marginHorizontal: moderateScale(10),
-          marginVertical: moderateScaleVertical(8),
           borderRadius: moderateScale(20),
           overflow: 'hidden',
           height: moderateScaleVertical(130),
           elevation: 0,
+          alignItems:'center',
+          width: width/3-10
 
         }}
         showRating={false}
@@ -421,6 +422,7 @@ const DashBoardFiveV2Api = ({
         productNameStyle={{ textAlign: 'center', fontSize: textScale(10), marginBottom: moderateScaleVertical(5) }}
         numberOfLines={2}
       />
+
 
     );
   }, [])
@@ -455,18 +457,16 @@ const DashBoardFiveV2Api = ({
 
   const SingleCategoryProductsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View style={{
-        marginBottom: moderateScaleVertical(0)
-      }}>
+      <View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={{ title: item?.data?.category_detail?.slug }} />
           {item?.data?.category_detail?.products?.length >= 9 && <TouchableOpacity onPress={() => showAllProducts(item)}>
             <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
         </View>
+        <View style={{marginHorizontal:moderateScale(8)}}>
         <FlatList
           showsHorizontalScrollIndicator={false}
-
           numColumns={3}
           data={item?.data?.category_detail?.products}
           renderItem={_renderSingleCategoryProducts}
@@ -475,6 +475,7 @@ const DashBoardFiveV2Api = ({
             <View style={{ marginRight: moderateScale(16) }} />
           )}
         />
+        </View>
       </View>
     ) : (
       <React.Fragment />
@@ -540,6 +541,7 @@ const DashBoardFiveV2Api = ({
     return !isEmpty(item?.data) ? (
       <View style={{
         marginBottom: moderateScaleVertical(0),
+        marginHorizontal: moderateScale(10)
 
       }}>
         {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
@@ -855,7 +857,7 @@ const DashBoardFiveV2Api = ({
   if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
 
   return (
-    <View style={{ flex: 1, }}>
+    <WrapperContainer >
       {showAllTempCartOrders()}
       <FlatList
         data={!!appMainData?.homePageLabels ? appMainData?.homePageLabels || [] : []}
@@ -869,15 +871,15 @@ const DashBoardFiveV2Api = ({
             tintColor={themeColors.primary_color}
           />
         }
-        ListHeaderComponent={()=><View style={{height: moderateScale(10)}} />}
-        ListFooterComponent={()=><View
+        ListHeaderComponent={() => <View style={{ height: moderateScale(0) }} />}
+        ListFooterComponent={() => <View
           style={{
             height:
               Platform.OS == 'ios' ? moderateScale(10) : moderateScale(20),
           }}
         />}
       />
-    
+
       {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
         <View
           style={{
@@ -975,7 +977,7 @@ const DashBoardFiveV2Api = ({
             onPressSubscribe={onPressSubscribe}
           />
         )}
-    </View>
+    </WrapperContainer>
   );
 }
 

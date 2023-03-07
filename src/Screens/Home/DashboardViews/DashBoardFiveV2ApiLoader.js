@@ -1,92 +1,105 @@
 //import liraries
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
-import { View, Text, StyleSheet } from 'react-native';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
-import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import ProductLoader from '../../../Components/Loaders/ProductLoader';
+import WrapperContainer from '../../../Components/WrapperContainer';
 import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
+import ContentLoader from 'react-native-easy-content-loader';
+import { View } from 'react-native';
 
 // create a component
+
+var cardHeight = moderateScale(60)
+var cardWidth = moderateScale(60)
+
+let itemHeight = parseInt(moderateScale(170))
+let itemWidth = parseInt(moderateScale(140))
+
+
 const DashBoardFiveV2ApiLoader = () => {
+
+
     return (
+        <WrapperContainer>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}>
-                <CategoryLoader2 />
-                <View style={{ flexDirection: 'row', marginTop: moderateScaleVertical(0) }}>
-                    <HeaderLoader
-                        viewStyles={{
-                            marginTop: moderateScaleVertical(8),
-                            marginBottom: moderateScaleVertical(0),
-                        }}
-                        widthLeft={moderateScale(150)}
-                        rectWidthLeft={moderateScale(150)}
-                        heightLeft={moderateScaleVertical(240)}
-                        rectHeightLeft={moderateScaleVertical(240)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
+
+                <BannerLoader homeLoaderHeight={moderateScaleVertical(180)} viewStyles={{ marginVertical: moderateScale(16) }} />
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
                     />
-                    <HeaderLoader
-                        viewStyles={{
-                            marginTop: moderateScaleVertical(8),
-                            marginBottom: moderateScaleVertical(0),
-                        }}
-                        widthLeft={moderateScale(150)}
-                        rectWidthLeft={moderateScale(150)}
-                        heightLeft={moderateScaleVertical(240)}
-                        rectHeightLeft={moderateScaleVertical(240)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
                     />
-                    <HeaderLoader
-                        viewStyles={{
-                            marginTop: moderateScaleVertical(8),
-                            marginBottom: moderateScaleVertical(0),
-                        }}
-                        widthLeft={moderateScale(150)}
-                        rectWidthLeft={moderateScale(150)}
-                        heightLeft={moderateScaleVertical(240)}
-                        rectHeightLeft={moderateScaleVertical(240)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
+
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
                     />
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <HeaderLoader
-                        widthLeft={moderateScale(180)}
-                        rectWidthLeft={moderateScale(180)}
-                        rectHeightLeft={moderateScaleVertical(60)}
-                        isRight={false}
-                        rx={4}
-                        ry={4}
-                    />
-                    <HeaderLoader
-                        widthLeft={moderateScale(100)}
-                        rectWidthLeft={moderateScale(100)}
-                        rectHeightLeft={moderateScaleVertical(60)}
-                        isRight={false}
-                        rx={4}
-                        ry={4}
+
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
                     />
                 </View>
 
-                <BannerLoader
-                    // isVendorLoader
-                    viewStyles={{ marginTop: moderateScale(12) }}
-                />
-                <BannerLoader
-                    // isVendorLoader
-                    viewStyles={{ marginTop: moderateScale(12) }}
-                />
-                <BannerLoader
-                    // isVendorLoader
-                    viewStyles={{ marginTop: moderateScale(12) }}
-                />
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: moderateScaleVertical(16) }}>
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
+                    />
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
+                    />
+
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
+                    />
+
+                    <BannerLoader
+                        homeLoaderHeight={cardHeight}
+                        homeLoaderWidth={cardWidth}
+                    />
+                </View>
+
+
+
+                <ScrollView style={{ marginVertical: moderateScaleVertical(24) }} horizontal showsHorizontalScrollIndicator={false}>
+                    <BannerLoader
+                        // isVendorLoader
+                        homeLoaderHeight={itemHeight}
+                        homeLoaderWidth={itemWidth}
+                    />
+                    <BannerLoader
+                        // isVendorLoader
+                        homeLoaderHeight={itemHeight}
+                        homeLoaderWidth={itemWidth}
+                    />
+                    <BannerLoader
+                        // isVendorLoader
+                        homeLoaderHeight={itemHeight}
+                        homeLoaderWidth={itemWidth}
+                    />
+                    <BannerLoader
+                        // isVendorLoader
+                        homeLoaderHeight={itemHeight}
+                        homeLoaderWidth={itemWidth}
+                    />
+                </ScrollView>
+
+                <BannerLoader homeLoaderHeight={moderateScaleVertical(180)} viewStyles={{ marginBottom: moderateScale(16) }} />
+
+
             </ScrollView>
+        </WrapperContainer>
     );
 };
 

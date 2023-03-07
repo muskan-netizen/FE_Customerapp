@@ -15,7 +15,7 @@ import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-// import CategoryStack from './CategoryStack';
+import CategoryStack from './CategoryStack';
 
 
 import navigationStrings from './navigationStrings';
@@ -211,7 +211,7 @@ export default function TabRoutesEcommerce(props) {
       {brandTab}
       {celebTab}
 
-{/* 
+
       {!!isEnableCategory ? <Tab.Screen
         component={CategoryStack}
         name={navigationStrings.CATEGORY}
@@ -229,7 +229,7 @@ export default function TabRoutesEcommerce(props) {
             )
           },
         })}
-      /> : null} */}
+      /> : null}
 
       <Tab.Screen
         component={AccountStack}

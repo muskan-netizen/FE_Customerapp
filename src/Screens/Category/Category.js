@@ -165,28 +165,31 @@ export default function Category({ navigation, route }) {
       }>
       <Header centerTitle={strings.CATEGORY} leftIcon={false} />
 
+
       <View style={{ height: 1, backgroundColor: colors.borderLight }} />
 
-      <FlatList
-        data={!!allCategories && allCategories?.data || []}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={<View style={{ height: 10 }} />}
-        keyExtractor={(item, index) => String(index)}
-        contentContainerStyle={{ flexGrow: 1 }}
-        ItemSeparatorComponent={() => (
-          <View style={{ height: moderateScaleVertical(10) }} />
-        )}
-        numColumns={3}
-        renderItem={_renderItem}
+      <View style={{ marginHorizontal: moderateScale(16) }}>
+        <FlatList
+          data={!!allCategories && allCategories?.data || []}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={<View style={{ height: 10 }} />}
+          keyExtractor={(item, index) => String(index)}
+          contentContainerStyle={{ flexGrow: 1 }}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: moderateScaleVertical(20) }} />
+          )}
+          numColumns={3}
+          renderItem={_renderItem}
 
-        initialNumToRender={5}
-        maxToRenderPerBatch={10}
-        windowSize={10}
-        onEndReachedThreshold={0.5}
-        ListEmptyComponent={
-          <NoDataFound isLoading={isLoading} containerStyle={{}} />
-        }
-      />
+          initialNumToRender={5}
+          maxToRenderPerBatch={10}
+          windowSize={10}
+          onEndReachedThreshold={0.5}
+          ListEmptyComponent={
+            <NoDataFound isLoading={isLoading} containerStyle={{}} />
+          }
+        />
+      </View>
     </WrapperContainer>
   );
 }

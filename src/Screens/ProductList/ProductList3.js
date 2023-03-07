@@ -417,7 +417,7 @@ export default function Products({ route, navigation }) {
       return (
         <View
           key={String(index)}
-          style={{ height: moderateScale(180) }}>
+          style={{ height:  moderateScale(180) }}>
           <ProductCard3
             data={item}
             index={index}
@@ -575,7 +575,7 @@ export default function Products({ route, navigation }) {
             animateText={animateText}
           // section={section}
           />
-          <View style={styles.horizontalLine} />
+          <View style={{...styles.horizontalLine,marginVertical:moderateScaleVertical(12)}} />
         </View>
       );
     },
@@ -606,7 +606,7 @@ export default function Products({ route, navigation }) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View style={{ height: listHeight }}>
+      <View style={{ height: !!categoryInfo?.is_show_products_with_category?  listHeight: 'auto' }}>
         {false ? (
           <View
             // key={AnimatedHeaderValue}
@@ -3878,8 +3878,9 @@ export default function Products({ route, navigation }) {
           }}>Done</Text>
         </TouchableOpacity>
       </View>
-      <FlatList data={appointmentAvailableSlots}
-        showsVerticalScrollIndicator={false}
+      <FlatList 
+      data={appointmentAvailableSlots}
+      showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{
           height: moderateScaleVertical(10)
         }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {

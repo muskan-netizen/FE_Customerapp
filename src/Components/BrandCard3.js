@@ -33,19 +33,19 @@ const BrandCard2 = ({ data = {}, onPress = () => { }, applyRadius = false }) => 
   const commonStyles = commonStylesFun({ fontFamily });
 
 
-  let imgHeight = parseInt(moderateScale(60));
-  let imgWidth = parseInt(moderateScale(60));
+  let imgHeight = parseInt(moderateScale(110));
+  let imgWidth = parseInt(moderateScale(110));
 
   const imageURI = data?.icon
-    ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${imgHeight + 80}/${imgWidth + 80}`)
-    : getImageUrl(data.image.image_fit, data.image.image_path, `${imgHeight + 80}/${imgWidth + 80}`);
+    ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${imgHeight + 140}/${imgWidth + 140}`)
+    : getImageUrl(data.image.image_fit, data.image.image_path, `${imgHeight + 140}/${imgWidth + 140}`);
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
 
   return (
     <View style={{
-      width: width/3,
+      width: (width/3-10),
       }}>
     <TouchableOpacity
       activeOpacity={1}
