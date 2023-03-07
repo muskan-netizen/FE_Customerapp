@@ -544,7 +544,9 @@ const shortCodes = {
   zozozi: '980515',
   ekobridge: '04468e',
   ambosSafariExpress: 'ec16dd',
-  zulbrand: '873380'
+  zulbrand: '873380',
+  emart: '6ca3a4',
+  oyeeRides:"634188"
 };
 
 const appIds = {
@@ -2704,6 +2706,14 @@ const appIds = {
   zulbrand: Platform.select({
     ios: 'com.zulbrand.order',
     android: 'com.zulbrand.order',
+  }),
+  emart: Platform.select({
+    ios: 'com.emart.order',
+    android: 'com.emart.order',
+  }),
+  oyeeRides: Platform.select({
+    ios: 'com.oyeeRides.order',
+    android: 'com.oyeeRides.order',
   }),
 };
 

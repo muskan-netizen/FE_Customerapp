@@ -1,4 +1,4 @@
-#include "Pods/Target Support Files/Pods-available_pods-Zulbrand/Pods-available_pods-Zulbrand.release.xcconfig"
+#include "Pods/Target Support Files/Pods-available_pods-Zulbrand/Pods-available_pods-Zulbrand.rel.xcconfig"
 PROJECT_APPLE_ID = 6445912372
 PROJECT_BUNDLE_ID = com.zulbrand.order
 PROJECT_APP_VERSION = 1.0
