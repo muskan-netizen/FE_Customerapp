@@ -249,6 +249,7 @@ export default function VendorDetail3({ navigation, route }) {
           rectWidthTop={(width - moderateScale(50)) / 3}
           heightTop={moderateScaleVertical(90)}
           rectHeightTop={moderateScaleVertical(90)}
+          radius={0}
           isSubCategory
         />
         <CategoryLoader2
@@ -259,6 +260,7 @@ export default function VendorDetail3({ navigation, route }) {
           heightTop={moderateScaleVertical(90)}
           rectHeightTop={moderateScaleVertical(90)}
           isSubCategory
+          radius={0}
         />
         <CategoryLoader2
           viewStyles={{ marginTop: moderateScale(25) }}
@@ -268,6 +270,7 @@ export default function VendorDetail3({ navigation, route }) {
           heightTop={moderateScaleVertical(90)}
           rectHeightTop={moderateScaleVertical(90)}
           isSubCategory
+          radius={0}
         />
         <CategoryLoader2
           viewStyles={{ marginTop: moderateScale(25) }}
@@ -277,6 +280,7 @@ export default function VendorDetail3({ navigation, route }) {
           heightTop={moderateScaleVertical(90)}
           rectHeightTop={moderateScaleVertical(90)}
           isSubCategory
+          radius={0}
         />
         <CategoryLoader2
           viewStyles={{ marginTop: moderateScale(25) }}
@@ -286,6 +290,7 @@ export default function VendorDetail3({ navigation, route }) {
           heightTop={moderateScaleVertical(90)}
           rectHeightTop={moderateScaleVertical(90)}
           isSubCategory
+          radius={0}
         />
       </WrapperContainer>
     );

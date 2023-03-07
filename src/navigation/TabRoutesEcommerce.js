@@ -223,8 +223,8 @@ export default function TabRoutesEcommerce(props) {
                 style={styles.iconStyle}
                 tintColor={!!focused ? themeColors?.primary_color : colors.inactiveText}
                 source={!!focused
-                  ? imagePath.icEcomBrand
-                  : imagePath.icEcomBrandInactive}
+                  ? imagePath.icCatActive
+                  : imagePath.icCat}
               />
             )
           },
