@@ -568,6 +568,7 @@ const DashBoardFiveV2Api = ({
       <View style={{
         marginBottom: moderateScaleVertical(0)
       }}>
+        <View style={{marginTop:moderateScaleVertical(8)}} />
         {vendorHeader(item)}
         <FlatList
           horizontal

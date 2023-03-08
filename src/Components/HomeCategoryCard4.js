@@ -36,8 +36,8 @@ const HomeCategoryCard3 = ({
 
   const onLoad = (evl) => { };
 
-  let imgHeight = moderateScale(50);
-  let imgWidth = moderateScale(50);
+  let imgHeight = moderateScale(70);
+  let imgWidth = moderateScale(70);
   let imgRadius = moderateScale(applyRadius ? 25 : 0);
 
   return (
@@ -49,19 +49,7 @@ const HomeCategoryCard3 = ({
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <View
-        style={{
-          flex: 0.8,
-          borderRadius: moderateScale(8),
-          width: moderateScale(80),
-          height: moderateScale(80),
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            themeColors.primary_color.substring(1),
-            10,
-          )
-        }}>
+   
         {isSVG ? (
           <SvgUri
             height={imgHeight}
@@ -87,13 +75,13 @@ const HomeCategoryCard3 = ({
             />
           </View>
         )}
-      </View>
+  
       <View style={{ flex: 0.2 }}>
         <Text
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.medium,
-            fontSize: textScale(11),
+            fontSize: textScale(10),
             textAlign: 'center',
             marginTop: moderateScaleVertical(4),
             width: moderateScale(80),
