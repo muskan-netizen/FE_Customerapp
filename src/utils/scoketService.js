@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 class WSService {
-    initializeSocket = (socketUrl) => {
+    initializeSocket = async(socketUrl) => {
         try {
             this.socket = io(socketUrl, {
                 transports: ['websocket'],

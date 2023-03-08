@@ -23,6 +23,7 @@ import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
 import Loader from '../../../Components/Loader';
 import socketServices from '../../../utils/scoketService';
+import { MyDarkTheme } from '../../../styles/theme';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -645,7 +646,12 @@ useEffect(()=>{
   };
   // console.log(appMainData, 'appMainData');
   return (
-    <View style={{flex: 1, backgroundColor: colors.white}}>
+    <View style={{
+      flex: 1, 
+      backgroundColor: isDarkMode
+      ? MyDarkTheme.colors.background
+      : colors.white,
+      }}>
       {renderHomeScreen()}
     </View>
   );
