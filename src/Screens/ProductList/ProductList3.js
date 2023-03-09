@@ -88,6 +88,8 @@ let timeOut = undefined;
 
 var tempQty = 0;
 
+var loadMoreProduct = true
+
 const filtersData = [
   {
     id: -2,
@@ -573,7 +575,7 @@ export default function Products({ route, navigation }) {
             animateText={animateText}
           // section={section}
           />
-          <View style={styles.horizontalLine} />
+          <View style={{ ...styles.horizontalLine, marginVertical: moderateScaleVertical(6) }} />
         </View>
       );
     },
@@ -604,7 +606,7 @@ export default function Products({ route, navigation }) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View style={{ height: listHeight }}>
+      <View style={{ height: !!categoryInfo?.is_show_products_with_category ? listHeight : 'auto' }}>
         {false ? (
           <View
             // key={AnimatedHeaderValue}
@@ -1876,8 +1878,7 @@ export default function Products({ route, navigation }) {
     updateState({ wrapperListLoader: true })
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
-    let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
-
+    let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}&limit=40`;
 
 
     if (!!data?.categoryExist) {
@@ -1937,6 +1938,7 @@ export default function Products({ route, navigation }) {
           if (res?.data) {
             if (res.data.products.data.length == 0) {
               updateState({ loadMore: false });
+              loadMoreProduct = false
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
@@ -2237,13 +2239,11 @@ export default function Products({ route, navigation }) {
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
-    console.log("dslkfdkjfkjfj")
-    if (loadMore) {
-      if (pageNo < lastPage) {
-        updateState({ pageNo: pageNo + 1 });
-        getAllListItems(pageNo + 1);
-        setLoading(false);
-      }
+    console.log("dslkfdkjfkjfj", loadMore)
+    if (loadMoreProduct) {
+      updateState({ pageNo: pageNo + 1 });
+      getAllListItems(pageNo + 1);
+      setLoading(false);
     }
   };
 
