@@ -21,7 +21,6 @@ import {useDarkMode} from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
-import Loader from '../../../Components/Loader';
 import socketServices from '../../../utils/scoketService';
 import { MyDarkTheme } from '../../../styles/theme';
 

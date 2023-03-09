@@ -846,6 +846,8 @@ export default function TaxiHomeDashbord({
                 onPress={() => updateState({ fullMapShow: true })}>
                 {
                   <MapView
+                    pointerEvents='none'
+                    scrollEnabled={false}
                     ref={mapRef}
                     provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                     // customMapStyle={mapStyleGrey}
@@ -854,7 +856,7 @@ export default function TaxiHomeDashbord({
                       borderRadius: 12,
                     }}
                     // provider={MapView.PROVIDER_GOOGLE}
-                    
+
                     region={{
                       latitude: !!curLatLong?.latitude
                         ? parseFloat(curLatLong?.latitude)
