@@ -121,8 +121,6 @@ export default function () {
     }
   };
 
-  console.log("businessTypebusinessTypebusinessType", businessType)
-
   return (
     <Stack.Navigator
       screenOptions={{
