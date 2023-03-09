@@ -541,6 +541,7 @@ export const getAppCode = () => {
         case appIds.zulbrand: return shortCodes.zulbrand;
         case appIds.emart: return shortCodes.emart;
         case appIds.oyeeRides: return shortCodes.oyeeRides;
+        case appIds.royoRides: return shortCodes.royoRides;
         
 
 

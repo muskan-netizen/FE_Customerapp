@@ -1084,6 +1084,8 @@
     "emartRelease": "cd android && ./gradlew assembleemartRelease",
     "oyeeRides": "react-native run-android --variant=oyeeRidesDebug --appIdSuffix=oyeeRides",
     "oyeeRidesRelease": "cd android && ./gradlew assembleoyeeRidesRelease",
+    "royoRides": "react-native run-android --variant=royoRidesDebug --appIdSuffix=royoRides",
+    "royoRidesRelease": "cd android && ./gradlew assembleroyoRidesRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

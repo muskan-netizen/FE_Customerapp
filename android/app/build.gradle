@@ -218,14 +218,14 @@ android {
 
       productFlavors {
 
-    zozozi{
+     royoRides{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zozozi.order'
-                resValue "string", "app_name", "Zozozi"
+                applicationId 'com.royoRides.order'
+                resValue "string", "app_name", "Royo Rides"
                 resValue "string", "host_name", ""
             }
 }
@@ -8584,7 +8584,7 @@ android {
     //             resValue "string", "app_name", "Emart"
     //             resValue "string", "host_name", ""
     //         }
-     // oyeeRides{
+    // oyeeRides{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8592,6 +8592,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.oyeeRides.order'
     //             resValue "string", "app_name", "OyeeRides"
+    //             resValue "string", "host_name", ""
+    //         }
+    // royoRides{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.royoRides.order'
+    //             resValue "string", "app_name", "Royo Rides"
     //             resValue "string", "host_name", ""
     //         }
     // }

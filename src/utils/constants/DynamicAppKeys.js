@@ -546,7 +546,8 @@ const shortCodes = {
   ambosSafariExpress: 'ec16dd',
   zulbrand: '873380',
   emart: '6ca3a4',
-  oyeeRides:"634188"
+  oyeeRides:"634188",
+  royoRides:'87406e'
 };
 
 const appIds = {
@@ -2714,6 +2715,10 @@ const appIds = {
   oyeeRides: Platform.select({
     ios: 'com.oyeeRides.order',
     android: 'com.oyeeRides.order',
+  }),
+  royoRides: Platform.select({
+    ios: 'com.royoRides.order',
+    android: 'com.royoRides.order',
   }),
 };
 
