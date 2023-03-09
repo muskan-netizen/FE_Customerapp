@@ -38,9 +38,9 @@ import {
   createToken,
   initStripe,
   StripeProvider,
-  handleCardAction,
   createPaymentMethod,
   confirmPayment,
+  handleNextAction
 } from '@stripe/stripe-react-native';
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
@@ -122,7 +122,7 @@ export default function TipPaymentOptions({ navigation, route }) {
     console.log(res2, 'cardInfo');
     if (res2) {
       await createPaymentMethod({
-        type: 'Card',
+        paymentMethodType: 'Card',
         card: cardInfo,
         token: res2
       })

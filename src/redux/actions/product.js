@@ -41,6 +41,7 @@ import {
   GET_PRODUCT_DELIVERY_SLOTS_INTERVAL,
   CHECK_SLOTS_LIMIT,
   GET_SLOTS_FOR_APPOINTMENT,
+  CREATE_BID_REQUEST,
 } from '../../config/urls';
 import { apiGet, apiPost, setWalletData } from '../../utils/utils';
 import store from '../store';
@@ -571,3 +572,9 @@ export function checkSlotsLimit(data = {}, headers = {}) {
 export function getAppointmentSlots(data = {}, headers = {}) {
   return apiPost(GET_SLOTS_FOR_APPOINTMENT, data, headers);
 }
+
+// create bid request>>>>>>>>>>
+export function createBidRequest(data = {}, headers = {}) {
+  return apiPost(CREATE_BID_REQUEST, data, headers);
+}
+

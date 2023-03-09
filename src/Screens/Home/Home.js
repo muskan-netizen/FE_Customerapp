@@ -30,6 +30,7 @@ import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 
+import DashBoardTwo from './DashboardViews/DashBoardTwo';
 
 import {
   DashBoardFive,
@@ -410,11 +411,16 @@ console.log(appData,'appDataappDataappDataappData')
     }
     let latlongObj = {};
 
+
+    console.log("locationDatalocationData", locationData)
+
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
-        latitude:locationData?.latitude || 30.7333 || '',
-        longitude:locationData?.longitude|| 76.7794 || '',
+
+        latitude: locationData?.latitude || 30.7333,
+        longitude: locationData?.longitude || 76.7794
+
       };
     }
 
@@ -441,17 +447,12 @@ console.log(appData,'appDataappDataappDataappData')
           }
         });
       }
-      console.log(selectedVendorType, defaultVendorType,
-        'defaultVendorType....defaultVendorType')
+
       if (!selectedVendorType) {
 
         actions.dineInData(defaultVendorType);
       }
-      console.log(
-        selectedVendorType,
-        defaultVendorType,
-        'selectedVendorTypeselectedVendorType',
-      );
+
 
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
@@ -1087,6 +1088,7 @@ console.log(appData,'appDataappDataappDataappData')
                   toggleData={appData}
                   location={location}
                   curLatLong={curLatLong}
+                  currentLocation={currentLocation}
                 />
               ) : (
                 <DashBoardNine
@@ -1146,6 +1148,7 @@ console.log(appData,'appDataappDataappDataappData')
                   toggleData={appData}
                   location={location}
                   curLatLong={curLatLong}
+                  currentLocation={currentLocation}
                 />
               ) : (
                 <DashBoardFive
@@ -1172,30 +1175,7 @@ console.log(appData,'appDataappDataappDataappData')
                   selectedHomeCategory={selectedHomeCategory}
                   selectedFilterType={selectedFilterType}
                 />
-                // <DashBoardFive2
-                //   handleRefresh={() => handleRefresh()}
-                //   bannerPress={(item) => bannerPress(item)}
-                //   isLoading={isLoading}
-                //   isRefreshing={isRefreshing}
-                //   appMainData={appMainData}
-                //   onPressCategory={(item) => {
-                //     onPressCategory(item);
-                //   }}
-                //   onPressVendor={(item) => {
-                //     onPressVendor(item);
-                //   }}
-                //   isDineInSelected={isDineInSelected}
-                //   selcetedToggle={selcetedToggle}
-                //   tempCartData={tempCartData}
-                //   toggleData={appData}
-                //   navigation={navigation}
-                //   onVendorFilterSeletion={onVendorFilterSeletion}
-                //   singleVendor={singleVendor}
-                //   onPressAddLaundryItem={onPressAddLaundryItem}
-                //   isLoadingAddons={isLoadingAddons}
-                //   selectedHomeCategory={selectedHomeCategory}
-                //   selectedFilterType={selectedFilterType}
-                // />
+
               )}
             </>
           );
@@ -1223,6 +1203,7 @@ console.log(appData,'appDataappDataappDataappData')
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardSix
@@ -1279,6 +1260,7 @@ console.log(appData,'appDataappDataappDataappData')
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardFive
@@ -1308,33 +1290,7 @@ console.log(appData,'appDataappDataappDataappData')
                 isSubscription={isSubscription}
                 selectedFilterType={selectedFilterType}
               />
-              // <DashBoardFive2
-              //   handleRefresh={() => handleRefresh()}
-              //   bannerPress={(item) => bannerPress(item)}
-              //   isLoading={isLoading}
-              //   isRefreshing={isRefreshing}
-              //   appMainData={appMainData}
-              //   onPressCategory={(item) => {
-              //     onPressCategory(item);
-              //   }}
-              //   onPressVendor={(item) => {
-              //     onPressVendor(item);
-              //   }}
-              //   isDineInSelected={isDineInSelected}
-              //   selcetedToggle={selcetedToggle}
-              //   tempCartData={tempCartData}
-              //   toggleData={appData}
-              //   navigation={navigation}
-              //   onVendorFilterSeletion={onVendorFilterSeletion}
-              //   singleVendor={singleVendor}
-              //   onPressAddLaundryItem={onPressAddLaundryItem}
-              //   isLoadingAddons={isLoadingAddons}
-              //   selectedHomeCategory={selectedHomeCategory}
-              //   onClose={_closeModal}
-              //   onPressSubscribe={_onPressSubscribe}
-              //   isSubscription={isSubscription}
-              //   selectedFilterType={selectedFilterType}
-              // />
+
             )}
           </>
         );
@@ -1367,6 +1323,7 @@ console.log(appData,'appDataappDataappDataappData')
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardEight
@@ -1425,6 +1382,7 @@ console.log(appData,'appDataappDataappDataappData')
                 toggleData={appData}
                 location={location}
                 curLatLong={curLatLong}
+                currentLocation={currentLocation}
               />
             ) : (
               <DashBoardNine

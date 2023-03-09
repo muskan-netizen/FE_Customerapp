@@ -1,0 +1,12 @@
+#include "Pods/Target Support Files/Pods-available_pods-Reedas/Pods-available_pods-Reedas.release.xcconfig"
+PROJECT_APPLE_ID = 6445840465
+PROJECT_BUNDLE_ID = com.reedas.order
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Reedas
+PROJECT_GOOGLE_CLIENT_ID =1029808003786-m196p220opvacqt39u6v5s6aca3cmcqj.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.1029808003786-m196p220opvacqt39u6v5s6aca3cmcqj
+PROJECT_FACEBOOK_ID = 202079879068671
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =ReedasInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

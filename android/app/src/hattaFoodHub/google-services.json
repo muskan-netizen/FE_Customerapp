@@ -1,58 +1,65 @@
 {
   "project_info": {
-    "project_number": "700297284346",
-    "project_id": "hattafoodhub-order",
-    "storage_bucket": "hattafoodhub-order.appspot.com"
+    "project_number": "407774402132",
+    "project_id": "hattafoodhub-b5350",
+    "storage_bucket": "hattafoodhub-b5350.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:700297284346:android:e525a83cd67ac96ddb1743",
+        "mobilesdk_app_id": "1:407774402132:android:c0e62a5a3065fb9398ffc1",
         "android_client_info": {
-          "package_name": "com.hattaFoodHub.royoorders"
+          "package_name": "com.hattaFoodHub.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "700297284346-bf33bnkcgrbbej0crh251dgn03gqee9j.apps.googleusercontent.com",
+          "client_id": "407774402132-d6u4shbjbd84ccjucbn66mago3dc4lfk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hattaFoodHub.royoorders",
+            "package_name": "com.hattaFoodHub.order",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "700297284346-pj7qlqh9m4r7cbs8ofctnodi2url5ds0.apps.googleusercontent.com",
+          "client_id": "407774402132-qnjiihcjg3d6r48rqekgpkhus0thnaii.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hattaFoodHub.royoorders",
+            "package_name": "com.hattaFoodHub.order",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "700297284346-rgp1lakf23o9c6d2hau322ebk19dcltm.apps.googleusercontent.com",
+          "client_id": "407774402132-vpksvj2pls9ngln9f3mg95bhtloa7od7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hattaFoodHub.royoorders",
+            "package_name": "com.hattaFoodHub.order",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "700297284346-q0b8gvpceuvg001ahiieloadi7eac8lc.apps.googleusercontent.com",
+          "client_id": "407774402132-enecernm9e57sgbronlnd8qk7lm53b6r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDxeIo0i_MXoaHaCNN1KzKYfxRMFcnW7JA"
+          "current_key": "AIzaSyArN7oyxK3invc_z1fCmkbRRZ8CNMw1MHU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "700297284346-q0b8gvpceuvg001ahiieloadi7eac8lc.apps.googleusercontent.com",
+              "client_id": "407774402132-enecernm9e57sgbronlnd8qk7lm53b6r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "407774402132-8q6uu8funsup6esrvs1to55vnfbet9mi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hattafoodhub.orderapp"
+              }
             }
           ]
         }
