@@ -28,10 +28,10 @@ const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
-  const { appStyle } = useSelector((state) => state?.initBoot || {});
+  const { appStyle,themeColors } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
 
-  console.log(businessType, "businessType>>>>>businessType")
+  console.log(themeColors, "themeColorsthemeColorsthemeColors")
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{

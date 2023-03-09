@@ -33,6 +33,11 @@ const GradientButton = ({
 
   const commonStyles = commonStylesFun({ fontFamily, themeColors });
 
+
+
+  const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
+
+
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -60,7 +65,7 @@ const GradientButton = ({
         colors={
           !!colorsArray
             ? colorsArray
-            : [!!themeColors?.primary_color ? themeColors?.primary_color : colors.themeColor, !!themeColors?.primary_color ? themeColors?.primary_color : colors.themeColor]
+            : [themePrimaryColor,themePrimaryColor]
         }>
         {!!indicator ? (
           <ActivityIndicator size="small" color={indicatorColor} />

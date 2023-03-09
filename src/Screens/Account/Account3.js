@@ -632,8 +632,6 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
           {/* {!!userData?.auth_token &&
@@ -862,6 +860,7 @@ export default function Account3({ navigation }) {
                 }}
               />
             )}
+            
           {!!userData?.auth_token ? null : (
             <View style={styles.loginView}>
               <TouchableOpacity
@@ -894,14 +893,6 @@ export default function Account3({ navigation }) {
           onPress={(index) => onSosButton(index)}
         />
       </SafeAreaView>
-      <ActionSheet
-        ref={actionSheet}
-        // title={'Choose one option'}
-        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={2}
-        onPress={(index) => onSosButton(index)}
-      />
     </View>
   );
 }

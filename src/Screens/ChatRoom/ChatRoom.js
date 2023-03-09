@@ -23,9 +23,7 @@ import FastImage from 'react-native-fast-image';
 export default function ChatRoom({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const {appData, currencies, languages, appStyle} = useSelector(
-    (state) => state.initBoot,
-  );
+  const {appData, currencies, languages, appStyle} = useSelector((state) => state.initBoot || {});
   const {dineInType} = useSelector((state) => state?.home);
 
   const fontFamily = appStyle?.fontSizeData;
