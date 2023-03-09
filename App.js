@@ -30,7 +30,7 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 
-import * as Sentry from '@sentry/react-native';
+
 import { View, Text } from 'react-native';
 
 import codePush from 'react-native-code-push';
@@ -38,13 +38,6 @@ import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
-
-Sentry.init({
-  dsn: 'https://1da68544ed374cabbd1a9782739dbe6b@o4504612036411392.ingest.sentry.io/4504616014708736',
-  attachScreenshot: true,
-});
-
-
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -444,4 +437,4 @@ const App = () => {
 };
 
 
-export default codePush(CodePushOptions)(Sentry.wrap(App));
+export default codePush(CodePushOptions)(App);

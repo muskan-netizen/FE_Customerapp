@@ -434,7 +434,7 @@ export default function TaxiHomeDashbord({
                   style={{
                     marginHorizontal: moderateScale(10),
                   }}>
-                  {!!itm?.street?<Text
+                  {!!itm?.street ? <Text
                     numberOfLines={2}
                     style={{
                       ...styles.addressTitle,
@@ -443,7 +443,7 @@ export default function TaxiHomeDashbord({
                         : colors.black,
                     }}>
                     {itm?.street}
-                  </Text>:null}
+                  </Text> : null}
                   <Text
                     numberOfLines={2}
                     style={{
@@ -479,7 +479,7 @@ export default function TaxiHomeDashbord({
       })
     );
   };
-  
+
   const savedPlaceView1 = (image) => {
     return (
       <ScrollView keyboardShouldPersistTaps={'handled'} style={{ width: width }}>
@@ -622,7 +622,11 @@ export default function TaxiHomeDashbord({
         }
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, zIndex: 1000 }}>
+        style={{
+          flex: 1, zIndex: 1000, backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+        }}>
         <>
           <TaxiBannerHome
             appStyle={appStyle}
@@ -850,6 +854,7 @@ export default function TaxiHomeDashbord({
                       borderRadius: 12,
                     }}
                     // provider={MapView.PROVIDER_GOOGLE}
+                    
                     region={{
                       latitude: !!curLatLong?.latitude
                         ? parseFloat(curLatLong?.latitude)
