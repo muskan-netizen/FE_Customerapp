@@ -217,747 +217,762 @@ android {
 
     flavorDimensions "appType"
 
-      productFlavors {
-
-        royoorder {
+    productFlavors { 
+              muvpod {
                 dimension "appType"
                 versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
                 // applicationIdSuffix ".royoorder"
-                applicationId 'com.codebrew.royoorder'
-                resValue "string", "app_name", "RoyoOrder"
+                applicationId 'com.muvpod'
+                resValue "string", "app_name", "Muvpod"
                 resValue "string", "host_name", "sales.royoorders.com"
             }
-    
-        weedLomo {
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.weedLomo.order'
-                resValue "string", "app_name", "WeedLomo"
-                resValue "string", "host_name", ""
-            }
-       
-               sultanCenter{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.sultanCenter.order'
-                resValue "string", "app_name", "Sultan Center"
-                resValue "string", "host_name", ""
-            }  
-                ngoal{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ngoal.order'
-                resValue "string", "app_name", "NGoal"
-                resValue "string", "host_name", ""
-            }
-            orderchekout{
-                dimension "appType"
-                versionCode 5
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.orderchekout'
-                resValue "string", "app_name", "Order Chekout"
-                resValue "string", "host_name", ""
-            }
-            homeric{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.homeric'
-                resValue "string", "app_name", "Homeric"
-                resValue "string", "host_name", ""  
-            }
-        runrun {
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".runrun"
-                applicationId 'com.codebrew.runrun'
-                resValue "string", "app_name", "Runrun"
-                resValue "string", "host_name", ""
-            }
-
-            tranzit {
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".tranzit"
-                applicationId 'com.app.tranzit'
-                resValue "string", "app_name", "Tranzit"
-                resValue "string", "host_name", ""
-            }
-            hmoobhub {
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.codebrew.hmoobhub'
-                resValue "string", "app_name", "Hmoob Hub"
-                resValue "string", "host_name", ""
-            }
-                        capcorp {
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.capcorpapp'
-                resValue "string", "app_name", "Capcorp"
-                resValue "string", "host_name", ""
-            }
-            masa{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.app.masa'
-                resValue "string", "app_name", "Masa"
-                resValue "string", "host_name", ""
-            }
-
-            yogofood{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.yogofood'
-                resValue "string", "app_name", "Yogo Food"
-                resValue "string", "host_name", "yogofood.royoorders.com"
-            }
-        
-            clicktoeat{
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.clicktoeat'
-                resValue "string", "app_name", "Click Eat"
-                resValue "string", "host_name", ""
-            } 
-            instamobile{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.instamobile'
-                resValue "string", "app_name", "InstaMobile"
-                resValue "string", "host_name", ""
-            } 
-            africanvillagemarket{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.africanvillagemarket'
-                resValue "string", "app_name", "African village Market"
-                resValue "string", "host_name", ""
-            }
-
-            bottomsup{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.bottomsup'
-                resValue "string", "app_name", "Bottoms Up"
-                resValue "string", "host_name", ""
-            }
-            ufood{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.order.ufood'
-                resValue "string", "app_name", "UFood"
-                resValue "string", "host_name", ""
-            }
-            martinionwheels{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.martinionwheels'
-                resValue "string", "app_name", "Martini on wheels"
-                resValue "string", "host_name", ""
-            }
-            blip{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.app.blip'
-                resValue "string", "app_name", "BLIP"
-                resValue "string", "host_name", ""
-            }
-           helpnowrightnow{
-                dimension "appType"
-                versionCode 6
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.helpnowrightnow'
-                resValue "string", "app_name", "HelpNow!RN"
-                resValue "string", "host_name", ""
-            }
-            cannabus{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.cannabus'
-                resValue "string", "app_name", "Cannabus"
-                resValue "string", "host_name", ""
-            }
-            govachow{
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.govachow'
-                resValue "string", "app_name", "GovaChow"
-                resValue "string", "host_name", ""
-            }
-            bustanfakieh{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.bustan'
-                resValue "string", "app_name", "Bustan Fakieh"
-                resValue "string", "host_name", ""
-            
-            }
-            shariff{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.shariff'
-                resValue "string", "app_name", "Shariff"
-                resValue "string", "host_name", ""
-            }
-            gajamove{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.gajamove'
-                resValue "string", "app_name", "GajaMove"
-                resValue "string", "host_name", ""
-            }
-            getme{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.getme'
-                resValue "string", "app_name", "Getme"
-                resValue "string", "host_name", ""
-            }
-            orbit{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.orbit'
-                resValue "string", "app_name", "Orbit"
-                resValue "string", "host_name", ""
-            }
-            carlitoo{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.carlitoo'
-                resValue "string", "app_name", "Carlitoo"
-                resValue "string", "host_name", ""
-            }
-            specialhalal{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.specialhalal'
-                resValue "string", "app_name", "Special halal"
-                resValue "string", "host_name", ""
-            }
-            thehouse{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.thehouse'
-                resValue "string", "app_name", "The House"
-                resValue "string", "host_name", ""
-            }
-            tasmeem{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.tasmeem'
-                resValue "string", "app_name", "Tasmeem"
-                resValue "string", "host_name", ""
-            }
-            snabbhem{
-                dimension "appType"
-                versionCode 3
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.snabbhem'
-                resValue "string", "app_name", "Snabbhem"
-                resValue "string", "host_name", ""
-            }
-            lastminutedress{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.lastminutedress.order'
-                resValue "string", "app_name", "Last Minute Dress"
-                resValue "string", "host_name", ""
-            }
-            rerak{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.rerak'
-                resValue "string", "app_name", "Rerak"
-                resValue "string", "host_name", ""
-            }
-            yummiidash{
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.app.yummiidash'
-                resValue "string", "app_name", "Yummiidash"
-                resValue "string", "host_name", ""
-            }
-            yoho{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.yoho'
-                resValue "string", "app_name", "Yoho"
-                resValue "string", "host_name", ""
-            }
-            glamsouq{
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.glamsouq.customer'
-                resValue "string", "app_name", "Glamsouq"
-                resValue "string", "host_name", ""
-            }
-            doctatransportation{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.doctatransportation'
-                resValue "string", "app_name", "Docta Transportation"
-                resValue "string", "host_name", ""
-            }
-
-            washvalley{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.washvalley'
-                resValue "string", "app_name", "WashValley"
-                resValue "string", "host_name", ""
-            }
-            equamd{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.equamd'
-                resValue "string", "app_name", "EquaMD"
-                resValue "string", "host_name", ""
-            }
-            hoganchef{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.codebrew.hoganchef'
-                resValue "string", "app_name", "Hogan Chef"
-                resValue "string", "host_name", ""
-
-            }
-            servze{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.servze.orderapp'
-                resValue "string", "app_name", "Servze"
-                resValue "string", "host_name", ""
-            }
-
-            cabdelivr{
-                dimension "appType"
-                versionCode 3
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.app.cabdelivr'
-                resValue "string", "app_name", "Cabdelivr"
-                resValue "string", "host_name", ""
-            }
-            drus{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.app.drus'
-                resValue "string", "app_name", "Drus"
-                resValue "string", "host_name", ""
-            }
-
-            arenagrub{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.arenagrub'
-                resValue "string", "app_name", "ArenaGrub" 
-                resValue "string", "host_name", ""
-            }
-            yahu{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.yahu'
-                resValue "string", "app_name", "Yahu" 
-                resValue "string", "host_name", ""
-            }
-            zuzuclean{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zuzuclean'
-                resValue "string", "app_name", "Zuzu Clean"
-                resValue "string", "host_name", ""
-            }
-            towtrek{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.app.towtrek'
-                resValue "string", "app_name", "TowTrek"
-                resValue "string", "host_name", ""
-            }
-            jet{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.jet'
-                resValue "string", "app_name", "Jet"
-                resValue "string", "host_name", ""
-            }
-
-            africanize{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.africanize'
-                resValue "string", "app_name", "Africanize"
-                resValue "string", "host_name", ""
-            }
-        ebay{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ebay.order'
-                resValue "string", "app_name", "Ebay"
-                resValue "string", "host_name", ""
-            }
-        readyToRent{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.readyToRent.order'
-                resValue "string", "app_name", "Ready to rent"
-                resValue "string", "host_name", ""
-            }
-    theGenie{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.theGenie.order'
-                resValue "string", "app_name", "The Genie"
-                resValue "string", "host_name", ""
-            }
-    reedas{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.reedas.order'
-                resValue "string", "app_name", "Reedas"
-                resValue "string", "host_name", ""
-            }
-    onebasket{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.onerbasket.order'
-                resValue "string", "app_name", "OneBasket"
-                resValue "string", "host_name", ""
-            }
-    zozozi{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zozozi.order'
-                resValue "string", "app_name", "Zozozi"
-                resValue "string", "host_name", ""
-            }
-    ekobridge{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ekobridge.order'
-                resValue "string", "app_name", "Ekobridge"
-                resValue "string", "host_name", ""
-            }
-    ambosSafariExpress{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ambosSafariExpress.order'
-                resValue "string", "app_name", "Ambos Safari Express"
-                resValue "string", "host_name", ""
-            }
-
-                        markita{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.markita'
-                resValue "string", "app_name", "Markita"
-                resValue "string", "host_name", ""
-            }
-            sirvu{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.sirvu'
-                resValue "string", "app_name", "SirVU"
-                resValue "string", "host_name", ""
-            }
-
-            ublue{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ublue'
-                resValue "string", "app_name", "Ublue"
-                resValue "string", "host_name", ""
-            }
-
-            senshive{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.senshive'
-                resValue "string", "app_name", "Senshive"
-                resValue "string", "host_name", ""
-            }
-
-            ridemate{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ridemate'
-                resValue "string", "app_name", "Ridemate"
-                resValue "string", "host_name", ""
-            }
-            codiner{
-                dimension "appType"
-                versionCode 11
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.app.codiner'
-                resValue "string", "app_name", "Codiner"
-                resValue "string", "host_name", "codiner.royoorders.com"
-            }
-            housekeeper{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.housekeeper'
-                resValue "string", "app_name", "Housekeeper 4 Hire"
-                resValue "string", "host_name", ""
-            }
-            hairstonexpress{
-                dimension "appType"
-                versionCode 2
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.hairstonexpress'
-                resValue "string", "app_name", "Hairston Express"
-                resValue "string", "host_name", ""
-            }
-
-            diamonddashers{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.diamonddashers'
-                resValue "string", "app_name", "Diamond Dashers"
-                resValue "string", "host_name", ""
-            }
-
-            destinationOps{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.destinationOps'
-                resValue "string", "app_name", "Destination Ops"
-                resValue "string", "host_name", ""
-            }
-            loopwhole{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.loopwhole'
-                resValue "string", "app_name", "LoopWhole"
-                resValue "string", "host_name", ""
-            }
-
-            messiaa{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.messiaa.orders'
-                resValue "string", "app_name", "MESSIAA"
-                resValue "string", "host_name", ""
-            }
-
-    zulbrand{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zulbrand.order'
-                resValue "string", "app_name", "Zulbrand"
-                resValue "string", "host_name", ""
-            }
-
     }
+
+    //   productFlavors {
+
+    //     royoorder {
+    //             dimension "appType"
+    //             versionCode 3
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".royoorder"
+    //             applicationId 'com.codebrew.royoorder'
+    //             resValue "string", "app_name", "RoyoOrder"
+    //             resValue "string", "host_name", "sales.royoorders.com"
+    //         }
+    
+    //     weedLomo {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.weedLomo.order'
+    //             resValue "string", "app_name", "WeedLomo"
+    //             resValue "string", "host_name", ""
+    //         }
+       
+    //            sultanCenter{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.sultanCenter.order'
+    //             resValue "string", "app_name", "Sultan Center"
+    //             resValue "string", "host_name", ""
+    //         }  
+    //             ngoal{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ngoal.order'
+    //             resValue "string", "app_name", "NGoal"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         orderchekout{
+    //             dimension "appType"
+    //             versionCode 5
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion         
+    //             applicationId 'com.orderchekout'
+    //             resValue "string", "app_name", "Order Chekout"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         homeric{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.homeric'
+    //             resValue "string", "app_name", "Homeric"
+    //             resValue "string", "host_name", ""  
+    //         }
+    //     runrun {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".runrun"
+    //             applicationId 'com.codebrew.runrun'
+    //             resValue "string", "app_name", "Runrun"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         tranzit {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".tranzit"
+    //             applicationId 'com.app.tranzit'
+    //             resValue "string", "app_name", "Tranzit"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         hmoobhub {
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".hmoobhhub"
+    //             applicationId 'com.codebrew.hmoobhub'
+    //             resValue "string", "app_name", "Hmoob Hub"
+    //             resValue "string", "host_name", ""
+    //         }
+    //                     capcorp {
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".hmoobhhub"
+    //             applicationId 'com.capcorpapp'
+    //             resValue "string", "app_name", "Capcorp"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         masa{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".hmoobhhub"
+    //             applicationId 'com.app.masa'
+    //             resValue "string", "app_name", "Masa"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         yogofood{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             // applicationIdSuffix ".hmoobhhub"
+    //             applicationId 'com.yogofood'
+    //             resValue "string", "app_name", "Yogo Food"
+    //             resValue "string", "host_name", "yogofood.royoorders.com"
+    //         }
+        
+    //         clicktoeat{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.clicktoeat'
+    //             resValue "string", "app_name", "Click Eat"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         instamobile{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.instamobile'
+    //             resValue "string", "app_name", "InstaMobile"
+    //             resValue "string", "host_name", ""
+    //         } 
+    //         africanvillagemarket{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.africanvillagemarket'
+    //             resValue "string", "app_name", "African village Market"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         bottomsup{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.bottomsup'
+    //             resValue "string", "app_name", "Bottoms Up"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         ufood{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.order.ufood'
+    //             resValue "string", "app_name", "UFood"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         martinionwheels{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.martinionwheels'
+    //             resValue "string", "app_name", "Martini on wheels"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         blip{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.app.blip'
+    //             resValue "string", "app_name", "BLIP"
+    //             resValue "string", "host_name", ""
+    //         }
+    //        helpnowrightnow{
+    //             dimension "appType"
+    //             versionCode 6
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.helpnowrightnow'
+    //             resValue "string", "app_name", "HelpNow!RN"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         cannabus{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.cannabus'
+    //             resValue "string", "app_name", "Cannabus"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         govachow{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.govachow'
+    //             resValue "string", "app_name", "GovaChow"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         bustanfakieh{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.bustan'
+    //             resValue "string", "app_name", "Bustan Fakieh"
+    //             resValue "string", "host_name", ""
+            
+    //         }
+    //         shariff{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.shariff'
+    //             resValue "string", "app_name", "Shariff"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         gajamove{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.gajamove'
+    //             resValue "string", "app_name", "GajaMove"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         getme{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.getme'
+    //             resValue "string", "app_name", "Getme"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         orbit{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.orbit'
+    //             resValue "string", "app_name", "Orbit"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         carlitoo{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.carlitoo'
+    //             resValue "string", "app_name", "Carlitoo"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         specialhalal{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.specialhalal'
+    //             resValue "string", "app_name", "Special halal"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         thehouse{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.thehouse'
+    //             resValue "string", "app_name", "The House"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         tasmeem{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.tasmeem'
+    //             resValue "string", "app_name", "Tasmeem"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         snabbhem{
+    //             dimension "appType"
+    //             versionCode 3
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.snabbhem'
+    //             resValue "string", "app_name", "Snabbhem"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         lastminutedress{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.lastminutedress.order'
+    //             resValue "string", "app_name", "Last Minute Dress"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         rerak{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.rerak'
+    //             resValue "string", "app_name", "Rerak"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         yummiidash{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.app.yummiidash'
+    //             resValue "string", "app_name", "Yummiidash"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         yoho{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.yoho'
+    //             resValue "string", "app_name", "Yoho"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         glamsouq{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.glamsouq.customer'
+    //             resValue "string", "app_name", "Glamsouq"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         doctatransportation{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.doctatransportation'
+    //             resValue "string", "app_name", "Docta Transportation"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         washvalley{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.washvalley'
+    //             resValue "string", "app_name", "WashValley"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         equamd{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.equamd'
+    //             resValue "string", "app_name", "EquaMD"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         hoganchef{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.codebrew.hoganchef'
+    //             resValue "string", "app_name", "Hogan Chef"
+    //             resValue "string", "host_name", ""
+
+    //         }
+    //         servze{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.servze.orderapp'
+    //             resValue "string", "app_name", "Servze"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         cabdelivr{
+    //             dimension "appType"
+    //             versionCode 3
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.app.cabdelivr'
+    //             resValue "string", "app_name", "Cabdelivr"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         drus{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.app.drus'
+    //             resValue "string", "app_name", "Drus"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         arenagrub{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.arenagrub'
+    //             resValue "string", "app_name", "ArenaGrub" 
+    //             resValue "string", "host_name", ""
+    //         }
+    //         yahu{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.yahu'
+    //             resValue "string", "app_name", "Yahu" 
+    //             resValue "string", "host_name", ""
+    //         }
+    //         zuzuclean{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zuzuclean'
+    //             resValue "string", "app_name", "Zuzu Clean"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         towtrek{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.app.towtrek'
+    //             resValue "string", "app_name", "TowTrek"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         jet{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.jet'
+    //             resValue "string", "app_name", "Jet"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         africanize{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.africanize'
+    //             resValue "string", "app_name", "Africanize"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     ebay{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ebay.order'
+    //             resValue "string", "app_name", "Ebay"
+    //             resValue "string", "host_name", ""
+    //         }
+    //     readyToRent{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.readyToRent.order'
+    //             resValue "string", "app_name", "Ready to rent"
+    //             resValue "string", "host_name", ""
+    //         }
+   
+    // theGenie{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.theGenie.order'
+    //             resValue "string", "app_name", "The Genie"
+    //             resValue "string", "host_name", ""
+    //         }
+    // reedas{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.reedas.order'
+    //             resValue "string", "app_name", "Reedas"
+    //             resValue "string", "host_name", ""
+    //         }
+    // onebasket{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.onerbasket.order'
+    //             resValue "string", "app_name", "OneBasket"
+    //             resValue "string", "host_name", ""
+    //         }
+    // zozozi{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zozozi.order'
+    //             resValue "string", "app_name", "Zozozi"
+    //             resValue "string", "host_name", ""
+    //         }
+    // ekobridge{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ekobridge.order'
+    //             resValue "string", "app_name", "Ekobridge"
+    //             resValue "string", "host_name", ""
+    //         }
+    // ambosSafariExpress{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ambosSafariExpress.order'
+    //             resValue "string", "app_name", "Ambos Safari Express"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //                     markita{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.markita'
+    //             resValue "string", "app_name", "Markita"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         sirvu{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.sirvu'
+    //             resValue "string", "app_name", "SirVU"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         ublue{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ublue'
+    //             resValue "string", "app_name", "Ublue"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         senshive{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.senshive'
+    //             resValue "string", "app_name", "Senshive"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         ridemate{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ridemate'
+    //             resValue "string", "app_name", "Ridemate"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         codiner{
+    //             dimension "appType"
+    //             versionCode 11
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.app.codiner'
+    //             resValue "string", "app_name", "Codiner"
+    //             resValue "string", "host_name", "codiner.royoorders.com"
+    //         }
+    //         housekeeper{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.housekeeper'
+    //             resValue "string", "app_name", "Housekeeper 4 Hire"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         hairstonexpress{
+    //             dimension "appType"
+    //             versionCode 2
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.hairstonexpress'
+    //             resValue "string", "app_name", "Hairston Express"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         diamonddashers{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.diamonddashers'
+    //             resValue "string", "app_name", "Diamond Dashers"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         destinationOps{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.destinationOps'
+    //             resValue "string", "app_name", "Destination Ops"
+    //             resValue "string", "host_name", ""
+    //         }
+    //         loopwhole{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.loopwhole'
+    //             resValue "string", "app_name", "LoopWhole"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //         messiaa{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.messiaa.orders'
+    //             resValue "string", "app_name", "MESSIAA"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    // zulbrand{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zulbrand.order'
+    //             resValue "string", "app_name", "Zulbrand"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    // }
             
 }
    dependencies {
