@@ -131,7 +131,6 @@ export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
   const { data } = route.params;
-  console.log(data, 'route.params');
 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
@@ -220,7 +219,6 @@ export default function Products({ route, navigation }) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
-  console.log(currencies, "currenciescurrencies");
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
   let businessType = appData?.profile?.preferences?.business_type || null;
@@ -1376,7 +1374,7 @@ export default function Products({ route, navigation }) {
       }
 
       console.log(item, 'chechItemm');
-      
+
       if (!!item.is_recurring_booking) {
         if (isEmpty(selectedPlanValues)) {
           showInfo('Click on Calendar icon to schedule the item!');
@@ -1722,6 +1720,7 @@ export default function Products({ route, navigation }) {
   };
 
   const getAllListItems = (pageNo = 1) => {
+
     if (data?.vendor) {
       {
         !!selectedFilters.current
@@ -1729,6 +1728,7 @@ export default function Products({ route, navigation }) {
           : getAllProductsByVendor(pageNo);
       }
     } else {
+
       {
         !!selectedFilters.current
           ? getAllProductsCategoryFilter(pageNo)
@@ -1873,7 +1873,7 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
-    updateState({wrapperListLoader:true})
+    updateState({ wrapperListLoader: true })
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
@@ -1902,7 +1902,7 @@ export default function Products({ route, navigation }) {
       .then(async (res) => {
         console.log('get all products by vendor res', res?.data);
         // return;
-        updateState({wrapperListLoader:false})
+        updateState({ wrapperListLoader: false })
 
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
           let detail = res?.data?.vendor
@@ -2033,6 +2033,7 @@ export default function Products({ route, navigation }) {
   const getAllProductsByCategoryId = (pageNo) => {
     const productWithCategoryId = data?.productWithSingleCategory ? data?.id : productListId?.id
     const rootproduct = data?.rootProducts || data?.productWithSingleCategory ? true : false
+    console.log("<==api hit getProductByCategoryIdOptamize")
     actions
       .getProductByCategoryIdOptamize(
         `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
@@ -2076,9 +2077,21 @@ export default function Products({ route, navigation }) {
           }
         }
         setLoading(false);
+        updateState({
+          lastPage: res.data.listData?.last_page
+        })
         // getAllVendorFilters()
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
-        updateState({ loadMore: false });
+        if (
+          res?.data?.listData?.current_page < res.data?.listData?.last_page
+        ) {
+          updateState({ loadMore: true });
+        }
+        else {
+          console.log("fskjflksdjfadslkfjs")
+          updateState({ loadMore: false });
+
+        }
       })
 
       .catch(errorMethod);
@@ -2224,6 +2237,7 @@ export default function Products({ route, navigation }) {
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
+    console.log("dslkfdkjfkjfj")
     if (loadMore) {
       if (pageNo < lastPage) {
         updateState({ pageNo: pageNo + 1 });
@@ -2896,7 +2910,7 @@ export default function Products({ route, navigation }) {
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;
-      const searchData =[]
+      const searchData = []
       const newArr = searchItems?.map((el) => {
         const records =
           el?.data &&
@@ -2917,8 +2931,8 @@ export default function Products({ route, navigation }) {
 
       newArr?.map((item) => {
         if (item?.data?.length != 0) {
-            searchData?.push(item)
-          }
+          searchData?.push(item)
+        }
       })
       console.log('checking products >>>>>', searchData);
 
@@ -3538,8 +3552,6 @@ export default function Products({ route, navigation }) {
     }
   };
 
-  console.log(cloneSectionList, "cloneSectionList");
-
   const getAdditionalPriceOfAddons = () => {
     // console.log(
     //   'productPriceDataproductPriceDataproductPriceData>>>',
@@ -3619,7 +3631,7 @@ export default function Products({ route, navigation }) {
       showError('Product varient is not availabel!');
       return;
     }
-    if(!!productDetailData.is_recurring_bookin){
+    if (!!productDetailData.is_recurring_bookin) {
       if (isEmpty(selectedPlanValues)) {
         showError('Plan type should not be empty!');
         return;
@@ -3640,8 +3652,8 @@ export default function Products({ route, navigation }) {
         }
       }
     }
-   
-    
+
+
 
     playHapticEffect(hapticEffects.rigid);
     console.log('add on set', addonSet);
@@ -4189,7 +4201,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-{console.log(tagFilteredData,'tagFilteredData=>',cloneSectionList)}
+            {console.log(tagFilteredData, 'tagFilteredData=>', cloneSectionList)}
 
             {!!categoryInfo?.is_show_products_with_category ? (
 
@@ -4242,7 +4254,7 @@ export default function Products({ route, navigation }) {
                 ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                 //  getItemLayout={getItemLayout}
                 // refreshing={isRefreshing}
-                // initialNumToRender={12}
+                initialNumToRender={12}
                 // maxToRenderPerBatch={10}
                 // windowSize={10}
                 // refreshControl={
@@ -4261,6 +4273,7 @@ export default function Products({ route, navigation }) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
+
             {/* <View style={{height: moderateScaleVertical(60)}} /> */}
 
             {isVisibleModal ? (
