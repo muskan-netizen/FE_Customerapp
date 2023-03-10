@@ -81,6 +81,7 @@ import {
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 import Modal, { ReactNativeModal } from 'react-native-modal';
+import * as RNLocalize from 'react-native-localize';
 
 
 let timeOut = undefined;
@@ -331,6 +332,12 @@ export default function Products({ route, navigation }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableVendorSlots, setAvailableVendorSlots] = useState([]);
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
+  const [selectedProductForAppointment, setSelectedProductForAppointment] = useState(null)
+  const [appointmentDispatcherAgentSlots, setAppointmentDispatcherAgentSlots] = useState([])
+  const [allDispatcherAgents, setAllDispatcherAgents] = useState([]);
+  const [availableDriversForSlot, setAvailableDriversForSlot] = useState([])
+  const [selectedAllProductDataForAppointment, setSelectedAllProductDataForAppointment] = useState({})
+  const [selectedAgent, setSelectedAgent] = useState({})
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
@@ -1306,10 +1313,11 @@ export default function Products({ route, navigation }) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
-
-
-      if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot)) {
+          console.log(dine_In_Type,item,selectedAppointmentSlot,"selectedAppointmentSlot");
+      if (dine_In_Type == 'appointment' && item?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
         setAppointmentPicker(true)
+        setSelectedProductForAppointment(item?.id || item?.variant[0].id)
+        setSelectedAllProductDataForAppointment(item)
         return
       }
 
@@ -1364,6 +1372,8 @@ export default function Products({ route, navigation }) {
           data['scheduled_date_time'] = String(
             moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
           );
+        data['dispatch_agent_id'] = selectedAgent?.id
+        data['schedule_type'] = selectedAllProductDataForAppointment?.mode_of_service == 'schedule' ? 'schedule' : ''
 
       }
 
@@ -1747,7 +1757,7 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
-    updateState({wrapperListLoader:true})
+    updateState({ wrapperListLoader: true })
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
@@ -1756,10 +1766,8 @@ export default function Products({ route, navigation }) {
 
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
-
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
@@ -1776,8 +1784,7 @@ export default function Products({ route, navigation }) {
       .then(async (res) => {
         console.log('get all products by vendor res', res?.data);
         // return;
-        updateState({wrapperListLoader:false})
-
+        updateState({ wrapperListLoader: false })
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
           let detail = res?.data?.vendor
           if (!!detail?.desc) {
@@ -2760,7 +2767,7 @@ export default function Products({ route, navigation }) {
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;
-      const searchData =[]
+      const searchData = []
       const newArr = searchItems?.map((el) => {
         const records =
           el?.data &&
@@ -2781,8 +2788,8 @@ export default function Products({ route, navigation }) {
 
       newArr?.map((item) => {
         if (item?.data?.length != 0) {
-            searchData?.push(item)
-          }
+          searchData?.push(item)
+        }
       })
       console.log('checking products >>>>>', searchData);
 
@@ -3471,11 +3478,12 @@ export default function Products({ route, navigation }) {
 
 
   const addToCart = (addonSet) => {
-    if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot)) {
+    if (dine_In_Type == 'appointment' && selectedAllProductDataForAppointment?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
       setAppointmentPicker(true)
+      setSelectedProductForAppointment(selectedAllProductDataForAppointment?.id)
+      setSelectedAllProductDataForAppointment(selectedAllProductDataForAppointment)
       return
     }
-
     if (!isProductAvailable && typeId == 10) {
       showError('Product varient is not availabel!');
       return;
@@ -3532,11 +3540,15 @@ export default function Products({ route, navigation }) {
           Number(productDetailNew?.product?.minimum_duration_min);
       }
 
+      console.log(appointmentSelectedDate,"appointmentSelectedDate");
+
       if (dine_In_Type == 'appointment') {
         data['schedule_slot'] = selectedAppointmentSlot?.value,
           data['scheduled_date_time'] = String(
             moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
           );
+        data['dispatch_agent_id'] = selectedAgent?.id
+        data['schedule_type'] = selectedAllProductDataForAppointment?.mode_of_service == 'schedule' ? 'schedule' : ''
 
       }
 
@@ -3575,20 +3587,70 @@ export default function Products({ route, navigation }) {
   };
 
 
-
-  const onDateSelected = (date) => {
+  const onDateSelected = async(date) => {
     setLoadingGetSlots(true);
-    if (isAppointmentPicker) {
-      actions.getAppointmentSlots({
-        cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
-        product_id: productDetailData?.id
-      }, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-      }).then((res) => {
-        console.log(res, "<===res getAppointmentSlots")
-        setAppointmentAvailableSlots(res?.data?.time_slots)
+    const apiData = {
+      cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+      product_id: productDetailData?.id || selectedProductForAppointment
+    }
+    const apiHeader = {
+      code: appData.profile.code,
+      currency: currencies.primary_currency.id,
+      language: languages.primary_language.id,
+    }
+ 
+    if (isAppointmentPicker ) {
+      if(selectedAllProductDataForAppointment?.is_slot_from_dispatch){
+        actions.getAppointmentSlots(apiData, apiHeader).then((res) => {
+          console.log(res, "<===res getAppointmentSlots")
+          if (res?.dispatchAgents) {
+            if (!isEmpty(res?.dispatchAgents?.slots)) {
+              const slots = res?.dispatchAgents?.slots
+              setAppointmentDispatcherAgentSlots(slots)
+              let allSlots = []
+              for (var propName in slots) {
+                if (slots.hasOwnProperty(propName)) {
+                  var propValue = slots[propName];
+                  allSlots.push(propValue)
+                }
+              }
+  
+              setAllDispatcherAgents(res?.dispatchAgents?.agents)
+              setAppointmentDispatcherAgentSlots(allSlots)
+            }
+  
+          } else {
+            setAppointmentAvailableSlots(res?.data?.time_slots)
+          }
+  
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
+          setSelectedAppointmentIndx(null);
+          setSelectedAppointmentSlot({})
+          setTimeout(() => {
+            setAppointmentSlotsModal(true)
+          }, 500);
+        }).catch((err) => {
+          console.log(err, "<==err getAppointmentSlots")
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
+          errorMethod(err);
+        })
+      }else{
+        try {
+        let vendorId = selectedAllProductDataForAppointment?.vendor_id
+        // vendor_id,date,delivery
+        const res = await actions.checkVendorSlots(
+          `?vendor_id=${vendorId}&date=${moment(appointmentSelectedDate).format("YYYY-MM-DD")}&delivery=${dineInType}`,
+          {
+            code: appData?.profile?.code,
+            timezone: RNLocalize.getTimeZone(),
+          },
+        );
+          
+        console.log(res,"res for slots vendor");
+        if(res){
+        setAppointmentAvailableSlots(res)
         setLoadingGetSlots(false);
         setAppointmentPicker(false);
         setSelectedAppointmentIndx(null);
@@ -3596,12 +3658,15 @@ export default function Products({ route, navigation }) {
         setTimeout(() => {
           setAppointmentSlotsModal(true)
         }, 500);
-      }).catch((err) => {
-        console.log(err, "<==err getAppointmentSlots")
-        setLoadingGetSlots(false);
-        setAppointmentPicker(false);
-        errorMethod(err);
-      })
+        }
+      } catch (error) {
+        setCheckSloatLoading(false);
+  
+        console.log('error riased', error);
+      }
+    };
+      
+     
 
       return
     }
@@ -3642,6 +3707,28 @@ export default function Products({ route, navigation }) {
       });
   };
 
+  const onSlotSelect = (item, index) => {
+    const result = allDispatcherAgents.filter(a1 => item?.agent_id.find(a2 => a1.id == a2));
+    setAvailableDriversForSlot(result)
+    setSelectedAppointmentSlot(item)
+    setSelectedAppointmentIndx(index)
+    setSelectedAgent({})
+  }
+
+  const _onSelecteAgent = (item) => {
+    setSelectedAgent(item)
+  }
+
+
+  const _onDonePressAfterSlotSelect =() => {
+    if (isEmpty(selectedAgent)&& selectedAllProductDataForAppointment?.is_show_dispatcher_agent) {
+      alert('please select agent')
+      return
+    }
+    setAppointmentSlotsModal(false)
+    setAppointmentPicker(false)
+    setSelectedAgent({})
+  }
 
 
 
@@ -3665,38 +3752,73 @@ export default function Products({ route, navigation }) {
           fontFamily: fontFamily?.bold,
           fontSize: textScale(14),
         }}>Select slot</Text>
-        <TouchableOpacity onPress={() => {
-          setAppointmentSlotsModal(false)
-          setAppointmentPicker(false)
-        }}>
+        <TouchableOpacity onPress={_onDonePressAfterSlotSelect}>
           <Text style={{
             fontFamily: fontFamily.bold,
             color: themeColors?.primary_color
           }}>Done</Text>
         </TouchableOpacity>
       </View>
-      <FlatList data={appointmentAvailableSlots}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{
-          height: moderateScaleVertical(10)
-        }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
-          setSelectedAppointmentSlot(item)
-          setSelectedAppointmentIndx(index)
-        }} style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 8,
-          borderWidth: 1,
-          borderColor: colors.borderColorB,
-          borderRadius: moderateScale(4)
-        }}>
-          <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
-          <Text style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(13),
-            marginLeft: moderateScale(10)
-          }}>{item?.name}</Text>
-        </TouchableOpacity>} />
+
+
+      {!isEmpty(appointmentDispatcherAgentSlots) ?
+        <FlatList data={appointmentDispatcherAgentSlots}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{
+            height: moderateScaleVertical(10)
+          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => onSlotSelect(item, index)} style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(4)
+          }}>
+            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(13),
+              marginLeft: moderateScale(10)
+            }}>{item?.name}</Text>
+          </TouchableOpacity>} />
+        : <FlatList data={appointmentAvailableSlots}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{
+            height: moderateScaleVertical(10)
+          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
+            setSelectedAppointmentSlot(item)
+            setSelectedAppointmentIndx(index)
+          }} style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(4)
+          }}>
+            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(13),
+              marginLeft: moderateScale(10)
+            }}>{item?.name}</Text>
+          </TouchableOpacity>} />}
+
+
+
+      <View style={{ flexDirection: 'row', paddingVertical: moderateScaleVertical(10) }}>
+        {!!(!isEmpty(selectedAllProductDataForAppointment)&& selectedAllProductDataForAppointment?.is_slot_from_dispatch && selectedAllProductDataForAppointment?.is_show_dispatcher_agent && !isEmpty(availableDriversForSlot)) && availableDriversForSlot.map((item, index) => {
+          return (
+            <TouchableOpacity style={{ alignItems: 'center', marginHorizontal: moderateScale(10) }}
+              onPress={() => _onSelecteAgent(item)}>
+              <View style={{ borderWidth: moderateScale(1), borderColor: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight, height: moderateScaleVertical(42), width: moderateScale(42), borderRadius: moderateScale(20) }}>
+                <Image style={{ height: moderateScaleVertical(40), width: moderateScale(40), borderRadius: moderateScale(20) }} source={{ uri: item?.image_url }} />
+              </View>
+              <Text style={{ fontSize: textScale(9), fontFamily: fontFamily?.bold, color: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight }}>{item?.name}</Text>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
     </View>
   }
 
@@ -3705,8 +3827,6 @@ export default function Products({ route, navigation }) {
 
   const renderSectionFooter = (props) => {
     const { section } = props;
-
-
     return (
       //   section?.data.length >= 15 && searchInput =='' && section?.data.length !== section?.data_count  ?
       //   <View style={{height: moderateScale(50)}}>
@@ -3986,7 +4106,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-{console.log(tagFilteredData,'tagFilteredData=>',cloneSectionList)}
+            {console.log(tagFilteredData, 'tagFilteredData=>', cloneSectionList)}
 
             {!!categoryInfo?.is_show_products_with_category ? (
 
@@ -4187,7 +4307,7 @@ export default function Products({ route, navigation }) {
                               ? MyDarkTheme.colors.background
                               : '#fff',
                           }}>
-                          {typeId !== 10 && !showErrorMessageTitle && (
+                          {typeId !== 10 && !showErrorMessageTitle && dine_In_Type !='appointment' &&(
                             <View
                               style={{
                                 flex: 0.35,
@@ -4522,7 +4642,7 @@ export default function Products({ route, navigation }) {
             locale={languages?.primary_language?.sort_code}
             date={isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date())}
             textColor={isDarkMode ? colors.white : colors.blackB}
-            mode="datetime"
+            mode="date"
             minimumDate={new Date()}
             onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
           />

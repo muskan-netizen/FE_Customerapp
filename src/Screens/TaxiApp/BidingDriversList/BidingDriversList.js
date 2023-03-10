@@ -19,6 +19,8 @@ import { MyDarkTheme } from '../../../styles/theme';
 import Header from '../../../Components/Header';
 import { isEmpty } from 'lodash';
 import { UIActivityIndicator } from 'react-native-indicators';
+import { Alert } from 'react-native';
+import strings from '../../../constants/lang';
 
 
 export default function BidingDriversList(props) {
@@ -34,6 +36,12 @@ export default function BidingDriversList(props) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
+
+  const {
+    notificationForBide
+  } = useSelector((state) => state?.order);
+
+
   const fontFamily = appStyle?.fontSizeData;
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -43,20 +51,32 @@ export default function BidingDriversList(props) {
   const [allDriverBidesList, setAllDriverBidesList] = useState([])
   const [bidExpiryTime, setBidExpiryTime] = useState(null)
 
-  const [textAnimatedValue, setTextAnimatedValue] = useState(new Animated.Value(0))
+
+  useEffect(() => {
+    _onOrderBidRideDetails()
+  }, [notificationForBide])
 
 
+  // useEffect(() => {
+  //   const notifiyUser = setTimeout(() => {
+  //     if (isFocused && isEmpty(allDriverBidesList)) {
+  //       Alert.alert('Info', 'No Driver Intrested', [
+  //         {
+  //           text: strings.CANCEL,
+  //           onPress: () => console.log('Cancel Pressed'),
+  //         },
+  //         { text: strings.OK, onPress: () => navigation.goBack() },
+  //       ]);
+  //     }
+  //   }, 45000);
 
-  useInterval(
-    () => {
-      _onOrderBidRideDetails()
-    }, isFocused ? 10000 : null
-  );
+  //   return () => clearTimeout(notifiyUser)
+  // }, [])
 
 
   const _onOrderBidRideDetails = () => {
     const data = {
-      order_id: !!paramData?.apiResponseData?.id ? paramData?.apiResponseData?.id : null,
+      order_id: paramData?.apiResponseData?.id || null,
       task_type: 'bid_ride_request'
     }
 
@@ -94,7 +114,7 @@ export default function BidingDriversList(props) {
   }
 
   const _onAcceptRideBid = (bidData) => {
-    console.log(bidData,"apiDat>>>>");
+    console.log(bidData, "apiDat>>>>");
     const apiData = {
       bid_id: bidData?.id,
     }
@@ -103,7 +123,7 @@ export default function BidingDriversList(props) {
       currency: currencies?.primary_currency?.id,
       language: languages?.primary_language?.id,
     }
-  
+
     actions.acceptRideForBid(apiData, headerData).then((res) => {
       navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         ...paramData,
@@ -113,7 +133,7 @@ export default function BidingDriversList(props) {
     }).catch((error) => {
       showError(error?.message)
     })
-   
+
   }
 
 
@@ -147,7 +167,7 @@ export default function BidingDriversList(props) {
           justifyContent: 'center',
           flexDirection: 'row',
           backgroundColor: getColorCodeWithOpactiyNumber(themeColors?.primary_color.substring(1), 20),
-          paddingVertical:moderateScaleVertical(5)
+          paddingVertical: moderateScaleVertical(5)
         }}>
           <Text
             style={{

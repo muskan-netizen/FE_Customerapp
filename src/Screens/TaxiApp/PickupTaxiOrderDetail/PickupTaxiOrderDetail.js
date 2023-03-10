@@ -360,7 +360,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({ isLoading: false });
       }
     },
-    isFocused && orderStatus != "completed" ? 10000 : null
+    isFocused && orderStatus != "completed" ? 5000 : null
   );
 
 
@@ -2307,10 +2307,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                           fullStarColor={colors.ORANGE}
                                           starSize={25}
                                         />
-                                        {console.log(
-                                          productInfo[index]?.product_rating,
-                                          "productInfo[index]?.product_rating"
-                                        )}
+                                      
                                         {productInfo[index]?.product_rating && (
                                           <TouchableOpacity
                                             onPress={() => rateYourOrder(val)}

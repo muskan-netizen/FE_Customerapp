@@ -103,7 +103,6 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
-
 function Cart({ navigation, route }) {
   let paramsData = route?.params;
   console.log(paramsData, 'paramsDataparamsData')
@@ -175,6 +174,8 @@ function Cart({ navigation, route }) {
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
+  const [isDriverListView, setIsDriverListView] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState({})
 
 
   const [state, setState] = useState({
@@ -286,6 +287,11 @@ function Cart({ navigation, route }) {
     });
     Keyboard.dismiss();
   };
+
+  const closeDriverView = () => {
+    setIsDriverListView(false)
+  }
+
   useFocusEffect(
     useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -297,7 +303,7 @@ function Cart({ navigation, route }) {
   );
 
   const androidBackButtonHandler = () => {
-    updateState({paymentModal: false})
+    updateState({ paymentModal: false })
     return true;
   };
 
@@ -498,7 +504,6 @@ function Cart({ navigation, route }) {
           let getApiScheduledDate =
             currentDate == res?.data?.scheduled_date_time?.slice(0, -6);
           setApiScheduledDate(getApiScheduledDate);
-
           // if (getBundleId == appIds.masa) {
           //   if (currentDate == sheduledorderdate || currentDate == getApiScheduledDate) {
           //     setAvailableTimeSlots([])
@@ -514,7 +519,6 @@ function Cart({ navigation, route }) {
           // setLaundryAvailableDropOffSlot(res.data.slots);
 
           setCartData(res.data);
-
           updateState({
             isLoadingB: false,
             isRefreshing: false,
@@ -534,8 +538,7 @@ function Cart({ navigation, route }) {
         }
       })
       .catch(errorMethod);
-
-    getItem('selectedTable')
+      getItem('selectedTable')
       .then((res) => {
         setDefaultSelectedTable(res);
       })
@@ -877,7 +880,7 @@ function Cart({ navigation, route }) {
       return;
     }
 
-    console.log("paymentIdpaymentIdpaymentIdpaymentId",paymentId)
+    console.log("paymentIdpaymentIdpaymentIdpaymentId", paymentId)
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
         return;
@@ -1238,7 +1241,7 @@ function Cart({ navigation, route }) {
         setModalType(null);
         setSheduleddropoffdate(null);
 
-        console.log("selectedPayment?.idselectedPayment?.id",selectedPayment?.id)
+        console.log("selectedPayment?.idselectedPayment?.id", selectedPayment?.id)
         if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
           updateState({ isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
@@ -1535,6 +1538,11 @@ function Cart({ navigation, route }) {
         return;
       }
 
+      // if (dineInType == 'appointment' && isEmpty(selectedDriver)) {
+      //   setIsDriverListView(true)
+      //   return
+      // }
+
       if (cartData?.without_category_kyc === 0) {
         showError('Please submit KYC form!');
         return;
@@ -1547,10 +1555,6 @@ function Cart({ navigation, route }) {
         });
       });
 
-      // if (!isFAQsSubmitted) {
-      //   showInfo("Please fill all product's FAQs");
-      //   return;
-      // }
 
       updateState({ placeLoader: true });
       var d1 = new Date();
@@ -1846,25 +1850,25 @@ function Cart({ navigation, route }) {
     order_number,
   ) => {
     actions.getStripePaymentIntent(
-        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-        {
-          payment_option_id: selectedPayment?.id,
-          action: 'cart',
-          amount:
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0),
-          payment_method_id: paymentMethodId,
-          order_number: order_number,
-          card: cardInfo,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+      {
+        payment_option_id: selectedPayment?.id,
+        action: 'cart',
+        amount:
+          Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0),
+        payment_method_id: paymentMethodId,
+        order_number: order_number,
+        card: cardInfo,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then(async (res) => {
         if (res && res?.client_secret) {
           const { paymentIntent, error } = await handleNextAction(
@@ -1873,28 +1877,28 @@ function Cart({ navigation, route }) {
           if (paymentIntent) {
             if (paymentIntent) {
               actions.confirmPaymentIntentStripe(
-                  {
-                    order_number: order_number,
-                    payment_option_id: selectedPayment?.id,
-                    action: 'cart',
-                    amount:
-                      Number(cartData?.total_payable_amount) +
-                      (selectedTipAmount != null && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0),
-                    payment_intent_id: paymentIntent?.id,
-                    address_id: selectedAddressData?.id,
-                    tip:
-                      selectedTipAmount && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0,
-                  },
-                  {
-                    code: appData?.profile?.code,
-                    currency: currencies?.primary_currency?.id,
-                    language: languages?.primary_language?.id,
-                  },
-                )
+                {
+                  order_number: order_number,
+                  payment_option_id: selectedPayment?.id,
+                  action: 'cart',
+                  amount:
+                    Number(cartData?.total_payable_amount) +
+                    (selectedTipAmount != null && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0),
+                  payment_intent_id: paymentIntent?.id,
+                  address_id: selectedAddressData?.id,
+                  tip:
+                    selectedTipAmount && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
                 .then((res) => {
                   console.log(res, 'secondresponse');
                   updateState({ isRefreshing: false });
@@ -1959,7 +1963,7 @@ function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log("payment method id++++",paymentMethodId)
+    console.log("payment method id++++", paymentMethodId)
     if (!!paymentMethodId) {
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
     } else {
@@ -3318,19 +3322,19 @@ function Cart({ navigation, route }) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyB,
                     }}
-                    >
+                  >
                     {strings.DELIVERY_FEE}:
                   </Text>
                 ) : null}
 
                 {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
                   <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                  }}
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                    }}
                   >{`${item?.delivery_types[0]?.courier_name
                     } ${tokenConverterPlusCurrencyNumberFormater(
                       Number(item?.delivery_types[0]?.rate),
@@ -3338,7 +3342,7 @@ function Cart({ navigation, route }) {
                       additional_preferences,
                       currencies?.primary_currency?.symbol,
                     )}`}</Text>
-                    
+
                 ) : !!item?.delivery_types &&
                   item?.delivery_types.length > 0 ? (
                   <ModalDropdown
@@ -5412,7 +5416,7 @@ function Cart({ navigation, route }) {
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}
-        >
+      >
         <Header
           centerTitle={strings.CART}
           noLeftIcon
@@ -6505,6 +6509,14 @@ function Cart({ navigation, route }) {
     setPrescriptionImgs(imgData);
   };
 
+
+
+
+  const _onSelectedDriver = (item) => {
+    setSelectedDriver(item)
+    setIsDriverListView(false)
+  }
+
   const renderUploadedPrescriptionImgs = ({ item, index }) => {
     return (
       <View
@@ -6671,6 +6683,51 @@ function Cart({ navigation, route }) {
       </View>
     );
   };
+
+  const renderDriversList = ({ item, index }) => {
+    console.log(item, "item is here");
+    return (
+      <View style={styles.driverListContainer}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Image style={styles.driverImage} source={{ uri: item.image }} />
+          <Text style={styles.driverName}>{item?.driverName}</Text>
+        </View>
+        <TouchableOpacity onPress={() => _onSelectedDriver(item)}>
+          <Text style={styles.selectDriver}>Select</Text>
+        </TouchableOpacity>
+
+      </View>
+    )
+  }
+
+
+  const renderAvailableDriverView = () => {
+    return (
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={[
+            { id: 1, driverName: 'Pavan Sharma', image: 'https://xyz.ir/wp-content/uploads/2021/05/avatar.jpg.320x320px.jpg' },
+            { id: 2, driverName: 'Gruwinder', image: 'https://media.nngroup.com/media/people/photos/2022-portrait-page-3.jpg.600x600_q75_autocrop_crop-smart_upscale.jpg' },
+            { id: 3, driverName: 'Inderjeet', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWsWiKThugWSWQL13mkeN7qpEyRJJKdqqjtl5sszIjh3I0XozQlno4NksLO94ZcXF7eN4&usqp=CAU' },
+
+          ]}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={renderDriversList}
+          style={{
+            flex: 1,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.backgroundGrey,
+          }}
+          ListEmptyComponent={() =>
+            !isShimmerLoading ? <ListEmptyComp /> : <></>
+          }
+        />
+
+      </View>
+    )
+  }
 
   // Category KYC end
 
@@ -7271,6 +7328,12 @@ function Cart({ navigation, route }) {
           minHeight: height / 2.3,
         }}
       />
+
+      {/* <BottomModal
+        onBackdropPress={closeDriverView}
+        isVisible={isDriverListView}
+        renderModalContent={renderAvailableDriverView}
+      /> */}
 
       <ActionSheet
         ref={actionSheet}

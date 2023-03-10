@@ -697,7 +697,10 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     data['currency_id'] = currencies?.primary_currency?.id;
     data['tasks'] = paramData?.tasks;
     data['images_array'] = uploadImages;
-    data['agent_id'] = paramData?.bidData?.driver_id
+    data['agent_id']=paramData?.bidData?.driver_id
+    if(paramData?.bidData?.driver_id){
+      data['bid_task_type'] = paramData?.bidData?.task_type
+    }
     data['user_product_order_form'] = allSubmittedAnswers
       ? allSubmittedAnswers
       : [];
@@ -802,7 +805,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({
       selectedCarOption: item,
       showBidPriceModal: paramData?.rideType == 'bideRide' ? true : false
-
     });
     setBidRidePrice(Number(item?.tags_price))
   };

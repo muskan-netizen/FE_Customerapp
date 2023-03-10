@@ -317,6 +317,7 @@ export default {
   SELECT: 'Select',
   DEBIT_FROM: 'Debit from',
   ADD: 'ADD',
+  ADDED:'ADDED',
   PLEASE_ENTER_OR_SELECT_AMOUNT: 'Please select or enter a specific amount',
   PLEASE_SELECT_PAYMENT_METHOD: 'Please select a payment method',
   LINKS: 'Join Us!',

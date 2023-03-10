@@ -115,6 +115,10 @@ const ForegroundHandler = (props) => {
       }
 
       await notifee.displayNotification(displayNotificationData);
+
+      if(data?.title=='bid_ride_request'){
+        actions.notificationDataForBid(data)
+      }
       // }
 
       // {
