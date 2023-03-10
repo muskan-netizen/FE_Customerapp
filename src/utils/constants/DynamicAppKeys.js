@@ -547,7 +547,11 @@ const shortCodes = {
   zulbrand: '873380',
   emart: '6ca3a4',
   oyeeRides:"634188",
-  royoRides:'87406e'
+  royoRides:'87406e',
+  tempcorner:'84a472',
+  autobox:'5db7c1',
+  emiRates:'9ba443',
+  
 };
 
 const appIds = {
@@ -2719,6 +2723,18 @@ const appIds = {
   royoRides: Platform.select({
     ios: 'com.royoRides.order',
     android: 'com.royoRides.order',
+  }),
+  tempcorner: Platform.select({
+    ios: 'com.tempcorner.royoorder',
+    android: 'com.tempcorner.royoorder',
+  }),
+  autobox: Platform.select({
+    ios: 'com.autobox.royoorder',
+    android: 'com.autobox.royoorder',
+  }),
+  emiRates: Platform.select({
+    ios: 'com.emiRates.royoorder',
+    android: 'com.emiRates.royoorder',
   }),
 };
 

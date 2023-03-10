@@ -542,8 +542,9 @@ export const getAppCode = () => {
         case appIds.emart: return shortCodes.emart;
         case appIds.oyeeRides: return shortCodes.oyeeRides;
         case appIds.royoRides: return shortCodes.royoRides;
-        
-
+        case appIds.tempcorner: return shortCodes.tempcorner;
+        case appIds.autobox: return shortCodes.autobox;
+        case appIds.emiRates: return shortCodes.emiRates;
 
         default: return '245bae'
     }

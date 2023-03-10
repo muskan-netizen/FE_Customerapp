@@ -218,14 +218,14 @@ android {
 
       productFlavors {
 
-     royoRides{
+                    emiRates{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.royoRides.order'
-                resValue "string", "app_name", "Royo Rides"
+                applicationId 'com.emiRates.royoorders'
+                resValue "string", "app_name", "EmiRates"
                 resValue "string", "host_name", ""
             }
 }
@@ -8602,6 +8602,36 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.royoRides.order'
     //             resValue "string", "app_name", "Royo Rides"
+    //             resValue "string", "host_name", ""
+    //         }
+        // tempcorner{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.tempcorner.royoorder'
+    //             resValue "string", "app_name", "Tempcorner"
+    //             resValue "string", "host_name", ""
+    //         }
+            // autobox{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.autobox.royoorder'
+    //             resValue "string", "app_name", "Autobox"
+    //             resValue "string", "host_name", ""
+    //         }
+                // emiRates{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.emiRates.royoorders'
+    //             resValue "string", "app_name", "EmiRates"
     //             resValue "string", "host_name", ""
     //         }
     // }
