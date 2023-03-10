@@ -1737,9 +1737,9 @@ export default function Products({ route, navigation }) {
           : getAllProductsByCategoryId(pageNo);
       }
     }
-    setTimeout(() => {
-      updateState({ loadMore: false });
-    }, 500);
+    // setTimeout(() => {
+    //   updateState({ loadMore: false });
+    // }, 500);
   };
 
   useEffect(() => {
@@ -2082,17 +2082,11 @@ export default function Products({ route, navigation }) {
         updateState({
           lastPage: res.data.listData?.last_page
         })
-        // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
-        if (
-          res?.data?.listData?.current_page < res.data?.listData?.last_page
-        ) {
-          updateState({ loadMore: true });
-        }
-        else {
-          console.log("fskjflksdjfadslkfjs")
-          updateState({ loadMore: false });
 
+        if (
+          res?.data?.listData?.current_page == res.data?.listData?.last_page
+        ) {
+          updateState({ loadMore: false });
         }
       })
 
@@ -2123,25 +2117,18 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         setLoading(false);
-
-        if (res.data.data.length == 0) {
+        setProductListData(
+          pageNo == 1 ? res?.data?.data : [...productListData, ...res?.data?.data],
+        );
+        updateState({ lastPage: res?.data?.last_page })
+        if (res?.data?.current_page == res?.data?.last_page) {
           updateState({ loadMore: false });
         }
-        console.log("productListData ++++", productListData);
-
-        console.log(res, 'getAllProductsCategoryFilter  res ++++++');
-        setProductListData(
-          pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
-        );
-        updateState({ lastPage: res.data.last_page })
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-        updateState({ loadMore: false });
       })
       .catch(errorMethod);
     // }
-  }, []);
+  }, [productListData]);
+
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray.length > 0) {
@@ -2239,7 +2226,6 @@ export default function Products({ route, navigation }) {
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
-    console.log("dslkfdkjfkjfj", loadMore)
     if (loadMoreProduct) {
       updateState({ pageNo: pageNo + 1 });
       getAllListItems(pageNo + 1);
@@ -4201,10 +4187,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-            {console.log(tagFilteredData, 'tagFilteredData=>', cloneSectionList)}
-
             {!!categoryInfo?.is_show_products_with_category ? (
-
               <SectionList
                 onScroll={onScroll}
                 ref={sectionListRef}
@@ -4273,7 +4256,6 @@ export default function Products({ route, navigation }) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
-
             {/* <View style={{height: moderateScaleVertical(60)}} /> */}
 
             {isVisibleModal ? (
