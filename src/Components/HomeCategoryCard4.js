@@ -1,9 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import strings from '../constants/lang';
+import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -17,7 +20,8 @@ const HomeCategoryCard3 = ({
   data = {},
   onPress = () => { },
   isLoading = false,
-  applyRadius = true
+  applyRadius = true,
+  index = 0
 }) => {
 
   const { themeColor, themeToggle, themeColors, appStyle } = useSelector((state) => state?.initBoot);
@@ -36,20 +40,67 @@ const HomeCategoryCard3 = ({
 
   const onLoad = (evl) => { };
 
-  let imgHeight = moderateScale(70);
-  let imgWidth = moderateScale(70);
-  let imgRadius = moderateScale(applyRadius ? 25 : 0);
+  let imgHeight = moderateScale(78);
+  let imgWidth = moderateScale(78);
+  let imgRadius = moderateScale(applyRadius ? 4 : 0);
 
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.9}
-      style={{
-        marginVertical: moderateScale(0),
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-   
+  const navigation = useNavigation()
+
+  if (index == 7) {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => navigation.navigate(navigationStrings.CATEGORY)}
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }} >
+        <View style={{
+          height: imgHeight,
+          width: imgWidth,
+          borderRadius: imgRadius,
+          backgroundColor:   getColorCodeWithOpactiyNumber(
+            themeColors?.primary_color.substr(1),
+            20,
+          ),
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <View style={{
+            height: 60,
+            width: 60,
+            borderRadius: 30,
+            backgroundColor: colors.white,
+            alignItems: 'center',
+            justifyContent: "center"
+          }}>
+            <Text
+              style={{
+                color: themeColors?.primary_color,
+                fontFamily: fontFamily.medium,
+                fontSize: textScale(10),
+                textAlign: 'center',
+                marginTop: moderateScaleVertical(4),
+                width: moderateScale(80),
+              }}>
+              {strings.VIEW_ALL}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+  if (index < 7) {
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.9}
+        style={{
+          marginVertical: moderateScale(0),
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+
         {isSVG ? (
           <SvgUri
             height={imgHeight}
@@ -75,9 +126,10 @@ const HomeCategoryCard3 = ({
             />
           </View>
         )}
-  
-      <View style={{ flex: 0.2 }}>
+
+
         <Text
+          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.medium,
@@ -88,9 +140,11 @@ const HomeCategoryCard3 = ({
           }}>
           {data.name}
         </Text>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  }
+  return null
+
 };
 export default React.memo(HomeCategoryCard3);
 
