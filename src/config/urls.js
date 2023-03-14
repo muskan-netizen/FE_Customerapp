@@ -433,7 +433,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://ebay.royoorders.com/api/v1';
 // ReadyToRent
 // export const API_BASE_URL = 'https://readytorent.focushires.com/api/v1';
-
+ //export const API_BASE_URL ="https://sxm2go.com/api/v1"
 
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;

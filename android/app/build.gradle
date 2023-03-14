@@ -271,6 +271,27 @@ android {
             resValue "string", "app_name", "WeTogether"
             resValue "string", "host_name", ""
             }
+
+              superApp{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.superapp.royoorder'
+                resValue "string", "app_name", "SuperApp"
+                resValue "string", "host_name", ""
+            }
+                     sxm2go{
+                dimension "appType"
+                versionCode 3
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.sxm2go.userapp'
+                resValue "string", "app_name", "SXM2GO"
+                resValue "string", "host_name", ""
+            }
 }
 
     // productFlavors {

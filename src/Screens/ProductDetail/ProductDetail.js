@@ -1560,6 +1560,15 @@ export default function ProductDetail({ route, navigation }) {
     setLoadingGetSlots(true);
     if (isAppointmentPicker) {
       if(productDetailData?.is_slot_from_dispatch){
+        const apiData = {
+          cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+          product_id: productDetailData?.id 
+        }
+        const apiHeader = {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        }
         actions.getAppointmentSlots(apiData, apiHeader).then((res) => {
           console.log(res, "<===res getAppointmentSlots")
           if (res?.dispatchAgents) {
