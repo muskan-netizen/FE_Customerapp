@@ -545,6 +545,7 @@ export const getAppCode = () => {
         case appIds.tempcorner: return shortCodes.tempcorner;
         case appIds.autobox: return shortCodes.autobox;
         case appIds.emiRates: return shortCodes.emiRates;
+        case appIds.zuluCluch: return shortCodes.zuluCluch;
 
         default: return '245bae'
     }

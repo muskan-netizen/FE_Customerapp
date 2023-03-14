@@ -551,6 +551,8 @@ const shortCodes = {
   tempcorner:'84a472',
   autobox:'5db7c1',
   emiRates:'9ba443',
+  zuluCluch:'',
+
   
 };
 
@@ -2729,12 +2731,16 @@ const appIds = {
     android: 'com.tempcorner.royoorder',
   }),
   autobox: Platform.select({
-    ios: 'com.autobox.royoorder',
-    android: 'com.autobox.royoorder',
+    ios: 'com.autobox.royoorders',
+    android: 'com.autobox.royoorders',
   }),
   emiRates: Platform.select({
     ios: 'com.emiRates.royoorder',
     android: 'com.emiRates.royoorder',
+  }),
+    zuluCluch: Platform.select({
+    ios: 'com.zuluCluch.royoorder',
+    android: 'com.zuluCluch.royoorder',
   }),
 };
 

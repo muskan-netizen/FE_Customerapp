@@ -1092,6 +1092,8 @@
     "autoboxRelease": "cd android && ./gradlew assembleautoboxRelease",
     "emiRates": "react-native run-android --variant=emiRatesDebug --appIdSuffix=emiRates",
     "emiRatesRelease": "cd android && ./gradlew assembleemiRatesRelease",
+    "zuluCluch": "react-native run-android --variant=zuluCluchDebug --appIdSuffix=zuluCluch",
+    "zuluCluchRelease": "cd android && ./gradlew assemblezuluCluchRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

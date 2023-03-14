@@ -217,16 +217,15 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-
-                    emiRates{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.emiRates.royoorders'
-                resValue "string", "app_name", "EmiRates"
-                resValue "string", "host_name", ""
+                          pawsee{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pawsee.order'
+            resValue "string", "app_name", "Pawsee"
+            resValue "string", "host_name", ""
             }
 }
 
@@ -8620,7 +8619,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.autobox.royoorder'
+    //             applicationId 'com.autobox.royoorders'
     //             resValue "string", "app_name", "Autobox"
     //             resValue "string", "host_name", ""
     //         }
@@ -8632,6 +8631,16 @@ android {
     //             targetSdkVersion rootProject.ext.targetSdkVersion
     //             applicationId 'com.emiRates.royoorders'
     //             resValue "string", "app_name", "EmiRates"
+    //             resValue "string", "host_name", ""
+    //         }
+                    // zuluCluch{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.zuluCluch.royoorders'
+    //             resValue "string", "app_name", "ZuluCluch"
     //             resValue "string", "host_name", ""
     //         }
     // }
