@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "280907368750",
+    "project_id": "virgingates-order",
+    "storage_bucket": "virgingates-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280907368750:android:6e3e5f94d70239104612bf",
+        "android_client_info": {
+          "package_name": "com.virgingates.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280907368750-4s70j78kpg8s6js2ridoh2n4g5hk5biq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.virgingates.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "280907368750-bqdb8553ilb53lh4n2904u6bqpfrifl3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.virgingates.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "280907368750-k8ar9if4l9iso5v76lujdnn5reoi9ks3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.virgingates.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "280907368750-puo8nl0keftmove9lqirgdsg09p4if2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoWn8NRkawMvvhxSQxM5pr3nDnVDd4vK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280907368750-puo8nl0keftmove9lqirgdsg09p4if2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
