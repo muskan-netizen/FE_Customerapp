@@ -546,18 +546,16 @@ const shortCodes = {
   ambosSafariExpress: 'ec16dd',
   zulbrand: '873380',
   emart: '6ca3a4',
-  oyeeRides:"634188",
-  royoRides:'87406e',
-  tempcorner:'84a472',
-  autobox:'5db7c1',
-  emiRates:'9ba443',
-  detailPros:'1a1d3b',
-  blink:'49ceca',
-  incubit:'9bc5da',
-  virgingates:'f5a75e',
-  zuluCluch:'',
-
-  
+  oyeeRides: "634188",
+  royoRides: '87406e',
+  tempcorner: '84a472',
+  autobox: '5db7c1',
+  emiRates: '9ba443',
+  detailPros: '1a1d3b',
+  blink: '49ceca',
+  incubit: '9bc5da',
+  virgingates: 'f5a75e',
+  zuluCluch: '6347c6',
 };
 
 const appIds = {
@@ -2743,22 +2741,22 @@ const appIds = {
     android: 'com.emiRates.royoorder',
   }),
   detailPros: Platform.select({
-    ios:'com.detailPros.royoorder',
-    android:'com.detailPros.royoorder',
+    ios: 'com.detailPros.royoorder',
+    android: 'com.detailPros.royoorder',
   }),
   blink: Platform.select({
-    ios:'com.blink.royoorder',
-    android:'com.blink.royoorder',
+    ios: 'com.blink.royoorder',
+    android: 'com.blink.royoorder',
   }),
   incubit: Platform.select({
-    ios:'com.incubit.royoorder',
-    android:'com.incubit.royoorder',
+    ios: 'com.incubit.royoorder',
+    android: 'com.incubit.royoorder',
   }),
   virgingates: Platform.select({
-    ios:'com.virgingates.royoorder',
-    android:'com.virgingates.royoorder',
+    ios: 'com.virgingates.royoorder',
+    android: 'com.virgingates.royoorder',
   }),
-    zuluCluch: Platform.select({
+  zuluCluch: Platform.select({
     ios: 'com.zuluCluch.royoorder',
     android: 'com.zuluCluch.royoorder',
   }),
