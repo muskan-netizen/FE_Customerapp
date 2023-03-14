@@ -1092,6 +1092,17 @@
     "autoboxRelease": "cd android && ./gradlew assembleautoboxRelease",
     "emiRates": "react-native run-android --variant=emiRatesDebug --appIdSuffix=emiRates",
     "emiRatesRelease": "cd android && ./gradlew assembleemiRatesRelease",
+    "detailPros": "react-native run-android --variant=detailProsDebug --appIdSuffix=detailPros",
+    "detailProsRelease": "cd android && ./gradlew assembledetailProsRelease",
+    "blink": "react-native run-android --variant=blinkDebug --appIdSuffix=blink",
+    "blinkRelease": "cd android && ./gradlew assembleblinkRelease",
+    "incubit": "react-native run-android --variant=incubitDebug --appIdSuffix=incubit",
+    "incubitRelease": "cd android && ./gradlew assembleincubitRelease",
+
+    "virgingates": "react-native run-android --variant=virgingatesDebug --appIdSuffix=virgingates",
+    "virgingatesRelease": "cd android && ./gradlew assemblevirgingatesRelease",
+    
+
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

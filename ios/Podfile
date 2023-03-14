@@ -2541,6 +2541,19 @@ end
 target 'Autobox' do
 end
 
+#DetailPros
+target 'DetailPros' do
+end
+
+#Blink
+target 'Blink' do
+end
+
+# #Virgingates
+# target 'Virgingates' do
+# end
+
+
 
 post_install do |installer|
   react_native_post_install(installer)

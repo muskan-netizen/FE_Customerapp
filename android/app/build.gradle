@@ -217,15 +217,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-
-                    emiRates{
+                virgingates{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.emiRates.royoorders'
-                resValue "string", "app_name", "EmiRates"
+                applicationId 'com.virgingates.royoorder'
+                resValue "string", "app_name", "Virgingates"
                 resValue "string", "host_name", ""
             }
 }
@@ -8634,7 +8633,57 @@ android {
     //             resValue "string", "app_name", "EmiRates"
     //             resValue "string", "host_name", ""
     //         }
+
+                  // detailPros{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.detailPros.royoorder'
+    //             resValue "string", "app_name", "DetailPros"
+    //             resValue "string", "host_name", ""
+    //         }
+
+                    // blink{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.blink.royoorder'
+    //             resValue "string", "app_name", "blink"
+    //             resValue "string", "host_name", ""
+    //         }
+
+
+                    // incubit{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.incubit.royoorder'
+    //             resValue "string", "app_name", ""
+    //             resValue "string", "host_name", ""
+    //         }
+
+                      // virgingates{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.virgingates.royoorder'
+    //             resValue "string", "app_name", "Virgingates"
+    //             resValue "string", "host_name", ""
+    //         }
     // }
+
+
+
+
+
 
 
 }

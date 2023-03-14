@@ -545,7 +545,10 @@ export const getAppCode = () => {
         case appIds.tempcorner: return shortCodes.tempcorner;
         case appIds.autobox: return shortCodes.autobox;
         case appIds.emiRates: return shortCodes.emiRates;
-
+        case appIds.detailPros: return shortCodes.detailPros;
+        case appIds.blink: return shortCodes.blink;
+        case appIds.incubit: return shortCodes.incubit;
+        case appIds.virgingates: return shortCodes.virgingates;
         default: return '245bae'
     }
 }
