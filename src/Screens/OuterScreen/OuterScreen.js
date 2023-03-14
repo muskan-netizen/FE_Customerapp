@@ -44,6 +44,7 @@ import {setItem, setUserData} from '../../utils/utils';
 import {isEmpty} from 'lodash';
 import { getValuebyKeyInArray } from '../../utils/commonFunction';
 import { enableFreeze } from "react-native-screens";
+import socketServices from '../../utils/scoketService';
 enableFreeze(true);
 
 
@@ -95,6 +96,9 @@ export default function OuterScreen({navigation}) {
       navigation.navigate(screenName, {data});
     };
   //Saving login user to backend
+
+
+
   const _saveSocailLogin = async (socialLoginData, type) => {
     let userStaticName = DeviceInfo.getBundleId();
     userStaticName = userStaticName.split('.');
@@ -336,7 +340,7 @@ export default function OuterScreen({navigation}) {
       showAlertMessageError(strings.SELECT);
       return;
     } else {
-      if (lang === 'ar') {
+      if (lang === 'ar' || lang === 'he' ) {
         I18nManager.forceRTL(true);
         setItem('language', lang);
         changeLaguage(lang);

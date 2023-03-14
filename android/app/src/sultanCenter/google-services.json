@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "309129008879",
+    "project_id": "sultan-center-driver",
+    "storage_bucket": "sultan-center-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309129008879:android:4c2e7a94f4223e6fe86d1a",
+        "android_client_info": {
+          "package_name": "com.sultanCenter.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309129008879-1frkc69n5sq3h8dofckgk7o63608543j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI81SiIs2TXesaijn0qXI65MRONXQHKYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309129008879-1frkc69n5sq3h8dofckgk7o63608543j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

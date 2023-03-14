@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "361947240722",
+    "project_id": "thegenie-order",
+    "storage_bucket": "thegenie-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361947240722:android:035a243ea6f0a0955a3bcb",
+        "android_client_info": {
+          "package_name": "com.theGenie.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361947240722-akj2i4gn0jir9lka6bplkbe17eq5huf0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.theGenie.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "361947240722-ei38hnip5stbjo1jrqtpq0sbtrapuknh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.theGenie.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "361947240722-fhloitrr6djenorph9bvk0gcl2dnapgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.theGenie.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "361947240722-9snfr9nihf2v1qebfaosgopdleop1jsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtwqX4vVmVxHb_RA7gIK3KlT-e1xjsJIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361947240722-9snfr9nihf2v1qebfaosgopdleop1jsk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "361947240722-1nb3m5uj5dm7teetu4rqsi5bn6s3h3ec.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.theGenie.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

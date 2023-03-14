@@ -643,8 +643,7 @@ export default function MyOrders(props) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.white}
-      source={loaderOne}
-      isLoadingB={isLoading}
+      isLoading={isLoading}
     >
       <Header
         noLeftIcon={!backIconShow}

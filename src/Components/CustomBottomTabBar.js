@@ -1,12 +1,11 @@
-import React, {Fragment} from 'react';
-import {Text, TouchableOpacity, Platform} from 'react-native';
+import React, { Fragment } from 'react';
+import { Platform, Text, TouchableOpacity } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
 
 const CustomBottomTabBar = ({
   state,
@@ -17,18 +16,20 @@ const CustomBottomTabBar = ({
   ...props
 }) => {
   const insets = useSafeAreaInsets();
-  const {themeColors, themeToggle, themeColor, appStyle} = useSelector(
-    (state) => state.initBoot,
-  );
+  const { themeColors, themeToggle, themeColor, appStyle } = useSelector((state) => state.initBoot || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
+
+  const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
+
   return (
     <LinearGradient
-      start={{x: 0, y: 1}}
-      end={{x: 1, y: 1}}
+      start={{ x: 0, y: 1 }}
+      end={{ x: 1, y: 1 }}
       style={{
-        height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
+        height: Platform.OS === 'ios' ? 45 + insets.bottom : 55 + insets.bottom,
         flexDirection: 'row',
         paddingBottom: insets.bottom,
         // borderTopLeftRadius: 10,
@@ -39,18 +40,20 @@ const CustomBottomTabBar = ({
       colors={
         isDarkMode
           ? [MyDarkTheme.colors.lightDark, MyDarkTheme.colors.lightDark]
-          : [themeColors.primary_color, themeColors.primary_color]
-      }>
+          : [themePrimaryColor, themePrimaryColor]
+      }
+
+    >
       {state.routes.map((route, index) => {
         // console.log(route, 'routesssssss');
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
@@ -80,7 +83,7 @@ const CustomBottomTabBar = ({
 
                 // marginBottom:20
               }}>
-              {options.tabBarIcon({focused: isFocused})}
+              {options.tabBarIcon({ focused: isFocused })}
               <Text
                 style={{
                   ...props.labelStyle,

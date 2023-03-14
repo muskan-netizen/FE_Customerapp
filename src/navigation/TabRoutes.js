@@ -67,6 +67,7 @@ export default function TabRoutes(props) {
     }
   };
 
+
   if (checkForCeleb) {
     celebTab = (
       <Tab.Screen
@@ -77,7 +78,7 @@ export default function TabRoutes(props) {
           tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                { tintColor: tintColor },
+                { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
                 appStyle?.tabBarLayout === 3 && { height: 26, width: 26 },
               ]}
               source={
@@ -89,9 +90,13 @@ export default function TabRoutes(props) {
                     ? focused
                       ? imagePath.icCelebActive1
                       : imagePath.icCelebInActive1
-                    : focused
-                      ? imagePath.tabDActive
-                      : imagePath.tabDInActive
+                    : appStyle?.tabBarLayout === 1
+                      ? focused
+                        ? imagePath.icCelebActive1
+                        : imagePath.icCelebInActive1 :
+                      focused
+                        ? imagePath.tabDActive
+                        : imagePath.tabDInActive
               }
             />
           ),
@@ -110,7 +115,7 @@ export default function TabRoutes(props) {
           tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                { tintColor: tintColor },
+                { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
                 appStyle?.tabBarLayout === 2 ||
                 (appStyle?.tabBarLayout === 4 && { height: 20, width: 20 }),
               ]}
@@ -123,9 +128,13 @@ export default function TabRoutes(props) {
                     ? focused
                       ? imagePath.brandsActive1
                       : imagePath.brandsInActive1
-                    : focused
-                      ? imagePath.tabCActive
-                      : imagePath.tabCInActive
+                    : appStyle?.tabBarLayout === 1
+                      ? focused
+                        ? imagePath.ic_tag2NewTab
+                        : imagePath.ic_tag2NewTab
+                      : focused
+                        ? imagePath.tabCActive
+                        : imagePath.tabCInActive
               }
             // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
             />
@@ -135,13 +144,12 @@ export default function TabRoutes(props) {
       />
     );
   }
-  console.log(appStyle?.tabBarLayout, "appStyle?.tabBarLayout");
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
       screenOptions={{
-        headerShown:false,
-        tabBarLabelStyle:{
+        headerShown: false,
+        tabBarLabelStyle: {
           textTransform: 'capitalize',
           fontFamily: fontFamily?.medium,
           fontSize: textScale(12),
@@ -161,6 +169,8 @@ export default function TabRoutes(props) {
               return <CustomBottomTabBarFour {...props} />;
             case 5:
               return <CustomBottomTabBarFive {...props} />;
+            default:
+              return <CustomBottomTabBar {...props} />;
           }
         }
       }}
@@ -169,7 +179,7 @@ export default function TabRoutes(props) {
           ? navigationStrings.CART
           : navigationStrings.HOMESTACK
       }
-      >
+    >
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
@@ -184,7 +194,7 @@ export default function TabRoutes(props) {
           tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                { tintColor: tintColor },
+                { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
                 appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
               ]}
               source={
@@ -196,9 +206,13 @@ export default function TabRoutes(props) {
                     ? focused
                       ? imagePath.homeRedActive
                       : imagePath.homeRedInActive
-                    : focused
-                      ? imagePath.tabAActive
-                      : imagePath.tabAInActive
+                    : appStyle?.tabBarLayout == 1 ?
+                      focused
+                        ? imagePath.ic_home2NewTab
+                        : imagePath.ic_home2NewTab :
+                      focused
+                        ? imagePath.tabAActive
+                        : imagePath.tabAInActive
               }
             />
           ),
@@ -260,11 +274,11 @@ export default function TabRoutes(props) {
                     width:
                       cartItemCount?.data?.item_count > 999
                         ? moderateScale(23)
-                        : moderateScale(18),
+                        : moderateScale(20),
                     height:
                       cartItemCount?.data?.item_count > 999
                         ? moderateScale(23)
-                        : moderateScale(18),
+                        : moderateScale(20),
                     top: cartItemCount?.data?.item_count > 999 ? -10 : -7,
                     right: cartItemCount?.data?.item_count > 999 ? -13 : -8,
                   }}>
@@ -277,7 +291,7 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={[
-                  { tintColor: tintColor },
+                  { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
                   appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
                 ]}
                 source={
@@ -289,9 +303,13 @@ export default function TabRoutes(props) {
                       ? focused
                         ? imagePath.cartRedActive
                         : imagePath.cartRedInActive
-                      : focused
-                        ? imagePath.cartActive
-                        : imagePath.cartInActive
+                      : appStyle?.tabBarLayout === 1
+                        ? focused
+                          ? imagePath.ic_cart2NewTab
+                          : imagePath.ic_cart2NewTab :
+                        focused
+                          ? imagePath.cartActive
+                          : imagePath.cartInActive
                 }
               />
             </View>
@@ -300,7 +318,7 @@ export default function TabRoutes(props) {
           gestureEnabled: true,
         })}
       />
-      {DeviceInfo.getBundleId() == appIds.dlvrd ||DeviceInfo.getBundleId()==appIds.sxm2go &&(
+      {DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go && (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}
@@ -340,7 +358,7 @@ export default function TabRoutes(props) {
             <Image
               resizeMode="contain"
               style={[
-                { tintColor: tintColor },
+                { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
                 appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
               ]}
               source={
@@ -352,9 +370,14 @@ export default function TabRoutes(props) {
                     ? focused
                       ? imagePath.accountRedActive
                       : imagePath.accountRedInActive
-                    : focused
-                      ? imagePath.tabEActive
-                      : imagePath.tabEInActive
+                    : appStyle?.tabBarLayout === 1
+                      ? focused
+                        ? imagePath.ic_account2NewTab
+                        : imagePath.ic_account2NewTab
+                      :
+                      focused
+                        ? imagePath.tabEActive
+                        : imagePath.tabEInActive
               }
             />
           ),

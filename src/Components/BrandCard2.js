@@ -1,10 +1,10 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
-import {SvgUri} from 'react-native-svg';
-import {useSelector} from 'react-redux';
+import { SvgUri } from 'react-native-svg';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import {
@@ -13,13 +13,13 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import {
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-const BrandCard2 = ({data = {}, onPress = () => {}}) => {
+const BrandCard2 = ({ data = {}, onPress = () => { } }) => {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -28,9 +28,9 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const scaleInAnimated = new Animated.Value(0);
-  const {appStyle, themeColors} = useSelector((state) => state.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
 
   // console.log("svg data",data)
 
@@ -77,7 +77,7 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
               cache: FastImage.cacheControl.immutable,
             }}
             style={{
-              marginRight:moderateScale(14),
+              marginRight: moderateScale(14),
               ...styles.imgStyle,
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
@@ -86,19 +86,18 @@ const BrandCard2 = ({data = {}, onPress = () => {}}) => {
           />
         )}
       </TouchableOpacity>
-      {console.log(data, 'data>>>>')}
-      <View style={{paddingHorizontal:moderateScale(4), justifyContent:'center',}} >
-      <Text
-        style={{
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
-          fontFamily: fontFamily.regular,
-          fontSize: textScale(10),
-          textAlign: 'center',
-          marginTop: moderateScaleVertical(2),
-          marginRight:moderateScale(2)
-        }}>
-        {data?.name || (data?.translation && data?.translation[0]?.title) || ''}
-      </Text>
+      <View style={{ paddingHorizontal: moderateScale(4), justifyContent: 'center', }} >
+        <Text
+          style={{
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(10),
+            textAlign: 'center',
+            marginTop: moderateScaleVertical(2),
+            marginRight: moderateScale(2)
+          }}>
+          {data?.name || (data?.translation && data?.translation[0]?.title) || ''}
+        </Text>
       </View>
     </View>
   );

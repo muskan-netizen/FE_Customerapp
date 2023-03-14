@@ -2465,6 +2465,71 @@ end
 target 'ShipSmart' do
 end
 
+#WeedLomo
+target 'WeedLomo' do
+end
+
+#NGoal
+target 'NGoal' do
+end
+
+#LivraiZoo
+target 'LivraiZoo' do
+end
+
+#BoozeBrothers
+target 'BoozeBrothers' do
+end
+
+#MagicalBookings
+target 'MagicalBookings' do
+end
+
+#Ebay
+target 'Ebay' do
+end
+
+#ReadyToRent
+target 'ReadyToRent' do
+end
+
+#TheGenie
+target 'TheGenie' do
+end
+
+#Reedas
+target 'Reedas' do
+end
+
+#OneBasket
+target 'OneBasket' do
+end
+
+#Zozozi
+target 'Zozozi' do
+end
+
+#Ekobridge
+target 'Ekobridge' do
+end
+
+#AmbosSafariExpress
+target 'AmbosSafariExpress' do
+end
+
+#Zulbrand
+target 'Zulbrand' do
+end
+
+#Emart
+target 'Emart' do
+end
+
+#OyeeRides
+target 'OyeeRides' do
+end
+
+
 
 post_install do |installer|
   react_native_post_install(installer)
@@ -2485,6 +2550,4 @@ post_install do |installer|
     end
   end
 end
-
-
 end

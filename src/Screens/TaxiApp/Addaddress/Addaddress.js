@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   Animated,
   FlatList,
@@ -9,11 +9,12 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
+import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import DropDown from "../../../Components/DropDown";
 import GradientButton from "../../../Components/GradientButton";
@@ -32,7 +33,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from "../../../styles/responsiveSize";
 import { MyDarkTheme } from "../../../styles/theme";
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
@@ -40,21 +41,20 @@ import {
   getAddressFromLatLong,
   getCurrentLocationFromApi,
   getPlaceDetails,
-  nearbySearch,
+  nearbySearch
 } from "../../../utils/googlePlaceApi";
 import {
   getAddressComponent,
   getPhoneNumberFromPhoneBook,
   getRandomColor,
-  showError,
+  showError
 } from "../../../utils/helperFunctions";
 import {
   checkContactPermission,
   chekLocationPermission,
-  locationPermission,
+  locationPermission
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -72,8 +72,16 @@ export default function Addaddress({ navigation, route }) {
   } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const { book_for_friend, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences;
+
+  const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
+  const { book_for_friend, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
+
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData || {};
+
+  console.log(categoryId, "categoryIdcategoryIdcategoryId");
+
   const [state, setState] = useState({
     pageNo: 1,
     limit: 5,
@@ -164,11 +172,17 @@ export default function Addaddress({ navigation, route }) {
 
   const [pickDropData, setPickDropData] = useState({});
 
+
+
+
+  console.log("routeroute++++++", route.params)
   useEffect(() => {
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
   }, [paramData]);
+
+
   useEffect(() => {
     getStaticLocations();
   }, []);
@@ -215,7 +229,8 @@ export default function Addaddress({ navigation, route }) {
       });
   };
 
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     chekLocationPermission()
       .then((result) => {
         if (result === "goback") {
@@ -223,7 +238,9 @@ export default function Addaddress({ navigation, route }) {
         }
         Geocoder.init(profile?.preferences?.map_key, { language: "en" }); // set the language
       })
-      .catch((error) => console.log("error while accessing location", error));
+      .catch((error) => {
+        console.log("error while accessing location", error)
+      });
   }, []);
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -233,8 +250,9 @@ export default function Addaddress({ navigation, route }) {
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+
+
+  console.log("profile data++", profile?.preferences)
 
   const getAllPickUpVendors = (lat, lng) => {
     console.log(appData, "appDataappData......");
@@ -247,13 +265,11 @@ export default function Addaddress({ navigation, route }) {
       }
       : { code: appData?.profile?.code };
 
-    actions
-      .getDataByCategoryId(
-        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
-        }?limit=${limit}&page=${pageNo}`,
-        {},
-        latlongData
-      )
+    actions.getDataByCategoryId(
+      `/${categoryId}?limit=${limit}&page=${pageNo}`,
+      {},
+      latlongData
+    )
       .then((res) => {
         console.log(res, 'resss>>>>>>>>>');
         updateState({
@@ -278,7 +294,7 @@ export default function Addaddress({ navigation, route }) {
     };
     updateState({
       searchResult: { ...searchResult, currentIndex: updateIndex },
-      isLoading: true,
+      // isLoading: true,
     });
     setIsPinAddressOnMapModal(true);
     setPickDropData({
@@ -288,9 +304,6 @@ export default function Addaddress({ navigation, route }) {
     });
   };
 
-  const moveToNewScreen = (screenName, data = {}) => () => {
-    navigation.navigate(screenName, { data });
-  };
 
   const renderbtn = () => {
     switch (getBundleId()) {
@@ -340,38 +353,14 @@ export default function Addaddress({ navigation, route }) {
         );
     }
   };
-  const renderDotContainer = (i) => {
-    return (
-      <View>
-        <Image
-          style={{
-            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            height: moderateScale(5),
-            width: moderateScale(5),
-            borderRadius:
-              dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
-          }}
-          source={imagePath.blackSquare}
-        />
-      </View>
-    );
-  };
 
   const checkBookingServiceType = (bookingType) => {
 
     switch (bookingType) {
-      case 0:
-        return ('Booking')
-        break;
-      case 1:
-        return ('Pooling')
-        break;
-      case 2:
-        return ('bideRide')
-        break;
-
-      default:
-        break;
+      case 0: return ('Booking')
+      case 1: return ('Pooling')
+      case 2: return ('bideRide')
+      default: return ('Booking')
     }
   }
 
@@ -418,8 +407,8 @@ export default function Addaddress({ navigation, route }) {
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
-      id: paramData?.data?.id,
-      pickup_taxi: paramData?.data?.pickup_taxi,
+      id: categoryId,
+      pickup_taxi: paramData?.cat?.pickup_taxi,
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
@@ -442,10 +431,6 @@ export default function Addaddress({ navigation, route }) {
 
   const saveAddressAndRedirect = () => {
     moveToNextScreenWithAddressData();
-  };
-
-  const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
   };
 
   const onShowHideFriendListModal = () => {
@@ -473,17 +458,22 @@ export default function Addaddress({ navigation, route }) {
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
       if (!paramData?.prefillAdress) {
-        const res = await getAddressFromLatLong(
-          `${latitude}, ${longitude}`,
+        const res = await getAddressFromLatLong(`${latitude}, ${longitude}`,
           appData.profile.preferences?.map_key
         );
-        console.log("get address+++++", res);
-        // alert("inner")
-        let cloneArr = dropLocationData;
+        let cloneArr = [...dropLocationData];
         cloneArr[0].pre_address = res.address;
         cloneArr[0].address = res.address;
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
+        cloneArr[0].task_type_id = 1;
+        updateState({ dropLocationData: cloneArr });
+      } else {
+        let cloneArr = [...dropLocationData];
+        cloneArr[0].pre_address = paramData?.prefillAdress?.address || '';
+        cloneArr[0].address = paramData?.prefillAdress?.address || '';
+        cloneArr[0].latitude = paramData?.prefillAdress?.latitude || '';
+        cloneArr[0].longitude = paramData?.prefillAdress?.longitude || '';
         cloneArr[0].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
       }
@@ -492,7 +482,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key);
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type || 'city');
       updateState({
         nearByAddressess: res.results,
       });
@@ -561,7 +551,7 @@ export default function Addaddress({ navigation, route }) {
     // return;
     if (!!place.place_id && !!place?.name) {
       // updateAddress(place.description)
-      const cloneArr = dropLocationData;
+      let cloneArr = [...dropLocationData];
       cloneArr[searchResult.currentIndex].pre_address = place?.name;
       updateState({ dropLocationData: cloneArr });
       try {
@@ -935,24 +925,24 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const fetchValues = (item, i) => {
-    console.log(i, "itemmmmm");
     updateState({
       // selectedLoaction[i]:item?.address
       selectedLoaction: [...selectedLoaction, item?.address],
     });
-    let cloneArr = dropLocationData;
+    let cloneArr = [...dropLocationData];
     cloneArr[i].pre_address = item.address;
     cloneArr[i].address = item.address;
     cloneArr[i].latitude = item?.latitude;
     cloneArr[i].longitude = item?.longitude;
     cloneArr[i].task_type_id = 2;
-
-    console.log(cloneArr, "cloneArrcloneArr");
     updateState({ dropLocationData: cloneArr });
   };
 
+
+
   const onSelectAddressViaMap = (prefillAdress) => {
-    const cloneArr = dropLocationData;
+    getNearByAddress(`${prefillAdress?.latitude},${prefillAdress?.longitude}`)
+    let cloneArr = [...dropLocationData];
     cloneArr[searchResult.currentIndex].pre_address =
       prefillAdress?.pre_address;
     cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude;
@@ -1131,12 +1121,12 @@ export default function Addaddress({ navigation, route }) {
                   }}
                   onPress={() => onBooking(0)}
                   btnText={"BOOKING"}
-                  containerStyle={{ flex: 1 ,  marginHorizontal:moderateScale(5)}}
+                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     borderColor: colors.textGreyLight,
                     borderWidth: moderateScale(0.5),
-                  
+
                   }}
                 />
               }
@@ -1220,7 +1210,18 @@ export default function Addaddress({ navigation, route }) {
                       }}
                     >
                       <View style={{ flex: 0.05, alignItems: "center" }}>
-                        {renderDotContainer(i)}
+                        <View>
+                          <Image
+                            style={{
+                              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                              height: moderateScale(5),
+                              width: moderateScale(5),
+                              borderRadius:
+                                dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
+                            }}
+                            source={imagePath.blackSquare}
+                          />
+                        </View>
                       </View>
                       {i > 0 &&
                         appData?.profile?.preferences?.is_static_dropoff ? (
@@ -1245,8 +1246,8 @@ export default function Addaddress({ navigation, route }) {
                         >
                           <SearchPlaces
                             curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                            autoFocus={
-                              i == dropLocationData.length - 1 ? true : false
+                            autoFocus={i == dropLocationData.length - 1 ? true :
+                              false
                             }
                             placeHolder={
                               i == 0
@@ -1255,7 +1256,7 @@ export default function Addaddress({ navigation, route }) {
                                   ? strings.WHERETO
                                   : strings.ADD_A_STOP
                             }
-                            value={val.pre_address} // instant update search value
+                            value={val?.pre_address} // instant update search value
                             mapKey={profile?.preferences?.map_key} //send here google Key
                             fetchArrayResult={(data) =>
                               updateState({

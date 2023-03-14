@@ -2,8 +2,8 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
-import {useDarkMode} from 'react-native-dynamic';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -49,7 +49,7 @@ import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
   const {
     appData,
@@ -135,6 +135,8 @@ export default function Home({route, navigation}) {
   } = state;
 
   const { profile } = appData;
+
+
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
@@ -262,7 +264,7 @@ export default function Home({route, navigation}) {
               } else {
                 //In case of guest user
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
-                  console.log(locData,"locDatalocData");
+                  console.log(locData, "locDatalocData");
                   //YES
                   actions.locationData(locData);
                   homeData(locData);
@@ -441,17 +443,12 @@ console.log(locationData,"locationData?.address");
           }
         });
       }
-      console.log(selectedVendorType, defaultVendorType,
-        'defaultVendorType....defaultVendorType')
+
       if (!selectedVendorType) {
 
         actions.dineInData(defaultVendorType);
       }
-      console.log(
-        selectedVendorType,
-        defaultVendorType,
-        'selectedVendorTypeselectedVendorType',
-      );
+
 
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
@@ -757,8 +754,7 @@ console.log(locationData,"locationData?.address");
 
   //Reloads the screen
   const initApiHit = () => {
-    let header = {};
-    header = {
+    let header = {
       code: appData?.profile?.code,
       language: languages?.primary_language?.id,
     };
@@ -1173,7 +1169,7 @@ console.log(locationData,"locationData?.address");
                   selectedHomeCategory={selectedHomeCategory}
                   selectedFilterType={selectedFilterType}
                 />
-              
+
               )}
             </>
           );
@@ -1288,7 +1284,7 @@ console.log(locationData,"locationData?.address");
                 isSubscription={isSubscription}
                 selectedFilterType={selectedFilterType}
               />
-            
+
             )}
           </>
         );

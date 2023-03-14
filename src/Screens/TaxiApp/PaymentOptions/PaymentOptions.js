@@ -50,6 +50,7 @@ const PaymentOptions = ({ navigation, route }) => {
   const { appData, appStyle, themeColors } = useSelector(
     (state) => state.initBoot
   );
+  const { profile } = appData;
   const [year, setYear] = useState()
   const [date, setDate] = useState()
 
@@ -77,11 +78,6 @@ const PaymentOptions = ({ navigation, route }) => {
     cardInfo,
     btnLoader,
   } = state;
-
-  console.log(
-    profile?.preferences?.is_postpay_enable,
-    " profile?.preferences?.is_postpay_enable"
-  );
 
   useEffect(() => {
     getAllPaymentOptions();
@@ -188,11 +184,9 @@ const PaymentOptions = ({ navigation, route }) => {
 
   const _onPressPaymentOption = (item) => {
     console.log(item, "itemitemitemitemitemitem");
-    updateState({
-      selectedPaymentMethod: item,
-    });
+    updateState({selectedPaymentMethod: item});
 
-    if (item?.id == 4 && !profile?.preferences?.is_postpay_enable) {
+    if (item?.id == 4) {
       return;
     }
     if(item?.id == 49 || item?.id == 50){
@@ -297,8 +291,7 @@ const PaymentOptions = ({ navigation, route }) => {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id === 4 &&
-          !profile?.preferences?.is_postpay_enable
+          selectedPaymentMethod?.id === 4 
         ) && (
             <StripeProvider
               publishableKey={
@@ -355,6 +348,8 @@ const PaymentOptions = ({ navigation, route }) => {
       </View>
     );
   };
+
+
 
   return (
     <WrapperContainer

@@ -1,0 +1,12 @@
+#include "Pods/Target Support Files/Pods-available_pods-OneBasket/Pods-available_pods-OneBasket.release.xcconfig"
+PROJECT_APPLE_ID = 6445840635
+PROJECT_BUNDLE_ID = com.onerbasket.order
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = OneBasket
+PROJECT_GOOGLE_CLIENT_ID =333127183785-ujq4jogfumq5nl9jnbb49lji5tvt3dnh.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.333127183785-ujq4jogfumq5nl9jnbb49lji5tvt3dnh
+PROJECT_FACEBOOK_ID = 1512668532472201
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =OneBasketInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

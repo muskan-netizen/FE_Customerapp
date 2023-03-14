@@ -1,22 +1,21 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import commonStylesFunc from '../styles/commonStyles';
-import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import { moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
+import { getImageUrl } from '../utils/helperFunctions';
 import ProgressiveImage from './ProgressiveImage';
 
-const OffersCard = ({data = {}, onPress = () => {}}) => {
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+const OffersCard = ({ data = {}, onPress = () => { } }) => {
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const commonStyles = commonStylesFunc({ fontFamily });
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={1}
+      activeOpacity={0.7}
       style={{
         borderRadius: 3,
         ...commonStyles.shadowStyle,
@@ -31,7 +30,7 @@ const OffersCard = ({data = {}, onPress = () => {}}) => {
         }}
         borderRadius={0}
         height={moderateScaleVertical(169)}
-        borderStyle={{borderTopLeftRadius: 4, borderTopRightRadius: 4}}
+        borderStyle={{ borderTopLeftRadius: 4, borderTopRightRadius: 4 }}
         width={'100%'}
       />
       <View

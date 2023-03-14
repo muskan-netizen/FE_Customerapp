@@ -907,6 +907,7 @@ export default function Home({route, navigation}) {
 
 
   const showAllProducts = (item) =>{
+  
     moveToNewScreen(navigationStrings.PRODUCT_LIST, {
       id: item?.data?.category_detail?.id,
       vendor: false,

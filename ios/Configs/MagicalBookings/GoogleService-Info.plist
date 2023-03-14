@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>37237959791-m8almsklprg6i0cf8lr6kf7r9jqvb3pn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.37237959791-m8almsklprg6i0cf8lr6kf7r9jqvb3pn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>37237959791-38sbgrie3b3f1hql0o8jb8qq3adqovts.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBPwqHZvXUIYN4xzAkLNxcfAELSfG2ncoE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>37237959791</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.boozeBrothers.order</string>
+	<key>PROJECT_ID</key>
+	<string>boozebrothers-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>boozebrothers-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:37237959791:ios:93538f4016d526e802719a</string>
+</dict>
+</plist>

@@ -1,11 +1,10 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, isEmpty} from 'lodash';
 import moment from 'moment';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState, Fragment} from 'react';
 import {
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -40,12 +39,17 @@ import {
   tokenConverterPlusCurrencyNumberFormater,
 } from '../utils/commonFunction';
 import {
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   hapticEffects,
   playHapticEffect,
 } from '../utils/helperFunctions';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
+import { Calendar, CalendarList } from 'react-native-calendars';
+import { ScrollView } from 'react-native-gesture-handler';
+import BorderTextInputWithLable from './BorderTextInputWithLable';
+import Reccuring from './Reccuring';
 
 const VariantAddons = ({
   productdetail = null,
@@ -71,6 +75,26 @@ const VariantAddons = ({
   isVarientSelectLoading = false,
   productDetailNew = {},
   isProductAvailable = false,
+
+  planValues = ["Daily", "Weekly", "Custom", "Alternate Days"],
+  weekDays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+  quickSelection = ["Weekdays", "Weekends"],
+  showCalendar = false,
+  reccuringCheckBox = false,
+  selectedPlanValues = '',
+  selectedWeekDaysValues = [],
+  selectedQuickSelectionValue = '',
+  minimumDate = moment(new Date()).add('days', 2).format("YYYY-MM-DD"),
+  initDate = new Date(),
+  start = {},
+  end = {},
+  period = {},
+  disabledDaysIndexes = [],
+  selectedDaysIndexes = [],
+  date = new Date(),
+  showDateTimeModal = false,
+  slectedDate = new Date(),
+  updateAddonState = () => { },
 }) => {
   console.log("productDetailNew =>", productDetailNew,"\n productDetailData =>", productDetailData, "\n endDateRental =>",endDateRental);
   const {appData, themeColors, currencies, languages, appStyle, themeColor} =
@@ -81,6 +105,29 @@ const VariantAddons = ({
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+
+  const resetVariantState = () => {
+    updateAddonState({
+      planValues: ["Daily", "Weekly","Alternate Days", "Custom"],
+      weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      quickSelection: ["Weekdays", "Weekends"],
+      showCalendar: false,
+      selectedPlanValues: '',
+      selectedWeekDaysValues: [],
+      selectedQuickSelectionValue: '',
+      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+      initDate: new Date(),
+      start: {},
+      end: {},
+      period: {},
+      disabledDaysIndexes: [],
+      selectedDaysIndexes: [],
+      date: new Date(),
+      showDateTimeModal: false,
+      slectedDate: new Date(),
+    })
+  }
+
   useFocusEffect(
     React.useCallback(() => {
       if (variantSet.length) {
@@ -1305,6 +1352,7 @@ const VariantAddons = ({
       </View>
     );
   };
+ 
 
   return (
     <View style={{flex: 1}}>
@@ -1469,6 +1517,59 @@ const VariantAddons = ({
                 {strings.NOVARIANTPRODUCTAVAILABLE}
               </Text>
             ) : null}
+              {!!productdetail?.is_recurring_booking &&
+                <View style={[{paddingHorizontal: moderateScale(12), flexDirection: 'row', alignItems: 'center' }]}>
+                  <Text
+                    style={[
+                      styles.variantValue,
+                      {
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: textScale(12),
+                      },
+                    ]}>
+                    Reccuring
+                  </Text>
+                  <TouchableOpacity
+                    style={{ paddingLeft: moderateScale(5) }}
+                    onPress={() => {
+                      updateAddonState({ reccuringCheckBox: !reccuringCheckBox })
+                      resetVariantState()
+                    }}>
+                    <Image
+                      style={{ tintColor: themeColors.primary_color, height: moderateScale(14), width: moderateScale(14) }}
+                      source={
+                        reccuringCheckBox
+                          ? imagePath.checkBox2Active
+                          : imagePath.checkBox2InActive
+                      }
+                    />
+                  </TouchableOpacity>
+                </View>
+              }
+              {reccuringCheckBox &&
+                <Reccuring
+                  planValues={planValues}
+                  weekDays={weekDays}
+                  quickSelection={quickSelection}
+                  showCalendar={showCalendar}
+                  reccuringCheckBox={reccuringCheckBox}
+                  selectedPlanValues={selectedPlanValues}
+                  selectedWeekDaysValues={selectedWeekDaysValues}
+                  selectedQuickSelectionValue={selectedQuickSelectionValue}
+                  minimumDate={minimumDate}
+                  initDate={initDate}
+                  start={start}
+                  end={end}
+                  period={period}
+                  disabledDaysIndexes={disabledDaysIndexes}
+                  selectedDaysIndexes={selectedDaysIndexes}
+                  date={date}
+                  showDateTimeModal={showDateTimeModal}
+                  slectedDate={slectedDate}
+                  updateAddonState={updateAddonState}
+                />}
           </ScrollView>
 
           <View style={{height: moderateScale(100)}} />
@@ -1484,6 +1585,17 @@ const VariantAddons = ({
         animationInTiming={600}>
         {renderImageZoomingView()}
       </Modal>
+      {/* <DatePicker
+        date={date}
+        mode={'date'}
+        minimumDate={new Date()}
+        style={{ width: width - 20, height: height / 3.5 }}
+        modal={true}
+        open={showDateTimeModal}
+        onConfirm={(date) => _onDateChange(date)}
+        onCancel={_selectTime}
+        androidVariant={'iosClone'}
+      /> */}
     </View>
   );
 };
@@ -1511,7 +1623,6 @@ const styles = StyleSheet.create({
   },
 
   modalMainViewContainer: {
-    flex: 1,
     backgroundColor: colors.white,
   },
   modalContainer: {
@@ -1545,7 +1656,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.regular,
   },
   mainView: {
-    marginVertical: moderateScaleVertical(15),
+    marginVertical: moderateScaleVertical(12),
     paddingHorizontal: moderateScale(12),
   },
   description: {
@@ -1625,5 +1736,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
     marginVertical: moderateScaleVertical(8),
   },
+  dateText: {
+    color: colors.textGrey,
+    textAlign: 'left',
+    fontFamily: fontFamily.bold,
+    fontSize: textScale(12),
+    marginVertical: moderateScaleVertical(4),
+  },
+  elementInRows: {
+    flexDirection: 'row',
+    marginVertical: moderateScaleVertical(8),
+    flexWrap: 'wrap'
+  }
 });
 export default VariantAddons;

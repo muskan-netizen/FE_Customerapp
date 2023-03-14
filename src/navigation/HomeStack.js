@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Addaddress,
   BrandProducts,
@@ -50,13 +50,13 @@ import {
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
-import {verticalAnimation} from '../utils/utils';
+import { verticalAnimation } from '../utils/utils';
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
 
 export default function () {
-  const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const { appStyle, appData } = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
 
   const rendervendorScreen = () => {
@@ -136,8 +136,8 @@ export default function () {
           businessType === 4
             ? TaxiHomeScreen
             : businessType === 8
-            ? HomeV2Api
-            : Home
+              ? HomeV2Api
+              : Home
         }
       />
       <Stack.Screen
@@ -224,9 +224,9 @@ export default function () {
         component={CategoryBrands}
       />
       <Stack.Screen
-        name={navigationStrings.CART_SCREEN}
+        name={navigationStrings.CHAT_SCREEN}
         component={ChatScreen}
-        options={{gestureEnabled: true}}
+        options={{ gestureEnabled: true }}
       />
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
@@ -258,15 +258,15 @@ export default function () {
         component={P2pProductDetail}
       />
 
-  <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
       />
 
 
-       
-       
-    
+
+
+
     </Stack.Navigator>
   );
 }
