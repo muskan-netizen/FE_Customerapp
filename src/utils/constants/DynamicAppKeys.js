@@ -554,7 +554,9 @@ const shortCodes = {
   detailPros:'1a1d3b',
   blink:'49ceca',
   incubit:'9bc5da',
-  virgingates:'f5a75e'
+  virgingates:'f5a75e',
+  zuluCluch:'',
+
   
 };
 
@@ -2733,8 +2735,8 @@ const appIds = {
     android: 'com.tempcorner.royoorder',
   }),
   autobox: Platform.select({
-    ios: 'com.autobox.royoorder',
-    android: 'com.autobox.royoorder',
+    ios: 'com.autobox.royoorders',
+    android: 'com.autobox.royoorders',
   }),
   emiRates: Platform.select({
     ios: 'com.emiRates.royoorder',
@@ -2755,10 +2757,11 @@ const appIds = {
   virgingates: Platform.select({
     ios:'com.virgingates.royoorder',
     android:'com.virgingates.royoorder',
-  })
-
-
-  
+  }),
+    zuluCluch: Platform.select({
+    ios: 'com.zuluCluch.royoorder',
+    android: 'com.zuluCluch.royoorder',
+  }),
 };
 
 const socialKeys = {

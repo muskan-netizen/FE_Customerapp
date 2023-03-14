@@ -549,6 +549,8 @@ export const getAppCode = () => {
         case appIds.blink: return shortCodes.blink;
         case appIds.incubit: return shortCodes.incubit;
         case appIds.virgingates: return shortCodes.virgingates;
+        case appIds.zuluCluch: return shortCodes.zuluCluch;
+
         default: return '245bae'
     }
 }
