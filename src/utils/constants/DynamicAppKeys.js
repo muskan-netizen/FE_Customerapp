@@ -555,9 +555,10 @@ const shortCodes = {
   blink:'49ceca',
   incubit:'9bc5da',
   virgingates:'f5a75e',
-  zuluCluch:'',
-
-  
+  zuluCluch:'6347c6',
+  ping:'17c374',
+  chutneyeah:'85de17',
+  ineeda:'aaabf3',  
 };
 
 const appIds = {
@@ -2761,6 +2762,18 @@ const appIds = {
     zuluCluch: Platform.select({
     ios: 'com.zuluCluch.royoorder',
     android: 'com.zuluCluch.royoorder',
+  }),
+    ping: Platform.select({
+    ios: 'com.ping.royoorder',
+    android: 'com.ping.royoorder',
+  }),
+  chutneyeah: Platform.select({
+    ios: 'com.chutneyeah.royoorder',
+    android: 'com.chutneyeah.royoorder',
+  }),
+  ineeda: Platform.select({
+    ios: 'com.ineeda.royoorder',
+    android: 'com.ineeda.royoorder',
   }),
 };
 

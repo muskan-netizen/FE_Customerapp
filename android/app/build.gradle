@@ -217,14 +217,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                virgingates{
+                                  ineeda{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.virgingates.royoorder'
-                resValue "string", "app_name", "Virgingates"
+                applicationId 'com.ineeda.royoorder'
+                resValue "string", "app_name", "Ineeda"
                 resValue "string", "host_name", ""
             }
 }
@@ -8689,16 +8689,40 @@ android {
     //             resValue "string", "app_name", "ZuluCluch"
     //             resValue "string", "host_name", ""
     //         }
+        //          Ping{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ping.royoorder'
+    //             resValue "string", "app_name", "Ping"
+    //             resValue "string", "host_name", ""
+    //         }
+         //          chutneyeah{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.chutneyeah.royoorder'
+    //             resValue "string", "app_name", "Chutneyeah"
+    //             resValue "string", "host_name", ""
+    //         }
+         //          ineeda{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ineeda.royoorder'
+    //             resValue "string", "app_name", "Ineeda"
+    //             resValue "string", "host_name", ""
+    //         }
 
 
- 
+
     // }
-
-
-
-
-
-
 
 }
    dependencies {

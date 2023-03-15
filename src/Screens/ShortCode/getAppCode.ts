@@ -550,6 +550,9 @@ export const getAppCode = () => {
         case appIds.incubit: return shortCodes.incubit;
         case appIds.virgingates: return shortCodes.virgingates;
         case appIds.zuluCluch: return shortCodes.zuluCluch;
+        case appIds.ping: return shortCodes.ping;
+        case appIds.chutneyeah: return shortCodes.chutneyeah;
+        case appIds.ineeda: return shortCodes.ineeda;
 
         default: return '245bae'
     }
