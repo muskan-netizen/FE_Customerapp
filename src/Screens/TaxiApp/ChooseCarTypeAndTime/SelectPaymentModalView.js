@@ -780,7 +780,7 @@ import stylesFun from './styles';
           }}
         />
       </View>
-
+      
       <Modal
         isVisible={showModal}
         style={{

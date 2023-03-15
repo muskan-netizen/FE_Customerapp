@@ -228,15 +228,25 @@ android {
                 resValue "string", "app_name", "Zozozi"
                 resValue "string", "host_name", ""
             }
-                pawsee{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.pawsee.order'
-            resValue "string", "app_name", "Pawsee"
-            resValue "string", "host_name", ""
+            pinkydeli{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.app.pinkydeli'
+                resValue "string", "app_name", "Pinky Deli"
+                resValue "string", "host_name", ""
+            }
+            ngoal{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.ngoal.order'
+                resValue "string", "app_name", "NGoal"
+                resValue "string", "host_name", ""
             }
 }
 
