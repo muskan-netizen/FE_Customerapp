@@ -265,6 +265,7 @@
 		09D8F8474FF230FDBB2EF8D3 /* libPods-available_pods-Axxi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C59DF5A1D6D890197CEC16 /* libPods-available_pods-Axxi.a */; };
 		09F2972EAE67E61C55C18F3B /* libPods-available_pods-HomeTownDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 300E27CB30EAD589A223BB4C /* libPods-available_pods-HomeTownDelivery.a */; };
 		0A694C5B2E0D3F71AECA069E /* libPods-available_pods-FlyBuilder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 297E101D0568268954E0AAD0 /* libPods-available_pods-FlyBuilder.a */; };
+		0B07279F84467D4F676616D9 /* libPods-available_pods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB570A1D050ED7D534280CB8 /* libPods-available_pods-RoyoOrder.a */; };
 		0B96F7944F0DCF3447642264 /* libPods-available_pods-Aredoo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F54B8AACF9DC9B574689476 /* libPods-available_pods-Aredoo.a */; };
 		0B9F91D9E23AA95F748B53BE /* libPods-available_pods-Ryde.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 958C52A85EAFFA8CB907A4E5 /* libPods-available_pods-Ryde.a */; };
 		0C3C813904225767057B92F6 /* libPods-available_pods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D640CCBEA177272597DE39 /* libPods-available_pods-Spidbi.a */; };
@@ -20314,6 +20315,7 @@
 		CADC4B0ABC9DD3D768199565 /* Pods-available_pods-CaribeClean.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-CaribeClean.release.xcconfig"; path = "Target Support Files/Pods-available_pods-CaribeClean/Pods-available_pods-CaribeClean.release.xcconfig"; sourceTree = "<group>"; };
 		CB1A6F82A983631B4382ABBD /* Pods-available_pods-JimsAutoRescue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-JimsAutoRescue.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-JimsAutoRescue/Pods-available_pods-JimsAutoRescue.debug.xcconfig"; sourceTree = "<group>"; };
 		CB1E5F344712BFA8F310203F /* Pods-available_pods-Autotek.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Autotek.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Autotek/Pods-available_pods-Autotek.debug.xcconfig"; sourceTree = "<group>"; };
+		CB570A1D050ED7D534280CB8 /* libPods-available_pods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBCBB9D3C532B69D7A730136 /* Pods-available_pods-MylaGlobal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-MylaGlobal.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-MylaGlobal/Pods-available_pods-MylaGlobal.debug.xcconfig"; sourceTree = "<group>"; };
 		CC06DDB56017F5CC50FD9FB2 /* libPods-available_pods-HelloDeliver.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-HelloDeliver.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC0A1921969F06F4FC0D8060 /* libPods-available_pods-GoKab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-GoKab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -23203,6 +23205,7 @@
 			files = (
 				A5323B0EAB2B51AC08DCAD13 /* (null) in Frameworks */,
 				51F205B52558902476324B36 /* libPods-available_pods-RoyoOrder.a in Frameworks */,
+				0B07279F84467D4F676616D9 /* libPods-available_pods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -29094,6 +29097,7 @@
 				819D32EC9714D261C2DCE265 /* libPods-available_pods-Blink.a */,
 				F4F66C39B81A2C7C99BC2780 /* libPods-available_pods-DetailPros.a */,
 				54EE6400F790F303E3C822A7 /* libPods-available_pods-Virgingates.a */,
+				CB570A1D050ED7D534280CB8 /* libPods-available_pods-RoyoOrder.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -153599,6 +153603,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6FXUMT5X23;
 				INFOPLIST_FILE = "$(SRCROOT)/Runrun/Plists/AceInfo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -153617,6 +153622,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = Ace;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ace_New;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
