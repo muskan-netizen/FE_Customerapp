@@ -58,6 +58,7 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
+  showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
@@ -68,6 +69,7 @@ import Clipboard from '@react-native-community/clipboard';
 import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import * as RNLocalize from 'react-native-localize';
+import Reccuring from '../../Components/Reccuring';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -205,6 +207,53 @@ export default function ProductDetail({ route, navigation }) {
     isOffersModalVisible,
   } = state;
 
+  const [variantState, setVariantState] = useState({
+    planValues: ["Daily", "Weekly", "Custom", "Alternate Days"],
+    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    quickSelection: ["Weekdays", "Weekends"],
+    showCalendar: false,
+    reccuringCheckBox: false,
+    selectedPlanValues: '',
+    selectedWeekDaysValues: [],
+    selectedQuickSelectionValue: '',
+    minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+    initDate: new Date(),
+    start: {},
+    end: {},
+    period: {},
+    disabledDaysIndexes: [],
+    selectedDaysIndexes: [],
+    date: new Date(),
+    showDateTimeModal: false,
+    slectedDate: new Date(),
+  })
+
+  const { planValues, reccuringCheckBox, showCalendar, selectedPlanValues, minimumDate,
+    weekDays, quickSelection, start, end, period, selectedWeekDaysValues, selectedQuickSelectionValue, initDate,
+    disabledDaysIndexes, selectedDaysIndexes, date, showDateTimeModal, slectedDate } = variantState
+  const updateAddonState = (data) => { setVariantState((state) => ({ ...state, ...data })) };
+
+  const resetVariantState = () => {
+    updateAddonState({
+      planValues: ["Daily", "Weekly", "Alternate Days", "Custom"],
+      weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      quickSelection: ["Weekdays", "Weekends"],
+      showCalendar: false,
+      selectedPlanValues: '',
+      selectedWeekDaysValues: [],
+      selectedQuickSelectionValue: '',
+      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+      initDate: new Date(),
+      start: {},
+      end: {},
+      period: {},
+      disabledDaysIndexes: [],
+      selectedDaysIndexes: [],
+      date: new Date(),
+      showDateTimeModal: false,
+      slectedDate: new Date(),
+    })
+  }
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
 
@@ -393,7 +442,11 @@ export default function ProductDetail({ route, navigation }) {
           selectedVariant: null,
           btnLoader: false,
         });
-        showError(error?.message || error?.error);
+        if (error?.message == "Recurring booking type not be empty.") {
+          showInfo('Schedule the product click on recurring checkbox');
+        } else {  
+          showError(error?.message || error?.error);
+        }
       }
     }
   };
@@ -413,7 +466,11 @@ export default function ProductDetail({ route, navigation }) {
       ]);
     } else {
       updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
-      showError(error?.message || error?.error);
+      if (error?.message == "Recurring booking type not be empty.") {
+        showInfo('Schedule the product click on recurring checkbox');
+      } else {  
+        showError(error?.message || error?.error);
+      }
     }
   };
 
@@ -1160,6 +1217,41 @@ export default function ProductDetail({ route, navigation }) {
 
     const addon_ids = [];
     const addon_options = [];
+
+    const weeDays = []
+    const selectedCustomDates = []
+
+    if (selectedWeekDaysValues.length) {
+      selectedWeekDaysValues.map((itm, inx) => {
+        const value = itm === "Mo" ? 1 :
+          itm === "Tu" ? 2 :
+            itm === "We" ? 3 :
+              itm === "Th" ? 4 :
+                itm === "Fr" ? 5 :
+                  itm === "Sa" ? 6 :
+                    itm === "Su" && 0
+        weeDays.push(value)
+      })
+    }
+    if (!isEmpty(period) && selectedPlanValues == "Custom") {
+      Object.entries(period).map(([key, value])=> (selectedCustomDates.push(key)));
+    }
+    if (!isEmpty(period) && selectedPlanValues == "Weekly") {
+      Object.entries(period).map(([key, value]) => {
+        console.log("=>", JSON.stringify(value));
+        ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+      });
+    }
+    const recurringformPost = {}
+
+    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
+      selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
+    recurringformPost['startDate'] = start.dateString ? start.dateString : ''
+    recurringformPost['endDate'] = end.dateString ? end.dateString : ''
+    recurringformPost['weekDay'] = weeDays
+    recurringformPost['selected_custom_dates'] = selectedCustomDates
+
+
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
         if (j?.value == true) {
@@ -1208,7 +1300,10 @@ export default function ProductDetail({ route, navigation }) {
     }
    
     console.log(data, 'data for cart');
-    
+
+    data['recurringformPost'] = recurringformPost
+
+    console.log(JSON.stringify(data), 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
       .addProductsToCart(data, {
@@ -1246,6 +1341,27 @@ export default function ProductDetail({ route, navigation }) {
     if (typeId == 10 && !!cartData?.data?.item_count) {
       showError('Rental product already added in cart!');
       return;
+    }
+    if (data?.is_recurring_booking) {
+      if (isEmpty(selectedPlanValues)) {
+        showError('Plan type should not be empty!');
+        return;
+      }
+      if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+        showError('Weekdays should not be empty!');
+        return;
+      }
+      if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+        if (isEmpty(start) || isEmpty(end)) {
+          showError('Start date and End date should not be empty!');
+          return;
+        }
+      } else {
+        if (isEmpty(period)) {
+          showError('Select dates in custom plan!');
+          return;
+        }
+      }
     }
     {
       addonSet && addonSet.length
@@ -1974,6 +2090,7 @@ export default function ProductDetail({ route, navigation }) {
     </View>
   }
 
+  console.log(themeColors, "variantState =>", variantState);
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -2551,6 +2668,61 @@ export default function ProductDetail({ route, navigation }) {
 
               }
 
+              {/* // Recurring Product variants */}
+              {!!data?.is_recurring_booking &&
+                <View style={[{ marginBottom: moderateScaleVertical(25), paddingHorizontal: moderateScale(2), flexDirection: 'row', alignItems: 'center' }]}>
+                  <Text
+                    style={[
+                      styles.variantValue,
+                      {
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: textScale(12),
+                      },
+                    ]}>
+                    Reccuring
+                  </Text>
+                  <TouchableOpacity
+                    style={{ paddingLeft: moderateScale(5) }}
+                    onPress={() => {
+                      updateAddonState({ reccuringCheckBox: !reccuringCheckBox })
+                      resetVariantState()
+                    }}>
+                    <Image
+                      style={{ tintColor: themeColors.primary_color, height: moderateScale(14), width: moderateScale(14) }}
+                      source={
+                        reccuringCheckBox
+                          ? imagePath.checkBox2Active
+                          : imagePath.checkBox2InActive
+                      }
+                    />
+                  </TouchableOpacity>
+                </View>
+              }
+
+              {reccuringCheckBox &&
+                <Reccuring
+                  planValues={planValues}
+                  weekDays={weekDays}
+                  quickSelection={quickSelection}
+                  showCalendar={showCalendar}
+                  reccuringCheckBox={reccuringCheckBox}
+                  selectedPlanValues={selectedPlanValues}
+                  selectedWeekDaysValues={selectedWeekDaysValues}
+                  selectedQuickSelectionValue={selectedQuickSelectionValue}
+                  minimumDate={minimumDate}
+                  initDate={initDate}
+                  start={start}
+                  end={end}
+                  period={period}
+                  disabledDaysIndexes={disabledDaysIndexes}
+                  selectedDaysIndexes={selectedDaysIndexes}
+                  date={date}
+                  showDateTimeModal={showDateTimeModal}
+                  slectedDate={slectedDate}
+                  updateAddonState={updateAddonState}
+                />}
 
               {/* Add to Cart button */}
               {(productDetailData?.has_inventory == 0 ||

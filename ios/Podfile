@@ -2521,6 +2521,39 @@ end
 target 'Zulbrand' do
 end
 
+#Emart
+target 'Emart' do
+end
+
+#OyeeRides
+target 'OyeeRides' do
+end
+
+#ROYORIDES
+target 'ROYORIDES' do
+end
+
+#Tempcorner
+target 'Tempcorner' do
+end
+
+#Autobox
+target 'Autobox' do
+end
+
+#DetailPros
+target 'DetailPros' do
+end
+
+#Blink
+target 'Blink' do
+end
+
+#Virgingates
+target 'Virgingates' do
+end
+
+
 
 post_install do |installer|
   react_native_post_install(installer)

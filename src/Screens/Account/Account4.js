@@ -1,9 +1,10 @@
 import { BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Alert,
   I18nManager,
   Image,
+  Linking,
   Platform,
   ScrollView,
   Share,
@@ -22,6 +23,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun, { hitSlopProp } from '../../styles/commonStyles';
+import ActionSheet from 'react-native-actionsheet';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -36,7 +38,7 @@ import {
 } from "../../utils/helperFunctions";
 import stylesFun from "./styles";
 
-export default function Account4({navigation}) {
+export default function Account4({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -51,9 +53,8 @@ export default function Account4({navigation}) {
   } = useSelector((state) => state?.initBoot);
 
   const businessType = appStyle?.homePageLayout;
-  const [state, setState] = useState({
-    isLoading: false,
-  });
+  const [state, setState] = useState({ isLoading: false });
+  const [allVendors, setAllVendors] = useState([]);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -66,14 +67,58 @@ export default function Account4({navigation}) {
     navigation.navigate(screenName, { data });
   };
 
-  const userData = useSelector((state) => state.auth.userData);
-  const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     _scrollRef.current.scrollTo(0);
-  //   }, []),
-  // );
+  console.log("appDataappData", appData)
+  const userData = useSelector((state) => state.auth.userData);
+  const { dineInType, appMainData } = useSelector((state) => state?.home || {});
+
+
+
+  useEffect(() => {
+    if (!!appMainData?.is_admin) {
+      fetchAllVendors();
+    }
+  }, [appMainData?.is_admin]);
+
+  const fetchAllVendors = async (value = null) => {
+    let query = `?limit=${100000}&page=${1}`;
+    let headers = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    };
+    try {
+      const res = await actions.storeVendors(query, headers);
+      if (res?.data?.data) {
+        setAllVendors(res.data.data);
+        return;
+      }
+      console.log('available vendors res', res);
+    } catch (error) {
+      console.log('error riased', error);
+      showError(error?.message);
+    }
+  };
+
+
+  const goToChatRoomForVendor = useCallback(() => {
+    navigation.navigate(navigationStrings.CHAT_ROOM_FOR_VENDOR, {
+      type: 'vendor_chat',
+    });
+  }, []);
+
+  const goToChatRoom = (type) => {
+    if (!!appMainData?.is_admin && type == 'vendor_chat') {
+      navigation.navigate(navigationStrings.CHAT_ROOM, {
+        type: type,
+        allVendors: allVendors,
+      });
+    } else {
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
+    }
+  };
+
+
 
   //Share your app
   const onShare = async () => {
@@ -93,8 +138,8 @@ export default function Account4({navigation}) {
       alert(error.message);
     }
   };
-  const onJoinUS =()=>{
-    if(deviceInfoModule.getBundleId()== appIds.jazzyBug){}
+  const onJoinUS = () => {
+    if (deviceInfoModule.getBundleId() == appIds.jazzyBug) { }
   }
   //Logout function
   const userlogout = () => {
@@ -120,6 +165,33 @@ export default function Account4({navigation}) {
   };
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
+
+
+  let actionSheet = useRef();
+
+  const showActionSheet = () => {
+    actionSheet.current.show();
+  };
+
+  const onSosButton = (index) => {
+    console.log(index, 'index');
+    switch (index) {
+      case 0:
+        Linking.openURL(
+          `tel:${appData?.profile?.preferences?.sos_police_contact}`,
+        );
+
+        break;
+      case 1:
+        Linking.openURL(
+          `tel:${appData?.profile?.preferences?.sos_ambulance_contact}`,
+        );
+        break;
+
+      default:
+        break;
+    }
+  };
 
   const onDeleteAccount = () => {
     if (!!userData?.auth_token) {
@@ -159,11 +231,13 @@ export default function Account4({navigation}) {
       showError(error?.message);
     }
   };
+
+
   return (
     <WrapperContainer
-    bgColor={
-      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-    }
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
     >
       <Text
         style={{
@@ -177,10 +251,10 @@ export default function Account4({navigation}) {
         {strings.ACCOUNT}
       </Text>
 
-      <ScrollView style={{ 
+      <ScrollView style={{
         flex: 1,
-        backgroundColor:  isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-         }} showsVerticalScrollIndicator={false}>
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }} showsVerticalScrollIndicator={false}>
         {!!userData?.auth_token && (
           <>
             <View
@@ -201,12 +275,12 @@ export default function Account4({navigation}) {
                   source={
                     userData?.source?.image_path
                       ? {
-                          uri: getImageUrl(
-                            userData?.source?.proxy_url,
-                            userData?.source?.image_path,
-                            "200/200"
-                          ),
-                        }
+                        uri: getImageUrl(
+                          userData?.source?.proxy_url,
+                          userData?.source?.image_path,
+                          "200/200"
+                        ),
+                      }
                       : userData?.source
                   }
                   style={{
@@ -328,30 +402,30 @@ export default function Account4({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
         {!!userData?.auth_token &&
-         !!appData &&
-         !!appData?.profile &&
-         appData?.profile?.preferences?.subscription_mode == 1 && (
-          <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: "row" }}
-            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-            onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-            iconLeft={imagePath.subscription}
-            centerHeading={strings.SUBSCRIPTION}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
+          !!appData &&
+          !!appData?.profile &&
+          appData?.profile?.preferences?.subscription_mode == 1 && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: "row" }}
+              leftIconStyle={{ flex: 0.1, alignItems: "center" }}
+              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+              iconLeft={imagePath.subscription}
+              centerHeading={strings.SUBSCRIPTION}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+            />
+          )}
 
         {!!userData?.auth_token && getBundleId() !== appIds.appi && (
           <ListItemHorizontal
@@ -365,8 +439,8 @@ export default function Account4({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
@@ -382,8 +456,8 @@ export default function Account4({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
@@ -400,7 +474,7 @@ export default function Account4({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-        {!!userData?.auth_token &&  (
+        {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: "row" }}
             leftIconStyle={{ flex: 0.1, alignItems: "center" }}
@@ -412,8 +486,8 @@ export default function Account4({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
         {!!userData?.auth_token &&
@@ -429,8 +503,8 @@ export default function Account4({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
@@ -445,8 +519,8 @@ export default function Account4({navigation}) {
             fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+        // iconRight={imagePath.goRight}
+        // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
         {!!userData?.auth_token && (
           <ListItemHorizontal
@@ -460,8 +534,8 @@ export default function Account4({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
 
@@ -476,9 +550,22 @@ export default function Account4({navigation}) {
             fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
+
+        {appData.profile.preferences.sos == 1 ? (
+          <ListItemHorizontal
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            onPress={showActionSheet}
+            iconLeft={imagePath.icSos}
+            centerHeading={strings.SOS}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+          />
+        ) : null}
 
         {!!userData?.auth_token &&
           Platform.OS === 'android' && getBundleId() !== appIds.appi &&
@@ -496,7 +583,7 @@ export default function Account4({navigation}) {
                         .then(() => {
                           navigation.navigate(navigationStrings.ATTACH_PRINTER);
                         })
-                        .catch((err) => {});
+                        .catch((err) => { });
                     }
                   },
                   (err) => {
@@ -511,8 +598,8 @@ export default function Account4({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ))}
 
@@ -539,9 +626,85 @@ export default function Account4({navigation}) {
             fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+        // iconRight={imagePath.goRight}
+        // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
+
+
+
+        {dineInType !== 'p2p' &&
+          !!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          businessType != 4 &&
+          !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={goToChatRoomForVendor}
+              iconLeft={imagePath.icStoreChat}
+              centerHeading={strings.STORES_CAHT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+
+        {dineInType !== 'p2p' &&
+          !!userData?.auth_token &&
+          !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('agent_chat')}
+              iconLeft={imagePath.icDriverChat}
+              centerHeading={strings.DRIVER_CHAT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )}
+
+        {dineInType !== 'p2p' &&
+          !!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('vendor_chat')}
+              iconLeft={imagePath.icUserChat}
+              centerHeading={strings.VENDOR_CHAT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )}
+
+        {dineInType !== 'p2p' &&
+          !!userData?.auth_token &&
+          !!appData?.profile?.socket_url && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => goToChatRoom('user_chat')}
+              iconLeft={imagePath.icVendorChat}
+              centerHeading={strings.USER_CHAT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          )}
+
         {!!userData?.auth_token ? null : (
           <View style={styles.loginView}>
             <TouchableOpacity
@@ -578,12 +741,20 @@ export default function Account4({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
         <View style={{ height: 100 }} />
+        <ActionSheet
+          ref={actionSheet}
+          // title={'Choose one option'}
+          options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => onSosButton(index)}
+        />
       </ScrollView>
     </WrapperContainer>
   );

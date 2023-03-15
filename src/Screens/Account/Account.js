@@ -54,6 +54,8 @@ export default function Account({navigation}) {
 
   const [allVendors, setAllVendors] = useState([]);
 
+
+  
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -69,6 +71,9 @@ export default function Account({navigation}) {
       _scrollRef.current.scrollTo(0);
     }, []),
   );
+
+
+
 
   //Share your app
   const onShare = () => {

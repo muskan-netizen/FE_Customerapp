@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
-// import NetInfo from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 // import { Linking, Platform } from 'react-native';
@@ -30,7 +30,7 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 
-import * as Sentry from '@sentry/react-native';
+
 import { View, Text } from 'react-native';
 
 import codePush from 'react-native-code-push';
@@ -38,13 +38,6 @@ import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
-
-Sentry.init({
-  dsn: 'https://1da68544ed374cabbd1a9782739dbe6b@o4504612036411392.ingest.sentry.io/4504616014708736',
-  attachScreenshot: true,
-});
-
-
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -265,6 +258,8 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
+
+      console.log("getLanguagegetLanguage",getLanguage)
       if (!!getLanguage) {
         strings.setLanguage(getLanguage);
       }
@@ -288,15 +283,15 @@ const App = () => {
     return () => { };
   }, []);
 
-  //Check internet connection
-  // useEffect(() => {
-  //   const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
-  //     const netStatus = state.isConnected;
-  //     setInternet(netStatus);
-  //     updateInternetConnection(netStatus);
-  //   });
-  //   return () => removeNetInfoSubscription();
-  // }, []);
+  // Check internet connection
+  useEffect(() => {
+    const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
+      const netStatus = state.isConnected;
+      setInternet(netStatus);
+      updateInternetConnection(netStatus);
+    });
+    return () => removeNetInfoSubscription();
+  }, []);
 
   const { blurRef } = useRef();
 
@@ -442,4 +437,4 @@ const App = () => {
 };
 
 
-export default codePush(CodePushOptions)(Sentry.wrap(App));
+export default codePush(CodePushOptions)(App);
