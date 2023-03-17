@@ -138,7 +138,8 @@ export default function SelectPaymentModal({
   useEffect(() => {
     updateState({ isLoading: true });
     getListOfPaymentMethod();
-    getSavedCardList()
+    if (selectedPaymentMethod?.id == 50) getSavedCardList()
+    
   }, []);
 
   //Get list of all payment method

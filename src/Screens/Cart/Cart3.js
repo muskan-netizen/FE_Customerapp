@@ -232,7 +232,7 @@ function Cart({ navigation, route }) {
     orderAmount,
     codMinAmount,
   } = state;
-
+console.log(laundrySelectedDropOffDate,availableTimeSlots,'laundrySelectedPickupDatelaundrySelectedPickupDate')
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
   const {
@@ -266,7 +266,7 @@ function Cart({ navigation, route }) {
   const { dineInType, appMainData, location } = useSelector(
     (state) => state?.home,
   );
-
+console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -1346,10 +1346,12 @@ function Cart({ navigation, route }) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
+ 
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
+ 
     if (!userData?.auth_token) {
       return;
     }
@@ -2016,6 +2018,7 @@ function Cart({ navigation, route }) {
   };
   //Select Time Laundry
   const _selectTimeLaundry = (item) => {
+    console.log('item',item)
     if (item == 'dropoff') {
       setModalType('dropoff');
       updateState({
@@ -2060,12 +2063,15 @@ function Cart({ navigation, route }) {
         setDateAndTimeSchedule();
         return;
       }
-    } else {
+    }
+     else {
       if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+         
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
           return;
         } else {
+ 
           // let formatDate = new Date(selectedDateFromCalendar);
           const date = selectedDateFromCalendar;
           const time = selectedTimeSlots.split('-')[0];
@@ -2073,6 +2079,7 @@ function Cart({ navigation, route }) {
             `${date} ${time}`,
             'YYYY-MM-DD HH:mm:ss',
           ).format();
+        
           setLocaleSheduledOrderDate(
             moment(new Date(formatDate)).format('lll'),
           );
@@ -2541,7 +2548,7 @@ function Cart({ navigation, route }) {
             cartData={cartData}
             strings={strings}
             scheduleType={scheduleType}
-
+            openPickerForPrescription={openPickerForPrescription}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} colors={colors} styles={styles} strings={strings} />
@@ -2651,6 +2658,18 @@ function Cart({ navigation, route }) {
         selectedTipvalue={selectedTipvalue}
         setSelectedTipAmount={setSelectedTipAmount}
         clearSceduleDate={clearSceduleDate}
+        _selectTimeLaundry={_selectTimeLaundry}
+        laundrySelectedPickupDate={laundrySelectedPickupDate}
+        laundrySelectedDropOffDate={laundrySelectedDropOffDate}
+        laundrySelectedPickupSlot={laundrySelectedPickupSlot}
+        laundrySelectedDropOffSlot={laundrySelectedDropOffSlot}
+        businessType={businessType}
+        pickupDriverComment={pickupDriverComment}
+        setPickupDriverComment={setPickupDriverComment}
+        dropOffDriverComment={dropOffDriverComment}
+        setDropOffDriverComment={setDropOffDriverComment}
+        vendorComment={vendorComment}
+        setVendorComment={setVendorComment}
       />
     )
   };

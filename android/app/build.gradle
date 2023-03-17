@@ -219,14 +219,14 @@ android {
 
       productFlavors {
 
-         stabex{ 
+        laundroZone{
             dimension "appType"
-            versionCode 4
+            versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.stabex.orders'
-            resValue "string", "app_name", "Stabex" 
+            applicationId 'com.laundroZone.orderapplication'
+            resValue "string", "app_name", "Laundro Zone" 
             resValue "string", "host_name", ""
             }
                qdelo{

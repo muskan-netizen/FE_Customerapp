@@ -39,7 +39,7 @@ export default function ShortCode() {
     // const appCode = !!prevCode ? prevCode : getAppCode();
 
 
- const appCode = "7678ee"
+ const appCode = "0fcc84"
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};
