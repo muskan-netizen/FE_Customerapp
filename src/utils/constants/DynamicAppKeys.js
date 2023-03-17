@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
-  royoorder: 'e82ca7',
+  royoorder: '245bae',
   runrun: 'bf8608',
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
@@ -289,7 +289,7 @@ const shortCodes = {
   trip: '89e246',
   aauJau: '326d8e',
   mediPick: 'b92261',
-  meltivers: '245bae',
+  meltivers: 'deca6f',
   ensoDigitalAgency: '419dc9',
   hiperAbasto: '50cb7f',
   redglee: '9e185e',
@@ -544,7 +544,9 @@ const shortCodes = {
   zozozi: '980515',
   ekobridge: '04468e',
   ambosSafariExpress: 'ec16dd',
-  zulbrand: '873380'
+  zulbrand: '873380',
+  emart: '6ca3a4',
+  oyeeRides:"634188"
 };
 
 const appIds = {
@@ -1970,7 +1972,7 @@ const appIds = {
   }),
   qdelo: Platform.select({
     ios: 'com.qdelo.order',
-    android: 'com.qdelo.order',
+    android: 'com.qdeloorder',
   }),
   pawsee: Platform.select({
     ios: 'com.pawsee.order',
@@ -2704,6 +2706,14 @@ const appIds = {
   zulbrand: Platform.select({
     ios: 'com.zulbrand.order',
     android: 'com.zulbrand.order',
+  }),
+  emart: Platform.select({
+    ios: 'com.emart.order',
+    android: 'com.emart.order',
+  }),
+  oyeeRides: Platform.select({
+    ios: 'com.oyeeRides.order',
+    android: 'com.oyeeRides.order',
   }),
 };
 

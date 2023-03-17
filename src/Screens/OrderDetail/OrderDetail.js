@@ -2570,7 +2570,7 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {(cartData?.total_service_fee > 0) && (
+          {/* {(cartData?.total_service_fee > 0) && (
             <LeftRightText
               leftText={'Service Fee'}
               rightText={tokenConverterPlusCurrencyNumberFormater(
@@ -2582,7 +2582,7 @@ export default function OrderDetail({ navigation, route }) {
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
-          )}
+          )} */}
           {(cartData?.total_other_taxes > 0 ||
             Number(cartData?.taxable_amount) > 0) && (
               <LeftRightText

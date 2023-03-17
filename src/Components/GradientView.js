@@ -16,6 +16,12 @@ export default function GradientView({
   const fontFamily = appStyle?.fontSizeData;
 
   const commonStyles = commonStylesFun({ fontFamily, themeColors });
+
+
+  const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
+
+
+
   return (
     <LinearGradient
       start={{ x: 0.0, y: -1.5 }}
@@ -30,7 +36,7 @@ export default function GradientView({
       colors={
         !isEmpty(colorsArray)
           ? colorsArray
-          : [themeColors?.primary_color, themeColors?.primary_color]
+          : [themePrimaryColor, themePrimaryColor]
       }>
       <Text
         numberOfLines={1}

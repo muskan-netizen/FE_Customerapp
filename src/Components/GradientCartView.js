@@ -128,6 +128,9 @@ const GradientCartView = ({
     },
   };
 
+  const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
+
+
   return (
     <View>
       {isMenuBtnShow ? (
@@ -179,9 +182,9 @@ const GradientCartView = ({
                 colorsArray
                   ? colorsArray
                   : [
-                    themeColors?.primary_color,
+                    themePrimaryColor,
                     getColorCodeWithOpactiyNumber(
-                      themeColors?.primary_color.substr(1),
+                      themePrimaryColor.substr(1),
                       70,
                     ),
                   ]

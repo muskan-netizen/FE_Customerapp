@@ -35,6 +35,7 @@ import {
   VENDOR_DROPOFF_SLOTS,
   ADD_PRESCRIPTIONS,
   DELETE_PRESCRIPTION,
+  SAVED_CARD_LIST,
 } from '../../config/urls';
 import {
   apiGet,
@@ -535,4 +536,9 @@ export function deletePrescriptions(data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+//Get card list 
+export function getSavedCardsList(data = {}, headers = {}) {
+  return apiGet(SAVED_CARD_LIST, data, headers);
 }

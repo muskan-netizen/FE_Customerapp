@@ -27,21 +27,22 @@ export default function ShortCode() {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let apiRes: any = useRef(null); // we using useRef to get latest values immediately
 
-  const [loadingScreen, setLoadingScreen] = useState(false);
+  const [loadingScreen, setLoadingScreen] = useState(true);
 
   useEffect(() => {
     initApiHit();
   }, []);
 
   const initApiHit = async () => {
-    const res = await getItem('setPrimaryLanguage');
+    const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
 
- const appCode = "16c5f2"
+
+ const appCode = "7678ee"
     let header = {};
-    if (!!res?.primary_language?.id) {
-      header = {code: appCode, language: res?.primary_language?.id};
+    if (!!lang?.primary_language?.id) {
+      header = {code: appCode, language: lang?.primary_language?.id};
     } else {
       header = {code: appCode};
     }
@@ -131,6 +132,7 @@ export default function ShortCode() {
       </View>
     );
   }, [loadingScreen]);
+  
   const animatedSplash = () => {
     return (
       <View style={styles.videoView}>

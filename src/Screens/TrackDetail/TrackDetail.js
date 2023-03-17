@@ -28,6 +28,12 @@ import { locationPermission } from "../../utils/permissions";
 import { getCurrentLocationFromApi } from "../../utils/googlePlaceApi";
 import StepIndicator from "react-native-step-indicator";
 import useInterval from "../../utils/useInterval";
+import { showError } from "../../utils/helperFunctions";
+
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+
 
 export default function TrackiDetail({ navigation, route }) {
   const [state, setState] = useState({
@@ -58,6 +64,7 @@ export default function TrackiDetail({ navigation, route }) {
     },
     currentPosition: null,
     orderAllStatus: [],
+    isLoading: true
   });
 
   const {
@@ -66,6 +73,7 @@ export default function TrackiDetail({ navigation, route }) {
     driverMarkerlocation,
     currentPosition,
     orderAllStatus,
+    isLoading
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -144,24 +152,27 @@ export default function TrackiDetail({ navigation, route }) {
         console.log(res?.data, "resresresresres>>>");
         updateState({
           orderPickupDropLocation: res?.data?.dispatch_order?.tasks,
+          isLoading: false,
           animateDriver: {
             latitude: Number(res?.data?.agent_location?.lat),
             longitude: Number(res?.data?.agent_location?.lng),
             latitudeDelta: 0.0222,
             longitudeDelta: 0.032,
           },
-          driverMarkerlocation:{
+          driverMarkerlocation: {
             latitude: Number(res?.data?.agent_location?.lat),
             longitude: Number(res?.data?.agent_location?.lng),
             latitudeDelta: 0.0222,
             longitudeDelta: 0.032,
-          } ,
+          },
           currentPosition: res?.data?.ordervendor?.order_status_option_id,
           orderAllStatus: res?.data?.order_status_vendor,
         });
       })
       .catch((error) => {
         console.log(error);
+        updateState({ isLoading: false })
+        showError(error?.message || error?.msg)
       });
   };
 
@@ -214,6 +225,7 @@ export default function TrackiDetail({ navigation, route }) {
     <WrapperContainer
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}
+      isLoading={isLoading}
     >
       <Header
         centerTitle={strings.TRACKDETAIL}
@@ -223,13 +235,13 @@ export default function TrackiDetail({ navigation, route }) {
       <View style={{ ...commonStyles.headerTopLine }} />
       <View style={styles.topSection}>
         {/* {basicInfoView()} */}
-       
+
         {!isEmpty(orderAllStatus) ? (
           <StepIndicator
             stepCount={orderAllStatus?.length} //showing step indicators dynamically
-           
+
             currentPosition={currentPosition}
-           
+
           />
         ) : null}
         {!isEmpty(orderAllStatus) ? (
@@ -275,7 +287,7 @@ export default function TrackiDetail({ navigation, route }) {
                 strokeWidth={3}
                 strokeColor={themeColors?.primary_color}
                 optimizeWaypoints={true}
-                onStart={(params) => {}}
+                onStart={(params) => { }}
                 precision={"high"}
                 timePrecision={"now"}
                 mode={"DRIVING"}

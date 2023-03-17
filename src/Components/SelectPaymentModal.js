@@ -461,8 +461,8 @@ export default function SelectPaymentModal({
 
   const renderSavedCardList = ({item,index}) => {
     console.log("renderSavedCardList =>", index)
-    const expDate = item?.expiration
-    // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(0, 6) + "/" + item?.expiration.slice(5)
+    // const expDate = item?.expiration
+    const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
     return (
       <TouchableOpacity
         onPress={() => selectSavedCard(item, index)}

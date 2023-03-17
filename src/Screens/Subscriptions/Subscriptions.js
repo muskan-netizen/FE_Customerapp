@@ -285,6 +285,7 @@ export default function Subscriptions({navigation, route}) {
 
   //render pyaments icons
   const _renderItemPayments = ({item, index}) => {
+    
     return (
       <>
         <TouchableOpacity 

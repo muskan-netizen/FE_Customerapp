@@ -1068,4 +1068,5 @@ Amount`,
   HOUR: 'hour',
   SELECT_INFLUENCER_CATEGORY: 'Select Influencer Category',
   INFLUENCER_ORDER_HISTORY: 'Influence order history',
+  ENTER_HOUSE_NO:'House No'
 };

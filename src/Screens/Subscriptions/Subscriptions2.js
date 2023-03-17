@@ -414,7 +414,7 @@ export default function Subscriptions2({ navigation, route }) {
 
   //render pyaments icons
   const _renderItemPayments = ({ item, index }) => {
-    console.log(item, 'itemmmmmmmmmmmmm')
+    console.log(item,selectedPaymentMethod, 'itemmmmmmmmmmmmm')
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -424,12 +424,13 @@ export default function Subscriptions2({ navigation, route }) {
               alignItems: 'center',
               paddingVertical: moderateScaleVertical(5),
             }}>
-            <FastImage
+            <Image
               source={
                 selectedPaymentMethod && selectedPaymentMethod?.id == item.id
                   ? imagePath.radioActive
                   : imagePath.radioInActive
               }
+           
             />
             <Text
               style={[

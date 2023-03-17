@@ -8,7 +8,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+
 } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
@@ -29,6 +31,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getPlaceDetails } from '../utils/googlePlaceApi';
 import { getAddressComponent } from '../utils/helperFunctions';
 import { chekLocationPermission } from '../utils/permissions';
@@ -115,6 +118,7 @@ const AddressBottomSheet = ({
     isCountry: false,
     isPincode: false,
     isAddress: false,
+    isHouse:false
   });
 
   const styles = stylesData({ fontFamily, themeColors });
@@ -171,6 +175,7 @@ const AddressBottomSheet = ({
     isCountry,
     isPincode,
     isAddress,
+    isHouse
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -255,17 +260,25 @@ const AddressBottomSheet = ({
 
   //this function use for save user info
   const isValidDataOfAddressSave = () => {
-    const error = validations({
-      address: address || '',
-      // street: street || '',
-      // city: city || '',
-      // states: states || '',
-      // country: country || '',
-      // pincode: pincode || '',
-    });
+    const error = appIds?.qdelo === getBundleId() ?
+      validations({
+        address: address || '',
+
+        street: street || '',
+        // city: city || '',
+        // states: states || '',
+        // country: country || '',
+        // pincode: pincode || '',
+        houseNo: houseNo
+      }) :
+      validations({
+        address: address || '',
+      })
     if (error) {
+      console.log(error, 'errorrrrr-----')
       // showError(error);
       // alert(error);
+      // alert('error')
       checkAddressError(error);
       return;
     }
@@ -290,32 +303,34 @@ const AddressBottomSheet = ({
         isPincode: false,
       });
     }
-    // if (
-    //   error ==
-    //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.ENTER_STREET
-    // ) {
-    //   updateState({
-    //     isStreet: true,
-    //     isCity: false,
-    //     isState: false,
-    //     isCountry: false,
-    //     isPincode: false,
-    //     isAddress: false,
-    //   });
-    // }
-    // if (
-    //   error ==
-    //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.CITY
-    // ) {
-    //   updateState({
-    //     isCity: true,
-    //     isStreet: false,
-    //     isState: false,
-    //     isCountry: false,
-    //     isPincode: false,
-    //     isAddress: false,
-    //   });
-    // }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.HOUSE_NO
+    ) {
+      updateState({
+        isCity: false,
+        isStreet: false,
+        isState: false,
+        isCountry: false,
+        isPincode: false,
+        isAddress: false,
+        isHouse:true
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.ENTER_STREET
+    ) {
+      updateState({
+        isStreet: true,
+        isCity: false,
+        isState: false,
+        isCountry: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    
     // if (
     //   error ==
     //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.STATE
@@ -383,6 +398,7 @@ const AddressBottomSheet = ({
       house_number: houseNo,
       extra_instruction: extra_instruction,
     };
+
     if (type == 'Home1') {
       navigation.navigate(navigationStrings.HOME, {
         details,
@@ -740,7 +756,20 @@ const AddressBottomSheet = ({
                 labelStyle={styles.labelStyle}
                 returnKeyType={'next'}
               />
-
+              {isHouse && (
+                <Text
+                  style={{
+                    marginTop: moderateScale(-20),
+                    marginLeft: moderateScale(6),
+                    color: colors.redB,
+                  }}>
+                  {strings.PLEASE_ENTER +
+                    ' ' +
+                    strings.YOUR +
+                    ' ' +
+                    strings.HOUSE_NO}
+                </Text>
+              )}
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('street')}
                 placeholder={strings.ENTER_STREET}

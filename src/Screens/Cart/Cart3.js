@@ -2517,6 +2517,7 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           <SwipeableSection
             item={item}
+            openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
             tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater}
