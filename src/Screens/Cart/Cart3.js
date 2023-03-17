@@ -2516,6 +2516,7 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           <SwipeableSection
             item={item}
+            openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
             tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater}
@@ -5076,6 +5077,7 @@ function Cart({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
+        {!!appData?.profile?.preferences?.flutterwave_public_key ? 
           <PayWithFlutterwave
             onAbort={() =>
               updateState({
@@ -5086,8 +5088,7 @@ function Cart({ navigation, route }) {
             onRedirect={handleOnRedirect}
             options={{
               tx_ref: generateTransactionRef(10),
-              authorization:
-                appData?.profile?.preferences?.flutterwave_public_key,
+              authorization: appData?.profile?.preferences?.flutterwave_public_key,
               customer: {
                 email: userData?.email,
                 name: userData?.name,
@@ -5096,7 +5097,7 @@ function Cart({ navigation, route }) {
               currency: currencies?.primary_currency?.iso_code,
               payment_options: 'card',
             }}
-          />
+          /> : <></>}
         </View>
       </Modal>
     </WrapperContainer>

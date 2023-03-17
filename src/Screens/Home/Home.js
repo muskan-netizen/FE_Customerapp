@@ -971,7 +971,7 @@ console.log(locationData,"locationData?.address");
       stopOrderModalVisible: false,
     });
   };
-
+{console.log(appStyle?.homePageLayout,"appStyle?.homePageLayout")}
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:

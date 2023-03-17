@@ -2529,6 +2529,42 @@ end
 target 'OyeeRides' do
 end
 
+#ROYORIDES
+target 'ROYORIDES' do
+end
+
+#Tempcorner
+target 'Tempcorner' do
+end
+
+#Autobox
+target 'Autobox' do
+end
+
+#DetailPros
+target 'DetailPros' do
+end
+
+#Blink
+target 'Blink' do
+end
+
+# #Virgingates
+target 'Virgingates' do
+end
+
+#Ping
+target 'Ping' do
+end
+
+#Chutneyeah
+target 'Chutneyeah' do
+end
+
+# #Ineeda
+# target 'Ineeda' do
+# end
+
 
 
 post_install do |installer|
