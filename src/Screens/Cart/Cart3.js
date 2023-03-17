@@ -487,11 +487,21 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
             };
             _vendorTableCart(data, tableData[0]);
           }
-
+          var months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May',
+            'Jun', 'Jul', 'Aug', 'Sept',
+            'Oct', 'Nov', 'Dec'
+            ];
+            function monthNameToNum(monthname) {
+              var month = months.indexOf(monthname);
+              return month ? month + 1 : 0;
+          }
           if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
-            var timeSlot = res?.data.products[0].delaySlot;
-            console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
-            setMinimumDelayVendorDate(timeSlot);
+            var timeSlot = res?.data?.products[0]?.delaySlot.replace(/,/g, "").split(" ");
+            const mont = monthNameToNum(timeSlot[1])
+            const fnd = `${timeSlot[2]}-0${mont}-${timeSlot[0]}`
+            console.log(fnd,'datadatadatavdata');
+            setMinimumDelayVendorDate(fnd);
           }
           setCartItems(res.data.products);
           let currentDate = moment(new Date()).format('YYYY-MM-DD');
@@ -4771,6 +4781,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
                     !!cartData?.slots.length > 0) ? (
                   <Fragment>
                     <ScrollView>
+                      {console.log(minimumDelayVendorDate,'+++minimumDelayVendorDate',new Date())}
                       <Calendar
                         current={
                           getBundleId() == appIds.masa
