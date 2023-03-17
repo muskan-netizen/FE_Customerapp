@@ -217,14 +217,14 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                       zuluCluch{
+                   incubit{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zuluCluch.royoorders'
-                resValue "string", "app_name", "ZuluCluch"
+                applicationId 'com.incubit.royoorder'
+                resValue "string", "app_name", "Incubit"
                 resValue "string", "host_name", ""
             }
 }
