@@ -707,13 +707,10 @@ export const EDIT_CUSTOMER_ORDER = getApiUrl('/user/editorder');
 export const DISCARD_EDIT_CUSTOMER_ORDER = getApiUrl('/user/discardeditorder');
 
 // pickup-delivery drop location change after order place
-export const DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE = getApiUrl(
-  '/pickup-delivery/edit-order')
+export const DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE = getApiUrl('/pickup-delivery/edit-order')
 
 //Replace Order
-export const GET_PRODUCTS_FOR_REPLACE = getApiUrl(
-  '/replace-order/get-replace-order-data-in-model',
-);
+export const GET_PRODUCTS_FOR_REPLACE = getApiUrl('/replace-order/get-replace-order-data-in-model');
 export const GET_DETAIL_OF_PRODUCT_FOR_REPLACE = getApiUrl(
   '/replace-order/get-replace-products',
 );

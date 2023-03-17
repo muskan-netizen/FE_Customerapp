@@ -18,7 +18,7 @@ abstract_target 'available_pods' do
   #  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
    pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
    pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
- 
+  
 
 ##RoyoOrder Target
 target 'RoyoOrder' do
@@ -2527,6 +2527,30 @@ end
 
 #OyeeRides
 target 'OyeeRides' do
+end
+
+#ROYORIDES
+target 'ROYORIDES' do
+end
+
+#Tempcorner
+target 'Tempcorner' do
+end
+
+#Autobox
+target 'Autobox' do
+end
+
+#DetailPros
+target 'DetailPros' do
+end
+
+#Blink
+target 'Blink' do
+end
+
+#Virgingates
+target 'Virgingates' do
 end
 
 

@@ -562,7 +562,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           cancelError: null,
         });
         console.log("error raised", error);
-        showError(error?.message || error?.error);
+        // showError(error?.message || error?.error);
       }
     }
   };
@@ -649,7 +649,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       cancelError: null,
     });
     console.log("error raised", error);
-    showError(error?.message || error?.error);
+    // showError(error?.message || error?.error);
   };
   const _onRegionChange = (region) => {
     updateState({ region: region });
