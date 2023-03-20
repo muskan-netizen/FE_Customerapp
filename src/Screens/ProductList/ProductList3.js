@@ -407,6 +407,11 @@ export default function Products({ route, navigation }) {
   //usecallback functions
 
   const goToProductDetail = (data) => {
+
+    console.log(data, "data>>>>>>>data")
+
+
+    return;
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
 
@@ -417,7 +422,7 @@ export default function Products({ route, navigation }) {
       return (
         <View
           key={String(index)}
-          style={{ height:  moderateScale(180) }}>
+          style={{ height: moderateScale(180) }}>
           <ProductCard3
             data={item}
             index={index}
@@ -575,7 +580,7 @@ export default function Products({ route, navigation }) {
             animateText={animateText}
           // section={section}
           />
-          <View style={{...styles.horizontalLine,marginVertical:moderateScaleVertical(12)}} />
+          <View style={{ ...styles.horizontalLine, marginVertical: moderateScaleVertical(12) }} />
         </View>
       );
     },
@@ -606,7 +611,7 @@ export default function Products({ route, navigation }) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View style={{ height: !!categoryInfo?.is_show_products_with_category?  listHeight: 'auto' }}>
+      <View style={{ height: !!categoryInfo?.is_show_products_with_category ? listHeight : 'auto' }}>
         {false ? (
           <View
             // key={AnimatedHeaderValue}
@@ -1376,7 +1381,7 @@ export default function Products({ route, navigation }) {
       }
 
       console.log(item, 'chechItemm');
-      
+
       if (!!item.is_recurring_booking) {
         if (isEmpty(selectedPlanValues)) {
           showInfo('Click on Calendar icon to schedule the item!');
@@ -1873,7 +1878,7 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
-    updateState({wrapperListLoader:true})
+    updateState({ wrapperListLoader: true })
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
@@ -1902,7 +1907,7 @@ export default function Products({ route, navigation }) {
       .then(async (res) => {
         console.log('get all products by vendor res', res?.data);
         // return;
-        updateState({wrapperListLoader:false})
+        updateState({ wrapperListLoader: false })
 
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
           let detail = res?.data?.vendor
@@ -2896,7 +2901,7 @@ export default function Products({ route, navigation }) {
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;
-      const searchData =[]
+      const searchData = []
       const newArr = searchItems?.map((el) => {
         const records =
           el?.data &&
@@ -2917,8 +2922,8 @@ export default function Products({ route, navigation }) {
 
       newArr?.map((item) => {
         if (item?.data?.length != 0) {
-            searchData?.push(item)
-          }
+          searchData?.push(item)
+        }
       })
       console.log('checking products >>>>>', searchData);
 
@@ -3619,7 +3624,7 @@ export default function Products({ route, navigation }) {
       showError('Product varient is not availabel!');
       return;
     }
-    if(!!productDetailData.is_recurring_bookin){
+    if (!!productDetailData.is_recurring_bookin) {
       if (isEmpty(selectedPlanValues)) {
         showError('Plan type should not be empty!');
         return;
@@ -3640,8 +3645,8 @@ export default function Products({ route, navigation }) {
         }
       }
     }
-   
-    
+
+
 
     playHapticEffect(hapticEffects.rigid);
     console.log('add on set', addonSet);
@@ -3878,9 +3883,9 @@ export default function Products({ route, navigation }) {
           }}>Done</Text>
         </TouchableOpacity>
       </View>
-      <FlatList 
-      data={appointmentAvailableSlots}
-      showsVerticalScrollIndicator={false}
+      <FlatList
+        data={appointmentAvailableSlots}
+        showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{
           height: moderateScaleVertical(10)
         }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
@@ -4190,7 +4195,7 @@ export default function Products({ route, navigation }) {
                 </View>
               )}
 
-{console.log(tagFilteredData,'tagFilteredData=>',cloneSectionList)}
+            {console.log(tagFilteredData, 'tagFilteredData=>', cloneSectionList)}
 
             {!!categoryInfo?.is_show_products_with_category ? (
 

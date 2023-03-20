@@ -169,7 +169,7 @@ const DashBoardFiveV2Api = ({
   };
   const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <View style={{width: width / 4.2}}>
+      <View style={{ width: width / 4.2 }}>
         <HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
@@ -394,7 +394,7 @@ const DashBoardFiveV2Api = ({
       <ProductsComp3
         item={item}
         onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
         }
       />
 
@@ -403,15 +403,15 @@ const DashBoardFiveV2Api = ({
 
   const _renderSingleCategoryProducts = useCallback(({ item, index }) => {
     return (
-    
+
       <SingleCategoryProducts
         mainContainerStyle={{
           borderRadius: moderateScale(20),
           overflow: 'hidden',
           height: moderateScaleVertical(130),
           elevation: 0,
-          alignItems:'center',
-          width: width/3-10
+          alignItems: 'center',
+          width: width / 3 - 10
 
         }}
         showRating={false}
@@ -465,17 +465,17 @@ const DashBoardFiveV2Api = ({
             <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
         </View>
-        <View style={{marginHorizontal:moderateScale(8)}}>
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          numColumns={3}
-          data={item?.data?.category_detail?.products}
-          renderItem={_renderSingleCategoryProducts}
-          keyExtractor={(item) => item?.id?.toString()}
-          ListFooterComponent={() => (
-            <View style={{ marginRight: moderateScale(16) }} />
-          )}
-        />
+        <View style={{ marginHorizontal: moderateScale(8) }}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            numColumns={3}
+            data={item?.data?.category_detail?.products}
+            renderItem={_renderSingleCategoryProducts}
+            keyExtractor={(item) => item?.id?.toString()}
+            ListFooterComponent={() => (
+              <View style={{ marginRight: moderateScale(16) }} />
+            )}
+          />
         </View>
       </View>
     ) : (

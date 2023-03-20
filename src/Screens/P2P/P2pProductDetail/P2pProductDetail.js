@@ -49,7 +49,6 @@ const P2pProductDetail = ({ navigation, route }) => {
   const snapPoints = useMemo(() => [height], []);
   const bottomSheetModalRef = useRef(null);
   const paramData = route?.params;
-  console.log(paramData, 'paramData....paramData');
   const {
     appData,
     currencies,
@@ -59,9 +58,11 @@ const P2pProductDetail = ({ navigation, route }) => {
     appStyle,
     themeColors,
   } = useSelector((state) => state?.initBoot);
-  const { userData } = useSelector((state) => state?.auth);
+  const { userData } = useSelector((state) => state?.auth || {});
+
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -93,9 +94,6 @@ const P2pProductDetail = ({ navigation, route }) => {
         console.log(res, '<===response getProductDetailByProductId');
         setIsLoading(false);
         setProductInfo(res?.data?.products);
-
-        // logic for grouping same attribute ids
-        let finalProductAttribut = [];
         var results = res?.data?.product_attribute.reduce(function (
           results,
           org,
@@ -159,19 +157,6 @@ const P2pProductDetail = ({ navigation, route }) => {
 
   const onChat = (item) => {
     navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item } });
-  };
-
-  const onChatPress = () => {
-    if (!!userData?.auth_token) {
-      navigation.navigate(navigationStrings.CHAT_ROOM_FOR_VENDOR, {
-        service_type: 'p2p',
-        vendor_id: productInfo?.vendor?.id,
-        product_id: productInfo?.id,
-      });
-    } else {
-      actions.setRedirection('');
-      actions.setAppSessionData('on_login');
-    }
   };
 
   const renderItem = useCallback(({ item, index }) => {
@@ -320,9 +305,7 @@ const P2pProductDetail = ({ navigation, route }) => {
             onPress={() => navigation.goBack()}>
             <Image source={imagePath.back1} />
           </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.heart}>
-            <Image source={imagePath.heart2} />
-          </TouchableOpacity> */}
+
 
           {!isEmpty(productInfo?.product_media) &&
             productInfo?.product_media.length >= 2 && (

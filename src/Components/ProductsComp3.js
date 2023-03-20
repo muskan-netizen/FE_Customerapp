@@ -72,13 +72,13 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         // padding: moderateScale(6),
         // width: imageWidth,
         shadowColor: '#000',
-        shadowOffset: {width: 0, height: 1},
+        shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
         elevation: 4,
-        margin:1,
+        margin: 1,
         ...getScaleTransformationStyle(scaleInAnimated),
-   
+
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>

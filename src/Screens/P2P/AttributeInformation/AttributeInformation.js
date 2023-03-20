@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
@@ -17,6 +17,7 @@ import Modal from 'react-native-modal';
 import WebView from 'react-native-webview';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import AddressBottomSheet from '../../../Components/AddressBottomSheet';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 import GradientButton from '../../../Components/GradientButton';
@@ -73,6 +74,19 @@ const AttributeInformation = ({ route, navigation }) => {
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
   const [price, setPrice] = useState('');
+  const [state, setState] = useState({
+    updateData: {},
+    indicator: false,
+    type: '',
+    selectViaMap: false,
+    isVisible: false,
+    selectedId: '',
+  })
+  const [selectedLocationAtt, setSelectedLocationAtt] = useState({})
+
+  const { updateData, indicator, type, selectViaMap, isVisible } = state;
+  const updateState = data => setState(state => ({ ...state, ...data }));
+
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -90,7 +104,7 @@ const AttributeInformation = ({ route, navigation }) => {
         },
       )
       .then((res) => {
-        console.log(res, '<===res');
+        console.log(res, '<===res getAvailableAttributes');
         setLoadingAttributes(false);
         setAttributeInfo(res?.data || []);
       })
@@ -130,10 +144,10 @@ const AttributeInformation = ({ route, navigation }) => {
     let apiObj = {};
     attributeInfo.map((item, index) => {
       let optionData = [];
-      item?.option?.map((item, inx) => {
+      item?.option?.map((itm, inx) => {
         optionData[inx] = {
-          option_id: item?.id,
-          option_title: item?.title,
+          option_id: itm?.id,
+          option_title: itm?.title,
         };
       });
       if (item?.values) {
@@ -144,8 +158,15 @@ const AttributeInformation = ({ route, navigation }) => {
           option: optionData,
           value: item?.values,
         };
+        if (item?.type == 6) {
+          apiObj[item?.id].latitude = item?.values?.latitude;
+          apiObj[item?.id].longitude = item?.values?.longitude;
+          apiObj[item?.id].address = item?.values?.value;
+        }
       }
     });
+
+    console.log(apiObj, "apiObj>>>>>>>apiObj")
     formData.append('attribute', JSON.stringify(apiObj));
     console.log(formData, '<===formData onSubmitAttributes');
     actions
@@ -196,6 +217,7 @@ const AttributeInformation = ({ route, navigation }) => {
     attributeInfoData[indexOfAttributeToUpdate].values = [text];
     setAttributeInfo(attributeInfoData);
   };
+
 
   const onPressCheckBoxes = (value, data) => {
     const attributeInfoData = [...attributeInfo];
@@ -283,6 +305,54 @@ const AttributeInformation = ({ route, navigation }) => {
     }
   };
 
+  const onClearLocationField = () => {
+    const attributeInfoData = cloneDeep(attributeInfo)
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == selectedLocationAtt?.id,
+    );
+    delete attributeInfoData[indexOfAttributeToUpdate].values
+    setAttributeInfo(attributeInfoData);
+  }
+
+
+  const addUpdateLocation = childData => {
+    updateState({
+      selectViaMap: false,
+      isVisible: false,
+    });
+    const attributeInfoData = cloneDeep(attributeInfo)
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == selectedLocationAtt?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = {
+      latitude: childData?.latitude,
+      longitude: childData?.longitude,
+      value: childData?.address
+    };
+    setAttributeInfo(attributeInfoData);
+  };
+
+  console.log(attributeInfo, "attributeInfo>>>>")
+
+  const openCloseMapAddress = type => {
+    updateState({ selectViaMap: type == 1 ? true : false });
+  };
+
+  const onModalClose = () => {
+    setModalVisible(false);
+    updateState({ selectViaMap: false });
+  };
+
+
+  const setModalVisible = (visible = false, type = '', id = '', data = {}) => {
+    updateState({
+      updateData: data,
+      isVisible: visible,
+      type: type,
+      selectedId: id,
+    });
+  };
+
   const renderRadioBtns = useCallback(
     (item, data, index) => {
       return (
@@ -308,11 +378,7 @@ const AttributeInformation = ({ route, navigation }) => {
             }}
           />
           <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(14),
-              marginLeft: moderateScale(6),
-            }}>
+            style={styles.titleTxt}>
             {item?.title}
           </Text>
         </TouchableOpacity>
@@ -394,7 +460,20 @@ const AttributeInformation = ({ route, navigation }) => {
               onChangeText={(text) => onChangeText(text, item)}
               style={styles.textInput}
             />
-          ) : (
+          ) : item?.type == 6 ? <TouchableOpacity
+            onPress={() => {
+              updateState({
+                isVisible: true
+              })
+              setSelectedLocationAtt(item)
+            }}
+            style={styles.addLocationBtn}>
+            <Text numberOfLines={1} style={{
+              flex: 1,
+              ...styles.titleTxt
+            }}>{!isEmpty(item?.values) ? item?.values?.value : "Add Location"}</Text>
+            {!isEmpty(item?.values) && <TouchableOpacity onPress={onClearLocationField}><Image source={imagePath.closeButton} /></TouchableOpacity>}
+          </TouchableOpacity> : (
             <View style={styles.checkBox}>
               {item?.option?.map((itm, index) =>
                 renderCheckBoxes(itm, item, index),
@@ -406,6 +485,7 @@ const AttributeInformation = ({ route, navigation }) => {
     },
     [attributeInfo],
   );
+
 
   const listFooterComponent = () => {
     return (
@@ -627,6 +707,7 @@ const AttributeInformation = ({ route, navigation }) => {
           </KeyboardAwareScrollView>
         )}
       </View>
+
       <GallaryCameraImgPicker
         isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}
@@ -663,13 +744,26 @@ const AttributeInformation = ({ route, navigation }) => {
             btnText={'Ok'}
             onPress={() => {
               setIsProductAddedModal(false);
-              navigation.goBack();
+              // navigation.goBack();
             }}
             containerStyle={{ width: '50%', marginTop: moderateScaleVertical(5) }}
             colorsArray={['#FC7049', '#FD312C']}
           />
         </View>
       </Modal>
+
+      {isVisible ? (
+        <AddressBottomSheet
+          navigation={navigation}
+          updateData={updateData}
+          indicator={indicator}
+          type={type}
+          passLocation={data => addUpdateLocation(data)}
+          openCloseMapAddress={openCloseMapAddress}
+          selectViaMap={selectViaMap}
+          onCloseSheet={onModalClose}
+        />
+      ) : null}
     </WrapperContainer>
   );
 };
@@ -780,6 +874,22 @@ function stylesFunc({ fontFamily, themeColors }) {
       backgroundColor: themeColors.primary_color,
       borderWidth: 0,
     },
+    addLocationBtn: {
+      borderWidth: 1,
+      borderColor: colors.borderColorB,
+      borderRadius: moderateScale(8),
+      paddingHorizontal: moderateScale(12),
+      height: moderateScaleVertical(48),
+      justifyContent: "space-between",
+      flexDirection: "row",
+      alignItems: "center"
+
+    },
+    titleTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(14),
+      marginLeft: moderateScale(6),
+    }
   });
   return styles;
 }
