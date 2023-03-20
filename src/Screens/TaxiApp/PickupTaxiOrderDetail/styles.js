@@ -44,6 +44,7 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       fontFamily: fontFamily.regular,
       fontSize: textScale(12),
       opacity: 0.4,
+      marginTop:moderateScaleVertical(8)
     },
     topLable: {
       flexDirection: 'row',
@@ -429,6 +430,12 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       alignSelf:'center',
       marginVertical:moderateScaleVertical(10)
     },
+    loaderStyle: {
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'space-between',
+      marginTop:moderateScaleVertical(24)
+    }
   });
   return styles;
 };

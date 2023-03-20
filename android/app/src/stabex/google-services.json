@@ -1,65 +1,34 @@
 {
   "project_info": {
-    "project_number": "627156568988",
-    "project_id": "stabex-ee8bd",
-    "storage_bucket": "stabex-ee8bd.appspot.com"
+    "project_number": "453280137882",
+    "project_id": "stabex-fb69b",
+    "storage_bucket": "stabex-fb69b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:627156568988:android:dd8c482f516a57fd869659",
+        "mobilesdk_app_id": "1:453280137882:android:8b97c236a30844786c1523",
         "android_client_info": {
-          "package_name": "com.stabex.royoorders"
+          "package_name": "com.stabex.orders"
         }
       },
       "oauth_client": [
         {
-          "client_id": "627156568988-8d6jtbh9u1d5lvkrkpljg12u51d29dgg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stabex.royoorders",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "627156568988-b1vn9hsbkpb6dl811gcuros76uuqqc08.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stabex.royoorders",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "627156568988-uvg57jf0942th69ufrf73e3tvv8q691l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stabex.royoorders",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "627156568988-87rfdifv98agpt9vdbm0ko6u6u6nc31o.apps.googleusercontent.com",
+          "client_id": "453280137882-54agelhaejsutim1d7acf65pm7s1llrp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAbksYQhp0e_n739VKXdHOPnPkxlWq0nQM"
+          "current_key": "AIzaSyBaYCKg3c-DcEblUvrOzy1t7j60Tatr6bE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "627156568988-87rfdifv98agpt9vdbm0ko6u6u6nc31o.apps.googleusercontent.com",
+              "client_id": "453280137882-54agelhaejsutim1d7acf65pm7s1llrp.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "627156568988-i2fnc5k0l9d6lgfctcg5ceirgtnhlt7v.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.stabex.royoorders"
-              }
             }
           ]
         }

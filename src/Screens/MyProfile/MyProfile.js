@@ -909,7 +909,7 @@ export default function MyProfile({route, navigation}) {
 
         {selectedTab && selectedTab == strings.BASIC_INFO && basicInfoView()}
         {selectedTab &&
-          selectedTab == strings.CHANGE_PASS &&
+          selectedTab == strings.CHANGE_PASS && userData?.refferal_code &&
           changePasswordView()}
         {selectedTab && selectedTab == strings.ADDRESS && addressView()}
       </View>

@@ -14,28 +14,28 @@ import {
   textScale,
   width
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
 export default function AvailableDriver({
+  rideType,
   isCabPooling = false,
-  isLoading,
+  isLoading = false,
   disabled,
   updateSeatNo,
   availableCarList = [],
   onPressAvailableCar,
   selectedCarOption = null,
   allListedDrivers,
-  _onUpdateSeatNo=()=>{},
+  _onUpdateSeatNo = () => { },
+  _onShowBidePriceModal = () => { }
 }) {
-  const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } =
-    useSelector((state) => state?.initBoot || {});
-  const {additional_preferences, digit_after_decimal} =
-    appData?.profile?.preferences || {};
+  const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } = useSelector((state) => state?.initBoot || {});
+  const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -47,6 +47,7 @@ export default function AvailableDriver({
     console.log(item, 'itemitemitem');
     return (
       <View
+        key={String(item.id)}
         style={{
           backgroundColor: isDarkMode
             ? selectedCarOption?.id == item?.id
@@ -74,6 +75,7 @@ export default function AvailableDriver({
             opacity: selectedCarOption?.id == item?.id ? 0.8 : 1,
           }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
             <Image
               resizeMode={'contain'}
               style={{
@@ -127,28 +129,49 @@ export default function AvailableDriver({
             </View>
           </View>
 
-          <Text
-            numberOfLines={1}
-            style={{
-              color: isDarkMode
-                ? selectedCarOption?.id == item?.id
-                  ? colors.white
-                  : colors.whiteOpacity50
-                : selectedCarOption?.id == item?.id
-                  ? colors.black
-                  : colors.blackC,
-              fontFamily: fontFamily.medium,
-              fontSize: textScale(14),
-              textAlign: 'left',
-            }}>
-            {tokenConverterPlusCurrencyNumberFormater(
-               Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
-              digit_after_decimal,
-              additional_preferences,
-              currencies?.primary_currency?.symbol,
-            )}
-          </Text>
-        </TouchableOpacity>
+          {rideType == 'bideRide' ?
+            <TouchableOpacity
+              onPress={() => _onShowBidePriceModal(item)}
+              style={{
+                backgroundColor: themeColors.primary_color,
+                padding: moderateScale(8),
+                borderRadius: moderateScale(4),
+                borderColor: themeColors.primary_color,
+              }}>
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.regular,
+                  color: colors.white,
+                }}>
+                {'Bid Now'}
+              </Text>
+            </TouchableOpacity>
+            :
+            <Text
+              numberOfLines={1}
+              style={{
+                color: isDarkMode
+                  ? selectedCarOption?.id == item?.id
+                    ? colors.white
+                    : colors.whiteOpacity50
+                  : selectedCarOption?.id == item?.id
+                    ? colors.black
+                    : colors.blackC,
+                fontFamily: fontFamily.medium,
+                fontSize: textScale(14),
+                textAlign: 'left',
+              }}>
+              {tokenConverterPlusCurrencyNumberFormater(
+                Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
+
+          }
+        </TouchableOpacity >
         {selectedCarOption?.id == item?.id && allListedDrivers?.length ? (
           <Text
             style={{
@@ -158,10 +181,12 @@ export default function AvailableDriver({
             }}>
             {allListedDrivers[0]?.arrival_time} away
           </Text>
-        ) : null}
-      </View>
+        ) : null
+        }
+      </View >
     );
   };
+
   const _listEmptyComponent = () => {
     return (
       <>
@@ -211,8 +236,8 @@ export default function AvailableDriver({
           ? MyDarkTheme.colors.background
           : colors.white,
       }}>
-         {
-       isCabPooling && (<View
+      {
+        !!isCabPooling && (<View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -249,7 +274,7 @@ export default function AvailableDriver({
 
           <View
             // pointerEvents={btnLoader ? 'none' : 'auto'}
-            style={{minWidth: moderateScale(74)}}>
+            style={{ minWidth: moderateScale(74) }}>
             <View
               style={{
                 backgroundColor: themeColors.primary_color,
@@ -262,8 +287,8 @@ export default function AvailableDriver({
               }}>
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
-                disabled={updateSeatNo == 1 || disabled?true :false}
-              onPress={()=>_onUpdateSeatNo('decrease')}
+                disabled={updateSeatNo == 1 || disabled ? true : false}
+                onPress={() => _onUpdateSeatNo('decrease')}
               >
                 <Text style={{
                   fontFamily: fontFamily.bold,
@@ -298,8 +323,8 @@ export default function AvailableDriver({
               </View>
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
-                disabled={  disabled ? true: false}
-              onPress={()=>_onUpdateSeatNo('increase')}
+                disabled={disabled ? true : false}
+                onPress={() => _onUpdateSeatNo('increase')}
               >
                 <Text style={{
                   fontFamily: fontFamily.bold,
@@ -312,16 +337,36 @@ export default function AvailableDriver({
             </View>
           </View>
         </View>
-      )}
-      <BottomSheetFlatList
-        // scrollEnabled={false}
-        data={availableCarList}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        ListEmptyComponent={_listEmptyComponent}
-      />
+        )}
+
+
+      {isLoading ?
+        <View
+          style={{
+            // height: height / 4,
+            marginBottom: moderateScaleVertical(20),
+          }}>
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((i, inx) => {
+            return (
+              <View
+                style={{ marginBottom: moderateScaleVertical(8) }}
+                key={inx}>
+                <ListEmptyCar isLoading={isLoading} />
+              </View>
+            );
+          })}
+        </View>
+        :
+        <BottomSheetFlatList
+          // scrollEnabled={false}
+          data={availableCarList}
+          extraData={availableCarList}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => item?.id || ''}
+          renderItem={_renderItem}
+          ListEmptyComponent={_listEmptyComponent}
+        />}
     </View>
   );
 }

@@ -82,6 +82,7 @@ export default function (data) {
     beneficiaryName,
     accountNumber,
     ifscCode,
+   houseNo,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -561,4 +562,11 @@ export default function (data) {
       return emptyValidationText;
     }
   }
+  if (houseNo !== undefined) {
+    let emptyValidationText = checkEmpty(houseNo, strings.HOUSE_NO);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
 }
+

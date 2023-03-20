@@ -12,3 +12,5 @@ export const offerImage =
 
 export const dummyUser =
   'https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg';
+
+export const google_map_key = 'AIzaSyDHPQM4OBs2I7ngqFOWk0Wk9Ke4AA034VI';

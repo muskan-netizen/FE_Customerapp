@@ -487,10 +487,11 @@ export default function Account3({ navigation }) {
             <View></View>
           )} */}
 
-          {!!userData?.auth_token &&
+          {/* {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
-            appData?.profile?.preferences?.subscription_mode == 1 && (
+            appData?.profile?.preferences?.subscription_mode == 1 && ( */}
+          {true &&(
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -631,11 +632,10 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
-          {/* {!!userData?.auth_token &&
+          {console.log(appMainData,'appMainDataappMainData')}
+          {!!userData?.auth_token &&
           Platform.OS === 'android' &&
           !!appMainData?.is_admin ? (
             <ListItemHorizontal
@@ -669,7 +669,7 @@ export default function Account3({ navigation }) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ) : null} */}
+          ) : null}
 
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
@@ -861,6 +861,7 @@ export default function Account3({ navigation }) {
                 }}
               />
             )}
+            
           {!!userData?.auth_token ? null : (
             <View style={styles.loginView}>
               <TouchableOpacity
@@ -893,14 +894,6 @@ export default function Account3({ navigation }) {
           onPress={(index) => onSosButton(index)}
         />
       </SafeAreaView>
-      <ActionSheet
-        ref={actionSheet}
-        // title={'Choose one option'}
-        options={[strings.POLICE, strings.AMBULANCE, strings.CANCEL]}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={2}
-        onPress={(index) => onSosButton(index)}
-      />
     </View>
   );
 }

@@ -82,7 +82,6 @@ const ProductCard3 = ({
 
   const isDarkMode = theme;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurrenciescurrencies");
   const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
@@ -94,8 +93,8 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
 
   const commonStyles = commonStylesFunc({ fontFamily });
 
-  const url1 = !isEmpty(data?.media)&& data?.media[0]?.image?.path.image_fit;
-  const url2 =!isEmpty(data?.media)&& data?.media[0]?.image?.path.image_path;
+  const url1 = !isEmpty(data?.media) && data?.media[0]?.image?.path.image_fit;
+  const url2 = !isEmpty(data?.media) && data?.media[0]?.image?.path.image_path;
 
   const getImage = (quality) => getImageUrl(url1, url2, quality);
 
@@ -247,7 +246,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
               fontSize: textScale(12),
               width: width / 2.5,
             }}>
-            {!isEmpty(data?.translation)?data?.translation[0]?.title :  data?.title || data?.sku}
+            {!isEmpty(data?.translation) ? data?.translation[0]?.title : data?.title || data?.sku}
           </Text>
 
           {data?.vendor?.name && (
@@ -315,7 +314,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
             }}>
-           
+
             {tokenConverterPlusCurrencyNumberFormater(
               data?.variant[0]?.price,
               digit_after_decimal,
@@ -336,7 +335,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                   textDecorationLine: 'line-through',
                   marginHorizontal: moderateScale(8),
                 }}>
-                  {/* { currencies?.primary_currency?.symbol} */}
+                {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
                   data?.variant[0]?.compare_at_price,
                   digit_after_decimal,
@@ -345,6 +344,25 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                 )}
               </Text>
             )}
+
+          {!!data?.is_recurring_booking &&
+            <TouchableOpacity
+              style={{
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
+                marginHorizontal: moderateScale(8),
+              }}
+              onPress={onPress}
+              activeOpacity={0.8}>
+              <Image
+                style={{
+                  tintColor: isDarkMode
+                    ? colors.white
+                    : themeColors.primary_color,
+                }}
+                source={imagePath.ic_calendar}
+              />
+            </TouchableOpacity>
+          }
         </View>
 
         <View style={{}}>
@@ -430,7 +448,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
             <View
               style={{
                 marginTop:
-                  selectedIndex == index ? moderateScaleVertical(8) : 0,
+                  selectedIndex == index ? moderateScaleVertical(8) : moderateScaleVertical(8),
                 alignItems: 'center',
               }}>
               {((!!data?.check_if_in_cart_app &&
@@ -543,6 +561,7 @@ console.log(currencies,"currenciescurrenciescurrenciescurrenciescurrenciescurren
                         : colors.greyColor2,
                       width: moderateScale(100),
                       minHeight: moderateScaleVertical(35),
+                      marginTop: moderateScaleVertical(5),
                     }}>
                     {selectedItemID == data?.id ? (
                       <UIActivityIndicator

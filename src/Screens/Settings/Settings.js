@@ -11,7 +11,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart';
 import LinearGradient from 'react-native-linear-gradient';

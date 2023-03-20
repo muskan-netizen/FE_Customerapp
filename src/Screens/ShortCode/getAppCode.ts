@@ -528,8 +528,20 @@ export const getAppCode = () => {
         case appIds.livraiZoo: return shortCodes.livraiZoo;
         case appIds.boozeBrothers: return shortCodes.boozeBrothers;
         case appIds.magicalBookings: return shortCodes.magicalBookings;
-
-
+        case appIds.tkaff: return shortCodes.tkaff;
+        case appIds.ebay: return shortCodes.ebay;
+        case appIds.readyToRent: return shortCodes.readyToRent;
+        case appIds.theGenie: return shortCodes.theGenie;
+        case appIds.sultanCenter: return shortCodes.sultanCenter;
+        case appIds.reedas: return shortCodes.reedas;
+        case appIds.onebasket: return shortCodes.onebasket;
+        case appIds.zozozi: return shortCodes.zozozi;
+        case appIds.ekobridge: return shortCodes.ekobridge;
+        case appIds.ambosSafariExpress: return shortCodes.ambosSafariExpress;
+        case appIds.zulbrand: return shortCodes.zulbrand;
+        case appIds.emart: return shortCodes.emart;
+        case appIds.oyeeRides: return shortCodes.oyeeRides;
+        
 
 
         default: return '245bae'

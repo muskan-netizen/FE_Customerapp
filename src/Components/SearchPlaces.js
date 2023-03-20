@@ -8,9 +8,10 @@ import {
   Keyboard,
   I18nManager,
   Text,
+  Alert,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -19,38 +20,38 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {googlePlacesApi} from '../utils/googlePlaceApi';
+import { googlePlacesApi } from '../utils/googlePlaceApi';
 import SelctFromMap from './SelctFromMap';
 import ModalView from '../Components/Modal';
 import strings from '../constants/lang';
 import * as RNLocalize from 'react-native-localize';
 import actions from '../redux/actions';
-import {showError} from '../utils/helperFunctions';
+import { showError } from '../utils/helperFunctions';
 
 const SearchPlaces = ({
   containerStyle = {},
   inputStyle = {},
   mapKey = '',
-  fetchArrayResult = () => {},
+  fetchArrayResult = () => { },
   value = '',
-  setValue = () => {},
+  setValue = () => { },
   placeHolder,
-  onFocus = () => {},
+  onFocus = () => { },
   autoFocus = false,
-  _moveToNextScreen = () => {},
+  _moveToNextScreen = () => { },
   curLatLng = {},
   placeHolderColor = colors.black,
-  onClear = () => {},
+  onClear = () => { },
   showRightImg = true,
   textStyle = {},
-  mapClose = () => {},
-  addressDone = () => {},
+  mapClose = () => { },
+  addressDone = () => { },
   isMapSelectLocation = false,
   currentLatLong = {},
   index = 0,
   isTaxiFlow = false,
 }) => {
-  const {appData, currencies, languages, themeColor, themeToggle} = useSelector(
+  const { appData, currencies, languages, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -104,7 +105,7 @@ const SearchPlaces = ({
 
   const modalMainContent = () => {
     return (
-      <View style={{flex: 1, }}>
+      <View style={{ flex: 1, }}>
         <SelctFromMap
           addressDone={addressDone}
           mapClose={mapClose} //address map close
@@ -171,7 +172,7 @@ const SearchPlaces = ({
         isVisible={isMapSelectLocation}
         onClose={mapClose}
         modalMainContent={modalMainContent}
-        mainViewStyle={{flex: 1}}
+        mainViewStyle={{ flex: 1 }}
         modalStyle={{
           flex: 1,
           marginVertical: 0,

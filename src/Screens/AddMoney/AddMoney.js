@@ -3,9 +3,9 @@ import {
   CardField,
   createPaymentMethod,
   createToken,
-  handleCardAction,
   initStripe,
   StripeProvider,
+  handleNextAction
 } from '@stripe/stripe-react-native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import React, { useEffect, useState } from 'react';
@@ -702,9 +702,10 @@ export default function AddMoney({ navigation }) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
+    console.log(cardInfo,res2,'hgreutiergtry')
     if (res2) {
       await createPaymentMethod({
-        type: 'Card',
+        paymentMethodType: 'Card',
         card: cardInfo,
         token: res2,
       })
@@ -731,14 +732,14 @@ export default function AddMoney({ navigation }) {
                 },
               )
               .then(async (res) => {
-                console.log(res, 'getStripePaymentIntent response');
+                console.log(res?.client_secret, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
-                  const { paymentIntent, error } = await handleCardAction(
+                  const { paymentIntent, error } = await handleNextAction(
                     res?.client_secret,
                   );
                   if (paymentIntent) {
                     console.log(paymentIntent, 'paymentIntent');
-                    if (paymentIntent) {
+                    if (paymentIntent) {                  
                       actions
                         .confirmPaymentIntentStripe(
                           {
@@ -791,51 +792,17 @@ export default function AddMoney({ navigation }) {
       updateState({ isLoadingB: true });
       await createToken({ ...cardInfo, type: 'Card' })
         .then((res) => {
-          console.log(res, 'res>>STRIpe');
+          console.log(res, 'z');
           if (!!res?.error && !!res?.error?.localizedMessage) {
             showError(res?.error?.localizedMessage);
             updateState({ isLoadingB: false });
             return;
           }
 
-          //Creating the createPaymentMehod
           if (res && res?.token && res.token?.id) {
             _createPaymentMethod(cardInfo, res.token?.id);
           }
 
-          // if (res && res?.token && res.token?.id) {
-          //   let selectedMethod = selectedPaymentMethod.code.toLowerCase();
-          //   // updateState({isLoadingB: true});
-          //   let apiData = `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&stripe_token=${res.token?.id}`;
-          //   actions
-          //     .openPaymentWebUrl(
-          //       apiData,
-          //       {},
-          //       {
-          //         code: appData?.profile?.code,
-          //         currency: currencies?.primary_currency?.id,
-          //         language: languages?.primary_language?.id,
-          //       },
-          //     )
-          //     .then((res) => {
-          //       updateState({isLoadingB: false, isRefreshing: false});
-          //       if (res && res?.status == 'Success' && res?.data) {
-          //         // updateState({allAvailAblePaymentMethods: res?.data});
-          //         // alert('Payment successfull');
-          //         Alert.alert('', strings.PAYMENT_SUCCESS, [
-          //           {
-          //             text: strings.OK,
-          //             onPress: () => console.log('Cancel Pressed'),
-          //             // style: 'destructive',
-          //           },
-          //         ]);
-          //         navigation.navigate(navigationStrings.WALLET);
-          //       }
-          //     })
-          //     .catch(errorMethod);
-          // } else {
-          //   updateState({isLoadingB: false});
-          // }
         })
         .catch(errorMethod);
     }
@@ -1006,17 +973,6 @@ export default function AddMoney({ navigation }) {
     );
   };
 
-  const _confirmCardPayment = async (paymentData) => {
-    const { paymentIntent, error } = await handleCardAction(
-      paymentData?.clientSecret,
-    );
-    if (paymentIntent) {
-      console.log(paymentIntent, 'paymentIntent');
-    } else {
-      console.log(error, 'error');
-      showError(error?.message || 'payment faild');
-    }
-  };
 
   return (
     <WrapperContainer
@@ -1024,8 +980,8 @@ export default function AddMoney({ navigation }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.white}
-      isLoadingB={isLoadingB}
-      source={loaderOne}>
+      isLoading={isLoadingB}
+      >
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

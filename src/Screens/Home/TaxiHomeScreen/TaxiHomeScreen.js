@@ -21,8 +21,8 @@ import {useDarkMode} from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
-import Loader from '../../../Components/Loader';
-import { getNearByPlacesMarker } from '../../../utils/googlePlaceApi';
+import socketServices from '../../../utils/scoketService';
+import { MyDarkTheme } from '../../../styles/theme';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -75,6 +75,14 @@ export default function TaxiHomeScreen({route, navigation}) {
     selectedTabType,
     locationObj,
   } = state;
+
+
+  useEffect(() => {
+    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+      socketServices.initializeSocket(appData?.profile?.socket_url);
+    }
+  }, [appData]);
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -604,6 +612,7 @@ useEffect(()=>{
 
 
   const renderHomeScreen = () => {
+  
     switch (appStyle?.homePageLayout) {
       case 4:
         return (
@@ -617,6 +626,7 @@ useEffect(()=>{
             selectedToggle={selectedToggle}
             toggleData={appData}
             location={locationObj}
+            currentLocation={locationObj}
           />
         );
       case 5:
@@ -640,7 +650,12 @@ useEffect(()=>{
   };
   // console.log(appMainData, 'appMainData');
   return (
-    <View style={{flex: 1, backgroundColor: colors.white}}>
+    <View style={{
+      flex: 1, 
+      backgroundColor: isDarkMode
+      ? MyDarkTheme.colors.background
+      : colors.white,
+      }}>
       {renderHomeScreen()}
     </View>
   );

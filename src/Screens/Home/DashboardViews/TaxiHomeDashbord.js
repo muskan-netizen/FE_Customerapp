@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import {
   FlatList,
@@ -13,10 +13,6 @@ import {
   Platform,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import BannerHome from '../../../Components/BannerHome';
-import BrickList from '../../../Components/BrickList';
-import ImgCardForBrickList from '../../../Components/ImgCardForBrickList';
-import CardLoader from '../../../Components/Loaders/CardLoader';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -32,119 +28,62 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import MapView, {
-  AnimatedRegion,
   Marker,
   PROVIDER_DEFAULT,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import {
   getColorCodeWithOpactiyNumber,
-  getImageUrl,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import ToggleTabBar from './ToggleTabBar';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
-
 import navigationStrings from '../../../navigation/navigationStrings';
 import { useNavigation } from '@react-navigation/native';
-
-import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import actions from '../../../redux/actions';
-import BottomViewModal from '../../../Components/BottomViewModal';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../../styles/theme';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
-import SelectTimeModalView from '../../CourierService/ChooseCarTypeAndTime/SelectTimeModalView';
-import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
-import GradientButton from '../../../Components/GradientButton';
 import AddressModal3 from '../../../Components/AddressModal3';
-import AddressModal from '../../../Components/AddressModal';
 import Loader from '../../../Components/Loader';
-import staticStrings from '../../../constants/staticStrings';
 import Modal from 'react-native-modal';
-import Geocoder from 'react-native-geocoding';
-import { locationPermission } from '../../../utils/permissions';
-import {
-  getAddressFromLatLong,
-  getCurrentLocationFromApi,
-} from '../../../utils/googlePlaceApi';
 import useInterval from '../../../utils/useInterval';
+import { nearbySearch } from '../../../utils/googlePlaceApi';
+import { isEmpty } from 'lodash';
+import { google_map_key } from '../../../constants/constants';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import GradientButton from '../../../Components/GradientButton';
+import * as RNLocalize from 'react-native-localize'
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
-  bannerPress = () => { },
-  //   appMainData = {},
-  isLoading = false,
   isRefreshing = false,
   onPressCategory = () => { },
-  selectedToggle,
-  toggleData,
-  isDineInSelected = false,
   location = {},
   curLatLong = {},
+  currentLocation = {}
 }) {
+
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appData, currencies, themeColors, appStyle, languages } = useSelector(
-    (state) => state?.initBoot,
-  );
+  const { appData, currencies, themeColors, appStyle, languages } = useSelector((state) => state?.initBoot);
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
-    newCategoryData: [],
     date: new Date(),
-    region: {
-      latitude: !!curLatLong?.latitude
-        ? parseFloat(curLatLong.latitude)
-        : parseFloat(location?.latitude),
-      longitude: !!curLatLong?.longitude
-        ? parseFloat(curLatLong?.longitude)
-        : parseFloat(location?.longitude),
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
-    },
-    coordinate: {
-      latitude: !!curLatLong?.latitude
-        ? parseFloat(curLatLong.latitude)
-        : parseFloat(location?.latitude),
-      longitude: !!curLatLong?.latitude
-        ? parseFloat(curLatLong.longitude)
-        : parseFloat(location?.longitude),
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
-    },
     allSavedAddress: [],
     isVisible: false,
-    availAbleTimes: [
-      {
-        id: 1,
-        label: 'in 20 min.',
-      },
-      {
-        id: 2,
-        label: 'in 50 min.',
-      },
-      {
-        id: 3,
-        label: 'in 80 min.',
-      },
-    ],
     isVisible1: false,
     updateData: {},
     indicator: false,
     type: 'addAddress',
-    selectedAvailableTimeOption: null,
-    selectedTime: null,
-    selectedDateAndTime: null,
-    slectedDate: null,
     newAddressAdded: null,
     isLoadingModal: false,
     fullMapShow: false,
@@ -152,24 +91,18 @@ export default function TaxiHomeDashbord({
     pickupAddress: {},
     allListedDrivers: [],
   });
+  const [searchType, setSearchType] = useState('')
+  const [nearByPlacesByType, setNearByPlacesByType] = useState([])
+
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
   const { bannerRef } = useRef();
   const {
     slider1ActiveSlide,
-    newCategoryData,
-    homeCategoryData,
-    region,
-    coordinate,
     allSavedAddress,
     isVisible,
     date,
-    availAbleTimes,
-    selectedAvailableTimeOption,
-    selectedTime,
-    selectedDateAndTime,
-    slectedDate,
     isVisible1,
     updateData,
     indicator,
@@ -181,32 +114,16 @@ export default function TaxiHomeDashbord({
     allListedDrivers,
   } = state;
   const styles = stylesFunc({ themeColors, fontFamily });
-  console.log(appData, 'appDataappData');
-  //update state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
-  const moveToNewScreen =
-    (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({
-        selectedTime: null,
-        selectedDateAndTime: null,
-        slectedDate: null,
-      });
       if (!!userData?.auth_token) {
         getAllAddress();
       }
     }, []),
   );
 
-  //show apdding from all the sides for drivers on map
-
-  //Finding All NearBy Drivers
 
   const isFocused = useIsFocused();
   useInterval(
@@ -288,7 +205,7 @@ export default function TaxiHomeDashbord({
         return imagePath.iccycleMarker;
         break;
       case 3:
-        return imagePath.icbikeMarker;
+        return imagePath.icBikeMarker;
         break;
       case 4:
         return imagePath.icCar;
@@ -330,31 +247,6 @@ export default function TaxiHomeDashbord({
     onPressCategory(item);
   };
 
-  const _modalClose = () => {
-    updateState({
-      isVisible: false,
-    });
-  };
-  // console.log(slectedDate, selectedTime, 'jskjsnsdkjgndsgkdsgj');
-  const _onDateChange = (date) => {
-    // alert(213);
-    console.log(date, 'date');
-    let time = moment(date).format('HH:mm');
-    let dateSelectd = moment(date).format('YYYY-MM-DD');
-
-    console.log(time, 'time');
-    console.log(dateSelectd, 'dateSelectd');
-    updateState({
-      selectedDateAndTime: `${dateSelectd} ${time}`,
-      slectedDate: dateSelectd,
-      selectedTime: moment(date).format('HH:mm'),
-      date: date,
-    });
-  };
-  const onDateChange = (value) => {
-    console.log(value, 'value');
-    _onDateChange(value);
-  };
 
   const addUpdateLocation = (childData) => {
     //setModalVisible(false);
@@ -394,122 +286,96 @@ export default function TaxiHomeDashbord({
     }
   };
 
-  const _renderItem = ({ item }) => {
-    return (
-      <TaxiHomeCategoryCard
-        data={item}
-        onPress={() => continueWithNaxtScreen(item)}
-      />
-    );
+
+  /********************************** instant booking funcationality module code starts here *****************************/
+
+
+
+  /********************************** get list of vichales based on the vendor and category *********************/
+
+
+
+
+  /********************** instunt order place api code written here ************************/
+
+  console.log(currentLocation, "currentLocation");
+
+  const _onInstuntOrderPlace = () => {
+
+    const vendorIdForInstuntBooking = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.id;
+    const productIdForIstuntBooking = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.products[0]?.id
+    const locationForOrder = [{ ...currentLocation, pre_address: currentLocation?.address, task_type_id: 1 }]
+    const productSKu = appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.products[0]?.sku
+
+    let data = {};
+    data['task_type'] = 'now';
+    data['schedule_time'] = ''
+    data['is_one_push_booking'] = 1;
+    data['recipient_phone'] = '';
+    data['recipient_email'] = '';
+    data['task_description'] = '';
+    data['amount'] = 0
+    data['tags_amount'] = 0;
+    data['tollamount'] = 0;
+    data['servicechargeamount'] = 0;
+    data['payment_option_id'] = 1;
+    data['vendor_id'] = vendorIdForInstuntBooking;
+    data['product_id'] = productIdForIstuntBooking;
+    data['currency_id'] = currencies?.primary_currency?.id;
+    data['tasks'] = locationForOrder;
+    data['images_array'] = [];
+    data['user_product_order_form'] = [];
+    data["is_postpay"] = ''
+    data["order_time_zone"] = RNLocalize.getTimeZone();
+    data["bookingType"] = '';
+    (data["friendName"] = '')
+
+    console.log(data, "datadatadatadatadatadata");
+
+    actions
+      .placeDelievryOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+
+        console.log("res+++++++", res)
+        if (res && res?.status == 200) {
+          let extraData = {
+            orderId: res?.data?.id,
+            fromVendorApp: true,
+            selectedVendor: { id: vendorIdForInstuntBooking },
+            orderDetail: res?.data,
+            fromCab: true,
+            pickup_taxi: navigationStrings.HOME,
+            totalDuration: 0,
+            selectedCarOption: productSKu,
+          };
+          navigation.navigate(
+            navigationStrings.PICKUPTAXIORDERDETAILS,
+            extraData
+          );
+        }
+        showSuccess(res?.message)
+      })
+      .catch(errorMethod);
+
+  }
+
+  const errorMethod = (error) => {
+    console.log(error, "errorOccured");
+    showError(error?.message || error?.error || error?.description);
   };
 
-  const latitudes = !!curLatLong?.latitude
-    ? parseFloat(curLatLong?.latitude)
-    : !!location?.latitude
-      ? parseFloat(location?.latitude)
-      : appData?.profile?.preferences?.Default_latitude;
+  /*********************************************** instunt booking module code ends here *************************/
 
-  const longitudes = !!curLatLong?.longitude
-    ? parseFloat(curLatLong?.longitude)
-    : !!location?.longitude
-      ? parseFloat(location?.longitude)
-      : appData?.profile?.preferences?.Default_latitude;
-
-  console.log(latitudes, 'latitudeslatitudes');
-  console.log(
-    appData?.profile?.preferences?.Default_latitude,
-    'latitudeslatitudeslongitudes',
-  );
-  console.log(appData?.profile?.preferences, 'latitudeslatitudeslongitudes');
-
-  const _ModalMainView = () => {
+  const _renderItem = useCallback(({ item }) => {
     return (
-      <View style={styles.modalContainer}>
-        <View>
-          <View
-            style={{
-              alignItems: 'center',
-              height: height / 3.5,
-            }}>
-            <DatePicker
-              date={date}
-              locale={
-                languages?.primary_language?.sort_code
-                  ? languages?.primary_language?.sort_code
-                  : 'en'
-              }
-              mode="datetime"
-              textColor={isDarkMode ? colors.black : colors.blackB}
-              minimumDate={new Date()}
-              style={{
-                width: width - 20,
-                height: height / 4.4,
-              }}
-              // onDateChange={setDate}
-              onDateChange={(value) => onDateChange(value)}
-            />
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: 16,
-                marginBottom: 24,
-              }}>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  height: 40,
-                  backgroundColor: themeColors.primary_color,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: moderateScale(10),
-                }}
-                onPress={_modalClose}>
-                <Text
-                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                  {strings.CANCEL}
-                </Text>
-              </TouchableOpacity>
-
-              <View style={{ marginHorizontal: 4 }} />
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  height: 40,
-                  backgroundColor: themeColors.primary_color,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: moderateScale(10),
-                }}
-                onPress={() => {
-                  updateState({
-                    isVisible: false,
-                    isLoadingModal: true,
-                  });
-
-                  setTimeout(() => {
-                    updateState({ isLoadingModal: false });
-                    actions.saveSchduleTime(
-                      slectedDate || selectedTime ? '' : 'now',
-                    );
-                    navigation.navigate(navigationStrings.ADDADDRESS, {
-                      cat: appMainData?.categories[0],
-                      datetime: { slectedDate, selectedTime },
-                    });
-                  }, 2000);
-                }}>
-                <Text
-                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                  {strings.SET}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
+      <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} />
     );
-  };
+  }, [appMainData?.categories || []])
+
 
   const moveToScreen = (details) => {
     updateState({ fullMapShow: false });
@@ -526,11 +392,7 @@ export default function TaxiHomeDashbord({
           };
         }
         actions.saveSchduleTime('now');
-        navigation.navigate(navigationStrings.ADDADDRESS, {
-          cat: appMainData?.categories[0],
-          datetime: { slectedDate, selectedTime },
-          prefillAdress: !!prefillAdress ? prefillAdress : null,
-        });
+        goToAddress({ prefillAdress })
       } else {
         actions.setAppSessionData('on_login');
       }
@@ -543,6 +405,7 @@ export default function TaxiHomeDashbord({
       allSavedAddress.map((itm, inx) => {
         return (
           <ScrollView
+            key={String(inx)}
             keyboardShouldPersistTaps={'handled'}
             style={{ width: width }}>
             <TouchableOpacity
@@ -571,7 +434,7 @@ export default function TaxiHomeDashbord({
                   style={{
                     marginHorizontal: moderateScale(10),
                   }}>
-                  <Text
+                  {!!itm?.street ? <Text
                     numberOfLines={2}
                     style={{
                       ...styles.addressTitle,
@@ -580,7 +443,7 @@ export default function TaxiHomeDashbord({
                         : colors.black,
                     }}>
                     {itm?.street}
-                  </Text>
+                  </Text> : null}
                   <Text
                     numberOfLines={2}
                     style={{
@@ -616,6 +479,7 @@ export default function TaxiHomeDashbord({
       })
     );
   };
+
   const savedPlaceView1 = (image) => {
     return (
       <ScrollView keyboardShouldPersistTaps={'handled'} style={{ width: width }}>
@@ -678,14 +542,74 @@ export default function TaxiHomeDashbord({
     );
   };
 
+  const onSearchType = (type) => {
+    setSearchType(type)
+    let locations = !!curLatLong?.latitude
+      ? `${curLatLong.latitude},${curLatLong.longitude}`
+      : `${location.latitude},${location.longitude}`
+
+    nearbySearch(
+      locations,
+      appData?.profile?.preferences?.map_key || google_map_key,
+      type,
+    ).then((res) => {
+      if (!isEmpty(res?.results)) {
+        setNearByPlacesByType(res?.results)
+      }
+      else {
+        showError("No near by places found!")
+      }
+    }).catch((err) => {
+      console.log(err, "err>>>>>>err>")
+    })
+  }
+  const goToAddress = ({
+    fromMap = false,
+    scheduleDate = null,
+    prefillAdress = null
+  }) => {
+    let item = appMainData.categories[0]
+    actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
+    if (fromMap) {
+      updateState({ fullMapShow: false })
+      setTimeout(() => {
+        userData?.auth_token
+          ? navigation.navigate(navigationStrings.ADDADDRESS, {
+            item,
+            prefillAdress: !!prefillAdress ? prefillAdress : null,
+          })
+          : actions.setAppSessionData('on_login');
+      }, 800);
+    } else {
+      userData?.auth_token
+        ? navigation.navigate(navigationStrings.ADDADDRESS, {
+          item,
+          prefillAdress: !!prefillAdress ? prefillAdress : null,
+        })
+        : actions.setAppSessionData('on_login');
+    }
+  }
+
+  const onDateSet = (date) => {
+    updateState({
+      isVisible: false,
+      isLoadingModal: true,
+    });
+    setTimeout(() => {
+      updateState({ isLoadingModal: false });
+      goToAddress({ scheduleDate: date })
+    }, 2000);
+  }
+
   return (
-    <View
+    <WrapperContainer
       style={{
         flex: 1,
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : colors.white,
       }}>
+
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -698,7 +622,11 @@ export default function TaxiHomeDashbord({
         }
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, zIndex: 1000 }}>
+        style={{
+          flex: 1, zIndex: 1000, backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+        }}>
         <>
           <TaxiBannerHome
             appStyle={appStyle}
@@ -713,17 +641,48 @@ export default function TaxiHomeDashbord({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
+        {getBundleId() == appIds.hezniTaxic && <View style={{
+          marginTop: moderateScaleVertical(10),
+          marginHorizontal: moderateScale(15),
+          flexDirection: "row",
+          alignItems: "center",
 
+
+        }}>
+          <TouchableOpacity onPress={() => onSearchType("hotel")} style={{
+            flexDirection: "row",
+            alignItems: "center"
+          }}>
+            <Image source={searchType == "hotel" ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              marginLeft: moderateScale(4),
+              fontSize: textScale(17)
+            }}>Hotel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => onSearchType("airport")} style={{
+            marginLeft: moderateScale(40),
+            flexDirection: "row",
+            alignItems: "center"
+          }}>
+            <Image source={searchType == "airport" ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              marginLeft: moderateScale(4),
+              fontSize: textScale(17)
+            }}>Airport</Text>
+          </TouchableOpacity>
+        </View>}
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
-          data={appMainData?.categories}
+          data={appMainData?.categories || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
           style={{
             marginTop: moderateScaleVertical(10),
             // marginHorizontal: moderateScale(10),
           }}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => !!item?.id ? String(item.id) : String(index)}
           renderItem={_renderItem}
           ItemSeparatorComponent={() => (
             <View style={{ marginRight: moderateScale(12) }} />
@@ -753,15 +712,8 @@ export default function TaxiHomeDashbord({
               }}>
               <TouchableOpacity
                 style={{ flexBasis: 'auto', flexGrow: width / 2 }}
-                onPress={() => {
-                  actions.saveSchduleTime('now');
-                  userData?.auth_token
-                    ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                      cat: appMainData,
-                      datetime: { slectedDate, selectedTime },
-                    })
-                    : actions.setAppSessionData('on_login');
-                }}>
+                onPress={() => goToAddress({ fromMap: false })} //from map is false
+              >
                 <Text
                   style={{
                     fontSize: textScale(14),
@@ -810,7 +762,9 @@ export default function TaxiHomeDashbord({
                   />
                 </View>
               </TouchableOpacity>}
+
             </View>
+
             {allSavedAddress.length > 0 && userData?.auth_token ? (
               <></>
             ) : (
@@ -892,6 +846,8 @@ export default function TaxiHomeDashbord({
                 onPress={() => updateState({ fullMapShow: true })}>
                 {
                   <MapView
+                    pointerEvents='none'
+                    scrollEnabled={false}
                     ref={mapRef}
                     provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                     // customMapStyle={mapStyleGrey}
@@ -900,6 +856,7 @@ export default function TaxiHomeDashbord({
                       borderRadius: 12,
                     }}
                     // provider={MapView.PROVIDER_GOOGLE}
+
                     region={{
                       latitude: !!curLatLong?.latitude
                         ? parseFloat(curLatLong?.latitude)
@@ -919,7 +876,21 @@ export default function TaxiHomeDashbord({
                   //showsMyLocationButton={true}
                   // pointerEvents={'none'}
                   >
-                    <Marker
+
+                    {!isEmpty(nearByPlacesByType) && searchType !== '' ? nearByPlacesByType?.map((item, index) => {
+                      return (
+                        <Marker
+                          key={String(index)}
+                          coordinate={{
+                            latitude: item?.geometry?.location?.lat,
+                            longitude: item?.geometry?.location?.lng,
+                            latitudeDelta: 0.015,
+                            longitudeDelta: 0.0121,
+                          }}
+
+                        />
+                      )
+                    }) : <Marker
                       coordinate={{
                         latitude: !!curLatLong?.latitude
                           ? parseFloat(curLatLong?.latitude)
@@ -934,23 +905,46 @@ export default function TaxiHomeDashbord({
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                    />
+                    />}
+
                   </MapView>
                 }
               </TouchableOpacity>
+
+              {!!userData?.auth_token && !!appData?.profile?.preferences?.is_one_push_book_enable &&
+                !!appData?.profile?.preferences?.pick_drop_instant_booking_vendor?.id &&
+                <GradientButton containerStyle={{
+                  marginHorizontal: moderateScale(10),
+                  marginTop: moderateScaleVertical(20)
+                }} btnText={'Instant Now'}
+                  onPress={_onInstuntOrderPlace} />
+              }
+
             </View>
           </>
         )}
 
-        {isVisible && (
-          <BottomViewModal
-            isDatetimePicker={true}
-            show={isVisible}
-            mainContainView={_ModalMainView}
-            closeModal={_modalClose}
+        <View>
+          <DatePicker
+            modal
+            open={isVisible}
+            date={date}
+            locale={
+              languages?.primary_language?.sort_code
+                ? languages?.primary_language?.sort_code
+                : "en"
+            }
+            mode="datetime"
+            textColor={isDarkMode ? colors.black : colors.blackB}
+            minimumDate={new Date()}
+            style={{
+              width: width - 20,
+              height: height / 4.4,
+            }}
+            onConfirm={date => onDateSet(date)}
+            onCancel={() => updateState({ isVisible: false })}
           />
-        )}
-
+        </View>
         <View style={{ height: moderateScaleVertical(95) }} />
       </ScrollView>
       <AddressModal3
@@ -1062,7 +1056,7 @@ export default function TaxiHomeDashbord({
             }}>
             <SafeAreaView>
               <TouchableOpacity
-                onPress={() => moveToScreen()}
+                onPress={() => goToAddress({ fromMap: true })}
                 style={{
                   height: moderateScale(48),
                   backgroundColor: isDarkMode
@@ -1086,6 +1080,6 @@ export default function TaxiHomeDashbord({
           </View>
         </View>
       </Modal>
-    </View>
+    </WrapperContainer>
   );
 }

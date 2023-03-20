@@ -3,34 +3,36 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>700297284346-3o9sd3igtknjrp1sjvd1moom5lq04sv0.apps.googleusercontent.com</string>
+	<string>407774402132-8q6uu8funsup6esrvs1to55vnfbet9mi.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.700297284346-3o9sd3igtknjrp1sjvd1moom5lq04sv0</string>
+	<string>com.googleusercontent.apps.407774402132-8q6uu8funsup6esrvs1to55vnfbet9mi</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>700297284346-bf33bnkcgrbbej0crh251dgn03gqee9j.apps.googleusercontent.com</string>
+	<string>407774402132-d6u4shbjbd84ccjucbn66mago3dc4lfk.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBsm5JoX_dMDE3IhSu_FsbYKFZ_5TkuVMg</string>
+	<string>AIzaSyCGM6ekPEMEjSS5GBvQXzW5ZymvW4GkTkY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>700297284346</string>
+	<string>407774402132</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hattaFoodHub.royoorders</string>
+	<string>com.hattafoodhub.orderapp</string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>PROJECT_ID</key>
-	<string>hattafoodhub-order</string>
+	<string>hattafoodhub-b5350</string>
 	<key>STORAGE_BUCKET</key>
-	<string>hattafoodhub-order.appspot.com</string>
+	<string>hattafoodhub-b5350.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:700297284346:ios:640d769c5fa1138bdb1743</string>
+	<string>1:407774402132:ios:f0be90d813489fcd98ffc1</string>
 </dict>
 </plist>

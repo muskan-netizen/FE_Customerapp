@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "865484264738",
+    "project_id": "oyeerides-order",
+    "storage_bucket": "oyeerides-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865484264738:android:e277e9b60e8cad6136017b",
+        "android_client_info": {
+          "package_name": "com.oyeeRides.order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865484264738-di5ah1ie14n9se6m5s7f7t369roh861a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oyeeRides.order",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "865484264738-mqgjlpms5lq4hmuspo7nack9c3ctcsof.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oyeeRides.order",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "865484264738-s38qb7uoel6krhfvb6n7n3i8imdkqeac.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oyeeRides.order",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "865484264738-i0kb9t4n082pikt89pngrdqs1kil7lcq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcSgikQ9yIDYHf7YJY-DEkbMttH8BeGYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865484264738-i0kb9t4n082pikt89pngrdqs1kil7lcq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "865484264738-nn75t93guugjed9evcv81tck27imtdhk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.oyeeRides.order"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

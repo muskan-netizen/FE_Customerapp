@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-Stabex/Pods-available_pods-Stabex.release.xcconfig"
 
-PROJECT_APPLE_ID = 6444143568
-PROJECT_BUNDLE_ID =com.stabex.royoorders
-PROJECT_APP_VERSION = 1.0
+PROJECT_APPLE_ID = 6445884531
+PROJECT_BUNDLE_ID =com.stabex.orders
+PROJECT_APP_VERSION = 1.1
 PROJECT_BUILD_NUMBER = 2
 PROJECT_APP_NAME = Stabex
-PROJECT_GOOGLE_CLIENT_ID = 627156568988-i2fnc5k0l9d6lgfctcg5ceirgtnhlt7v.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.627156568988-i2fnc5k0l9d6lgfctcg5ceirgtnhlt7v
+PROJECT_GOOGLE_CLIENT_ID = 453280137882-lbd43jet9b2e11hcoea7fvf5afft48rk.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.453280137882-lbd43jet9b2e11hcoea7fvf5afft48rk
 PROJECT_FACEBOOK_ID = 805534527323637
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =StabexInfo
