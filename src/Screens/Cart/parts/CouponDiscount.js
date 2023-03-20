@@ -12,13 +12,14 @@ import {
 
 /**
  * CouponDiscount Part
- * @param {item ,tokenConverterPlusCurrencyNumberFormater,isDarkMode,colors,styles,FastImage,imagePath,appIds,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,strings} props 
+ * @param {item ,tokenConverterPlusCurrencyNumberFormater,isDarkMode,colors,styles,FastImage,imagePath,appIds,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,strings,preferences} props 
  * @returns 
  */
 
  function CouponDiscount(props) {
  
-    const {item ,tokenConverterPlusCurrencyNumberFormater,isDarkMode,colors,styles,FastImage,imagePath,appIds,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,strings} = props;
+    const {item ,tokenConverterPlusCurrencyNumberFormater,isDarkMode,colors,styles,FastImage,imagePath,appIds,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,strings,preferences} = props;
+    
         return (
             <>
                <View
