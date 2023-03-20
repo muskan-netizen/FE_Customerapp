@@ -432,8 +432,12 @@ export const API_BASE_URL = 'https://aaujaaunp.com/api/v1';
 // export const API_BASE_URL = 'https://order.sta.ug/api/v1';
 // Ebay
 // export const API_BASE_URL = 'https://ebay.royoorders.com/api/v1';
+
 // ReadyToRent
 // export const API_BASE_URL = 'https://readytorent.focushires.com/api/v1';
+
+//Emart
+// export const API_BASE_URL = 'https://emart.royoorders.com/api/v1';
 
 
 

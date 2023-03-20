@@ -2539,7 +2539,8 @@ function Cart({ navigation, route }) {
             cartData={cartData}
             strings={strings}
             scheduleType={scheduleType}
-
+            openDeleteView={openDeleteView}
+            openPickerForPrescription={openPickerForPrescription}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} colors={colors} styles={styles} />
@@ -2551,7 +2552,7 @@ function Cart({ navigation, route }) {
 
           {/* start amount view       */}
 
-          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} />
+          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} preferences={preferences} />
         </View >
       </View >
     );
