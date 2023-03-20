@@ -497,11 +497,10 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
               return month ? month + 1 : 0;
           }
           if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
-            var timeSlot = res?.data?.products[0]?.delaySlot.replace(/,/g, "").split(" ");
-            const mont = monthNameToNum(timeSlot[1])
-            const fnd = `${timeSlot[2]}-0${mont}-${timeSlot[0]}`
-            console.log(fnd,'datadatadatavdata');
-            setMinimumDelayVendorDate(fnd);
+            var delaySlot = res?.data?.products[0]?.delaySlot.replace(/,/g, "").split(" ");
+            const mont = monthNameToNum(delaySlot[1])
+            const timeSlot = `${delaySlot[2]}-${mont>9?'':'0'}${mont}-${delaySlot[0]}`
+            setMinimumDelayVendorDate(timeSlot);
           }
           setCartItems(res.data.products);
           let currentDate = moment(new Date()).format('YYYY-MM-DD');
