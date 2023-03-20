@@ -219,25 +219,25 @@ android {
 
       productFlavors {
 
-        laundroZone{
+          tiimo{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.laundroZone.orderapplication'
-            resValue "string", "app_name", "Laundro Zone" 
+            applicationId 'com.tiimo.royoorders'
+            resValue "string", "app_name", "Tiimo" 
             resValue "string", "host_name", ""
             }
-               qdelo{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.qdeloorder'
-            resValue "string", "app_name", "Qdelo"
-            resValue "string", "host_name", ""
+                helpnowrightnow{
+                dimension "appType"
+                versionCode 6
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.helpnowrightnow'
+                resValue "string", "app_name", "HelpNow!RN"
+                resValue "string", "host_name", ""
             }
             speedyDelivery{ 
                 dimension "appType"

@@ -2670,6 +2670,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
         setDropOffDriverComment={setDropOffDriverComment}
         vendorComment={vendorComment}
         setVendorComment={setVendorComment}
+        _renderUpSellProducts={_renderUpSellProducts}
       />
     )
   };
