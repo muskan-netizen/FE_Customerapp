@@ -232,7 +232,7 @@ function Cart({ navigation, route }) {
     orderAmount,
     codMinAmount,
   } = state;
-console.log(laundrySelectedDropOffDate,availableTimeSlots,'laundrySelectedPickupDatelaundrySelectedPickupDate')
+  console.log(laundrySelectedDropOffDate, availableTimeSlots, 'laundrySelectedPickupDatelaundrySelectedPickupDate')
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
   const {
@@ -256,7 +256,7 @@ console.log(laundrySelectedDropOffDate,availableTimeSlots,'laundrySelectedPickup
   });
 
   const { preferences } = appData?.profile;
-  console.log(preferences,'perferences-------')
+  console.log(preferences, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -266,7 +266,7 @@ console.log(laundrySelectedDropOffDate,availableTimeSlots,'laundrySelectedPickup
   const { dineInType, appMainData, location } = useSelector(
     (state) => state?.home,
   );
-console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
+  console.log(localeSheduledOrderDate, 'localeSheduledOrderDate')
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -298,7 +298,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
   );
 
   const androidBackButtonHandler = () => {
-    updateState({paymentModal: false})
+    updateState({ paymentModal: false })
     return true;
   };
 
@@ -491,15 +491,15 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
             'Jan', 'Feb', 'Mar', 'Apr', 'May',
             'Jun', 'Jul', 'Aug', 'Sept',
             'Oct', 'Nov', 'Dec'
-            ];
-            function monthNameToNum(monthname) {
-              var month = months.indexOf(monthname);
-              return month ? month + 1 : 0;
+          ];
+          function monthNameToNum(monthname) {
+            var month = months.indexOf(monthname);
+            return month ? month + 1 : 0;
           }
           if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
             var delaySlot = res?.data?.products[0]?.delaySlot.replace(/,/g, "").split(" ");
             const mont = monthNameToNum(delaySlot[1])
-            const timeSlot = `${delaySlot[2]}-${mont>9?'':'0'}${mont}-${delaySlot[0]}`
+            const timeSlot = `${delaySlot[2]}-${mont > 9 ? '' : '0'}${mont}-${delaySlot[0]}`
             setMinimumDelayVendorDate(timeSlot);
           }
           setCartItems(res.data.products);
@@ -887,7 +887,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
       return;
     }
 
-    console.log("paymentIdpaymentIdpaymentIdpaymentId",paymentId)
+    console.log("paymentIdpaymentIdpaymentIdpaymentId", paymentId)
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
         return;
@@ -1146,7 +1146,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
 
     let selectPaymentCode = selectedPayment?.code?.toLowerCase()
     let CardNumber = paramsData?.CardNumber ? paramsData?.CardNumber.split(" ").join("") : ''
-    console.log("paramsData =>",paramsData);
+    console.log("paramsData =>", paramsData);
     let expirydate
     if (selectedPayment?.id == 50) {
 
@@ -1158,12 +1158,14 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
     }
     let cvc = paramsData?.cvc || ''
     let Order_Number = response?.data?.order_number || ''
+    let saveCard = !!paramsData?.saveCardDetails ? 1 : 0
     let amount = Number(cartData?.total_payable_amount) +
       (selectedTipAmount != null && selectedTipAmount != "" ? Number(selectedTipAmount) : 0)
 
-    let savedCardId = paramsData?.selectedSavedListCardNumber.id || ''
+    let savedCardId = paramsData?.selectedSavedListCardNumber && paramsData?.selectedSavedListCardNumber.id || ''
 
     let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${Order_Number}&card_id=${savedCardId}&action=cart`;
+    if (selectedPayment?.id == 50 && !!CardNumber) { queryData = queryData + `&save_card=${saveCard}` }
     console.log('QueryData----------', queryData)
     actions
       .openPaymentWebUrl(
@@ -1248,8 +1250,9 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
         setModalType(null);
         setSheduleddropoffdate(null);
 
-        console.log("selectedPayment?.idselectedPayment?.id",selectedPayment?.id)
+
         if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
+
           updateState({ isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
           return;
@@ -1355,12 +1358,12 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
- 
+
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
- 
+
     if (!userData?.auth_token) {
       return;
     }
@@ -1836,25 +1839,25 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
     order_number,
   ) => {
     actions.getStripePaymentIntent(
-        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-        {
-          payment_option_id: selectedPayment?.id,
-          action: 'cart',
-          amount:
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0),
-          payment_method_id: paymentMethodId,
-          order_number: order_number,
-          card: cardInfo,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+      {
+        payment_option_id: selectedPayment?.id,
+        action: 'cart',
+        amount:
+          Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0),
+        payment_method_id: paymentMethodId,
+        order_number: order_number,
+        card: cardInfo,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then(async (res) => {
         if (res && res?.client_secret) {
           const { paymentIntent, error } = await handleNextAction(
@@ -1863,28 +1866,28 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
           if (paymentIntent) {
             if (paymentIntent) {
               actions.confirmPaymentIntentStripe(
-                  {
-                    order_number: order_number,
-                    payment_option_id: selectedPayment?.id,
-                    action: 'cart',
-                    amount:
-                      Number(cartData?.total_payable_amount) +
-                      (selectedTipAmount != null && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0),
-                    payment_intent_id: paymentIntent?.id,
-                    address_id: selectedAddressData?.id,
-                    tip:
-                      selectedTipAmount && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0,
-                  },
-                  {
-                    code: appData?.profile?.code,
-                    currency: currencies?.primary_currency?.id,
-                    language: languages?.primary_language?.id,
-                  },
-                )
+                {
+                  order_number: order_number,
+                  payment_option_id: selectedPayment?.id,
+                  action: 'cart',
+                  amount:
+                    Number(cartData?.total_payable_amount) +
+                    (selectedTipAmount != null && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0),
+                  payment_intent_id: paymentIntent?.id,
+                  address_id: selectedAddressData?.id,
+                  tip:
+                    selectedTipAmount && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
                 .then((res) => {
                   console.log(res, 'secondresponse');
                   updateState({ isRefreshing: false });
@@ -1949,7 +1952,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log("payment method id++++",paymentMethodId)
+    console.log("payment method id++++", paymentMethodId)
     if (!!paymentMethodId) {
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
     } else {
@@ -2027,7 +2030,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
   };
   //Select Time Laundry
   const _selectTimeLaundry = (item) => {
-    console.log('item',item)
+    console.log('item', item)
     if (item == 'dropoff') {
       setModalType('dropoff');
       updateState({
@@ -2073,14 +2076,14 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
         return;
       }
     }
-     else {
+    else {
       if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
-         
+
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
           return;
         } else {
- 
+
           // let formatDate = new Date(selectedDateFromCalendar);
           const date = selectedDateFromCalendar;
           const time = selectedTimeSlots.split('-')[0];
@@ -2088,7 +2091,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
             `${date} ${time}`,
             'YYYY-MM-DD HH:mm:ss',
           ).format();
-        
+
           setLocaleSheduledOrderDate(
             moment(new Date(formatDate)).format('lll'),
           );
@@ -2569,7 +2572,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
 
           {/* start amount view       */}
 
-          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} preferences={preferences}/>
+          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} preferences={preferences} />
         </View >
       </View >
     );
@@ -2679,6 +2682,8 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
         setDropOffDriverComment={setDropOffDriverComment}
         vendorComment={vendorComment}
         setVendorComment={setVendorComment}
+        _renderUpSellProducts={_renderUpSellProducts}
+        _renderCrossSellProducts={_renderCrossSellProducts}
       />
     )
   };
@@ -3218,7 +3223,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}
-        >
+      >
         <Header
           centerTitle={strings.CART}
           noLeftIcon
@@ -4780,7 +4785,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
                     !!cartData?.slots.length > 0) ? (
                   <Fragment>
                     <ScrollView>
-                      {console.log(minimumDelayVendorDate,'+++minimumDelayVendorDate',new Date())}
+                      {console.log(minimumDelayVendorDate, '+++minimumDelayVendorDate', new Date())}
                       <Calendar
                         current={
                           getBundleId() == appIds.masa

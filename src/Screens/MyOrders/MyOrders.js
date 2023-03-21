@@ -75,7 +75,7 @@ export default function MyOrders(props) {
               ? strings.ACTIVEDELEIVERIES
               : appIds.jiffex == getBundleId()
                 ? strings.ACTIVE_ORDERS
-                : strings.ACTIVERIDES,
+                : 'Active Bookings',
             isActive: true,
           }
         : { title: strings.ACTIVE_ORDERS, isActive: true },
@@ -86,7 +86,7 @@ export default function MyOrders(props) {
               ? strings.PASTDELEIVERIES
               : appIds.jiffex == getBundleId()
                 ? strings.PAST_ORDERS
-                : strings.PASTRIDES,
+                : 'Past Bookings',
             isActive: false,
           }
         : { title: strings.PAST_ORDERS, isActive: false },

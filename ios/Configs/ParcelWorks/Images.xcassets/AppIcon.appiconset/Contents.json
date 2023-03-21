@@ -151,8 +151,6 @@
       "size" : "1024x1024"
     },
     {
-<<<<<<< HEAD
-=======
       "filename" : "16.png",
       "idiom" : "mac",
       "scale" : "1x",
@@ -213,7 +211,6 @@
       "size" : "512x512"
     },
     {
->>>>>>> d93639ddb42985d0d444e06c6fdd7e988cad836c
       "filename" : "48.png",
       "idiom" : "watch",
       "role" : "notificationCenter",
@@ -291,8 +288,6 @@
       "subtype" : "45mm"
     },
     {
-<<<<<<< HEAD
-=======
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -300,7 +295,6 @@
       "subtype" : "49mm"
     },
     {
->>>>>>> d93639ddb42985d0d444e06c6fdd7e988cad836c
       "filename" : "172.png",
       "idiom" : "watch",
       "role" : "quickLook",
@@ -332,72 +326,6 @@
       "subtype" : "45mm"
     },
     {
-<<<<<<< HEAD
-      "filename" : "1024.png",
-      "idiom" : "watch-marketing",
-      "scale" : "1x",
-      "size" : "1024x1024"
-    },
-    {
-      "filename" : "16.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "16x16"
-    },
-    {
-      "filename" : "32.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16"
-    },
-    {
-      "filename" : "32.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "32x32"
-    },
-    {
-      "filename" : "64.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32"
-    },
-    {
-      "filename" : "128.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "128x128"
-    },
-    {
-      "filename" : "256.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128"
-    },
-    {
-      "filename" : "256.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "256x256"
-    },
-    {
-      "filename" : "512.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256"
-    },
-    {
-      "filename" : "512.png",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "size" : "512x512"
-    },
-    {
-      "filename" : "1024.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "512x512"
-=======
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -409,7 +337,6 @@
       "idiom" : "watch-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
->>>>>>> d93639ddb42985d0d444e06c6fdd7e988cad836c
     },
     {
       "filename" : "102.png",

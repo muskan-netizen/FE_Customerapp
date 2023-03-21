@@ -143,7 +143,7 @@ export default function Account3({ navigation }) {
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
     );
-    
+
   }, [
     preferences?.customer_support_application_id,
     preferences?.customer_support_key,
@@ -155,15 +155,15 @@ export default function Account3({ navigation }) {
     ZendeskChat.setVisitorInfo({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
-      
+
     });
     ZendeskChat.startChat({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
-      messagingOptions: {botName:`${DeviceInfo.getApplicationName()} Support`},
-      
+      messagingOptions: { botName: `${DeviceInfo.getApplicationName()} Support` },
+
     });
   };
 
@@ -491,7 +491,10 @@ export default function Account3({ navigation }) {
             !!appData &&
             !!appData?.profile &&
             appData?.profile?.preferences?.subscription_mode == 1 && ( */}
-          {true &&(
+          {!!userData?.auth_token &&
+            !!appData &&
+            !!appData?.profile &&
+            appData?.profile?.preferences?.subscription_mode == 1 && (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -752,7 +755,7 @@ export default function Account3({ navigation }) {
             />
           )}
 
-   
+
           {!!userData?.auth_token && preferences?.customer_support_application_id && preferences?.customer_support_key && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
@@ -861,7 +864,7 @@ export default function Account3({ navigation }) {
                 }}
               />
             )}
-            
+
           {!!userData?.auth_token ? null : (
             <View style={styles.loginView}>
               <TouchableOpacity

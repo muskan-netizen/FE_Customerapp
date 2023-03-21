@@ -208,7 +208,9 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   const {
     additional_preferences,
     digit_after_decimal,
+    is_cab_pooling
   } = appData?.profile?.preferences || {};
+
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
   const { profile } = appData || {};
@@ -2406,8 +2408,18 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                   ) : (
                     <View style={{ marginBottom: moderateScaleVertical(24) }} />
                   )}
-
+                  {!!orderFullDetail?.noofCopassengers && !!is_cab_pooling ?
+                    <View style={{ marginHorizontal: moderateScale(16),paddingBottom:moderateScale(10) }}>
+                      <LeftRightText
+                            leftText={strings.NO_OF_COPASSENGERS}
+                            rightText={`${orderFullDetail?.noofCopassengers}`}
+                            isDarkMode={isDarkMode}
+                            MyDarkTheme={MyDarkTheme}
+                            marginBottom={0}
+                          />
+                   </View>:null}
                   <View style={{ marginHorizontal: moderateScale(16) }}>
+                    
                     {!!orderFullDetail?.order_details?.delivery_fee &&
                       Number(orderFullDetail?.order_details?.delivery_fee) !==
                       0 && (
@@ -2450,6 +2462,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           <View style={styles.horizontalLine} />
                         </View>
                       )}
+                 
                     {!!orderFullDetail?.order_details?.toll_amount &&
                       Number(orderFullDetail?.order_details?.toll_amount) >
                       0 && (
@@ -2470,6 +2483,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           <View style={styles.horizontalLine} />
                         </View>
                       )}
+                    
+                    {console.log(orderFullDetail,'orderFullDetail')}
                     {!!orderFullDetail?.order_details
                       ?.service_fee_percentage_amount &&
                       Number(

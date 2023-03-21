@@ -241,7 +241,8 @@ export default function Account4({ navigation }) {
     >
       <Text
         style={{
-          color: colors.black2Color,
+          // color: colors.black2Color,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           fontSize: textScale(16),
           lineHeight: textScale(28),
           textAlign: "center",

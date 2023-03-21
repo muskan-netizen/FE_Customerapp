@@ -88,6 +88,8 @@ let timeOut = undefined;
 
 var tempQty = 0;
 
+var loadMoreProduct = true
+
 const filtersData = [
   {
     id: -2,
@@ -573,7 +575,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             animateText={animateText}
           // section={section}
           />
-          <View style={styles.horizontalLine} />
+          <View style={{ ...styles.horizontalLine, marginVertical: moderateScaleVertical(6) }} />
         </View>
       );
     },
@@ -604,7 +606,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
   const listHeaderComponent2 = () => {
     return (
-      <View style={{ height: listHeight }}>
+      <View style={{ height: !!categoryInfo?.is_show_products_with_category ? listHeight : 'auto' }}>
         {false ? (
           <View
             // key={AnimatedHeaderValue}
@@ -1735,9 +1737,9 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           : getAllProductsByCategoryId(pageNo);
       }
     }
-    setTimeout(() => {
-      updateState({ loadMore: false });
-    }, 500);
+    // setTimeout(() => {
+    //   updateState({ loadMore: false });
+    // }, 500);
   };
 
   useEffect(() => {
@@ -1876,8 +1878,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
     updateState({ wrapperListLoader: true })
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
-    let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}`;
-
+    let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}&limit=40`;
 
 
     if (!!data?.categoryExist) {
@@ -1942,6 +1943,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           if (res?.data) {
             if (!!res?.data && !!res?.data?.products && res?.data?.products?.data?.length == 0) {
               updateState({ loadMore: false });
+              loadMoreProduct = false
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
@@ -2085,17 +2087,11 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
         updateState({
           lastPage: res.data.listData?.last_page
         })
-        // getAllVendorFilters()
-        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
-        if (
-          res?.data?.listData?.current_page < res.data?.listData?.last_page
-        ) {
-          updateState({ loadMore: true });
-        }
-        else {
-          console.log("fskjflksdjfadslkfjs")
-          updateState({ loadMore: false });
 
+        if (
+          res?.data?.listData?.current_page == res.data?.listData?.last_page
+        ) {
+          updateState({ loadMore: false });
         }
       })
 
@@ -2126,25 +2122,18 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
       )
       .then((res) => {
         setLoading(false);
-
-        if (res.data.data?.length == 0) {
+        setProductListData(
+          pageNo == 1 ? res?.data?.data : [...productListData, ...res?.data?.data],
+        );
+        updateState({ lastPage: res?.data?.last_page })
+        if (res?.data?.current_page == res?.data?.last_page) {
           updateState({ loadMore: false });
         }
-        console.log("productListData ++++", productListData);
-
-        console.log(res, 'getAllProductsCategoryFilter  res ++++++');
-        setProductListData(
-          pageNo == 1 ? res.data.data : [...productListData, ...res.data.data],
-        );
-        updateState({ lastPage: res.data.last_page })
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-        updateState({ loadMore: false });
       })
       .catch(errorMethod);
     // }
-  }, []);
+  }, [productListData]);
+
 
   const fetchTags = (filterArray) => {
     if (filterArray && filterArray?.length > 0) {
@@ -2242,13 +2231,10 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
-    console.log("dslkfdkjfkjfj")
-    if (loadMore) {
-      if (pageNo < lastPage) {
-        updateState({ pageNo: pageNo + 1 });
-        getAllListItems(pageNo + 1);
-        setLoading(false);
-      }
+    if (loadMoreProduct) {
+      updateState({ pageNo: pageNo + 1 });
+      getAllListItems(pageNo + 1);
+      setLoading(false);
     }
   };
 
@@ -4207,10 +4193,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                 </View>
               )}
 
-            {console.log(tagFilteredData, 'tagFilteredData=>', cloneSectionList)}
-
             {!!categoryInfo?.is_show_products_with_category ? (
-
               <SectionList
                 onScroll={onScroll}
                 ref={sectionListRef}
@@ -4279,7 +4262,6 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
-
             {/* <View style={{height: moderateScaleVertical(60)}} /> */}
 
             {isVisibleModal ? (

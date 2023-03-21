@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>562125914561-vijrppueqgdsa4fu50ig9h80qckfgus2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.562125914561-vijrppueqgdsa4fu50ig9h80qckfgus2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>562125914561-6ugo3gqnqhgbfmh1d05v4vc39hhtm6i1.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB7bTiQDPftvtZdU5peoakpQ0X4M2d-Stk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>562125914561</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.emiRates.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>emirates-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>emirates-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:562125914561:ios:4f9ef518ea23579fe8af40</string>
+</dict>
+</plist>
