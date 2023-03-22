@@ -1582,6 +1582,7 @@
     "merge-options" "^3.0.4"
 
 "@react-native-community/blur@https://github.com/flyingSAP/react-native-blur":
+  "integrity" "sha512-ivHH9NBmhJeKzQSoAvvG3q5JjCkGlAffuYjw/AwVw8ZZhzoAHCatYNN5ICmdM93ThyyADZltvwjCwkBTEsbEiQ=="
   "resolved" "git+ssh://git@github.com/flyingSAP/react-native-blur.git#5bf427b0954b5f28543378ec78d0f5505b976d6e"
   "version" "3.6.0"
   dependencies:

@@ -217,56 +217,15 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                       zuluCluch{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.zuluCluch.royoorders'
-                resValue "string", "app_name", "ZuluCluch"
-                resValue "string", "host_name", ""
-            }
-                superApp{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.superapp.royoorder'
-                resValue "string", "app_name", "SuperApp"
-                resValue "string", "host_name", ""
-            }
-                     torunz{
+            zynoride{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.torunz.userapp'
-            resValue "string", "app_name", "Torunz"
+            applicationId 'com.zynoride.royoorders'
+            resValue "string", "app_name", "Zynoride" 
             resValue "string", "host_name", ""
-            }
-
-                      mobi{
-                dimension "appType"
-                versionCode 4
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.mobi.orders'
-                resValue "string", "app_name", "MOBI"
-                resValue "string", "host_name", ""
-            }
-                weedLomo{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.weedLomo.order'
-                resValue "string", "app_name", "WeedLomo"
-                resValue "string", "host_name", ""
             }
 }
 

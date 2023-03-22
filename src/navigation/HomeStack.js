@@ -49,6 +49,7 @@ import {
   ViewAllData,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
+import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
 
 import { verticalAnimation } from '../utils/utils';
 import navigationStrings from './navigationStrings';
@@ -57,6 +58,8 @@ const Stack = createNativeStackNavigator();
 
 export default function () {
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
+  const { lastBidInfo } = useSelector((state) => state?.home);
+
   const businessType = appStyle?.homePageLayout;
 
   const rendervendorScreen = () => {
@@ -121,11 +124,20 @@ export default function () {
     }
   };
 
+
+
   return (
     <Stack.Navigator
+
       screenOptions={{
         headerShown: false,
       }}>
+
+      {!!lastBidInfo && <Stack.Screen
+        name={navigationStrings.BIDINGDRIVERSLIST}
+        component={BidingDriversList}
+        options={{ headerShown: false }}
+      />}
       <Stack.Screen
         name={
           businessType === 4
@@ -262,9 +274,6 @@ export default function () {
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
       />
-
-
-
 
 
     </Stack.Navigator>

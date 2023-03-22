@@ -1171,7 +1171,7 @@ export default function Addaddress({ navigation, route }) {
                     marginHorizontal: moderateScale(5),
                   }}
                   onPress={() => onBooking(2)}
-                  btnText={"BIDE & RIDE"}
+                  btnText={"BID & RIDE"}
                   containerStyle={{ flex: 1 }}
                   btnStyle={{
                     borderRadius: moderateScale(4),

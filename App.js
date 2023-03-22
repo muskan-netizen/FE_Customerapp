@@ -28,7 +28,7 @@ import {
   notificationListener,
   requestUserPermission,
 } from './src/utils/notificationService';
-import { getItem, getUserData, setItem } from './src/utils/utils';
+import { getItem, getUserData, setItem, getLastBidInfo } from './src/utils/utils';
 
 
 import { View, Text } from 'react-native';
@@ -38,6 +38,8 @@ import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
+import moment from 'moment';
+import { clearLastBidData } from './src/redux/actions/home';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -90,8 +92,10 @@ const App = () => {
   const openSpecificScreenByDeeplink = async (deepLinkUrl) => {
     const userData = await getUserData();
     if (userData?.auth_token && deepLinkUrl) {
+
       actions.setRedirection('from_deepLinking');
       actions.setAppSessionData('shortcode');
+
     } else {
       setTimeout(() => {
         actions.setAppSessionData('on_login');
@@ -140,19 +144,32 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
-
       notificationConfig();
-
       const { dispatch } = store;
       if (userData && !!userData?.auth_token) {
+        let lastBidData = await getLastBidInfo()
+        if (!!lastBidData) {
+          let expiryDate = new Date(lastBidData?.expiryTime)
+          let currentDate = new Date()
+          if (currentDate >= expiryDate) {
+            clearLastBidData()
+          }
+          else {
+            dispatch({
+              type: types.LAST_BID_INFO,
+              payload: lastBidData,
+            });
+          }
+
+        }
+
         dispatch({
           type: types.LOGIN,
           payload: userData,
         });
+
       }
       const getAppData = await getItem('appData');
-
-
       if (!!getAppData) {
         dispatch({
           type: types.APP_INIT,
@@ -259,7 +276,6 @@ const App = () => {
       //Language
       const getLanguage = await getItem('language');
 
-      console.log("getLanguagegetLanguage",getLanguage)
       if (!!getLanguage) {
         strings.setLanguage(getLanguage);
       }

@@ -419,7 +419,7 @@ const shortCodes = {
   lex: 'a7f382',
   smokyKitchen: '8c4efa',
   flank: '3de814',
-  zynoride: '2768e6',
+  zynoride: '958bb4',
   mealsarehere: 'c00a78',
   loamscape: 'ded864',
   delcolink: 'a2726b',
