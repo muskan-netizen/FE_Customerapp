@@ -45,7 +45,6 @@ export default function BidingDriversList(props) {
   const [allDriverBidesList, setAllDriverBidesList] = useState([])
   const [bidExpiryTime, setBidExpiryTime] = useState(0)
   let endDate = new Date(lastBidInfo?.expiryTime);
-  // Do your operations
   let startDate = new Date();
 
   useEffect(() => {
