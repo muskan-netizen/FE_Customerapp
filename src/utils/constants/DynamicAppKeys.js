@@ -2757,8 +2757,8 @@ const appIds = {
     android: 'com.virgingates.royoorder',
   }),
   zuluCluch: Platform.select({
-    ios: 'com.zuluCluch.royoorder',
-    android: 'com.zuluCluch.royoorder',
+    ios: 'com.zuluCluch.royoorders',
+    android: 'com.zuluCluch.royoorders',
   }),
 };
 
