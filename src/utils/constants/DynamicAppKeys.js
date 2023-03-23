@@ -2356,8 +2356,8 @@ const appIds = {
     android: 'com.pointoneExpediteDelivery.royoorders',
   }),
   saamanshop: Platform.select({
-    ios: 'com.saamanshop.royoorders',
-    android: 'com.saamanshop.royoorders',
+    ios: 'my.saamanshop.royoorders',
+    android: 'my.saamanshop.royoorders',
   }),
   tdc: Platform.select({
     ios: 'com.tdc.royoorders',

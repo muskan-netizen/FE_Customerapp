@@ -7727,7 +7727,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.saamanshop.royoorders'
+    //         applicationId 'my.saamanshop.royoorders'
     //         resValue "string", "app_name", "Saamanshop" 
     //         resValue "string", "host_name", ""
     //         }
