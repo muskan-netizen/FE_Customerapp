@@ -218,25 +218,15 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-            mobi{
+    weedLomo{
                 dimension "appType"
-                versionCode 4
+                versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.mobi.orders'
-                resValue "string", "app_name", "MOBI"
+                applicationId 'com.weedLomo.order'
+                resValue "string", "app_name", "WeedLomo"
                 resValue "string", "host_name", ""
-            }
-              flyCommerce{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.flycommerce.royoorders'
-            resValue "string", "app_name", "Fly Commerce" 
-            resValue "string", "host_name", ""
             }
 }
 

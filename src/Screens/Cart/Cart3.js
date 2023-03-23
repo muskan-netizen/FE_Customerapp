@@ -457,7 +457,7 @@ function Cart({ navigation, route }) {
         setSheduleddropoffdate(res?.data?.schedule_dropoff);
 
         setScheduleType(res?.data?.schedule_type);
-        if (res && res?.data) {
+        if (res && res?.data && !isEmpty(res?.data)) {
           if (
             !!res?.data?.vendor_details?.vendor_tables &&
             res?.data?.vendor_details?.vendor_tables?.length > 0
@@ -623,7 +623,7 @@ function Cart({ navigation, route }) {
       .then((res) => {
         console.log('cart res remove', res);
         actions.reloadData(!reloadData);
-        if (!!res?.data && !!res?.data?.products) {
+        if (!!res?.data && !isEmpty(res?.data) &&!!res?.data?.products) {
           actions.cartItemQty(res);
           setCartItems(res.data.products || []);
           setCartData(res.data);
