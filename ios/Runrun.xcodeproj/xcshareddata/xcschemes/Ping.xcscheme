@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F412F88C29C06BE30087DB97"
-               BuildableName = "Ping.app"
+               BuildableName = "Ping"
                BlueprintName = "Ping"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -59,7 +59,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F412F88C29C06BE30087DB97"
-            BuildableName = "Ping.app"
+            BuildableName = "Ping"
             BlueprintName = "Ping"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F412F88C29C06BE30087DB97"
-            BuildableName = "Ping.app"
+            BuildableName = "Ping"
             BlueprintName = "Ping"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

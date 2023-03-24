@@ -34,6 +34,8 @@ export default function ShortCode() {
   }, []);
 
   const initApiHit = async () => {
+
+    console.log("getBundleId()getBundleId()",getBundleId())
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
 

@@ -2744,24 +2744,24 @@ const appIds = {
     android: 'com.emiRates.royoorder',
   }),
   detailPros: Platform.select({
-    ios:'com.detailPros.royoorder',
-    android:'com.detailPros.royoorder',
+    ios: 'com.detailPros.royoorder',
+    android: 'com.detailPros.royoorder',
   }),
   blink: Platform.select({
-    ios:'com.blink.royoorder',
-    android:'com.blink.royoorder',
+    ios: 'com.blink.royoorder',
+    android: 'com.blink.royoorder',
   }),
   incubit: Platform.select({
-    ios:'com.incubit.royoorder',
-    android:'com.incubit.royoorder',
+    ios: 'com.incubit.royoorder',
+    android: 'com.incubit.royoorder',
   }),
   virgingates: Platform.select({
-    ios:'com.virgingates.royoorder',
-    android:'com.virgingates.royoorder',
+    ios: 'com.virgingates.royoorder',
+    android: 'com.virgingates.royoorder',
   }),
-    zuluCluch: Platform.select({
-    ios: 'com.zuluCluch.royoorder',
-    android: 'com.zuluCluch.royoorder',
+  zuluCluch: Platform.select({
+    ios: 'com.zuluCluch.royoorders',
+    android: 'com.zuluCluch.royoorders',
   }),
     ping: Platform.select({
     ios: 'com.ping.royoorder',

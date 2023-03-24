@@ -20,7 +20,6 @@ import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
-import { View, Text, TouchableOpacity } from 'react-native';
 import TabRoutesP2p from './TabRoutesP2p';
 
 const Stack = createNativeStackNavigator();

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F424288929C0B54500EA835E"
-               BuildableName = "Chutneyeah.app"
+               BuildableName = "Chutneyeah"
                BlueprintName = "Chutneyeah"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F424288929C0B54500EA835E"
-            BuildableName = "Chutneyeah.app"
+            BuildableName = "Chutneyeah"
             BlueprintName = "Chutneyeah"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F424288929C0B54500EA835E"
-            BuildableName = "Chutneyeah.app"
+            BuildableName = "Chutneyeah"
             BlueprintName = "Chutneyeah"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
