@@ -137,10 +137,6 @@ const App = () => {
     notificationListener();
   };
 
-
-
-
-
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
@@ -148,7 +144,7 @@ const App = () => {
       const { dispatch } = store;
       if (userData && !!userData?.auth_token) {
         let lastBidData = await getLastBidInfo()
-        if (!!lastBidData) {
+        if (!!lastBidData && !!lastBidData?.expiryTime) {
           let expiryDate = new Date(lastBidData?.expiryTime)
           let currentDate = new Date()
           if (currentDate >= expiryDate) {

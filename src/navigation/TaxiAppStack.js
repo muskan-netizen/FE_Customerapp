@@ -5,6 +5,7 @@ import {
   AddNewRider,
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
+  ChooseVechile,
   HomeScreenTaxi, Location, Offers,
   OrderDetail,
   Payfast,
@@ -57,7 +58,8 @@ export default function (Stack) {
 
       <Stack.Screen
         name={navigationStrings.CHOOSECARTYPEANDTIMETAXI}
-        component={ChooseCarTypeAndTimeTaxi}
+        // component={ChooseCarTypeAndTimeTaxi}
+        component={ChooseVechile}
         options={{ headerShown: false }}
       />
       <Stack.Screen

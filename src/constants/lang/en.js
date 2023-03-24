@@ -1070,5 +1070,9 @@ Amount`,
   SELECT_INFLUENCER_CATEGORY: 'Select Influencer Category',
   INFLUENCER_ORDER_HISTORY: 'Influence order history',
   ALL_BIDS: "All Bids",
-  WAITING_FOR_DRIVER_BIDS: "Waiting for driver bids"
+  WAITING_FOR_DRIVER_BIDS: "Waiting for driver bids",
+  SUGGESTIONS: "Suggestions",
+  BOOKING: "Booking",
+  POOLING: "Pooling",
+  BID_RIDE: "Bid & Ride"
 };

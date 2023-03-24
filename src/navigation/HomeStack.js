@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {
   Addaddress,
+  Addaddress2,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
@@ -37,6 +38,7 @@ import {
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
+  TaxiHome,
   TaxiHomeScreen,
   TrackDetail,
   Tracking,
@@ -146,7 +148,8 @@ export default function () {
         }
         component={
           businessType === 4
-            ? TaxiHomeScreen
+            // ? TaxiHomeScreen
+            ? TaxiHome
             : businessType === 8
               ? HomeV2Api
               : Home
@@ -154,7 +157,8 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
-        component={Addaddress}
+        // component={Addaddress}
+        component={Addaddress2}
       />
 
       <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />

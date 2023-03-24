@@ -1,10 +1,11 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import React, { useRef } from 'react';
+import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
-import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
 import { UIActivityIndicator } from 'react-native-indicators';
+import { useSelector } from 'react-redux';
+import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import {
@@ -18,8 +19,8 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
-import ListEmptyCar from './ListEmptyCar';
-import stylesFun from './styles';
+import ListEmptyCar from '../../TaxiApp/ChooseCarTypeAndTime/ListEmptyCar';
+import stylesFun from '../styles';
 
 export default function AvailableDriver({
   rideType,
@@ -28,7 +29,7 @@ export default function AvailableDriver({
   disabled,
   updateSeatNo,
   availableCarList = [],
-  onPressAvailableCar,
+  onPressAvailableCar = () => { },
   selectedCarOption = null,
   allListedDrivers,
   _onUpdateSeatNo = () => { },
@@ -45,24 +46,10 @@ export default function AvailableDriver({
   // choose a trip or swipe up for more
   //Render all Available amounts
   const _renderItem = ({ item, index }) => {
-    console.log(item, 'itemitemitem');
     return (
       <View
         key={String(item.id)}
-        style={{
-          backgroundColor: isDarkMode
-            ? selectedCarOption?.id == item?.id
-              ? colors.whiteOpacity15
-              : colors.textGrey
-            : selectedCarOption?.id == item?.id
-              ? colors.lightGreyBg
-              : colors.whiteOpacity77,
-
-          borderBottomColor: isDarkMode
-            ? colors.whiteOpacity22
-            : colors.lightGreyBg,
-          borderBottomWidth: 0.6,
-        }}>
+      >
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => onPressAvailableCar(item)}
@@ -70,12 +57,12 @@ export default function AvailableDriver({
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingVertical: moderateScaleVertical(12),
-            paddingHorizontal: moderateScale(16),
-            // marginBottom: moderateScaleVertical(8),
-            opacity: selectedCarOption?.id == item?.id ? 0.8 : 1,
+            flex: 1,
+            borderTopWidth: index !== 0 ? 1 : 0,
+            borderColor: colors.borderColorB,
+            paddingVertical: moderateScaleVertical(12)
           }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.75, }}>
 
             <Image
               resizeMode={'contain'}
@@ -95,17 +82,14 @@ export default function AvailableDriver({
             <View
               style={{
                 marginLeft: moderateScale(16),
+
               }}>
               <Text
                 numberOfLines={1}
                 style={{
                   color: isDarkMode
-                    ? selectedCarOption?.id == item?.id
-                      ? colors.white
-                      : colors.whiteOpacity50
-                    : selectedCarOption?.id == item?.id
-                      ? colors.black
-                      : colors.blackC,
+                    ? colors.whiteOpacity50
+                    : colors.blackC,
                   fontFamily: fontFamily.medium,
                   fontSize: textScale(14),
                   textAlign: 'left',
@@ -113,77 +97,40 @@ export default function AvailableDriver({
                 {item?.translation[0]?.title}
               </Text>
               <Text
+                numberOfLines={1}
                 style={{
-                  color: isDarkMode
-                    ? selectedCarOption?.id == item?.id
-                      ? colors.white
-                      : colors.whiteOpacity50
-                    : selectedCarOption?.id == item?.id
-                      ? colors.black
-                      : colors.blackOpacity66,
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(10),
-                  textAlign: 'left',
+                  ...styles.vechilePriceName, color: isDarkMode
+                    ? colors.whiteOpacity50
+                    : colors.textColor,
+                }}>
+                {rideType == "bidRide" ? "Minimum Fare" : "Fare"} - {tokenConverterPlusCurrencyNumberFormater(
+                  Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
+              {!!allListedDrivers[0]?.arrival_time && <Text
+                style={{
+                  ...styles.vechilePriceName, color: isDarkMode
+                    ? colors.whiteOpacity50
+                    : colors.textColor,
+                }}>
+                Estimated Time - {allListedDrivers[0]?.arrival_time}
+              </Text>}
+              {!!item?.translation[0]?.meta_description && <Text
+                style={{
+                  ...styles.vechilePriceName, color: isDarkMode
+                    ? colors.whiteOpacity50
+                    : colors.textColor,
                 }}>
                 {item?.translation[0]?.meta_description}
-              </Text>
+              </Text>}
             </View>
           </View>
 
-          {rideType == 'bideRide' ?
-            <TouchableOpacity
-              onPress={() => _onShowBidePriceModal(item)}
-              style={{
-                backgroundColor: themeColors.primary_color,
-                padding: moderateScale(8),
-                borderRadius: moderateScale(4),
-                borderColor: themeColors.primary_color,
-              }}>
-              <Text
-                style={{
-                  fontSize: textScale(12),
-                  fontFamily: fontFamily.regular,
-                  color: colors.white,
-                }}>
-                {'Bid Now'}
-              </Text>
-            </TouchableOpacity>
-            :
-            <Text
-              numberOfLines={1}
-              style={{
-                color: isDarkMode
-                  ? selectedCarOption?.id == item?.id
-                    ? colors.white
-                    : colors.whiteOpacity50
-                  : selectedCarOption?.id == item?.id
-                    ? colors.black
-                    : colors.blackC,
-                fontFamily: fontFamily.medium,
-                fontSize: textScale(14),
-                textAlign: 'left',
-              }}>
-              {tokenConverterPlusCurrencyNumberFormater(
-                Number(item?.tags_price) + Number(item?.toll_fee ? item?.toll_fee : 0),
-                digit_after_decimal,
-                additional_preferences,
-                currencies?.primary_currency?.symbol,
-              )}
-            </Text>
-
-          }
+          <Image source={imagePath.ic_right_arrow} />
         </TouchableOpacity >
-        {selectedCarOption?.id == item?.id && allListedDrivers?.length ? (
-          <Text
-            style={{
-              marginLeft: moderateScale(10),
-              marginBottom: moderateScaleVertical(5),
-              marginTop: moderateScaleVertical(-10),
-            }}>
-            {allListedDrivers[0]?.arrival_time} away
-          </Text>
-        ) : null
-        }
       </View >
     );
   };
@@ -366,6 +313,13 @@ export default function AvailableDriver({
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => item?.id || ''}
           renderItem={_renderItem}
+          contentContainerStyle={{
+            padding: 10,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            marginHorizontal: moderateScale(20),
+            borderRadius: moderateScale(12)
+          }}
           ListEmptyComponent={_listEmptyComponent}
         />}
     </View>

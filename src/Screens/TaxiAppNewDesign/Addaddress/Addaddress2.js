@@ -20,7 +20,7 @@ import DropDown from "../../../Components/DropDown";
 import GradientButton from "../../../Components/GradientButton";
 import Modal from "../../../Components/Modal";
 import PinAddressOnMap from "../../../Components/PinAddressOnMap";
-import SearchPlaces from "../../../Components/SearchPlaces";
+import SearchPlaces2 from "../../../Components/SearchPlaces2";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang/index";
@@ -60,8 +60,8 @@ enableFreeze(true);
 
 export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
-  const { userData } = useSelector((state) => state?.auth);
-  const { pickUpTimeType } = useSelector((state) => state?.home);
+  const { userData } = useSelector((state) => state?.auth || {});
+  const { pickUpTimeType } = useSelector((state) => state?.home || {});
   const {
     appData,
     allAddresss,
@@ -69,33 +69,26 @@ export default function Addaddress({ navigation, route }) {
     appStyle,
     themeColor,
     themeToggle,
-  } = useSelector((state) => state?.initBoot);
+  } = useSelector((state) => state?.initBoot || {});
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
-  const { book_for_friend, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences || {};
+  const { book_for_friend } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
 
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData || {};
 
-  console.log(categoryId, "categoryIdcategoryIdcategoryId");
 
   const [state, setState] = useState({
     pageNo: 1,
     limit: 5,
     pickUpVendors: [],
-    allSavedAddress: [],
-    selectedAddress: null,
+
     savedAddressViewHeight: 0,
     avalibleValueInTextInput: false,
     vendorId: null,
-    isVisible: false,
-    updateData: {},
-    indicator: false,
-    type: "addAddress",
-    del: false,
+
     searchResult: {
       currentIndex: 0,
       data: [],
@@ -120,12 +113,6 @@ export default function Addaddress({ navigation, route }) {
     ],
     nearByAddressess: [],
     selectedTab: 1,
-    bookForFriendModalVisible: false,
-    friendName: "",
-    friendMobileNumber: "",
-    countryPickerModalVisible: false,
-    cca2: "IN",
-    callingCode: "+91",
     showFriendListModal: false,
     allAddedFriends: [],
     isBookingType: "0",
@@ -138,26 +125,13 @@ export default function Addaddress({ navigation, route }) {
     pageNo,
     limit,
     pickUpVendors,
-    allSavedAddress,
-    selectedAddress,
     savedAddressViewHeight,
     avalibleValueInTextInput,
-    isVisible,
-    updateData,
-    indicator,
-    type,
-    del,
     searchResult,
     dropLocationData,
     nearByAddressess,
     curLatLng,
     selectedTab,
-    bookForFriendModalVisible,
-    friendName,
-    friendMobileNumber,
-    countryPickerModalVisible,
-    cca2,
-    callingCode,
     showFriendListModal,
     allAddedFriends,
     selectedFriendForRide,
@@ -167,15 +141,10 @@ export default function Addaddress({ navigation, route }) {
     isLoading,
   } = state;
 
-  const [modalLayoutHeight, setModalLayoutHeight] = useState(0);
   const [isPinAddressOnMapModal, setIsPinAddressOnMapModal] = useState(false);
-
   const [pickDropData, setPickDropData] = useState({});
 
 
-
-
-  console.log("routeroute++++++", route.params)
   useEffect(() => {
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
@@ -186,6 +155,18 @@ export default function Addaddress({ navigation, route }) {
   useEffect(() => {
     getStaticLocations();
   }, []);
+
+  useEffect(() => {
+    getLiveLocation();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getAllRiderList();
+    }, [])
+  );
+
+
   const getStaticLocations = () => {
     actions
       .getStaticLocations(
@@ -218,9 +199,9 @@ export default function Addaddress({ navigation, route }) {
         console.log(res, "all address");
         // actions.saveAllUserAddress(res.data);
         updateState({
-          allSavedAddress: res.data,
+
           isLoading: false,
-          indicator: false,
+
         });
       })
       .catch((error) => {
@@ -250,9 +231,6 @@ export default function Addaddress({ navigation, route }) {
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-
-
-  console.log("profile data++", profile?.preferences)
 
   const getAllPickUpVendors = (lat, lng) => {
     console.log(appData, "appDataappData......");
@@ -299,10 +277,10 @@ export default function Addaddress({ navigation, route }) {
     setIsPinAddressOnMapModal(true);
     setPickDropData({
       task_id: updateIndex == 0 ? 1 : 2,
+
       ...(existLatLng?.latitude !== 0 ? existLatLng : curLatLng),
     });
   };
-
 
 
   const renderbtn = () => {
@@ -329,7 +307,6 @@ export default function Addaddress({ navigation, route }) {
             />
           </View>
         );
-
       default:
         return (
           <View
@@ -359,12 +336,10 @@ export default function Addaddress({ navigation, route }) {
     switch (bookingType) {
       case 0: return ('Booking')
       case 1: return ('Pooling')
-      case 2: return ('bideRide')
+      case 2: return ('bidRide')
       default: return ('Booking')
     }
   }
-
-
 
   const moveToNextScreenWithAddressData = () => {
     let location = [];
@@ -406,6 +381,7 @@ export default function Addaddress({ navigation, route }) {
     );
 
 
+
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
       id: categoryId,
@@ -439,16 +415,6 @@ export default function Addaddress({ navigation, route }) {
       showFriendListModal: !showFriendListModal,
     });
   };
-
-  useEffect(() => {
-    getLiveLocation();
-  }, []);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      getAllRiderList();
-    }, [])
-  );
 
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
@@ -496,7 +462,6 @@ export default function Addaddress({ navigation, route }) {
       isBookingType: type,
     });
   };
-
 
   const renderAddressess = (item) => {
     return (
@@ -706,11 +671,6 @@ export default function Addaddress({ navigation, route }) {
       });
   };
 
-  const onLayout = (event) => {
-    const { x, y, height, width } = event.nativeEvent.layout;
-
-    setModalLayoutHeight(height);
-  };
 
   const renderBookFriendListFooter = () => (
     <>
@@ -781,7 +741,7 @@ export default function Addaddress({ navigation, route }) {
     return (
       <>
         <View
-          onLayout={onLayout}
+
           style={{
             ...styles.modalMainContainer,
             paddingHorizontal: moderateScale(10),
@@ -1016,7 +976,7 @@ export default function Addaddress({ navigation, route }) {
               />
             </TouchableOpacity>
             <View>
-              {book_for_friend ? (
+              {!!book_for_friend ? (
                 <TouchableOpacity
                   style={{
                     flexDirection: "row",
@@ -1096,7 +1056,9 @@ export default function Addaddress({ navigation, route }) {
               )}
             </View>
           </View>
-          {is_cab_pooling || is_bid_ride_enable ? (
+
+
+          {/* {is_cab_pooling || is_bid_ride_enable ? (
             <View
               style={{
 
@@ -1184,19 +1146,22 @@ export default function Addaddress({ navigation, route }) {
               }
 
             </View>
-          ) : null}
+          ) : null} */}
 
           <View style={{ flex: 1 }}>
             <View>
               <View
                 style={{
-                  ...commonStyles.shadowStyle,
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
                     : colors.white,
                   paddingBottom: moderateScaleVertical(8),
-                  shadowOffset: { width: 0, height: moderateScale(6) },
                   borderRadius: 0,
+                  marginTop: moderateScaleVertical(10)
+
+                  // shadowOffset: { width: 0, height: moderateScale(6) },
+                  // ...commonStyles.shadowStyle,
+
                 }}
               >
                 {dropLocationData.map((val, i) => {
@@ -1204,13 +1169,14 @@ export default function Addaddress({ navigation, route }) {
                     <View
                       style={{
                         flexDirection: "row",
-                        marginHorizontal: moderateScale(16),
+                        marginHorizontal: moderateScale(20),
                         alignItems: "center",
                         marginVertical: moderateScale(2),
                         justifyContent: "space-between",
+
                       }}
                     >
-                      <View style={{ flex: 0.05, alignItems: "center" }}>
+                      <View style={{ alignItems: "center", }}>
                         <View>
                           <Image
                             style={{
@@ -1227,7 +1193,7 @@ export default function Addaddress({ navigation, route }) {
                       {i > 0 &&
                         appData?.profile?.preferences?.is_static_dropoff ? (
                         <View
-                          style={{ flex: 0.9, marginLeft: moderateScale(20) }}
+                          style={{ flex: 1, marginLeft: moderateScale(20) }}
                         >
                           <DropDown
                             value={dropLocationData[i].address}
@@ -1243,9 +1209,9 @@ export default function Addaddress({ navigation, route }) {
                         </View>
                       ) : (
                         <View
-                          style={{ flex: 0.9, marginLeft: moderateScale(20) }}
+                          style={{ flex: 1, marginLeft: moderateScale(12), }}
                         >
-                          <SearchPlaces
+                          <SearchPlaces2
                             curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
                             autoFocus={i == dropLocationData.length - 1 ? true :
                               false
