@@ -860,6 +860,7 @@ export default function TaxiDashboard({
         constCurrLoc={location}
       />
 
+
       <Modal
         isVisible={fullMapShow}
         style={{

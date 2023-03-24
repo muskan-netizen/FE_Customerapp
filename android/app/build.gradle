@@ -217,15 +217,15 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-            zynoride{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.zynoride.royoorders'
-            resValue "string", "app_name", "Zynoride" 
-            resValue "string", "host_name", ""
+                   gokab{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.gokab'
+                resValue "string", "app_name", "GoKab"
+                resValue "string", "host_name", ""
             }
 }
 
