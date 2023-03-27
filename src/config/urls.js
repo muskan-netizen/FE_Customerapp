@@ -1,8 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
+// export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
 //  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL='https://demo.qdelo.com/api/v1'
+export const API_BASE_URL='https://demo.qdelo.com/api/v1'
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1';
 // export const API_BASE_URL='https://ubierweeds.com/api/v1'
@@ -442,7 +442,7 @@ export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
 //Emart
 // export const API_BASE_URL = 'https://emart.royoorders.com/api/v1';
 
-
+// export const API_BASE_URL='https://dot-taxi.com/api/v1'
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -791,3 +791,7 @@ export const ACCEPT_RIDE_FOR_BID = getApiUrl(
 //saved card list
 export const SAVED_CARD_LIST = getApiUrl('/user/get-user-cards');
 
+//delete card
+
+
+export const DELETE_CARD = getApiUrl('/user/deleteCard');

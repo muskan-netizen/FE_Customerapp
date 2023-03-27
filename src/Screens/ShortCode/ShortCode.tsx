@@ -39,7 +39,7 @@ export default function ShortCode() {
     // const appCode = !!prevCode ? prevCode : getAppCode();
 
 
- const appCode = "245bae"
+ const appCode = "0fcc84"
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};
@@ -58,7 +58,8 @@ export default function ShortCode() {
           getBundleId() == appIds.masa ||
           getBundleId() == appIds.muvpod ||
           getBundleId() == appIds.hezniTaxi ||
-          getBundleId() == appIds.parcelworks
+          getBundleId() == appIds.parcelworks ||
+          getBundleId() == appIds.stabex
         ) {
           setLoadingScreen(false);
         } else {
@@ -102,6 +103,8 @@ export default function ShortCode() {
         return animatedSplash();
       case appIds.parcelworks:
         return animatedSplash();
+        case appIds.stabex:
+          return animatedSplash();
       default:
         return imageSplash();
     }
@@ -116,6 +119,8 @@ export default function ShortCode() {
         return imagePath.HezniSplash;
       case appIds?.parcelworks:
         return imagePath.parcelWorksSplash;
+        case appIds?.stabex:
+          return imagePath.stabex;
     }
   }, []);
   const imageSplash = useCallback(() => {

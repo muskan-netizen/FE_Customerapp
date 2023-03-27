@@ -684,6 +684,7 @@ export default function DashBoardEight({
                         marginHorizontal: moderateScale(10),
                         lineHeight: moderateScale(20),
                         marginTop: moderateScale(5),
+                        color: isDarkMode ? MyDarkTheme?.colors?.text : colors.blackB
                       }}>
                       {strings.SORRY_MSG}
                     </Text>

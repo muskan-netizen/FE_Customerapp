@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -36,9 +36,10 @@ import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-export default function OtpVerification({navigation, route}) {
+export default function OtpVerification({ navigation, route }) {
   const paramData = route?.params;
   console.log(paramData, 'paramData...paramData');
+
 
   const [state, setState] = useState({
     timer: 30,
@@ -46,15 +47,15 @@ export default function OtpVerification({navigation, route}) {
     emailOTP: '',
     isLoading: false,
   });
-  const {timer, phoneOTP, emailOTP, isLoading} = state;
+  const { timer, phoneOTP, emailOTP, isLoading } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {currencies, languages} = useSelector((state) => state?.initBoot || {});
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { currencies, languages } = useSelector((state) => state?.initBoot || {});
   useEffect(() => {
     let timerId;
     if (timer > 0) {
       timerId = setTimeout(() => {
-        updateState({timer: timer - 1});
+        updateState({ timer: timer - 1 });
       }, 1000);
     }
     return () => {
@@ -99,7 +100,7 @@ export default function OtpVerification({navigation, route}) {
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
       countryData: paramData?.countryData,
     };
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
 
     actions
       .loginUsername(data, {
@@ -109,26 +110,27 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then(() => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       })
       .catch(errorMethod);
 
-    updateState({timer: 30});
+    updateState({ timer: 30 });
   };
 
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, appStyle, themeColors} = useSelector(
+  const { appData, appStyle, themeColors } = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(appData, 'appDataappData')
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
 
   const moveToNewScreen = (screenName, data) => () => {
     navigation.navigate(screenName, {});
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   const isValidData = (otp) => {
@@ -156,7 +158,7 @@ export default function OtpVerification({navigation, route}) {
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     console.log('sending data', data);
     actions
       .phoneloginOtp(data, {
@@ -167,13 +169,13 @@ export default function OtpVerification({navigation, route}) {
       })
       .then((res) => {
         console.log('resssss.....ress...', res);
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -190,17 +192,18 @@ export default function OtpVerification({navigation, route}) {
         }}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={
               appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                 ? imagePath.icBackb
                 : imagePath.back
             }
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
           />
         </TouchableOpacity>
       </View>
+
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -215,54 +218,65 @@ export default function OtpVerification({navigation, route}) {
           }}>
           <Text style={styles.header}>{strings.OTP_VERIFICATION}</Text>
           <Text style={styles.txtSmall}>{strings.ENTER_OTP_SENT}</Text>
-          <View style={{height: moderateScaleVertical(50)}} />
+          <View style={{ height: moderateScaleVertical(50) }} />
           {/* {!!userData?.client_preference?.verify_phone ? (
             !userData?.verify_details?.is_phone_verified && ( */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginVertical: moderateScaleVertical(20),
-            }}>
-            <BorderTextInput
-              placeholder={strings.ENTER_OTP}
-              containerStyle={{flex: 0.7}}
-              marginBottom={0}
-              onChangeText={_onChangeText('phoneOTP')}
-              value={phoneOTP}
-              keyboardType="numeric"
-            />
-            <TouchableOpacity
-              onPress={() => onVerify('phone', phoneOTP)}
+
+          <View >
+            {(!!appData?.profile?.preferences?.static_otp) &&
+              <View style={{}}>
+                <Text style={{ ...styles.txtSmall, color: colors.blackB,fontSize:textScale(15) }}>
+                  {strings.YOUR_OTP}
+                </Text>
+              </View>}
+            <View
               style={{
-                flex: 0.27,
-                backgroundColor: !userData?.verify_details?.is_phone_verified
-                  ? themeColors.primary_color
-                  : colors.white,
-                paddingVertical: moderateScaleVertical(17),
-                paddingHorizontal: moderateScale(8),
-                borderRadius: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginVertical: moderateScaleVertical(20),
               }}>
-              <Text
+
+              <BorderTextInput
+                placeholder={strings.ENTER_OTP}
+                containerStyle={{ flex: 0.7 }}
+                marginBottom={0}
+                onChangeText={_onChangeText('phoneOTP')}
+                value={phoneOTP}
+                keyboardType="numeric"
+              />
+              <TouchableOpacity
+                onPress={() => onVerify('phone', phoneOTP)}
                 style={{
-                  textAlign: 'center',
-                  color: !userData?.verify_details?.is_phone_verified
-                    ? colors.white
-                    : colors.green,
-                  fontFamily: fontFamily.bold,
-                  fontSize: textScale(12),
+                  flex: 0.27,
+                  backgroundColor: !userData?.verify_details?.is_phone_verified
+                    ? themeColors.primary_color
+                    : colors.white,
+                  paddingVertical: moderateScaleVertical(17),
+                  paddingHorizontal: moderateScale(8),
+                  borderRadius: 10,
                 }}>
-                {!userData?.verify_details?.is_phone_verified
-                  ? strings.VERIFY_PHONE
-                  : strings.VERIFIED}
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: !userData?.verify_details?.is_phone_verified
+                      ? colors.white
+                      : colors.green,
+                    fontFamily: fontFamily.bold,
+                    fontSize: textScale(12),
+                  }}>
+                  {!userData?.verify_details?.is_phone_verified
+                    ? strings.VERIFY_PHONE
+                    : strings.VERIFIED}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
+
 
           {timer > 0 ? (
             <View style={styles.bottomContainer}>
-              <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>
+              <Text style={{ ...styles.txtSmall, color: colors.textGreyLight }}>
                 {strings.RESEND_CODE_IN}
                 <Text
                   style={{
@@ -275,7 +289,7 @@ export default function OtpVerification({navigation, route}) {
             </View>
           ) : (
             <View style={styles.bottomContainer}>
-              <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>
+              <Text style={{ ...styles.txtSmall, color: colors.textGreyLight }}>
                 {strings.DIDNT_GET_OTP}
                 <Text
                   onPress={_onResend}
@@ -288,8 +302,10 @@ export default function OtpVerification({navigation, route}) {
               </Text>
             </View>
           )}
+
         </View>
       </KeyboardAwareScrollView>
+
     </WrapperContainer>
   );
 }

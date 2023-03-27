@@ -407,7 +407,7 @@ export default function Products({ route, navigation }) {
   const goToProductDetail = (data) => {
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
-console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
+  console.log(wrapperListLoader, 'wrapperListLoaderwrapperListLoader')
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
       console.log(item, 'renderSectionItem=>');
@@ -1735,9 +1735,9 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           : getAllProductsByCategoryId(pageNo);
       }
     }
-    setTimeout(() => {
-      updateState({ loadMore: false });
-    }, 500);
+    // setTimeout(() => {
+    //   updateState({ loadMore: false });
+    // }, 500);
   };
 
   useEffect(() => {
@@ -1900,7 +1900,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
         },
       )
       .then(async (res) => {
-        console.log('get all products by vendor res', res?.data);
+        console.log('get all products by vendor res', res?.data, pageNo);
         setLoading(false);
         // return;
         updateState({ wrapperListLoader: false })
@@ -1911,7 +1911,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             setListHeight(height / 2.8)
           }
         }
-       
+
         if (res?.data?.vendor) {
           FastImage.preload([
             {
@@ -1925,23 +1925,33 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             },
           ]); //category banner preload
         }
-  
+
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
-          
-          console.log("resDataresDataresData",resData)
+
+          console.log("resDataresDataresData", resData)
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
-          
+
           setCategoryInfo(res?.data?.vendor);
           fetchTags(resData);
           setLoading(false);
         } else {
           if (res?.data) {
-            if (!!res?.data && !!res?.data?.products && res?.data?.products?.data?.length == 0) {
+            if (!!res?.data && !!res?.data?.products && res?.data?.products?.data?.length == 0 ) {
               updateState({ loadMore: false });
+            }
+            if(res?.data?.products?.last_page == pageNo){
+              updateState({ loadMore: false });
+            }
+            else{
+              updateState({
+             
+                loadMore: true,
+                lastPage: res?.data?.products?.last_page
+              });
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
@@ -1950,6 +1960,12 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                 ? res?.data?.products.data
                 : [...productListData, ...res?.data?.products.data],
             );
+           
+            if (pageNo == lastPage) {
+              updateState({
+                loadMore: false,
+              });
+            }
           } else {
             setLoading(false);
           }
@@ -1960,7 +1976,8 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             appMainData?.brands,
           );
         }
-        updateState({ loadMore: false });
+        // updateState({ loadMore: false });
+
       })
       .catch(errorMethod);
   };
@@ -2019,6 +2036,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                 ? res.data.products.data
                 : [...productListData, ...res.data.products.data],
             );
+
           } else {
             setLoading(false);
           }
@@ -2093,7 +2111,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           updateState({ loadMore: true });
         }
         else {
-          console.log("fskjflksdjfadslkfjs")
+
           updateState({ loadMore: false });
 
         }
@@ -2102,7 +2120,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
       .catch(errorMethod);
     // }
   };
-
+  console.log("productListData ++++", productListData);
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = useCallback((pageNo) => {
     let data = {};
@@ -2242,7 +2260,6 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
-    console.log("dslkfdkjfkjfj")
     if (loadMore) {
       if (pageNo < lastPage) {
         updateState({ pageNo: pageNo + 1 });

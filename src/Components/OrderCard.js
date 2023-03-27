@@ -15,6 +15,7 @@ import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
 import {useSelector} from 'react-redux';
 import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
+import { useDarkMode } from 'react-native-dynamic';
 
 const OrderCard = (props) => {
   const {
@@ -37,7 +38,7 @@ const OrderCard = (props) => {
   } = useSelector((state) => state?.initBoot);
 
   const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
-
+  const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   console.log(item,"itemm>>")
 

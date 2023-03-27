@@ -73,7 +73,7 @@ export default function Account3({ navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-
+  const [allAvailAblePaymentMethods, setAllAvailAblePaymentMethods] = useState([])
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -91,6 +91,9 @@ export default function Account3({ navigation }) {
     }
   }, [appMainData?.is_admin]);
 
+  useEffect(() => {
+    getListOfPaymentMethod()
+  }, [])
   const fetchAllVendors = async (value = null) => {
     let query = `?limit=${100000}&page=${1}`;
     let headers = {
@@ -112,6 +115,27 @@ export default function Account3({ navigation }) {
   };
 
   console.log(userData, 'appDataappData');
+  const getListOfPaymentMethod = () => {
+    actions
+      .getListOfPaymentMethod(
+        '/wallet',
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log('payment list options', res.data);
+        // updateState({ isLoadingB: false, isRefreshing: false });
+        if (res && res?.data) {
+          setAllAvailAblePaymentMethods(res?.data)
+
+        }
+      })
+      .catch((err) => console.log(err, 'errororroro'));
+  };
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -143,7 +167,7 @@ export default function Account3({ navigation }) {
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
     );
-    
+
   }, [
     preferences?.customer_support_application_id,
     preferences?.customer_support_key,
@@ -155,15 +179,15 @@ export default function Account3({ navigation }) {
     ZendeskChat.setVisitorInfo({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
-      
+
     });
     ZendeskChat.startChat({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
-      messagingOptions: {botName:`${DeviceInfo.getApplicationName()} Support`},
-      
+      messagingOptions: { botName: `${DeviceInfo.getApplicationName()} Support` },
+
     });
   };
 
@@ -397,7 +421,24 @@ export default function Account3({ navigation }) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-
+         {!!userData?.auth_token && allAvailAblePaymentMethods?.map((item, inx) => {
+            if (item?.id == 50) {
+              return (<ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={moveToNewScreen(navigationStrings.SAVEDCARDS, {
+                  isBack: true,
+                })}
+                iconLeft={imagePath.icMyPosts}
+                centerHeading={"Saved Cards"}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />)
+            }
+          })}
           {!!userData?.auth_token &&
             dineInType == 'p2p' &&
             !!appMainData?.is_admin &&
@@ -491,22 +532,22 @@ export default function Account3({ navigation }) {
             !!appData &&
             !!appData?.profile &&
             appData?.profile?.preferences?.subscription_mode == 1 && ( */}
-          {true &&(
-              <ListItemHorizontal
-                centerContainerStyle={{ flexDirection: 'row' }}
-                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-                iconLeft={imagePath.subscription}
-                centerHeading={strings.SUBSCRIPTION}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            )}
+          {true && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+              iconLeft={imagePath.subscription}
+              centerHeading={strings.SUBSCRIPTION}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal
@@ -634,10 +675,10 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-          {console.log(appMainData,'appMainDataappMainData')}
+          {console.log(appMainData, 'appMainDataappMainData')}
           {!!userData?.auth_token &&
-          Platform.OS === 'android' &&
-          !!appMainData?.is_admin ? (
+            Platform.OS === 'android' &&
+            !!appMainData?.is_admin ? (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -752,7 +793,7 @@ export default function Account3({ navigation }) {
             />
           )}
 
-   
+
           {!!userData?.auth_token && preferences?.customer_support_application_id && preferences?.customer_support_key && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
@@ -861,7 +902,7 @@ export default function Account3({ navigation }) {
                 }}
               />
             )}
-            
+
           {!!userData?.auth_token ? null : (
             <View style={styles.loginView}>
               <TouchableOpacity

@@ -109,7 +109,8 @@ const App = () => {
       getBundleId() == appIds.muvpod ||
       getBundleId() == appIds.hezniTaxi ||
       getBundleId() == appIds.flank ||
-      getBundleId() == appIds.parcelworks
+      getBundleId() == appIds.parcelworks ||
+      getBundleId() == appIds.stabex
     ) {
       setTimeout(() => {
         SplashScreen.hide();
@@ -233,7 +234,7 @@ const App = () => {
       } else {
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: !!themeToggle ? JSON.parse(themeToggle) : {},
+          payload: !!themeToggle ? JSON.parse(themeToggle) : getBundleId() == appIds.qdelo ? false : {},
         });
         if (JSON.parse(theme)) {
           dispatch({

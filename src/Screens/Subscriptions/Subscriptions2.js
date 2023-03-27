@@ -2,6 +2,7 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import React, { createRef, useCallback, useEffect, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   Keyboard,
@@ -11,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
@@ -52,6 +53,7 @@ import stylesFun from './styles';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import PaymentGateways from '../../Components/PaymentGateways';
 import RazorpayCheckout from 'react-native-razorpay';
+import TextTabBar from '../../Components/TextTabBar';
 
 export default function Subscriptions2({ navigation, route }) {
   //   console.log(route, 'route>>>');
@@ -77,6 +79,9 @@ export default function Subscriptions2({ navigation, route }) {
     planPrice: 0,
     paymentDataFlutterWave: null,
     isModalVisibleForPayFlutterWave: false,
+    cardFill: true,
+    savedCardData: [],
+    selectedSavedListCardNumber: null,
   });
 
   const {
@@ -94,6 +99,9 @@ export default function Subscriptions2({ navigation, route }) {
     selectedPaymentMethod,
     cardInfo,
     planPrice,
+    cardFill,
+    savedCardData,
+    selectedSavedListCardNumber
   } = state;
   //update your state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -104,7 +112,7 @@ export default function Subscriptions2({ navigation, route }) {
   );
   const [year, setYear] = useState()
   const [date, setDate] = useState()
-
+  const [accept, isAccept] = useState(false);
   const [cardNumber, setCardNUmber] = useState()
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
@@ -156,6 +164,62 @@ export default function Subscriptions2({ navigation, route }) {
   }, []);
 
 
+  useEffect(() => {
+    getSavedCardList()
+  }, [])
+
+
+  
+  const getSavedCardList = () => {
+
+    actions.getSavedCardsList({},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
+      .then((res) => {
+        console.log('getSavedCardList =>', res);
+        updateState({ isLoading: false, isRefreshing: false });
+        if (res && res?.data) {
+          updateState({ savedCardData: res?.data })
+        }
+      })
+      .catch(errorMethod);
+  }
+  const deleteCard = (item) => {
+    Alert.alert('', strings.DELETE_CARD, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {
+        text: strings.CONFIRM,
+        onPress: () => {
+          deleteSaveCard(item)
+        },
+      },
+    ]);
+  }
+
+  const deleteSaveCard = (item) => {
+    let query = `?id=${item?.id}`
+    actions.deleteCard(query, {}, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+
+        console.log(res, 'resereserseersre')
+        alert(res?.message)
+        getSavedCardList()
+
+      })
+      .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
+  }
 
   const checkInputHandler = (type, data) => {
     if (type === 'Card Number') {
@@ -245,6 +309,8 @@ export default function Subscriptions2({ navigation, route }) {
             paymentOptions: res?.data?.payment_options
               ? res?.data?.payment_options
               : [],
+            selectedPaymentMethod: null,
+            selectedSavedListCardNumber: null
           });
           setYear("")
           setDate("")
@@ -291,6 +357,15 @@ export default function Subscriptions2({ navigation, route }) {
   const errorMethod = (error) => {
     updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
+  };
+
+  const selectSavedCard = (data, inx) => {
+    console.log(data, 'datadatadata')
+    {
+      selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
+        ? (updateState({ selectedSavedListCardNumber: null }))
+        : updateState({ selectedSavedListCardNumber: data });
+    }
   };
 
   const renderProduct = ({ item, index }) => {
@@ -353,7 +428,7 @@ export default function Subscriptions2({ navigation, route }) {
         }}>
         <Text style={styles.subscription2}>{strings.SUBSCRIPTION2}</Text>
         <TouchableOpacity
-          onPress={() => updateState({ isModalVisibleForPayment: false })}>
+          onPress={() => updateState({ isModalVisibleForPayment: false, selectedPaymentMethod: null, selectedSavedListCardNumber: null })}>
           <Image source={imagePath.cross} />
         </TouchableOpacity>
       </View>
@@ -365,11 +440,11 @@ export default function Subscriptions2({ navigation, route }) {
       selectedPaymentMethod && selectedPaymentMethod?.id == item?.id
         ? updateState({ selectedPaymentMethod: null })
         : updateState({ selectedPaymentMethod: item });
-        setCardNUmber("")
-        setYear("")
-        setDate("")
-        setExpiryDate("")
-        setCvc("")
+      setCardNUmber("")
+      setYear("")
+      setDate("")
+      setExpiryDate("")
+      setCvc("")
     }
   };
 
@@ -387,6 +462,8 @@ export default function Subscriptions2({ navigation, route }) {
   const _checkoutPayment = (token) => {
     console.log(token, 'tokentokentokentoken');
     let selectedMethod = selectedPaymentMethod.code.toLowerCase();
+
+
     actions
       .openPaymentWebUrl(
         `/${selectedMethod}?amount=${planPrice}&token=${token}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`,
@@ -406,15 +483,102 @@ export default function Subscriptions2({ navigation, route }) {
             isLoading: false,
             isModalVisibleForPayment: false,
             isRefreshing: false,
+            selectedPaymentMethod: null,
+            selectedSavedListCardNumber: null
           });
         }
       })
       .catch(errorMethod);
   };
+  const _isCheck = () => {
+    isAccept(!accept)
+  }
+
+
+  const renderSavedCardList = ({ item, index }) => {
+    console.log("renderSavedCardList =>", index)
+    const expDate = item?.expiration
+    // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => selectSavedCard(item, index)}
+          style={{
+            marginVertical: moderateScaleVertical(8), borderRadius: moderateScaleVertical(13),
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <Image
+            source={
+              selectedSavedListCardNumber &&
+                selectedSavedListCardNumber?.id == item.id
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <View style={{ marginLeft: moderateScale(10) }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Card No:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {item?.card_hint}
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Exp Date:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {expDate}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteCard(item)}>
+          <Image source={imagePath?.delete} />
+        </TouchableOpacity>
+      </View>
+
+    )
+  }
+
 
   //render pyaments icons
   const _renderItemPayments = ({ item, index }) => {
-    console.log(item,selectedPaymentMethod, 'itemmmmmmmmmmmmm')
+    console.log(item, selectedPaymentMethod, 'itemmmmmmmmmmmmm')
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -430,7 +594,7 @@ export default function Subscriptions2({ navigation, route }) {
                   ? imagePath.radioActive
                   : imagePath.radioInActive
               }
-           
+
             />
             <Text
               style={[
@@ -477,25 +641,117 @@ export default function Subscriptions2({ navigation, route }) {
               />
             </View>
           )}
+
         {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           // selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
         ) && (
-            <PaymentGateways
-            isCardNumber={cardNumber}
-            cvc={cvc}
-            expiryDate={expiryDate}
-            year={year}
-            onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-            onChangeText={(data) => checkInputHandler('Card Number', data)}
-            onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-            onChangeYearText={(data) => checkInputHandler('Year', data)}
-            onChangeDateText={(data) => checkInputHandler('Date', data)}
-            paymentid={selectedPaymentMethod?.id}
-            eDate={date}
-            />
+            selectedPaymentMethod?.id == 50 ?
+              <>
+                <View style={{
+                  flexDirection: 'row',
+                  marginTop: moderateScale(10),
+                  justifyContent: 'space-around'
+                }}>
+                  <TextTabBar
+                    text={'Card Fill'}
+                    isActive={cardFill}
+                    containerStyle={
+                      isDarkMode
+                        ? { backgroundColor: MyDarkTheme.colors.background }
+                        : { backgroundColor: colors.white, width: width / 2 }
+                    }
+                    onPress={() => updateState({ cardFill: true })}
+                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                  />
+                  <TextTabBar
+                    text={'Saved Card'}
+                    isActive={!cardFill}
+                    containerStyle={
+                      isDarkMode
+                        ? { backgroundColor: MyDarkTheme.colors.background }
+                        : { backgroundColor: colors.white, width: width / 2 }
+                    }
+                    onPress={() => updateState({ cardFill: false })}
+                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                  />
+                </View>
+                {
+                  cardFill ?
+                    <>
+                      <PaymentGateways
+                        isCardNumber={cardNumber}
+                        cvc={cvc}
+                        expiryDate={expiryDate}
+                        year={year}
+                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                        onChangeText={(data) => checkInputHandler('Card Number', data)}
+                        onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                        onChangeYearText={(data) => checkInputHandler('Year', data)}
+                        onChangeDateText={(data) => checkInputHandler('Date', data)}
+                        paymentid={selectedPaymentMethod?.id}
+                        eDate={date}
+                      />
+                      <View style={{ flexDirection: "row", alignItems: 'center', }}>
+                        <TouchableOpacity
+                          onPress={_isCheck}
+                          style={{
+
+                            marginRight: 10,
+                          }}>
+                          <FastImage
+                            style={{
+                              width: moderateScale(15),
+                              height: moderateScale(15),
+                            }}
+                            tintColor={
+                              isDarkMode ? MyDarkTheme.colors.text : colors.black
+                            }
+                            source={
+                              accept
+                                ? imagePath.checkBox2Active
+                                : imagePath.checkBox2InActive
+                            }
+                            resizeMode="contain"
+                          />
+                        </TouchableOpacity>
+                        <Text> Save Card</Text>
+                      </View>
+
+
+                    </>
+                    :
+                    <FlatList
+                      keyExtractor={(itm, inx) => String(inx)}
+                      data={savedCardData}
+                      renderItem={renderSavedCardList}
+                      ListEmptyComponent={() =>
+                        <View>
+                          <Text style={{ textAlign: 'center' }}>
+                            {" No Saved Cards"}
+                          </Text>
+                        </View>
+                      }
+                    />
+
+                }
+              </>
+              :
+              <PaymentGateways
+                isCardNumber={cardNumber}
+                cvc={cvc}
+                expiryDate={expiryDate}
+                year={year}
+                onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                onChangeText={(data) => checkInputHandler('Card Number', data)}
+                onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                onChangeYearText={(data) => checkInputHandler('Year', data)}
+                onChangeDateText={(data) => checkInputHandler('Date', data)}
+                paymentid={selectedPaymentMethod?.id}
+                eDate={date}
+              />
           )}
         {!!(
           selectedPaymentMethod &&
@@ -517,6 +773,8 @@ export default function Subscriptions2({ navigation, route }) {
               onPressSubmit={(res) => {
                 updateState({
                   isModalVisibleForPayment: false,
+                  selectedPaymentMethod: null,
+                  selectedSavedListCardNumber: null
                 });
                 setTimeout(() => {
                   updateState({
@@ -550,7 +808,7 @@ export default function Subscriptions2({ navigation, route }) {
       <GradientButton
         colorsArray={[themeColors.primary_color, themeColors.primary_color]}
         textStyle={styles.textStyle}
-        onPress={() => updateState({ isModalVisibleForPayment: false })}
+        onPress={() => updateState({ isModalVisibleForPayment: false, selectedSavedListCardNumber: null, selectedPaymentMethod: null })}
         borderRadius={moderateScale(5)}
         containerStyle={{
           marginHorizontal: moderateScale(10),
@@ -775,11 +1033,11 @@ export default function Subscriptions2({ navigation, route }) {
         }, 1000);
       } else if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
         _paymentWithPlugnPayMethods()
-      }else if (
-        selectedPaymentMethod?.id == 10 ) {
+      } else if (
+        selectedPaymentMethod?.id == 10) {
         _renderRazor(planPrice);
         return;
-      } 
+      }
       else {
         _webPayment();
       }
@@ -788,19 +1046,24 @@ export default function Subscriptions2({ navigation, route }) {
     }
   };
   const _paymentWithPlugnPayMethods = () => {
-
+ updateState({isLoading : true})
     let selectedMethod = selectedPaymentMethod.code;
-    let CardNumber = cardNumber.split(" ").join("")
+    let CardNumber = cardNumber.split(" ").join("") || " "
+    let subscrtiptionPlanPrice = Number(planPrice).toFixed(2)
+    console.log(subscrtiptionPlanPrice, 'subscrtiptionPlanPrice')
     let expirydate
     if (selectedPaymentMethod?.id == 50) {
 
-      expirydate = year.concat(date)
+      expirydate = year.concat(date) || " "
       console.log(expirydate, 'expirydate')
     }
     else {
-      expirydate = expiryDate
+      expirydate = expiryDate || " "
     }
-    let queryData = `/${selectedMethod}?amount=${planPrice}&cv=${cvc}&dt=${expirydate}&subscription_id=${selectedPlan?.slug}&cno=${CardNumber}&action=subscription`;
+    let savedCardId = selectedSavedListCardNumber && selectedSavedListCardNumber.id || ''
+    let saveCard = !!accept ? 1 : 0
+    let queryData = `/${selectedMethod}?amount=${subscrtiptionPlanPrice}&cv=${cvc}&dt=${expirydate}&subscription_id=${selectedPlan?.slug}&cno=${CardNumber}&card_id=${savedCardId}&action=subscription`;
+    if (selectedPaymentMethod?.id == 50 && !!CardNumber) { queryData = queryData + `&save_card=${saveCard}` }
     actions
       .openPaymentWebUrl(
         queryData,
@@ -819,9 +1082,16 @@ export default function Subscriptions2({ navigation, route }) {
 
         ) {
           getAllSubscriptions(true);
+          getSavedCardList()
           setCardNUmber('')
           setCvc('')
           setExpiryDate('')
+          showSuccess(res?.msg)
+          updateState({isLoading : false})
+        }
+        else {
+          showError(res?.msg)
+          updateState({isLoading : false})
         }
       })
       .catch((err) => {
@@ -830,6 +1100,7 @@ export default function Subscriptions2({ navigation, route }) {
         setCvc('')
         setExpiryDate('')
         showError(err?.msg)
+        updateState({isLoading : false})
       })
   }
   const _webPayment = () => {
@@ -1034,7 +1305,7 @@ export default function Subscriptions2({ navigation, route }) {
   };
 
   const _renderRazor = (planPrice) => {
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     let options = {
       description: 'Payment for your order',
       image: getImageUrl(
@@ -1046,8 +1317,8 @@ export default function Subscriptions2({ navigation, route }) {
       key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
       amount: (
         (Number(planPrice)
-            ? Number(planPrice)
-            : 0) *
+          ? Number(planPrice)
+          : 0) *
         100
       ).toFixed(0),
       name: appData?.profile?.company_name,
@@ -1056,13 +1327,13 @@ export default function Subscriptions2({ navigation, route }) {
         contact: userData?.phone_number || '',
         name: userData?.name,
       },
-      theme: {color: themeColors.primary_color},
+      theme: { color: themeColors.primary_color },
     };
 
     console.log(options, 'optios');
     RazorpayCheckout.open(options)
       .then((res) => {
-        console.log(res,"resresres for razorepay");
+        console.log(res, "resresres for razorepay");
         getAllSubscriptions(true);
         updateState({
           isLoadingB: false,
@@ -1070,7 +1341,7 @@ export default function Subscriptions2({ navigation, route }) {
           isRefreshing: false,
         });
       })
-      .catch((error)=>{console.log(error,"errorororoor>>>")});
+      .catch((error) => { console.log(error, "errorororoor>>>") });
   };
 
   const modalBottomContent = () => {
@@ -1089,7 +1360,7 @@ export default function Subscriptions2({ navigation, route }) {
                 themeColors.primary_color,
               ]}
               textStyle={styles.textStyle}
-              onPress={() => updateState({ isModalVisibleForPayment: false })}
+              onPress={() => updateState({ isModalVisibleForPayment: false, selectedSavedListCardNumber: null, selectedPaymentMethod: null })}
               borderRadius={moderateScale(5)}
               containerStyle={{
                 marginHorizontal: moderateScale(10),
@@ -1224,8 +1495,9 @@ export default function Subscriptions2({ navigation, route }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}
-      isLoadingB={isLoading}
-      source={loaderOne}>
+      isLoading={isLoading}
+      // source={loaderOne}
+      >
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

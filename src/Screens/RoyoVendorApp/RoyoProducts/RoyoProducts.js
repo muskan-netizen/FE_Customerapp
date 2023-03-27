@@ -285,7 +285,12 @@ const RoyoProducts = (props) => {
   const renderItem = (data, rowMap) => {
     const { item } = data;
     return (
-      <View style={styles.itemBox}>
+      <TouchableOpacity style={styles.itemBox}  onPress={() =>
+        navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+          data: item,
+          isVendor: true,
+        })
+      }>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate(navigationStrings.PRODUCTDETAIL, {
@@ -365,7 +370,7 @@ const RoyoProducts = (props) => {
             )}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

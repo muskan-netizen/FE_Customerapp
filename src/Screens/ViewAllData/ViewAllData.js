@@ -25,6 +25,7 @@ import { MyDarkTheme } from '../../styles/theme';
 import FooterLoader from '../../Components/FooterLoader';
 
 import { enableFreeze } from "react-native-screens";
+import { UIActivityIndicator } from 'react-native-indicators';
 enableFreeze(true);
 
 export default function ViewAllData({ route, navigation }) {
@@ -267,14 +268,6 @@ export default function ViewAllData({ route, navigation }) {
     }
   };
 
-  const listFooterComponent = () => {
-    return (
-      <View style={{ height: moderateScale(100) }}>
-        <FooterLoader style={{ color: themeColors?.primary_color }} />
-      </View>
-    );
-  };
-
   return (
     <WrapperContainer
       bgColor={
@@ -317,7 +310,16 @@ export default function ViewAllData({ route, navigation }) {
             </View>
           )
         }
-        ListFooterComponent={!!loadMore? listFooterComponent: <View style={{height:moderateScale(100)}} />}
+        ListFooterComponent={!!loadMore ?
+          <View style={{ marginBottom: moderateScale(100) }}>
+
+            <UIActivityIndicator
+              color={themeColors.primary_color}
+              size={30}
+            />
+          </View>
+
+          : <View style={{ height: moderateScale(100) }} />}
       />
     </WrapperContainer>
   );

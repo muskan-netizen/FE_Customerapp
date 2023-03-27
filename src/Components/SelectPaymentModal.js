@@ -8,6 +8,7 @@ import {
 } from '@stripe/stripe-react-native';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import {
   Image,
   Keyboard,
@@ -19,7 +20,8 @@ import {
   FlatList
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
+import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
@@ -66,6 +68,7 @@ export default function SelectPaymentModal({
   const styles = stylesFun({ fontFamily, themeColors });
   const [year, setYear] = useState()
   const [date, setDate] = useState()
+  const [accept, isAccept] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
     payementMethods: [],
@@ -138,9 +141,10 @@ export default function SelectPaymentModal({
   useEffect(() => {
     updateState({ isLoading: true });
     getListOfPaymentMethod();
-    if (selectedPaymentMethod?.id == 50) getSavedCardList()
-    
+
+
   }, []);
+
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
@@ -158,9 +162,12 @@ export default function SelectPaymentModal({
       .then((res) => {
         console.log(res, 'allpayments gate');
         updateState({ isLoading: false, isRefreshing: false });
-        if (res && res?.data) {
+        if (res && res?.data && !isEmpty(res?.data)) {
           updateState({ payementMethods: res?.data });
           // updateState({allAvailAblePaymentMethods: res?.data});
+          res?.data.map((item, inx) => {
+            item?.id == 50 && getSavedCardList()
+          })
         }
       })
       .catch(errorMethod);
@@ -168,6 +175,7 @@ export default function SelectPaymentModal({
 
   // Get Saved card list of user
   const getSavedCardList = () => {
+
     actions.getSavedCardsList({},
       {
         code: appData?.profile?.code,
@@ -176,7 +184,7 @@ export default function SelectPaymentModal({
       },
     )
       .then((res) => {
-        console.log('getSavedCardList =>',res);
+        console.log('getSavedCardList =>', res);
         updateState({ isLoading: false, isRefreshing: false });
         if (res && res?.data) {
           updateState({ savedCardData: res?.data })
@@ -203,7 +211,7 @@ export default function SelectPaymentModal({
       await createPaymentMethod({
         token: res2,
         card: cardInfo,
-        paymentMethodType:'Card',
+        paymentMethodType: 'Card',
         billing_details: {
           name: 'Jenny Rosen',
         },
@@ -280,7 +288,7 @@ export default function SelectPaymentModal({
             navigation.navigate(navigationStrings.CART, { selectedSavedListCardNumber: selectedSavedListCardNumber })
           }
           if ((cardNumber && cvc) && (expiryDate || (year && date))) {
-            navigation.navigate(navigationStrings.CART, { CardNumber: cardNumber, cvc: cvc, expiryDate: expiryDate, date: date, year: year })
+            navigation.navigate(navigationStrings.CART, { CardNumber: cardNumber, cvc: cvc, expiryDate: expiryDate, date: date, year: year, saveCardDetails: accept })
           }
         }
         setTimeout(() => {
@@ -303,13 +311,13 @@ export default function SelectPaymentModal({
     console.log(data, 'datadatadata')
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
-        ?( updateState({ selectedPaymentMethod: null }))
+        ? (updateState({ selectedPaymentMethod: null }))
         : updateState({ selectedPaymentMethod: data });
-        setCardNUmber(""),
+      setCardNUmber(""),
         setCvc("")
-        setYear("")
-        setDate("")
-        setExpiryDate("")
+      setYear("")
+      setDate("")
+      setExpiryDate("")
     }
   };
 
@@ -351,7 +359,9 @@ export default function SelectPaymentModal({
       setDate(year)
     }
   }
-
+  const _isCheck = () => {
+    isAccept(!accept)
+  }
 
   const _onChangeStripeData = (cardDetails) => {
     console.log('_onChangeStripeData_onChangeStripeData', cardDetails);
@@ -460,76 +470,114 @@ export default function SelectPaymentModal({
     }
   };
 
-  const renderSavedCardList = ({item,index}) => {
+  const deleteCard = (item) => {
+    Alert.alert('', strings.DELETE_CARD, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {
+        text: strings.CONFIRM,
+        onPress: () => {
+          deleteSaveCard(item)
+        },
+      },
+    ]);
+  }
+
+  const deleteSaveCard = (item) => {
+    let query = `?id=${item?.id}`
+    actions.deleteCard(query, {}, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+
+        console.log(res, 'resereserseersre')
+        alert(res?.message)
+        getSavedCardList()
+
+      })
+      .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
+  }
+  const renderSavedCardList = ({ item, index }) => {
     console.log("renderSavedCardList =>", index)
-    // const expDate = item?.expiration
-    const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
+    const expDate = item?.expiration
+    // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
     return (
-      <TouchableOpacity
-        onPress={() => selectSavedCard(item, index)}
-        style={[styles.caseOnDeliveryView, { marginVertical: moderateScaleVertical(8) }]}>
-        <Image
-          source={
-            selectedSavedListCardNumber &&
-              selectedSavedListCardNumber?.id == item.id
-              ? imagePath.radioActive
-              : imagePath.radioInActive
-          }
-        />
-        <View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                    styles.caseOnDeliveryText,
-                    { color: MyDarkTheme.colors.text },
-                  ]
-                  : styles.caseOnDeliveryText
-              }>
-              {'Card No:'}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                    styles.caseOnDeliveryText,
-                    { color: MyDarkTheme.colors.text },
-                  ]
-                  : styles.caseOnDeliveryText
-              }>
-              {item?.card_hint}
-            </Text>
+      <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => selectSavedCard(item, index)}
+          style={[styles.caseOnDeliveryView, { marginVertical: moderateScaleVertical(8) }]}>
+          <Image
+            source={
+              selectedSavedListCardNumber &&
+                selectedSavedListCardNumber?.id == item.id
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Card No:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {item?.card_hint}
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Exp Date:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {expDate}
+              </Text>
+            </View>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                    styles.caseOnDeliveryText,
-                    { color: MyDarkTheme.colors.text },
-                  ]
-                  : styles.caseOnDeliveryText
-              }>
-              {'Exp Date:'}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                    styles.caseOnDeliveryText,
-                    { color: MyDarkTheme.colors.text },
-                  ]
-                  : styles.caseOnDeliveryText
-              }>
-              {expDate}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteCard(item)}>
+          <Image source={imagePath?.delete} />
+        </TouchableOpacity>
+      </View>
+
     )
   }
-  console.log("payementMethodspayementMethodspayementMethods",payementMethods)
+  console.log("payementMethodspayementMethodspayementMethods", payementMethods)
   const mainView = () => {
     return (
       <>
@@ -642,24 +690,63 @@ export default function SelectPaymentModal({
                             </View>
                             {
                               cardFill ?
-                                <PaymentGateways
-                                  isCardNumber={cardNumber}
-                                  cvc={cvc}
-                                  expiryDate={expiryDate}
-                                  year={year}
-                                  onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                                  onChangeText={(data) => checkInputHandler('Card Number', data)}
-                                  onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                                  onChangeYearText={(data) => checkInputHandler('Year', data)}
-                                  onChangeDateText={(data) => checkInputHandler('Date', data)}
-                                  paymentid={selectedPaymentMethod?.id}
-                                  eDate={date}
-                                />
+                                <>
+                                  <PaymentGateways
+                                    isCardNumber={cardNumber}
+                                    cvc={cvc}
+                                    expiryDate={expiryDate}
+                                    year={year}
+                                    onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                                    onChangeText={(data) => checkInputHandler('Card Number', data)}
+                                    onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                                    onChangeYearText={(data) => checkInputHandler('Year', data)}
+                                    onChangeDateText={(data) => checkInputHandler('Date', data)}
+                                    paymentid={selectedPaymentMethod?.id}
+                                    eDate={date}
+                                  />
+
+                                  <TouchableOpacity
+                                    onPress={_isCheck}
+                                    style={{
+                                      flexDirection: "row", alignItems: 'center'
+                                      // marginRight: 10,
+                                    }}>
+                                    <FastImage
+                                      style={{
+                                        width: moderateScale(15),
+                                        height: moderateScale(15),
+                                      }}
+                                      tintColor={
+                                        isDarkMode ? MyDarkTheme.colors.text : colors.black
+                                      }
+                                      source={
+                                        accept
+                                          ? imagePath.checkBox2Active
+                                          : imagePath.checkBox2InActive
+                                      }
+                                      resizeMode="contain"
+                                    />
+                                    <Text> Save Card</Text>
+                                  </TouchableOpacity>
+
+
+
+
+                                </>
                                 :
                                 <FlatList
-                                keyExtractor={(itm, inx) => String(inx)}
-                                data={savedCardData}
-                                renderItem={renderSavedCardList}/>
+                                  keyExtractor={(itm, inx) => String(inx)}
+                                  data={savedCardData}
+                                  renderItem={renderSavedCardList}
+                                  ListEmptyComponent={() =>
+                                    <View>
+                                      <Text style={{ textAlign: 'center' }}>
+                                        {" No Saved Cards"}
+                                      </Text>
+                                    </View>
+                                  }
+                                />
+
                             }
                           </>
                           :
@@ -734,7 +821,7 @@ export default function SelectPaymentModal({
                 ? keyboardHeight
                 : moderateScale(keyboardHeight - 80),
           }}>
-          {selectedPaymentMethod == null || selectedPaymentMethod.id != 17 ? (
+          {(selectedPaymentMethod == null || selectedPaymentMethod.id != 17) ? (
             <GradientButton
               onPress={selectPaymentOption}
               marginTop={moderateScaleVertical(10)}

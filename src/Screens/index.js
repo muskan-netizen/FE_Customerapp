@@ -173,3 +173,4 @@ export {default as MyP2pPosts} from './P2P/MyP2pPosts/MyP2pPosts';
 export {default as ReferAndEarn} from './ReferAndEarn/ReferAndEarn';
 export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAndSelectedProducts/SpotdealProductAndSelectedProducts';
 
+export {default as SavedCards} from './SavedCards/SavedCards'

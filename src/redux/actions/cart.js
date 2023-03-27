@@ -36,6 +36,7 @@ import {
   ADD_PRESCRIPTIONS,
   DELETE_PRESCRIPTION,
   SAVED_CARD_LIST,
+  DELETE_CARD,
 } from '../../config/urls';
 import {
   apiGet,
@@ -541,4 +542,8 @@ export function deletePrescriptions(data = {}, headers = {}) {
 //Get card list 
 export function getSavedCardsList(data = {}, headers = {}) {
   return apiGet(SAVED_CARD_LIST, data, headers);
+}
+
+export function deleteCard(query ="",data = {}, headers = {}) {
+  return apiGet(DELETE_CARD + query, data, headers);
 }

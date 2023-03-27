@@ -218,36 +218,25 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-
-          tiimo{
+             qdelo{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.tiimo.royoorders'
-            resValue "string", "app_name", "Tiimo" 
+            applicationId 'com.qdeloorder'
+            resValue "string", "app_name", "Qdelo"
             resValue "string", "host_name", ""
             }
-                helpnowrightnow{
-                dimension "appType"
-                versionCode 6
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.helpnowrightnow'
-                resValue "string", "app_name", "HelpNow!RN"
-                resValue "string", "host_name", ""
-            }
-            speedyDelivery{ 
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.speedydelivery.orders'
-                resValue "string", "app_name", "Speedy Delivery" 
-                resValue "string", "host_name", ""
+                  stabex{ 
+            dimension "appType"
+            versionCode 5
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.stabex.orders'
+            resValue "string", "app_name", "Stabex" 
+            resValue "string", "host_name", ""
             }
 }
 
@@ -934,7 +923,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.fleety'
+    //             applicationId 'com.feelty.userApp'
     //             resValue "string", "app_name", "Fleety"
     //             resValue "string", "host_name", ""
     //         }
@@ -8179,7 +8168,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.hattaFoodHub.royoorders'
+    //             applicationId 'com.hattaFoodHub.order'
     //             resValue "string", "app_name", "HattaFoodHub"
     //             resValue "string", "host_name", ""
     //         }

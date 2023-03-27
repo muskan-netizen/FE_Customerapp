@@ -1068,5 +1068,7 @@ Amount`,
   HOUR: 'hour',
   SELECT_INFLUENCER_CATEGORY: 'Select Influencer Category',
   INFLUENCER_ORDER_HISTORY: 'Influence order history',
-  ENTER_HOUSE_NO:'House No'
+  ENTER_HOUSE_NO:'House No',
+  DELETE_CARD:"Are you sure u want to delete Card ?",
+  YOUR_OTP:" Your OTP is : 123456"
 };

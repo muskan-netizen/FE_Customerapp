@@ -943,7 +943,7 @@ export default {
   ORDER_CANCELLED: 'Order Cancelled',
   SPECIFIC_INSTRUCTIONS: 'Specific Instructions',
   THANKS_FOR_YOUR_PURCHASE: '¡Gracias por tu compra!',
-  WHAT_WHOULD_YOU_LIKE_TO_DO: 'What would you like to do?',
+  WHAT_WHOULD_YOU_LIKE_TO_DO: 'Que te gustaría hacer?',
   ENTER_NEW_ADDRESS: 'new address',
   PRODUCT_ORDER_FORM: 'Product Order Form',
   FIXED_FEE: 'Fixed fee',
