@@ -1368,9 +1368,10 @@ export default function Products({ route, navigation }) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
-
-
       if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot)) {
+        updateState({
+          productDetailData: item
+        })
         setAppointmentPicker(true)
         return
       }
@@ -3781,7 +3782,7 @@ export default function Products({ route, navigation }) {
     setLoadingGetSlots(true);
     if (isAppointmentPicker) {
       actions.getAppointmentSlots({
-        cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+        cur_date: moment(appointmentSelectedDate || date).format("YYYY-MM-DD"),
         product_id: productDetailData?.id
       }, {
         code: appData.profile.code,
