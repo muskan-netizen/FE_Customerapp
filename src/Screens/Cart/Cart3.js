@@ -297,7 +297,7 @@ function Cart({ navigation, route }) {
   );
 
   const androidBackButtonHandler = () => {
-    updateState({paymentModal: false})
+    updateState({ paymentModal: false })
     return true;
   };
 
@@ -324,7 +324,7 @@ function Cart({ navigation, route }) {
     if (
       !!checkCartItem?.data &&
       !!checkCartItem?.data?.products &&
-      !!checkCartItem?.data?.products.length
+      !!checkCartItem?.data?.products?.length
     ) {
       checkforAddressUpdate();
     }
@@ -332,12 +332,12 @@ function Cart({ navigation, route }) {
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
-    if (allAddresss.length == 0) {
+    if (allAddresss?.length == 0) {
       setSelectedAddress(null);
       actions.saveAddress(null);
       return;
     }
-    if (!selectedAddress && allAddresss.length) {
+    if (!selectedAddress && allAddresss?.length) {
       let find = allAddresss.find((x) => x.is_primary);
       if (find) {
         setSelectedAddress(find);
@@ -401,6 +401,7 @@ function Cart({ navigation, route }) {
         closeForm();
         actions.cartItemQty(res);
         setIsShimmerLoading(false);
+
         !(
           dineInType === 'delivery' ||
           dineInType === 'on_demand' ||
@@ -456,7 +457,7 @@ function Cart({ navigation, route }) {
         setSheduleddropoffdate(res?.data?.schedule_dropoff);
 
         setScheduleType(res?.data?.schedule_type);
-        if (res && res?.data) {
+        if (res && !isEmpty(res?.data)) {
           if (
             !!res?.data?.vendor_details?.vendor_tables &&
             res?.data?.vendor_details?.vendor_tables?.length > 0
@@ -487,7 +488,7 @@ function Cart({ navigation, route }) {
             _vendorTableCart(data, tableData[0]);
           }
 
-          if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
+          if (!!res?.data.products?.length && res?.data.products[0].delaySlot) {
             var timeSlot = res?.data.products[0].delaySlot;
             console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
             setMinimumDelayVendorDate(timeSlot);
@@ -519,7 +520,7 @@ function Cart({ navigation, route }) {
             isLoadingB: false,
             isRefreshing: false,
           });
-          if (!res?.data?.schedule_type && res.data.products.length > 0) {
+          if (!res?.data?.schedule_type && res.data.products?.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -877,7 +878,7 @@ function Cart({ navigation, route }) {
       return;
     }
 
-    console.log("paymentIdpaymentIdpaymentIdpaymentId",paymentId)
+    console.log("paymentIdpaymentIdpaymentIdpaymentId", paymentId)
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
         return;
@@ -1023,7 +1024,7 @@ function Cart({ navigation, route }) {
         if (
           !!businessType &&
           businessType == 'home_service' &&
-          res?.data?.vendors.length == 1
+          res?.data?.vendors?.length == 1
         ) {
           _getOrderDetail(res.data.vendors[0]);
         }
@@ -1238,7 +1239,7 @@ function Cart({ navigation, route }) {
         setModalType(null);
         setSheduleddropoffdate(null);
 
-        console.log("selectedPayment?.idselectedPayment?.id",selectedPayment?.id)
+        console.log("selectedPayment?.idselectedPayment?.id", selectedPayment?.id)
         if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
           updateState({ isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
@@ -1304,7 +1305,7 @@ function Cart({ navigation, route }) {
           if (
             !!businessType &&
             businessType == 'home_service' &&
-            res?.data?.vendors.length == 1 &&
+            res?.data?.vendors?.length == 1 &&
             res?.data?.vendors[0]?.dispatch_traking_url
           ) {
             setCartItems([]);
@@ -1601,7 +1602,7 @@ function Cart({ navigation, route }) {
   const swipeBtns = (progress, dragX) => {
     return (
       <Animated.View
-        key={String(cartItems.length)}
+        key={String(cartItems?.length)}
         style={{
           ...styles.swipeView,
         }}>
@@ -1824,25 +1825,25 @@ function Cart({ navigation, route }) {
     order_number,
   ) => {
     actions.getStripePaymentIntent(
-        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-        {
-          payment_option_id: selectedPayment?.id,
-          action: 'cart',
-          amount:
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0),
-          payment_method_id: paymentMethodId,
-          order_number: order_number,
-          card: cardInfo,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+      {
+        payment_option_id: selectedPayment?.id,
+        action: 'cart',
+        amount:
+          Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0),
+        payment_method_id: paymentMethodId,
+        order_number: order_number,
+        card: cardInfo,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then(async (res) => {
         if (res && res?.client_secret) {
           const { paymentIntent, error } = await handleNextAction(
@@ -1851,28 +1852,28 @@ function Cart({ navigation, route }) {
           if (paymentIntent) {
             if (paymentIntent) {
               actions.confirmPaymentIntentStripe(
-                  {
-                    order_number: order_number,
-                    payment_option_id: selectedPayment?.id,
-                    action: 'cart',
-                    amount:
-                      Number(cartData?.total_payable_amount) +
-                      (selectedTipAmount != null && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0),
-                    payment_intent_id: paymentIntent?.id,
-                    address_id: selectedAddressData?.id,
-                    tip:
-                      selectedTipAmount && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0,
-                  },
-                  {
-                    code: appData?.profile?.code,
-                    currency: currencies?.primary_currency?.id,
-                    language: languages?.primary_language?.id,
-                  },
-                )
+                {
+                  order_number: order_number,
+                  payment_option_id: selectedPayment?.id,
+                  action: 'cart',
+                  amount:
+                    Number(cartData?.total_payable_amount) +
+                    (selectedTipAmount != null && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0),
+                  payment_intent_id: paymentIntent?.id,
+                  address_id: selectedAddressData?.id,
+                  tip:
+                    selectedTipAmount && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
                 .then((res) => {
                   console.log(res, 'secondresponse');
                   updateState({ isRefreshing: false });
@@ -1937,7 +1938,7 @@ function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log("payment method id++++",paymentMethodId)
+    console.log("payment method id++++", paymentMethodId)
     if (!!paymentMethodId) {
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
     } else {
@@ -2001,7 +2002,7 @@ function Cart({ navigation, route }) {
       scheduleType == 'now' &&
       !!checkCartItem?.data &&
       !!checkCartItem?.data.products &&
-      !!checkCartItem?.data.products.length
+      !!checkCartItem?.data.products?.length
     ) {
       setDateAndTimeSchedule();
     }
@@ -2060,7 +2061,7 @@ function Cart({ navigation, route }) {
         return;
       }
     } else {
-      if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+      if (availableTimeSlots?.length > 0 || cartData.slots?.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
           return;
@@ -2090,7 +2091,7 @@ function Cart({ navigation, route }) {
     var result = '';
     var characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
+    var charactersLength = characters?.length;
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
@@ -2420,7 +2421,7 @@ function Cart({ navigation, route }) {
             {dineInType === 'dine_in' &&
               userData?.auth_token &&
               !!cartData?.vendor_details?.vendor_tables &&
-              cartData?.vendor_details?.vendor_tables.length > 0 && (
+              cartData?.vendor_details?.vendor_tables?.length > 0 && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({ isTableDropDown: true })}
@@ -3063,7 +3064,7 @@ function Cart({ navigation, route }) {
             marginVertical: moderateScaleVertical(16),
           }}
         />
-        {wishlistArray.length > 0 && (
+        {wishlistArray?.length > 0 && (
           <View>
             <Text
               style={{
@@ -3089,7 +3090,7 @@ function Cart({ navigation, route }) {
         )}
         <View style={{ marginVertical: moderateScaleVertical(8) }} />
 
-        {recommendedVendorsdata && recommendedVendorsdata.length > 0 && (
+        {recommendedVendorsdata && recommendedVendorsdata?.length > 0 && (
           <View>
             <Text
               style={{
@@ -3188,7 +3189,7 @@ function Cart({ navigation, route }) {
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}
-        >
+      >
         <Header
           centerTitle={strings.CART}
           noLeftIcon
@@ -3437,7 +3438,7 @@ function Cart({ navigation, route }) {
         setLaundryAvailablePickupSlot(res);
       }
       setAvailableTimeSlots(res);
-      if (res.length == 0) {
+      if (res?.length == 0) {
         setSelectedTimeSlots('');
       }
       setCheckSloatLoading(false);
@@ -4350,7 +4351,7 @@ function Cart({ navigation, route }) {
                   Added Prescriptions (
                   {
                     selectedItemForPrescription?.product?.uploaded_prescriptions
-                      .length
+                      ?.length
                   }
                   )
                 </Text>
@@ -4744,10 +4745,10 @@ function Cart({ navigation, route }) {
               </View>
             ) : (
               <View>
-                {(!!availableTimeSlots && availableTimeSlots.length > 0) ||
+                {(!!availableTimeSlots && availableTimeSlots?.length > 0) ||
                   (!!cartData &&
                     !!cartData?.slots &&
-                    !!cartData?.slots.length > 0) ? (
+                    !!cartData?.slots?.length > 0) ? (
                   <Fragment>
                     <ScrollView>
                       <Calendar
