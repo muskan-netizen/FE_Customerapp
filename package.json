@@ -1164,6 +1164,7 @@
     "react-native-animated-loader": "0.0.9",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-app-link": "^1.0.1",
+    "react-native-apple-payment": "^1.1.1",
     "react-native-background-actions": "^2.6.4",
     "react-native-calendar-strip": "^2.2.5",
     "react-native-calendars": "^1.1291.1",
