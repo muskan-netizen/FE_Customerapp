@@ -217,26 +217,16 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-           ngoal{
+                 Ping{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ngoal.order'
-                resValue "string", "app_name", "NGoal"
+                applicationId 'com.ping.royoorder'
+                resValue "string", "app_name", "Ping"
                 resValue "string", "host_name", ""
             }
-            // boozeBrothers{
-            //     dimension "appType"
-            //     versionCode 1
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion
-            //     applicationId 'com.boozeBrothers.order'
-            //     resValue "string", "app_name", "Booze Brothers"
-            //     resValue "string", "host_name", ""
-            // }
             
 }
 

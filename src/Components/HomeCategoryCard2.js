@@ -48,13 +48,13 @@ const HomeCategoryCard2 = ({
   let imgWidth =
     appStyle?.homePageLayout === 5
       ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel
+      : getBundleId() === appIds.onTheWheel 
       ? moderateScale(70)
       : moderateScale(50);
   let imgRadius =
     appStyle?.homePageLayout === 5
       ? moderateScale(30)
-      : getBundleId() === appIds.onTheWheel
+      : getBundleId() === appIds.onTheWheel 
       ? moderateScale(35)
       : moderateScale(25);
 
