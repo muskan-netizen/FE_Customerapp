@@ -2420,7 +2420,6 @@ export default function Products({ route, navigation }) {
   };
 
   //decrementing/removeing products from cart
-  console.log("cartId =====", cartId);
   const removeProductFromCart = (
     itemToUpdate,
     section = null,

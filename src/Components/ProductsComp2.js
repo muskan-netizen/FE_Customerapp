@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -35,8 +35,8 @@ const ProductsComp = ({
   onPress = () => { },
   mainContainerStyle = {},
   showRating = true,
-  productNameStyle={},
-  numberOfLines=1
+  productNameStyle = {},
+  numberOfLines = 1
 }) => {
   const { themeColors, appStyle, currencies, themeColor, themeToggle } =
     useSelector((state) => state?.initBoot);
@@ -64,7 +64,7 @@ const ProductsComp = ({
     '600/600',
   );
 
-  console.log(imageUrl,"imageUrlimageUrl");
+  console.log(imageUrl, "imageUrlimageUrl");
 
   return (
     <TouchableOpacity
@@ -176,7 +176,7 @@ const ProductsComp = ({
                 }}>
                 <Text>
                   {tokenConverterPlusCurrencyNumberFormater(
-                    variants[0]?.price,
+                    Number(variants[0]?.price) * Number(variants[0]?.multiplier || 1),
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,

@@ -152,7 +152,6 @@ const ProductCard3 = ({
 
   const onIncrementQty = () => {
     setAdd(true);
-    console.log('data', data);
     if (
       !!categoryInfo?.is_vendor_closed &&
       categoryInfo?.closed_store_order_scheduled !== 1
@@ -177,7 +176,6 @@ const ProductCard3 = ({
       onIncrement();
     }
   };
-  console.log();
   const onDecrementQty = () => {
     setAdd(false);
     if (
@@ -267,7 +265,7 @@ const ProductCard3 = ({
               style={{
                 ...styles.inTextStyle,
                 color: isDarkMode
-                  ?colors.white
+                  ? colors.white
                   : colors.blackOpacity40,
               }}>
               {strings.IN}
@@ -314,9 +312,8 @@ const ProductCard3 = ({
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
             }}>
-
             {tokenConverterPlusCurrencyNumberFormater(
-              data?.variant[0]?.price,
+              Number(data?.variant[0]?.price) * Number(data?.variant[0]?.multiplier || 1),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
@@ -337,7 +334,7 @@ const ProductCard3 = ({
                 }}>
                 {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
-                  data?.variant[0]?.compare_at_price,
+                  data?.variant[0]?.compare_at_price * data?.variant[0]?.multiplier,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,

@@ -217,7 +217,6 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-
                   ondgoo {
                 dimension "appType"
                 versionCode 1
