@@ -488,7 +488,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
             _vendorTableCart(data, tableData[0]);
           }
 
-          if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
+          if (!isEmpty(res?.data.products)&& !!res?.data.products.length && res?.data.products[0].delaySlot) {
             var timeSlot = res?.data.products[0].delaySlot;
             console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
             setMinimumDelayVendorDate(timeSlot);
@@ -520,7 +520,7 @@ console.log(localeSheduledOrderDate,'localeSheduledOrderDate')
             isLoadingB: false,
             isRefreshing: false,
           });
-          if (!res?.data?.schedule_type && res.data.products.length > 0) {
+          if (!res?.data?.schedule_type && !isEmpty(res.data.products)&& res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }

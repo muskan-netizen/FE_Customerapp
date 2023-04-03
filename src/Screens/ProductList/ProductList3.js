@@ -1375,7 +1375,8 @@ export default function Products({ route, navigation }) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
-      console.log(item,selectedAppointmentSlot,"itemitemitemitemitem");
+       
+      console.log(item,"item?.mode_of_serviceitem?.mode_of_service");
       if (dine_In_Type == 'appointment' && item?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
         setAppointmentPicker(true)
         setSelectedProductForAppointment(item?.id || item?.variant[0].id)
