@@ -85,6 +85,7 @@ const ProductCard3 = ({
   const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
 
@@ -452,7 +453,7 @@ const ProductCard3 = ({
                 data?.check_if_in_cart_app.length > 0) ||
                 !!data?.qty ||
                 totalProductQty) &&
-                CartItems.data !== null ? (
+                CartItems.data !== null && dine_In_Type!='appointment' ? (
                 <View
                   // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                   style={{
@@ -574,7 +575,7 @@ const ProductCard3 = ({
                               ? colors.white
                               : themeColors.primary_color,
                           }}>
-                          {strings.ADD}{' '}
+                          {!!data?.check_if_in_cart_app&&data?.check_if_in_cart_app.length > 0?strings.ADDED:strings.ADD}{' '}
                           {data?.minimum_order_count > 1
                             ? `(${data?.minimum_order_count})`
                             : ''}

@@ -299,10 +299,10 @@ export default function Addaddress({ navigation, route }) {
     setIsPinAddressOnMapModal(true);
     setPickDropData({
       task_id: updateIndex == 0 ? 1 : 2,
-
       ...(existLatLng?.latitude !== 0 ? existLatLng : curLatLng),
     });
   };
+
 
 
   const renderbtn = () => {
@@ -329,6 +329,7 @@ export default function Addaddress({ navigation, route }) {
             />
           </View>
         );
+
       default:
         return (
           <View
@@ -355,7 +356,6 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const checkBookingServiceType = (bookingType) => {
-
     switch (bookingType) {
       case 0: return ('Booking')
       case 1: return ('Pooling')
@@ -363,6 +363,8 @@ export default function Addaddress({ navigation, route }) {
       default: return ('Booking')
     }
   }
+
+
 
   const moveToNextScreenWithAddressData = () => {
     let location = [];
@@ -402,7 +404,6 @@ export default function Addaddress({ navigation, route }) {
     let checkEmptyTask = dropLocationData.filter(
       (item) => item.pre_address !== ""
     );
-
 
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {

@@ -25,7 +25,7 @@ import {
   ACCEPT_RIDE_BID,
   ACCEPT_RIDE_FOR_BID,
 } from '../../config/urls';
-import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
+import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 
@@ -333,7 +333,7 @@ export function homeDataV2(data = {}, headers = {}, isShortCode = false) {
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL_V2, data, headers)
       .then((res) => {
-        console.log(res,"homePage2");
+        console.log(res, "homePage2");
         if (!isShortCode) {
           dispatch({
             type: types.HOME_DATA,
@@ -371,8 +371,30 @@ export function onGetProductsOnHomePage(data = {}, headers = {}) {
         reject(error);
       });
   });
-
 }
+
+export const saveBidInfo = (data = null) => {
+  dispatch({
+    type: types.LAST_BID_INFO,
+    payload: data,
+  });
+}
+
+export const saveBidInAsync = (data) => {
+  saveBidData(data).then((res) => {
+    saveBidInfo(data)
+  }).catch((err) => {
+
+  })
+}
+
+export const clearLastBidData = () => {
+  saveBidInfo(null)
+  clearBidData()
+}
+
+
+
 
 export const orderRideBidDetails = (data, headers = {}) => {
   return new Promise((resolve, reject) => {

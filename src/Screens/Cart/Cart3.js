@@ -232,7 +232,7 @@ function Cart({ navigation, route }) {
     orderAmount,
     codMinAmount,
   } = state;
-
+  console.log(laundrySelectedDropOffDate, availableTimeSlots, 'laundrySelectedPickupDatelaundrySelectedPickupDate')
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
   const {
@@ -256,6 +256,7 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
+  console.log(preferences, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -265,7 +266,7 @@ function Cart({ navigation, route }) {
   const { dineInType, appMainData, location } = useSelector(
     (state) => state?.home,
   );
-
+  console.log(localeSheduledOrderDate, 'localeSheduledOrderDate')
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -488,7 +489,7 @@ function Cart({ navigation, route }) {
             _vendorTableCart(data, tableData[0]);
           }
 
-          if (!!res?.data.products?.length && res?.data.products[0].delaySlot) {
+          if (!isEmpty(res?.data.products) && !!res?.data.products.length && res?.data.products[0].delaySlot) {
             var timeSlot = res?.data.products[0].delaySlot;
             console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
             setMinimumDelayVendorDate(timeSlot);
@@ -520,7 +521,7 @@ function Cart({ navigation, route }) {
             isLoadingB: false,
             isRefreshing: false,
           });
-          if (!res?.data?.schedule_type && res.data.products?.length > 0) {
+          if (!res?.data?.schedule_type && !isEmpty(res.data.products) && res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -1136,25 +1137,25 @@ function Cart({ navigation, route }) {
   const _paymentWithPlugnPayMethods = (response) => {
 
     let selectPaymentCode = selectedPayment?.code?.toLowerCase()
-    let CardNumber = paramsData?.CardNumber.split(" ").join("")
-
+    let CardNumber = paramsData?.CardNumber ? paramsData?.CardNumber.split(" ").join("") : ''
+    console.log("paramsData =>", paramsData);
     let expirydate
     if (selectedPayment?.id == 50) {
 
-      expirydate = paramsData?.year.concat(paramsData?.date)
+      expirydate = paramsData?.year ? paramsData?.year.concat(paramsData?.date) : ''
       console.log(expirydate, 'expirydate')
     }
     else {
-      expirydate = paramsData?.expiryDate
+      expirydate = paramsData?.expiryDate || ''
     }
-    let cvc = paramsData?.cvc
-    let Order_Number = response?.data?.order_number
+    let cvc = paramsData?.cvc || ''
+    let Order_Number = response?.data?.order_number || ''
     let amount = Number(cartData?.total_payable_amount) +
-      (selectedTipAmount != null && selectedTipAmount != ""
-        ? Number(selectedTipAmount)
-        : 0)
+      (selectedTipAmount != null && selectedTipAmount != "" ? Number(selectedTipAmount) : 0)
 
-    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${Order_Number}&action=cart`;
+    let savedCardId = paramsData?.selectedSavedListCardNumber.id || ''
+
+    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${Order_Number}&card_id=${savedCardId}&action=cart`;
     console.log('QueryData----------', queryData)
     actions
       .openPaymentWebUrl(
@@ -1346,10 +1347,12 @@ function Cart({ navigation, route }) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
+
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
+
     if (!userData?.auth_token) {
       return;
     }
@@ -2016,6 +2019,7 @@ function Cart({ navigation, route }) {
   };
   //Select Time Laundry
   const _selectTimeLaundry = (item) => {
+    console.log('item', item)
     if (item == 'dropoff') {
       setModalType('dropoff');
       updateState({
@@ -2060,12 +2064,15 @@ function Cart({ navigation, route }) {
         setDateAndTimeSchedule();
         return;
       }
-    } else {
-      if (availableTimeSlots?.length > 0 || cartData.slots?.length > 0) {
+    }
+    else {
+      if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
           return;
         } else {
+
           // let formatDate = new Date(selectedDateFromCalendar);
           const date = selectedDateFromCalendar;
           const time = selectedTimeSlots.split('-')[0];
@@ -2073,6 +2080,7 @@ function Cart({ navigation, route }) {
             `${date} ${time}`,
             'YYYY-MM-DD HH:mm:ss',
           ).format();
+
           setLocaleSheduledOrderDate(
             moment(new Date(formatDate)).format('lll'),
           );
@@ -2517,6 +2525,7 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           <SwipeableSection
             item={item}
+            openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
             tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater}
@@ -2540,10 +2549,10 @@ function Cart({ navigation, route }) {
             cartData={cartData}
             strings={strings}
             scheduleType={scheduleType}
-
+            openPickerForPrescription={openPickerForPrescription}
           />
           {/************ end render cart items *************/}
-          <DeliverableSection item={item} colors={colors} styles={styles} />
+          <DeliverableSection item={item} colors={colors} styles={styles} strings={strings} />
 
           {/* offerview */}
           <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings}
@@ -2552,7 +2561,7 @@ function Cart({ navigation, route }) {
 
           {/* start amount view       */}
 
-          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} />
+          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} preferences={preferences} />
         </View >
       </View >
     );
@@ -2650,6 +2659,18 @@ function Cart({ navigation, route }) {
         selectedTipvalue={selectedTipvalue}
         setSelectedTipAmount={setSelectedTipAmount}
         clearSceduleDate={clearSceduleDate}
+        _selectTimeLaundry={_selectTimeLaundry}
+        laundrySelectedPickupDate={laundrySelectedPickupDate}
+        laundrySelectedDropOffDate={laundrySelectedDropOffDate}
+        laundrySelectedPickupSlot={laundrySelectedPickupSlot}
+        laundrySelectedDropOffSlot={laundrySelectedDropOffSlot}
+        businessType={businessType}
+        pickupDriverComment={pickupDriverComment}
+        setPickupDriverComment={setPickupDriverComment}
+        dropOffDriverComment={dropOffDriverComment}
+        setDropOffDriverComment={setDropOffDriverComment}
+        vendorComment={vendorComment}
+        setVendorComment={setVendorComment}
       />
     )
   };
@@ -5077,27 +5098,30 @@ function Cart({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-          <PayWithFlutterwave
-            onAbort={() =>
-              updateState({
-                isModalVisibleForPayFlutterWave: false,
-                placeLoader: false,
-              })
-            }
-            onRedirect={handleOnRedirect}
-            options={{
-              tx_ref: generateTransactionRef(10),
-              authorization:
-                appData?.profile?.preferences?.flutterwave_public_key,
-              customer: {
-                email: userData?.email,
-                name: userData?.name,
-              },
-              amount: paymentDataFlutterWave?.total_payable_amount || 0,
-              currency: currencies?.primary_currency?.iso_code,
-              payment_options: 'card',
-            }}
-          />
+          {!!appData?.profile?.preferences?.flutterwave_public_key &&
+            <PayWithFlutterwave
+              onAbort={() =>
+                updateState({
+                  isModalVisibleForPayFlutterWave: false,
+                  placeLoader: false,
+                })
+              }
+              onRedirect={handleOnRedirect}
+              options={{
+                tx_ref: generateTransactionRef(10),
+                authorization:
+                  appData?.profile?.preferences?.flutterwave_public_key,
+                customer: {
+                  email: userData?.email,
+                  name: userData?.name,
+                },
+                amount: paymentDataFlutterWave?.total_payable_amount || 0,
+                currency: currencies?.primary_currency?.iso_code,
+                payment_options: 'card',
+              }}
+            />
+          }
+
         </View>
       </Modal>
     </WrapperContainer>

@@ -489,7 +489,6 @@ export default function Account3({ navigation }) {
             <View></View>
           )} */}
 
-
           {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&

@@ -2,6 +2,7 @@ import types from '../types';
 
 const initial_state = {
   storeSelectedVendor: {},
+  notificationForBide: {}
 };
 
 export default function (state = initial_state, action) {
@@ -12,6 +13,13 @@ export default function (state = initial_state, action) {
       return {
         ...state,
         storeSelectedVendor: data,
+      };
+    }
+
+    case types.NOTIFICATION_FOR_BIDE: {
+      return {
+        ...state,
+        notificationForBide: action.payload,
       };
     }
 

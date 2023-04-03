@@ -39,14 +39,13 @@ export default function ShortCode() {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     const appCode = !!prevCode ? prevCode : getAppCode();
+    // const appCode = '17c374'
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};
     } else {
       header = {code: appCode};
     }
-
-    console.log(appCode, 'appCode>>>>>');
     actions
       .initApp({}, header, false, null, null, true)
       .then(res => {
@@ -131,7 +130,7 @@ export default function ShortCode() {
       </View>
     );
   }, [loadingScreen]);
-  
+
   const animatedSplash = () => {
     return (
       <View style={styles.videoView}>
