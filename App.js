@@ -65,6 +65,10 @@ const App = () => {
   };
 
 
+  if (!__DEV__)
+{
+   console.log = () => null
+}
 
 
   // async function handleDynamicLink(deepLinkUrl) {
