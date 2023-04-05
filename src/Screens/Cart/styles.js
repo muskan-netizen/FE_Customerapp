@@ -1,4 +1,4 @@
-import {I18nManager, Platform, StyleSheet} from 'react-native';
+import { I18nManager, Platform, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -8,10 +8,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
 
-export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -539,20 +539,37 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontSize: moderateScale(11),
       fontFamily: fontFamily.regular,
       color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
-    }, 
-     cartErrorMessageContainer:{
+    },
+    cartErrorMessageContainer: {
       padding: moderateScale(10),
       paddingVertical: moderateScaleVertical(15),
-      marginVertical:moderateScaleVertical(20),
-      marginHorizontal:moderateScale(20),
-      backgroundColor:getColorCodeWithOpactiyNumber(colors.redB.substring(1),20),
-      borderRadius:moderateScale(5)
+      marginVertical: moderateScaleVertical(20),
+      marginHorizontal: moderateScale(20),
+      backgroundColor: getColorCodeWithOpactiyNumber(colors.redB.substring(1), 20),
+      borderRadius: moderateScale(5)
     },
     codmessageView: {
       flexDirection: 'row',
       paddingVertical: moderateScaleVertical(5),
       paddingHorizontal: moderateScale(16),
     },
+    selectDriver: {
+      fontFamily: fontFamily?.bold,
+      color: themeColors?.primary_color
+    }, driverName: {
+      marginHorizontal: moderateScale(10),
+      fontFamily: fontFamily?.regular
+    }, driverImage: {
+      height: moderateScaleVertical(40),
+      width: moderateScale(40),
+      borderRadius: moderateScale(20)
+    },driverListContainer  :{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(10),
+      marginVertical: moderateScaleVertical(10),
+      alignItems: 'center'
+    }
   });
   return styles;
 };

@@ -24,7 +24,7 @@ function DeliverableSection(props) {
                         <Text
                             style={{
                                 fontSize: moderateScale(12),
-                                fontFamily: fontFamily.medium,
+                                fontFamily: fontFamily?.medium,
                                 color: colors.redFireBrick,
                             }}>
                             {strings.ITEM_NOT_DELIVERABLE}

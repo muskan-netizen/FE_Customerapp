@@ -413,8 +413,6 @@ export default function Home({ route, navigation }) {
     let latlongObj = {};
 
 
-    console.log("locationDatalocationData", locationData)
-
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',

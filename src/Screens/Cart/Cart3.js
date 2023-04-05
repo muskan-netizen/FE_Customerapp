@@ -232,7 +232,7 @@ function Cart({ navigation, route }) {
     orderAmount,
     codMinAmount,
   } = state;
-
+  console.log(laundrySelectedDropOffDate, availableTimeSlots, 'laundrySelectedPickupDatelaundrySelectedPickupDate')
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
   const {
@@ -256,6 +256,7 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
+  console.log(preferences, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -265,7 +266,7 @@ function Cart({ navigation, route }) {
   const { dineInType, appMainData, location } = useSelector(
     (state) => state?.home,
   );
-
+  console.log(localeSheduledOrderDate, 'localeSheduledOrderDate')
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -297,7 +298,7 @@ function Cart({ navigation, route }) {
   );
 
   const androidBackButtonHandler = () => {
-    updateState({paymentModal: false})
+    updateState({ paymentModal: false })
     return true;
   };
 
@@ -324,7 +325,7 @@ function Cart({ navigation, route }) {
     if (
       !!checkCartItem?.data &&
       !!checkCartItem?.data?.products &&
-      !!checkCartItem?.data?.products.length
+      !!checkCartItem?.data?.products?.length
     ) {
       checkforAddressUpdate();
     }
@@ -332,12 +333,12 @@ function Cart({ navigation, route }) {
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
-    if (allAddresss.length == 0) {
+    if (allAddresss?.length == 0) {
       setSelectedAddress(null);
       actions.saveAddress(null);
       return;
     }
-    if (!selectedAddress && allAddresss.length) {
+    if (!selectedAddress && allAddresss?.length) {
       let find = allAddresss.find((x) => x.is_primary);
       if (find) {
         setSelectedAddress(find);
@@ -401,6 +402,7 @@ function Cart({ navigation, route }) {
         closeForm();
         actions.cartItemQty(res);
         setIsShimmerLoading(false);
+
         !(
           dineInType === 'delivery' ||
           dineInType === 'on_demand' ||
@@ -456,7 +458,7 @@ function Cart({ navigation, route }) {
         setSheduleddropoffdate(res?.data?.schedule_dropoff);
 
         setScheduleType(res?.data?.schedule_type);
-        if (res && res?.data) {
+        if (res && !isEmpty(res?.data)) {
           if (
             !!res?.data?.vendor_details?.vendor_tables &&
             res?.data?.vendor_details?.vendor_tables?.length > 0
@@ -487,7 +489,7 @@ function Cart({ navigation, route }) {
             _vendorTableCart(data, tableData[0]);
           }
 
-          if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
+          if (!isEmpty(res?.data.products) && !!res?.data.products.length && res?.data.products[0].delaySlot) {
             var timeSlot = res?.data.products[0].delaySlot;
             console.log('netxt festilval2', new Date(timeSlot.replace(' ')));
             setMinimumDelayVendorDate(timeSlot);
@@ -519,7 +521,7 @@ function Cart({ navigation, route }) {
             isLoadingB: false,
             isRefreshing: false,
           });
-          if (!res?.data?.schedule_type && res.data.products.length > 0) {
+          if (!res?.data?.schedule_type && !isEmpty(res.data.products) && res.data.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -877,7 +879,7 @@ function Cart({ navigation, route }) {
       return;
     }
 
-    console.log("paymentIdpaymentIdpaymentIdpaymentId",paymentId)
+    console.log("paymentIdpaymentIdpaymentIdpaymentId", paymentId)
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
         return;
@@ -1023,7 +1025,7 @@ function Cart({ navigation, route }) {
         if (
           !!businessType &&
           businessType == 'home_service' &&
-          res?.data?.vendors.length == 1
+          res?.data?.vendors?.length == 1
         ) {
           _getOrderDetail(res.data.vendors[0]);
         }
@@ -1135,25 +1137,25 @@ function Cart({ navigation, route }) {
   const _paymentWithPlugnPayMethods = (response) => {
 
     let selectPaymentCode = selectedPayment?.code?.toLowerCase()
-    let CardNumber = paramsData?.CardNumber.split(" ").join("")
-
+    let CardNumber = paramsData?.CardNumber ? paramsData?.CardNumber.split(" ").join("") : ''
+    console.log("paramsData =>", paramsData);
     let expirydate
     if (selectedPayment?.id == 50) {
 
-      expirydate = paramsData?.year.concat(paramsData?.date)
+      expirydate = paramsData?.year ? paramsData?.year.concat(paramsData?.date) : ''
       console.log(expirydate, 'expirydate')
     }
     else {
-      expirydate = paramsData?.expiryDate
+      expirydate = paramsData?.expiryDate || ''
     }
-    let cvc = paramsData?.cvc
-    let Order_Number = response?.data?.order_number
+    let cvc = paramsData?.cvc || ''
+    let Order_Number = response?.data?.order_number || ''
     let amount = Number(cartData?.total_payable_amount) +
-      (selectedTipAmount != null && selectedTipAmount != ""
-        ? Number(selectedTipAmount)
-        : 0)
+      (selectedTipAmount != null && selectedTipAmount != "" ? Number(selectedTipAmount) : 0)
 
-    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${Order_Number}&action=cart`;
+    let savedCardId = paramsData?.selectedSavedListCardNumber.id || ''
+
+    let queryData = `/${selectPaymentCode}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&order_number=${Order_Number}&card_id=${savedCardId}&action=cart`;
     console.log('QueryData----------', queryData)
     actions
       .openPaymentWebUrl(
@@ -1238,7 +1240,7 @@ function Cart({ navigation, route }) {
         setModalType(null);
         setSheduleddropoffdate(null);
 
-        console.log("selectedPayment?.idselectedPayment?.id",selectedPayment?.id)
+        console.log("selectedPayment?.idselectedPayment?.id", selectedPayment?.id)
         if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
           updateState({ isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
@@ -1304,7 +1306,7 @@ function Cart({ navigation, route }) {
           if (
             !!businessType &&
             businessType == 'home_service' &&
-            res?.data?.vendors.length == 1 &&
+            res?.data?.vendors?.length == 1 &&
             res?.data?.vendors[0]?.dispatch_traking_url
           ) {
             setCartItems([]);
@@ -1345,10 +1347,12 @@ function Cart({ navigation, route }) {
 
   // false, 'schedule', value
   const setDateAndTimeSchedule = (
+
     toHitApiForPlaceOrder = false,
     dateType = scheduleType,
     scheduleDate = sheduledorderdate,
   ) => {
+
     if (!userData?.auth_token) {
       return;
     }
@@ -1601,7 +1605,7 @@ function Cart({ navigation, route }) {
   const swipeBtns = (progress, dragX) => {
     return (
       <Animated.View
-        key={String(cartItems.length)}
+        key={String(cartItems?.length)}
         style={{
           ...styles.swipeView,
         }}>
@@ -1824,25 +1828,25 @@ function Cart({ navigation, route }) {
     order_number,
   ) => {
     actions.getStripePaymentIntent(
-        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-        {
-          payment_option_id: selectedPayment?.id,
-          action: 'cart',
-          amount:
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0),
-          payment_method_id: paymentMethodId,
-          order_number: order_number,
-          card: cardInfo,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+      {
+        payment_option_id: selectedPayment?.id,
+        action: 'cart',
+        amount:
+          Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0),
+        payment_method_id: paymentMethodId,
+        order_number: order_number,
+        card: cardInfo,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then(async (res) => {
         if (res && res?.client_secret) {
           const { paymentIntent, error } = await handleNextAction(
@@ -1851,28 +1855,28 @@ function Cart({ navigation, route }) {
           if (paymentIntent) {
             if (paymentIntent) {
               actions.confirmPaymentIntentStripe(
-                  {
-                    order_number: order_number,
-                    payment_option_id: selectedPayment?.id,
-                    action: 'cart',
-                    amount:
-                      Number(cartData?.total_payable_amount) +
-                      (selectedTipAmount != null && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0),
-                    payment_intent_id: paymentIntent?.id,
-                    address_id: selectedAddressData?.id,
-                    tip:
-                      selectedTipAmount && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0,
-                  },
-                  {
-                    code: appData?.profile?.code,
-                    currency: currencies?.primary_currency?.id,
-                    language: languages?.primary_language?.id,
-                  },
-                )
+                {
+                  order_number: order_number,
+                  payment_option_id: selectedPayment?.id,
+                  action: 'cart',
+                  amount:
+                    Number(cartData?.total_payable_amount) +
+                    (selectedTipAmount != null && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0),
+                  payment_intent_id: paymentIntent?.id,
+                  address_id: selectedAddressData?.id,
+                  tip:
+                    selectedTipAmount && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
                 .then((res) => {
                   console.log(res, 'secondresponse');
                   updateState({ isRefreshing: false });
@@ -1937,7 +1941,7 @@ function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log("payment method id++++",paymentMethodId)
+    console.log("payment method id++++", paymentMethodId)
     if (!!paymentMethodId) {
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
     } else {
@@ -2001,7 +2005,7 @@ function Cart({ navigation, route }) {
       scheduleType == 'now' &&
       !!checkCartItem?.data &&
       !!checkCartItem?.data.products &&
-      !!checkCartItem?.data.products.length
+      !!checkCartItem?.data.products?.length
     ) {
       setDateAndTimeSchedule();
     }
@@ -2015,6 +2019,7 @@ function Cart({ navigation, route }) {
   };
   //Select Time Laundry
   const _selectTimeLaundry = (item) => {
+    console.log('item', item)
     if (item == 'dropoff') {
       setModalType('dropoff');
       updateState({
@@ -2059,12 +2064,15 @@ function Cart({ navigation, route }) {
         setDateAndTimeSchedule();
         return;
       }
-    } else {
+    }
+    else {
       if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
+
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
           return;
         } else {
+
           // let formatDate = new Date(selectedDateFromCalendar);
           const date = selectedDateFromCalendar;
           const time = selectedTimeSlots.split('-')[0];
@@ -2072,6 +2080,7 @@ function Cart({ navigation, route }) {
             `${date} ${time}`,
             'YYYY-MM-DD HH:mm:ss',
           ).format();
+
           setLocaleSheduledOrderDate(
             moment(new Date(formatDate)).format('lll'),
           );
@@ -2090,7 +2099,7 @@ function Cart({ navigation, route }) {
     var result = '';
     var characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
+    var charactersLength = characters?.length;
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
@@ -2420,7 +2429,7 @@ function Cart({ navigation, route }) {
             {dineInType === 'dine_in' &&
               userData?.auth_token &&
               !!cartData?.vendor_details?.vendor_tables &&
-              cartData?.vendor_details?.vendor_tables.length > 0 && (
+              cartData?.vendor_details?.vendor_tables?.length > 0 && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({ isTableDropDown: true })}
@@ -2516,6 +2525,7 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           <SwipeableSection
             item={item}
+            openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
             tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater}
@@ -2539,10 +2549,10 @@ function Cart({ navigation, route }) {
             cartData={cartData}
             strings={strings}
             scheduleType={scheduleType}
-
+            openPickerForPrescription={openPickerForPrescription}
           />
           {/************ end render cart items *************/}
-          <DeliverableSection item={item} colors={colors} styles={styles} />
+          <DeliverableSection item={item} colors={colors} styles={styles} strings={strings} />
 
           {/* offerview */}
           <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings}
@@ -2551,7 +2561,7 @@ function Cart({ navigation, route }) {
 
           {/* start amount view       */}
 
-          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} />
+          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} preferences={preferences} />
         </View >
       </View >
     );
@@ -2649,6 +2659,18 @@ function Cart({ navigation, route }) {
         selectedTipvalue={selectedTipvalue}
         setSelectedTipAmount={setSelectedTipAmount}
         clearSceduleDate={clearSceduleDate}
+        _selectTimeLaundry={_selectTimeLaundry}
+        laundrySelectedPickupDate={laundrySelectedPickupDate}
+        laundrySelectedDropOffDate={laundrySelectedDropOffDate}
+        laundrySelectedPickupSlot={laundrySelectedPickupSlot}
+        laundrySelectedDropOffSlot={laundrySelectedDropOffSlot}
+        businessType={businessType}
+        pickupDriverComment={pickupDriverComment}
+        setPickupDriverComment={setPickupDriverComment}
+        dropOffDriverComment={dropOffDriverComment}
+        setDropOffDriverComment={setDropOffDriverComment}
+        vendorComment={vendorComment}
+        setVendorComment={setVendorComment}
       />
     )
   };
@@ -3063,7 +3085,7 @@ function Cart({ navigation, route }) {
             marginVertical: moderateScaleVertical(16),
           }}
         />
-        {wishlistArray.length > 0 && (
+        {wishlistArray?.length > 0 && (
           <View>
             <Text
               style={{
@@ -3089,7 +3111,7 @@ function Cart({ navigation, route }) {
         )}
         <View style={{ marginVertical: moderateScaleVertical(8) }} />
 
-        {recommendedVendorsdata && recommendedVendorsdata.length > 0 && (
+        {recommendedVendorsdata && recommendedVendorsdata?.length > 0 && (
           <View>
             <Text
               style={{
@@ -3188,7 +3210,7 @@ function Cart({ navigation, route }) {
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}
-        >
+      >
         <Header
           centerTitle={strings.CART}
           noLeftIcon
@@ -3437,7 +3459,7 @@ function Cart({ navigation, route }) {
         setLaundryAvailablePickupSlot(res);
       }
       setAvailableTimeSlots(res);
-      if (res.length == 0) {
+      if (res?.length == 0) {
         setSelectedTimeSlots('');
       }
       setCheckSloatLoading(false);
@@ -4350,7 +4372,7 @@ function Cart({ navigation, route }) {
                   Added Prescriptions (
                   {
                     selectedItemForPrescription?.product?.uploaded_prescriptions
-                      .length
+                      ?.length
                   }
                   )
                 </Text>
@@ -4744,10 +4766,10 @@ function Cart({ navigation, route }) {
               </View>
             ) : (
               <View>
-                {(!!availableTimeSlots && availableTimeSlots.length > 0) ||
+                {(!!availableTimeSlots && availableTimeSlots?.length > 0) ||
                   (!!cartData &&
                     !!cartData?.slots &&
-                    !!cartData?.slots.length > 0) ? (
+                    !!cartData?.slots?.length > 0) ? (
                   <Fragment>
                     <ScrollView>
                       <Calendar
@@ -5076,27 +5098,30 @@ function Cart({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-          <PayWithFlutterwave
-            onAbort={() =>
-              updateState({
-                isModalVisibleForPayFlutterWave: false,
-                placeLoader: false,
-              })
-            }
-            onRedirect={handleOnRedirect}
-            options={{
-              tx_ref: generateTransactionRef(10),
-              authorization:
-                appData?.profile?.preferences?.flutterwave_public_key,
-              customer: {
-                email: userData?.email,
-                name: userData?.name,
-              },
-              amount: paymentDataFlutterWave?.total_payable_amount || 0,
-              currency: currencies?.primary_currency?.iso_code,
-              payment_options: 'card',
-            }}
-          />
+          {!!appData?.profile?.preferences?.flutterwave_public_key &&
+            <PayWithFlutterwave
+              onAbort={() =>
+                updateState({
+                  isModalVisibleForPayFlutterWave: false,
+                  placeLoader: false,
+                })
+              }
+              onRedirect={handleOnRedirect}
+              options={{
+                tx_ref: generateTransactionRef(10),
+                authorization:
+                  appData?.profile?.preferences?.flutterwave_public_key,
+                customer: {
+                  email: userData?.email,
+                  name: userData?.name,
+                },
+                amount: paymentDataFlutterWave?.total_payable_amount || 0,
+                currency: currencies?.primary_currency?.iso_code,
+                payment_options: 'card',
+              }}
+            />
+          }
+
         </View>
       </Modal>
     </WrapperContainer>

@@ -1,8 +1,8 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, BackHandler, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -13,11 +13,11 @@ import {
   getCurrentLocation,
   showError,
 } from '../../../utils/helperFunctions';
-import {chekLocationPermission} from '../../../utils/permissions';
+import { chekLocationPermission } from '../../../utils/permissions';
 import {
   TaxiHomeDashbord,
 } from '../DashboardViews/Index';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
 import DashBoardSeven from '../DashboardViews/DashBoardSeven';
@@ -26,12 +26,12 @@ import { MyDarkTheme } from '../../../styles/theme';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function TaxiHomeScreen({route, navigation}) {
+export default function TaxiHomeScreen({ route, navigation }) {
   const paramData = route?.params;
-  const {location, dineInType, appMainData} = useSelector(
-    (state) => state?.home,
+  const { location, dineInType, appMainData } = useSelector(
+    (state) => state?.home || {},
   );
-  const {cartItemCount} = useSelector((state) => state?.cart);
+  const { cartItemCount } = useSelector((state) => state?.cart || {});
   const {
     appData,
     themeColors,
@@ -44,8 +44,8 @@ export default function TaxiHomeScreen({route, navigation}) {
     themeColor,
     themeToggle,
     redirectedFrom
-  } = useSelector((state) => state?.initBoot);
-  const {userData} = useSelector((state) => state?.auth);
+  } = useSelector((state) => state?.initBoot || {});
+  const { userData } = useSelector((state) => state?.auth || {});
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -96,13 +96,12 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       chekLocationPermission(true)
         .then((result) => {
           if (result !== 'goback') {
             getCurrentLocation('home')
               .then((res) => {
-                console.log('current lcoation', res);
                 if (
                   appMainData &&
                   typeof appMainData?.reqData == 'object' &&
@@ -115,9 +114,9 @@ export default function TaxiHomeScreen({route, navigation}) {
                     longitude: appMainData?.reqData?.longitude,
                   };
                   actions.locationData(res);
-                  updateState({locationObj: res, isLoading: false});
+                  updateState({ locationObj: res, isLoading: false });
                 } else {
-                  updateState({locationObj: res});
+                  updateState({ locationObj: res });
                   if (appData?.profile?.preferences?.is_hyperlocal) {
                     if (!location?.address) {
                       actions.locationData(res);
@@ -128,7 +127,7 @@ export default function TaxiHomeScreen({route, navigation}) {
               .catch((err) => {
                 console.log('error raised', location);
                 // console.log("default location",location)
-                updateState({locationObj: location, isLoading: true}); // if user not gave location permission then we set pannel lat lng.
+                updateState({ locationObj: location, isLoading: true }); // if user not gave location permission then we set pannel lat lng.
               });
           }
         })
@@ -142,7 +141,6 @@ export default function TaxiHomeScreen({route, navigation}) {
   //       if (result !== 'goback') {
   //         getCurrentLocation('home')
   //           .then((res) => {
-  //             console.log('current lcoation', res);
   //             if (
   //               appMainData &&
   //               typeof appMainData?.reqData == 'object' &&
@@ -176,7 +174,7 @@ export default function TaxiHomeScreen({route, navigation}) {
   // }, []);
 
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
   useEffect(() => {
@@ -212,7 +210,7 @@ export default function TaxiHomeScreen({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -236,7 +234,7 @@ export default function TaxiHomeScreen({route, navigation}) {
   };
 
   const updateLatLang = (res) => {
-    updateState({updateTime: Math.random()});
+    updateState({ updateTime: Math.random() });
     actions.locationData(res);
   };
   useEffect(() => {
@@ -245,23 +243,23 @@ export default function TaxiHomeScreen({route, navigation}) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(appData?.profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
       // homeData();
       getAllAddress();
-      
+
     }, []),
   );
 
-useEffect(()=>{
-  if(redirectedFrom =='from_deepLinking'){
-    navigation.navigate(navigationStrings.TRACKING) 
-  }
+  useEffect(() => {
+    if (redirectedFrom == 'from_deepLinking') {
+      navigation.navigate(navigationStrings.TRACKING)
+    }
 
-},[redirectedFrom])
+  }, [redirectedFrom])
 
   // useEffect(() => {
   //   homeData();
@@ -303,6 +301,8 @@ useEffect(()=>{
       };
     }
 
+    console.log(appStyle?.homePageLayout, ">fksldfk;lsdkf")
+
     var selectedVendorType = null;
     var defaultVendorType = null;
 
@@ -314,7 +314,7 @@ useEffect(()=>{
         }
       });
     }
- 
+
     if (!selectedVendorType) {
 
       actions.dineInData(defaultVendorType);
@@ -367,7 +367,7 @@ useEffect(()=>{
           }
         }
         setTimeout(() => {
-          updateState({isLoading: false, isRefreshing: false});
+          updateState({ isLoading: false, isRefreshing: false });
         }, 1000);
       })
       .catch(errorMethod);
@@ -376,21 +376,21 @@ useEffect(()=>{
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'error>>>>');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const {viewRef2, viewRef3, bannerRef} = useRef();
+  const { viewRef2, viewRef3, bannerRef } = useRef();
 
   //onPress Category
   const onPressCategory = (item) => {
@@ -435,19 +435,19 @@ useEffect(()=>{
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -474,15 +474,15 @@ useEffect(()=>{
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: data.redirect_id,
@@ -521,18 +521,18 @@ useEffect(()=>{
         // updateState({isRefreshing: false});
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
     initApiHit();
     // homeData();
   };
   const updateCircleData = (data) => {
-    updateState({updatedData: data});
+    updateState({ updatedData: data });
   };
 
   useEffect(() => {
@@ -591,15 +591,15 @@ useEffect(()=>{
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data?.id,
-            vendor: true,
-            name: data?.name,
-          })();
+          id: data?.id,
+          vendor: true,
+          name: data?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -607,9 +607,9 @@ useEffect(()=>{
 
 
   const renderHomeScreen = () => {
-  
+
     switch (appStyle?.homePageLayout) {
-      case 4:
+      case 5:
         return (
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
@@ -646,11 +646,11 @@ useEffect(()=>{
   // console.log(appMainData, 'appMainData');
   return (
     <View style={{
-      flex: 1, 
+      flex: 1,
       backgroundColor: isDarkMode
-      ? MyDarkTheme.colors.background
-      : colors.white,
-      }}>
+        ? MyDarkTheme.colors.background
+        : colors.white,
+    }}>
       {renderHomeScreen()}
     </View>
   );

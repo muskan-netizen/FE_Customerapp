@@ -288,7 +288,7 @@ export default function DashBoardFive({
           : '400/600',
     );
     return (
-      <TouchableOpacity style={{marginTop:moderateScaleVertical(16)}} activeOpacity={0.8} onPress={() => bannerPress(item)}>
+      <TouchableOpacity style={{ marginTop: moderateScaleVertical(16) }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -1184,31 +1184,31 @@ export default function DashBoardFive({
 
   return (
     <View style={{ flex: 1 }}>
-        <Animatable.View animation={'fadeInUp'} delay={200}>
-          <FlatList
-            ref={scrollRef}
-            refreshControl={
-              <RefreshControl
-                refreshing={isRefreshing}
-                onRefresh={handleRefresh}
-                tintColor={themeColors.primary_color}
-              />
-            }
-            ListHeaderComponent={vendorHeader()}
-            showsVerticalScrollIndicator={false}
-            alwaysBounceVertical={true}
-            data={vendorsData}
-            keyExtractor={(item) => item?.id?.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderVendors}
-            ListEmptyComponent={listEmptyComponent}
-            ItemSeparatorComponent={() => (
-              <View style={{ height: moderateScale(10) }} />
-            )}
-            ListFooterComponent={listFooterComponent}
-          />
-        </Animatable.View>
-  
+      <Animatable.View animation={'fadeInUp'} delay={200}>
+        <FlatList
+          ref={scrollRef}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          ListHeaderComponent={vendorHeader()}
+          showsVerticalScrollIndicator={false}
+          alwaysBounceVertical={true}
+          data={vendorsData}
+          keyExtractor={(item) => item?.id?.toString()}
+          showsHorizontalScrollIndicator={false}
+          renderItem={_renderVendors}
+          ListEmptyComponent={listEmptyComponent}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: moderateScale(10) }} />
+          )}
+          ListFooterComponent={listFooterComponent}
+        />
+      </Animatable.View>
+
       {!!userData?.auth_token &&
         !!appData?.profile?.preferences?.show_subscription_plan_popup && (
           <SubscriptionModal

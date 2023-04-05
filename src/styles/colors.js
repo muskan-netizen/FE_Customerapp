@@ -132,4 +132,6 @@ export default {
   statusbarColor: '#F4F8FB',
   whiteOpacity85: 'rgba(255,255,255,0.85)',
   grey1: '#E5E5E5',
+  boxGrey: '#EDEDED',
+  textColor: "#646464"
 };
