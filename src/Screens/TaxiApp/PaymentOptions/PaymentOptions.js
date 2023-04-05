@@ -36,6 +36,7 @@ import stylesFun from "./styles";
 import { enableFreeze } from "react-native-screens";
 import FastImage from "react-native-fast-image";
 import TextTabBar from "../../../Components/TextTabBar";
+import { isEmpty } from "lodash";
 enableFreeze(true);
 
 
@@ -53,7 +54,7 @@ const PaymentOptions = ({ navigation, route }) => {
     selectedSavedListCardNumber: null,
   });
 
-  const { appData, appStyle, themeColors } = useSelector(
+  const { appData, appStyle, themeColors, currencies , languages } = useSelector(
     (state) => state.initBoot
   );
   const { profile } = appData;
@@ -96,9 +97,9 @@ const PaymentOptions = ({ navigation, route }) => {
     getWalletData();
   }, [pageNo]);
 
-  useEffect(() => {
-    getSavedCardList()
-  }, [])
+  // useEffect(() => {
+  //   getSavedCardList()
+  // }, [])
 
   const getSavedCardList = () => {
 
@@ -133,6 +134,12 @@ const PaymentOptions = ({ navigation, route }) => {
         updateState({
           apiPaymentOptions: res?.data,
         });
+        { !isEmpty(res?.data)  && res?.data.map((item,index)=>{
+          item.id == 50 && getSavedCardList();
+        })
+
+        }
+        
       })
       .catch(errorMethod);
   };

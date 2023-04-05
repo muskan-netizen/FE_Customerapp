@@ -37,9 +37,7 @@ export default function ShortCode() {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
-
-
- const appCode = "0fcc84"
+    const appCode = '7678ee';
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};
@@ -120,7 +118,7 @@ export default function ShortCode() {
       case appIds?.parcelworks:
         return imagePath.parcelWorksSplash;
         case appIds?.stabex:
-          return imagePath.stabex;
+          return imagePath.Stabex;
     }
   }, []);
   const imageSplash = useCallback(() => {

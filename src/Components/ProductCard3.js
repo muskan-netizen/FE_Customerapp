@@ -76,7 +76,7 @@ const ProductCard3 = ({
   }
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
+console.log(data,'datadatadatadatadatadata')
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 

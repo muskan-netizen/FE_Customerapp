@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-available_pods-FoodNests/Pods-available_pods-FoodNests.debug.xcconfig"
 
-PROJECT_APPLE_ID = 1598271515
-PROJECT_BUNDLE_ID = com.foodnests
-PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 3
+PROJECT_APPLE_ID = 1667264337
+PROJECT_BUNDLE_ID = com.foodnests.orderapp
+PROJECT_APP_VERSION = 1.1
+PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = FoodNests
-PROJECT_GOOGLE_CLIENT_ID = 487451161102-6u9ai348l7csm73lai1sevmqvq1bgme0.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.487451161102-6u9ai348l7csm73lai1sevmqvq1bgme0
+PROJECT_GOOGLE_CLIENT_ID = 843573894537-79nh4g9d4eenj7mk1b56ddud9jtos3tr.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.843573894537-79nh4g9d4eenj7mk1b56ddud9jtos3tr
 PROJECT_FACEBOOK_ID = 2958872031046240
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST = FoodNestsInfo

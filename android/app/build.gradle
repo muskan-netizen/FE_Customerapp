@@ -218,19 +218,29 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-             qdelo{
+              bauBau{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.qdeloorder'
-            resValue "string", "app_name", "Qdelo"
+            applicationId 'com.baubau.order'
+            resValue "string", "app_name", "Baubau"
             resValue "string", "host_name", ""
             }
-                  stabex{ 
+                    meltivers{
             dimension "appType"
-            versionCode 5
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.meltiverse.user'
+            resValue "string", "app_name", "Meltivers"
+            resValue "string", "host_name", ""
+            }
+           stabex{ 
+            dimension "appType"
+            versionCode 4
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -4541,7 +4551,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.baubau'
+    //         applicationId 'com.baubau.order'
     //         resValue "string", "app_name", "BauBau"
     //         resValue "string", "host_name", ""
     //         }

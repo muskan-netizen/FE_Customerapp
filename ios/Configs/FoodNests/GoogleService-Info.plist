@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>487451161102-6u9ai348l7csm73lai1sevmqvq1bgme0.apps.googleusercontent.com</string>
+	<string>843573894537-79nh4g9d4eenj7mk1b56ddud9jtos3tr.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.487451161102-6u9ai348l7csm73lai1sevmqvq1bgme0</string>
+	<string>com.googleusercontent.apps.843573894537-79nh4g9d4eenj7mk1b56ddud9jtos3tr</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>487451161102-mct9jjicookhudi8b2nkik3qs7i8j8c1.apps.googleusercontent.com</string>
+	<string>843573894537-2ls8s6v3e5luo7u3f0mckogr8qaglns5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAUcdcSf-RRcjcdhoGfcLwOEGnze3s6DqM</string>
+	<string>AIzaSyDVMXrpdHNJa9fJ9VzHZ97MJLiMMs4LEdI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>487451161102</string>
+	<string>843573894537</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.foodnests</string>
+	<string>com.foodnests.orderapp</string>
 	<key>PROJECT_ID</key>
-	<string>foodnests-2d968</string>
+	<string>foodnest-a3000</string>
 	<key>STORAGE_BUCKET</key>
-	<string>foodnests-2d968.appspot.com</string>
+	<string>foodnest-a3000.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:487451161102:ios:7d2e879cf2e629819c825f</string>
+	<string>1:843573894537:ios:175591f22c0fde9b8ad558</string>
 </dict>
 </plist>

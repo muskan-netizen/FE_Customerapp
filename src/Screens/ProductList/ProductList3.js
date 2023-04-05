@@ -3544,7 +3544,7 @@ export default function Products({ route, navigation }) {
       let uniqueProductsArray = [
         ...new Map(arry.map((item) => [item["id"], item])).values(),
       ];
-      console.log('append item', arry);
+      console.log('append item', uniqueProductsArray,arry);
       let dummyData = cloneSectionList;
       dummyData[section.index].data = uniqueProductsArray;
       console.log('append last data', dummyData);

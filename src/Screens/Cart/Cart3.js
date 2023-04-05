@@ -2570,7 +2570,7 @@ function Cart({ navigation, route }) {
           <DeliverableSection item={item} colors={colors} styles={styles} strings={strings} />
 
           {/* offerview */}
-          <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings}
+          <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings} _removeCoupon={_removeCoupon}
             _getAllOffers={_getAllOffers} />
           {/* offerview end */}
 
@@ -2634,6 +2634,7 @@ function Cart({ navigation, route }) {
   const getFooter = () => {
     return (
       <Footer
+      preferences={preferences}
         updateState={updateState}
         setAppSessionRedirection={setAppSessionRedirection}
         deleteItem={deleteItem}

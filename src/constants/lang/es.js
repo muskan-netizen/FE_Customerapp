@@ -323,7 +323,7 @@ export default {
   ADD: 'AGREGAR',
   PLEASE_ENTER_OR_SELECT_AMOUNT: 'Seleccione o ingrese una cantidad específica',
   PLEASE_SELECT_PAYMENT_METHOD: 'Por favor seleccione un método de pago',
-  LINKS: 'Unite a nosotros',
+  LINKS: 'Únete a nosotras',
   LOCATION_DISABLED_MSG: `¡Permiso de ubicación inhabilitado permanentemente! Permitir desde la configuración`,
   LOCATION_LIMITED: 'El permiso es limitado: algunas acciones son posibles',
   LOCATION_UNAVAILABLE:
@@ -985,4 +985,5 @@ export default {
   SERVICE_CHARGES: 'Service Charges',
   ENTER_YOUR_NAME: "Enter your name",
   ENTER_YOUR_EMAIL:"Enter your email",
+  REFER_AND_EARN:'Referir y Ganar'
 };

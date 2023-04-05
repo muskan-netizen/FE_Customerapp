@@ -10,13 +10,13 @@ import {
 } from '../../../styles/responsiveSize';
 /**
  * PromoCodeAvailableSection Part
- * @param {item ,colors,styles,FastImage,imagePath,cartData,strings,themeColors, _getAllOffers} props 
+ * @param {item ,colors,styles,FastImage,imagePath,cartData,strings,themeColors, _getAllOffers,_removeCoupon} props 
  * @returns 
  */
 
 function PromoCodeAvailableSection(props) {
 
-    const { item, colors, styles, FastImage, imagePath, cartData, strings, themeColors, _getAllOffers } = props;
+    const { item, colors, styles, FastImage, imagePath, cartData, strings, themeColors, _getAllOffers,_removeCoupon } = props;
     return (
         <>
             {/* offerview */}

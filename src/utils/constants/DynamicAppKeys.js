@@ -1231,7 +1231,7 @@ const appIds = {
     android: 'com.hokitch.orders',
   }),
   foodnests: Platform.select({
-    ios: 'com.foodnests',
+    ios: 'com.foodnests.orderapp',
     android: 'com.foodnests.orderapp',
   }),
   sponge: Platform.select({
@@ -1515,8 +1515,8 @@ const appIds = {
     android: 'com.app.foodies',
   }),
   bauBau: Platform.select({
-    ios: 'com.baubau',
-    android: 'com.baubau',
+    ios: 'com.bauBau.order',
+    android: 'com.baubau.order',
   }),
   bookARyde: Platform.select({
     ios: 'com.bookARyde',
@@ -2331,7 +2331,7 @@ const appIds = {
     android: 'com.holla.orders',
   }),
   stabex: Platform.select({
-    ios: 'com.stabex.royoorders',
+    ios: 'com.stabex.orders',
     android: 'com.stabex.orders',
   }),
   uberWeeds: Platform.select({

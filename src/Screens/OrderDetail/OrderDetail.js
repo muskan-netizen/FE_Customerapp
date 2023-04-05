@@ -3539,7 +3539,9 @@ export default function OrderDetail({ navigation, route }) {
                 longitudeDelta: 0.032,
               }}
               rotateEnabled={true}
-            >
+            >{
+              console.log(dispatcherStatus,driverStatus,orderStatus,'dispatcherStatusdispatcherStatus')
+            }
               <MapViewDirections
                 resetOnChange={false}
                 origin={
