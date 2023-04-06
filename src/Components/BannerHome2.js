@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import colors from '../styles/colors';
 import {moderateScale, width} from '../styles/responsiveSize';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {getImageUrl} from '../utils/helperFunctions';
 
 const BannerHome2 = ({
@@ -98,7 +100,7 @@ const BannerHome2 = ({
           renderItem={bannerDataImages}
           autoplay={true}
           loop={true}
-          autoplayInterval={3000}
+          autoplayInterval={ 500}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           onSnapToItem={(index) => setSnapState(index)}

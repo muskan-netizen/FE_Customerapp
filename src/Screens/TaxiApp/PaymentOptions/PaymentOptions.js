@@ -189,7 +189,7 @@ const PaymentOptions = ({ navigation, route }) => {
     if (item?.id == 4) {
       return;
     }
-    if(item?.id == 49 || item?.id == 50){
+    if(item?.id == 49 || item?.id == 50 || item?.id == 53){
       return;
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
@@ -231,7 +231,7 @@ const PaymentOptions = ({ navigation, route }) => {
         //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
       }
     }
-    else if((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
+    else if((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
       selectedPaymentMethod?.off_site == 1){
         navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
           ...paramData,
@@ -329,7 +329,7 @@ const PaymentOptions = ({ navigation, route }) => {
                     selectedPaymentMethod &&
                     selectedPaymentMethod?.id == item.id &&
                     selectedPaymentMethod?.off_site == 1 &&
-                    (selectedPaymentMethod?.id === 49 ||selectedPaymentMethod?.id === 50  )
+                    (selectedPaymentMethod?.id === 49 ||selectedPaymentMethod?.id === 50  ||selectedPaymentMethod?.id === 53 )
                   ) && (
                       <PaymentGateways
                       isCardNumber={cardNumber}
@@ -412,7 +412,7 @@ const PaymentOptions = ({ navigation, route }) => {
             keyExtractor={(item, index) => String(index)}
           />
         </View>
-        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) && (
+        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) && (
           <GradientButton
             onPress={selectPaymentOption}
             containerStyle={{

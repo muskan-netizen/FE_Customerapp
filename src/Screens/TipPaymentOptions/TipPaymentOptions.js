@@ -341,6 +341,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   }
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
+    console.log(selectedPaymentMethod,"selectedPaymentMethodselectedPaymentMethod")
     if (selectedPaymentMethod) {
       if (
         selectedPaymentMethod?.id == 4 &&
@@ -387,11 +388,12 @@ export default function TipPaymentOptions({ navigation, route }) {
           });
         } else
           if (
-            (selectedPaymentMethod?.id == 49 ||selectedPaymentMethod?.id == 50 ) &&
+            (selectedPaymentMethod?.id == 49 ||selectedPaymentMethod?.id == 50 ||selectedPaymentMethod?.id == 53) &&
             selectedPaymentMethod?.off_site == 1
           ) {
             _paymentWithPlugnPayMethods()
           } else {
+            console.log('imhere');
             setTimeout(() => {
               updateState({ isLoading: false });
               _webPayment(selectedPaymentMethod);
@@ -441,7 +443,7 @@ export default function TipPaymentOptions({ navigation, route }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+         ( res?.status == 'Success' ||  res?.status == 200)
 
         ) {
           navigation.navigate(navigationStrings.ORDER_DETAIL);
@@ -449,7 +451,6 @@ export default function TipPaymentOptions({ navigation, route }) {
       })
       .catch((err) => {
         console.log('Error>>>>>>>>>>>', err)
-
         showError(err?.msg)
       })
   }
@@ -542,7 +543,7 @@ export default function TipPaymentOptions({ navigation, route }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 ||selectedPaymentMethod?.id == 53)
         ) && (
             <PaymentGateways
             isCardNumber={cardNumber}
@@ -627,6 +628,7 @@ export default function TipPaymentOptions({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res,"ress?>>>");
         updateState({ isLoading: false });
         if (
           res &&

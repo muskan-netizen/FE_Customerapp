@@ -16,10 +16,11 @@ import {
 function DeliverableSection(props) {
 
     const { item, colors, fontFamily, strings } = props;
+    console.log(item?.isDeliverable ,"item?.isDeliverable ");
     return (
         <>
             {
-                item?.isDeliverable ? null : (
+                !!item?.isDeliverable ? null : (
                     <View style={{ marginHorizontal: moderateScale(10) }}>
                         <Text
                             style={{
@@ -27,6 +28,7 @@ function DeliverableSection(props) {
                                 fontFamily: fontFamily.medium,
                                 color: colors.redFireBrick,
                             }}>
+                               {/* {'not Deliverable'} */}
                             {strings.ITEM_NOT_DELIVERABLE}
                         </Text>
                     </View>

@@ -175,13 +175,14 @@ function Cart({ navigation, route }) {
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
+  const [paymentModal, setPaymentModal] = useState(false)
 
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
     selectViaMap: false,
-    paymentModal: false,
+    // paymentModal: false,
     deliveryFeeLoader: false,
     isTableDropDown: false,
     btnLoader: false,
@@ -218,7 +219,7 @@ function Cart({ navigation, route }) {
     showTaxFeeArea,
     isGiftBoxSelected,
     selectViaMap,
-    paymentModal,
+    // paymentModal,
     deliveryFeeLoader,
     isProductOrderForm,
     isProductLoader,
@@ -297,7 +298,8 @@ function Cart({ navigation, route }) {
   );
 
   const androidBackButtonHandler = () => {
-    updateState({paymentModal: false})
+    // updateState({ paymentModal: false })
+    setPaymentModal(false)
     return true;
   };
 
@@ -456,7 +458,7 @@ function Cart({ navigation, route }) {
         setSheduleddropoffdate(res?.data?.schedule_dropoff);
 
         setScheduleType(res?.data?.schedule_type);
-        if (res && res?.data) {
+        if (res && res?.data && !isEmpty(res?.data)) {
           if (
             !!res?.data?.vendor_details?.vendor_tables &&
             res?.data?.vendor_details?.vendor_tables?.length > 0
@@ -599,6 +601,7 @@ function Cart({ navigation, route }) {
 
   //decrementing/removeing products from cart
   const removeProductFromCart = (item) => {
+    console.log(item, "itemmmmm?>>>>>");
     let data = {};
     data['cart_id'] = item?.cart_id;
     data['cart_product_id'] = item?.id;
@@ -674,7 +677,7 @@ function Cart({ navigation, route }) {
         // getAllWishListData();
         showSuccess(res?.message);
       })
-      .catch(errorMethod);
+      .catch(err=> console.log(err, "errr>>?"));
   };
 
   //Error handling in screen
@@ -877,7 +880,9 @@ function Cart({ navigation, route }) {
       return;
     }
 
-    console.log("paymentIdpaymentIdpaymentIdpaymentId",paymentId)
+    console.log("paymentIdpaymentIdpaymentIdpaymentId", paymentId)
+    console.log("paymentIdpaymentIdpaymentIdpaymentId22", paymentData)
+
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
         return;
@@ -1017,6 +1022,10 @@ function Cart({ navigation, route }) {
       case 46: //Direct Pay Online Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
+        return;
+      case 52: //SaamanShop: skipCash  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         return;
 
       default:
@@ -1167,7 +1176,7 @@ function Cart({ navigation, route }) {
       )
       .then((res) => {
         console.log(res, "Response>>>>>");
-        if (res?.status == 'Success') {
+        if (res?.status == 'Success' || res?.status == 200) {
           updateState({ isLoadingB: false })
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: response?.data,
@@ -1177,8 +1186,9 @@ function Cart({ navigation, route }) {
       })
       .catch((err) => {
         updateState({ isLoadingB: false })
+        updateState({placeLoader:false})
         console.log('Error>>>>>>>>>>>', err)
-        showError(err?.msg)
+        showError(err?.msg || err?.error)
       })
   }
 
@@ -1238,9 +1248,10 @@ function Cart({ navigation, route }) {
         setModalType(null);
         setSheduleddropoffdate(null);
 
-        console.log("selectedPayment?.idselectedPayment?.id",selectedPayment?.id)
-        if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
+        console.log("selectedPayment?.idselectedPayment?.id", selectedPayment?.id)
+        if (selectedPayment?.id === 49 || selectedPayment?.id === 50 || selectedPayment?.id === 53) {
           updateState({ isLoadingB: true })
+          updateState({ placeLoader: true })
           _paymentWithPlugnPayMethods(res);
           return;
         }
@@ -1262,7 +1273,9 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 34 &&
           selectedPayment?.id != 41 &&
           selectedPayment?.id != 44 &&
-          selectedPayment?.id != 49
+          selectedPayment?.id != 49 &&
+          selectedPayment?.id != 50 && 
+          selectedPayment?.id != 53
         ) {
           setCartItems([]);
           setCartData({});
@@ -1507,8 +1520,8 @@ function Cart({ navigation, route }) {
         isEmpty(selectedPayment)
       ) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-
-        updateState({ paymentModal: true });
+        setPaymentModal(true)
+        // updateState({ paymentModal: true });
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
       }
@@ -1824,25 +1837,25 @@ function Cart({ navigation, route }) {
     order_number,
   ) => {
     actions.getStripePaymentIntent(
-        // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
-        {
-          payment_option_id: selectedPayment?.id,
-          action: 'cart',
-          amount:
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0),
-          payment_method_id: paymentMethodId,
-          order_number: order_number,
-          card: cardInfo,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
+      {
+        payment_option_id: selectedPayment?.id,
+        action: 'cart',
+        amount:
+          Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0),
+        payment_method_id: paymentMethodId,
+        order_number: order_number,
+        card: cardInfo,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then(async (res) => {
         if (res && res?.client_secret) {
           const { paymentIntent, error } = await handleNextAction(
@@ -1851,28 +1864,28 @@ function Cart({ navigation, route }) {
           if (paymentIntent) {
             if (paymentIntent) {
               actions.confirmPaymentIntentStripe(
-                  {
-                    order_number: order_number,
-                    payment_option_id: selectedPayment?.id,
-                    action: 'cart',
-                    amount:
-                      Number(cartData?.total_payable_amount) +
-                      (selectedTipAmount != null && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0),
-                    payment_intent_id: paymentIntent?.id,
-                    address_id: selectedAddressData?.id,
-                    tip:
-                      selectedTipAmount && selectedTipAmount != ''
-                        ? Number(selectedTipAmount)
-                        : 0,
-                  },
-                  {
-                    code: appData?.profile?.code,
-                    currency: currencies?.primary_currency?.id,
-                    language: languages?.primary_language?.id,
-                  },
-                )
+                {
+                  order_number: order_number,
+                  payment_option_id: selectedPayment?.id,
+                  action: 'cart',
+                  amount:
+                    Number(cartData?.total_payable_amount) +
+                    (selectedTipAmount != null && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0),
+                  payment_intent_id: paymentIntent?.id,
+                  address_id: selectedAddressData?.id,
+                  tip:
+                    selectedTipAmount && selectedTipAmount != ''
+                      ? Number(selectedTipAmount)
+                      : 0,
+                },
+                {
+                  code: appData?.profile?.code,
+                  currency: currencies?.primary_currency?.id,
+                  language: languages?.primary_language?.id,
+                },
+              )
                 .then((res) => {
                   console.log(res, 'secondresponse');
                   updateState({ isRefreshing: false });
@@ -1937,7 +1950,7 @@ function Cart({ navigation, route }) {
 
   //Offline payments
   const _offineLinePayment = async (order_number) => {
-    console.log("payment method id++++",paymentMethodId)
+    console.log("payment method id++++", paymentMethodId)
     if (!!paymentMethodId) {
       _paymentWithStripe(cardInfo, tokenInfo, paymentMethodId, order_number);
     } else {
@@ -2543,7 +2556,7 @@ function Cart({ navigation, route }) {
 
           />
           {/************ end render cart items *************/}
-          <DeliverableSection item={item} colors={colors} styles={styles} />
+          <DeliverableSection item={item} fontFamily={fontFamily} strings={strings} colors={colors} styles={styles}  />
 
           {/* offerview */}
           <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} FastImage={FastImage} imagePath={imagePath} cartData={cartData} strings={strings}
@@ -2610,6 +2623,7 @@ function Cart({ navigation, route }) {
   const getFooter = () => {
     return (
       <Footer
+        setPaymentModal={(item)=>setPaymentModal(item)}
         updateState={updateState}
         setAppSessionRedirection={setAppSessionRedirection}
         deleteItem={deleteItem}
@@ -3189,7 +3203,7 @@ function Cart({ navigation, route }) {
         }
         statusBarColor={colors.backgroundGrey}
         source={loaderOne}
-        >
+      >
         <Header
           centerTitle={strings.CART}
           noLeftIcon
@@ -4450,7 +4464,7 @@ function Cart({ navigation, route }) {
   };
 
   // Category KYC end
-
+  console.log(cartItems,"cartItemscartItems");
   return (
     <WrapperContainer
       bgColor={
@@ -4960,6 +4974,7 @@ function Cart({ navigation, route }) {
           </ScrollView>
         </View>
       </Modal>
+      {console.log(paymentModal,"paymentModal?>>>?")}
       {!!paymentModal ? (
         <BottomSheet
           ref={bottomSheetRef}
@@ -5002,7 +5017,7 @@ function Cart({ navigation, route }) {
                   onSelectPayment={onSelectPayment}
                   codMinAmount={codMinAmount}
                   amount={orderAmount}
-                  paymentModalClose={() => updateState({ paymentModal: false })}
+                  paymentModalClose={()=>setPaymentModal(false)}
                   dineInType={dineInType}
                 />
               </StripeProvider>
@@ -5077,27 +5092,27 @@ function Cart({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-        {!!appData?.profile?.preferences?.flutterwave_public_key ? 
-          <PayWithFlutterwave
-            onAbort={() =>
-              updateState({
-                isModalVisibleForPayFlutterWave: false,
-                placeLoader: false,
-              })
-            }
-            onRedirect={handleOnRedirect}
-            options={{
-              tx_ref: generateTransactionRef(10),
-              authorization: appData?.profile?.preferences?.flutterwave_public_key,
-              customer: {
-                email: userData?.email,
-                name: userData?.name,
-              },
-              amount: paymentDataFlutterWave?.total_payable_amount || 0,
-              currency: currencies?.primary_currency?.iso_code,
-              payment_options: 'card',
-            }}
-          /> : <></>}
+          {!!appData?.profile?.preferences?.flutterwave_public_key ?
+            <PayWithFlutterwave
+              onAbort={() =>
+                updateState({
+                  isModalVisibleForPayFlutterWave: false,
+                  placeLoader: false,
+                })
+              }
+              onRedirect={handleOnRedirect}
+              options={{
+                tx_ref: generateTransactionRef(10),
+                authorization: appData?.profile?.preferences?.flutterwave_public_key,
+                customer: {
+                  email: userData?.email,
+                  name: userData?.name,
+                },
+                amount: paymentDataFlutterWave?.total_payable_amount || 0,
+                currency: currencies?.primary_currency?.iso_code,
+                payment_options: 'card',
+              }}
+            /> : <></>}
         </View>
       </Modal>
     </WrapperContainer>

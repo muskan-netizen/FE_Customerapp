@@ -23,14 +23,14 @@ import {
 } from '../../../styles/responsiveSize';
 /**
 * SwipeableSection Part
-* @param {ideleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,placeLoader,ButtonComponent,localeSheduledOrderDate,_selectTime,placeOrder,strings,selectedTipvalue,_onGiftBoxSelection,themeColors,isGiftBoxSelected,hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setSelectedTipAmount,setInstruction,clearSceduleDate} props 
+* @param {ideleteItem,addDeleteCartItems,setPaymentModal,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,placeLoader,ButtonComponent,localeSheduledOrderDate,_selectTime,placeOrder,strings,selectedTipvalue,_onGiftBoxSelection,themeColors,isGiftBoxSelected,hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setSelectedTipAmount,setInstruction,clearSceduleDate} props 
 * @returns 
 */
 
 
 function Footer(props) {
 
-  const { instruction, preferences, tokenConverterPlusCurrencyNumberFormater, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, colors, styles, FastImage, imagePath, fontFamily, appIds, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, MyDarkTheme, currencies, cartData, strings, businessType, localeDropOffDate, appData, placeLoader, ButtonComponent, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setInstruction,setSelectedTipAmount,clearSceduleDate } = props;
+  const { instruction, setPaymentModal, preferences, tokenConverterPlusCurrencyNumberFormater, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, colors, styles, FastImage, imagePath, fontFamily, appIds, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, MyDarkTheme, currencies, cartData, strings, businessType, localeDropOffDate, appData, placeLoader, ButtonComponent, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setInstruction,setSelectedTipAmount,clearSceduleDate } = props;
   return (
     <View style={{}}>
       {!!cartData?.category_kyc_count && !!userData?.auth_token && (
@@ -1206,7 +1206,7 @@ function Footer(props) {
           <TouchableOpacity
             onPress={() =>
               !!userData?.auth_token
-                ? updateState({ paymentModal: true })
+                ? setPaymentModal(true)
                 : setAppSessionRedirection()
             }
             style={{

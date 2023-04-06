@@ -160,6 +160,7 @@ export {default as SubcategoryVendor} from './SubcategoryVendor/SubcategoryVendo
 export {default as ChatScreenForVendor} from './ChatScreen/ChatScreenForVendor';
 export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
+export {default as SkipCash} from './PaymentGateways/SkipCash';
 export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
 
 // P2p template
@@ -172,4 +173,5 @@ export {default as MyP2pPosts} from './P2P/MyP2pPosts/MyP2pPosts';
 // Refer & Earn
 export {default as ReferAndEarn} from './ReferAndEarn/ReferAndEarn';
 export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAndSelectedProducts/SpotdealProductAndSelectedProducts';
+
 

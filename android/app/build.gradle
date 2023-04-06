@@ -217,14 +217,24 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                 Ping{
+            // saamanshop{ 
+            // dimension "appType"
+            // versionCode 1
+            // versionName "1.0"
+            // minSdkVersion rootProject.ext.minSdkVersion
+            // targetSdkVersion rootProject.ext.targetSdkVersion
+            // applicationId 'com.saamanshop.royoorders'
+            // resValue "string", "app_name", "Saamanshop" 
+            // resValue "string", "host_name", ""
+            // }
+           stargaze{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.ping.royoorder'
-                resValue "string", "app_name", "Ping"
+                applicationId 'com.stargaze.royoorder'
+                resValue "string", "app_name", "Stargaze"
                 resValue "string", "host_name", ""
             }
             

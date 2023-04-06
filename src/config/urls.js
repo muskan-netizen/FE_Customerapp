@@ -1,6 +1,9 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'https://ping.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'https://locate.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'http://192.168.102.19:8001/api/v1'; // inderjet sir
 //  export const API_BASE_URL = 'https://ngoalapp.com/api/v1';
 //  export const API_BASE_URL = 'https://book.vitalmedicalservices.com/api/v1';
 //  export const API_BASE_URL = 'https://order.westvirginiahub.com/api/v1';

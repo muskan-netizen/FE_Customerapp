@@ -166,5 +166,6 @@ export default {
   REFER_AND_EARN: 'referAndEarn',
   PLUGNPAY: 'PlugnPay',
   SPOTDEALPRODUCTSANDSELECTEDPRODUCTS :'SpotdealProductAndSelectedProducts',
-  BIDINGDRIVERSLIST :'BidingDriversList'
+  BIDINGDRIVERSLIST :'BidingDriversList',
+  SKIP_CASH :'SkipCash'
 };

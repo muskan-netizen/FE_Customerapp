@@ -2626,6 +2626,7 @@ export default function ProductDetail({ route, navigation }) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
+                          {console.log(productQuantityForCart,"productQuantityForCart")}
                         {getBundleId() !== appIds.danielleBejjani && typeId !== 10 ?
                           <View
                             style={{
@@ -2635,7 +2636,7 @@ export default function ProductDetail({ route, navigation }) {
                                 themeColors.primary_color.substr(1),
                                 15,
                               ),
-                              flex: 0.3,
+                              flex: 0.4,
                               borderColor: themeColors?.primary_color,
                               height: moderateScale(38),
                               justifyContent: 'space-between',
@@ -2673,7 +2674,8 @@ export default function ProductDetail({ route, navigation }) {
                                   themeColors.primary_color.substr(1),
                                   15,
                                 ),
-                                flex: 0.3,
+                                
+                                // flex: 0.5,
                                 borderColor: themeColors?.primary_color,
                                 height: moderateScale(38),
                                 justifyContent: 'space-between',

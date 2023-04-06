@@ -326,6 +326,7 @@ export default function AddMoney({ navigation }) {
               />
             </View>
           )}
+          {console.log(selectedPaymentMethod,"selectedPaymentMethod>>>>")}
 
         {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
@@ -356,11 +357,12 @@ export default function AddMoney({ navigation }) {
               }}
             />
           )}
+        
         {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
         ) && (
             <PaymentGateways
               isCardNumber={cardNumber}
@@ -521,11 +523,11 @@ export default function AddMoney({ navigation }) {
       });
       return;
     }
-    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50)) {
+    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50 && selectedPaymentMethod?.id != 53)) {
       _webPayment();
       return;
     }
-    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
+    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id === 53) {
       _paymentWithPlugnPayMethods()
       return;
     }
@@ -615,7 +617,7 @@ export default function AddMoney({ navigation }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+         ( res?.status == 'Success' ||  res?.status == 200)
 
         ) {
           navigation.navigate(navigationStrings.WALLET);
@@ -665,7 +667,7 @@ export default function AddMoney({ navigation }) {
     let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-
+    
     updateState({ isLoadingB: true });
     actions
       .openPaymentWebUrl(
