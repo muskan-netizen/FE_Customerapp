@@ -170,7 +170,7 @@ export default function TabRoutes(props) {
             case 5:
               return <CustomBottomTabBarFive {...props} />;
             default:
-              return <CustomBottomTabBar {...props} />;
+              return  <CustomBottomTabBarTwo {...props} />;
           }
         }
       }}

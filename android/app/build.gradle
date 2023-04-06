@@ -240,12 +240,12 @@ android {
             }
            stabex{ 
             dimension "appType"
-            versionCode 4
+            versionCode 12
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.stabex.orders'
-            resValue "string", "app_name", "Stabex" 
+            resValue "string", "app_name", "Stabex App" 
             resValue "string", "host_name", ""
             }
 }

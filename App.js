@@ -226,16 +226,16 @@ const App = () => {
       if (JSON.parse(themeToggle)) {
         dispatch({
           type: types.THEME,
-          payload: isDarkMode,
+          payload: false,
         });
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: !!themeToggle ? JSON.parse(themeToggle) : {},
+          payload: !!themeToggle ? JSON.parse(themeToggle) : false,
         });
       } else {
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: !!themeToggle ? JSON.parse(themeToggle) : getBundleId() == appIds.qdelo ? false : {},
+          payload: !!themeToggle ? JSON.parse(themeToggle) :false,
         });
         if (JSON.parse(theme)) {
           dispatch({
