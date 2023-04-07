@@ -580,6 +580,6 @@ export default {
   ic_cart2NewTab: require('../assets/tabbariconsnew/ic_cart2.png'),
   ic_celeb2NewTab: require('../assets/tabbariconsnew/ic_celeb2.png'),
   ic_tag2NewTab: require('../assets/tabbariconsnew/ic_tag2.png'),
-  Stabex : require('../assets/Stabex.mp4'),
+  Stabex : require('../assets/stabex.mp4'),
  
 };

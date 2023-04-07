@@ -158,19 +158,21 @@ export default function TabRoutes(props) {
       }}
       tabBar={(props) => {
         if (showBottomBar_) {
+          console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayoutappStyle?.tabBarLayout')
           switch (appStyle?.tabBarLayout) {
-            case 1:
-              return <CustomBottomTabBar {...props} />;
+            // case 1:
+            //   return <CustomBottomTabBar {...props} />;
             case 2:
               return <CustomBottomTabBarTwo {...props} />;
             case 3:
               return <CustomBottomTabBarThree {...props} />;
             case 4:
+
               return <CustomBottomTabBarFour {...props} />;
             case 5:
               return <CustomBottomTabBarFive {...props} />;
             default:
-              return  <CustomBottomTabBarTwo {...props} />;
+              return <CustomBottomTabBarTwo {...props} />;
           }
         }
       }}
