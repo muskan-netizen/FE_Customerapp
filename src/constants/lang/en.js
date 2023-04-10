@@ -1074,5 +1074,10 @@ Amount`,
   SUGGESTIONS: "Suggestions",
   BOOKING: "Booking",
   POOLING: "Pooling",
-  BID_RIDE: "Bid & Ride"
+  BID_RIDE: "Bid & Ride",
+  WE_HAVE: "We have",
+  DAYS: "days",
+  REPLACABLE: "replaceable",
+  RETURNABLE: "returnable",
+  POLICY_ON_THIS_PRODUCT: "policy on this product!"
 };

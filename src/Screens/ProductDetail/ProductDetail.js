@@ -708,184 +708,7 @@ export default function ProductDetail({ route, navigation }) {
           {selectedVariant?.variant_type_id == variant_type_id
             ? radioButtonView(options)
             : null}
-          {typeId == 10 ? (
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginVertical: moderateScaleVertical(10),
-                }}>
-                <TouchableOpacity
-                  onPress={() => updateState({ isRentalStartDatePicker: true })}>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(13),
-                      fontFamily: fontFamily.bold,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    Start Date
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(12),
-                      fontFamily: fontFamily.regular,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {!!startDateRental
-                      ? moment(startDateRental).format('MM/DD/YY hh:mm A')
-                      : ''}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => updateState({ isRentalEndDatePicker: true })}>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(13),
-                      fontFamily: fontFamily.bold,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    End Date
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(12),
-                      fontFamily: fontFamily.regular,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {!!endDateRental
-                      ? moment(endDateRental).format('MM/DD/YY hh:mm A')
-                      : ''}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <Text
-                style={{
-                  fontSize: moderateScale(13),
-                  fontFamily: fontFamily.bold,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                Duration:
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderWidth: 1,
-                  marginVertical: 5,
-                }}>
-                <TouchableOpacity
-                  onPress={() => addRemoveDuration(2)}
-                  style={{
-                    borderRightWidth: 1,
-                    flex: 0.3,
-                    alignItems: 'center',
-                    padding: 5,
-                  }}>
-                  <Text>{'<'}</Text>
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    flex: 0.4,
-                    textAlign: 'center',
-                    fontSize: moderateScale(13),
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {getHourAndMinutes(rentalProductDuration)}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => addRemoveDuration(1)}
-                  style={{
-                    borderLeftWidth: 1,
-                    flex: 0.3,
-                    alignItems: 'center',
-                    padding: 5,
-                  }}>
-                  <Text> {'>'} </Text>
-                </TouchableOpacity>
-              </View>
 
-              <Text
-                style={{
-                  fontSize: moderateScale(13),
-                  fontFamily: fontFamily.regular,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {' '}
-                  {tokenConverterPlusCurrencyNumberFormater(
-                    productDetailNew?.actual_price,
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                  )}
-                </Text>{' '}
-                for first{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productDetailNew?.product?.minimum_duration}
-                </Text>{' '}
-                hour{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productDetailNew?.product?.minimum_duration_min}
-                </Text>{' '}
-                min
-              </Text>
-              <Text
-                style={{
-                  fontSize: moderateScale(13),
-                  fontFamily: fontFamily.regular,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                Extra duration will be charged{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {tokenConverterPlusCurrencyNumberFormater(
-                    productDetailNew?.incremental_price,
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                  )}
-                </Text>{' '}
-                per{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productDetailNew?.product?.additional_increments}
-                </Text>{' '}
-                hour{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {' '}
-                  {productDetailNew?.product?.additional_increments_min}
-                </Text>{' '}
-                min
-              </Text>
-            </View>
-          ) : null}
         </View>
       );
     }
@@ -1191,6 +1014,8 @@ export default function ProductDetail({ route, navigation }) {
     );
   };
 
+  console.log(typeId, "typeId>>>>>typeId", rentalProductDuration)
+
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
       updateState({ addonSet: data?.addonSetData });
@@ -1282,8 +1107,8 @@ export default function ProductDetail({ route, navigation }) {
 
     data['additional_increments_hrs_min'] =
       rentalProductDuration -
-      Number(productDetailNew?.product?.minimum_duration) * 60 +
-      Number(productDetailNew?.product?.minimum_duration_min);
+      Number(productDetailData?.minimum_duration) * 60 +
+      Number(productDetailData?.minimum_duration_min);
     if (addonSet && addonSet.length) {
       // console.log(addonSetData, 'addonSetData');
       data['addon_ids'] = addon_ids;
@@ -1302,7 +1127,6 @@ export default function ProductDetail({ route, navigation }) {
     console.log(data, 'data for cart');
 
     data['recurringformPost'] = recurringformPost
-
     console.log(JSON.stringify(data), 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
@@ -2372,17 +2196,16 @@ export default function ProductDetail({ route, navigation }) {
                       fontSize: textScale(12),
                       color: colors.textGrey,
                     }}>
-                    We have{' '}
-                    {productDetailData?.is_return_days
-                      ? productDetailData?.return_days + ' days '
+                    {strings.WE_HAVE}{' '}
+                    {!!productDetailData?.is_return_days
+                      ? productDetailData?.return_days + ` ${strings.DAYS} `
                       : ''}
-                    {productDetailData?.replaceable ? 'replaceable' : ''}
-                    {productDetailData?.replaceable &&
+                    {!!productDetailData?.replaceable ? strings.REPLACABLE : ''}
+                    {!!productDetailData?.replaceable &&
                       productDetailData?.returnable
-                      ? ' and '
+                      ? ` ${strings.AND} `
                       : ''}
-                    {productDetailData?.returnable ? 'returnable' : ''} policy
-                    on this product!
+                    {!!productDetailData?.returnable ? strings.RETURNABLE : ''} {strings.POLICY_ON_THIS_PRODUCT}
                   </Text>
                 </View>
               ) : null}
@@ -2604,6 +2427,195 @@ export default function ProductDetail({ route, navigation }) {
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}
               {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
+              {typeId == 10 ? (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginVertical: moderateScaleVertical(10),
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => updateState({ isRentalStartDatePicker: true })}>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(13),
+                          fontFamily: fontFamily.bold,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        Start Date
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(12),
+                          fontFamily: fontFamily.regular,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {!!startDateRental
+                          ? moment(startDateRental).format('MM/DD/YY hh:mm A')
+                          : ''}
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => updateState({ isRentalEndDatePicker: true })}>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(13),
+                          fontFamily: fontFamily.bold,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        End Date
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(12),
+                          fontFamily: fontFamily.regular,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {!!endDateRental
+                          ? moment(endDateRental).format('MM/DD/YY hh:mm A')
+                          : ''}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.bold,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    Duration:
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      marginVertical: 5,
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => addRemoveDuration(2)}
+                      style={{
+                        borderRightWidth: 1,
+                        flex: 0.3,
+                        alignItems: 'center',
+                        padding: 5,
+                      }}>
+                      <Text>{'<'}</Text>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        flex: 0.4,
+                        textAlign: 'center',
+                        fontSize: moderateScale(13),
+                        fontFamily: fontFamily.regular,
+                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      }}>
+                      {getHourAndMinutes(rentalProductDuration)}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => addRemoveDuration(1)}
+                      style={{
+                        borderLeftWidth: 1,
+                        flex: 0.3,
+                        alignItems: 'center',
+                        padding: 5,
+                      }}>
+                      <Text> {'>'} </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {' '}
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productDetailData?.variant[0]?.actual_price,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )}
+                    </Text>{' '}
+                    for first{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {productDetailData?.minimum_duration}
+                    </Text>{' '}
+                    hour{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {productDetailData?.minimum_duration_min}
+                    </Text>{' '}
+                    min
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    Extra duration will be charged{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productDetailData?.variant[0]?.incremental_price,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )}
+                    </Text>{' '}
+                    per{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {productDetailData?.additional_increments}
+                    </Text>{' '}
+                    hour and {' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productDetailData?.variant[0]?.incremental_price_per_min,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )} per
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {' '}
+                      {productDetailData?.additional_increments_min}
+                    </Text>{' '}
+                    min
+                  </Text>
+                </View>
+              ) : null}
 
               {showErrorMessageTitle ? (
                 <Text
