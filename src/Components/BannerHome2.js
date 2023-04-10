@@ -100,7 +100,7 @@ const BannerHome2 = ({
           renderItem={bannerDataImages}
           autoplay={true}
           loop={true}
-          autoplayInterval={ 500}
+          autoplayInterval={ 2000}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           onSnapToItem={(index) => setSnapState(index)}

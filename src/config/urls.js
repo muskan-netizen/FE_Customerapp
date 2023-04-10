@@ -1,6 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'https://bimol-order.netsolutionindia.com/api/v1';
+//  export const API_BASE_URL = 'https://saamanshop.focushires.com/api/v1';
 //  export const API_BASE_URL = 'https://ping.rostaging.com/api/v1';
 //  export const API_BASE_URL = 'https://locate.rostaging.com/api/v1';
 //  export const API_BASE_URL = 'http://192.168.102.19:8001/api/v1'; // inderjet sir

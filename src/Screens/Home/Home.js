@@ -466,7 +466,7 @@ console.log(locationData,"locationData?.address");
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          updateState({ searchDataLoader: false });
+          updateState({ searchDataLoader: false , isLoading:false});
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -491,7 +491,7 @@ console.log(locationData,"locationData?.address");
               isLoadingB: false,
               searchDataLoader: false,
             });
-          }, 1500);
+          }, 500);
         })
         .catch(errorMethod);
     }

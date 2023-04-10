@@ -217,16 +217,16 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-            // saamanshop{ 
-            // dimension "appType"
-            // versionCode 1
-            // versionName "1.0"
-            // minSdkVersion rootProject.ext.minSdkVersion
-            // targetSdkVersion rootProject.ext.targetSdkVersion
-            // applicationId 'com.saamanshop.royoorders'
-            // resValue "string", "app_name", "Saamanshop" 
-            // resValue "string", "host_name", ""
-            // }
+              bimol{
+                dimension "appType"
+                versionCode 2
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion         
+                applicationId 'com.bimol.user'
+                resValue "string", "app_name", "Bimol"
+                resValue "string", "host_name", ""
+            }
            stargaze{
                 dimension "appType"
                 versionCode 1
