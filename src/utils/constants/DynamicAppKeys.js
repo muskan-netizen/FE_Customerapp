@@ -2275,8 +2275,8 @@ const appIds = {
     android: 'com.clickokart.royoorders',
   }),
   tiimo: Platform.select({
-    ios: 'com.tiimo.royoorders',
-    android: 'com.tiimo.royoorders',
+    ios: 'com.tiimo.orderApp',
+    android: 'com.tiimo.orderApp',
   }),
   verz: Platform.select({
     ios: 'com.verz.royoorders',
@@ -2520,7 +2520,7 @@ const appIds = {
   }),
   bukam: Platform.select({
     ios: 'com.bukam.royoorders',
-    android: 'com.bukam.royoorders',
+    android: 'com.bukam.order',
   }),
   dot: Platform.select({
     ios: 'com.dot.royoorders',
@@ -2652,15 +2652,15 @@ const appIds = {
     android: 'com.weedLomo.order',
   }),
   ngoal: Platform.select({
-    ios: 'com.ngoal.order',
-    android: 'com.ngoal.order',
+    ios: 'com.nGoal.orderApp',
+    android: 'com.nGoal.order',
   }),
   livraiZoo: Platform.select({
     ios: 'com.liverso.order',
     android: 'com.liverso.order',
   }),
   boozeBrothers: Platform.select({
-    ios: 'com.boozeBrothers.order',
+    ios: 'com.boozeBrother.order',
     android: 'com.boozeBrothers.order',
   }),
   magicalBookings: Platform.select({

@@ -120,11 +120,11 @@ export default function TabRoutes(props) {
                 (appStyle?.tabBarLayout === 4 && { height: 20, width: 20 }),
               ]}
               source={
-                appStyle?.tabBarLayout === 4
+                appStyle?.tabBarLayout === 5
                   ? focused
                     ? imagePath.icBrandActive
                     : imagePath.icBrandInActive
-                  : appStyle?.tabBarLayout === 5
+                  : appStyle?.tabBarLayout === 4
                     ? focused
                       ? imagePath.brandsActive1
                       : imagePath.brandsInActive1
@@ -160,19 +160,19 @@ export default function TabRoutes(props) {
         if (showBottomBar_) {
           console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayoutappStyle?.tabBarLayout')
           switch (appStyle?.tabBarLayout) {
-            // case 1:
-            //   return <CustomBottomTabBar {...props} />;
+            case 1:
+              return <CustomBottomTabBar {...props} />;
             case 2:
               return <CustomBottomTabBarTwo {...props} />;
             case 3:
               return <CustomBottomTabBarThree {...props} />;
             case 4:
-
-              return <CustomBottomTabBarFour {...props} />;
-            case 5:
               return <CustomBottomTabBarFive {...props} />;
+             
+            case 5:
+              return <CustomBottomTabBarFour {...props} />;
             default:
-              return <CustomBottomTabBarTwo {...props} />;
+              return <CustomBottomTabBarFour {...props} />;
           }
         }
       }}
@@ -200,11 +200,11 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
               ]}
               source={
-                appStyle?.tabBarLayout === 5
+                appStyle?.tabBarLayout === 4
                   ? focused
                     ? imagePath.homeActive
                     : imagePath.homeInActive
-                  : appStyle?.tabBarLayout === 4
+                  : appStyle?.tabBarLayout === 5
                     ? focused
                       ? imagePath.homeRedActive
                       : imagePath.homeRedInActive
@@ -239,11 +239,11 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
                 ]}
                 source={
-                  appStyle?.tabBarLayout === 5
+                  appStyle?.tabBarLayout === 4
                     ? focused
                       ? imagePath.search
                       : imagePath.search1
-                    : appStyle?.tabBarLayout === 4
+                    : appStyle?.tabBarLayout === 5
                       ? focused
                         ? imagePath.search
                         : imagePath.search1
@@ -297,11 +297,11 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
                 ]}
                 source={
-                  appStyle?.tabBarLayout === 5
+                  appStyle?.tabBarLayout === 4
                     ? focused
                       ? imagePath.ordersActive
                       : imagePath.ordersInActive
-                    : appStyle?.tabBarLayout === 4
+                    : appStyle?.tabBarLayout === 5
                       ? focused
                         ? imagePath.cartRedActive
                         : imagePath.cartRedInActive
@@ -334,9 +334,9 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
                 ]}
                 source={
-                  appStyle?.tabBarLayout === 5
+                  appStyle?.tabBarLayout === 4
                     ? imagePath.myOrder2
-                    : appStyle?.tabBarLayout === 4
+                    : appStyle?.tabBarLayout === 5
                       ? imagePath.myOrder2
                       : focused
                         ? imagePath.tabEActive
@@ -364,11 +364,11 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && { height: 23, width: 23 },
               ]}
               source={
-                appStyle?.tabBarLayout === 5
+                appStyle?.tabBarLayout === 4
                   ? focused
                     ? imagePath.profileActive
                     : imagePath.profileInActive
-                  : appStyle?.tabBarLayout === 4
+                  : appStyle?.tabBarLayout === 5
                     ? focused
                       ? imagePath.accountRedActive
                       : imagePath.accountRedInActive

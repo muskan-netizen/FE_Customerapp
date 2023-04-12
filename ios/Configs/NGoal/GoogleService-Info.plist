@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1047811476285-fs94cuetgkiik4kr6fud6fj33453e3rs.apps.googleusercontent.com</string>
+	<string>700937882772-8uhg8m664r4ht4d9o01gndj5oiuho0a6.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1047811476285-fs94cuetgkiik4kr6fud6fj33453e3rs</string>
+	<string>com.googleusercontent.apps.700937882772-8uhg8m664r4ht4d9o01gndj5oiuho0a6</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1047811476285-nedv5dimtpkhstvk7j6j2icatlkm5bkk.apps.googleusercontent.com</string>
+	<string>700937882772-5eu1e1brpgsvflr4jm1b4eb332fjams6.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC2IqBqUal4oikEhP4QWnwq3LRRAKaUZAQ</string>
+	<string>AIzaSyBUXeeoAkJ16ALLLCWpRdiFi0Pq_xTZhQg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1047811476285</string>
+	<string>700937882772</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ngoal.order</string>
+	<string>com.nGoal.orderApp</string>
 	<key>PROJECT_ID</key>
-	<string>ngoal-order</string>
+	<string>ngoal-960de</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ngoal-order.appspot.com</string>
+	<string>ngoal-960de.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1047811476285:ios:9722bd1edf567d17461354</string>
+	<string>1:700937882772:ios:c923946bd4423f52ecf881</string>
 </dict>
 </plist>

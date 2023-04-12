@@ -421,7 +421,7 @@ export default function Account3({ navigation }) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-         {!!userData?.auth_token && allAvailAblePaymentMethods?.map((item, inx) => {
+          {!!userData?.auth_token && allAvailAblePaymentMethods?.map((item, inx) => {
             if (item?.id == 50) {
               return (<ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
@@ -532,22 +532,25 @@ export default function Account3({ navigation }) {
             !!appData &&
             !!appData?.profile &&
             appData?.profile?.preferences?.subscription_mode == 1 && ( */}
-          {true && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-              iconLeft={imagePath.subscription}
-              centerHeading={strings.SUBSCRIPTION}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          {!!userData?.auth_token &&
+            !!appData &&
+             !!appData?.profile &&
+            appData?.profile?.preferences?.subscription_mode == 1  &&   (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+                iconLeft={imagePath.subscription}
+                centerHeading={strings.SUBSCRIPTION}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
 
           {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal

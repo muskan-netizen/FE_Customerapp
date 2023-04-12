@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { View } from 'react-native';
 import { Platform, Text, TouchableOpacity } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import LinearGradient from 'react-native-linear-gradient';
@@ -6,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { MyDarkTheme } from '../styles/theme';
+
 
 const CustomBottomTabBar = ({
   state,
@@ -51,7 +53,7 @@ const CustomBottomTabBar = ({
       // borderTopLeftRadius: 10,
       // borderTopRightRadius: 10,
       paddingTop: 10,
-      // backgroundColor:"white"
+      backgroundColor:isDarkMode ? MyDarkTheme.colors.lightDark :themePrimaryColor
     }}>
 
    

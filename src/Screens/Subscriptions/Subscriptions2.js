@@ -54,6 +54,7 @@ import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunc
 import PaymentGateways from '../../Components/PaymentGateways';
 import RazorpayCheckout from 'react-native-razorpay';
 import TextTabBar from '../../Components/TextTabBar';
+import { isEmpty } from 'lodash';
 
 export default function Subscriptions2({ navigation, route }) {
   //   console.log(route, 'route>>>');
@@ -164,9 +165,9 @@ export default function Subscriptions2({ navigation, route }) {
   }, []);
 
 
-  useEffect(() => {
-    getSavedCardList()
-  }, [])
+  // useEffect(() => {
+  //   getSavedCardList()
+  // }, [])
 
 
   
@@ -312,6 +313,11 @@ export default function Subscriptions2({ navigation, route }) {
             selectedPaymentMethod: null,
             selectedSavedListCardNumber: null
           });
+          {
+            !isEmpty(res?.data?.payment_options) && res?.data?.payment_options.map((item,inx)=>{
+              item?.id == 50 && getSavedCardList()
+            })
+          }
           setYear("")
           setDate("")
           setCardNUmber("")

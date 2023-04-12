@@ -1,11 +1,11 @@
 #include "Pods/Target Support Files/Pods-available_pods-BoozeBrothers/Pods-available_pods-BoozeBrothers.debug.xcconfig"
-PROJECT_APPLE_ID = 1671488466
-PROJECT_BUNDLE_ID = com.boozeBrothers.order
+PROJECT_APPLE_ID = 6447626485
+PROJECT_BUNDLE_ID = com.boozeBrother.order
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Booze Brothers
-PROJECT_GOOGLE_CLIENT_ID =37237959791-m8almsklprg6i0cf8lr6kf7r9jqvb3pn.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.37237959791-m8almsklprg6i0cf8lr6kf7r9jqvb3pn
+PROJECT_GOOGLE_CLIENT_ID =245279718064-829qur1qclg3qbsh9vk8ckar3tvhev8u.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.245279718064-829qur1qclg3qbsh9vk8ckar3tvhev8u
 PROJECT_FACEBOOK_ID = 556832673147229
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =BoozeBrothersInfo

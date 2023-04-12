@@ -218,35 +218,25 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-              bauBau{
+                qdelo{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.baubau.order'
-            resValue "string", "app_name", "Baubau"
+            applicationId 'com.qdeloorder'
+            resValue "string", "app_name", "Qdelo"
             resValue "string", "host_name", ""
             }
-                    meltivers{
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.meltiverse.user'
-            resValue "string", "app_name", "Meltivers"
-            resValue "string", "host_name", ""
-            }
-           stabex{ 
-            dimension "appType"
-            versionCode 13
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.stabex.orders'
-            resValue "string", "app_name", "Stabex App" 
-            resValue "string", "host_name", ""
+                 bukam {
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.bukam.order'
+                resValue "string", "app_name", "Bukam"
+                resValue "string", "host_name", ""
             }
 }
 
@@ -7556,7 +7546,7 @@ android {
         //     versionName "1.0"
         //     minSdkVersion rootProject.ext.minSdkVersion
         //     targetSdkVersion rootProject.ext.targetSdkVersion
-        //     applicationId 'com.tiimo.royoorders'
+        //     applicationId 'com.tiimo.orderApp'
         //     resValue "string", "app_name", "Tiimo" 
         //     resValue "string", "host_name", ""
         //     }
@@ -8137,7 +8127,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.bukam.royoorders'
+    //             applicationId 'com.bukam.order'
     //             resValue "string", "app_name", "Bukam"
     //             resValue "string", "host_name", ""
     //         }

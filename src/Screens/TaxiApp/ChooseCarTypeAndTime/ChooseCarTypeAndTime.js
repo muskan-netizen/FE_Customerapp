@@ -92,7 +92,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
   const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
-
+console.log(themeColors,'themeColorsthemeColorsthemeColors')
   const [state, setState] = useState({
     region: {
       latitude: paramData?.location[0]?.latitude
@@ -1541,7 +1541,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
                     ? `${scheduleDateTime?.selectedDateAndTime}`
                     : slectedDate || selectedTime
                       ? `${slectedDate} ${selectedTime}`
-                      : 'Schedule a ride'
+                      : appIds.jiffex == getBundleId() ? 'Schedule a order' : 'Schedule a ride'
                     }`}
                   btnStyle={styles.scheduleBtnStyle}
                 />

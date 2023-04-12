@@ -1,8 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
 // export const API_BASE_URL='https://ngoalapp.com/api/v1'
-// export const API_BASE_URL='https://order.westvirginiahub.com/api/v1'
-export const API_BASE_URL='https://bukam.app/api/v1'
+export const API_BASE_URL='https://order.westvirginiahub.com/api/v1'
+// export const API_BASE_URL='https://bukam.app/api/v1'
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
@@ -415,7 +415,7 @@ export const API_BASE_URL='https://bukam.app/api/v1'
 
 
 // uberweeds
-// export const API_BASE_URL = 'https://uber-weeds.com/api/v1';
+// export const API_BASE_URL = 'https://ubierweeds.com/api/v1';
 
 // mobi
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1';
