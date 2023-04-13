@@ -2629,7 +2629,7 @@ export default function ProductDetail({ route, navigation }) {
                 </Text>
               ) : null}
               {
-                dine_In_Type == 'appointment' &&
+                dine_In_Type == 'appointment' && productDetailData?.mode_of_service === 'schedule' &&
                 <View style={{
                   flexDirection: "row",
                   alignItems: "center",
@@ -3116,7 +3116,7 @@ export default function ProductDetail({ route, navigation }) {
         }}>
         <AppointmentSlotModal />
       </ReactNativeModal>
-    </WrapperContainer>
+    </WrapperContainer >
   );
 }
 const htmlStyle = StyleSheet.create({

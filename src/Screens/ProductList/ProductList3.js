@@ -339,6 +339,7 @@ export default function Products({ route, navigation }) {
   const [availableDriversForSlot, setAvailableDriversForSlot] = useState([])
   const [selectedAllProductDataForAppointment, setSelectedAllProductDataForAppointment] = useState({})
   const [selectedAgent, setSelectedAgent] = useState({})
+  const [pressedItemInx, setPressedItemInx] = useState(0)
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
@@ -419,8 +420,6 @@ export default function Products({ route, navigation }) {
 
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
-      console.log(item, 'renderSectionItem=>');
-      // const url1 = item?.media[0]?.image?.path.image_fit;
       return (
         <View
           key={String(index)}
@@ -1375,14 +1374,15 @@ export default function Products({ route, navigation }) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
+
       if (dine_In_Type == 'appointment' && item?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
         setAppointmentPicker(true)
         setSelectedProductForAppointment(item?.id || item?.variant[0].id)
         setSelectedAllProductDataForAppointment(item)
+        setSelectedSection(section);
+        setPressedItemInx(inx)
         return
       }
-
-      console.log(item, 'chechItemm');
 
       if (!!item.is_recurring_booking) {
         if (isEmpty(selectedPlanValues)) {
@@ -3788,8 +3788,9 @@ export default function Products({ route, navigation }) {
 
   const onDateSelected = async (date) => {
     setLoadingGetSlots(true);
+    setAppointmentSelectedDate(date)
     const apiData = {
-      cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+      cur_date: moment(date).format("YYYY-MM-DD"),
       product_id: productDetailData?.id || selectedProductForAppointment
     }
     const apiHeader = {
@@ -3840,7 +3841,7 @@ export default function Products({ route, navigation }) {
           let vendorId = selectedAllProductDataForAppointment?.vendor_id
           // vendor_id,date,delivery
           const res = await actions.checkVendorSlots(
-            `?vendor_id=${vendorId}&date=${moment(appointmentSelectedDate).format("YYYY-MM-DD")}&delivery=${dineInType}`,
+            `?vendor_id=${vendorId}&date=${moment(date).format("YYYY-MM-DD")}&delivery=${dineInType}`,
             {
               code: appData?.profile?.code,
               timezone: RNLocalize.getTimeZone(),
@@ -3918,7 +3919,6 @@ export default function Products({ route, navigation }) {
     setSelectedAgent(item)
   }
 
-
   const _onDonePressAfterSlotSelect = () => {
     if (isEmpty(selectedAgent) && selectedAllProductDataForAppointment?.is_show_dispatcher_agent) {
       alert('please select agent')
@@ -3927,6 +3927,7 @@ export default function Products({ route, navigation }) {
     setAppointmentSlotsModal(false)
     setAppointmentPicker(false)
     setSelectedAgent({})
+    addSingleItem(selectedAllProductDataForAppointment, selectedSection, selectedItemIndx)
   }
 
 
