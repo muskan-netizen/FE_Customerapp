@@ -1,5 +1,5 @@
-import {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,14 +9,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {MultiSelect} from 'react-native-element-dropdown';
+import { useDarkMode } from 'react-native-dynamic';
+import { MultiSelect } from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
 import WebView from 'react-native-webview';
-import {useSelector} from 'react-redux';
-import {v4 as uuidv4} from 'uuid';
+import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import AddressBottomSheet from '../../../Components/AddressBottomSheet';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 import GradientButton from '../../../Components/GradientButton';
@@ -27,7 +28,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {hitSlopProp} from '../../../styles/commonStyles';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -39,11 +40,11 @@ import {
   cameraHandler,
   checkValueExistInAry,
 } from '../../../utils/commonFunction';
-import {showError} from '../../../utils/helperFunctions';
-import {androidCameraPermission} from '../../../utils/permissions';
+import { showError } from '../../../utils/helperFunctions';
+import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
 
-const AttributeInformation = ({route, navigation}) => {
+const AttributeInformation = ({ route, navigation }) => {
   let paramData = route?.params;
   console.log(paramData, '<===paramData');
   const darkthemeusingDevice = useDarkMode();
@@ -60,7 +61,7 @@ const AttributeInformation = ({route, navigation}) => {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -73,6 +74,19 @@ const AttributeInformation = ({route, navigation}) => {
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
   const [price, setPrice] = useState('');
+  const [state, setState] = useState({
+    updateData: {},
+    indicator: false,
+    type: '',
+    selectViaMap: false,
+    isVisible: false,
+    selectedId: '',
+  })
+  const [selectedLocationAtt, setSelectedLocationAtt] = useState({})
+
+  const { updateData, indicator, type, selectViaMap, isVisible } = state;
+  const updateState = data => setState(state => ({ ...state, ...data }));
+
 
   useEffect(() => {
     getListOfAvailableAttributes();
@@ -90,7 +104,7 @@ const AttributeInformation = ({route, navigation}) => {
         },
       )
       .then((res) => {
-        console.log(res, '<===res');
+        console.log(res, '<===res getAvailableAttributes');
         setLoadingAttributes(false);
         setAttributeInfo(res?.data || []);
       })
@@ -130,10 +144,10 @@ const AttributeInformation = ({route, navigation}) => {
     let apiObj = {};
     attributeInfo.map((item, index) => {
       let optionData = [];
-      item?.option?.map((item, inx) => {
+      item?.option?.map((itm, inx) => {
         optionData[inx] = {
-          option_id: item?.id,
-          option_title: item?.title,
+          option_id: itm?.id,
+          option_title: itm?.title,
         };
       });
       if (item?.values) {
@@ -144,8 +158,15 @@ const AttributeInformation = ({route, navigation}) => {
           option: optionData,
           value: item?.values,
         };
+        if (item?.type == 6) {
+          apiObj[item?.id].latitude = item?.values?.latitude;
+          apiObj[item?.id].longitude = item?.values?.longitude;
+          apiObj[item?.id].address = item?.values?.value;
+        }
       }
     });
+
+    console.log(apiObj, "apiObj>>>>>>>apiObj")
     formData.append('attribute', JSON.stringify(apiObj));
     console.log(formData, '<===formData onSubmitAttributes');
     actions
@@ -196,6 +217,7 @@ const AttributeInformation = ({route, navigation}) => {
     attributeInfoData[indexOfAttributeToUpdate].values = [text];
     setAttributeInfo(attributeInfoData);
   };
+
 
   const onPressCheckBoxes = (value, data) => {
     const attributeInfoData = [...attributeInfo];
@@ -283,6 +305,54 @@ const AttributeInformation = ({route, navigation}) => {
     }
   };
 
+  const onClearLocationField = () => {
+    const attributeInfoData = cloneDeep(attributeInfo)
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == selectedLocationAtt?.id,
+    );
+    delete attributeInfoData[indexOfAttributeToUpdate].values
+    setAttributeInfo(attributeInfoData);
+  }
+
+
+  const addUpdateLocation = childData => {
+    updateState({
+      selectViaMap: false,
+      isVisible: false,
+    });
+    const attributeInfoData = cloneDeep(attributeInfo)
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == selectedLocationAtt?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = {
+      latitude: childData?.latitude,
+      longitude: childData?.longitude,
+      value: childData?.address
+    };
+    setAttributeInfo(attributeInfoData);
+  };
+
+  console.log(attributeInfo, "attributeInfo>>>>")
+
+  const openCloseMapAddress = type => {
+    updateState({ selectViaMap: type == 1 ? true : false });
+  };
+
+  const onModalClose = () => {
+    setModalVisible(false);
+    updateState({ selectViaMap: false });
+  };
+
+
+  const setModalVisible = (visible = false, type = '', id = '', data = {}) => {
+    updateState({
+      updateData: data,
+      isVisible: visible,
+      type: type,
+      selectedId: id,
+    });
+  };
+
   const renderRadioBtns = useCallback(
     (item, data, index) => {
       return (
@@ -308,11 +378,7 @@ const AttributeInformation = ({route, navigation}) => {
             }}
           />
           <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(14),
-              marginLeft: moderateScale(6),
-            }}>
+            style={styles.titleTxt}>
             {item?.title}
           </Text>
         </TouchableOpacity>
@@ -360,7 +426,7 @@ const AttributeInformation = ({route, navigation}) => {
   );
 
   const renderAttributeOptions = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <View>
           <Text
@@ -394,7 +460,20 @@ const AttributeInformation = ({route, navigation}) => {
               onChangeText={(text) => onChangeText(text, item)}
               style={styles.textInput}
             />
-          ) : (
+          ) : item?.type == 6 ? <TouchableOpacity
+            onPress={() => {
+              updateState({
+                isVisible: true
+              })
+              setSelectedLocationAtt(item)
+            }}
+            style={styles.addLocationBtn}>
+            <Text numberOfLines={1} style={{
+              flex: 1,
+              ...styles.titleTxt
+            }}>{!isEmpty(item?.values) ? item?.values?.value : "Add Location"}</Text>
+            {!isEmpty(item?.values) && <TouchableOpacity onPress={onClearLocationField}><Image source={imagePath.closeButton} /></TouchableOpacity>}
+          </TouchableOpacity> : (
             <View style={styles.checkBox}>
               {item?.option?.map((itm, index) =>
                 renderCheckBoxes(itm, item, index),
@@ -406,6 +485,7 @@ const AttributeInformation = ({route, navigation}) => {
     },
     [attributeInfo],
   );
+
 
   const listFooterComponent = () => {
     return (
@@ -430,11 +510,11 @@ const AttributeInformation = ({route, navigation}) => {
           backgroundColor: colors.white,
         }}>
         <Header
-          centerTitle={'Attribute Information'}
-          leftIcon={imagePath.back1}
+          centerTitle={paramData?.category_name}
+          leftIcon={imagePath.icBackb}
         />
         {isLoadingAttributes ? (
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             {['', '', '', '', '', '', '', '', ''].map((itm, indx) => (
               <View
                 key={String(indx)}
@@ -529,9 +609,7 @@ const AttributeInformation = ({route, navigation}) => {
                     placeholder="Enter price"
                     onChangeText={(text) => setPrice(text)}
                     keyboardType="number-pad"
-                    style={{
-                      flex: 1,
-                    }}
+                    style={{ ...styles.textInput, backgroundColor: colors.transparent }}
                   />
                 </View>
                 <Text
@@ -571,12 +649,12 @@ const AttributeInformation = ({route, navigation}) => {
                               width: moderateScale(90),
                               marginRight: moderateScale(10),
                             }}
-                            source={{uri: itm?.uri}}
+                            source={{ uri: itm?.uri }}
                           />
                           <TouchableOpacity
                             hitSlop={hitSlopProp}
                             onPress={() => removeProductImg(itm, 1)}
-                            style={{position: 'absolute', right: 4, top: -2}}>
+                            style={{ position: 'absolute', right: 4, top: -2 }}>
                             <Image source={imagePath.icRemoveIcon} />
                           </TouchableOpacity>
                         </View>
@@ -595,9 +673,6 @@ const AttributeInformation = ({route, navigation}) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-
-             
-
                 <View
                   style={{
                     marginTop: moderateScaleVertical(16),
@@ -617,7 +692,7 @@ const AttributeInformation = ({route, navigation}) => {
                     renderItem={renderAttributeOptions}
                     ListFooterComponent={listFooterComponent}
                   />
-                  <View style={{height: moderateScaleVertical(65)}} />
+                  <View style={{ height: moderateScaleVertical(65) }} />
                 </View>
               </View>
             ) : (
@@ -632,6 +707,7 @@ const AttributeInformation = ({route, navigation}) => {
           </KeyboardAwareScrollView>
         )}
       </View>
+
       <GallaryCameraImgPicker
         isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}
@@ -668,20 +744,33 @@ const AttributeInformation = ({route, navigation}) => {
             btnText={'Ok'}
             onPress={() => {
               setIsProductAddedModal(false);
-              navigation.goBack();
+              // navigation.goBack();
             }}
-            containerStyle={{width: '50%', marginTop: moderateScaleVertical(5)}}
+            containerStyle={{ width: '50%', marginTop: moderateScaleVertical(5) }}
             colorsArray={['#FC7049', '#FD312C']}
           />
         </View>
       </Modal>
+
+      {isVisible ? (
+        <AddressBottomSheet
+          navigation={navigation}
+          updateData={updateData}
+          indicator={indicator}
+          type={type}
+          passLocation={data => addUpdateLocation(data)}
+          openCloseMapAddress={openCloseMapAddress}
+          selectViaMap={selectViaMap}
+          onCloseSheet={onModalClose}
+        />
+      ) : null}
     </WrapperContainer>
   );
 };
 
 export default AttributeInformation;
 
-function stylesFunc({fontFamily, themeColors}) {
+function stylesFunc({ fontFamily, themeColors }) {
   const styles = StyleSheet.create({
     header: {
       marginTop: moderateScale(32),
@@ -740,7 +829,7 @@ function stylesFunc({fontFamily, themeColors}) {
       marginVertical: moderateScale(12),
       fontFamily: fontFamily.regular,
     },
-    linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '5%'},
+    linkButton: { flex: 1, justifyContent: 'flex-end', marginBottom: '5%' },
     labelStyle: {
       fontFamily: fontFamily.bold,
       color: colors.blackOpacity43,
@@ -785,6 +874,22 @@ function stylesFunc({fontFamily, themeColors}) {
       backgroundColor: themeColors.primary_color,
       borderWidth: 0,
     },
+    addLocationBtn: {
+      borderWidth: 1,
+      borderColor: colors.borderColorB,
+      borderRadius: moderateScale(8),
+      paddingHorizontal: moderateScale(12),
+      height: moderateScaleVertical(48),
+      justifyContent: "space-between",
+      flexDirection: "row",
+      alignItems: "center"
+
+    },
+    titleTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(14),
+      marginLeft: moderateScale(6),
+    }
   });
   return styles;
 }

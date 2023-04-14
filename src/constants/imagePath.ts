@@ -571,10 +571,14 @@ export default {
   icDefaultImg: require('../assets/images/p2p/default_image.jpg'),
   icMyPosts: require('../assets/images/p2p/ic_my_posts.png'),
   icTapToCopy: require('../assets/images/p2p/ic_tap_to_copy.png'),
+  icAddPostActive: require('../assets/images/p2p/ic_add.png'),
+  icAddPostInactive: require('../assets/images/p2p/ic_add2.png'),
   icAwaitingApproval: require('../assets/images/p2p/ic_waiting_apporval.gif'),
   icApprovalRejected: require('../assets/images/p2p/ic_approval_rejected.gif'),
-  parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
+  //
 
+  icAirport: require('../assets/images/ic_airport.png'),
+  icHotel: require('../assets/images/ic_hotel.png'),
   ic_home2NewTab: require('../assets/tabbariconsnew/ic_home2.png'),
   ic_account2NewTab: require('../assets/tabbariconsnew/ic_account2.png'),
   ic_cart2NewTab: require('../assets/tabbariconsnew/ic_cart2.png'),
@@ -592,4 +596,24 @@ export default {
   ic_cab_pooling: require('../assets/images/TaxiAppNew/ic_cab_pooling.png'),
   ic_right_arrow: require('../assets/images/TaxiAppNew/ic_right_arrow.png'),
   ic_close_circle: require('../assets/images/TaxiAppNew/ic_close_circle.png'),
+  parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
+
+  //Ecommerce Template
+  icEcomHome: require('../assets/images/Ecommerce/ic_home_01.png'),
+  icEcomHomeInactive: require('../assets/images/Ecommerce/ic_home_02.png'),
+  icEcomCart: require('../assets/images/Ecommerce/ic_cart_01.png'),
+  icEcomCartInactive: require('../assets/images/Ecommerce/ic_cart_02.png'),
+  icEcomCeleb: require('../assets/images/Ecommerce/ic_celebrity_01.png'),
+  icEcomCelebInactive: require('../assets/images/Ecommerce/ic_celebrity_02.png'),
+  icEcomBrand: require('../assets/images/Ecommerce/ic_brand_01.png'),
+  icEcomBrandInactive: require('../assets/images/Ecommerce/ic_brand_02.png'),
+
+  icCat: require('../assets/images/Ecommerce/ic_cat.png'),
+  icCatActive: require('../assets/images/Ecommerce/ic_cat_active.png'),
+
+  icEcomAccount: require('../assets/images/Ecommerce/ic_account_01.png'),
+  icEcomAccountInactive: require('../assets/images/Ecommerce/ic_account_02.png'),
+  icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
+  icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
+  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01.png'),
 };

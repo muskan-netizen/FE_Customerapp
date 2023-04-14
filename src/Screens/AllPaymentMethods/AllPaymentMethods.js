@@ -1,20 +1,20 @@
-import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+import { CardField, createToken, initStripe } from '@stripe/stripe-react-native';
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
   Keyboard,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
+  Text, TouchableOpacity,
+  View
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
+import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -23,36 +23,26 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical,
+  moderateScaleVertical
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import {
-  Frames,
-  CardNumber,
-  ExpiryDate,
-  Cvv,
-  SubmitButton,
-} from 'frames-react-native';
-import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 
-export default function AllPaymentMethods({navigation, route}) {
+export default function AllPaymentMethods({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, appStyle, themeColors, currencies, languages} = useSelector(
+  const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
+  const styles = stylesFun({ fontFamily, themeColors });
   const selectedPaymentMethodHandler = route?.params?.data;
 
   // console.log(selectedPaymentMethodHandler, 'selectedPaymentMethod');
@@ -85,8 +75,8 @@ export default function AllPaymentMethods({navigation, route}) {
     console.log(selectedPaymentMethod, 'selectedPaymentMethod>>');
   }, [selectedPaymentMethod]);
   //Update states in screen
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {preferences} = appData?.profile;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { preferences } = appData?.profile;
 
   console.log(
     preferences?.stripe_publishable_key,
@@ -120,13 +110,13 @@ export default function AllPaymentMethods({navigation, route}) {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       (event) => {
-        updateState({keyboardHeight: event.endCoordinates.height});
+        updateState({ keyboardHeight: event.endCoordinates.height });
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       (event) => {
-        updateState({keyboardHeight: 0});
+        updateState({ keyboardHeight: 0 });
       },
     );
     return () => {
@@ -136,7 +126,7 @@ export default function AllPaymentMethods({navigation, route}) {
   }, []);
 
   useEffect(() => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     getListOfPaymentMethod();
   }, []);
 
@@ -154,9 +144,9 @@ export default function AllPaymentMethods({navigation, route}) {
       )
       .then((res) => {
         console.log(res, 'allpayments gate');
-        updateState({isLoading: false, isRefreshing: false});
+        updateState({ isLoading: false, isRefreshing: false });
         if (res && res?.data) {
-          updateState({payementMethods: res?.data});
+          updateState({ payementMethods: res?.data });
           // updateState({allAvailAblePaymentMethods: res?.data});
         }
       })
@@ -165,52 +155,52 @@ export default function AllPaymentMethods({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
     if (selectedPaymentMethod) {
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
 
       if (
         selectedPaymentMethod?.id == 4 &&
         selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
-          await createToken({...cardInfo, type: 'Card'})
+          await createToken({ ...cardInfo, type: 'Card' })
             .then((res) => {
               console.log('stripeTokenres>>');
               if (!!res?.error) {
                 //alert(res.error.localizedMessage);
-                updateState({isLoading: false});
+                updateState({ isLoading: false });
                 alert('i am here++++');
                 return;
               }
               if (res && res?.token && res.token?.id) {
                 alert('i am here');
-                updateState({isLoading: false});
+                updateState({ isLoading: false });
                 navigation.navigate(navigationStrings.CART, {
                   selectedMethod: selectedPaymentMethod,
                   cardInfo: cardInfo,
                   tokenInfo: res.token?.id,
                 });
               } else {
-                updateState({isLoading: false});
+                updateState({ isLoading: false });
               }
             })
             .catch((err) => {
-              updateState({isLoading: false});
+              updateState({ isLoading: false });
               console.log(err, 'err>>');
             });
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
       } else {
         setTimeout(() => {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           navigation.navigate(navigationStrings.CART, {
             selectedMethod: selectedPaymentMethod,
             cardInfo: cardInfo,
@@ -226,8 +216,8 @@ export default function AllPaymentMethods({navigation, route}) {
   const selectPaymentMethod = (data, inx) => {
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
-        ? updateState({selectedPaymentMethod: null})
-        : updateState({selectedPaymentMethod: data});
+        ? updateState({ selectedPaymentMethod: null })
+        : updateState({ selectedPaymentMethod: data });
     }
   };
 
@@ -246,7 +236,7 @@ export default function AllPaymentMethods({navigation, route}) {
     }
   };
 
-  const _renderItemPayments = ({item, index}) => {
+  const _renderItemPayments = ({ item, index }) => {
     return (
       <>
         <TouchableOpacity
@@ -267,7 +257,7 @@ export default function AllPaymentMethods({navigation, route}) {
           <Text
             style={
               isDarkMode
-                ? [styles.caseOnDeliveryText, {color: MyDarkTheme.colors.text}]
+                ? [styles.caseOnDeliveryText, { color: MyDarkTheme.colors.text }]
                 : styles.caseOnDeliveryText
             }>
             {item?.title_lng ? item?.title_lng : item?.title}
@@ -279,68 +269,68 @@ export default function AllPaymentMethods({navigation, route}) {
           selectedPaymentMethod?.off_site == 0 &&
           selectedPaymentMethod?.id === 4
         ) && (
-          <View>
-            <CardField
-              postalCodeEnabled={false}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={{
-                backgroundColor: colors.white,
-                textColor: colors.black,
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 10,
-              }}
-              onCardChange={(cardDetails) => {
-                _onChangeStripeData(cardDetails);
-              }}
-              onFocus={(focusedField) => {
-                console.log('focusField', focusedField);
-              }}
-              onBlur={() => {
-                Keyboard.dismiss();
-              }}
-            />
-          </View>
-        )}
+            <View>
+              <CardField
+                postalCodeEnabled={false}
+                placeholder={{
+                  number: '4242 4242 4242 4242',
+                }}
+                cardStyle={{
+                  backgroundColor: colors.white,
+                  textColor: colors.black,
+                }}
+                style={{
+                  width: '100%',
+                  height: 50,
+                  marginVertical: 10,
+                }}
+                onCardChange={(cardDetails) => {
+                  _onChangeStripeData(cardDetails);
+                }}
+                onFocus={(focusedField) => {
+                  console.log('focusField', focusedField);
+                }}
+                onBlur={() => {
+                  Keyboard.dismiss();
+                }}
+              />
+            </View>
+          )}
         {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
           selectedPaymentMethod?.id === 17
         ) && (
-          <CheckoutPaymentView
-            cardTokenized={(e) => {
-              updateState({isLoading: false});
-              if (e.token) {
-                navigation.navigate(navigationStrings.CART, {
-                  selectedMethod: selectedPaymentMethod,
-                  cardInfo: e.token,
+            <CheckoutPaymentView
+              cardTokenized={(e) => {
+                updateState({ isLoading: false });
+                if (e.token) {
+                  navigation.navigate(navigationStrings.CART, {
+                    selectedMethod: selectedPaymentMethod,
+                    cardInfo: e.token,
+                  });
+                }
+              }}
+              cardTokenizationFailed={(e) => {
+                setTimeout(() => {
+                  updateState({ isLoading: false });
+                  showError(strings.INVALID_CARD_DETAILS);
+                }, 1000);
+              }}
+              onPressSubmit={(res) => {
+                updateState({
+                  isLoading: true,
                 });
-              }
-            }}
-            cardTokenizationFailed={(e) => {
-              setTimeout(() => {
-                updateState({isLoading: false});
-                showError(strings.INVALID_CARD_DETAILS);
-              }, 1000);
-            }}
-            onPressSubmit={(res) => {
-              updateState({
-                isLoading: true,
-              });
-            }}
-            btnTitle={strings.SELECT}
-            isSubmitBtn
-            submitBtnStyle={{
-              width: '100%',
-              height: moderateScale(45),
-            }}
-          />
-        )}
+              }}
+              btnTitle={strings.SELECT}
+              isSubmitBtn
+              submitBtnStyle={{
+                width: '100%',
+                height: moderateScale(45),
+              }}
+            />
+          )}
       </>
     );
   };
@@ -362,7 +352,7 @@ export default function AllPaymentMethods({navigation, route}) {
       //   cardInfo: cardDetails
       // });
     } else {
-      updateState({cardInfo: null});
+      updateState({ cardInfo: null });
     }
   };
 
@@ -379,17 +369,17 @@ export default function AllPaymentMethods({navigation, route}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.PAYMENT}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.backgroundGrey}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.backgroundGrey }
         }
       />
-      <View style={{height: 1, backgroundColor: colors.borderLight}} />
+      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
       <KeyboardAwareScrollView
         alwaysBounceVertical={true}
         showsVerticalScrollIndicator={false}
@@ -402,12 +392,12 @@ export default function AllPaymentMethods({navigation, route}) {
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps={'handled'}
           // horizontal
-          style={{marginTop: moderateScaleVertical(10)}}
+          style={{ marginTop: moderateScaleVertical(10) }}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItemPayments}
           ListEmptyComponent={() =>
             !isLoading && (
-              <Text style={{textAlign: 'center'}}>
+              <Text style={{ textAlign: 'center' }}>
                 {strings.NO_PAYMENT_METHOD}
               </Text>
             )

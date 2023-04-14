@@ -1,11 +1,14 @@
+import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
+import LaundryAddonModal from '../../Components/LaundryAddonModal';
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
@@ -14,24 +17,20 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import Voice from '@react-native-voice/voice';
-import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
   getNearestLocation,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import socketServices from '../../utils/scoketService';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 
-import DashBoardTwo from './DashboardViews/DashBoardTwo';
 
+import { openBrowser } from '../../utils/openNativeApp';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -41,9 +40,8 @@ import {
   DashBoardOne,
   DashBoardSix,
   DashBoardTen,
-  TaxiHomeDashbord,
+  TaxiHomeDashbord
 } from './DashboardViews/Index';
-import { openBrowser } from '../../utils/openNativeApp';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -139,9 +137,9 @@ export default function Home({ route, navigation }) {
 
 
   useEffect(() => {
-    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      socketServices.initializeSocket(appData?.profile?.socket_url);
-    }
+    // if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+    //   socketServices.initializeSocket(appData?.profile?.socket_url);
+    // }
   }, [appData]);
 
   useFocusEffect(
@@ -973,6 +971,8 @@ export default function Home({ route, navigation }) {
     });
   };
 
+
+  console.log("appStyle?.homePageLayouappStyle?.homePageLayou",appStyle?.homePageLayout)
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:

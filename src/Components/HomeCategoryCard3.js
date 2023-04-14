@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -9,22 +9,22 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
-import {SvgUri} from 'react-native-svg';
+import { getImageUrl } from '../utils/helperFunctions';
+import { SvgUri } from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
 
 const HomeCategoryCard3 = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   isLoading = false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const { appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   const imageURI = getImageUrl(
@@ -35,7 +35,7 @@ const HomeCategoryCard3 = ({
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  const onLoad = (evl) => {};
+  const onLoad = (evl) => { };
 
   let imgHeight =
     appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
@@ -91,7 +91,7 @@ const HomeCategoryCard3 = ({
           </View>
         )}
       </View>
-      <View style={{flex: 0.2}}>
+      <View style={{ flex: 0.2 }}>
         <Text
           // numberOfLines={1}
           style={{

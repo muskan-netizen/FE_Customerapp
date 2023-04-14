@@ -38,7 +38,6 @@ import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
-import moment from 'moment';
 import { clearLastBidData } from './src/redux/actions/home';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };

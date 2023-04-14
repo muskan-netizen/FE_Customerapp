@@ -66,7 +66,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
-        resizeMode="contain"
+        resizeMode="cover"
         source={{
           uri: imageUrl,
           cache: FastImage.cacheControl.immutable,

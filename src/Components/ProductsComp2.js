@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
@@ -17,7 +17,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
@@ -25,19 +25,13 @@ import {
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
-  pressOutAnimation,
+  pressOutAnimation
 } from '../utils/helperFunctions';
 
-const ProductsComp = ({
-  isDiscount,
-  item,
-  imageStyle,
-  onPress = () => { },
-  mainContainerStyle = {},
-  showRating = true,
-  productNameStyle = {},
-  numberOfLines = 1
-}) => {
+let imageHeight = parseInt(moderateScale(100))
+let imageWidth = parseInt(width / 3.2)
+
+const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
   const { themeColors, appStyle, currencies, themeColor, themeToggle } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
@@ -54,45 +48,43 @@ const ProductsComp = ({
     category = {},
     media = [],
     vendor = {},
-    variants = [],
+    variant = [],
   } = item;
-  console.log(item, "iteiteiteitietietietiet");
+
 
   const imageUrl = getImageUrl(
-    media[0]?.image?.path?.image_fit,
+    media[0]?.image?.path?.proxy_url,
     media[0]?.image?.path?.image_path,
-    '600/600',
+    `${imageHeight}/${imageWidth}`,
   );
-
-  console.log(imageUrl, "imageUrlimageUrl");
 
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
       style={{
-        width: width / 2.5,
         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
         elevation: 1,
         marginVertical: 2,
-        borderRadius: 5,
+        borderRadius: moderateScale(5),
         ...getScaleTransformationStyle(scaleInAnimated),
-        ...mainContainerStyle
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
-        resizeMode='contain'
+        resizeMode={FastImage.resizeMode.contain}
         source={{
           uri: imageUrl,
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
         }}
+
         style={{
-          height: moderateScale(100),
-          width: width / 2.5,
+          height: imageHeight,
+          width: imageWidth,
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
-          borderRadius: moderateScale(8),
+          borderTopLeftRadius: moderateScale(5),
+          borderTopRightRadius: moderateScale(5),
           ...imageStyle,
         }}
         imageStyle={{
@@ -101,7 +93,7 @@ const ProductsComp = ({
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && item?.averageRating !== '0.0' && showRating && (
+        {!!item?.averageRating && item?.averageRating !== '0.0' && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{
@@ -128,9 +120,9 @@ const ProductsComp = ({
             textAlign: 'left',
             lineHeight: moderateScale(16),
             marginLeft: moderateScale(5),
-            ...productNameStyle
           }}>
           {translation[0]?.title || item?.title || item?.sku}
+
         </Text>
         <Text
           numberOfLines={1}
@@ -145,45 +137,45 @@ const ProductsComp = ({
           {vendor?.name}
         </Text>
         {!isDiscount ? (
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={{ flex: 0.5, alignItems: 'flex-start' }}>
-              {category?.category_detail?.translation[0]?.name && (
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.inTextStyle,
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity66,
-                    width: width / 4,
-                    marginLeft: moderateScale(5),
-                  }}>
-                  {category?.category_detail?.translation[0]?.name || category}
-                </Text>
-              )}
-            </View>
-            <View style={{ marginHorizontal: 10 }} />
-
-            <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
+          <View style={{ flexDirection: 'row', flex: 1, }}>
+            {!!category?.category_detail?.translation[0]?.name ? (
               <Text
                 numberOfLines={1}
+                style={{
+                  ...styles.inTextStyle,
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity66,
+                  marginLeft: moderateScale(5),
+                  flex: 0.4
+                }}>
+                {category?.category_detail?.translation[0]?.name || category}
+              </Text>
+            ) : <View style={{
+              flex: 0.4
+            }} />}
+            <View style={{
+              flex: 0.6,
+              alignItems: "flex-end",
+            }}>
+              <Text
                 style={{
                   fontSize: textScale(10),
                   fontFamily: fontFamily.medium,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   marginRight: moderateScale(5),
                 }}>
-                <Text>
-                  {tokenConverterPlusCurrencyNumberFormater(
-                    Number(variants[0]?.price) * Number(variants[0]?.multiplier || 1),
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                  )}
-                </Text>
+
+                {tokenConverterPlusCurrencyNumberFormater(
+                  variant[0].price,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
             </View>
+
           </View>
         ) : (
           <View>
@@ -212,7 +204,12 @@ const ProductsComp = ({
                   color: colors.green,
                   marginVertical: moderateScaleVertical(8),
                 }}>
-                {currencies?.primary_currency.symbol} {variants[0]?.price}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  variant[0]?.price,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
               </Text>
               <Text
                 numberOfLines={2}
@@ -223,7 +220,13 @@ const ProductsComp = ({
                     : colors.blackOpacity40,
                   marginLeft: moderateScale(12),
                 }}>
-                {currencies?.primary_currency.symbol} {variants[0]?.price}
+                {tokenConverterPlusCurrencyNumberFormater(
+                  variant[0]?.price,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+
               </Text>
             </View>
           </View>

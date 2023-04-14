@@ -7,6 +7,7 @@ export default {
   HOMESTACK: 'homestack',
   OFFERS: 'offers',
   BRANDS: 'brands',
+  CATEGORY: 'Category',
   CELEBRITY: 'celebrity',
   ACCOUNTS: 'accounts',
   TAB_ROUTES: 'tabRoutes',
@@ -166,5 +167,5 @@ export default {
   REFER_AND_EARN: 'referAndEarn',
   PLUGNPAY: 'PlugnPay',
   SPOTDEALPRODUCTSANDSELECTEDPRODUCTS :'SpotdealProductAndSelectedProducts',
-  BIDINGDRIVERSLIST :'BidingDriversList'
+  BIDINGDRIVERSLIST :'BidingDriversList',
 };

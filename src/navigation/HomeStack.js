@@ -121,11 +121,12 @@ export default function () {
         return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
+      case 10:
+        return SearchProductVendorItem3V2;
       default:
         return SearchProductVendorItem2;
     }
   };
-
 
 
   return (
@@ -148,9 +149,8 @@ export default function () {
         }
         component={
           businessType === 4
-            // ? TaxiHomeScreen
-            ? TaxiHome
-            : businessType === 8
+            ? TaxiHomeScreen
+            : (businessType === 8 || businessType === 10)
               ? HomeV2Api
               : Home
         }
@@ -278,7 +278,6 @@ export default function () {
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
       />
-
 
     </Stack.Navigator>
   );

@@ -365,7 +365,7 @@ export default function OuterScreen5({ navigation }) {
 
       {shortCodeStatus ? (
         <Header
-          leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back2}
+          leftIcon={imagePath.icBackb}
           onPressLeft={() => actions.setAppSessionData('guest_login')}
           isRightText
           rightTxt={
@@ -437,7 +437,7 @@ export default function OuterScreen5({ navigation }) {
             />
           )}
 
-      
+
 
           <GradientButton
             containerStyle={{

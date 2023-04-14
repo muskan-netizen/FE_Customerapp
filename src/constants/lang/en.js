@@ -1079,5 +1079,8 @@ Amount`,
   DAYS: "days",
   REPLACABLE: "replaceable",
   RETURNABLE: "returnable",
-  POLICY_ON_THIS_PRODUCT: "policy on this product!"
+  POLICY_ON_THIS_PRODUCT: "policy on this product!",
+  AIRPORT: "Airport",
+  HOTEL: "Hotel",
+  SELECT_TYPE_OR_SKIP: "Select any type or you can skip!"
 };
