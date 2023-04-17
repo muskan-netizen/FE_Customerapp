@@ -32,7 +32,7 @@ export default function Offer({ route, navigation }) {
 
   const paramsData = route?.params?.data;
 
-console.log(paramsData,"paramsDataparamsDataparamsData");
+  console.log(paramsData, "paramsDataparamsDataparamsData");
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -45,7 +45,7 @@ console.log(paramsData,"paramsDataparamsDataparamsData");
 
 
 
-  
+
   const { isTaxi } = paramsData;
   const { appData, appStyle, themeColors, themeLayouts, currencies, languages } =
     useSelector((state) => state.initBoot);
@@ -134,24 +134,24 @@ console.log(paramsData,"paramsDataparamsDataparamsData");
             promocodeDetail: {
               couponInfo: item,
               vendorInfo: paramsData,
-              
+
             },
           });
         }
       })
       .catch(errorMethod);
   };
-  
+
 
   //Verify your promo code
   const _verifyPromoCodeForCab = (item) => {
+    updateState({ isLoadingB: true, isLoading: true });
     let data = {};
     data['vendor_id'] = paramsData?.vendor?.vendor_id;
     data['product_id'] = paramsData?.vendor?.id;
     data['coupon_id'] = item.id;
     data['amount'] = paramsData?.vendor?.tags_price;
     console.log(data, 'data-verify-promo');
-    updateState({ isLoadingB: true });
     actions
       .verifyPromocodeForCabOrders(data, {
         code: appData?.profile?.code,
@@ -161,10 +161,10 @@ console.log(paramsData,"paramsDataparamsDataparamsData");
       })
       .then((res) => {
         console.log(res, 'res');
-        updateState({ isLoadingB: false });
+        updateState({ isLoadingB: false, isLoading: false });
         if (res) {
           showSuccess(res?.message || res?.error);
-        
+
           if (paramsData?.pickUp) {
             navigation.navigate(navigationStrings.SHIPPING_DETAILS, {
               promocodeDetail: {
@@ -178,7 +178,7 @@ console.log(paramsData,"paramsDataparamsDataparamsData");
                 ? navigationStrings.CHOOSECARTYPEANDTIMETAXI
                 : navigationStrings.CHOOSECARTYPEANDTIME,
               {
-                ...paramsData?.paramsData,couponInfo:res?.data
+                ...paramsData?.paramsData, couponInfo: res?.data
               },
             );
           }

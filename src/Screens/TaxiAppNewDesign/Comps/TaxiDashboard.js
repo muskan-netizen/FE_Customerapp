@@ -370,7 +370,7 @@ export default function TaxiDashboard({
   }, [appMainData?.categories || []])
 
 
-  const moveToScreen = (details) => {
+  const moveToScreen = (details, isFromSavedAddress = false) => {
     updateState({ fullMapShow: false });
     setTimeout(() => {
       if (!!userData?.auth_token) {
@@ -382,6 +382,7 @@ export default function TaxiDashboard({
             address: details?.address,
             task_type_id: 1,
             pre_address: details?.address,
+            isFromSavedAddress: isFromSavedAddress
           };
         }
         actions.saveSchduleTime('now');
@@ -404,7 +405,7 @@ export default function TaxiDashboard({
             <TouchableOpacity
               key={inx}
               style={{ ...styles.savedPlaceTouc, paddingBottom: 0 }}
-              onPress={() => moveToScreen(itm)}>
+              onPress={() => moveToScreen(itm, true)}>
               <View
                 style={styles.addressView}>
                 <View>

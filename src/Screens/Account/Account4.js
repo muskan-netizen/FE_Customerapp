@@ -360,7 +360,8 @@ export default function Account4({ navigation }) {
                   <Image
                     source={imagePath.icEdit1}
                     style={{
-                      tintColor: colors.black,
+                      tintColor: isDarkMode
+                        ? colors.white : colors.black,
                     }}
                   />
                 </TouchableOpacity>

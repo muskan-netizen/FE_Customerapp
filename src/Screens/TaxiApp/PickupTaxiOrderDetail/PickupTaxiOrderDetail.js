@@ -1916,7 +1916,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                 <View
                                   style={{
                                     backgroundColor: colors.blackOpacity05,
-                                    marginLeft: moderateScale(38),
+                                    marginLeft: moderateScale(10),
                                     borderStyle: "dashed",
                                     borderWidth: 1,
                                   }}

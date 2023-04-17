@@ -96,8 +96,8 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
-  // gokab: 'fb78f0', // live
-  gokab: '578b33', // staging
+  gokab: 'fb78f0', // live
+  // gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
@@ -545,19 +545,19 @@ const shortCodes = {
   ambosSafariExpress: 'ec16dd',
   zulbrand: '873380',
   emart: '6ca3a4',
-  oyeeRides:"634188",
-  royoRides:'87406e',
-  tempcorner:'84a472',
-  autobox:'5db7c1',
-  emiRates:'9ba443',
-  detailPros:'1a1d3b',
-  blink:'49ceca',
-  incubit:'9bc5da',
-  virgingates:'f5a75e',
-  zuluCluch:'6347c6',
-  ping:'17c374',
-  chutneyeah:'85de17',
-  ineeda:'aaabf3',  
+  oyeeRides: "634188",
+  royoRides: '87406e',
+  tempcorner: '84a472',
+  autobox: '5db7c1',
+  emiRates: '9ba443',
+  detailPros: '1a1d3b',
+  blink: '49ceca',
+  incubit: '9bc5da',
+  virgingates: 'f5a75e',
+  zuluCluch: '6347c6',
+  ping: '17c374',
+  chutneyeah: '85de17',
+  ineeda: 'aaabf3',
 };
 
 const appIds = {
@@ -2762,7 +2762,7 @@ const appIds = {
     ios: 'com.zuluCluch.royoorders',
     android: 'com.zuluCluch.royoorders',
   }),
-    ping: Platform.select({
+  ping: Platform.select({
     ios: 'com.ping.royoorder',
     android: 'com.ping.royoorder',
   }),

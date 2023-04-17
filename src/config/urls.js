@@ -1,4 +1,10 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
+
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
+// export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
+
+
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
 // export const API_BASE_URL='https://ngoalapp.com/api/v1'
 // export const API_BASE_URL = 'https://mygreenhippo.com/api/v1'
@@ -7,7 +13,6 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL='https://demo.qdelo.com/api/v1'
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1';
@@ -26,7 +31,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
 //export const API_BASE_URL = 'https://carryfood.org/api/v1';
-//export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
 //export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
@@ -41,7 +46,6 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-// export const API_BASE_URL = 'https://ace.focushires.com/api/v1';
 // export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';

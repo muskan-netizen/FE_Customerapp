@@ -74,7 +74,7 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PICKUPTAXIORDERDETAILS}
         component={PickupTaxiOrderDetail}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, unmountOnBlur: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
@@ -116,17 +116,17 @@ export default function (Stack) {
         component={Khalti}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.SKIP_CASH}
         component={SkipCash}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}
         component={RateOrder}
         options={{
           headerShown: false,
-          unmountOnBlur: true,
+          unmountOnBlur: false,
         }}
       />
       <Stack.Screen

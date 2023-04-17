@@ -156,7 +156,7 @@ const OrderCardVendorComponent2 = ({
     };
   }, []);
 
-console.log(data,'datdadtatda')
+  console.log(data, 'datdadtatda')
   const onCancelOrder = (item) => {
     setIsCancelOrderContentLoader(true);
     setCancellationItem(item);
@@ -243,7 +243,7 @@ console.log(data,'datdadtatda')
                   color: colors.white,
                 }}
               >
-                {strings.YOUR_ORDER_WILL_ARRIVE_BY}{" "}
+                {businessType == 'taxi' ? strings.YOUR_RIDE_WILL_ARRIVE_BY : strings.YOUR_ORDER_WILL_ARRIVE_BY}{" "}
                 {dateParser(data?.scheduled_date_time) || etaTime}
               </Text>
             </View>

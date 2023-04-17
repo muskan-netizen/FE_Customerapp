@@ -1086,5 +1086,6 @@ Amount`,
   AIRPORT: "Airport",
   HOTEL: "Hotel",
   SELECT_TYPE_OR_SKIP: "Select any type or you can skip!",
-  NO_OF_COPASSENGERS: 'No of co-passengers'
+  NO_OF_COPASSENGERS: 'No of co-passengers',
+  YOUR_RIDE_WILL_ARRIVE_BY: 'Your ride will arrive by',
 };
