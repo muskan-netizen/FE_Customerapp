@@ -9,16 +9,18 @@ import {
     moderateScale,
 } from '../../../styles/responsiveSize';
 import FastImage from 'react-native-fast-image';
+import colors from '../../../styles/colors';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 
 /**
  * PromoCodeAvailableSection Part
- * @param {item ,colors,styles,imagePath,cartData,strings,themeColors, _getAllOffers,_removeCoupon} props 
+ * @param {item ,styles,cartData,themeColors, _getAllOffers,_removeCoupon} props 
  * @returns 
  */
 
 function PromoCodeAvailableSection(props) {
-
-    const { item, colors, styles, imagePath, cartData, strings, themeColors, _getAllOffers, _removeCoupon } = props;
+    const { item, styles, cartData, themeColors, _getAllOffers, _removeCoupon } = props;
     return (
         <>
             {/* offerview */}

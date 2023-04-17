@@ -73,7 +73,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // handy-pickup
 // export const API_BASE_URL = 'https://app.handy-pickup.com/api/v1';
 
-// export const API_BASE_URL = 'https://aaujaaunepal.com/api/v1';
+// export const API_BASE_URL = 'https://aaujaaunp.com/api/v1';
 // export const API_BASE_URL='https://halatalabat.com/api/v1';
 // export const API_BASE_URL = 'https://marksoublet.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://papiruki.com/api/v1';

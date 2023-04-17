@@ -7,16 +7,18 @@ import {
 import {
     moderateScale,
 } from '../../../styles/responsiveSize';
+import colors from '../../../styles/colors';
+import strings from '../../../constants/lang';
+
 /**
  * DeliverableSection Part
- * @param {item ,colors,fontFamily,strings} props 
+ * @param {item ,fontFamily} props 
  * @returns 
  */
 
 function DeliverableSection(props) {
 
-    const { item, colors, fontFamily, strings } = props;
-    console.log(item?.isDeliverable ,"item?.isDeliverable ");
+    const { item, fontFamily } = props;
     return (
         <>
             {
@@ -28,7 +30,7 @@ function DeliverableSection(props) {
                                 fontFamily: fontFamily?.medium,
                                 color: colors.redFireBrick,
                             }}>
-                               {/* {'not Deliverable'} */}
+                            {/* {'not Deliverable'} */}
                             {strings.ITEM_NOT_DELIVERABLE}
                         </Text>
                     </View>

@@ -22,17 +22,25 @@ import {
 import { getBundleId } from 'react-native-device-info';
 import { cloneDeep, isEmpty } from 'lodash';
 import FastImage from 'react-native-fast-image';
+import { getHourAndMinutes, tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { MyDarkTheme } from '../../../styles/theme';
+import imagePath from '../../../constants/imagePath';
+import colors from '../../../styles/colors';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import strings from '../../../constants/lang';
+
+
 
 
 /**
  * SwipeableSection Part
- * @param {item ,deleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,getHourAndMinutes,swipeRef,swipeKey,swipeBtns,isDarkMode,colors,styles,imagePath,fontFamily,appIds,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription} props 
+ * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription} props 
  * @returns 
  */
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, tokenConverterPlusCurrencyNumberFormater, getHourAndMinutes, swipeRef, swipeKey, swipeBtns, isDarkMode, colors, styles, imagePath, fontFamily, appIds, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, MyDarkTheme, currencies, cartData, strings, scheduleType, openDeleteView, openPickerForPrescription } = props;
+    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription } = props;
     return (
         <>
             {item?.vendor_products.length > 0

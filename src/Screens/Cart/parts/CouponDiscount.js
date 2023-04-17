@@ -10,17 +10,22 @@ import {
 } from '../../../styles/responsiveSize';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import colors from '../../../styles/colors';
+import imagePath from '../../../constants/imagePath';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import strings from '../../../constants/lang';
 
 /**
  * CouponDiscount Part
- * @param {item ,tokenConverterPlusCurrencyNumberFormater,isDarkMode,colors,styles,imagePath,appIds,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,strings,preferences} props 
+ * @param {item, isDarkMode,styles,digit_after_decimal,additional_preferences,currencies,preferences} props 
  * @returns 
  */
 
 function CouponDiscount(props) {
 
-    const { item, tokenConverterPlusCurrencyNumberFormater, isDarkMode, colors, styles, imagePath, appIds, digit_after_decimal, additional_preferences, MyDarkTheme, currencies, strings, preferences } = props;
+    const { item, isDarkMode, styles, digit_after_decimal, additional_preferences, currencies, preferences } = props;
 
     return (
         <>

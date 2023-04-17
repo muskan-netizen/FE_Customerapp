@@ -678,6 +678,7 @@
 		10386725281FBAC5007B8D7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 10386724281FBABF007B8D7E /* GoogleService-Info.plist */; };
 		1038B9A903D04392FFFD0EB2 /* libPods-available_pods-Kurs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 927EF26AF906F14F2C35F2EB /* libPods-available_pods-Kurs.a */; };
 		103D737C281FDB35000A95E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 103D737B281FDB34000A95E7 /* GoogleService-Info.plist */; };
+		103E6A8932C93BF5F8BD4FF2 /* libPods-available_pods-Myfarma.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF95B143EB08F65C62BD6A4C /* libPods-available_pods-Myfarma.a */; };
 		104E1AA6283B6CD200F6061D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		104E1AA7283B6CD200F6061D /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		104E1AA8283B6CD200F6061D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -1228,6 +1229,7 @@
 		10B01FA3282A96A7001B2FC4 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		10B01FA5282A96A7001B2FC4 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		10B01FA6282A96A7001B2FC4 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		10B26459A102F216EC1A2340 /* libPods-available_pods-Nounou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CA1B661506AD17D49692F8 /* libPods-available_pods-Nounou.a */; };
 		10B6D057283DF968009E2ACD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		10B6D058283DF968009E2ACD /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		10B6D059283DF968009E2ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -1953,6 +1955,7 @@
 		186153B42990D9AA00174151 /* GoKart(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 186153B02990D99B00174151 /* GoKart(Production).xcconfig */; };
 		186153B52990D9AA00174151 /* GoKart(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 186153B12990D9A000174151 /* GoKart(Development).xcconfig */; };
 		186153B62990D9AA00174151 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186153B22990D9A500174151 /* Images.xcassets */; };
+		186A241920FD32F23720331E /* libPods-available_pods-PointoneExpediteDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59F0351170A4D7A0DC282CB1 /* libPods-available_pods-PointoneExpediteDelivery.a */; };
 		186A67D02976836F0009ADEE /* Nounou(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 186A67C9297682910009ADEE /* Nounou(Development).xcconfig */; };
 		186A67D1297683E00009ADEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 186A67CB2976829B0009ADEE /* GoogleService-Info.plist */; };
 		186A67D2297683F50009ADEE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A67CA297682960009ADEE /* Images.xcassets */; };
@@ -7731,6 +7734,7 @@
 		84519A5527D9D78C00317E27 /* Slider(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84519A5427D9D78C00317E27 /* Slider(Production).xcconfig */; };
 		84519A5727D9D7BC00317E27 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84519A5627D9D7BC00317E27 /* Images.xcassets */; };
 		84519B5D27D9D7E200317E27 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84519A5827D9D7DD00317E27 /* GoogleService-Info.plist */; };
+		8451CB56E773B96C93B9DA62 /* libPods-available_pods-Ssuum.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96BCD291CD8E13B9479FC6C /* libPods-available_pods-Ssuum.a */; };
 		8452303026F4BE1800DE21B8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8452303126F4BE1800DE21B8 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8452303226F4BE1800DE21B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -8387,6 +8391,7 @@
 		846921EA26E786B700E28501 /* YourLaundryApp(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 846921E926E786B700E28501 /* YourLaundryApp(Production).xcconfig */; };
 		8469223D26E786D600E28501 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8469223C26E786D600E28501 /* Images.xcassets */; };
 		8469229026E7892A00E28501 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8469228F26E7892900E28501 /* GoogleService-Info.plist */; };
+		846AFBCF4472DEF468CA197B /* libPods-available_pods-BlacNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8A5B72C5C6993C9077011F /* libPods-available_pods-BlacNetwork.a */; };
 		846B57EC2716EA3500367125 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		846B57ED2716EA3500367125 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		846B57EE2716EA3500367125 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -9689,7 +9694,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -10511,7 +10516,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -15998,6 +16003,7 @@
 		F48F24622859E055008E2072 /* Kurs(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F48F24612859E054008E2072 /* Kurs(Production).xcconfig */; };
 		F48F24642859E097008E2072 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F48F24632859E096008E2072 /* Images.xcassets */; };
 		F48F24662859E119008E2072 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48F24652859E118008E2072 /* GoogleService-Info.plist */; };
+		F496B5749DDAF2FE1B9B6977 /* libPods-available_pods-ClickService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D161BF7F266ECBD5399149DA /* libPods-available_pods-ClickService.a */; };
 		F49C6D2B286091BD002E6C82 /* AbbeRides(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2A286091BC002E6C82 /* AbbeRides(Development).xcconfig */; };
 		F49C6D2D286091FA002E6C82 /* AbbeRides(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2C286091FA002E6C82 /* AbbeRides(Production).xcconfig */; };
 		F49C6D2F2860923D002E6C82 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49C6D2E2860923D002E6C82 /* Images.xcassets */; };
@@ -16857,6 +16863,7 @@
 		184D89852987D15000C251EF /* Bliss(Development).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bliss(Development).xcconfig"; sourceTree = "<group>"; };
 		184D89862987D15500C251EF /* Bliss(Production).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bliss(Production).xcconfig"; sourceTree = "<group>"; };
 		184D89872987D15900C251EF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		184D9ED6F19C30CDFB0B63D2 /* Pods-available_pods-Cabdelivr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Cabdelivr.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Cabdelivr/Pods-available_pods-Cabdelivr.release.xcconfig"; sourceTree = "<group>"; };
 		184E0BFB296BE66300E87E64 /* MovingWheelsDelivery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovingWheelsDelivery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		184E0BFD296BEA6200E87E64 /* MovingWheelsDelivery(Development).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "MovingWheelsDelivery(Development).xcconfig"; sourceTree = "<group>"; };
 		184E0BFE296BEA6600E87E64 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -17564,6 +17571,7 @@
 		2CCF4AD963250C4D5941B6B0 /* Pods-available_pods-Zozozi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Zozozi.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Zozozi/Pods-available_pods-Zozozi.debug.xcconfig"; sourceTree = "<group>"; };
 		2CD05A4128E718C400706A07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2CD3C65728F93234009B1D66 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CD402614773E8F234CA2F84 /* Pods-available_pods-Jeevann.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Jeevann.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Jeevann/Pods-available_pods-Jeevann.debug.xcconfig"; sourceTree = "<group>"; };
 		2CD72E5F28C08F360006B909 /* OnTheWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD72E9628C08F500006B909 /* ValleyMeats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ValleyMeats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD72E9928C08FD40006B909 /* OnTheWheel(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "OnTheWheel(Development).xcconfig"; sourceTree = "<group>"; };
@@ -18411,6 +18419,7 @@
 		84258EB327A7FDE300840D16 /* PalmettoPlus(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PalmettoPlus(Production).xcconfig"; sourceTree = "<group>"; };
 		84258EB527A7FDF900840D16 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8425921527A7FFF800840D16 /* PalmettoPlus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PalmettoPlus.entitlements; sourceTree = "<group>"; };
+		8425971995BD5FDF2AF7698D /* libPods-available_pods-Carryfood.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Carryfood.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8426841427297DDF001EFE96 /* MaxisDelivery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaxisDelivery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		842687C127297F20001EFE96 /* MaxisDelivery(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "MaxisDelivery(Development).xcconfig"; sourceTree = "<group>"; };
 		8426884927297F45001EFE96 /* MaxisDelivery(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "MaxisDelivery(Production).xcconfig"; sourceTree = "<group>"; };
@@ -18627,6 +18636,7 @@
 		8449639026DD0745001401BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		844963D826DD07E1001401BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8449646626DD0A13001401BF /* ErrandDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ErrandDebug.entitlements; sourceTree = "<group>"; };
+		844A92448F7239A51786D49F /* libPods-available_pods-GiftyLeaf.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-GiftyLeaf.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		844AA64E27D7897200F613A9 /* Dbairro(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Dbairro(Development).xcconfig"; sourceTree = "<group>"; };
 		844AA65027D789A000F613A9 /* Dbairro(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Dbairro(Production).xcconfig"; sourceTree = "<group>"; };
 		844AA75427D789D000F613A9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -18793,6 +18803,7 @@
 		8469228F26E7892900E28501 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8469242626E78A5100E28501 /* YourLaundryApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YourLaundryApp.entitlements; sourceTree = "<group>"; };
 		84692AF426E79D0100E28501 /* HemptyFy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HemptyFy.entitlements; sourceTree = "<group>"; };
+		84697BB201579F85D558915E /* Pods-available_pods-ShipSmart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-ShipSmart.release.xcconfig"; path = "Target Support Files/Pods-available_pods-ShipSmart/Pods-available_pods-ShipSmart.release.xcconfig"; sourceTree = "<group>"; };
 		846B58512716EA3500367125 /* BakeSale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BakeSale.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846B5BCE2716EBCD00367125 /* BakeSale(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BakeSale(Development).xcconfig"; sourceTree = "<group>"; };
 		846B5CAE2716EBEA00367125 /* BakeSale(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BakeSale(Production).xcconfig"; sourceTree = "<group>"; };
@@ -19341,6 +19352,7 @@
 		849921862799383600A955AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		849924DC27993E9D00A955AC /* CannabisClubSF.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CannabisClubSF.entitlements; sourceTree = "<group>"; };
 		849A371326D7C48500A1D9AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		849A40340255F18854B868DF /* Pods-available_pods-SwiffyLLC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-SwiffyLLC.release.xcconfig"; path = "Target Support Files/Pods-available_pods-SwiffyLLC/Pods-available_pods-SwiffyLLC.release.xcconfig"; sourceTree = "<group>"; };
 		849AE09326C5245800B6C20D /* Travo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849AE16D26C5263300B6C20D /* Travo(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Travo(Development).xcconfig"; sourceTree = "<group>"; };
 		849AE1C526C5264A00B6C20D /* Travo(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Travo(Production).xcconfig"; sourceTree = "<group>"; };
@@ -19414,6 +19426,7 @@
 		84A1A291269EE98000A83511 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84A2D220C925BD693480D36D /* Pods-available_pods-Ebay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Ebay.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Ebay/Pods-available_pods-Ebay.debug.xcconfig"; sourceTree = "<group>"; };
 		84A2FB7326B18695008F557E /* Masa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Masa.entitlements; sourceTree = "<group>"; };
+		84A70D9D8722867418F09A04 /* Pods-available_pods-ChipeTaxi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-ChipeTaxi.release.xcconfig"; path = "Target Support Files/Pods-available_pods-ChipeTaxi/Pods-available_pods-ChipeTaxi.release.xcconfig"; sourceTree = "<group>"; };
 		84A8021E26C3982E00F35132 /* WashValley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WashValley.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A802B926C3990700F35132 /* WashValley(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "WashValley(Development).xcconfig"; sourceTree = "<group>"; };
 		84A8030726C3992B00F35132 /* WashValley(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "WashValley(Production).xcconfig"; sourceTree = "<group>"; };
@@ -19610,6 +19623,7 @@
 		84C6B52E273BEBC200D6AAA1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84C6B5BE273BED0000D6AAA1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84C6B76A273BEDBA00D6AAA1 /* Dishefs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dishefs.entitlements; sourceTree = "<group>"; };
+		84C6C2C8AD768603A060F979 /* Pods-available_pods-WeedLomo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-WeedLomo.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-WeedLomo/Pods-available_pods-WeedLomo.debug.xcconfig"; sourceTree = "<group>"; };
 		84C85486270747AA00D6B750 /* Ace(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ace(Development).xcconfig"; sourceTree = "<group>"; };
 		84C85488270747C000D6B750 /* Ace(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ace(Production).xcconfig"; sourceTree = "<group>"; };
 		84C8548A270747D000D6B750 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -19806,6 +19820,7 @@
 		84ECE2B526A7FB1E009A0F8C /* InstaMobile(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "InstaMobile(Production).xcconfig"; sourceTree = "<group>"; };
 		84ECE2E926A7FD83009A0F8C /* InstaMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InstaMobile.entitlements; sourceTree = "<group>"; };
 		84ECE3BC26A80385009A0F8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84ED7A5E07E8F12A13E31199 /* Pods-available_pods-BKSTaxi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-BKSTaxi.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-BKSTaxi/Pods-available_pods-BKSTaxi.debug.xcconfig"; sourceTree = "<group>"; };
 		84F0464A27C7B6BB007F6CCB /* BauBau.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BauBau.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F04BE927C7B848007F6CCB /* BauBau(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BauBau(Production).xcconfig"; sourceTree = "<group>"; };
 		84F04BEB27C7B863007F6CCB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -20033,6 +20048,7 @@
 		981CD917BD49180C1A67F578 /* libPods-available_pods-Skoop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Skoop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98242743294701F100F7E413 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		982427732947486700F7E413 /* Shipmoe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shipmoe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9825714FA962035760B56E9E /* libPods-available_pods-VendorSpot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-VendorSpot.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98290E4A2946EE390050FCB0 /* LincShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LincShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9862E9B9C3726352475AAE4C /* libPods-available_pods-MobosErrandsService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-MobosErrandsService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		986EDB6CC041002974A49DFC /* libPods-available_pods-PinkJet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-PinkJet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -20619,6 +20635,7 @@
 		E80EE5DF28814D6A00494987 /* SmartMur(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SmartMur(Production).xcconfig"; sourceTree = "<group>"; };
 		E80EE5E128814DB100494987 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E80EE5E328814F0B00494987 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E80FDDDDD6122CA633936130 /* Pods-available_pods-Vendoor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Vendoor.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Vendoor/Pods-available_pods-Vendoor.debug.xcconfig"; sourceTree = "<group>"; };
 		E810C12D28854B5D00CEA1E3 /* OuiSpeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OuiSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E810C13228855F7600CEA1E3 /* OuiSpeed(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "OuiSpeed(Development).xcconfig"; sourceTree = "<group>"; };
 		E810C13428855FED00CEA1E3 /* OuiSpeed(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "OuiSpeed(Production).xcconfig"; sourceTree = "<group>"; };
@@ -20661,6 +20678,7 @@
 		E842FE60289D23E800112F20 /* FoodSpot(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FoodSpot(Production).xcconfig"; sourceTree = "<group>"; };
 		E842FE62289D245900112F20 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E842FE64289D250D00112F20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E84459AFFB29F1579E23D1B6 /* Pods-available_pods-LivraiZoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-LivraiZoo.release.xcconfig"; path = "Target Support Files/Pods-available_pods-LivraiZoo/Pods-available_pods-LivraiZoo.release.xcconfig"; sourceTree = "<group>"; };
 		E84B38572897DF9000D48699 /* RescueRoadsideAssistance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RescueRoadsideAssistance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E84E219E28A370AA00D5CA81 /* VDU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VDU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E84E21A228A3726100D5CA81 /* VDU(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "VDU(Development).xcconfig"; sourceTree = "<group>"; };
@@ -20723,6 +20741,7 @@
 		E88945EF28A3BB8400144B8D /* Taxiolgy(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Taxiolgy(Production).xcconfig"; sourceTree = "<group>"; };
 		E88945F128A3BBD900144B8D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E88945F328A3BC9100144B8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E88CBB00BB1BEC0E49CB2F34 /* Pods-available_pods-HairRun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-HairRun.release.xcconfig"; path = "Target Support Files/Pods-available_pods-HairRun/Pods-available_pods-HairRun.release.xcconfig"; sourceTree = "<group>"; };
 		E894450C2898FD3400E9C08D /* TaxE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E894450F2898FEFD00E9C08D /* TaxE(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TaxE(Development).xcconfig"; sourceTree = "<group>"; };
 		E89445112898FF2000E9C08D /* TaxE(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TaxE(Production).xcconfig"; sourceTree = "<group>"; };
@@ -20962,6 +20981,7 @@
 		F46DAB5929BF0F51003F4778 /* DetailPros.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DetailPros.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F46EF7932844F9EA002AA14A /* SorDelivery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SorDelivery.entitlements; sourceTree = "<group>"; };
 		F46FF6F02846063300EFF1C2 /* SorDelivery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SorDelivery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F47A00DA292435BD8EE909CE /* libPods-available_pods-Appi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Appi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47BC82E285C5CE5009A723A /* GasGiant(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GasGiant(Development).xcconfig"; sourceTree = "<group>"; };
 		F47BC830285C5D35009A723A /* GasGiant(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GasGiant(Production).xcconfig"; sourceTree = "<group>"; };
 		F47BC832285C5D53009A723A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -68208,6 +68228,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Hokitch/Pods-available_pods-Hokitch-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		00B1FD0A02C73D28B56A065A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kartandkarry/Pods-available_pods-Kartandkarry-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kartandkarry/Pods-available_pods-Kartandkarry-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kartandkarry/Pods-available_pods-Kartandkarry-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		00BAF11B28D9AB7A0000EC87 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -69074,6 +69111,213 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Swipe/Pods-available_pods-Swipe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		02A9200A2F35302AEBE5FDDC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Runrun-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		03353187A54789B1314709FE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Sadia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0349572FD804C6FAD94E16D3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Potolo/Pods-available_pods-Potolo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Potolo/Pods-available_pods-Potolo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Potolo/Pods-available_pods-Potolo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0377D2EEDBD27C0A201FE614 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MeatEasy/Pods-available_pods-MeatEasy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MeatEasy/Pods-available_pods-MeatEasy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MeatEasy/Pods-available_pods-MeatEasy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		03BCA4A5DD0B06F094748A24 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-YogoLift/Pods-available_pods-YogoLift-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-YogoLift/Pods-available_pods-YogoLift-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-YogoLift/Pods-available_pods-YogoLift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0451839F8A91C62E7F5B55AD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Shelf/Pods-available_pods-Shelf-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Shelf/Pods-available_pods-Shelf-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Shelf/Pods-available_pods-Shelf-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		04917F89340896AAB4F5312D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MeatEasy/Pods-available_pods-MeatEasy-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MeatEasy/Pods-available_pods-MeatEasy-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MeatEasy/Pods-available_pods-MeatEasy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		04CFE6E54166339638C770D2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-EnsoDigitalAgency-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		04FB9DC54EA82141276B66D1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Xborne/Pods-available_pods-Xborne-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Xborne/Pods-available_pods-Xborne-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Xborne/Pods-available_pods-Xborne-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		057AA14674E85A01570ABC34 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Nool-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		05C5F28E2A9979A94983EEE7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SmartMur/Pods-available_pods-SmartMur-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SmartMur/Pods-available_pods-SmartMur-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-SmartMur/Pods-available_pods-SmartMur-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		05E9D4D60F271699F26F276E /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -69491,6 +69735,96 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Dlvrd/Pods-available_pods-Dlvrd-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		06BC96384094E4EC66F61635 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-EzMobileFuel-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		06C1D7467BE11C0F55CAE9C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-HectoHomes/Pods-available_pods-HectoHomes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-HectoHomes/Pods-available_pods-HectoHomes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-HectoHomes/Pods-available_pods-HectoHomes-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		06D4CBF0B0D2F47EA39BB925 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Senshive/Pods-available_pods-Senshive-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Senshive/Pods-available_pods-Senshive-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Senshive/Pods-available_pods-Senshive-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		06F09E40FEEEAFD2091ACB26 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-FarmMeat/Pods-available_pods-FarmMeat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-FarmMeat/Pods-available_pods-FarmMeat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-FarmMeat/Pods-available_pods-FarmMeat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		06FEF08EADA7EA453A91FBB3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-PeerDeliveries/Pods-available_pods-PeerDeliveries-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-PeerDeliveries/Pods-available_pods-PeerDeliveries-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-PeerDeliveries/Pods-available_pods-PeerDeliveries-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		07252ACFD5931A3FC8491D91 /* ShellScript */ = {
@@ -71755,6 +72089,28 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-RoyoOrder/Pods-available_pods-RoyoOrder-frameworks.sh\"\n";
 		};
+		10626D15334EF6C897B46718 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-VendorSpot-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1066ADEF2817F5A800846A58 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -73577,6 +73933,45 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GinDeliver/Pods-available_pods-GinDeliver-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		149DEE7C836CF7CD53CD3978 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Driveree-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		14A073D45FC29B32E53A69ED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Awamer/Pods-available_pods-Awamer-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Awamer/Pods-available_pods-Awamer-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Awamer/Pods-available_pods-Awamer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		14ACEF2D5A02FA236B3EB0C4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -73881,7 +74276,7 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kurs/Pods-available_pods-Kurs-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Kurs/Pods-available_pods-Kurs-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -78586,7 +78981,11 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Inmotion/Pods-available_pods-Inmotion-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Inmotion/Pods-available_pods-Inmotion-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -79046,6 +79445,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Empire/Pods-available_pods-Empire-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		2244A6655063A1CF4CC5042C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-FazeiTeam/Pods-available_pods-FazeiTeam-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-FazeiTeam/Pods-available_pods-FazeiTeam-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-FazeiTeam/Pods-available_pods-FazeiTeam-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		225F08653544A80850908784 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -79059,6 +79475,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
+		};
+		226129B963EA393C88771506 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-EatHalal-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		22676B2583C2E296FF14F54B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Grub-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		2268B7E20B0D7A4E574E8FFB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -79227,27 +79687,8 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Icare/Pods-available_pods-Icare-frameworks.sh",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/razorpay-pod/Razorpay.framework/Razorpay",
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatProvidersSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUISDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessagingAPI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessagingSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDKConfigurations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Razorpay.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -79794,12 +80235,9 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-WashValley/Pods-available_pods-WashValley-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -79807,7 +80245,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-WashValley/Pods-available_pods-WashValley-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		24B22A2D5539FE5811848028 /* [CP] Embed Pods Frameworks */ = {
@@ -86558,12 +86996,9 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-EasyDrink/Pods-available_pods-EasyDrink-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -86571,7 +87006,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-EasyDrink/Pods-available_pods-EasyDrink-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2E14605D2F008FC1140C11FC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Myfarma/Pods-available_pods-Myfarma-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Myfarma/Pods-available_pods-Myfarma-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Myfarma/Pods-available_pods-Myfarma-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2DE942D5A357DC39FCB3A8DA /* [CP] Copy Pods Resources */ = {
@@ -92685,6 +93137,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Gorillas/Pods-Gorillas-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		532F70B406BDEB2DF71613B6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-YogoLift/Pods-available_pods-YogoLift-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-YogoLift/Pods-available_pods-YogoLift-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-YogoLift/Pods-available_pods-YogoLift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5330E6A9C6B1B8B4105BEEF8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -96450,6 +96919,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Marasym/Pods-available_pods-Marasym-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		694104C72826DA91DC052719 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-ZestyClickz/Pods-available_pods-ZestyClickz-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-ZestyClickz/Pods-available_pods-ZestyClickz-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-ZestyClickz/Pods-available_pods-ZestyClickz-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		694AAB7E742A5DDCCE990E0D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -96506,7 +96992,7 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-WeGotit/Pods-available_pods-WeGotit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-WeGotit/Pods-available_pods-WeGotit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -98501,6 +98987,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GajaMove/Pods-available_pods-GajaMove-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		729E3A795A1543D2979F08C0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ssuum/Pods-available_pods-Ssuum-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ssuum/Pods-available_pods-Ssuum-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ssuum/Pods-available_pods-Ssuum-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		72AD6C9ABABAB5439D466484 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -98693,6 +99196,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-NGoal/Pods-available_pods-NGoal-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		738A28B8784567EB0A2BDDAD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Wer/Pods-available_pods-Wer-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Wer/Pods-available_pods-Wer-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Wer/Pods-available_pods-Wer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		73E1972D7C9197BB40B58906 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-PatrolNow/Pods-available_pods-PatrolNow-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-PatrolNow/Pods-available_pods-PatrolNow-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-PatrolNow/Pods-available_pods-PatrolNow-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73E2D704D7A743CB691AE8EC /* Bundle React Native code and images */ = {
@@ -101657,6 +102194,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Jet/Pods-available_pods-Jet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82CFD1DCB5627959E6928252 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Shipmoe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		82D16D689244BDB80803C1C5 /* ShellScript */ = {
@@ -105491,6 +106050,28 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		846C7CAFD3A298107C06F501 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Choizez-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		846D8F91278EEC0600980345 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -106205,6 +106786,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+		};
+		84756B45A7246F55D608CBA5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-FlyCommerce-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		8477262E27EC493800142126 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -107574,6 +108177,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8488B5F8EFF49C76E9E772B6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-WhatchaGotPickUp/Pods-available_pods-WhatchaGotPickUp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-WhatchaGotPickUp/Pods-available_pods-WhatchaGotPickUp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-WhatchaGotPickUp/Pods-available_pods-WhatchaGotPickUp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		848A11CE27425640003BD140 /* Start Packager */ = {
@@ -115627,6 +116247,174 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoodWheelz/Pods-available_pods-GoodWheelz-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		970C5D2F5F014204C435BD06 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Junkerz/Pods-available_pods-Junkerz-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Junkerz/Pods-available_pods-Junkerz-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Junkerz/Pods-available_pods-Junkerz-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9718DB847A9E6D985484E31A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Xborne-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9725BAAA2FDC26B199E765E6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-FresHest/Pods-available_pods-FresHest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-FresHest/Pods-available_pods-FresHest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-FresHest/Pods-available_pods-FresHest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9749E8FF4D19FA4C6A473453 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-LiverpoolEats/Pods-available_pods-LiverpoolEats-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-LiverpoolEats/Pods-available_pods-LiverpoolEats-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-LiverpoolEats/Pods-available_pods-LiverpoolEats-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9774DCB625D00F449843D7F5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tajammul/Pods-available_pods-Tajammul-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tajammul/Pods-available_pods-Tajammul-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tajammul/Pods-available_pods-Tajammul-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		97910855ACE2EA2B3404C1A1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Delivery-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		979B2D1B3F6CF2110B5936B5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-UFood-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98016C6C3969F78070C82B5A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MandaExpress/Pods-available_pods-MandaExpress-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MandaExpress/Pods-available_pods-MandaExpress-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MandaExpress/Pods-available_pods-MandaExpress-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9810A56351AE45465BFBAB82 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-GRN/Pods-available_pods-GRN-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-GRN/Pods-available_pods-GRN-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GRN/Pods-available_pods-GRN-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		982427492947486700F7E413 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -116270,7 +117058,7 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tezras/Pods-available_pods-Tezras-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Tezras/Pods-available_pods-Tezras-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -119574,7 +120362,7 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SeaEats/Pods-available_pods-SeaEats-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SeaEats/Pods-available_pods-SeaEats-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -120062,12 +120850,9 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-AauJau/Pods-available_pods-AauJau-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -120075,7 +120860,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-AauJau/Pods-available_pods-AauJau-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B0D8E7BB5865A3EE12067D38 /* [CP] Embed Pods Frameworks */ = {
@@ -120916,6 +121701,79 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B508A2C190623DBDBEC6D4B9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-EquaMD-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5390C549C9F9A81D50BA445 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-StitchesonSite/Pods-available_pods-StitchesonSite-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-StitchesonSite/Pods-available_pods-StitchesonSite-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-StitchesonSite/Pods-available_pods-StitchesonSite-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5DC8DDA48602A9F984FB474 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-TimHomeServices/Pods-available_pods-TimHomeServices-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-TimHomeServices/Pods-available_pods-TimHomeServices-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-TimHomeServices/Pods-available_pods-TimHomeServices-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5E564BD870FE93059295F48 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-CitySuds/Pods-available_pods-CitySuds-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-CitySuds/Pods-available_pods-CitySuds-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-CitySuds/Pods-available_pods-CitySuds-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B5EE509CA9DE4E071226ADA3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -121061,12 +121919,9 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Cattch/Pods-available_pods-Cattch-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -121552,7 +122407,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-SafeWalks/Pods-available_pods-SafeWalks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B955AE1E97FA2448AF55D315 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Lex/Pods-available_pods-Lex-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Lex/Pods-available_pods-Lex-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Lex/Pods-available_pods-Lex-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9610E6C42D88929D4880C22 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MyRide/Pods-available_pods-MyRide-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-MyRide/Pods-available_pods-MyRide-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-MyRide/Pods-available_pods-MyRide-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B949DC8C90CD8D31B4246080 /* [CP] Copy Pods Resources */ = {
@@ -123373,6 +124262,128 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-CareWorks/Pods-available_pods-CareWorks-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C3DD7409533B1DDA920C588A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-BottomsUp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C3DEF217BBDC4A28C6890B42 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Tranzit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C3EA0D1B3D70486431346B19 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Hokitch/Pods-available_pods-Hokitch-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Hokitch/Pods-available_pods-Hokitch-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Hokitch/Pods-available_pods-Hokitch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C3FC76BA069B9B7BE94DFE2A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Allotaxi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C3FE9D4A5B0BF95D7601A1CD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-Kazakazi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C434B406032FCF70CE5FE29D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SuperApp/Pods-available_pods-SuperApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SuperApp/Pods-available_pods-SuperApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-SuperApp/Pods-available_pods-SuperApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C43E50D380B82509474F0E18 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -123593,7 +124604,7 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-DimaVega/Pods-available_pods-DimaVega-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-DimaVega/Pods-available_pods-DimaVega-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
@@ -124761,7 +125772,11 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-available_pods-SpeedyDelivery/Pods-available_pods-SpeedyDelivery-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -131408,6 +132423,28 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-FifteenP/Pods-available_pods-FifteenP-frameworks.sh\"\n";
 		};
+		E8A4FE6D36B8D9C6318711D9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-BakeSale-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E8A84AF128B0EED200931DEA /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -135481,6 +136518,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F5F88B66C7B902A948FAE460 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-DotTaxiApp/Pods-available_pods-DotTaxiApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-DotTaxiApp/Pods-available_pods-DotTaxiApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-DotTaxiApp/Pods-available_pods-DotTaxiApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F62A3E71E747769B6CF85EBF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -136261,12 +137315,9 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -136871,6 +137922,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ebay/Pods-available_pods-Ebay-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE6AB8577739F58CE8A213AA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-SuperApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FE85BB9929967EB60004A490 /* Bundle React Native code and images */ = {
@@ -141706,7 +142779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* (null) in Sources */,
+				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -141800,7 +142873,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* (null) in Sources */,
+				8480076B26CE20340014F500 /* BuildFile in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -158920,6 +159993,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6FXUMT5X23;
 				INFOPLIST_FILE = "$(SRCROOT)/Runrun/Plists/AceInfo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -158938,6 +160012,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = Ace;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ace_New;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -169522,6 +170597,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6FXUMT5X23;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -169540,6 +170616,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = ICare;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ICare;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -1085,5 +1085,6 @@ Amount`,
   POLICY_ON_THIS_PRODUCT: "policy on this product!",
   AIRPORT: "Airport",
   HOTEL: "Hotel",
-  SELECT_TYPE_OR_SKIP: "Select any type or you can skip!"
+  SELECT_TYPE_OR_SKIP: "Select any type or you can skip!",
+  NO_OF_COPASSENGERS: 'No of co-passengers'
 };

@@ -601,10 +601,8 @@ export default {
   icEcomCelebInactive: require('../assets/images/Ecommerce/ic_celebrity_02.png'),
   icEcomBrand: require('../assets/images/Ecommerce/ic_brand_01.png'),
   icEcomBrandInactive: require('../assets/images/Ecommerce/ic_brand_02.png'),
-
   icCat: require('../assets/images/Ecommerce/ic_cat.png'),
   icCatActive: require('../assets/images/Ecommerce/ic_cat_active.png'),
-
   icEcomAccount: require('../assets/images/Ecommerce/ic_account_01.png'),
   icEcomAccountInactive: require('../assets/images/Ecommerce/ic_account_02.png'),
   icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
@@ -619,5 +617,6 @@ export default {
   parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
   HezniSplash: require('../assets/HezniSplash.mp4'),
   // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
+
   // flanksplash: require('../assets/Flanksplash.mp4'),
 };

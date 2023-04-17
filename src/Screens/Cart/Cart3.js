@@ -1022,7 +1022,7 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.CONEKTA, paymentData);
         return;
-      case 46: //Direct Pay Online Payment Getway
+      case 47: //Direct Pay Online Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
         return;
@@ -2544,40 +2544,31 @@ function Cart({ navigation, route }) {
             openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
-            tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater}
-            getHourAndMinutes={getHourAndMinutes}
             swipeRef={swipeRef}
             swipeKey={swipeKey}
             swipeBtns={swipeBtns}
             isDarkMode={isDarkMode}
-            colors={colors}
             styles={styles}
-
-            imagePath={imagePath}
             fontFamily={fontFamily}
-            appIds={appIds}
             btnLoadrId={btnLoadrId}
             btnLoader={btnLoader}
             digit_after_decimal={digit_after_decimal}
             additional_preferences={additional_preferences}
             currencies={currencies}
-            MyDarkTheme={MyDarkTheme}
             cartData={cartData}
-            strings={strings}
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
           />
           {/************ end render cart items *************/}
-          <DeliverableSection item={item} fontFamily={fontFamily} strings={strings} colors={colors} styles={styles} />
+          <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />
 
           {/* offerview */}
-          <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} imagePath={imagePath} cartData={cartData} strings={strings} _removeCoupon={_removeCoupon}
+          <PromoCodeAvailableSection themeColors={themeColors} item={item} styles={styles} cartData={cartData} _removeCoupon={_removeCoupon}
             _getAllOffers={_getAllOffers} />
           {/* offerview end */}
 
           {/* start amount view       */}
-
-          <CouponDiscount item={item} tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater} isDarkMode={isDarkMode} colors={colors} styles={styles} imagePath={imagePath} appIds={appIds} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} MyDarkTheme={MyDarkTheme} currencies={currencies} strings={strings} preferences={preferences} />
+          <CouponDiscount item={item} isDarkMode={isDarkMode} styles={styles} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} currencies={currencies} preferences={preferences} />
         </View >
       </View >
     );
@@ -2641,19 +2632,12 @@ function Cart({ navigation, route }) {
         setAppSessionRedirection={setAppSessionRedirection}
         deleteItem={deleteItem}
         addDeleteCartItems={addDeleteCartItems}
-        tokenConverterPlusCurrencyNumberFormater={tokenConverterPlusCurrencyNumberFormater}
-        getHourAndMinutes={getHourAndMinutes}
         isDarkMode={isDarkMode}
-        colors={colors}
         styles={styles}
-
-        imagePath={imagePath}
         fontFamily={fontFamily}
-        appIds={appIds}
         digit_after_decimal={digit_after_decimal}
         additional_preferences={additional_preferences}
         currencies={currencies}
-        MyDarkTheme={MyDarkTheme}
         cartData={cartData}
         appData={appData}
         showTaxFeeArea={showTaxFeeArea}
@@ -2663,15 +2647,12 @@ function Cart({ navigation, route }) {
         scheduleType={scheduleType}
         selectedPayment={selectedPayment}
         placeLoader={placeLoader}
-        ButtonComponent={ButtonComponent}
         _selectTime={_selectTime}
         localeSheduledOrderDate={localeSheduledOrderDate}
         placeOrder={placeOrder}
-        strings={strings}
         _onGiftBoxSelection={_onGiftBoxSelection}
         themeColors={themeColors}
         isGiftBoxSelected={isGiftBoxSelected}
-        hitSlopProp={hitSlopProp}
         selectedTip={selectedTip}
         setInstruction={setInstruction}
         selectedTipvalue={selectedTipvalue}
