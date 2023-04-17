@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
@@ -34,10 +33,8 @@ const OrderCard = (props) => {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-
   const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   return (
     <View style={styles.container}>
       {!!(Platform.OS === 'android' && isBleDevice) && (

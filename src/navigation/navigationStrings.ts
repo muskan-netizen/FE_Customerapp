@@ -169,4 +169,5 @@ export default {
   SPOTDEALPRODUCTSANDSELECTEDPRODUCTS: 'SpotdealProductAndSelectedProducts',
   BIDINGDRIVERSLIST: 'BidingDriversList',
   SAVEDCARDS: 'SavedCards',
+  SKIP_CASH: 'SkipCash',
 };

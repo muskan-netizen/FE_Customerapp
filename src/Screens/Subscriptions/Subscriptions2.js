@@ -170,7 +170,7 @@ export default function Subscriptions2({ navigation, route }) {
   // }, [])
 
 
-  
+
   const getSavedCardList = () => {
 
     actions.getSavedCardsList({},
@@ -314,7 +314,7 @@ export default function Subscriptions2({ navigation, route }) {
             selectedSavedListCardNumber: null
           });
           {
-            !isEmpty(res?.data?.payment_options) && res?.data?.payment_options.map((item,inx)=>{
+            !isEmpty(res?.data?.payment_options) && res?.data?.payment_options.map((item, inx) => {
               item?.id == 50 && getSavedCardList()
             })
           }
@@ -652,7 +652,7 @@ export default function Subscriptions2({ navigation, route }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           // selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
         ) && (
             selectedPaymentMethod?.id == 50 ?
               <>
@@ -1037,7 +1037,7 @@ export default function Subscriptions2({ navigation, route }) {
             paymentDataFlutterWave: paymentData,
           });
         }, 1000);
-      } else if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
+      } else if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) {
         _paymentWithPlugnPayMethods()
       } else if (
         selectedPaymentMethod?.id == 10) {
@@ -1052,7 +1052,7 @@ export default function Subscriptions2({ navigation, route }) {
     }
   };
   const _paymentWithPlugnPayMethods = () => {
- updateState({isLoading : true})
+    updateState({ isLoading: true })
     let selectedMethod = selectedPaymentMethod.code;
     let CardNumber = cardNumber.split(" ").join("") || " "
     let subscrtiptionPlanPrice = Number(planPrice).toFixed(2)
@@ -1084,7 +1084,7 @@ export default function Subscriptions2({ navigation, route }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
           getAllSubscriptions(true);
@@ -1093,11 +1093,11 @@ export default function Subscriptions2({ navigation, route }) {
           setCvc('')
           setExpiryDate('')
           showSuccess(res?.msg)
-          updateState({isLoading : false})
+          updateState({ isLoading: false })
         }
         else {
           showError(res?.msg)
-          updateState({isLoading : false})
+          updateState({ isLoading: false })
         }
       })
       .catch((err) => {
@@ -1106,7 +1106,7 @@ export default function Subscriptions2({ navigation, route }) {
         setCvc('')
         setExpiryDate('')
         showError(err?.msg)
-        updateState({isLoading : false})
+        updateState({ isLoading: false })
       })
   }
   const _webPayment = () => {
@@ -1127,6 +1127,7 @@ export default function Subscriptions2({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res, "ressss?>>");
         updateState({ isLoading: false });
         if (
           res &&
@@ -1502,8 +1503,8 @@ export default function Subscriptions2({ navigation, route }) {
       }
       statusBarColor={colors.backgroundGrey}
       isLoading={isLoading}
-      // source={loaderOne}
-      >
+    // source={loaderOne}
+    >
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

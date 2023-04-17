@@ -171,13 +171,14 @@ function Cart({ navigation, route }) {
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
+  const [paymentModal, setPaymentModal] = useState(false)
 
 
   const [state, setState] = useState({
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
     selectViaMap: false,
-    paymentModal: false,
+    // paymentModal: false,
     deliveryFeeLoader: false,
     isTableDropDown: false,
     btnLoader: false,
@@ -214,7 +215,7 @@ function Cart({ navigation, route }) {
     showTaxFeeArea,
     isGiftBoxSelected,
     selectViaMap,
-    paymentModal,
+    // paymentModal,
     deliveryFeeLoader,
     isProductOrderForm,
     isProductLoader,
@@ -294,7 +295,7 @@ function Cart({ navigation, route }) {
   );
 
   const androidBackButtonHandler = () => {
-    updateState({ paymentModal: false })
+    setPaymentModal(false)
     return true;
   };
 
@@ -606,6 +607,7 @@ function Cart({ navigation, route }) {
 
   //decrementing/removeing products from cart
   const removeProductFromCart = (item) => {
+    console.log(item, "itemmmmm?>>>>>");
     let data = {};
     data['cart_id'] = item?.cart_id;
     data['cart_product_id'] = item?.id;
@@ -681,7 +683,7 @@ function Cart({ navigation, route }) {
         // getAllWishListData();
         showSuccess(res?.message);
       })
-      .catch(errorMethod);
+      .catch(err => console.log(err, "errr>>?"));
   };
 
   //Error handling in screen
@@ -884,7 +886,6 @@ function Cart({ navigation, route }) {
       return;
     }
 
-    console.log("paymentIdpaymentIdpaymentIdpaymentId", paymentId)
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
         return;
@@ -1024,6 +1025,10 @@ function Cart({ navigation, route }) {
       case 46: //Direct Pay Online Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.KHALTI, paymentData);
+        return;
+      case 52: //SaamanShop: skipCash  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         return;
 
       default:
@@ -1176,8 +1181,8 @@ function Cart({ navigation, route }) {
       )
       .then((res) => {
         console.log(res, "Response>>>>>");
-        if (res?.status == 'Success') {
-          updateState({ isLoadingB: false, placeLoader: false })
+        if (res?.status == 'Success' || res?.status == 200) {
+          updateState({ isLoadingB: false })
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: response?.data,
           })();
@@ -1191,7 +1196,7 @@ function Cart({ navigation, route }) {
       .catch((err) => {
         updateState({ isLoadingB: false, placeLoader: false })
         console.log('Error>>>>>>>>>>>', err)
-        showError(err?.msg)
+        showError(err?.msg || err?.error)
       })
   }
 
@@ -1251,9 +1256,8 @@ function Cart({ navigation, route }) {
         setModalType(null);
         setSheduleddropoffdate(null);
 
-        if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
-
-          updateState({ isLoadingB: true })
+        if (selectedPayment?.id === 49 || selectedPayment?.id === 50 || selectedPayment?.id === 53) {
+          updateState({ placeLoader: true, isLoadingB: true })
           _paymentWithPlugnPayMethods(res);
           return;
         }
@@ -1275,7 +1279,9 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 34 &&
           selectedPayment?.id != 41 &&
           selectedPayment?.id != 44 &&
-          selectedPayment?.id != 49
+          selectedPayment?.id != 49 &&
+          selectedPayment?.id != 50 &&
+          selectedPayment?.id != 53
         ) {
           setCartItems([]);
           setCartData({});
@@ -1522,8 +1528,7 @@ function Cart({ navigation, route }) {
         isEmpty(selectedPayment)
       ) {
         // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-
-        updateState({ paymentModal: true });
+        setPaymentModal(true)
         // moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
         return;
       }
@@ -2563,7 +2568,7 @@ function Cart({ navigation, route }) {
             openPickerForPrescription={openPickerForPrescription}
           />
           {/************ end render cart items *************/}
-          <DeliverableSection item={item} colors={colors} styles={styles} strings={strings} />
+          <DeliverableSection item={item} fontFamily={fontFamily} strings={strings} colors={colors} styles={styles} />
 
           {/* offerview */}
           <PromoCodeAvailableSection themeColors={themeColors} item={item} colors={colors} styles={styles} imagePath={imagePath} cartData={cartData} strings={strings} _removeCoupon={_removeCoupon}
@@ -2631,6 +2636,7 @@ function Cart({ navigation, route }) {
     return (
       <Footer
         preferences={preferences}
+        setPaymentModal={(item) => setPaymentModal(item)}
         updateState={updateState}
         setAppSessionRedirection={setAppSessionRedirection}
         deleteItem={deleteItem}
@@ -4486,7 +4492,7 @@ function Cart({ navigation, route }) {
   };
 
   // Category KYC end
-
+  console.log(cartItems, "cartItemscartItems");
   return (
     <WrapperContainer
       bgColor={
@@ -5039,7 +5045,7 @@ function Cart({ navigation, route }) {
                   onSelectPayment={onSelectPayment}
                   codMinAmount={codMinAmount}
                   amount={orderAmount}
-                  paymentModalClose={() => updateState({ paymentModal: false })}
+                  paymentModalClose={() => setPaymentModal(false)}
                   dineInType={dineInType}
                 />
               </StripeProvider>
@@ -5114,33 +5120,32 @@ function Cart({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-          {!!appData?.profile?.preferences?.flutterwave_public_key &&
-            <PayWithFlutterwave
-              onAbort={() =>
-                updateState({
-                  isModalVisibleForPayFlutterWave: false,
-                  placeLoader: false,
-                })
-              }
-              onRedirect={handleOnRedirect}
-              options={{
-                tx_ref: generateTransactionRef(10),
-                authorization:
-                  appData?.profile?.preferences?.flutterwave_public_key,
-                customer: {
-                  email: userData?.email,
-                  name: userData?.name,
-                },
-                amount: paymentDataFlutterWave?.total_payable_amount || 0,
-                currency: currencies?.primary_currency?.iso_code,
-                payment_options: 'card',
-              }}
-            />
+          {
+            !!appData?.profile?.preferences?.flutterwave_public_key ?
+              <PayWithFlutterwave
+                onAbort={() =>
+                  updateState({
+                    isModalVisibleForPayFlutterWave: false,
+                    placeLoader: false,
+                  })
+                }
+                onRedirect={handleOnRedirect}
+                options={{
+                  tx_ref: generateTransactionRef(10),
+                  authorization: appData?.profile?.preferences?.flutterwave_public_key,
+                  customer: {
+                    email: userData?.email,
+                    name: userData?.name,
+                  },
+                  amount: paymentDataFlutterWave?.total_payable_amount || 0,
+                  currency: currencies?.primary_currency?.iso_code,
+                  payment_options: 'card',
+                }}
+              /> : <></>
           }
-
-        </View>
-      </Modal>
-    </WrapperContainer>
+        </View >
+      </Modal >
+    </WrapperContainer >
   );
 }
 export default React.memo(Cart);

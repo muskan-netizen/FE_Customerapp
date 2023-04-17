@@ -37,9 +37,7 @@ export default function ShortCode() {
     console.log('getBundleId()getBundleId()', getBundleId());
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
-    // const appCode = !!prevCode ? prevCode : getAppCode();
     const appCode = !!prevCode ? prevCode : getAppCode();
-    // const appCode = '17c374'
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};

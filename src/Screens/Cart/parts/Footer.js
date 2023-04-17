@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
-
 import FastImage from 'react-native-fast-image';
 import {
   moderateScale,
@@ -1207,7 +1206,7 @@ function Footer(props) {
           <TouchableOpacity
             onPress={() =>
               !!userData?.auth_token
-                ? updateState({ paymentModal: true })
+                ? setPaymentModal(true)
                 : setAppSessionRedirection()
             }
             style={{

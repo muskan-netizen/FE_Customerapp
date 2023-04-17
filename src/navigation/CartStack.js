@@ -31,6 +31,7 @@ import {
   ProductList3,
   ScrollableCategory,
   Simplify,
+  SkipCash,
   Square,
   StripeOXXO,
   ToyyibPay,
@@ -190,6 +191,7 @@ export default function () {
         component={DirectPayOnline}
       />
       <Stack.Screen name={navigationStrings.KHALTI} component={Khalti} />
+      <Stack.Screen name={navigationStrings.SKIP_CASH} component={SkipCash} />
 
       <Stack.Screen name={navigationStrings.OPENPAY} component={OpenPay} />
       <Stack.Screen name={navigationStrings.USEREDE} component={Userede} />

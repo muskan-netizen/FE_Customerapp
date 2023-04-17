@@ -2768,14 +2768,14 @@ export default function ProductDetail({ route, navigation }) {
                                 themeColors.primary_color.substr(1),
                                 15,
                               ),
-                              flex: 0.3,
+                              flex: 0.4,
                               borderColor: themeColors?.primary_color,
                               height: moderateScale(38),
                               justifyContent: 'space-between',
                               marginRight: moderateScale(8),
 
+
                             }}
-                          // onPress={onPress}
                           >
                             <TouchableOpacity
                               disabled={
@@ -2783,11 +2783,6 @@ export default function ProductDetail({ route, navigation }) {
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
                               onPress={() => productIncrDecreamentForCart(2)}
-                            // hitSlop={hitSlopProp}
-                            // style={{
-                            //   flex: 0.2,
-
-                            // }}
                             >
                               <Text
                                 style={{
@@ -2799,35 +2794,18 @@ export default function ProductDetail({ route, navigation }) {
                               </Text>
                             </TouchableOpacity>
                             <TextInput
-                              style={{
-                                ...commonStyles.buttonRect,
-                                ...styles.incDecBtnStyle,
-                                backgroundColor: getColorCodeWithOpactiyNumber(
-                                  themeColors.primary_color.substr(1),
-                                  15,
-                                ),
-                                flex: 0.3,
-                                borderColor: themeColors?.primary_color,
-                                height: moderateScale(38),
-                                justifyContent: 'space-between',
-                                marginRight: moderateScale(8),
-                              }}
-                              value={`${productQuantityForCart.toString()}`}
-                            />
-                            <TouchableOpacity
-                              disabled={
-                                !productDetailData?.vendor?.show_slot &&
-                                !!productDetailData?.vendor?.is_vendor_closed
-                              }
-
-
+                              keyboardType={"number-pad"}
                               onChangeText={(value) =>
                                 updateState({
                                   productQuantityForCart:
-                                    value == '' ? '' : Number(value),
+                                    value == '' ? 1 : Number(value),
                                 })
                               }
-
+                              style={{
+                                maxWidth: moderateScale(60),
+                                marginLeft: moderateScale(4)
+                              }}
+                              value={`${productQuantityForCart.toString()}`}
                             />
 
                             <TouchableOpacity

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "916278263416",
+    "project_id": "chutneyeah-order",
+    "storage_bucket": "chutneyeah-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916278263416:android:cd602966531906f3e7b78d",
+        "android_client_info": {
+          "package_name": "com.chutneyeah.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916278263416-cd6o9l910ve03mjru2lq4jb1vum3ao09.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chutneyeah.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "916278263416-csfttjdotcumhfalsijcchta397p77a2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chutneyeah.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "916278263416-g0glvfu8okgc4spkjq2ddq8u5jtes7bm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chutneyeah.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "916278263416-v1re8f9v4mpumf5jmvrhg8c24bkg2auo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyb5H5NJnsqLWhQefySLo5aG4VORnP1Kk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916278263416-v1re8f9v4mpumf5jmvrhg8c24bkg2auo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "916278263416-n3b4d6bu6fkn70lngi424rluoe0qm184.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.chutneyeah.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

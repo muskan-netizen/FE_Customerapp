@@ -496,6 +496,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
   };
 
   const checkPaymentOptions = (extraData, res) => {
+
     console.log(extraData, 'extraData');
     console.log(res, 'res');
     let paymentId = selectedPayment?.id;
@@ -516,11 +517,12 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
     };
 
     console.log(paymentData, 'paymentData>paymentData');
+    console.log(paymentId, 'paymentData>paymentData123');
     updateState({
       isModalVisible: false,
       isLoading: false,
       isRefreshing: false,
-      // indicatorLoader: false,
+      indicatorLoader: false,
     });
     switch (paymentId) {
       case 4: //Stripe Payment Getway
@@ -543,6 +545,9 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         break;
       case 47: //Khalti Payment Gatway
         navigation.navigate(navigationStrings.KHALTI, paymentData);
+        break;
+      case 52: //SKIP_CASH Payment Gatway
+        navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         break;
       case 30: //FlutterWave Payment Getway
         updateState({
@@ -592,7 +597,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
           let newObj = extraData?.orderDetail;
@@ -640,7 +645,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
             selectedCarOption: selectedCarOption?.sku,
           };
           console.log(extraData, data, "extraData, data");
-          if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res, data) }
+          if (selectedPayment?.id == 49 || selectedPayment?.id == 50 || selectedPayment?.id == 53) { _paymentWithPlugnPayMethods(extraData, res, data) }
           else { checkPaymentOptions(extraData, data); }
 
         } else {

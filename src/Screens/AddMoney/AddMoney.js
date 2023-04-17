@@ -328,7 +328,7 @@ export default function AddMoney({ navigation }) {
                 : imagePath.radioInActive
             }
           />
-          <View style={{marginLeft:moderateScale(10)}}>
+          <View style={{ marginLeft: moderateScale(10) }}>
             <View style={{ flexDirection: 'row' }}>
               <Text
                 style={
@@ -466,6 +466,7 @@ export default function AddMoney({ navigation }) {
               />
             </View>
           )}
+        {console.log(selectedPaymentMethod, "selectedPaymentMethod>>>>")}
 
         {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
@@ -500,7 +501,7 @@ export default function AddMoney({ navigation }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
         ) && (
             <PaymentGateways
               isCardNumber={cardNumber}
@@ -789,11 +790,11 @@ export default function AddMoney({ navigation }) {
       });
       return;
     }
-    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50)) {
+    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50 && selectedPaymentMethod?.id != 53)) {
       _webPayment();
       return;
     }
-    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
+    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id === 53) {
       _paymentWithPlugnPayMethods()
       return;
     }
@@ -891,7 +892,7 @@ export default function AddMoney({ navigation }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
           updateState({ btnLoader: false })

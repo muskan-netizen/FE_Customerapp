@@ -779,7 +779,7 @@ function SelectPaymentModalView({
           }}
         />
       </View>
-
+      
       <Modal
         isVisible={showModal}
         style={{

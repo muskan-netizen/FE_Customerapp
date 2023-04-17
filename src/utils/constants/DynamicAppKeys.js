@@ -545,16 +545,19 @@ const shortCodes = {
   ambosSafariExpress: 'ec16dd',
   zulbrand: '873380',
   emart: '6ca3a4',
-  oyeeRides: "634188",
-  royoRides: '87406e',
-  tempcorner: '84a472',
-  autobox: '5db7c1',
-  emiRates: '9ba443',
-  detailPros: '1a1d3b',
-  blink: '49ceca',
-  incubit: '9bc5da',
-  virgingates: 'f5a75e',
-  zuluCluch: '6347c6',
+  oyeeRides:"634188",
+  royoRides:'87406e',
+  tempcorner:'84a472',
+  autobox:'5db7c1',
+  emiRates:'9ba443',
+  detailPros:'1a1d3b',
+  blink:'49ceca',
+  incubit:'9bc5da',
+  virgingates:'f5a75e',
+  zuluCluch:'6347c6',
+  ping:'17c374',
+  chutneyeah:'85de17',
+  ineeda:'aaabf3',  
 };
 
 const appIds = {
@@ -2758,6 +2761,18 @@ const appIds = {
   zuluCluch: Platform.select({
     ios: 'com.zuluCluch.royoorders',
     android: 'com.zuluCluch.royoorders',
+  }),
+    ping: Platform.select({
+    ios: 'com.ping.royoorder',
+    android: 'com.ping.royoorder',
+  }),
+  chutneyeah: Platform.select({
+    ios: 'com.chutneyeah.royoorder',
+    android: 'com.chutneyeah.royoorder',
+  }),
+  ineeda: Platform.select({
+    ios: 'com.ineeda.royoorder',
+    android: 'com.ineeda.royoorder',
   }),
 };
 

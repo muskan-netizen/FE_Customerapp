@@ -15,6 +15,7 @@ import {
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
+  SkipCash,
   VerifyAccount
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -114,6 +115,11 @@ export default function (Stack) {
         name={navigationStrings.KHALTI}
         component={Khalti}
         options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name={navigationStrings.SKIP_CASH}
+        component={SkipCash}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.RATEORDER}

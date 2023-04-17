@@ -2638,7 +2638,7 @@ export default function OrderDetail({ navigation, route }) {
                 MyDarkTheme={MyDarkTheme}
               />
             )} */}
-
+            
           {!!cartData?.tip_amount && cartData?.tip_amount > 0 && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}
@@ -2722,7 +2722,8 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-
+          {console.log(appData,"tippppppppp")}
+          {console.log(appData?.profile?.preferences?.tip_after_order,"tippppppppp2222")}
           {!!(
             paramData?.orderStatus?.current_status?.title ===
             strings.DELIVERED &&

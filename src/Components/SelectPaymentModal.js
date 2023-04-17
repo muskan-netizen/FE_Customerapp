@@ -147,6 +147,14 @@ export default function SelectPaymentModal({
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
     let apiData = `/cart?service_type=${dineInType}`;
+    let header = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+
+    }
+    console.log(apiData,"apiDataapiData");
+    console.log(header, "headerr$");
     actions
       .getListOfPaymentMethod(
         apiData,
@@ -243,7 +251,7 @@ export default function SelectPaymentModal({
       updateState({ btnLoader: true });
       if (
         selectedPaymentMethod?.id == 4 &&
-        selectedPaymentMethod?.off_site == 0
+        selectedPaymentMethod?.off_site == 0 
       ) {
         if (cardInfo) {
           await createToken({ ...cardInfo, type: 'Card' })
@@ -279,7 +287,7 @@ export default function SelectPaymentModal({
           //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
       } else {
-        if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
+        if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
           selectedPaymentMethod?.off_site == 1) {
           if (!isEmpty(selectedSavedListCardNumber)) {
             console.log("selectedSavedListCardNumber =>", selectedSavedListCardNumber);
@@ -651,11 +659,12 @@ export default function SelectPaymentModal({
                           />
                         </View>
                       )}
+                    
                     {!!(
                       selectedPaymentMethod &&
                       selectedPaymentMethod?.id == item.id &&
                       selectedPaymentMethod?.off_site == 1 &&
-                      (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+                      (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53)
                     ) && (
                         selectedPaymentMethod?.id == 50 ?
                           <>

@@ -162,6 +162,8 @@ export {default as ChatRoomForVendor} from './ChatRoom/ChatRoomForVendor';
 export {default as Conekta} from './PaymentGateways/Conekta';
 export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
 export {default as Category} from './Category/Category';
+export {default as SkipCash} from './PaymentGateways/SkipCash';
+export {default as SavedCards} from './SavedCards/SavedCards';
 
 // P2p template
 export {default as Post} from './P2P/Post/PostCategory';
@@ -178,4 +180,3 @@ export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAn
 export {default as TaxiHome} from './TaxiAppNewDesign/TaxiHome';
 export {default as Addaddress2} from './TaxiAppNewDesign/Addaddress/Addaddress2';
 export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseVechile';
-export {default as SavedCards} from './SavedCards/SavedCards';

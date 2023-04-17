@@ -49,6 +49,8 @@ const MarketCard3 = ({
   const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
 
+  console.log(data,"datadatadata>>>>");
+
   let imageUrl = getImageUrl(
     data?.banner?.proxy_url || data?.image?.proxy_url,
     data?.banner?.image_path || data?.image?.image_path,

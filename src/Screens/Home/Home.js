@@ -468,7 +468,7 @@ export default function Home({ route, navigation }) {
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          updateState({ searchDataLoader: false });
+          updateState({ searchDataLoader: false, isLoading: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -493,7 +493,7 @@ export default function Home({ route, navigation }) {
               isLoadingB: false,
               searchDataLoader: false,
             });
-          }, 1500);
+          }, 500);
         })
         .catch(errorMethod);
     }
@@ -1228,7 +1228,7 @@ export default function Home({ route, navigation }) {
           </>
         );
 
-      case 5:
+      case 5: // 5
         return (
           <>
             <DashBoardHeaderFive
