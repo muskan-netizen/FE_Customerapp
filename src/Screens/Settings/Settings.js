@@ -34,7 +34,7 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { setItem } from '../../utils/utils';
 import stylesFunc from './styles';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBuildId, getBundleId } from 'react-native-device-info';
 import { API_BASE_URL } from '../../config/urls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
@@ -46,6 +46,7 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 
 export default function Settings({ route, navigation }) {
   const {
@@ -186,7 +187,7 @@ export default function Settings({ route, navigation }) {
           await AsyncStorage.setItem('autoConnectEnabled', 'true');
           await AsyncStorage.setItem('BleDevice2', btData);
           console.log('++++++22', btData);
-          if (lang === 'ar') {
+          if (lang === 'ar' || lang === 'he') {
             I18nManager.forceRTL(true);
             setItem('language', lang);
             changeLaguage(lang);
@@ -201,7 +202,7 @@ export default function Settings({ route, navigation }) {
             (s) => { },
           );
         } else {
-          if (lang === 'ar') {
+          if (lang === 'ar' || lang === 'he') {
             I18nManager.forceRTL(true);
             setItem('language', lang);
             changeLaguage(lang);
@@ -359,6 +360,8 @@ export default function Settings({ route, navigation }) {
     }
   };
 
+
+
   return (
     <WrapperContainer
       bgColor={
@@ -387,6 +390,8 @@ export default function Settings({ route, navigation }) {
 
       <View style={{ ...commonStyles.headerTopLine }} />
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      {appIds.weTogether!=getBundleId()&&
+      <>
         <View
           style={{
             marginHorizontal: moderateScale(20),
@@ -404,8 +409,8 @@ export default function Settings({ route, navigation }) {
           </Text>
         </View>
         <View style={{ height: 10 }} />
-
-        <View
+       
+          <View
           style={{
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.lightDark
@@ -498,6 +503,9 @@ export default function Settings({ route, navigation }) {
           </View>
           <View style={{ height: 10 }} />
         </View>
+        </>
+        }
+      
         <View style={{ height: moderateScaleVertical(30) }} />
         {Platform.OS === 'android' ? (
           <LinearGradient

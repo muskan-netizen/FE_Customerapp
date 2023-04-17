@@ -417,3 +417,14 @@ export function submitProductForReplacement(data = {}, headers = {}) {
 export function getCancellationReason(data = {}, headers = {}) {
   return apiGet(GET_CANCEL_REASONS, data, headers);
 }
+
+
+
+// check for new bides
+
+export function notificationDataForBid(data = {}) {
+  dispatch({
+    type: types.NOTIFICATION_FOR_BIDE,
+    payload: data,
+  });
+}

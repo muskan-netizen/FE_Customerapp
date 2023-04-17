@@ -23,6 +23,7 @@ import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
 
+
 const Stack = createNativeStackNavigator();
 
 
@@ -31,8 +32,6 @@ export default function Routes() {
   const { appStyle, themeColors } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
 
-  console.log("businessTypebusinessType",businessType)
-  
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{

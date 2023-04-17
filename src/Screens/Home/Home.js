@@ -411,8 +411,6 @@ export default function Home({ route, navigation }) {
     let latlongObj = {};
 
 
-    console.log("locationDatalocationData", locationData)
-
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
@@ -1455,6 +1453,68 @@ export default function Home({ route, navigation }) {
             />
           </>
         );
+
+      default:
+        return <>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            nearestLoc={nearestLocDis}
+            currentLoc={currentLocation}
+          />
+          {dineInType == 'pick_drop' ? (
+            <TaxiHomeDashbord
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory(item)}
+              toggleData={appData}
+              location={location}
+              curLatLong={curLatLong}
+              currentLocation={currentLocation}
+            />
+          ) : (
+            <DashBoardFive
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+              selectedFilterType={selectedFilterType}
+            />
+
+          )}
+        </>
     }
   };
 

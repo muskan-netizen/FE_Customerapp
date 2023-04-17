@@ -58,8 +58,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
     `${imageHeight}/${imageWidth}`,
   );
 
-
-
   return (
     <TouchableOpacity
       onPress={onPress}

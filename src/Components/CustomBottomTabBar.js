@@ -81,7 +81,7 @@ const CustomBottomTabBar = ({
                 style={{
                   ...props.labelStyle,
                   color: isFocused
-                    ? themeColors.secondary_color
+                    ? themeColors?.secondary_color
                     : colors.whiteOpacity85,
                   opacity: isFocused ? 1 : 0.6,
                 }}>

@@ -125,7 +125,7 @@ const Header = ({
               style={{
                 ...styles.textStyle,
                 ...textStyle,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                color: isDarkMode ? colors.white : colors.black,
               }}>
               {centerTitle}
             </Text>
@@ -152,6 +152,7 @@ const Header = ({
                   color: themeColors.primary_color,
                   fontSize: textScale(12),
                   ...rightTxtStyle,
+                  color: isDarkMode ? colors.white : colors.black,
                 }}>
                 {rightTxt}
               </Text>

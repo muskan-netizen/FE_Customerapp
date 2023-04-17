@@ -68,6 +68,7 @@ import Toast from 'react-native-simple-toast';
 import Clipboard from '@react-native-community/clipboard';
 import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import * as RNLocalize from 'react-native-localize';
 import Reccuring from '../../Components/Reccuring';
 
 import { enableFreeze } from "react-native-screens";
@@ -158,6 +159,11 @@ export default function ProductDetail({ route, navigation }) {
   const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState({})
   const [isAppointmentSlotsModal, setAppointmentSlotsModal] = useState(false)
   const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null)
+  const [appointmentDispatcherAgentSlots, setAppointmentDispatcherAgentSlots] = useState([])
+  const [allDispatcherAgents, setAllDispatcherAgents] = useState([]);
+  const [availableDriversForSlot, setAvailableDriversForSlot] = useState([])
+  // const [selectedAllProductDataForAppointment, setSelectedAllProductDataForAppointment] = useState({})
+  const [selectedAgent, setSelectedAgent] = useState({})
 
 
 
@@ -438,7 +444,7 @@ export default function ProductDetail({ route, navigation }) {
         });
         if (error?.message == "Recurring booking type not be empty.") {
           showInfo('Schedule the product click on recurring checkbox');
-        } else {  
+        } else {
           showError(error?.message || error?.error);
         }
       }
@@ -462,7 +468,7 @@ export default function ProductDetail({ route, navigation }) {
       updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       if (error?.message == "Recurring booking type not be empty.") {
         showInfo('Schedule the product click on recurring checkbox');
-      } else {  
+      } else {
         showError(error?.message || error?.error);
       }
     }
@@ -702,184 +708,7 @@ export default function ProductDetail({ route, navigation }) {
           {selectedVariant?.variant_type_id == variant_type_id
             ? radioButtonView(options)
             : null}
-          {typeId == 10 ? (
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginVertical: moderateScaleVertical(10),
-                }}>
-                <TouchableOpacity
-                  onPress={() => updateState({ isRentalStartDatePicker: true })}>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(13),
-                      fontFamily: fontFamily.bold,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    Start Date
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(12),
-                      fontFamily: fontFamily.regular,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {!!startDateRental
-                      ? moment(startDateRental).format('MM/DD/YY hh:mm A')
-                      : ''}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => updateState({ isRentalEndDatePicker: true })}>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(13),
-                      fontFamily: fontFamily.bold,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    End Date
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(12),
-                      fontFamily: fontFamily.regular,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {!!endDateRental
-                      ? moment(endDateRental).format('MM/DD/YY hh:mm A')
-                      : ''}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <Text
-                style={{
-                  fontSize: moderateScale(13),
-                  fontFamily: fontFamily.bold,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                Duration:
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderWidth: 1,
-                  marginVertical: 5,
-                }}>
-                <TouchableOpacity
-                  onPress={() => addRemoveDuration(2)}
-                  style={{
-                    borderRightWidth: 1,
-                    flex: 0.3,
-                    alignItems: 'center',
-                    padding: 5,
-                  }}>
-                  <Text>{'<'}</Text>
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    flex: 0.4,
-                    textAlign: 'center',
-                    fontSize: moderateScale(13),
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {getHourAndMinutes(rentalProductDuration)}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => addRemoveDuration(1)}
-                  style={{
-                    borderLeftWidth: 1,
-                    flex: 0.3,
-                    alignItems: 'center',
-                    padding: 5,
-                  }}>
-                  <Text> {'>'} </Text>
-                </TouchableOpacity>
-              </View>
 
-              <Text
-                style={{
-                  fontSize: moderateScale(13),
-                  fontFamily: fontFamily.regular,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {' '}
-                  {tokenConverterPlusCurrencyNumberFormater(
-                    productDetailNew?.actual_price,
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                  )}
-                </Text>{' '}
-                for first{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productDetailNew?.product?.minimum_duration}
-                </Text>{' '}
-                hour{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productDetailNew?.product?.minimum_duration_min}
-                </Text>{' '}
-                min
-              </Text>
-              <Text
-                style={{
-                  fontSize: moderateScale(13),
-                  fontFamily: fontFamily.regular,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                Extra duration will be charged{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {tokenConverterPlusCurrencyNumberFormater(
-                    productDetailNew?.incremental_price,
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                  )}
-                </Text>{' '}
-                per{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {productDetailNew?.product?.additional_increments}
-                </Text>{' '}
-                hour{' '}
-                <Text
-                  style={{
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  {' '}
-                  {productDetailNew?.product?.additional_increments_min}
-                </Text>{' '}
-                min
-              </Text>
-            </View>
-          ) : null}
         </View>
       );
     }
@@ -1185,6 +1014,8 @@ export default function ProductDetail({ route, navigation }) {
     );
   };
 
+  console.log(typeId, "typeId>>>>>typeId", rentalProductDuration)
+
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
       updateState({ addonSet: data?.addonSetData });
@@ -1228,7 +1059,7 @@ export default function ProductDetail({ route, navigation }) {
       })
     }
     if (!isEmpty(period) && selectedPlanValues == "Custom") {
-      Object.entries(period).map(([key, value])=> (selectedCustomDates.push(key)));
+      Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
     }
     if (!isEmpty(period) && selectedPlanValues == "Weekly") {
       Object.entries(period).map(([key, value]) => {
@@ -1276,8 +1107,8 @@ export default function ProductDetail({ route, navigation }) {
 
     data['additional_increments_hrs_min'] =
       rentalProductDuration -
-      Number(productDetailNew?.product?.minimum_duration) * 60 +
-      Number(productDetailNew?.product?.minimum_duration_min);
+      Number(productDetailData?.minimum_duration) * 60 +
+      Number(productDetailData?.minimum_duration_min);
     if (addonSet && addonSet.length) {
       // console.log(addonSetData, 'addonSetData');
       data['addon_ids'] = addon_ids;
@@ -1288,13 +1119,14 @@ export default function ProductDetail({ route, navigation }) {
         data['scheduled_date_time'] = String(
           moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
         );
+      data['dispatch_agent_id'] = selectedAgent?.id
+      data['schedule_type'] = productDetailData?.mode_of_service == 'schedule' ? 'schedule' : ''
 
     }
 
     console.log(data, 'data for cart');
 
     data['recurringformPost'] = recurringformPost
-
     console.log(JSON.stringify(data), 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
@@ -1320,7 +1152,7 @@ export default function ProductDetail({ route, navigation }) {
               data: res?.data
             }
           });
-        }else{
+        } else {
           navigation.goBack()
         }
       }).catch((error) => errorMethodSecond(error, addonSet));
@@ -1664,30 +1496,87 @@ export default function ProductDetail({ route, navigation }) {
       .catch(errorMethod);
   };
 
-  const onDateSelected = (date) => {
+  const onDateSelected = async (date) => {
     setLoadingGetSlots(true);
     if (isAppointmentPicker) {
-      actions.getAppointmentSlots({
-        cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
-        product_id: productDetailData?.id
-      }, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-      },).then((res) => {
-        console.log(res, "<===res getAppointmentSlots")
-        setAppointmentAvailableSlots(res?.data?.time_slots)
-        setLoadingGetSlots(false);
-        setAppointmentPicker(false);
-        setSelectedAppointmentIndx(null);
-        setSelectedAppointmentSlot({})
-      }).catch((err) => {
-        console.log(err, "<==err getAppointmentSlots")
-        setLoadingGetSlots(false);
-        setAppointmentPicker(false);
-        errorMethod(err);
-      })
+      if (productDetailData?.is_slot_from_dispatch) {
+        const apiData = {
+          cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+          product_id: productDetailData?.id
+        }
+        const apiHeader = {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        }
+        actions.getAppointmentSlots(apiData, apiHeader).then((res) => {
+          console.log(res, "<===res getAppointmentSlots")
+          if (res?.dispatchAgents) {
+            if (!isEmpty(res?.dispatchAgents?.slots)) {
+              const slots = res?.dispatchAgents?.slots
+              setAppointmentDispatcherAgentSlots(slots)
+              let allSlots = []
+              for (var propName in slots) {
+                if (slots.hasOwnProperty(propName)) {
+                  var propValue = slots[propName];
+                  allSlots.push(propValue)
+                }
+              }
 
+              setAllDispatcherAgents(res?.dispatchAgents?.agents)
+              setAppointmentDispatcherAgentSlots(allSlots)
+            }
+
+          } else {
+            setAppointmentAvailableSlots(res?.data?.time_slots)
+          }
+
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
+          setSelectedAppointmentIndx(null);
+          setSelectedAppointmentSlot({})
+          setTimeout(() => {
+            setAppointmentSlotsModal(true)
+          }, 500);
+        }).catch((err) => {
+          console.log(err, "<==err getAppointmentSlots")
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
+          errorMethod(err);
+        })
+      } else {
+        try {
+          let vendorId = productDetailData?.vendor_id
+          // vendor_id,date,delivery
+          const res = await actions.checkVendorSlots(
+            `?vendor_id=${vendorId}&date=${moment(appointmentSelectedDate).format("YYYY-MM-DD")}&delivery=${dine_In_Type}`,
+            {
+              code: appData?.profile?.code,
+              // currency: currencies?.primary_currency?.id,
+              // language: languages?.primary_language?.id,
+              // systemuser: DeviceInfo.getUniqueId(),
+              timezone: RNLocalize.getTimeZone(),
+              // device_token: DeviceInfo.getUniqueId(),
+            },
+          );
+
+          console.log(res, "res for slots vendor");
+          if (res) {
+            setAppointmentAvailableSlots(res)
+            setLoadingGetSlots(false);
+            setAppointmentPicker(false);
+            setSelectedAppointmentIndx(null);
+            setSelectedAppointmentSlot({})
+            setTimeout(() => {
+              setAppointmentSlotsModal(true)
+            }, 500);
+          }
+        } catch (error) {
+          setLoadingGetSlots(false);
+
+          console.log('error riased', error);
+        }
+      };
       return
     }
 
@@ -1920,6 +1809,19 @@ export default function ProductDetail({ route, navigation }) {
   };
 
 
+  const onSlotSelect = (item, index) => {
+    const result = allDispatcherAgents.filter(a1 => item?.agent_id.find(a2 => a1.id == a2));
+    setAvailableDriversForSlot(result)
+    setSelectedAppointmentSlot(item)
+    setSelectedAppointmentIndx(index)
+    setSelectedAgent({})
+  }
+
+  const _onSelecteAgent = (item) => {
+    setSelectedAgent(item)
+  }
+
+
   const AppointmentSlotModal = () => {
     return <View style={{
       backgroundColor: colors.white,
@@ -1938,35 +1840,78 @@ export default function ProductDetail({ route, navigation }) {
           fontFamily: fontFamily?.bold,
           fontSize: textScale(14),
         }}>Select slot</Text>
-        <TouchableOpacity onPress={() => setAppointmentSlotsModal(false)}>
+        <TouchableOpacity onPress={() => {
+          if (isEmpty(selectedAgent) && productDetailData?.is_show_dispatcher_agent) {
+            alert('please select agent')
+            return
+          }
+          setAppointmentSlotsModal(false)
+        }}>
           <Text style={{
             fontFamily: fontFamily.bold,
             color: themeColors?.primary_color
           }}>Done</Text>
         </TouchableOpacity>
       </View>
-      <FlatList data={appointmentAvailableSlots}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{
-          height: moderateScaleVertical(10)
-        }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
-          setSelectedAppointmentSlot(item)
-          setSelectedAppointmentIndx(index)
-        }} style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 8,
-          borderWidth: 1,
-          borderColor: colors.borderColorB,
-          borderRadius: moderateScale(4)
-        }}>
-          <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
-          <Text style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(13),
-            marginLeft: moderateScale(10)
-          }}>{item?.name}</Text>
-        </TouchableOpacity>} />
+      {!isEmpty(appointmentDispatcherAgentSlots) ?
+        <FlatList data={appointmentDispatcherAgentSlots}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{
+            height: moderateScaleVertical(10)
+          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => onSlotSelect(item, index)} style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(4)
+          }}>
+            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(13),
+              marginLeft: moderateScale(10)
+            }}>{item?.name}</Text>
+          </TouchableOpacity>} />
+        : <FlatList data={appointmentAvailableSlots}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{
+            height: moderateScaleVertical(10)
+          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
+            setSelectedAppointmentSlot(item)
+            setSelectedAppointmentIndx(index)
+          }} style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(4)
+          }}>
+            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(13),
+              marginLeft: moderateScale(10)
+            }}>{item?.name}</Text>
+          </TouchableOpacity>} />}
+
+
+
+      <View style={{ flexDirection: 'row', paddingVertical: moderateScaleVertical(10) }}>
+        {!!(productDetailData?.is_slot_from_dispatch && productDetailData?.is_show_dispatcher_agent && !isEmpty(availableDriversForSlot)) && availableDriversForSlot.map((item, index) => {
+          return (
+            <TouchableOpacity style={{ alignItems: 'center', marginHorizontal: moderateScale(10) }}
+              onPress={() => _onSelecteAgent(item)}>
+              <View style={{ borderWidth: moderateScale(1), borderColor: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight, height: moderateScaleVertical(42), width: moderateScale(42), borderRadius: moderateScale(20) }}>
+                <Image style={{ height: moderateScaleVertical(40), width: moderateScale(40), borderRadius: moderateScale(20) }} source={{ uri: item?.image_url }} />
+              </View>
+              <Text style={{ fontSize: textScale(9), fontFamily: fontFamily?.bold, color: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight }}>{item?.name}</Text>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
+
     </View>
   }
 
@@ -2251,17 +2196,16 @@ export default function ProductDetail({ route, navigation }) {
                       fontSize: textScale(12),
                       color: colors.textGrey,
                     }}>
-                    We have{' '}
-                    {productDetailData?.is_return_days
-                      ? productDetailData?.return_days + ' days '
+                    {strings.WE_HAVE}{' '}
+                    {!!productDetailData?.is_return_days
+                      ? productDetailData?.return_days + ` ${strings.DAYS} `
                       : ''}
-                    {productDetailData?.replaceable ? 'replaceable' : ''}
-                    {productDetailData?.replaceable &&
+                    {!!productDetailData?.replaceable ? strings.REPLACABLE : ''}
+                    {!!productDetailData?.replaceable &&
                       productDetailData?.returnable
-                      ? ' and '
+                      ? ` ${strings.AND} `
                       : ''}
-                    {productDetailData?.returnable ? 'returnable' : ''} policy
-                    on this product!
+                    {!!productDetailData?.returnable ? strings.RETURNABLE : ''} {strings.POLICY_ON_THIS_PRODUCT}
                   </Text>
                 </View>
               ) : null}
@@ -2483,6 +2427,195 @@ export default function ProductDetail({ route, navigation }) {
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}
               {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
+              {typeId == 10 ? (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginVertical: moderateScaleVertical(10),
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => updateState({ isRentalStartDatePicker: true })}>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(13),
+                          fontFamily: fontFamily.bold,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        Start Date
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(12),
+                          fontFamily: fontFamily.regular,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {!!startDateRental
+                          ? moment(startDateRental).format('MM/DD/YY hh:mm A')
+                          : ''}
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => updateState({ isRentalEndDatePicker: true })}>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(13),
+                          fontFamily: fontFamily.bold,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        End Date
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: moderateScale(12),
+                          fontFamily: fontFamily.regular,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {!!endDateRental
+                          ? moment(endDateRental).format('MM/DD/YY hh:mm A')
+                          : ''}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.bold,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    Duration:
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      marginVertical: 5,
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => addRemoveDuration(2)}
+                      style={{
+                        borderRightWidth: 1,
+                        flex: 0.3,
+                        alignItems: 'center',
+                        padding: 5,
+                      }}>
+                      <Text>{'<'}</Text>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        flex: 0.4,
+                        textAlign: 'center',
+                        fontSize: moderateScale(13),
+                        fontFamily: fontFamily.regular,
+                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      }}>
+                      {getHourAndMinutes(rentalProductDuration)}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => addRemoveDuration(1)}
+                      style={{
+                        borderLeftWidth: 1,
+                        flex: 0.3,
+                        alignItems: 'center',
+                        padding: 5,
+                      }}>
+                      <Text> {'>'} </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {' '}
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productDetailData?.variant[0]?.actual_price,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )}
+                    </Text>{' '}
+                    for first{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {productDetailData?.minimum_duration}
+                    </Text>{' '}
+                    hour{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {productDetailData?.minimum_duration_min}
+                    </Text>{' '}
+                    min
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: moderateScale(13),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    Extra duration will be charged{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productDetailData?.variant[0]?.incremental_price,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )}
+                    </Text>{' '}
+                    per{' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {productDetailData?.additional_increments}
+                    </Text>{' '}
+                    hour and {' '}
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productDetailData?.variant[0]?.incremental_price_per_min,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )} per
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      {' '}
+                      {productDetailData?.additional_increments_min}
+                    </Text>{' '}
+                    min
+                  </Text>
+                </View>
+              ) : null}
 
               {showErrorMessageTitle ? (
                 <Text
@@ -2496,7 +2629,7 @@ export default function ProductDetail({ route, navigation }) {
                 </Text>
               ) : null}
               {
-                !!productPreferences?.appointment_check && dine_In_Type == 'appointment' &&
+                dine_In_Type == 'appointment' && productDetailData?.mode_of_service === 'schedule' &&
                 <View style={{
                   flexDirection: "row",
                   alignItems: "center",
@@ -2626,7 +2759,7 @@ export default function ProductDetail({ route, navigation }) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
-                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 ?
+                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 && dine_In_Type != 'appointment' ?
                           <View
                             style={{
                               ...commonStyles.buttonRect,
@@ -2934,7 +3067,7 @@ export default function ProductDetail({ route, navigation }) {
             locale={languages?.primary_language?.sort_code}
             date={isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date())}
             textColor={isDarkMode ? colors.white : colors.blackB}
-            mode="datetime"
+            mode="date"
             minimumDate={new Date()}
             onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
           />
@@ -2983,7 +3116,7 @@ export default function ProductDetail({ route, navigation }) {
         }}>
         <AppointmentSlotModal />
       </ReactNativeModal>
-    </WrapperContainer>
+    </WrapperContainer >
   );
 }
 const htmlStyle = StyleSheet.create({

@@ -34,18 +34,18 @@ export default function ShortCode() {
   }, []);
 
   const initApiHit = async () => {
+    console.log('getBundleId()getBundleId()', getBundleId());
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
     const appCode = !!prevCode ? prevCode : getAppCode();
+    // const appCode = '17c374'
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};
     } else {
       header = {code: appCode};
     }
-
-    console.log(appCode, 'appCode>>>>>');
     actions
       .initApp({}, header, false, null, null, true)
       .then(res => {
@@ -73,7 +73,6 @@ export default function ShortCode() {
   };
   const navigateToNextScreen = useCallback(
     (res: any) => {
-      console.log('finally navigate screen+++', res);
       getItem('firstTime').then(el => {
         if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
           actions.setAppSessionData('app_intro');

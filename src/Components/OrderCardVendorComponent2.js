@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
+import FastImage from "react-native-fast-image";
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import { dummyUser } from '../constants/constants';
@@ -263,15 +264,15 @@ const OrderCardVendorComponent2 = ({
               alignItems: "flex-start",
             }}
           >
-            <Image
+            <FastImage
               source={{ uri: imageUrl }}
               style={{
                 height: moderateScale(50),
                 width: moderateScale(50),
                 borderRadius: moderateScale(50 / 2),
-                resizeMode: "contain",
                 marginRight: moderateScale(8),
               }}
+            // resizeMode={FastImage.resizeMode.contain}
             />
             <Text
               numberOfLines={2}

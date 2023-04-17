@@ -1,5 +1,5 @@
 import produce from 'immer';
-import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
 import types from '../types';
 
 const initial_state = {
@@ -21,13 +21,14 @@ const initial_state = {
   },
   pickUpTimeType: 'now',
   isLocationSearched: false,
+  lastBidInfo: null
 };
 
 export default function (state = initial_state, action) {
   switch (action.type) {
     case types.HOME_DATA: {
       const data = action.payload;
-      let oldAppMainData = {...data};
+      let oldAppMainData = { ...data };
       oldAppMainData?.homePageLabels?.map((item, index) => {
         if (item?.slug == 'nav_categories') {
           oldAppMainData['categories'] = item?.data || [];
@@ -103,9 +104,16 @@ export default function (state = initial_state, action) {
         isLocationSearched: data,
       };
     }
+    case types.LAST_BID_INFO: {
+      const data = action.payload;
+      return {
+        ...state,
+        lastBidInfo: data,
+      };
+    }
 
     default: {
-      return {...state};
+      return { ...state };
     }
   }
 }

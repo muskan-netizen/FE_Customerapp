@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "882528932954",
+    "project_id": "blink-order",
+    "storage_bucket": "blink-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882528932954:android:4cfdd8df8cad13cf3e7463",
+        "android_client_info": {
+          "package_name": "com.blink.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882528932954-gu5clcakca4sg1pkip8adas16f4t59mc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blink.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "882528932954-hdeih1j7r69sfkrmrm67mckvnu0a406l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blink.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "882528932954-lsqb6a73n3c9em7b9nf8lek8gnc14tn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blink.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "882528932954-negphdfdu87jgfu8meghjv8vc2qhb4dj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM002a4eK0O0XNxnwqhbtGMp8J2mQ3wqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882528932954-negphdfdu87jgfu8meghjv8vc2qhb4dj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

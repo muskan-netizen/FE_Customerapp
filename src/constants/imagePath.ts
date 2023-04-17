@@ -585,6 +585,17 @@ export default {
   ic_celeb2NewTab: require('../assets/tabbariconsnew/ic_celeb2.png'),
   ic_tag2NewTab: require('../assets/tabbariconsnew/ic_tag2.png'),
 
+  //Taxi App new
+  ic_down_arrow: require('../assets/images/TaxiAppNew/ic_down_arrow.png'),
+  ic_add_location: require('../assets/images/TaxiAppNew/ic_add_location.png'),
+  ic_back_taxi: require('../assets/images/TaxiAppNew/ic_back_taxi.png'),
+  ic_recent_places: require('../assets/images/TaxiAppNew/ic_recent_places.png'),
+  ic_saved_places: require('../assets/images/TaxiAppNew/ic_saved_places.png'),
+  ic_bid_ride: require('../assets/images/TaxiAppNew/ic_bid_ride.png'),
+  ic_booking: require('../assets/images/TaxiAppNew/ic_booking.png'),
+  ic_cab_pooling: require('../assets/images/TaxiAppNew/ic_cab_pooling.png'),
+  ic_right_arrow: require('../assets/images/TaxiAppNew/ic_right_arrow.png'),
+  ic_close_circle: require('../assets/images/TaxiAppNew/ic_close_circle.png'),
   parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
 
   //Ecommerce Template

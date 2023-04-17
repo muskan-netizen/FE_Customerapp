@@ -44,6 +44,7 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       fontFamily: fontFamily.regular,
       fontSize: textScale(12),
       opacity: 0.4,
+      marginTop:moderateScaleVertical(8)
     },
     topLable: {
       flexDirection: 'row',

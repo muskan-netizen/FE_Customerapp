@@ -420,7 +420,7 @@ export default function SelectPaymentModal({
     );
   }
 
-  console.log("payementMethodspayementMethodspayementMethods",payementMethods)
+  console.log("payementMethodspayementMethodspayementMethods",selectedPaymentMethod)
   const mainView = () => {
     return (
       <>

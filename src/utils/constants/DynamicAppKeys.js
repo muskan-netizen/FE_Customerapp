@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
-  royoorder: '6ca3a4',
+  royoorder: '245bae',
   runrun: 'bf8608',
   tranzit: '52a1a6',
   hmoobhub: 'fa11e1',
@@ -94,11 +94,10 @@ const shortCodes = {
   taquick: '630e49',
   vecto: '39f6fd',
   goody: '397840',
-  // grub: '2f3120',
-  grub: "245bae",
+  grub: '2f3120',
   gusto: 'd1b1a0',
-  gokab: 'fb78f0', // live
-  // gokab: '578b33', // staging
+  // gokab: 'fb78f0', // live
+  gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
@@ -419,7 +418,7 @@ const shortCodes = {
   lex: 'a7f382',
   smokyKitchen: '8c4efa',
   flank: '3de814',
-  zynoride: '2768e6',
+  zynoride: '958bb4',
   mealsarehere: 'c00a78',
   loamscape: 'ded864',
   delcolink: 'a2726b',
@@ -544,7 +543,18 @@ const shortCodes = {
   zozozi: '980515',
   ekobridge: '04468e',
   ambosSafariExpress: 'ec16dd',
-  zulbrand: '873380'
+  zulbrand: '873380',
+  emart: '6ca3a4',
+  oyeeRides: "634188",
+  royoRides: '87406e',
+  tempcorner: '84a472',
+  autobox: '5db7c1',
+  emiRates: '9ba443',
+  detailPros: '1a1d3b',
+  blink: '49ceca',
+  incubit: '9bc5da',
+  virgingates: 'f5a75e',
+  zuluCluch: '6347c6',
 };
 
 const appIds = {
@@ -2345,8 +2355,8 @@ const appIds = {
     android: 'com.pointoneExpediteDelivery.royoorders',
   }),
   saamanshop: Platform.select({
-    ios: 'com.saamanshop.royoorders',
-    android: 'com.saamanshop.royoorders',
+    ios: 'my.saamanshop.royoorders',
+    android: 'my.saamanshop.royoorders',
   }),
   tdc: Platform.select({
     ios: 'com.tdc.royoorders',
@@ -2704,6 +2714,50 @@ const appIds = {
   zulbrand: Platform.select({
     ios: 'com.zulbrand.order',
     android: 'com.zulbrand.order',
+  }),
+  emart: Platform.select({
+    ios: 'com.emart.order',
+    android: 'com.emart.order',
+  }),
+  oyeeRides: Platform.select({
+    ios: 'com.oyeeRides.order',
+    android: 'com.oyeeRides.order',
+  }),
+  royoRides: Platform.select({
+    ios: 'com.royoRides.order',
+    android: 'com.royoRides.order',
+  }),
+  tempcorner: Platform.select({
+    ios: 'com.tempcorner.royoorder',
+    android: 'com.tempcorner.royoorder',
+  }),
+  autobox: Platform.select({
+    ios: 'com.autobox.royoorders',
+    android: 'com.autobox.royoorders',
+  }),
+  emiRates: Platform.select({
+    ios: 'com.emiRates.royoorder',
+    android: 'com.emiRates.royoorder',
+  }),
+  detailPros: Platform.select({
+    ios: 'com.detailPros.royoorder',
+    android: 'com.detailPros.royoorder',
+  }),
+  blink: Platform.select({
+    ios: 'com.blink.royoorder',
+    android: 'com.blink.royoorder',
+  }),
+  incubit: Platform.select({
+    ios: 'com.incubit.royoorder',
+    android: 'com.incubit.royoorder',
+  }),
+  virgingates: Platform.select({
+    ios: 'com.virgingates.royoorder',
+    android: 'com.virgingates.royoorder',
+  }),
+  zuluCluch: Platform.select({
+    ios: 'com.zuluCluch.royoorders',
+    android: 'com.zuluCluch.royoorders',
   }),
 };
 

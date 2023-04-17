@@ -155,7 +155,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
                 }}>
                 <Text>
                   {tokenConverterPlusCurrencyNumberFormater(
-                    variant[0]?.price,
+                    Number(variant[0]?.price) * Number(variant[0]?.multiplier || 1),
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,
