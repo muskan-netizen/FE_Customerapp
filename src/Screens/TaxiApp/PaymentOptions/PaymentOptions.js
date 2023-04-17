@@ -1,8 +1,9 @@
 import {
-  StripeProvider,
   CardField,
+  StripeProvider,
   createToken,
 } from "@stripe/stripe-react-native";
+import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -14,10 +15,13 @@ import {
   View,
 } from "react-native";
 import { useDarkMode } from "react-native-dynamic";
+import FastImage from "react-native-fast-image";
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";
 import PaymentGateways from "../../../Components/PaymentGateways";
+import TextTabBar from "../../../Components/TextTabBar";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -33,10 +37,6 @@ import {
 import { MyDarkTheme } from "../../../styles/theme";
 import { showError } from "../../../utils/helperFunctions";
 import stylesFun from "./styles";
-import { enableFreeze } from "react-native-screens";
-import FastImage from "react-native-fast-image";
-import TextTabBar from "../../../Components/TextTabBar";
-import { isEmpty } from "lodash";
 enableFreeze(true);
 
 
@@ -54,7 +54,7 @@ const PaymentOptions = ({ navigation, route }) => {
     selectedSavedListCardNumber: null,
   });
 
-  const { appData, appStyle, themeColors, currencies , languages } = useSelector(
+  const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state.initBoot
   );
   const { profile } = appData;
@@ -134,12 +134,13 @@ const PaymentOptions = ({ navigation, route }) => {
         updateState({
           apiPaymentOptions: res?.data,
         });
-        { !isEmpty(res?.data)  && res?.data.map((item,index)=>{
-          item.id == 50 && getSavedCardList();
-        })
+        {
+          !isEmpty(res?.data) && res?.data.map((item, index) => {
+            item.id == 50 && getSavedCardList();
+          })
 
         }
-        
+
       })
       .catch(errorMethod);
   };
@@ -347,7 +348,6 @@ const PaymentOptions = ({ navigation, route }) => {
   };
 
   const _onPressPaymentOption = (item) => {
-    console.log(item, "itemitemitemitemitemitem");
     updateState({ selectedPaymentMethod: item });
 
     if (item?.id == 4) {
@@ -398,8 +398,6 @@ const PaymentOptions = ({ navigation, route }) => {
     else if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
       selectedPaymentMethod?.off_site == 1) {
       if (!isEmpty(selectedSavedListCardNumber)) {
-        console.log("selectedSavedListCardNumber =>", selectedSavedListCardNumber);
-
         navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
           ...paramData,
 
@@ -524,12 +522,13 @@ const PaymentOptions = ({ navigation, route }) => {
                       eDate={date}
                       />
                     )} */}
-        {!!(
-          selectedPaymentMethod &&
-          selectedPaymentMethod?.id == item.id &&
-          // selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
-        ) && (
+        {
+          !!(
+            selectedPaymentMethod &&
+            selectedPaymentMethod?.id == item.id &&
+            // selectedPaymentMethod?.off_site == 1 &&
+            (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+          ) && (
             selectedPaymentMethod?.id == 50 ?
               <>
                 <View style={{
@@ -634,8 +633,9 @@ const PaymentOptions = ({ navigation, route }) => {
                 paymentid={selectedPaymentMethod?.id}
                 eDate={date}
               />
-          )}
-      </View>
+          )
+        }
+      </View >
     );
   };
 

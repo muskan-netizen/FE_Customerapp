@@ -8,16 +8,14 @@ import {
 } from '@stripe/stripe-react-native';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
 import {
-  Image,
+  Alert, FlatList, Image,
   Keyboard,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  FlatList
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dynamic';
@@ -462,12 +460,10 @@ export default function SelectPaymentModal({
     );
   }
   const selectSavedCard = (data, inx) => {
-    console.log(data, 'datadatadata')
-    {
-      selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
-        ? (updateState({ selectedSavedListCardNumber: null }))
-        : updateState({ selectedSavedListCardNumber: data });
-    }
+
+    selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
+      ? (updateState({ selectedSavedListCardNumber: null }))
+      : updateState({ selectedSavedListCardNumber: data });
   };
 
   const deleteCard = (item) => {
@@ -503,7 +499,6 @@ export default function SelectPaymentModal({
       .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
   }
   const renderSavedCardList = ({ item, index }) => {
-    console.log("renderSavedCardList =>", index)
     const expDate = item?.expiration
     // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
     return (

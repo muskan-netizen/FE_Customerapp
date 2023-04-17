@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "852314496256",
+    "project_id": "detailpros-order",
+    "storage_bucket": "detailpros-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852314496256:android:a9f2083400b54de06e67e5",
+        "android_client_info": {
+          "package_name": "com.detailPros.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852314496256-kkte0fgp5lqsa97vgms970q36j7ceuai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.detailPros.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "852314496256-nq7ntq0uqps1k6qvmof89acnlucdeogs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.detailPros.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "852314496256-s33t22iv6te5rmijpkdkpgbf1ui4ssqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.detailPros.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "852314496256-v93q9qneq234a3p7fnq4r1g370dmr4fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEjY5t3dvyHeuNEdMJ4rAY0he949oFktE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852314496256-v93q9qneq234a3p7fnq4r1g370dmr4fh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "852314496256-kvrbicq5859kf8v22elg208vbsc1c053.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.detailPros.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

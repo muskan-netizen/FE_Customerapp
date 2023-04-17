@@ -41,6 +41,7 @@ export default function AvailableDriver({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
 
+
   // choose a trip or swipe up for more
   //Render all Available amounts
   const _renderItem = ({ item, index }) => {

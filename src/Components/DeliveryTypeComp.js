@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
@@ -44,7 +44,6 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
   });
 
   const { tabs } = state;
-  console.log(appData, 'tabs------------');
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {

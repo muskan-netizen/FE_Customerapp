@@ -14,8 +14,8 @@ import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import {getItem} from '../../utils/utils';
 import {getAppCode} from './getAppCode';
-import styles from './styles';
 import {IRootState} from './interfaces';
+import styles from './styles';
 
 export default function ShortCode() {
   const {deepLinkUrl, auth, themeColor, themeToggle} = useSelector(
@@ -34,18 +34,18 @@ export default function ShortCode() {
   }, []);
 
   const initApiHit = async () => {
+    console.log('getBundleId()getBundleId()', getBundleId());
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
-    const appCode = '2d6cda';
+    const appCode = !!prevCode ? prevCode : getAppCode();
+    // const appCode = '17c374'
     let header = {};
     if (!!lang?.primary_language?.id) {
       header = {code: appCode, language: lang?.primary_language?.id};
     } else {
       header = {code: appCode};
     }
-
-    console.log(appCode, 'appCode>>>>>');
     actions
       .initApp({}, header, false, null, null, true)
       .then(res => {
@@ -74,7 +74,6 @@ export default function ShortCode() {
   };
   const navigateToNextScreen = useCallback(
     (res: any) => {
-      console.log('finally navigate screen+++', res);
       getItem('firstTime').then(el => {
         if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
           actions.setAppSessionData('app_intro');
@@ -101,8 +100,8 @@ export default function ShortCode() {
         return animatedSplash();
       case appIds.parcelworks:
         return animatedSplash();
-        case appIds.stabex:
-          return animatedSplash();
+      case appIds.stabex:
+        return animatedSplash();
       default:
         return imageSplash();
     }
@@ -117,8 +116,8 @@ export default function ShortCode() {
         return imagePath.HezniSplash;
       case appIds?.parcelworks:
         return imagePath.parcelWorksSplash;
-        case appIds?.stabex:
-          return imagePath.Stabex;
+      case appIds?.stabex:
+        return imagePath.Stabex;
     }
   }, []);
   const imageSplash = useCallback(() => {
@@ -135,7 +134,7 @@ export default function ShortCode() {
       </View>
     );
   }, [loadingScreen]);
-  
+
   const animatedSplash = () => {
     return (
       <View style={styles.videoView}>

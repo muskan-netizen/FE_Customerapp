@@ -84,7 +84,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     themeColor,
   } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal, distance_unit_for_time } = appData?.profile?.preferences || {};
-  console.log(appData?.profile?.preferences, "appData?.profile?.preferences");
   const { userData } = useSelector((state) => state?.auth || {});
   const { pickUpTimeType, location } = useSelector((state) => state?.home || {});
   const darkthemeusingDevice = useDarkMode();
@@ -247,11 +246,8 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
     });
   }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
 
-  console.log("paramDataparamDataparamDataparamData", paramData)
 
   useEffect(() => {
-    //if pickupTimeType is now then we hit direct api withhout schedule date 
-    //otherwise we pass the shcedule date onDateSet function and hit api accordingly
     !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
   }, [updateSeatNO]);
 
@@ -272,8 +268,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
     _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
   }, [date])
 
-  console.log("slectedDateslectedDate", slectedDate)
-
   const clearScheduleDate = useCallback(() => {
     actions.saveSchduleTime('now');
     updateState({
@@ -290,7 +284,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
     if (showInitalModal) {
       updateState({ showCarModal: true });
     }
-
     updateState({ isLoading: true });
 
     const apiQuery = `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`
@@ -698,6 +691,9 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
     data['tasks'] = paramData?.tasks;
     data['images_array'] = uploadImages;
     data['agent_id'] = paramData?.bidData?.driver_id
+    if (paramData?.bidData?.driver_id) {
+      data['bid_task_type'] = paramData?.bidData?.task_type
+    }
     data['user_product_order_form'] = allSubmittedAnswers
       ? allSubmittedAnswers
       : [];
@@ -783,7 +779,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log('current lcoation', res);
               updateState({
                 myCurrentLocationDetails: res,
               });
@@ -802,7 +797,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
     updateState({
       selectedCarOption: item,
       showBidPriceModal: paramData?.rideType == 'bideRide' ? true : false
-
     });
     setBidRidePrice(Number(item?.tags_price))
   };
@@ -1580,7 +1574,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         )}
       </View>
 
-      {/* BottomView */}
+
 
       <View style={styles.topView}>
 
