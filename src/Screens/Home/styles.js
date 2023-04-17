@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { StyleSheet } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,9 +8,9 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default ({themeColors, fontFamily}) => {
+export default ({ themeColors, fontFamily }) => {
   const styles = StyleSheet.create({
     modalContainer: {
       backgroundColor: colors.white,
@@ -45,7 +45,7 @@ export default ({themeColors, fontFamily}) => {
       paddingBottom: moderateScaleVertical(12),
       paddingLeft: moderateScaleVertical(12),
     },
-    imgSmall: {height: '100%', width: '100%', borderRadius: 4},
+    imgSmall: { height: '100%', width: '100%', borderRadius: 4 },
     imgContainer: {
       height: moderateScaleVertical(128),
       width: width * 0.5 - moderateScale(12),
@@ -207,7 +207,7 @@ export default ({themeColors, fontFamily}) => {
       fontSize: textScale(9),
       textAlign: 'left',
     },
-    circularListImage: {height: moderateScale(40), width: moderateScale(40)},
+    circularListImage: { height: moderateScale(40), width: moderateScale(40) },
     applyPromoBtn: {
       marginHorizontal: moderateScale(7),
       borderRadius: moderateScale(15),
@@ -315,7 +315,7 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(13),
     },
     exploreStoresTxt: {
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily?.medium,
       fontSize: textScale(14),
       textAlign: 'left',
     },
@@ -486,6 +486,40 @@ export default ({themeColors, fontFamily}) => {
       marginHorizontal: moderateScale(10),
       marginVertical: moderateScaleVertical(10),
     },
+    airportHotelBtns: {
+      height: moderateScale(45),
+      width: width - moderateScale(80),
+      borderWidth: 1,
+      borderRadius: moderateScale(8),
+      alignItems: "center",
+      paddingHorizontal: moderateScale(16),
+      flexDirection: "row",
+      flex: 0.48
+    },
+    hotelAirportTxt: {
+      fontFamily: fontFamily?.regular,
+      fontSize: textScale(14),
+      marginLeft: moderateScale(6)
+    },
+    modalHotelAirportContainer: {
+      height: moderateScaleVertical(180),
+      backgroundColor: colors.white,
+      borderTopLeftRadius: moderateScale(16),
+      borderTopRightRadius: moderateScale(16),
+      justifyContent: "center",
+      paddingHorizontal: moderateScale(20),
+
+    },
+    roundContinueBtn: {
+      borderColor: themeColors?.primary_color,
+      width: moderateScale(50),
+      alignSelf: "flex-end",
+      height: moderateScale(50),
+      borderRadius: moderateScale(25),
+      borderWidth: 1,
+      justifyContent: "center",
+      alignItems: "center"
+    }
   });
 
   return styles;

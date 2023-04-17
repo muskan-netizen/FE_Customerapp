@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>513519801707-jbehiv0rkjtpktd6q8nsat4p0c7s3ekg.apps.googleusercontent.com</string>
+	<string>1088146101114-3eb6qaqknm56b8ukoo9v2uji00i4b302.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.513519801707-jbehiv0rkjtpktd6q8nsat4p0c7s3ekg</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>513519801707-bnjp24lva0ketgaesil1rddqajou260n.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.1088146101114-3eb6qaqknm56b8ukoo9v2uji00i4b302</string>
 	<key>API_KEY</key>
-	<string>AIzaSyACSKOhDWHVNf2Cf-pREkIKSLIKRL4wyIU</string>
+	<string>AIzaSyDlGNGHDw4x4fe-HJBEr0P7mDNuTPsYp8M</string>
 	<key>GCM_SENDER_ID</key>
-	<string>513519801707</string>
+	<string>1088146101114</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.saamanshop.royoorders</string>
+	<string>my.saamanshop.royoorders</string>
 	<key>PROJECT_ID</key>
-	<string>saamanshop-a8487</string>
+	<string>saamanshop</string>
 	<key>STORAGE_BUCKET</key>
-	<string>saamanshop-a8487.appspot.com</string>
+	<string>saamanshop.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:513519801707:ios:77c05be453a9b3f547282e</string>
+	<string>1:1088146101114:ios:15334c7f9551fec71b3cc3</string>
 </dict>
 </plist>

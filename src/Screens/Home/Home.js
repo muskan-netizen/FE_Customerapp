@@ -1,11 +1,14 @@
+import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, BackHandler, Linking } from 'react-native';
 import AppLink from 'react-native-app-link';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
+import LaundryAddonModal from '../../Components/LaundryAddonModal';
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
@@ -14,24 +17,20 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import Voice from '@react-native-voice/voice';
-import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
   getNearestLocation,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import socketServices from '../../utils/scoketService';
 import DashBoardEight from './DashboardViews/DashBoardEight';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';
 
-import DashBoardTwo from './DashboardViews/DashBoardTwo';
 
+import { openBrowser } from '../../utils/openNativeApp';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -41,9 +40,8 @@ import {
   DashBoardOne,
   DashBoardSix,
   DashBoardTen,
-  TaxiHomeDashbord,
+  TaxiHomeDashbord
 } from './DashboardViews/Index';
-import { openBrowser } from '../../utils/openNativeApp';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -139,9 +137,9 @@ export default function Home({ route, navigation }) {
 
 
   useEffect(() => {
-    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      socketServices.initializeSocket(appData?.profile?.socket_url);
-    }
+    // if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+    //   socketServices.initializeSocket(appData?.profile?.socket_url);
+    // }
   }, [appData]);
 
   useFocusEffect(
@@ -411,12 +409,13 @@ export default function Home({ route, navigation }) {
       updateState({ searchDataLoader: true });
     }
     let latlongObj = {};
-console.log(locationData,"locationData?.address");
+
+
     if (!!locationData) {
       latlongObj = {
         address: locationData?.address || '',
-        latitude:locationData?.latitude || 30.7333 || '',
-        longitude:locationData?.longitude|| 76.7794 || '',
+        latitude: locationData?.latitude || 30.7333,
+        longitude: locationData?.longitude || 76.7794
       };
     }
 
@@ -466,7 +465,7 @@ console.log(locationData,"locationData?.address");
         .homeData(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
-          updateState({ searchDataLoader: false , isLoading:false});
+          updateState({ searchDataLoader: false, isLoading: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -971,7 +970,7 @@ console.log(locationData,"locationData?.address");
       stopOrderModalVisible: false,
     });
   };
-{console.log(appStyle?.homePageLayout,"appStyle?.homePageLayout")}
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -1452,6 +1451,68 @@ console.log(locationData,"locationData?.address");
             />
           </>
         );
+
+      default:
+        return <>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            nearestLoc={nearestLocDis}
+            currentLoc={currentLocation}
+          />
+          {dineInType == 'pick_drop' ? (
+            <TaxiHomeDashbord
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory(item)}
+              toggleData={appData}
+              location={location}
+              curLatLong={curLatLong}
+              currentLocation={currentLocation}
+            />
+          ) : (
+            <DashBoardFive
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              onPressVendor={(item) => {
+                onPressVendor(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={tempCartData}
+              toggleData={appData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+              selectedFilterType={selectedFilterType}
+            />
+
+          )}
+        </>
     }
   };
 

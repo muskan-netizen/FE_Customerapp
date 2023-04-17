@@ -13,8 +13,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dynamic';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {
   Menu,
@@ -89,7 +89,7 @@ export default function DashBoardEight({
     showMenu: false,
     categoriesData: [],
     seeMore: false,
-    loading:true,
+    loading: true,
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);

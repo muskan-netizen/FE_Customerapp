@@ -7,6 +7,7 @@ export default {
   HOMESTACK: 'homestack',
   OFFERS: 'offers',
   BRANDS: 'brands',
+  CATEGORY: 'Category',
   CELEBRITY: 'celebrity',
   ACCOUNTS: 'accounts',
   TAB_ROUTES: 'tabRoutes',
@@ -165,7 +166,7 @@ export default {
   MY_POSTS: 'myPosts',
   REFER_AND_EARN: 'referAndEarn',
   PLUGNPAY: 'PlugnPay',
-  SPOTDEALPRODUCTSANDSELECTEDPRODUCTS :'SpotdealProductAndSelectedProducts',
-  BIDINGDRIVERSLIST :'BidingDriversList',
-  SKIP_CASH :'SkipCash'
+  SPOTDEALPRODUCTSANDSELECTEDPRODUCTS: 'SpotdealProductAndSelectedProducts',
+  BIDINGDRIVERSLIST: 'BidingDriversList',
+  SKIP_CASH: 'SkipCash',
 };

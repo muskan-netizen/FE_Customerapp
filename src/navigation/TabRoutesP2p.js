@@ -1,17 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
-import { View } from 'react-native-animatable';
+import { Image, StyleSheet } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import { moderateScale, textScale } from '../styles/responsiveSize';
+import { textScale } from '../styles/responsiveSize';
 import AccountStack from './AccountStack';
-import CartStack from './CartStack';
 import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
@@ -137,28 +135,24 @@ export default function TabRoutesP2p(props) {
           tabBarVisible: getTabBarVisibility(route, navigation, []),
           tabBarLabel: strings.POST,
           tabBarIcon: ({ focused, tintColor }) => (
-            <View style={{}}>
-              <Image
-                style={{
-                  position: 'absolute',
-                  top: -37,
-                  left: -21,
-                  height: 65,
-                  width: 65,
-                }}
-                source={imagePath.icAddPostP2p}
-              />
-              <View
-                style={{
-                  height: 25,
-                  width: 25,
-                }}></View>
-            </View>
+            <Image
+              resizeMode="contain"
+              style={{
+                tintColor: focused
+                  ? themeColors?.primary_color
+                  : isDarkMode
+                    ? colors.whiteOpacity50
+                    : colors.blackOpacity43,
+              }}
+              source={
+                focused ? imagePath.icAddPostInactive : imagePath.icAddPostActive
+              }
+            />
           ),
         })}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
         options={({ route, navigation }) => ({
@@ -208,7 +202,7 @@ export default function TabRoutesP2p(props) {
           unmountOnBlur: true,
           gestureEnabled: true,
         })}
-      />
+      /> */}
 
       <Tab.Screen
         component={AccountStack}

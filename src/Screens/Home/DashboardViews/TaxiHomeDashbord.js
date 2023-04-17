@@ -1,23 +1,32 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
-  Image,
-  RefreshControl,
-  ScrollView,
+  Image, Platform, RefreshControl, SafeAreaView, ScrollView,
   StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  Platform,
+  Text, TouchableOpacity, View
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import * as RNLocalize from 'react-native-localize';
+import MapView, {
+  Marker,
+  PROVIDER_DEFAULT,
+  PROVIDER_GOOGLE
+} from 'react-native-maps';
+import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
+import AddressModal3 from '../../../Components/AddressModal3';
+import GradientButton from '../../../Components/GradientButton';
+import Loader from '../../../Components/Loader';
+import TaxiBannerHome from '../../../Components/TaxiBannerHome';
+import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import {
   height,
   itemWidth,
@@ -25,38 +34,18 @@ import {
   moderateScaleVertical,
   sliderWidth,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import MapView, {
-  Marker,
-  PROVIDER_DEFAULT,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../../utils/helperFunctions';
-import stylesFunc from '../styles';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
-import navigationStrings from '../../../navigation/navigationStrings';
-import { useNavigation } from '@react-navigation/native';
-import actions from '../../../redux/actions';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../../styles/theme';
-import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
-import TaxiBannerHome from '../../../Components/TaxiBannerHome';
-import DatePicker from 'react-native-date-picker';
-import AddressModal3 from '../../../Components/AddressModal3';
-import Loader from '../../../Components/Loader';
-import Modal from 'react-native-modal';
 import useInterval from '../../../utils/useInterval';
-import { nearbySearch } from '../../../utils/googlePlaceApi';
-import { isEmpty } from 'lodash';
-import { google_map_key } from '../../../constants/constants';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import GradientButton from '../../../Components/GradientButton';
-import * as RNLocalize from 'react-native-localize'
+import stylesFunc from '../styles';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -91,9 +80,6 @@ export default function TaxiHomeDashbord({
     pickupAddress: {},
     allListedDrivers: [],
   });
-  const [searchType, setSearchType] = useState('')
-  const [nearByPlacesByType, setNearByPlacesByType] = useState([])
-
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
@@ -542,27 +528,7 @@ export default function TaxiHomeDashbord({
     );
   };
 
-  const onSearchType = (type) => {
-    setSearchType(type)
-    let locations = !!curLatLong?.latitude
-      ? `${curLatLong.latitude},${curLatLong.longitude}`
-      : `${location.latitude},${location.longitude}`
 
-    nearbySearch(
-      locations,
-      appData?.profile?.preferences?.map_key || google_map_key,
-      type,
-    ).then((res) => {
-      if (!isEmpty(res?.results)) {
-        setNearByPlacesByType(res?.results)
-      }
-      else {
-        showError("No near by places found!")
-      }
-    }).catch((err) => {
-      console.log(err, "err>>>>>>err>")
-    })
-  }
   const goToAddress = ({
     fromMap = false,
     scheduleDate = null,
@@ -600,6 +566,7 @@ export default function TaxiHomeDashbord({
       goToAddress({ scheduleDate: date })
     }, 2000);
   }
+
 
   return (
     <WrapperContainer
@@ -641,38 +608,7 @@ export default function TaxiHomeDashbord({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
-        {getBundleId() == appIds.hezniTaxic && <View style={{
-          marginTop: moderateScaleVertical(10),
-          marginHorizontal: moderateScale(15),
-          flexDirection: "row",
-          alignItems: "center",
 
-
-        }}>
-          <TouchableOpacity onPress={() => onSearchType("hotel")} style={{
-            flexDirection: "row",
-            alignItems: "center"
-          }}>
-            <Image source={searchType == "hotel" ? imagePath.radioActive : imagePath.radioInActive} />
-            <Text style={{
-              fontFamily: fontFamily?.bold,
-              marginLeft: moderateScale(4),
-              fontSize: textScale(17)
-            }}>Hotel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => onSearchType("airport")} style={{
-            marginLeft: moderateScale(40),
-            flexDirection: "row",
-            alignItems: "center"
-          }}>
-            <Image source={searchType == "airport" ? imagePath.radioActive : imagePath.radioInActive} />
-            <Text style={{
-              fontFamily: fontFamily?.bold,
-              marginLeft: moderateScale(4),
-              fontSize: textScale(17)
-            }}>Airport</Text>
-          </TouchableOpacity>
-        </View>}
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={appMainData?.categories || []}
@@ -876,21 +812,7 @@ export default function TaxiHomeDashbord({
                   //showsMyLocationButton={true}
                   // pointerEvents={'none'}
                   >
-
-                    {!isEmpty(nearByPlacesByType) && searchType !== '' ? nearByPlacesByType?.map((item, index) => {
-                      return (
-                        <Marker
-                          key={String(index)}
-                          coordinate={{
-                            latitude: item?.geometry?.location?.lat,
-                            longitude: item?.geometry?.location?.lng,
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121,
-                          }}
-
-                        />
-                      )
-                    }) : <Marker
+                    <Marker
                       coordinate={{
                         latitude: !!curLatLong?.latitude
                           ? parseFloat(curLatLong?.latitude)
@@ -905,8 +827,7 @@ export default function TaxiHomeDashbord({
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                    />}
-
+                    />
                   </MapView>
                 }
               </TouchableOpacity>

@@ -23,14 +23,15 @@ import {
 } from '../../../styles/responsiveSize';
 /**
 * SwipeableSection Part
-* @param {ideleteItem,addDeleteCartItems,setPaymentModal,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,placeLoader,ButtonComponent,localeSheduledOrderDate,_selectTime,placeOrder,strings,selectedTipvalue,_onGiftBoxSelection,themeColors,isGiftBoxSelected,hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setSelectedTipAmount,setInstruction,clearSceduleDate} props 
+* @param {ideleteItem,addDeleteCartItems,tokenConverterPlusCurrencyNumberFormater,showTaxFeeArea,selectedTipAmount,userData,scheduleType,isDarkMode,colors,styles,FastImage,imagePath,fontFamily,appIds,codMinAmount,selectedPayment,digit_after_decimal,additional_preferences,MyDarkTheme,currencies,cartData,placeLoader,ButtonComponent,localeSheduledOrderDate,_selectTime,placeOrder,strings,selectedTipvalue,_onGiftBoxSelection,themeColors,isGiftBoxSelected,hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setSelectedTipAmount,setInstruction,clearSceduleDate,_selectTimeLaundry,laundrySelectedPickupDate,laundrySelectedDropOffDate,laundrySelectedPickupSlot,laundrySelectedDropOffSlot,pickupDriverComment,setPickupDriverComment,dropOffDriverComment,setDropOffDriverComment,vendorComment,setVendorComment} props 
 * @returns 
 */
 
 
 function Footer(props) {
 
-  const { instruction, setPaymentModal, preferences, tokenConverterPlusCurrencyNumberFormater, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, colors, styles, FastImage, imagePath, fontFamily, appIds, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, MyDarkTheme, currencies, cartData, strings, businessType, localeDropOffDate, appData, placeLoader, ButtonComponent, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, hitSlopProp, setAppSessionRedirection, updateState,selectedTip,setInstruction,setSelectedTipAmount,clearSceduleDate } = props;
+  const { instruction, preferences, tokenConverterPlusCurrencyNumberFormater, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, colors, styles, FastImage, imagePath, fontFamily, appIds, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, MyDarkTheme, currencies, cartData, strings, businessType, localeDropOffDate, appData, placeLoader, ButtonComponent, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, hitSlopProp, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment } = props;
+
   return (
     <View style={{}}>
       {!!cartData?.category_kyc_count && !!userData?.auth_token && (
@@ -518,7 +519,7 @@ function Footer(props) {
               : styles.priceItemLabel
           }>
           {tokenConverterPlusCurrencyNumberFormater(
-            Number(cartData?.gross_paybale_amount ? cartData?.gross_paybale_amount : cartData?.sub_total ? cartData?.sub_total : 0 ) +
+            Number(cartData?.gross_paybale_amount ? cartData?.gross_paybale_amount : cartData?.sub_total ? cartData?.sub_total : 0) +
             Number(
               cartData?.total_container_charges
                 ? cartData?.total_container_charges
@@ -584,7 +585,7 @@ function Footer(props) {
 
       {/* total_delivery_fee */}
       {/* V1 v2 changes */}
-      {!! (cartData?.total_delivery_fee) || !!(cartData?.delivery_charges)   ? (
+      {!!(cartData?.total_delivery_fee) || !!(cartData?.delivery_charges) ? (
         <View style={styles.bottomTabLableValue}>
           <Text
             style={
@@ -606,8 +607,8 @@ function Footer(props) {
               Number(
                 cartData?.total_delivery_fee
                   ? cartData?.total_delivery_fee
-                  :  cartData?.delivery_charges
-                  ? cartData?.delivery_charges : 0,
+                  : cartData?.delivery_charges
+                    ? cartData?.delivery_charges : 0,
               ),
               digit_after_decimal,
               additional_preferences,
@@ -863,10 +864,10 @@ function Footer(props) {
                 : styles.priceItemLabel
             }>
             {tokenConverterPlusCurrencyNumberFormater(
-              Number(cartData?.total_tax ? cartData?.total_tax : 0)
-              + Number(cartData?.total_taxable_amount
-                ? cartData?.total_taxable_amount
-                : 0),
+              Number(cartData?.total_tax ? cartData?.total_tax : 0),
+              // + Number(cartData?.total_taxable_amount
+              //   ? cartData?.total_taxable_amount
+              //   : 0),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol

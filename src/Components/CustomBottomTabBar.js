@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
+import { moderateScaleVertical } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 
 const CustomBottomTabBar = ({
@@ -12,9 +13,9 @@ const CustomBottomTabBar = ({
   descriptors,
   navigation,
   bottomTabNotify,
-
   ...props
 }) => {
+
   const insets = useSafeAreaInsets();
   const { themeColors, themeToggle, themeColor, appStyle } = useSelector((state) => state.initBoot || {});
 
@@ -29,13 +30,9 @@ const CustomBottomTabBar = ({
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 1 }}
       style={{
-        height: Platform.OS === 'ios' ? 45 + insets.bottom : 55 + insets.bottom,
+        height: Platform.OS === 'ios' ? moderateScaleVertical(45) + insets.bottom : moderateScaleVertical(50) + insets.bottom,
         flexDirection: 'row',
-        paddingBottom: insets.bottom,
-        // borderTopLeftRadius: 10,
-        // borderTopRightRadius: 10,
-        paddingTop: 10,
-        // style={{marginBottom:Platform.OS === 'ios'?30:10}}
+        alignItems: "center"
       }}
       colors={
         isDarkMode
@@ -45,7 +42,6 @@ const CustomBottomTabBar = ({
 
     >
       {state.routes.map((route, index) => {
-        // console.log(route, 'routesssssss');
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const label =
@@ -74,14 +70,11 @@ const CustomBottomTabBar = ({
               accessibilityLabel={options.tabBarAccessibilityLabel}
               testID={options.tabBarTestID}
               onPress={onPress}
-              // onLongPress={onLongPress}
               style={{
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                height: 49,
 
-                // marginBottom:20
               }}>
               {options.tabBarIcon({ focused: isFocused })}
               <Text

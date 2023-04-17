@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -22,7 +22,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 //styling
 import colors from '../../../styles/colors';
-import {MyDarkTheme} from '../../../styles/theme';
+import { MyDarkTheme } from '../../../styles/theme';
 import {
   height,
   moderateScale,
@@ -31,22 +31,22 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 //3rd party
-import {isEmpty} from 'lodash';
-import {MultiSelect} from 'react-native-element-dropdown';
+import { isEmpty } from 'lodash';
+import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import actions from '../../../redux/actions';
-import {useDarkMode} from 'react-native-dynamic';
-import {checkValueExistInAry} from '../../../utils/commonFunction';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import { useDarkMode } from 'react-native-dynamic';
+import { checkValueExistInAry } from '../../../utils/commonFunction';
+import { getImageUrl, showError } from '../../../utils/helperFunctions';
 import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {SvgUri} from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
 
-const PostCategory = ({navigation}) => {
+const PostCategory = ({ navigation }) => {
   const modalRef = useRef();
   const {
     appData,
@@ -57,13 +57,13 @@ const PostCategory = ({navigation}) => {
     themeColors,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  const {userData} = useSelector((state) => state?.auth);
-  const {location} = useSelector((state) => state?.home);
+  const { userData } = useSelector((state) => state?.auth);
+  const { location } = useSelector((state) => state?.home);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
   const [isAutofillModal, setIsAutofillModal] = useState(false);
   const [data, setData] = useState();
   const [isAttributesModal, setIsAttributesModal] = useState(false);
@@ -225,6 +225,7 @@ const PostCategory = ({navigation}) => {
     if (!!userData?.auth_token) {
       navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
         category_id: item?.id,
+        category_name: item?.translation_one?.name
       });
     } else {
       actions.setRedirection('p2pPost');
@@ -235,7 +236,7 @@ const PostCategory = ({navigation}) => {
   console.log(fontFamily, 'fsdaklfhksjdf');
 
   const renderAttributeOptions = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <View>
           <Text
@@ -362,7 +363,7 @@ const PostCategory = ({navigation}) => {
   );
 
   const renderP2Pcategories = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       let imageURI = getImageUrl(
         item?.icon?.image_fit,
         item?.icon?.image_path,
@@ -370,7 +371,7 @@ const PostCategory = ({navigation}) => {
       );
       const isSVG = imageURI ? imageURI.includes('.svg') : null;
       return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <TouchableOpacity
             style={{
               ...styles.categoryStyle,
@@ -455,7 +456,7 @@ const PostCategory = ({navigation}) => {
         />
 
         <GradientButton
-          containerStyle={{marginTop: moderateScale(18), width: '100%'}}
+          containerStyle={{ marginTop: moderateScale(18), width: '100%' }}
           colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
           // onPress={_onLogin}
           btnText={strings.AUTO_FILL_DETAILS}
@@ -559,11 +560,11 @@ const PostCategory = ({navigation}) => {
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
       }>
-      <View style={{marginVertical: moderateScale(18)}}>
+      <View style={{ marginVertical: moderateScale(18) }}>
         {/* <Header
           leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back1}
         /> */}
-        <View style={{marginHorizontal: moderateScale(15)}}>
+        <View style={{ marginHorizontal: moderateScale(15) }}>
           <Text
             style={{
               ...styles.header,
@@ -667,7 +668,7 @@ const PostCategory = ({navigation}) => {
 
 export default PostCategory;
 
-function stylesFunc({fontFamily, themeColor}) {
+function stylesFunc({ fontFamily, themeColor }) {
   // alert(!!themeColor);
   const styles = StyleSheet.create({
     header: {
@@ -724,7 +725,7 @@ function stylesFunc({fontFamily, themeColor}) {
       marginVertical: moderateScale(12),
       fontFamily: fontFamily.regular,
     },
-    linkButton: {flex: 1, justifyContent: 'flex-end', marginBottom: '5%'},
+    linkButton: { flex: 1, justifyContent: 'flex-end', marginBottom: '5%' },
     labelStyle: {
       fontFamily: fontFamily.bold,
       color: colors.blackOpacity43,

@@ -217,27 +217,16 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-              bimol{
+          emart{
                 dimension "appType"
                 versionCode 2
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion         
-                applicationId 'com.bimol.user'
-                resValue "string", "app_name", "Bimol"
-                resValue "string", "host_name", ""
-            }
-           stargaze{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.stargaze.royoorder'
-                resValue "string", "app_name", "Stargaze"
+                applicationId 'com.emart.order'
+                resValue "string", "app_name", "Emart"
                 resValue "string", "host_name", ""
             }
-            
 }
 
     // productFlavors {
@@ -7726,7 +7715,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.saamanshop.royoorders'
+    //         applicationId 'my.saamanshop.royoorders'
     //         resValue "string", "app_name", "Saamanshop" 
     //         resValue "string", "host_name", ""
     //         }
@@ -8734,6 +8723,12 @@ android {
 
 
     // }
+
+
+
+
+
+
 
 }
    dependencies {

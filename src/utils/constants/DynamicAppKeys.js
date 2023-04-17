@@ -94,11 +94,10 @@ const shortCodes = {
   taquick: '630e49',
   vecto: '39f6fd',
   goody: '397840',
-  // grub: '2f3120',
-  grub: "245bae",
+  grub: '2f3120',
   gusto: 'd1b1a0',
-  gokab: 'fb78f0', // live
-  // gokab: '578b33', // staging
+  // gokab: 'fb78f0', // live
+  gokab: '578b33', // staging
   suel: '638bd1',
   elixir: '574467',
   ace: '2d98b5',
@@ -419,7 +418,7 @@ const shortCodes = {
   lex: 'a7f382',
   smokyKitchen: '8c4efa',
   flank: '3de814',
-  zynoride: '2768e6',
+  zynoride: '958bb4',
   mealsarehere: 'c00a78',
   loamscape: 'ded864',
   delcolink: 'a2726b',
@@ -2359,8 +2358,8 @@ const appIds = {
     android: 'com.pointoneExpediteDelivery.royoorders',
   }),
   saamanshop: Platform.select({
-    ios: 'com.saamanshop.royoorders',
-    android: 'com.saamanshop.royoorders',
+    ios: 'my.saamanshop.royoorders',
+    android: 'my.saamanshop.royoorders',
   }),
   tdc: Platform.select({
     ios: 'com.tdc.royoorders',

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   I18nManager,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import {
   loaderOne,
@@ -21,37 +21,37 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
 import LottieView from 'lottie-react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import MarketCard3 from '../../Components/MarketCard3';
-import {setItem} from '../../utils/utils';
+import { setItem } from '../../utils/utils';
 import RoundImg from '../../Components/RoundImg';
 import FooterLoader from '../../Components/FooterLoader';
 import styles from './styles';
 import CircularLoader from '../../Components/Loaders/CircularLoader';
 import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
-import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
-import {getCurrentLocation} from '../../utils/helperFunctions';
-import {useFocusEffect} from '@react-navigation/native';
+import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
+import { getCurrentLocation } from '../../utils/helperFunctions';
+import { useFocusEffect } from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
-import {getBundleId} from 'react-native-device-info';
+import { getBundleId } from 'react-native-device-info';
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;
 
-export default function SearchProductVendorItem2({navigation, route}) {
+export default function SearchProductVendorItem2({ navigation, route }) {
   //route params
   const paramData = route?.params?.data;
   console.log('param data', paramData);
@@ -68,7 +68,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     isVoiceRecord: false,
   });
 
-  const {location} = useSelector((state) => state?.home);
+  const { location } = useSelector((state) => state?.home);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const previousSearches = useSelector((state) => state?.initBoot?.searchText);
@@ -90,22 +90,22 @@ export default function SearchProductVendorItem2({navigation, route}) {
     userCurrentLongitude,
     isVoiceRecord,
   } = state;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const onChangeText = (value) => {
     updateState({
@@ -127,7 +127,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     }, []),
   );
 
-  const onSpeechStartHandler = (e) => {};
+  const onSpeechStartHandler = (e) => { };
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -320,7 +320,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     }
     if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     }
     if (item?.response_type == 'brand') {
       navigation.push(navigationStrings.BRANDDETAIL, {
@@ -341,7 +341,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
       });
     }
     if (item?.response_type == 'product') {
-      navigation.push(navigationStrings.PRODUCTDETAIL, {data: {id: item.id}});
+      navigation.push(navigationStrings.PRODUCTDETAIL, { data: { id: item.id } });
     }
   };
 
@@ -349,15 +349,15 @@ export default function SearchProductVendorItem2({navigation, route}) {
     if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -369,7 +369,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
 
   const onEndReached = () => {
     if (!onEndReachedCalledDuringMomentum && !isNoMore) {
-      updateState({isLoadMore: true});
+      updateState({ isLoadMore: true });
       globalSearch(pageCount + 1);
     }
   };
@@ -399,62 +399,62 @@ export default function SearchProductVendorItem2({navigation, route}) {
           }}>
           {data && data.length
             ? data.map((item, index) => {
-                console.log(item, 'itemitem');
-                return (
-                  <View>
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        borderColor: colors.textGreyB,
-                        borderWidth: 0.5,
-                        borderRadius: 4,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginHorizontal: moderateScale(5),
-                        paddingHorizontal: moderateScale(5),
-                        paddingVertical: moderateScaleVertical(7),
-                        marginVertical: moderateScaleVertical(5),
-                      }}
-                      onPress={() => onClickRecent(item)}
-                      key={index}>
-                      <View>
-                        <Image
-                          style={
-                            isDarkMode
-                              ? {
-                                  tintColor: MyDarkTheme.colors.text,
-                                  opacity: 0.7,
-                                  marginHorizontal: moderateScale(5),
-                                }
-                              : {
-                                  opacity: 0.7,
-                                  marginHorizontal: moderateScale(5),
-                                }
-                          }
-                          source={imagePath.recently_search}
-                        />
-                      </View>
-                      <View>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            fontFamily: fontFamily.medium,
-                            color: colors.greyLight,
-                          }}>
-                          {item?.dataname || item?.name}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })
+              console.log(item, 'itemitem');
+              return (
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: 'row',
+                      borderColor: colors.textGreyB,
+                      borderWidth: 0.5,
+                      borderRadius: 4,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginHorizontal: moderateScale(5),
+                      paddingHorizontal: moderateScale(5),
+                      paddingVertical: moderateScaleVertical(7),
+                      marginVertical: moderateScaleVertical(5),
+                    }}
+                    onPress={() => onClickRecent(item)}
+                    key={index}>
+                    <View>
+                      <Image
+                        style={
+                          isDarkMode
+                            ? {
+                              tintColor: MyDarkTheme.colors.text,
+                              opacity: 0.7,
+                              marginHorizontal: moderateScale(5),
+                            }
+                            : {
+                              opacity: 0.7,
+                              marginHorizontal: moderateScale(5),
+                            }
+                        }
+                        source={imagePath.recently_search}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontFamily: fontFamily.medium,
+                          color: colors.greyLight,
+                        }}>
+                        {item?.dataname || item?.name}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              );
+            })
             : null}
         </View>
       </View>
     );
   };
 
-  const renderProduct = ({item}) => {
+  const renderProduct = ({ item }) => {
     return (
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}
@@ -472,7 +472,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             MyDarkTheme={MyDarkTheme}
           />
         )}
-        <View style={{flex: 1, marginLeft: moderateScale(12)}}>
+        <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
           <Text
             numberOfLines={1}
             style={{
@@ -498,7 +498,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     );
   };
 
-  const renderRecommendedVendors = ({item}) => {
+  const renderRecommendedVendors = ({ item }) => {
     return (
       <View
         style={{
@@ -524,7 +524,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
         {searchInput ? null : (
           <>
             {previousSearches?.length > 0 ? (
-              <View style={{marginHorizontal: moderateScale(20)}}>
+              <View style={{ marginHorizontal: moderateScale(20) }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -589,7 +589,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                     paddingVertical: moderateScaleVertical(5),
                   }}
                   // ListEmptyComponent={_listEmptyComponent}
-                  ItemSeparatorComponent={() => <View style={{height: 30}} />}
+                  ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
                 />
               </View>
             )}
@@ -629,8 +629,8 @@ export default function SearchProductVendorItem2({navigation, route}) {
               <Image
                 source={
                   appStyle?.homePageLayout === 3 ||
-                  appStyle?.homePageLayout === 5 ||
-                  appStyle?.homePageLayout === 6
+                    appStyle?.homePageLayout === 5 ||
+                    appStyle?.homePageLayout === 6
                     ? imagePath.icBackb
                     : imagePath.back
                 }
@@ -638,7 +638,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                   tintColor: isDarkMode
                     ? MyDarkTheme.colors.text
                     : colors.black,
-                  transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                 }}
               />
             )}
@@ -660,7 +660,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             onChangeText={(value) => onChangeText(value)}
             showRightIcon={showRightIcon}
             rightIconPress={() =>
-              updateState({searchInput: '', isLoading: false})
+              updateState({ searchInput: '', isLoading: false })
             }
             autoFocus={true}
             isVoiceRecord={isVoiceRecord}
@@ -669,7 +669,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           />
         </View>
 
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {showShimmer ? (
             <View
               style={{
@@ -679,7 +679,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
               }}>
               {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}].map(() => {
                 return (
-                  <ContentLoader style={{height: moderateScale(54)}}>
+                  <ContentLoader style={{ height: moderateScale(54) }}>
                     <Circle cx="20" cy="20" r="20" />
                     <Rect x="50" y="14" rx="2" ry="2" width="100" height="8" />
                   </ContentLoader>
@@ -693,28 +693,28 @@ export default function SearchProductVendorItem2({navigation, route}) {
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(20)}} />
+                <View style={{ height: moderateScale(20) }} />
               )}
               onEndReached={onEndReached}
               ListHeaderComponent={() => (
-                <View style={{height: moderateScale(16)}} />
+                <View style={{ height: moderateScale(16) }} />
               )}
               extraData={searchData}
               ListFooterComponent={
-              ()=>{
-               return (
-                isLoadMore ? (
-                  <View style={{height:moderateScaleVertical(100)}}>
-                    <FooterLoader style={{color:themeColors?.primary_color}}  />
-                  </View>
-                ) : (
-                  <View style={{height: moderateScale(80)}} />
-                )
-               )
-              }
+                () => {
+                  return (
+                    isLoadMore ? (
+                      <View style={{ height: moderateScaleVertical(100) }}>
+                        <FooterLoader style={{ color: themeColors?.primary_color }} />
+                      </View>
+                    ) : (
+                      <View style={{ height: moderateScale(80) }} />
+                    )
+                  )
+                }
               }
             />
           )}

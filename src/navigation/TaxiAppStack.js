@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Addaddress,
   AddNewRider,
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
+  ChooseVechile,
   HomeScreenTaxi, Location, Offers,
   OrderDetail,
   Payfast,
@@ -30,42 +32,43 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.HOMESCREENTAXI}
         component={HomeScreenTaxi}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
         component={Addaddress}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ADD_NEW_RIDER}
         component={AddNewRider}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.PINADDRESSONMAP}
         component={PinAddressOnMap}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.PAYMENT_OPTIONS}
         component={PaymentOptions}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.CHOOSECARTYPEANDTIMETAXI}
-        component={ChooseCarTypeAndTimeTaxi}
-        options={{headerShown: false}}
+        // component={ChooseCarTypeAndTimeTaxi}
+        component={ChooseVechile}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.OFFERS2}
         component={Offers}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.LOCATION}
         component={Location}
         options={{ headerShown: false }}
@@ -73,47 +76,47 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PICKUPTAXIORDERDETAILS}
         component={PickupTaxiOrderDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDERSUCESS}
         component={OrderSuccess}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAYFAST}
         component={Payfast}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAYPHONE}
         component={PayPhone}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.AuthorizeNet}
         component={AuthorizeNet}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.PAYSTACK}
         component={Paystack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.DIRECTPAYONLINE}
         component={DirectPayOnline}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.KHALTI}
         component={Khalti}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
        <Stack.Screen
         name={navigationStrings.SKIP_CASH}
@@ -131,12 +134,12 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT_TAXI}
         component={VerifyAccount}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.BIDINGDRIVERSLIST}
         component={BidingDriversList}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </>
   );

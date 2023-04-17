@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {
   Addaddress,
+  Addaddress2,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
@@ -37,6 +38,7 @@ import {
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
+  TaxiHome,
   TaxiHomeScreen,
   TrackDetail,
   Tracking,
@@ -49,6 +51,7 @@ import {
   ViewAllData,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
+import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
 
 import { verticalAnimation } from '../utils/utils';
 import navigationStrings from './navigationStrings';
@@ -57,6 +60,8 @@ const Stack = createNativeStackNavigator();
 
 export default function () {
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
+  const { lastBidInfo } = useSelector((state) => state?.home);
+
   const businessType = appStyle?.homePageLayout;
 
   const rendervendorScreen = () => {
@@ -116,16 +121,26 @@ export default function () {
         return SearchProductVendorItem;
       case 8:
         return SearchProductVendorItem3V2;
+      case 10:
+        return SearchProductVendorItem3V2;
       default:
         return SearchProductVendorItem2;
     }
   };
 
+
   return (
     <Stack.Navigator
+
       screenOptions={{
         headerShown: false,
       }}>
+
+      {!!lastBidInfo && <Stack.Screen
+        name={navigationStrings.BIDINGDRIVERSLIST}
+        component={BidingDriversList}
+        options={{ headerShown: false }}
+      />}
       <Stack.Screen
         name={
           businessType === 4
@@ -135,14 +150,15 @@ export default function () {
         component={
           businessType === 4
             ? TaxiHomeScreen
-            : businessType === 8
+            : (businessType === 8 || businessType === 10)
               ? HomeV2Api
               : Home
         }
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
-        component={Addaddress}
+        // component={Addaddress}
+        component={Addaddress2}
       />
 
       <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
@@ -262,10 +278,6 @@ export default function () {
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
       />
-
-
-
-
 
     </Stack.Navigator>
   );

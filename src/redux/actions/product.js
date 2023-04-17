@@ -42,6 +42,7 @@ import {
   CHECK_SLOTS_LIMIT,
   GET_SLOTS_FOR_APPOINTMENT,
   CREATE_BID_REQUEST,
+  GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER,
 } from '../../config/urls';
 import { apiGet, apiPost, setWalletData } from '../../utils/utils';
 import store from '../store';
@@ -570,7 +571,7 @@ export function checkSlotsLimit(data = {}, headers = {}) {
   return apiPost(CHECK_SLOTS_LIMIT, data, headers);
 }
 export function getAppointmentSlots(data = {}, headers = {}) {
-  return apiPost(GET_SLOTS_FOR_APPOINTMENT, data, headers);
+  return apiPost( GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER , data, headers);
 }
 
 // create bid request>>>>>>>>>>
