@@ -218,25 +218,26 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-              emart{
+                      grub{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.emart.order'
-                resValue "string", "app_name", "Emart"
+                applicationId 'com.customer.grub'
+                resValue "string", "app_name", "Grub"
                 resValue "string", "host_name", ""
             }
-            gokab{
+          royoorder {
                 dimension "appType"
-                versionCode 2
+                versionCode 3
                 versionName "1.0"
                 minSdkVersion rootProject.ext.minSdkVersion
                 targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.gokab'
-                resValue "string", "app_name", "GoKab"
-                resValue "string", "host_name", ""
+                // applicationIdSuffix ".royoorder"
+                applicationId 'com.codebrew.royoorder'
+                resValue "string", "app_name", "RoyoOrder"
+                resValue "string", "host_name", "sales.royoorders.com"
             }
 }
 

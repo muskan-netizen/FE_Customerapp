@@ -194,6 +194,8 @@ export default function Home({ route, navigation }) {
     }
   }, [redirectedFrom])
 
+  console.log(appData, "appData>>>>>appData")
+
   useEffect(() => {
     chekLocationPermission(true)
       .then((result) => {
@@ -295,6 +297,9 @@ export default function Home({ route, navigation }) {
               homeData();
               return;
             }
+          }
+          else {
+            homeData();
           }
         }
       })

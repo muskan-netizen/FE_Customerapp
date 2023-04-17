@@ -50,7 +50,7 @@ function SwipeableSection(props) {
                             ref={swipeRef}
                             key={swipeKey + Math.random()}
                             renderRightActions={swipeBtns}
-                            onSwipeableOpen={() => deleteItem(i, index)}
+                            onSwipeableOpen={() => deleteItem(i, inx)}
                             rightThreshold={width / 1.4}
                         // overshootFriction={8}
                         >

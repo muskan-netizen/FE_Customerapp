@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F415271329BB063B00412481"
-               BuildableName = "ROYORIDES.app"
+               BuildableName = "ROYORIDES"
                BlueprintName = "ROYORIDES"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F415271329BB063B00412481"
-            BuildableName = "ROYORIDES.app"
+            BuildableName = "ROYORIDES"
             BlueprintName = "ROYORIDES"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F415271329BB063B00412481"
-            BuildableName = "ROYORIDES.app"
+            BuildableName = "ROYORIDES"
             BlueprintName = "ROYORIDES"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>

@@ -146,7 +146,11 @@ export default function () {
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
-        component={TaxiHome}
+        component={businessType === 4
+          ? TaxiHomeScreen
+          : businessType === 8
+            ? HomeV2Api
+            : Home}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
