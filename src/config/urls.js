@@ -1,8 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-export const API_BASE_URL = 'https://piolfix.focushires.com/api/v1'; //Staging
-// export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
+// export const API_BASE_URL = 'https://piolfix.focushires.com/api/v1'; //Staging
+export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
