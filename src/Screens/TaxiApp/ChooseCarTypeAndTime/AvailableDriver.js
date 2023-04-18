@@ -20,6 +20,7 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
+import RenderHTML from 'react-native-render-html';
 
 export default function AvailableDriver({
   rideType,
@@ -40,6 +41,7 @@ export default function AvailableDriver({
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
+
 
   // choose a trip or swipe up for more
   //Render all Available amounts
@@ -111,7 +113,7 @@ export default function AvailableDriver({
                 }}>
                 {item?.translation[0]?.title}
               </Text>
-              <Text
+              {/* <Text
                 style={{
                   color: isDarkMode
                     ? selectedCarOption?.id == item?.id
@@ -125,7 +127,25 @@ export default function AvailableDriver({
                   textAlign: 'left',
                 }}>
                 {item?.translation[0]?.meta_description}
-              </Text>
+              </Text> */}
+              <RenderHTML
+                contentWidth={width}
+                source={{ html: item?.translation[0]?.body_html }}
+                tagsStyles={{
+                  p: {
+                    color: isDarkMode
+                      ? selectedCarOption?.id == item?.id
+                        ? colors.white
+                        : colors.whiteOpacity50
+                      : selectedCarOption?.id == item?.id
+                        ? colors.black
+                        : colors.blackOpacity66,
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(10),
+                    textAlign: 'left',
+                  },
+                }}
+              />
             </View>
           </View>
 

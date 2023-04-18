@@ -84,7 +84,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     themeColor,
   } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal, distance_unit_for_time } = appData?.profile?.preferences || {};
-  console.log(appData?.profile?.preferences, "appData?.profile?.preferences");
   const { userData } = useSelector((state) => state?.auth || {});
   const { pickUpTimeType, location } = useSelector((state) => state?.home || {});
   const darkthemeusingDevice = useDarkMode();
@@ -92,7 +91,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
   const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
-
+console.log(themeColors,'themeColorsthemeColorsthemeColors')
   const [state, setState] = useState({
     region: {
       latitude: paramData?.location[0]?.latitude
@@ -247,11 +246,8 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     });
   }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
 
-  console.log("paramDataparamDataparamDataparamData", paramData)
 
   useEffect(() => {
-    //if pickupTimeType is now then we hit direct api withhout schedule date 
-    //otherwise we pass the shcedule date onDateSet function and hit api accordingly
     !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
   }, [updateSeatNO]);
 
@@ -272,8 +268,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
   }, [date])
 
-  console.log("slectedDateslectedDate", slectedDate)
-
   const clearScheduleDate = useCallback(() => {
     actions.saveSchduleTime('now');
     updateState({
@@ -290,7 +284,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     if (showInitalModal) {
       updateState({ showCarModal: true });
     }
-
     updateState({ isLoading: true });
 
     const apiQuery = `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`
@@ -503,6 +496,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const checkPaymentOptions = (extraData, res) => {
+
     console.log(extraData, 'extraData');
     console.log(res, 'res');
     let paymentId = selectedPayment?.id;
@@ -523,11 +517,12 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     };
 
     console.log(paymentData, 'paymentData>paymentData');
+    console.log(paymentId, 'paymentData>paymentData123');
     updateState({
       isModalVisible: false,
       isLoading: false,
       isRefreshing: false,
-      // indicatorLoader: false,
+      indicatorLoader: false,
     });
     switch (paymentId) {
       case 4: //Stripe Payment Getway
@@ -550,6 +545,9 @@ function ChooseCarTypeAndTime({ navigation, route }) {
         break;
       case 47: //Khalti Payment Gatway
         navigation.navigate(navigationStrings.KHALTI, paymentData);
+        break;
+      case 52: //SKIP_CASH Payment Gatway
+        navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         break;
       case 30: //FlutterWave Payment Getway
         updateState({
@@ -599,7 +597,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
           let newObj = extraData?.orderDetail;
@@ -647,7 +645,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
             selectedCarOption: selectedCarOption?.sku,
           };
           console.log(extraData, data, "extraData, data");
-          if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res, data) }
+          if (selectedPayment?.id == 49 || selectedPayment?.id == 50 || selectedPayment?.id == 53) { _paymentWithPlugnPayMethods(extraData, res, data) }
           else { checkPaymentOptions(extraData, data); }
 
         } else {
@@ -698,6 +696,9 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     data['tasks'] = paramData?.tasks;
     data['images_array'] = uploadImages;
     data['agent_id'] = paramData?.bidData?.driver_id
+    if (paramData?.bidData?.driver_id) {
+      data['bid_task_type'] = paramData?.bidData?.task_type
+    }
     data['user_product_order_form'] = allSubmittedAnswers
       ? allSubmittedAnswers
       : [];
@@ -783,7 +784,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log('current lcoation', res);
               updateState({
                 myCurrentLocationDetails: res,
               });
@@ -802,7 +802,6 @@ function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({
       selectedCarOption: item,
       showBidPriceModal: paramData?.rideType == 'bideRide' ? true : false
-
     });
     setBidRidePrice(Number(item?.tags_price))
   };
@@ -1541,7 +1540,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
                     ? `${scheduleDateTime?.selectedDateAndTime}`
                     : slectedDate || selectedTime
                       ? `${slectedDate} ${selectedTime}`
-                      : 'Schedule a ride'
+                      : appIds.jiffex == getBundleId() ? 'Schedule a order' : 'Schedule a ride'
                     }`}
                   btnStyle={styles.scheduleBtnStyle}
                 />
@@ -1580,7 +1579,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
         )}
       </View>
 
-      {/* BottomView */}
+
 
       <View style={styles.topView}>
 

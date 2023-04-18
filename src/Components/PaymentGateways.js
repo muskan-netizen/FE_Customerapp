@@ -39,7 +39,7 @@ export default function PaymentGateways({
       <View style={{ flexDirection: 'row', flex: 1, justifyContent: "space-between" }}>
 
         <View style={{ flex: .5 }}>
-          {paymentid == 49 ? 
+          {paymentid !=50 ? 
           <BorderTextInput
             onChangeText={onChangeExpiryDateText}
             placeholder={'MM/YY'}

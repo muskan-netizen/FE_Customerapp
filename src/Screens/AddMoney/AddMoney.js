@@ -19,7 +19,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
+import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import RazorpayCheckout from 'react-native-razorpay';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -29,6 +30,7 @@ import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PaymentGateways from '../../Components/PaymentGateways';
+import TextTabBar from '../../Components/TextTabBar';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -76,19 +78,24 @@ export default function AddMoney({ navigation }) {
     cardInfo: null,
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
+    cardFill: true,
+    savedCardData: [],
+    selectedSavedListCardNumber: null,
+    btnLoader: false
   });
   //update your state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Redux Store Data
   const { appData, themeColors, appStyle, currencies, languages } = useSelector((state) => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
+  const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
   const userData = useSelector((state) => state.auth.userData);
   const { preferences } = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const [year, setYear] = useState()
   const [date, setDate] = useState()
+  const [accept, isAccept] = useState(false);
   const commonStyles = commonStylesFun({ fontFamily });
   const {
     allAvailAblePaymentMethods,
@@ -98,11 +105,17 @@ export default function AddMoney({ navigation }) {
     cardInfo,
     isModalVisibleForPayFlutterWave,
     paymentDataFlutterWave,
+    cardFill,
+    savedCardData,
+    selectedSavedListCardNumber,
+    btnLoader
   } = state;
   useEffect(() => {
     getListOfPaymentMethod();
   }, []);
-
+  useEffect(() => {
+    getSavedCardList()
+  }, [])
   useEffect(() => {
     if (
       preferences &&
@@ -137,6 +150,40 @@ export default function AddMoney({ navigation }) {
       })
       .catch(errorMethod);
   };
+
+  const deleteCard = (item) => {
+    Alert.alert('', strings.DELETE_CARD, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {
+        text: strings.CONFIRM,
+        onPress: () => {
+          deleteSaveCard(item)
+        },
+      },
+    ]);
+  }
+  const deleteSaveCard = (item) => {
+    let query = `?id=${item?.id}`
+    actions.deleteCard(query, {}, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+
+        console.log(res, 'resereserseersre')
+        alert(res?.message)
+        getSavedCardList()
+
+      })
+      .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
+  }
+
+
 
   const checkInputHandler = (type, data) => {
     if (type === 'Card Number') {
@@ -186,7 +233,7 @@ export default function AddMoney({ navigation }) {
       isRefreshing: false,
       isModalVisibleForPayFlutterWave: false,
     });
-    showError(error?.error?.reason|| error?.message || error?.error);
+    showError(error?.error?.reason || error?.message || error?.error);
   };
 
   //Navigation to specific screen
@@ -246,16 +293,108 @@ export default function AddMoney({ navigation }) {
       </TouchableOpacity>
     );
   };
+
+
+  const _isCheck = () => {
+    isAccept(!accept)
+  }
+
+  const selectSavedCard = (data, inx) => {
+    {
+      selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
+        ? (updateState({ selectedSavedListCardNumber: null }))
+        : updateState({ selectedSavedListCardNumber: data });
+    }
+  };
+  const renderSavedCardList = ({ item, index }) => {
+    console.log("renderSavedCardList =>", index)
+    const expDate = item?.expiration
+    // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => selectSavedCard(item, index)}
+          style={{
+            marginVertical: moderateScaleVertical(8), borderRadius: moderateScaleVertical(13),
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <Image
+            source={
+              selectedSavedListCardNumber &&
+                selectedSavedListCardNumber?.id == item.id
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <View style={{ marginLeft: moderateScale(10) }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Card No:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {item?.card_hint}
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Exp Date:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {expDate}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteCard(item)}>
+          <Image source={imagePath?.delete} />
+        </TouchableOpacity>
+      </View>
+
+    )
+  }
   const _selectPaymentMethod = (item) => {
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == item?.id
         ? updateState({ selectedPaymentMethod: null })
         : updateState({ selectedPaymentMethod: item });
-        setCardNUmber("")
-        setYear("")
-        setDate("")
-        setExpiryDate("")
-        setCvc("")
+      setCardNUmber("")
+      setYear("")
+      setDate("")
+      setExpiryDate("")
+      setCvc("")
     }
   };
   const _renderItemPayments = ({ item, index }) => {
@@ -326,6 +465,7 @@ export default function AddMoney({ navigation }) {
               />
             </View>
           )}
+        {console.log(selectedPaymentMethod, "selectedPaymentMethod>>>>")}
 
         {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
@@ -356,11 +496,11 @@ export default function AddMoney({ navigation }) {
               }}
             />
           )}
-        {!!(
+        {/* {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
         ) && (
             <PaymentGateways
               isCardNumber={cardNumber}
@@ -375,6 +515,117 @@ export default function AddMoney({ navigation }) {
               paymentid={selectedPaymentMethod?.id}
               eDate={date}
             />
+          )} */}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 1 &&
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+        ) && (
+            selectedPaymentMethod?.id == 50 ?
+              <>
+                <View style={{
+                  flexDirection: 'row',
+                  marginTop: moderateScale(10),
+                  justifyContent: 'space-around'
+                }}>
+                  <TextTabBar
+                    text={'Card Fill'}
+                    isActive={cardFill}
+                    containerStyle={
+                      isDarkMode
+                        ? { backgroundColor: MyDarkTheme.colors.background }
+                        : { backgroundColor: colors.white, width: width / 2 }
+                    }
+                    onPress={() => updateState({ cardFill: true })}
+                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                  />
+                  <TextTabBar
+                    text={'Saved Card'}
+                    isActive={!cardFill}
+                    containerStyle={
+                      isDarkMode
+                        ? { backgroundColor: MyDarkTheme.colors.background }
+                        : { backgroundColor: colors.white, width: width / 2 }
+                    }
+                    onPress={() => updateState({ cardFill: false })}
+                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                  />
+                </View>
+                {
+                  cardFill ?
+                    <>
+                      <PaymentGateways
+                        isCardNumber={cardNumber}
+                        cvc={cvc}
+                        expiryDate={expiryDate}
+                        year={year}
+                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                        onChangeText={(data) => checkInputHandler('Card Number', data)}
+                        onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                        onChangeYearText={(data) => checkInputHandler('Year', data)}
+                        onChangeDateText={(data) => checkInputHandler('Date', data)}
+                        paymentid={selectedPaymentMethod?.id}
+                        eDate={date}
+                      />
+                      <View style={{ flexDirection: "row", alignItems: 'center', }}>
+                        <TouchableOpacity
+                          onPress={_isCheck}
+                          style={{
+
+                            marginRight: 10,
+                          }}>
+                          <FastImage
+                            style={{
+                              width: moderateScale(15),
+                              height: moderateScale(15),
+                            }}
+                            tintColor={
+                              isDarkMode ? MyDarkTheme.colors.text : colors.black
+                            }
+                            source={
+                              accept
+                                ? imagePath.checkBox2Active
+                                : imagePath.checkBox2InActive
+                            }
+                            resizeMode="contain"
+                          />
+                        </TouchableOpacity>
+                        <Text> Save Card</Text>
+                      </View>
+
+
+                    </>
+                    :
+                    <FlatList
+                      keyExtractor={(itm, inx) => String(inx)}
+                      data={savedCardData}
+                      renderItem={renderSavedCardList}
+                      ListEmptyComponent={() =>
+                        <View>
+                          <Text style={{ textAlign: 'center' }}>
+                            {" No Saved Cards"}
+                          </Text>
+                        </View>
+                      }
+                    />
+
+                }
+              </>
+              :
+              <PaymentGateways
+                isCardNumber={cardNumber}
+                cvc={cvc}
+                expiryDate={expiryDate}
+                year={year}
+                onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                onChangeText={(data) => checkInputHandler('Card Number', data)}
+                onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                onChangeYearText={(data) => checkInputHandler('Year', data)}
+                onChangeDateText={(data) => checkInputHandler('Date', data)}
+                paymentid={selectedPaymentMethod?.id}
+                eDate={date}
+              />
           )}
       </>
     );
@@ -436,7 +687,24 @@ export default function AddMoney({ navigation }) {
       })
       .catch(errorMethod);
   };
+  const getSavedCardList = () => {
 
+    actions.getSavedCardsList({},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
+      .then((res) => {
+        console.log('getSavedCardList =>', res);
+        updateState({ isLoading: false, isRefreshing: false });
+        if (res && res?.data) {
+          updateState({ savedCardData: res?.data })
+        }
+      })
+      .catch(errorMethod);
+  }
   const openPayTabs = async (data) => {
     console.log(appData, 'openPayTabsappData');
     console.log('openPayTabsdata', data);
@@ -521,11 +789,11 @@ export default function AddMoney({ navigation }) {
       });
       return;
     }
-    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50)) {
+    if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50 && selectedPaymentMethod?.id != 53)) {
       _webPayment();
       return;
     }
-    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) {
+    if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id === 53) {
       _paymentWithPlugnPayMethods()
       return;
     }
@@ -588,22 +856,30 @@ export default function AddMoney({ navigation }) {
     }
   };
   //flutter wave
+
+
+
   const _paymentWithPlugnPayMethods = () => {
 
+    updateState({ btnLoader: true })
     let selectedMethod = selectedPaymentMethod.code;
-    let CardNumber = cardNumber.split(" ").join("")
+    let CardNumber = cardNumber.split(" ").join("") || " "
     let expirydate
     if (selectedPaymentMethod?.id == 50) {
 
-      expirydate = year.concat(date)
+      expirydate = year.concat(date) || " "
       console.log(expirydate, 'expirydate')
     }
     else {
-      expirydate = expiryDate
+      expirydate = expiryDate || " "
     }
+    let savedCardId = selectedSavedListCardNumber && selectedSavedListCardNumber.id || ''
+    let saveCard = !!accept ? 1 : 0
+    let queryData = `/${selectedMethod}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&card_id=${savedCardId}&action=wallet&come_from=app`;
+    if (selectedPaymentMethod?.id == 50 && !!CardNumber) { queryData = queryData + `&save_card=${saveCard}` }
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${amount}&cv=${cvc}&dt=${expirydate}&cno=${CardNumber}&action=wallet&come_from=app`,
+        queryData,
         {},
         {
           code: appData?.profile?.code,
@@ -615,13 +891,15 @@ export default function AddMoney({ navigation }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
+          updateState({ btnLoader: false })
           navigation.navigate(navigationStrings.WALLET);
         }
       })
       .catch((err) => {
+        updateState({ btnLoader: false })
         console.log('Error>>>>>>>>>>>', err)
         showError(err?.msg)
       })
@@ -702,7 +980,7 @@ export default function AddMoney({ navigation }) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
-    console.log(cardInfo,res2,'hgreutiergtry')
+    console.log(cardInfo, res2, 'hgreutiergtry')
     if (res2) {
       await createPaymentMethod({
         paymentMethodType: 'Card',
@@ -739,7 +1017,7 @@ export default function AddMoney({ navigation }) {
                   );
                   if (paymentIntent) {
                     console.log(paymentIntent, 'paymentIntent');
-                    if (paymentIntent) {                  
+                    if (paymentIntent) {
                       actions
                         .confirmPaymentIntentStripe(
                           {
@@ -823,6 +1101,7 @@ export default function AddMoney({ navigation }) {
               marginTop={moderateScaleVertical(50)}
               marginBottom={moderateScaleVertical(50)}
               btnText={strings.ADD}
+              indicator={btnLoader}
             />
           </View>
         ) : (
@@ -981,7 +1260,7 @@ export default function AddMoney({ navigation }) {
       }
       statusBarColor={colors.white}
       isLoading={isLoadingB}
-      >
+    >
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2

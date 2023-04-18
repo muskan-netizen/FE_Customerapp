@@ -1,13 +1,13 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {width, height} from '../../../styles/responsiveSize';
+import { width, height } from '../../../styles/responsiveSize';
 
-export default ({themeColor, toggleTheme, fontFamily}) => {
+export default ({ themeColor, toggleTheme, fontFamily }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -55,7 +55,6 @@ export default ({themeColor, toggleTheme, fontFamily}) => {
       borderRadius: moderateScale(12),
       backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: '#FC7049',
     },
     btn2: {
       width: width / 2.5,
@@ -98,8 +97,8 @@ export default ({themeColor, toggleTheme, fontFamily}) => {
       borderRadius: 6,
       marginHorizontal: 8,
     },
-    back: {position: 'absolute', left: 18, top: 38},
-    heart: {position: 'absolute', right: 18, top: 42},
+    back: { position: 'absolute', left: 18, top: 38 },
+    heart: { position: 'absolute', right: 18, top: 42 },
     leftRightBtn: {
       alignItems: 'center',
       justifyContent: 'center',

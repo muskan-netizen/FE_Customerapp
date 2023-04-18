@@ -1,50 +1,41 @@
 {
   "project_info": {
-    "project_number": "35173708031",
-    "project_id": "bukam-c8fc4",
-    "storage_bucket": "bukam-c8fc4.appspot.com"
+    "project_number": "756745911894",
+    "project_id": "bukam-order",
+    "storage_bucket": "bukam-order.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:35173708031:android:6a82d9d460230c66aedcca",
+        "mobilesdk_app_id": "1:756745911894:android:8478952b914a9d7c2205f7",
         "android_client_info": {
-          "package_name": "com.bukam.royoorders"
+          "package_name": "com.bukam.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "35173708031-isgiqbf5os0gt68jp8vrudoc7505k97a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bukam.royoorders",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "35173708031-tqpsi5o39mj4pqi3uvvovvqtlfplvtlq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bukam.royoorders",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "35173708031-mriag79e7fpgaq38654i04c71lj6rse8.apps.googleusercontent.com",
+          "client_id": "756745911894-94ivo933bk2mtan59gdm341l0de2al1v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBfe1nePQgpncxj28IXZCU6GINaB_4zE-8"
+          "current_key": "AIzaSyDfldTLMfABzh5M7ngrxo2atsGy5OcMfFA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "35173708031-mriag79e7fpgaq38654i04c71lj6rse8.apps.googleusercontent.com",
+              "client_id": "756745911894-94ivo933bk2mtan59gdm341l0de2al1v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "756745911894-e7s6aq38equ8tff21ka0ojmdt1l7jvn7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bukam.order"
+              }
             }
           ]
         }

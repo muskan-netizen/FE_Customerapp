@@ -18,6 +18,11 @@ export function setUserData(data) {
   return AsyncStorage.setItem('userData', data);
 }
 
+export function saveBidData(data) {
+  data = JSON.stringify(data);
+  return AsyncStorage.setItem('lastBidInfo', data);
+}
+
 //Save wallet info
 
 export function setWalletData(data) {
@@ -74,6 +79,14 @@ export async function getUserData() {
   });
 }
 
+export async function getLastBidInfo() {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem('lastBidInfo').then((data) => {
+      resolve(JSON.parse(data));
+    });
+  });
+}
+
 export async function getAppData() {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem('appData').then((data) => {
@@ -84,6 +97,10 @@ export async function getAppData() {
 
 export async function clearUserData() {
   return AsyncStorage.removeItem('userData');
+}
+
+export async function clearBidData() {
+  return AsyncStorage.removeItem('lastBidInfo');
 }
 
 export async function apiReq(

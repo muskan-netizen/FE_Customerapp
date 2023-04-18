@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>671083763720-hhnds51qtjgko6pee431o1vahiumlv1h.apps.googleusercontent.com</string>
+	<string>367782733089-feojdshfv6ntquvp18rj1idi3eute28l.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.671083763720-hhnds51qtjgko6pee431o1vahiumlv1h</string>
+	<string>com.googleusercontent.apps.367782733089-feojdshfv6ntquvp18rj1idi3eute28l</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>671083763720-2amk4704an7g4hdbnpd6vb5fbj7tm7ca.apps.googleusercontent.com</string>
+	<string>367782733089-ao1130jrsg3a6cff22a6dibg6o3s2lfe.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA567k-6nDBHxglfdemAh__EsE8bpqC2rU</string>
+	<string>AIzaSyBCn2Bgxopt8n3j6vqmbA-p_AcQfEHgWy4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>671083763720</string>
+	<string>367782733089</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.baubau</string>
+	<string>com.bauBau.order</string>
 	<key>PROJECT_ID</key>
-	<string>baubau-6025b</string>
+	<string>baubau-eca5e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>baubau-6025b.appspot.com</string>
+	<string>baubau-eca5e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:671083763720:ios:a00ff35e9f6cdd6c5799bd</string>
+	<string>1:367782733089:ios:425b9f377b9a5cf850ca60</string>
 </dict>
 </plist>

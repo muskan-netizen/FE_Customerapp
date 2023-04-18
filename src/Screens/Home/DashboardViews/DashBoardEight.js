@@ -89,6 +89,7 @@ export default function DashBoardEight({
     showMenu: false,
     categoriesData: [],
     seeMore: false,
+    loading: true,
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -100,7 +101,7 @@ export default function DashBoardEight({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const { slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore } =
+  const { slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore, loading } =
     state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
@@ -390,6 +391,11 @@ export default function DashBoardEight({
 
   const scrollRef = React.useRef(null);
   useScrollToTop(scrollRef);
+
+  // if ( !!vendorsData || !!categoriesData) {
+  //   updateState({loading:false})
+  // }
+
 
   if (isLoading) {
     return (
@@ -684,6 +690,7 @@ export default function DashBoardEight({
                         marginHorizontal: moderateScale(10),
                         lineHeight: moderateScale(20),
                         marginTop: moderateScale(5),
+                        color: isDarkMode ? MyDarkTheme?.colors?.text : colors.blackB
                       }}>
                       {strings.SORRY_MSG}
                     </Text>

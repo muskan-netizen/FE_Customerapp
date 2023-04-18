@@ -1,11 +1,11 @@
-import {useNavigation} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useState, useEffect} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useNavigation } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import HTMLView from 'react-native-htmlview';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -18,8 +18,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
+import { MyDarkTheme } from '../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import {
   getImageUrl,
   hapticEffects,
@@ -36,7 +36,7 @@ export default function AddonModal({
   resizeMode = 'cover',
   imagestyle = {},
   redirectedFrom = '',
-  updateAddonOnReplaceProduct = () => {},
+  updateAddonOnReplaceProduct = () => { },
 }) {
   const navigation = useNavigation();
   const [state, setState] = useState({
@@ -46,11 +46,11 @@ export default function AddonModal({
   });
 
   useEffect(() => {
-    setState({addonSetData: addonSet, viewHeight: 0, maxLimitAddon: 0});
+    setState({ addonSetData: addonSet, viewHeight: 0, maxLimitAddon: 0 });
   }, [addonSet]);
 
-  const {addonSetData, viewHeight, maxLimitAddon} = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const { addonSetData, viewHeight, maxLimitAddon } = state;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const {
     appData,
     themeColors,
@@ -64,10 +64,10 @@ export default function AddonModal({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   let productImage = productdetail?.product_media[0];
 
@@ -127,12 +127,13 @@ export default function AddonModal({
   };
 
   let plainHtml = productdetail?.translation[0]?.body_html || null;
-  const checkBoxButtonViewAddons = ({setoptions}) => {
+  const checkBoxButtonViewAddons = ({ setoptions }) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
           return (
             <TouchableOpacity
+              key={String(inx)}
               activeOpacity={1}
               onPress={() => {
                 selectSpecificOptionsForAddions(setoptions, i, inx);
@@ -144,7 +145,7 @@ export default function AddonModal({
 
                 marginBottom: moderateScaleVertical(10),
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -160,7 +161,7 @@ export default function AddonModal({
                 </Text>
               </View>
 
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -177,7 +178,7 @@ export default function AddonModal({
                     currencies?.primary_currency?.symbol,
                   )}
                 </Text>
-                <View style={{paddingLeft: moderateScale(5)}}>
+                <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
                     source={i?.value ? imagePath.check : imagePath.unCheck}
                   />
@@ -201,7 +202,7 @@ export default function AddonModal({
           {variantSetData.map((i, inx) => {
             return (
               <View
-                key={inx}
+                key={String(inx)}
                 style={{
                   marginVertical: moderateScaleVertical(5),
                 }}>
@@ -268,12 +269,12 @@ export default function AddonModal({
       console.log('temp value', temp);
       if (temp) {
         let CloneArr = addonSetData;
-        CloneArr[inx] = {...CloneArr[inx], errorShow: false};
-        updateState({addonSetData: CloneArr});
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
+        updateState({ addonSetData: CloneArr });
       } else {
         let CloneArr = addonSetData;
-        CloneArr[inx] = {...CloneArr[inx], errorShow: true};
-        updateState({addonSetData: CloneArr});
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
+        updateState({ addonSetData: CloneArr });
       }
     });
 
@@ -302,7 +303,7 @@ export default function AddonModal({
       animationType={'none'}
       style={styles.modalContainer}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
@@ -365,7 +366,7 @@ export default function AddonModal({
                       ? plainHtml
                       : '<p>' + plainHtml + '</p>'
                   }
-                  stylesheet={{p: styles.descriptionStyle}}
+                  stylesheet={{ p: styles.descriptionStyle }}
                 />
               </View>
             ) : null}
@@ -382,10 +383,10 @@ export default function AddonModal({
           </View>
         </View>
 
-        <View style={{height: moderateScaleVertical(100)}} />
+        <View style={{ height: moderateScaleVertical(100) }} />
       </ScrollView>
       <View
-        style={[styles.bottomAddToCartView, {top: viewHeight - height / 10}]}>
+        style={[styles.bottomAddToCartView, { top: viewHeight - height / 10 }]}>
         <GradientButton
           colorsArray={[themeColors.primary_color, themeColors.primary_color]}
           textStyle={styles.textStyle}

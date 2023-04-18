@@ -18,11 +18,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators';
 import LinearGradient from 'react-native-linear-gradient';
+import * as RNLocalize from 'react-native-localize';
+import Modal, { ReactNativeModal } from 'react-native-modal';
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import Share from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 import { SvgUri } from 'react-native-svg';
@@ -54,7 +57,6 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
-import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import {
   height,
   moderateScale,
@@ -64,9 +66,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import {
-  currencyNumberFormatter,
-  getHourAndMinutes,
-  tokenConverterPlusCurrencyNumberFormater,
+  tokenConverterPlusCurrencyNumberFormater
 } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
@@ -81,7 +81,6 @@ import {
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
-import Modal, { ReactNativeModal } from 'react-native-modal';
 
 
 let timeOut = undefined;
@@ -123,8 +122,8 @@ const filtersData = [
   },
 ];
 
-import { enableFreeze } from "react-native-screens";
 import DatePicker from 'react-native-date-picker';
+import { enableFreeze } from "react-native-screens";
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 enableFreeze(true);
 
@@ -332,6 +331,13 @@ export default function Products({ route, navigation }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableVendorSlots, setAvailableVendorSlots] = useState([]);
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
+  const [selectedProductForAppointment, setSelectedProductForAppointment] = useState(null)
+  const [appointmentDispatcherAgentSlots, setAppointmentDispatcherAgentSlots] = useState([])
+  const [allDispatcherAgents, setAllDispatcherAgents] = useState([]);
+  const [availableDriversForSlot, setAvailableDriversForSlot] = useState([])
+  const [selectedAllProductDataForAppointment, setSelectedAllProductDataForAppointment] = useState({})
+  const [selectedAgent, setSelectedAgent] = useState({})
+  const [pressedItemInx, setPressedItemInx] = useState(0)
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
@@ -407,13 +413,16 @@ export default function Products({ route, navigation }) {
   //usecallback functions
 
   const goToProductDetail = (data) => {
+
+    console.log(data, "data>>>>>>>data")
+
+
+    return;
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
-console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
+  console.log(wrapperListLoader, 'wrapperListLoaderwrapperListLoader')
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
-      console.log(item, 'renderSectionItem=>');
-      // const url1 = item?.media[0]?.image?.path.image_fit;
       return (
         <View
           key={String(index)}
@@ -1369,13 +1378,14 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
 
-
-      if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot)) {
+      if (dine_In_Type == 'appointment' && item?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
         setAppointmentPicker(true)
+        setSelectedProductForAppointment(item?.id || item?.variant[0].id)
+        setSelectedAllProductDataForAppointment(item)
+        setSelectedSection(section);
+        setPressedItemInx(inx)
         return
       }
-
-      console.log(item, 'chechItemm');
 
       if (!!item.is_recurring_booking) {
         if (isEmpty(selectedPlanValues)) {
@@ -1485,6 +1495,8 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           data['scheduled_date_time'] = String(
             moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
           );
+        data['dispatch_agent_id'] = selectedAgent?.id
+        data['schedule_type'] = selectedAllProductDataForAppointment?.mode_of_service == 'schedule' ? 'schedule' : ''
 
       }
 
@@ -1883,10 +1895,8 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
-
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-
     actions
       .getProductByVendorIdOptamizeV2(
         apiData,
@@ -1901,18 +1911,17 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
         },
       )
       .then(async (res) => {
-        console.log('get all products by vendor res', res?.data);
+        console.log('get all products by vendor res', res?.data, pageNo);
         setLoading(false);
         // return;
         updateState({ wrapperListLoader: false })
-
         if (!!res?.data?.vendor) { //set static height due to auto scroll category
           let detail = res?.data?.vendor
           if (!!detail?.desc) {
             setListHeight(height / 2.8)
           }
         }
-       
+
         if (res?.data?.vendor) {
           FastImage.preload([
             {
@@ -1926,16 +1935,16 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             },
           ]); //category banner preload
         }
-  
+
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
-          
-          console.log("resDataresDataresData",resData)
+
+          console.log("resDataresDataresData", resData)
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
-          
+
           setCategoryInfo(res?.data?.vendor);
           fetchTags(resData);
           setLoading(false);
@@ -1945,6 +1954,16 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
               updateState({ loadMore: false });
               loadMoreProduct = false
             }
+            if (res?.data?.products?.last_page == pageNo) {
+              updateState({ loadMore: false });
+            }
+            else {
+              updateState({
+
+                loadMore: true,
+                lastPage: res?.data?.products?.last_page
+              });
+            }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
             setProductListData(
@@ -1952,6 +1971,12 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                 ? res?.data?.products.data
                 : [...productListData, ...res?.data?.products.data],
             );
+
+            if (pageNo == lastPage) {
+              updateState({
+                loadMore: false,
+              });
+            }
           } else {
             setLoading(false);
           }
@@ -1962,7 +1987,8 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             appMainData?.brands,
           );
         }
-        updateState({ loadMore: false });
+        // updateState({ loadMore: false });
+
       })
       .catch(errorMethod);
   };
@@ -2021,6 +2047,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                 ? res.data.products.data
                 : [...productListData, ...res.data.products.data],
             );
+
           } else {
             setLoading(false);
           }
@@ -2087,18 +2114,30 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
         updateState({
           lastPage: res.data.listData?.last_page
         })
-
+        // getAllVendorFilters()
+        // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
         if (
-          res?.data?.listData?.current_page == res.data?.listData?.last_page
+          res?.data?.listData?.current_page < res.data?.listData?.last_page
         ) {
+          updateState({ loadMore: true });
+        }
+        else {
+
           updateState({ loadMore: false });
+
+          if (
+            res?.data?.listData?.current_page == res.data?.listData?.last_page
+          ) {
+            updateState({ loadMore: false });
+          }
         }
       })
+
 
       .catch(errorMethod);
     // }
   };
-
+  console.log("productListData ++++", productListData);
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = useCallback((pageNo) => {
     let data = {};
@@ -2122,11 +2161,8 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
       )
       .then((res) => {
         setLoading(false);
-        setProductListData(
-          pageNo == 1 ? res?.data?.data : [...productListData, ...res?.data?.data],
-        );
-        updateState({ lastPage: res?.data?.last_page })
-        if (res?.data?.current_page == res?.data?.last_page) {
+
+        if (res.data.data?.length == 0) {
           updateState({ loadMore: false });
         }
       })
@@ -2231,10 +2267,12 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
-    if (loadMoreProduct) {
-      updateState({ pageNo: pageNo + 1 });
-      getAllListItems(pageNo + 1);
-      setLoading(false);
+    if (loadMore) {
+      if (pageNo < lastPage) {
+        updateState({ pageNo: pageNo + 1 });
+        getAllListItems(pageNo + 1);
+        setLoading(false);
+      }
     }
   };
 
@@ -2424,7 +2462,6 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
   };
 
   //decrementing/removeing products from cart
-  console.log("cartId =====", cartId);
   const removeProductFromCart = (
     itemToUpdate,
     section = null,
@@ -2897,7 +2934,6 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
   // Search with more
   const onSearchWithinMenu = (text, data = [], withApiSearch = false) => {
-    console.log(data, withApiSearch, sectionListData, 'datadatadata');
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;
@@ -3513,7 +3549,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
       let uniqueProductsArray = [
         ...new Map(arry.map((item) => [item["id"], item])).values(),
       ];
-      console.log('append item', arry);
+      console.log('append item', uniqueProductsArray, arry);
       let dummyData = cloneSectionList;
       dummyData[section.index].data = uniqueProductsArray;
       console.log('append last data', dummyData);
@@ -3614,11 +3650,12 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
 
   const addToCart = (addonSet) => {
-    if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot)) {
+    if (dine_In_Type == 'appointment' && selectedAllProductDataForAppointment?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
       setAppointmentPicker(true)
+      setSelectedProductForAppointment(selectedAllProductDataForAppointment?.id)
+      setSelectedAllProductDataForAppointment(selectedAllProductDataForAppointment)
       return
     }
-
     if (!isProductAvailable && typeId == 10) {
       showError('Product varient is not availabel!');
       return;
@@ -3736,11 +3773,15 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           Number(productDetailNew?.product?.minimum_duration_min);
       }
 
+      console.log(appointmentSelectedDate, "appointmentSelectedDate");
+
       if (dine_In_Type == 'appointment') {
         data['schedule_slot'] = selectedAppointmentSlot?.value,
           data['scheduled_date_time'] = String(
             moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
           );
+        data['dispatch_agent_id'] = selectedAgent?.id
+        data['schedule_type'] = selectedAllProductDataForAppointment?.mode_of_service == 'schedule' ? 'schedule' : ''
 
       }
 
@@ -3782,33 +3823,87 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
   };
 
 
-
-  const onDateSelected = (date) => {
+  const onDateSelected = async (date) => {
     setLoadingGetSlots(true);
+    setAppointmentSelectedDate(date)
+    const apiData = {
+      cur_date: moment(date).format("YYYY-MM-DD"),
+      product_id: productDetailData?.id || selectedProductForAppointment
+    }
+    const apiHeader = {
+      code: appData.profile.code,
+      currency: currencies.primary_currency.id,
+      language: languages.primary_language.id,
+    }
+
     if (isAppointmentPicker) {
-      actions.getAppointmentSlots({
-        cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
-        product_id: productDetailData?.id
-      }, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-      }).then((res) => {
-        console.log(res, "<===res getAppointmentSlots")
-        setAppointmentAvailableSlots(res?.data?.time_slots)
-        setLoadingGetSlots(false);
-        setAppointmentPicker(false);
-        setSelectedAppointmentIndx(null);
-        setSelectedAppointmentSlot({})
-        setTimeout(() => {
-          setAppointmentSlotsModal(true)
-        }, 500);
-      }).catch((err) => {
-        console.log(err, "<==err getAppointmentSlots")
-        setLoadingGetSlots(false);
-        setAppointmentPicker(false);
-        errorMethod(err);
-      })
+      if (selectedAllProductDataForAppointment?.is_slot_from_dispatch) {
+        actions.getAppointmentSlots(apiData, apiHeader).then((res) => {
+          console.log(res, "<===res getAppointmentSlots")
+          if (res?.dispatchAgents) {
+            if (!isEmpty(res?.dispatchAgents?.slots)) {
+              const slots = res?.dispatchAgents?.slots
+              setAppointmentDispatcherAgentSlots(slots)
+              let allSlots = []
+              for (var propName in slots) {
+                if (slots.hasOwnProperty(propName)) {
+                  var propValue = slots[propName];
+                  allSlots.push(propValue)
+                }
+              }
+
+              setAllDispatcherAgents(res?.dispatchAgents?.agents)
+              setAppointmentDispatcherAgentSlots(allSlots)
+            }
+
+          } else {
+            setAppointmentAvailableSlots(res?.data?.time_slots)
+          }
+
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
+          setSelectedAppointmentIndx(null);
+          setSelectedAppointmentSlot({})
+          setTimeout(() => {
+            setAppointmentSlotsModal(true)
+          }, 500);
+        }).catch((err) => {
+          console.log(err, "<==err getAppointmentSlots")
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
+          errorMethod(err);
+        })
+      } else {
+        try {
+          let vendorId = selectedAllProductDataForAppointment?.vendor_id
+          // vendor_id,date,delivery
+          const res = await actions.checkVendorSlots(
+            `?vendor_id=${vendorId}&date=${moment(date).format("YYYY-MM-DD")}&delivery=${dineInType}`,
+            {
+              code: appData?.profile?.code,
+              timezone: RNLocalize.getTimeZone(),
+            },
+          );
+
+          console.log(res, "res for slots vendor");
+          if (res) {
+            setAppointmentAvailableSlots(res)
+            setLoadingGetSlots(false);
+            setAppointmentPicker(false);
+            setSelectedAppointmentIndx(null);
+            setSelectedAppointmentSlot({})
+            setTimeout(() => {
+              setAppointmentSlotsModal(true)
+            }, 500);
+          }
+        } catch (error) {
+          setCheckSloatLoading(false);
+
+          console.log('error riased', error);
+        }
+      };
+
+
 
       return
     }
@@ -3849,6 +3944,28 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
       });
   };
 
+  const onSlotSelect = (item, index) => {
+    const result = allDispatcherAgents.filter(a1 => item?.agent_id.find(a2 => a1.id == a2));
+    setAvailableDriversForSlot(result)
+    setSelectedAppointmentSlot(item)
+    setSelectedAppointmentIndx(index)
+    setSelectedAgent({})
+  }
+
+  const _onSelecteAgent = (item) => {
+    setSelectedAgent(item)
+  }
+
+  const _onDonePressAfterSlotSelect = () => {
+    if (isEmpty(selectedAgent) && selectedAllProductDataForAppointment?.is_show_dispatcher_agent) {
+      alert('please select agent')
+      return
+    }
+    setAppointmentSlotsModal(false)
+    setAppointmentPicker(false)
+    setSelectedAgent({})
+    addSingleItem(selectedAllProductDataForAppointment, selectedSection, selectedItemIndx)
+  }
 
 
 
@@ -3872,38 +3989,73 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
           fontFamily: fontFamily?.bold,
           fontSize: textScale(14),
         }}>Select slot</Text>
-        <TouchableOpacity onPress={() => {
-          setAppointmentSlotsModal(false)
-          setAppointmentPicker(false)
-        }}>
+        <TouchableOpacity onPress={_onDonePressAfterSlotSelect}>
           <Text style={{
             fontFamily: fontFamily.bold,
             color: themeColors?.primary_color
           }}>Done</Text>
         </TouchableOpacity>
       </View>
-      <FlatList data={appointmentAvailableSlots}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{
-          height: moderateScaleVertical(10)
-        }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
-          setSelectedAppointmentSlot(item)
-          setSelectedAppointmentIndx(index)
-        }} style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 8,
-          borderWidth: 1,
-          borderColor: colors.borderColorB,
-          borderRadius: moderateScale(4)
-        }}>
-          <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
-          <Text style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(13),
-            marginLeft: moderateScale(10)
-          }}>{item?.name}</Text>
-        </TouchableOpacity>} />
+
+
+      {!isEmpty(appointmentDispatcherAgentSlots) ?
+        <FlatList data={appointmentDispatcherAgentSlots}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{
+            height: moderateScaleVertical(10)
+          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => onSlotSelect(item, index)} style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(4)
+          }}>
+            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(13),
+              marginLeft: moderateScale(10)
+            }}>{item?.name}</Text>
+          </TouchableOpacity>} />
+        : <FlatList data={appointmentAvailableSlots}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{
+            height: moderateScaleVertical(10)
+          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
+            setSelectedAppointmentSlot(item)
+            setSelectedAppointmentIndx(index)
+          }} style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 8,
+            borderWidth: 1,
+            borderColor: colors.borderColorB,
+            borderRadius: moderateScale(4)
+          }}>
+            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
+            <Text style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(13),
+              marginLeft: moderateScale(10)
+            }}>{item?.name}</Text>
+          </TouchableOpacity>} />}
+
+
+
+      <View style={{ flexDirection: 'row', paddingVertical: moderateScaleVertical(10) }}>
+        {!!(!isEmpty(selectedAllProductDataForAppointment) && selectedAllProductDataForAppointment?.is_slot_from_dispatch && selectedAllProductDataForAppointment?.is_show_dispatcher_agent && !isEmpty(availableDriversForSlot)) && availableDriversForSlot.map((item, index) => {
+          return (
+            <TouchableOpacity style={{ alignItems: 'center', marginHorizontal: moderateScale(10) }}
+              onPress={() => _onSelecteAgent(item)}>
+              <View style={{ borderWidth: moderateScale(1), borderColor: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight, height: moderateScaleVertical(42), width: moderateScale(42), borderRadius: moderateScale(20) }}>
+                <Image style={{ height: moderateScaleVertical(40), width: moderateScale(40), borderRadius: moderateScale(20) }} source={{ uri: item?.image_url }} />
+              </View>
+              <Text style={{ fontSize: textScale(9), fontFamily: fontFamily?.bold, color: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight }}>{item?.name}</Text>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
     </View>
   }
 
@@ -3912,8 +4064,6 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
 
   const renderSectionFooter = (props) => {
     const { section } = props;
-
-
     return (
       //   section?.data.length >= 15 && searchInput =='' && section?.data.length !== section?.data_count  ?
       //   <View style={{height: moderateScale(50)}}>
@@ -4411,7 +4561,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
                               ? MyDarkTheme.colors.background
                               : '#fff',
                           }}>
-                          {typeId !== 10 && !showErrorMessageTitle && (
+                          {typeId !== 10 && !showErrorMessageTitle && dine_In_Type != 'appointment' && (
                             <View
                               style={{
                                 flex: 0.35,
@@ -4746,7 +4896,7 @@ console.log(wrapperListLoader,'wrapperListLoaderwrapperListLoader')
             locale={languages?.primary_language?.sort_code}
             date={isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date())}
             textColor={isDarkMode ? colors.white : colors.blackB}
-            mode="datetime"
+            mode="date"
             minimumDate={new Date()}
             onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
           />

@@ -52,8 +52,9 @@ const StripeOXXO = ({ navigation, route }) => {
             };
 
     const apiHit = async () => {
+        let address_id = paramsData?.orderDetail?.address_id !== null ? paramsData?.orderDetail?.address_id :""
         let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
-            }&payment_option_id=${paramsData?.payment_option_id}&action=cart&order_number=${paramsData?.orderDetail?.order_number}&address_id=${paramsData?.orderDetail?.address_id}`;
+            }&payment_option_id=${paramsData?.payment_option_id}&action=cart&order_number=${paramsData?.orderDetail?.order_number}&address_id=${address_id}`;
         console.log(queryData, "queryData")
         try {
             const res = await actions.openPaymentWebUrl(

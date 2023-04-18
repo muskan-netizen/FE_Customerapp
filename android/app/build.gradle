@@ -913,7 +913,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.fleety'
+    //             applicationId 'com.feelty.userApp'
     //             resValue "string", "app_name", "Fleety"
     //             resValue "string", "host_name", ""
     //         }
@@ -4531,7 +4531,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.baubau'
+    //         applicationId 'com.baubau.order'
     //         resValue "string", "app_name", "BauBau"
     //         resValue "string", "host_name", ""
     //         }
@@ -7536,7 +7536,7 @@ android {
         //     versionName "1.0"
         //     minSdkVersion rootProject.ext.minSdkVersion
         //     targetSdkVersion rootProject.ext.targetSdkVersion
-        //     applicationId 'com.tiimo.royoorders'
+        //     applicationId 'com.tiimo.orderApp'
         //     resValue "string", "app_name", "Tiimo" 
         //     resValue "string", "host_name", ""
         //     }
@@ -7687,7 +7687,7 @@ android {
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
     //         applicationId 'com.uberweeds'
-    //         resValue "string", "app_name", "UberWeeds" 
+    //         resValue "string", "app_name", "ubierweeds" 
     //         resValue "string", "host_name", ""
     //         }
     //        cabPro{ 
@@ -7716,7 +7716,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.saamanshop.royoorders'
+    //         applicationId 'my.saamanshop.royoorders'
     //         resValue "string", "app_name", "Saamanshop" 
     //         resValue "string", "host_name", ""
     //         }
@@ -8117,7 +8117,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.bukam.royoorders'
+    //             applicationId 'com.bukam.order'
     //             resValue "string", "app_name", "Bukam"
     //             resValue "string", "host_name", ""
     //         }
@@ -8158,7 +8158,7 @@ android {
     //             versionName "1.0"
     //             minSdkVersion rootProject.ext.minSdkVersion
     //             targetSdkVersion rootProject.ext.targetSdkVersion
-    //             applicationId 'com.hattaFoodHub.royoorders'
+    //             applicationId 'com.hattaFoodHub.order'
     //             resValue "string", "app_name", "HattaFoodHub"
     //             resValue "string", "host_name", ""
     //         }
@@ -8690,9 +8690,39 @@ android {
     //             resValue "string", "app_name", "ZuluCluch"
     //             resValue "string", "host_name", ""
     //         }
+        //          Ping{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ping.royoorder'
+    //             resValue "string", "app_name", "Ping"
+    //             resValue "string", "host_name", ""
+    //         }
+         //          chutneyeah{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.chutneyeah.royoorder'
+    //             resValue "string", "app_name", "Chutneyeah"
+    //             resValue "string", "host_name", ""
+    //         }
+         //          ineeda{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ineeda.royoorder'
+    //             resValue "string", "app_name", "Ineeda"
+    //             resValue "string", "host_name", ""
+    //         }
 
 
- 
+
     // }
 
 

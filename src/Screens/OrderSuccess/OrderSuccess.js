@@ -61,10 +61,10 @@ console.log(paramData?.orderDetail?.id,'paramData?.orderDetail?.idparamData?.ord
           onPress={() => {
             navigation.goBack();
           }}>
-          <Image
+          {/* <Image
             style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
             source={imagePath.cross}
-          />
+          /> */}
         </TouchableOpacity>
         <View style={styles.doneIconView}>
           <Image

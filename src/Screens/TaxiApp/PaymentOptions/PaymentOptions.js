@@ -1,10 +1,12 @@
 import {
-  StripeProvider,
   CardField,
+  StripeProvider,
   createToken,
 } from "@stripe/stripe-react-native";
+import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   FlatList,
   Image,
   Keyboard,
@@ -13,10 +15,13 @@ import {
   View,
 } from "react-native";
 import { useDarkMode } from "react-native-dynamic";
+import FastImage from "react-native-fast-image";
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";
 import PaymentGateways from "../../../Components/PaymentGateways";
+import TextTabBar from "../../../Components/TextTabBar";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -32,7 +37,6 @@ import {
 import { MyDarkTheme } from "../../../styles/theme";
 import { showError } from "../../../utils/helperFunctions";
 import stylesFun from "./styles";
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -45,15 +49,18 @@ const PaymentOptions = ({ navigation, route }) => {
     selectedPaymentMethod: null,
     cardInfo: null,
     btnLoader: false,
+    cardFill: true,
+    savedCardData: [],
+    selectedSavedListCardNumber: null,
   });
 
-  const { appData, appStyle, themeColors } = useSelector(
+  const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state.initBoot
   );
   const { profile } = appData;
   const [year, setYear] = useState()
   const [date, setDate] = useState()
-
+  const [accept, isAccept] = useState(false);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -77,6 +84,9 @@ const PaymentOptions = ({ navigation, route }) => {
     selectedPaymentMethod,
     cardInfo,
     btnLoader,
+    cardFill,
+    savedCardData,
+    selectedSavedListCardNumber
   } = state;
 
   useEffect(() => {
@@ -86,6 +96,29 @@ const PaymentOptions = ({ navigation, route }) => {
   useEffect(() => {
     getWalletData();
   }, [pageNo]);
+
+  // useEffect(() => {
+  //   getSavedCardList()
+  // }, [])
+
+  const getSavedCardList = () => {
+
+    actions.getSavedCardsList({},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
+      .then((res) => {
+        console.log('getSavedCardList =>', res);
+        updateState({ isLoading: false, isRefreshing: false });
+        if (res && res?.data) {
+          updateState({ savedCardData: res?.data })
+        }
+      })
+      .catch(errorMethod);
+  }
 
   const getAllPaymentOptions = () => {
     actions
@@ -101,6 +134,13 @@ const PaymentOptions = ({ navigation, route }) => {
         updateState({
           apiPaymentOptions: res?.data,
         });
+        {
+          !isEmpty(res?.data) && res?.data.map((item, index) => {
+            item.id == 50 && getSavedCardList();
+          })
+
+        }
+
       })
       .catch(errorMethod);
   };
@@ -141,6 +181,130 @@ const PaymentOptions = ({ navigation, route }) => {
       let year = data.replace(/^([1-9]\/|[2-9])$/g, '0$1').trim()
       setDate(year)
     }
+  }
+
+
+  const deleteCard = (item) => {
+    Alert.alert('', strings.DELETE_CARD, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {
+        text: strings.CONFIRM,
+        onPress: () => {
+          deleteSaveCard(item)
+        },
+      },
+    ]);
+  }
+  const deleteSaveCard = (item) => {
+    let query = `?id=${item?.id}`
+    actions.deleteCard(query, {}, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+
+        console.log(res, 'resereserseersre')
+        alert(res?.message)
+        getSavedCardList()
+
+      })
+      .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
+  }
+
+  const _isCheck = () => {
+    isAccept(!accept)
+  }
+
+  const selectSavedCard = (data, inx) => {
+    {
+      selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
+        ? (updateState({ selectedSavedListCardNumber: null }))
+        : updateState({ selectedSavedListCardNumber: data });
+    }
+  };
+  const renderSavedCardList = ({ item, index }) => {
+    console.log("renderSavedCardList =>", index)
+    const expDate = item?.expiration
+    // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => selectSavedCard(item, index)}
+          style={{
+            marginVertical: moderateScaleVertical(8), borderRadius: moderateScaleVertical(13),
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <Image
+            source={
+              selectedSavedListCardNumber &&
+                selectedSavedListCardNumber?.id == item.id
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <View style={{ marginLeft: moderateScale(10) }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Card No:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {item?.card_hint}
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Exp Date:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {expDate}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteCard(item)}>
+          <Image source={imagePath?.delete} />
+        </TouchableOpacity>
+      </View>
+
+    )
   }
   const getWalletData = () => {
     actions
@@ -183,13 +347,12 @@ const PaymentOptions = ({ navigation, route }) => {
   };
 
   const _onPressPaymentOption = (item) => {
-    console.log(item, "itemitemitemitemitemitem");
-    updateState({selectedPaymentMethod: item});
+    updateState({ selectedPaymentMethod: item });
 
     if (item?.id == 4) {
       return;
     }
-    if(item?.id == 49 || item?.id == 50){
+    if (item?.id == 49 || item?.id == 50 || item?.id == 53) {
       return;
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
@@ -231,18 +394,31 @@ const PaymentOptions = ({ navigation, route }) => {
         //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
       }
     }
-    else if((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
-      selectedPaymentMethod?.off_site == 1){
+    else if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
+      selectedPaymentMethod?.off_site == 1) {
+      if (!isEmpty(selectedSavedListCardNumber)) {
+        navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+          ...paramData,
+
+          selectedMethod: selectedPaymentMethod,
+          selectedSavedListCardNumber: selectedSavedListCardNumber
+        });
+      }
+      if ((cardNumber && cvc) && (expiryDate || (year && date))) {
         navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
           ...paramData,
           Card_Number: cardNumber,
           cvc: cvc,
           expiryDate: expiryDate,
           selectedMethod: selectedPaymentMethod,
-          year:year,
-          date:date
+          year: year,
+          date: date,
+          saveCardDetails: accept
         });
       }
+
+    }
+
   };
 
   const _onChangeStripeData = (cardDetails) => {
@@ -291,7 +467,7 @@ const PaymentOptions = ({ navigation, route }) => {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id === 4 
+          selectedPaymentMethod?.id === 4
         ) && (
             <StripeProvider
               publishableKey={
@@ -326,25 +502,25 @@ const PaymentOptions = ({ navigation, route }) => {
             </StripeProvider>
           )}
         {!!(
-                    selectedPaymentMethod &&
-                    selectedPaymentMethod?.id == item.id &&
-                    selectedPaymentMethod?.off_site == 1 &&
-                    (selectedPaymentMethod?.id === 49 ||selectedPaymentMethod?.id === 50  )
-                  ) && (
-                      <PaymentGateways
-                      isCardNumber={cardNumber}
-                      cvc={cvc}
-                      expiryDate={expiryDate}
-                      year={year}
-                      onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                      onChangeText={(data) => checkInputHandler('Card Number', data)}
-                      onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                      onChangeYearText={(data) => checkInputHandler('Year', data)}
-                      onChangeDateText={(data) => checkInputHandler('Date', data)}
-                      paymentid={selectedPaymentMethod?.id}
-                      eDate={date}
-                      />
-                    )}
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 1 &&
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
+        ) && (
+            <PaymentGateways
+              isCardNumber={cardNumber}
+              cvc={cvc}
+              expiryDate={expiryDate}
+              year={year}
+              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+              onChangeText={(data) => checkInputHandler('Card Number', data)}
+              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+              onChangeYearText={(data) => checkInputHandler('Year', data)}
+              onChangeDateText={(data) => checkInputHandler('Date', data)}
+              paymentid={selectedPaymentMethod?.id}
+              eDate={date}
+            />
+          )}
       </View>
     );
   };
@@ -412,7 +588,7 @@ const PaymentOptions = ({ navigation, route }) => {
             keyExtractor={(item, index) => String(index)}
           />
         </View>
-        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) && (
+        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) && (
           <GradientButton
             onPress={selectPaymentOption}
             containerStyle={{

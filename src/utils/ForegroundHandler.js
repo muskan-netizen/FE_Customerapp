@@ -11,8 +11,6 @@ import actions from '../redux/actions';
 import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import { redirectFromNotification } from './helperFunctions';
 
-// let arr = []
-// let canEnablePrinter = true
 
 const ForegroundHandler = (props) => {
   useEffect(() => {
@@ -48,15 +46,6 @@ const ForegroundHandler = (props) => {
 
       });
 
-      // if (Platform.OS == 'ios') {
-      //   PushNotificationIOS.addNotificationRequest({
-      //     id: messageId,
-      //     body: data?.body || '',
-      //     title: data?.title || '',
-      //     sound: notification?.sound || '',
-      //   });
-      // }
-      //  else {
       let displayNotificationData = {};
 
       if (!!data?.fcm_options?.image || !!notification?.android?.imageUrl) {
@@ -115,30 +104,10 @@ const ForegroundHandler = (props) => {
       }
 
       await notifee.displayNotification(displayNotificationData);
-      // }
 
-      // {
-      //   Platform.OS == 'ios'
-      //     ? PushNotificationIOS.addNotificationRequest({
-      //         id: messageId,
-      //         body: data?.body || '',
-      //         title: data?.title || '',
-      //         sound: notification.sound,
-      //       })
-      //     : PushNotification.localNotification({
-      //         bigPictureUrl:
-      //           'https://media.istockphoto.com/id/517188688/photo/mountain-landscape.jpg?s=612x612&w=0&k=20&c=A63koPKaCyIwQWOTFBRWXj_PwCrR4cEoOw2S9Q7yVl8=',
-      //         channelId: notification.android.channelId,
-      //         id: messageId,
-      //         body: data?.message || '',
-      //         title: data?.type || '',
-      //         soundName: notification.android.sound,
-      //         vibrate: true,
-      //         playSound: true,
-      //       });
-      // }
-
-      // soundName: notification?.title == "order Accepted" ? 'customnotii.mp3' : notification.android.sound,
+      if (data?.title == 'bid_ride_request') {
+        actions.notificationDataForBid(data)
+      }
 
       if (
         Platform.OS == 'android' &&

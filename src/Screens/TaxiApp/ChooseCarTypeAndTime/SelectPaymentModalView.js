@@ -43,7 +43,7 @@ import { androidCameraPermission } from '../../../utils/permissions';
 import stylesFun from './styles';
 
 
- function SelectPaymentModalView({
+function SelectPaymentModalView({
   _confirmAndPay,
   slectedDate = "",
   selectedTime = "",
@@ -70,7 +70,7 @@ import stylesFun from './styles';
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, appStyle } = useSelector((state) => state?.initBoot || {});
-  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
+  const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
@@ -310,8 +310,7 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
               { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
             ]}
           >
-            {`${selectedCarOption?.distance || '0'} ${
-              getBundleId() === appIds?.weTogether ||
+            {`${selectedCarOption?.distance || '0'} ${getBundleId() === appIds?.weTogether ||
               getBundleId() === appIds?.taxiolgy
               ? 'Miles'
               : 'km'
@@ -496,9 +495,9 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
                 })
               }
             >
-             {!!selectedCarOption?.duration < 60
-              ? `${selectedCarOption?.duration} mins`
-              : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
+              {!!selectedCarOption?.duration < 60
+                ? `${selectedCarOption?.duration} mins`
+                : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
             </Text>
           </View>
           <View
@@ -780,7 +779,7 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
           }}
         />
       </View>
-
+      
       <Modal
         isVisible={showModal}
         style={{

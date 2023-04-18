@@ -1,4 +1,4 @@
-import {PayWithFlutterwave} from 'flutterwave-react-native';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
 
 export function payWithCard(detail) {
   console.log(detail, 'payWithCarddetail');
@@ -99,7 +99,6 @@ export const generateTransactionRef = (length) => {
 };
 
 export function payWithFlutterWave(detail, handleOnRedirect) {
-  console.log(detail, 'payWithFlutterWave>payWithFlutterWave>detail');
   return (
     <PayWithFlutterwave
       onRedirect={handleOnRedirect}

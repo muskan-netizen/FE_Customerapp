@@ -1,5 +1,5 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -11,24 +11,22 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
-import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-import ZendeskChat from '../../library/react-native-zendesk-chat';
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
+import ZendeskChat from '../../library/react-native-zendesk-chat';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import DeviceInfo from 'react-native-device-info';
-import { useRef } from 'react';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -73,7 +71,7 @@ export default function Account3({ navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-
+  const [allAvailAblePaymentMethods, setAllAvailAblePaymentMethods] = useState([])
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -91,6 +89,9 @@ export default function Account3({ navigation }) {
     }
   }, [appMainData?.is_admin]);
 
+  useEffect(() => {
+    getListOfPaymentMethod()
+  }, [])
   const fetchAllVendors = async (value = null) => {
     let query = `?limit=${100000}&page=${1}`;
     let headers = {
@@ -112,6 +113,27 @@ export default function Account3({ navigation }) {
   };
 
   console.log(userData, 'appDataappData');
+  const getListOfPaymentMethod = () => {
+    actions
+      .getListOfPaymentMethod(
+        '/wallet',
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log('payment list options', res.data);
+        // updateState({ isLoadingB: false, isRefreshing: false });
+        if (res && res?.data) {
+          setAllAvailAblePaymentMethods(res?.data)
+
+        }
+      })
+      .catch((err) => console.log(err, 'errororroro'));
+  };
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -188,6 +210,7 @@ export default function Account3({ navigation }) {
     });
   }, []);
 
+
   //----------------------------------ActionSheet------------------------------//
   let actionSheet = useRef();
   const showActionSheet = () => {
@@ -237,6 +260,7 @@ export default function Account3({ navigation }) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
+
 
         {shortCodeStatus == '245bae' ? (
           <Header
@@ -397,7 +421,24 @@ export default function Account3({ navigation }) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
-
+          {!!userData?.auth_token && allAvailAblePaymentMethods?.map((item, inx) => {
+            if (item?.id == 50) {
+              return (<ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={moveToNewScreen(navigationStrings.SAVEDCARDS, {
+                  isBack: true,
+                })}
+                iconLeft={imagePath.icMyPosts}
+                centerHeading={"Saved Cards"}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />)
+            }
+          })}
           {!!userData?.auth_token &&
             dineInType == 'p2p' &&
             !!appMainData?.is_admin &&
@@ -487,10 +528,6 @@ export default function Account3({ navigation }) {
             <View></View>
           )} */}
 
-          {/* {!!userData?.auth_token &&
-            !!appData &&
-            !!appData?.profile &&
-            appData?.profile?.preferences?.subscription_mode == 1 && ( */}
           {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
@@ -637,10 +674,10 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-          {console.log(appMainData,'appMainDataappMainData')}
+          {console.log(appMainData, 'appMainDataappMainData')}
           {!!userData?.auth_token &&
-          Platform.OS === 'android' &&
-          !!appMainData?.is_admin ? (
+            Platform.OS === 'android' &&
+            !!appMainData?.is_admin ? (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}

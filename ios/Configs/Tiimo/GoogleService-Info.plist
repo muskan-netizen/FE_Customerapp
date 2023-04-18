@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>497788164537-uekd0avi0f8e9dphvmmf3c5rrbqudovl.apps.googleusercontent.com</string>
+	<string>809208600072-4d7940g574an72scj0qv6d9ss85hlqts.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.497788164537-uekd0avi0f8e9dphvmmf3c5rrbqudovl</string>
+	<string>com.googleusercontent.apps.809208600072-4d7940g574an72scj0qv6d9ss85hlqts</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>809208600072-2agbgopm1b7400htl5vneuic9s166ntp.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDIvZBJ2XfvSowYZuVFVP_IaG4ts-lN9sc</string>
+	<string>AIzaSyAx974OVsKSZEQRsiY5cYrDkwI3UtkTEoc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>497788164537</string>
+	<string>809208600072</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.tiimo.royoorders</string>
+	<string>com.tiimo.orderApp</string>
 	<key>PROJECT_ID</key>
-	<string>tiimo-c7ed3</string>
+	<string>tiimo-8e53f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>tiimo-c7ed3.appspot.com</string>
+	<string>tiimo-8e53f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:497788164537:ios:81f52e853fe22fdb8b3e68</string>
+	<string>1:809208600072:ios:c513b08b79ca1c4118a3bd</string>
 </dict>
 </plist>

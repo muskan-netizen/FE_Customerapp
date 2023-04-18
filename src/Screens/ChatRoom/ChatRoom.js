@@ -1,41 +1,40 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {Text, View, FlatList, TouchableOpacity} from 'react-native';
-import socketServices from '../../utils/scoketService';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
-import imagePath from '../../constants/imagePath';
-import Header from '../../Components/Header';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
-import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import WrapperContainer from '../../Components/WrapperContainer';
-import actions from '../../redux/actions';
-import {moderateScale, textScale} from '../../styles/responsiveSize';
-import _, {isEmpty} from 'lodash';
-import {showError} from '../../utils/helperFunctions';
-import navigationStrings from '../../navigation/navigationStrings';
-import stylesFun from './styles';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import _ from 'lodash';
 import moment from 'moment';
-import CircularImages from '../../Components/CircularImages';
-import strings from '../../constants/lang';
+import React, { useCallback, useRef, useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
+import CircularImages from '../../Components/CircularImages';
+import Header from '../../Components/Header';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import { moderateScale, textScale } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import socketServices from '../../utils/scoketService';
+import stylesFun from './styles';
 
-export default function ChatRoom({navigation, route}) {
+export default function ChatRoom({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const {appData, currencies, languages, appStyle} = useSelector((state) => state.initBoot || {});
   const {dineInType} = useSelector((state) => state?.home);
-
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log(paramData, 'paramData....paramData');
-  const styles = stylesFun({fontFamily, isDarkMode});
-  const [state, setState] = useState({roomData: [], isLoading: true});
-  const {roomData, isLoading} = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const styles = stylesFun({ fontFamily, isDarkMode });
+  const [state, setState] = useState({ roomData: [], isLoading: true });
+  const { roomData, isLoading } = state;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const roomDataRef = useRef([]);
   const isFocused = useIsFocused();
 
@@ -81,8 +80,8 @@ export default function ChatRoom({navigation, route}) {
           dineInType == 'p2p'
             ? 'user_to_user'
             : paramData?.type == 'agent_chat'
-            ? 'agent_to_user'
-            : 'vendor_to_user',
+              ? 'agent_to_user'
+              : 'vendor_to_user',
         db_name: appData?.profile?.database_name,
         client_id: String(appData?.profile.id),
         p2p_id: String(userData?.vendor_id),
@@ -98,28 +97,28 @@ export default function ChatRoom({navigation, route}) {
         dineInType == 'p2p'
           ? await actions.fetchP2pUserToUsertChat(apiData, headerData)
           : paramData?.type == 'user_chat'
-          ? await actions.fetchUserChat(apiData, headerData)
-          : paramData?.type == 'vendor_chat'
-          ? await actions.fetchVendorChat(apiData, headerData)
-          : await actions.fetchAgentChat(apiData, headerData);
-      updateState({isLoading: false});
+            ? await actions.fetchUserChat(apiData, headerData)
+            : paramData?.type == 'vendor_chat'
+              ? await actions.fetchVendorChat(apiData, headerData)
+              : await actions.fetchAgentChat(apiData, headerData);
+      updateState({ isLoading: false });
       if (!!res?.roomData && !_.isEmpty(res?.roomData) && isFocused) {
         roomDataRef.current = res.roomData;
-        updateState({roomData: res.roomData});
+        updateState({ roomData: res.roomData });
       }
       console.log('room res++++', res);
     } catch (error) {
       console.log('error raised in start chat api', error);
       showError(error?.message);
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     }
   };
   const goToChatRoom = useCallback((item) => {
     navigation.navigate(navigationStrings.CHAT_SCREEN, {
-      data: {...item, id: item?.order_vendor_id},
+      data: { ...item, id: item?.order_vendor_id },
     });
   }, []);
-  const renderItem = useCallback(({item, index}) => {
+  const renderItem = useCallback(({ item, index }) => {
     let isAnyMessage = _.isEmpty(item?.chat_Data);
     return (
       <TouchableOpacity
@@ -146,7 +145,7 @@ export default function ChatRoom({navigation, route}) {
                   source={
                     _.isEmpty(item?.user_Data)
                       ? imagePath.icDefaultImg
-                      : {uri: item?.user_Data[0]?.display_image}
+                      : { uri: item?.user_Data[0]?.display_image }
                   }
                   resizeMode={'cover'}
                   style={{
@@ -208,7 +207,7 @@ export default function ChatRoom({navigation, route}) {
                       'DD/MM/YYYY',
                     )}
                   </Text>
-                  <Text style={{...styles.timeStyle, textAlign: 'right'}}>
+                  <Text style={{ ...styles.timeStyle, textAlign: 'right' }}>
                     {moment(item?.chat_Data[0]?.created_date).format('hh:mm A')}
                   </Text>
                 </View>
@@ -217,7 +216,7 @@ export default function ChatRoom({navigation, route}) {
                   <Text style={styles.timeStyle}>
                     {moment(item?.created_date).format('DD/MM/YYYY')}
                   </Text>
-                  <Text style={{...styles.timeStyle, textAlign: 'right'}}>
+                  <Text style={{ ...styles.timeStyle, textAlign: 'right' }}>
                     {moment(item?.created_date).format('hh:mm A')}
                   </Text>
                 </View>
@@ -235,7 +234,7 @@ export default function ChatRoom({navigation, route}) {
                   </Text>
                 ) : null}
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {_.isEmpty(item?.user_Data) ? null : (
                   <CircularImages
                     fontFamily={fontFamily}
@@ -257,7 +256,7 @@ export default function ChatRoom({navigation, route}) {
   }, []);
   const listEmptyComponent = useCallback(() => {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text
           style={{
             fontSize: textScale(16),
@@ -286,8 +285,8 @@ export default function ChatRoom({navigation, route}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         noLeftIcon={dineInType == 'p2p'}
         centerTitle={strings.CHAT_ROOM}
@@ -299,7 +298,7 @@ export default function ChatRoom({navigation, route}) {
           ListEmptyComponent={!isLoading && listEmptyComponent}
           keyExtractor={awesomeChildListKeyExtractor}
           ItemSeparatorComponent={itemSeparatorComponent}
-          contentContainerStyle={{flexGrow: 1}}
+          contentContainerStyle={{ flexGrow: 1 }}
         />
       </View>
     </WrapperContainer>

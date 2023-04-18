@@ -1,8 +1,8 @@
 #include "Pods/Target Support Files/Pods-available_pods-NGoal/Pods-available_pods-NGoal.debug.xcconfig"
-PROJECT_APPLE_ID = 1671488466
-PROJECT_BUNDLE_ID = com.ngoal.order
+PROJECT_APPLE_ID = 6447552190
+PROJECT_BUNDLE_ID = com.nGoal.orderApp
 PROJECT_APP_VERSION = 1.0
-PROJECT_BUILD_NUMBER = 7
+PROJECT_BUILD_NUMBER = 12
 PROJECT_APP_NAME = NGoal
 PROJECT_GOOGLE_CLIENT_ID =1047811476285-fs94cuetgkiik4kr6fud6fj33453e3rs.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.1047811476285-fs94cuetgkiik4kr6fud6fj33453e3rs

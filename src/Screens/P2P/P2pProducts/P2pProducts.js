@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -21,18 +21,18 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
+import { MyDarkTheme } from '../../../styles/theme';
 import styleFun from './styles';
 //constants
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
-import {isEmpty} from 'lodash';
-import {useDarkMode} from 'react-native-dynamic';
+import { isEmpty } from 'lodash';
+import { useDarkMode } from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
 import strings from '../../../constants/lang';
@@ -43,16 +43,16 @@ import {
   showError,
 } from '../../../utils/helperFunctions';
 
-import {MultiSelect} from 'react-native-element-dropdown';
+import { MultiSelect } from 'react-native-element-dropdown';
 import {
   checkValueExistInAry,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import FastImage from 'react-native-fast-image';
 import GradientView from '../../../Components/GradientView';
 
-const P2pProducts = ({route, navigation}) => {
+const P2pProducts = ({ route, navigation }) => {
   const flatlistRef = useRef(null);
   const paramData = route?.params?.data;
   const {
@@ -64,13 +64,13 @@ const P2pProducts = ({route, navigation}) => {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const {userData} = useSelector((state) => state?.auth);
-  const {additional_preferences, digit_after_decimal} =
+  const { userData } = useSelector((state) => state?.auth);
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const styles = styleFun({themeColor, themeToggle, fontFamily});
+  const styles = styleFun({ themeColor, themeToggle, fontFamily });
 
   const [isLoading, setIsLoading] = useState(true);
   const [p2pProducts, setP2pProducts] = useState([]);
@@ -211,15 +211,15 @@ const P2pProducts = ({route, navigation}) => {
     let attributeFilterAry = [];
     newAttributeInfo.map((itm) => {
       if (!isEmpty(itm?.values)) {
-        attributeFilterAry.push({attribute_id: itm?.id, options: itm?.values});
+        attributeFilterAry.push({ attribute_id: itm?.id, options: itm?.values });
       }
     });
-    flatlistRef.current.scrollToOffset({animated: true, offset: 0});
+    flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
     getP2pProductsByCategoryId(1, attributeFilterAry);
   };
 
   const onClearAttributeFilter = () => {
-    flatlistRef.current.scrollToOffset({animated: true, offset: 0});
+    flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
     onResetFilter();
     setIsAttributeFilterModal(false);
     setIsLoading(true);
@@ -242,14 +242,14 @@ const P2pProducts = ({route, navigation}) => {
   };
 
   const renderP2pProducts = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       const getImage = (quality) =>
         !isEmpty(item?.media)
           ? getImageUrl(
-              item?.media[0]?.image?.path.image_fit,
-              item?.media[0]?.image?.path.image_path,
-              quality,
-            )
+            item?.media[0]?.image?.path.image_fit,
+            item?.media[0]?.image?.path.image_path,
+            quality,
+          )
           : item?.product_image;
 
       return (
@@ -263,18 +263,18 @@ const P2pProducts = ({route, navigation}) => {
             }>
             <FastImage
               style={styles.imgBack}
-              source={{uri: getImage('700/700')}}
+              source={{ uri: getImage('700/700') }}
             />
             <FastImage
               source={
                 !!item?.vendor?.logo?.image_fit
                   ? {
-                      uri: getImageUrl(
-                        item?.vendor?.logo?.image_fit,
-                        item?.vendor?.logo?.image_path,
-                        '400/400',
-                      ),
-                    }
+                    uri: getImageUrl(
+                      item?.vendor?.logo?.image_fit,
+                      item?.vendor?.logo?.image_path,
+                      '400/400',
+                    ),
+                  }
                   : imagePath.icProfile
               }
               style={{
@@ -292,7 +292,7 @@ const P2pProducts = ({route, navigation}) => {
           </Text>
           <View style={{}}>
             {!!item?.translation_description ||
-            !!item?.translation[0]?.translation_description ? (
+              !!item?.translation[0]?.translation_description ? (
               <View style={{}}>
                 <Text
                   numberOfLines={3}
@@ -308,8 +308,8 @@ const P2pProducts = ({route, navigation}) => {
                   {!!item?.translation_description
                     ? item?.translation_description.toString()
                     : !!item?.translation[0]?.translation_description
-                    ? item?.translation[0]?.translation_description
-                    : ''}
+                      ? item?.translation[0]?.translation_description
+                      : ''}
                 </Text>
               </View>
             ) : null}
@@ -333,7 +333,7 @@ const P2pProducts = ({route, navigation}) => {
               ),
               themeColors?.primary_color,
             ]}
-            btnStyle={{marginTop: moderateScale(4)}}
+            btnStyle={{ marginTop: moderateScale(4) }}
           />
         </View>
       );
@@ -418,7 +418,7 @@ const P2pProducts = ({route, navigation}) => {
   );
 
   const renderAttributeOptions = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <View>
           <Text
@@ -472,7 +472,7 @@ const P2pProducts = ({route, navigation}) => {
       }
       isLoading={isLoading}>
       <Header
-        leftIcon={!!themeColor ? imagePath.back_dark : imagePath.back2}
+        leftIcon={imagePath.icBackb}
         centerTitle={''}
         headerStyle={{
           marginVertical: moderateScaleVertical(8),
@@ -502,7 +502,7 @@ const P2pProducts = ({route, navigation}) => {
           renderItem={renderP2pProducts}
           keyExtractor={(itm, indx) => String(indx)}
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           ListEmptyComponent={() =>
             !isLoading && (
               <View>
@@ -569,7 +569,7 @@ const P2pProducts = ({route, navigation}) => {
           />
           <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}
-            style={{flexGrow: 1}}>
+            style={{ flexGrow: 1 }}>
             <FlatList
               data={attributeInfo}
               keyboardShouldPersistTaps={'handled'}
@@ -582,7 +582,7 @@ const P2pProducts = ({route, navigation}) => {
                 />
               )}
               renderItem={renderAttributeOptions}
-              // ListFooterComponent={listFooterComponent}
+            // ListFooterComponent={listFooterComponent}
             />
             <View style={styles.btnStyle}>
               <ButtonWithLoader

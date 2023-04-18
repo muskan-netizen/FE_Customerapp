@@ -507,13 +507,9 @@ export default {
   closeFriendList: require('../assets/images/BookAFriend/ic_addrider.png'),
   selectFriendList: require('../assets/images/BookAFriend/ic_drpdwn.png'),
   riderImage: require('../assets/images/ic_profilegrey.png'),
-  //Video
-  // flank: require('../assets/flankSplash.mp4'),
-  masa: require('../assets/masa.mp4'),
 
   icCar: require('../assets/images/ic_topviewcar.png'),
-  muvpod: require('../assets/muvpod.mp4'),
-  // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
+
   icSos: require('../assets/images/RoyoorderNewImages/ic_sos.png'),
   subscribe: require('../assets/images/subscribe.png'),
   icNoDrivers: require('../assets/images/RoyoorderNewImages/ic_nodrivers.png'),
@@ -535,8 +531,7 @@ export default {
   icUserChat: require('../assets/images/ic_userchat.png'),
   icVendorChat: require('../assets/images/ic_vendorchat.png'),
   icOtherAddressType: require('../assets/images/RoyoorderNewImages/ic_other_address.png'),
-  HezniSplash: require('../assets/HezniSplash.mp4'),
-  // flanksplash: require('../assets/Flanksplash.mp4'),
+
   timer: require('../assets/images/timer.png'),
   icSocialShare: require('../assets/images/RoyoorderNewImages/social-media.png'),
   app_icon: require('../assets/images/app_icon_zonesso.png'),
@@ -571,13 +566,57 @@ export default {
   icDefaultImg: require('../assets/images/p2p/default_image.jpg'),
   icMyPosts: require('../assets/images/p2p/ic_my_posts.png'),
   icTapToCopy: require('../assets/images/p2p/ic_tap_to_copy.png'),
+  icAddPostActive: require('../assets/images/p2p/ic_add.png'),
+  icAddPostInactive: require('../assets/images/p2p/ic_add2.png'),
   icAwaitingApproval: require('../assets/images/p2p/ic_waiting_apporval.gif'),
   icApprovalRejected: require('../assets/images/p2p/ic_approval_rejected.gif'),
-  parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
+  //
 
+  icAirport: require('../assets/images/ic_airport.png'),
+  icHotel: require('../assets/images/ic_hotel.png'),
   ic_home2NewTab: require('../assets/tabbariconsnew/ic_home2.png'),
   ic_account2NewTab: require('../assets/tabbariconsnew/ic_account2.png'),
   ic_cart2NewTab: require('../assets/tabbariconsnew/ic_cart2.png'),
   ic_celeb2NewTab: require('../assets/tabbariconsnew/ic_celeb2.png'),
   ic_tag2NewTab: require('../assets/tabbariconsnew/ic_tag2.png'),
+
+  //Taxi App new
+  ic_down_arrow: require('../assets/images/TaxiAppNew/ic_down_arrow.png'),
+  ic_add_location: require('../assets/images/TaxiAppNew/ic_add_location.png'),
+  ic_back_taxi: require('../assets/images/TaxiAppNew/ic_back_taxi.png'),
+  ic_recent_places: require('../assets/images/TaxiAppNew/ic_recent_places.png'),
+  ic_saved_places: require('../assets/images/TaxiAppNew/ic_saved_places.png'),
+  ic_bid_ride: require('../assets/images/TaxiAppNew/ic_bid_ride.png'),
+  ic_booking: require('../assets/images/TaxiAppNew/ic_booking.png'),
+  ic_cab_pooling: require('../assets/images/TaxiAppNew/ic_cab_pooling.png'),
+  ic_right_arrow: require('../assets/images/TaxiAppNew/ic_right_arrow.png'),
+  ic_close_circle: require('../assets/images/TaxiAppNew/ic_close_circle.png'),
+
+  //Ecommerce Template
+  icEcomHome: require('../assets/images/Ecommerce/ic_home_01.png'),
+  icEcomHomeInactive: require('../assets/images/Ecommerce/ic_home_02.png'),
+  icEcomCart: require('../assets/images/Ecommerce/ic_cart_01.png'),
+  icEcomCartInactive: require('../assets/images/Ecommerce/ic_cart_02.png'),
+  icEcomCeleb: require('../assets/images/Ecommerce/ic_celebrity_01.png'),
+  icEcomCelebInactive: require('../assets/images/Ecommerce/ic_celebrity_02.png'),
+  icEcomBrand: require('../assets/images/Ecommerce/ic_brand_01.png'),
+  icEcomBrandInactive: require('../assets/images/Ecommerce/ic_brand_02.png'),
+  icCat: require('../assets/images/Ecommerce/ic_cat.png'),
+  icCatActive: require('../assets/images/Ecommerce/ic_cat_active.png'),
+  icEcomAccount: require('../assets/images/Ecommerce/ic_account_01.png'),
+  icEcomAccountInactive: require('../assets/images/Ecommerce/ic_account_02.png'),
+  icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
+  icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
+  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01.png'),
+
+  //Video
+  // flank: require('../assets/flankSplash.mp4'),
+  masa: require('../assets/masa.mp4'),
+  Stabex: require('../assets/stabex.mp4'),
+  muvpod: require('../assets/muvpod.mp4'),
+  parcelWorksSplash: require('../assets/ParcelWorksSplash.mp4'),
+  HezniSplash: require('../assets/HezniSplash.mp4'),
+  // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
+
+  // flanksplash: require('../assets/Flanksplash.mp4'),
 };

@@ -1,26 +1,24 @@
 import React from 'react';
-import {Platform, TouchableOpacity} from 'react-native';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import strings from '../constants/lang';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
-import moment from 'moment';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
+import { getImageUrl } from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
-import strings from '../constants/lang';
-import {useSelector} from 'react-redux';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import { useDarkMode } from 'react-native-dynamic';
 
 const OrderCard = (props) => {
   const {
     item = {},
-    onPress = () => {},
+    onPress = () => { },
     updateOrderStatus,
     isBleDevice = false,
     index,
@@ -63,7 +61,7 @@ const OrderCard = (props) => {
               marginLeft: moderateScale(10),
               height: moderateScaleVertical(25),
             }}
-            onPress={() => StartPrinting({id: item?.id})}
+            onPress={() => StartPrinting({ id: item?.id })}
           />
           {/* <TouchableOpacity
                   onPress={() => StartPrinting({id: item?.id})}
@@ -79,7 +77,7 @@ const OrderCard = (props) => {
         </View>
       )}
       <TouchableOpacity onPress={onPress}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.font13Regular}>
             {strings.ORDER} {item?.order_number}
           </Text>
@@ -88,9 +86,9 @@ const OrderCard = (props) => {
         <View
           style={[
             styles.rowSapce,
-            {flexDirection: 'column', alignItems: 'flex-start'},
+            { flexDirection: 'column', alignItems: 'flex-start' },
           ]}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
                 height: moderateScaleVertical(48),
@@ -117,7 +115,7 @@ const OrderCard = (props) => {
                 />
               ))}
             </View>
-            <Text style={[styles.font16Regular, {flex: 1}]}>
+            <Text style={[styles.font16Regular, { flex: 1 }]}>
               {item?.product_details && item?.product_details[0]
                 ? item?.product_details[0].title
                 : ''}{' '}
@@ -136,7 +134,7 @@ const OrderCard = (props) => {
         </View>
       </TouchableOpacity>
       <View style={styles.line} />
-      <View style={{...styles.rowSapce, marginTop: moderateScaleVertical(12)}}>
+      <View style={{ ...styles.rowSapce, marginTop: moderateScaleVertical(12) }}>
         <View>
           <Text style={styles.orderText}>{strings.ORDER_TOTAL}</Text>
           <Text style={styles.totalPrice}>
@@ -171,7 +169,7 @@ const OrderCard = (props) => {
             </Text>
           </View>
         ) : (
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <ButtonWithLoader
               btnText={strings.REJECT}
               btnTextStyle={styles.btnText}
@@ -180,7 +178,7 @@ const OrderCard = (props) => {
             />
             <ButtonWithLoader
               btnText={strings.CONFIRM}
-              btnTextStyle={{...styles.btnText, color: colors.white}}
+              btnTextStyle={{ ...styles.btnText, color: colors.white }}
               btnStyle={{
                 ...styles.btnContainer,
                 backgroundColor: colors.themeColor2,

@@ -46,6 +46,8 @@ import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod'
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import Modal from 'react-native-modal';
 import PaymentGateways from '../../Components/PaymentGateways';
+import TextTabBar from '../../Components/TextTabBar';
+import FastImage from 'react-native-fast-image';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -57,7 +59,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(year,date,'year,date')
+  console.log(year, date, 'year,date')
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily });
   const data = route?.params?.data;
@@ -66,6 +68,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   const [cardNumber, setCardNUmber] = useState()
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
+  const [accept, isAccept] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
 
@@ -75,6 +78,9 @@ export default function TipPaymentOptions({ navigation, route }) {
     tokenInfo: null,
     isModalVisibleForPayFlutterWave: false,
     paymentDataFlutterWave: null,
+    cardFill: true,
+    savedCardData: [],
+    selectedSavedListCardNumber: null,
   });
   const {
     isModalVisibleForPayFlutterWave,
@@ -84,6 +90,9 @@ export default function TipPaymentOptions({ navigation, route }) {
     tokenInfo,
     selectedPaymentMethod,
     isLoading,
+    cardFill,
+    savedCardData,
+    selectedSavedListCardNumber
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -92,6 +101,29 @@ export default function TipPaymentOptions({ navigation, route }) {
     updateState({ isLoading: true });
     getListOfPaymentMethod();
   }, []);
+
+  useEffect(() => {
+    getSavedCardList()
+  }, [])
+
+  const getSavedCardList = () => {
+
+    actions.getSavedCardsList({},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
+      .then((res) => {
+        console.log('getSavedCardList =>', res);
+        updateState({ isLoading: false, isRefreshing: false });
+        if (res && res?.data) {
+          updateState({ savedCardData: res?.data })
+        }
+      })
+      .catch(errorMethod);
+  }
 
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
@@ -339,8 +371,133 @@ export default function TipPaymentOptions({ navigation, route }) {
       setDate(year)
     }
   }
+
+  const deleteCard = (item) => {
+    Alert.alert('', strings.DELETE_CARD, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {
+        text: strings.CONFIRM,
+        onPress: () => {
+          deleteSaveCard(item)
+        },
+      },
+    ]);
+  }
+  const deleteSaveCard = (item) => {
+    let query = `?id=${item?.id}`
+    actions.deleteCard(query, {}, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+
+        console.log(res, 'resereserseersre')
+        alert(res?.message)
+        getSavedCardList()
+
+      })
+      .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
+  }
+
+  const _isCheck = () => {
+    isAccept(!accept)
+  }
+
+  const selectSavedCard = (data, inx) => {
+    {
+      selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
+        ? (updateState({ selectedSavedListCardNumber: null }))
+        : updateState({ selectedSavedListCardNumber: data });
+    }
+  };
+  const renderSavedCardList = ({ item, index }) => {
+    console.log("renderSavedCardList =>", index)
+    const expDate = item?.expiration
+    // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
+        <TouchableOpacity
+          onPress={() => selectSavedCard(item, index)}
+          style={{
+            marginVertical: moderateScaleVertical(8), borderRadius: moderateScaleVertical(13),
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <Image
+            source={
+              selectedSavedListCardNumber &&
+                selectedSavedListCardNumber?.id == item.id
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <View style={{ marginLeft: moderateScale(10) }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Card No:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {item?.card_hint}
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {'Exp Date:'}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.caseOnDeliveryText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.caseOnDeliveryText
+                }>
+                {expDate}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteCard(item)}>
+          <Image source={imagePath?.delete} />
+        </TouchableOpacity>
+      </View>
+
+    )
+  }
+
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
+    console.log(selectedPaymentMethod, "selectedPaymentMethodselectedPaymentMethod")
     if (selectedPaymentMethod) {
       if (
         selectedPaymentMethod?.id == 4 &&
@@ -387,11 +544,12 @@ export default function TipPaymentOptions({ navigation, route }) {
           });
         } else
           if (
-            (selectedPaymentMethod?.id == 49 ||selectedPaymentMethod?.id == 50 ) &&
+            (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
             selectedPaymentMethod?.off_site == 1
           ) {
             _paymentWithPlugnPayMethods()
           } else {
+            console.log('imhere');
             setTimeout(() => {
               updateState({ isLoading: false });
               _webPayment(selectedPaymentMethod);
@@ -441,7 +599,7 @@ export default function TipPaymentOptions({ navigation, route }) {
         console.log(res, "Response>>>>>");
         if (
           res &&
-          res?.status == 'Success'
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
           navigation.navigate(navigationStrings.ORDER_DETAIL);
@@ -449,7 +607,6 @@ export default function TipPaymentOptions({ navigation, route }) {
       })
       .catch((err) => {
         console.log('Error>>>>>>>>>>>', err)
-
         showError(err?.msg)
       })
   }
@@ -538,11 +695,11 @@ export default function TipPaymentOptions({ navigation, route }) {
               />
             </View>
           )}
-        {!!(
+        {/* {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50)
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 ||selectedPaymentMethod?.id == 53)
         ) && (
             <PaymentGateways
             isCardNumber={cardNumber}
@@ -557,6 +714,117 @@ export default function TipPaymentOptions({ navigation, route }) {
             paymentid={selectedPaymentMethod?.id}
             eDate={date}
             />
+          )} */}
+        {!!(
+          selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 1 &&
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+        ) && (
+            selectedPaymentMethod?.id == 50 ?
+              <>
+                <View style={{
+                  flexDirection: 'row',
+                  marginTop: moderateScale(10),
+                  justifyContent: 'space-around'
+                }}>
+                  <TextTabBar
+                    text={'Card Fill'}
+                    isActive={cardFill}
+                    containerStyle={
+                      isDarkMode
+                        ? { backgroundColor: MyDarkTheme.colors.background }
+                        : { backgroundColor: colors.white, width: width / 2 }
+                    }
+                    onPress={() => updateState({ cardFill: true })}
+                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                  />
+                  <TextTabBar
+                    text={'Saved Card'}
+                    isActive={!cardFill}
+                    containerStyle={
+                      isDarkMode
+                        ? { backgroundColor: MyDarkTheme.colors.background }
+                        : { backgroundColor: colors.white, width: width / 2 }
+                    }
+                    onPress={() => updateState({ cardFill: false })}
+                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                  />
+                </View>
+                {
+                  cardFill ?
+                    <>
+                      <PaymentGateways
+                        isCardNumber={cardNumber}
+                        cvc={cvc}
+                        expiryDate={expiryDate}
+                        year={year}
+                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                        onChangeText={(data) => checkInputHandler('Card Number', data)}
+                        onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                        onChangeYearText={(data) => checkInputHandler('Year', data)}
+                        onChangeDateText={(data) => checkInputHandler('Date', data)}
+                        paymentid={selectedPaymentMethod?.id}
+                        eDate={date}
+                      />
+                      <View style={{ flexDirection: "row", alignItems: 'center', }}>
+                        <TouchableOpacity
+                          onPress={_isCheck}
+                          style={{
+
+                            marginRight: 10,
+                          }}>
+                          <FastImage
+                            style={{
+                              width: moderateScale(15),
+                              height: moderateScale(15),
+                            }}
+                            tintColor={
+                              isDarkMode ? MyDarkTheme.colors.text : colors.black
+                            }
+                            source={
+                              accept
+                                ? imagePath.checkBox2Active
+                                : imagePath.checkBox2InActive
+                            }
+                            resizeMode="contain"
+                          />
+                        </TouchableOpacity>
+                        <Text> Save Card</Text>
+                      </View>
+
+
+                    </>
+                    :
+                    <FlatList
+                      keyExtractor={(itm, inx) => String(inx)}
+                      data={savedCardData}
+                      renderItem={renderSavedCardList}
+                      ListEmptyComponent={() =>
+                        <View>
+                          <Text style={{ textAlign: 'center' }}>
+                            {" No Saved Cards"}
+                          </Text>
+                        </View>
+                      }
+                    />
+
+                }
+              </>
+              :
+              <PaymentGateways
+                isCardNumber={cardNumber}
+                cvc={cvc}
+                expiryDate={expiryDate}
+                year={year}
+                onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+                onChangeText={(data) => checkInputHandler('Card Number', data)}
+                onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+                onChangeYearText={(data) => checkInputHandler('Year', data)}
+                onChangeDateText={(data) => checkInputHandler('Date', data)}
+                paymentid={selectedPaymentMethod?.id}
+                eDate={date}
+              />
           )}
         {!!(
           selectedPaymentMethod &&
@@ -627,6 +895,7 @@ export default function TipPaymentOptions({ navigation, route }) {
         },
       )
       .then((res) => {
+        console.log(res, "ress?>>>");
         updateState({ isLoading: false });
         if (
           res &&

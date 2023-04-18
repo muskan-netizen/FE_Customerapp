@@ -46,6 +46,7 @@ import {
   ReplaceOrder,
   ReturnOrder,
   SalesExpenses,
+  SavedCards,
   SearchProductVendorItem,
   SearchProductVendorItem2,
   SearchProductVendorItem3V2,
@@ -67,6 +68,7 @@ import {
   Wishlist2,
   Yoco,
 } from '../Screens';
+
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
@@ -274,6 +276,7 @@ export default function ({navigation}) {
         name={navigationStrings.REFER_AND_EARN}
         component={ReferAndEarn}
       />
+      <Stack.Screen name={navigationStrings.SAVEDCARDS} component={SavedCards} />
     </Stack.Navigator>
   );
 }
