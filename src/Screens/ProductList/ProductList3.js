@@ -413,11 +413,6 @@ export default function Products({ route, navigation }) {
   //usecallback functions
 
   const goToProductDetail = (data) => {
-
-    console.log(data, "data>>>>>>>data")
-
-
-    return;
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
   console.log(wrapperListLoader, 'wrapperListLoaderwrapperListLoader')
