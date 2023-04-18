@@ -148,7 +148,7 @@ export default function () {
         }
         component={businessType === 4
           ? TaxiHomeScreen
-          : businessType === 8
+          : businessType === 8 || businessType === 10
             ? HomeV2Api
             : Home}
       />
