@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Alert, FlatList, Image,
   Keyboard,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -35,6 +36,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width
 } from '../styles/responsiveSize';
@@ -43,6 +45,7 @@ import { showError } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
 import PaymentGateways from './PaymentGateways';
 import TextTabBar from './TextTabBar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => { },
@@ -153,7 +156,7 @@ export default function SelectPaymentModal({
       language: languages?.primary_language?.id,
 
     }
-    console.log(apiData,"apiDataapiData");
+    console.log(apiData, "apiDataapiData");
     console.log(header, "headerr$");
     actions
       .getListOfPaymentMethod(
@@ -251,7 +254,7 @@ export default function SelectPaymentModal({
       updateState({ btnLoader: true });
       if (
         selectedPaymentMethod?.id == 4 &&
-        selectedPaymentMethod?.off_site == 0 
+        selectedPaymentMethod?.off_site == 0
       ) {
         if (cardInfo) {
           await createToken({ ...cardInfo, type: 'Card' })
@@ -314,7 +317,6 @@ export default function SelectPaymentModal({
 
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
-    console.log(data, 'datadatadata')
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
         ? (updateState({ selectedPaymentMethod: null }))
@@ -393,14 +395,11 @@ export default function SelectPaymentModal({
 
   if (isLoading) {
     return (
-      <WrapperContainer
-        bgColor={
-          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-        }
-        statusBarColor={colors.backgroundGrey}
-        source={loaderOne}
-      // isLoadingB={isLoading}
-      >
+      <View style={{
+        flex: 1,
+
+        marginTop: Platform.OS == "ios" ? 0 : StatusBarHeight
+      }}>
         <Header
           leftIcon={
             appStyle?.homePageLayout === 2
@@ -464,7 +463,7 @@ export default function SelectPaymentModal({
             marginHorizontal: moderateScale(16),
           }}
         />
-      </WrapperContainer>
+      </View>
     );
   }
   const selectSavedCard = (data, inx) => {
@@ -580,7 +579,6 @@ export default function SelectPaymentModal({
 
     )
   }
-  console.log("payementMethodspayementMethodspayementMethods", payementMethods)
   const mainView = () => {
     return (
       <>
@@ -659,7 +657,7 @@ export default function SelectPaymentModal({
                           />
                         </View>
                       )}
-                    
+
                     {!!(
                       selectedPaymentMethod &&
                       selectedPaymentMethod?.id == item.id &&
@@ -843,14 +841,10 @@ export default function SelectPaymentModal({
   };
 
   return (
-    <WrapperContainer
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }
-      statusBarColor={colors.backgroundGrey}
-      source={loaderOne}
-    // isLoadingB={isLoading}
-    >
+    <View style={{
+      flex: 1,
+      marginTop: Platform.OS == "ios" ? 0 : StatusBarHeight
+    }}>
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -867,14 +861,13 @@ export default function SelectPaymentModal({
             : { backgroundColor: colors.backgroundGrey }
         }
       />
-      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
-
       <StripeProvider
         publishableKey={preferences?.stripe_publishable_key}
         merchantIdentifier="merchant.identifier">
         {mainView()}
       </StripeProvider>
-    </WrapperContainer>
+
+    </View>
   );
 }
 

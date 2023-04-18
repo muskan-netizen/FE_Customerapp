@@ -317,8 +317,6 @@ export default function TaxiHomeDashbord({
     data["bookingType"] = '';
     (data["friendName"] = '')
 
-    console.log(data, "datadatadatadatadatadata");
-
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,

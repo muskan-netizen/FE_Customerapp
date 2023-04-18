@@ -2672,6 +2672,11 @@ function Cart({ navigation, route }) {
         setVendorComment={setVendorComment}
         _renderUpSellProducts={_renderUpSellProducts}
         _renderCrossSellProducts={_renderCrossSellProducts}
+        onSelectPaymentMethod={() =>
+          !!userData?.auth_token
+            ? setPaymentModal(true)
+            : setAppSessionRedirection()
+        }
 
       />
     )
@@ -5018,19 +5023,18 @@ function Cart({ navigation, route }) {
                 ? MyDarkTheme.colors.background
                 : colors.backgroundGrey,
             }}>
-            <View>
-              <StripeProvider
-                publishableKey={preferences?.stripe_publishable_key}
-                merchantIdentifier="merchant.identifier">
-                <SelectPaymentModal
-                  onSelectPayment={onSelectPayment}
-                  codMinAmount={codMinAmount}
-                  amount={orderAmount}
-                  paymentModalClose={() => setPaymentModal(false)}
-                  dineInType={dineInType}
-                />
-              </StripeProvider>
-            </View>
+            {/* <StripeProvider
+              publishableKey={preferences?.stripe_publishable_key}
+              merchantIdentifier="merchant.identifier"> */}
+            <SelectPaymentModal
+              onSelectPayment={onSelectPayment}
+              codMinAmount={codMinAmount}
+              amount={orderAmount}
+              paymentModalClose={() => setPaymentModal(false)}
+              dineInType={dineInType}
+            />
+            {/* </StripeProvider> */}
+
           </BottomSheetScrollView>
         </BottomSheet>
       ) : null}

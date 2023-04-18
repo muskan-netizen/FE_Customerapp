@@ -240,7 +240,6 @@ export function getListOfAllCmsLinks(data = {}, headers = {}) {
 
 //Get CMS page detail
 export function getCmsPageDetail(data = {}, headers = {}) {
-  console.log(data, 'datadatadatadata');
   return new Promise((resolve, reject) => {
     apiPost(CMS_PAGE_DETAIL, data, headers)
       .then((res) => {

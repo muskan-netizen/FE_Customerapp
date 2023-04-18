@@ -76,7 +76,6 @@ const ProductCard3 = ({
   }
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-console.log(data,'datadatadatadatadatadata')
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -453,7 +452,7 @@ console.log(data,'datadatadatadatadatadata')
                 data?.check_if_in_cart_app.length > 0) ||
                 !!data?.qty ||
                 totalProductQty) &&
-                CartItems.data !== null && dine_In_Type!='appointment' ? (
+                CartItems.data !== null && dine_In_Type != 'appointment' ? (
                 <View
                   // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                   style={{
@@ -575,7 +574,7 @@ console.log(data,'datadatadatadatadatadata')
                               ? colors.white
                               : themeColors.primary_color,
                           }}>
-                          {!!data?.check_if_in_cart_app&&data?.check_if_in_cart_app.length > 0?strings.ADDED:strings.ADD}{' '}
+                          {!!data?.check_if_in_cart_app && data?.check_if_in_cart_app.length > 0 ? strings.ADDED : strings.ADD}{' '}
                           {data?.minimum_order_count > 1
                             ? `(${data?.minimum_order_count})`
                             : ''}

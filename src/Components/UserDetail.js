@@ -38,11 +38,10 @@ const UserDetail = ({
   submitedRatingToDriver = null,
   cartData = null,
   textStyle,
-  _onRateDriver = () => {},
-  startChatWithAgent = () => {},
-  onStarRatingForDriverPress = () => {},
+  _onRateDriver = () => { },
+  startChatWithAgent = () => { },
+  onStarRatingForDriverPress = () => { },
 }) => {
-  console.log(data, "datadatadata");
   const { toggleTheme, themeColors, theme, appStyle, appData } = useSelector(
     (state) => state.initBoot
   );
@@ -101,10 +100,10 @@ const UserDetail = ({
           uri: !!data?.agent_image
             ? data?.agent_image
             : getImageUrl(
-                data?.vendor?.banner?.image_fit,
-                data?.vendor?.banner?.image_path,
-                "600/600"
-              ),
+              data?.vendor?.banner?.image_fit,
+              data?.vendor?.banner?.image_path,
+              "600/600"
+            ),
         }}
         style={{
           height: moderateScale(40),
@@ -113,7 +112,7 @@ const UserDetail = ({
           backgroundColor: colors.blackOpacity10,
           ...imgStyle,
         }}
-        // resizeMode="cover"
+      // resizeMode="cover"
       />
 
       <View
@@ -222,58 +221,58 @@ const UserDetail = ({
           )}
         </View>
 
-        {getBundleId() == ( appIds.masa || appIds.hokitch)
+        {getBundleId() == (appIds.masa || appIds.hokitch)
           ? null
           : (data?.vendor?.phone_no || data?.order?.phone_number) && (
-              <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity onPress={onWhatsapp}>
-                  <Image
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      marginRight: moderateScale(20),
-                    }}
-                    source={imagePath.whatsAppRoyo}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    dialCall(
-                      data?.order?.phone_number || data?.vendor?.phone_no,
-                      (type = "phone")
-                    )
-                  }
-                >
-                  <Image
-                    source={imagePath.call2}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: themeColors.primary_color,
-                      marginRight: moderateScale(20),
-                    }}
-                  />
-                </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity onPress={onWhatsapp}>
+                <Image
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    marginRight: moderateScale(20),
+                  }}
+                  source={imagePath.whatsAppRoyo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  dialCall(
+                    data?.order?.phone_number || data?.vendor?.phone_no,
+                    (type = "phone")
+                  )
+                }
+              >
+                <Image
+                  source={imagePath.call2}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: themeColors.primary_color,
+                    marginRight: moderateScale(20),
+                  }}
+                />
+              </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() =>
-                    dialCall(
-                      data?.order?.phone_number || data?.vendor?.phone_no,
-                      "text"
-                    )
-                  }
-                >
-                  <Image
-                    source={imagePath.msg}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: themeColors.primary_color,
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
+              <TouchableOpacity
+                onPress={() =>
+                  dialCall(
+                    data?.order?.phone_number || data?.vendor?.phone_no,
+                    "text"
+                  )
+                }
+              >
+                <Image
+                  source={imagePath.msg}
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: themeColors.primary_color,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
       </View>
     </View>
   );

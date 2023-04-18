@@ -221,7 +221,6 @@ const PaymentOptions = ({ navigation, route }) => {
   }
 
   const selectSavedCard = (data, inx) => {
-    console.log(data, 'datadatadata')
     {
       selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
         ? (updateState({ selectedSavedListCardNumber: null }))

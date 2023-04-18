@@ -59,7 +59,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(year,date,'year,date')
+  console.log(year, date, 'year,date')
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily });
   const data = route?.params?.data;
@@ -102,9 +102,9 @@ export default function TipPaymentOptions({ navigation, route }) {
     getListOfPaymentMethod();
   }, []);
 
-useEffect(()=>{
-  getSavedCardList()
-},[])
+  useEffect(() => {
+    getSavedCardList()
+  }, [])
 
   const getSavedCardList = () => {
 
@@ -409,7 +409,6 @@ useEffect(()=>{
   }
 
   const selectSavedCard = (data, inx) => {
-    console.log(data, 'datadatadata')
     {
       selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
         ? (updateState({ selectedSavedListCardNumber: null }))
@@ -437,7 +436,7 @@ useEffect(()=>{
                 : imagePath.radioInActive
             }
           />
-          <View style={{marginLeft:moderateScale(10)}}>
+          <View style={{ marginLeft: moderateScale(10) }}>
             <View style={{ flexDirection: 'row' }}>
               <Text
                 style={
@@ -498,7 +497,7 @@ useEffect(()=>{
 
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
-    console.log(selectedPaymentMethod,"selectedPaymentMethodselectedPaymentMethod")
+    console.log(selectedPaymentMethod, "selectedPaymentMethodselectedPaymentMethod")
     if (selectedPaymentMethod) {
       if (
         selectedPaymentMethod?.id == 4 &&
@@ -545,7 +544,7 @@ useEffect(()=>{
           });
         } else
           if (
-            (selectedPaymentMethod?.id == 49 ||selectedPaymentMethod?.id == 50 ||selectedPaymentMethod?.id == 53) &&
+            (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
             selectedPaymentMethod?.off_site == 1
           ) {
             _paymentWithPlugnPayMethods()
@@ -600,7 +599,7 @@ useEffect(()=>{
         console.log(res, "Response>>>>>");
         if (
           res &&
-         ( res?.status == 'Success' ||  res?.status == 200)
+          (res?.status == 'Success' || res?.status == 200)
 
         ) {
           navigation.navigate(navigationStrings.ORDER_DETAIL);
@@ -716,7 +715,7 @@ useEffect(()=>{
             eDate={date}
             />
           )} */}
-          {!!(
+        {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 1 &&
@@ -896,7 +895,7 @@ useEffect(()=>{
         },
       )
       .then((res) => {
-        console.log(res,"ress?>>>");
+        console.log(res, "ress?>>>");
         updateState({ isLoading: false });
         if (
           res &&

@@ -2934,7 +2934,6 @@ export default function Products({ route, navigation }) {
 
   // Search with more
   const onSearchWithinMenu = (text, data = [], withApiSearch = false) => {
-    console.log(data, withApiSearch, sectionListData, 'datadatadata');
     updateState({ searchInput: text });
     if (text) {
       let searchItems = withApiSearch ? data : sectionListData;

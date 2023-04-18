@@ -29,7 +29,7 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import strings from '../../../constants/lang';
 
 function Footer(props) {
-  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts } = props;
+  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { } } = props;
 
   return (
     <View style={{}}>
@@ -1204,11 +1204,7 @@ function Footer(props) {
           : 0) >
         0 && (
           <TouchableOpacity
-            onPress={() =>
-              !!userData?.auth_token
-                ? setPaymentModal(true)
-                : setAppSessionRedirection()
-            }
+            onPress={onSelectPaymentMethod}
             style={{
               ...styles.paymentMainView,
               backgroundColor: isDarkMode
