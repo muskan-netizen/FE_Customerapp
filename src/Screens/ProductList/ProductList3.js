@@ -1730,7 +1730,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
 
-    if (data?.vendor) {
+    if (data?.vendor && data?.screenName != "category") {
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1900,8 +1900,8 @@ export default function Products({ route, navigation }) {
           code: appData.profile.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-          latitude: appMainData?.reqData?.latitude,
-          longitude: appMainData?.reqData?.longitude,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -2072,7 +2072,10 @@ export default function Products({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
+
         },
       )
       .then((res) => {
@@ -2151,6 +2154,8 @@ export default function Products({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -3525,8 +3530,8 @@ export default function Products({ route, navigation }) {
         code: appData.profile.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        latitude: appMainData?.reqData?.latitude,
-        longitude: appMainData?.reqData?.longitude,
+        latitude: location?.latitude,
+        longitude: location?.longitude,
         systemuser: DeviceInfo.getUniqueId(),
       };
       console.log('sending header', headers);
