@@ -1,8 +1,9 @@
 import {
-  StripeProvider,
   CardField,
+  StripeProvider,
   createToken,
 } from "@stripe/stripe-react-native";
+import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -14,10 +15,13 @@ import {
   View,
 } from "react-native";
 import { useDarkMode } from "react-native-dynamic";
+import FastImage from "react-native-fast-image";
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";
 import PaymentGateways from "../../../Components/PaymentGateways";
+import TextTabBar from "../../../Components/TextTabBar";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -33,10 +37,6 @@ import {
 import { MyDarkTheme } from "../../../styles/theme";
 import { showError } from "../../../utils/helperFunctions";
 import stylesFun from "./styles";
-import { enableFreeze } from "react-native-screens";
-import FastImage from "react-native-fast-image";
-import TextTabBar from "../../../Components/TextTabBar";
-import { isEmpty } from "lodash";
 enableFreeze(true);
 
 
@@ -54,7 +54,7 @@ const PaymentOptions = ({ navigation, route }) => {
     selectedSavedListCardNumber: null,
   });
 
-  const { appData, appStyle, themeColors, currencies , languages } = useSelector(
+  const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state.initBoot
   );
   const { profile } = appData;
@@ -134,12 +134,13 @@ const PaymentOptions = ({ navigation, route }) => {
         updateState({
           apiPaymentOptions: res?.data,
         });
-        { !isEmpty(res?.data)  && res?.data.map((item,index)=>{
-          item.id == 50 && getSavedCardList();
-        })
+        {
+          !isEmpty(res?.data) && res?.data.map((item, index) => {
+            item.id == 50 && getSavedCardList();
+          })
 
         }
-        
+
       })
       .catch(errorMethod);
   };
@@ -220,7 +221,6 @@ const PaymentOptions = ({ navigation, route }) => {
   }
 
   const selectSavedCard = (data, inx) => {
-    console.log(data, 'datadatadata')
     {
       selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
         ? (updateState({ selectedSavedListCardNumber: null }))
@@ -347,13 +347,12 @@ const PaymentOptions = ({ navigation, route }) => {
   };
 
   const _onPressPaymentOption = (item) => {
-    console.log(item, "itemitemitemitemitemitem");
     updateState({ selectedPaymentMethod: item });
 
     if (item?.id == 4) {
       return;
     }
-    if (item?.id == 49 || item?.id == 50) {
+    if (item?.id == 49 || item?.id == 50 || item?.id == 53) {
       return;
     }
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
@@ -395,11 +394,9 @@ const PaymentOptions = ({ navigation, route }) => {
         //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
       }
     }
-    else if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
+    else if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
       selectedPaymentMethod?.off_site == 1) {
       if (!isEmpty(selectedSavedListCardNumber)) {
-        console.log("selectedSavedListCardNumber =>", selectedSavedListCardNumber);
-
         navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
           ...paramData,
 
@@ -504,136 +501,25 @@ const PaymentOptions = ({ navigation, route }) => {
               />
             </StripeProvider>
           )}
-        {/* {!!(
-                    selectedPaymentMethod &&
-                    selectedPaymentMethod?.id == item.id &&
-                    selectedPaymentMethod?.off_site == 1 &&
-                    (selectedPaymentMethod?.id === 49 ||selectedPaymentMethod?.id === 50  )
-                  ) && (
-                      <PaymentGateways
-                      isCardNumber={cardNumber}
-                      cvc={cvc}
-                      expiryDate={expiryDate}
-                      year={year}
-                      onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                      onChangeText={(data) => checkInputHandler('Card Number', data)}
-                      onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                      onChangeYearText={(data) => checkInputHandler('Year', data)}
-                      onChangeDateText={(data) => checkInputHandler('Date', data)}
-                      paymentid={selectedPaymentMethod?.id}
-                      eDate={date}
-                      />
-                    )} */}
         {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
-          // selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+          selectedPaymentMethod?.off_site == 1 &&
+          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
         ) && (
-            selectedPaymentMethod?.id == 50 ?
-              <>
-                <View style={{
-                  flexDirection: 'row',
-                  marginTop: moderateScale(10),
-                  justifyContent: 'space-around'
-                }}>
-                  <TextTabBar
-                    text={'Card Fill'}
-                    isActive={cardFill}
-                    containerStyle={
-                      isDarkMode
-                        ? { backgroundColor: MyDarkTheme.colors.background }
-                        : { backgroundColor: colors.white, width: width / 2 }
-                    }
-                    onPress={() => updateState({ cardFill: true })}
-                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
-                  />
-                  <TextTabBar
-                    text={'Saved Card'}
-                    isActive={!cardFill}
-                    containerStyle={
-                      isDarkMode
-                        ? { backgroundColor: MyDarkTheme.colors.background }
-                        : { backgroundColor: colors.white, width: width / 2 }
-                    }
-                    onPress={() => updateState({ cardFill: false })}
-                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
-                  />
-                </View>
-                {
-                  cardFill ?
-                    <>
-                      <PaymentGateways
-                        isCardNumber={cardNumber}
-                        cvc={cvc}
-                        expiryDate={expiryDate}
-                        year={year}
-                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                        onChangeText={(data) => checkInputHandler('Card Number', data)}
-                        onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                        onChangeYearText={(data) => checkInputHandler('Year', data)}
-                        onChangeDateText={(data) => checkInputHandler('Date', data)}
-                        paymentid={selectedPaymentMethod?.id}
-                        eDate={date}
-                      />
-                      <View style={{ flexDirection: "row", alignItems: 'center', }}>
-                        <TouchableOpacity
-                          onPress={_isCheck}
-                          style={{
-
-                            marginRight: 10,
-                          }}>
-                          <FastImage
-                            style={{
-                              width: moderateScale(15),
-                              height: moderateScale(15),
-                            }}
-                            tintColor={
-                              isDarkMode ? MyDarkTheme.colors.text : colors.black
-                            }
-                            source={
-                              accept
-                                ? imagePath.checkBox2Active
-                                : imagePath.checkBox2InActive
-                            }
-                            resizeMode="contain"
-                          />
-                        </TouchableOpacity>
-                        <Text> Save Card</Text>
-                      </View>
-
-
-                    </>
-                    :
-                    <FlatList
-                      keyExtractor={(itm, inx) => String(inx)}
-                      data={savedCardData}
-                      renderItem={renderSavedCardList}
-                      ListEmptyComponent={() =>
-                        <View>
-                          <Text style={{ textAlign: 'center' }}>
-                            {" No Saved Cards"}
-                          </Text>
-                        </View>
-                      }
-                    />
-
-                }
-              </>
-              :
-              <PaymentGateways
-                isCardNumber={cardNumber}
-                cvc={cvc}
-                expiryDate={expiryDate}
-                year={year}
-                onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                onChangeText={(data) => checkInputHandler('Card Number', data)}
-                onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                onChangeYearText={(data) => checkInputHandler('Year', data)}
-                onChangeDateText={(data) => checkInputHandler('Date', data)}
-                paymentid={selectedPaymentMethod?.id}
-                eDate={date}
-              />
+            <PaymentGateways
+              isCardNumber={cardNumber}
+              cvc={cvc}
+              expiryDate={expiryDate}
+              year={year}
+              onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
+              onChangeText={(data) => checkInputHandler('Card Number', data)}
+              onChangeCvcText={(data) => checkInputHandler('CVC', data)}
+              onChangeYearText={(data) => checkInputHandler('Year', data)}
+              onChangeDateText={(data) => checkInputHandler('Date', data)}
+              paymentid={selectedPaymentMethod?.id}
+              eDate={date}
+            />
           )}
       </View>
     );
@@ -702,7 +588,7 @@ const PaymentOptions = ({ navigation, route }) => {
             keyExtractor={(item, index) => String(index)}
           />
         </View>
-        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) && (
+        {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) && (
           <GradientButton
             onPress={selectPaymentOption}
             containerStyle={{

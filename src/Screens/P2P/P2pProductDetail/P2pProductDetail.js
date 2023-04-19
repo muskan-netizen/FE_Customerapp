@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -17,24 +17,24 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
+import { MyDarkTheme } from '../../../styles/theme';
 import styleFun from './styles';
-import {isEmpty} from 'lodash';
-import {useDarkMode} from 'react-native-dynamic';
+import { isEmpty } from 'lodash';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import RenderHTML from 'react-native-render-html';
 import Carousel from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
 } from '../../../utils/helperFunctions';
-import {dialCall} from '../../../utils/openNativeApp';
+import { dialCall } from '../../../utils/openNativeApp';
 import ReactNativeModal from 'react-native-modal';
 import Header from '../../../Components/Header';
 import GradientView from '../../../Components/GradientView';
@@ -44,12 +44,11 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 
-const P2pProductDetail = ({navigation, route}) => {
+const P2pProductDetail = ({ navigation, route }) => {
   const carouselRef = useRef(null);
   const snapPoints = useMemo(() => [height], []);
   const bottomSheetModalRef = useRef(null);
   const paramData = route?.params;
-  console.log(paramData, 'paramData....paramData');
   const {
     appData,
     currencies,
@@ -59,14 +58,16 @@ const P2pProductDetail = ({navigation, route}) => {
     appStyle,
     themeColors,
   } = useSelector((state) => state?.initBoot);
-  const {userData} = useSelector((state) => state?.auth);
-  const {additional_preferences, digit_after_decimal} =
+  const { userData } = useSelector((state) => state?.auth || {});
+
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleFun({themeColor, themeToggle, fontFamily});
+  const styles = styleFun({ themeColor, themeToggle, fontFamily });
   const [indexSelected, setIndexSelected] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [productInfo, setProductInfo] = useState({});
@@ -93,9 +94,6 @@ const P2pProductDetail = ({navigation, route}) => {
         console.log(res, '<===response getProductDetailByProductId');
         setIsLoading(false);
         setProductInfo(res?.data?.products);
-
-        // logic for grouping same attribute ids
-        let finalProductAttribut = [];
         var results = res?.data?.product_attribute.reduce(function (
           results,
           org,
@@ -105,7 +103,7 @@ const P2pProductDetail = ({navigation, route}) => {
           );
           return results;
         },
-        {});
+          {});
 
         setProductAttributeInfo(Object.values(results) || []);
       })
@@ -158,45 +156,32 @@ const P2pProductDetail = ({navigation, route}) => {
   };
 
   const onChat = (item) => {
-    navigation.navigate(navigationStrings.CHAT_SCREEN, {data: {...item}});
+    navigation.navigate(navigationStrings.CHAT_SCREEN, { data: { ...item } });
   };
 
-  const onChatPress = () => {
-    if (!!userData?.auth_token) {
-      navigation.navigate(navigationStrings.CHAT_ROOM_FOR_VENDOR, {
-        service_type: 'p2p',
-        vendor_id: productInfo?.vendor?.id,
-        product_id: productInfo?.id,
-      });
-    } else {
-      actions.setRedirection('');
-      actions.setAppSessionData('on_login');
-    }
-  };
-
-  const renderItem = useCallback(({item, index}) => {
+  const renderItem = useCallback(({ item, index }) => {
     return (
       <View style={styles.item}>
-      
-          <FastImage
-            source={{
-              uri: getImageUrl(
-                item?.image?.path?.image_fit,
-                item?.image?.path?.image_path,
-                '400/400',
-              ),
-            }}
-            style={{
-              height: moderateScale(299),
-              width: width,
-            }}
-          />
+
+        <FastImage
+          source={{
+            uri: getImageUrl(
+              item?.image?.path?.image_fit,
+              item?.image?.path?.image_path,
+              '400/400',
+            ),
+          }}
+          style={{
+            height: moderateScale(299),
+            width: width,
+          }}
+        />
       </View>
     );
   }, []);
 
   const renderaAttributeItems = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <View
           style={{
@@ -273,8 +258,8 @@ const P2pProductDetail = ({navigation, route}) => {
               width: width,
             }}
           />
-          
-   
+
+
         </WrapperContainer>
       </View>
     );
@@ -293,8 +278,8 @@ const P2pProductDetail = ({navigation, route}) => {
           : colors.statusbarColor,
       }}>
       {!isEmpty(productInfo) && (
-        <ScrollView showsVerticalScrollIndicator={false} style={{flexGrow: 1}}>
-          <View style={{backgroundColor: colors.white}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flexGrow: 1 }}>
+          <View style={{ backgroundColor: colors.white }}>
             {!isEmpty(productInfo?.product_media) ? (
               <Carousel
                 ref={carouselRef}
@@ -320,9 +305,7 @@ const P2pProductDetail = ({navigation, route}) => {
             onPress={() => navigation.goBack()}>
             <Image source={imagePath.back1} />
           </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.heart}>
-            <Image source={imagePath.heart2} />
-          </TouchableOpacity> */}
+
 
           {!isEmpty(productInfo?.product_media) &&
             productInfo?.product_media.length >= 2 && (
@@ -337,7 +320,7 @@ const P2pProductDetail = ({navigation, route}) => {
                 }}>
                 <TouchableOpacity
                   onPress={() => carouselRef.current.snapToPrev()}
-                  style={{...styles.leftRightBtn, left: moderateScale(15)}}>
+                  style={{ ...styles.leftRightBtn, left: moderateScale(15) }}>
                   <Image
                     source={imagePath.backRoyo}
                     style={{
@@ -347,12 +330,12 @@ const P2pProductDetail = ({navigation, route}) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => carouselRef.current.snapToNext()}
-                  style={{...styles.leftRightBtn, right: moderateScale(15)}}>
+                  style={{ ...styles.leftRightBtn, right: moderateScale(15) }}>
                   <Image
                     source={imagePath.backRoyo}
                     style={{
                       tintColor: themeColors.primary_color,
-                      transform: [{rotate: '180deg'}],
+                      transform: [{ rotate: '180deg' }],
                     }}
                   />
                 </TouchableOpacity>
@@ -403,7 +386,7 @@ const P2pProductDetail = ({navigation, route}) => {
               }}
             />
 
-            <Text style={{...styles.txt1}}>
+            <Text style={{ ...styles.txt1 }}>
               {!isEmpty(productInfo?.translation)
                 ? productInfo?.translation[0]?.title
                 : ''}
@@ -412,7 +395,7 @@ const P2pProductDetail = ({navigation, route}) => {
             {!isEmpty(productInfo?.translation) && (
               <RenderHTML
                 contentWidth={width}
-                source={{html: productInfo?.translation[0]?.body_html}}
+                source={{ html: productInfo?.translation[0]?.body_html }}
                 tagsStyles={{
                   p: {
                     color: isDarkMode ? colors.white : colors.black,
@@ -426,7 +409,7 @@ const P2pProductDetail = ({navigation, route}) => {
             )}
           </View>
           <View style={styles.view1}>
-            <Text style={{...styles.txt1, fontSize: textScale(13)}}>
+            <Text style={{ ...styles.txt1, fontSize: textScale(13) }}>
               Posted By
             </Text>
             <View style={styles.view2}>
@@ -444,12 +427,12 @@ const P2pProductDetail = ({navigation, route}) => {
                   source={
                     !!productInfo?.vendor?.logo?.image_fit
                       ? {
-                          uri: getImageUrl(
-                            productInfo?.vendor?.logo?.image_fit,
-                            productInfo?.vendor?.logo?.image_path,
-                            '400/400',
-                          ),
-                        }
+                        uri: getImageUrl(
+                          productInfo?.vendor?.logo?.image_fit,
+                          productInfo?.vendor?.logo?.image_path,
+                          '400/400',
+                        ),
+                      }
                       : imagePath.icProfile
                   }
                   style={{
@@ -484,16 +467,16 @@ const P2pProductDetail = ({navigation, route}) => {
                         alignItems: 'center',
                       }}
                       leftImgSrc={imagePath.icChatP2p}
-                      textStyle={{...styles.chatBtn, color: colors.orange1}}
-                      btnStyle={{...styles.btn1}}
+                      textStyle={{ ...styles.chatBtn, color: themeColors?.primary_color, }}
+                      btnStyle={{ ...styles.btn1, borderColor: themeColors?.primary_color, }}
                       source={imagePath.message}
-                      containerStyle={{alignItems: 'flex-start'}}
+                      containerStyle={{ alignItems: 'flex-start' }}
                       colorsArray={
                         isDarkMode
                           ? [
-                              MyDarkTheme?.colors?.lightDark,
-                              MyDarkTheme?.colors?.lightDark,
-                            ]
+                            MyDarkTheme?.colors?.lightDark,
+                            MyDarkTheme?.colors?.lightDark,
+                          ]
                           : [colors.white, colors.white]
                       }
                       leftImgStyle={{
@@ -518,17 +501,17 @@ const P2pProductDetail = ({navigation, route}) => {
                       }}
                       leftImgSrc={imagePath.icCallP2p}
                       textStyle={styles.chatBtn}
-                      colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+                      colorsArray={[themeColors?.primary_color, themeColors?.primary_color, themeColors?.primary_color]}
                       btnStyle={styles.btn2}
                       source={imagePath.call}
-                      containerStyle={{alignItems: 'flex-start'}}
+                      containerStyle={{ alignItems: 'flex-start' }}
                     />
                   )}
                 </View>
               )}
           </View>
           {!isEmpty(productAttributeInfo) && (
-            <View style={{...styles.view1, marginTop: 0}}>
+            <View style={{ ...styles.view1, marginTop: 0 }}>
               <Text
                 style={{
                   ...styles.txt1,

@@ -208,7 +208,9 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   const {
     additional_preferences,
     digit_after_decimal,
+    is_cab_pooling
   } = appData?.profile?.preferences || {};
+
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
   const { profile } = appData || {};
@@ -360,7 +362,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({ isLoading: false });
       }
     },
-    isFocused && orderStatus != "completed" ? 10000 : null
+    isFocused && orderStatus != "completed" ? 5000 : null
   );
 
 
@@ -562,7 +564,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           cancelError: null,
         });
         console.log("error raised", error);
-        showError(error?.message || error?.error);
+        // showError(error?.message || error?.error);
       }
     }
   };
@@ -649,7 +651,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       cancelError: null,
     });
     console.log("error raised", error);
-    showError(error?.message || error?.error);
+    // showError(error?.message || error?.error);
   };
   const _onRegionChange = (region) => {
     updateState({ region: region });
@@ -1914,7 +1916,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                 <View
                                   style={{
                                     backgroundColor: colors.blackOpacity05,
-                                    marginLeft: moderateScale(38),
+                                    marginLeft: moderateScale(10),
                                     borderStyle: "dashed",
                                     borderWidth: 1,
                                   }}
@@ -2307,10 +2309,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                           fullStarColor={colors.ORANGE}
                                           starSize={25}
                                         />
-                                        {console.log(
-                                          productInfo[index]?.product_rating,
-                                          "productInfo[index]?.product_rating"
-                                        )}
+
                                         {productInfo[index]?.product_rating && (
                                           <TouchableOpacity
                                             onPress={() => rateYourOrder(val)}
@@ -2406,8 +2405,18 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                   ) : (
                     <View style={{ marginBottom: moderateScaleVertical(24) }} />
                   )}
-
+                  {!!orderFullDetail?.noofCopassengers && !!is_cab_pooling ?
+                    <View style={{ marginHorizontal: moderateScale(16), paddingBottom: moderateScale(10) }}>
+                      <LeftRightText
+                        leftText={strings.NO_OF_COPASSENGERS}
+                        rightText={`${orderFullDetail?.noofCopassengers}`}
+                        isDarkMode={isDarkMode}
+                        MyDarkTheme={MyDarkTheme}
+                        marginBottom={0}
+                      />
+                    </View> : null}
                   <View style={{ marginHorizontal: moderateScale(16) }}>
+
                     {!!orderFullDetail?.order_details?.delivery_fee &&
                       Number(orderFullDetail?.order_details?.delivery_fee) !==
                       0 && (
@@ -2450,12 +2459,12 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           <View style={styles.horizontalLine} />
                         </View>
                       )}
-                    {!!orderFullDetail?.order_details?.toll_amount &&
-                      Number(orderFullDetail?.order_details?.toll_amount) >
-                      0 && (
+                    {
+                      Number(orderFullDetail?.order_details?.toll_amount) > 0
+                      && (
                         <View>
                           <LeftRightText
-                            leftText={"Toll fee"}
+                            leftText={strings.TOLL_FEE}
                             rightText={` ${tokenConverterPlusCurrencyNumberFormater(
                               Number(orderFullDetail?.order_details?.toll_amount),
                               digit_after_decimal,
@@ -2470,6 +2479,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           <View style={styles.horizontalLine} />
                         </View>
                       )}
+
+                    {console.log(orderFullDetail, 'orderFullDetail')}
                     {!!orderFullDetail?.order_details
                       ?.service_fee_percentage_amount &&
                       Number(

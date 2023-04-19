@@ -8,16 +8,15 @@ import {
 } from '@stripe/stripe-react-native';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
 import {
-  Image,
+  Alert, FlatList, Image,
   Keyboard,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  FlatList
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dynamic';
@@ -37,6 +36,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width
 } from '../styles/responsiveSize';
@@ -45,6 +45,7 @@ import { showError } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
 import PaymentGateways from './PaymentGateways';
 import TextTabBar from './TextTabBar';
+
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => { },
@@ -149,6 +150,14 @@ export default function SelectPaymentModal({
   //Get list of all payment method
   const getListOfPaymentMethod = () => {
     let apiData = `/cart?service_type=${dineInType}`;
+    let header = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+
+    }
+    console.log(apiData, "apiDataapiData");
+    console.log(header, "headerr$");
     actions
       .getListOfPaymentMethod(
         apiData,
@@ -281,7 +290,7 @@ export default function SelectPaymentModal({
           //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
       } else {
-        if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50) &&
+        if ((selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) &&
           selectedPaymentMethod?.off_site == 1) {
           if (!isEmpty(selectedSavedListCardNumber)) {
             console.log("selectedSavedListCardNumber =>", selectedSavedListCardNumber);
@@ -308,7 +317,6 @@ export default function SelectPaymentModal({
 
   //Select/ Update payment method
   const selectPaymentMethod = (data, inx) => {
-    console.log(data, 'datadatadata')
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == data?.id
         ? (updateState({ selectedPaymentMethod: null }))
@@ -387,14 +395,9 @@ export default function SelectPaymentModal({
 
   if (isLoading) {
     return (
-      <WrapperContainer
-        bgColor={
-          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-        }
-        statusBarColor={colors.backgroundGrey}
-        source={loaderOne}
-      // isLoadingB={isLoading}
-      >
+      <View style={{
+        flex: 1,
+      }}>
         <Header
           leftIcon={
             appStyle?.homePageLayout === 2
@@ -458,16 +461,14 @@ export default function SelectPaymentModal({
             marginHorizontal: moderateScale(16),
           }}
         />
-      </WrapperContainer>
+      </View>
     );
   }
   const selectSavedCard = (data, inx) => {
-    console.log(data, 'datadatadata')
-    {
-      selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
-        ? (updateState({ selectedSavedListCardNumber: null }))
-        : updateState({ selectedSavedListCardNumber: data });
-    }
+
+    selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
+      ? (updateState({ selectedSavedListCardNumber: null }))
+      : updateState({ selectedSavedListCardNumber: data });
   };
 
   const deleteCard = (item) => {
@@ -503,7 +504,6 @@ export default function SelectPaymentModal({
       .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
   }
   const renderSavedCardList = ({ item, index }) => {
-    console.log("renderSavedCardList =>", index)
     const expDate = item?.expiration
     // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
     return (
@@ -577,7 +577,6 @@ export default function SelectPaymentModal({
 
     )
   }
-  console.log("payementMethodspayementMethodspayementMethods", payementMethods)
   const mainView = () => {
     return (
       <>
@@ -656,11 +655,12 @@ export default function SelectPaymentModal({
                           />
                         </View>
                       )}
+
                     {!!(
                       selectedPaymentMethod &&
                       selectedPaymentMethod?.id == item.id &&
                       selectedPaymentMethod?.off_site == 1 &&
-                      (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50)
+                      (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53)
                     ) && (
                         selectedPaymentMethod?.id == 50 ?
                           <>
@@ -839,14 +839,9 @@ export default function SelectPaymentModal({
   };
 
   return (
-    <WrapperContainer
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }
-      statusBarColor={colors.backgroundGrey}
-      source={loaderOne}
-    // isLoadingB={isLoading}
-    >
+    <View style={{
+      flex: 1,
+    }}>
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -863,14 +858,13 @@ export default function SelectPaymentModal({
             : { backgroundColor: colors.backgroundGrey }
         }
       />
-      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
-
       <StripeProvider
         publishableKey={preferences?.stripe_publishable_key}
         merchantIdentifier="merchant.identifier">
         {mainView()}
       </StripeProvider>
-    </WrapperContainer>
+
+    </View>
   );
 }
 

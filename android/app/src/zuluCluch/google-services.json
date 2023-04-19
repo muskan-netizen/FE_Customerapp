@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "627919888442",
+    "project_id": "zulu-clutch-order",
+    "storage_bucket": "zulu-clutch-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627919888442:android:463ba10f77573df06f9503",
+        "android_client_info": {
+          "package_name": "com.zuluCluch.royoorders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627919888442-52caodtm7u58gagju33laar8fs61sv9r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zuluCluch.royoorders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "627919888442-ur8mug10c8tol2ueg7gbrbb22e6a8jk9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zuluCluch.royoorders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "627919888442-vgnkt3vk5dqje97p8qam5itn0lfaik7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zuluCluch.royoorders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "627919888442-9bu95okvgu58glro1ivellhaaoiv9agt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4hvchdRq6gIxd44zxN4ggkkgDj3ayrFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627919888442-9bu95okvgu58glro1ivellhaaoiv9agt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "627919888442-3ptv91q7cjsmsuabqjq7dc1p1o00vnmi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zuluCluch.royoorders"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

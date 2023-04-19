@@ -76,7 +76,6 @@ const ProductCard3 = ({
   }
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-console.log(data,'datadatadatadatadatadata')
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -85,6 +84,7 @@ console.log(data,'datadatadatadatadatadata')
   const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
 
@@ -152,7 +152,6 @@ console.log(data,'datadatadatadatadatadata')
 
   const onIncrementQty = () => {
     setAdd(true);
-    console.log('data', data);
     if (
       !!categoryInfo?.is_vendor_closed &&
       categoryInfo?.closed_store_order_scheduled !== 1
@@ -177,7 +176,6 @@ console.log(data,'datadatadatadatadatadata')
       onIncrement();
     }
   };
-  console.log();
   const onDecrementQty = () => {
     setAdd(false);
     if (
@@ -267,7 +265,7 @@ console.log(data,'datadatadatadatadatadata')
               style={{
                 ...styles.inTextStyle,
                 color: isDarkMode
-                  ?colors.white
+                  ? colors.white
                   : colors.blackOpacity40,
               }}>
               {strings.IN}
@@ -277,7 +275,7 @@ console.log(data,'datadatadatadatadatadata')
         </View>
 
 
-        {!!data?.averageRating && (
+        {!!appData?.profile?.preferences?.rating_check && !!data?.averageRating && (
           <View
             style={{
               borderWidth: 0.5,
@@ -314,9 +312,8 @@ console.log(data,'datadatadatadatadatadata')
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
             }}>
-
             {tokenConverterPlusCurrencyNumberFormater(
-              data?.variant[0]?.price,
+              Number(data?.variant[0]?.price) * Number(data?.variant[0]?.multiplier || 1),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
@@ -337,7 +334,7 @@ console.log(data,'datadatadatadatadatadata')
                 }}>
                 {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
-                  data?.variant[0]?.compare_at_price,
+                  data?.variant[0]?.compare_at_price * data?.variant[0]?.multiplier,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
@@ -455,7 +452,7 @@ console.log(data,'datadatadatadatadatadata')
                 data?.check_if_in_cart_app.length > 0) ||
                 !!data?.qty ||
                 totalProductQty) &&
-                CartItems.data !== null ? (
+                CartItems.data !== null && dine_In_Type != 'appointment' ? (
                 <View
                   // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
                   style={{
@@ -577,7 +574,7 @@ console.log(data,'datadatadatadatadatadata')
                               ? colors.white
                               : themeColors.primary_color,
                           }}>
-                          {strings.ADD}{' '}
+                          {!!data?.check_if_in_cart_app && data?.check_if_in_cart_app.length > 0 ? strings.ADDED : strings.ADD}{' '}
                           {data?.minimum_order_count > 1
                             ? `(${data?.minimum_order_count})`
                             : ''}

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,7 +8,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({themeColors, fontFamily, productTotalQuantity}) =>
+export default ({ themeColors, fontFamily, productTotalQuantity }) =>
   StyleSheet.create({
     cardViewStyle: {
       alignItems: 'center',
@@ -17,7 +17,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
 
       // marginRight: 20
     },
-    dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
+    dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
     ratingColor: {
       // color: colors.backgroundGrey,
       paddingLeft: 5,

@@ -80,7 +80,6 @@ export default function Addaddress({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
   const { profile } = appData || {};
 
-  console.log(categoryId, "categoryIdcategoryIdcategoryId");
 
   const [state, setState] = useState({
     pageNo: 1,
@@ -252,7 +251,6 @@ export default function Addaddress({ navigation, route }) {
   });
 
 
-  console.log("profile data++", profile?.preferences)
 
   const getAllPickUpVendors = (lat, lng) => {
     console.log(appData, "appDataappData......");
@@ -299,10 +297,10 @@ export default function Addaddress({ navigation, route }) {
     setIsPinAddressOnMapModal(true);
     setPickDropData({
       task_id: updateIndex == 0 ? 1 : 2,
-
       ...(existLatLng?.latitude !== 0 ? existLatLng : curLatLng),
     });
   };
+
 
 
   const renderbtn = () => {
@@ -329,6 +327,7 @@ export default function Addaddress({ navigation, route }) {
             />
           </View>
         );
+
       default:
         return (
           <View
@@ -355,7 +354,6 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const checkBookingServiceType = (bookingType) => {
-
     switch (bookingType) {
       case 0: return ('Booking')
       case 1: return ('Pooling')
@@ -363,6 +361,8 @@ export default function Addaddress({ navigation, route }) {
       default: return ('Booking')
     }
   }
+
+
 
   const moveToNextScreenWithAddressData = () => {
     let location = [];
@@ -402,7 +402,6 @@ export default function Addaddress({ navigation, route }) {
     let checkEmptyTask = dropLocationData.filter(
       (item) => item.pre_address !== ""
     );
-
 
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
@@ -449,11 +448,12 @@ export default function Addaddress({ navigation, route }) {
     }, [])
   );
 
+
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
       const { latitude, longitude } = await getCurrentLocationFromApi();
-      // console.log("get live location after 4 second")
+      console.log("get live location after 4 second")
       updateState({ curLatLng: { latitude, longitude } });
       getNearByAddress(`${latitude}, ${longitude}`);
       getAllPickUpVendors(latitude, longitude);
@@ -480,9 +480,10 @@ export default function Addaddress({ navigation, route }) {
     }
   };
 
+
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type || 'city');
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key, 'city');
       updateState({
         nearByAddressess: res.results,
       });

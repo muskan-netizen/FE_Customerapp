@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "221898859322",
+    "project_id": "ineeda-order",
+    "storage_bucket": "ineeda-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221898859322:android:849db2d5875e1feb2f2603",
+        "android_client_info": {
+          "package_name": "com.ineeda.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221898859322-7gqblam3nt934echqcc91gpupia4dk95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ineeda.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "221898859322-fq3quvd6fa81gdirr2oabiof3mn7n2ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ineeda.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "221898859322-pum5ivlef46l0lih4g1c15nqairrd53m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ineeda.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "221898859322-8pagudmq1qtaeouh37d4gpfgid0fn2c4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIH3ul4aMWCfnPTtdkWO_RJkl4N38tduw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221898859322-8pagudmq1qtaeouh37d4gpfgid0fn2c4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "221898859322-iqhddvsc7anutcudql9eu873q8sq1tvi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ineeda.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

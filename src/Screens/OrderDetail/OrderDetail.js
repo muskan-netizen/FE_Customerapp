@@ -2722,7 +2722,8 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-
+          {console.log(appData, "tippppppppp")}
+          {console.log(appData?.profile?.preferences?.tip_after_order, "tippppppppp2222")}
           {!!(
             paramData?.orderStatus?.current_status?.title ===
             strings.DELIVERED &&
@@ -3539,63 +3540,55 @@ export default function OrderDetail({ navigation, route }) {
                 longitudeDelta: 0.032,
               }}
               rotateEnabled={true}
-            >{
-              console.log(dispatcherStatus,driverStatus,orderStatus,'dispatcherStatusdispatcherStatus')
-            }
-              <MapViewDirections
-                resetOnChange={false}
-                origin={
-                  orderStatus !== "completed" && orderStatus !== "unassigned"
-                    ? {
-                      latitude: Number(driverStatus?.agent_location?.lat),
-                      longitude: Number(
-                        driverStatus?.agent_location?.long ||
-                        driverStatus?.agent_location?.lng
-                      ),
-                    }
-                    : driverStatus.tasks[0]
-                }
-                // origin={{
-                //   latitude: Number(driverStatus.tasks[0]?.latitude),
-                //   longitude: Number(driverStatus.tasks[0]?.longitude),
-                //   // latitude: Number(driverStatus?.agent_location?.lat),
-                //   // longitude: Number(driverStatus?.agent_location?.long),
-                //   latitudeDelta: 0.0222,
-                //   longitudeDelta: 0.032,
-                // }}
-                destination={{
-                  latitude: Number(driverStatus.tasks[1]?.latitude),
-                  longitude: Number(driverStatus.tasks[1]?.longitude),
-                  latitudeDelta: 0.0222,
-                  longitudeDelta: 0.032,
-                }}
-                apikey={appData.profile?.preferences?.map_key}
-                strokeWidth={3}
-                strokeColor={themeColors?.primary_color}
-                optimizeWaypoints={true}
-                onStart={(params) => { }}
-                precision={"high"}
-                timePrecision={"now"}
-                mode={"DRIVING"}
-                // maxZoomLevel={20}
-                onReady={(result) => {
-                  // updateState({
-                  //   totalDistance: result.distance.toFixed(appData?.profile?.preferences?.digit_after_decimal),v
-                  //   totalDuration: result.duration.toFixed(appData?.profile?.preferences?.digit_after_decimal),
-                  // });
-                  mapRef.current.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      right: width / 20,
-                      bottom: height / 20,
-                      left: width / 20,
-                      top: height / 20,
-                    },
-                  });
-                }}
-                onError={(errorMessage) => {
-                  //
-                }}
-              />
+            >
+              {!!driverStatus.tasks[1]?.latitude && (!!driverStatus?.agent_location?.lat) ?
+                <MapViewDirections
+                  resetOnChange={false}
+
+                  origin={
+                    orderStatus?.current_status?.title !== "completed" && orderStatus?.current_status?.title !== "unassigned"
+                      ? {
+                        latitude: Number(driverStatus?.agent_location?.lat),
+                        longitude: Number(
+                          driverStatus?.agent_location?.long ||
+                          driverStatus?.agent_location?.lng
+                        ),
+                      }
+                      : driverStatus.tasks[0]
+                  }
+                  destination={{
+                    latitude: Number(driverStatus.tasks[1]?.latitude),
+                    longitude: Number(driverStatus.tasks[1]?.longitude),
+                    latitudeDelta: 0.0222,
+                    longitudeDelta: 0.032,
+                  }}
+                  apikey={appData.profile?.preferences?.map_key}
+                  strokeWidth={3}
+                  strokeColor={themeColors?.primary_color}
+                  optimizeWaypoints={false}
+                  onStart={(params) => { }}
+                  precision={"high"}
+                  timePrecision={"now"}
+                  mode={"DRIVING"}
+                  // maxZoomLevel={20}
+                  onReady={(result) => {
+                    // updateState({
+                    //   totalDistance: result.distance.toFixed(appData?.profile?.preferences?.digit_after_decimal),v
+                    //   totalDuration: result.duration.toFixed(appData?.profile?.preferences?.digit_after_decimal),
+                    // });
+                    mapRef.current.fitToCoordinates(result.coordinates, {
+                      edgePadding: {
+                        right: width / 20,
+                        bottom: height / 20,
+                        left: width / 20,
+                        top: height / 20,
+                      },
+                    });
+                  }}
+                  onError={(errorMessage) => {
+                    //
+                  }}
+                /> : null}
               <Marker
                 coordinate={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),

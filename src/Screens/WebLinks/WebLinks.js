@@ -1026,6 +1026,7 @@ export default function WebLinks({navigation, route}) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             flexGrow: 1,
+       
           }}>
           <View
             style={{
@@ -1376,6 +1377,7 @@ export default function WebLinks({navigation, route}) {
                   <View
                     style={{
                       marginVertical: moderateScaleVertical(15),
+                      zIndex: 5000,
                     }}>
                     <Text
                       style={{
@@ -1396,10 +1398,10 @@ export default function WebLinks({navigation, route}) {
                         backgroundColor: isDarkMode
                           ? MyDarkTheme.colors.lightDark
                           : '#fafafa',
-                        zIndex: 5000,
                         flexDirection: I18nManager.isRTL
                           ? 'row-reverse'
                           : 'row',
+                        
                       }}
                       itemStyle={{
                         justifyContent: 'flex-start',

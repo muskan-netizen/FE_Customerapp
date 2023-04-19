@@ -541,8 +541,18 @@ export const getAppCode = () => {
         case appIds.zulbrand: return shortCodes.zulbrand;
         case appIds.emart: return shortCodes.emart;
         case appIds.oyeeRides: return shortCodes.oyeeRides;
-        
-
+        case appIds.royoRides: return shortCodes.royoRides;
+        case appIds.tempcorner: return shortCodes.tempcorner;
+        case appIds.autobox: return shortCodes.autobox;
+        case appIds.emiRates: return shortCodes.emiRates;
+        case appIds.detailPros: return shortCodes.detailPros;
+        case appIds.blink: return shortCodes.blink;
+        case appIds.incubit: return shortCodes.incubit;
+        case appIds.virgingates: return shortCodes.virgingates;
+        case appIds.zuluCluch: return shortCodes.zuluCluch;
+        case appIds.ping: return shortCodes.ping;
+        case appIds.chutneyeah: return shortCodes.chutneyeah;
+        case appIds.ineeda: return shortCodes.ineeda;
 
         default: return '245bae'
     }

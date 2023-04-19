@@ -218,14 +218,25 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-    eatHalal{
+   masa{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                // applicationIdSuffix ".hmoobhhub"
+                applicationId 'com.app.masa'
+                resValue "string", "app_name", "Masa"
+                resValue "string", "host_name", ""
+            }
+             meltivers{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.eathalal.royoorders'
-            resValue "string", "app_name", "Eat Halal" 
+            applicationId 'com.meltiverse.user'
+            resValue "string", "app_name", "Meltivers"
             resValue "string", "host_name", ""
             }
 
@@ -7717,7 +7728,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.saamanshop.royoorders'
+    //         applicationId 'my.saamanshop.royoorders'
     //         resValue "string", "app_name", "Saamanshop" 
     //         resValue "string", "host_name", ""
     //         }
@@ -8585,7 +8596,7 @@ android {
     //             resValue "string", "app_name", "Emart"
     //             resValue "string", "host_name", ""
     //         }
-     // oyeeRides{
+    // oyeeRides{
     //             dimension "appType"
     //             versionCode 1
     //             versionName "1.0"
@@ -8595,7 +8606,141 @@ android {
     //             resValue "string", "app_name", "OyeeRides"
     //             resValue "string", "host_name", ""
     //         }
+    // royoRides{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.royoRides.order'
+    //             resValue "string", "app_name", "Royo Rides"
+    //             resValue "string", "host_name", ""
+    //         }
+        // tempcorner{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.tempcorner.royoorder'
+    //             resValue "string", "app_name", "Tempcorner"
+    //             resValue "string", "host_name", ""
+    //         }
+            // autobox{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.autobox.royoorders'
+    //             resValue "string", "app_name", "Autobox"
+    //             resValue "string", "host_name", ""
+    //         }
+                // emiRates{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.emiRates.royoorders'
+    //             resValue "string", "app_name", "EmiRates"
+    //             resValue "string", "host_name", ""
+    //         }
+
+                  // detailPros{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.detailPros.royoorder'
+    //             resValue "string", "app_name", "DetailPros"
+    //             resValue "string", "host_name", ""
+    //         }
+
+                    // blink{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.blink.royoorder'
+    //             resValue "string", "app_name", "blink"
+    //             resValue "string", "host_name", ""
+    //         }
+
+
+                    // incubit{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.incubit.royoorder'
+    //             resValue "string", "app_name", ""
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //          virgingates{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.virgingates.royoorder'
+    //             resValue "string", "app_name", "Virgingates"
+    //             resValue "string", "host_name", ""
+    //         }
+
+    //        zuluCluch{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+        //         applicationId 'com.zuluCluch.royoorders'
+    //             resValue "string", "app_name", "ZuluCluch"
+    //             resValue "string", "host_name", ""
+    //         }
+        //          Ping{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ping.royoorder'
+    //             resValue "string", "app_name", "Ping"
+    //             resValue "string", "host_name", ""
+    //         }
+         //          chutneyeah{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.chutneyeah.royoorder'
+    //             resValue "string", "app_name", "Chutneyeah"
+    //             resValue "string", "host_name", ""
+    //         }
+         //          ineeda{
+    //             dimension "appType"
+    //             versionCode 1
+    //             versionName "1.0"
+    //             minSdkVersion rootProject.ext.minSdkVersion
+    //             targetSdkVersion rootProject.ext.targetSdkVersion
+    //             applicationId 'com.ineeda.royoorder'
+    //             resValue "string", "app_name", "Ineeda"
+    //             resValue "string", "host_name", ""
+    //         }
+
+
+
     // }
+
+
+
+
+
 
 
 }

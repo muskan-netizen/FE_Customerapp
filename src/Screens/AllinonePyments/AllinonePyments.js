@@ -34,7 +34,9 @@ export default function AllinonePyments({navigation, route}) {
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
     console.log(props, 'returnURL');
-    console.log('query params', URL);
+    console.log('query params', queryParams);
+    console.log('query paramsurl', URL);
+    console.log('query paramsurl', url);
     let transId = '';
     if (url.includes('payment/checkoutSuccess')) {
       //in case of paypal

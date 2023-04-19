@@ -37,6 +37,7 @@ import {
   showError
 } from "../../utils/helperFunctions";
 import stylesFun from "./styles";
+import Header from "../../Components/Header";
 
 export default function Account4({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -66,6 +67,7 @@ export default function Account4({ navigation }) {
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
   };
+
 
 
   console.log("appDataappData", appData)
@@ -239,7 +241,8 @@ export default function Account4({ navigation }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
     >
-      <Text
+      {/* <Text
+      
         style={{
           color: colors.black2Color,
           fontSize: textScale(16),
@@ -249,8 +252,8 @@ export default function Account4({ navigation }) {
         }}
       >
         {strings.ACCOUNT}
-      </Text>
-
+      </Text> */}
+      <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
       <ScrollView style={{
         flex: 1,
         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
@@ -357,7 +360,8 @@ export default function Account4({ navigation }) {
                   <Image
                     source={imagePath.icEdit1}
                     style={{
-                      tintColor: colors.black,
+                      tintColor: isDarkMode
+                        ? colors.white : colors.black,
                     }}
                   />
                 </TouchableOpacity>

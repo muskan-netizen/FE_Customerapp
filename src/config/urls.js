@@ -1,5 +1,5 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
-export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
+// export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL='https://eathalalonly.com/api/v1'
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
 // export const API_BASE_URL='https://ngoalapp.com/api/v1'
@@ -9,7 +9,6 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL='https://app.baubau.app/api/v1'
 // export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
 // export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL='https://demo.qdelo.com/api/v1'
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1';
@@ -28,7 +27,7 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
 //export const API_BASE_URL = 'https://carryfood.org/api/v1';
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
 //export const API_BASE_URL = 'http://192.168.101.104:9090/api/v1';
@@ -43,7 +42,6 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL = 'https://ambutap.com/api/v1';
 // export const API_BASE_URL = 'https://spryton.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://spryntz.com/api/v1';
-// export const API_BASE_URL = 'https://ace.focushires.com/api/v1';
 // export const API_BASE_URL  ='https://shopcentral.shop/api/v1'
 // export const API_BASE_URL = 'http://192.168.101.140:9090/api/v1';
 // export const API_BASE_URL = 'https://ipickndrop.com/api/v1';
@@ -75,12 +73,12 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // handy-pickup
 // export const API_BASE_URL = 'https://app.handy-pickup.com/api/v1';
 
-// export const API_BASE_URL = 'https://aaujaaunepal.com/api/v1';
+// export const API_BASE_URL = 'https://aaujaaunp.com/api/v1';
 // export const API_BASE_URL='https://halatalabat.com/api/v1';
 // export const API_BASE_URL = 'https://marksoublet.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://papiruki.com/api/v1';
 // export const API_BASE_URL = 'https://sales.royoorders.com/api/v1'; //sales demo
-// export const API_BASE_URL = 'https://baubau.rostaging.com/api/v1';
+//export const API_BASE_URL = 'https://nounou.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'https://hokitch.com/api/v1';
 
@@ -122,7 +120,9 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL = 'https://dispatcher.releezer.shop';
 // export const API_BASE_URL = 'http://192.168.96.84:9090/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.152:8005/api/v1';
-// export const API_BASE_URL = 'https://masaapp.ae/api/v1';
+export const API_BASE_URL = 'https://masaapp.ae/api/v1';
+// export const API_BASE_URL = 'https://emart.rostaging.com/api/v1';
+// // export const API_BASE_URL = 'https://masaapp.ae/api/v1';
 // export const API_BASE_URL = 'https://movingwheelsdeliveryservices.com/api/v1';
 // export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://fly-commerce.com/api/v1';
@@ -130,7 +130,6 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 
 // dishefs
 // export const API_BASE_URL = 'https://order.dishefs.com/api/v1';
-
 // bustamovepartybus
 // export const API_BASE_URL = 'https://order.bustamovepartybus.com/api/v1';
 
@@ -209,7 +208,7 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL = 'https://zuzuclean.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://halatalabat.com/api/v1';
 
-// export const API_BASE_URL = 'https://sponge.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://yogo.gd/api/v1'; // yogoFood
 // export const API_BASE_URL = 'https://smokerunstore.com/api/v1';
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
@@ -430,7 +429,7 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 // export const API_BASE_URL = 'https://bliss.royoorders.com/api/v1';
 
 // goKart
-// export const API_BASE_URL = 'https://ebay.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://emart.royoorders.com/api/v1';
 
 // Etaim
 // export const API_BASE_URL = 'https://etiamstore.com/api/v1';
@@ -447,6 +446,7 @@ export const API_BASE_URL='http://192.168.102.70:8006/api/v1'
 
 // ReadyToRent
 // export const API_BASE_URL = 'https://readytorent.focushires.com/api/v1';
+//export const API_BASE_URL ="https://sxm2go.com/api/v1"
 
 //Emart
 // export const API_BASE_URL = 'https://emart.royoorders.com/api/v1';
@@ -719,13 +719,10 @@ export const EDIT_CUSTOMER_ORDER = getApiUrl('/user/editorder');
 export const DISCARD_EDIT_CUSTOMER_ORDER = getApiUrl('/user/discardeditorder');
 
 // pickup-delivery drop location change after order place
-export const DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE = getApiUrl(
-  '/pickup-delivery/edit-order')
+export const DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE = getApiUrl('/pickup-delivery/edit-order')
 
 //Replace Order
-export const GET_PRODUCTS_FOR_REPLACE = getApiUrl(
-  '/replace-order/get-replace-order-data-in-model',
-);
+export const GET_PRODUCTS_FOR_REPLACE = getApiUrl('/replace-order/get-replace-order-data-in-model');
 export const GET_DETAIL_OF_PRODUCT_FOR_REPLACE = getApiUrl(
   '/replace-order/get-replace-products',
 );
@@ -771,6 +768,7 @@ export const SAVE_INFULENCER_INFO = getApiUrl(
 
 export const CHECK_SLOTS_LIMIT = getApiUrl('/cart/checkSlotOrders');
 export const GET_SLOTS_FOR_APPOINTMENT = getApiUrl('/getTimeSlotsForOndemand');
+export const GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER = getApiUrl('/getslotsFormDispatcher');
 
 
 export const GET_PRODUCTS_ON_DASHBOARD = getApiUrl('/v2/get_products')

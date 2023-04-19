@@ -158,8 +158,7 @@ export default function DashBoardHeaderFive({
                       },
                     ]}>
                     {location?.address}
-                    {/* {console.log(nearestLoc,"nearestLocnearestLoc")} */}
-                    {/* {!!nearestLoc  ? currentLocation?.address : nearestLoc?.address || location?.address} */}
+
                   </Text>
                 </View>
               </TouchableOpacity>

@@ -1,5 +1,5 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -11,24 +11,22 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
-import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
 import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-import ZendeskChat from '../../library/react-native-zendesk-chat';
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
+import ZendeskChat from '../../library/react-native-zendesk-chat';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import DeviceInfo from 'react-native-device-info';
-import { useRef } from 'react';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -212,6 +210,7 @@ export default function Account3({ navigation }) {
     });
   }, []);
 
+
   //----------------------------------ActionSheet------------------------------//
   let actionSheet = useRef();
   const showActionSheet = () => {
@@ -261,6 +260,7 @@ export default function Account3({ navigation }) {
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       /> */}
+
 
         {shortCodeStatus == '245bae' ? (
           <Header
@@ -528,10 +528,6 @@ export default function Account3({ navigation }) {
             <View></View>
           )} */}
 
-          {/* {!!userData?.auth_token &&
-            !!appData &&
-            !!appData?.profile &&
-            appData?.profile?.preferences?.subscription_mode == 1 && ( */}
           {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
