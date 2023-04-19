@@ -97,6 +97,7 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 import { enableFreeze } from "react-native-screens";
 import { CouponDiscount, DeliverableSection, PromoCodeAvailableSection, SwipeableSection } from './parts';
 import Footer from './parts/Footer';
+import { log } from 'console';
 enableFreeze(true);
 
 
@@ -172,8 +173,10 @@ function Cart({ navigation, route }) {
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
   const [paymentModal, setPaymentModal] = useState(false)
+  const [selectedSlotDateTime, setSelectedSlotDateTime] = useState([])
 
 
+  const [productId, setProductId] = useState()
   const [state, setState] = useState({
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
@@ -622,7 +625,7 @@ function Cart({ navigation, route }) {
       .then((res) => {
         console.log('cart res remove', res);
         actions.reloadData(!reloadData);
-        if (!!res?.data && !isEmpty(res?.data) &&!!res?.data?.products) {
+        if (!!res?.data && !isEmpty(res?.data) && !!res?.data?.products) {
           actions.cartItemQty(res);
           setCartItems(res.data.products || []);
           setCartData(res.data);
@@ -2009,10 +2012,26 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  const clearSceduleDate = async () => {
-    setScheduleType('now');
+  const clearSceduleDate = async (item) => {
+  
+    if(businessType == 'super_app'){
+
+      let cloneArr = [...selectedSlotDateTime]
+  
+      let foundIndex = cloneArr.findIndex(i=>i.id== item?.id)
+    console.log(foundIndex,'foundindexdrdddd')
+      if(foundIndex >=0){
+     
+        // cloneArr[foundIndex].pop()
+        cloneArr.splice(foundIndex, 1);
+        setSelectedSlotDateTime(cloneArr),
+        console.log(cloneArr,selectedSlotDateTime,'foundindexdrddddjfkdslkghdflhgoif')
+      }
+    }
+    else
+    {setScheduleType('now');
     setLocaleSheduledOrderDate(null);
-    setSheduledorderdate(null);
+    setSheduledorderdate(null);}
   };
 
   useEffect(() => {
@@ -2048,8 +2067,8 @@ function Cart({ navigation, route }) {
       });
     }
   };
-
   const selectOrderDate = () => {
+    console.log(businessType, selectedDateFromCalendar, selectedTimeSlots, "businessTypebusinessTypebusinessTypebusinessTypebusinessType");
     if (businessType == 'laundry') {
       if (laundrySelectedPickupDate > laundrySelectedDropOffDate) {
         alert('Please select valid dates.');
@@ -2080,6 +2099,22 @@ function Cart({ navigation, route }) {
         setDateAndTimeSchedule();
         return;
       }
+    }
+    else if (businessType == 'super_app') {
+      const cloneArr=selectedSlotDateTime
+      const foundIndex = cloneArr.findIndex(x => x.id == productId);
+      if (foundIndex >= 0) {
+        cloneArr[foundIndex] = { date: selectedDateFromCalendar, time: selectedTimeSlots, id: productId }
+        setSelectedSlotDateTime(cloneArr)
+      }
+      else
+       { 
+        cloneArr.push({ date: selectedDateFromCalendar, time: selectedTimeSlots, id: productId })
+        setSelectedSlotDateTime(cloneArr)
+        }
+        onClose();
+        setDateAndTimeSchedule();
+        return;
     }
     else {
       if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
@@ -2437,6 +2472,19 @@ function Cart({ navigation, route }) {
     setPrescriptionModal(true);
   };
 
+  const _selectTimefc = (item, inx) => {
+    console.log(item, inx, 'dgsuyfiuygfiuysdilugyfdviufdtiou')
+    _selectTime()
+    setProductId(item?.id)
+  }
+  const clearSelectedSceduleDate = (item,inx) =>{
+    console.log(item, inx, 'clearSelectedSceduleDateclearSelectedSceduleDateclearSelectedSceduleDateclearSelectedSceduleDate')
+    setScheduleType('now');
+    // clearSceduleDate()
+    // setLocaleSheduledOrderDate(null);
+    // setSheduledorderdate(null);
+
+  }
   const _renderItem = ({ item, index }) => {
     return (
       <View>
@@ -2541,6 +2589,10 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           <SwipeableSection
             item={item}
+            themeColors={themeColors}
+            userData={userData}
+            businessType={businessType}
+            appData={appData}
             openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
@@ -2556,8 +2608,12 @@ function Cart({ navigation, route }) {
             additional_preferences={additional_preferences}
             currencies={currencies}
             cartData={cartData}
+            _selectTime={_selectTimefc}
+            selectedSlotDateTime={selectedSlotDateTime}
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
+            localeSheduledOrderDate={localeSheduledOrderDate}
+            clearSceduleDate={clearSceduleDate}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />

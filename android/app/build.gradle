@@ -218,15 +218,15 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-            shariff{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.shariffOrder.royoorder'
-                resValue "string", "app_name", "Shariff"
-                resValue "string", "host_name", ""
+             pawsee{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pawsee.order'
+            resValue "string", "app_name", "Pawsee"
+            resValue "string", "host_name", ""
             }
 }
 

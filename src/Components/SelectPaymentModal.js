@@ -45,7 +45,7 @@ import { showError } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
 import PaymentGateways from './PaymentGateways';
 import TextTabBar from './TextTabBar';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 export default function SelectPaymentModal({
   onSelectPayment,
   paymentModalClose = () => { },
@@ -397,8 +397,6 @@ export default function SelectPaymentModal({
     return (
       <View style={{
         flex: 1,
-
-        marginTop: Platform.OS == "ios" ? 0 : StatusBarHeight
       }}>
         <Header
           leftIcon={
@@ -843,7 +841,6 @@ export default function SelectPaymentModal({
   return (
     <View style={{
       flex: 1,
-      marginTop: Platform.OS == "ios" ? 0 : StatusBarHeight
     }}>
       <Header
         leftIcon={

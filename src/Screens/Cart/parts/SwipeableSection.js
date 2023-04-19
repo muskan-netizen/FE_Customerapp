@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Animated,
     Image,
@@ -28,19 +28,25 @@ import imagePath from '../../../constants/imagePath';
 import colors from '../../../styles/colors';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import strings from '../../../constants/lang';
+import ButtonComponent from '../../../Components/ButtonComponent';
 
 
 
 
 /**
  * SwipeableSection Part
- * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription} props 
+ * @param {item ,
+ * deleteItem,addDeleteCartItems,swipeRef,swipeKey,userData,appData,businessType
+ * swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,clearSceduleDate,themeColors,
+ * additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription,_selectTime,selectedSlotDateTime} props 
  * @returns 
  */
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription } = props;
+    const { item, deleteItem, addDeleteCartItems, appData, userData, businessType, swipeRef, swipeKey, clearSceduleDate, swipeBtns, themeColors, localeSheduledOrderDate, isDarkMode, styles, fontFamily, btnLoadrId, _selectTime, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription, selectedSlotDateTime } = props;
+    const [index, setIndex] = useState()
+    console.log(item, "itemitemitemitemitem");
     return (
         <>
             {item?.vendor_products.length > 0
@@ -497,6 +503,66 @@ function SwipeableSection(props) {
                                                 }`}</Text>
                                     )}
                                 </View >
+                                {
+                                    !!(
+                                        userData?.auth_token &&
+                                        !appData?.profile?.preferences?.off_scheduling_at_cart &&
+                                        businessType !== 'laundry' &&
+                                        !cartData?.cart_error_message
+                                    ) &&
+                                    !!(scheduleType == 'schedule') && !isEmpty(selectedSlotDateTime) &&  (
+                                        <TouchableOpacity
+                                            style={{
+                                                marginVertical: moderateScale(16),
+                                                marginLeft: moderateScale(16),
+                                                alignSelf: 'flex-start',
+                                            }}
+                                            onPress={() =>
+                                                clearSceduleDate(i, inx)
+                                            }>
+                                            <Text
+                                                style={{
+                                                    fontFamily: fontFamily?.bold,
+                                                    color: themeColors.primary_color,
+                                                    textAlign: 'left',
+                                                }}>
+
+                                                {!isEmpty(selectedSlotDateTime) ? selectedSlotDateTime.map((item, inx) => {
+                                                    console.log(item, item?.id == i?.id, 'itemmmmm')
+                                                    return <Text>
+                                                        {item?.id == i?.id && strings.CLEAR_SCHEDULE_DATE}
+                                                    </Text>
+                                                }) : null}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    )
+                                }
+                                <ButtonComponent
+                                    onPress={() =>
+                                        _selectTime(i, inx)
+                                    }
+                                    btnText={!isEmpty(selectedSlotDateTime) ? selectedSlotDateTime.map((item, inx) => {
+                                        console.log(item, item?.id == i?.id, 'itemmmmm')
+                                        return <Text>
+                                            {item?.id == i?.id ? `${item?.date} ${item?.time}` : strings.SCHEDULE_ORDER}
+                                        </Text>
+                                    }) : strings.SCHEDULE_ORDER}
+                                    borderRadius={moderateScale(13)}
+                                    textStyle={{
+                                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                                    }}
+                                    containerStyle={{
+                                        ...styles.placeOrderButtonStyle,
+                                        backgroundColor: colors.transparent,
+                                        // backgroundColor:'red',
+                                        borderColor: isDarkMode
+                                            ? MyDarkTheme.colors.text
+                                            : colors.black,
+                                        borderWidth: 0.8,
+                                        width: width / 2.5,
+                                        padding: 7
+                                    }}
+                                />
                                 {!!i?.is_processor_enable && (
                                     <View>
                                         <Text
