@@ -2085,6 +2085,23 @@ export default function ProductDetail({ route, navigation }) {
                         )}
                       </Text>
                     ) : null}
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        textDecorationLine: 'line-through',
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity40,
+                        marginLeft: moderateScale(12),
+                      }}>
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        productPriceData?.compare_at_price,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol,
+                      )}
+
+                    </Text>
                   </View>
                 </View>
 
@@ -2773,26 +2790,28 @@ export default function ProductDetail({ route, navigation }) {
                               height: moderateScale(38),
                               justifyContent: 'space-between',
                               marginRight: moderateScale(8),
-
-
                             }}
                           >
                             <TouchableOpacity
+                            style={{flex:0.5}}
                               disabled={
                                 !productDetailData?.vendor?.show_slot &&
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
                               onPress={() => productIncrDecreamentForCart(2)}
                             >
-                              <Text
+                              <Image
                                 style={{
-                                  ...commonStyles.mediumFont14,
-                                  color: themeColors?.primary_color,
-                                  fontFamily: fontFamily.bold,
-                                }}>
-                                -
-                              </Text>
+                                  height: moderateScale(15),
+                                  width: moderateScale(15),
+                                  tintColor: themeColors?.primary_color,
+                                  marginLeft:moderateScale(3)
+                                }}
+                                resizeMode='contain'
+                                source={imagePath.icMinus2}
+                              />
                             </TouchableOpacity>
+
                             <TextInput
                               keyboardType={"number-pad"}
                               onChangeText={(value) =>
@@ -2802,9 +2821,10 @@ export default function ProductDetail({ route, navigation }) {
                                 })
                               }
                               style={{
-                                maxWidth: moderateScale(60),
-                                marginLeft: moderateScale(4)
+                                maxWidth: moderateScale(70),
+                                // marginRight:moderateScale(5)
                               }}
+                              textAlign='center'
                               value={`${productQuantityForCart.toString()}`}
                             />
 
@@ -2815,14 +2835,19 @@ export default function ProductDetail({ route, navigation }) {
                               }
                               onPress={() => productIncrDecreamentForCart(1)}
                               hitSlop={hitSlopProp}>
-                              <Text
+                              <Image
                                 style={{
-                                  ...commonStyles.mediumFont14,
-                                  color: themeColors?.primary_color,
-                                  fontFamily: fontFamily.bold,
-                                }}>+</Text>
+                                  height: moderateScale(15),
+                                  width: moderateScale(15),
+                                  tintColor: themeColors?.primary_color,
+                                  // marginRight: moderateScale(8),
+                                }}
+                                source={imagePath.plus}
+                              />
                             </TouchableOpacity>
-                          </View> : null}
+                          </View>
+                          : null
+                        }
 
                         <View />
                         <View style={{ flex: 1 }}>

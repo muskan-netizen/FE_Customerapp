@@ -38,11 +38,25 @@ export default function DashBoardHeaderEcommerce({
   currentLocation,
   nearestLoc,
   currentLoc,
+  cartItemCountView = {
+    position: 'absolute',
+    zIndex: 100,
+
+    // backgroundColor: colors.cartItemPrice,
+
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cartItemCountNumber = {
+    fontSize: textScale(8),
+  },
 }) {
   const navigation = useNavigation();
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+  const { cartItemCount } = useSelector((state) => state?.cart || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -175,6 +189,66 @@ export default function DashBoardHeaderEcommerce({
             alignItems: 'center',
 
           }}>
+
+          {/* wish list */}
+          <TouchableOpacity
+            style={{ marginHorizontal: moderateScale(8) }}
+            onPress={() => navigation.navigate(navigationStrings.WISHLIST)}>
+            <Image
+              style={{
+                tintColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.greyD,
+                height: moderateScale(20),
+                width: moderateScale(20),
+              }}
+              source={imagePath.wishlist}
+            />
+          </TouchableOpacity>
+          {/*  */}
+
+          {/* cart button */}
+          <TouchableOpacity
+            style={{ marginHorizontal: moderateScale(8) }}
+            onPress={() => navigation.navigate(navigationStrings.CART)}>
+            {cartItemCount?.data?.item_count ? (
+              <View
+                style={{
+                  width:
+                    cartItemCount?.data?.item_count > 999
+                      ? moderateScale(23)
+                      : moderateScale(20),
+                  height:
+                    cartItemCount?.data?.item_count > 999
+                      ? moderateScale(23)
+                      : moderateScale(20),
+                  top: cartItemCount?.data?.item_count > 999 ? -10 : -2,
+                  ...cartItemCountView,
+                  right: cartItemCount?.data?.item_count > 999 ? -13 : 0,
+                }}>
+                <Text
+                  style={{
+                    color: themeColor.primary_color,
+                    fontFamily: fontFamily?.bold,
+                    ...cartItemCountNumber,
+                  }}>
+                  {cartItemCount?.data?.item_count > 999
+                    ? '999+'
+                    : cartItemCount?.data?.item_count}
+                </Text>
+              </View>
+            ) : null}
+            <Image
+              style={{
+                tintColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.black,
+              }}
+              source={imagePath.cartInActive}
+            />
+          </TouchableOpacity>
+          {/*  */}
+
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)

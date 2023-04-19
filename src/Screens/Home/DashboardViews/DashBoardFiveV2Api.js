@@ -315,20 +315,22 @@ const DashBoardFiveV2Api = ({
             (item?.slug == 'new_products' ||
               item?.slug == 'featured_products' ||
               item?.slug == 'on_sale' ||
-              item?.slug == 'most_popular_products') ? <ProductsThemeView item={item} /> : item?.slug == 'vendors' ?
-              <VendorsView item={item} />
-              : item?.slug == 'nav_categories' ? (
-                <CategoriesView item={item} showTitle={false} />
-              ) : item?.slug == 'best_sellers' ? (
-                <BestSellersView item={item} />
-              ) : item?.slug == 'brands' ? (
-                <BrandsView item={item} />
-              ) : item?.slug == 'spotlight_deals' ? (
-                <SpotlightDealsView item={item} />
-              ) : item?.slug == 'selected_products' ? (
-                <SelectedProductsThemeView item={item} />
-              ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
-                <React.Fragment />
+              item?.slug == 'most_popular_products') ?
+              <ProductsThemeView item={item} />
+              : item?.slug == 'vendors' ?
+                <VendorsView item={item} />
+                : item?.slug == 'nav_categories' ? (
+                  <CategoriesView item={item} showTitle={false} />
+                ) : item?.slug == 'best_sellers' ? (
+                  <BestSellersView item={item} />
+                ) : item?.slug == 'brands' ? (
+                  <BrandsView item={item} />
+                ) : item?.slug == 'spotlight_deals' ? (
+                  <SpotlightDealsView item={item} />
+                ) : item?.slug == 'selected_products' ? (
+                  <SelectedProductsThemeView item={item} />
+                ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
+                  <React.Fragment />
         }
       </View>
     );
@@ -628,7 +630,7 @@ const DashBoardFiveV2Api = ({
         activeOpacity={0.7}
         style={{
           height: moderateScaleVertical(140),
-          width: width - width / 3.5,
+          width: width /2,
           borderRadius: moderateScale(10),
           overflow: 'hidden',
           alignItems: 'center',
@@ -639,7 +641,7 @@ const DashBoardFiveV2Api = ({
           style={{
             ...StyleSheet.absoluteFill,
             height: moderateScaleVertical(140),
-            width: width - width / 3.5,
+            width: width /2,
           }}
         />
         <View
@@ -796,25 +798,26 @@ const DashBoardFiveV2Api = ({
   }, [themeColors, fontFamily])
 
   const BannersView = useCallback(({ item = {}, showTitle = true }) => {
-    return !isEmpty(item?.banner_images) ? <View style={{
-      marginBottom: moderateScaleVertical(0)
-    }}>
-      {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-      <Carousel
-        autoplay={true}
-        loop={true}
-        autoplayInterval={2000}
-        data={
-          item?.banner_images ||
-          appMainData?.mobile_banners ||
-          appData?.mobile_banners
-        }
-        renderItem={renderBanners}
-        sliderWidth={width}
-        itemWidth={width - moderateScale(32)}
+    return (
+      !isEmpty(item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners) ?
+        <View style={{ marginBottom: moderateScaleVertical(0) }}>
+          {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+          <Carousel
+            autoplay={true}
+            loop={true}
+            autoplayInterval={2000}
+            data={
+              item?.banner_images ||
+              appMainData?.mobile_banners ||
+              appData?.mobile_banners
+            }
+            renderItem={renderBanners}
+            sliderWidth={width}
+            itemWidth={width - moderateScale(32)}
 
-      />
-    </View> : <React.Fragment />
+          />
+        </View> : <React.Fragment />
+    )
   }, [appMainData, appData])
 
 

@@ -145,7 +145,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           }}>
           {vendor?.name}
         </Text>
-        {!isDiscount ? (
+        {(!variant[0].hasOwnProperty('compare_at_price') || Number(variant[0].compare_at_price) == 0) ? (
           <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: moderateScale(8) }}>
             <View style={{
               flex: 1,
@@ -232,7 +232,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                   marginLeft: moderateScale(12),
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0]?.price,
+                  variant[0]?.compare_at_price,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
