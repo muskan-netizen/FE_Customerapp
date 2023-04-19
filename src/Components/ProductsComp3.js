@@ -190,17 +190,20 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           </View>
         ) : (
           <View>
-            <Text
-              style={{
-                ...styles.inTextStyle,
-                fontFamily: fontFamily.regular,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity66,
-                marginLeft: moderateScale(5),
-              }}>
-              {strings.IN} {category?.category_detail?.translation[0]?.name}
-            </Text>
+            {!!category?.category_detail?.translation[0]?.name && (
+                <Text
+                  style={{
+                    ...styles.inTextStyle,
+                    fontFamily: fontFamily.regular,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity66,
+                    marginLeft: moderateScale(5),
+                  }}>
+                  {console.log("category?.category_detail=>", category)}
+                  {strings.IN} {category?.category_detail?.translation[0]?.name}
+                </Text>
+            )}
             <View
               style={{
                 flexDirection: 'row',
@@ -210,10 +213,10 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
               }}>
               <Text
                 style={{
-                  fontSize: textScale(12),
+                  fontSize: textScale(9),
                   fontFamily: fontFamily.medium,
                   color: colors.green,
-                  marginVertical: moderateScaleVertical(8),
+                  // marginVertical: moderateScaleVertical(8),
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
                   variant[0]?.price,
@@ -225,6 +228,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
               <Text
                 numberOfLines={2}
                 style={{
+                  fontSize: textScale(9),
+                  fontFamily: fontFamily.medium,
                   textDecorationLine: 'line-through',
                   color: isDarkMode
                     ? MyDarkTheme.colors.text

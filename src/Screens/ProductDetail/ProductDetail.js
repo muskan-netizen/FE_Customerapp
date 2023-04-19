@@ -2085,9 +2085,11 @@ export default function ProductDetail({ route, navigation }) {
                         )}
                       </Text>
                     ) : null}
-                    <Text
+                    {/* compare price */}
+                    {Number(productPriceData?.compare_at_price) > 0 && <Text
                       numberOfLines={2}
                       style={{
+                        ...styles.productPrice,
                         textDecorationLine: 'line-through',
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
@@ -2100,8 +2102,7 @@ export default function ProductDetail({ route, navigation }) {
                         additional_preferences,
                         currencies?.primary_currency?.symbol,
                       )}
-
-                    </Text>
+                    </Text>}
                   </View>
                 </View>
 
