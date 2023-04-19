@@ -218,26 +218,17 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                qdelo{
+    eatHalal{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.qdeloorder'
-            resValue "string", "app_name", "Qdelo"
+            applicationId 'com.eathalal.royoorders'
+            resValue "string", "app_name", "Eat Halal" 
             resValue "string", "host_name", ""
             }
-                uberWeeds{ 
-            dimension "appType"
-            versionCode 1
-            versionName "1.0"
-            minSdkVersion rootProject.ext.minSdkVersion
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.uberweeds'
-            resValue "string", "app_name", "ubierweeds" 
-            resValue "string", "host_name", ""
-            }
+
 }
 
     // productFlavors {

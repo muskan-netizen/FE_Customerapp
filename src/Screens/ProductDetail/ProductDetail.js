@@ -438,7 +438,7 @@ export default function ProductDetail({ route, navigation }) {
         });
         if (error?.message == "Recurring booking type not be empty.") {
           showInfo('Schedule the product click on recurring checkbox');
-        } else {  
+        } else {
           showError(error?.message || error?.error);
         }
       }
@@ -462,7 +462,7 @@ export default function ProductDetail({ route, navigation }) {
       updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       if (error?.message == "Recurring booking type not be empty.") {
         showInfo('Schedule the product click on recurring checkbox');
-      } else {  
+      } else {
         showError(error?.message || error?.error);
       }
     }
@@ -1228,7 +1228,7 @@ export default function ProductDetail({ route, navigation }) {
       })
     }
     if (!isEmpty(period) && selectedPlanValues == "Custom") {
-      Object.entries(period).map(([key, value])=> (selectedCustomDates.push(key)));
+      Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
     }
     if (!isEmpty(period) && selectedPlanValues == "Weekly") {
       Object.entries(period).map(([key, value]) => {
@@ -1320,7 +1320,7 @@ export default function ProductDetail({ route, navigation }) {
               data: res?.data
             }
           });
-        }else{
+        } else {
           navigation.goBack()
         }
       }).catch((error) => errorMethodSecond(error, addonSet));
@@ -2021,10 +2021,10 @@ export default function ProductDetail({ route, navigation }) {
                     justifyContent: 'space-between',
                   }}>
                   {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-                  <View style={{ flex: 1, alignItems: 'center' }}>
+                  <View style={{ flex: 1, alignItems: 'center', }}>
                     <Banner2
                       autoPlay={false}
-                      resizeMode="contain"
+                      resizeMode={getBundleId() == appIds?.eatHalal ? "cover" : "contain"}
                       bannerRef={bannerRef}
                       bannerData={productDetailData?.product_media}
                       sliderWidth={width}

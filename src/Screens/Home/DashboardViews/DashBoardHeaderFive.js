@@ -24,6 +24,8 @@ import {
 import FastImage from 'react-native-fast-image';
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 
 
 export default function DashBoardHeaderFive({
@@ -69,6 +71,7 @@ export default function DashBoardHeaderFive({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
+        backgroundColor: getBundleId() == appIds?.eatHalal ? themeColors?.primary_color : null
       }}>
       {showAboveView ? (
         <View
@@ -117,13 +120,18 @@ export default function DashBoardHeaderFive({
                   marginLeft: moderateScale(8),
                 }}>
                 <Image
-                  style={styles.locationIcon}
+                  style={[styles.locationIcon, { tintColor: getBundleId() == appIds?.eatHalal ? colors?.white : themeColors.primary_color }]}
                   source={imagePath.redLocation}
                   resizeMode="contain"
                 />
                 <View>
                   {!!location?.type && (
-                    <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                    <Text numberOfLines={1} style={[styles.locationTypeTxt, {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : getBundleId() == appIds?.eatHalal ? colors?.white : colors.blackOpacity30,
+                      fontFamily: fontFamily.medium,
+                    }]}>
                       {location?.type === 3
                         ? !!(
                           location?.type_name != 0 &&
@@ -145,7 +153,7 @@ export default function DashBoardHeaderFive({
                       {
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
-                          : colors.blackOpacity30,
+                          : getBundleId() == appIds?.eatHalal ? colors?.white : colors.blackOpacity30,
                         fontFamily: fontFamily.medium,
                       },
                     ]}>
@@ -174,7 +182,7 @@ export default function DashBoardHeaderFive({
                 style={{
                   tintColor: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : colors.black,
+                    : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
                 }}
                 source={imagePath.search1}
               />
@@ -213,7 +221,7 @@ export default function DashBoardHeaderFive({
                     borderRadius: moderateScale(10),
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
-                      : colors.black,
+                      : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
                   }}
                   resizeMode="contain"
                 />

@@ -534,8 +534,8 @@ export default function Account3({ navigation }) {
             appData?.profile?.preferences?.subscription_mode == 1 && ( */}
           {!!userData?.auth_token &&
             !!appData &&
-             !!appData?.profile &&
-            appData?.profile?.preferences?.subscription_mode == 1  &&   (
+            !!appData?.profile &&
+            appData?.profile?.preferences?.subscription_mode == 1 && (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -622,7 +622,7 @@ export default function Account3({ navigation }) {
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
             centerHeading={
-              getBundleId() == appIds.sxm2go ? strings.JOIN : strings.LINKS
+              getBundleId() == appIds.sxm2go ? strings.JOIN : getBundleId() == appIds.masa ? "More Information" : strings.LINKS
             }
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
