@@ -574,6 +574,7 @@ export default function Home({ route, navigation }) {
         name: item?.name,
         isVendorList: true,
         fetchOffers: true,
+        screenName: 'vendor'
       })();
     }
   };

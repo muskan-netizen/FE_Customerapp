@@ -95,12 +95,13 @@ export default function TabRoutes(props) {
     switch (appStyle?.tabBarLayout) {
       case 5:
         return focused
-          ? imagePath.homeActive
-          : imagePath.homeInActive;
-      case 4:
-        return focused
           ? imagePath.homeRedActive
           : imagePath.homeRedInActive;
+      case 4:
+        return focused
+          ? imagePath.homeActive
+          : imagePath.homeInActive;
+
       case 1:
         return focused
           ? imagePath.ic_home2NewTab
@@ -112,10 +113,11 @@ export default function TabRoutes(props) {
     }
   }
 
+
   const getMyOrderIcons = (focused) => {
     switch (appStyle?.tabBarLayout) {
       case 5:
-        return imagePath.myOrder2;
+        return focused ? imagePath.ordersRedActive : imagePath.myOrder2;
       case 4:
         return imagePath.myOrder2;
 
@@ -130,12 +132,12 @@ export default function TabRoutes(props) {
     switch (appStyle?.tabBarLayout) {
       case 5:
         return focused
-          ? imagePath.profileActive
-          : imagePath.profileInActive;
-      case 4:
-        return focused
           ? imagePath.accountRedActive
           : imagePath.accountRedInActive;
+      case 4:
+        return focused
+          ? imagePath.profileActive
+          : imagePath.profileInActive;
       case 1:
         return focused
           ? imagePath.ic_account2NewTab
@@ -160,12 +162,12 @@ export default function TabRoutes(props) {
     switch (appStyle?.tabBarLayout) {
       case 5:
         return focused
-          ? imagePath.icCelebActive1
-          : imagePath.icCelebInActive1;
+          ? imagePath.icCelebActive
+          : imagePath.icCelebInActive;
       case 4:
         return focused
-          ? imagePath.celebActive
-          : imagePath.celebInActive
+          ? imagePath.icCelebActive1
+          : imagePath.icCelebInActive1;
       case 1:
         return focused
           ? imagePath.icCelebActive1
@@ -198,8 +200,31 @@ export default function TabRoutes(props) {
     }
   }
 
+  const getCartIcons = (focused) => {
+
+    switch (appStyle?.tabBarLayout) {
+
+      case 5:
+        return focused
+          ? imagePath.cartRedActive
+          : imagePath.cartRedInActive
+      case 4:
+        return focused
+          ? imagePath.ordersActive
+          : imagePath.ordersInActive
+      case 1:
+        return focused
+          ? imagePath.ic_cart2NewTab
+          : imagePath.ic_cart2NewTab
+      default:
+        return focused
+          ? imagePath.cartActive
+          : imagePath.cartInActive
+    }
+  }
+
   const getTintColor = (focused = false, tintColor) => {
-    return appStyle?.tabBarLayout === 1 ? focused ? colors.white : colors.whiteOpacity77 : tintColor
+    return appStyle?.tabBarLayout === 1 ? focused ? colors.white : colors.whiteOpacity77 : appStyle?.tabBarLayout === 4 ? null : tintColor
   }
 
 
@@ -334,25 +359,11 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={[
-                  { tintColor: appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
-                  appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
+                  { tintColor: appStyle?.tabBarLayout === 4 ? null : appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
+                  { height: 20, width: 20 },
                 ]}
                 source={
-                  appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.ordersActive
-                      : imagePath.ordersInActive
-                    : appStyle?.tabBarLayout === 5
-                      ? focused
-                        ? imagePath.cartRedActive
-                        : imagePath.cartRedInActive
-                      : appStyle?.tabBarLayout === 1
-                        ? focused
-                          ? imagePath.ic_cart2NewTab
-                          : imagePath.ic_cart2NewTab :
-                        focused
-                          ? imagePath.cartActive
-                          : imagePath.cartInActive
+                  getCartIcons(focused)
                 }
               />
             </View>
@@ -362,23 +373,24 @@ export default function TabRoutes(props) {
         })}
       />
 
-
-      {DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go && (
-        <Tab.Screen
-          component={MyOrdersStack}
-          name={navigationStrings.MYORDERSSTACK}
-          options={() => ({
-            tabBarLabel: strings.ORDERS,
-            tabBarIcon: ({ focused, tintColor }) => (
-              <FastImage
-                style={styles.iconStyle}
-                tintColor={getTintColor(focused, tintColor)}
-                source={getMyOrderIcons(focused)}
-              />
-            ),
-          })}
-        />
-      )}
+      {
+        // DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go && DeviceInfo.getBundleId() == appIds.stabex && DeviceInfo.getBundleId() == appIds.stafood && //stabex & stafood added by Paridhi Gupta
+        appStyle?.tabBarLayout === 5 && (
+          <Tab.Screen
+            component={MyOrdersStack}
+            name={navigationStrings.MYORDERSSTACK}
+            options={() => ({
+              tabBarLabel: strings.ORDERS,
+              tabBarIcon: ({ focused, tintColor }) => (
+                <FastImage
+                  style={styles.iconStyle}
+                  tintColor={getTintColor(focused, tintColor)}
+                  source={getMyOrderIcons(focused)}
+                />
+              ),
+            })}
+          />
+        )}
 
       {brandTab}
       {celebTab}

@@ -62,7 +62,6 @@ export default function () {
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
   const { lastBidInfo } = useSelector((state) => state?.home);
 
-  const businessType = appStyle?.homePageLayout;
 
   const rendervendorScreen = () => {
     switch (appStyle?.homePageLayout) {
@@ -128,6 +127,18 @@ export default function () {
     }
   };
 
+  const getHomeScreen = (homeScreen) => {
+    switch (appStyle?.homePageLayout) {
+      case 4:
+        return TaxiHomeScreen;
+      case 8:
+        return HomeV2Api;
+      case 10:
+        return HomeV2Api;
+      default:
+        return Home;
+    }
+  }
 
   return (
     <Stack.Navigator
@@ -142,15 +153,11 @@ export default function () {
       />}
       <Stack.Screen
         name={
-          businessType === 4
+          appStyle?.homePageLayout === 4
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
-        component={businessType === 4
-          ? TaxiHomeScreen
-          : businessType === 8
-            ? HomeV2Api
-            : Home}
+        component={getHomeScreen()}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
