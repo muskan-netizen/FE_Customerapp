@@ -51,12 +51,6 @@ const UserDetail = ({
   const fontFamily = appStyle?.fontSizeData;
 
   const userData = useSelector((state) => state?.auth?.userData);
-console.log(data?.vendor?.dial_code,data?.vendor?.phone_no,  "data>>>>>>>>>>>>>>>>>>>>>>>");
-  // const dialCall = (number, type = "phone") => {
-  //   type === "phone"
-  //     ? Linking.openURL(`tel:${number}`)
-  //     : Linking.openURL(`sms:${number}`);
-  // };
 
   const onWhatsapp = async () => {
     const vendorPhoneNumber = data?.vendor?.phone_no.replace(/\s/g, "") || data?.order?.phone_number.replace(/\s/g, "")
@@ -259,7 +253,6 @@ console.log(data?.vendor?.dial_code,data?.vendor?.phone_no,  "data>>>>>>>>>>>>>>
               <TouchableOpacity
                 onPress={() =>
                   dialCall(
-                    // `+${orderInfo?.user?.dial_code}${data?.vendor?.phone_no}`
                     data?.order?.phone_number || data?.vendor?.phone_no,
                     "text"
                   )

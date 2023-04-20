@@ -83,23 +83,7 @@ const RoyoOrderDetail = (props) => {
     isLoading
   } = state;
 
-  const fun = async () => {
-    MyShare.shareSingle({
-      title: 'Share via',
-      message: 'some message',
-      url: 'some share url',
-      social: MyShare.Social.WHATSAPP,
-      whatsAppNumber: `${orderInfo?.user?.dial_code}${orderInfo?.user?.phone_number}`,
-    })
-      .then((res) => {
-        console.log(res, 'share response');
-        alert('successfully shared');
-      })
-      .catch((err) => {
-        err && console.log(err, 'share response');
-        alert('sorry for inconvenience , we are unable to share');
-      });
-  };
+
    const onWhatsapp = async () => {
     const vendorPhoneNumber = orderInfo?.user?.phone_number.replace(/\s/g, "")
     let url = `whatsapp://send?phone=${orderInfo?.user?.dial_code}${vendorPhoneNumber}`;
@@ -687,7 +671,6 @@ const RoyoOrderDetail = (props) => {
              
              dialCall(
             `+${orderInfo?.user?.dial_code}${orderInfo?.user?.phone_number}`
-               // (type = "phone")
              )
            }>
                 <Image source={imagePath.callRoyo} />
