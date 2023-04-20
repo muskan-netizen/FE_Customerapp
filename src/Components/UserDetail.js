@@ -27,6 +27,7 @@ import { getBundleId } from "react-native-device-info";
 import Share from "react-native-share";
 import StarRating from "react-native-star-rating";
 import strings from "../constants/lang";
+import { dialCall } from "../utils/openNativeApp";
 
 // create a component
 const UserDetail = ({
@@ -50,12 +51,12 @@ const UserDetail = ({
   const fontFamily = appStyle?.fontSizeData;
 
   const userData = useSelector((state) => state?.auth?.userData);
-
-  const dialCall = (number, type = "phone") => {
-    type === "phone"
-      ? Linking.openURL(`tel:${number}`)
-      : Linking.openURL(`sms:${number}`);
-  };
+console.log(data?.vendor?.dial_code,data?.vendor?.phone_no,  "data>>>>>>>>>>>>>>>>>>>>>>>");
+  // const dialCall = (number, type = "phone") => {
+  //   type === "phone"
+  //     ? Linking.openURL(`tel:${number}`)
+  //     : Linking.openURL(`sms:${number}`);
+  // };
 
   const onWhatsapp = async () => {
     const vendorPhoneNumber = data?.vendor?.phone_no.replace(/\s/g, "") || data?.order?.phone_number.replace(/\s/g, "")
@@ -236,12 +237,13 @@ const UserDetail = ({
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() =>
-                  dialCall(
-                    data?.order?.phone_number || data?.vendor?.phone_no,
-                    (type = "phone")
-                  )
-                }
+              onPress={() =>
+             
+                dialCall(
+               `+${data?.vendor?.dial_code}${data?.vendor?.phone_no}`
+                  // (type = "phone")
+                )
+              }
               >
                 <Image
                   source={imagePath.call2}
@@ -257,6 +259,7 @@ const UserDetail = ({
               <TouchableOpacity
                 onPress={() =>
                   dialCall(
+                    // `+${orderInfo?.user?.dial_code}${data?.vendor?.phone_no}`
                     data?.order?.phone_number || data?.vendor?.phone_no,
                     "text"
                   )
