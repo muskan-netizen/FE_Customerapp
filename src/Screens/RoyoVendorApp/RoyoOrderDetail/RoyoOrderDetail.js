@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
+  Linking,
   ScrollView,
   Share,
   StyleSheet,
@@ -82,22 +83,30 @@ const RoyoOrderDetail = (props) => {
     isLoading
   } = state;
 
-  const fun = async () => {
-    MyShare.shareSingle({
-      title: 'Share via',
-      message: 'some message',
-      url: 'some share url',
-      social: MyShare.Social.WHATSAPP,
-      whatsAppNumber: '917543875613',
-    })
-      .then((res) => {
-        console.log(res, 'share response');
-        alert('successfully shared');
+
+   const onWhatsapp = async () => {
+    const vendorPhoneNumber = orderInfo?.user?.phone_number.replace(/\s/g, "")
+    let url = `whatsapp://send?phone=${orderInfo?.user?.dial_code}${vendorPhoneNumber}`;
+    Linking.openURL(url)
+      .then((data) => {
+        console.log("WhatsApp Opened successfully " + data); //<---Success
       })
-      .catch((err) => {
-        err && console.log(err, 'share response');
-        alert('sorry for inconvenience , we are unable to share');
+      .catch(() => {
+        alert("Make sure WhatsApp installed on your device"); //<---Error
       });
+    if (link) {
+      Linking.canOpenURL(link)
+        .then((supported) => {
+          if (!supported) {
+            Alert.alert("Please install Whatsapp to send direct message.");
+          } else {
+            return Linking.openURL(link);
+          }
+        })
+        .catch((err) => console.error("An error occurred", err));
+    } else {
+      console.log("sendWhatsAppMessage -----> ", "message link is undefined");
+    }
   };
   useEffect(() => {
     _getOrderDetailScreen();
@@ -658,10 +667,15 @@ const RoyoOrderDetail = (props) => {
               {strings.DELIEVERY_ADDRESS}
             </Text>
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity onPress={() => dialCall(1234567890)}>
+              <TouchableOpacity onPress={() =>
+             
+             dialCall(
+            `+${orderInfo?.user?.dial_code}${orderInfo?.user?.phone_number}`
+             )
+           }>
                 <Image source={imagePath.callRoyo} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={fun}>
+              <TouchableOpacity onPress={onWhatsapp}>
                 <Image
                   style={{
                     marginLeft: moderateScaleVertical(10),

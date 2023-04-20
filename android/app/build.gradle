@@ -216,7 +216,6 @@ android {
     }
 
     flavorDimensions "appType"
-
       productFlavors {
             grub{
                 dimension "appType"
