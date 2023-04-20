@@ -218,7 +218,7 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-                      grub{
+            grub{
                 dimension "appType"
                 versionCode 1
                 versionName "1.0"
