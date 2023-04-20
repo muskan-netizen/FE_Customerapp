@@ -218,25 +218,24 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-   masa{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                // applicationIdSuffix ".hmoobhhub"
-                applicationId 'com.app.masa'
-                resValue "string", "app_name", "Masa"
-                resValue "string", "host_name", ""
-            }
-             meltivers{
+   bauBau{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.meltiverse.user'
-            resValue "string", "app_name", "Meltivers"
+            applicationId 'com.baubau.order'
+            resValue "string", "app_name", "BauBau"
+            resValue "string", "host_name", ""
+            }
+           greenhippo{ 
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.greenhippo.orders'
+            resValue "string", "app_name", "GreenHippo" 
             resValue "string", "host_name", ""
             }
 
@@ -7798,7 +7797,7 @@ android {
     //         versionName "1.0"
     //         minSdkVersion rootProject.ext.minSdkVersion
     //         targetSdkVersion rootProject.ext.targetSdkVersion
-    //         applicationId 'com.greenhippo.royoorders'
+    //         applicationId 'com.greenhippo.orders'
     //         resValue "string", "app_name", "GreenHippo" 
     //         resValue "string", "host_name", ""
     //         }
