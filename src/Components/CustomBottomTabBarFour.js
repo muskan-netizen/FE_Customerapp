@@ -1,15 +1,15 @@
-import React, {Fragment} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
+import React, { Fragment } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
 
 const CustomBottomTabBarFour = ({
   state,
@@ -20,7 +20,7 @@ const CustomBottomTabBarFour = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -28,18 +28,18 @@ const CustomBottomTabBarFour = ({
 
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesData({fontFamily});
+  const styles = stylesData({ fontFamily });
   return (
     <View style={[styles.tabBarStyle]}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-            ? options.title
-            : route.name;
+              ? options.title
+              : route.name;
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
@@ -75,8 +75,8 @@ const CustomBottomTabBarFour = ({
                 tintColor: isDarkMode
                   ? MyDarkTheme.colors.text
                   : isFocused
-                  ? themeColors.primary_color
-                  : colors.black,
+                    ? themeColors.primary_color
+                    : colors.black,
               })}
               <Text
                 style={{
@@ -84,8 +84,7 @@ const CustomBottomTabBarFour = ({
                   ...styles.labelStyle,
                   color: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : isFocused
-                    ? themeColors.primary_color
+
                     : colors.black,
                   // color: isFocused ? themeColors.primary_color : colors.black,
                   opacity: isFocused ? 1 : 0.6,
@@ -100,9 +99,9 @@ const CustomBottomTabBarFour = ({
   );
 };
 
-export function stylesData({fontFamily}) {
+export function stylesData({ fontFamily }) {
   const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors} = currentTheme;
+  const { themeColors } = currentTheme;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
@@ -121,7 +120,7 @@ export function stylesData({fontFamily}) {
       bottom: moderateScaleVertical(10),
       borderRadius: moderateScale(35.5),
       shadowColor: colors.black,
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,
