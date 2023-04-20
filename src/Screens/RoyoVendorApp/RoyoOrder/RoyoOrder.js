@@ -13,6 +13,7 @@ import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import MultiScreen from '../../../Components/MultiScreen';
+import * as RNLocalize from 'react-native-localize';
 import OrderCard from '../../../Components/OrderCard';
 import SelectVendorListModal from '../../../Components/SelectVendorListModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -141,8 +142,9 @@ const RoyoOrder = (props) => {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,   
       language: languages?.primary_language?.id,
+      timezone: RNLocalize.getTimeZone(),
     }
-    console.log("sending query", query)
+    console.log("sending query", query,headers)
     try {
       const res = await actions.allVendorOrders(query, headers)
       console.log("all vendor orders", res.data)

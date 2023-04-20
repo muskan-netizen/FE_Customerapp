@@ -639,7 +639,7 @@ const appIds = {
   }),
   shariff: Platform.select({
     ios: 'com.codebrew.shariff',
-    android: 'com.shariff',
+    android: 'com.shariffOrder.royoorder',
   }),
   gajamove: Platform.select({
     ios: 'com.codebrew.gajamove',
@@ -1254,7 +1254,7 @@ const appIds = {
     android: 'com.app.gomeat',
   }),
   shopcentral: Platform.select({
-    ios: 'com.shopcentral',
+    ios: 'com.shopcentralOrder.royoorderapp',
     android: 'com.shopcentral',
   }),
   skidoo: Platform.select({
@@ -1727,7 +1727,7 @@ const appIds = {
     android: 'com.curblerLLC',
   }),
   cartnar: Platform.select({
-    ios: 'com.cartnar',
+    ios: 'com.shoparixOrder.royoorder',
     android: 'com.cartnar',
   }),
   uven: Platform.select({
@@ -1844,7 +1844,7 @@ const appIds = {
     android: 'com.medicab',
   }),
   fazeiTeam: Platform.select({
-    ios: 'com.fazeiTeam',
+    ios: 'com.fazei.ordersapp',
     android: 'com.fazeiTeam',
   }),
   weTogether: Platform.select({
@@ -1893,7 +1893,7 @@ const appIds = {
   }),
   busTaMove: Platform.select({
     ios: 'com.bustamove',
-    android: 'com.bustamove',
+    android: 'com.bustamove.order',
   }),
   atasktt: Platform.select({
     ios: 'com.atasktt',

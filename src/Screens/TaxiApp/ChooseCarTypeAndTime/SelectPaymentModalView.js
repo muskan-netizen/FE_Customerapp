@@ -91,7 +91,7 @@ function SelectPaymentModalView({
       () => {
         navigation.navigate(screenName, { data });
       };
-
+console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOption123");
   //Get list of all offers
   const _getAllOffers = (vendor) => {
     moveToNewScreen(navigationStrings.OFFERS2, {

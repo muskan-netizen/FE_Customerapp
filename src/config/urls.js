@@ -5,6 +5,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 
+// export const API_BASE_URL = 'https://sta.ug/api/v1';
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
 // export const API_BASE_URL='https://ngoalapp.com/api/v1'
 // export const API_BASE_URL = 'https://mygreenhippo.com/api/v1'

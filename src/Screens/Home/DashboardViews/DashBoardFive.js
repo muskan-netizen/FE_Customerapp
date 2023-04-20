@@ -1,6 +1,6 @@
 import { useScrollToTop } from '@react-navigation/native';
 import _, { isEmpty } from 'lodash';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -45,6 +45,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  sliderWidth,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
@@ -56,6 +57,8 @@ import {
 } from '../../../utils/helperFunctions';
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
+import BannerHome from '../../../Components/BannerHome';
+import BannerHome2 from '../../../Components/BannerHome2';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -79,7 +82,7 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
-
+  const {bannerRef} = useRef();
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -443,7 +446,22 @@ export default function DashBoardFive({
             />
           ) : (
             <View style={{ marginTop: moderateScaleVertical(4) }}>
-              <FlatList
+              <BannerHome2
+            bannerRef={bannerRef}
+            slider1ActiveSlide={slider1ActiveSlide}
+            bannerData={appMainData?.mobile_banners || appData?.mobile_banners}
+            sliderWidth={width}
+            itemWidth={moderateScale(320)}
+            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
+            onPress={(item) => bannerPress(item)}
+            isDarkMode={isDarkMode}
+            isPagination
+            imagestyle={{
+              marginRight: moderateScale(0),
+              borderRadius: moderateScale(10),
+            }}
+          />
+              {/* <FlatList
                 horizontal
                 data={appMainData?.mobile_banners || appData?.mobile_banners}
                 keyExtractor={(item) => item?.id?.toString()}
@@ -458,7 +476,7 @@ export default function DashBoardFive({
                 ListFooterComponent={() => (
                   <View style={{ marginRight: moderateScale(16) }} />
                 )}
-              />
+              /> */}
             </View>
           )}
         </View>
