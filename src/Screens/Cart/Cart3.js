@@ -97,7 +97,6 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 import { enableFreeze } from "react-native-screens";
 import { CouponDiscount, DeliverableSection, PromoCodeAvailableSection, SwipeableSection } from './parts';
 import Footer from './parts/Footer';
-import { log } from 'console';
 enableFreeze(true);
 
 
@@ -173,10 +172,8 @@ function Cart({ navigation, route }) {
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
   const [paymentModal, setPaymentModal] = useState(false)
-  const [selectedSlotDateTime, setSelectedSlotDateTime] = useState(null)
 
 
-  const [productId, setProductId] = useState()
   const [state, setState] = useState({
     showTaxFeeArea: false,
     isGiftBoxSelected: false,
@@ -503,18 +500,7 @@ function Cart({ navigation, route }) {
             const timeSlot = `${delaySlot[2]}-${mont > 9 ? '' : '0'}${mont}-${delaySlot[0]}`
             setMinimumDelayVendorDate(timeSlot);
           }
-
-          console.log("res.data.products", res.data.products)
-
-          let modifyProducts = res.data.products.map((val, i) => {
-            let newItem = val.vendor_products.map((item, index) => {
-              return { ...item, scheduleDate: null }
-            })
-            return { ...val, vendor_products: newItem }
-          })
-
-          console.log("modifyProductsmodifyProductsmodifyProducts", modifyProducts)
-          setCartItems(modifyProducts);
+          setCartItems(res.data.products);
           let currentDate = moment(new Date()).format('YYYY-MM-DD');
           // console.log(res?.data?.scheduled_date_time.slice(0, -6), "res?.data?.scheduled_date_time")
           let getApiScheduledDate =
@@ -564,7 +550,7 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data_++++++++', cartData);
+  console.log('cart data_++++++++', cartData,businessType,dineInType);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -636,7 +622,7 @@ function Cart({ navigation, route }) {
       .then((res) => {
         console.log('cart res remove', res);
         actions.reloadData(!reloadData);
-        if (!!res?.data && !isEmpty(res?.data) && !!res?.data?.products) {
+        if (!!res?.data && !!res?.data?.products) {
           actions.cartItemQty(res);
           setCartItems(res.data.products || []);
           setCartData(res.data);
@@ -1230,9 +1216,6 @@ function Cart({ navigation, route }) {
     data['specific_instructions'] = instruction;
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
-    }
-    if (!isEmpty(selectedSlotDateTime)) {
-      data['timeSlot'] = selectedSlotDateTime || ''
     }
     if (!!selectedTipAmount) {
       data['tip'] = selectedTipAmount || '';
@@ -2026,34 +2009,10 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  const clearSceduleDate = async (itm) => {
-
-    if (businessType == 'super_app') {
-      let cloneCartItem = [...cartItems] //we are adding here schedule date time
-      let removeDateTime = cloneCartItem.map((val, i) => {
-        let newItem = val.vendor_products.map((item, index) => {
-          if (item?.id == itm?.id) {
-            return { ...item, scheduleDate: null }
-          }
-          return item
-        })
-        return { ...val, vendor_products: newItem }
-      })
-
-      setCartItems(removeDateTime);
-      // let cloneArr = [...selectedSlotDateTime]
-      // let foundIndex = cloneArr.findIndex(i => i.id == item?.id)
-      // if (foundIndex >= 0) {
-      //   // cloneArr[foundIndex].pop()
-      //   cloneArr.splice(foundIndex, 1);
-      //   setSelectedSlotDateTime(cloneArr);
-      // }
-    }
-    else {
-      setScheduleType('now');
-      setLocaleSheduledOrderDate(null);
-      setSheduledorderdate(null);
-    }
+  const clearSceduleDate = async () => {
+    setScheduleType('now');
+    setLocaleSheduledOrderDate(null);
+    setSheduledorderdate(null);
   };
 
   useEffect(() => {
@@ -2089,8 +2048,8 @@ function Cart({ navigation, route }) {
       });
     }
   };
+
   const selectOrderDate = () => {
-    console.log(businessType, selectedDateFromCalendar, selectedTimeSlots, "businessTypebusinessTypebusinessTypebusinessTypebusinessType");
     if (businessType == 'laundry') {
       if (laundrySelectedPickupDate > laundrySelectedDropOffDate) {
         alert('Please select valid dates.');
@@ -2121,24 +2080,6 @@ function Cart({ navigation, route }) {
         setDateAndTimeSchedule();
         return;
       }
-    }
-    else if (businessType == 'super_app') {
- 
-      let cloneCartItem = [...cartItems] //we are adding here schedule date time
-      let addDateTime = cloneCartItem.map((val, i) => {
-        let newItem = val.vendor_products.map((item, index) => {
-          if (item?.id == productId) {
-            return { ...item, scheduleDate: { date: selectedDateFromCalendar, time: selectedTimeSlots, id: productId } }
-          }
-          return item
-        })
-        return { ...val, vendor_products: newItem }
-      })
-
-      setCartItems(addDateTime);
-      onClose();
-      setDateAndTimeSchedule();
-      return;
     }
     else {
       if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
@@ -2496,10 +2437,6 @@ function Cart({ navigation, route }) {
     setPrescriptionModal(true);
   };
 
-  const _selectTimefc = (item, inx) => {
-    _selectTime()
-    setProductId(item?.id)
-  }
   const _renderItem = ({ item, index }) => {
     return (
       <View>
@@ -2604,10 +2541,6 @@ function Cart({ navigation, route }) {
           {/************ start  render cart items *************/}
           <SwipeableSection
             item={item}
-            themeColors={themeColors}
-            userData={userData}
-            businessType={businessType}
-            appData={appData}
             openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
@@ -2623,12 +2556,8 @@ function Cart({ navigation, route }) {
             additional_preferences={additional_preferences}
             currencies={currencies}
             cartData={cartData}
-            _selectTime={_selectTimefc}
-            // selectedSlotDateTime={selectedSlotDateTime}
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
-            localeSheduledOrderDate={localeSheduledOrderDate}
-            clearSceduleDate={clearSceduleDate}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />

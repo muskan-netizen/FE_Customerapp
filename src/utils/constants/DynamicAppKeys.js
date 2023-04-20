@@ -1844,7 +1844,7 @@ const appIds = {
     android: 'com.medicab',
   }),
   fazeiTeam: Platform.select({
-    ios: 'com.fazeiTeam',
+    ios: 'com.fazei.ordersapp',
     android: 'com.fazeiTeam',
   }),
   weTogether: Platform.select({

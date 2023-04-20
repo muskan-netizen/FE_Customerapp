@@ -379,14 +379,7 @@ const RoyoOrderDetail = (props) => {
             })
             : null}
         </View>
-        <Text style={styles.font16Semibold}>
-          {tokenConverterPlusCurrencyNumberFormater(
-            Number(item.quantity * item.price),
-            digit_after_decimal,
-            additional_preferences,
-            currencies?.primary_currency?.symbol,
-          )}
-        </Text>
+     
       </View>
     );
   }, []);

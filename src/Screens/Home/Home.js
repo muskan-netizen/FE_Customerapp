@@ -980,6 +980,7 @@ export default function Home({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
+  console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePageLayoutappStyle?.homePageLayout");
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:

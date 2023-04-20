@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
@@ -14,6 +14,7 @@ import { getImageUrl } from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import { useDarkMode } from 'react-native-dynamic';
+import moment from 'moment';
 
 const OrderCard = (props) => {
   const {
@@ -34,11 +35,17 @@ const OrderCard = (props) => {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-
+const [localTime,setLocaleTime] = useState(null)
   const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   console.log(item,"itemm>>")
+  const date =new Date(item?.date_time)
+  var createdDateTime = moment.utc(date, 'YYYY-MM-DD HH:mm').unix()
+  var LocalTimeSelected = new Date(createdDateTime * 1000);
+  console.log(LocalTimeSelected,"createdDateTimecreatedDateTimecreatedDateTime");
+
+
 
   return (
     <View style={styles.container}>
@@ -81,7 +88,8 @@ const OrderCard = (props) => {
           <Text style={styles.font13Regular}>
             {strings.ORDER} {item?.order_number}
           </Text>
-          <Text style={styles.date}>{item?.date_time}</Text>
+          <Text style={styles.date}>{LocalTimeSelected.toString().slice(0,21)}
+            </Text>
         </View>
         <View
           style={[
