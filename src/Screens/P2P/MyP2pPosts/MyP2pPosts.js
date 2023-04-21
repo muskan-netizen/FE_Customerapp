@@ -7,34 +7,40 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import Header from '../../../Components/Header';
 import imagePath from '../../../constants/imagePath';
 import actions from '../../../redux/actions';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
 import navigationStrings from '../../../navigation/navigationStrings';
-import {debounce, isEmpty} from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import FastImage from 'react-native-fast-image';
-import {getImageUrl, showError} from '../../../utils/helperFunctions';
+import { getImageUrl, showError } from '../../../utils/helperFunctions';
 import HTMLView from 'react-native-htmlview';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import fontFamily from '../../../styles/fontFamily';
 import colors from '../../../styles/colors';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../../styles/theme';
 
-export default function MyP2pPosts({route, navigation}) {
-  const {appData, themeColors, currencies, languages} = useSelector(
+export default function MyP2pPosts({ route, navigation }) {
+  const { appData, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
-  const {userData} = useSelector((state) => state?.auth);
+  const { userData } = useSelector((state) => state?.auth);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
 
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [allPosts, setAllPosts] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [isLoading, setLoading] = useState(true);
@@ -93,7 +99,7 @@ export default function MyP2pPosts({route, navigation}) {
   console.log(userData, 'asfklfslakdjf');
 
   const renderAllPostsItem = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
         <TouchableOpacity
           activeOpacity={0.7}
@@ -108,25 +114,25 @@ export default function MyP2pPosts({route, navigation}) {
             source={
               !isEmpty(item?.media)
                 ? {
-                    uri: getImageUrl(
-                      item?.media[0].image?.path?.image_fit,
-                      item?.media[0].image?.path?.image_path,
-                      '500/500',
-                    ),
-                    priority: FastImage.priority.high,
-                    cache: FastImage.cacheControl.immutable,
-                  }
+                  uri: getImageUrl(
+                    item?.media[0].image?.path?.image_fit,
+                    item?.media[0].image?.path?.image_path,
+                    '500/500',
+                  ),
+                  priority: FastImage.priority.high,
+                  cache: FastImage.cacheControl.immutable,
+                }
                 : imagePath.icDefaultImg
             }
           />
 
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               {/* <View style={{flex: 1, }}> */}
               <Text
                 numberOfLines={1}
-                style={[styles.font16medium, {textTransform: 'capitalize'}]}>
+                style={[styles.font16medium, { textTransform: 'capitalize' }]}>
                 {item.translation[0]?.title}
               </Text>
 
@@ -138,7 +144,7 @@ export default function MyP2pPosts({route, navigation}) {
               </Text>
             ) : null}
 
-            <View style={{marginTop: 10}}>
+            <View style={{ marginTop: 10 }}>
               <HTMLView
                 value={
                   item?.translation[0]?.body_html
@@ -170,8 +176,14 @@ export default function MyP2pPosts({route, navigation}) {
   );
 
   return (
-    <WrapperContainer isLoading={isLoading}>
-      <Header centerTitle={'My Posts'} leftIcon={imagePath.back1} />
+    <WrapperContainer isLoading={isLoading} bgColor={
+      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+    } >
+      <Header centerTitle={'My Posts'} leftIcon={imagePath.backArrow} headerStyle={
+        isDarkMode
+          ? { backgroundColor: MyDarkTheme.colors.background }
+          : { backgroundColor: colors.white }
+      } />
       <View
         style={{
           flex: 1,

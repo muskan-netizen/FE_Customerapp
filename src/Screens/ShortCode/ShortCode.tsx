@@ -37,7 +37,7 @@ export default function ShortCode() {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
-    const appCode = 'e5e48e';
+    const appCode = '04468e';
  
 
     let header = {};

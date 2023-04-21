@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { MyDarkTheme } from '../styles/theme';
+import { moderateScale } from '../styles/responsiveSize';
 
 
 const CustomBottomTabBar = ({
@@ -103,6 +104,7 @@ const CustomBottomTabBar = ({
                       ? themeColors.secondary_color
                       : colors.whiteOpacity85,
                     opacity: isFocused ? 1 : 0.6,
+                    marginBottom: moderateScale(6)
                   }}>
                   {label}
                 </Text>

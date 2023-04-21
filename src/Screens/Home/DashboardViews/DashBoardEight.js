@@ -104,7 +104,7 @@ export default function DashBoardEight({
   const { slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore, loading } =
     state;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({ themeColors, fontFamily,isDarkMode });
 
   //update state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));

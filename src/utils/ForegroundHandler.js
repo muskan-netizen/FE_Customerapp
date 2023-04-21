@@ -41,7 +41,7 @@ const ForegroundHandler = (props) => {
         name: 'Default Channel',
         vibration: true,
         lightColor: AndroidColor.YELLOW,
-        sound: 'customnotii',
+        sound: notification?.android?.sound ||'customnotii',
         importance: AndroidImportance.HIGH,
 
       });

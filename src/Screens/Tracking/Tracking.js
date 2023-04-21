@@ -13,6 +13,8 @@ import { moderateScaleVertical } from "../../styles/responsiveSize";
 import stylesFun from "./styles";
 import commonStylesFun from "../../styles/commonStyles";
 import actions from "../../redux/actions";
+import { useDarkMode } from "react-native-dynamic";
+import { MyDarkTheme } from "../../styles/theme";
 export default function Tracking({ navigation }) {
   const currentTheme = useSelector((state) => state.appTheme);
   const [state, setState] = useState({
@@ -21,13 +23,17 @@ export default function Tracking({ navigation }) {
   const { trackId } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const { themeColors, themeLayouts } = currentTheme;
+  const { themeColors, themeLayouts, } = currentTheme;
   const { appStyle } = useSelector((state) => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({ fontFamily });
   const styles = stylesFun({ fontFamily });
-
+  const {themeColor, themeToggle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // on change text
   const _onChangeText = (key) => (val) => {
     updateState({ [key]: val });
@@ -46,12 +52,12 @@ export default function Tracking({ navigation }) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}
     >
       <Header
         centerTitle={strings.TRACKING}
-        headerStyle={{ backgroundColor: colors.backgroundGrey }}
+        headerStyle={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey }}
        
       />
 

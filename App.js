@@ -279,6 +279,7 @@ const App = () => {
       const getLanguage = await getItem('language');
 
       if (!!getLanguage) {
+        console.log(getLanguage,"getLanguagegetLanguagegetLanguagegetLanguage");
         strings.setLanguage(getLanguage);
       }
 

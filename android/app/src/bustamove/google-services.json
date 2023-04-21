@@ -1,58 +1,41 @@
 {
   "project_info": {
-    "project_number": "1056329031809",
-    "project_id": "bustamove-2b7b7",
-    "storage_bucket": "bustamove-2b7b7.appspot.com"
+    "project_number": "503125311921",
+    "project_id": "bustamove-b6657",
+    "storage_bucket": "bustamove-b6657.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1056329031809:android:d90697b84812e00f9a2d80",
+        "mobilesdk_app_id": "1:503125311921:android:1745c394ad5318cd32fd90",
         "android_client_info": {
-          "package_name": "com.bustamove"
+          "package_name": "com.bustamove.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1056329031809-37hfo4us4qgo4lon47uianr0h7hf3tfg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bustamove",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "1056329031809-74ch552qgravbh0qj6phkn1190kdv6nr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bustamove",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "1056329031809-alsohth425jh17sec0a8vrifgldmmmtg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bustamove",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "1056329031809-uq3preh3abemcf0f60nphfohn3qmg938.apps.googleusercontent.com",
+          "client_id": "503125311921-e4ssj2e4ivu2ghpuoaf1np60vs0o1enh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCzQTiYBhtxNGYg-iWtasRXfOj7i0_zI1M"
+          "current_key": "AIzaSyAE90_cLF9DAfSQvHwZhvj_744JYA8TzzI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1056329031809-uq3preh3abemcf0f60nphfohn3qmg938.apps.googleusercontent.com",
+              "client_id": "503125311921-e4ssj2e4ivu2ghpuoaf1np60vs0o1enh.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "503125311921-k9i9oprj6ra92gtpaecqd2k8h10peokb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bustamove.order"
+              }
             }
           ]
         }

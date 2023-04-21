@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>153706150562-3qlg970kjn4mekbu9ls75vh48ag7eqdu.apps.googleusercontent.com</string>
+	<string>286844476920-q4j5n6grr8qu9aplmfb0danfc451m4ak.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.153706150562-3qlg970kjn4mekbu9ls75vh48ag7eqdu</string>
+	<string>com.googleusercontent.apps.286844476920-q4j5n6grr8qu9aplmfb0danfc451m4ak</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>153706150562-d1tl3rkfdhbeslie9horj1drm1juan6i.apps.googleusercontent.com</string>
+	<string>286844476920-2i07uimtrlufui8c4khpgf4k1vufsdug.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDKRjJcYq7hFYERGh2TqgiyrdLam7K2ztY</string>
+	<string>AIzaSyBcEXld673FNC2RIJ-MTmkEASovrUlQSkA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>153706150562</string>
+	<string>286844476920</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cartnar</string>
+	<string>com.shoparixOrder.royoorder</string>
 	<key>PROJECT_ID</key>
-	<string>cartnar-d96dd</string>
+	<string>shoparix-order</string>
 	<key>STORAGE_BUCKET</key>
-	<string>cartnar-d96dd.appspot.com</string>
+	<string>shoparix-order.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:153706150562:ios:5b68e22355beb7f951b5fb</string>
+	<string>1:286844476920:ios:aef78b3467ce48e92b0a0d</string>
 </dict>
 </plist>

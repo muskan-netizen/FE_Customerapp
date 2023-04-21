@@ -1381,7 +1381,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
             customMapStyle={
               mapStyleGrey
             }
-            style={{ height: height / 1.25 }}
+            style={{ height: height / 4 }}
             region={region}
             initialRegion={region}
             tracksViewChanges={false}>
@@ -1482,7 +1482,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         <BottomSheet
           ref={bottomSheetRef}
           index={1}
-          snapPoints={[height / 2.2, height / 1.25]}
+          snapPoints={[height / 1.25, height / 1.25]}
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
           animateOnMount={true}

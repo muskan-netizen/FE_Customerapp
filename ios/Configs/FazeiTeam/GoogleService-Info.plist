@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>641372624577-ahr9m6h6ltlrr4at6rr0l8teun150qgd.apps.googleusercontent.com</string>
+	<string>200228620242-k1jaecm465bcg3j9okql3li6g6dfgkea.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.641372624577-ahr9m6h6ltlrr4at6rr0l8teun150qgd</string>
+	<string>com.googleusercontent.apps.200228620242-k1jaecm465bcg3j9okql3li6g6dfgkea</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>641372624577-3cedrus43nffsglmha9ohptjtbt19qn8.apps.googleusercontent.com</string>
+	<string>200228620242-4p0qmjnooklakqrirpm5io0rt96o2p6j.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCBr6W0mIgsMQLJF2IJYn29eVWmrHJqRY0</string>
+	<string>AIzaSyD-gEOUT6C8SYvFmmhAXRE3dFNy_Wb9-Lc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>641372624577</string>
+	<string>200228620242</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.fazeiTeam</string>
+	<string>com.fazei.ordersapp</string>
 	<key>PROJECT_ID</key>
-	<string>fazeiteam</string>
+	<string>fazei-orders</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fazeiteam.appspot.com</string>
+	<string>fazei-orders.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:641372624577:ios:962b391988b10aaf1a2640</string>
+	<string>1:200228620242:ios:6a53fcea1c74573976ea0b</string>
 </dict>
 </plist>

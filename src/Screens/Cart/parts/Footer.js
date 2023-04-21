@@ -1331,8 +1331,8 @@ function Footer(props) {
             {!!(
               userData?.auth_token &&
               !appData?.profile?.preferences?.off_scheduling_at_cart &&
-              businessType !== 'laundry'
-            ) && (
+              businessType !== 'laundry' 
+            )  && (
                 <ButtonComponent
                   onPress={
                     !!cartData?.editing_order?.id
