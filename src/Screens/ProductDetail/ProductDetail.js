@@ -70,8 +70,10 @@ import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import * as RNLocalize from 'react-native-localize';
 import Reccuring from '../../Components/Reccuring';
+import * as Animatable from 'react-native-animatable';
 
 import { enableFreeze } from "react-native-screens";
+import ProductsComp3 from '../../Components/ProductsComp3';
 enableFreeze(true);
 
 
@@ -133,6 +135,11 @@ export default function ProductDetail({ route, navigation }) {
     productAttributes: [],
     offersList: [],
     isOffersModalVisible: false,
+    suggestedBrandProducts: [],
+    suggestedCategoryProducts: [],
+    suggestedVendorProducts: [],
+    upsellProducts: [],
+    crossProducts: [],
   });
   const [pinCode, setPinCode] = useState('');
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
@@ -205,6 +212,11 @@ export default function ProductDetail({ route, navigation }) {
     productAttributes,
     offersList,
     isOffersModalVisible,
+    suggestedBrandProducts,
+    suggestedCategoryProducts,
+    suggestedVendorProducts,
+    upsellProducts,
+    crossProducts,
   } = state;
 
   const [variantState, setVariantState] = useState({
@@ -256,6 +268,7 @@ export default function ProductDetail({ route, navigation }) {
   }
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -333,6 +346,8 @@ export default function ProductDetail({ route, navigation }) {
         // )
         // : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
         setProductPreferences(res?.data?.prefference)
+
+
         updateState({
           productAttributes: res?.data?.product_attribute,
           offersList: res?.data?.coupon_list,
@@ -361,6 +376,16 @@ export default function ProductDetail({ route, navigation }) {
           ),
           startDateRental: new Date(),
         });
+
+        if (appStyle?.homePageLayout === 10) {
+          updateState({
+            suggestedBrandProducts: res.data.relatedProducts,
+            suggestedCategoryProducts: res?.data?.suggested_category_products || [],
+            suggestedVendorProducts: res?.data?.suggested_vendor_products || [],
+            upsellProducts: res?.data?.upSellProducts || [],
+            crossProducts: res?.data?.crossProducts || [],
+          })
+        }
         if (
           res.data.products.variant_set.length &&
           variantSet &&
@@ -1228,31 +1253,21 @@ export default function ProductDetail({ route, navigation }) {
   const renderProduct = ({ item, index }) => {
     // item.showAddToCart = true;
     return (
-      <ProductsComp
-        item={item}
-        onPress={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
-      />
-      // <ProductCard
-      // onPress={() =>
-      //   navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
-      // }
-      //   onAddtoWishlist={() => _onAddtoWishlist(item)}
-      //   data={item}
-      //   cardStyle={{
-      //     backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
-      //     marginHorizontal: moderateScale(10),
-      //   }}
-      //   addToCart={() =>
-      //     navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
-      //   }
-      //   bottomText={strings.VIEW_DETAIL}
-      //   nameTextStyle={{
-      //     ...styles.productName,
-      //     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-      //   }}
-      // />
+
+      <Animatable.View
+        animation='slideInLeft'
+        delay={index * 100}
+        style={{ flex: 1 }}
+      >
+        <View style={{ width: width / 2 }}>
+          <ProductsComp3
+            item={item}
+            onPress={() =>
+              navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
+            }
+          />
+        </View>
+      </Animatable.View>
     );
   };
 
@@ -2794,7 +2809,7 @@ export default function ProductDetail({ route, navigation }) {
                             }}
                           >
                             <TouchableOpacity
-                            style={{flex:0.5}}
+                              style={{ flex: 0.5 }}
                               disabled={
                                 !productDetailData?.vendor?.show_slot &&
                                 !!productDetailData?.vendor?.is_vendor_closed
@@ -2806,7 +2821,7 @@ export default function ProductDetail({ route, navigation }) {
                                   height: moderateScale(15),
                                   width: moderateScale(15),
                                   tintColor: themeColors?.primary_color,
-                                  marginLeft:moderateScale(3)
+                                  marginLeft: moderateScale(3)
                                 }}
                                 resizeMode='contain'
                                 source={imagePath.icMinus2}
@@ -2948,11 +2963,70 @@ export default function ProductDetail({ route, navigation }) {
             ListFooterComponent={() => (
               <View style={{ marginLeft: moderateScale(8) }} />
             )}
-          // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
           />
         </View>
+
+        {suggestedCategoryProducts.length > 0 ? <View style={{}}>
+          <Text
+            style={{
+              ...styles.descriptiontitle,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              marginLeft: moderateScale(8),
+            }}>
+            Similar product in {productDetailNew?.category?.category_detail?.translation[0]?.name}
+          </Text>
+          <FlatList
+            data={(!state.isLoading && suggestedCategoryProducts) || []}
+            renderItem={renderProduct}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsHorizontalScrollIndicator={false}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            horizontal
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            ListHeaderComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+            ListFooterComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+          />
+        </View> : null}
+
+        {suggestedVendorProducts.length > 0 ? <View style={{ marginVertical: moderateScaleVertical(8) }}>
+
+          <Text
+            style={{
+              ...styles.descriptiontitle,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              marginLeft: moderateScale(8),
+            }}>
+            Similar product by {productDetailNew?.vendor?.name}
+          </Text>
+          <FlatList
+            data={(!state.isLoading && suggestedVendorProducts) || []}
+            renderItem={renderProduct}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsHorizontalScrollIndicator={false}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            horizontal
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            ListHeaderComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+            ListFooterComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+          />
+        </View> : null}
+
+
         <View style={{ marginBottom: moderateScale(40) }} />
       </KeyboardAwareScrollView>
+
 
       <Modal
         isVisible={isProductImageLargeViewVisible}

@@ -49,6 +49,8 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
+  Wishlist,
+  Wishlist2,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -281,6 +283,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.WISHLIST}
+        component={Wishlist2}
       />
 
     </Stack.Navigator>

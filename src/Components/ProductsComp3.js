@@ -131,7 +131,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             textAlign: 'left',
             marginLeft: moderateScale(8),
           }}>
-          {translation[0]?.title || item?.title || item?.sku}
+          {translation[0]?.title || item?.url_slug || item?.title || item?.sku}
         </Text>
         <Text
           numberOfLines={1}

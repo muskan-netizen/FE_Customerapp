@@ -23,6 +23,8 @@ import {
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
+import actions from '../../../redux/actions';
+import { hitSlopProp } from '../../../styles/commonStyles';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -57,6 +59,7 @@ export default function DashBoardHeaderEcommerce({
     (state) => state?.initBoot,
   );
   const { cartItemCount } = useSelector((state) => state?.cart || {});
+  const { userData } = useSelector((state) => state?.auth);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -64,6 +67,8 @@ export default function DashBoardHeaderEcommerce({
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
+
+
 
   const imageURI = getImageUrl(
     isDarkMode
@@ -75,6 +80,14 @@ export default function DashBoardHeaderEcommerce({
     '200/400',
   );
 
+  const onPressWishList = () => {
+    if (!!userData?.auth_token) {
+      navigation.navigate(navigationStrings.WISHLIST)
+    } else {
+      actions.setAppSessionData('on_login')
+    }
+
+  }
 
   return (
     <View
@@ -82,7 +95,7 @@ export default function DashBoardHeaderEcommerce({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
-          backgroundColor: isDarkMode
+        backgroundColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.white
       }}>
@@ -192,22 +205,25 @@ export default function DashBoardHeaderEcommerce({
 
           {/* wish list */}
           <TouchableOpacity
+            hitSlop={hitSlopProp}
             style={{ marginHorizontal: moderateScale(8) }}
-            onPress={() => navigation.navigate(navigationStrings.WISHLIST)}>
+            onPress={onPressWishList}>
             <Image
               style={{
+                height:moderateScale(20),
+                width:moderateScale(20),
                 tintColor: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.greyD,
-                height: moderateScale(20),
-                width: moderateScale(20),
+
               }}
-              source={imagePath.wishlist}
+              source={imagePath.wishlist2}
             />
           </TouchableOpacity>
+          
           {/*  */}
 
-          {/* cart button */}
+
           <TouchableOpacity
             style={{ marginHorizontal: moderateScale(8) }}
             onPress={() => navigation.navigate(navigationStrings.CART)}>
@@ -240,21 +256,30 @@ export default function DashBoardHeaderEcommerce({
             ) : null}
             <Image
               style={{
+                height:moderateScale(20),
+                width:moderateScale(20),
                 tintColor: isDarkMode
                   ? MyDarkTheme.colors.text
-                  : colors.black,
+                  : colors.greyD,
               }}
               source={imagePath.cartInActive}
             />
           </TouchableOpacity>
-          {/*  */}
 
           <TouchableOpacity
+            hitSlop={hitSlopProp}
+            style={{ marginLeft: moderateScale(8) }}
             onPress={() =>
               navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
             }>
             <Image
-
+        style={{
+          height:moderateScale(20),
+          width:moderateScale(20),
+          tintColor: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.greyD,
+        }}
               source={imagePath.icEcomSearch}
             />
           </TouchableOpacity>

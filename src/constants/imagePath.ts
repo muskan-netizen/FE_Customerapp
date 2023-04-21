@@ -607,7 +607,8 @@ export default {
   icEcomAccountInactive: require('../assets/images/Ecommerce/ic_account_02.png'),
   icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
   icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
-  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01.png'),
+  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01-1.png'),
+  wishlist2: require('../assets/images/Ecommerce/ic_wishlist_01.png'),
 
   //Video
   // flank: require('../assets/flankSplash.mp4'),

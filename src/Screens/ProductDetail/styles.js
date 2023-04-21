@@ -292,4 +292,5 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       borderBottomWidth: 0.5,
       marginVertical: moderateScaleVertical(8),
     },
+ 
   });

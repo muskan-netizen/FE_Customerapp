@@ -831,7 +831,7 @@ const DashBoardFiveV2Api = ({
           ? '800/600'
           : DeviceInfo.getBundleId() == appIds.masa
             ? '800/600'
-            : '400/600',
+            : '1200/1000',
       );
     return (
       <TouchableOpacity style={{
