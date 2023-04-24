@@ -170,4 +170,6 @@ export default {
   BIDINGDRIVERSLIST: 'BidingDriversList',
   SAVEDCARDS: 'SavedCards',
   SKIP_CASH: 'SkipCash',
+  FREELANCER_SERVICE: 'freelancerService',
+  AVAILABLE_TECHNICIANS: 'availableTechnicians',
 };

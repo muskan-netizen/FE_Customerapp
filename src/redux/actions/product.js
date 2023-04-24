@@ -43,6 +43,8 @@ import {
   GET_SLOTS_FOR_APPOINTMENT,
   CREATE_BID_REQUEST,
   GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER,
+  GET_DRIVER_SLOTS,
+  SEND_PRODUCT_BOOKING_DATA,
 } from '../../config/urls';
 import { apiGet, apiPost, setWalletData } from '../../utils/utils';
 import store from '../store';
@@ -571,11 +573,19 @@ export function checkSlotsLimit(data = {}, headers = {}) {
   return apiPost(CHECK_SLOTS_LIMIT, data, headers);
 }
 export function getAppointmentSlots(data = {}, headers = {}) {
-  return apiPost( GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER , data, headers);
+  return apiPost(GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER, data, headers);
 }
 
 // create bid request>>>>>>>>>>
 export function createBidRequest(data = {}, headers = {}) {
   return apiPost(CREATE_BID_REQUEST, data, headers);
+}
+
+export function getDriverSlots(query = '', data = {}, headers = {}) {
+  return apiGet(GET_DRIVER_SLOTS + query, data, headers);
+}
+
+export function sendProductBookingData(data = {}, headers = {}) {
+  return apiPost(SEND_PRODUCT_BOOKING_DATA, data, headers);
 }
 

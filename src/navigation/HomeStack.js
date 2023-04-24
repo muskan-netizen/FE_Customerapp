@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   Addaddress,
   Addaddress2,
+  AvailableTechnicians,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
@@ -14,6 +15,7 @@ import {
   ConfirmDetailsBuy,
   Delivery,
   Filter,
+  FreelancerService,
   Home,
   HomeV2Api,
   LaundryAvailableVendors,
@@ -281,6 +283,15 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
+      />
+      <Stack.Screen
+        name={navigationStrings.FREELANCER_SERVICE}
+        component={FreelancerService}
+      />
+      <Stack.Screen
+        name={navigationStrings.AVAILABLE_TECHNICIANS}
+        component={AvailableTechnicians}
+
       />
 
     </Stack.Navigator>

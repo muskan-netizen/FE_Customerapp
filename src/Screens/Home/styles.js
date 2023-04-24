@@ -519,7 +519,7 @@ export default ({ themeColors, fontFamily }) => {
       borderWidth: 1,
       justifyContent: "center",
       alignItems: "center"
-    }
+    },
   });
 
   return styles;

@@ -1,7 +1,7 @@
 import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import { Alert, BackHandler, Linking, Text, TouchableOpacity } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -45,6 +45,14 @@ import {
 
 import { enableFreeze } from "react-native-screens";
 import socketServices from '../../utils/scoketService';
+import BottomSheetModal from '../../Components/BottomSheetModal';
+import { height, moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import { View } from 'react-native-animatable';
+import imagePath from '../../constants/imagePath';
+import { Image } from 'react-native';
+import Modal from "react-native-modal";
+import styles from './styles';
+
 enableFreeze(true);
 
 
@@ -75,6 +83,8 @@ export default function Home({ route, navigation }) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const fontFamily = appStyle?.fontSizeData;
+
 
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
   const [isLoadingAddons, setLoadingAddons] = useState(true);
@@ -84,7 +94,8 @@ export default function Home({ route, navigation }) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [nearestLocDis, setNearestLocDis] = useState(null)
-  const [isSearchLoc, setIsSearchLoc] = useState(0)
+  const [ispriceTypeModal, setIsPriceTypeModal] = useState(false)
+  const [priceType, setPriceType] = useState('vendor')
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -195,7 +206,7 @@ export default function Home({ route, navigation }) {
     }
   }, [redirectedFrom])
 
-  console.log(appData, "appData>>>>>appData")
+
 
   useEffect(() => {
     chekLocationPermission(true)
@@ -409,6 +420,7 @@ export default function Home({ route, navigation }) {
 
   //Home data
   const homeData = (locationData = null, selectedFilter = null) => {
+
     if (!isFocused) {
       return;
     }
@@ -457,6 +469,12 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
+      if (appData?.profile?.preferences?.is_service_product_price_from_dispatch && (selectedVendorType === "on_demand" || defaultVendorType === "on_demand")) {
+        if (appData?.profile?.preferences?.is_service_price_selection) {
+          setIsPriceTypeModal(true)
+        }
+
+      }
 
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
@@ -581,7 +599,16 @@ export default function Home({ route, navigation }) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'itemmmmmmmmm')
+    if (priceType === "freelancer") {
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        fetchOffers: true,
+        id: item.id,
+        vendor: false,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
 
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
@@ -796,7 +823,6 @@ export default function Home({ route, navigation }) {
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
-
     updateState({
       selectedFilterType: {},
     });
@@ -982,7 +1008,6 @@ export default function Home({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
-  console.log(appStyle?.homePageLayout, "appStyle?.homePageLayoutappStyle?.homePageLayoutappStyle?.homePageLayout");
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -1595,17 +1620,46 @@ export default function Home({ route, navigation }) {
           onClose={_stopOrderModalClose}
         />
       )}
+      <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
+        <View style={{ height: moderateScaleVertical(140), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            fontSize: textScale(16)
+          }}>Select type of price model</Text>
+          <View style={{
+            margin: moderateScale(12)
+          }}>
+            <TouchableOpacity
+              onPress={() => setPriceType("vendor")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}>
+              <Image source={priceType == "vendor" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>From Vendor</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPriceType("freelancer")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: moderateScaleVertical(12)
+              }}>
+              <Image source={priceType == "freelancer" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>From Freelancer</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }
 
-// import { View, Text } from 'react-native'
-// import React from 'react'
-
-// export default function Home() {
-//   return (
-//     <View>
-//       <Text>Home</Text>
-//     </View>
-//   )
-// }

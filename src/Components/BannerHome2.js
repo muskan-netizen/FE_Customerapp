@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import colors from '../styles/colors';
-import {moderateScale, width} from '../styles/responsiveSize';
+import { moderateScale, width } from '../styles/responsiveSize';
 import { appIds } from '../utils/constants/DynamicAppKeys';
-import {getImageUrl} from '../utils/helperFunctions';
+import { getImageUrl } from '../utils/helperFunctions';
 
 const BannerHome2 = ({
   imagestyle = {},
@@ -15,13 +15,13 @@ const BannerHome2 = ({
   sliderWidth = width - 20,
   itemWidth = width - 20,
   resizeMode = 'cover',
-  setActiveState = () => {},
-  onPress = () => {},
+  setActiveState = () => { },
+  onPress = () => { },
   childView = null,
   carouselViewStyle = {},
   isDarkMode = false,
   isPagination = false,
-  paginationColor = colors.themeColor,
+  paginationColor = { backgroundColor: colors.themeColor },
 }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -58,13 +58,13 @@ const BannerHome2 = ({
     setActiveSlide(index);
   };
 
-  const bannerDataImages = ({item, index}) => {
+  const bannerDataImages = ({ item, index }) => {
     const imageUrl = item?.image?.path
       ? getImageUrl(
-          item.image.path.image_fit,
-          item.image.path.image_path,
-          '900/700',
-        )
+        item.image.path.image_fit,
+        item.image.path.image_path,
+        '900/700',
+      )
       : getImageUrl(item.image.image_fit, item.image.image_path, '900/700');
 
     return (
@@ -73,7 +73,7 @@ const BannerHome2 = ({
         style={[styles.imageStyle, imagestyle]}
         onPress={() => onPress(item)}>
         <FastImage
-          source={{uri: imageUrl}}
+          source={{ uri: imageUrl }}
           style={{
             height: '100%',
             width: '100%',
@@ -100,13 +100,13 @@ const BannerHome2 = ({
           renderItem={bannerDataImages}
           autoplay={true}
           loop={true}
-          autoplayInterval={ 2000}
+          autoplayInterval={2000}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           onSnapToItem={(index) => setSnapState(index)}
         />
       </View>
-      <View style={{alignSelf: 'center'}}>{isPagination && pagination()}</View>
+      <View style={{ alignSelf: 'center' }}>{isPagination && pagination()}</View>
     </>
   );
 };

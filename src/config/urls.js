@@ -5,7 +5,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 
-export const API_BASE_URL = 'https://sta.ug/api/v1';
+// export const API_BASE_URL = 'https://sta.ug/api/v1';
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
 // export const API_BASE_URL='https://ngoalapp.com/api/v1'
 // export const API_BASE_URL = 'https://mygreenhippo.com/api/v1'
@@ -18,7 +18,7 @@ export const API_BASE_URL = 'https://sta.ug/api/v1';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1';
 // export const API_BASE_URL='https://ubierweeds.com/api/v1'
-// export const API_BASE_URL = 'http://192.168.103.164:8000/api/v1';
+export const API_BASE_URL = 'https://00cc-112-196-88-218.ngrok-free.app/api/v1';
 
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
@@ -803,5 +803,8 @@ export const SAVED_CARD_LIST = getApiUrl('/user/get-user-cards');
 
 //delete card
 
-
 export const DELETE_CARD = getApiUrl('/user/deleteCard');
+
+// time slots of driver
+export const GET_DRIVER_SLOTS = getApiUrl('/getDispatcherGerenalSlot');
+export const SEND_PRODUCT_BOOKING_DATA = getApiUrl('/get_product_price_from_dispatcher');

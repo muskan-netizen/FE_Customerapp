@@ -68,7 +68,6 @@ export default function TabRoutes(props) {
   };
 
 
-  console.log(appStyle?.tabBarLayout, "fdsjfadjsfhsadf")
 
   const getCustomTabBar = (props) => {
     if (showBottomBar_) {
