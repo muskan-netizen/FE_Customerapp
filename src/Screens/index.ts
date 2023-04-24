@@ -184,3 +184,4 @@ export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseV
 //FreelancerService
 export {default as FreelancerService} from './FreelancerService/FreelancerService';
 export {default as AvailableTechnicians} from './FreelancerService/AvailableTechnicians/AvailableTechnicians';
+export {default as TechnicianProfile} from './FreelancerService/TechnicianProfile/TechnicianProfile';

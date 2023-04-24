@@ -52,6 +52,7 @@ import imagePath from '../../constants/imagePath';
 import { Image } from 'react-native';
 import Modal from "react-native-modal";
 import styles from './styles';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 enableFreeze(true);
 
@@ -67,7 +68,8 @@ export default function Home({ route, navigation }) {
     themeColor,
     themeToggle,
     allAddresss,
-    redirectedFrom
+    redirectedFrom,
+    themeColors
   } = useSelector((state) => state?.initBoot);
   const { location, appMainData, dineInType, isLocationSearched } = useSelector(
     (state) => state?.home,
@@ -465,15 +467,11 @@ export default function Home({ route, navigation }) {
       }
 
       if (!selectedVendorType) {
-
         actions.dineInData(defaultVendorType);
       }
 
-      if (appData?.profile?.preferences?.is_service_product_price_from_dispatch && (selectedVendorType === "on_demand" || defaultVendorType === "on_demand")) {
-        if (appData?.profile?.preferences?.is_service_price_selection) {
-          setIsPriceTypeModal(true)
-        }
-
+      if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (selectedVendorType === "on_demand" || defaultVendorType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection) {
+        setIsPriceTypeModal(true)
       }
 
       let apiData = {
@@ -1621,11 +1619,11 @@ export default function Home({ route, navigation }) {
         />
       )}
       <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
-        <View style={{ height: moderateScaleVertical(140), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
+        <View style={{ height: moderateScaleVertical(170), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
           <Text style={{
             fontFamily: fontFamily?.bold,
             fontSize: textScale(16)
-          }}>Select type of price model</Text>
+          }}>Select type of price</Text>
           <View style={{
             margin: moderateScale(12)
           }}>
@@ -1655,6 +1653,21 @@ export default function Home({ route, navigation }) {
                 fontSize: textScale(14),
                 marginLeft: moderateScale(8)
               }}>From Freelancer</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsPriceTypeModal(false)} style={{
+              borderWidth: 1,
+              borderColor: themeColors?.primary_color,
+              height: 35,
+              borderRadius: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "flex-end",
+              marginTop: moderateScale(10),
+              paddingHorizontal: moderateScale(10)
+            }}>
+              <Text style={{
+                color: themeColors?.primary_color
+              }}>{"Done"}</Text>
             </TouchableOpacity>
           </View>
         </View>

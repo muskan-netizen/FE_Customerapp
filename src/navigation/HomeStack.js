@@ -42,6 +42,7 @@ import {
   SuperMarket,
   TaxiHome,
   TaxiHomeScreen,
+  TechnicianProfile,
   TrackDetail,
   Tracking,
   VendorDetail,
@@ -291,9 +292,12 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.AVAILABLE_TECHNICIANS}
         component={AvailableTechnicians}
+      />
+      <Stack.Screen
+        name={navigationStrings.TECHNICIAN_PROFILE}
+        component={TechnicianProfile}
 
       />
-
     </Stack.Navigator>
   );
 }
