@@ -237,6 +237,8 @@ export default function WebLinks({navigation, route}) {
       })
       .catch((err) => {
         console.log(err, 'err......3');
+        showError(err?.message || "Something went wrong")
+        updateState({isLoading: false});
       });
   };
 

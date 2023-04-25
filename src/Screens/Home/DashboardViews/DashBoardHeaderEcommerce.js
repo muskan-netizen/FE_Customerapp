@@ -107,6 +107,20 @@ export default function DashBoardHeaderEcommerce({
           alignItems: 'center',
           marginTop: moderateScaleVertical(4),
         }}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigation.openDrawer()}
+          style={{ alignItems: 'center', }}>
+          <Image
+            style={{
+              height: moderateScale(25),
+              width: moderateScale(25),
+              tintColor: themeColors.primary_color,
+            }}
+            source={imagePath.drawerMenuIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
         <View
           style={{
             flexDirection: 'row',

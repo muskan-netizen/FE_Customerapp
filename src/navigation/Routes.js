@@ -22,6 +22,7 @@ import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
+import DrawerRoutes from './DrawerRoutes';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,9 +35,7 @@ export default function Routes() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{
-        headerShown: false
-      }} >
+      <Stack.Navigator screenOptions={{headerShown: false}}>
 
         {appSessionInfo == 'shortcode' ||
           appSessionInfo == 'show_shortcode' ? (
@@ -54,14 +53,8 @@ export default function Routes() {
           />
         ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
           <Stack.Screen
-            name={navigationStrings.TAB_ROUTES}
-            component={
-              businessType === 4
-                ? TaxiTabRoutes
-                : businessType === 8
-                  ? TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
-                    : TabRoutes
-            }
+            name={navigationStrings.DRAWER_ROUTES}
+            component={DrawerRoutes}
             options={{ gestureEnabled: false }}
           />
 

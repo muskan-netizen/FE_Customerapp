@@ -1,4 +1,8 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -19,6 +23,7 @@ import { View } from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesP2p from './TabRoutesP2p';
+import TabRoutesEcommerce from './TabRoutesEcommerce';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
@@ -43,8 +48,8 @@ export default function DrawerRoutes(props) {
 
   var celebTab = null;
   var brandTab = null;
-  var gestureEnabled = false;
-  var swipeEnabled = false;
+  var gestureEnabled = true;
+  var swipeEnabled = true;
   if (checkForCeleb) {
     celebTab = (
       <Drawer.Screen
@@ -89,17 +94,18 @@ export default function DrawerRoutes(props) {
       backBehavior={'initialRoute'}
       drawerType={'front'}
       overlayColor={'rgba(0,0,0,0.6)'}
-      // hideStatusBar={true}
-      drawerStyle={{ width: '75%', backgroundColor: colors.blueHeaderColor }}
-      drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      screenOptions={{ headerShown: false }}
+      initialRouteName={ businessType === 4
+        ? navigationStrings.TAXITABROUTES
+        : navigationStrings.TAB_ROUTES}
+    >
+    
       <Drawer.Screen
-        component={
-          businessType === 4
-            ? TaxiTabRoutes
-            : businessType === 8
-              ? TabRoutesP2p
-              :
-              TabRoutes
+        component={businessType === 4
+          ? TaxiTabRoutes : businessType === 8
+            ? TabRoutesP2p : businessType === 10
+              ? TabRoutesEcommerce : TabRoutes
         }
         name={
           businessType === 4
@@ -142,20 +148,7 @@ export default function DrawerRoutes(props) {
       />
       {brandTab}
       {celebTab}
-      <Drawer.Screen
-        component={AccountStack}
-        name={navigationStrings.ACCOUNTS}
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.ACCOUNTS,
-          drawerIcon: ({ focused }) => (
-            <Image
-              source={focused ? imagePath.tabEActive : imagePath.tabEInActive}
-            />
-          ),
-        }}
-      />
+
     </Drawer.Navigator>
   );
 }
