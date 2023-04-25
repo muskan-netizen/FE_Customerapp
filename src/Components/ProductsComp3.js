@@ -66,7 +66,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
         // elevation: 1,
         // marginVertical: 2,
-        // width: imageWidth,
+        width: imageWidth,
         // borderRadius: moderateScale(5),
         // borderColor: colors.borderStroke,
         // padding: moderateScale(6),
