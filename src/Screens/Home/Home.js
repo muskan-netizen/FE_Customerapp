@@ -1623,7 +1623,7 @@ export default function Home({ route, navigation }) {
           <Text style={{
             fontFamily: fontFamily?.bold,
             fontSize: textScale(16)
-          }}>Select type of price</Text>
+          }}>Select pricing type</Text>
           <View style={{
             margin: moderateScale(12)
           }}>

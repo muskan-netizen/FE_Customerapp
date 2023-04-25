@@ -1,8 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-// export const API_BASE_URL = 'https://piolfix.focushires.com/api/v1'; //Staging
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
+//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 
 // export const API_BASE_URL = 'https://sta.ug/api/v1';
@@ -18,7 +18,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
 // export const API_BASE_URL='https://vduonline.co.in/api/v1';
 // export const API_BASE_URL='https://ubierweeds.com/api/v1'
-export const API_BASE_URL = 'https://00cc-112-196-88-218.ngrok-free.app/api/v1';
+// export const API_BASE_URL = 'https://00cc-112-196-88-218.ngrok-free.app/api/v1';
 
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
