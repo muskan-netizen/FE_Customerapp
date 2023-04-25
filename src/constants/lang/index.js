@@ -24,6 +24,7 @@ import es_heybuddy from './es_heybuddy';
 import es_sabroson from './es_sabroson';
 import swa from './swa';
 import heb from './heb'
+import fr_oxo from './fr_oxo';
 
 //Spanish fils
 
@@ -48,13 +49,22 @@ const arbicFile = () => {
       return ar;
   }
 };
+const frenchFile = () => {
+  switch (DeviceInfo.getBundleId()) {
+    case appIds?.oxo:
+      return fr_oxo;
+    default:
+      return fr;
+  }
+};
+
 
 let strings = new LocalizedStrings({
   en: en,
   ar: arbicFile(),
   es: spanishfile(),
   de: de,
-  fr: fr,
+  fr: frenchFile(),
   tr: tr,
   sv: sv,
   zh: zh,

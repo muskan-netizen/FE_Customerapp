@@ -2607,8 +2607,8 @@ const appIds = {
     android: 'com.etiam.orderApp',
   }),
   dotTaxiApp: Platform.select({
-    ios: 'com.dotTaxiApp.royoorder',
-    android: 'com.dotTaxiApp.royoorder',
+    ios: 'com.dotTaxi.order',
+    android: 'com.dotTaxi.order',
   }),
   airvoltTaxi: Platform.select({
     ios: 'com.airvoltTaxi.royoorder',

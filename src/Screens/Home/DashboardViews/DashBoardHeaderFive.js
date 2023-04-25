@@ -26,6 +26,7 @@ import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
 import { getBundleId } from 'react-native-device-info';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { color } from 'react-native-reanimated';
 
 
 export default function DashBoardHeaderFive({
@@ -71,7 +72,7 @@ export default function DashBoardHeaderFive({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
-        backgroundColor: getBundleId() == appIds?.eatHalal ? themeColors?.primary_color : null
+        backgroundColor: getBundleId() == appIds?.eatHalal ? colors?.redFireBrick : null
       }}>
       {showAboveView ? (
         <View

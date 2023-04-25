@@ -15,8 +15,9 @@ import {openAppSetting} from './openNativeApp';
 
 export const androidCameraPermission = () =>
   new Promise(async (resolve, reject) => {
+   
     try {
-      if (Platform.OS === 'android' && Platform.Version > 22) {
+      if (Platform.OS === 'android' && Platform.Version > 22 ) {
         const granted = await PermissionsAndroid.requestMultiple([
           PermissionsAndroid.PERMISSIONS.CAMERA,
           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -40,6 +41,7 @@ export const androidCameraPermission = () =>
         }
         return resolve(true);
       }
+    
 
       return resolve(true);
     } catch (error) {

@@ -23,7 +23,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'http://192.168.103.164:8000/api/v1';
 
 // export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
-// export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
+export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
 // export const API_BASE_URL = 'https://speedy.com.do/api/v1';
 // export const API_BASE_URL = 'https://kaypee.app//api/v1';
 // export const API_BASE_URL = 'https://jeevannapp.com/api/v1';
@@ -33,7 +33,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://classicab.org/api/v1';
 // export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
-//export const API_BASE_URL = 'https://carryfood.org/api/v1';
+// export const API_BASE_URL = 'https://carryfood.org/api/v1';
 
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
@@ -65,7 +65,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://sales.focushires.com/api/v1'; //sales demo
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://maxisdelivery.net/api/v1';
 
 // export const API_BASE_URL = 'https://smokykitchen.royoorders.com/api/v1';
@@ -220,6 +220,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://smokerunstore.com/api/v1';
 // export const API_BASE_URL = 'https://expresdeliverys.com/api/v1';
 // export const API_BASE_URL = 'https://gdotdelivery.com/api/v1';
+// export const API_BASE_URL='https://sourcesservices.com/api/v1'
 // export const API_BASE_URL = 'https://cabio.rostaging.com/api/v1';
 // export const API_BASE_URL='https://ubierweeds.com/api/v1'
 // export const API_BASE_URL = 'https://glamsouq.com/api/v1';
