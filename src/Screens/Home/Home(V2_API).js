@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import { Alert, BackHandler, Linking,Animated } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -112,6 +112,29 @@ export default function Home({ route, navigation }) {
   } = state;
 
   const { profile } = appData;
+
+
+  const [toggleSearchBar, setToggleSearchBar] = useState(true);
+
+  const searchBarAnim = useRef(new Animated.Value(-45)).current;
+
+
+  useEffect(() => {
+    if (toggleSearchBar) {
+      Animated.timing(searchBarAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(searchBarAnim, {
+        toValue: -45,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [toggleSearchBar]);
+
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
@@ -935,6 +958,17 @@ export default function Home({ route, navigation }) {
     });
   };
 
+  const onScrollFlat = (props) =>{
+    console.log("onScrollFlat",props?.nativeEvent?.contentOffset?.y)
+    if(props?.nativeEvent?.contentOffset?.y > 100){
+      setToggleSearchBar(false)
+    }else{
+      setToggleSearchBar(true)
+    }
+  
+
+  }
+
   const renderHomeScreen = () => {
     return (
       <>
@@ -950,6 +984,8 @@ export default function Home({ route, navigation }) {
           _onVoiceListen={_onVoiceListen}
           isVoiceRecord={isVoiceRecord}
           _onVoiceStop={_onVoiceStop}
+          searchBarAnim={searchBarAnim}
+          toggleSearchBar={toggleSearchBar}
         />
         <DashBoardFiveV2Api
           handleRefresh={() => handleRefresh()}
@@ -979,6 +1015,8 @@ export default function Home({ route, navigation }) {
           selectedFilterType={selectedFilterType}
           showAllProducts={showAllProducts}
           showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+          onScrollFlat={onScrollFlat}
+          searchBarAnim={searchBarAnim}
         />
       </>
     );
@@ -1022,11 +1060,13 @@ export default function Home({ route, navigation }) {
 
   return (
     <WrapperContainer
-      statusBarColor={colors.whiteSmokeColor}
+      statusBarColor={colors.white}
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }
-      isLoading={searchDataLoader}>
+      isLoading={searchDataLoader}
+      isSafeArea={false}
+      >
       <>{renderHomeScreen()}</>
       <LaundryAddonModal
         isVisible={isLaundryAddonModal}

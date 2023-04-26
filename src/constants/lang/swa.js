@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'Je, hauna akaunti ?',
   CREATE_NEW_ACCOUNT: 'Tengeneza akaunti mpya',
   GUEST_LOGIN: 'RUKA',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'Au',
   OR_CONTINUE_WITH: 'Au Endelea na',
   OR_LOGIN_WITH: 'Au',

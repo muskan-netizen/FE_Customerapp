@@ -7,7 +7,8 @@ import {
   ChatRoom,
   ChatRoomForVendor,
   ChatScreen,
-  ChatScreenForVendor
+  ChatScreenForVendor,
+  WebLinks
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -93,6 +94,7 @@ export default function Routes() {
           component={TabRoutesVendorNewTemplate}
           options={{ gestureEnabled: false }}
         />
+       
       </Stack.Navigator>
     </NavigationContainer>
   );

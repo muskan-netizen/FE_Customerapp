@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: ' НЕТ АККАУНТА ',
   CREATE_NEW_ACCOUNT: ' СОЗДАТЬ НОВЫЙ АККАУНТ ',
   GUEST_LOGIN: ' ВХОД КАК ГОСТЬ ',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: ' ИЛИ ЗАРЕГИСТРИРОВАТЬСЯ НА ',
   OR_CONTINUE_WITH: ' ИЛИ ПРОДОЛЖИТЬ С',
   OR_LOGIN_WITH: ' ИЛИ ВОЙТИ С ',

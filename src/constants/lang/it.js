@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'Non hai un account?',
   CREATE_NEW_ACCOUNT: 'Crea un nuovo account',
   GUEST_LOGIN: 'SALTA',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'O',
   OR_CONTINUE_WITH: 'Oppure Continua con',
   OR_LOGIN_WITH: 'O',

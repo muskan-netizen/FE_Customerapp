@@ -24,6 +24,7 @@ import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesEcommerce from './TabRoutesEcommerce';
+import { WebLinks } from '../Screens';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
@@ -91,16 +92,16 @@ export default function DrawerRoutes(props) {
   return (
     <Drawer.Navigator
       drawerPosition={'left'}
-      backBehavior={'initialRoute'}
+      backBehavior={'none'}
       drawerType={'front'}
       overlayColor={'rgba(0,0,0,0.6)'}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{ headerShown: false }}
-      initialRouteName={ businessType === 4
+      initialRouteName={businessType === 4
         ? navigationStrings.TAXITABROUTES
         : navigationStrings.TAB_ROUTES}
     >
-    
+
       <Drawer.Screen
         component={businessType === 4
           ? TaxiTabRoutes : businessType === 8
@@ -112,39 +113,18 @@ export default function DrawerRoutes(props) {
             ? navigationStrings.TAXITABROUTES
             : navigationStrings.TAB_ROUTES
         }
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.HOME,
-          drawerIcon: ({ focused }) => (
-            <Image
-              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
-            />
-          ),
-        }}
+
       />
       <Drawer.Screen
         component={CartStack}
         name={navigationStrings.CART}
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.CART,
-          drawerIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center' }}>
-              {cartItemCount?.data?.item_count ? (
-                <View style={[styles.cartItemCountView]}>
-                  <Text style={styles.cartItemCountNumber}>
-                    {cartItemCount?.data?.item_count}
-                  </Text>
-                </View>
-              ) : null}
-              <Image
-                source={focused ? imagePath.cartActive : imagePath.cartInActive}
-              />
-            </View>
-          ),
-        }}
+      />
+
+
+      <Drawer.Screen
+        name={navigationStrings.WEBLINKS}
+        component={WebLinks}
+        options={{ headerShown: false }}
       />
       {brandTab}
       {celebTab}
@@ -153,22 +133,3 @@ export default function DrawerRoutes(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  cartItemCountView: {
-    position: 'absolute',
-    zIndex: 100,
-    top: -5,
-    right: -5,
-    backgroundColor: colors.cartItemPrice,
-    width: moderateScale(18),
-    height: moderateScale(18),
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cartItemCountNumber: {
-    fontFamily: fontFamily.futuraBtHeavy,
-    color: colors.white,
-    fontSize: textScale(8),
-  },
-});

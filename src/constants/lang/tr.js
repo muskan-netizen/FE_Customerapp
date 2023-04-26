@@ -8,6 +8,7 @@ export default {
   CREATE_AN_ACCOUNT: 'YENİ HESAP OLUŞTUR',
   CREATE_NEW_ACCOUNT: 'Yeni hesap oluştur',
   GUEST_LOGIN: 'SKIP',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'Veya kaydolun',
   OR_LOGIN_WITH: 'Veya giriş yapın',
   ALREADY_HAVE_AN_ACCOUNT: 'Zaten bir hesabınız var mı?',

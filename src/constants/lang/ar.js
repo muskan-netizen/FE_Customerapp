@@ -8,6 +8,7 @@ export default {
   CREATE_AN_ACCOUNT: 'إنشاء حساب جديد',
   CREATE_NEW_ACCOUNT: 'انشاء حساب جديد',
   GUEST_LOGIN: 'SKIP',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'أو تسجيل اشتراك من خلال',
   OR_LOGIN_WITH: 'أو تسجيل دخول من خلال',
   ALREADY_HAVE_AN_ACCOUNT: 'هل لديك حساب بالفعل؟',

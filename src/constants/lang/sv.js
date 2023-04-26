@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'Har du inget konto?',
   CREATE_NEW_ACCOUNT: 'Skapa nytt konto',
   GUEST_LOGIN: 'SKIPPA',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'Eller registrera dig med',
   OR_CONTINUE_WITH: 'Eller fortsätt med',
   OR_LOGIN_WITH: 'Eller logga in med',

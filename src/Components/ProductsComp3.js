@@ -46,7 +46,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
     category = {},
     media = [],
     vendor = {},
-    variant = [],
   } = item;
 
 
@@ -56,6 +55,9 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
     `${500}/${500}`,
   );
 
+
+
+const variant = !!item?.variant ? item.variant : !!item?.variants ? item?.variants:  []
 
 
   return (
@@ -145,7 +147,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           }}>
           {vendor?.name}
         </Text>
-        {(!variant[0].hasOwnProperty('compare_at_price') || Number(variant[0].compare_at_price) == 0) ? (
+        {(!variant[0]?.hasOwnProperty('compare_at_price') || Number(variant[0].compare_at_price) == 0) ? (
           <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: moderateScale(8) }}>
             <View style={{
               flex: 1,
@@ -157,8 +159,9 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
 
                 }}>
+            
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0].price,
+                  variant[0]?.price,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,

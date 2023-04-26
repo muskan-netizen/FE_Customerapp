@@ -9,6 +9,7 @@ export default {
   CREATE_NEW_ACCOUNT: 'Crear una cuenta nueva',
   DONT_HAVE_ACCOUNT: 'no tengo una cuenta ?',
   GUEST_LOGIN: 'ENTRAR COMO INVITADO',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'Continuar con:',
   OR_LOGIN_WITH: 'Continuar con:',
   ALREADY_HAVE_AN_ACCOUNT: '¿Ya tienes una cuenta?',

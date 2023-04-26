@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'حساب ندارید؟',
   CREATE_NEW_ACCOUNT: 'ایجاد حساب جدید،',
   GUEST_LOGIN: 'پرش',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'یا',
   OR_CONTINUE_WITH: 'یا ادامه با',
   OR_LOGIN_WITH: 'یا',

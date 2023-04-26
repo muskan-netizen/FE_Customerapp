@@ -1,4 +1,3 @@
-import { useScrollToTop } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -11,7 +10,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Animated
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DashedLine from 'react-native-dashed-line';
@@ -38,6 +38,9 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
+import { useScrollToTop } from '@react-navigation/native';
+
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -68,7 +71,9 @@ const DashBoardFiveV2Api = ({
   onPressSubscribe = () => { },
   isSubscription = false,
   showAllProducts = () => { },
-  showAllSpotDealAndSelectedProducts = () => { }
+  showAllSpotDealAndSelectedProducts = () => { },
+  onScrollFlat = () => {},
+  searchBarAnim
 }) => {
 
 
@@ -81,6 +86,10 @@ const DashBoardFiveV2Api = ({
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;
+
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
 
   const isGetEstimation = appData?.profile?.preferences?.get_estimations;
 
@@ -169,7 +178,10 @@ const DashBoardFiveV2Api = ({
   };
   const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <View style={{ width: width / 4.2 }}>
+      <Animatable.View
+        animation={'tada'}
+        delay={index * 100}
+        style={{ width: width / 4.2 }}>
         <HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
@@ -177,7 +189,7 @@ const DashBoardFiveV2Api = ({
           applyRadius={true}
           index={index}
         />
-      </View>
+      </Animatable.View>
     );
   }, [])
 
@@ -299,8 +311,7 @@ const DashBoardFiveV2Api = ({
     });
   }, [])
 
-  const scrollRef = React.useRef(null);
-  useScrollToTop(scrollRef);
+
 
   const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) }
 
@@ -393,13 +404,17 @@ const DashBoardFiveV2Api = ({
 
   const _renderProducts = useCallback(({ item, index }) => {
     return (
-      <ProductsComp3
-        item={item}
-        onPress={() =>
-          !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
-      />
-
+      <Animatable.View
+        animation={'slideInRight'}
+        delay={index * 100}
+      >
+        <ProductsComp3
+          item={item}
+          onPress={() =>
+            !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          }
+        />
+      </Animatable.View>
     );
   }, [])
 
@@ -486,29 +501,17 @@ const DashBoardFiveV2Api = ({
   }, [themeColors, fontFamily])
 
   const _renderSelectedProducts = useCallback(({ item, index }) => {
-    console.log(item, " selected");
+
     return (
-      <ProductsComp2
-        mainContainerStyle={{
-          width: moderateScale(width / 4),
-          marginHorizontal: moderateScale(10),
-          marginVertical: moderateScaleVertical(8),
-          borderRadius: moderateScale(20),
-          overflow: 'hidden',
-          height: moderateScaleVertical(130),
-          elevation: 0,
-
-        }}
-        showRating={false}
-        imageStyle={{ width: moderateScale(width / 4), height: moderateScaleVertical(80), resizeMode: 'cover' }}
-        item={item?.products}
-        onPress={() =>
-          navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
-        productNameStyle={{ textAlign: 'center', fontSize: textScale(10), marginBottom: moderateScaleVertical(5) }}
-        numberOfLines={2}
-      />)
-
+      <View style={{ marginRight: 8 }}>
+        <ProductsComp3
+          item={item?.products}
+          onPress={() =>
+            navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          }
+        />
+      </View>
+    )
   }, [])
 
   const SelectedProductsThemeView = useCallback(({ item }) => {
@@ -522,18 +525,25 @@ const DashBoardFiveV2Api = ({
             <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
         </View>
+
         <FlatList
           showsHorizontalScrollIndicator={false}
-          // horizontal
-          style={{ width: width, alignItems: 'center' }}
-          numColumns={3}
+          horizontal
           data={item?.data}
           renderItem={_renderSelectedProducts}
           keyExtractor={(item) => item?.id?.toString()}
+
+          ItemSeparatorComponent={() => (
+            <View style={{ marginRight: moderateScale(16) }} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{ marginLeft: moderateScale(16) }} />
+          )}
           ListFooterComponent={() => (
             <View style={{ marginRight: moderateScale(16) }} />
           )}
         />
+
       </View>
     ) : (
       <React.Fragment />
@@ -571,7 +581,7 @@ const DashBoardFiveV2Api = ({
       <View style={{
         marginBottom: moderateScaleVertical(0)
       }}>
-        <View style={{marginTop:moderateScaleVertical(8)}} />
+        <View style={{ marginTop: moderateScaleVertical(8) }} />
         {vendorHeader(item)}
         <FlatList
           horizontal
@@ -630,7 +640,7 @@ const DashBoardFiveV2Api = ({
         activeOpacity={0.7}
         style={{
           height: moderateScaleVertical(140),
-          width: width /2,
+          width: width / 2,
           borderRadius: moderateScale(10),
           overflow: 'hidden',
           alignItems: 'center',
@@ -641,7 +651,7 @@ const DashBoardFiveV2Api = ({
           style={{
             ...StyleSheet.absoluteFill,
             height: moderateScaleVertical(140),
-            width: width /2,
+            width: width / 2,
           }}
         />
         <View
@@ -834,26 +844,30 @@ const DashBoardFiveV2Api = ({
             : '1200/1000',
       );
     return (
-      <TouchableOpacity style={{
-
-      }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
-        <FastImage
-          source={{
-            uri: imageUrl,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
-          }}
-          style={{
-            height: moderateScale(200),
-            width: width - moderateScale(30),
-            borderRadius: moderateScale(16),
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.grayOpacity51,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </TouchableOpacity>
+      <Animatable.View
+        animation={'zoomIn'}
+        delay={200}
+      >
+        <TouchableOpacity style={{
+        }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
+          <FastImage
+            source={{
+              uri: imageUrl,
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable,
+            }}
+            style={{
+              height: moderateScale(200),
+              width: width - moderateScale(30),
+              borderRadius: moderateScale(16),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.grayOpacity51,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </TouchableOpacity>
+      </Animatable.View>
     );
   }, [])
 
@@ -861,14 +875,20 @@ const DashBoardFiveV2Api = ({
 
   if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
 
+
+ 
+
   return (
     <WrapperContainer >
       {showAllTempCartOrders()}
-      <FlatList
+      <Animated.FlatList
+        ref={ref}
         data={!!appMainData?.homePageLabels ? appMainData?.homePageLabels || [] : []}
         renderItem={renderHomePageItems}
         showsVerticalScrollIndicator={false}
         keyExtractor={keyExtractorUnique}
+        // onScrollBeginDrag={onScrollFlat}
+       
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
@@ -882,7 +902,8 @@ const DashBoardFiveV2Api = ({
             height:
               Platform.OS == 'ios' ? moderateScale(10) : moderateScale(20),
           }}
-        />}
+        />
+      }
       />
 
       {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (

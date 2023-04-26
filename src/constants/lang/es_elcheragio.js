@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'Qihubo ¿aún sin cuenta?',
   CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
   GUEST_LOGIN: 'SALTAR',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'O Regístrate con',
   OR_CONTINUE_WITH: 'O Continua con',
   OR_LOGIN_WITH: 'O Inicia Sesión con',

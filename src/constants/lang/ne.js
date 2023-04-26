@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'खाता छैन ?',
   CREATE_NEW_ACCOUNT: 'नयाँ खाता सिर्जना गर्नुहोस्',
   GUEST_LOGIN: 'छोड्नुहोस्',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'वा',
   OR_CONTINUE_WITH: 'वा जारी राख्नुहोस्',
   OR_LOGIN_WITH: 'वा',

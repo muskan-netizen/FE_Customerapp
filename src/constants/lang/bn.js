@@ -9,6 +9,7 @@ export default {
     DONT_HAVE_ACCOUNT: "একাউন্ট নেই?",
     CREATE_NEW_ACCOUNT: 'নতুন অ্যাকাউন্ট তৈরি করুন',
     GUEST_LOGIN: 'এড়িয়ে যান',
+    GUSET_USER:"Guest User",
     OR_SIGNUP_WITH: 'অথবা',
     OR_CONTINUE_WITH: 'অথবা এর সাথে চালিয়ে যান',
     OR_LOGIN_WITH: 'অথবা',

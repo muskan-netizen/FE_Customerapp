@@ -610,6 +610,11 @@ export default {
   icEcomSearch: require('../assets/images/Ecommerce/ic_search_01-1.png'),
   wishlist2: require('../assets/images/Ecommerce/ic_wishlist_01.png'),
 
+  icCategory: require('../assets/images/Ecommerce/ic_categories_02.png'),
+  icPrivacy: require('../assets/images/Ecommerce/ic_privacypolicy_02.png'),
+  icTerms: require('../assets/images/Ecommerce/ic_terms&condition_02.png'),
+
+
   //Video
   // flank: require('../assets/flankSplash.mp4'),
   masa: require('../assets/masa.mp4'),

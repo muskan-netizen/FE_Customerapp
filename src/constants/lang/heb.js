@@ -9,6 +9,7 @@ export default {
     DONT_HAVE_ACCOUNT: "אין לך חשבון ?",
     CREATE_NEW_ACCOUNT: 'ליצור חשבון חדש',
     GUEST_LOGIN: 'לדלג',
+    GUSET_USER:"Guest User",
     OR_SIGNUP_WITH: 'אוֹ',
     OR_CONTINUE_WITH: 'או המשך עם',
     OR_LOGIN_WITH: 'אוֹ',

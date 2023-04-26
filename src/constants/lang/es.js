@@ -25,6 +25,7 @@ export default {
   TO_ENJOY_SHOPPING:
     'Para disfrutar de las compras desde nuestra aplicación, verifique la siguiente información. Por lo tanto, no enfrentará ninguna interrupción en el futuro.',
   YOUR_NAME: 'Tu nombre',
+  GUSET_USER:"Guest User",
   YOUR_EMAIL: 'Tu correo electrónico',
   ENTER_TITLE: 'Introduce el título',
   ENTER_HERE: 'Ingresa Aquí',

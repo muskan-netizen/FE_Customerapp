@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'Chưa có tài khoản?',
   CREATE_NEW_ACCOUNT: 'Tạo tài khoản mới',
   GUEST_LOGIN: 'Bỏ qua',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'Hoặc Đăng ký mới',
   OR_CONTINUE_WITH: 'Hoặc tiếp tục với',
   OR_LOGIN_WITH: 'Hoặc đăng nhập bằng',
