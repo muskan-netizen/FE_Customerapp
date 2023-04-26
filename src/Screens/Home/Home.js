@@ -44,6 +44,7 @@ import {
 } from './DashboardViews/Index';
 
 import { enableFreeze } from "react-native-screens";
+import socketServices from '../../utils/scoketService';
 enableFreeze(true);
 
 
@@ -981,7 +982,7 @@ export default function Home({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
-  console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePageLayoutappStyle?.homePageLayout");
+  console.log(appStyle?.homePageLayout, "appStyle?.homePageLayoutappStyle?.homePageLayoutappStyle?.homePageLayout");
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:

@@ -64,7 +64,7 @@ export default function Account3({ navigation }) {
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
-  console.log("appDataappDataappData", appData)
+  console.log("appDataappDataappData", appData, languages)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -90,8 +90,8 @@ export default function Account3({ navigation }) {
   }, [appMainData?.is_admin]);
 
   useEffect(() => {
-    getListOfPaymentMethod()
-  }, [])
+    if (!!userData?.auth_token) { getListOfPaymentMethod() }
+  }, [userData?.auth_token])
   const fetchAllVendors = async (value = null) => {
     let query = `?limit=${100000}&page=${1}`;
     let headers = {
@@ -411,7 +411,7 @@ export default function Account3({ navigation }) {
                   isBack: true,
                 })}
                 iconLeft={imagePath.myOrder2}
-                centerHeading={strings.MY_ORDERS}
+                centerHeading={(getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings.MY_ORDERS_MRVELOZ : strings.MY_ORDERS}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -584,7 +584,7 @@ export default function Account3({ navigation }) {
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.WALLET)}
               iconLeft={imagePath.wallet3}
-              centerHeading={strings.WALLET}
+              centerHeading={(getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings?.WALLET_MRVELOZ : strings.WALLET}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
@@ -781,7 +781,7 @@ export default function Account3({ navigation }) {
                   : moveToNewScreen(navigationStrings.CONTACT_US)
               }
               iconLeft={imagePath.contactUs}
-              centerHeading={strings.CONTACT_US}
+              centerHeading={(getBundleId() == appIds?.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings?.CONTACT_US_MRVELOZ : strings.CONTACT_US}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),

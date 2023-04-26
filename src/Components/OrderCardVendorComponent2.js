@@ -34,6 +34,8 @@ import {
 import { getImageUrl } from "../utils/helperFunctions";
 import ButtonWithLoader from "./ButtonWithLoader";
 import BannerLoader from './Loaders/BannerLoader';
+import { getBundleId } from "react-native-device-info";
+import { appIds } from "../utils/constants/DynamicAppKeys";
 
 
 const OrderCardVendorComponent2 = ({
@@ -243,7 +245,7 @@ const OrderCardVendorComponent2 = ({
                   color: colors.white,
                 }}
               >
-                {businessType == 'taxi' ? strings.YOUR_RIDE_WILL_ARRIVE_BY : strings.YOUR_ORDER_WILL_ARRIVE_BY}{" "}
+                {businessType == 'taxi' ? strings.YOUR_RIDE_WILL_ARRIVE_BY : (getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings.YOUR_ORDER_WILL_ARRIVE_BY_MRVELOZ : strings.YOUR_ORDER_WILL_ARRIVE_BY}{" "}
                 {dateParser(data?.scheduled_date_time) || etaTime}
               </Text>
             </View>
@@ -299,7 +301,7 @@ const OrderCardVendorComponent2 = ({
                   : styles.orderLableStyle
               }
             >
-              {`${strings.ORDER_ID}: #${data?.order_number}`}
+              {`${(getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings.ORDER_ID_MRVELOZ : strings.ORDER_ID}: #${data?.order_number}`}
             </Text>
             <Text
               style={

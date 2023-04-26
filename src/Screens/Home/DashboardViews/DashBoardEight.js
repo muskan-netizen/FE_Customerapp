@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dynamic';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {
   Menu,
@@ -77,7 +77,7 @@ export default function DashBoardEight({
   const isSingleVendor = appData?.profile?.preferences?.single_vendor;
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { bannerRef } = useRef();
-  const { appData, themeColors, appStyle } = useSelector(
+  const { appData, themeColors, appStyle,languages } = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -104,7 +104,7 @@ export default function DashBoardEight({
   const { slider1ActiveSlide, vendorsData, showMenu, categoriesData, seeMore, loading } =
     state;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily,isDarkMode });
+  const styles = stylesFunc({ themeColors, fontFamily, isDarkMode });
 
   //update state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -219,7 +219,7 @@ export default function DashBoardEight({
             marginHorizontal: moderateScale(10),
             marginVertical: moderateScaleVertical(10),
           }}>
-          {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
+          {(getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings?.WHAT_WHOULD_YOU_LIKE_TO_DO_MRVELOZ : strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
         </Text>}
         {appMainData &&
           appMainData?.categories &&
