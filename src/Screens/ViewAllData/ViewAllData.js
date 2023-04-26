@@ -26,6 +26,7 @@ import FooterLoader from '../../Components/FooterLoader';
 
 import { enableFreeze } from "react-native-screens";
 import { UIActivityIndicator } from 'react-native-indicators';
+import { debounce } from 'lodash';
 enableFreeze(true);
 
 export default function ViewAllData({ route, navigation }) {
@@ -72,7 +73,7 @@ export default function ViewAllData({ route, navigation }) {
 
   //update state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
+  
   useEffect(() => {
     apiHit(pageNo);
 
@@ -91,7 +92,7 @@ export default function ViewAllData({ route, navigation }) {
       }
       return homeFilter;
     };
-  }, []);
+  }, [pageNo]);
 
   //Home data
   const apiHit = (pageNo) => {
@@ -258,22 +259,28 @@ export default function ViewAllData({ route, navigation }) {
       </WrapperContainer>
     );
   }
-
-  const onEndReached = () => {
+  const onEndReached = ({ distanceFromEnd }) => {
+  
     if (totalProduct !== data.length) {
+     
       updateState({ pageNo: pageNo + 1, loadMore: true });
-      apiHit(pageNo + 1);
+      // apiHit(pageNo + 1);
     } else {
       updateState({ loadMore: false });
     }
   };
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
 
   return (
     <WrapperContainer
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
-      statusBarColor={colors.backgroundGrey}>
+      statusBarColor={colors.backgroundGrey}
+      isLoading={loadMore}>
 
       <Header3
         leftIcon={imagePath.icBackb}
@@ -295,7 +302,7 @@ export default function ViewAllData({ route, navigation }) {
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
         onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
+        onEndReached={onEndReachedDelayed}
         initialNumToRender={6}
         ListEmptyComponent={
           !isLoading && (
@@ -310,16 +317,17 @@ export default function ViewAllData({ route, navigation }) {
             </View>
           )
         }
-        ListFooterComponent={!!loadMore ?
-          <View style={{ marginBottom: moderateScale(100) }}>
+        // ListFooterComponent={!!loadMore ?
+        //   <View style={{ marginBottom: moderateScale(100) }}>
 
-            <UIActivityIndicator
-              color={themeColors.primary_color}
-              size={30}
-            />
-          </View>
+        //     <UIActivityIndicator
+        //       color={themeColors.primary_color}
+        //       size={30}
+        //     />
+        //   </View>
 
-          : <View style={{ height: moderateScale(100) }} />}
+        //   : <View style={{ height: moderateScale(100) }} />}
+        ListFooterComponent={() => <View style={{ height: 90 }} />}
       />
     </WrapperContainer>
   );

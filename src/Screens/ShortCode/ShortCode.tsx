@@ -36,7 +36,9 @@ export default function ShortCode() {
   const initApiHit = async () => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
-    const appCode = !!prevCode ? prevCode : getAppCode();
+    // const appCode = !!prevCode ? prevCode : getAppCode();
+    const appCode = '245bae';
+ 
 
     let header = {};
     if (!!lang?.primary_language?.id) {

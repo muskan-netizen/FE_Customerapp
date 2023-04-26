@@ -550,7 +550,7 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data_++++++++', cartData);
+  console.log('cart data_++++++++', cartData,businessType,dineInType);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;

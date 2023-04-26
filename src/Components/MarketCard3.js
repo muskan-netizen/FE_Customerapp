@@ -270,7 +270,7 @@ const MarketCard3 = ({
             {data.name}
           </Text>
 
-          {!!data?.product_avg_average_rating && (
+          {!!appData?.profile?.preferences?.rating_check && !!data?.product_avg_average_rating && (
             <View
               style={{
                 flexDirection: 'row',

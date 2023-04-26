@@ -1429,7 +1429,7 @@ const VariantAddons = ({
                 ) : null}
 
                 {/* rating View */}
-                {productDetailData?.averageRating !== null && (
+                {!!appData?.profile?.preferences?.rating_check && productDetailData?.averageRating !== null && (
                   <View
                     style={{
                       borderWidth: 0.5,

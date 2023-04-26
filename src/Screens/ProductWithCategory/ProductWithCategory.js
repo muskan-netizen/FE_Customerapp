@@ -613,8 +613,8 @@ export default function ProductWithCategory({route, navigation}) {
                         {data?.name || categoryInfo?.name || ''}
                       </Text>
 
-                      {!!categoryInfo &&
-                        !!categoryInfo?.product_avg_average_rating && (
+                      {(!!appData?.profile?.preferences?.rating_check && !!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating) && (
                           <View
                             style={[
                               styles.hdrRatingTxtView,

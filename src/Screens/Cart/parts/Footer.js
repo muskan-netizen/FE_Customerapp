@@ -842,8 +842,8 @@ function Footer(props) {
                     ? MyDarkTheme.colors.text
                     : colors.textGreyB,
                 }}>
-                {/* {strings.TAXES_FEES} */}
-                {`Taxes`}
+                {strings.TAXES_FEES}
+                {/* {`Taxes`} */}
               </Text>
 
               <Image

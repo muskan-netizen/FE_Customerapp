@@ -31,7 +31,7 @@ export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
   const { appStyle, themeColors } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
-
+console.log(appSessionInfo,'appSessionInfoappSessionInfo')
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{

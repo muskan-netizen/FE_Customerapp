@@ -123,13 +123,24 @@ const [localTime,setLocaleTime] = useState(null)
                 />
               ))}
             </View>
-            <Text style={[styles.font16Regular, { flex: 1 }]}>
+            
+            <Text style={[styles.font16Regular, {flex: 1}]}>
               {item?.product_details && item?.product_details[0]
                 ? item?.product_details[0].title
                 : ''}{' '}
               {count == 0 ? '' : 'x' + ' ' + count + ' more'}
             </Text>
+           
           </View>
+          <Text
+            style={{
+              ...styles.font14Regular,
+              color: '#35B300',
+              // textAlign: 'right',
+              // alignSelf: 'flex-end',
+            }}>
+            {item?.luxury_option_name}
+          </Text>
           <Text
             style={{
               ...styles.font14Regular,

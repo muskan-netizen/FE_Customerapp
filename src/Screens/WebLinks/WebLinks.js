@@ -237,6 +237,8 @@ export default function WebLinks({navigation, route}) {
       })
       .catch((err) => {
         console.log(err, 'err......3');
+        updateState({isLoading: false});
+        showError(err?.message)
       });
   };
 
@@ -1030,7 +1032,7 @@ export default function WebLinks({navigation, route}) {
             style={{
               marginTop: moderateScaleVertical(20),
               marginBottom: moderateScaleVertical(25),
-              marginHorizontal: moderateScale(18),
+              marginLeft: moderateScale(6),
               justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
               flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
