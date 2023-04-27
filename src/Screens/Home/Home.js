@@ -96,8 +96,6 @@ export default function Home({ route, navigation }) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [nearestLocDis, setNearestLocDis] = useState(null)
-  const [ispriceTypeModal, setIsPriceTypeModal] = useState(false)
-  const [priceType, setPriceType] = useState('vendor')
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -422,7 +420,6 @@ export default function Home({ route, navigation }) {
 
   //Home data
   const homeData = (locationData = null, selectedFilter = null) => {
-
     if (!isFocused) {
       return;
     }
@@ -470,9 +467,6 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
-      if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (selectedVendorType === "on_demand" || defaultVendorType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection) {
-        setIsPriceTypeModal(true)
-      }
 
       let apiData = {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
@@ -597,7 +591,7 @@ export default function Home({ route, navigation }) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    if (priceType === "freelancer") {
+    if (dineInType === "on_demand") {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
         id: item.id,
@@ -1618,60 +1612,6 @@ export default function Home({ route, navigation }) {
           onClose={_stopOrderModalClose}
         />
       )}
-      <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
-        <View style={{ height: moderateScaleVertical(170), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
-          <Text style={{
-            fontFamily: fontFamily?.bold,
-            fontSize: textScale(16)
-          }}>Select pricing type</Text>
-          <View style={{
-            margin: moderateScale(12)
-          }}>
-            <TouchableOpacity
-              onPress={() => setPriceType("vendor")}
-              style={{
-                flexDirection: "row",
-                alignItems: "center"
-              }}>
-              <Image source={priceType == "vendor" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
-              <Text style={{
-                fontFamily: fontFamily?.regular,
-                fontSize: textScale(14),
-                marginLeft: moderateScale(8)
-              }}>From Vendor</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setPriceType("freelancer")}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: moderateScaleVertical(12)
-              }}>
-              <Image source={priceType == "freelancer" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
-              <Text style={{
-                fontFamily: fontFamily?.regular,
-                fontSize: textScale(14),
-                marginLeft: moderateScale(8)
-              }}>From Freelancer</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setIsPriceTypeModal(false)} style={{
-              borderWidth: 1,
-              borderColor: themeColors?.primary_color,
-              height: 35,
-              borderRadius: 10,
-              alignItems: "center",
-              justifyContent: "center",
-              alignSelf: "flex-end",
-              marginTop: moderateScale(10),
-              paddingHorizontal: moderateScale(10)
-            }}>
-              <Text style={{
-                color: themeColors?.primary_color
-              }}>{"Done"}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </WrapperContainer>
   );
 }
