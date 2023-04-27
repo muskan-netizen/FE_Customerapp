@@ -36,14 +36,13 @@ import stylesFunc from './styles';
 // create a component
 const FreelancerService = ({ route, navigation }) => {
     const { data } = route.params;
-
     const moveToNewScreen = (screenName, data) => () => {
         navigation.navigate(screenName, { data });
     };
     const darkthemeusingDevice = useDarkMode();
 
     const { appData, themeColors, themeLayouts, currencies, languages, themeColor, themeToggle, redirectedFrom, } = useSelector((state) => state?.initBoot)
-    const { dineInType, location } = useSelector((state) => state?.home?.dineInType);
+    const { dineInType, location } = useSelector((state) => state?.home);
     const { reloadData } = useSelector((state) => state?.reloadData);
     const { userData } = useSelector((state) => state?.auth);
     const selectedAddressData = useSelector((state) => state?.cart?.selectedAddress);

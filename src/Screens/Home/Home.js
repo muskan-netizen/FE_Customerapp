@@ -591,7 +591,7 @@ export default function Home({ route, navigation }) {
   };
   //onPress Category
   const onPressCategory = (item) => {
-    if (dineInType === "on_demand") {
+    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
         id: item.id,
@@ -1000,6 +1000,7 @@ export default function Home({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
