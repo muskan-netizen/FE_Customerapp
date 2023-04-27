@@ -20,6 +20,7 @@ import {
   SendProduct,
   Vendors,
   Vendors2,
+  ViewAllSearchItems,
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -86,6 +87,11 @@ export default function () {
       />
 
       <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
+
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
+      />
 
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}

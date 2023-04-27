@@ -24,6 +24,7 @@ import {
   DECLINE_RIDE_BID,
   ACCEPT_RIDE_BID,
   ACCEPT_RIDE_FOR_BID,
+  SERACH_ALL_ITEMS,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
@@ -351,6 +352,20 @@ export function onGlobalSearchV2(query = '', data = {}, headers = {}) {
   console.log('search global');
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_V2 + query, data, headers)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+export function viewAllSearchItemV2(query = '', data = {}, headers = {}) {
+  console.log('search global');
+  return new Promise((resolve, reject) => {
+    apiPost(SERACH_ALL_ITEMS + query, data, headers)
       .then((response) => {
         resolve(response);
       })

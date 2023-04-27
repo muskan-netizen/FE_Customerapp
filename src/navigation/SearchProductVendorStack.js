@@ -1,17 +1,18 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   ProductList3,
   SearchProductVendorItem,
   SearchProductVendorItem2,
   SearchProductVendorItem3V2,
+  ViewAllSearchItems,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
 export default function () {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const { appStyle } = useSelector((state) => state?.initBoot);
 
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
@@ -35,6 +36,10 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={ProductList3}
+      />
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
       />
     </Stack.Navigator>
   );

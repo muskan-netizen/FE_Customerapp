@@ -3,6 +3,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
 // export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
+// export const API_BASE_URL = 'http://192.168.102.143:8001/api/v1'
 
 
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
@@ -804,3 +805,5 @@ export const SAVED_CARD_LIST = getApiUrl('/user/get-user-cards');
 
 
 export const DELETE_CARD = getApiUrl('/user/deleteCard');
+
+export const SERACH_ALL_ITEMS = getApiUrl('/v2/search/all');

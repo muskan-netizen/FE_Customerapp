@@ -44,6 +44,7 @@ import {
 } from './DashboardViews/Index';
 
 import { enableFreeze } from "react-native-screens";
+import socketServices from '../../utils/scoketService';
 enableFreeze(true);
 
 

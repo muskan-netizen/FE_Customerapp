@@ -60,6 +60,7 @@ import {
   UdhaarLedger,
   Vendors,
   Vendors2,
+  ViewAllSearchItems,
   Wallet,
   WebLinks,
   WebPayment,
@@ -277,6 +278,10 @@ export default function ({navigation}) {
         component={ReferAndEarn}
       />
       <Stack.Screen name={navigationStrings.SAVEDCARDS} component={SavedCards} />
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
+      />
     </Stack.Navigator>
   );
 }

@@ -49,6 +49,7 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
+  ViewAllSearchItems,
   Wishlist,
   Wishlist2,
 } from '../Screens';
@@ -288,6 +289,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.WISHLIST}
         component={Wishlist2}
+      />
+
+<Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
       />
 
     </Stack.Navigator>

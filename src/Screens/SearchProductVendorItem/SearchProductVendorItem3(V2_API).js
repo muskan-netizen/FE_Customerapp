@@ -207,7 +207,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
       language: languages?.primary_language?.id,
     })
       .then((response) => {
-        console.log('res==>>>>++', response);
+        console.log('res==>>>>++ search', response);
         if (response.data.length == 0) {
           isNoMore = true;
         }
@@ -510,9 +510,15 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     );
   };
 
-  const renderProduct = ({ item }) => {
+  const onPresItem = (item) =>{
+    console.log("pressed item+++",item)
+    navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM,{view_type: item?.title.toLowerCase()})
+  }
+
+  const renderProduct = ({ item, index }) => {
     return (
       <View
+        key={String(item?.id || index)}
         style={{
           flex: 1,
           flexDirection: 'row',
@@ -528,6 +534,8 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           />
         )}
         <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
+
+          <View style={{flexDirection:"row",alignItems:'center',justifyContent:'space-between'}}>
           <Text
             numberOfLines={1}
             style={{
@@ -537,6 +545,20 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
             }}>
             {item?.dataname || item?.title || item?.name}
           </Text>
+            {
+              //!!item?.next_page_url > 1
+            }
+          {true ?<TouchableOpacity
+          activeOpacity={0.7}
+          onPress={()=>onPresItem(item)}
+          >
+            <Text style={{
+                 fontSize: textScale(12),
+                 fontFamily: fontFamily?.medium,
+                 color: themeColors?.primary_color,
+            }}>{strings.VIEW_ALL}</Text>
+          </TouchableOpacity>:null}
+          </View>
           <View
             style={{
               marginLeft: moderateScale(10),
@@ -558,6 +580,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                   }}
                 />
               )}
+              keyExtractor={(item, index) => String(item?.id || index)}
             />
           </View>
         </View>
@@ -751,7 +774,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
             <FlatList
               data={searchData}
               renderItem={renderProduct}
-              keyExtractor={(item, index) => String(index)}
+              keyExtractor={(item, index) => String(item?.id || index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
               style={{ flex: 1 }}
@@ -759,7 +782,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               ItemSeparatorComponent={() => (
                 <View style={{ height: moderateScale(20) }} />
               )}
-              onEndReached={onEndReached}
+              // onEndReached={onEndReached}
               ListHeaderComponent={() => (
                 <View style={{ height: moderateScale(16) }} />
               )}

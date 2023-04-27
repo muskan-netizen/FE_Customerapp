@@ -170,4 +170,5 @@ export default {
   BIDINGDRIVERSLIST: 'BidingDriversList',
   SAVEDCARDS: 'SavedCards',
   SKIP_CASH: 'SkipCash',
+  VIEW_ALL_SEARCH_ITEM:"ViewAllSearchItems",
 };

@@ -87,7 +87,12 @@ export default function () {
             <Stack.Screen
                 name={navigationStrings.SEARCHPRODUCTOVENDOR}
                 component={checkSearchProductVendorItemLayout()}
-    
+
+            />
+
+            <Stack.Screen
+                name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+                component={Screens.ViewAllSearchItems}
             />
 
         </Stack.Navigator>

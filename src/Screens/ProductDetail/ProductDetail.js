@@ -1257,16 +1257,16 @@ export default function ProductDetail({ route, navigation }) {
       <Animatable.View
         animation='slideInLeft'
         delay={index * 100}
-        style={{ flex: 1 }}
+        style={{ flex: 1, width: width / 2.5  }}
       >
-        <View style={{ width: width / 2 }}>
+
           <ProductsComp3
             item={item}
             onPress={() =>
               navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
             }
           />
-        </View>
+
       </Animatable.View>
     );
   };

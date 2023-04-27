@@ -28,6 +28,7 @@ import {
 import { chekLocationPermission } from '../../utils/permissions';
 import { DashBoardFiveV2Api, DashBoardHeaderFive } from './DashboardViews/Index';
 import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
+import socketServices from '../../utils/scoketService';
 enableFreeze(true);
 
 
@@ -138,7 +139,7 @@ export default function Home({ route, navigation }) {
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      // socketServices.initializeSocket(appData?.profile?.socket_url);
+      socketServices.initializeSocket(appData?.profile?.socket_url);
     }
   }, [appData]);
 
