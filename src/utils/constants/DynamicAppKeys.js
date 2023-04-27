@@ -516,7 +516,7 @@ const shortCodes = {
   oaks: 'db5f29',
   buzy: '5e7246',
   etaim: '4b3283',
-  dotTaxiApp: 'ba540d',
+  dotTaxiApp: 'f9e0e1',
   airvoltTaxi: '41ca60',
   melakPharmacy: '4dbfe1',
   wiEnergi: '39c65c',
@@ -2387,7 +2387,7 @@ const appIds = {
   }),
   greenhippo: Platform.select({
     ios: 'com.greenhippo.royoorders',
-    android: 'com.greenhippo.royoorders',
+    android: 'com.greenhippo.orders',
   }),
   mymeddy: Platform.select({
     ios: 'com.mymeddy.royoorders',
@@ -2607,8 +2607,8 @@ const appIds = {
     android: 'com.etiam.orderApp',
   }),
   dotTaxiApp: Platform.select({
-    ios: 'com.dotTaxiApp.royoorder',
-    android: 'com.dotTaxiApp.royoorder',
+    ios: 'com.dotTaxi.order',
+    android: 'com.dotTaxi.order',
   }),
   airvoltTaxi: Platform.select({
     ios: 'com.airvoltTaxi.royoorder',

@@ -21,7 +21,7 @@ const MarketCard2 = ({data = {}, onPress = () => {}, extraStyles = {}}) => {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle,appData} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, extraStyles});
@@ -82,7 +82,7 @@ const MarketCard2 = ({data = {}, onPress = () => {}, extraStyles = {}}) => {
             dashColor={colors.borderColorD}
           />
         </View>
-        {data?.product_avg_average_rating && (
+        {!!appData?.profile?.preferences?.rating_check && data?.product_avg_average_rating && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               style={{tintColor: isDarkMode ? colors.yellowB : colors.black}}

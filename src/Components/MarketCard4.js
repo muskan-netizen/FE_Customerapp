@@ -65,7 +65,7 @@ const MarketCard4 = ({
         return (
             <View style={{ flex: 1, justifyContent: 'space-between' }}>
                <View style={{justifyContent:'space-between',flexDirection:'row', alignItems:'center'}} >
-               {!!data?.product_avg_average_rating && (
+               {!!appData?.profile?.preferences?.rating_check && !!data?.product_avg_average_rating && (
                         <View
                             style={{
                                 flexDirection: 'row',

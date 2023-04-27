@@ -266,7 +266,10 @@ const P2pProductDetail = ({ navigation, route }) => {
   };
 
   if (isLoading) {
-    return <WrapperContainer isLoading={isLoading} />;
+    return <WrapperContainer isLoading={isLoading} 
+    bgColor={
+      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+    } />;
   }
 
   return (

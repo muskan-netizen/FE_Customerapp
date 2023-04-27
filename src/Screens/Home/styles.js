@@ -10,7 +10,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 
-export default ({ themeColors, fontFamily }) => {
+export default ({ themeColors, fontFamily,isDarkMode }) => {
   const styles = StyleSheet.create({
     modalContainer: {
       backgroundColor: colors.white,
@@ -362,7 +362,7 @@ export default ({ themeColors, fontFamily }) => {
       marginVertical: moderateScale(10),
     },
     viewAllText: {
-      color: themeColors.primary_color,
+      color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
     },

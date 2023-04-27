@@ -90,7 +90,7 @@ const ProductsCompTwo = ({ isDiscount, item, imageStyle, onPress = () => { } }) 
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && item?.averageRating !== '0.0' && (
+        {!!appData?.profile?.preferences?.rating_check && !!item?.averageRating && item?.averageRating !== '0.0' && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{
