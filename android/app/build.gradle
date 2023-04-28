@@ -218,16 +218,16 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-    dotTaxiApp{
-                dimension "appType"
-                versionCode 1
-                versionName "1.0"
-                minSdkVersion rootProject.ext.minSdkVersion
-                targetSdkVersion rootProject.ext.targetSdkVersion
-                applicationId 'com.dotTaxi.order'
-                resValue "string", "app_name", "Dot Taxi "
-                resValue "string", "host_name", ""
-            }
+            tempcorner{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.tempcorner.royoorder'
+                    resValue "string", "app_name", "Tempcorner"
+                    resValue "string", "host_name", ""
+                }
       }
 
 }
