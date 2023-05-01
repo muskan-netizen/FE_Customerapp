@@ -550,7 +550,7 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data_++++++++', cartData,businessType,dineInType);
+  console.log('cart data_++++++++', cartData, businessType, dineInType);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -2568,7 +2568,7 @@ function Cart({ navigation, route }) {
           {/* offerview end */}
 
           {/* start amount view       */}
-          <CouponDiscount item={item} isDarkMode={isDarkMode} styles={styles} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} currencies={currencies} preferences={preferences} />
+          <CouponDiscount item={item} isDarkMode={isDarkMode} styles={styles} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} currencies={currencies} preferences={preferences} renderDropDown={renderDropDown} sel_types={sel_types} />
         </View >
       </View >
     );
