@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
-import {Platform} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 import {navigate} from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
@@ -8,47 +8,47 @@ import actions from '../redux/actions';
 import {getItem} from './utils';
 
 
-export async function requestUserPermission(callback = () => { }) {
-
+export async function requestUserPermission(callback = () => {}) {
+  
   if (Platform.OS === 'ios') {
     await messaging().registerDeviceForRemoteMessages();
     // await messaging().registerForRemoteNotifications()
   }
-
-
-
-  try {
-    const granted = await PermissionsAndroid.request(
-      PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
-      {
-        title: 'Notification Permission',
-        message: 'Allow this app to post notifications?',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
-    console.log(granted, 'grantedgrantedgrantedgranted');
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      getFcmToken();
-      callback(false);
-    } else {
-      callback(true)
-    }
-  } catch (err) {
-    console.warn(err);
+  if (Platform.Version>=33) {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+          {
+            title: 'Notification Permission',
+            message: 'Allow this app to post notifications?',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        console.log(granted,'grantedgrantedgrantedgranted');
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          getFcmToken();
+          callback(false);
+        } else {
+          callback(true)
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    
+  } else {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      if (enabled) {
+        getFcmToken();
+        callback(false);
+      } else callback(true);
   }
-
-
-  // const authStatus = await messaging().requestPermission();
-  // const enabled =
-  // authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-  //   authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  //   if (enabled) {
-  //     getFcmToken();
-  //     callback(false);
-  //   } else callback(true);
 }
+
 
 
 const getFcmToken = async () => {
