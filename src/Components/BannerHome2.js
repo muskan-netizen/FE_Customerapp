@@ -97,10 +97,12 @@ const BannerHome2 = ({
         <Carousel
           ref={bannerRef}
           data={bannerData}
+          scrollEnabled={true}
           renderItem={bannerDataImages}
           autoplay={true}
           loop={true}
           autoplayInterval={2000}
+          enableMomentum={true}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           onSnapToItem={(index) => setSnapState(index)}

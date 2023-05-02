@@ -2558,6 +2558,7 @@ function Cart({ navigation, route }) {
             cartData={cartData}
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
+            getProductFAQs={getProductFAQs}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />

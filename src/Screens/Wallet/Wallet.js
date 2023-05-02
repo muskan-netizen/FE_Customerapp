@@ -1,7 +1,7 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {debounce} from 'lodash';
+import { useFocusEffect } from '@react-navigation/native';
+import { debounce } from 'lodash';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -35,21 +35,22 @@ import {
   getValuebyKeyInArray,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
 import Modal from 'react-native-modal';
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
-import {showMessage} from 'react-native-flash-message';
-import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
-import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { showMessage } from 'react-native-flash-message';
+import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
+import { BarIndicator, UIActivityIndicator } from 'react-native-indicators';
 
 import BorderTextInput from '../../Components/BorderTextInput';
+import { getBuildId, getBundleId } from 'react-native-device-info';
 
-export default function Wallet({navigation}) {
+export default function Wallet({ navigation }) {
   const [state, setState] = useState({
     pageNo: 1,
     limit: 12,
@@ -65,19 +66,19 @@ export default function Wallet({navigation}) {
     errorRaised: null,
   });
 
-  const {appData, themeColors, currencies, themeColor, themeToggle, appStyle} =
+  const { appData, themeColors, currencies, themeColor, themeToggle, appStyle } =
     useSelector((state) => state?.initBoot || {});
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
-  const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  const commonStyles = commonStylesFun({ fontFamily });
+  const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
   const {
     pageNo,
@@ -133,15 +134,15 @@ export default function Wallet({navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const searchUser = async (val) => {
     try {
-      let data = {username: val};
+      let data = { username: val };
       const res = await actions.walletUserVerify(data, {
         code: appData?.profile?.code,
       });
@@ -151,7 +152,7 @@ export default function Wallet({navigation}) {
         '400/400',
       );
       console.log('verifiedUser res++', imageUrl);
-      const resData = {name: res?.data?.name || '', image: imageUrl || ''};
+      const resData = { name: res?.data?.name || '', image: imageUrl || '' };
       updateState({
         verifiedUser: resData,
         errorRaised: null,
@@ -171,7 +172,7 @@ export default function Wallet({navigation}) {
     const searchInterval = setTimeout(() => {
       let searchObj = {};
       if (transferEmail.trim()) {
-        updateState({searchLoader: true});
+        updateState({ searchLoader: true });
         searchObj.search_text = transferEmail;
       }
       if (!!searchObj.search_text) {
@@ -217,7 +218,7 @@ export default function Wallet({navigation}) {
   const onConfirm = async () => {
     const isValid = checkValid();
     if (isValid) {
-      updateState({confirmLoader: true});
+      updateState({ confirmLoader: true });
       try {
         let data = {
           username: transferEmail,
@@ -241,7 +242,7 @@ export default function Wallet({navigation}) {
       } catch (error) {
         console.log('error raised', error);
         showError(error?.message || '');
-        updateState({confirmLoader: false});
+        updateState({ confirmLoader: false });
       }
     }
   };
@@ -257,7 +258,7 @@ export default function Wallet({navigation}) {
     });
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity>
         <View
@@ -289,7 +290,7 @@ export default function Wallet({navigation}) {
             </Text>
           </View>
           <View
-            style={[styles.addMoneyListDesc, {backgroundColor: 'transparent'}]}>
+            style={[styles.addMoneyListDesc, { backgroundColor: 'transparent' }]}>
             <HTMLView
               stylesheet={isDarkMode ? htmlStyle : null}
               value={`<p>${item?.meta?.description || item?.meta}</p>`}
@@ -303,7 +304,7 @@ export default function Wallet({navigation}) {
               numberOfLines={2}
               style={
                 isDarkMode
-                  ? [styles.addedMoneyValue, {color: MyDarkTheme.colors.text}]
+                  ? [styles.addedMoneyValue, { color: MyDarkTheme.colors.text }]
                   : styles.addedMoneyValue
               }>
               {getValuebyKeyInArray(
@@ -311,20 +312,18 @@ export default function Wallet({navigation}) {
                 additional_preferences,
               ) && item.type == 'withdraw'
                 ? tokenConverterPlusCurrencyNumberFormater(
-                    item.amount,
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                  )
+                  item.amount,
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )
                 : item.type == 'deposit'
-                ? `+${
-                    currencies?.primary_currency?.symbol
+                  ? `+${currencies?.primary_currency?.symbol
                   } ${currencyNumberFormatter(
                     item.amount,
                     appData?.profile?.preferences?.digit_after_decimal,
                   )}`
-                : `${
-                    currencies?.primary_currency?.symbol
+                  : `${currencies?.primary_currency?.symbol
                   } ${currencyNumberFormatter(
                     item.amount,
                     appData?.profile?.preferences?.digit_after_decimal,
@@ -340,17 +339,17 @@ export default function Wallet({navigation}) {
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    updateState({ pageNo: pageNo + 1 });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({ pageNo: 1, isRefreshing: true });
   };
 
   const onTransferFunds = () => {
-    updateState({transferModal: true});
+    updateState({ transferModal: true });
   };
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
     leading: true,
@@ -361,12 +360,12 @@ export default function Wallet({navigation}) {
     return (
       <View style={styles.addMoneyCon}>
         <TouchableOpacity onPress={goToAddMoney} style={styles.addMoneybtn}>
-          <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+          <Text style={{ ...styles.addMoneyText, letterSpacing: 1 }}>
             {strings.ADD_MONEY}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onTransferFunds} style={styles.addMoneybtn}>
-          <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+          <Text style={{ ...styles.addMoneyText, letterSpacing: 1 }}>
             {strings.TRANSFER_FUNDS}
           </Text>
         </TouchableOpacity>
@@ -385,14 +384,14 @@ export default function Wallet({navigation}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.WALLET}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.white }
         }
       />
 
@@ -402,7 +401,7 @@ export default function Wallet({navigation}) {
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: Colors.white}}
       /> */}
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       {!getValuebyKeyInArray(
         'is_token_currency_enable',
         additional_preferences,
@@ -412,34 +411,34 @@ export default function Wallet({navigation}) {
             style={
               isDarkMode
                 ? [
-                    styles.availableBalanceCon,
-                    {backgroundColor: MyDarkTheme.colors.background},
-                  ]
+                  styles.availableBalanceCon,
+                  { backgroundColor: MyDarkTheme.colors.background },
+                ]
                 : styles.availableBalanceCon
             }>
             <View style={styles.balanceCon}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text
                   style={
                     isDarkMode
                       ? [
-                          styles.availableBalanceText,
-                          {color: MyDarkTheme.colors.text},
-                        ]
+                        styles.availableBalanceText,
+                        { color: MyDarkTheme.colors.text },
+                      ]
                       : styles.availableBalanceText
                   }>
                   {strings.AVAILABLE_BALANCE}
                 </Text>
               </View>
 
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text
                   style={
                     isDarkMode
                       ? [
-                          styles.availableBalanceValue,
-                          {color: MyDarkTheme.colors.text},
-                        ]
+                        styles.availableBalanceValue,
+                        { color: MyDarkTheme.colors.text },
+                      ]
                       : styles.availableBalanceValue
                   }>
                   {currencies?.primary_currency?.symbol}{' '}
@@ -470,9 +469,9 @@ export default function Wallet({navigation}) {
                 style={
                   isDarkMode
                     ? [
-                        styles.availableBalanceValue,
-                        {color: MyDarkTheme.colors.text},
-                      ]
+                      styles.availableBalanceValue,
+                      { color: MyDarkTheme.colors.text },
+                    ]
                     : styles.availableBalanceValue
                 }>
                 {currencies?.primary_currency?.symbol}{' '}
@@ -485,9 +484,9 @@ export default function Wallet({navigation}) {
                 style={
                   isDarkMode
                     ? [
-                        styles.availableBalanceText,
-                        {color: MyDarkTheme.colors.text},
-                      ]
+                      styles.availableBalanceText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
                     : styles.availableBalanceText
                 }>
                 {strings.AVAILABLE_BALANCE}
@@ -501,9 +500,9 @@ export default function Wallet({navigation}) {
                 style={
                   isDarkMode
                     ? [
-                        styles.availableBalanceValue,
-                        {color: MyDarkTheme.colors.text},
-                      ]
+                      styles.availableBalanceValue,
+                      { color: MyDarkTheme.colors.text },
+                    ]
                     : styles.availableBalanceValue
                 }>
                 {tokenConverterPlusCurrencyNumberFormater(
@@ -517,9 +516,9 @@ export default function Wallet({navigation}) {
                 style={
                   isDarkMode
                     ? [
-                        styles.availableBalanceText,
-                        {color: MyDarkTheme.colors.text},
-                      ]
+                      styles.availableBalanceText,
+                      { color: MyDarkTheme.colors.text },
+                    ]
                     : styles.availableBalanceText
                 }>
                 {'Token Balance'}
@@ -542,7 +541,7 @@ export default function Wallet({navigation}) {
                 borderRadius: moderateScale(5),
                 alignItems: 'center',
               }}>
-              <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+              <Text style={{ ...styles.addMoneyText, letterSpacing: 1 }}>
                 {strings.ADD_MONEY}
               </Text>
             </TouchableOpacity>
@@ -556,7 +555,7 @@ export default function Wallet({navigation}) {
                 borderRadius: moderateScale(5),
                 alignItems: 'center',
               }}>
-              <Text style={{...styles.addMoneyText, letterSpacing: 1}}>
+              <Text style={{ ...styles.addMoneyText, letterSpacing: 1 }}>
                 {strings.TRANSFER_FUNDS}
               </Text>
             </TouchableOpacity>
@@ -567,24 +566,24 @@ export default function Wallet({navigation}) {
         style={
           isDarkMode
             ? [
-                styles.transactionHistoryCon,
-                {backgroundColor: MyDarkTheme.colors.background},
-              ]
+              styles.transactionHistoryCon,
+              { backgroundColor: MyDarkTheme.colors.background },
+            ]
             : styles.transactionHistoryCon
         }>
         <Text
           style={
             isDarkMode
               ? [
-                  styles.transactionHistoryText,
-                  {color: MyDarkTheme.colors.text},
-                ]
+                styles.transactionHistoryText,
+                { color: MyDarkTheme.colors.text },
+              ]
               : styles.transactionHistoryText
           }>
           {strings.TRANSACTION_HISTORY}
         </Text>
       </View>
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       <View
         style={{
           backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
@@ -597,7 +596,7 @@ export default function Wallet({navigation}) {
         <FlatList
           data={walletHistory}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<View style={{height: 4}} />}
+          ListHeaderComponent={<View style={{ height: 4 }} />}
           ItemSeparatorComponent={(walletHistory, index) =>
             index == walletHistory.length ? null : (
               <View style={styles.cartItemLine}></View>
@@ -664,7 +663,7 @@ export default function Wallet({navigation}) {
             }}>
             {strings.AVAILABLE_BALANCE}
           </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
                 ...styles.availableBalanceValue,
@@ -691,7 +690,7 @@ export default function Wallet({navigation}) {
               placeholderTextColor={
                 isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51
               }
-              onChangeText={(text) => updateState({transferAmount: text})}
+              onChangeText={(text) => updateState({ transferAmount: text })}
               style={styles.textInputStyle}
               keyboardType="number-pad"
             />
@@ -704,21 +703,21 @@ export default function Wallet({navigation}) {
             }}>
             {strings.TRANSFER_TO}
           </Text>
-          <View style={{...styles.textInputView, alignItems: 'center'}}>
-            <View style={{flex: 1}}>
+          <View style={{ ...styles.textInputView, alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
               <TextInput
                 placeholder={
-                  strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE
+                  getBundleId() == appIds.qdelo ? 'Email / Phone Ex: 919876543210 ' : strings.ENTER_EMAIL_OR_PHONE_NUMBER_WITH_COUNTRY_CODE
                 }
                 placeholderTextColor={
                   isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51
                 }
-                onChangeText={(text) => updateState({transferEmail: text})}
+                onChangeText={(text) => updateState({ transferEmail: text })}
                 style={styles.textInputStyle}
               />
             </View>
             {searchLoader ? (
-              <View style={{flex: 0.1, alignItems: 'flex-end'}}>
+              <View style={{ flex: 0.1, alignItems: 'flex-end' }}>
                 <UIActivityIndicator
                   size={20}
                   color={themeColors.primary_color}
@@ -742,9 +741,9 @@ export default function Wallet({navigation}) {
               </Text>
             ) : null}
             {!!verifiedUser ? (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image
-                  source={{uri: verifiedUser?.image || ''}}
+                  source={{ uri: verifiedUser?.image || '' }}
                   style={{
                     height: moderateScale(50),
                     width: moderateScale(50),
@@ -779,7 +778,7 @@ export default function Wallet({navigation}) {
               isLoading={confirmLoader}
               onPress={onConfirm}
             />
-            <View style={{marginHorizontal: moderateScaleVertical(8)}} />
+            <View style={{ marginHorizontal: moderateScaleVertical(8) }} />
             <ButtonWithLoader
               btnStyle={{
                 flex: 1,

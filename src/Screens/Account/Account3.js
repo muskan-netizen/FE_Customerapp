@@ -8,7 +8,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
@@ -40,6 +40,8 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+
+import { bluetoothPermission } from '../../utils/permissions';
 export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -134,6 +136,8 @@ export default function Account3({ navigation }) {
       })
       .catch((err) => console.log(err, 'errororroro'));
   };
+
+
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -685,13 +689,25 @@ export default function Account3({ navigation }) {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
                     if (Boolean(enabled)) {
-                      navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                    } else {
-                      BluetoothManager.enableBluetooth()
-                        .then(() => {
+                      bluetoothPermission().then((res) => {
+                          console.log(res, 'resreserserserser')
                           navigation.navigate(navigationStrings.ATTACH_PRINTER);
+
                         })
-                        .catch((err) => { });
+              
+                    } else {
+                     
+                      bluetoothPermission().then((res) => {
+                          console.log(res, 'resesersererser')
+                          BluetoothManager.enableBluetooth()
+                            .then((res) => {
+
+                              navigation.navigate(navigationStrings.ATTACH_PRINTER);
+
+                            })
+                            .catch((err) => { });
+                        })
+                      
                     }
                   },
                   (err) => {

@@ -34,13 +34,13 @@ import strings from '../../../constants/lang';
 
 /**
  * SwipeableSection Part
- * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription} props 
+ * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription,getProductFAQs} props 
  * @returns 
  */
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription } = props;
+    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription,getProductFAQs } = props;
     return (
         <>
             {item?.vendor_products.length > 0
