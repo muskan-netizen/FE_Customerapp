@@ -57,7 +57,7 @@ function PromoCodeAvailableSection(props) {
                                             styles.viewOffers,
                                             { marginLeft: moderateScale(10) },
                                         ]}>
-                                        {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
+                                        {`${item?.couponData?.name} ${strings.CODE} ${strings.APPLYED}`}
                                     </Text>
                                 </View>
                                 <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
