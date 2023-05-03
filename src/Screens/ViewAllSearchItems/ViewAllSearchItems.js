@@ -17,6 +17,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+    height,
     moderateScale,
     moderateScaleVertical,
     width,
@@ -32,7 +33,11 @@ import { Text } from 'react-native';
 import staticStrings from '../../constants/staticStrings';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import ProductsComp3 from '../../Components/ProductsComp3';
+import SearchBar from '../../Components/SearchBar';
 enableFreeze(true);
+
+let isNoMore = false;
+let onEndReachedCalledDuringMomentum = false;
 
 export default function ViewAllSearchItems({ route, navigation }) {
     const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot || {});
@@ -46,7 +51,10 @@ export default function ViewAllSearchItems({ route, navigation }) {
     const fontFamily = appStyle?.fontSizeData;
     const commonStyles = commonStylesFun({ fontFamily });
 
-    const paramData = route?.params
+    const { view_type, searchText } = route?.params || ''
+
+
+    const [searchInput, setSearchInput] = useState(searchText)
 
     const [state, setState] = useState({
         isLoading: true,
@@ -62,6 +70,9 @@ export default function ViewAllSearchItems({ route, navigation }) {
         nearMe: 0,
         userCurrentLatitude: null,
         userCurrentLongitude: null,
+        isVoiceRecord: false,
+        showRightIcon: false,
+        pageCount: 1
 
     });
 
@@ -78,7 +89,10 @@ export default function ViewAllSearchItems({ route, navigation }) {
         bestSeller,
         nearMe,
         userCurrentLatitude,
-        userCurrentLongitude
+        userCurrentLongitude,
+        showRightIcon,
+        isVoiceRecord,
+        pageCount
     } = state;
 
     //update state
@@ -98,13 +112,60 @@ export default function ViewAllSearchItems({ route, navigation }) {
     }, [])
 
 
+
     useEffect(() => {
-        apiHit(pageNo);
-    }, []);
+        isNoMore = false
+        const searchInterval = setTimeout(() => {
+            let searchObj = {};
+
+            if (searchInput.trim() && searchInput.length > 1) {
+                updateState({
+                    searchLoader: true,
+                    showRightIcon: true,
+                    pageCount: 1,
+                    showShimmer: true,
+                });
+                searchObj.search_text = searchInput;
+                isNoMore = false;
+            }
+            if (true) {
+                console.log('calling.....2');
+                apiHit(1, true); //search from start
+                updateState({ showRightIcon: false })
+            } else {
+                updateState({
+                    searchData: [],
+                    showRightIcon: false,
+                    isLoading: false,
+                    searchLoader: false,
+                    showShimmer: false,
+                });
+            }
+        }, 600);
+        return () => {
+            if (searchInterval) {
+                clearInterval(searchInterval);
+            }
+        };
+    }, [searchInput]);
+
+
+    const onChangeText = (value) => {
+        setSearchInput(value)
+        updateState({
+            isLoading: false,
+        });
+    };
+
+    const rightIconPress = () => {
+        setSearchInput('')
+        updateState({ isLoading: false })
+    }
+
 
     //Home data
-    const apiHit = (pageNo) => {
-        let latlongObj = {};
+    const apiHit = (pageNo, searchAgain = false) => {
+
         if (!!appData?.profile?.preferences?.is_hyperlocal) {
             latlongObj = {
                 latitude: location?.latitude,
@@ -112,7 +173,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
             };
         }
         let data = {};
-        data['keyword'] = 'testing';
+        data['keyword'] = searchInput;
         data['type'] = dineInType;
         data['limit'] = 10;
         data['latitude'] = !!location?.latitude
@@ -121,8 +182,8 @@ export default function ViewAllSearchItems({ route, navigation }) {
         data['longitude'] = !!location?.longitude
             ? location?.longitude
             : userCurrentLongitude;
-        data['page'] = 1;
-        data['view_type'] = paramData?.view_type || 'category'
+        data['page'] = pageNo;
+        data['view_type'] = view_type || 'category'
 
 
         let headers = {
@@ -130,20 +191,31 @@ export default function ViewAllSearchItems({ route, navigation }) {
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,
         };
-        console.log(data, 'sending data headers', headers);
+        console.log(data, 'sending data+++');
 
 
         actions.viewAllSearchItemV2('', data, headers)
             .then((res) => {
-                console.log('Home data++++++', res);
-                // if (totalProduct == 0) {
-                //     updateState({ totalProduct: res?.data?.total });
-                // }
-                updateState({
-                    data: pageNo == 1 ? res?.data[0]?.result : [...data, ...res?.data[0]?.result],
-                    isLoading: false,
-                    loadMore: false,
-                });
+                console.log('search data++++++', res?.data);
+                if (!!res?.data) {
+                    let mergeData = pageNo == 1 ? res?.data[0]?.result : [...data, ...res?.data[0]?.result]
+                    console.log("merging data", mergeData)
+                    isNoMore = false
+                    updateState({
+                        data: mergeData,
+                        totalProduct: res?.data[0]?.total,
+                        isLoading: false,
+                        pageCount: searchAgain ? 1 : pageCount + 1,
+                    });
+                    
+                } else {
+                    isNoMore = true
+                    updateState({
+                        isLoading: false,
+                        loadMore: false,
+                    })
+                }
+
             })
             .catch((error) => {
                 console.log('error raised', error);
@@ -259,21 +331,42 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
     const renderViewType = (item) => {
-        switch (paramData?.view_type) {
+
+        switch (view_type) {
             case 'category':
-                return (<BrandCard3
-                    data={item}
-                    onPress={() => onPressCategory(item)}
-                />)
+                return (
+                    <BrandCard3
+                        data={item}
+                        onPress={() => onPressCategory(item)}
+                    />)
             case 'product':
-                return (<ProductsComp3
-                    item={item}
-                    onPress={() =>
-                        navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
-                    }
-                />)
+                return (
+                    <View style={{
+                        width: '50%',
+                        marginRight: moderateScale(4)
+
+                    }}>
+                        <ProductsComp3
+                            item={item}
+                            onPress={() =>
+                                navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
+                            }
+                            containerStyle={{
+                                width: '100%',
+                                height: height / 3.2,
+
+                            }}
+                            numberOfLines={2}
+                        />
+                    </View>)
             case 'vendor':
-                return (<MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />)
+                return (
+                    <View style={{
+                        flex: 1
+                    }}>
+                        <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
+                    </View>
+                )
             case 'brand':
                 return (<BrandCard3
                     data={item}
@@ -286,18 +379,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
     }
 
     const _renderItem = ({ item, index }) => {
-        console.log("my item", item)
-        return (
-            <Animatable.View
-                style={{ marginHorizontal: moderateScale(15) }}
-            // animation={'fadeInUp'}
-            // delay={index * 60}
-            >
-                {renderViewType(item)}
-           
-
-            </Animatable.View>
-        );
+        return (renderViewType(item))
     };
 
     if (isLoading) {
@@ -309,9 +391,10 @@ export default function ViewAllSearchItems({ route, navigation }) {
                 statusBarColor={colors.backgroundGrey}>
                 <Header3
                     leftIcon={imagePath.icBackb}
-                    centerTitle={data?.name}
+                    centerTitle={view_type}
                     rightIcon={imagePath.search}
                     showAddress={false}
+
                 // location={location}
                 // onPressRight={() =>
                 //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -375,13 +458,31 @@ export default function ViewAllSearchItems({ route, navigation }) {
     }
 
     const onEndReached = () => {
-        if (totalProduct !== data.length) {
-            updateState({ pageNo: pageNo + 1, loadMore: true });
-            apiHit(pageNo + 1);
+        if (!isNoMore) {
+            updateState({ pageNo: pageNo + 1 });
+            apiHit(pageNo + 1, false);
         } else {
-            updateState({ loadMore: false });
+            isNoMore = true
         }
     };
+
+
+    const numColumnsReturn = () => {
+        switch (view_type) {
+            case 'vendor':
+                return 1
+            case 'brand':
+                return 3
+            case 'product':
+                return 2
+            case 'category':
+                return 3
+            default:
+                return 1
+        }
+    }
+
+
 
     return (
         <WrapperContainer
@@ -394,48 +495,67 @@ export default function ViewAllSearchItems({ route, navigation }) {
                 leftIcon={imagePath.icBackb}
                 showAddress={false}
                 rightIcon={imagePath.search}
-
-
             />
-            {/* <TouchableOpacity>
-          <Image source={imagePath.filter} />
-        </TouchableOpacity> */}
 
-            <SearchBar2 navigation={navigation} />
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={data}
-                extraData={data}
-                ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-                keyExtractor={(item, index) => String(index)}
-                renderItem={_renderItem}
-                onEndReachedThreshold={0.5}
-                // onEndReached={onEndReached}
-                initialNumToRender={6}
-                ListEmptyComponent={
-                    !isLoading && (
-                        <View
-                            style={{
-                                flex: 1,
-                                marginTop: moderateScaleVertical(width / 2),
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
-                            <NoDataFound isLoading={isLoading} />
+
+            <SearchBar
+                containerStyle={{
+                    marginRight: moderateScale(18),
+                    borderRadius: 8,
+                    width: width / 1.12,
+                    backgroundColor: isDarkMode
+                        ? colors.whiteOpacity15
+                        : colors.greyColor,
+                    height: moderateScaleVertical(42),
+                    marginLeft: moderateScale(25),
+                    marginBottom: moderateScaleVertical(16)
+                }}
+                searchValue={searchInput}
+                placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
+                onChangeText={(value) => onChangeText(value)}
+                showRightIcon={!!searchInput ? true : false}
+                rightIconPress={rightIconPress}
+                autoFocus={false}
+                showVoiceRecord={false}
+            />
+            <View style={{ marginHorizontal: moderateScale(8) }}>
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={data}
+                    extraData={data}
+                    ItemSeparatorComponent={() => <View style={{ height: moderateScale(8) }} />}
+                    numColumns={numColumnsReturn()}
+                    keyExtractor={(item, index) => String(index)}
+                    renderItem={_renderItem}
+                    onEndReachedThreshold={0.05}
+                    onEndReached={onEndReached}
+                    initialNumToRender={6}
+                    ListEmptyComponent={
+                        !isLoading && (
+                            <View
+                                style={{
+                                    flex: 1,
+                                    marginTop: moderateScaleVertical(width / 2),
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                <NoDataFound isLoading={isLoading} />
+                            </View>
+                        )
+                    }
+
+                    ListFooterComponent={!!loadMore ?
+                        <View style={{ marginBottom: moderateScale(100) }}>
+
+                            <UIActivityIndicator
+                                color={themeColors.primary_color}
+                                size={30}
+                            />
                         </View>
-                    )
-                }
-                ListFooterComponent={!!loadMore ?
-                    <View style={{ marginBottom: moderateScale(100) }}>
 
-                        <UIActivityIndicator
-                            color={themeColors.primary_color}
-                            size={30}
-                        />
-                    </View>
-
-                    : <View style={{ height: moderateScale(100) }} />}
-            />
+                        : <View style={{ height: moderateScale(100) }} />}
+                />
+            </View>
         </WrapperContainer>
     );
 }

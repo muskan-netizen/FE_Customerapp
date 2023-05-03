@@ -1,14 +1,10 @@
 //import liraries
-import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
-import ProductLoader from '../../../Components/Loaders/ProductLoader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
-import ContentLoader from 'react-native-easy-content-loader';
-import { View } from 'react-native';
 
-// create a component
 
 var cardHeight = moderateScale(60)
 var cardWidth = moderateScale(60)
@@ -103,4 +99,4 @@ const DashBoardFiveV2ApiLoader = () => {
     );
 };
 
-export default DashBoardFiveV2ApiLoader;
+export default React.memo(DashBoardFiveV2ApiLoader);

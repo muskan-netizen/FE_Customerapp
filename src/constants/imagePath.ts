@@ -609,10 +609,14 @@ export default {
   icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
   icEcomSearch: require('../assets/images/Ecommerce/ic_search_01-1.png'),
   wishlist2: require('../assets/images/Ecommerce/ic_wishlist_01.png'),
+  wishlist3: require('../assets/images/Ecommerce/ic_wishlist_03.png'),
+  icCart3:require('../assets/images/Ecommerce/ic_cart_03.png'),
 
   icCategory: require('../assets/images/Ecommerce/ic_categories_02.png'),
   icPrivacy: require('../assets/images/Ecommerce/ic_privacypolicy_02.png'),
   icTerms: require('../assets/images/Ecommerce/ic_terms&condition_02.png'),
+  icHamburger: require('../assets/images/Ecommerce/ic_hamburger_03.png'),
+  icEcomCart2: require('../assets/images/Ecommerce/ic_cart_03.png'),
 
 
   //Video

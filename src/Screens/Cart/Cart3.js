@@ -2563,8 +2563,10 @@ function Cart({ navigation, route }) {
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />
 
           {/* offerview */}
-          <PromoCodeAvailableSection themeColors={themeColors} item={item} styles={styles} cartData={cartData} _removeCoupon={_removeCoupon}
-            _getAllOffers={_getAllOffers} />
+          <PromoCodeAvailableSection themeColors={themeColors} item={item} styles={styles} cartData={cartData} _removeCoupon={_removeCoupon} _getAllOffers={_getAllOffers} />
+
+
+
           {/* offerview end */}
 
           {/* start amount view       */}

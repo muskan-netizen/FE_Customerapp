@@ -327,7 +327,7 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'featured_products' ||
               item?.slug == 'on_sale' ||
               item?.slug == 'most_popular_products' ||
-              item?.slug == 'recently_viewed'
+              item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
               ) ?
               <ProductsThemeView item={item} />
               : item?.slug == 'vendors' ?

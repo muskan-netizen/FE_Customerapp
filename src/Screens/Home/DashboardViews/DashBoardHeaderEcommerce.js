@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, Text, TouchableOpacity, View, Animated } from 'react-native';
+import { Image, SafeAreaView, Text, TouchableOpacity, View, Animated, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -96,20 +96,18 @@ export default function DashBoardHeaderEcommerce({
   const headerIconStyle = {
     height: moderateScale(34),
     width: moderateScale(34),
-    borderRadius: moderateScale(28 / 2)
+    // borderRadius: moderateScale(28 / 2)
   }
   return (
 
-
     <LinearGradient
-      colors={[themeColors?.primary_color, getColorCodeWithOpactiyNumber(
-        themeColors.primary_color.substr(1),
-        70), getColorCodeWithOpactiyNumber(
+      colors={[themeColors?.primary_color, themeColors?.primary_color, getColorCodeWithOpactiyNumber(
           themeColors.primary_color.substr(1),
           40)]}
 
     >
       <SafeAreaView>
+
         <View
           style={{
             flexDirection: 'row',
@@ -126,9 +124,11 @@ export default function DashBoardHeaderEcommerce({
               style={{
                 ...headerIconStyle,
                 tintColor: colors.white,
-                marginRight: moderateScale(8)
+                marginRight: moderateScale(16),
+                height:moderateScale(26),
+                width:moderateScale(26),
               }}
-              source={imagePath.drawerMenuIcon}
+              source={imagePath.icHamburger}
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -145,7 +145,7 @@ export default function DashBoardHeaderEcommerce({
               <FastImage
                 style={{
                   width: moderateScale(width / 6),
-                  height: moderateScale(40),
+                  height: moderateScale(60),
                 }}
                 resizeMode={FastImage.resizeMode.contain}
                 source={{
@@ -239,7 +239,7 @@ export default function DashBoardHeaderEcommerce({
                   tintColor: colors.white,
 
                 }}
-                source={imagePath.wishlist2}
+                source={imagePath.wishlist3}
               />
             </TouchableOpacity>
 
@@ -281,7 +281,7 @@ export default function DashBoardHeaderEcommerce({
                   ...headerIconStyle,
                   tintColor: colors.white,
                 }}
-                source={imagePath.cartIcon}
+                source={imagePath.icEcomCart2}
               />
             </TouchableOpacity>
 

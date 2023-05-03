@@ -244,12 +244,13 @@ const CustomDrawerContent = (props) => {
         </View>
 
 
-        <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
+        <View style={{ flex: 0.2, justifyContent: 'flex-end',paddingBottom:moderateScaleVertical(16) }}>
           <ButtonComponent
             btnText={!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
             containerStyle={{
               backgroundColor: themeColors.primary_color,
               marginHorizontal: moderateScale(12),
+              borderRadius: moderateScale(4)
             }}
             onPress={onPressLoginLogout}
           />

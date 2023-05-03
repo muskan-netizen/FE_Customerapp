@@ -30,7 +30,7 @@ import {
 let imageHeight = parseInt(moderateScale(140))
 let imageWidth = parseInt(moderateScale(140))
 
-const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
+const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
   const { themeColors, appStyle, currencies, themeColor, themeToggle } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
@@ -57,7 +57,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
 
 
 
-const variant = !!item?.variant ? item.variant : !!item?.variants ? item?.variants:  []
+  const variant = !!item?.variant ? item.variant : !!item?.variants ? item?.variants : []
 
 
   return (
@@ -79,6 +79,7 @@ const variant = !!item?.variant ? item.variant : !!item?.variants ? item?.varian
         shadowRadius: 2,
         elevation: 4,
         margin: 1,
+        ...containerStyle,
         ...getScaleTransformationStyle(scaleInAnimated),
 
       }}
@@ -135,7 +136,8 @@ const variant = !!item?.variant ? item.variant : !!item?.variants ? item?.varian
           }}>
           {translation[0]?.title || item?.url_slug || item?.title || item?.sku}
         </Text>
-        <Text
+        
+        {!!vendor?.name ? <Text
           numberOfLines={1}
           style={{
             fontSize: textScale(11),
@@ -145,67 +147,63 @@ const variant = !!item?.variant ? item.variant : !!item?.variants ? item?.varian
             marginLeft: moderateScale(8),
             marginBottom: moderateScaleVertical(4)
           }}>
-          {vendor?.name}
-        </Text>
-        {(!variant[0]?.hasOwnProperty('compare_at_price') || Number(variant[0].compare_at_price) == 0) ? (
-          <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: moderateScale(8) }}>
-            <View style={{
-              flex: 1,
-            }}>
-              <Text
-                style={{
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.bold,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          {vendor?.name || ''}
+        </Text> : null}
 
-                }}>
-            
-                {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0]?.price,
-                  digit_after_decimal,
-                  additional_preferences,
-                  currencies?.primary_currency?.symbol,
-                )}
-              </Text>
-            </View>
-            {!!category?.category_detail?.translation[0]?.name && (
-              <View style={{
-                flex: 0.4,
-                alignItems: "flex-end"
+
+
+        {(!variant[0]?.hasOwnProperty('compare_at_price') || Number(variant[0]?.compare_at_price) == 0) ? (
+          <View style={{ flexDirection: 'row', marginHorizontal: moderateScale(8),marginVertical:moderateScaleVertical(4) }}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                fontFamily: fontFamily.bold,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: textScale(9),
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity66,
 
-                  }}>
-                  {category?.category_detail?.translation[0]?.name || category}
-                </Text>
-              </View>
+              {tokenConverterPlusCurrencyNumberFormater(
+                variant[0]?.price,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
+
+            {!!category?.category_detail?.translation[0]?.name && (
+              <Text
+                numberOfLines={2}
+                style={{
+                  fontSize: textScale(9),
+                  fontFamily: fontFamily.regular,
+                  marginLeft: moderateScale(4),
+                  flex: 1,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity66,
+                }}>
+                {category?.category_detail?.translation[0]?.name || category}
+              </Text>
+
             )}
-
-
 
           </View>
         ) : (
           <View>
+
             {!!category?.category_detail?.translation[0]?.name && (
-                <Text
-                  style={{
-                    ...styles.inTextStyle,
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity66,
-                    marginLeft: moderateScale(5),
-                  }}>
-                  {console.log("category?.category_detail=>", category)}
-                  {strings.IN} {category?.category_detail?.translation[0]?.name}
-                </Text>
+              <Text
+                style={{
+                  ...styles.inTextStyle,
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity66,
+                  marginLeft: moderateScale(5),
+                  marginVertical:moderateScaleVertical(2)
+                }}>
+
+                {strings.IN} {category?.category_detail?.translation[0]?.name}
+              </Text>
             )}
             <View
               style={{

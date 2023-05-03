@@ -61,13 +61,13 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     isLoading: true,
     searchInput: !!paramData?.voiceInput || '',
     searchData: [],
-    showRightIcon: false,
     pageCount: 1,
     isLoadMore: false,
     showShimmer: false,
     userCurrentLatitude: null,
     userCurrentLongitude: null,
     isVoiceRecord: false,
+    showRightIcon: false,
   });
 
   const { location } = useSelector((state) => state?.home);
@@ -512,7 +512,10 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
 
   const onPresItem = (item) =>{
     console.log("pressed item+++",item)
-    navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM,{view_type: item?.title.toLowerCase()})
+    navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM,{
+      view_type: item?.title.toLowerCase(),
+      searchText: searchInput
+    })
   }
 
   const renderProduct = ({ item, index }) => {

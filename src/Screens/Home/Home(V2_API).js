@@ -429,6 +429,7 @@ export default function Home({ route, navigation }) {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
+        action: "2"
       };
 
       let apiHeader = {
@@ -437,11 +438,12 @@ export default function Home({ route, navigation }) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header home page', apiData, apiHeader);
-
+      console.time("check api time");
       actions
         .homeDataV2(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
+          console.timeEnd("check api time");
           updateState({ searchDataLoader: false, isRefreshing: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
@@ -970,58 +972,79 @@ export default function Home({ route, navigation }) {
 
   }
 
-  const renderHomeScreen = () => {
-    return (
-      <>
-        <DashBoardHeaderEcommerce
-          showToggles={false}
-          navigation={navigation}
-          location={location}
-          selcetedToggle={selcetedToggle}
-          toggleData={appData}
-          isLoading={isLoading}
-          currentLocation={currentLocation}
-          isLoadingB={isLoadingB}
-          _onVoiceListen={_onVoiceListen}
-          isVoiceRecord={isVoiceRecord}
-          _onVoiceStop={_onVoiceStop}
-          searchBarAnim={searchBarAnim}
-          toggleSearchBar={toggleSearchBar}
-        />
-        <DashBoardFiveV2Api
-          handleRefresh={() => handleRefresh()}
-          bannerPress={(item) => bannerPress(item)}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          appMainData={appMainData}
-          onPressCategory={(item) => {
-            onPressCategory(item);
-          }}
-          onPressVendor={(item) => {
-            onPressVendor(item);
-          }}
-          isDineInSelected={isDineInSelected}
-          selcetedToggle={selcetedToggle}
-          tempCartData={tempCartData}
-          toggleData={appData}
-          navigation={navigation}
-          onVendorFilterSeletion={onVendorFilterSeletion}
-          singleVendor={singleVendor}
-          onPressAddLaundryItem={onPressAddLaundryItem}
-          isLoadingAddons={isLoadingAddons}
-          selectedHomeCategory={selectedHomeCategory}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-          isSubscription={isSubscription}
-          selectedFilterType={selectedFilterType}
-          showAllProducts={showAllProducts}
-          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-          onScrollFlat={onScrollFlat}
-          searchBarAnim={searchBarAnim}
-        />
-      </>
-    );
-  };
+const renderHomeScreen = useCallback(()=>{
+  return (
+    <>
+      <DashBoardHeaderEcommerce
+        showToggles={false}
+        navigation={navigation}
+        location={location}
+        selcetedToggle={selcetedToggle}
+        toggleData={appData}
+        isLoading={isLoading}
+        currentLocation={currentLocation}
+        isLoadingB={isLoadingB}
+        _onVoiceListen={_onVoiceListen}
+        isVoiceRecord={isVoiceRecord}
+        _onVoiceStop={_onVoiceStop}
+        searchBarAnim={searchBarAnim}
+        toggleSearchBar={toggleSearchBar}
+      />
+      <DashBoardFiveV2Api
+        handleRefresh={() => handleRefresh()}
+        bannerPress={(item) => bannerPress(item)}
+        isLoading={isLoading}
+        isRefreshing={isRefreshing}
+        appMainData={appMainData}
+        onPressCategory={(item) => {
+          onPressCategory(item);
+        }}
+        onPressVendor={(item) => {
+          onPressVendor(item);
+        }}
+        isDineInSelected={isDineInSelected}
+        selcetedToggle={selcetedToggle}
+        tempCartData={tempCartData}
+        toggleData={appData}
+        navigation={navigation}
+        onVendorFilterSeletion={onVendorFilterSeletion}
+        singleVendor={singleVendor}
+        onPressAddLaundryItem={onPressAddLaundryItem}
+        isLoadingAddons={isLoadingAddons}
+        selectedHomeCategory={selectedHomeCategory}
+        onClose={_closeModal}
+        onPressSubscribe={_onPressSubscribe}
+        isSubscription={isSubscription}
+        selectedFilterType={selectedFilterType}
+        showAllProducts={showAllProducts}
+        showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+        onScrollFlat={onScrollFlat}
+        searchBarAnim={searchBarAnim}
+      />
+    </>
+  );
+},[
+  location, 
+  appData,
+  tempCartData,
+  singleVendor, 
+  isLoadingAddons, 
+  selectedHomeCategory, 
+  isSubscription,
+  selectedFilterType,
+  searchBarAnim,
+  isDineInSelected,
+  appMainData,
+  isRefreshing,
+  isLoading,
+  currentLocation,
+  isLoadingB,
+  isVoiceRecord,
+  searchBarAnim,
+  toggleSearchBar
+])
+
+
 
   useEffect(() => {
     if (!!userData?.auth_token) {
