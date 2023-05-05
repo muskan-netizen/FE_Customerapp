@@ -7,8 +7,7 @@ index 0000000..0d259dd
 +o/classes
 diff --git a/node_modules/react-native-safe-area-context/android/build/.transforms/228df998d044636ccf38908099a1992a/transformed/classes/classes.dex b/node_modules/react-native-safe-area-context/android/build/.transforms/228df998d044636ccf38908099a1992a/transformed/classes/classes.dex
 new file mode 100644
-index 0000000..00db4fc
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/.transforms/228df998d044636ccf38908099a1992a/transformed/classes/classes.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/generated/source/buildConfig/debug/com/th3rdwave/safeareacontext/BuildConfig.java b/node_modules/react-native-safe-area-context/android/build/generated/source/buildConfig/debug/com/th3rdwave/safeareacontext/BuildConfig.java
 new file mode 100644
 index 0000000..e9dab34
@@ -84,12 +83,10 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/compile_library_classes_jar/debug/classes.jar b/node_modules/react-native-safe-area-context/android/build/intermediates/compile_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..92ac784
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/compile_library_classes_jar/debug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/compile_r_class_jar/debug/R.jar b/node_modules/react-native-safe-area-context/android/build/intermediates/compile_r_class_jar/debug/R.jar
 new file mode 100644
-index 0000000..90a6e7f
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/compile_r_class_jar/debug/R.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/compile_symbol_list/debug/R.txt b/node_modules/react-native-safe-area-context/android/build/intermediates/compile_symbol_list/debug/R.txt
 new file mode 100644
 index 0000000..bd74fdc
@@ -1997,32 +1994,25 @@ index 0000000..96e5e82
 \ No newline at end of file
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.class b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.class
 new file mode 100644
-index 0000000..f00d983
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerInterface.class b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerInterface.class
 new file mode 100644
-index 0000000..d126f2e
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerInterface.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.class b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.class
 new file mode 100644
-index 0000000..a94817a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerInterface.class b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerInterface.class
 new file mode 100644
-index 0000000..96c9b01
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerInterface.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/th3rdwave/safeareacontext/BuildConfig.class b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/th3rdwave/safeareacontext/BuildConfig.class
 new file mode 100644
-index 0000000..5638ed1
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/th3rdwave/safeareacontext/BuildConfig.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/th3rdwave/safeareacontext/NativeSafeAreaContextSpec.class b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/th3rdwave/safeareacontext/NativeSafeAreaContextSpec.class
 new file mode 100644
-index 0000000..8a413fb
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/javac/debug/classes/com/th3rdwave/safeareacontext/NativeSafeAreaContextSpec.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/library_java_res/debug/res.jar b/node_modules/react-native-safe-area-context/android/build/intermediates/library_java_res/debug/res.jar
 new file mode 100644
-index 0000000..f2a04cb
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/library_java_res/debug/res.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/local_only_symbol_list/debug/R-def.txt b/node_modules/react-native-safe-area-context/android/build/intermediates/local_only_symbol_list/debug/R-def.txt
 new file mode 100644
 index 0000000..78ac5b8
@@ -2097,8 +2087,7 @@ index 0000000..0c3fdff
 \ No newline at end of file
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar b/node_modules/react-native-safe-area-context/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..2ae3bdf
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt b/node_modules/react-native-safe-area-context/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
 new file mode 100644
 index 0000000..501bbb5
@@ -3483,316 +3472,238 @@ index 0000000..501bbb5
 +xml rn_dev_preferences
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/build-history.bin b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/build-history.bin
 new file mode 100644
-index 0000000..316c8f2
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/build-history.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab
 new file mode 100644
-index 0000000..516828a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.keystream
 new file mode 100644
-index 0000000..19006d3
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.keystream.len
 new file mode 100644
-index 0000000..8b88589
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.len
 new file mode 100644
-index 0000000..9911af5
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.values.at
 new file mode 100644
-index 0000000..cbe53be
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab_i
 new file mode 100644
-index 0000000..6f6a01d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/inputs/source-to-output.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab
 new file mode 100644
-index 0000000..a8c98f5
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.keystream
 new file mode 100644
-index 0000000..9204dcf
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len
 new file mode 100644
-index 0000000..68e2e19
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.len
 new file mode 100644
-index 0000000..8fe89d8
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.values.at
 new file mode 100644
-index 0000000..850852d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab_i
 new file mode 100644
-index 0000000..d506bce
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-attributes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab
 new file mode 100644
-index 0000000..4050231
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream
 new file mode 100644
-index 0000000..9204dcf
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len
 new file mode 100644
-index 0000000..68e2e19
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len
 new file mode 100644
-index 0000000..8fe89d8
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at
 new file mode 100644
-index 0000000..78d2c12
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i
 new file mode 100644
-index 0000000..d506bce
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab
 new file mode 100644
-index 0000000..59a1961
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.keystream
 new file mode 100644
-index 0000000..7cf82bf
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.keystream.len
 new file mode 100644
-index 0000000..21d4c2e
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.len
 new file mode 100644
-index 0000000..93a595b
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.values.at
 new file mode 100644
-index 0000000..133a1c4
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab_i
 new file mode 100644
-index 0000000..db795f0
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/constants.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab
 new file mode 100644
-index 0000000..ef173d8
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream
 new file mode 100644
-index 0000000..3a7cbae
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len
 new file mode 100644
-index 0000000..231f195
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len
 new file mode 100644
-index 0000000..6a294aa
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at
 new file mode 100644
-index 0000000..920ad05
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i
 new file mode 100644
-index 0000000..8e085ea
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab
 new file mode 100644
-index 0000000..dc8c02a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.keystream
 new file mode 100644
-index 0000000..bb061ec
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.keystream.len
 new file mode 100644
-index 0000000..90c90ce
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.len
 new file mode 100644
-index 0000000..a9f80ae
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.values.at
 new file mode 100644
-index 0000000..0ed33ff
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab_i
 new file mode 100644
-index 0000000..2860cc0
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/java-sources-proto-map.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab
 new file mode 100644
-index 0000000..d2ae4c7
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.keystream
 new file mode 100644
-index 0000000..76f2ac0
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len
 new file mode 100644
-index 0000000..7cbe639
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.len
 new file mode 100644
-index 0000000..9e27f73
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.values.at
 new file mode 100644
-index 0000000..d06c58f
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab_i
 new file mode 100644
-index 0000000..0146475
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/package-parts.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab
 new file mode 100644
-index 0000000..96853fb
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.keystream
 new file mode 100644
-index 0000000..24c5c5d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.keystream.len
 new file mode 100644
-index 0000000..8587e0f
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.len
 new file mode 100644
-index 0000000..6a294aa
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.values.at
 new file mode 100644
-index 0000000..1c1d42a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab_i
 new file mode 100644
-index 0000000..bb1412d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/proto.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab
 new file mode 100644
-index 0000000..3c36a82
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream
 new file mode 100644
-index 0000000..ff1f29d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len
 new file mode 100644
-index 0000000..f9e6f48
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.len
 new file mode 100644
-index 0000000..14f7c06
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at
 new file mode 100644
-index 0000000..f80e9ac
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab_i
 new file mode 100644
-index 0000000..2a01360
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/source-to-classes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab
 new file mode 100644
-index 0000000..bf5eeab
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.keystream
 new file mode 100644
-index 0000000..33eb6c1
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len
 new file mode 100644
-index 0000000..be9984c
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.len
 new file mode 100644
-index 0000000..cf8a30a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.values.at
 new file mode 100644
-index 0000000..59a16c7
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab_i
 new file mode 100644
-index 0000000..cd90e82
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/subtypes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab
 new file mode 100644
-index 0000000..72df44d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.keystream
 new file mode 100644
-index 0000000..2db5df6
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len
 new file mode 100644
-index 0000000..2f7f080
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.len
 new file mode 100644
-index 0000000..a541356
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.values.at
 new file mode 100644
-index 0000000..4bab32d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab_i
 new file mode 100644
-index 0000000..128ce93
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/jvm/kotlin/supertypes.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/counters.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/counters.tab
 new file mode 100644
 index 0000000..c7c4318
@@ -3804,92 +3715,70 @@ index 0000000..c7c4318
 \ No newline at end of file
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab
 new file mode 100644
-index 0000000..c04d15b
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.keystream
 new file mode 100644
-index 0000000..89f606c
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.keystream.len
 new file mode 100644
-index 0000000..8b88589
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.len
 new file mode 100644
-index 0000000..9911af5
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.values.at
 new file mode 100644
-index 0000000..bd7303f
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab_i
 new file mode 100644
-index 0000000..18a1e3a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/file-to-id.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab
 new file mode 100644
-index 0000000..e23f79c
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.keystream
 new file mode 100644
-index 0000000..7f88049
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.keystream.len
 new file mode 100644
-index 0000000..c0f177d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.len
 new file mode 100644
-index 0000000..9911af5
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.values.at
 new file mode 100644
-index 0000000..abc39d4
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab_i
 new file mode 100644
-index 0000000..242a9b6
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/id-to-file.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab
 new file mode 100644
-index 0000000..3f24ea9
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.keystream b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.keystream
 new file mode 100644
-index 0000000..61af02f
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.keystream differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.keystream.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.keystream.len
 new file mode 100644
-index 0000000..5db49f3
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.keystream.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.len
 new file mode 100644
-index 0000000..a096199
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.values.at b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.values.at
 new file mode 100644
-index 0000000..7b36c7e
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab.values.at differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab_i b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab_i
 new file mode 100644
-index 0000000..e85fe89
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab_i differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab_i.len b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab_i.len
 new file mode 100644
-index 0000000..131e265
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/caches-jvm/lookups/lookups.tab_i.len differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/last-build.bin b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/last-build.bin
 new file mode 100644
-index 0000000..774efc7
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/kotlin/compileDebugKotlin/last-build.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-safe-area-context/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
 index 0000000..b1b4911
@@ -3923,108 +3812,82 @@ index 0000000..b1b4911
 +		INJECTED from /Users/vivekkumarsharma/Desktop/WORKAREA/MAIN_CODE/Royo_Orders_2_React_Native/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/react-native-safe-area-context/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
 new file mode 100644
-index 0000000..4793734
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/META-INF/react-native-safe-area-context_debug.kotlin_module b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/META-INF/react-native-safe-area-context_debug.kotlin_module
 new file mode 100644
-index 0000000..882b64f
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/META-INF/react-native-safe-area-context_debug.kotlin_module differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/EdgeInsets.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/EdgeInsets.class
 new file mode 100644
-index 0000000..fb374c0
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/EdgeInsets.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/InsetsChangeEvent$Companion.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/InsetsChangeEvent$Companion.class
 new file mode 100644
-index 0000000..50e87c4
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/InsetsChangeEvent$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/InsetsChangeEvent.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/InsetsChangeEvent.class
 new file mode 100644
-index 0000000..d1df41b
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/InsetsChangeEvent.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/Rect.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/Rect.class
 new file mode 100644
-index 0000000..68f7176
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/Rect.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextModule$Companion.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextModule$Companion.class
 new file mode 100644
-index 0000000..a68b2b9
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextModule$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextModule.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextModule.class
 new file mode 100644
-index 0000000..e2e20f8
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextPackage.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextPackage.class
 new file mode 100644
-index 0000000..3c295c8
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaContextPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProvider.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProvider.class
 new file mode 100644
-index 0000000..2ba3c8d
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProvider.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderKt.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderKt.class
 new file mode 100644
-index 0000000..58e1a32
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderKt.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager$Companion.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager$Companion.class
 new file mode 100644
-index 0000000..766edf9
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager$addEventEmitters$1.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager$addEventEmitters$1.class
 new file mode 100644
-index 0000000..8a6c3d4
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager$addEventEmitters$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager.class
 new file mode 100644
-index 0000000..e7400e8
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManagerKt.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManagerKt.class
 new file mode 100644
-index 0000000..a50b384
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaProviderManagerKt.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaUtilsKt.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaUtilsKt.class
 new file mode 100644
-index 0000000..0051e55
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaUtilsKt.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaView.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaView.class
 new file mode 100644
-index 0000000..e201f61
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaView.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewEdges.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewEdges.class
 new file mode 100644
-index 0000000..97f5595
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewEdges.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewKt.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewKt.class
 new file mode 100644
-index 0000000..25ff7ae
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewKt.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewLocalData.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewLocalData.class
 new file mode 100644
-index 0000000..2614f62
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewLocalData.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewManager$Companion.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewManager$Companion.class
 new file mode 100644
-index 0000000..eb98a9c
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewManager$Companion.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewManager.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewManager.class
 new file mode 100644
-index 0000000..f6f4569
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewManager.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewMode.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewMode.class
 new file mode 100644
-index 0000000..cd1d277
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewMode.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.class
 new file mode 100644
-index 0000000..123a775
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SerializationUtilsKt.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SerializationUtilsKt.class
 new file mode 100644
-index 0000000..1813c12
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/SerializationUtilsKt.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/UIManagerHelperCompatKt.class b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/UIManagerHelperCompatKt.class
 new file mode 100644
-index 0000000..2e05b1a
-Binary files /dev/null and b/node_modules/react-native-safe-area-context/android/build/tmp/kotlin-classes/debug/com/th3rdwave/safeareacontext/UIManagerHelperCompatKt.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec b/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec
 index 3691d80..7453c3a 100644
 --- a/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec

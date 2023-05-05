@@ -1,21 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
-import Header3 from '../../Components/Header3';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import SearchLoader from '../../Components/Loaders/SearchLoader';
+
 import MarketCard3 from '../../Components/MarketCard3';
 import NoDataFound from '../../Components/NoDataFound';
-import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFun from '../../styles/commonStyles';
+import commonStylesFun, { hitSlopProp } from '../../styles/commonStyles';
 import {
     height,
     moderateScale,
@@ -29,11 +25,17 @@ import { enableFreeze } from "react-native-screens";
 import { UIActivityIndicator } from 'react-native-indicators';
 import { getCurrentLocation } from '../../utils/helperFunctions';
 import BrandCard3 from '../../Components/BrandCard3';
-import { Text } from 'react-native';
 import staticStrings from '../../constants/staticStrings';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import ProductsComp3 from '../../Components/ProductsComp3';
 import SearchBar from '../../Components/SearchBar';
+import { TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
+import SearchVendorLoader from './SearchVendorLoader';
+import SearchProductLoader from './SearchProductLoader';
+import SearchCategoryLoader from './SearchCategoryLoader';
+import { isEmpty } from 'lodash';
+
 enableFreeze(true);
 
 let isNoMore = false;
@@ -63,7 +65,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
         isRefreshing: false,
         data: [],
         totalProduct: 0,
-        loadMore: false,
+        loadMore: true,
         openVendor: 1,
         closeVendor: 0,
         bestSeller: 0,
@@ -128,6 +130,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                 searchObj.search_text = searchInput;
                 isNoMore = false;
             }
+            updateState({isLoading: true})
             if (true) {
                 console.log('calling.....2');
                 apiHit(1, true); //search from start
@@ -141,7 +144,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                     showShimmer: false,
                 });
             }
-        }, 600);
+        }, 400);
         return () => {
             if (searchInterval) {
                 clearInterval(searchInterval);
@@ -175,7 +178,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
         let data = {};
         data['keyword'] = searchInput;
         data['type'] = dineInType;
-        data['limit'] = 10;
+        data['limit'] = 8;
         data['latitude'] = !!location?.latitude
             ? location?.latitude
             : userCurrentLatitude;
@@ -197,8 +200,8 @@ export default function ViewAllSearchItems({ route, navigation }) {
         actions.viewAllSearchItemV2('', data, headers)
             .then((res) => {
                 console.log('search data++++++', res?.data);
-                if (!!res?.data) {
-                    let mergeData = pageNo == 1 ? res?.data[0]?.result : [...data, ...res?.data[0]?.result]
+                if (!!res?.data && !isEmpty(res?.data)) {
+                    let mergeData = pageNo == 1 ? res?.data[0]?.result : [...state.data, ...res?.data[0]?.result]
                     console.log("merging data", mergeData)
                     isNoMore = false
                     updateState({
@@ -206,8 +209,9 @@ export default function ViewAllSearchItems({ route, navigation }) {
                         totalProduct: res?.data[0]?.total,
                         isLoading: false,
                         pageCount: searchAgain ? 1 : pageCount + 1,
+                        loadMore: false
                     });
-                    
+
                 } else {
                     isNoMore = true
                     updateState({
@@ -225,7 +229,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                 });
             });
     };
-    console.log('data length', data.length);
+
 
     //Naviagtion to specific screen
     const moveToNewScreen =
@@ -356,7 +360,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                                 height: height / 3.2,
 
                             }}
-                            numberOfLines={2}
+                            numberOfLines={1}
                         />
                     </View>)
             case 'vendor':
@@ -382,84 +386,12 @@ export default function ViewAllSearchItems({ route, navigation }) {
         return (renderViewType(item))
     };
 
-    if (isLoading) {
-        return (
-            <WrapperContainer
-                bgColor={
-                    isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-                }
-                statusBarColor={colors.backgroundGrey}>
-                <Header3
-                    leftIcon={imagePath.icBackb}
-                    centerTitle={view_type}
-                    rightIcon={imagePath.search}
-                    showAddress={false}
-
-                // location={location}
-                // onPressRight={() =>
-                //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                // }
-                />
-                <View style={{ alignItems: 'center' }}>
-                    <SearchLoader viewStyles={{ marginVertical: moderateScale(17) }} />
-                    <HeaderLoader
-                        viewStyles={{ marginTop: 5 }}
-                        widthLeft={width - moderateScaleVertical(40)}
-                        rectWidthLeft={width - moderateScaleVertical(40)}
-                        heightLeft={moderateScaleVertical(170)}
-                        rectHeightLeft={moderateScaleVertical(170)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
-                    />
-                    <HeaderLoader
-                        viewStyles={{ marginTop: 15 }}
-                        widthLeft={width - moderateScaleVertical(40)}
-                        rectWidthLeft={width - moderateScaleVertical(40)}
-                        heightLeft={moderateScaleVertical(170)}
-                        rectHeightLeft={moderateScaleVertical(170)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
-                    />
-                    <HeaderLoader
-                        viewStyles={{ marginTop: 15 }}
-                        widthLeft={width - moderateScaleVertical(40)}
-                        rectWidthLeft={width - moderateScaleVertical(40)}
-                        heightLeft={moderateScaleVertical(170)}
-                        rectHeightLeft={moderateScaleVertical(170)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
-                    />
-                    <HeaderLoader
-                        viewStyles={{ marginTop: 15 }}
-                        widthLeft={width - moderateScaleVertical(40)}
-                        rectWidthLeft={width - moderateScaleVertical(40)}
-                        heightLeft={moderateScaleVertical(170)}
-                        rectHeightLeft={moderateScaleVertical(170)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
-                    />
-                    <HeaderLoader
-                        viewStyles={{ marginTop: 15 }}
-                        widthLeft={width - moderateScaleVertical(40)}
-                        rectWidthLeft={width - moderateScaleVertical(40)}
-                        heightLeft={moderateScaleVertical(170)}
-                        rectHeightLeft={moderateScaleVertical(170)}
-                        isRight={false}
-                        rx={15}
-                        ry={15}
-                    />
-                </View>
-            </WrapperContainer>
-        );
-    }
-
+ 
     const onEndReached = () => {
+    
         if (!isNoMore) {
-            updateState({ pageNo: pageNo + 1 });
+            console.log("on end reachted api hit.....")
+            updateState({ pageNo: pageNo + 1, loadMore: true });
             apiHit(pageNo + 1, false);
         } else {
             isNoMore = true
@@ -483,6 +415,23 @@ export default function ViewAllSearchItems({ route, navigation }) {
     }
 
 
+    const loaderReturn = () => {
+        
+        switch (view_type) {
+            case 'vendor':
+                return(<SearchVendorLoader />)
+            case 'brand':
+                return(<SearchCategoryLoader />)
+            case 'product':
+                return(<SearchProductLoader />)
+            case 'category':
+                return(<SearchCategoryLoader />)
+            default:
+                return(<SearchVendorLoader />)
+        }
+    }
+
+
 
     return (
         <WrapperContainer
@@ -491,71 +440,91 @@ export default function ViewAllSearchItems({ route, navigation }) {
             }
             statusBarColor={colors.backgroundGrey}>
 
-            <Header3
-                leftIcon={imagePath.icBackb}
-                showAddress={false}
-                rightIcon={imagePath.search}
-            />
+            <View style={styles.headerView}>
 
+                <View style={{ flex: 0.1 }}>
+                    <TouchableOpacity
+                        hitSlop={hitSlopProp}
+                        activeOpacity={0.7}
+                        onPress={() => navigation.goBack()}>
+                        <Image
+                            source={imagePath.icBackb}
+                            style={{ tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                        />
+                    </TouchableOpacity>
+                </View>
 
-            <SearchBar
-                containerStyle={{
-                    marginRight: moderateScale(18),
-                    borderRadius: 8,
-                    width: width / 1.12,
-                    backgroundColor: isDarkMode
-                        ? colors.whiteOpacity15
-                        : colors.greyColor,
-                    height: moderateScaleVertical(42),
-                    marginLeft: moderateScale(25),
-                    marginBottom: moderateScaleVertical(16)
-                }}
-                searchValue={searchInput}
-                placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
-                onChangeText={(value) => onChangeText(value)}
-                showRightIcon={!!searchInput ? true : false}
-                rightIconPress={rightIconPress}
-                autoFocus={false}
-                showVoiceRecord={false}
-            />
+                <View style={{ flex: 0.88 }}>
+                    <SearchBar
+                        containerStyle={{
+                            // marginRight: moderateScale(18),
+                            borderRadius: 8,
+                            width: '100%',
+                            backgroundColor: isDarkMode
+                                ? colors.whiteOpacity15
+                                : colors.greyColor,
+                            height: moderateScaleVertical(42),
+
+                        }}
+                        searchValue={searchInput}
+                        placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
+                        onChangeText={(value) => onChangeText(value)}
+                        showRightIcon={!!searchInput ? true : false}
+                        rightIconPress={rightIconPress}
+                        autoFocus={false}
+                        showVoiceRecord={false}
+                    />
+                </View>
+            </View>
             <View style={{ marginHorizontal: moderateScale(8) }}>
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    data={data}
-                    extraData={data}
-                    ItemSeparatorComponent={() => <View style={{ height: moderateScale(8) }} />}
-                    numColumns={numColumnsReturn()}
-                    keyExtractor={(item, index) => String(index)}
-                    renderItem={_renderItem}
-                    onEndReachedThreshold={0.05}
-                    onEndReached={onEndReached}
-                    initialNumToRender={6}
-                    ListEmptyComponent={
-                        !isLoading && (
-                            <View
-                                style={{
-                                    flex: 1,
-                                    marginTop: moderateScaleVertical(width / 2),
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
-                                <NoDataFound isLoading={isLoading} />
+                {isLoading ?
+                    <>{loaderReturn()}</>
+                    : <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={data}
+                        extraData={data}
+                        ItemSeparatorComponent={() => <View style={{ height: moderateScale(8) }} />}
+                        numColumns={numColumnsReturn()}
+                        keyExtractor={(item, index) => String(index)}
+                        renderItem={_renderItem}
+                        onEndReachedThreshold={0.05}
+                        onEndReached={onEndReached}
+                        initialNumToRender={6}
+                        ListEmptyComponent={
+                            !isLoading && (
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        marginTop: moderateScaleVertical(width / 2),
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}>
+                                    <NoDataFound isLoading={isLoading} />
+                                </View>
+                            )
+                        }
+                        ListFooterComponent={!!loadMore ?
+                            <View style={{ marginBottom: moderateScale(100),marginTop:moderateScaleVertical(24) }}>
+
+                                <UIActivityIndicator
+                                    color={themeColors.primary_color}
+                                    size={30}
+                                />
                             </View>
-                        )
-                    }
 
-                    ListFooterComponent={!!loadMore ?
-                        <View style={{ marginBottom: moderateScale(100) }}>
-
-                            <UIActivityIndicator
-                                color={themeColors.primary_color}
-                                size={30}
-                            />
-                        </View>
-
-                        : <View style={{ height: moderateScale(100) }} />}
-                />
+                            : <View style={{ height: moderateScale(120) }} />}
+                    />}
             </View>
         </WrapperContainer>
     );
 }
+
+
+const styles = StyleSheet.create({
+    headerView: {
+        flexDirection: "row",
+        alignItems: 'center',
+        marginBottom: moderateScaleVertical(16),
+        marginHorizontal: moderateScale(8)
+    }
+})

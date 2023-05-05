@@ -20,9 +20,8 @@ import {
   width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
-import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
+import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
-  getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation
@@ -30,32 +29,18 @@ import {
 let imageHeight = parseInt(moderateScale(140))
 let imageWidth = parseInt(moderateScale(140))
 
-const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle,appData } =
-    useSelector((state) => state?.initBoot);
-  const { additional_preferences, digit_after_decimal } = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
-  );
+
+const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
+  const { themeColors, appStyle, currencies, themeColor, themeToggle } =useSelector((state) => state?.initBoot || {});
+  const { additional_preferences, digit_after_decimal } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const scaleInAnimated = new Animated.Value(0);
 
-  const {
-    translation = [],
-    category = {},
-    media = [],
-    vendor = {},
-    variant = [],
-  } = item;
+  const appMainData = useSelector((state) => state?.home?.appMainData || {});
 
-
-  const imageUrl = getImageUrl(
-    media[0]?.image?.path?.proxy_url,
-    media[0]?.image?.path?.image_path,
-    `${500}/${500}`,
-  );
-
+  const {category = {}} = item || {};
 
 
   return (
@@ -64,19 +49,14 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       activeOpacity={1}
       style={{
         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
-        // elevation: 1,
-        // marginVertical: 2,
-        // width: imageWidth,
-        // borderRadius: moderateScale(5),
-        // borderColor: colors.borderStroke,
-        // padding: moderateScale(6),
-        // width: imageWidth,
+        width: imageWidth,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
         elevation: 4,
         margin: 1,
+        ...containerStyle,
         ...getScaleTransformationStyle(scaleInAnimated),
 
       }}
@@ -85,18 +65,20 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       <FastImage
         resizeMode={FastImage.resizeMode.contain}
         source={{
-          uri: imageUrl,
+          uri:getImageUrlNew({
+            url: item?.path || null,
+            image_const_arr: appMainData.image_prefix,
+            type: 'image_fit',
+            height: moderateScale(250),
+            width: moderateScale(250),
+          }),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
         }}
-
         style={{
           height: imageHeight,
           width: imageWidth,
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
-          // borderTopLeftRadius: moderateScale(5),
-          // borderTopRightRadius: moderateScale(5),
-          alignSelf:'center',
           ...imageStyle,
         }}
         imageStyle={{
@@ -105,7 +87,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!appData?.profile?.preferences?.rating_check && !!item?.averageRating && item?.averageRating !== '0.0' && (
+        {!!item?.averageRating && item?.averageRating !== '0.0' && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{
@@ -132,9 +114,10 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             textAlign: 'left',
             marginLeft: moderateScale(8),
           }}>
-          {translation[0]?.title || item?.title || item?.sku}
+          {item?.title}
         </Text>
-        <Text
+        
+        {!!item?.vendor_name ? <Text
           numberOfLines={1}
           style={{
             fontSize: textScale(11),
@@ -144,65 +127,55 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             marginLeft: moderateScale(8),
             marginBottom: moderateScaleVertical(4)
           }}>
-          {vendor?.name}
-        </Text>
-        {!isDiscount ? (
-          <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: moderateScale(8) }}>
-            <View style={{
-            //   flex: 1,
-            }}>
-              <Text
-                style={{
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.bold,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-
-                }}>
-                {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0].price,
-                  digit_after_decimal,
-                  additional_preferences,
-                  currencies?.primary_currency?.symbol,
-                )}
-              </Text>
-            </View>
-            {!!category?.category_detail?.translation[0]?.name && (
-              <View style={{
-                // flex: 0.4,
-                alignItems: "flex-end",
-                marginLeft:moderateScale(8)
+          {item?.vendor_name || ''}
+        </Text> : null}
+        {(!item?.hasOwnProperty('compare_price_numeric') || Number(item?.compare_price_numeric) == 0) ? (
+          <View style={{ flexDirection: 'row', marginHorizontal: moderateScale(8),marginVertical:moderateScaleVertical(4) }}>
+            <Text
+              style={{
+                fontSize: textScale(10),
+                fontFamily: fontFamily.bold,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: textScale(9),
-                    fontFamily: fontFamily.regular,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity66,
-
-                  }}>
-                  {category?.category_detail?.translation[0]?.name || category}
-                </Text>
-              </View>
+              {tokenConverterPlusCurrencyNumberFormater(
+                item?.price_numeric,
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol,
+              )}
+            </Text>
+            {!!category?.category_detail?.translation[0]?.name && (
+              <Text
+                numberOfLines={2}
+                style={{
+                  fontSize: textScale(9),
+                  fontFamily: fontFamily.regular,
+                  marginLeft: moderateScale(4),
+                  flex: 1,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity66,
+                }}>
+                {category?.category_detail?.translation[0]?.name || category}
+              </Text>
             )}
-
-
-
           </View>
         ) : (
           <View>
-            <Text
-              style={{
-                ...styles.inTextStyle,
-                fontFamily: fontFamily.regular,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity66,
-                marginLeft: moderateScale(5),
-              }}>
-              {strings.IN} {category?.category_detail?.translation[0]?.name}
-            </Text>
+            {!!category?.category_detail?.translation[0]?.name && (
+              <Text
+                style={{
+                  ...styles.inTextStyle,
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity66,
+                  marginLeft: moderateScale(5),
+                  marginVertical:moderateScaleVertical(2)
+                }}>
+                {strings.IN} {category?.category_detail?.translation[0]?.name}
+              </Text>
+            )}
             <View
               style={{
                 flexDirection: 'row',
@@ -212,13 +185,12 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
               }}>
               <Text
                 style={{
-                  fontSize: textScale(12),
+                  fontSize: textScale(9),
                   fontFamily: fontFamily.medium,
                   color: colors.green,
-                  marginVertical: moderateScaleVertical(8),
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0]?.price,
+                  item?.price_numeric,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
@@ -227,6 +199,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
               <Text
                 numberOfLines={2}
                 style={{
+                  fontSize: textScale(9),
+                  fontFamily: fontFamily.medium,
                   textDecorationLine: 'line-through',
                   color: isDarkMode
                     ? MyDarkTheme.colors.text
@@ -234,12 +208,11 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                   marginLeft: moderateScale(12),
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0]?.price,
+                  item?.compare_price_numeric,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
                 )}
-
               </Text>
             </View>
           </View>
@@ -280,3 +253,7 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo(ProductsComp);
+
+
+
+

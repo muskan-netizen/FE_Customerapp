@@ -2375,7 +2375,7 @@ export default function ProductDetail({ route, navigation }) {
                           containerStyle={{
                             flex: 1,
                             borderRadius: moderateScale(10),
-                            height: moderateScaleVertical(40),
+                            minHeight: moderateScaleVertical(40),
                           }}
                           keyboardType={'number-pad'}
                           marginBottom={0}

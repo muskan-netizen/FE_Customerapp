@@ -40,6 +40,9 @@ export default function DrawerRoutes(props) {
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
+
+  console.log("businessTypebusinessTypebusinessType",businessType)
+
   // const checkForCeleb =
   //   allCategory &&
   //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);

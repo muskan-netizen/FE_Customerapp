@@ -657,7 +657,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                 <View>{recentlyData(previousSearches)}</View>
               </View>
             ) : null}
-            {!isEmpty(recommendedVendorsdata[0]?.data) && (
+            {/* {!isEmpty(recommendedVendorsdata[0]?.data) && (
               <View>
                 <Text
                   style={{
@@ -673,7 +673,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                   horizontal
                   data={recommendedVendorsdata[0]?.data}
                   renderItem={renderRecommendedVendors}
-                  keyExtractor={(item, index) => item?.id.toString()}
+                  keyExtractor={(item, index) => String(item?.id || index)}
                   keyboardShouldPersistTaps="always"
                   showsHorizontalScrollIndicator={false}
                   style={{
@@ -685,7 +685,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                   ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
                 />
               </View>
-            )}
+            )} */}
           </>
         )}
       </View>

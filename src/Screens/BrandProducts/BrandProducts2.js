@@ -56,6 +56,8 @@ var tempQty = 0;
 
 let activeIdx = 0;
 
+
+
 export default function BrandProducts2({route, navigation}) {
   const {data} = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1195,7 +1197,7 @@ export default function BrandProducts2({route, navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={brand?.name || brand?.translation[0]?.title}
+        centerTitle={brand?.title || brand?.translation_title}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

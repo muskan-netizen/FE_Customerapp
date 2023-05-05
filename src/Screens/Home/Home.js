@@ -462,7 +462,7 @@ export default function Home({ route, navigation }) {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
-        // action: '1'
+        action: '1'
       };
       let apiHeader = {
         code: appData?.profile?.code,
@@ -470,12 +470,10 @@ export default function Home({ route, navigation }) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header', apiData);
-      console.time("check api time");
+
       actions
         .homeData(apiData, apiHeader)
         .then(async (res) => {
-          console.log('Home data++++++', res);
-          console.timeEnd("check api time");
           updateState({ searchDataLoader: false, isLoading: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&

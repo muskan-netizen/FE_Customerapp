@@ -43,7 +43,6 @@ export default function DashBoardHeaderEcommerce({
   currentLocation,
   nearestLoc,
   currentLoc,
-  searchBarAnim,
   cartItemCountView = {
     position: 'absolute',
     zIndex: 100,
@@ -71,6 +70,8 @@ export default function DashBoardHeaderEcommerce({
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
+
+  console.log("profileInfoprofileInfo",profileInfo)
 
 
 
@@ -243,39 +244,9 @@ export default function DashBoardHeaderEcommerce({
               />
             </TouchableOpacity>
 
-            {/*  */}
-
-
             <TouchableOpacity
               style={{ marginHorizontal: moderateScale(8) }}
               onPress={() => navigation.navigate(navigationStrings.CART)}>
-              {/* {cartItemCount?.data?.item_count ? (
-                <View
-                  style={{
-                    width:
-                      cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(20),
-                    height:
-                      cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(20),
-                    top: cartItemCount?.data?.item_count > 999 ? -10 : -2,
-                    ...cartItemCountView,
-                    right: cartItemCount?.data?.item_count > 999 ? -13 : 0,
-                  }}>
-                  <Text
-                    style={{
-                      color: themeColor.primary_color,
-                      fontFamily: fontFamily?.bold,
-                      ...cartItemCountNumber,
-                    }}>
-                    {cartItemCount?.data?.item_count > 999
-                      ? '999+'
-                      : cartItemCount?.data?.item_count}
-                  </Text>
-                </View>
-              ) : null} */}
               <Image
                 style={{
                   ...headerIconStyle,
@@ -285,16 +256,13 @@ export default function DashBoardHeaderEcommerce({
               />
             </TouchableOpacity>
 
-
           </View>
         </View>
 
 
         <DeliveryTypeEcommerceComp
           selectedToggle={selcetedToggle}
-          tabMainStyle={{
-            marginBottom: moderateScaleVertical(30),
-          }}
+          themeColors={{primary_color: colors.black}}
         />
         <Animatable.View
           animation={'fadeIn'}

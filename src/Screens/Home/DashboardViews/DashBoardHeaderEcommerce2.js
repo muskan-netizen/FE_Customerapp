@@ -305,6 +305,7 @@ export default function DashBoardHeaderEcommerce({
         tabMainStyle={{
           marginBottom: moderateScaleVertical(30),
         }}
+        themeColors={themeColors}
       />
 
       <CustomAnimatedLoader
