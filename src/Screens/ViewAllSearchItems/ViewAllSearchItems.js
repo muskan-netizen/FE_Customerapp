@@ -39,7 +39,9 @@ import { isEmpty } from 'lodash';
 enableFreeze(true);
 
 let isNoMore = false;
-let onEndReachedCalledDuringMomentum = false;
+let pageCount = 1
+let limit = 20
+let onEndReachedCalledDuringMomentum = false
 
 export default function ViewAllSearchItems({ route, navigation }) {
     const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot || {});
@@ -60,41 +62,18 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
     const [state, setState] = useState({
         isLoading: true,
-        pageNo: 1,
-        limit: 5,
-        isRefreshing: false,
         data: [],
-        totalProduct: 0,
         loadMore: true,
-        openVendor: 1,
-        closeVendor: 0,
-        bestSeller: 0,
-        nearMe: 0,
         userCurrentLatitude: null,
         userCurrentLongitude: null,
-        isVoiceRecord: false,
-        showRightIcon: false,
-        pageCount: 1
-
     });
 
     const {
         isLoading,
-        pageNo,
-        isRefreshing,
-        limit,
         data,
-        totalProduct,
         loadMore,
-        openVendor,
-        closeVendor,
-        bestSeller,
-        nearMe,
         userCurrentLatitude,
         userCurrentLongitude,
-        showRightIcon,
-        isVoiceRecord,
-        pageCount
     } = state;
 
     //update state
@@ -114,36 +93,12 @@ export default function ViewAllSearchItems({ route, navigation }) {
     }, [])
 
 
-
     useEffect(() => {
         isNoMore = false
+        pageCount = 1
         const searchInterval = setTimeout(() => {
-            let searchObj = {};
-
-            if (searchInput.trim() && searchInput.length > 1) {
-                updateState({
-                    searchLoader: true,
-                    showRightIcon: true,
-                    pageCount: 1,
-                    showShimmer: true,
-                });
-                searchObj.search_text = searchInput;
-                isNoMore = false;
-            }
-            updateState({isLoading: true})
-            if (true) {
-                console.log('calling.....2');
-                apiHit(1, true); //search from start
-                updateState({ showRightIcon: false })
-            } else {
-                updateState({
-                    searchData: [],
-                    showRightIcon: false,
-                    isLoading: false,
-                    searchLoader: false,
-                    showShimmer: false,
-                });
-            }
+            updateState({ isLoading: true })
+            apiHit(1, true); //default value 1 for pageNo and searchAgain true
         }, 400);
         return () => {
             if (searchInterval) {
@@ -178,7 +133,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
         let data = {};
         data['keyword'] = searchInput;
         data['type'] = dineInType;
-        data['limit'] = 8;
+        data['limit'] = limit;
         data['latitude'] = !!location?.latitude
             ? location?.latitude
             : userCurrentLatitude;
@@ -206,9 +161,8 @@ export default function ViewAllSearchItems({ route, navigation }) {
                     isNoMore = false
                     updateState({
                         data: mergeData,
-                        totalProduct: res?.data[0]?.total,
                         isLoading: false,
-                        pageCount: searchAgain ? 1 : pageCount + 1,
+                        pageCount: searchAgain ? 1 : pageNo + 1,
                         loadMore: false
                     });
 
@@ -232,13 +186,11 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
     //Naviagtion to specific screen
-    const moveToNewScreen =
-        (screenName, data = {}) =>
-            () => {
+    const moveToNewScreen =(screenName, data = {}) => {() => {
                 navigation.navigate(screenName, { data });
-            };
-
-    const _checkRedirectScreen = (item) => {
+            }}
+         
+    const _checkRedirectScreen = useCallback((item) => {
         {
             item?.is_show_category
                 ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -254,9 +206,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                     fetchOffers: true,
                 })();
         }
-    };
-
-    /**********/
+    }, [])
 
 
     const onPressCategory = useCallback((item) => {
@@ -333,9 +283,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
 
-
-    const renderViewType = (item) => {
-
+    const renderViewType = useCallback((item) => {
         switch (view_type) {
             case 'category':
                 return (
@@ -380,23 +328,24 @@ export default function ViewAllSearchItems({ route, navigation }) {
             default:
                 break;
         }
-    }
+    }, [view_type])
 
-    const _renderItem = ({ item, index }) => {
+
+
+    const _renderItem = useCallback(({ item }) => {
         return (renderViewType(item))
-    };
+    }, [data])
 
- 
-    const onEndReached = () => {
-    
+
+    const onEndReached = useCallback(() => {
         if (!isNoMore) {
-            console.log("on end reachted api hit.....")
-            updateState({ pageNo: pageNo + 1, loadMore: true });
-            apiHit(pageNo + 1, false);
+            pageCount = pageCount + 1
+            updateState({ loadMore: true });
+            apiHit(pageCount, false);
         } else {
             isNoMore = true
         }
-    };
+    }, [pageCount, isNoMore])
 
 
     const numColumnsReturn = () => {
@@ -416,18 +365,18 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
     const loaderReturn = () => {
-        
+
         switch (view_type) {
             case 'vendor':
-                return(<SearchVendorLoader />)
+                return (<SearchVendorLoader />)
             case 'brand':
-                return(<SearchCategoryLoader />)
+                return (<SearchCategoryLoader />)
             case 'product':
-                return(<SearchProductLoader />)
+                return (<SearchProductLoader />)
             case 'category':
-                return(<SearchCategoryLoader />)
+                return (<SearchCategoryLoader />)
             default:
-                return(<SearchVendorLoader />)
+                return (<SearchVendorLoader />)
         }
     }
 
@@ -489,7 +438,8 @@ export default function ViewAllSearchItems({ route, navigation }) {
                         renderItem={_renderItem}
                         onEndReachedThreshold={0.05}
                         onEndReached={onEndReached}
-                        initialNumToRender={6}
+                        initialNumToRender={10}
+                        onMomentumScrollBegin={onEndReachedCalledDuringMomentum}
                         ListEmptyComponent={
                             !isLoading && (
                                 <View
@@ -504,7 +454,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                             )
                         }
                         ListFooterComponent={!!loadMore ?
-                            <View style={{ marginBottom: moderateScale(100),marginTop:moderateScaleVertical(24) }}>
+                            <View style={{ marginBottom: moderateScale(100), marginTop: moderateScaleVertical(24) }}>
 
                                 <UIActivityIndicator
                                     color={themeColors.primary_color}

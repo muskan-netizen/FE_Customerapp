@@ -270,6 +270,11 @@ export default function DashBoardHeaderEcommerce({
         >
           <SearchBar3
             onPress={() => navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)}
+            containerStyle={{
+              marginVertical: 0,
+              marginBottom:moderateScaleVertical(12),
+              height:moderateScale(38)
+            }}
           />
         </Animatable.View>
 
