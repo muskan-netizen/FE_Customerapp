@@ -863,6 +863,7 @@ function ChooseVechile({ navigation, route }) {
     const carModalHeader = () => {
         if (!!showPaymentModal) {
             return (
+             
                 <View
                     style={{
                         backgroundColor: isDarkMode
@@ -924,6 +925,7 @@ function ChooseVechile({ navigation, route }) {
             );
         }
         return (
+            
             <View
                 style={{
                     backgroundColor: isDarkMode
@@ -932,7 +934,7 @@ function ChooseVechile({ navigation, route }) {
                     borderRadius: 8,
                     borderBottomLeftRadius: 0,
                     borderBottomRightRadius: 0,
-                    marginTop: moderateScaleVertical(18),
+                    marginTop: moderateScaleVertical(18)
                 }}>
                 <View
                     style={{
@@ -972,7 +974,7 @@ function ChooseVechile({ navigation, route }) {
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
-                        {is_cab_pooling &&
+                        {!!is_cab_pooling &&
                             <TouchableOpacity onPress={() => setCabBookingType('Pooling')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>

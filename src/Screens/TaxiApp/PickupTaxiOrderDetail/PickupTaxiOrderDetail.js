@@ -2072,6 +2072,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                   driverRatingData: driverRatingData
                                     ? driverRatingData
                                     : orderFullDetail?.order_driver_rating,
+                                    trackingUrl:paramData?.orderDetail?.dispatch_traking_url
                                 })
                               }
                             >
