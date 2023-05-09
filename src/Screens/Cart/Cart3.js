@@ -253,7 +253,7 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
-  console.log(preferences, 'perferences-------')
+  console.log(preferences,cartData, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(

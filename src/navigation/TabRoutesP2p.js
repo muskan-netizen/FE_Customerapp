@@ -8,12 +8,14 @@ import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import { textScale } from '../styles/responsiveSize';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 import AccountStack from './AccountStack';
 import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
 import PostStack from './PostStack';
+import CartStack from './CartStack';
+import { Text, View } from 'react-native-animatable';
 
 const Tab = createBottomTabNavigator();
 
@@ -79,7 +81,7 @@ export default function TabRoutesP2p(props) {
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
-            navigationStrings.P2P_PRODUCTS,
+            // navigationStrings.P2P_PRODUCTS,
             navigationStrings.P2P_PRODUCT_DETAIL,
           ]),
           tabBarLabel: strings.HOME,
@@ -152,7 +154,7 @@ export default function TabRoutesP2p(props) {
         })}
       />
 
-      {/* <Tab.Screen
+      <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
         options={({ route, navigation }) => ({
@@ -202,7 +204,7 @@ export default function TabRoutesP2p(props) {
           unmountOnBlur: true,
           gestureEnabled: true,
         })}
-      /> */}
+      />
 
       <Tab.Screen
         component={AccountStack}
