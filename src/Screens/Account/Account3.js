@@ -8,7 +8,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
@@ -40,6 +40,8 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+
+import { bluetoothPermission } from '../../utils/permissions';
 export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -64,7 +66,7 @@ export default function Account3({ navigation }) {
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
-  console.log("appDataappDataappData", appData)
+  console.log("appDataappDataappData", appData, languages)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -90,8 +92,8 @@ export default function Account3({ navigation }) {
   }, [appMainData?.is_admin]);
 
   useEffect(() => {
-    getListOfPaymentMethod()
-  }, [])
+    if (!!userData?.auth_token) { getListOfPaymentMethod() }
+  }, [userData?.auth_token])
   const fetchAllVendors = async (value = null) => {
     let query = `?limit=${100000}&page=${1}`;
     let headers = {
@@ -134,6 +136,8 @@ export default function Account3({ navigation }) {
       })
       .catch((err) => console.log(err, 'errororroro'));
   };
+
+
 
   const onShare = () => {
     console.log('onShare', appData?.profile?.preferences);
@@ -411,7 +415,7 @@ export default function Account3({ navigation }) {
                   isBack: true,
                 })}
                 iconLeft={imagePath.myOrder2}
-                centerHeading={strings.MY_ORDERS}
+                centerHeading={(getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings.MY_ORDERS_MRVELOZ : strings.MY_ORDERS}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -584,7 +588,7 @@ export default function Account3({ navigation }) {
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.WALLET)}
               iconLeft={imagePath.wallet3}
-              centerHeading={strings.WALLET}
+              centerHeading={(getBundleId() == appIds.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings?.WALLET_MRVELOZ : strings.WALLET}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),
@@ -618,7 +622,7 @@ export default function Account3({ navigation }) {
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
             centerHeading={
-              getBundleId() == appIds.sxm2go ? strings.JOIN : strings.LINKS
+              getBundleId() == appIds.sxm2go ? strings.JOIN : getBundleId() == appIds.masa ? "More Information" : strings.LINKS
             }
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
@@ -685,13 +689,25 @@ export default function Account3({ navigation }) {
                 BluetoothManager.checkBluetoothEnabled().then(
                   (enabled) => {
                     if (Boolean(enabled)) {
-                      navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                    } else {
-                      BluetoothManager.enableBluetooth()
-                        .then(() => {
+                      bluetoothPermission().then((res) => {
+                          console.log(res, 'resreserserserser')
                           navigation.navigate(navigationStrings.ATTACH_PRINTER);
+
                         })
-                        .catch((err) => { });
+              
+                    } else {
+                     
+                      bluetoothPermission().then((res) => {
+                          console.log(res, 'resesersererser')
+                          BluetoothManager.enableBluetooth()
+                            .then((res) => {
+
+                              navigation.navigate(navigationStrings.ATTACH_PRINTER);
+
+                            })
+                            .catch((err) => { });
+                        })
+                      
                     }
                   },
                   (err) => {
@@ -781,7 +797,7 @@ export default function Account3({ navigation }) {
                   : moveToNewScreen(navigationStrings.CONTACT_US)
               }
               iconLeft={imagePath.contactUs}
-              centerHeading={strings.CONTACT_US}
+              centerHeading={(getBundleId() == appIds?.mrVeloz && languages?.primary_language?.sort_code == 'es') ? strings?.CONTACT_US_MRVELOZ : strings.CONTACT_US}
               containerStyle={styles.containerStyle2}
               centerHeadingStyle={{
                 fontSize: textScale(14),

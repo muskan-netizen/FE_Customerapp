@@ -1,7 +1,7 @@
 import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import { Alert, BackHandler, Linking, Text, TouchableOpacity } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -44,6 +44,16 @@ import {
 } from './DashboardViews/Index';
 
 import { enableFreeze } from "react-native-screens";
+import socketServices from '../../utils/scoketService';
+import BottomSheetModal from '../../Components/BottomSheetModal';
+import { height, moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import { View } from 'react-native-animatable';
+import imagePath from '../../constants/imagePath';
+import { Image } from 'react-native';
+import Modal from "react-native-modal";
+import styles from './styles';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
+
 enableFreeze(true);
 
 
@@ -58,7 +68,8 @@ export default function Home({ route, navigation }) {
     themeColor,
     themeToggle,
     allAddresss,
-    redirectedFrom
+    redirectedFrom,
+    themeColors
   } = useSelector((state) => state?.initBoot);
   const { location, appMainData, dineInType, isLocationSearched } = useSelector(
     (state) => state?.home,
@@ -74,6 +85,8 @@ export default function Home({ route, navigation }) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const fontFamily = appStyle?.fontSizeData;
+
 
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
   const [isLoadingAddons, setLoadingAddons] = useState(true);
@@ -83,7 +96,6 @@ export default function Home({ route, navigation }) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [nearestLocDis, setNearestLocDis] = useState(null)
-  const [isSearchLoc, setIsSearchLoc] = useState(0)
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -194,7 +206,7 @@ export default function Home({ route, navigation }) {
     }
   }, [redirectedFrom])
 
-  console.log(appData, "appData>>>>>appData")
+
 
   useEffect(() => {
     chekLocationPermission(true)
@@ -452,7 +464,6 @@ export default function Home({ route, navigation }) {
       }
 
       if (!selectedVendorType) {
-
         actions.dineInData(defaultVendorType);
       }
 
@@ -574,12 +585,22 @@ export default function Home({ route, navigation }) {
         name: item?.name,
         isVendorList: true,
         fetchOffers: true,
+        screenName: 'vendor'
       })();
     }
   };
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'itemmmmmmmmm')
+    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        fetchOffers: true,
+        id: item.id,
+        vendor: false,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
 
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
@@ -794,7 +815,6 @@ export default function Home({ route, navigation }) {
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
-
     updateState({
       selectedFilterType: {},
     });
@@ -980,6 +1000,7 @@ export default function Home({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -1596,13 +1617,3 @@ export default function Home({ route, navigation }) {
   );
 }
 
-// import { View, Text } from 'react-native'
-// import React from 'react'
-
-// export default function Home() {
-//   return (
-//     <View>
-//       <Text>Home</Text>
-//     </View>
-//   )
-// }

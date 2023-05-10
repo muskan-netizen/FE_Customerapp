@@ -180,3 +180,8 @@ export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAn
 export {default as TaxiHome} from './TaxiAppNewDesign/TaxiHome';
 export {default as Addaddress2} from './TaxiAppNewDesign/Addaddress/Addaddress2';
 export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseVechile';
+
+//FreelancerService
+export {default as FreelancerService} from './FreelancerService/FreelancerService';
+export {default as AvailableTechnicians} from './FreelancerService/AvailableTechnicians/AvailableTechnicians';
+export {default as TechnicianProfile} from './FreelancerService/TechnicianProfile/TechnicianProfile';

@@ -11,7 +11,7 @@ import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
 
-const TaxiHomeCategoryCard = ({data = {},onPress = () => { }}) => {
+const TaxiHomeCategoryCard = ({data = {},onPress = () => { },mainViewStyle}) => {
   
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -29,7 +29,8 @@ const TaxiHomeCategoryCard = ({data = {},onPress = () => { }}) => {
       activeOpacity={0.9}
       style={{
         width: getBundleId() == appIds.hezniTaxi ? width / moderateScale(3) : undefined,
-        ...styles.mainView
+        ...styles.mainView,
+        ...mainViewStyle
       }}>
       {!!imageURI ? (
         <View style={styles.container}>
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  
   }
 });
 export default React.memo(TaxiHomeCategoryCard);

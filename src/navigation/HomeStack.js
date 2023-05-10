@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   Addaddress,
   Addaddress2,
+  AvailableTechnicians,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
@@ -14,6 +15,7 @@ import {
   ConfirmDetailsBuy,
   Delivery,
   Filter,
+  FreelancerService,
   Home,
   HomeV2Api,
   LaundryAvailableVendors,
@@ -40,6 +42,7 @@ import {
   SuperMarket,
   TaxiHome,
   TaxiHomeScreen,
+  TechnicianProfile,
   TrackDetail,
   Tracking,
   VendorDetail,
@@ -62,7 +65,6 @@ export default function () {
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
   const { lastBidInfo } = useSelector((state) => state?.home);
 
-  const businessType = appStyle?.homePageLayout;
 
   const rendervendorScreen = () => {
     switch (appStyle?.homePageLayout) {
@@ -128,6 +130,18 @@ export default function () {
     }
   };
 
+  const getHomeScreen = (homeScreen) => {
+    switch (appStyle?.homePageLayout) {
+      case 4:
+        return TaxiHomeScreen;
+      case 8:
+        return HomeV2Api;
+      case 10:
+        return HomeV2Api;
+      default:
+        return Home;
+    }
+  }
 
   return (
     <Stack.Navigator
@@ -142,15 +156,11 @@ export default function () {
       />}
       <Stack.Screen
         name={
-          businessType === 4
+          appStyle?.homePageLayout === 4
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
-        component={businessType === 4
-          ? TaxiHomeScreen
-          : businessType === 8 || businessType === 10
-            ? HomeV2Api
-            : Home}
+        component={getHomeScreen()}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
@@ -275,7 +285,19 @@ export default function () {
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
       />
+      <Stack.Screen
+        name={navigationStrings.FREELANCER_SERVICE}
+        component={FreelancerService}
+      />
+      <Stack.Screen
+        name={navigationStrings.AVAILABLE_TECHNICIANS}
+        component={AvailableTechnicians}
+      />
+      <Stack.Screen
+        name={navigationStrings.TECHNICIAN_PROFILE}
+        component={TechnicianProfile}
 
+      />
     </Stack.Navigator>
   );
 }

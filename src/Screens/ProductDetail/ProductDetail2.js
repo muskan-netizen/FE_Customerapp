@@ -703,7 +703,7 @@ export default function ProductDetail2({route, navigation}) {
                   alignItems: 'center',
                   marginHorizontal: moderateScale(10),
                 }}>
-                {productDetailData?.averageRating !== null && (
+                {(!!appData?.profile?.preferences?.rating_check && productDetailData?.averageRating !== null) && (
                   <View style={{alignItems: 'flex-end'}}>
                     <View
                       style={{

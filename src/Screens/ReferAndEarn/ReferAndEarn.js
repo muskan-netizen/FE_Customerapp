@@ -66,7 +66,7 @@ export default function ReferAndEarn() {
   } = appData?.profile?.preferences || {};
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const styles = stylesFunc({ fontFamily, themeColors,isDarkMode });
 
   const [availableInfluencerTypes, setAvailableInfluencerTypes] = useState([]);
   const [isInfluencerCategoryForm, setInfluencerCategoryForm] = useState(false);
@@ -426,7 +426,10 @@ export default function ReferAndEarn() {
 
   const influencerForm = () => {
     return (
-      <WrapperContainer isLoading={isLoadingCategoryAttributes}>
+      <WrapperContainer isLoading={isLoadingCategoryAttributes} 
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }>
         <Header
           leftIcon={imagePath.icBackb}
           onPressLeft={() => {
@@ -936,9 +939,11 @@ export default function ReferAndEarn() {
                         source={imagePath.noDataFound}
                         style={styles.noDataFoundImg}
                       />
-                      <Text style={{...styles.noDataFoundTxt, color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyJ,}}>
+                      <Text style={{
+                        ...styles.noDataFoundTxt, color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyJ,
+                      }}>
                         {strings.NODATAFOUND}
                       </Text>
                     </View>
@@ -965,7 +970,7 @@ export default function ReferAndEarn() {
   );
 }
 
-const stylesFunc = ({ fontFamily, themeColors }) => {
+const stylesFunc = ({ fontFamily, themeColors,isDarkMode }) => {
   const styles = StyleSheet.create({
     head: { height: 40, backgroundColor: '#f1f8ff' },
     text: { margin: 6, textAlign: 'center' },
@@ -1017,6 +1022,7 @@ const stylesFunc = ({ fontFamily, themeColors }) => {
       fontFamily: fontFamily.bold,
       fontSize: textScale(17),
       textAlign: 'center',
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
     },
     selectCategoryTxt: {
       marginVertical: moderateScaleVertical(14),
@@ -1071,7 +1077,7 @@ const stylesFunc = ({ fontFamily, themeColors }) => {
     formSectionTitle: {
       fontFamily: fontFamily?.bold,
       fontSize: textScale(14),
-      color: colors.black,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
       textAlign: 'center',
     },
   });

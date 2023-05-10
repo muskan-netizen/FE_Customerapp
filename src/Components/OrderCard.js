@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -13,6 +12,9 @@ import {
 import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import { getImageUrl } from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
+import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
+import { useDarkMode } from 'react-native-dynamic';
+import moment from 'moment';
 
 const OrderCard = (props) => {
   const {
@@ -33,7 +35,17 @@ const OrderCard = (props) => {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
+const [localTime,setLocaleTime] = useState(null)
+  const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  console.log(item,"itemm>>")
+  const date =new Date(item?.date_time)
+  var createdDateTime = moment.utc(date, 'YYYY-MM-DD HH:mm').unix()
+  var LocalTimeSelected = new Date(createdDateTime * 1000);
+  console.log(LocalTimeSelected,"createdDateTimecreatedDateTimecreatedDateTime");
+
+
 
   return (
     <View style={styles.container}>
@@ -76,7 +88,8 @@ const OrderCard = (props) => {
           <Text style={styles.font13Regular}>
             {strings.ORDER} {item?.order_number}
           </Text>
-          <Text style={styles.date}>{item?.date_time}</Text>
+          <Text style={styles.date}>{LocalTimeSelected.toString().slice(0,21)}
+            </Text>
         </View>
         <View
           style={[
@@ -110,13 +123,24 @@ const OrderCard = (props) => {
                 />
               ))}
             </View>
-            <Text style={[styles.font16Regular, { flex: 1 }]}>
+            
+            <Text style={[styles.font16Regular, {flex: 1}]}>
               {item?.product_details && item?.product_details[0]
                 ? item?.product_details[0].title
                 : ''}{' '}
               {count == 0 ? '' : 'x' + ' ' + count + ' more'}
             </Text>
+           
           </View>
+          <Text
+            style={{
+              ...styles.font14Regular,
+              color: '#35B300',
+              // textAlign: 'right',
+              // alignSelf: 'flex-end',
+            }}>
+            {item?.luxury_option_name}
+          </Text>
           <Text
             style={{
               ...styles.font14Regular,

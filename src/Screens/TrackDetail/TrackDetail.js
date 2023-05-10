@@ -31,6 +31,8 @@ import useInterval from "../../utils/useInterval";
 import { showError } from "../../utils/helperFunctions";
 
 import { enableFreeze } from "react-native-screens";
+import { useDarkMode } from "react-native-dynamic";
+import { MyDarkTheme } from "../../styles/theme";
 enableFreeze(true);
 
 
@@ -87,6 +89,9 @@ export default function TrackiDetail({ navigation, route }) {
     themeToggle,
     animateDriver,
   } = useSelector((state) => state?.initBoot);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const mapRef = useRef(null);
   const markerRef = useRef(null);
 
@@ -223,13 +228,15 @@ export default function TrackiDetail({ navigation, route }) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+    bgColor={
+      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+    }
       statusBarColor={colors.backgroundGrey}
       isLoading={isLoading}
     >
       <Header
         centerTitle={strings.TRACKDETAIL}
-        headerStyle={{ backgroundColor: colors.backgroundGrey }}
+        headerStyle={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey }}
       />
 
       <View style={{ ...commonStyles.headerTopLine }} />

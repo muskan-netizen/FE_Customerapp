@@ -33,7 +33,6 @@ enableFreeze(true);
 
 export default function VendorDetail3({ navigation, route }) {
   let vendorParams = route?.params?.data;
-  console.log('vendor params', vendorParams);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -113,6 +112,7 @@ export default function VendorDetail3({ navigation, route }) {
           isVendorList: false,
           category_slug: item?.slug,
           categoryExist: item?.id || null,
+          screenName: 'category'
         },
       });
       return;

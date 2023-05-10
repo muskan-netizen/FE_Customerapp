@@ -295,7 +295,7 @@ const RoyoHome = (props) => {
     )
       .startOf('month')
       .format('MM')}-${moment(date).endOf('month').format('DD')}`;
-
+console.log(data,'datadatadatadata')
     actions
       .getRevenueDashboardData(data, {
         code: appData?.profile?.code,

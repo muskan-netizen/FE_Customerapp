@@ -65,10 +65,9 @@ const App = () => {
   };
 
 
-  if (!__DEV__)
-{
-   console.log = () => null
-}
+  if (!__DEV__) {
+    console.log = () => null
+  }
 
 
   // async function handleDynamicLink(deepLinkUrl) {
@@ -238,7 +237,6 @@ const App = () => {
       }
       const theme = await getItem('theme');
       const themeToggle = await getItem('istoggle');
-      console.log(themeToggle,'themeTogglethemeToggle')
       if (JSON.parse(themeToggle)) {
         dispatch({
           type: types.THEME,
@@ -251,7 +249,7 @@ const App = () => {
       } else {
         dispatch({
           type: types.THEME_TOGGLE,
-          payload: !!themeToggle ? JSON.parse(themeToggle) :false,
+          payload: !!themeToggle ? JSON.parse(themeToggle) : false,
         });
         if (JSON.parse(theme)) {
           dispatch({
@@ -279,6 +277,7 @@ const App = () => {
       const getLanguage = await getItem('language');
 
       if (!!getLanguage) {
+        console.log(getLanguage, "getLanguagegetLanguagegetLanguagegetLanguage");
         strings.setLanguage(getLanguage);
       }
 

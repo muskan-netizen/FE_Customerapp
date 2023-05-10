@@ -413,20 +413,16 @@ export default function Products({ route, navigation }) {
   //usecallback functions
 
   const goToProductDetail = (data) => {
-
-    console.log(data, "data>>>>>>>data")
-
-
-    return;
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
-  console.log(wrapperListLoader, 'wrapperListLoaderwrapperListLoader')
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
       return (
         <View
           key={String(index)}
-          style={{ height: moderateScale(180) }}>
+          style={{
+            height: moderateScale(180),
+          }}>
           <ProductCard3
             data={item}
             index={index}
@@ -615,16 +611,12 @@ export default function Products({ route, navigation }) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View style={{ height: !!categoryInfo?.is_show_products_with_category ? listHeight : 'auto' }}>
+      <View style={{ height: !!categoryInfo?.is_show_products_with_category ? listHeight : 'auto', marginBottom: moderateScaleVertical(8) }}>
         {false ? (
           <View
-            // key={AnimatedHeaderValue}
-            // duration={10}
-
             style={{
               ...styles.headerStyle,
               marginBottom: moderateScale(12),
-              // height: 52
             }}>
             <View
               style={{
@@ -1735,7 +1727,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
 
-    if (data?.vendor) {
+    if (data?.vendor && data?.screenName != "category") {
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1905,8 +1897,8 @@ export default function Products({ route, navigation }) {
           code: appData.profile.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-          latitude: appMainData?.reqData?.latitude,
-          longitude: appMainData?.reqData?.longitude,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -2077,7 +2069,10 @@ export default function Products({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
+
         },
       )
       .then((res) => {
@@ -2156,6 +2151,8 @@ export default function Products({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -3530,8 +3527,8 @@ export default function Products({ route, navigation }) {
         code: appData.profile.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        latitude: appMainData?.reqData?.latitude,
-        longitude: appMainData?.reqData?.longitude,
+        latitude: location?.latitude,
+        longitude: location?.longitude,
         systemuser: DeviceInfo.getUniqueId(),
       };
       console.log('sending header', headers);

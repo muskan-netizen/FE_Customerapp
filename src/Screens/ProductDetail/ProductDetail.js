@@ -1966,10 +1966,10 @@ export default function ProductDetail({ route, navigation }) {
                     justifyContent: 'space-between',
                   }}>
                   {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-                  <View style={{ flex: 1, alignItems: 'center' }}>
+                  <View style={{ flex: 1, alignItems: 'center', }}>
                     <Banner2
                       autoPlay={false}
-                      resizeMode="contain"
+                      resizeMode={getBundleId() == appIds?.eatHalal ? "cover" : "contain"}
                       bannerRef={bannerRef}
                       bannerData={productDetailData?.product_media}
                       sliderWidth={width}
@@ -2136,7 +2136,7 @@ export default function ProductDetail({ route, navigation }) {
                     )}
                   </View>
 
-                  {productDetailData?.averageRating !== null && (
+                  {(!!appData?.profile?.preferences?.rating_check && productDetailData?.averageRating !== null) && (
                     <View
                       style={{
                         borderWidth: 0.5,

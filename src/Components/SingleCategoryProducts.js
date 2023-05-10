@@ -99,7 +99,7 @@ const SingleCategoryProducts = ({
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && item?.averageRating !== '0.0' && showRating && (
+        {!!appData?.profile?.preferences?.rating_check && !!item?.averageRating && item?.averageRating !== '0.0' && showRating && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{

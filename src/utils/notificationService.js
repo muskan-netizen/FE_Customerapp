@@ -1,26 +1,54 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
-import {Platform} from 'react-native';
-import {navigate} from '../navigation/NavigationService';
+import { PermissionsAndroid, Platform } from 'react-native';
+import { navigate } from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
+import { getItem } from './utils';
+import { PERMISSIONS } from 'react-native-permissions';
 
-import {getItem} from './utils';
 
+export async function requestUserPermission(callback = () => { }) {
 
-export async function requestUserPermission() {
-  // if (Platform.OS == 'ios') {
-  //     await messaging().registerDeviceForRemoteMessages();
-  // }
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-    getFcmToken();
+  if (Platform.OS === 'ios') {
+    await messaging().registerDeviceForRemoteMessages();
+    // await messaging().registerForRemoteNotifications()
+  }
+  if (Platform.Version >= 33) {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+        {
+          title: 'Notification Permission',
+          message: 'Allow this app to post notifications?',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        getFcmToken();
+        callback(false);
+      } else {
+        callback(true)
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+
+  } else {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      getFcmToken();
+      callback(false);
+    } else callback(true);
   }
 }
+
+
 
 const getFcmToken = async () => {
   let fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -42,7 +70,7 @@ const getFcmToken = async () => {
 
 const _getOrderDetail = async (id) => {
   const getAppData = await getItem('appData');
-  const {appData} = getAppData;
+  const { appData } = getAppData;
   console.log('manage Redirections', appData);
   let data = {};
   data['order_id'] = id;
@@ -88,8 +116,8 @@ const manageRedirections = async (data) => {
 //   //   popInitialNotification: true,
 //   // });
 
- 
-  
+
+
 
 
 //   messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -201,14 +229,10 @@ const manageRedirections = async (data) => {
 
 
 export const notificationListener = async () => {
-  console.log('i am calleding bhai')
   //Backgorund
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'i am calleding bhai too',
-      JSON.stringify(remoteMessage),
-    );
-    const {notification} = remoteMessage;
+
+    const { notification } = remoteMessage;
     // if (
     //   notification?.sound == 'notification.mp3' ||
     //   notification?.android?.sound == 'notification'
@@ -243,7 +267,7 @@ export const notificationListener = async () => {
           'remote message inital notification',
           JSON.stringify(remoteMessage),
         );
-        const {notification} = remoteMessage;
+        const { notification } = remoteMessage;
         console.log(
           'Notification caused app to open from quit state:',
           remoteMessage,
@@ -283,7 +307,7 @@ const _openApp = () => {
       'Notification caused app to open from background state bla bla:',
       remoteMessage,
     );
-    const {data, messageId, notification} = remoteMessage;
+    const { data, messageId, notification } = remoteMessage;
 
     manageRedirections(data);
 
