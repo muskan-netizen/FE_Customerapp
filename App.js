@@ -438,6 +438,7 @@ const App = () => {
     );
   };
 
+
   return (
     <SafeAreaProvider>
       <MenuProvider>

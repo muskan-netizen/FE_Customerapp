@@ -578,84 +578,84 @@ const DashBoardFiveV2Api = ({
 
 
   //banners view
-const BannersView = ({
-  item = {},
-  showTitle = true,
-}) => {
-  let myBanner = item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners || []
-  return (
-    !isEmpty(myBanner) ?
-      <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0) }}>
-        {!!showTitle ?
-          <TitleViewHome
-            item={item}
-            isDarkMode={isDarkMode}
-            appStyle={appStyle}
-          /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-        <Carousel
-          autoplay={true}
-          loop={true}
-          autoplayInterval={2000}
-          data={myBanner}
-          renderItem={renderBanners}
-          sliderWidth={width}
-          itemWidth={width - moderateScale(32)}
-        />
-      </View> : <React.Fragment />
-  )
-}
+  const BannersView = ({
+    item = {},
+    showTitle = true,
+  }) => {
+    let myBanner = item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners || []
+    return (
+      !isEmpty(myBanner) ?
+        <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0) }}>
+          {!!showTitle ?
+            <TitleViewHome
+              item={item}
+              isDarkMode={isDarkMode}
+              appStyle={appStyle}
+            /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+          <Carousel
+            autoplay={true}
+            loop={true}
+            autoplayInterval={2000}
+            data={myBanner}
+            renderItem={renderBanners}
+            sliderWidth={width}
+            itemWidth={width - moderateScale(32)}
+          />
+        </View> : <React.Fragment />
+    )
+  }
 
-//render banners function
-const renderBanners = ({
-  item = {},
-  index = 0,
-}) => {
-  const imageUrl =
-    item?.banner_image_url ||
-    getImageUrl(
-      item?.image.image_fit,
-      item?.image.image_path,
-      appStyle?.homePageLayout === 5
-        ? '800/600'
-        : DeviceInfo.getBundleId() == appIds.masa
+  //render banners function
+  const renderBanners = ({
+    item = {},
+    index = 0,
+  }) => {
+    const imageUrl =
+      item?.banner_image_url ||
+      getImageUrl(
+        item?.image.image_fit,
+        item?.image.image_path,
+        appStyle?.homePageLayout === 5
           ? '800/600'
-          : '1200/1000',
-    );
-    console.log("appStyle?.homePageLayout ",appStyle?.homePageLayout )
-  return (
-    <View key={String(item?.id || index)}>
-      <TouchableOpacity style={{
-      }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
-        <FastImage
-          source={{
-            uri: imageUrl,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
-          }}
-          style={{
-            height:
-              appStyle?.homePageLayout !== 5
-                ? moderateScale(140)
-                : DeviceInfo.getBundleId() == appIds.masa
-                  ? moderateScale(260)
-                  : height / 3.8,
-            width:
-              appStyle?.homePageLayout !== 5
-                ? width / 1.1
-                : DeviceInfo.getBundleId() == appIds.masa
+          : DeviceInfo.getBundleId() == appIds.masa
+            ? '800/600'
+            : '1200/1000',
+      );
+    console.log("appStyle?.homePageLayout ", appStyle?.homePageLayout)
+    return (
+      <View key={String(item?.id || index)}>
+        <TouchableOpacity style={{
+        }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
+          <FastImage
+            source={{
+              uri: imageUrl,
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable,
+            }}
+            style={{
+              height:
+                appStyle?.homePageLayout !== 5
+                  ? moderateScale(140)
+                  : DeviceInfo.getBundleId() == appIds.masa
+                    ? moderateScale(260)
+                    : height / 3.8,
+              width:
+                appStyle?.homePageLayout !== 5
                   ? width / 1.1
-                  : moderateScale(160),
-            borderRadius: moderateScale(16),
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.greyColor,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </TouchableOpacity>
-    </View>
-  );
-}
+                  : DeviceInfo.getBundleId() == appIds.masa
+                    ? width / 1.1
+                    : moderateScale(160),
+              borderRadius: moderateScale(16),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.greyColor,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
 
   const CategoriesView = useCallback(({ item, showTitle }) => {
@@ -667,6 +667,21 @@ const renderBanners = ({
           marginHorizontal: moderateScale(10)
 
         }}>
+
+        {appStyle?.homePageLayout == 6 ?
+          <View>
+            <Text
+              style={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.medium,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                marginHorizontal: moderateScale(10),
+                marginVertical: moderateScaleVertical(10),
+              }}>
+              {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
+            </Text>
+          </View> : null
+        }
         {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
         <FlatList
           horizontal={categoryFlatViewStyle().horizontal}

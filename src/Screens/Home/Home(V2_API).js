@@ -1133,10 +1133,12 @@ export default function Home({ route, navigation }) {
   }
 
 
+
+
   const renderHomeScreen = () => {
     return (
       <>
-        {dineInType == 'pick_drop' ? null : renderHeaders()}
+        {renderHeaders()}
         {dineInType == 'pick_drop' ?
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
@@ -1214,6 +1216,7 @@ export default function Home({ route, navigation }) {
   };
 
 
+  
 
   return (
     <WrapperContainer

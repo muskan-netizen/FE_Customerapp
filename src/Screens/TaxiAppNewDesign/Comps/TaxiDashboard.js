@@ -517,7 +517,7 @@ export default function TaxiDashboard({
     scheduleDate = null,
     prefillAdress = null
   }) => {
-    let item = appMainData.categories[0]
+    let item = !!appMainData?.categories ? appMainData?.categories[0] : null
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
       updateState({ fullMapShow: false })

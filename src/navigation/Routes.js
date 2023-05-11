@@ -34,6 +34,8 @@ export default function Routes() {
   const { appStyle, themeColors } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
 
+  console.log("appStyle?.homePageLayout",appStyle?.homePageLayout)
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
