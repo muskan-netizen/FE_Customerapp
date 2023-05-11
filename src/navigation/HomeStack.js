@@ -30,7 +30,6 @@ import {
   ProductWithCategory,
   ScrollableCategory,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   ShippingDetails,
@@ -126,7 +125,7 @@ export default function () {
       case 10:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
 
@@ -139,7 +138,7 @@ export default function () {
       case 10:
         return HomeV2Api;
       default:
-        return Home;
+        return HomeV2Api;
     }
   }
 

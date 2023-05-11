@@ -48,7 +48,6 @@ import {
   SalesExpenses,
   SavedCards,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   SendRefferal,
@@ -107,7 +106,7 @@ export default function ({navigation}) {
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
 

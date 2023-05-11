@@ -45,6 +45,8 @@ import {
 
 import { enableFreeze } from "react-native-screens";
 import socketServices from '../../utils/scoketService';
+import store from '../../redux/store';
+import types from '../../redux/types';
 enableFreeze(true);
 
 
@@ -61,9 +63,7 @@ export default function Home({ route, navigation }) {
     allAddresss,
     redirectedFrom
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType, isLocationSearched } = useSelector(
-    (state) => state?.home,
-  );
+  const { location, appMainData, dineInType, isLocationSearched } = useSelector((state) => state?.home || {});
 
   const isFocused = useIsFocused();
   const { cartItemCount } = useSelector((state) => state?.cart);
@@ -156,6 +156,9 @@ export default function Home({ route, navigation }) {
   useEffect(() => {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
+
+
+  console.log("appMainDataappMainData",appMainData)
 
   useEffect(() => {
     if (
@@ -462,7 +465,7 @@ export default function Home({ route, navigation }) {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
-        action: '1'
+        action: '2'
       };
       let apiHeader = {
         code: appData?.profile?.code,
@@ -470,11 +473,39 @@ export default function Home({ route, navigation }) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header', apiData);
-
+      console.time('api response time')
+      const otherTemplate = true
       actions
-        .homeData(apiData, apiHeader)
+        .homeDataV2(apiData, apiHeader, otherTemplate)
         .then(async (res) => {
+          console.timeEnd('api response time')
+          console.log("home data res",res)
           updateState({ searchDataLoader: false, isLoading: false });
+
+          if(!!res?.data){
+            let modifyObj ={}
+
+              res?.data?.homePageLabels.map((val,i)=>{
+                if(val?.slug == 'brands'){
+                  modifyObj['brands'] = val?.data
+                }
+                if(val?.slug == 'nav_categories'){
+                  modifyObj['categories'] = val?.data
+                }
+                if(val?.slug == "featured_products"){
+                  modifyObj["featured_products"] = val?.data
+                }
+                if(val?.slug == "best_sellers"){
+                  modifyObj['vendors'] = val?.data
+                }
+              })
+              console.log("modifyObjmodifyObj",modifyObj)
+              store.dispatch({
+                type: types.HOME_DATA,
+                payload: modifyObj
+              });
+          
+          }
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -984,6 +1015,8 @@ export default function Home({ route, navigation }) {
 
 
 
+
+
   const renderHomeScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -1126,6 +1159,7 @@ export default function Home({ route, navigation }) {
         } else {
           return (
             <>
+              {console.log('curLatLong=>', curLatLong)}
               <DashBoardHeaderFive
                 showToggles={false}
                 navigation={navigation}
@@ -1562,6 +1596,7 @@ export default function Home({ route, navigation }) {
     });
   };
 
+  const { blurRef } = useRef();
 
   return (
     <WrapperContainer
@@ -1597,3 +1632,14 @@ export default function Home({ route, navigation }) {
     </WrapperContainer>
   );
 }
+
+// import { View, Text } from 'react-native'
+// import React from 'react'
+
+// export default function Home() {
+//   return (
+//     <View>
+//       <Text>Home</Text>
+//     </View>
+//   )
+// }

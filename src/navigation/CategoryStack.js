@@ -55,7 +55,7 @@ export default function () {
             case 10:
                 return Screens.SearchProductVendorItem3V2;
             default:
-                return Screens.SearchProductVendorItem2;
+                return Screens.SearchProductVendorItem3V2;
         }
     };
 

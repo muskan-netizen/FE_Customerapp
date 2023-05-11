@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import {
   ProductList3,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   ViewAllSearchItems,
 } from '../Screens';
@@ -21,7 +20,7 @@ export default function () {
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
   return (

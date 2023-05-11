@@ -24,7 +24,6 @@ import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp2 from '../../../Components/ProductsComp2';
-import ProductsComp3 from '../../../Components/ProductsComp3';
 import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -34,6 +33,7 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import { useScrollToTop } from '@react-navigation/native';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -41,12 +41,15 @@ import {
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import {getColorCodeWithOpactiyNumber,getImageUrl} from '../../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber, getImageUrl } from '../../../utils/helperFunctions';
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
 import { getImageUrlNew } from '../../../utils/commonFunction';
 import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
+
+import * as CategoryTemplate from '../TemplateStyle/CategoryStyle'
+
 
 const DashBoardFiveV2Api = ({
   handleRefresh = () => { },
@@ -77,12 +80,12 @@ const DashBoardFiveV2Api = ({
   useScrollToTop(ref);
 
   const [isConfirmAgeModal, setIsConfirmAgeModal] = useState(true);
- 
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
 
 
-  const OnTakeMeOut = () => {RNExitApp.exitApp()};
+  const OnTakeMeOut = () => { RNExitApp.exitApp() };
 
   const checkAgeModalPermission = async () => {
     try {
@@ -228,9 +231,6 @@ const DashBoardFiveV2Api = ({
             <BannersView
               item={item}
               showTitle={false}
-              appData={appData}
-              appMainData={appMainData}
-              bannerPress={bannerPress}
             />
           ) :
             (item?.slug == 'new_products' ||
@@ -239,37 +239,37 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'most_popular_products' ||
               item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
             ) ?
-              <ProductsThemeView appStyle={appStyle}item={item} navigation={navigation} />
+              <ProductsThemeView appStyle={appStyle} item={item} navigation={navigation} />
               : item?.slug == 'vendors' ?
-                <VendorsView  item={item} />
+                <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
-                  <CategoriesView  item={item} showTitle={false} />
+                  <CategoriesView item={item} showTitle={false} />
                 ) : item?.slug == 'best_sellers' ? (
-                  <BestSellersView 
-                  item={item}
-                  onPressVendor={onPressVendor}
-                   appMainData={appMainData}
-                   styles={styles}
-                   appStyle={appStyle}
-                   />
-                ) : 
-                item?.slug == 'brands' ? (
-                  <BrandsView
+                  <BestSellersView
                     item={item}
+                    onPressVendor={onPressVendor}
                     appMainData={appMainData}
-                    isDarkMode={isDarkMode}
-                    moveToNewScreen={moveToNewScreen}
+                    styles={styles}
+                    appStyle={appStyle}
                   />
-                ) : item?.slug == 'spotlight_deals' ? (
-                  <SpotlightDealsView  item={item} />
-                ) : item?.slug == 'selected_products' ? (
-                  <SelectedProductsThemeView item={item} />
-                ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
-                  <React.Fragment />
+                ) :
+                  item?.slug == 'brands' ? (
+                    <BrandsView
+                      item={item}
+                      appMainData={appMainData}
+                      isDarkMode={isDarkMode}
+                      moveToNewScreen={moveToNewScreen}
+                    />
+                  ) : item?.slug == 'spotlight_deals' ? (
+                    <SpotlightDealsView item={item} />
+                  ) : item?.slug == 'selected_products' ? (
+                    <SelectedProductsThemeView item={item} />
+                  ) : item?.slug == 'single_category_products' ? <SingleCategoryProductsView item={item} /> :
+                    <React.Fragment />
         }
       </View>
     );
-  }, [themeColors, fontFamily, appMainData])
+  }, [themeColors, fontFamily, appMainData, appStyle])
 
   const showAllTempCartOrders = useCallback(() => {
     return (
@@ -399,11 +399,11 @@ const DashBoardFiveV2Api = ({
 
   const SelectedProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View 
-      key={String(item?.id || '')}
-      style={{
-        marginBottom: moderateScaleVertical(0)
-      }}>
+      <View
+        key={String(item?.id || '')}
+        style={{
+          marginBottom: moderateScaleVertical(0)
+        }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
@@ -435,25 +435,247 @@ const DashBoardFiveV2Api = ({
     );
   }, [themeColors, fontFamily, appMainData])
 
+
+
+
+  //categories functions
+
+  const _renderCategories = useCallback(({ item, index }) => {
+    switch (appStyle?.homePageLayout) {
+      case 1:
+        return (
+          <CategoryTemplate.HomeCategory6
+            data={item}
+            onPress={() => onPressCategory(item)}
+          />
+        )
+      case 2:
+        return (
+          <View style={{ marginRight: moderateScale(8) }}>
+            <CategoryTemplate.HomeCategoryCard2 data={item} onPress={() => onPressCategory(item)} />
+          </View>
+        )
+      case 3:
+        return (
+          <View
+            style={{
+              marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
+              width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+            }}>
+            <CategoryTemplate.HomeCategoryCard_3_5_7
+              data={item}
+              onPress={() => onPressCategory(item)}
+              isLoading={isLoading}
+            />
+          </View>
+        )
+      case 4:
+        return (
+          <View style={{ width: width / 4.2 }}>
+            <CategoryTemplate.HomeCategoryCard4
+              data={item}
+              onPress={() => onPressCategory(item)}
+            />
+          </View>
+        )
+      case 5:
+        return (
+          <View
+            style={{
+              marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
+              width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+            }}>
+            <CategoryTemplate.HomeCategoryCard_3_5_7
+              data={item}
+              onPress={() => onPressCategory(item)}
+              isLoading={isLoading}
+            />
+          </View>
+        )
+      case 6:
+        return (
+          <View style={{ width: width / 4.2 }}>
+            <CategoryTemplate.HomeCategoryCard6
+              data={item}
+              onPress={() => onPressCategory(item)}
+            />
+          </View>
+        )
+      case 7:
+        return (
+          <View
+            style={{
+              marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
+              width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+            }}>
+            <CategoryTemplate.HomeCategoryCard_3_5_7
+              data={item}
+              onPress={() => onPressCategory(item)}
+              isLoading={isLoading}
+            />
+          </View>
+        )
+      case 8:
+        return (
+          <CategoryTemplate.HomeCategoryCard8
+            item={item}
+            onPress={() => onPressCategory(item)}
+          />
+
+        )
+      case 10:
+        return (
+          <View style={{ width: width / 4.2 }}>
+            <HomeCategoryCard4
+              data={item}
+              onPress={() => onPressCategory(item)}
+              applyRadius={true}
+              index={index}
+            />
+          </View>
+        )
+      default:
+        <HomeCategoryCard4
+          data={item}
+          onPress={() => onPressCategory(item)}
+          applyRadius={true}
+          index={index}
+        />
+    }
+  }, [appStyle])
+
+
+  const categoryFlatViewStyle = () => {
+    switch (appStyle?.homePageLayout) {
+      case 1:
+        return {
+          numColumns: 4,
+          horizontal: false,
+          scrollEnabled: false
+        };
+      case 2:
+        return {
+          numColumns: 0,
+          horizontal: true,
+          scrollEnabled: true
+        };
+
+      case 8:
+        return {
+          numColumns: 3,
+          horizontal: false,
+          scrollEnabled: false
+        };
+
+      default:
+        return {
+          numColumns: 4,
+          horizontal: false,
+          scrollEnabled: false
+        };
+    }
+  }
+
+
+  //banners view
+const BannersView = ({
+  item = {},
+  showTitle = true,
+}) => {
+  let myBanner = item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners || []
+  return (
+    !isEmpty(myBanner) ?
+      <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0) }}>
+        {!!showTitle ?
+          <TitleViewHome
+            item={item}
+            isDarkMode={isDarkMode}
+            appStyle={appStyle}
+          /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+        <Carousel
+          autoplay={true}
+          loop={true}
+          autoplayInterval={2000}
+          data={myBanner}
+          renderItem={renderBanners}
+          sliderWidth={width}
+          itemWidth={width - moderateScale(32)}
+        />
+      </View> : <React.Fragment />
+  )
+}
+
+//render banners function
+const renderBanners = ({
+  item = {},
+  index = 0,
+}) => {
+  const imageUrl =
+    item?.banner_image_url ||
+    getImageUrl(
+      item?.image.image_fit,
+      item?.image.image_path,
+      appStyle?.homePageLayout === 5
+        ? '800/600'
+        : DeviceInfo.getBundleId() == appIds.masa
+          ? '800/600'
+          : '1200/1000',
+    );
+    console.log("appStyle?.homePageLayout ",appStyle?.homePageLayout )
+  return (
+    <View key={String(item?.id || index)}>
+      <TouchableOpacity style={{
+      }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
+        <FastImage
+          source={{
+            uri: imageUrl,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={{
+            height:
+              appStyle?.homePageLayout !== 5
+                ? moderateScale(140)
+                : DeviceInfo.getBundleId() == appIds.masa
+                  ? moderateScale(260)
+                  : height / 3.8,
+            width:
+              appStyle?.homePageLayout !== 5
+                ? width / 1.1
+                : DeviceInfo.getBundleId() == appIds.masa
+                  ? width / 1.1
+                  : moderateScale(160),
+            borderRadius: moderateScale(16),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+
   const CategoriesView = useCallback(({ item, showTitle }) => {
     return !isEmpty(item?.data) ? (
-      <View 
-      key={String(item?.id || '')}
-      style={{
-        marginBottom: moderateScaleVertical(0),
-        marginHorizontal: moderateScale(10)
+      <View
+        key={String(item?.id || '')}
+        style={{
+          marginBottom: moderateScaleVertical(0),
+          marginHorizontal: moderateScale(10)
 
-      }}>
+        }}>
         {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
         <FlatList
-          key={'6'}
-          // horizontal
+          horizontal={categoryFlatViewStyle().horizontal}
           data={item?.data}
-          scrollEnabled={false}
+          scrollEnabled={categoryFlatViewStyle().scrollEnabled}
           keyExtractor={(item, index) => String(item?.id + `${index}`)}
           showsHorizontalScrollIndicator={false}
-          numColumns={4}
-          renderItem={({ item, index }) => _renderCategories(item, index, onPressCategory)}
+          numColumns={categoryFlatViewStyle().numColumns}
+          renderItem={_renderCategories}
           ItemSeparatorComponent={() => (
             <View style={{ height: moderateScale(8) }} />
           )}
@@ -466,11 +688,11 @@ const DashBoardFiveV2Api = ({
 
   const VendorsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View 
-      key={String(item?.id || '')}
-      style={{
-        marginBottom: moderateScaleVertical(0)
-      }}>
+      <View
+        key={String(item?.id || '')}
+        style={{
+          marginBottom: moderateScaleVertical(0)
+        }}>
         <View style={{ marginTop: moderateScaleVertical(8) }} />
         {vendorHeader(item)}
         <FlatList
@@ -536,11 +758,11 @@ const DashBoardFiveV2Api = ({
 
   const SpotlightDealsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
-      <View 
-      key={String(item?.id || '')}
-      style={{
-        marginBottom: moderateScaleVertical(0)
-      }}>
+      <View
+        key={String(item?.id || '')}
+        style={{
+          marginBottom: moderateScaleVertical(0)
+        }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
@@ -741,7 +963,7 @@ const TitleViewHome = ({
 const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
   return !isEmpty(item?.data) ? (
     <View
-    key={String(item?.id || '')}
+      key={String(item?.id || '')}
       style={{
         marginBottom: moderateScaleVertical(0)
       }}>
@@ -783,132 +1005,29 @@ const _renderProducts = ({ item, navigation }) => {
   )
 }
 
-//banners view
-const BannersView = ({
-  item = {},
-  showTitle = true,
-  appMainData = {},
-  appData = {},
-  isDarkMode = false,
-  bannerPress = () => { },
-  appStyle
-}) => {
-  let myBanner = item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners || []
-  return (
-    !isEmpty(myBanner) ?
-      <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0) }}>
-        {!!showTitle ?
-          <TitleViewHome
-            item={item}
-            isDarkMode={isDarkMode}
-            appStyle={appStyle}
-          /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-        <Carousel
-          autoplay={true}
-          loop={true}
-          autoplayInterval={2000}
-          data={myBanner}
-          renderItem={({ item, index }) => renderBanners(
-            {
-              item,
-              index,
-              isDarkMode,
-              bannerPress,
-              appStyle
-            }
-          )}
-          sliderWidth={width}
-          itemWidth={width - moderateScale(32)}
-        />
-      </View> : <React.Fragment />
-  )
-}
 
-//render banners function
-const renderBanners = ({
-  item = {},
-  index = 0,
-  isDarkMode = false,
-  bannerPress = () => { },
-  appStyle = {}
-}) => {
-  const imageUrl =
-    item?.banner_image_url ||
-    getImageUrl(
-      item?.image.image_fit,
-      item?.image.image_path,
-      appStyle?.homePageLayout === 5
-        ? '800/600'
-        : DeviceInfo.getBundleId() == appIds.masa
-          ? '800/600'
-          : '1200/1000',
-    );
-  return (
-    <Animatable.View
-      animation={'zoomIn'}
-      delay={200}
-      key={String(item?.id || index)}
-    >
-      <TouchableOpacity style={{
-      }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
-        <FastImage
-          source={{
-            uri: imageUrl,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
-          }}
-          style={{
-            height: moderateScale(200),
-            width: width - moderateScale(30),
-            borderRadius: moderateScale(16),
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.grayOpacity51,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </TouchableOpacity>
-    </Animatable.View>
-  );
-}
-
-//categories functions
-const _renderCategories = (item, index, onPressCategory) => {
-  return (
-    <View
-      style={{ width: width / 4.2 }}>
-      <HomeCategoryCard4
-        data={item}
-        onPress={() => onPressCategory(item)}
-        // isLoading={isLoading}
-        applyRadius={true}
-        index={index}
-      />
-    </View>
-  )
-}
 
 //best sellers view
-const BestSellersView = ({ 
+const BestSellersView = ({
   item = {},
-  onPressVendor = () =>{},
-  appMainData ={},
-  styles={},
+  onPressVendor = () => { },
+  appMainData = {},
+  styles = {},
   appStyle = {}
- }) => {
+}) => {
   return !isEmpty(item?.data) ? (
-    <View 
-    key={String(item?.id || '')}
-    style={{
-      marginBottom: moderateScaleVertical(0)
-    }}>
+    <View
+      key={String(item?.id || '')}
+      style={{
+        marginBottom: moderateScaleVertical(0)
+      }}>
       <TitleViewHome item={item} />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
         data={item?.data || []}
-        renderItem={({item})=>_renderBestVendors({
-          item, 
+        renderItem={({ item }) => _renderBestVendors({
+          item,
           onPressVendor,
           appMainData,
           styles,
@@ -932,13 +1051,13 @@ const BestSellersView = ({
 }
 //render best vendors function
 
-const _renderBestVendors = ({ 
-  item={}, 
-  onPressVendor = () =>{},
-  appMainData ={},
+const _renderBestVendors = ({
+  item = {},
+  onPressVendor = () => { },
+  appMainData = {},
   styles = {},
   appStyle = {}
- }) => {
+}) => {
   const fontFamily = appStyle?.fontSizeData;
   return (
     <TouchableOpacity
@@ -1016,17 +1135,17 @@ const BrandsView = ({
   moveToNewScreen = () => { }
 }) => {
   return !isEmpty(item?.data) ? (
-    <View 
-    key={String(item?.id || '')}
-    style={{
-      marginBottom: moderateScaleVertical(0)
-    }}>
+    <View
+      key={String(item?.id || '')}
+      style={{
+        marginBottom: moderateScaleVertical(0)
+      }}>
       <TitleViewHome item={item} />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
         data={item?.data}
-        renderItem={({ item }) =>_renderBrands({ item, isDarkMode, appMainData, moveToNewScreen })}
+        renderItem={({ item }) => _renderBrands({ item, isDarkMode, appMainData, moveToNewScreen })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
           <View style={{ marginRight: moderateScale(12) }} />
@@ -1060,6 +1179,8 @@ const _renderBrands = ({
     })
     : item?.image_url;
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
+
+
   return (
     <TouchableOpacity
       activeOpacity={0.7}
