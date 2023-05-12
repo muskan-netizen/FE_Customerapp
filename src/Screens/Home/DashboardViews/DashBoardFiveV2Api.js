@@ -850,7 +850,7 @@ const DashBoardFiveV2Api = ({
           ListFooterComponent={() => <View
             style={{
               height:
-                Platform.OS == 'ios' ? moderateScale(10) : moderateScale(20),
+                Platform.OS == 'ios' ? moderateScale(10) : moderateScale(80),
             }}
           />
           }

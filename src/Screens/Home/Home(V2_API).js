@@ -943,7 +943,7 @@ export default function Home({ route, navigation }) {
   };
 
 
-  
+
 
   const renderHeaders = () => {
     switch (appStyle?.homePageLayout) {
@@ -1077,21 +1077,22 @@ export default function Home({ route, navigation }) {
           </>
         );
 
-      case 10: return (
-        <DashBoardHeaderEcommerce
-          showToggles={false}
-          navigation={navigation}
-          location={location}
-          selcetedToggle={selcetedToggle}
-          toggleData={appData}
-          isLoading={isLoading}
-          currentLocation={currentLocation}
-          isLoadingB={isLoadingB}
-          _onVoiceListen={_onVoiceListen}
-          isVoiceRecord={isVoiceRecord}
-          _onVoiceStop={_onVoiceStop}
-        />
-      )
+      case 10:
+        return (
+          <DashBoardHeaderEcommerce
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+          />
+        )
 
       case 8:
         return (
@@ -1158,8 +1159,8 @@ export default function Home({ route, navigation }) {
             isLoading={isLoading}
             isRefreshing={isRefreshing}
             appMainData={appMainData}
-            onPressCategory={(item) => {onPressCategory(item)}}
-            onPressVendor={(item) => {onPressVendor(item)}}
+            onPressCategory={(item) => { onPressCategory(item) }}
+            onPressVendor={(item) => { onPressVendor(item) }}
             isDineInSelected={isDineInSelected}
             selcetedToggle={selcetedToggle}
             tempCartData={tempCartData}
@@ -1216,7 +1217,7 @@ export default function Home({ route, navigation }) {
   };
 
 
-  
+
 
   return (
     <WrapperContainer

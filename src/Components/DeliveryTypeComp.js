@@ -122,6 +122,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
     ({ item, index }) => {
       return (
         <TouchableOpacity
+          hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
           activeOpacity={1}
           disabled={item?.isActive}
           onPress={() =>
