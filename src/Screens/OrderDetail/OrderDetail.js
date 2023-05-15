@@ -2535,6 +2535,19 @@ export default function OrderDetail({ navigation, route }) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {!!(cartData?.total_waiting_price > 0) && (
+            <LeftRightText
+              leftText={`${strings.WAITING_TIME} (${cartData?.total_waiting_time} ${strings.MIN})`}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_waiting_price),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol
+              )}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           {!!cartData?.wallet_amount_used &&
             cartData?.wallet_amount_used > 0 && (
               <LeftRightText
