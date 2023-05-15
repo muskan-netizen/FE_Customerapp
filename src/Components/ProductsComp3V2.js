@@ -48,7 +48,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       onPress={onPress}
       activeOpacity={1}
       style={{
-        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
+        backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
         width: imageWidth,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
@@ -69,8 +69,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             url: item?.path || null,
             image_const_arr: appMainData.image_prefix,
             type: 'image_fit',
-            // height: moderateScale(50),
-            // width: moderateScale(50),
           }),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,

@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -49,6 +48,7 @@ import { getImageUrlNew } from '../../../utils/commonFunction';
 import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle'
+import MarketCard3V2 from '../../../Components/MarketCard3V2';
 
 
 const DashBoardFiveV2Api = ({
@@ -133,14 +133,14 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderVendors = useCallback(({ item, index }) => (
-    <View style={{ width: width - width / 3.5 }}>
-      <MarketCard3
+    <View style={{ width: '100%' }}>
+      <MarketCard3V2
         data={item}
         onPress={() => onPressVendor(item)}
         extraStyles={{ margin: 2 }}
       />
     </View>
-  ), [])
+  ), [isDarkMode])
 
 
   const onViewAll = useCallback((type, data) => {
@@ -148,7 +148,7 @@ const DashBoardFiveV2Api = ({
       data: data,
       type: type,
     });
-  }, [])
+  }, [isDarkMode])
 
   const vendorHeader = useCallback((item) => {
     if (appData?.profile?.preferences?.single_vendor) {
@@ -205,7 +205,7 @@ const DashBoardFiveV2Api = ({
         )}
       </View>
     );
-  }, [appData, isDarkMode, appMainData])
+  }, [appData, isDarkMode, appMainData,isDarkMode])
 
   const onPressViewEditAndReplace = useCallback((item) => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -215,7 +215,7 @@ const DashBoardFiveV2Api = ({
       },
       selectedVendor: { id: item?.vendors[0].vendor_id },
     });
-  }, [])
+  }, [isDarkMode])
 
 
 
@@ -239,7 +239,7 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'most_popular_products' ||
               item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
             ) ?
-              <ProductsThemeView appStyle={appStyle} item={item} navigation={navigation} />
+              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} />
               : item?.slug == 'vendors' ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
@@ -251,6 +251,7 @@ const DashBoardFiveV2Api = ({
                     appMainData={appMainData}
                     styles={styles}
                     appStyle={appStyle}
+                    isDarkMode={isDarkMode} 
                   />
                 ) :
                   item?.slug == 'brands' ? (
@@ -269,7 +270,7 @@ const DashBoardFiveV2Api = ({
         }
       </View>
     );
-  }, [themeColors, fontFamily, appMainData, appStyle])
+  }, [themeColors, fontFamily, appMainData, appStyle,isDarkMode])
 
   const showAllTempCartOrders = useCallback(() => {
     return (
@@ -324,7 +325,7 @@ const DashBoardFiveV2Api = ({
           : null}
       </View>
     );
-  }, [fontFamily, themeColors, tempCartData])
+  }, [fontFamily, themeColors, tempCartData,isDarkMode])
 
 
   const _renderSingleCategoryProducts = useCallback(({ item, index }) => {
@@ -352,7 +353,7 @@ const DashBoardFiveV2Api = ({
 
 
     );
-  }, [])
+  }, [isDarkMode])
 
   const SingleCategoryProductsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
@@ -360,6 +361,7 @@ const DashBoardFiveV2Api = ({
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome
             item={{ title: item?.data?.category_detail?.slug }}
+            isDarkMode={isDarkMode}
 
           />
           {item?.data?.category_detail?.products?.length >= 9 && <TouchableOpacity onPress={() => showAllProducts(item)}>
@@ -382,7 +384,7 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  }, [themeColors, fontFamily, appMainData])
+  }, [themeColors, fontFamily, appMainData,isDarkMode])
 
   const _renderSelectedProducts = useCallback(({ item, index }) => {
     return (
@@ -405,7 +407,7 @@ const DashBoardFiveV2Api = ({
           marginBottom: moderateScaleVertical(0)
         }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <TitleViewHome item={item} />
+          <TitleViewHome item={item} isDarkMode={isDarkMode} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
             <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
@@ -433,12 +435,8 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  }, [themeColors, fontFamily, appMainData])
+  }, [themeColors, fontFamily, appMainData,isDarkMode])
 
-
-
-
-  //categories functions
 
   const _renderCategories = useCallback(({ item, index }) => {
     switch (appStyle?.homePageLayout) {
@@ -542,7 +540,7 @@ const DashBoardFiveV2Api = ({
           index={index}
         />
     }
-  }, [appStyle])
+  }, [appStyle,isDarkMode])
 
 
   const categoryFlatViewStyle = () => {
@@ -591,6 +589,7 @@ const DashBoardFiveV2Api = ({
               item={item}
               isDarkMode={isDarkMode}
               appStyle={appStyle}
+        
             /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
           <Carousel
             autoplay={true}
@@ -682,7 +681,7 @@ const DashBoardFiveV2Api = ({
             </Text>
           </View> : null
         }
-        {!!showTitle ? <TitleViewHome item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+        {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
         <FlatList
           horizontal={categoryFlatViewStyle().horizontal}
           data={item?.data}
@@ -699,7 +698,38 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  }, [appMainData])
+  }, [appMainData,isDarkMode])
+
+  const listEmptyComponent = useCallback(() => {
+    return (
+      <View>
+        <FastImage
+          source={imagePath.noDataFound}
+          resizeMode="contain"
+          style={{
+            width: moderateScale(140),
+            height: moderateScale(140),
+            alignSelf: 'center',
+            marginTop: moderateScaleVertical(30),
+          }}
+        />
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: textScale(11),
+            fontFamily: fontFamily.regular,
+            marginHorizontal: moderateScale(10),
+            lineHeight: moderateScale(20),
+            marginTop: moderateScale(5),
+            color: isDarkMode ? colors.white : colors.black
+          }}>
+          {businessType == 'home_service'
+            ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+            : `${strings.SORRY_MSG}`}
+        </Text>
+      </View>
+    )
+  }, [isDarkMode])
 
   const VendorsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
@@ -710,55 +740,25 @@ const DashBoardFiveV2Api = ({
         }}>
         <View style={{ marginTop: moderateScaleVertical(8) }} />
         {vendorHeader(item)}
-        <FlatList
-          horizontal
-          alwaysBounceVertical={true}
-          data={item?.data}
-          keyExtractor={(item, index) => String(item?.id + `${index}`)}
-          showsHorizontalScrollIndicator={false}
-          renderItem={_renderVendors}
-          ListHeaderComponent={() => (
-            <View style={{ marginLeft: moderateScale(16) }} />
-          )}
-          ListFooterComponent={() => (
-            <View style={{ marginLeft: moderateScale(16) }} />
-          )}
-          ListEmptyComponent={() => (
-            <View>
-              <FastImage
-                source={imagePath.noDataFound}
-                resizeMode="contain"
-                style={{
-                  width: moderateScale(140),
-                  height: moderateScale(140),
-                  alignSelf: 'center',
-                  marginTop: moderateScaleVertical(30),
-                }}
-              />
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: textScale(11),
-                  fontFamily: fontFamily.regular,
-                  marginHorizontal: moderateScale(10),
-                  lineHeight: moderateScale(20),
-                  marginTop: moderateScale(5),
-                }}>
-                {businessType == 'home_service'
-                  ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
-                  : `${strings.SORRY_MSG}`}
-              </Text>
-            </View>
-          )}
-          ItemSeparatorComponent={() => (
-            <View style={{ width: moderateScale(10) }} />
-          )}
-        />
+
+        <View style={{ marginHorizontal: moderateScale(16) }}>
+          <FlatList
+            alwaysBounceVertical={true}
+            data={item?.data || []}
+            keyExtractor={(item, index) => String(item?.id + `${index}`)}
+            showsHorizontalScrollIndicator={false}
+            renderItem={_renderVendors}
+            ListEmptyComponent={listEmptyComponent}
+            ItemSeparatorComponent={() => (
+              <View style={{ height: moderateScale(10) }} />
+            )}
+          />
+        </View>
       </View>
     ) : (
       <React.Fragment />
     );
-  }, [appMainData])
+  }, [appMainData,isDarkMode])
 
 
   const _renderSpotlightDeals = useCallback(({ item }) => {
@@ -769,7 +769,7 @@ const DashBoardFiveV2Api = ({
         numberOfLines={2}
       />
     )
-  }, [])
+  }, [isDarkMode])
 
   const SpotlightDealsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
@@ -779,7 +779,7 @@ const DashBoardFiveV2Api = ({
           marginBottom: moderateScaleVertical(0)
         }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <TitleViewHome item={item} />
+          <TitleViewHome item={item} isDarkMode={isDarkMode} />
           {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
             <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>}
@@ -805,7 +805,7 @@ const DashBoardFiveV2Api = ({
     ) : (
       <React.Fragment />
     );
-  }, [themeColors, fontFamily, appMainData])
+  }, [themeColors, fontFamily, appMainData,isDarkMode])
 
 
   const keyExtractorUnique = useCallback((item, index) => !!item?.id ? String(item.id) : String(index))
@@ -829,7 +829,9 @@ const DashBoardFiveV2Api = ({
   if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
 
   return (
-    <WrapperContainer>
+    <WrapperContainer
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
+    >
       {showAllTempCartOrders()}
 
       {!!dataProvider && !isEmpty(dataProvider) ?
@@ -850,7 +852,7 @@ const DashBoardFiveV2Api = ({
           ListFooterComponent={() => <View
             style={{
               height:
-                Platform.OS == 'ios' ? moderateScale(10) : moderateScale(80),
+                moderateScale(80)
             }}
           />
           }
@@ -965,7 +967,7 @@ const TitleViewHome = ({
       fontFamily: fontFamily?.medium,
       fontSize: textScale(14),
       textAlign: 'left',
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+      color: isDarkMode ? colors.white : colors.black,
       marginHorizontal: moderateScale(16),
       marginVertical: moderateScaleVertical(6),
     }}>
@@ -1028,15 +1030,17 @@ const BestSellersView = ({
   onPressVendor = () => { },
   appMainData = {},
   styles = {},
-  appStyle = {}
+  appStyle = {},
+  isDarkMode = false
 }) => {
+  console.log("itemitemitem", item)
   return !isEmpty(item?.data) ? (
     <View
       key={String(item?.id || '')}
       style={{
         marginBottom: moderateScaleVertical(0)
       }}>
-      <TitleViewHome item={item} />
+      <TitleViewHome isDarkMode={isDarkMode} item={item} />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
@@ -1071,9 +1075,12 @@ const _renderBestVendors = ({
   onPressVendor = () => { },
   appMainData = {},
   styles = {},
-  appStyle = {}
+  appStyle = {},
+
 }) => {
   const fontFamily = appStyle?.fontSizeData;
+
+
   return (
     <TouchableOpacity
       key={String(item?.id)}
@@ -1086,6 +1093,7 @@ const _renderBestVendors = ({
         overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
+
       }}>
       <FastImage
         source={{
@@ -1153,9 +1161,9 @@ const BrandsView = ({
     <View
       key={String(item?.id || '')}
       style={{
-        marginBottom: moderateScaleVertical(0)
+        marginBottom: moderateScaleVertical(0),
       }}>
-      <TitleViewHome item={item} />
+      <TitleViewHome isDarkMode={isDarkMode} item={item} />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal

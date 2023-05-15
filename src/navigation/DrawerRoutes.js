@@ -92,6 +92,7 @@ export default function DrawerRoutes(props) {
     );
   }
 
+
   return (
     <Drawer.Navigator
       drawerPosition={'left'}

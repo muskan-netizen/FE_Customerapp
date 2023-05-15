@@ -19,6 +19,8 @@ import CategoryStack from './CategoryStack';
 
 
 import navigationStrings from './navigationStrings';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +30,12 @@ export default function TabRoutesEcommerce(props) {
   const { appMainData } = useSelector((state) => state?.home) || {};
   const { appStyle, appData, redirectedFrom, themeColors } = useSelector((state) => state?.initBoot || {});
   const { cartItemCount } = useSelector((state) => state?.cart || {});
+
+
+  const { themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const styles = stylesData();
 
@@ -109,24 +117,13 @@ export default function TabRoutesEcommerce(props) {
   }
 
 
-
   return (
     <Tab.Navigator
       backBehavior={navigationStrings.HOMESTACK}
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          // height: Platform.OS === 'ios' ? moderateScaleVertical(55) + insets.bottom : moderateScaleVertical(64) + insets.bottom,
-          // backgroundColor: colors.white,
-          // borderTopLeftRadius: moderateScale(24),
-          // borderTopRightRadius: moderateScale(24),
-          // paddingVertical: 5,
-          // // position: "absolute",
-          // bottom: 0,
-          // borderColor: colors.borderStroke,
-          // borderWidth: 1,
-          // paddingVertical:moderateScaleVertical(8)
-          // elevation: 1
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
         },
       }}
 
@@ -274,7 +271,7 @@ export function stylesData(params) {
       fontFamily: fontFamily?.medium,
       fontSize: textScale(8),
       color: colors.black,
-      marginVertical: moderateScaleVertical(4)
+      marginVertical: moderateScaleVertical(4),
     },
     iconStyle: {
       height: moderateScale(24),

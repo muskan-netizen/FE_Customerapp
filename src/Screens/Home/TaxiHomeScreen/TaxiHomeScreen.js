@@ -301,7 +301,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
       };
     }
 
-    console.log(appStyle?.homePageLayout, ">fksldfk;lsdkf")
+
 
     var selectedVendorType = null;
     var defaultVendorType = null;

@@ -1,5 +1,5 @@
 import { cloneDeep, debounce } from "lodash";
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useCallback, useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -13,7 +13,6 @@ import {
 import { useDarkMode } from "react-native-dynamic";
 import FastImage from "react-native-fast-image";
 import * as RNLocalize from "react-native-localize";
-import { useIsFocused } from "@react-navigation/native";
 import Modal from "react-native-modal";
 import { useSelector } from "react-redux";
 import CustomTopTabBar from "../../Components/CustomTopTabBar";
@@ -39,7 +38,6 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import useInterval from '../../utils/useInterval';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
 
@@ -148,18 +146,8 @@ export default function MyOrders(props) {
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFun({ fontFamily, themeColors });
 
-  const isFocused = useIsFocused();
-  useInterval(
-    () => {
-      if (!!userData?.auth_token) {
 
-        _getListOfOrders();
-      } else {
-        actions.setAppSessionData("on_login");
-      }
-    },
-    isFocused ? 7000 : null
-  );
+
 
   const updateLocalItem = (data) => {
     console.log("update location item data", data);
@@ -450,6 +438,18 @@ export default function MyOrders(props) {
   //Get list of all orders based on selected tab
 
   //Get list of all orders
+  // useEffect(() => {
+  // updateState({ isLoading: true });
+  //   if (userData && userData?.auth_token) {
+  //     _getListOfOrders();
+  //   } else {
+  //     updateState({
+  //       isLoading: false,
+  //     });
+  //     actions.setAppSessionData("on_login");
+  //   }
+  // }, [selectedTab]);
+
   useEffect(() => {
     updateState({ isLoading: true });
     if (userData && userData?.auth_token) {
@@ -460,18 +460,7 @@ export default function MyOrders(props) {
       });
       actions.setAppSessionData("on_login");
     }
-  }, [selectedTab]);
-
-  useEffect(() => {
-    if (userData && userData?.auth_token) {
-      _getListOfOrders();
-    } else {
-      updateState({
-        isLoading: false,
-      });
-      actions.setAppSessionData("on_login");
-    }
-  }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
+  }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing, selectedTab]);
 
   //Refresh screen
 
@@ -637,6 +626,39 @@ export default function MyOrders(props) {
   };
 
 
+  const listEmptyComp = useCallback(()=>{
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <NoDataFound
+          image={
+            appStyle?.homePageLayout === 4
+              ? appIds.mml == getBundleId()
+                ? imagePath.notrcukImage
+                : imagePath.noRides
+              : imagePath.noDataFound2
+          }
+          isLoading={state.isLoading}
+          text={
+            appStyle?.homePageLayout === 4
+              ? appIds.mml == getBundleId()
+                ? strings.NODELIVERIESFOUND
+                : appIds.jiffex == getBundleId()
+                  ? strings.NO_ORDERS_FOUND
+                  : strings.NO_RIDE_FOUND
+              : strings.NODATAFOUND
+          }
+        />
+      </View>
+    )
+  },[orders])
+
+
   return (
     <WrapperContainer
       bgColor={
@@ -694,7 +716,7 @@ export default function MyOrders(props) {
         // data={activeOrders || pastOrders || scheduledOrders}
         // data={[1, 2, 3, 4]}
         renderItem={renderOrders}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(item, index) => String(item?.id || index)}
         keyboardShouldPersistTaps="always"
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
@@ -713,38 +735,10 @@ export default function MyOrders(props) {
         }
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
+        windowSize={6}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         ListFooterComponent={() => <View style={{ height: 90 }} />}
-        ListEmptyComponent={
-          !isLoading && (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <NoDataFound
-                image={
-                  appStyle?.homePageLayout === 4
-                    ? appIds.mml == getBundleId()
-                      ? imagePath.notrcukImage
-                      : imagePath.noRides
-                    : imagePath.noDataFound2
-                }
-                isLoading={state.isLoading}
-                text={
-                  appStyle?.homePageLayout === 4
-                    ? appIds.mml == getBundleId()
-                      ? strings.NODELIVERIESFOUND
-                      : appIds.jiffex == getBundleId()
-                        ? strings.NO_ORDERS_FOUND
-                        : strings.NO_RIDE_FOUND
-                    : strings.NODATAFOUND
-                }
-              />
-            </View>
-          )
+        ListEmptyComponent={!isLoading && (listEmptyComp())
         }
       />
 

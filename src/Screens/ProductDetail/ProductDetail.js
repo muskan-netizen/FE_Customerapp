@@ -2298,7 +2298,7 @@ export default function ProductDetail({ route, navigation }) {
                 lineStyle={{ marginVertical: moderateScaleVertical(16) }}
               />
 
-              {/* Product description */}
+           
 
               {plainHtml != null ? (
                 <>

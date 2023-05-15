@@ -156,7 +156,7 @@ const OrderCardVendorComponent2 = ({
     };
   }, []);
 
-  console.log(data, 'datdadtatda')
+
   const onCancelOrder = (item) => {
     setIsCancelOrderContentLoader(true);
     setCancellationItem(item);

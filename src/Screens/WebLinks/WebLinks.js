@@ -1046,7 +1046,7 @@ export default function WebLinks(props) {
             style={{
               marginTop: moderateScaleVertical(20),
               marginBottom: moderateScaleVertical(25),
-              marginHorizontal: moderateScale(18),
+              marginHorizontal: moderateScale(16),
               justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
               flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
@@ -1058,17 +1058,41 @@ export default function WebLinks(props) {
                 tagsStyles={{
                   p: {
                     color: isDarkMode ? colors.white : colors.black,
-                    width: height / 2,
-                    paddingHorizontal: 5
+                    width: '100%',
+                    textAlign:'justify',
+                    color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(14),
+                  },
+                  ul: {
+                    color: isDarkMode ? colors.white : colors.black,
+                    width: '100%',
+                    textAlign:'justify',
+                    color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(14),
                   },
                   h2: {
-                    width: height / 2
+                    width: height / 2,
+                    color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
                   },
                   td: {
                     width: height / 2,
+                    color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
                   },
                   tr: {
                     width: height / 2,
+                    color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
                   },
                 }}
               />

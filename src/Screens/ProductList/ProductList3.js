@@ -3988,7 +3988,7 @@ export default function Products({ route, navigation }) {
           <Text style={{
             fontFamily: fontFamily.bold,
             color: themeColors?.primary_color
-          }}>Done</Text>
+          }}>{strings.DONE}</Text>
         </TouchableOpacity>
       </View>
 
