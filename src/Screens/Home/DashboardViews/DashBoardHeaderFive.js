@@ -26,7 +26,7 @@ import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
 
 
-export default function DashBoardHeaderFive({
+function DashBoardHeaderFive({
   // navigation = {},
   location = [],
   selcetedToggle,
@@ -63,6 +63,9 @@ export default function DashBoardHeaderFive({
     '200/400',
   );
 
+
+ 
+
   return (
     <View
       style={{
@@ -79,6 +82,22 @@ export default function DashBoardHeaderFive({
               : colors.borderColorD,
             // borderBottomWidth: 0,
           }}>
+
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.openDrawer()}
+            style={{ alignItems: 'center', }}>
+            <Image
+              style={{
+                tintColor: themeColors.primary_color,
+                marginRight: moderateScale(16),
+                height: moderateScale(30),
+                width: moderateScale(30),
+              }}
+              source={imagePath.icHamburger}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
           <View
             style={{
               flexDirection: 'row',
@@ -247,3 +266,5 @@ export default function DashBoardHeaderFive({
     </View>
   );
 }
+
+export default React.memo(DashBoardHeaderFive)

@@ -201,6 +201,7 @@ export default function DashBoardHeaderSix({
       }
         style={styles.searchBarView}
       >
+        
         <View style={{ flexDirection: 'row', }} >
           <Image
             style={{
@@ -264,6 +265,22 @@ export default function DashBoardHeaderSix({
                 }}
               />
             ) : null} */}
+
+<TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.openDrawer()}
+            style={{ alignItems: 'center', }}>
+            <Image
+              style={{
+                tintColor: themeColors.primary_color,
+                marginRight: moderateScale(16),
+                height: moderateScale(30),
+                width: moderateScale(30),
+              }}
+              source={imagePath.icHamburger}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
 
             {!!appData?.profile?.preferences?.is_hyperlocal && (
               <TouchableOpacity

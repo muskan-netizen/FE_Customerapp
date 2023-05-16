@@ -128,7 +128,7 @@ export default function DrawerRoutes(props) {
       <Drawer.Screen
         name={navigationStrings.WEBLINKS}
         component={WebLinks}
-        options={{ headerShown: false, unmountOnBlur: true }}
+        options={{ headerShown: false}}
         
       />
       {brandTab}

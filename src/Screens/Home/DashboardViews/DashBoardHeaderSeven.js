@@ -77,6 +77,23 @@ export default function DashBoardHeaderSeven({
           marginTop: moderateScaleVertical(15),
           marginBottom: moderateScaleVertical(5),
         }}>
+
+<TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.openDrawer()}
+            style={{ alignItems: 'center', }}>
+            <Image
+              style={{
+                tintColor: themeColors.primary_color,
+                marginRight: moderateScale(16),
+                height: moderateScale(24),
+                width: moderateScale(24),
+              }}
+              source={imagePath.icHamburger}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
         <TouchableOpacity
           style={{flexDirection: 'row'}}
           activeOpacity={0.7}

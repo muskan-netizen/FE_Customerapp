@@ -295,7 +295,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                 return (
                     <View style={{
                         width: '50%',
-                        marginRight: moderateScale(4)
+                        marginRight: moderateScale(4),
 
                     }}>
                         <ProductsComp3

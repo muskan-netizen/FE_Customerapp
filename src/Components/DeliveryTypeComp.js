@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
+  Pressable,
   View,
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
@@ -39,30 +41,21 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
 
-  const [state, setState] = useState({
-    tabs: [],
-  });
+  const flatRef = useRef(null)
 
-  const { tabs } = state;
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const [myTabs, setTabs] = useState([])
+
+  const tabs = useMemo(() => myTabs);
 
   useEffect(() => {
     addAllTabs();
   }, []);
 
+
+
   const addAllTabs = () => {
     if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-      // let serviceType = '';
-      // appData?.profile?.preferences?.vendorMode?.map((itm) => {
-      //   if (itm?.type == 'p2p') {
-      //     serviceType = 'p2p';
-      //     return;
-      //   }
-      // });
-      // if (serviceType == 'p2p') {
-      //   selectedToggle(serviceType);
-      // }
-      updateState({ tabs: appData?.profile?.preferences?.vendorMode });
+      setTabs(appData?.profile?.preferences?.vendorMode || [])
     }
     return;
   };
@@ -73,14 +66,11 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
       if (index === indx) {
         selectedToggle(item?.type);
         newTabs[index].isActive = true;
-        updateState({
-          tabs: [...newTabs],
-        });
+        setTabs([...newTabs])
+
       } else {
         newTabs[index].isActive = false;
-        updateState({
-          tabs: [...newTabs],
-        });
+        setTabs([...newTabs])
       }
     });
   };
@@ -118,22 +108,35 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
     showError(error?.message || error?.error);
   };
 
-  const renderItem = useCallback(
-    ({ item, index }) => {
-      return (
-        <TouchableOpacity
-          hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
-          activeOpacity={1}
-          disabled={item?.isActive}
-          onPress={() =>
-            !(
-              cartItemCount?.message == null &&
-              cartItemCount?.data?.item_count > 0
-            )
-              ? _onTableItm(item, index)
-              : dineInFunction(item, index)
-          }
-          key={index}
+
+  const onPressItem = (item, index) => {
+    if (!!flatRef?.current) {
+      flatRef.current.scrollToIndex({
+        animated: true,
+        index: index,
+
+        viewPosition: 0.5
+      })
+    }
+    !(
+      cartItemCount?.message == null &&
+      cartItemCount?.data?.item_count > 0
+    )
+      ? _onTableItm(item, index)
+      : dineInFunction(item, index)
+  }
+
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <Pressable
+        activeOpacity={1}
+        disabled={item?.isActive}
+        onPress={() => onPressItem(item, index)}
+        key={index}
+      
+      >
+        <View
           style={{
             ...styles.tabItemView,
             borderBottomColor:
@@ -146,10 +149,13 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
                     : colors.greyColor1,
             width:
               tabs.length == 2
-                ? (width - moderateScale(16)) / 2
-                : (width - moderateScale(16)) / 3,
-          }}>
+                ? width / 2
+                : width / 4,
+            // marginRight: 24
+          }}
+        >
           <Text
+            onPress={() => onPressItem(item, index)}
             style={{
               ...styles.tabItemTxt,
               color:
@@ -161,11 +167,11 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
             }}>
             {item?.name}
           </Text>
-        </TouchableOpacity>
-      );
-    },
-    [tabs, appData, cartItemCount, dineInType],
-  );
+        </View>
+      </Pressable>
+    )
+  }
+
 
   const awesomeChildListKeyExtractor = useCallback(
     (item) => `awesome-child-key-${item?.type}`,
@@ -187,13 +193,22 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
           marginBottom: moderateScaleVertical(12),
           ...tabMainStyle,
         }}>
+
+        {/* <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+
+        >
+          {tabs.map((val, i) => renderItem(val, i))}
+
+        </ScrollView> */}
         <FlatList
+          ref={flatRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           data={tabs}
-          initialScrollIndex={tabs.findIndex(
-            (item) => item?.type == dineInType,
-          )}
+          initialScrollIndex={tabs.findIndex((item) => item?.type == dineInType)}
           onScrollToIndexFailed={(val) => console.log('indexed failed')}
           renderItem={renderItem}
           keyExtractor={awesomeChildListKeyExtractor}
@@ -229,10 +244,8 @@ export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
       marginRight: moderateScale(3),
     },
     tabItemTxt: {
-      marginLeft: moderateScale(3),
       fontSize: textScale(14),
       fontFamily: fontFamily.regular,
-
       textTransform: 'capitalize',
     },
   });

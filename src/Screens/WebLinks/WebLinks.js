@@ -216,7 +216,7 @@ export default function WebLinks(props) {
   useEffect(() => {
     updateState({ isLoading: true });
     getCmsPageDetail();
-  }, []);
+  }, [paramData?.id]);
 
   // //Get list of all payment method
   const getCmsPageDetail = () => {
@@ -1059,40 +1059,40 @@ export default function WebLinks(props) {
                   p: {
                     color: isDarkMode ? colors.white : colors.black,
                     width: '100%',
-                    textAlign:'justify',
+                    textAlign: 'justify',
                     color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyOpcaity7,
-                  fontFamily: fontFamily.medium,
-                  fontSize: textScale(14),
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    fontFamily: fontFamily.medium,
+                    fontSize: textScale(14),
                   },
                   ul: {
                     color: isDarkMode ? colors.white : colors.black,
                     width: '100%',
-                    textAlign:'justify',
+                    textAlign: 'justify',
                     color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyOpcaity7,
-                  fontFamily: fontFamily.medium,
-                  fontSize: textScale(14),
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    fontFamily: fontFamily.medium,
+                    fontSize: textScale(14),
                   },
                   h2: {
                     width: height / 2,
                     color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyOpcaity7,
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   },
                   td: {
                     width: height / 2,
                     color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyOpcaity7,
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   },
                   tr: {
                     width: height / 2,
                     color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyOpcaity7,
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   },
                 }}
               />

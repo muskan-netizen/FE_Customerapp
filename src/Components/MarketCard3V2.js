@@ -56,11 +56,12 @@ const MarketCard3 = ({
     url: data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
     type: 'image_fit',
-    height: moderateScale(250),
-    width: moderateScale(250),
+    height: 250,
+    width:250
   })
 
 
+  console.log("imageUrlimageUrlimageUrl",imageUrl)
 
   const distanceView = () => {
     return (

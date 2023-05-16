@@ -499,10 +499,15 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           }}
         />
         <Text
+        numberOfLines={2}
           style={{
             fontFamily: fontFamily.regular,
             fontSize: textScale(12),
-            marginLeft: moderateScale(8),
+            marginHorizontal: moderateScale(8),
+            color: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.black,
+            textAlign:'justify'
           }}>
           {item?.dataname || item?.title || item?.name}
         </Text>
