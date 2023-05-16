@@ -61,8 +61,6 @@ const MarketCard3 = ({
   })
 
 
-  console.log("imageUrlimageUrlimageUrl",imageUrl)
-
   const distanceView = () => {
     return (
       <View style={{ flex: 1, justifyContent: 'space-between' }}>

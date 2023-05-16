@@ -24,7 +24,7 @@ import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesEcommerce from './TabRoutesEcommerce';
-import { WebLinks } from '../Screens';
+import { Category, WebLinks } from '../Screens';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
@@ -131,6 +131,12 @@ export default function DrawerRoutes(props) {
         options={{ headerShown: false}}
         
       />
+         {/* <Drawer.Screen
+        name={navigationStrings.CATEGORY}
+        component={Category}
+        options={{ headerShown: false}}
+        
+      /> */}
       {brandTab}
       {celebTab}
 

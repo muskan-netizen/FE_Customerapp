@@ -1109,6 +1109,8 @@
     "chutneyeahRelease": "cd android && ./gradlew assemblechutneyeahRelease",
     "ineeda": "react-native run-android --variant=ineedaDebug --appIdSuffix=ineeda",
     "ineedaRelease": "cd android && ./gradlew assembleineedaRelease",
+    "dropoff": "react-native run-android --variant=dropoffDebug --appIdSuffix=dropoff",
+    "dropoffRelease": "cd android && ./gradlew assembledropoffRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

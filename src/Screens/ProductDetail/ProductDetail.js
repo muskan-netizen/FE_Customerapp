@@ -1257,15 +1257,15 @@ export default function ProductDetail({ route, navigation }) {
       <Animatable.View
         animation='slideInLeft'
         delay={index * 100}
-        style={{ flex: 1, width: width / 2.5  }}
+        style={{ flex: 1, width: width / 2.5 }}
       >
 
-          <ProductsComp3
-            item={item}
-            onPress={() =>
-              navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
-            }
-          />
+        <ProductsComp3
+          item={item}
+          onPress={() =>
+            navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
+          }
+        />
 
       </Animatable.View>
     );
@@ -2298,7 +2298,7 @@ export default function ProductDetail({ route, navigation }) {
                 lineStyle={{ marginVertical: moderateScaleVertical(16) }}
               />
 
-           
+
 
               {plainHtml != null ? (
                 <>
@@ -2809,17 +2809,17 @@ export default function ProductDetail({ route, navigation }) {
                             }}
                           >
                             <TouchableOpacity
-                              style={{ flex: 0.5 }}
                               disabled={
                                 !productDetailData?.vendor?.show_slot &&
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
                               onPress={() => productIncrDecreamentForCart(2)}
+                              hitSlop={hitSlopProp}
                             >
                               <Image
                                 style={{
-                                  height: moderateScale(15),
-                                  width: moderateScale(15),
+                                  height: moderateScale(12),
+                                  width: moderateScale(12),
                                   tintColor: themeColors?.primary_color,
                                   marginLeft: moderateScale(3)
                                 }}
@@ -2828,21 +2828,21 @@ export default function ProductDetail({ route, navigation }) {
                               />
                             </TouchableOpacity>
 
-                            <TextInput
-                              keyboardType={"number-pad"}
-                              onChangeText={(value) =>
-                                updateState({
-                                  productQuantityForCart:
-                                    value == '' ? 1 : Number(value),
-                                })
-                              }
+                            <Text
                               style={{
-                                maxWidth: moderateScale(70),
-                                // marginRight:moderateScale(5)
+                                fontFamily: fontFamily.medium,
+                                fontSize: moderateScale(14),
+                                color: isDarkMode
+                                  ? colors.white
+                                  : themeColors.primary_color,
+                                // height: moderateScale(100),
+                                marginHorizontal: moderateScale(8),
                               }}
-                              textAlign='center'
-                              value={`${productQuantityForCart.toString()}`}
-                            />
+                            >
+                              {productQuantityForCart}
+                            </Text>
+
+                      
 
                             <TouchableOpacity
                               disabled={
@@ -2850,11 +2850,12 @@ export default function ProductDetail({ route, navigation }) {
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
                               onPress={() => productIncrDecreamentForCart(1)}
-                              hitSlop={hitSlopProp}>
+                              hitSlop={hitSlopProp}
+                              >
                               <Image
                                 style={{
-                                  height: moderateScale(15),
-                                  width: moderateScale(15),
+                                  height: moderateScale(12),
+                                  width: moderateScale(12),
                                   tintColor: themeColors?.primary_color,
                                   // marginRight: moderateScale(8),
                                 }}

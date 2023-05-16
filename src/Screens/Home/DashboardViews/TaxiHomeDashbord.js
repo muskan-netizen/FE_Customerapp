@@ -103,6 +103,17 @@ export default function TaxiHomeDashbord({
   const styles = stylesFunc({ themeColors, fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
+  console.log("appMainDataappMainData",appMainData)
+
+  let myCategories = [{data: []}]
+  
+   myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val,i)=>{
+    if(val.slug == 'nav_categories'){
+      return val
+    }
+  })
+console.log("myCategoriesmyCategories",myCategories)
+
   useFocusEffect(
     React.useCallback(() => {
       if (!!userData?.auth_token) {
@@ -355,11 +366,14 @@ export default function TaxiHomeDashbord({
 
   /*********************************************** instunt booking module code ends here *************************/
 
+
+  console.log("myCategories?.data",myCategories)
   const _renderItem = useCallback(({ item }) => {
+
     return (
       <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} />
     );
-  }, [appMainData?.categories || []])
+  }, [myCategories || []])
 
 
   const moveToScreen = (details) => {
@@ -610,7 +624,7 @@ export default function TaxiHomeDashbord({
 
         <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
-          data={appMainData?.categories || []}
+          data={myCategories[0]?.data || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
           style={{
             marginTop: moderateScaleVertical(10),

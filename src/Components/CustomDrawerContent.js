@@ -160,7 +160,7 @@ const CustomDrawerContent = (props) => {
             }}
           />
 
-          <DrawerItem
+          {/* <DrawerItem
             label={strings.CATEGORY}
             onPress={() => onPressItem(navigationStrings.CATEGORY, 2)} //screenName, tabIndex
             icon={({ focused }) => {
@@ -178,7 +178,7 @@ const CustomDrawerContent = (props) => {
                 10,
               ) : colors.white
             }}
-          />
+          /> */}
           <DrawerItem
             label={strings.WISHLIST}
             onPress={() => onPressWishList(3)} //tabIndex

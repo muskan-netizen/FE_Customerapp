@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "664961203731",
+    "project_id": "dropoff-order",
+    "storage_bucket": "dropoff-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664961203731:android:1bc039e86b0945bbebc9e6",
+        "android_client_info": {
+          "package_name": "com.dropoff.royorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664961203731-446gcjj2ccd4l4m10hmi3lgmhiqfour7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dropoff.royorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "664961203731-gbvk71ehmoiqm1jb6jlp0ckr63dgffo1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dropoff.royorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "664961203731-ojpopeegmdkg4r0nfjeeepucdg91ko7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dropoff.royorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "664961203731-sd13ubjk5tf5j7p2tfc453hm4uois8l1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzazsL1bse8gvR3PZGWxy4KKLOmSm14ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664961203731-sd13ubjk5tf5j7p2tfc453hm4uois8l1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
