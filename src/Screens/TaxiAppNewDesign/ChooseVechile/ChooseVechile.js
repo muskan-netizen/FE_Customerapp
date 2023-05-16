@@ -547,6 +547,9 @@ function ChooseVechile({ navigation, route }) {
             case 47: //Khalti Payment Gatway
                 navigation.navigate(navigationStrings.KHALTI, paymentData);
                 break;
+                case 57: //PesaPal Payment Gatway
+                navigation.navigate(navigationStrings.PESAPAL, paymentData);
+                break;
             case 30: //FlutterWave Payment Getway
                 updateState({
                     isModalVisibleForPayFlutterWave: true,

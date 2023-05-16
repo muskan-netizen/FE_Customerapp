@@ -164,7 +164,7 @@ export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
 export {default as Category} from './Category/Category';
 export {default as SkipCash} from './PaymentGateways/SkipCash';
 export {default as SavedCards} from './SavedCards/SavedCards';
-
+export {default as Pesapal} from './PaymentGateways/Pesapal';
 // P2p template
 export {default as Post} from './P2P/Post/PostCategory';
 export {default as P2pProducts} from './P2P/P2pProducts/P2pProducts';
@@ -185,3 +185,5 @@ export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseV
 export {default as FreelancerService} from './FreelancerService/FreelancerService';
 export {default as AvailableTechnicians} from './FreelancerService/AvailableTechnicians/AvailableTechnicians';
 export {default as TechnicianProfile} from './FreelancerService/TechnicianProfile/TechnicianProfile';
+
+

@@ -48,6 +48,7 @@ import Modal from 'react-native-modal';
 import PaymentGateways from '../../Components/PaymentGateways';
 import TextTabBar from '../../Components/TextTabBar';
 import FastImage from 'react-native-fast-image';
+import { isEmpty } from 'lodash';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -102,9 +103,9 @@ export default function TipPaymentOptions({ navigation, route }) {
     getListOfPaymentMethod();
   }, []);
 
-  useEffect(() => {
-    getSavedCardList()
-  }, [])
+  // useEffect(() => {
+  //   getSavedCardList()
+  // }, [])
 
   const getSavedCardList = () => {
 
@@ -140,6 +141,9 @@ export default function TipPaymentOptions({ navigation, route }) {
       .then((res) => {
         console.log(res, 'allpayments gate');
         updateState({ isLoading: false, payementMethods: res?.data });
+        !isEmpty(res?.data) && res?.data.map((item) => {
+          item.id == 50 && getSavedCardList()
+        })
       })
       .catch(errorMethod);
   };
@@ -899,15 +903,15 @@ export default function TipPaymentOptions({ navigation, route }) {
         updateState({ isLoading: false });
         if (
           res &&
-          res?.status == 'Success' &&
-          (res?.data || res?.payment_link)
+          (res?.status == 'Success' || res?.status == '200') &&
+          (res?.data || res?.payment_link ||res?.redirect_url)
         ) {
           console.log('generate payment url', res.data);
           let sendingData = {
             id: selectedPaymentMethod?.id,
             title: selectedPaymentMethod?.title,
             screenName: navigationStrings.ORDER_DETAIL,
-            paymentUrl: res.data || res?.payment_link,
+            paymentUrl: res.data || res?.payment_link || res?.redirect_url,
             action: 'tip',
             tip_amount: data?.selectedTipAmount,
             order_number: data?.order_number,

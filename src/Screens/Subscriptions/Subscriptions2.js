@@ -1130,15 +1130,15 @@ export default function Subscriptions2({ navigation, route }) {
         updateState({ isLoading: false });
         if (
           res &&
-          res?.status == 'Success' &&
-          (res?.data || res?.payment_link)
+          (res?.status == 'Success' || res?.status == '200') &&
+          (res?.data || res?.payment_link ||res?.redirect_url)
         ) {
           console.log('generate payment url', res.data);
           let sendingData = {
             id: selectedPaymentMethod.id,
             title: selectedPaymentMethod.title,
             screenName: navigationStrings.SUBSCRIPTION,
-            paymentUrl: res.data || res?.payment_link,
+            paymentUrl: res.data || res?.payment_link  ||res?.redirect_url,
             action: 'subscription',
             selectedPlanSlug: selectedPlan?.slug,
           };

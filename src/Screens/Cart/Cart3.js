@@ -1030,7 +1030,10 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         return;
-
+        case 57: //stafood: pesapal  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PESAPAL, paymentData);
+        return;
       default:
         if (
           !!businessType &&

@@ -52,6 +52,7 @@ import {
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import stylesFun from './styles';
+import { isEmpty } from 'lodash';
 
 export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -113,9 +114,9 @@ export default function AddMoney({ navigation }) {
   useEffect(() => {
     getListOfPaymentMethod();
   }, []);
-  useEffect(() => {
-    getSavedCardList()
-  }, [])
+  // useEffect(() => {
+  //   getSavedCardList()
+  // }, [])
   useEffect(() => {
     if (
       preferences &&
@@ -146,6 +147,9 @@ export default function AddMoney({ navigation }) {
         updateState({ isLoadingB: false, isRefreshing: false });
         if (res && res?.data) {
           updateState({ allAvailAblePaymentMethods: res?.data });
+          !isEmpty(res?.data) && res?.data.map((item) => {
+            item.id == 50 && getSavedCardList()
+          })
         }
       })
       .catch(errorMethod);
@@ -961,14 +965,14 @@ export default function AddMoney({ navigation }) {
         console.log('res==>>>>', res);
         if (
           res &&
-          res?.status == 'Success' &&
-          (res?.data || res?.payment_link)
+          (res?.status == 'Success' || res?.status == '200') &&
+          (res?.data || res?.payment_link || res?.redirect_url)
         ) {
           let sendingData = {
             id: selectedPaymentMethod.id,
             title: selectedPaymentMethod.title,
             screenName: navigationStrings.WALLET,
-            paymentUrl: res?.data || res?.payment_link,
+            paymentUrl: res?.data || res?.payment_link || res?.redirect_url,
             action: 'wallet',
           };
 
