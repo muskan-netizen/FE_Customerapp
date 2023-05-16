@@ -1,51 +1,32 @@
 import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
+  createDrawerNavigator
 } from '@react-navigation/drawer';
 import React from 'react';
+import { Image } from 'react-native';
 import { useSelector } from 'react-redux';
+import CustomDrawerContent from '../Components/CustomDrawerContent';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
-import colors from '../styles/colors';
-import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
-import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
-import { Image, Text, StyleSheet } from 'react-native';
-import { moderateScale, textScale } from '../styles/responsiveSize';
-import fontFamily from '../styles/fontFamily';
-import CustomDrawerContent from '../Components/CustomDrawerContent';
-import { View } from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
-import TaxiTabRoutes from './TaxiTabRoutes';
-import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesEcommerce from './TabRoutesEcommerce';
-import { Category, WebLinks } from '../Screens';
+import TabRoutesP2p from './TabRoutesP2p';
+import TaxiTabRoutes from './TaxiTabRoutes';
+import { WebLinks } from '../Screens';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
-  const { shortCodeStatus, appStyle, appData } = useSelector(
-    (state) => state?.initBoot,
-  );
-
-  const businessType = appStyle?.homePageLayout;
+  const {appStyle, appData } = useSelector((state) => state?.initBoot);  const businessType = appStyle?.homePageLayout;
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
-
-  console.log("businessTypebusinessTypebusinessType",businessType)
-
-  // const checkForCeleb =
-  //   allCategory &&
-  //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
   const checkForBrand =
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);

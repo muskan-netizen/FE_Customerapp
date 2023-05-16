@@ -2,7 +2,6 @@
 export {default as DashBoardOne} from './DashBoardOne';
 export {default as DashBoardTwo} from './DashBoardTwo';
 export {default as DashBoardFour} from './DashBoardFour';
-export {default as DashBoardFive} from './DashBoardFive';
 export {default as DashBoardSix} from './DashBoardSix';
 export {default as DashBoardTen} from './DashBoardTen';
 export {default as DashBoardFiveV2Api} from './DashBoardFiveV2Api';

@@ -574,6 +574,7 @@ const DashBoardFiveV2Api = ({
   }
 
 
+  console.log("appMainDataappMainDataappMainData",appMainData)
   //banners view
   const BannersView = ({
     item = {},
@@ -827,6 +828,25 @@ const DashBoardFiveV2Api = ({
 
   if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
 
+
+
+  const ListHeaderComponent = () =>{
+    let myBanner =  appMainData?.mobile_banners || appData?.mobile_banners || []
+    return(
+      <View style={{marginTop:moderateScaleVertical(8)}}>
+           <Carousel
+              autoplay={true}
+              loop={true}
+              autoplayInterval={2000}
+              data={myBanner}
+              renderItem={renderBanners}
+              sliderWidth={width}
+              itemWidth={width - moderateScale(32)}
+            />
+      </View>
+    )
+  }
+  
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
@@ -847,7 +867,7 @@ const DashBoardFiveV2Api = ({
               tintColor={themeColors.primary_color}
             />
           }
-          ListHeaderComponent={() => <View style={{ height: moderateScale(0) }} />}
+          ListHeaderComponent={ListHeaderComponent}
           ListFooterComponent={() => <View
             style={{
               height:
@@ -1150,6 +1170,8 @@ const _renderBestVendors = ({
 }
 
 //brand view
+
+
 const BrandsView = ({
   item = {},
   isDarkMode = false,

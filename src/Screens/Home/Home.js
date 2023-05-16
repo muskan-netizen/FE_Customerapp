@@ -24,7 +24,6 @@ import {
   showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import DashBoardEight from './DashboardViews/DashBoardEight';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import DashBoardNine from './DashboardViews/DashBoardNine';

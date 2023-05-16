@@ -7,23 +7,18 @@ import {
   ChatRoom,
   ChatRoomForVendor,
   ChatScreen,
-  ChatScreenForVendor,
-  WebLinks
+  ChatScreenForVendor
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
 import AuthStack from './AuthStack';
 import CourierStack from './CourierStack';
+import DrawerRoutes from './DrawerRoutes';
 import { navigationRef } from './NavigationService';
-import navigationStrings from './navigationStrings';
-import TabRoutes from './TabRoutes';
-import TabRoutesEcommerce from './TabRoutesEcommerce';
-import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
-import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
-import DrawerRoutes from './DrawerRoutes';
+import navigationStrings from './navigationStrings';
 
 
 const Stack = createNativeStackNavigator();

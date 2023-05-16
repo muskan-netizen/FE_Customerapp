@@ -23,6 +23,7 @@ import {
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { showError, showSuccess } from '../utils/helperFunctions';
+import { hitSlopProp } from '../styles/commonStyles';
 
 function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
   const { cartItemCount } = useSelector((state) => state?.cart);
@@ -134,7 +135,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
         disabled={item?.isActive}
         onPress={() => onPressItem(item, index)}
         key={index}
-      
+      hitSlop={hitSlopProp}
       >
         <View
           style={{
