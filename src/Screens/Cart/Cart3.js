@@ -500,7 +500,7 @@ function Cart({ navigation, route }) {
             const timeSlot = `${delaySlot[2]}-${mont > 9 ? '' : '0'}${mont}-${delaySlot[0]}`
             setMinimumDelayVendorDate(timeSlot);
           }
-          setCartItems(res.data.products);
+          setCartItems((!!res?.data && !!res?.data?.products) ? res?.data?.products : []);
           let currentDate = moment(new Date()).format('YYYY-MM-DD');
           // console.log(res?.data?.scheduled_date_time.slice(0, -6), "res?.data?.scheduled_date_time")
           let getApiScheduledDate =
@@ -2559,6 +2559,7 @@ function Cart({ navigation, route }) {
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
             getProductFAQs={getProductFAQs}
+            dineInType={dineInType}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />
@@ -2673,6 +2674,7 @@ function Cart({ navigation, route }) {
         setVendorComment={setVendorComment}
         _renderUpSellProducts={_renderUpSellProducts}
         _renderCrossSellProducts={_renderCrossSellProducts}
+        dineInType={dineInType}
         onSelectPaymentMethod={() =>
           !!userData?.auth_token
             ? setPaymentModal(true)
@@ -3423,6 +3425,7 @@ function Cart({ navigation, route }) {
     );
   };
 
+
   const checkVendorSlots = async (date) => {
     if (businessType == 'laundry') {
       if (modalType !== 'pickup') {
@@ -3438,7 +3441,9 @@ function Cart({ navigation, route }) {
             },
           );
           setCheckSloatLoading(false);
-          setLaundryAvailableDropOffSlot(res);
+          const availableSlots = !!res && Array.isArray(res) ? res : !!res?.data && Array.isArray(res?.data) ? res?.data : []
+
+          setLaundryAvailableDropOffSlot(availableSlots);
         } catch (error) {
           setCheckSloatLoading(false);
 
@@ -3463,10 +3468,12 @@ function Cart({ navigation, route }) {
         },
       );
 
+      const availableSlots = !!res && Array.isArray(res) ? res : !!res?.data && Array.isArray(res?.data) ? res?.data : []
+      setCheckSloatLoading(false);
       if (modalType == 'pickup') {
-        setLaundryAvailablePickupSlot(res);
+        setLaundryAvailablePickupSlot(availableSlots);
       }
-      setAvailableTimeSlots(res);
+      setAvailableTimeSlots(availableSlots);
       if (res?.length == 0) {
         setSelectedTimeSlots('');
       }

@@ -34,13 +34,13 @@ import strings from '../../../constants/lang';
 
 /**
  * SwipeableSection Part
- * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription,getProductFAQs} props 
+ * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription,getProductFAQs,dineInType} props 
  * @returns 
  */
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription,getProductFAQs } = props;
+    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription, getProductFAQs, dineInType } = props;
     return (
         <>
             {item?.vendor_products.length > 0
@@ -354,7 +354,14 @@ function SwipeableSection(props) {
                                                             );
                                                         })
                                                         : null}
-                                                </View >
+                                                </View>
+                                                {dineInType == 'appointment' ? <Text style={{
+                                                    ...styles.cartItemWeight2,
+                                                    color: isDarkMode
+                                                        ? MyDarkTheme.colors.text
+                                                        : colors.textGreyB,
+                                                    marginBottom: moderateScale(2),
+                                                }} >{i?.scheduled_date_time} {i?.schedule_slot}</Text> : null}
                                                 {!!(
                                                     !!i?.pvariant &&
                                                     Number(i?.pvariant?.container_charges)
@@ -420,6 +427,7 @@ function SwipeableSection(props) {
                                                     )}
                                             </View>
 
+
                                             <View
                                                 style={{
                                                     flexDirection: 'row',
@@ -448,6 +456,7 @@ function SwipeableSection(props) {
                                                             </TouchableOpacity>
                                                         </>
                                                     )}
+
                                                 <View>
                                                     {!!i?.product?.pharmacy_check && (
                                                         <TouchableOpacity
@@ -461,6 +470,8 @@ function SwipeableSection(props) {
                                                             <Image source={imagePath.icPrescription} />
                                                         </TouchableOpacity>
                                                     )}
+
+
 
                                                     <TouchableOpacity
                                                         onPress={() => openDeleteView(i)}>
@@ -597,7 +608,7 @@ function SwipeableSection(props) {
                                 }
                                 {/* <View style={styles.dashedLine} /> */}
 
-                                {i.is_recurring_booking == 1 && !!scheduleType ?
+                                {i?.is_recurring_booking == 1 && !!scheduleType ?
                                     <View
                                         style={{
                                             flexDirection: 'row',

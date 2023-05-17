@@ -4084,6 +4084,7 @@ export default function OrderDetail({ navigation, route }) {
         setLaundryAvailableDropOffSlot(res);
       } catch (error) {
         console.log("error riased", error);
+        showError(error?.error || error?.message || '')
       }
     } else {
       try {
@@ -4099,6 +4100,7 @@ export default function OrderDetail({ navigation, route }) {
         setLaundryAvailablePickupSlot(res);
       } catch (error) {
         console.log("error riased", error);
+        showError(error?.error || error?.message || '')
       }
     }
   };

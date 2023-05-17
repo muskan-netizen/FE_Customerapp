@@ -95,7 +95,7 @@ export default function ProductDetail({ route, navigation }) {
   const styles = stylesFunc({ themeColors, fontFamily });
   const commonStyles = commonStylesFunc({ fontFamily });
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
-  const { data, isProductList = false } = route.params;
+  const { data, isProductList = false, previousScreenData } = route.params;
 
 
   const [state, setState] = useState({
@@ -1149,8 +1149,9 @@ export default function ProductDetail({ route, navigation }) {
             data: {
               item: data,
               isLoading: true,
-              data: res?.data
-            }
+              data: res?.data,
+              vendor: previousScreenData?.vendor
+            },
           });
         } else {
           navigation.goBack()
@@ -1562,7 +1563,7 @@ export default function ProductDetail({ route, navigation }) {
 
           console.log(res, "res for slots vendor");
           if (res) {
-            setAppointmentAvailableSlots(res)
+            setAppointmentAvailableSlots(res.data)
             setLoadingGetSlots(false);
             setAppointmentPicker(false);
             setSelectedAppointmentIndx(null);
@@ -1573,8 +1574,10 @@ export default function ProductDetail({ route, navigation }) {
           }
         } catch (error) {
           setLoadingGetSlots(false);
-
+          showError(error?.error || error?.message || '')
           console.log('error riased', error);
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
         }
       };
       return
