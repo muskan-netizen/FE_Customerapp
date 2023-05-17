@@ -13,6 +13,9 @@ import { height, moderateScaleVertical } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
+import { showError } from '../../utils/helperFunctions';
+import axios from 'axios';
+import { apiGet } from '../../utils/utils';
 
 export default function SkipCash({ navigation, route }) {
     let paramsData = route?.params;
@@ -31,7 +34,7 @@ export default function SkipCash({ navigation, route }) {
     //Update states on screens
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
     const { webData, isLoading } = state;
-console.log(webData,'webDatawebData')
+
     useEffect(() => {
         apiHit();
     }, []);
@@ -40,7 +43,7 @@ console.log(webData,'webDatawebData')
         let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
             }&payment_option_id=${paramsData?.payment_option_id
             }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}&come_from=app`;
-             console.log(queryData,"queryData");
+        console.log(queryData, "queryData");
         try {
             const res = await actions.openPaymentWebUrl(
                 queryData,
@@ -55,7 +58,7 @@ console.log(webData,'webDatawebData')
 
             updateState({ webData: res?.redirect_url });
         } catch (error) {
-            console.log(error,'eroorororrooorro')
+            console.log(error, 'eroorororrooorro')
             updateState({ isLoading: false });
             showError(error.message || error);
         }
@@ -69,17 +72,18 @@ console.log(webData,'webDatawebData')
 
     const onNavigationStateChange = (props) => {
         const { url } = props;
-        console.log(props,'urlllllllllll')
+        console.log(props, 'urlllllllllll')
         const URL = queryString.parseUrl(url);
         const queryParams = URL.query;
         const nonQueryURL = URL.url;
-        console.log(url,  'urlllprops===>...');
-        console.log(URL,  'urlllprops===>');
-        console.log(queryParams,  'props===>');
-        console.log(nonQueryURL,  'props===>11');
+        console.log(url, 'urlllprops===>...');
+        console.log(URL, 'urlllprops===>');
+        console.log(queryParams, 'props===>');
+        console.log(nonQueryURL, 'props===>11');
 
         setTimeout(() => {
-            if (queryParams.status == 200  ) {
+            if (queryParams.status == 200) {
+                
                 if (paramsData?.extraData) {
                     console.log('extraData')
                     navigation.navigate(
@@ -90,7 +94,7 @@ console.log(webData,'webDatawebData')
                     console.log('elseee')
                     moveToNewScreen(navigationStrings.ORDERSUCESS, {
                         orderDetail: {
-                            order_number: queryParams.order,
+                            order_number: queryParams.OrderMerchantReference,
                             id: paramsData?.orderDetail?.id,
                         },
                     })();
@@ -126,9 +130,9 @@ console.log(webData,'webDatawebData')
             />
             {webData !== '' && (
                 <WebView
-                onLoad={() => updateState({isLoading: false})}
-                source={{uri: webData}}
-                onNavigationStateChange={onNavigationStateChange}
+                    onLoad={() => updateState({ isLoading: false })}
+                    source={{ uri: webData }}
+                    onNavigationStateChange={onNavigationStateChange}
                 />
             )}
         </WrapperContainer>

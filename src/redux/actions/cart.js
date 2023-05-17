@@ -37,6 +37,7 @@ import {
   DELETE_PRESCRIPTION,
   SAVED_CARD_LIST,
   DELETE_CARD,
+  PESAPAL_SUCCESS,
 } from '../../config/urls';
 import {
   apiGet,
@@ -547,3 +548,4 @@ export function getSavedCardsList(data = {}, headers = {}) {
 export function deleteCard(query ="",data = {}, headers = {}) {
   return apiGet(DELETE_CARD + query, data, headers);
 }
+

@@ -943,15 +943,16 @@ export default function AddMoney({ navigation }) {
   };
 
   const _webPayment = () => {
-
+    let queryData
     let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-
+    queryData = `/${selectedMethod}?amount=${amount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet`
+    if (selectedPaymentMethod?.id == 57) { queryData = queryData + `&come_from=app` }
     updateState({ isLoadingB: true });
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${amount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet`,
+        queryData,
         {},
         {
           code: appData?.profile?.code,

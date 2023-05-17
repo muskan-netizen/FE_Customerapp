@@ -1113,6 +1113,8 @@ export default function Subscriptions2({ navigation, route }) {
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
     let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
+   if(selectedPaymentMethod?.id == 57)
+   {queryData = queryData + `&come_from=app`}
     updateState({ isLoading: true });
     console.log('query data', queryData);
     actions

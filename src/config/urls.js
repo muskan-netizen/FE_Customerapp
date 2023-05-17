@@ -813,3 +813,4 @@ export const DELETE_CARD = getApiUrl('/user/deleteCard');
 // time slots of driver
 export const GET_DRIVER_SLOTS = getApiUrl('/getDispatcherGerenalSlot');
 export const SEND_PRODUCT_BOOKING_DATA = getApiUrl('/get_product_price_from_dispatcher');
+

@@ -68,7 +68,7 @@ function ChooseVechile({ navigation, route }) {
     const paramData = route?.params?.promocodeDetail
         ? route?.params?.promocodeDetail
         : route?.params;
-
+console.log(paramData,'paramData')
     const bottomSheetRef = useRef(null);
     const mapRef = useRef();
 
@@ -975,7 +975,7 @@ function ChooseVechile({ navigation, route }) {
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
-                        {is_cab_pooling &&
+                        {!!is_cab_pooling &&
                             <TouchableOpacity onPress={() => setCabBookingType('Pooling')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
@@ -1596,6 +1596,7 @@ function ChooseVechile({ navigation, route }) {
     }
 
     return (
+      
         <View style={{ ...styles.container }}>
             <View style={{ flex: 1 }}>
                 {!!paramData?.location.length > 0 && (
