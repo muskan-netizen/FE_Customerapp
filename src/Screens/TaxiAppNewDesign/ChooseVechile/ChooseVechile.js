@@ -290,7 +290,7 @@ console.log(paramData,'paramData')
         }
         updateState({ isLoading: true });
 
-        const apiQuery = `/${39}/${2}?page=${pageNo}&limit=${limit}`
+        const apiQuery = `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`
         const apiData = {
             locations: paramData?.location,
             schedule_date_delivery: scheduleDateTime?.selectedDateAndTime
