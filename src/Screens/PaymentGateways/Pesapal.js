@@ -40,6 +40,7 @@ export default function SkipCash({ navigation, route }) {
     }, []);
 
     const apiHit = async () => {
+        
         let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
             }&payment_option_id=${paramsData?.payment_option_id
             }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}&come_from=app`;
@@ -55,7 +56,7 @@ export default function SkipCash({ navigation, route }) {
                 },
             );
             console.log(res, 'responseData===>');
-
+            updateState({ isLoading: false });
             updateState({ webData: res?.redirect_url });
         } catch (error) {
             console.log(error, 'eroorororrooorro')
