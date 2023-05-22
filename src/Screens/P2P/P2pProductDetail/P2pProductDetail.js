@@ -488,7 +488,7 @@ const P2pProductDetail = ({ navigation, route }) => {
               />
             )}
           </View>
-          {/* <View style={styles.view1}>
+          <View style={styles.view1}>
             <Text style={{ ...styles.txt1, fontSize: textScale(13) }}>
               Posted By
             </Text>
@@ -589,7 +589,7 @@ const P2pProductDetail = ({ navigation, route }) => {
                   )}
                 </View>
               )}
-          </View> */}
+          </View>
           {!isEmpty(productAttributeInfo) && (
             <View style={{ ...styles.view1, marginTop: 0 }}>
               <Text
@@ -636,10 +636,10 @@ const P2pProductDetail = ({ navigation, route }) => {
                 )
               })}
             </View>
-            <GradientButton
+            {/* <GradientButton
               btnText={'Add to Cart'}
               onPress={addToCart}
-            />
+            /> */}
           </View>
         </ScrollView>
       )}
