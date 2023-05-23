@@ -27,6 +27,7 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductListEcom,
   ProductWithCategory,
   ScrollableCategory,
   SearchProductVendorItem,
@@ -34,6 +35,7 @@ import {
   SendProduct,
   ShippingDetails,
   SpotdealProductAndSelectedProducts,
+  SubCategoryItems,
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
@@ -89,12 +91,10 @@ export default function () {
 
   const renderProductListScreen = () => {
     switch (appStyle?.homePageLayout) {
-      case 1:
-        return ProductList;
-      case 2:
-        return ProductList2;
-      default:
-        return ProductList3;
+      case 1: return ProductList;
+      case 2: return ProductList2;
+      case 10: return ProductListEcom;
+      default: return ProductList3;
     }
   };
 
@@ -269,7 +269,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.SUBCATEGORY_VENDORS}
-        component={SubcategoryVendor}
+        component={appStyle?.homePageLayout == 10 ? SubCategoryItems : SubcategoryVendor}
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
@@ -290,7 +290,7 @@ export default function () {
         component={Wishlist2}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
       />

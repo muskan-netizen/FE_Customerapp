@@ -25,6 +25,7 @@ import {
   ACCEPT_RIDE_BID,
   ACCEPT_RIDE_FOR_BID,
   SERACH_ALL_ITEMS,
+  GET_SUBCATEGORY_VENDORS_V2,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
@@ -321,6 +322,19 @@ export const getSubCategoryVendors = (data, headers = {}) => {
       });
   });
 };
+
+export const getSubCategoryVendorsV2 = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_SUBCATEGORY_VENDORS_V2, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 
 export const isLocationSearched = (flag) => {
   dispatch({

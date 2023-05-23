@@ -19,7 +19,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-const BrandCard2 = ({ data = {}, onPress = () => { } }) => {
+const BrandCard2 = ({ data = {}, onPress = () => { }, showName = true }) => {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -86,7 +86,7 @@ const BrandCard2 = ({ data = {}, onPress = () => { } }) => {
           />
         )}
       </TouchableOpacity>
-      <View style={{ paddingHorizontal: moderateScale(4), justifyContent: 'center', }} >
+      {showName ? <View style={{ paddingHorizontal: moderateScale(4), justifyContent: 'center', }} >
         <Text
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
@@ -98,7 +98,7 @@ const BrandCard2 = ({ data = {}, onPress = () => { } }) => {
           }}>
           {data?.name || (data?.translation && data?.translation[0]?.title) || ''}
         </Text>
-      </View>
+      </View>: null}
     </View>
   );
 };

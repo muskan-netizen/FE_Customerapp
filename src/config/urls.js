@@ -1,10 +1,13 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
 // export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
 // export const API_BASE_URL = 'http://192.168.100.214:8001/api/v1'
 // export const API_BASE_URL = 'https://uat-order.royoorders.com/api/v1';
+
+export const API_BASE_URL = 'http://192.168.100.156:9001/api/v1'; //Staging
+
 
 
 // export const API_BASE_URL='https://tiimollc.com/api/v1'
@@ -692,7 +695,11 @@ export const RESCHDULE_ORDER = getApiUrl('/mystore/vendor/rescheduleOrder');
 export const ADD_PRESCRIPTIONS = getApiUrl('/upload/prescriptions');
 export const DELETE_PRESCRIPTION = getApiUrl('/delete/prescriptions');
 export const GET_SUBCATEGORY_VENDORS = getApiUrl('/get/subcategory/vendor');
+export const GET_SUBCATEGORY_VENDORS_V2 = getApiUrl('/v2/get/subcategory/vendor');
 export const VENDER_UPDATE_ORDER = getApiUrl('/order-update');
+
+
+
 
 //Chat Apis
 export const START_CHAT = getApiUrl('/chat/startChat');

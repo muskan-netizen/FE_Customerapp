@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   AboutUs,
   Account,
@@ -41,6 +41,7 @@ import {
   ProductDetail2,
   ProductList,
   ProductList2,
+  ProductListEcom,
   RateOrder,
   ReferAndEarn,
   ReplaceOrder,
@@ -72,10 +73,10 @@ import {
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
-export default function ({navigation}) {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+export default function ({ navigation }) {
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
-  console.log("appStyle?.homePageLayoutappStyle?.homePageLayout",appStyle?.homePageLayout)
+  console.log("appStyle?.homePageLayoutappStyle?.homePageLayout", appStyle?.homePageLayout)
   const checkAccountsLayout = (inx) => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -109,6 +110,19 @@ export default function ({navigation}) {
         return SearchProductVendorItem3V2;
     }
   };
+
+  const productListView = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductList2
+      case 10:
+        return ProductListEcom
+      default:
+        return ProductList
+    }
+  }
+
+
 
   return (
     <Stack.Navigator
@@ -150,8 +164,8 @@ export default function ({navigation}) {
         name={navigationStrings.WISHLIST}
         component={
           appStyle?.homePageLayout === 3 ||
-          appStyle?.homePageLayout === 5 ||
-          appStyle?.homePageLayout === 8
+            appStyle?.homePageLayout === 5 ||
+            appStyle?.homePageLayout === 8
             ? Wishlist2
             : Wishlist
         }
@@ -161,7 +175,7 @@ export default function ({navigation}) {
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name={navigationStrings.TRACKING} component={Tracking} />
       <Stack.Screen
@@ -191,7 +205,7 @@ export default function ({navigation}) {
       <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
+        component={productListView()}
       />
       <Stack.Screen name={navigationStrings.RATEORDER} component={RateOrder} />
       <Stack.Screen
@@ -210,7 +224,7 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.PICKUPORDERDETAIL}
         component={PickupOrderDetail}
-        options={{tabBarVisible: false}}
+        options={{ tabBarVisible: false }}
       />
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}

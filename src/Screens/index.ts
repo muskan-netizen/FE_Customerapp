@@ -23,6 +23,8 @@ export {default as SuperMarket} from './Supermarket/Supermarket';
 export {default as Vendors} from './Vendors/Vendors';
 export {default as VendorDetail} from './VendorDetail/VendorDetail';
 export {default as ProductList} from './ProductList/ProductList';
+export {default as ProductListEcom} from './ProductList/ProductListEcom';
+
 export {default as MyProfile} from './MyProfile/MyProfile';
 export {default as MyOrders} from './MyOrders/MyOrders';
 export {default as OrderDetail} from './OrderDetail/OrderDetail';
@@ -180,4 +182,5 @@ export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAn
 export {default as TaxiHome} from './TaxiAppNewDesign/TaxiHome';
 export {default as Addaddress2} from './TaxiAppNewDesign/Addaddress/Addaddress2';
 export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseVechile';
-export {default as ViewAllSearchItems} from './ViewAllSearchItems/ViewAllSearchItems'
+export {default as ViewAllSearchItems} from './ViewAllSearchItems/ViewAllSearchItems';
+export {default as SubCategoryItems} from './SubCategoryItems/SubCategoryItems';

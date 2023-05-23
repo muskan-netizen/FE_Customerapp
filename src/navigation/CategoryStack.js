@@ -24,12 +24,10 @@ export default function () {
 
     const renderProductListScreen = () => {
         switch (appStyle?.homePageLayout) {
-            case 1:
-                return Screens.ProductList;
-            case 2:
-                return Screens.ProductList2;
-            default:
-                return Screens.ProductList3;
+            case 1: return Screens.ProductList;
+            case 2: return Screens.ProductList2;
+            case 10: return Screens.ProductListEcom;
+            default: return Screens.ProductList3;
         }
     };
 

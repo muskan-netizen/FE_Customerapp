@@ -1253,21 +1253,14 @@ export default function ProductDetail({ route, navigation }) {
   const renderProduct = ({ item, index }) => {
     // item.showAddToCart = true;
     return (
-
-      <Animatable.View
-        animation='slideInLeft'
-        delay={index * 100}
-        style={{ flex: 1, width: width / 2.5 }}
-      >
-
+      <View style={{ flex: 1, width: width / 2.5 }}>
         <ProductsComp3
           item={item}
           onPress={() =>
             navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
           }
         />
-
-      </Animatable.View>
+      </View>
     );
   };
 
@@ -2354,7 +2347,7 @@ export default function ProductDetail({ route, navigation }) {
                         fontSize: textScale(12),
                         color: colors.black,
                       }}>
-                      Enter Pincode for hassale free timely delivery
+                      Enter 6 digit pincode for hassale free timely delivery
                     </Text>
                     <View
                       style={{
@@ -2373,7 +2366,7 @@ export default function ProductDetail({ route, navigation }) {
                           value={pinCode}
                           placeholder={'Enter Pincode'}
                           containerStyle={{
-                            flex: 1,
+                       
                             borderRadius: moderateScale(10),
                             minHeight: moderateScaleVertical(40),
                           }}
@@ -2385,10 +2378,11 @@ export default function ProductDetail({ route, navigation }) {
                           !isLoadingPinCode && (
                             <Text
                               style={{
-                                textAlign: 'right',
+                                // textAlign: 'right',
                                 color: colors.redB,
                                 marginRight: 5,
                                 fontSize: textScale(10),
+                                marginTop:moderateScaleVertical(4)
                               }}>
                               Enter valid pincode
                             </Text>

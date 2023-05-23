@@ -105,7 +105,6 @@ export default function DashBoardHeaderEcommerce({
       colors={[themeColors?.primary_color, themeColors?.primary_color, getColorCodeWithOpactiyNumber(
           themeColors.primary_color.substr(1),
           40)]}
-
     >
       <SafeAreaView>
 
@@ -125,7 +124,7 @@ export default function DashBoardHeaderEcommerce({
               style={{
                 ...headerIconStyle,
                 tintColor: colors.white,
-                marginRight: moderateScale(16),
+                marginRight: moderateScale(8),
                 height:moderateScale(26),
                 width:moderateScale(26),
               }}
@@ -168,13 +167,14 @@ export default function DashBoardHeaderEcommerce({
                   flexDirection: 'row',
                   alignItems: 'center',
                   flex: 0.85,
-                  marginLeft: moderateScale(16),
+                  marginLeft: moderateScale(4),
+
                 }}>
                 <Image
                   style={{
                     height: moderateScale(20),
                     width: moderateScale(20),
-                    tintColor: themeColors.primary_color,
+                    tintColor: colors.white
                   }}
                   source={imagePath.icEcomHeaderLocation}
                   resizeMode="contain"
@@ -183,7 +183,7 @@ export default function DashBoardHeaderEcommerce({
                   {!!location?.type && (
                     <View style={{
                       flexDirection: "row",
-                      alignItems: "center"
+                      alignItems: "center",
                     }}>
                       <Text numberOfLines={1} style={{ ...styles.locationTypeTxt, color: colors.black, fontSize: textScale(14) }}>
                         {location?.type === 3
@@ -209,9 +209,7 @@ export default function DashBoardHeaderEcommerce({
                     style={[
                       styles.locationTxt,
                       {
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.blackOpacity30,
+                        color: colors.white,
                         fontFamily: fontFamily.medium,
                       },
                     ]}>

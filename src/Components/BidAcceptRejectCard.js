@@ -85,7 +85,7 @@ const BidAcceptRejectCard = ({
               Number(data?.bid_price),
               digit_after_decimal,
               additional_preferences,
-              currencies?.primary_currency?.symbol
+              currencies?.primary_currency?.symbol,
             )}</Text>
           </View>
 

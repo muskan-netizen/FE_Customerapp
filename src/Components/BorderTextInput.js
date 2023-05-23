@@ -59,7 +59,7 @@ const BorderTextInput = ({
     <View
       style={{
         flexDirection: 'row',
-        height: moderateScaleVertical(49),
+        minHeight: moderateScaleVertical(48),
         color: colors.white,
         borderWidth: borderWidth,
         borderRadius: borderRadius,

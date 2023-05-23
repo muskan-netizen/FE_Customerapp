@@ -26,8 +26,9 @@ import {
   pressInAnimation,
   pressOutAnimation
 } from '../utils/helperFunctions';
-let imageHeight = parseInt(moderateScale(140))
-let imageWidth = parseInt(moderateScale(140))
+let imageHeight = 160
+let imageWidth = 160
+let imageRadius = 8
 
 
 const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
@@ -51,11 +52,12 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
         width: imageWidth,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
+        shadowOffset: { width: 0, height: 1, },
         shadowOpacity: 0.1,
         shadowRadius: 2,
-        elevation: 4,
+        elevation: 2,
         margin: 1,
+        borderRadius: imageRadius,
         ...containerStyle,
         ...getScaleTransformationStyle(scaleInAnimated),
 
@@ -68,7 +70,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           uri:getImageUrlNew({
             url: item?.path || null,
             image_const_arr: appMainData.image_prefix,
-            type: 'image_fit',
+            type: 'image_fill',  
           }),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
@@ -76,6 +78,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         style={{
           height: imageHeight,
           width: imageWidth,
+          borderTopLeftRadius: imageRadius,
+          borderTopRightRadius: imageRadius,
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
           ...imageStyle,
         }}
@@ -140,6 +144,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
+                currencies
               )}
             </Text>
             {!!category?.category_detail?.translation[0]?.name && (

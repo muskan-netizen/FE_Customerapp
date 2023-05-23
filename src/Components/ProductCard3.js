@@ -317,11 +317,13 @@ const ProductCard3 = ({
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
+              currencies
             )}
           </Text>
 
           {Number(data?.variant[0]?.compare_at_price) >
             Number(data?.variant[0]?.price) && (
+        
               <Text
                 numberOfLines={1}
                 style={{
@@ -331,15 +333,18 @@ const ProductCard3 = ({
                   fontFamily: fontFamily.regular,
                   textDecorationLine: 'line-through',
                   marginHorizontal: moderateScale(8),
+           
+        
                 }}>
-                {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
                   data?.variant[0]?.compare_at_price * data?.variant[0]?.multiplier,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
+                  currencies
                 )}
               </Text>
+           
             )}
 
           {!!data?.is_recurring_booking &&

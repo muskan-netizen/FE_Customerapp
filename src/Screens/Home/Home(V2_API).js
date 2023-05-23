@@ -502,6 +502,7 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressVendor = (item) => {
+    
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -538,9 +539,14 @@ export default function Home({ route, navigation }) {
     }
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
-
       return;
     }
+    if (item?.redirect_to == staticStrings.SUBCATEGORY && appStyle?.homePageLayout == 10) {
+      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      return;
+    }
+    
+
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -1132,8 +1138,6 @@ export default function Home({ route, navigation }) {
         </>
     }
   }
-
-
 
 
   const renderHomeScreen = () => {

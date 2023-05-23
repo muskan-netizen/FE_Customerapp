@@ -16,9 +16,11 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
@@ -52,13 +54,15 @@ const MarketCard3 = ({
 
   const appMainData = useSelector((state) => state?.home?.appMainData || {});
 
-  let imageUrl =  getImageUrlNew({
+  let imageUrl = getImageUrlNew({
     url: data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
-    type: 'image_fit',
-    height: 250,
-    width:250
+    type: 'image_fill',
+    height: (height/2).toFixed(0),
+    width: width.toFixed(0)
   })
+
+  console.log("imageUrl", imageUrl)
 
 
   const distanceView = () => {
@@ -155,7 +159,9 @@ const MarketCard3 = ({
                         resizeMode="contain"
                         source={imagePath.icTime2}
                       />
-                      {data?.timeofLineOfSightDistance / 60 > 1 &&
+
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>{data?.timeofLineOfSightDistance}</Text>
+                      {/* {data?.timeofLineOfSightDistance / 60 > 1 &&
                         appIds.hokitch == getBundleId() ? (
                         <Text
                           numberOfLines={1}
@@ -167,7 +173,7 @@ const MarketCard3 = ({
                           {checkEvenOdd(data?.timeofLineOfSightDistance)}-
                           {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
                         </Text>
-                      )}
+                      )} */}
                     </View>
                   )}
                 </View>
@@ -204,7 +210,7 @@ const MarketCard3 = ({
                   ...fastImageStyle,
                   // opacity: 0.8,
                 }}
-                resizeMode={FastImage.resizeMode.cover}
+              // resizeMode={FastImage.resizeMode.cover}
               />
               <View style={styles.vendorScheduledView}>
                 <Text style={styles.vendorScheduledText}>
@@ -388,7 +394,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       textAlign: 'left',
     },
     mainImage: {
-      height: moderateScaleVertical(200),
+      height: 200,
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),

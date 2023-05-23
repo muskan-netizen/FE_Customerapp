@@ -233,7 +233,7 @@ const DashBoardFiveV2Api = ({
           data={item}
           onPress={() => onPressCategory(item)}
           isLoading={isLoading}
-          applyRadius={true}
+          applyRadius={4}
           index={index}
         />
       </View>

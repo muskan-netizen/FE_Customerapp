@@ -187,6 +187,7 @@ const ProductCard3demo = ({
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
+                  
                 )}
               </Text>
             </View>
