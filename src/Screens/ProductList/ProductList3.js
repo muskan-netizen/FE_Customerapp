@@ -131,7 +131,7 @@ enableFreeze(true);
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
-  const { data } = route.params;
+  const { data, previousScreenData } = route.params;
 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
@@ -151,6 +151,7 @@ export default function Products({ route, navigation }) {
 
   const [listHeight, setListHeight] = useState(height / 3.2)
 
+  const [checkSloatLoading, setCheckSloatLoading] = useState(false)
   const [state, setState] = useState({
     sortFilters: filtersData,
     searchInput: '',
@@ -412,8 +413,8 @@ export default function Products({ route, navigation }) {
 
   //usecallback functions
 
-  const goToProductDetail = (data) => {
-    navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
+  const goToProductDetail = (productDetail) => {
+    navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: productDetail, previousScreenData: data, isProductList: true })
   }
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
@@ -1370,6 +1371,8 @@ export default function Products({ route, navigation }) {
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
 
+
+
       if (dine_In_Type == 'appointment' && item?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
         setAppointmentPicker(true)
         setSelectedProductForAppointment(item?.id || item?.variant[0].id)
@@ -1378,6 +1381,7 @@ export default function Products({ route, navigation }) {
         setPressedItemInx(inx)
         return
       }
+
 
       if (!!item.is_recurring_booking) {
         if (isEmpty(selectedPlanValues)) {
@@ -1426,7 +1430,7 @@ export default function Products({ route, navigation }) {
         });
         return;
       }
-      if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
+      if (item?.add_on_count !== 0 && item?.mode_of_service === 'schedule') {
         setSelectedSection(section);
         setSelectedCarItems(item);
         setIsVisibleModal(true);
@@ -1688,7 +1692,7 @@ export default function Products({ route, navigation }) {
     if (productListId?.vendor && routeData) {
       fetchOffers();
     }
-    if (isLoadingC) {
+    if (isLoadingC && !data?.vendor) {
       getAllProductsByCategoryId(true);
     }
   }, [navigation, languages, currencies, reloadData, CartItems]);
@@ -2825,7 +2829,7 @@ export default function Products({ route, navigation }) {
     }
   };
   useEffect(() => {
-    if (isLoadingC) {
+    if (isLoadingC && !data?.vendor) {
       getAllProductsByCategoryId(1);
 
       if (productListId?.vendor && routeData) {
@@ -3884,7 +3888,7 @@ export default function Products({ route, navigation }) {
 
           console.log(res, "res for slots vendor");
           if (res) {
-            setAppointmentAvailableSlots(res)
+            setAppointmentAvailableSlots(res.data)
             setLoadingGetSlots(false);
             setAppointmentPicker(false);
             setSelectedAppointmentIndx(null);
@@ -3895,6 +3899,9 @@ export default function Products({ route, navigation }) {
           }
         } catch (error) {
           setCheckSloatLoading(false);
+          showError(error?.message || error?.error || "something wen't wrong")
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
 
           console.log('error riased', error);
         }
@@ -4868,6 +4875,10 @@ export default function Products({ route, navigation }) {
             }}>
             <TouchableOpacity
               activeOpacity={0.8}
+              hitSlop={hitSlopProp}
+              style={{
+                padding: moderateScale(8)
+              }}
               onPress={() => {
                 if (isAppointmentPicker) {
                   setAppointmentPicker(false)

@@ -1717,6 +1717,38 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                     </View>
                   </View>
 
+                  {!!(orderFullDetail.order_details?.waiting_price > 0) && <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+
+                      marginBottom: moderateScaleVertical(8),
+                      marginHorizontal: moderateScale(16),
+
+                    }}
+                  >
+
+                    <Text
+                      style={{
+                        ...styles.statusText,
+                        color: colors.black,
+                        marginTop: moderateScaleVertical(4)
+                      }}
+                    >
+                      {`${strings.WAITING_TIME} (${orderFullDetail.order_details?.waiting_time} ${strings.MIN}) ${strings.FEE}`}
+                    </Text>
+                    <Text style={styles.statusText}>
+                      {tokenConverterPlusCurrencyNumberFormater(
+                        Number(orderFullDetail.order_details?.waiting_price),
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol
+                      )}
+                    </Text>
+
+
+                  </View>}
+
                   {!!orderFullDetail?.order.task_description && (
                     <View style={{ marginHorizontal: moderateScale(16) }}>
                       <Text style={styles.datePriceText}>
