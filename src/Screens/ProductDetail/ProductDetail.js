@@ -43,6 +43,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  scale,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -74,6 +75,7 @@ import * as Animatable from 'react-native-animatable';
 
 import { enableFreeze } from "react-native-screens";
 import ProductsComp3 from '../../Components/ProductsComp3';
+import { color } from 'react-native-reanimated';
 enableFreeze(true);
 
 
@@ -137,6 +139,7 @@ export default function ProductDetail({ route, navigation }) {
     isOffersModalVisible: false,
     suggestedBrandProducts: [],
     suggestedCategoryProducts: [],
+    frequently_bought: [],
     suggestedVendorProducts: [],
     upsellProducts: [],
     crossProducts: [],
@@ -214,6 +217,7 @@ export default function ProductDetail({ route, navigation }) {
     isOffersModalVisible,
     suggestedBrandProducts,
     suggestedCategoryProducts,
+    frequently_bought,
     suggestedVendorProducts,
     upsellProducts,
     crossProducts,
@@ -384,6 +388,7 @@ export default function ProductDetail({ route, navigation }) {
             suggestedVendorProducts: res?.data?.suggested_vendor_products || [],
             upsellProducts: res?.data?.upSellProducts || [],
             crossProducts: res?.data?.crossProducts || [],
+            frequently_bought: res.data.frequently_bought || []
           })
         }
         if (
@@ -528,6 +533,7 @@ export default function ProductDetail({ route, navigation }) {
       })
       .catch(errorMethod);
   };
+
 
   //add Product to wishlist
   const _onAddtoWishlist = (item) => {
@@ -1022,9 +1028,36 @@ export default function ProductDetail({ route, navigation }) {
       </View>
     );
   };
+  //show reviews
+  const renderreviews = ({ item, index }) => {
+    return (
+      <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12) }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <FastImage style={{ width: moderateScale(20), height: moderateScale(20), marginRight: moderateScaleVertical(10) }} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }} />
+          <Text>{item?.user?.name}</Text>
+        </View>
+        <StarRating
+          disabled={false}
+          maxStars={5}
+          rating={parseInt(
+            Number(item?.rating).toFixed(1),
+          )}
+          fullStarColor={colors.yellowB}
+          starSize={15}
+          containerStyle={{ width: width / 5, marginVertical: moderateScaleVertical(8) }}
+        />
+        {!!item?.review_files ?
+          <></>
+          : null}
 
+        <Text>{item?.review}</Text>
+
+      </View>
+    )
+  }
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
+    console.log(variantSetData, 'vardatdatdat')
     return (
       <View style={{ marginBottom: moderateScaleVertical(16) }}>
         <FlatList
@@ -1922,6 +1955,49 @@ export default function ProductDetail({ route, navigation }) {
 
     </View>
   }
+  const renderVarient = ({ item }) => {
+
+    return (
+      <View>
+        {item.title == 'Color' ? <View>
+          <Text style={{ fontSize: scale(18), marginLeft: moderateScale(12), fontWeight: 'bold' }}>{item.title}</Text>
+          <FlatList
+            data={item.options}
+            horizontal
+            renderItem={({ item }) => {
+              { console.log(item, 'setset') }
+              return (
+                <TouchableOpacity style={{ marginVertical:moderateScaleVertical(8),height: moderateScale(100), width: moderateScaleVertical(70), alignItems: 'center' }}>
+                  <Text>{item.title}</Text>
+                  <View style={{ backgroundColor: item.hexacode, height: moderateScale(30), width: moderateScale(30), borderRadius: 16,borderColor:colors.greyA,borderWidth:1 }}></View>
+                </TouchableOpacity>
+              )
+
+            }}
+          />
+        </View> : null}
+        {item.title == 'Size' ? <View>
+          <Text style={{ fontSize: scale(18), marginLeft: moderateScale(7), fontWeight: 'bold' }}>{item.title}</Text>
+          <FlatList
+            data={item.options}
+            horizontal
+            renderItem={({ item }) => {
+              { console.log(item, 'setset') }
+              return (
+                <TouchableOpacity style={{ justifyContent: 'center', margin: 5, height: moderateScale(30), width: moderateScaleVertical(70), alignItems: 'center', borderRadius: 8, borderWidth: 1, borderColor: colors.greyA, marginVertical: moderateScaleVertical(12) }}>
+                  <Text>{item.title}</Text>
+                </TouchableOpacity>
+              )
+
+            }}
+          />
+
+        </View> : null}
+
+      </View>
+    )
+  }
+
 
   console.log(themeColors, "variantState =>", variantState);
   return (
@@ -2366,7 +2442,7 @@ export default function ProductDetail({ route, navigation }) {
                           value={pinCode}
                           placeholder={'Enter Pincode'}
                           containerStyle={{
-                       
+
                             borderRadius: moderateScale(10),
                             minHeight: moderateScaleVertical(40),
                           }}
@@ -2382,7 +2458,7 @@ export default function ProductDetail({ route, navigation }) {
                                 color: colors.redB,
                                 marginRight: 5,
                                 fontSize: textScale(10),
-                                marginTop:moderateScaleVertical(4)
+                                marginTop: moderateScaleVertical(4)
                               }}>
                               Enter valid pincode
                             </Text>
@@ -2450,6 +2526,27 @@ export default function ProductDetail({ route, navigation }) {
                       )}
                   </View>
                 )}
+              {/* products varient amazon style */}
+
+              {variantSet && variantSet.length ?
+                <FlatList
+                  data={(!state.isLoading && variantSet) || []}
+                  renderItem={renderVarient}
+                  keyExtractor={(item, index) => String(index)}
+                  keyboardShouldPersistTaps="always"
+                  style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+                  contentContainerStyle={{ flexGrow: 1 }}
+                  ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                  ListHeaderComponent={() => (
+                    <View style={{ marginLeft: moderateScale(8) }} />
+                  )}
+                  ListFooterComponent={() => (
+                    <View style={{ marginLeft: moderateScale(8) }} />
+                  )}
+                />
+                : null}
+
+
 
               {/* // Product variants */}
               {variantSet && variantSet.length ? showAllVariants() : null}
@@ -2836,7 +2933,7 @@ export default function ProductDetail({ route, navigation }) {
                               {productQuantityForCart}
                             </Text>
 
-                      
+
 
                             <TouchableOpacity
                               disabled={
@@ -2845,7 +2942,7 @@ export default function ProductDetail({ route, navigation }) {
                               }
                               onPress={() => productIncrDecreamentForCart(1)}
                               hitSlop={hitSlopProp}
-                              >
+                            >
                               <Image
                                 style={{
                                   height: moderateScale(12),
@@ -2961,6 +3058,38 @@ export default function ProductDetail({ route, navigation }) {
           />
         </View>
 
+
+
+
+
+
+        {frequently_bought.length > 0 ? <View style={{}}>
+          <Text
+            style={{
+              ...styles.descriptiontitle,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              marginLeft: moderateScale(8),
+            }}>
+            Frequently bought
+          </Text>
+          <FlatList
+            data={(!state.isLoading && frequently_bought) || []}
+            renderItem={renderProduct}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsHorizontalScrollIndicator={false}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            horizontal
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            ListHeaderComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+            ListFooterComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+          />
+        </View> : null}
         {suggestedCategoryProducts.length > 0 ? <View style={{}}>
           <Text
             style={{
@@ -3017,7 +3146,41 @@ export default function ProductDetail({ route, navigation }) {
             )}
           />
         </View> : null}
-
+        <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
+            <StarRating
+              disabled={false}
+              maxStars={5}
+              rating={parseInt(
+                Number(productDetailData?.averageRating).toFixed(1),
+              )}
+              fullStarColor={colors.yellowB}
+              starSize={12}
+              containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
+            />
+            <Text>({parseInt(
+              Number(productDetailData?.averageRating).toFixed(1),
+            )} out of 5)</Text>
+          </View>
+          <Text>{productDetailData?.reviews.length} global rating</Text>
+        </View>
+        <FlatList
+          data={(!state.isLoading && productDetailData?.reviews) || []}
+          renderItem={renderreviews}
+          keyExtractor={(item, index) => String(index)}
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+          ListHeaderComponent={() => (
+            <View style={{ marginLeft: moderateScale(8) }} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{ marginLeft: moderateScale(8) }} />
+          )}
+        />
 
         <View style={{ marginBottom: moderateScale(40) }} />
       </KeyboardAwareScrollView>
