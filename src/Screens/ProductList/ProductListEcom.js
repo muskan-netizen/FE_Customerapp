@@ -3,7 +3,7 @@ import { BlurView } from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
 import _, { cloneDeep, debounce, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -62,6 +62,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  scale,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -426,25 +427,49 @@ export default function Products({ route, navigation }) {
 
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
+      console.log("renderSectionItem =>", item, index, section)
       return (
-        <ProductCardEcomSection
-          data={item}
-          index={index}
-          onPress={() => goToProductDetail(item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => () => { }}
-          onIncrement={() => () => { }}
-          onDecrement={() => () => { }}
-          selectedItemID={selectedItemID}
-          btnLoader={btnLoader}
-          selectedItemIndx={selectedItemIndx}
-          businessType={businessType}
-          categoryInfo={categoryInfo}
-          animateText={animateText}
-          section={section}
-          CartItems={CartItems}
-          wrapperListLoader={wrapperListLoader}
-        />
+        <View>
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingHorizontal:moderateScale(12)}}>
+            <Text style={{ paddingVertical: moderateScale(8), fontSize: scale(21), fontWeight: 'bold' }}>{item?.translation[0]?.name}</Text>
+            <TouchableOpacity>
+             <Text>See All</Text>
+              </TouchableOpacity>
+          </View>
+
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={item?.data}
+            ItemSeparatorComponent={() => <View style={{
+              height: moderateScaleVertical(10)
+            }} />}
+            renderItem={({ item, index }) =>
+              <ProductCardEcom
+                data={item}
+                index={index}
+                onPress={() => goToProductDetail(item)}
+                onAddtoWishlist={() => _onAddtoWishlist(item)}
+                addToCart={() => () => { }}
+                onIncrement={() => () => { }}
+                onDecrement={() => () => { }}
+                selectedItemID={selectedItemID}
+                btnLoader={false}
+                selectedItemIndx={selectedItemIndx}
+                differentAddsOns={differentAddsOns}
+                businessType={businessType}
+                categoryInfo={categoryInfo}
+                animateText={animateText}
+                section={section}
+                CartItems={CartItems}
+                wrapperListLoader={wrapperListLoader}
+
+              />
+            }
+          />
+
+        </View>
+
       );
     },
     [
@@ -1500,7 +1525,7 @@ export default function Products({ route, navigation }) {
 
   //useCallback end
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // setLoading(true)
     updateState({ pageNo: 1, loadMore: true });
     setSelectedAppointmentSlot({})
@@ -1566,7 +1591,7 @@ export default function Products({ route, navigation }) {
     // }, 500);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getAllVendorFilters();
   }, []);
 
@@ -2560,7 +2585,7 @@ export default function Products({ route, navigation }) {
       });
     }
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isLoadingC) {
       getAllProductsByCategoryId(1);
 
@@ -2583,7 +2608,7 @@ export default function Products({ route, navigation }) {
 
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let EnabledTags = ProductTags.filter((el) => el.isSelected);
     if (EnabledTags?.length > 0) {
       setApiHitAgain(true);
@@ -3793,16 +3818,16 @@ export default function Products({ route, navigation }) {
   };
 
 
-  const goToTop = () =>{
+  const goToTop = () => {
     console.log(sectionListRef.current)
-    if(!!categoryInfo?.is_show_products_with_category && !!sectionListRef?.current){
+    if (!!categoryInfo?.is_show_products_with_category && !!sectionListRef?.current) {
       sectionListRef.current.scrollToLocation({
         animated: true,
         itemIndex: 0,
         sectionIndex: 0
 
       })
-    }else if(!!flatRef?.current){
+    } else if (!!flatRef?.current) {
       flatRef.current.scrollToIndex({
         index: 0,
         animated: true
@@ -3824,78 +3849,64 @@ export default function Products({ route, navigation }) {
         appStyle={appStyle}
       />
 
-
       {!!categoryInfo?.is_show_products_with_category ?
-        <SectionList
-          ref={sectionListRef}
-          showsVerticalScrollIndicator={false}
-          sections={isFilteredData ? tagFilteredData : sectionListData}
-          // ListHeaderComponent={listHeaderComponent2()}
-          stickySectionHeadersEnabled={true}
-          keyExtractor={awesomeChildListKeyExtractor}
+        <>
+          <FlatList
+            data={isFilteredData ? tagFilteredData : sectionListData}
+            renderItem={renderSectionItem}
+            key={'1'}
+          />
+        </>
 
-          // tabBarStyle={styles.tabBar}
-          // ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={renderSectionItem}
-          renderSectionHeader={renderSectionHeader}
-          // renderSectionFooter={renderSectionFooter}
-          getItemLayout={getItemLayout}
-          onScrollToIndexFailed={(val) => console.log('indexed failed')}
-          ItemSeparatorComponent={() => <View style={{ height: moderateScale(8) }} />}
-          ListEmptyComponent={listEmptyComponent}
-          extraData={sectionListData}
-          // Performance settings
-          removeClippedSubviews={true} // Unmount components when outside of window
-          // initialNumToRender={2} // Reduce initial render amount
-          // maxToRenderPerBatch={10} // Redu ce number in each render batch
-          updateCellsBatchingPeriod={20} // Increase time between renders
-        // windowSize={7} // Reduce the window size
+        :
+        <>
+          {console.log("second")}
+          <FlatList
+            // onScroll={onScroll}
+            numColumns={2}
+            ref={flatRef}
+            key={'2'}
+            disableScrollViewPanResponder
+            showsVerticalScrollIndicator={false}
+            data={productListData}
+            extraData={productListData}
+            renderItem={renderProduct}
+            ListHeaderComponent={listHeaderComponent2()}
+            keyExtractor={awesomeChildListKeyExtractor}
 
-        /> :
-        <FlatList
-          // onScroll={onScroll}
-          numColumns={2}
-          ref={flatRef}
-          disableScrollViewPanResponder
-          showsVerticalScrollIndicator={false}
-          data={productListData}
-          extraData={productListData}
-          renderItem={renderProduct}
-          ListHeaderComponent={listHeaderComponent2()}
-          keyExtractor={awesomeChildListKeyExtractor}
-
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-          //  getItemLayout={getItemLayoutFlat}
-          // refreshing={isRefreshing}
-          initialNumToRender={10}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0.10}
-          ListFooterComponent={listFooterComponent}
-          ListEmptyComponent={listEmptyComponent}
-        // style={{marginHorizontal: moderateScale(8)}}
-        />
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            //  getItemLayout={getItemLayoutFlat}
+            // refreshing={isRefreshing}
+            initialNumToRender={10}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.10}
+            ListFooterComponent={listFooterComponent}
+            ListEmptyComponent={listEmptyComponent}
+          // style={{marginHorizontal: moderateScale(8)}}
+          />
+        </>
 
       }
 
 
 
-      <TouchableOpacity 
-      onPress={goToTop}
-      style={{
-        width: 60,
-        height: 60, 
-        borderRadius: 30, 
-        backgroundColor: themeColors?.primary_color,
-        alignItems:'center',
-        justifyContent:'center',
-        position:'absolute',
-        bottom: 20,
-        right: 20,
-      }}
-      
+      <TouchableOpacity
+        onPress={goToTop}
+        style={{
+          width: 60,
+          height: 60,
+          borderRadius: 30,
+          backgroundColor: themeColors?.primary_color,
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+        }}
+
       >
-<Text>Go To Top</Text>
-        </TouchableOpacity>
+        <Text>Go To Top</Text>
+      </TouchableOpacity>
 
 
       {isShowFilter ? (

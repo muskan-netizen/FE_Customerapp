@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, size } from 'lodash';
 import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -8,10 +8,11 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
-import { height, moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
+import { height, moderateScale, moderateScaleVertical, scale, textScale, width } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import { getImageUrl } from '../utils/helperFunctions';
+import { color } from 'react-native-reanimated';
 
 
 const ProductCardEcom = ({
@@ -19,6 +20,7 @@ const ProductCardEcom = ({
     onPress = () => { },
     btnLoader,
     section = {},
+    onAddtoWishlist=()=>{}
 }) => {
 
     const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -44,34 +46,48 @@ const ProductCardEcom = ({
         <TouchableOpacity
             disabled={btnLoader}
             activeOpacity={0.6}
-              onPress={onPress}
+            onPress={onPress}
             style={{
                 ...commonStyles.shadowStyle,
                 minHeight: height / 2.2,
                 margin: 4,
                 backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.white,
+                    ? colors.whiteOpacity15
+                    : colors.white,
+                    width:width/2.1
 
             }}>
 
 
             {!!url1 ? (
-                <FastImage
-                    style={{
-                        ...styles.imgStyle,
-                        backgroundColor: isDarkMode
-                            ? colors.whiteOpacity15
-                            : colors.white,
+                <>
+                    <FastImage
+                        style={{
+                            ...styles.imgStyle,
+                            backgroundColor: isDarkMode
+                                ? colors.whiteOpacity15
+                                : colors.white,
 
-                    }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    source={{
-                        uri: getImage('300/300'),
-                        cache: FastImage.cacheControl.immutable,
-                        priority: FastImage.priority.high,
-                    }}
-                />
+                        }}
+                        resizeMode={FastImage.resizeMode.contain}
+                        source={{
+                            uri: getImage('300/300'),
+                            cache: FastImage.cacheControl.immutable,
+                            priority: FastImage.priority.high,
+                        }}
+                    />
+                    <View style={{ width: '100%', position: 'absolute', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: moderateScale(5), paddingHorizontal: moderateScale(10) }}>
+                        {/* <View style={{ backgroundColor: colors.blackOpacity66, borderRadius: scale(12)}}>
+                            <Text style={{ color: colors.white, fontSize: scale(10),padding:moderateScale(5) }} >Best Seller</Text>
+                        </View> */}
+                        <View></View>
+                        <TouchableOpacity onPress={onAddtoWishlist} style={{ backgroundColor: colors.grey1, borderRadius: 16, padding: moderateScale(4), justifyContent: 'center', alignItems: 'center' }}>
+                            <FastImage style={{ width: 20, height: 20 }} source={imagePath.heart2} />
+
+                        </TouchableOpacity>
+                    </View>
+
+                </>
 
             ) :
                 <View
@@ -85,8 +101,8 @@ const ProductCardEcom = ({
 
                 />
             }
-            <View style={{ alignItems: 'center',paddingVertical:moderateScaleVertical(8),paddingHorizontal: moderateScale(8) }}>
-                <View style={{ alignItems: 'center' }}>
+            <View style={{ paddingVertical: moderateScaleVertical(8), paddingHorizontal: moderateScale(8) }}>
+                <View style={{}}>
                     <Text
                         style={{
                             ...commonStyles.futuraBtHeavyFont14,
@@ -123,7 +139,7 @@ const ProductCardEcom = ({
                     ) : null}
                 </View>
 
-                {!!data?.averageRating && (
+                {/* {!!data?.averageRating && (
                     <View
                         style={{
                             borderWidth: 0.5,
@@ -142,13 +158,13 @@ const ProductCardEcom = ({
                             containerStyle={{ width: width / 9 }}
                         />
                     </View>
-                )}
+                )} */}
 
                 {/* Price view */}
                 <View
                     style={{
-                        paddingTop: moderateScale(5),
-                        paddingBottom: moderateScale(5),
+                        paddingTop: moderateScale(10),
+                        // paddingBottom: moderateScale(2),
                         flexDirection: 'row',
                     }}>
                     <Text
@@ -158,6 +174,7 @@ const ProductCardEcom = ({
                             color: isDarkMode ? colors.white : colors.black,
                             fontSize: textScale(12),
                             fontFamily: fontFamily.regular,
+                            marginRight: moderateScale(6)
                         }}>
                         {tokenConverterPlusCurrencyNumberFormater(
                             Number(data?.variant[0]?.price) * Number(data?.variant[0]?.multiplier || 1),
@@ -167,27 +184,7 @@ const ProductCardEcom = ({
                         )}
                     </Text>
 
-                    {Number(data?.variant[0]?.compare_at_price) >
-                        Number(data?.variant[0]?.price) && (
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    ...commonStyles.mediumFont14,
-                                    color: isDarkMode ? colors.white : colors.redB,
-                                    fontSize: textScale(12),
-                                    fontFamily: fontFamily.regular,
-                                    textDecorationLine: 'line-through',
-                                    marginHorizontal: moderateScale(8),
-                                }}>
-                                {/* { currencies?.primary_currency?.symbol} */}
-                                {tokenConverterPlusCurrencyNumberFormater(
-                                    data?.variant[0]?.compare_at_price * data?.variant[0]?.multiplier,
-                                    digit_after_decimal,
-                                    additional_preferences,
-                                    currencies?.primary_currency?.symbol,
-                                )}
-                            </Text>
-                        )}
+
 
                     {!!data?.is_recurring_booking &&
                         <TouchableOpacity
@@ -208,31 +205,98 @@ const ProductCardEcom = ({
                         </TouchableOpacity>
                     }
                 </View>
+                {/* Discount Price view */}
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {/* <Text
+                        numberOfLines={1}
+                        style={{
+                            ...commonStyles.mediumFont14,
+                            color: isDarkMode ? colors.white : colors.black,
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.regular,
+                            textDecorationLine:'line-through',
+                        }}>
+                        {tokenConverterPlusCurrencyNumberFormater(
+                            Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                        )}
+                    </Text> */}
+
+                    {
+                        !!Number(data?.variant[0]?.compare_at_price) ? (
+                            <>
+                           
+                            <Text
+                                numberOfLines={1}
+                                style={{
+                                    ...commonStyles.mediumFont14,
+                                    color: isDarkMode ? colors.white : colors.redB,
+                                    fontSize: textScale(12),
+                                    fontFamily: fontFamily.regular,
+                                    textDecorationLine: 'line-through',
+                                    // marginHorizontal: moderateScale(8),
+                                }}>
+                                {tokenConverterPlusCurrencyNumberFormater(
+                                    Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
+                                    digit_after_decimal,
+                                    additional_preferences,
+                                    currencies?.primary_currency?.symbol,
+                                )}
+                            </Text>
+                            <Text style={{ marginLeft: moderateScale(4), fontSize: scale(12), color: colors.green }}>{parseInt(((data.variant[0].compare_at_price - data?.variant[0]?.price) / data?.variant[0]?.price * 100).toFixed(3))}% Discount</Text>
+                            </>
+                        ):null}
+                    
+
+                </View>
+
+
 
                 <View style={{}}>
-          {!!data?.translation_description ||
-            !!data?.translation[0]?.translation_description ? (
-            <View style={{}}>
-              <Text
-                numberOfLines={2}
-                style={{
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.regular,
-                  lineHeight: moderateScale(14),
-                  color: isDarkMode
-                    ? colors.white
-                    : colors.blackOpacity66,
-                  textAlign: 'left',
-                }}>
-                {!!data?.translation_description
-                  ? data?.translation_description.toString()
-                  : !!data?.translation[0]?.translation_description
-                    ? data?.translation[0]?.translation_description
-                    : ''}
-              </Text>
-            </View>
-          ) : null}
-        </View>
+                    {!!data?.translation_description ||
+                        !!data?.translation[0]?.translation_description ? (
+                        <View style={{}}>
+                            <Text
+                                numberOfLines={2}
+                                style={{
+                                    fontSize: textScale(10),
+                                    fontFamily: fontFamily.regular,
+                                    lineHeight: moderateScale(14),
+                                    color: isDarkMode
+                                        ? colors.white
+                                        : colors.blackOpacity66,
+                                    textAlign: 'left',
+                                }}>
+                                {!!data?.translation_description
+                                    ? data?.translation_description.toString()
+                                    : !!data?.translation[0]?.translation_description
+                                        ? data?.translation[0]?.translation_description
+                                        : ''}
+                            </Text>
+                        </View>
+                    ) : null}
+
+                    {/* New rating view */}
+                    {!!data?.averageRating ? (
+                        <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+                        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:colors.green,borderRadius:scale(8),padding:moderateScaleVertical(2),marginTop:moderateScaleVertical(4)}}>
+                            <Text style={{fontSize:scale(12),color:colors.white}}>{data?.averageRating}</Text>
+                            <StarRating
+                                disabled={false}
+                                maxStars={1}
+                                rating={1}
+                                fullStarColor={colors.white}
+                                starSize={15}
+                                containerStyle={{marginLeft:moderateScale(3)}}
+                            />
+                        </View>
+                        </View>
+                    ):null
+
+                    }
+                </View>
             </View>
         </TouchableOpacity>
 
