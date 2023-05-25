@@ -5593,7 +5593,7 @@
 		684CCE59072BCD963F2BEE5B /* libPods-available_pods-Bocch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F22731D8CF74A2770EF56B67 /* libPods-available_pods-Bocch.a */; };
 		69AE25AFF265357E25D80B58 /* libPods-available_pods-ArenaGrub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B4CF3539096917033AE130 /* libPods-available_pods-ArenaGrub.a */; };
 		69DF1FF5B3949998132E659E /* libPods-available_pods-Kurrix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EC85DEB45E64ACB14F883C /* libPods-available_pods-Kurrix.a */; };
-		6A69527482EF0FEDC5559B5A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		6A69527482EF0FEDC5559B5A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		6AF8D9DC0EDF9C235DDA7480 /* libPods-available_pods-Saamanshop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC5D09576D44F02D3D6E779 /* libPods-available_pods-Saamanshop.a */; };
 		6B702E67A11699454EBE1143 /* libPods-available_pods-SXM2GO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A57A2EF17974F601405224 /* libPods-available_pods-SXM2GO.a */; };
 		6C23A68C679DB6CF533CBED9 /* libPods-available_pods-Valley.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEF3D52692AB573833786B9 /* libPods-available_pods-Valley.a */; };
@@ -9682,7 +9682,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -10503,7 +10503,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -13971,7 +13971,7 @@
 		99AC044BDDEF0255B9CA057D /* libPods-available_pods-Papiruki.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A9829E7ACA1F0E572D42C9 /* libPods-available_pods-Papiruki.a */; };
 		9A056F5B07B146A3D2CF2EB4 /* libPods-available_pods-Uven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9AD3FD73CC4123F27E4F07 /* libPods-available_pods-Uven.a */; };
 		9A49905D7D6099BF9E33B3EE /* libPods-available_pods-ThreadAgain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D4646E1AFB6FA8C5406A78 /* libPods-available_pods-ThreadAgain.a */; };
-		9ADEA8BA419F5D966ACAEB55 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9ADEA8BA419F5D966ACAEB55 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		9B107FE0C6F00E25A08BE272 /* libPods-available_pods-OnTheWheel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C00BA19A3660B0882E4A5760 /* libPods-available_pods-OnTheWheel.a */; };
 		9B474F23E54A2926FDE5A77B /* libPods-available_pods-Greenhippo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A73F2995900E71784959B424 /* libPods-available_pods-Greenhippo.a */; };
 		9B5F2F3DCE322847CBD58B6A /* libPods-available_pods-NineOneTwo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D50E96CE033CA3CAFEE71E /* libPods-available_pods-NineOneTwo.a */; };
@@ -14015,7 +14015,7 @@
 		AEDEBE6A7743E061C6D441CA /* libPods-available_pods-MarkSoublet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7237F8A5374284493230C3FB /* libPods-available_pods-MarkSoublet.a */; };
 		B073AF66CC1BC36F47455677 /* libPods-available_pods-MagicalBookings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D3A586975EFACADE5D812F /* libPods-available_pods-MagicalBookings.a */; };
 		B092D34C0B8E90DD82164E13 /* libPods-available_pods-RIDETCI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A69391E9D480A3054775A35 /* libPods-available_pods-RIDETCI.a */; };
-		B0938649A60E8870B52A572A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		B0938649A60E8870B52A572A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		B0BCD5EDABDEE0A491243C97 /* libPods-available_pods-Cartnar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F903B6C3D5C2F5A9EF7B341F /* libPods-available_pods-Cartnar.a */; };
 		B11017D93B9CF5CF237602BF /* libPods-available_pods-GoTech.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB15D884941E489A9AAFCFE0 /* libPods-available_pods-GoTech.a */; };
 		B13EEB4EE077353C5963BA90 /* libPods-available_pods-Genee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B451D8C8520E7968E3ED5942 /* libPods-available_pods-Genee.a */; };
@@ -14662,7 +14662,7 @@
 		E84E21DF28A3883500D5CA81 /* LaundroZone(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E84E21DE28A3883400D5CA81 /* LaundroZone(Production).xcconfig */; };
 		E84E21E128A3888D00D5CA81 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E84E21E028A3888C00D5CA81 /* Images.xcassets */; };
 		E84E21E328A38B7100D5CA81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E84E21E228A38B6F00D5CA81 /* GoogleService-Info.plist */; };
-		E8521FB97D69A83B749A5FCC /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		E8521FB97D69A83B749A5FCC /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E858044FA573A4A42F7F1692 /* libPods-available_pods-EatHalal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E48B2C2E852C122721BC5B /* libPods-available_pods-EatHalal.a */; };
 		E8642848288FB15000102881 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		E8642849288FB15000102881 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -15673,14 +15673,14 @@
 		F415276429BB083A00412481 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F415276629BB083A00412481 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F415276729BB083A00412481 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
-		F415900D29BF69E100F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F415901029BF6B1800F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F415901229BF6BC800F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F415901429BF6E2C00F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073529C08C8D00B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073729C08CE300B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073A29C08F0E00B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073B29C08F0E00B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		F415900D29BF69E100F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F415901029BF6B1800F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F415901229BF6BC800F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F415901429BF6E2C00F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073529C08C8D00B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073729C08CE300B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073A29C08F0E00B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073B29C08F0E00B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F424288D29C0B54500EA835E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F424288E29C0B54500EA835E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		F424288F29C0B54500EA835E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -15706,10 +15706,10 @@
 		F42428A929C0B54500EA835E /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F42428AB29C0B54500EA835E /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F42428AC29C0B54500EA835E /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
-		F42428BB29C0B93B00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F42428BC29C0B93B00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F42428BD29C0B93C00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F42428BE29C0B93C00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		F42428BB29C0B93B00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F42428BC29C0B93B00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F42428BD29C0B93C00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F42428BE29C0B93C00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F42D420028769DCC00BAE5E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F42D420128769DCC00BAE5E9 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		F42D420228769DCC00BAE5E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -22607,7 +22607,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8521FB97D69A83B749A5FCC /* BuildFile in Frameworks */,
+				E8521FB97D69A83B749A5FCC /* (null) in Frameworks */,
 				DC67DB7422520EDD456FD224 /* libPods-available_pods-Chutneyeah.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -24286,7 +24286,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A69527482EF0FEDC5559B5A /* BuildFile in Frameworks */,
+				6A69527482EF0FEDC5559B5A /* (null) in Frameworks */,
 				6B702E67A11699454EBE1143 /* libPods-available_pods-SXM2GO.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -24935,7 +24935,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ADEA8BA419F5D966ACAEB55 /* BuildFile in Frameworks */,
+				9ADEA8BA419F5D966ACAEB55 /* (null) in Frameworks */,
 				3AC097A29C591878B04A3BFE /* libPods-available_pods-EuodooTechnologies.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -25368,7 +25368,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0938649A60E8870B52A572A /* BuildFile in Frameworks */,
+				B0938649A60E8870B52A572A /* (null) in Frameworks */,
 				87820769897C14D4BCE99BEF /* libPods-available_pods-FresHest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48734,10 +48734,6 @@
 						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
-					84AD2A9827ABDE8C00BD7E37 = {
-						DevelopmentTeam = KQ2282FRKY;
-						ProvisioningStyle = Automatic;
-					};
 					84AE315626BACC02005257F6 = {
 						DevelopmentTeam = 68KX92U2D5;
 						ProvisioningStyle = Automatic;
@@ -67077,10 +67073,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F421073729C08CE300B336D3 /* BuildFile in Resources */,
-				F421073A29C08F0E00B336D3 /* BuildFile in Resources */,
-				F421073B29C08F0E00B336D3 /* BuildFile in Resources */,
-				F421073529C08C8D00B336D3 /* BuildFile in Resources */,
+				F421073729C08CE300B336D3 /* (null) in Resources */,
+				F421073A29C08F0E00B336D3 /* (null) in Resources */,
+				F421073B29C08F0E00B336D3 /* (null) in Resources */,
+				F421073529C08C8D00B336D3 /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67155,25 +67151,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				F424289329C0B54500EA835E /* Eina02-Regular.ttf in Resources */,
-				F42428BD29C0B93C00EA835E /* BuildFile in Resources */,
+				F42428BD29C0B93C00EA835E /* (null) in Resources */,
 				F424289429C0B54500EA835E /* SFProDisplay-Regular.ttf in Resources */,
 				F424289529C0B54500EA835E /* Futura-Medium.ttf in Resources */,
 				F424289629C0B54500EA835E /* LaunchScreen.storyboard in Resources */,
 				F424289729C0B54500EA835E /* CircularStd-Book.otf in Resources */,
-				F42428BE29C0B93C00EA835E /* BuildFile in Resources */,
+				F42428BE29C0B93C00EA835E /* (null) in Resources */,
 				F424289829C0B54500EA835E /* Metropolis-Bold.otf in Resources */,
 				F424289929C0B54500EA835E /* Futura Hv BT.ttf in Resources */,
 				F424289A29C0B54500EA835E /* SFProText-Regular.ttf in Resources */,
 				F424289B29C0B54500EA835E /* SFProText-SemiBold.ttf in Resources */,
 				F424289C29C0B54500EA835E /* SFProText-Medium.ttf in Resources */,
-				F42428BB29C0B93B00EA835E /* BuildFile in Resources */,
+				F42428BB29C0B93B00EA835E /* (null) in Resources */,
 				F424289E29C0B54500EA835E /* notification.wav in Resources */,
 				F42428A129C0B54500EA835E /* Plists in Resources */,
 				F42428A229C0B54500EA835E /* Futura-Normal.ttf in Resources */,
 				F42428A329C0B54500EA835E /* Eina02-Bold.ttf in Resources */,
 				F42428A429C0B54500EA835E /* Futura-Book.ttf in Resources */,
 				F42428A529C0B54500EA835E /* CircularStd-Medium.otf in Resources */,
-				F42428BC29C0B93B00EA835E /* BuildFile in Resources */,
+				F42428BC29C0B93B00EA835E /* (null) in Resources */,
 				F42428A629C0B54500EA835E /* Metropolis-SemiBold.otf in Resources */,
 				F42428A729C0B54500EA835E /* FuturaBT-Heavy.ttf in Resources */,
 				F42428A829C0B54500EA835E /* CircularStd-Bold.ttf in Resources */,
@@ -67591,11 +67587,11 @@
 				F4BD7EB729BF5FC100EC70C0 /* Metropolis-Bold.otf in Resources */,
 				F4BD7EB829BF5FC100EC70C0 /* Futura Hv BT.ttf in Resources */,
 				F4BD7EB929BF5FC100EC70C0 /* SFProText-Regular.ttf in Resources */,
-				F415901229BF6BC800F238B8 /* BuildFile in Resources */,
+				F415901229BF6BC800F238B8 /* (null) in Resources */,
 				F4BD7EBA29BF5FC100EC70C0 /* SFProText-SemiBold.ttf in Resources */,
 				F4BD7EBB29BF5FC100EC70C0 /* SFProText-Medium.ttf in Resources */,
-				F415901029BF6B1800F238B8 /* BuildFile in Resources */,
-				F415901429BF6E2C00F238B8 /* BuildFile in Resources */,
+				F415901029BF6B1800F238B8 /* (null) in Resources */,
+				F415901429BF6E2C00F238B8 /* (null) in Resources */,
 				F4BD7EBD29BF5FC100EC70C0 /* notification.wav in Resources */,
 				F4BD7EC029BF5FC100EC70C0 /* Plists in Resources */,
 				F4BD7EC129BF5FC100EC70C0 /* Futura-Normal.ttf in Resources */,
@@ -67604,7 +67600,7 @@
 				F4BD7EC429BF5FC100EC70C0 /* CircularStd-Medium.otf in Resources */,
 				F4BD7EC529BF5FC100EC70C0 /* Metropolis-SemiBold.otf in Resources */,
 				F4BD7EC629BF5FC100EC70C0 /* FuturaBT-Heavy.ttf in Resources */,
-				F415900D29BF69E100F238B8 /* BuildFile in Resources */,
+				F415900D29BF69E100F238B8 /* (null) in Resources */,
 				F4BD7EC729BF5FC100EC70C0 /* CircularStd-Bold.ttf in Resources */,
 				F4BD7EC829BF5FC100EC70C0 /* Metropolis-Regular.otf in Resources */,
 				F4BD7ECA29BF5FC100EC70C0 /* SFProText-Bold.ttf in Resources */,
@@ -136241,7 +136237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -136335,7 +136331,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -165851,9 +165847,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RoyoOrder.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = KQ2282FRKY;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KQ2282FRKY;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -165873,6 +165871,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "SXM@Go";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

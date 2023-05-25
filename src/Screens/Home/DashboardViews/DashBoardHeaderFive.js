@@ -91,10 +91,10 @@ function DashBoardHeaderFive({
               style={{
                 tintColor: themeColors.primary_color,
                 marginRight: moderateScale(16),
-                height: moderateScale(30),
-                width: moderateScale(30),
+                height: moderateScale(20),
+                width: moderateScale(20),
               }}
-              source={imagePath.icHamburger}
+              source={imagePath.icMenuIcon}
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -131,14 +131,15 @@ function DashBoardHeaderFive({
                 }
                 style={{
                   flexDirection: 'row',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
                   flex: 0.85,
                   marginLeft: moderateScale(8),
                 }}>
                 <Image
                   style={styles.locationIcon}
-                  source={imagePath.redLocation}
+                  source={imagePath.locationIcon}
                   resizeMode="contain"
+                  
                 />
                 <View>
                   {!!location?.type && (
@@ -192,7 +193,7 @@ function DashBoardHeaderFive({
                 style={{
                   tintColor: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : colors.black,
+                    : themeColors.primary_color,
                 }}
                 source={imagePath.search1}
               />
@@ -231,7 +232,7 @@ function DashBoardHeaderFive({
                     borderRadius: moderateScale(10),
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
-                      : colors.black,
+                      :themeColors.primary_color,
                   }}
                   resizeMode="contain"
                 />

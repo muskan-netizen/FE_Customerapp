@@ -119,9 +119,9 @@ function SwipeableSection(props) {
                                                             justifyContent: 'space-between',
                                                             flex: 1,
                                                         }}>
-                                                        <View style={{flex:0.6}}>
-                                                        
-                                                            {!!i?.product?.category_name?.name && (
+                                                        <View style={{ flex: 0.6 }}>
+
+                                                            {/* {!!i?.product?.category_name?.name && (
                                                                 <Text
                                                                     numberOfLines={1}
                                                                     style={{
@@ -131,11 +131,11 @@ function SwipeableSection(props) {
                                                                             : colors.textGreyB,
                                                                         fontSize: textScale(12),
                                                                         fontFamily: fontFamily.medium,
-                                                        
+
                                                                     }}>
-                                                                    {i?.product?.category_name.name},
+                                                                    {i?.product?.category_name.name}
                                                                 </Text>
-                                                            )}
+                                                            )} */}
                                                             <Text
                                                                 numberOfLines={1}
                                                                 style={{
@@ -145,33 +145,35 @@ function SwipeableSection(props) {
                                                                         : colors.blackOpacity86,
                                                                     fontSize: textScale(12),
                                                                     fontFamily: fontFamily.medium,
-    
+
                                                                 }}>
-                                                                {i?.product?.translation[0]?.title},
+                                                                {i?.product?.translation[0]?.title}
                                                             </Text>
-                                            
+
                                                         </View>
 
-                                                        <View style={{marginHorizontal: moderateScale(8)}} />
-                                                                
+                                                        <View style={{ marginHorizontal: moderateScale(8) }} />
+
                                                         {getBundleId() !== appIds.rentzy &&
                                                             <View
                                                                 pointerEvents={btnLoader ? 'none' : 'auto'}
-                                                                style={{ flex:0.5 }}>
+                                                                style={{ flex: 0.3 }}>
                                                                 <View style={{
-                                                                    ...commonStyles.buttonRect,
+                                                                    // ...commonStyles.buttonRect,
                                                                     borderWidth: 0.4,
-                                                                    borderRadius: moderateScale(4),
-                                                                    height: moderateScale(38),
+                                                                    // borderRadius: moderateScale(4),
                                                                     flexDirection: 'row',
-                                                                    justifyContent: 'space-between',
-                                                                    paddingHorizontal: moderateScale(12),
+                                                                    alignItems:'center',
+                                                                    justifyContent: 'space-evenly',
+                                                                    borderRadius:moderateScale(10),
+                                                                    paddingHorizontal: moderateScale(11),
                                                                     backgroundColor: getColorCodeWithOpactiyNumber(
                                                                         themeColors.primary_color.substr(1),
                                                                         15,
                                                                     ),
                                                                     borderColor: themeColors?.primary_color,
-                                                                    height: moderateScale(38),
+                                                                    height: moderateScale(27),
+                                                                    
                                                                 }}>
                                                                     <TouchableOpacity
                                                                         style={{ alignItems: 'center' }}
@@ -182,9 +184,9 @@ function SwipeableSection(props) {
                                                                             tintColor={themeColors?.primary_color}
                                                                             style={{
                                                                                 height: moderateScale(15),
-                                                                                width: moderateScale(15),
+                                                                                width: moderateScale(10),
 
-                                                                                
+
                                                                             }}
                                                                             resizeMode='contain'
                                                                             source={imagePath.icMinus2}
@@ -201,8 +203,8 @@ function SwipeableSection(props) {
                                                                         <View style={{
 
                                                                             width: moderateScale(40),
-                                                                            alignItems:'center'
-                                                                            }}>
+                                                                            alignItems: 'center'
+                                                                        }}>
                                                                             {btnLoadrId === i.id && btnLoader ? (
                                                                                 <UIActivityIndicator
                                                                                     size={moderateScale(16)}
@@ -220,8 +222,8 @@ function SwipeableSection(props) {
                                                                                     {i?.quantity}
                                                                                 </Text>
                                                                             )}
-                                                                            </View>
-                                                           
+                                                                        </View>
+
                                                                     </View>
                                                                     <TouchableOpacity
                                                                         style={{ alignItems: 'center' }}
@@ -232,7 +234,7 @@ function SwipeableSection(props) {
                                                                             tintColor={themeColors?.primary_color}
                                                                             style={{
                                                                                 height: moderateScale(15),
-                                                                                width: moderateScale(15),
+                                                                                width: moderateScale(10),
 
                                                                                 marginLeft: moderateScale(3)
                                                                             }}
@@ -252,17 +254,11 @@ function SwipeableSection(props) {
                                                     }}>
                                                     <Text
                                                         style={{
-                                                            ...styles.priceItemLabel2,
-                                                            fontSize: textScale(12),
                                                             color: isDarkMode
                                                                 ? MyDarkTheme.colors.text
                                                                 : colors.textGreyOpcaity7,
-                                                            marginTop: moderateScaleVertical(4),
-                                                            fontFamily: fontFamily.regular,
                                                         }}>
-                                                        {i?.quantity} X
-
-                                                        {(i?.recurring_day_data != undefined && i?.recurring_day_data != null) &&
+                                                        {i?.quantity} X {(i?.recurring_day_data != undefined && i?.recurring_day_data != null) &&
                                                             <Text> ({(i?.recurring_day_data.match(/,/g) || []).length + 1}) Days  X{' '}</Text>
                                                         }
 

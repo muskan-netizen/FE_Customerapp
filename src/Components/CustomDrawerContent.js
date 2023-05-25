@@ -140,25 +140,7 @@ const CustomDrawerContent = (props) => {
             </Text>
           </TouchableOpacity>
 
-          <DrawerItem
-            label={strings.HOME}
-            onPress={() => onPressItem(navigationStrings.HOME, 1)} //screenName, tabIndex
-            icon={({ focused }) => {
-              return (
-                <Image style={{
-                  ...imageStyle,
-                  tintColor: currentTab?.current == 1 ? themeColors.primary_color : colors.black
-                }} source={imagePath.icEcomHomeInactive} />
-              )
-            }}
-            labelStyle={{ color: currentTab?.current == 1 ? themeColors?.primary_color : colors.black }}
-            style={{
-              backgroundColor: currentTab?.current == 1 ? getColorCodeWithOpactiyNumber(
-                themeColors.primary_color.substr(1),
-                10,
-              ) : colors.white
-            }}
-          />
+          
 
           {/* <DrawerItem
             label={strings.CATEGORY}

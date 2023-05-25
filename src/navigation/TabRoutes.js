@@ -268,6 +268,7 @@ export default function TabRoutes(props) {
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
+            navigationStrings.BRANDDETAIL
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => {

@@ -949,7 +949,7 @@ export default function Home({ route, navigation }) {
   };
 
 
-
+console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePageLayout");
 
   const renderHeaders = () => {
     switch (appStyle?.homePageLayout) {

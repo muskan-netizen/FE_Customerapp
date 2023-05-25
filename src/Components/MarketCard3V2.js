@@ -45,6 +45,8 @@ const MarketCard3 = ({
   const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+  const vendorDistance = data?.lineOfSightDistance.split(" ",2)
+  console.log(vendorDistance,"wesdfghjkl;'");
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -53,7 +55,8 @@ const MarketCard3 = ({
   const scaleInAnimated = new Animated.Value(0);
 
   const appMainData = useSelector((state) => state?.home?.appMainData || {});
-
+  const { additional_preferences, digit_after_decimal } =
+    appData?.profile?.preferences || {};
   let imageUrl = getImageUrlNew({
     url: data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
@@ -62,7 +65,7 @@ const MarketCard3 = ({
     width: width.toFixed(0)
   })
 
-  console.log("imageUrl", imageUrl)
+  console.log("data>>>>>>>>>>>>>>>>>>>>", data)
 
 
   const distanceView = () => {
@@ -129,7 +132,8 @@ const MarketCard3 = ({
                       style={{
                         ...styles.distanceTimeStyle,
                       }}>
-                      {data?.lineOfSightDistance}
+                        {Number(vendorDistance[0]).toFixed(2)} {vendorDistance[1]}
+                      {/* {Number(data?.lineOfSightDistance).toFixed(2)} */}
                     </Text>
                   </View>
 
@@ -394,7 +398,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       textAlign: 'left',
     },
     mainImage: {
-      height: 200,
+      height: 150,
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),
@@ -427,7 +431,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
     },
     distanceTimeStyle: {
       color: colors.black,
-      fontSize: textScale(8),
+      fontSize: textScale(14),
       fontFamily: fontFamily.regular,
       textAlign: 'left',
       marginLeft: moderateScale(4),

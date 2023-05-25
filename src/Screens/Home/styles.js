@@ -264,9 +264,10 @@ export default ({ themeColors, fontFamily }) => {
       paddingBottom: moderateScale(5),
     },
     locationIcon: {
-      height: moderateScale(18),
-      width: moderateScale(18),
+      height: moderateScale(25),
+      width: moderateScale(25),
       tintColor: themeColors.primary_color,
+      marginTop:4
     },
     locationTxt: {
       paddingLeft: 5,
@@ -318,6 +319,7 @@ export default ({ themeColors, fontFamily }) => {
       fontFamily: fontFamily?.medium,
       fontSize: textScale(14),
       textAlign: 'left',
+      marginTop:moderateScaleVertical(16)
     },
     dotStyle: {
       height: 6,
@@ -365,6 +367,7 @@ export default ({ themeColors, fontFamily }) => {
       color: themeColors.primary_color,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
+      marginTop: moderateScaleVertical(16),
     },
     viewAllVeiw: {
       flexDirection: 'row',
