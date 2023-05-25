@@ -68,11 +68,9 @@ export default function TabRoutes(props) {
   };
 
 
-  console.log(appStyle?.tabBarLayout, "fdsjfadjsfhsadf")
 
   const getCustomTabBar = (props) => {
     if (showBottomBar_) {
-
       switch (appStyle?.tabBarLayout) {
         case 1:
           return <CustomBottomTabBar {...props} />;
@@ -88,7 +86,6 @@ export default function TabRoutes(props) {
           return <CustomBottomTabBar {...props} />;
       }
     }
-
   }
 
   const getHomeIcons = (focused = false) => {
@@ -362,8 +359,8 @@ export default function TabRoutes(props) {
         })}
       />
 
-
-      {DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go && (
+{/* DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go || DeviceInfo.getBundleId() == appIds.dropOff */}
+      {true && (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}

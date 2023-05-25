@@ -1325,7 +1325,7 @@ export default function Products({ route, navigation }) {
               horizontal
               style={{
                 // marginHorizontal: moderateScale(0),
-                marginTop: moderateScaleVertical(5),
+                marginVertical: moderateScaleVertical(8),
               }}>
               {/* <View><Image source={imagePath.}/></View> */}
               {categoryInfo.childs.map((item, inx) => {

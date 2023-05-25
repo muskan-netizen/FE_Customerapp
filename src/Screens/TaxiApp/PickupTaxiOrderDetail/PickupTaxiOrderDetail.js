@@ -1382,7 +1382,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     );
   }
 
-  console.log("taskstaskstaskstaskstasks", tasks)
+  console.log("paramDataparamDataparamData", paramData)
 
   return (
     <WrapperContainer
@@ -1404,9 +1404,9 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           <TouchableOpacity
             onPress={
               paramData?.fromCab
-                ? () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                ? () => navigation.popToTop()
                 : paramData?.pickup_taxi
-                  ? () => navigation.navigate(navigationStrings.HOME)
+                  ? () => navigation.popToTop()
                   : () => navigation.goBack()
             }
             activeOpacity={0.8}

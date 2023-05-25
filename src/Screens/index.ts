@@ -12,7 +12,7 @@ export {default as ResetPassword} from './ResetPassword/ResetPassword';
 export {default as WebLinks} from './WebLinks/WebLinks';
 export {default as VerifyAccount} from './VerifyAccount/VerifyAccount';
 
-export {default as Home} from './Home/Home';
+export {default as HomeTemplate3} from './Home/HomeTemplate3';
 export {default as HomeV2Api} from './Home/Home(V2_API)';
 export {default as Offers} from './Offers/Offers';
 export {default as Brands} from './Brands/Brands';
