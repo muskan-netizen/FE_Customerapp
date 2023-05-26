@@ -8253,16 +8253,6 @@ android {
     //             resValue "string", "app_name", "ViralClean"
     //             resValue "string", "host_name", ""
     //         }
-            // stargaze{
-            //     dimension "appType"
-            //     versionCode 1
-            //     versionName "1.0"
-            //     minSdkVersion rootProject.ext.minSdkVersion
-            //     targetSdkVersion rootProject.ext.targetSdkVersion
-            //     applicationId 'com.stargaze.royoorder'
-            //     resValue "string", "app_name", "Stargaze"
-            //     resValue "string", "host_name", ""
-            // }
     //         messiaa{
     //             dimension "appType"
     //             versionCode 1

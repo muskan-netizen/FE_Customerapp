@@ -200,6 +200,8 @@ const CustomDrawerContent = (props) => {
               ) : colors.white
             }}
           /> */}
+
+      
           <DrawerItem
             label={strings.WISHLIST}
             onPress={() => onPressWishList(3)} //tabIndex

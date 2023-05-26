@@ -2342,7 +2342,6 @@ function Cart({ navigation, route }) {
   };
 
   const getProductFAQs = (item) => {
-    console.log(item, 'itemitemitem');
     clickedItem = item;
     updateState({
       isProductOrderForm: true,

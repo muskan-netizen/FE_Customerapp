@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isArray, isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
   Animated,
@@ -592,7 +592,7 @@ const ProductCard3 = ({
                 </>
               )}
               {(!!data?.add_on_count && data?.add_on_count !== 0) ||
-                (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
+                (!!data?.variant_set_count && data?.variant_set_count !== 0) || (!!isArray(data?.add_on)  && data?.add_on?.length !== 0 )? (
                 <Text
                   style={{
                     ...styles.customTextStyle,

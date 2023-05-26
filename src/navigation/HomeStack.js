@@ -14,7 +14,7 @@ import {
   ConfirmDetailsBuy,
   Delivery,
   Filter,
-  Home,
+  HomeTemplate3,
   HomeV2Api,
   LaundryAvailableVendors,
   Location,
@@ -293,6 +293,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
+      />
+
+<Stack.Screen
+        name={navigationStrings.HOME_TEMP_3}
+        component={HomeTemplate3}
       />
 
     </Stack.Navigator>

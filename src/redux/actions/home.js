@@ -344,17 +344,19 @@ export const isLocationSearched = (flag) => {
 };
 
 //Get Homme banners and Category data
-export function homeDataV2(data = {}, headers = {}, isShortCode = false) {
+export function homeDataV2(data = {}, headers = {}, isShortCode = false, isSaveRedux= true) {
   return new Promise((resolve, reject) => {
 
 
     apiPost(HOMEPAGE_DATA_URL_V2, data, headers)
       .then((res) => {
         if (!isShortCode) {
+          if(isSaveRedux){
           dispatch({
             type: types.HOME_DATA,
             payload: res.data,
           });
+        }
         }
         resolve(res);
       })

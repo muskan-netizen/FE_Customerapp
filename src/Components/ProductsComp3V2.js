@@ -43,7 +43,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
 
   const {category = {}} = item || {};
 
-
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -110,7 +109,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         <Text
           numberOfLines={numberOfLines}
           style={{
-            fontSize: textScale(12),
+            fontSize: textScale(13),
             fontFamily: fontFamily.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             textAlign: 'left',
@@ -122,7 +121,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         {!!item?.vendor_name ? <Text
           numberOfLines={1}
           style={{
-            fontSize: textScale(11),
+            fontSize: textScale(12),
             fontFamily: fontFamily.regular,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
             textAlign: 'left',
@@ -132,11 +131,11 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           {item?.vendor_name || ''}
         </Text> : null}
         {(!item?.hasOwnProperty('compare_price_numeric') || Number(item?.compare_price_numeric) == 0) ? (
-          <View style={{ flexDirection: 'row', marginHorizontal: moderateScale(8),marginVertical:moderateScaleVertical(4) }}>
+          <View style={{ flexDirection: 'row', marginHorizontal: moderateScale(8) }}>
             <Text
               style={{
-                fontSize: textScale(10),
-                fontFamily: fontFamily.bold,
+                fontSize: textScale(12),
+                // fontFamily: fontFamily.bold,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {tokenConverterPlusCurrencyNumberFormater(
@@ -183,12 +182,12 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginLeft: moderateScale(5),
+                marginLeft: moderateScale(9),
                 flexWrap: 'wrap',
               }}>
               <Text
                 style={{
-                  fontSize: textScale(9),
+                  fontSize: textScale(12),
                   fontFamily: fontFamily.medium,
                   color: colors.green,
                 }}>
@@ -202,7 +201,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
               <Text
                 numberOfLines={2}
                 style={{
-                  fontSize: textScale(9),
+                  fontSize: textScale(12),
                   fontFamily: fontFamily.medium,
                   textDecorationLine: 'line-through',
                   color: isDarkMode

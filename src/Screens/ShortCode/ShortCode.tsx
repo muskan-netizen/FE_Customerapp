@@ -33,7 +33,7 @@ const ShortCode: FC = () => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
-    const appCode = 'f34c51'
+    const appCode = '30f2f1'
     
 
     let header = {};

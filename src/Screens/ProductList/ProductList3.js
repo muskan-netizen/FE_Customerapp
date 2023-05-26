@@ -141,6 +141,8 @@ export default function Products({ route, navigation }) {
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
 
+  
+
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -349,7 +351,7 @@ export default function Products({ route, navigation }) {
   const userData = useSelector((state) => state?.auth?.userData);
   //app Main Data
   const { appMainData, location } = useSelector((state) => state?.home);
-
+console.log(categoryInfo,"categoryInfocategoryInfocategoryInfocategoryInfo");
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -386,7 +388,7 @@ export default function Products({ route, navigation }) {
     weekDays, quickSelection, start, end, period, selectedWeekDaysValues, selectedQuickSelectionValue, initDate,
     disabledDaysIndexes, selectedDaysIndexes, date, showDateTimeModal, slectedDate } = variantState
   const updateAddonState = (data) => { setVariantState((state) => ({ ...state, ...data })) };
-
+console.log(productDetailNew,"productDetailNewproductDetailNewproductDetailNew");
   const resetVariantState = () => {
     updateAddonState({
       planValues: ["Daily", "Weekly", "Alternate Days", "Custom"],
@@ -1325,7 +1327,7 @@ export default function Products({ route, navigation }) {
               horizontal
               style={{
                 // marginHorizontal: moderateScale(0),
-                marginTop: moderateScaleVertical(5),
+                marginVertical: moderateScaleVertical(8),
               }}>
               {/* <View><Image source={imagePath.}/></View> */}
               {categoryInfo.childs.map((item, inx) => {

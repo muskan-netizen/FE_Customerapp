@@ -39,12 +39,13 @@ const MarketCard3 = ({
   onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
-  imageResizeMode = 'cover',
   isMaxSaftey = true,
 }) => {
   const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+  const vendorDistance = typeof(data?.lineOfSightDistance) == 'string' ? data?.lineOfSightDistance.split(" ",2) : data.lineOfSightDistance.toFixed(0)
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -53,7 +54,8 @@ const MarketCard3 = ({
   const scaleInAnimated = new Animated.Value(0);
 
   const appMainData = useSelector((state) => state?.home?.appMainData || {});
-
+  const { additional_preferences, digit_after_decimal } =
+    appData?.profile?.preferences || {};
   let imageUrl = getImageUrlNew({
     url: data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
@@ -61,9 +63,6 @@ const MarketCard3 = ({
     height: (height/2).toFixed(0),
     width: width.toFixed(0)
   })
-
-  console.log("imageUrl", imageUrl)
-
 
   const distanceView = () => {
     return (
@@ -129,7 +128,8 @@ const MarketCard3 = ({
                       style={{
                         ...styles.distanceTimeStyle,
                       }}>
-                      {data?.lineOfSightDistance}
+                        {vendorDistance} km
+                  
                     </Text>
                   </View>
 
@@ -183,6 +183,8 @@ const MarketCard3 = ({
       </View>
     );
   };
+
+
 
   return (
     <TouchableOpacity
@@ -394,7 +396,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       textAlign: 'left',
     },
     mainImage: {
-      height: 200,
+      height: 150,
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),
@@ -427,7 +429,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
     },
     distanceTimeStyle: {
       color: colors.black,
-      fontSize: textScale(8),
+      fontSize: textScale(14),
       fontFamily: fontFamily.regular,
       textAlign: 'left',
       marginLeft: moderateScale(4),

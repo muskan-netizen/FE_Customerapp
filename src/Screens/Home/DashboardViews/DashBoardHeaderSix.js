@@ -403,7 +403,7 @@ export default function DashBoardHeaderSix({
       ) : null}
 
       {SearchBarView()}
-      {/* <DeliveryTypeCompTwo selectedToggle={selcetedToggle} /> */}
+      <DeliveryTypeCompTwo selectedToggle={selcetedToggle} />
 
       <CustomAnimatedLoader
         source={loaderOne}

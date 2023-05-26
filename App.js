@@ -315,7 +315,6 @@ const App = () => {
 
 
 
-
   useEffect(() => {
     codePush.sync(
       {

@@ -617,7 +617,8 @@ export default {
   icTerms: require('../assets/images/Ecommerce/ic_terms&condition_02.png'),
   icHamburger: require('../assets/images/Ecommerce/ic_hamburger_03.png'),
   icEcomCart2: require('../assets/images/Ecommerce/ic_cart_03.png'),
-
+  icMenuIcon : require('../assets/images/ic_menu.png'),
+  locationIcon: require('../assets/images/place.png'),
 
   //Video
   // flank: require('../assets/flankSplash.mp4'),

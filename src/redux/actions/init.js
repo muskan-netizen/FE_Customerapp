@@ -33,6 +33,7 @@ export function initApp(
       .then(async (res) => {
         let data = res?.data;
 
+
         const currencies = !!data?.currencies
           ? data?.currencies.map((x) => {
             return {
