@@ -42,6 +42,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
@@ -49,18 +50,23 @@ import {
   currencyNumberFormatter,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { getImageUrl, otpTimerCounter, showError, showSuccess } from '../../utils/helperFunctions';
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import stylesFun from './styles';
 import { isEmpty } from 'lodash';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
+import axios from 'axios';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import useInterval from '../../utils/useInterval';
 
 export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const [cardNumber, setCardNUmber] = useState()
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
-  console.log(expiryDate, 'expiryDateexpiryDate')
-
+  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+const[responseTimer,setResponseTimer] = useState(420)
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -97,6 +103,7 @@ export default function AddMoney({ navigation }) {
   const [year, setYear] = useState()
   const [date, setDate] = useState()
   const [accept, isAccept] = useState(false);
+  const[mtnGatewayResponse,setMtnGatewayResponse] = useState('')
   const commonStyles = commonStylesFun({ fontFamily });
   const {
     allAvailAblePaymentMethods,
@@ -402,7 +409,7 @@ export default function AddMoney({ navigation }) {
     }
   };
   const _renderItemPayments = ({ item, index }) => {
-    console.log(item, 'itemmmmmmmm')
+ 
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -432,7 +439,7 @@ export default function AddMoney({ navigation }) {
                       : colors.textGreyJ,
                 },
               ]}>
-              {item?.title_lng ? item?.title_lng : item?.title}
+              {appIds?.qdelo === getBundleId() ? item?.id == 10 ? `Online / ${(item?.title_lng ? item?.title_lng : item?.title)}` : (item?.title_lng ? item?.title_lng : item?.title) : item?.title_lng ? item?.title_lng : item?.title}
             </Text>
           </View>
         </TouchableOpacity>
@@ -751,12 +758,86 @@ export default function AddMoney({ navigation }) {
     }
   };
 
+  const paymentReponse = (res) => {
+    axios({
+      method: "get",
+      url: res?.responseUrl,
+      headers: {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        authorization: `${userData.auth_token}`
+
+      },
+    }).then((response) => {
+      console.log(response,isVisibleMtnGateway, 'reseserserseeseers');
+      if (response?.data?.status ==  "SUCCESSFUL") {
+        setIsVisibleMtnGateway(false)
+        showSuccess(response?.data?.message)
+        navigation.goBack()
+      }
+      
+    })
+      .catch((error) => {
+        console.log(error, 'error');
+        setMtnGatewayResponse('')
+        setIsVisibleMtnGateway(false)
+        showError(error?.response?.data?.message)
+        navigation.goBack()
+      })
+  }
+  useEffect(()=>{
+    if(!isVisibleMtnGateway && mtnGatewayResponse) {
+      showError('Request TimeOut')
+      navigation.goBack()
+    }
+  },[isVisibleMtnGateway])
+
+  useInterval(
+    () => {
+     if(!!isVisibleMtnGateway) 
+     {  paymentReponse(mtnGatewayResponse);}
+    },
+    !!isVisibleMtnGateway ? 3000 : null,
+  );
+
+  const mtnGateway = () => {
+    updateState({ btnLoader: true })
+    let data = {}
+
+    data['amount'] = amount
+    data['currency'] = currencies?.primary_currency?.iso_code
+    data['order_no'] = ''
+    data['subscription_id'] = ''
+    data['from'] = 'wallet'
+    actions.mtnGateway(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+        console.log(res, 'rsrseereeseresre')
+        updateState({ btnLoader: false })
+        if (res?.status == 'Success') {
+          setIsVisibleMtnGateway(true)
+          setMtnGatewayResponse(res)
+          paymentReponse(res)
+          // navigation.goBack()
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'ererrerererere')
+        updateState({ btnLoader: false })
+        showError(err?.message)
+      })
+  }
+
   const _addMoneyToWallet = () => {
     console.log(
       selectedPaymentMethod,
       'selectedPaymentMethodselectedPaymentMethod',
     );
-
+ 
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
       return;
@@ -793,6 +874,10 @@ export default function AddMoney({ navigation }) {
       });
       return;
     }
+    if (selectedPaymentMethod?.id == 48) {
+      mtnGateway()
+      return;
+    }
     if (selectedPaymentMethod?.off_site == 1 && (selectedPaymentMethod?.id !== 49 && selectedPaymentMethod?.id !== 50 && selectedPaymentMethod?.id != 53)) {
       _webPayment();
       return;
@@ -801,6 +886,7 @@ export default function AddMoney({ navigation }) {
       _paymentWithPlugnPayMethods()
       return;
     }
+
     _offineLinePayment();
   };
 
@@ -980,6 +1066,9 @@ export default function AddMoney({ navigation }) {
           navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
             data: sendingData,
           });
+        }
+        else if (res?.status == '201') {
+          showError(res?.message || '')
         }
       })
       .catch(errorMethod);
@@ -1308,24 +1397,62 @@ export default function AddMoney({ navigation }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-          <PayWithFlutterwave
-            onAbort={() =>
-              updateState({ isModalVisibleForPayFlutterWave: false })
-            }
-            onRedirect={handleOnRedirect}
-            options={{
-              tx_ref: generateTransactionRef(10),
-              authorization:
-                appData?.profile?.preferences?.flutterwave_public_key,
-              customer: {
-                email: userData?.email,
-                name: userData?.name,
-              },
-              amount: paymentDataFlutterWave?.total_payable_amount,
-              currency: currencies?.primary_currency?.iso_code,
-              payment_options: 'card',
-            }}
-          />
+          {!!appData?.profile?.preferences?.flutterwave_public_key &&
+            <PayWithFlutterwave
+              onAbort={() =>
+                updateState({ isModalVisibleForPayFlutterWave: false })
+              }
+              onRedirect={handleOnRedirect}
+              options={{
+                tx_ref: generateTransactionRef(10),
+                authorization:
+                  appData?.profile?.preferences?.flutterwave_public_key,
+                customer: {
+                  email: userData?.email,
+                  name: userData?.name,
+                },
+                amount: paymentDataFlutterWave?.total_payable_amount,
+                currency: currencies?.primary_currency?.iso_code,
+                payment_options: 'card',
+              }}
+            />}
+        </View>
+      </Modal>
+      <Modal
+        isVisible={isVisibleMtnGateway}
+        style={{
+          // // margin: 0,
+          // // justifyContent: 'flex-end',
+          // // marginBottom: 20,
+          // // height:moderateScaleVertical(100),
+          // marginHorizontal:moderateScale(20),
+
+        }}
+      >
+        <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
+          <Text style={{ 
+            color: isDarkMode ? 'white' : themeColors?.primary_color,
+             fontSize: textScale(15),
+              padding: moderateScale(10) }}>Waiting for response ....</Text>
+          <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
+
+            <CountdownCircleTimer
+              isPlaying
+              duration={Number(responseTimer)}
+              colors={[themeColors?.primary_color]}
+              size={40}
+              strokeWidth={5}
+            >
+              {({ remainingTime }) => {
+
+                remainingTime == 1 && responseTimer !=null && setIsVisibleMtnGateway(false)
+                return (
+                  <Text>{remainingTime}</Text>
+                )
+
+              }}
+            </CountdownCircleTimer>
+          </View>
         </View>
       </Modal>
     </WrapperContainer>

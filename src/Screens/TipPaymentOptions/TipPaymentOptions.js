@@ -25,6 +25,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import {
@@ -49,6 +50,11 @@ import PaymentGateways from '../../Components/PaymentGateways';
 import TextTabBar from '../../Components/TextTabBar';
 import FastImage from 'react-native-fast-image';
 import { isEmpty } from 'lodash';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import useInterval from '../../utils/useInterval';
+import axios from 'axios';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -56,6 +62,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   const [date, setDate] = useState()
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
+  const [btnLoader,setBtnLoader] = useState(false)
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
@@ -70,6 +77,10 @@ export default function TipPaymentOptions({ navigation, route }) {
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
   const [accept, isAccept] = useState(false);
+  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
+  const[responseTimer,setResponseTimer] = useState(420)
+
   const [state, setState] = useState({
     isLoading: false,
 
@@ -106,6 +117,47 @@ export default function TipPaymentOptions({ navigation, route }) {
   // useEffect(() => {
   //   getSavedCardList()
   // }, [])
+  const paymentReponse = (res) => {
+    axios({
+      method: "get",
+      url: res?.responseUrl,
+      headers: {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        authorization: `${userData.auth_token}`
+
+      },
+    }).then((response) => {
+      console.log(response, 'reseserserseeseers');
+      if (response?.data?.status == "SUCCESSFUL") {
+        setIsVisibleMtnGateway(false)
+        navigation.goBack()
+      }
+    })
+      .catch((error) => {
+        console.log(error, 'error');
+        setMtnGatewayResponse('')
+        setIsVisibleMtnGateway(false)
+        showError(error?.response?.data?.message)
+        navigation.goBack()
+      })
+  }
+  useEffect(()=>{
+    if(!isVisibleMtnGateway && mtnGatewayResponse) {
+      showError('Request TimeOut')
+      navigation.goBack()
+    }
+  },[isVisibleMtnGateway])
+
+  useInterval(
+    () => {
+
+      if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse); }
+
+    },
+    !!isVisibleMtnGateway ? 5000 : null,
+  );
 
   const getSavedCardList = () => {
 
@@ -498,6 +550,7 @@ export default function TipPaymentOptions({ navigation, route }) {
 
     )
   }
+  
 
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
@@ -552,7 +605,15 @@ export default function TipPaymentOptions({ navigation, route }) {
             selectedPaymentMethod?.off_site == 1
           ) {
             _paymentWithPlugnPayMethods()
-          } else {
+          } 
+          else
+          if (
+            (selectedPaymentMethod?.id == 48) &&
+            selectedPaymentMethod?.off_site == 1
+          ) {
+            mtnGateway()
+          }
+          else {
             console.log('imhere');
             setTimeout(() => {
               updateState({ isLoading: false });
@@ -574,7 +635,38 @@ export default function TipPaymentOptions({ navigation, route }) {
     }
   };
 
+  const mtnGateway = () => {
+   setBtnLoader(true)
+    let dataForGatweay = {}
 
+    dataForGatweay['amount'] = data?.selectedTipAmount
+    dataForGatweay['currency'] = currencies?.primary_currency?.iso_code
+    dataForGatweay['order_no'] =data?.order_number
+    dataForGatweay['subscription_id'] =''
+    dataForGatweay['from'] = 'tip'
+    actions.mtnGateway(dataForGatweay, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+        console.log(res, 'rsrseereeseresre')
+        setBtnLoader(false)
+        if (res?.status == 'Success') {
+          // updateState({ isLoading: false })
+            setIsVisibleMtnGateway(true)
+            setMtnGatewayResponse(res)
+            paymentReponse(res)
+            // navigation.goBack()
+          
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'ererrerererere')
+        setBtnLoader(false)
+        showError(err?.message)
+      })
+  }
   const _paymentWithPlugnPayMethods = () => {
 
     let selectedMethod = selectedPaymentMethod.code;
@@ -666,7 +758,8 @@ export default function TipPaymentOptions({ navigation, route }) {
                 ? [styles.caseOnDeliveryText, { color: MyDarkTheme.colors.text }]
                 : styles.caseOnDeliveryText
             }>
-            {item?.title_lng ? item?.title_lng : item?.title}
+              {appIds?.qdelo === getBundleId() ? item?.id == 10 ? `Online / ${(item?.title_lng ? item?.title_lng : item?.title)}` : (item?.title_lng ? item?.title_lng : item?.title) : item?.title_lng ? item?.title_lng : item?.title}
+          
           </Text>
         </TouchableOpacity>
         {!!(
@@ -927,6 +1020,9 @@ export default function TipPaymentOptions({ navigation, route }) {
           // order_number: data?.order_number,
           // });
         }
+        else if(res?.status == '201'){
+          showError(res?.message ||'')
+        }
       })
       .catch(errorMethod);
   };
@@ -989,6 +1085,7 @@ export default function TipPaymentOptions({ navigation, route }) {
             marginTop={moderateScaleVertical(10)}
             marginBottom={moderateScaleVertical(10)}
             btnText={strings.SELECT}
+            indicator={btnLoader}
           />
         </View>
       ) : (
@@ -1011,7 +1108,7 @@ export default function TipPaymentOptions({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-          <PayWithFlutterwave
+         {!!appData?.profile?.preferences?.flutterwave_public_key && <PayWithFlutterwave
             onAbort={() =>
               updateState({ isModalVisibleForPayFlutterWave: false })
             }
@@ -1028,7 +1125,41 @@ export default function TipPaymentOptions({ navigation, route }) {
               currency: currencies?.primary_currency?.iso_code,
               payment_options: 'card',
             }}
-          />
+          />}
+        </View>
+      </Modal>
+      <Modal
+        isVisible={isVisibleMtnGateway}
+        style={{
+          // // margin: 0,
+          // // justifyContent: 'flex-end',
+          // // marginBottom: 20,
+          // // height:moderateScaleVertical(100),
+          // marginHorizontal:moderateScale(20),
+
+        }}
+      >
+        <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
+          <Text style={{ color: isDarkMode ? 'white' : themeColors?.primary_color, fontSize: textScale(15), padding: moderateScale(10) }}>Waiting for response ....</Text>
+          <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
+
+            <CountdownCircleTimer
+              isPlaying
+              duration={Number(responseTimer)}
+              colors={[themeColors?.primary_color]}
+              size={40}
+              strokeWidth={5}
+            >
+              {({ remainingTime }) => {
+
+                remainingTime == 1 && responseTimer !=null && setIsVisibleMtnGateway(false)
+                return (
+                  <Text>{remainingTime}</Text>
+                )
+
+              }}
+            </CountdownCircleTimer>
+          </View>
         </View>
       </Modal>
     </WrapperContainer>

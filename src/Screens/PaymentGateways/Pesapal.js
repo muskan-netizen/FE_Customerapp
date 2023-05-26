@@ -17,7 +17,7 @@ import { showError } from '../../utils/helperFunctions';
 import axios from 'axios';
 import { apiGet } from '../../utils/utils';
 
-export default function SkipCash({ navigation, route }) {
+export default function Pesapal({ navigation, route }) {
     let paramsData = route?.params;
     console.log(paramsData, '===>paramsData');
 
@@ -40,7 +40,7 @@ export default function SkipCash({ navigation, route }) {
     }, []);
 
     const apiHit = async () => {
-        
+
         let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${paramsData?.total_payable_amount
             }&payment_option_id=${paramsData?.payment_option_id
             }&action=${paramsData?.redirectFrom}&order_number=${paramsData?.orderDetail?.order_number}&come_from=app`;
@@ -56,8 +56,15 @@ export default function SkipCash({ navigation, route }) {
                 },
             );
             console.log(res, 'responseData===>');
-            updateState({ isLoading: false });
-            updateState({ webData: res?.redirect_url });
+            if (res?.status == '200') {
+                updateState({ isLoading: false });
+                updateState({ webData: res?.redirect_url })
+
+                    ;
+            }
+            else if (res?.status == '201') {
+                showError(res?.message || '')
+            }
         } catch (error) {
             console.log(error, 'eroorororrooorro')
             updateState({ isLoading: false });
@@ -84,7 +91,7 @@ export default function SkipCash({ navigation, route }) {
 
         setTimeout(() => {
             if (queryParams.status == 200) {
-                
+
                 if (paramsData?.extraData) {
                     console.log('extraData')
                     navigation.navigate(

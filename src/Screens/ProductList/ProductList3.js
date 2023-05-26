@@ -132,7 +132,8 @@ export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
   const { data } = route.params;
-
+  const notificationData = route.params.fromNotification || false
+ 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1727,7 +1728,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
 
-    if (data?.vendor && data?.screenName != "category") {
+    if ((data?.vendor || (data && notificationData)) && data?.screenName != "category") {
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1753,7 +1754,7 @@ export default function Products({ route, navigation }) {
   const getAllVendorFilters = () => {
     actions
       .getVendorFilters(
-        `/ ${productListId?.id} `,
+        `/ ${!!productListId?.id ? productListId?.id : data} `,
         {},
         {
           code: appData?.profile?.code,
@@ -1880,7 +1881,7 @@ export default function Products({ route, navigation }) {
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
     updateState({ wrapperListLoader: true })
-    let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
+    let vendorId = !!data?.vendorData ? data?.vendorData.id : !!productListId.id ? productListId.id : data;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}&limit=40`;
 
@@ -2057,7 +2058,7 @@ export default function Products({ route, navigation }) {
   };
   /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
-    const productWithCategoryId = data?.productWithSingleCategory ? data?.id : productListId?.id
+    const productWithCategoryId = data?.productWithSingleCategory ? data?.id : !!productListId.id ? productListId.id : data
     const rootproduct = data?.rootProducts || data?.productWithSingleCategory ? true : false
     console.log("<==api hit getProductByCategoryIdOptamize")
     actions

@@ -38,6 +38,7 @@ import {
   SAVED_CARD_LIST,
   DELETE_CARD,
   PESAPAL_SUCCESS,
+  MTNGATEWAY,
 } from '../../config/urls';
 import {
   apiGet,
@@ -549,3 +550,6 @@ export function deleteCard(query ="",data = {}, headers = {}) {
   return apiGet(DELETE_CARD + query, data, headers);
 }
 
+export function mtnGateway(data = {}, headers = {}) {
+  return apiPost(MTNGATEWAY, data, headers);
+}
