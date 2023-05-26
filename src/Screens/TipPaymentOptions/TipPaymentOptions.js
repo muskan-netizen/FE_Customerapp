@@ -55,6 +55,7 @@ import { getBundleId } from 'react-native-device-info';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import useInterval from '../../utils/useInterval';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
