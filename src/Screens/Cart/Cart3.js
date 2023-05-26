@@ -97,6 +97,9 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 import { enableFreeze } from "react-native-screens";
 import { CouponDiscount, DeliverableSection, PromoCodeAvailableSection, SwipeableSection } from './parts';
 import Footer from './parts/Footer';
+import useInterval from '../../utils/useInterval';
+import axios from 'axios';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 enableFreeze(true);
 
 
@@ -171,6 +174,9 @@ function Cart({ navigation, route }) {
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
+  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
+  const [responseTimer, setResponseTimer] = useState(420)
   const [paymentModal, setPaymentModal] = useState(false)
 
 
@@ -253,7 +259,7 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
-  console.log(preferences,cartData, 'perferences-------')
+  console.log(preferences, cartData, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -327,7 +333,14 @@ function Cart({ navigation, route }) {
       checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
-
+  useEffect(() => {
+    if (!isVisibleMtnGateway && mtnGatewayResponse) {
+      showError('Request TimeOut')
+      //   navigation.goBack()
+      updateState({ placeLoader: false, isLoading: false })
+      getCartDetail()
+    }
+  }, [isVisibleMtnGateway])
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
     if (allAddresss?.length == 0) {
@@ -500,7 +513,7 @@ function Cart({ navigation, route }) {
             const timeSlot = `${delaySlot[2]}-${mont > 9 ? '' : '0'}${mont}-${delaySlot[0]}`
             setMinimumDelayVendorDate(timeSlot);
           }
-          setCartItems(res.data.products);
+          setCartItems((!!res?.data && !!res?.data?.products) ? res?.data?.products : []);
           let currentDate = moment(new Date()).format('YYYY-MM-DD');
           // console.log(res?.data?.scheduled_date_time.slice(0, -6), "res?.data?.scheduled_date_time")
           let getApiScheduledDate =
@@ -857,6 +870,8 @@ function Cart({ navigation, route }) {
 
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
+
+
     // setSelectedPayment(selectedPayment);
     console.log('api res success', res);
 
@@ -888,6 +903,8 @@ function Cart({ navigation, route }) {
 
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
+        return;
+      case 48: mtnGateway(res);
         return;
       case 5: //Paystack Payment Getway
         updateState({ placeLoader: false });
@@ -1030,7 +1047,10 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         return;
-
+      case 57: //stafood: pesapal  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PESAPAL, paymentData);
+        return;
       default:
         if (
           !!businessType &&
@@ -1281,7 +1301,8 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 44 &&
           selectedPayment?.id != 49 &&
           selectedPayment?.id != 50 &&
-          selectedPayment?.id != 53
+          selectedPayment?.id != 53 &&
+          selectedPayment?.id != 48
         ) {
           setCartItems([]);
           setCartData({});
@@ -1693,6 +1714,7 @@ function Cart({ navigation, route }) {
 
           setSelectedPayment(selectedPayment);
         }
+
       })
       .catch(errorMethod);
   };
@@ -2008,6 +2030,85 @@ function Cart({ navigation, route }) {
       })
       .catch(errorMethod);
   };
+
+  const paymentReponse = (res) => {
+    axios({
+      method: "get",
+      url: res?.responseUrl,
+      headers: {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        authorization: `${userData.auth_token}`
+
+      },
+    }).then((response) => {
+      console.log(response, 'reseserserseeseers');
+      if (response?.data?.status == "SUCCESSFUL") {
+        setIsVisibleMtnGateway(false)
+
+        showSuccess(response?.data?.message)
+        // getAllSubscriptions(true);
+        updateState({ isLoading: false, placeLoader: false })
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: {
+            order_number:
+              response?.data?.order_number,
+            id: response?.data?.order_id,
+          },
+        })()
+
+      }
+    })
+      .catch((error) => {
+        console.log(error, 'error');
+        setMtnGatewayResponse('')
+        setIsVisibleMtnGateway(false)
+        showError(error?.response?.data?.message)
+      })
+  }
+
+
+  useInterval(
+    () => {
+      if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse); }
+    },
+    !!isVisibleMtnGateway ? 5000 : null,
+  );
+
+
+  const mtnGateway = (res) => {
+
+    updateState({ isLoadingB: true, placeLoader: true })
+    let data = {}
+
+    data['amount'] = res?.data?.total_amount
+    data['currency'] = currencies?.primary_currency?.iso_code
+    data['order_no'] = res?.data?.order_number
+    data['subscription_id'] = ''
+    data['from'] = 'cart'
+
+    actions.mtnGateway(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((response) => {
+        console.log(response, 'rsrseereeseresre')
+        updateState({ isLoadingB: false, placeLoader: false })
+        if (response?.status == 'Success') {
+          setIsVisibleMtnGateway(true)
+          setMtnGatewayResponse(response)
+          paymentReponse(response)
+
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'ererrerererere')
+        updateState({ isLoadingB: false, placeLoader: false })
+        showError(err?.message)
+      })
+  }
 
   const clearSceduleDate = async () => {
     setScheduleType('now');
@@ -2559,6 +2660,7 @@ function Cart({ navigation, route }) {
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
             getProductFAQs={getProductFAQs}
+            dineInType={dineInType}
           />
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />
@@ -2673,6 +2775,7 @@ function Cart({ navigation, route }) {
         setVendorComment={setVendorComment}
         _renderUpSellProducts={_renderUpSellProducts}
         _renderCrossSellProducts={_renderCrossSellProducts}
+        dineInType={dineInType}
         onSelectPaymentMethod={() =>
           !!userData?.auth_token
             ? setPaymentModal(true)
@@ -3423,6 +3526,7 @@ function Cart({ navigation, route }) {
     );
   };
 
+
   const checkVendorSlots = async (date) => {
     if (businessType == 'laundry') {
       if (modalType !== 'pickup') {
@@ -3438,7 +3542,9 @@ function Cart({ navigation, route }) {
             },
           );
           setCheckSloatLoading(false);
-          setLaundryAvailableDropOffSlot(res);
+          const availableSlots = !!res && Array.isArray(res) ? res : !!res?.data && Array.isArray(res?.data) ? res?.data : []
+
+          setLaundryAvailableDropOffSlot(availableSlots);
         } catch (error) {
           setCheckSloatLoading(false);
 
@@ -3463,10 +3569,12 @@ function Cart({ navigation, route }) {
         },
       );
 
+      const availableSlots = !!res && Array.isArray(res) ? res : !!res?.data && Array.isArray(res?.data) ? res?.data : []
+      setCheckSloatLoading(false);
       if (modalType == 'pickup') {
-        setLaundryAvailablePickupSlot(res);
+        setLaundryAvailablePickupSlot(availableSlots);
       }
-      setAvailableTimeSlots(res);
+      setAvailableTimeSlots(availableSlots);
       if (res?.length == 0) {
         setSelectedTimeSlots('');
       }
@@ -5131,6 +5239,47 @@ function Cart({ navigation, route }) {
           }
         </View >
       </Modal >
+      <Modal
+        isVisible={isVisibleMtnGateway}
+        style={{
+          // // margin: 0,
+          // // justifyContent: 'flex-end',
+          // // marginBottom: 20,
+          // // height:moderateScaleVertical(100),
+          // marginHorizontal:moderateScale(20),
+
+        }}
+      >
+        <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
+          <Text style={{
+            color: isDarkMode ? 'white' : themeColors?.primary_color,
+            fontSize: textScale(15),
+            padding: moderateScale(10)
+          }}>Waiting for response ....</Text>
+          <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
+
+            <CountdownCircleTimer
+              isPlaying
+              duration={Number(responseTimer)}
+              colors={[themeColors?.primary_color]}
+              size={40}
+              strokeWidth={5}
+            >
+              {({ remainingTime }) => {
+
+                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                return (<>
+                  <Text>{format}</Text>
+                </>
+                )
+
+              }}
+            </CountdownCircleTimer>
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer >
   );
 }

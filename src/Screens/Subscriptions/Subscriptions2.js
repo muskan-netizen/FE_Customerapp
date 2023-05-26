@@ -55,6 +55,11 @@ import PaymentGateways from '../../Components/PaymentGateways';
 import RazorpayCheckout from 'react-native-razorpay';
 import TextTabBar from '../../Components/TextTabBar';
 import { isEmpty } from 'lodash';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
+import useInterval from '../../utils/useInterval';
+import axios from 'axios';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 export default function Subscriptions2({ navigation, route }) {
   //   console.log(route, 'route>>>');
@@ -62,6 +67,9 @@ export default function Subscriptions2({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
+  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
+  const [responseTimer, setResponseTimer] = useState(420)
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [isReloadPage, setIsReloadPage] = useState(false);
   const [state, setState] = useState({
@@ -168,7 +176,49 @@ export default function Subscriptions2({ navigation, route }) {
   // useEffect(() => {
   //   getSavedCardList()
   // }, [])
+  const paymentReponse = (res) => {
+    axios({
+      method: "get",
+      url: res?.responseUrl,
+      headers: {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        authorization: `${userData.auth_token}`
 
+      },
+    }).then((response) => {
+      console.log(response, 'reseserserseeseers');
+      if (response?.data?.status == "SUCCESSFUL") {
+        setIsVisibleMtnGateway(false)
+        showSuccess(response?.data?.message)
+        getAllSubscriptions(true);
+        updateState({ isLoading: false })
+      }
+    })
+      .catch((error) => {
+        console.log(error, 'error');
+        // setIsVisibleMtnGateway(false)
+        setMtnGatewayResponse('')
+        setIsVisibleMtnGateway(false)
+        showError(error?.response?.data?.message)
+      })
+  }
+  useEffect(() => {
+    if (!isVisibleMtnGateway && mtnGatewayResponse) {
+      showError('Request TimeOut')
+      // navigation.goBack()
+    }
+  }, [isVisibleMtnGateway])
+
+  useInterval(
+    () => {
+
+      if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse); }
+
+    },
+    !!isVisibleMtnGateway ? 5000 : null,
+  );
 
 
   const getSavedCardList = () => {
@@ -613,8 +663,8 @@ export default function Subscriptions2({ navigation, route }) {
                   marginLeft: moderateScale(5),
                 },
               ]}>
-              {item.title}
-            </Text>
+              {/* {item.title} */}
+              {appIds?.qdelo === getBundleId() ? (item?.id == 10 ? ` Online / ${item?.title}` : (item?.title)) : (item?.title)}</Text>
           </View>
         </TouchableOpacity>
 
@@ -1007,7 +1057,38 @@ export default function Subscriptions2({ navigation, route }) {
     }
   };
   //flutter wave
+  const mtnGateway = () => {
+    updateState({ isLoading: true })
+    let data = {}
 
+    data['amount'] = planPrice
+    data['currency'] = currencies?.primary_currency?.iso_code
+    data['order_no'] = ''
+    data['subscription_id'] = selectedPlan?.slug
+    data['from'] = 'subscription'
+    actions.mtnGateway(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((res) => {
+        console.log(res, 'rsrseereeseresre')
+        updateState({ btnLoader: false })
+        if (res?.status == 'Success') {
+          updateState({ isLoading: false })
+          setIsVisibleMtnGateway(true)
+          setMtnGatewayResponse(res)
+          paymentReponse(res)
+          // navigation.goBack()
+
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'ererrerererere')
+        updateState({ isLoading: false })
+        showError(err?.message)
+      })
+  }
   const payAmount = () => {
     updateState({ isModalVisibleForPayment: false });
     if (!!selectedPaymentMethod) {
@@ -1036,6 +1117,11 @@ export default function Subscriptions2({ navigation, route }) {
             paymentDataFlutterWave: paymentData,
           });
         }, 1000);
+
+      }
+      else if (selectedPaymentMethod?.id == 48) {
+        mtnGateway()
+        return;
       } else if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) {
         _paymentWithPlugnPayMethods()
       } else if (
@@ -1113,6 +1199,7 @@ export default function Subscriptions2({ navigation, route }) {
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
     let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
+    if (selectedPaymentMethod?.id == 57) { queryData = queryData + `&come_from=app` }
     updateState({ isLoading: true });
     console.log('query data', queryData);
     actions
@@ -1130,15 +1217,15 @@ export default function Subscriptions2({ navigation, route }) {
         updateState({ isLoading: false });
         if (
           res &&
-          res?.status == 'Success' &&
-          (res?.data || res?.payment_link)
+          (res?.status == 'Success' || res?.status == '200') &&
+          (res?.data || res?.payment_link || res?.redirect_url)
         ) {
           console.log('generate payment url', res.data);
           let sendingData = {
             id: selectedPaymentMethod.id,
             title: selectedPaymentMethod.title,
             screenName: navigationStrings.SUBSCRIPTION,
-            paymentUrl: res.data || res?.payment_link,
+            paymentUrl: res.data || res?.payment_link || res?.redirect_url,
             action: 'subscription',
             selectedPlanSlug: selectedPlan?.slug,
           };
@@ -1152,6 +1239,9 @@ export default function Subscriptions2({ navigation, route }) {
           //   selectedPaymentMethod: selectedPaymentMethod,
           // selectedPlanSlug: selectedPlan?.slug
           // });
+        }
+        else if (res?.status == '201') {
+          showError(res?.message || '')
         }
       })
       .catch(errorMethod);
@@ -1582,7 +1672,7 @@ export default function Subscriptions2({ navigation, route }) {
               height: height / 8,
               justifyContent: 'flex-end',
             }}>
-            <PayWithFlutterwave
+            {!!appData?.profile?.preferences?.flutterwave_public_key && <PayWithFlutterwave
               onAbort={() =>
                 updateState({ isModalVisibleForPayFlutterWave: false })
               }
@@ -1599,10 +1689,57 @@ export default function Subscriptions2({ navigation, route }) {
                 currency: currencies?.primary_currency?.iso_code,
                 payment_options: 'card',
               }}
-            />
+            />}
           </View>
         </Modal>
       </StripeProvider>
+      <Modal
+        isVisible={isVisibleMtnGateway}
+        style={{
+          // // margin: 0,
+          // // justifyContent: 'flex-end',
+          // // marginBottom: 20,
+          // // height:moderateScaleVertical(100),
+          // marginHorizontal:moderateScale(20),
+
+        }}
+      >
+        <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
+          <Text style={{
+            color: isDarkMode ? 'white' : themeColors?.primary_color,
+            fontSize: textScale(15),
+            padding: moderateScale(10)
+          }}>
+            Waiting for response ....
+          </Text>
+          <View style={{
+            justifyContent: "center",
+            alignItems: "center",
+            padding: moderateScale(25)
+          }}>
+
+            <CountdownCircleTimer
+              isPlaying
+              duration={Number(responseTimer)}
+              colors={[themeColors?.primary_color]}
+              size={40}
+              strokeWidth={5}
+            >
+              {({ remainingTime }) => {
+
+                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                return (<>
+                  <Text>{format}</Text>
+                </>
+                )
+
+              }}
+            </CountdownCircleTimer>
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

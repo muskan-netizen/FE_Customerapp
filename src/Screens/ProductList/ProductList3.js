@@ -131,7 +131,9 @@ enableFreeze(true);
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
-  const { data } = route.params;
+
+  const notificationData = route.params.fromNotification || false
+  const { data, previousScreenData } = route.params;
 
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
@@ -151,6 +153,7 @@ export default function Products({ route, navigation }) {
 
   const [listHeight, setListHeight] = useState(height / 3.2)
 
+  const [checkSloatLoading, setCheckSloatLoading] = useState(false)
   const [state, setState] = useState({
     sortFilters: filtersData,
     searchInput: '',
@@ -412,8 +415,8 @@ export default function Products({ route, navigation }) {
 
   //usecallback functions
 
-  const goToProductDetail = (data) => {
-    navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
+  const goToProductDetail = (productDetail) => {
+    navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: productDetail, previousScreenData: data, isProductList: true })
   }
   const renderSectionItem = useCallback(
     ({ item, index, section }) => {
@@ -1370,6 +1373,8 @@ export default function Products({ route, navigation }) {
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
 
+
+
       if (dine_In_Type == 'appointment' && item?.mode_of_service == 'schedule' && isEmpty(selectedAppointmentSlot)) {
         setAppointmentPicker(true)
         setSelectedProductForAppointment(item?.id || item?.variant[0].id)
@@ -1378,6 +1383,7 @@ export default function Products({ route, navigation }) {
         setPressedItemInx(inx)
         return
       }
+
 
       if (!!item.is_recurring_booking) {
         if (isEmpty(selectedPlanValues)) {
@@ -1426,7 +1432,7 @@ export default function Products({ route, navigation }) {
         });
         return;
       }
-      if (item?.add_on_count === 0 && item?.mode_of_service === 'schedule') {
+      if (item?.add_on_count !== 0 && item?.mode_of_service === 'schedule') {
         setSelectedSection(section);
         setSelectedCarItems(item);
         setIsVisibleModal(true);
@@ -1688,7 +1694,7 @@ export default function Products({ route, navigation }) {
     if (productListId?.vendor && routeData) {
       fetchOffers();
     }
-    if (isLoadingC) {
+    if (isLoadingC && !data?.vendor) {
       getAllProductsByCategoryId(true);
     }
   }, [navigation, languages, currencies, reloadData, CartItems]);
@@ -1727,7 +1733,7 @@ export default function Products({ route, navigation }) {
 
   const getAllListItems = (pageNo = 1) => {
 
-    if (data?.vendor && data?.screenName != "category") {
+    if ((data?.vendor || (data && notificationData)) && data?.screenName != "category") {
       {
         !!selectedFilters.current
           ? newVendorFilter(pageNo)
@@ -1753,7 +1759,7 @@ export default function Products({ route, navigation }) {
   const getAllVendorFilters = () => {
     actions
       .getVendorFilters(
-        `/ ${productListId?.id} `,
+        `/ ${!!productListId?.id ? productListId?.id : data} `,
         {},
         {
           code: appData?.profile?.code,
@@ -1880,7 +1886,7 @@ export default function Products({ route, navigation }) {
   const getAllProductsByVendor = (pageNo) => {
     console.log(data, 'api hit getAllProductsByVendor');
     updateState({ wrapperListLoader: true })
-    let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
+    let vendorId = !!data?.vendorData ? data?.vendorData.id : !!productListId.id ? productListId.id : data;
 
     let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1}&type=${dineInType}&limit=40`;
 
@@ -2057,7 +2063,7 @@ export default function Products({ route, navigation }) {
   };
   /**********Get all list items by category id productListData*/
   const getAllProductsByCategoryId = (pageNo) => {
-    const productWithCategoryId = data?.productWithSingleCategory ? data?.id : productListId?.id
+    const productWithCategoryId = data?.productWithSingleCategory ? data?.id : !!productListId.id ? productListId.id : data
     const rootproduct = data?.rootProducts || data?.productWithSingleCategory ? true : false
     console.log("<==api hit getProductByCategoryIdOptamize")
     actions
@@ -2825,7 +2831,7 @@ export default function Products({ route, navigation }) {
     }
   };
   useEffect(() => {
-    if (isLoadingC) {
+    if (isLoadingC && !data?.vendor) {
       getAllProductsByCategoryId(1);
 
       if (productListId?.vendor && routeData) {
@@ -3884,7 +3890,7 @@ export default function Products({ route, navigation }) {
 
           console.log(res, "res for slots vendor");
           if (res) {
-            setAppointmentAvailableSlots(res)
+            setAppointmentAvailableSlots(res.data)
             setLoadingGetSlots(false);
             setAppointmentPicker(false);
             setSelectedAppointmentIndx(null);
@@ -3895,6 +3901,9 @@ export default function Products({ route, navigation }) {
           }
         } catch (error) {
           setCheckSloatLoading(false);
+          showError(error?.message || error?.error || "something wen't wrong")
+          setLoadingGetSlots(false);
+          setAppointmentPicker(false);
 
           console.log('error riased', error);
         }
@@ -4868,6 +4877,10 @@ export default function Products({ route, navigation }) {
             }}>
             <TouchableOpacity
               activeOpacity={0.8}
+              hitSlop={hitSlopProp}
+              style={{
+                padding: moderateScale(8)
+              }}
               onPress={() => {
                 if (isAppointmentPicker) {
                   setAppointmentPicker(false)

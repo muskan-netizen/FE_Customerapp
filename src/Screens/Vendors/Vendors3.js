@@ -69,7 +69,7 @@ export default function Vendors3({ route, navigation }) {
   useEffect(() => {
     actions
       .getDataByCategoryId(
-        `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
+        `/${data.id || data }?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
         {},
         {
           code: appData.profile.code,

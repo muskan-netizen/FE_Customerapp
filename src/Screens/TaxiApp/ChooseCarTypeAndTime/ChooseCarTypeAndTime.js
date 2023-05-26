@@ -549,6 +549,9 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
       case 52: //SKIP_CASH Payment Gatway
         navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         break;
+        case 57: //Peaspal Payment Gatway
+        navigation.navigate(navigationStrings.PESAPAL, paymentData);
+        break;
       case 30: //FlutterWave Payment Getway
         updateState({
           isModalVisibleForPayFlutterWave: true,

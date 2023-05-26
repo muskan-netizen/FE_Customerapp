@@ -173,4 +173,5 @@ export default {
   FREELANCER_SERVICE: 'freelancerService',
   AVAILABLE_TECHNICIANS: 'availableTechnicians',
   TECHNICIAN_PROFILE: 'technicianProfile',
+  PESAPAL:'Pesapal'
 };
