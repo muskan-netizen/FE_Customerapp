@@ -31,6 +31,8 @@ import {
   showError
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 
 export default function AllPaymentMethods({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -260,7 +262,7 @@ export default function AllPaymentMethods({ navigation, route }) {
                 ? [styles.caseOnDeliveryText, { color: MyDarkTheme.colors.text }]
                 : styles.caseOnDeliveryText
             }>
-            {item?.title_lng ? item?.title_lng : item?.title}
+               {appIds?.qdelo === getBundleId() ? item?.id == 10 ? `Online / ${(item?.title_lng ? item?.title_lng : item?.title)}` : (item?.title_lng ? item?.title_lng : item?.title) : item?.title_lng ? item?.title_lng : item?.title}
           </Text>
         </TouchableOpacity>
         {!!(

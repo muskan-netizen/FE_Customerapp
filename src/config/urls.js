@@ -1,7 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
+// export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 // export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
@@ -812,3 +813,6 @@ export const DELETE_CARD = getApiUrl('/user/deleteCard');
 // time slots of driver
 export const GET_DRIVER_SLOTS = getApiUrl('/getDispatcherGerenalSlot');
 export const SEND_PRODUCT_BOOKING_DATA = getApiUrl('/get_product_price_from_dispatcher');
+
+
+export const MTNGATEWAY = getApiUrl('/mtn/create-token')

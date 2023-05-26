@@ -59,6 +59,9 @@ import AvailableDriver from '../Comps/AvailableDriver';
 import SelectPaymentModalView from '../../TaxiApp/ChooseCarTypeAndTime/SelectPaymentModalView';
 import stylesFun from './styles';
 import FastImage from 'react-native-fast-image';
+import axios from 'axios';
+import useInterval from '../../../utils/useInterval';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -68,7 +71,7 @@ function ChooseVechile({ navigation, route }) {
     const paramData = route?.params?.promocodeDetail
         ? route?.params?.promocodeDetail
         : route?.params;
-
+    console.log(paramData, 'paramData')
     const bottomSheetRef = useRef(null);
     const mapRef = useRef();
 
@@ -89,7 +92,10 @@ function ChooseVechile({ navigation, route }) {
     const fontFamily = appStyle?.fontSizeData;
     const { additional_preferences, digit_after_decimal, distance_unit_for_time, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences || {};
     const styles = stylesFun({ fontFamily, themeColors });
-
+    const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+    const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
+    const[responseTimer,setResponseTimer] = useState(420)
+    const [pickuporderdetails, setPickuporderdetails] = useState('')
     const [state, setState] = useState({
         region: {
             latitude: paramData?.location[0]?.latitude
@@ -254,6 +260,14 @@ function ChooseVechile({ navigation, route }) {
         //otherwise we pass the shcedule date onDateSet function and hit api accordingly
         !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
     }, [updateSeatNO]);
+
+    useEffect(()=>{
+        if(!isVisibleMtnGateway && mtnGatewayResponse) {
+          showError('Request TimeOut')
+        //   navigation.goBack()
+        updateState({   indicatorLoader: false, })
+        }
+      },[isVisibleMtnGateway])
 
     const onDateSet = useCallback((date) => {
         let time = moment(date).format("HH:mm ");
@@ -547,6 +561,9 @@ function ChooseVechile({ navigation, route }) {
             case 47: //Khalti Payment Gatway
                 navigation.navigate(navigationStrings.KHALTI, paymentData);
                 break;
+            case 57: //PesaPal Payment Gatway
+                navigation.navigate(navigationStrings.PESAPAL, paymentData);
+                break;
             case 30: //FlutterWave Payment Getway
                 updateState({
                     isModalVisibleForPayFlutterWave: true,
@@ -565,6 +582,46 @@ function ChooseVechile({ navigation, route }) {
                 break;
         }
     };
+
+    const paymentReponse = (res, extraData) => {
+        axios({
+            method: "get",
+            url: res?.responseUrl,
+            headers: {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+                authorization: `${userData.auth_token}`
+
+            },
+        }).then((response) => {
+            console.log(response, 'reseserserseeseers');
+            if (response?.data?.status == "SUCCESSFUL") {
+                setIsVisibleMtnGateway(false)
+                navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS,
+                    extraData
+                );
+                showSuccess(response?.data?.message)
+            }
+        })
+            .catch((error) => {
+                console.log(error, 'error');
+                setMtnGatewayResponse('')
+                setIsVisibleMtnGateway(false)
+                showError(error?.response?.data?.message)
+                updateState({   indicatorLoader: false, })
+                
+            })
+    }
+    useInterval(
+        () => {
+            if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse, pickuporderdetails); }
+        },
+        !!isVisibleMtnGateway ? 5000 : null,
+    );
+
+
+
     const _paymentWithPlugnPayMethods = (extraData, response, data) => {
 
         console.log(extraData, response, paramData, 'extradataextradata')
@@ -611,6 +668,43 @@ function ChooseVechile({ navigation, route }) {
                 showError(err?.msg)
             })
     }
+
+    const mtnGateway = (extraData, response, data) => {
+        console.log(response, 'rsresresrersserres')
+        let dataforGateway = {}
+        dataforGateway['amount'] = response?.data?.payable_amount || data?.amount
+        dataforGateway['currency'] = currencies?.primary_currency?.iso_code
+        dataforGateway['order_no'] = response?.data?.order_number
+        dataforGateway['subscription_id'] = ''
+        dataforGateway['reload_route'] = response?.data?.dispatch_traking_url
+        dataforGateway['from'] = 'pickup_delivery'
+
+        actions.mtnGateway(dataforGateway, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+        })
+            .then((res) => {
+                console.log(res, 'rsrseereeseresre')
+                if (res?.status == 'Success') {
+                
+                    setIsVisibleMtnGateway(true)
+                    setMtnGatewayResponse(res)
+                    setPickuporderdetails(extraData)
+                    paymentReponse(res, extraData)
+                   
+                }
+
+            })
+            .catch((err) => {
+                console.log(err, 'ererrerererere')
+                updateState({ isLoadingB: false, placeLoader: false })
+                showError(err?.message)
+            })
+    }
+
+
+
     const _finalPayment = (data) => {
         if (isEmpty(selectedPayment)) {
             // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
@@ -643,7 +737,11 @@ function ChooseVechile({ navigation, route }) {
                         selectedCarOption: selectedCarOption?.sku,
                     };
                     console.log(extraData, data, "extraData, data");
+
                     if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res, data) }
+                    else if (selectedPayment?.id == 48) {
+                        mtnGateway(extraData, res, data)
+                    }
                     else { checkPaymentOptions(extraData, data); }
 
                 } else {
@@ -972,7 +1070,7 @@ function ChooseVechile({ navigation, route }) {
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
-                        {is_cab_pooling &&
+                        {!!is_cab_pooling &&
                             <TouchableOpacity onPress={() => setCabBookingType('Pooling')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
@@ -1593,6 +1691,7 @@ function ChooseVechile({ navigation, route }) {
     }
 
     return (
+
         <View style={{ ...styles.container }}>
             <View style={{ flex: 1 }}>
                 {!!paramData?.location.length > 0 && (
@@ -1694,7 +1793,7 @@ function ChooseVechile({ navigation, route }) {
                 </TouchableOpacity>
                 <BottomSheet
                     ref={bottomSheetRef}
-                    index={availableCarList.length <= 2 ? bottomSheetIndex : 1}
+                    index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
                     snapPoints={[height / 1.6, height / 1.25]}
                     activeOffsetY={[-1, 1]}
                     failOffsetX={[-5, 5]}
@@ -1841,7 +1940,35 @@ function ChooseVechile({ navigation, route }) {
                     />
                 )
             }
+            {!!isVisibleMtnGateway && <Modal
+                isVisible={isVisibleMtnGateway}
+
+            >
+                <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15), justifyContent: "center" ,alignContent:"center"}}>
+                    <Text style={{ color: isDarkMode ? 'white' : themeColors?.primary_color, fontSize: textScale(15), padding: moderateScale(10) }}>Waiting for response ....</Text>
+                    <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
+
+                        <CountdownCircleTimer
+                            isPlaying
+                            duration={Number(responseTimer)}
+                            colors={[themeColors?.primary_color]}
+                            size={40}
+                            strokeWidth={5}
+                        >
+                            {({ remainingTime }) => {
+
+                                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                                return (
+                                    <Text>{remainingTime}</Text>
+                                )
+
+                            }}
+                        </CountdownCircleTimer>
+                    </View>
+                </View>
+            </Modal>}
         </View >
+
     );
 }
 
