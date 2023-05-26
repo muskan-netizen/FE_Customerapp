@@ -88,7 +88,7 @@ const CustomDrawerContent = (props) => {
     navigation.navigate(navigationStrings.WEBLINKS, { id: id, isComeFromDrawer: true })
   }
 
-  const onPressProfile = () =>{
+  const onPressProfile = () => {
     if (!!userData?.auth_token) {
 
       navigation.navigate(navigationStrings.MY_PROFILE, { isComeFromDrawer: true })
@@ -159,6 +159,27 @@ const CustomDrawerContent = (props) => {
               ) : colors.white
             }}
           />
+         {!!userData && <DrawerItem
+            label={strings.MY_ORDERS}
+            onPress={() => onPressItem(navigationStrings.MY_ORDERS, 1)} //tabIndex
+
+            icon={({ focused }) => {
+              return (
+                <Image style={{
+                  ...imageStyle,
+                  resizeMode: 'contain',
+                  tintColor: currentTab?.current == 2 ? themeColors.primary_color : colors.black
+                }} source={imagePath.icEcomCart} />
+              )
+            }}
+            labelStyle={{ color: currentTab?.current == 2 ? themeColors?.primary_color : colors.black }}
+            style={{
+              backgroundColor: currentTab?.current == 2 ? getColorCodeWithOpactiyNumber(
+                themeColors.primary_color.substr(1),
+                10,
+              ) : colors.white
+            }}
+          />}
 
           {/* <DrawerItem
             label={strings.CATEGORY}
@@ -244,7 +265,7 @@ const CustomDrawerContent = (props) => {
         </View>
 
 
-        <View style={{ flex: 0.2, justifyContent: 'flex-end',paddingBottom:moderateScaleVertical(16) }}>
+        <View style={{ flex: 0.2, justifyContent: 'flex-end', paddingBottom: moderateScaleVertical(16) }}>
           <ButtonComponent
             btnText={!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
             containerStyle={{

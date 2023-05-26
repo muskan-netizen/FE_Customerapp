@@ -131,6 +131,7 @@ import EcomHeader from '../../Components/EcomHeader';
 import ProductCardEcom from '../../Components/ProductCardEcom';
 import FilterCompEcom from '../../Components/FilterCompEcom';
 import ProductCardEcomSection from '../../Components/ProductCardEcomSection';
+import SortCompEcom from '../../Components/SortCompEcom';
 enableFreeze(true);
 
 
@@ -185,6 +186,7 @@ export default function Products({ route, navigation }) {
     updateTagFilter: false,
     differentAddsOnsModal: false,
     isShowFilter: false,
+    isShowSort:false,
     showListEndLoader: false,
 
     slider1ActiveSlide: 0,
@@ -256,6 +258,7 @@ export default function Products({ route, navigation }) {
     differentAddsOnsModal,
     selectedDiffAdsOnId,
     isShowFilter,
+    isShowSort,
     selectedSortFilter,
     showListEndLoader,
     variantSet,
@@ -665,7 +668,34 @@ export default function Products({ route, navigation }) {
     }} />
   }, [isDarkMode])
 
-
+  const SortView = () => (
+    <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity
+        onPress={onShowHideSort}
+        activeOpacity={0.7}
+        style={{
+          borderLeftWidth: 1,
+          padding: moderateScale(6),
+          borderLeftColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity10,
+          flexDirection: "row",
+          alignItems: 'center'
+        }}>
+        <Text style={{
+          ...styles.filterText,
+          color: themeColors?.primary_color
+        }}>Sort</Text>
+        <Image
+          source={imagePath.filter}
+          style={{
+            tintColor: isDarkMode
+              ? colors.white
+              : themeColors.primary_color,
+            height: moderateScale(14),
+            width: moderateScale(14)
+          }} />
+      </TouchableOpacity>
+    </View>
+  )
 
   const filterView = () => {
     return (
@@ -752,7 +782,11 @@ export default function Products({ route, navigation }) {
                 color: isDarkMode ? colors.white : colors.black
               }}>{`Results (${totalProducts})`}</Text>
             </View>}
+            <View style={{flexDirection:'row'}}>
             {filterView()}
+            {SortView()}
+            </View>
+            
           </View>
           {horizontalLine({ marginVertical: 0, marginBottom: moderateScaleVertical(8) })}
         </View>
@@ -3077,6 +3111,9 @@ export default function Products({ route, navigation }) {
   const onShowHideFilter = () => {
     updateState({ isShowFilter: !isShowFilter });
   };
+  const onShowHideSort =()=>{
+    updateState({isShowSort:!isShowSort})
+  }
 
   const bottomSheetHeader = () => {
     return (
@@ -3907,7 +3944,23 @@ export default function Products({ route, navigation }) {
       >
         <Text>Go To Top</Text>
       </TouchableOpacity>
-
+      {isShowSort ? (
+        <SortCompEcom
+          isDarkMode={isDarkMode}
+          themeColors={themeColors}
+          onFilterApply={onFilterApply}
+          onShowHideFilter={onShowHideSort}
+          allClearFilters={allClearFilters}
+          selectedSortFilter={selectedSortFilter}
+          onSelectedSortFilter={(val) =>
+            updateState({ selectedSortFilter: val })
+          }
+          maximumPrice={maximumPrice}
+          minimumPrice={minimumPrice}
+          updateMinMax={updateMinMax}
+          filterData={allFilters}
+        />
+       ) : null} 
 
       {isShowFilter ? (
         <FilterCompEcom

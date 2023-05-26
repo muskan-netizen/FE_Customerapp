@@ -12,7 +12,7 @@ import GradientButton from './GradientButton';
 import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 
 
-const FilterCompEcom = ({
+const SortCompEcom = ({
     isDarkMode = null,
     themeColors,
     onFilterApply = () => { },
@@ -267,7 +267,7 @@ const FilterCompEcom = ({
                             <Text style={{
                                 fontSize: moderateScale(15),
                                 fontFamily: fontFamily.bold
-                            }}>{strings.FILTER_BY}</Text>
+                            }}>{strings.SORT_BY}</Text>
 
                             <TouchableOpacity
                                 onPress={onClearFilter}
@@ -286,13 +286,13 @@ const FilterCompEcom = ({
                                 : colors.lightGreyBg,
                         }} />
 
-                        {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
 
                             {sortFilters.map((val, i) => {
                                 return sortingView(val, i)
                             })}
-                        </View> */}
-{/* 
+                        </View>
+
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: moderateScaleVertical(8) }}>
                             <Text style={{
                                 fontSize: moderateScale(14),
@@ -302,9 +302,9 @@ const FilterCompEcom = ({
                                 fontSize: moderateScale(14),
                                 fontFamily: fontFamily.regular
                             }}>{maximumPrice}</Text>
-                        </View> */}
+                        </View>
 
-                        {/* <View style={{ marginHorizontal: moderateScale(12), marginBottom: moderateScaleVertical(8) }}>
+                        <View style={{ marginHorizontal: moderateScale(12), marginBottom: moderateScaleVertical(8) }}>
                             <MultiSlider
                                 values={[minimumPrice, maximumPrice]}
                                 sliderLength={width / 1.2}
@@ -326,13 +326,13 @@ const FilterCompEcom = ({
                                 />
                                 }
                             />
-                        </View> */}
+                        </View>
 
-                        <View>
+                        {/* <View>
                             {filterTypes.map((val, i) => {
                                 return filterView(val, i)
                             })}
-                        </View>
+                        </View> */}
                     </ScrollView>
                     <GradientButton
                         colorsArray={[
@@ -385,4 +385,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default React.memo(FilterCompEcom);
+export default React.memo(SortCompEcom);

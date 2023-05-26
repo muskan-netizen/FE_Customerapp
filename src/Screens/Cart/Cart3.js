@@ -1214,6 +1214,8 @@ function Cart({ navigation, route }) {
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
     data['specific_instructions'] = instruction;
+    data['order_product'] = [54,56]
+
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
@@ -1229,6 +1231,7 @@ function Cart({ navigation, route }) {
 
   const placeOrderData = (data) => {
     console.log('Sending data', data);
+
     let headerData = {
       code: appData?.profile?.code,
       currency: currencies?.primary_currency?.id,
@@ -2539,11 +2542,19 @@ function Cart({ navigation, route }) {
           </View>
 
           {/************ start  render cart items *************/}
+                
+                <View style={{
+                  flexDirection:'row',
+                  alignItems:'center'
+                }}>
+         
+          <View>
           <SwipeableSection
             item={item}
             openDeleteView={openDeleteView}
             deleteItem={deleteItem}
             addDeleteCartItems={addDeleteCartItems}
+            selectCartItem={selectCartItem}
             swipeRef={swipeRef}
             swipeKey={swipeKey}
             swipeBtns={swipeBtns}
@@ -2558,7 +2569,10 @@ function Cart({ navigation, route }) {
             cartData={cartData}
             scheduleType={scheduleType}
             openPickerForPrescription={openPickerForPrescription}
+            parentIndex = {index}
           />
+          </View>
+          </View>
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />
 
@@ -2687,6 +2701,8 @@ function Cart({ navigation, route }) {
   //end footer
 
   //Header section of cart screen
+
+  console.log("cartDatacartData",cartData)
 
   const homeType = (data) => {
     let value = strings.HOME;
@@ -4478,6 +4494,29 @@ function Cart({ navigation, route }) {
       </View>
     );
   };
+
+  const selectCartItem =({
+    currentIndex,
+    parentItem,
+    currentItem,
+    parentIndex
+  })=>{
+
+      
+
+    const cloneArry = cloneDeep(cartItems)
+
+    let filterArry = cloneArry[parentIndex]?.vendor_products.map((val,i)=>{
+          if(val?.product_id == currentItem?.product_id){
+            return {...val, isSelected: !val?.isSelected }
+          }
+          return val
+    })
+
+    cloneArry[parentIndex]={...parentItem, vendor_products: filterArry }
+    setCartItems(cloneArry)
+  }
+  
 
   // Category KYC end
   console.log(cartItems, "cartItemscartItems");
