@@ -66,7 +66,7 @@ export default function AddMoney({ navigation }) {
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
   const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
-const[responseTimer,setResponseTimer] = useState(420)
+  const[responseTimer,setResponseTimer] = useState(420)
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
