@@ -42,7 +42,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
   const appMainData = useSelector((state) => state?.home?.appMainData || {});
 
   const {category = {}} = item || {};
-console.log(item,"gfhnhjgmmj");
 
   return (
     <TouchableOpacity

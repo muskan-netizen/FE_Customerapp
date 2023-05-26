@@ -242,12 +242,12 @@ function DashBoardHeaderFive({
         </View>
       ) : null}
 
-      <DeliveryTypeComp
+      {appStyle?.homePageLayout !== 6 ?<DeliveryTypeComp
         selectedToggle={selcetedToggle}
         tabMainStyle={{
           marginBottom: 0,
         }}
-      />
+      />:null}
 
       <CustomAnimatedLoader
         source={loaderOne}

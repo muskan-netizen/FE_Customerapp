@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import { Alert, BackHandler, Image, Linking, TouchableOpacity, View } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -14,9 +14,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-
 import Voice from '@react-native-voice/voice';
-
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
@@ -27,17 +25,15 @@ import {
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
 import { DashBoardFiveV2Api, DashBoardHeaderFive, TaxiHomeDashbord } from './DashboardViews/Index';
-import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
-import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
-import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
-import { DashBoardHeaderFour } from './DashboardViews/Index';
-import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import socketServices from '../../utils/scoketService';
+import imagePath from '../../constants/imagePath';
+import { moderateScale, moderateScaleVertical } from '../../styles/responsiveSize';
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-export default function Home({ route, navigation }) {
+
+export default function HomeTemplate3({ route, navigation }) {
   const paramData = route?.params;
   const {
     appData,
@@ -49,10 +45,12 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType, isLocationSearched } = useSelector((state) => state?.home || {});
+
+  const defaultVendorType = paramData?.type;
+
+  const { location, isLocationSearched } = useSelector((state) => state?.home || {});
 
   const isFocused = useIsFocused();
-  const { cartItemCount } = useSelector((state) => state?.cart);
 
   const { userData } = useSelector((state) => state?.auth);
   const [nearestLocDis, setNearestLocDis] = useState(null)
@@ -68,6 +66,8 @@ export default function Home({ route, navigation }) {
   const [minMaxError, setMinMaxError] = useState([]);
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
+  const [appMainData, setAppMainData] = useState({})
+
 
   const [state, setState] = useState({
     isLoading: true,
@@ -121,7 +121,7 @@ export default function Home({ route, navigation }) {
   const { profile } = appData;
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     chekLocationPermission(true)
       .then((result) => {
         if (result !== 'goback' && result == 'granted') {
@@ -129,7 +129,6 @@ export default function Home({ route, navigation }) {
             .then((curLoc) => {
               updateState({
                 curLatLong: curLoc,
-                isLoading: true
               });
               let locData = location?.latitude ? location : curLoc;
               if (!!userData?.auth_token) {
@@ -218,7 +217,7 @@ export default function Home({ route, navigation }) {
         homeData();
         return;
       });
-  }, [selectedTabType, appData, allAddresss])
+  }, [selectedTabType, appData, allAddresss]);
 
 
   useEffect(() => {
@@ -236,21 +235,9 @@ export default function Home({ route, navigation }) {
       return () => backHandler.remove();
     }, []),
   );
-  useEffect(() => {
-    updateState({ updatedData: appMainData?.categories });
-  }, [appMainData]);
 
-  useEffect(() => {
-    if (
-      paramData?.details &&
-      paramData?.details?.formatted_address != location?.address
-    ) {
-      _getLocationFromParams();
-      updateState({
-        selectedFilterType: {},
-      });
-    }
-  }, [paramData?.details]);
+
+
 
   useFocusEffect(
     useCallback(() => {
@@ -277,27 +264,6 @@ export default function Home({ route, navigation }) {
     Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
-  const _getLocationFromParams = () => {
-    actions.isLocationSearched(true);
-    const address = paramData?.details?.formatted_address;
-    const res = {
-      address: address,
-      latitude: paramData?.details?.geometry?.location.lat,
-      longitude: paramData?.details?.geometry?.location.lng,
-    };
-    if (
-      res?.latitude != location?.latitude &&
-      res?.longitude != location?.longitude
-    ) {
-      if (cartItemCount?.data?.item_count) {
-        checkCartWithLatLang(res);
-      } else {
-        updateLatLang(res);
-      }
-    } else {
-      updateLatLang(res);
-    }
-  };
 
   const checkCartWithLatLang = (res) => {
     Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
@@ -373,9 +339,7 @@ export default function Home({ route, navigation }) {
     if (!isFocused) {
       return;
     }
-    if (!!paramData) {
-      updateState({ searchDataLoader: true });
-    }
+
     let latlongObj = {};
 
     if (!!locationData) {
@@ -386,8 +350,6 @@ export default function Home({ route, navigation }) {
       };
     }
 
-
-    console.log("selectedFilterselectedFilter", selectedFilter)
     let vendorFilterData = {
       open_close_vendor: selectedFilter?.id == 2 ? 1 : 0
     };
@@ -396,26 +358,9 @@ export default function Home({ route, navigation }) {
     } else {
       updateState({ singleVendor: false });
     }
-
     {
-      var selectedVendorType = null;
-      var defaultVendorType = null;
-
-      if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-        defaultVendorType = appData?.profile?.preferences?.vendorMode[0]?.type; //
-        appData?.profile?.preferences?.vendorMode.forEach((val, i) => {
-          if (val?.type == dineInType) {
-            selectedVendorType = val.type;
-          }
-        });
-      }
-      if (!selectedVendorType) {
-        actions.dineInData(defaultVendorType);
-      }
-
-      let vendorType = appStyle?.homePageLayout == 6 ? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
       let apiData = {
-        type: vendorType,
+        type: defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
         action: '2'
@@ -427,11 +372,13 @@ export default function Home({ route, navigation }) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header', apiData);
-
+      const isSaveRedux = false
+      const isShortCode = false
       actions
-        .homeDataV2(apiData, apiHeader)
+        .homeDataV2(apiData, apiHeader, isShortCode, isSaveRedux)
         .then(async (res) => {
           console.log('Home data++++++', res);
+          setAppMainData(res.data)
           updateState({ searchDataLoader: false, isRefreshing: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
@@ -745,17 +692,13 @@ export default function Home({ route, navigation }) {
   };
 
   const selcetedToggle = (type) => {
-    if (appStyle?.homePageLayout == 6) {
-      actions.dineInData(type);
-      navigation.navigate(navigationStrings.HOME_TEMP_3, { type: type })
-      return;
-    }
     actions.dineInData(type);
+
     updateState({
       selectedFilterType: {},
     });
 
-    if (dineInType != type) {
+    if (defaultVendorType != type) {
       {
         updateState({
           selectedTabType: type,
@@ -957,211 +900,19 @@ export default function Home({ route, navigation }) {
   };
 
 
-  const renderHeaders = useCallback(()=>{
-    switch (appStyle?.homePageLayout) {
-      case 1:
-        return (
-          <>
-            <DashBoardHeaderOne navigation={navigation} location={location} />
-          </>
-        );
-
-      case 2:
-        return (
-          <>
-            <DashBoardHeaderOne navigation={navigation} location={location} />
-          </>
-        );
-      case 3:
-        if (getBundleId() === appIds.onTheWheel) {
-          return (
-            <>
-              <DashBoardHeaderSix
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-                isLoading={isLoading}
-                currentLocation={currentLocation}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-              />
-            </>
-          );
-        } else {
-          return (
-            <>
-              {console.log('curLatLong=>', curLatLong)}
-              <DashBoardHeaderFive
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-                isLoading={isLoading}
-                currentLocation={curLatLong}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-                nearestLoc={nearestLocDis}
-                currentLoc={currentLocation}
-              />
-            </>
-          );
-        }
-
-      case 4:
-        return (
-          <>
-            <DashBoardHeaderFour
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-            />
-
-          </>
-        );
-
-      case 5: // 5
-        return (
-          <>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              nearestLoc={nearestLocDis}
-              currentLoc={currentLocation}
-            />
-          </>
-        );
-      case 6:
-        return (
-          <>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              nearestLoc={nearestLocDis}
-              currentLoc={currentLocation}
-            />
-          </>
-        );
-
-      case 7:
-        return (
-          <>
-             <DashBoardHeaderFive
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-                isLoading={isLoading}
-                currentLocation={curLatLong}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-                nearestLoc={nearestLocDis}
-                currentLoc={currentLocation}
-              />
-          </>
-        );
-
-      case 10:
-        return (
-          <DashBoardHeaderEcommerce
-            showToggles={false}
-            navigation={navigation}
-            location={location}
-            selcetedToggle={selcetedToggle}
-            toggleData={appData}
-            isLoading={isLoading}
-            currentLocation={currentLocation}
-            isLoadingB={isLoadingB}
-            _onVoiceListen={_onVoiceListen}
-            isVoiceRecord={isVoiceRecord}
-            _onVoiceStop={_onVoiceStop}
-          />
-        )
-
-      case 8:
-        return (
-          <>
-            <DashBoardHeaderSeven
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              curLatLong={curLatLong}
-            />
-          </>
-        );
-
-      default:
-        return <>
-          <DashBoardHeaderFive
-            showToggles={false}
-            navigation={navigation}
-            location={location}
-            selcetedToggle={selcetedToggle}
-            toggleData={appData}
-            isLoading={isLoading}
-            currentLocation={currentLocation}
-            isLoadingB={isLoadingB}
-            _onVoiceListen={_onVoiceListen}
-            isVoiceRecord={isVoiceRecord}
-            _onVoiceStop={_onVoiceStop}
-          />
-        </>
-    }
-  },[
-    appStyle?.homePageLayout,
-    location,
-    appData,
-    isLoading,
-    currentLocation,
-    isLoadingB,
-    isVoiceRecord
-  ])
- 
-
 
   const renderHomeScreen = () => {
     return (
       <>
-        {renderHeaders()}
-        {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ?
+
+        <TouchableOpacity
+          style={{ paddingHorizontal: moderateScale(16), marginBottom: moderateScaleVertical(16) }}
+          onPress={() => navigation.goBack()}
+          activeOpacity={0.7}
+        >
+          <Image source={imagePath.backRoyo} />
+        </TouchableOpacity>
+        {defaultVendorType == 'pick_drop' ?
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
@@ -1198,7 +949,7 @@ export default function Home({ route, navigation }) {
             selectedFilterType={selectedFilterType}
             showAllProducts={showAllProducts}
             showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-            showVendorCategory={true}
+            showVendorCategory={false}
           />
         }
       </>

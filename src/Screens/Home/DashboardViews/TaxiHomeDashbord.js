@@ -54,7 +54,9 @@ export default function TaxiHomeDashbord({
   onPressCategory = () => { },
   location = {},
   curLatLong = {},
-  currentLocation = {}
+  currentLocation = {},
+  isLoading = true,
+  appMainData = {}
 }) {
 
   const navigation = useNavigation();
@@ -82,7 +84,6 @@ export default function TaxiHomeDashbord({
     allListedDrivers: [],
   });
 
-  const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
   const { bannerRef } = useRef();
   const {
@@ -103,7 +104,7 @@ export default function TaxiHomeDashbord({
   const styles = stylesFunc({ themeColors, fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  console.log("appMainDataappMainData",appMainData)
+
 
   let myCategories = [{data: []}]
   
@@ -170,8 +171,7 @@ console.log("myCategoriesmyCategories",myCategories)
   };
 
   const getAllDrivers = () => {
-    actions
-      .getAllNearByDrivers(
+    actions.getAllNearByDrivers(
         {
           latitude: location?.latitude,
           longitude: location?.longitude,
@@ -588,7 +588,9 @@ console.log("myCategoriesmyCategories",myCategories)
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : colors.white,
-      }}>
+      }}
+      isLoading={isLoading}
+      >
 
       <ScrollView
         // bounces={false}
@@ -616,13 +618,14 @@ console.log("myCategoriesmyCategories",myCategories)
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
             onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
+            cardViewStyle={{marginTop:moderateScaleVertical(8)}}
           // onPress={(item) => bannerPress(item)}
           />
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
         <Loader isLoading={isLoadingModal} />
 
-        <FlatList
+        {isLoading ? null:<FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={myCategories[0]?.data || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
@@ -643,7 +646,7 @@ console.log("myCategoriesmyCategories",myCategories)
             <View style={{ marginRight: moderateScale(12) }} />
           )}
         />
-
+}
         {/* findCabCategory */}
         {true && (
           <>

@@ -39,14 +39,13 @@ const MarketCard3 = ({
   onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
-  imageResizeMode = 'cover',
   isMaxSaftey = true,
 }) => {
   const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
-  const vendorDistance = data?.lineOfSightDistance.split(" ",2)
-  console.log(vendorDistance,"wesdfghjkl;'");
+  const vendorDistance = typeof(data?.lineOfSightDistance) == 'string' ? data?.lineOfSightDistance.split(" ",2) : data.lineOfSightDistance.toFixed(0)
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -64,9 +63,6 @@ const MarketCard3 = ({
     height: (height/2).toFixed(0),
     width: width.toFixed(0)
   })
-
-  console.log("data>>>>>>>>>>>>>>>>>>>>", data)
-
 
   const distanceView = () => {
     return (
@@ -132,8 +128,8 @@ const MarketCard3 = ({
                       style={{
                         ...styles.distanceTimeStyle,
                       }}>
-                        {Number(vendorDistance[0]).toFixed(2)} {vendorDistance[1]}
-                      {/* {Number(data?.lineOfSightDistance).toFixed(2)} */}
+                        {vendorDistance} km
+                  
                     </Text>
                   </View>
 
@@ -187,6 +183,8 @@ const MarketCard3 = ({
       </View>
     );
   };
+
+
 
   return (
     <TouchableOpacity

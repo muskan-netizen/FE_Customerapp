@@ -46,7 +46,6 @@ export default function AvailableDriver({
   // choose a trip or swipe up for more
   //Render all Available amounts
   const _renderItem = ({ item, index }) => {
-    console.log(item, 'itemitemitem');
     return (
       <View
         key={String(item.id)}

@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   Modal,
@@ -21,7 +22,6 @@ import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
-import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -29,6 +29,7 @@ import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import { useScrollToTop } from '@react-navigation/native';
+import deviceInfoModule from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -38,7 +39,7 @@ import {
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getColorCodeWithOpactiyNumber, getImageUrl } from '../../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber, getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions';
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
@@ -54,6 +55,17 @@ import {
 } from 'react-native-popup-menu';
 import Cities from '../../../Components/Cities';
 import fontFamily from '../../../styles/fontFamily';
+import actions from '../../../redux/actions';
+import VendorMode from '../../../Components/VendorMode';
+import { enableFreeze } from "react-native-screens";
+enableFreeze(true);
+
+const homeFilter = [
+  { id: 1, type: strings.OPEN },
+  { id: 2, type: strings.CLOSE },
+  { id: 3, type: strings.BESTSELLER },
+];
+
 
 
 const DashBoardFiveV2Api = ({
@@ -71,16 +83,21 @@ const DashBoardFiveV2Api = ({
   showAllProducts = () => { },
   showAllSpotDealAndSelectedProducts = () => { },
   onVendorFilterSeletion = () => { },
+  selcetedToggle = () => { },
+  showVendorCategory = true,
+  appMainData = {}
 }) => {
 
-  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
+
+
+  const { appData, themeColors, appStyle, currencies, languages, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const userData = useSelector((state) => state?.auth?.userData);
+  const { cartItemCount } = useSelector((state) => state?.cart);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;
-console.log(businessType,"businessTypebusinessTypebusinessType");
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -153,6 +170,13 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
   };
 
 
+
+  const onSelectedFilter = (selectedFilter) => {
+    updateState({ showMenu: false, currSelectedFilter: selectedFilter });
+    onVendorFilterSeletion(selectedFilter);
+  };
+
+
   const _renderVendors = useCallback(({ item, index }) => (
     <View style={{ width: '100%' }}>
       <MarketCard3V2
@@ -214,6 +238,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
                 <Text
                   style={{
                     ...styles.viewAllText,
+                    marginRight: moderateScale(4),
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : themeColors.primary_color,
@@ -223,7 +248,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
               </TouchableOpacity>
             )}
 
-            {/* <Menu style={{ alignSelf: 'flex-end' }}>
+            {<Menu style={{ alignSelf: 'flex-end' }}>
               <MenuTrigger>
                 <View style={styles.menuView}>
                   <FastImage
@@ -259,7 +284,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
                     width: moderateScale(100),
                   },
                 }}>
-                {homeAllFilters?.map((item, index) => {
+                {homeFilter.map((item, index) => {
                   return (
                     <View key={index}>
                       <MenuOption
@@ -280,7 +305,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
                   );
                 })}
               </MenuOptions>
-            </Menu> */}
+            </Menu>}
 
           </View>
         )}
@@ -352,7 +377,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
         }
       </View>
     );
-  }, [themeColors, fontFamily, appMainData, appStyle, isDarkMode])
+  }, [themeColors, fontFamily, appMainData, appStyle, isDarkMode,cartItemCount])
 
   const showAllTempCartOrders = useCallback(() => {
     return (
@@ -673,7 +698,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
   }
 
 
-  console.log("appMainDataappMainDataappMainData", appMainData)
+
   //banners view
   const BannersView = ({
     item = {},
@@ -698,7 +723,16 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
             renderItem={renderBanners}
             sliderWidth={width}
             itemWidth={width - moderateScale(32)}
+
           />
+          {/* <View style={styles.dotView}>
+            {myBanner.map((va, i) => {
+              return (<View style={{
+                 ...styles.bannerDotStyle, 
+                 backgroundColor: slider1ActiveSlide == i ? themeColors?.primary_color : colors.blackOpacity10
+                 }} />)
+            })}
+          </View> */}
         </View> : <React.Fragment />
     )
   }
@@ -719,7 +753,7 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
             ? '800/600'
             : '1200/1000',
       );
-    console.log("appStyle?.homePageLayout ", appStyle?.homePageLayout)
+
     return (
       <View key={String(item?.id || index)}>
         <TouchableOpacity style={{
@@ -755,352 +789,398 @@ console.log(businessType,"businessTypebusinessTypebusinessType");
     );
   }
 
-
-  const CategoriesView = useCallback(({ item, showTitle }) => {
-    return !isEmpty(item?.data) ? (
-      <View
-        key={String(item?.id || '')}
-        style={{
-          marginBottom: moderateScaleVertical(0),
-          marginHorizontal: moderateScale(10)
-
-        }}>
-
-        {appStyle?.homePageLayout == 6 ?
-          <View>
-            <Text
-              style={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginHorizontal: moderateScale(10),
-                marginTop: moderateScaleVertical(20),
-              }}>
-              {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
-            </Text>
-          </View> : null
-        }
-        {!!showTitle ? <TitleViewHome
-          item={item}
-          isDarkMode={isDarkMode}
-          appStyle={appStyle}
-        /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-        <FlatList
-          horizontal={categoryFlatViewStyle().horizontal}
-          data={item?.data}
-          scrollEnabled={categoryFlatViewStyle().scrollEnabled}
-          keyExtractor={(item, index) => String(item?.id + `${index}`)}
-          showsHorizontalScrollIndicator={false}
-          numColumns={categoryFlatViewStyle().numColumns}
-          renderItem={_renderCategories}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScale(8) }} />
-          )}
-        />
-      </View>
-    ) : (
-      <React.Fragment />
-    );
-  }, [appMainData, isDarkMode])
-
-  const listEmptyComponent = useCallback(() => {
-    return (
-      <View>
-        <FastImage
-          source={imagePath.noDataFound}
-          resizeMode="contain"
-          style={{
-            width: moderateScale(140),
-            height: moderateScale(140),
-            alignSelf: 'center',
-            marginTop: moderateScaleVertical(30),
-          }}
-        />
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: textScale(11),
-            fontFamily: fontFamily.regular,
-            marginHorizontal: moderateScale(10),
-            lineHeight: moderateScale(20),
-            marginTop: moderateScale(5),
-            color: isDarkMode ? colors.white : colors.black
-          }}>
-          {businessType == 'home_service'
-            ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
-            : `${strings.SORRY_MSG}`}
-        </Text>
-      </View>
-    )
-  }, [isDarkMode])
-
-  const VendorsView = useCallback(({ item }) => {
-    console.log(item,"itemitemitemitemitemitemitem1233333");
-    return !isEmpty(item?.data) ? (
-      <View
-        key={String(item?.id || '')}
-        style={{
-          marginBottom: moderateScaleVertical(0)
-        }}>
-        <View style={{ marginTop: moderateScaleVertical(8) }} />
-        {vendorHeader(item)}
-
-        <View style={{ marginHorizontal: moderateScale(16) }}>
-          <FlatList
-            alwaysBounceVertical={true}
-            data={item?.data || []}
-            keyExtractor={(item, index) => String(item?.id + `${index}`)}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderVendors}
-            ListEmptyComponent={listEmptyComponent}
-            ItemSeparatorComponent={() => (
-              <View style={{ height: moderateScale(10) }} />
-            )}
-          />
-        </View>
-      </View>
-    ) : (
-      <React.Fragment />
-    );
-  }, [appMainData, isDarkMode])
-
-
-  const _renderSpotlightDeals = useCallback(({ item }) => {
-    return (
-      <ProductsComp3V2
-        item={item}
-        onPress={() => navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })}
-        numberOfLines={1}
-      />
-    )
-  }, [isDarkMode])
-
-  const SpotlightDealsView = useCallback(({ item }) => {
-    console.log("SpotlightDealsView", item)
-    return !isEmpty(item?.data) ? (
-      <View
-        key={String(item?.id || '')}
-        style={{
-          marginTop: moderateScaleVertical(8),
-          backgroundColor: 'white',
-          paddingVertical: moderateScaleVertical(8)
-
-        }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <TitleViewHome
-            item={item}
-            isDarkMode={isDarkMode}
-            appStyle={appStyle}
-          />
-          {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
-            <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
-          </TouchableOpacity>}
-        </View>
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          data={item?.data || []}
-          renderItem={_renderSpotlightDeals}
-          keyExtractor={(item, index) => String(item?.id + `${index}`)}
-          ItemSeparatorComponent={() => (
-            <View style={{ marginRight: moderateScale(12) }} />
-          )}
-          ListHeaderComponent={() => (
-            <View style={{ marginLeft: moderateScale(16) }} />
-          )}
-          ListFooterComponent={() => (
-            <View style={{ marginRight: moderateScale(16) }} />
-          )}
-        />
-      </View>
-    ) : (
-      <React.Fragment />
-    );
-  }, [themeColors, fontFamily, appMainData, isDarkMode])
-
-
-  const keyExtractorUnique = useCallback((item, index) => !!item?.id ? String(item.id) : String(index))
-
-
-  //remove unncessary data
-  const optamizeValue = useMemo(() => {
-    let filterData = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
-      if (val?.slug == 'banner' && !isEmpty(val?.banner_image)) {
-        return val
-      }
-      if (!!val?.data && !isEmpty(val?.data)) {
-        return val
-      }
-    })
-    return filterData
-  }, [appMainData?.homePageLabels])
-
-  const dataProvider = useMemo(() => optamizeValue || [], [appMainData?.homePageLabels || []]);
-
-  if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
-
-
-
-  const ListHeaderComponent = () => {
-    let myBanner = appMainData?.mobile_banners || appData?.mobile_banners || []
-    return (
-      <View style={{ marginTop: moderateScaleVertical(8) }}>
-        <Carousel
-          autoplay={true}
-          loop={true}
-          autoplayInterval={2000}
-          data={myBanner}
-          renderItem={renderBanners}
-          sliderWidth={width}
-          itemWidth={width - moderateScale(32)}
-        />
-      </View>
-    )
+  const onPressMode = (item) => {
+    if (!!cartItemCount?.data && cartItemCount?.data?.item_count) {
+      clearCartItem(item)
+    } else {
+      selcetedToggle(item.type)
+    }
   }
 
 
 
-  const onSelectedFilter = (selectedFilter) => {
-    updateState({ showMenu: false, currSelectedFilter: selectedFilter });
-    onVendorFilterSeletion(selectedFilter);
-  };
 
-  const homeAllFilters = () => {
-    let homeFilter = [
-      { id: 1, type: strings.OPEN },
-      { id: 2, type: strings.CLOSE },
-      { id: 3, type: strings.BESTSELLER },
-    ];
 
-    return homeFilter;
-  };
+const clearCartItem = (item) => {
+  Alert.alert('', strings.REMOVE_CART_MSG, [
+    {
+      text: strings.CANCEL,
+      onPress: () => console.log('Cancel Pressed'),
+    },
+    { text: strings.CLEAR_CART2, onPress: () => clearCart(item) },
+  ]);
+};
 
+const clearCart = (item) => {
+  actions
+    .clearCart(
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: deviceInfoModule.getUniqueId(),
+      },
+    )
+    .then((res) => {
+      showSuccess(res?.message);
+      actions.cartItemQty(res);
+      selcetedToggle(item.type)
+    })
+    .catch(errorMethod);
+};
+
+const errorMethod = (error) => {
+  showError(error?.message || error?.error);
+};
+
+
+const renderMode = useCallback(({ item, index }) => {
+  return (
+    <VendorMode
+      item={item}
+      onPressMode={onPressMode}
+    />
+  )
+}, [cartItemCount, appData?.profile?.preferences?.vendorMode || []])
+
+const CategoriesView = useCallback(({ item, showTitle }) => {
+  return !isEmpty(item?.data) ? (
+    <View
+      key={String(item?.id || '')}
+      style={{
+        marginBottom: moderateScaleVertical(0),
+        marginHorizontal: moderateScale(10)
+
+      }}>
+
+      {appStyle?.homePageLayout == 6 && showVendorCategory ? <View>
+        <View>
+          <Text
+            style={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              marginHorizontal: moderateScale(10),
+              marginTop: moderateScaleVertical(20),
+              marginBottom: moderateScaleVertical(8)
+            }}>
+            {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
+          </Text>
+
+          <FlatList
+            data={appData?.profile?.preferences?.vendorMode || []}
+            renderItem={renderMode}
+            numColumns={4}
+            ItemSeparatorComponent={() => <View style={{ height: moderateScale(10) }} />}
+            keyExtractor={(item, index) => String(item?.type || index)}
+          />
+        </View>
+      </View> :
+        <View>
+          {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+          <FlatList
+            horizontal={categoryFlatViewStyle().horizontal}
+            data={item?.data}
+            scrollEnabled={categoryFlatViewStyle().scrollEnabled}
+            keyExtractor={(item, index) => String(item?.id + `${index}`)}
+            showsHorizontalScrollIndicator={false}
+            numColumns={categoryFlatViewStyle().numColumns}
+            renderItem={_renderCategories}
+            ItemSeparatorComponent={() => (
+              <View style={{ height: moderateScale(8) }} />
+            )}
+          />
+        </View>
+      }
+    </View>
+  ) : (
+    <React.Fragment />
+  );
+}, [appMainData, isDarkMode, cartItemCount])
+
+const listEmptyComponent = useCallback(() => {
+  return (
+    <View>
+      <FastImage
+        source={imagePath.noDataFound}
+        resizeMode="contain"
+        style={{
+          width: moderateScale(140),
+          height: moderateScale(140),
+          alignSelf: 'center',
+          marginTop: moderateScaleVertical(30),
+        }}
+      />
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: textScale(11),
+          fontFamily: fontFamily.regular,
+          marginHorizontal: moderateScale(10),
+          lineHeight: moderateScale(20),
+          marginTop: moderateScale(5),
+          color: isDarkMode ? colors.white : colors.black
+        }}>
+        {businessType == 'home_service'
+          ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+          : `${strings.SORRY_MSG}`}
+      </Text>
+    </View>
+  )
+}, [isDarkMode])
+
+const VendorsView = useCallback(({ item }) => {
 
   return (
-    <WrapperContainer
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
-    >
-      {showAllTempCartOrders()}
+    <View
+      key={String(item?.id || '')}
+      style={{
+        marginBottom: moderateScaleVertical(0)
+      }}>
+      <View style={{ marginTop: moderateScaleVertical(8) }} />
 
-      {!!dataProvider && !isEmpty(dataProvider) ?
+      {vendorHeader(item)}
+
+      <View style={{ marginHorizontal: moderateScale(16) }}>
         <FlatList
-          data={dataProvider}
-          extraData={dataProvider}
-          renderItem={renderHomePageItems}
-          keyExtractor={keyExtractorUnique}
-          onScrollToIndexFailed={() => console.log("df")}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={handleRefresh}
-              tintColor={themeColors.primary_color}
-            />
-          }
-          ListHeaderComponent={ListHeaderComponent}
-          ListFooterComponent={() => <View
-            style={{
-              height:
-                moderateScale(80)
-            }}
-          />
-          }
-        /> : null}
+          alwaysBounceVertical={true}
+          data={item?.data || []}
+          keyExtractor={(item, index) => String(item?.id + `${index}`)}
+          showsHorizontalScrollIndicator={false}
+          renderItem={_renderVendors}
+          ListEmptyComponent={listEmptyComponent}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: moderateScale(10) }} />
+          )}
+        />
+      </View>
+    </View>
+  )
+}, [appMainData, isDarkMode])
 
-      {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isConfirmAgeModal}
-          >
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,0.5)',
-              }}>
-              <View style={styles.innerAgeModaleView}>
-                <TouchableOpacity
-                  style={{
-                    alignSelf: 'center',
-                    marginBottom: moderateScale(10),
-                  }}>
-                  <Image
-                    style={{
-                      height: moderateScaleVertical(25),
-                      width: moderateScale(25),
-                    }}
-                    source={imagePath.icCross18}
-                  />
-                </TouchableOpacity>
-                <Text
-                  style={[
-                    styles.ageModalText,
-                    { color: isDarkMode ? colors.white : colors.black },
-                  ]}>
-                  {strings.AGE_VERIFICATION}
-                </Text>
-                {/* <View style={styles.horizontalLine} /> */}
-                <View style={styles.horizontalLine}>
-                  <DashedLine
-                    dashLength={5}
-                    dashThickness={1}
-                    dashGap={2}
-                    dashColor={colors.black}
-                    style={{ marginTop: moderateScale(7) }}
-                  />
-                </View>
-                <Text style={styles.ageConfirmationText}>
-                  {strings.YOU_MUST_BE_18}
-                </Text>
-                <View
-                  style={{
-                    marginVertical: moderateScaleVertical(10),
-                    width: '70%',
-                  }}>
-                  <GradientButton
-                    colorsArray={[
-                      themeColors.primary_color,
-                      themeColors.primary_color,
-                    ]}
-                    textStyle={{
-                      fontFamily: fontFamily.medium,
-                      color: colors.white,
-                    }}
-                    onPress={() => {
-                      onConfirmAge(false);
-                    }}
-                    borderRadius={moderateScale(5)}
-                    btnText={strings.YES_I_AM_ABOVE_18}
-                    containerStyle={{
-                      width: '100%',
-                    }}
-                  />
-                </View>
 
-                <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle}>
-                  {strings.TAKE_ME_OUT}
-                </Text>
-              </View>
-            </View>
-          </Modal>
-        </View>
-      )}
-      {!!userData?.auth_token &&
-        !!appData?.profile?.preferences?.show_subscription_plan_popup && (
-          <SubscriptionModal
-            isVisible={isSubscription}
-            onClose={onClose}
-            onPressSubscribe={onPressSubscribe}
-          />
+const _renderSpotlightDeals = useCallback(({ item }) => {
+  return (
+    <ProductsComp3V2
+      item={item}
+      onPress={() => navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })}
+      numberOfLines={1}
+    />
+  )
+}, [isDarkMode])
+
+const SpotlightDealsView = useCallback(({ item }) => {
+  console.log("SpotlightDealsView", item)
+  return !isEmpty(item?.data) ? (
+    <View
+      key={String(item?.id || '')}
+      style={{
+        marginTop: moderateScaleVertical(8),
+        backgroundColor: 'white',
+        paddingVertical: moderateScaleVertical(8)
+
+      }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <TitleViewHome
+          item={item}
+          isDarkMode={isDarkMode}
+          appStyle={appStyle}
+        />
+        {item?.data?.length >= 9 && <TouchableOpacity onPress={() => showAllSpotDealAndSelectedProducts(item)}>
+          <Text style={{ marginHorizontal: moderateScale(18), color: themeColors?.primary_color, fontFamily: fontFamily?.bold }}>{strings.VIEW_ALL}</Text>
+        </TouchableOpacity>}
+      </View>
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        data={item?.data || []}
+        renderItem={_renderSpotlightDeals}
+        keyExtractor={(item, index) => String(item?.id + `${index}`)}
+        ItemSeparatorComponent={() => (
+          <View style={{ marginRight: moderateScale(12) }} />
         )}
-    </WrapperContainer>
+        ListHeaderComponent={() => (
+          <View style={{ marginLeft: moderateScale(16) }} />
+        )}
+        ListFooterComponent={() => (
+          <View style={{ marginRight: moderateScale(16) }} />
+        )}
+      />
+    </View>
+  ) : (
+    <React.Fragment />
   );
+}, [themeColors, fontFamily, appMainData, isDarkMode])
+
+
+const keyExtractorUnique = useCallback((item, index) => !!item?.id ? String(item.id) : String(index))
+
+
+//remove unncessary data
+const optamizeValue = useMemo(() => {
+  let filterData = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
+    if (val?.slug == 'banner' && !isEmpty(val?.banner_image)) {
+      return val
+    }
+    return val
+  })
+  return filterData
+}, [appMainData?.homePageLabels])
+
+
+const dataProvider = useMemo(() => optamizeValue, [appMainData?.homePageLabels])
+
+if (isLoading) { return (<DashBoardFiveV2ApiLoader />) } //home loader
+
+
+
+const ListHeaderComponent = () => {
+  let myBanner = appMainData?.mobile_banners || appData?.mobile_banners || []
+  return (
+    <View style={{ marginTop: moderateScaleVertical(8) }}>
+      <Carousel
+        autoplay={true}
+        loop={true}
+        autoplayInterval={2000}
+        data={myBanner}
+        renderItem={renderBanners}
+        sliderWidth={width}
+        itemWidth={width - moderateScale(32)}
+      />
+    </View>
+  )
+}
+
+
+
+
+console.log("dataProvider", dataProvider)
+return (
+  <WrapperContainer
+    bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
+  >
+    {showAllTempCartOrders()}
+
+    {!!dataProvider && !isEmpty(dataProvider) ?
+      <FlatList
+        data={dataProvider}
+        extraData={dataProvider}
+        renderItem={renderHomePageItems}
+        keyExtractor={keyExtractorUnique}
+        onScrollToIndexFailed={() => console.log("df")}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }
+        // ListHeaderComponent={ListHeaderComponent}
+        ListFooterComponent={() => <View
+          style={{
+            height:
+              moderateScale(80)
+          }}
+        />
+        }
+      /> : null}
+
+    {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isConfirmAgeModal}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }}>
+            <View style={styles.innerAgeModaleView}>
+              <TouchableOpacity
+                style={{
+                  alignSelf: 'center',
+                  marginBottom: moderateScale(10),
+                }}>
+                <Image
+                  style={{
+                    height: moderateScaleVertical(25),
+                    width: moderateScale(25),
+                  }}
+                  source={imagePath.icCross18}
+                />
+              </TouchableOpacity>
+              <Text
+                style={[
+                  styles.ageModalText,
+                  { color: isDarkMode ? colors.white : colors.black },
+                ]}>
+                {strings.AGE_VERIFICATION}
+              </Text>
+              {/* <View style={styles.horizontalLine} /> */}
+              <View style={styles.horizontalLine}>
+                <DashedLine
+                  dashLength={5}
+                  dashThickness={1}
+                  dashGap={2}
+                  dashColor={colors.black}
+                  style={{ marginTop: moderateScale(7) }}
+                />
+              </View>
+              <Text style={styles.ageConfirmationText}>
+                {strings.YOU_MUST_BE_18}
+              </Text>
+              <View
+                style={{
+                  marginVertical: moderateScaleVertical(10),
+                  width: '70%',
+                }}>
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    fontFamily: fontFamily.medium,
+                    color: colors.white,
+                  }}
+                  onPress={() => {
+                    onConfirmAge(false);
+                  }}
+                  borderRadius={moderateScale(5)}
+                  btnText={strings.YES_I_AM_ABOVE_18}
+                  containerStyle={{
+                    width: '100%',
+                  }}
+                />
+              </View>
+
+              <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle}>
+                {strings.TAKE_ME_OUT}
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    )}
+    {!!userData?.auth_token &&
+      !!appData?.profile?.preferences?.show_subscription_plan_popup && (
+        <SubscriptionModal
+          isVisible={isSubscription}
+          onClose={onClose}
+          onPressSubscribe={onPressSubscribe}
+        />
+      )}
+  </WrapperContainer>
+);
 }
 
 //Title home
@@ -1130,7 +1210,7 @@ const TitleViewHome = ({
 
 //product theme view
 const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
-  console.log(item,"itemitemitemitemvvv");
+
   return !isEmpty(item?.data) ? (
     <View
       key={String(item?.id || '')}
@@ -1141,7 +1221,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
         item={item}
         isDarkMode={isDarkMode}
         appStyle={appStyle}
-        textStyle={{ fontFamily: fontFamily?.medium}}
+        textStyle={{ fontFamily: fontFamily?.medium }}
       />
       <FlatList
         showsHorizontalScrollIndicator={false}
@@ -1234,7 +1314,6 @@ const BestSellersView = ({
   appStyle = {},
   isDarkMode = false
 }) => {
-  console.log("itemitemitem", item)
   return !isEmpty(item?.data) ? (
     <View
       key={String(item?.id || '')}
@@ -1375,7 +1454,7 @@ const BrandsView = ({
         item={item}
         isDarkMode={isDarkMode}
         appStyle={appStyle}
-        // textStyle={{ fontFamily: fontFamily?.medium}}
+      // textStyle={{ fontFamily: fontFamily?.medium}}
       />
       <FlatList
         showsHorizontalScrollIndicator={false}

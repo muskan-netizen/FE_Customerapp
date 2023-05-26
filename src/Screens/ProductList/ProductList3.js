@@ -141,6 +141,8 @@ export default function Products({ route, navigation }) {
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
 
+  
+
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -1325,7 +1327,7 @@ console.log(productDetailNew,"productDetailNewproductDetailNewproductDetailNew")
               horizontal
               style={{
                 // marginHorizontal: moderateScale(0),
-                marginTop: moderateScaleVertical(5),
+                marginVertical: moderateScaleVertical(8),
               }}>
               {/* <View><Image source={imagePath.}/></View> */}
               {categoryInfo.childs.map((item, inx) => {

@@ -367,7 +367,7 @@ export default ({ themeColors, fontFamily }) => {
       color: themeColors.primary_color,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      marginTop: moderateScaleVertical(16),
+      // marginTop: moderateScaleVertical(16),
     },
     viewAllVeiw: {
       flexDirection: 'row',
@@ -522,6 +522,19 @@ export default ({ themeColors, fontFamily }) => {
       borderWidth: 1,
       justifyContent: "center",
       alignItems: "center"
+    },
+    bannerDotStyle:{
+      height: moderateScale(8), 
+      width: moderateScale(8), 
+      borderRadius: moderateScale(4), 
+      marginRight:moderateScale(4),
+
+    },
+    dotView: {
+      flexDirection:"row",
+      alignItems:'center',
+      marginTop:moderateScaleVertical(8),
+      alignSelf:'center'
     }
   });
 

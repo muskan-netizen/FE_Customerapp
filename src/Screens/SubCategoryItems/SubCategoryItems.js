@@ -1155,7 +1155,6 @@ const BestSellersView = ({
   appStyle = {},
   isDarkMode = false
 }) => {
-  console.log("itemitemitem", item)
   return !isEmpty(item?.data) ? (
     <View
       key={String(item?.id || '')}

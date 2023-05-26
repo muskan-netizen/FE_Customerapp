@@ -88,7 +88,7 @@ const CustomDrawerContent = (props) => {
     navigation.navigate(navigationStrings.WEBLINKS, { id: id, isComeFromDrawer: true })
   }
 
-  const onPressProfile = () =>{
+  const onPressProfile = () => {
     if (!!userData?.auth_token) {
 
       navigation.navigate(navigationStrings.MY_PROFILE, { isComeFromDrawer: true })
@@ -140,7 +140,7 @@ const CustomDrawerContent = (props) => {
             </Text>
           </TouchableOpacity>
 
-          
+
 
           {/* <DrawerItem
             label={strings.CATEGORY}
@@ -161,6 +161,30 @@ const CustomDrawerContent = (props) => {
               ) : colors.white
             }}
           /> */}
+
+          <DrawerItem
+            label={strings.HOME}
+            onPress={() => onPressItem(appStyle?.homePageLayout === 4
+              ? navigationStrings.TAXIHOMESCREEN
+              : navigationStrings.HOME, 1)} //tabIndex
+
+            icon={({ focused }) => {
+              return (
+                <Image style={{
+                  ...imageStyle,
+                  tintColor: currentTab?.current == 1 ? themeColors.primary_color : colors.black
+                }} source={imagePath.icEcomHome} />
+              )
+            }}
+            labelStyle={{ color: currentTab?.current == 1 ? themeColors?.primary_color : colors.black }}
+            style={{
+              backgroundColor: currentTab?.current == 1 ? getColorCodeWithOpactiyNumber(
+                themeColors.primary_color.substr(1),
+                10,
+              ) : colors.white
+            }}
+          />
+
           <DrawerItem
             label={strings.WISHLIST}
             onPress={() => onPressWishList(3)} //tabIndex
@@ -226,7 +250,7 @@ const CustomDrawerContent = (props) => {
         </View>
 
 
-        <View style={{ flex: 0.2, justifyContent: 'flex-end',paddingBottom:moderateScaleVertical(16) }}>
+        <View style={{ flex: 0.2, justifyContent: 'flex-end', paddingBottom: moderateScaleVertical(16) }}>
           <ButtonComponent
             btnText={!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
             containerStyle={{

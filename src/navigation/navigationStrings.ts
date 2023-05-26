@@ -5,6 +5,7 @@ export default {
   SIGN_UP: 'signUp',
   HOME: 'home',
   HOMESTACK: 'homestack',
+  HOME_TEMP_3: 'homeTemplate3',
   OFFERS: 'offers',
   BRANDS: 'brands',
   CATEGORY: 'Category',

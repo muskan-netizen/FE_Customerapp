@@ -674,7 +674,7 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-          {console.log(appMainData, 'appMainDataappMainData')}
+
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
             !!appMainData?.is_admin ? (
