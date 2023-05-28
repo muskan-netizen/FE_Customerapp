@@ -3146,6 +3146,9 @@ export default function ProductDetail({ route, navigation }) {
             )}
           />
         </View> : null}
+
+
+        {!!productDetailData && !!productDetailData?.reviews ? <View>
         <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
@@ -3181,6 +3184,7 @@ export default function ProductDetail({ route, navigation }) {
             <View style={{ marginLeft: moderateScale(8) }} />
           )}
         />
+        </View>:null}
 
         <View style={{ marginBottom: moderateScale(40) }} />
       </KeyboardAwareScrollView>
