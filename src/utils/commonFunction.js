@@ -69,6 +69,9 @@ export function getImageUrl(url1, url2, dimentions) {
   return `${url1}${dimentions}${url2}`;
 }
 
+
+
+
 export function getImageUrlNew({
   url = '',
   image_const_arr = '',
@@ -76,7 +79,6 @@ export function getImageUrlNew({
   height = "260",
   width = "260",
 }) {
-  console.lo
   const values = image_const_arr[type];
   let return_url = `${values}${height}/${width}${image_const_arr['proxy_url']}/${image_const_arr['s3_url']}${url}@webp`;
   return return_url;

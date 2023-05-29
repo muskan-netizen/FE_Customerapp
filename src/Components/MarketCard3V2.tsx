@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Animated,
   Image,
@@ -34,17 +34,44 @@ import {
 } from '../utils/helperFunctions';
 import { getImageUrlNew } from '../utils/commonFunction';
 
-const MarketCard3 = ({
-  data = {},
-  onPress = () => { },
-  extraStyles = {},
-  fastImageStyle = {},
-  isMaxSaftey = true,
-}) => {
-  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
-    (state) => state?.initBoot,
-  );
-  const vendorDistance = typeof(data?.lineOfSightDistance) == 'string' ? data?.lineOfSightDistance.split(" ",2) : data.lineOfSightDistance.toFixed(0)
+
+interface lineOfSightDistanceInterface {
+  lineOfSightDistance?: string | number,
+  is_vendor_closed?: boolean,
+  timeofLineOfSightDistance?: string | number,
+  closed_store_order_scheduled?: number,
+  delaySlot?: string,
+  product_avg_average_rating?: number,
+  categoriesList?: string,
+  path?: string | object | null,
+  logo?: string | object | null,
+  show_slot?: boolean | number,
+  name?: string
+}
+
+
+interface CompProps {
+  data: lineOfSightDistanceInterface,
+  onPress: () => {},
+  extraStyles?: {},
+  fastImageStyle?: {},
+  isMaxSaftey?: true,
+}
+
+
+const MarketCard3: FC<CompProps> = ({
+  data,
+  onPress,
+  extraStyles,
+  fastImageStyle,
+  isMaxSaftey,
+}: CompProps) => {
+  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector((state:any) => state?.initBoot || {});
+
+  let vendorDistance: any = 0
+  if (!!data?.lineOfSightDistance) {
+    vendorDistance = typeof (data?.lineOfSightDistance) == 'string' ? data?.lineOfSightDistance.split(" ", 2) : data.lineOfSightDistance.toFixed(0)
+  }
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -53,14 +80,13 @@ const MarketCard3 = ({
   const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
-  const appMainData = useSelector((state) => state?.home?.appMainData || {});
-  const { additional_preferences, digit_after_decimal } =
-    appData?.profile?.preferences || {};
+  const appMainData = useSelector((state:any) => state?.home?.appMainData || {});
+
   let imageUrl = getImageUrlNew({
     url: data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
     type: 'image_fill',
-    height: (height/2).toFixed(0),
+    height: (height / 2).toFixed(0),
     width: width.toFixed(0)
   })
 
@@ -128,8 +154,8 @@ const MarketCard3 = ({
                       style={{
                         ...styles.distanceTimeStyle,
                       }}>
-                        {vendorDistance} km
-                  
+                      {vendorDistance} km
+
                     </Text>
                   </View>
 
@@ -159,21 +185,7 @@ const MarketCard3 = ({
                         resizeMode="contain"
                         source={imagePath.icTime2}
                       />
-
                       <Text numberOfLines={1} style={styles.distanceTimeStyle}>{data?.timeofLineOfSightDistance}</Text>
-                      {/* {data?.timeofLineOfSightDistance / 60 > 1 &&
-                        appIds.hokitch == getBundleId() ? (
-                        <Text
-                          numberOfLines={1}
-                          style={{ marginLeft: moderateScale(10) }}>
-                          ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
-                        </Text>
-                      ) : (
-                        <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                          {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                          {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                        </Text>
-                      )} */}
                     </View>
                   )}
                 </View>
@@ -183,8 +195,6 @@ const MarketCard3 = ({
       </View>
     );
   };
-
-
 
   return (
     <TouchableOpacity
@@ -375,7 +385,7 @@ const MarketCard3 = ({
   );
 };
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }:any) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
