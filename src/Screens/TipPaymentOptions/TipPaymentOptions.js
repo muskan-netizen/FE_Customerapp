@@ -55,6 +55,7 @@ import { getBundleId } from 'react-native-device-info';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import useInterval from '../../utils/useInterval';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -62,7 +63,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   const [date, setDate] = useState()
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
-  const [btnLoader,setBtnLoader] = useState(false)
+  const [btnLoader, setBtnLoader] = useState(false)
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,
@@ -79,7 +80,7 @@ export default function TipPaymentOptions({ navigation, route }) {
   const [accept, isAccept] = useState(false);
   const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
   const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
-  const[responseTimer,setResponseTimer] = useState(420)
+  const [responseTimer, setResponseTimer] = useState(420)
 
   const [state, setState] = useState({
     isLoading: false,
@@ -143,12 +144,12 @@ export default function TipPaymentOptions({ navigation, route }) {
         navigation.goBack()
       })
   }
-  useEffect(()=>{
-    if(!isVisibleMtnGateway && mtnGatewayResponse) {
+  useEffect(() => {
+    if (!isVisibleMtnGateway && mtnGatewayResponse) {
       showError('Request TimeOut')
       navigation.goBack()
     }
-  },[isVisibleMtnGateway])
+  }, [isVisibleMtnGateway])
 
   useInterval(
     () => {
@@ -550,7 +551,7 @@ export default function TipPaymentOptions({ navigation, route }) {
 
     )
   }
-  
+
 
   //Change Payment method/ Navigate to payment screen
   const selectPaymentOption = async () => {
@@ -605,21 +606,21 @@ export default function TipPaymentOptions({ navigation, route }) {
             selectedPaymentMethod?.off_site == 1
           ) {
             _paymentWithPlugnPayMethods()
-          } 
+          }
           else
-          if (
-            (selectedPaymentMethod?.id == 48) &&
-            selectedPaymentMethod?.off_site == 1
-          ) {
-            mtnGateway()
-          }
-          else {
-            console.log('imhere');
-            setTimeout(() => {
-              updateState({ isLoading: false });
-              _webPayment(selectedPaymentMethod);
-            }, 1000);
-          }
+            if (
+              (selectedPaymentMethod?.id == 48) &&
+              selectedPaymentMethod?.off_site == 1
+            ) {
+              mtnGateway()
+            }
+            else {
+              console.log('imhere');
+              setTimeout(() => {
+                updateState({ isLoading: false });
+                _webPayment(selectedPaymentMethod);
+              }, 1000);
+            }
       }
     } else {
       showError(strings.SELECTPAYEMNTMETHOD);
@@ -636,13 +637,13 @@ export default function TipPaymentOptions({ navigation, route }) {
   };
 
   const mtnGateway = () => {
-   setBtnLoader(true)
+    setBtnLoader(true)
     let dataForGatweay = {}
 
     dataForGatweay['amount'] = data?.selectedTipAmount
     dataForGatweay['currency'] = currencies?.primary_currency?.iso_code
-    dataForGatweay['order_no'] =data?.order_number
-    dataForGatweay['subscription_id'] =''
+    dataForGatweay['order_no'] = data?.order_number
+    dataForGatweay['subscription_id'] = ''
     dataForGatweay['from'] = 'tip'
     actions.mtnGateway(dataForGatweay, {
       code: appData?.profile?.code,
@@ -654,11 +655,11 @@ export default function TipPaymentOptions({ navigation, route }) {
         setBtnLoader(false)
         if (res?.status == 'Success') {
           // updateState({ isLoading: false })
-            setIsVisibleMtnGateway(true)
-            setMtnGatewayResponse(res)
-            paymentReponse(res)
-            // navigation.goBack()
-          
+          setIsVisibleMtnGateway(true)
+          setMtnGatewayResponse(res)
+          paymentReponse(res)
+          // navigation.goBack()
+
         }
       })
       .catch((err) => {
@@ -758,8 +759,8 @@ export default function TipPaymentOptions({ navigation, route }) {
                 ? [styles.caseOnDeliveryText, { color: MyDarkTheme.colors.text }]
                 : styles.caseOnDeliveryText
             }>
-              {appIds?.qdelo === getBundleId() ? item?.id == 10 ? `Online / ${(item?.title_lng ? item?.title_lng : item?.title)}` : (item?.title_lng ? item?.title_lng : item?.title) : item?.title_lng ? item?.title_lng : item?.title}
-          
+            {appIds?.qdelo === getBundleId() ? item?.id == 10 ? `Online / ${(item?.title_lng ? item?.title_lng : item?.title)}` : (item?.title_lng ? item?.title_lng : item?.title) : item?.title_lng ? item?.title_lng : item?.title}
+
           </Text>
         </TouchableOpacity>
         {!!(
@@ -997,7 +998,7 @@ export default function TipPaymentOptions({ navigation, route }) {
         if (
           res &&
           (res?.status == 'Success' || res?.status == '200') &&
-          (res?.data || res?.payment_link ||res?.redirect_url)
+          (res?.data || res?.payment_link || res?.redirect_url)
         ) {
           console.log('generate payment url', res.data);
           let sendingData = {
@@ -1020,8 +1021,8 @@ export default function TipPaymentOptions({ navigation, route }) {
           // order_number: data?.order_number,
           // });
         }
-        else if(res?.status == '201'){
-          showError(res?.message ||'')
+        else if (res?.status == '201') {
+          showError(res?.message || '')
         }
       })
       .catch(errorMethod);
@@ -1108,7 +1109,7 @@ export default function TipPaymentOptions({ navigation, route }) {
             height: height / 8,
             justifyContent: 'flex-end',
           }}>
-         {!!appData?.profile?.preferences?.flutterwave_public_key && <PayWithFlutterwave
+          {!!appData?.profile?.preferences?.flutterwave_public_key && <PayWithFlutterwave
             onAbort={() =>
               updateState({ isModalVisibleForPayFlutterWave: false })
             }
@@ -1152,9 +1153,12 @@ export default function TipPaymentOptions({ navigation, route }) {
             >
               {({ remainingTime }) => {
 
-                remainingTime == 1 && responseTimer !=null && setIsVisibleMtnGateway(false)
-                return (
-                  <Text>{remainingTime}</Text>
+                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                return (<>
+                  <Text>{format}</Text>
+                </>
                 )
 
               }}

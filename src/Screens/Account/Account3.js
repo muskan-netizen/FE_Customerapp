@@ -462,7 +462,7 @@ export default function Account3({ navigation }) {
                 }}
               />
             ))}
-          {!!userData?.auth_token && getBundleId() != appIds.sxm2go ? (
+          {/* {!!userData?.auth_token && getBundleId() != appIds.sxm2go ? (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -477,7 +477,7 @@ export default function Account3({ navigation }) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          ) : null}
+          ) : null} */}
 
           {/* {DeviceInfo.getBundleId() == appIds.bharatMove ? (
             <View>

@@ -43,6 +43,7 @@ import {
 import { showError } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const AttributeInformation = ({ route, navigation }) => {
   let paramData = route?.params;
@@ -81,10 +82,11 @@ const AttributeInformation = ({ route, navigation }) => {
     selectViaMap: false,
     isVisible: false,
     selectedId: '',
+    isDelivery: false
   })
   const [selectedLocationAtt, setSelectedLocationAtt] = useState({})
 
-  const { updateData, indicator, type, selectViaMap, isVisible } = state;
+  const { updateData, indicator, type, selectViaMap, isVisible, isDelivery } = state;
   const updateState = data => setState(state => ({ ...state, ...data }));
 
 
@@ -135,6 +137,7 @@ const AttributeInformation = ({ route, navigation }) => {
     formData.append('product_name', name);
     formData.append('body_html', description);
     formData.append('price', price);
+    formData.append('delivery', isDelivery ? 1 : 0);
     productImgs.map((item) => {
       formData.append('file[]', item);
     });
@@ -674,6 +677,32 @@ const AttributeInformation = ({ route, navigation }) => {
                   </View>
                 </View>
                 <View
+                  style={{ flexDirection: "row", alignContent: "center", marginVertical: moderateScale(15) }}>
+                  <Text
+                    style={{
+                      // marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      paddingRight: moderateScale(4),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                      ...styles.attributeTitle,
+                    }}>
+                    {strings.DELIVERY}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isDelivery}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({ isDelivery: !isDelivery })}
+                  />
+                </View>
+                <View
                   style={{
                     marginTop: moderateScaleVertical(16),
                   }}>
@@ -704,10 +733,11 @@ const AttributeInformation = ({ route, navigation }) => {
                 <Image source={imagePath.icEmptyCart} />
               </View>
             )}
+
           </KeyboardAwareScrollView>
         )}
-      </View>
 
+      </View>
       <GallaryCameraImgPicker
         isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}

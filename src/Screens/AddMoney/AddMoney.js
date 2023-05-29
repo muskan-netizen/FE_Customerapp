@@ -59,6 +59,7 @@ import { getBundleId } from 'react-native-device-info';
 import axios from 'axios';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import useInterval from '../../utils/useInterval';
+import moment from 'moment';
 
 export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1440,14 +1441,17 @@ export default function AddMoney({ navigation }) {
               isPlaying
               duration={Number(responseTimer)}
               colors={[themeColors?.primary_color]}
-              size={40}
+              size={60}
               strokeWidth={5}
             >
               {({ remainingTime }) => {
 
                 remainingTime == 1 && responseTimer !=null && setIsVisibleMtnGateway(false)
-                return (
-                  <Text>{remainingTime}</Text>
+               var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format =  moment.duration(seconds,'seconds').minutes() + ':' + moment.duration(seconds,'seconds').seconds();
+                return (<>
+                <Text>{format}</Text>
+                </>
                 )
 
               }}

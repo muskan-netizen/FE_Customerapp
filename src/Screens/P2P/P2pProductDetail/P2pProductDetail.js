@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ScrollView,
@@ -33,6 +34,7 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
+  showSuccess,
 } from '../../../utils/helperFunctions';
 import { dialCall } from '../../../utils/openNativeApp';
 import ReactNativeModal from 'react-native-modal';
@@ -43,6 +45,8 @@ import {
   BottomSheetView,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import DeviceInfo from 'react-native-device-info';
+import strings from '../../../constants/lang';
 
 const P2pProductDetail = ({ navigation, route }) => {
   const carouselRef = useRef(null);
@@ -59,7 +63,7 @@ const P2pProductDetail = ({ navigation, route }) => {
     themeColors,
   } = useSelector((state) => state?.initBoot);
   const { userData } = useSelector((state) => state?.auth || {});
-
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
 
@@ -74,7 +78,8 @@ const P2pProductDetail = ({ navigation, route }) => {
   const [productAttributeInfo, setProductAttributeInfo] = useState([]);
   const [isLoadingChat, setLoadingChat] = useState(false);
   const [selectedPanoImg, setSelectedPanoImg] = useState(null);
-
+  const [deliveryType, setDeliveryType] = useState([{ id: 1, title: 'Pickup' }, { id: 2, title: 'Delivery' }])
+  const [deliveryIndex, setDeliveryIndex] = useState(0)
   useEffect(() => {
     getP2pProductDetail();
   }, []);
@@ -266,10 +271,82 @@ const P2pProductDetail = ({ navigation, route }) => {
   };
 
   if (isLoading) {
-    return <WrapperContainer isLoading={isLoading} 
-    bgColor={
-      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-    } />;
+    return <WrapperContainer isLoading={isLoading}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      } />;
+  }
+
+  const clearCart = async (addonSet = [], item, section, inx) => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log(res, 'reeserseerserrser')
+        showSuccess(res?.message)
+        // actions.cartItemQty({});
+        // setIsVisibleModal(false);
+      })
+      .catch((error) => {
+        console.log(error, 'erorrrrrr');
+      });
+  };
+
+  const addToCart = () => {
+    
+    let data = {};
+    data['sku'] = productInfo?.sku;
+    data['quantity'] = productInfo?.minimum_order_count;
+    data['product_variant_id'] = productInfo?.variant[0]?.id;
+    data['type'] = !!deliveryIndex ? 'delivery' : 'pickup';
+    actions
+      .addProductsToCart(data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'res.data');
+        // actions.cartItemQty(res);
+        // actions.reloadData(!reloadData);
+
+        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+
+        // updateState({ isLoadingC: false });
+        // if (!!isProductList) {
+        //   navigation.navigate(navigationStrings.PRODUCT_LIST, {
+        //     data: {
+        //       item: data,
+        //       isLoading: true,
+        //       data: res?.data
+        //     }
+        //   });
+        // } else {
+        navigation.goBack()
+        // }
+      }).catch((error) => {
+        console.log('error---------', error)
+        Alert.alert('', strings.ALREADY_EXIST, [
+          {
+            text: strings.CANCEL,
+            onPress: () => console.log('Cancel Pressed'),
+            // style: 'destructive',
+          },
+          {
+            text: strings.CLEARCART,
+            onPress: () => clearCart(),
+          },
+        ]);
+      }
+      );
   }
 
   return (
@@ -530,6 +607,37 @@ const P2pProductDetail = ({ navigation, route }) => {
               />
             </View>
           )}
+
+          <View style={{ marginHorizontal: moderateScale(25) }}>
+            <View style={{ marginVertical: moderateScaleVertical(20) }}>
+
+              {deliveryType.map((item, index) => {
+                return (
+                  <TouchableOpacity style={{ flexDirection: 'row', alignContent: "center", alignItems: 'center', paddingVertical: moderateScaleVertical(5) }} onPress={() => setDeliveryIndex(index)}>
+                    <Image source={
+                      index == deliveryIndex
+                        ? imagePath.radioActive
+                        : imagePath.radioInActive
+                    } /><Text style={isDarkMode
+                      ? [
+                        {
+                          marginHorizontal: moderateScaleVertical(10),
+                          fontFamily: fontFamily.medium,
+                          fontSize: textScale(14)
+                        },
+                        { color: MyDarkTheme.colors.text },
+                      ]
+                      : {
+                        marginHorizontal: moderateScaleVertical(10),
+                        fontFamily: fontFamily.medium,
+                        fontSize: textScale(14),
+                      }}>{item.title}</Text>
+                  </TouchableOpacity>
+                )
+              })}
+            </View>
+          
+          </View>
         </ScrollView>
       )}
       <BottomSheetModalProvider>

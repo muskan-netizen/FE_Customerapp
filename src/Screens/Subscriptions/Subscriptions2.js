@@ -60,6 +60,7 @@ import { getBundleId } from 'react-native-device-info';
 import useInterval from '../../utils/useInterval';
 import axios from 'axios';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import moment from 'moment';
 
 export default function Subscriptions2({ navigation, route }) {
   //   console.log(route, 'route>>>');
@@ -69,7 +70,7 @@ export default function Subscriptions2({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
   const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
-  const[responseTimer,setResponseTimer] = useState(420)
+  const [responseTimer, setResponseTimer] = useState(420)
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [isReloadPage, setIsReloadPage] = useState(false);
   const [state, setState] = useState({
@@ -204,12 +205,12 @@ export default function Subscriptions2({ navigation, route }) {
         showError(error?.response?.data?.message)
       })
   }
-  useEffect(()=>{
-    if(!isVisibleMtnGateway && mtnGatewayResponse) {
+  useEffect(() => {
+    if (!isVisibleMtnGateway && mtnGatewayResponse) {
       showError('Request TimeOut')
       // navigation.goBack()
     }
-  },[isVisibleMtnGateway])
+  }, [isVisibleMtnGateway])
 
   useInterval(
     () => {
@@ -1076,11 +1077,11 @@ export default function Subscriptions2({ navigation, route }) {
         updateState({ btnLoader: false })
         if (res?.status == 'Success') {
           updateState({ isLoading: false })
-            setIsVisibleMtnGateway(true)
-            setMtnGatewayResponse(res)
-            paymentReponse(res)
-            // navigation.goBack()
-          
+          setIsVisibleMtnGateway(true)
+          setMtnGatewayResponse(res)
+          paymentReponse(res)
+          // navigation.goBack()
+
         }
       })
       .catch((err) => {
@@ -1706,15 +1707,17 @@ export default function Subscriptions2({ navigation, route }) {
       >
         <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
           <Text style={{
-             color: isDarkMode ? 'white' : themeColors?.primary_color, 
-             fontSize: textScale(15), 
-             padding: moderateScale(10) }}>
-              Waiting for response ....
-              </Text>
-          <View style={{ 
-            justifyContent: "center", 
-            alignItems: "center", 
-            padding: moderateScale(25) }}>
+            color: isDarkMode ? 'white' : themeColors?.primary_color,
+            fontSize: textScale(15),
+            padding: moderateScale(10)
+          }}>
+            Waiting for response ....
+          </Text>
+          <View style={{
+            justifyContent: "center",
+            alignItems: "center",
+            padding: moderateScale(25)
+          }}>
 
             <CountdownCircleTimer
               isPlaying
@@ -1725,9 +1728,12 @@ export default function Subscriptions2({ navigation, route }) {
             >
               {({ remainingTime }) => {
 
-                remainingTime == 1 && responseTimer !=null && setIsVisibleMtnGateway(false)
-                return (
-                  <Text>{remainingTime}</Text>
+                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                return (<>
+                  <Text>{format}</Text>
+                </>
                 )
 
               }}

@@ -94,7 +94,7 @@ function ChooseVechile({ navigation, route }) {
     const styles = stylesFun({ fontFamily, themeColors });
     const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
     const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
-    const[responseTimer,setResponseTimer] = useState(420)
+    const [responseTimer, setResponseTimer] = useState(420)
     const [pickuporderdetails, setPickuporderdetails] = useState('')
     const [state, setState] = useState({
         region: {
@@ -261,13 +261,13 @@ function ChooseVechile({ navigation, route }) {
         !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
     }, [updateSeatNO]);
 
-    useEffect(()=>{
-        if(!isVisibleMtnGateway && mtnGatewayResponse) {
-          showError('Request TimeOut')
-        //   navigation.goBack()
-        updateState({   indicatorLoader: false, })
+    useEffect(() => {
+        if (!isVisibleMtnGateway && mtnGatewayResponse) {
+            showError('Request TimeOut')
+            //   navigation.goBack()
+            updateState({ indicatorLoader: false, })
         }
-      },[isVisibleMtnGateway])
+    }, [isVisibleMtnGateway])
 
     const onDateSet = useCallback((date) => {
         let time = moment(date).format("HH:mm ");
@@ -609,8 +609,8 @@ function ChooseVechile({ navigation, route }) {
                 setMtnGatewayResponse('')
                 setIsVisibleMtnGateway(false)
                 showError(error?.response?.data?.message)
-                updateState({   indicatorLoader: false, })
-                
+                updateState({ indicatorLoader: false, })
+
             })
     }
     useInterval(
@@ -687,12 +687,12 @@ function ChooseVechile({ navigation, route }) {
             .then((res) => {
                 console.log(res, 'rsrseereeseresre')
                 if (res?.status == 'Success') {
-                
+
                     setIsVisibleMtnGateway(true)
                     setMtnGatewayResponse(res)
                     setPickuporderdetails(extraData)
                     paymentReponse(res, extraData)
-                   
+
                 }
 
             })
@@ -961,6 +961,7 @@ function ChooseVechile({ navigation, route }) {
     const carModalHeader = () => {
         if (!!showPaymentModal) {
             return (
+
                 <View
                     style={{
                         backgroundColor: isDarkMode
@@ -1022,6 +1023,7 @@ function ChooseVechile({ navigation, route }) {
             );
         }
         return (
+
             <View
                 style={{
                     backgroundColor: isDarkMode
@@ -1030,7 +1032,7 @@ function ChooseVechile({ navigation, route }) {
                     borderRadius: 8,
                     borderBottomLeftRadius: 0,
                     borderBottomRightRadius: 0,
-                    marginTop: moderateScaleVertical(18),
+                    marginTop: moderateScaleVertical(18)
                 }}>
                 <View
                     style={{
@@ -1944,7 +1946,7 @@ function ChooseVechile({ navigation, route }) {
                 isVisible={isVisibleMtnGateway}
 
             >
-                <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15), justifyContent: "center" ,alignContent:"center"}}>
+                <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15), justifyContent: "center", alignContent: "center" }}>
                     <Text style={{ color: isDarkMode ? 'white' : themeColors?.primary_color, fontSize: textScale(15), padding: moderateScale(10) }}>Waiting for response ....</Text>
                     <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
 
@@ -1958,8 +1960,11 @@ function ChooseVechile({ navigation, route }) {
                             {({ remainingTime }) => {
 
                                 remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
-                                return (
-                                    <Text>{remainingTime}</Text>
+                                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                                return (<>
+                                    <Text>{format}</Text>
+                                </>
                                 )
 
                             }}

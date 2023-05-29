@@ -176,7 +176,7 @@ function Cart({ navigation, route }) {
   const [isValidSlot, setIsValidSlot] = useState(true);
   const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
   const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
-  const[responseTimer,setResponseTimer] = useState(420)
+  const [responseTimer, setResponseTimer] = useState(420)
   const [paymentModal, setPaymentModal] = useState(false)
 
 
@@ -259,7 +259,7 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
-  console.log(preferences, 'perferences-------')
+  console.log(preferences, cartData, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -5268,8 +5268,11 @@ function Cart({ navigation, route }) {
               {({ remainingTime }) => {
 
                 remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
-                return (
-                  <Text>{remainingTime}</Text>
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                return (<>
+                  <Text>{format}</Text>
+                </>
                 )
 
               }}
