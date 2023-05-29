@@ -70,7 +70,7 @@ const MarketCard3: FC<CompProps> = ({
 
   let vendorDistance: any = 0
   if (!!data?.lineOfSightDistance) {
-    vendorDistance = typeof (data?.lineOfSightDistance) == 'string' ? data?.lineOfSightDistance.split(" ", 2) : data.lineOfSightDistance.toFixed(0)
+    vendorDistance = typeof (data?.lineOfSightDistance) == 'string' ? parseInt(data?.lineOfSightDistance.split(" ")[0]) : data.lineOfSightDistance.toFixed(0)
   }
 
   const darkthemeusingDevice = useDarkMode();

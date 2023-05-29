@@ -37,13 +37,13 @@ import commonStylesFunc, { hitSlopProp } from '../../../styles/commonStyles';
 
 /**
  * SwipeableSection Part
- * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription,selectCartItem,parentIndex} props 
+ * @param {item ,deleteItem,addDeleteCartItems,swipeRef,swipeKey,swipeBtns,isDarkMode,stylesfontFamily,btnLoadrId,btnLoader,digit_after_decimal,additional_preferences,currencies,cartData,scheduleType,openDeleteView,openPickerForPrescription,selectCartItem,parentIndex,showCheckBox} props 
  * @returns 
  */
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription,selectCartItem,parentIndex} = props;
+    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription,selectCartItem,parentIndex, showCheckBox=false} = props;
     const { themeColors } = useSelector((state) => state?.initBoot);
 
     const commonStyles = commonStylesFunc({ fontFamily });
@@ -81,7 +81,7 @@ function SwipeableSection(props) {
                         // overshootFriction={8}
                         >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <TouchableOpacity onPress={()=>selectCartItem({
+                                {showCheckBox ?<TouchableOpacity onPress={()=>selectCartItem({
                                     currentItem: i,
                                     currentIndex: inx, 
                                     parentItem: item,
@@ -91,7 +91,7 @@ function SwipeableSection(props) {
                                         height:moderateScale(20),
                                         width: moderateScale(20)
                                     }} source={!i?.isSelected ? imagePath.checkBox2Active : imagePath.checkBox2InActive} />
-                                </TouchableOpacity>
+                                </TouchableOpacity>:null}
                                 <Animated.View
                                     style={{
                                         backgroundColor: isDarkMode
@@ -108,7 +108,7 @@ function SwipeableSection(props) {
                                         style={{
                                             ...styles.cartItemMainContainer,
                                             minHeight: moderateScaleVertical(110),
-                                            width:moderateScale(330),
+                                            width: showCheckBox? moderateScale(330): width/1.05,
                                             alignItems: 'center'
                                         }}>
 
@@ -263,6 +263,7 @@ function SwipeableSection(props) {
                                                                 width: moderateScale(90),
                                                                 borderColor: themeColors?.primary_color,
                                                                 height: moderateScale(24),
+                                                                marginVertical:moderateScaleVertical(4)
                                                             }}>
                                                                 <TouchableOpacity
                                                                     style={{ alignItems: 'center' }}
