@@ -636,17 +636,10 @@ const P2pProductDetail = ({ navigation, route }) => {
                 )
               })}
             </View>
-            {/* <GradientButton
-              btnText={'Add to Cart'}
-              onPress={addToCart}
-            /> */}
+          
           </View>
         </ScrollView>
       )}
-
-      {/* Add to Cart */}
-
-
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetModalRef}
