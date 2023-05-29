@@ -287,8 +287,7 @@ export default function Products({ route, navigation }) {
   const [selectedCartItem, setSelectedCarItems] = useState(null);
   const [differentAddsOns, setDifferentAddsOns] = useState([]);
   const [selectedDiffAdsOnItem, setSelectedDiffAdsOnItem] = useState(null);
-  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] =
-    useState(null);
+  const [selectedDiffAdsOnSection, setSelectedDiffAdsOnSection] = useState(null);
   const [allFilters, setAllFilter] = useState([]);
   const [ProductTags, setProductTags] = useState([]);
   const [offerList, setOfferList] = useState([]);
@@ -613,6 +612,7 @@ export default function Products({ route, navigation }) {
 
 
   const listHeaderComponent2 = () => {
+    console.log(categoryInfo,'infoinfo')
     return (
       <View style={{ height: !!categoryInfo?.is_show_products_with_category ? listHeight : 'auto', marginBottom: moderateScaleVertical(8) }}>
         {false ? (
@@ -1697,7 +1697,7 @@ export default function Products({ route, navigation }) {
     if (isLoadingC && !data?.vendor) {
       getAllProductsByCategoryId(true);
     }
-  }, [navigation, languages, currencies, reloadData, CartItems]);
+  }, [navigation, languages, currencies, reloadData, CartItems,selectedCategory]);
 
   const getAllProductTags = () => {
     actions
