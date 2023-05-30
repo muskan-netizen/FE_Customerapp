@@ -131,7 +131,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://emart.rostaging.com/api/v1';
 // // export const API_BASE_URL = 'https://masaapp.ae/api/v1';
 // export const API_BASE_URL = 'https://movingwheelsdeliveryservices.com/api/v1';
-export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://fly-commerce.com/api/v1';
 //live
 
@@ -304,7 +304,7 @@ export const API_BASE_URL = 'https://ace.royoorders.com/api/v1';
 
 // dindDongDelivers
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
-// export const API_BASE_URL = 'https://punnet.royoorders.com/api/v1'
+export const API_BASE_URL = 'https://punnet.royoorders.com/api/v1'
 //Dlvrd
 // export const API_BASE_URL = 'https://36kel.com.ph/api/v1';
 
