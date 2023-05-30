@@ -348,7 +348,7 @@ export const differentAddOns = (data, headers = {}) => {
 };
 
 export const checkVendorSlots = (data, headers = {}) => {
-  return apiGet(VENDOR_SLOTS + data, {}, headers);
+  return apiPost(VENDOR_SLOTS + data, {}, headers);
 };
 
 //Get List of payment method
