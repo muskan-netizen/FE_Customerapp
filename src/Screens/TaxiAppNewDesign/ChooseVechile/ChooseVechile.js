@@ -1,4 +1,4 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { isEmpty } from 'lodash';
@@ -10,13 +10,14 @@ import {
     Platform,
     Pressable, Text,
     TouchableOpacity,
-    View
+    View,
+    ScrollView
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import {  gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import * as RNLocalize from 'react-native-localize';
 import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
@@ -62,6 +63,7 @@ import FastImage from 'react-native-fast-image';
 import axios from 'axios';
 import useInterval from '../../../utils/useInterval';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -1121,7 +1123,8 @@ function ChooseVechile({ navigation, route }) {
 
     const _selectCarModalView = () => {
         return (
-            <AvailableDriver
+          
+             <AvailableDriver
                 isCabPooling={!!cabBookingType && cabBookingType == 'Pooling' ? true : false}
                 onPressAvailableCar={_selectedProductForDrivers}
                 rideType={cabBookingType}
@@ -1162,6 +1165,7 @@ function ChooseVechile({ navigation, route }) {
                 navigation={navigation}
                 _onShowBidePriceModal={_onShowBidePriceModal}
             />
+           
 
         );
     };
@@ -1796,22 +1800,33 @@ function ChooseVechile({ navigation, route }) {
                 <BottomSheet
                     ref={bottomSheetRef}
                     index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
-                    snapPoints={[height / 1.6, height / 1.25]}
-                    activeOffsetY={[-1, 1]}
+                    snapPoints={[height / 1.8, height / 1.6]}
+                    // activeOffsetY={[-1, 1]}
                     failOffsetX={[-5, 5]}
                     animateOnMount={true}
                     handleComponent={carModalHeader}
                     onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-                    <View
+                    <BottomSheetScrollView
+                        keyboardShouldPersistTaps="handled"
+                        showsVerticalScrollIndicator={false}
                         style={{
-                            flex: 1,
+                            marginBottom:moderateScaleVertical(10),
                             backgroundColor: isDarkMode
                                 ? MyDarkTheme.colors.background
                                 : colors.white,
                         }}>
-                        {!!showCarModal && _selectCarModalView()}
-                        {!!showPaymentModal && _selectPaymentView()}
-                    </View>
+                        <View
+                            style={{
+                                //  height:height/1.7,
+                                flex: 1,
+                                backgroundColor: isDarkMode
+                                    ? MyDarkTheme.colors.background
+                                    : colors.white,
+                            }}>
+                            {!!showCarModal && _selectCarModalView()}
+                            {!!showPaymentModal && _selectPaymentView()}
+                        </View>
+                    </BottomSheetScrollView>
                 </BottomSheet>
 
 
