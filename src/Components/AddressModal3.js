@@ -417,11 +417,16 @@ const AddressModal3 = ({
         details,
       });
     } else if (type == 'addAddress') {
-      onClose();
-      clearState();
-
-      passLocation(data);
-      // clearState();
+      if (getBundleId() == appIds.bumprkar) {
+        // alert(`heyyy`)
+        onClose();
+        clearState();
+        return passLocation(data, true);
+      } else {
+        onClose();
+        clearState();
+        passLocation(data);
+      }
     } else if (type == 'updateAddress') {
       let update = 'update';
       onClose();
@@ -524,6 +529,9 @@ const AddressModal3 = ({
     }
 
     data['is_primary'] = type == 'addAddress' ? 1 : is_primary;
+    if (getBundleId() === appIds.bumprkar) {
+      addressHelper(data)
+    }
     passLocation(data);
   };
 
