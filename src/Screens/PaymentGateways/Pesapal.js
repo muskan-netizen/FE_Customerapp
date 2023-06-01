@@ -102,8 +102,9 @@ export default function Pesapal({ navigation, route }) {
                     console.log('elseee')
                     moveToNewScreen(navigationStrings.ORDERSUCESS, {
                         orderDetail: {
-                            order_number: queryParams.OrderMerchantReference,
-                            id: paramsData?.orderDetail?.id,
+                            order_number:  paramsData?.orderDetail?.order_number,
+                            id: paramsData?.orderDetail?.id || queryParams.order_id
+                            ,
                         },
                     })();
                 }
