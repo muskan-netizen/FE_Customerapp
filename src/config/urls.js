@@ -2,7 +2,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 // export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
@@ -304,7 +304,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // dindDongDelivers
 // export const API_BASE_URL = 'https://dingdongdelivers.com/api/v1'
-export const API_BASE_URL = 'https://punnet.royoorders.com/api/v1'
+// export const API_BASE_URL = 'https://punnet.royoorders.com/api/v1'
 //Dlvrd
 // export const API_BASE_URL = 'https://36kel.com.ph/api/v1';
 
