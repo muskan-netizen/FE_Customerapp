@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Grayscale } from 'react-native-color-matrix-image-filters';
-import { useDarkMode } from 'react-native-dynamic';
-import { getBundleId } from 'react-native-device-info';
+import {Grayscale} from 'react-native-color-matrix-image-filters';
+import {useDarkMode} from 'react-native-dynamic';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -20,8 +20,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { appIds } from '../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../styles/theme';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -33,31 +33,31 @@ import {
 
 const MarketCard3 = ({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
   isMaxSaftey = true,
 }) => {
-  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
-    (state) => state?.initBoot,
+  const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
+    state => state?.initBoot,
   );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
+  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
-    data?.banner?.proxy_url || data?.image?.proxy_url,
+    data?.banner?.image_fit || data?.image?.proxy_url,
     data?.banner?.image_path || data?.image?.image_path,
-    '700/300',
+    '800/1600',
   );
 
   const distanceView = () => {
     return (
-      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
         {!!appData?.profile?.preferences?.is_hyperlocal ? (
           <View
             style={{
@@ -71,37 +71,71 @@ const MarketCard3 = ({
                 color: data?.show_slot
                   ? colors.green
                   : data?.is_vendor_closed
-                    ? colors.redB
-                    : colors.green,
+                  ? colors.redB
+                  : colors.green,
               }}>
               {data?.show_slot
                 ? strings.OPEN
                 : data?.is_vendor_closed
-                  ? strings.CLOSE
-                  : strings.OPEN}
+                ? strings.CLOSE
+                : strings.OPEN}
             </Text>
           </View>
         ) : (
           <View />
         )}
 
-        {
-          appIds.sxm2go != getBundleId()
-            && (!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance) ? (
-            <View
-              style={{
-                ...styles.ratingView,
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: 'white',
-              }}>
-              {!!data?.lineOfSightDistance && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {appIds.sxm2go != getBundleId() &&
+        (!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance) ? (
+          <View
+            style={{
+              ...styles.ratingView,
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: 'white',
+            }}>
+            {!!data?.lineOfSightDistance && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Image
+                    style={{
+                      tintColor: data?.is_vendor_closed
+                        ? colors.black
+                        : themeColors.primary_color,
+                      width: moderateScale(12),
+                      height: moderateScale(12),
+                      opacity: data?.is_vendor_closed ? 0.5 : 1,
+                    }}
+                    resizeMode="contain"
+                    source={imagePath.location2}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.distanceTimeStyle,
+                    }}>
+                    {data?.lineOfSightDistance}
+                  </Text>
+                </View>
+
+                {!!data?.timeofLineOfSightDistance && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <View
+                      style={{
+                        height: moderateScale(12),
+                        borderRightWidth: 0.8,
+                        marginHorizontal: moderateScale(8),
+                        borderRightColor: colors.black,
+                      }}
+                    />
                     <Image
                       style={{
                         tintColor: data?.is_vendor_closed
@@ -112,62 +146,27 @@ const MarketCard3 = ({
                         opacity: data?.is_vendor_closed ? 0.5 : 1,
                       }}
                       resizeMode="contain"
-                      source={imagePath.location2}
+                      source={imagePath.icTime2}
                     />
-                    <Text
-                      numberOfLines={1}
-                      style={{
-                        ...styles.distanceTimeStyle,
-                      }}>
-                      {data?.lineOfSightDistance}
-                    </Text>
+                    {data?.timeofLineOfSightDistance / 60 > 1 &&
+                    appIds.hokitch == getBundleId() ? (
+                      <Text
+                        numberOfLines={1}
+                        style={{marginLeft: moderateScale(10)}}>
+                        ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
+                      </Text>
+                    ) : (
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        {checkEvenOdd(data?.timeofLineOfSightDistance)}-
+                        {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+                      </Text>
+                    )}
                   </View>
-
-                  {!!data?.timeofLineOfSightDistance && (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <View
-                        style={{
-                          height: moderateScale(12),
-                          borderRightWidth: 0.8,
-                          marginHorizontal: moderateScale(8),
-                          borderRightColor: colors.black,
-                        }}
-                      />
-                      <Image
-                        style={{
-                          tintColor: data?.is_vendor_closed
-                            ? colors.black
-                            : themeColors.primary_color,
-                          width: moderateScale(12),
-                          height: moderateScale(12),
-                          opacity: data?.is_vendor_closed ? 0.5 : 1,
-                        }}
-                        resizeMode="contain"
-                        source={imagePath.icTime2}
-                      />
-                      {data?.timeofLineOfSightDistance / 60 > 1 &&
-                        appIds.hokitch == getBundleId() ? (
-                        <Text
-                          numberOfLines={1}
-                          style={{ marginLeft: moderateScale(10) }}>
-                          ≈{checkEvenOdd(data?.timeofLineOfSightDistance)}
-                        </Text>
-                      ) : (
-                        <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                          {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                          {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                        </Text>
-                      )}
-                    </View>
-                  )}
-                </View>
-              )}
-            </View>
-          ) : null}
+                )}
+              </View>
+            )}
+          </View>
+        ) : null}
       </View>
     );
   };
@@ -186,7 +185,7 @@ const MarketCard3 = ({
       <View>
         {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
           <View>
-            <View style={{ justifyContent: 'center' }}>
+            <View style={{justifyContent: 'center'}}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -212,7 +211,7 @@ const MarketCard3 = ({
         ) : !!data?.is_vendor_closed &&
           data?.closed_store_order_scheduled == 0 ? (
           <Grayscale>
-            <View style={{ justifyContent: 'center' }}>
+            <View style={{justifyContent: 'center'}}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -226,7 +225,7 @@ const MarketCard3 = ({
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-              <Text style={{ ...styles.currentlyUnavailable }}>
+              <Text style={{...styles.currentlyUnavailable}}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
             </View>
@@ -255,9 +254,9 @@ const MarketCard3 = ({
           backgroundColor:
             !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
               ? getColorCodeWithOpactiyNumber(
-                colors.textGreyLight.substring(1),
-                20,
-              )
+                  colors.textGreyLight.substring(1),
+                  20,
+                )
               : colors.whiteOpacity15,
         }}>
         <View style={styles.descView}>
@@ -270,36 +269,37 @@ const MarketCard3 = ({
             {data.name}
           </Text>
 
-          {!!appData?.profile?.preferences?.rating_check && !!data?.product_avg_average_rating && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: colors.green,
-                borderRadius: moderateScale(4),
-                padding: 2,
-                paddingHorizontal: 6,
-              }}>
-              <Text
+          {!!appData?.profile?.preferences?.rating_check &&
+            !!data?.product_avg_average_rating && (
+              <View
                 style={{
-                  ...styles.ratingTxt,
-                  color: colors.white,
-                  fontSize: textScale(9),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: colors.green,
+                  borderRadius: moderateScale(4),
+                  padding: 2,
+                  paddingHorizontal: 6,
                 }}>
-                {Number(data?.product_avg_average_rating).toFixed(1)}
-              </Text>
-              <Image
-                style={{
-                  tintColor: colors.white,
-                  marginLeft: 2,
-                  width: 9,
-                  height: 9,
-                }}
-                source={imagePath.star}
-                resizeMode="contain"
-              />
-            </View>
-          )}
+                <Text
+                  style={{
+                    ...styles.ratingTxt,
+                    color: colors.white,
+                    fontSize: textScale(9),
+                  }}>
+                  {Number(data?.product_avg_average_rating).toFixed(1)}
+                </Text>
+                <Image
+                  style={{
+                    tintColor: colors.white,
+                    marginLeft: 2,
+                    width: 9,
+                    height: 9,
+                  }}
+                  source={imagePath.star}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
         </View>
         {!!data?.categoriesList ? (
           <Text
@@ -317,8 +317,8 @@ const MarketCard3 = ({
         ) : null}
 
         {!!appData?.profile?.preferences?.max_safety_mod &&
-          isMaxSaftey &&
-          appStyle?.homePageLayout === 5 ? (
+        isMaxSaftey &&
+        appStyle?.homePageLayout === 5 ? (
           <View>
             <View
               style={{
@@ -361,12 +361,12 @@ const MarketCard3 = ({
   );
 };
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
+export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
+      shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,
