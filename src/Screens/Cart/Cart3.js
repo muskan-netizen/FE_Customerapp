@@ -2965,14 +2965,66 @@ function Cart({ navigation, route }) {
   }, []);
 
   //Add and update the addreess
-  const addUpdateLocation = (childData) => {
+  const addUpdateLocation = (childData, isSAveAddAdress )=> {
+   
     // setModalVisible(false);
+    console.log(childData,isSAveAddAdress,"childDatachildData");
+    console.log(isSAveAddAdress,"childDatachildDataisSAveAddAdress");
+    // alert(isSAveAddAdress)
     updateState({ isLoading: true });
-    actions
+   
+    if (getBundleId() === appIds.bumprkar) {
+      if ( isSAveAddAdress) {
+        actions
+        .addAddress(childData, {
+          code: appData?.profile?.code,
+        })
+        .then(res => {
+          updateState({
+            isLoading: false,
+            isLoadingB: false,
+            isVisible: false,
+            isVisibleAddressModal: false,
+            placeLoader: false,
+            selectViaMap: false,
+          });
+          getAllAddress();
+          setTimeout(() => {
+            let address = res.data;
+            address['is_primary'] = 1;
+            setSelectedAddress(address);
+            actions.saveAddress(address);
+          });
+          showSuccess(res.message);
+        })
+        .catch(error => {
+          updateState({
+            isLoading: false,
+            isLoadingB: false,
+            isVisible: false,
+            isVisibleAddressModal: false,
+          });
+          showError(error?.message || error?.error);
+        });
+      }else{
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          // isVisible: false,
+          // isVisibleAddressModal: false,
+          isVisibleAddressModal: true,
+          placeLoader: false,
+          selectViaMap: false,
+        });
+      }
+
+     
+    } else{
+      actions
       .addAddress(childData, {
         code: appData?.profile?.code,
       })
-      .then((res) => {
+      .then(res => {
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -2990,7 +3042,7 @@ function Cart({ navigation, route }) {
         });
         showSuccess(res.message);
       })
-      .catch((error) => {
+      .catch(error => {
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -2999,6 +3051,7 @@ function Cart({ navigation, route }) {
         });
         showError(error?.message || error?.error);
       });
+    }
   };
 
   //Pull to refresh
@@ -4657,7 +4710,7 @@ function Cart({ navigation, route }) {
         isVisible={isVisibleAddressModal}
         onClose={() => setModalVisibleForAddessModal(!isVisibleAddressModal)}
         type={type}
-        passLocation={(data) => addUpdateLocation(data)}
+        passLocation={(data, value) => addUpdateLocation(data, value)}
         navigation={navigation}
         selectViaMap={selectViaMap}
         openCloseMapAddress={openCloseMapAddress}

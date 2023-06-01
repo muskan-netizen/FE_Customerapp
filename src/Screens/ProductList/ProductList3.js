@@ -915,7 +915,8 @@ export default function Products({route, navigation}) {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignSelf:
-                          !DeviceInfo.getBundleId() === appIds.hokitch
+
+                        !DeviceInfo.getBundleId() === appIds.hokitch || DeviceInfo.getBundleId() === appIds.bumprkar 
                             ? 'auto'
                             : 'flex-end',
                       }}>
@@ -933,6 +934,20 @@ export default function Products({route, navigation}) {
                           }}>
                           {categoryInfo?.address || ''}
                         </Text>
+                      ) :true ? (
+                        <Text
+                        // numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          fontSize: textScale(12.5),
+                          fontFamily: fontFamily.regular,
+                          textAlign: 'left',
+                          color: isDarkMode ? colors.white : colors.white,
+                          width: width / 1.5,
+                        }}>
+                        {categoryInfo?.address || ''}
+                      </Text>
                       ) : null}
 
                       {!!categoryInfo &&
