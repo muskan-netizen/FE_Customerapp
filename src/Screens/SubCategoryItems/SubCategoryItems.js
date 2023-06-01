@@ -5,6 +5,7 @@ import {
   Linking,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View
@@ -67,6 +68,8 @@ export default function SubcategoryVendor({ navigation, route }) {
 
   let businessType = appData?.profile?.preferences?.business_type || null;
 
+  const parentFlatRef = useRef(null)
+
   const initState = {
     mobile_banners: [],
     vendors: [],
@@ -85,6 +88,7 @@ export default function SubcategoryVendor({ navigation, route }) {
   const [isApiLoading, setApiLoading] = useState(false);
   const [selectedTabType, setSelectedTabType] = useState({});
   const [currentActiveSlider, setCurrentActiveSlider] = useState(0)
+  const [flatIndex, setFlatIndex] = useState(0)
 
   const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) };
 
@@ -616,7 +620,8 @@ export default function SubcategoryVendor({ navigation, route }) {
         key={String(item?.id || '')}
         style={{
           backgroundColor: isDarkMode ? MyDarkTheme.colors.background : 'rgba(222,236,249,1)',
-          paddingVertical:moderateScaleVertical(8)
+          paddingVertical: moderateScaleVertical(8),
+          marginTop: moderateScaleVertical(8)
         }}>
 
 
@@ -667,14 +672,18 @@ export default function SubcategoryVendor({ navigation, route }) {
 
 
 
-  const _renderCategories = useCallback(({ item, index }) => {
+  const _renderCategories = useCallback((item, index) => {
     return (
-      <HomeCategoryCard4
-        data={item}
-        onPress={() => onPressCategory(item)}
-        applyRadius={4}
-        index={index}
-      />
+      <View style={{ marginBottom: moderateScaleVertical(8) }}>
+        <HomeCategoryCard4
+          data={item}
+          onPress={() => onPressCategory(item)}
+          applyRadius={4}
+          index={index}
+          categoryHieght={40}
+          categoryWidth={40}
+        />
+      </View>
     )
   }, [appStyle, isDarkMode])
 
@@ -687,36 +696,33 @@ export default function SubcategoryVendor({ navigation, route }) {
         key={String(item?.id || '')}
         style={{
           marginBottom: moderateScaleVertical(0),
-          marginHorizontal: moderateScale(10)
+          // marginHorizontal: moderateScale(10)
 
         }}>
 
-        {appStyle?.homePageLayout == 6 ?
-          <View>
-            <Text
-              style={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginHorizontal: moderateScale(10),
-                marginVertical: moderateScaleVertical(10),
-              }}>
-              {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
-            </Text>
-          </View> : null
-        }
-        {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-        <FlatList
-          horizontal={true}
+
+
+        {!!showTitle ? <TitleViewHome appStyle={appStyle} isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+
+
+        <View style={{ flexDirection: "row", flexWrap: 'wrap' }}>
+          {item?.data.map((val, i) => {
+            return _renderCategories(val, i)
+          })}
+
+        </View>
+        {/* <FlatList
+
           data={item?.data}
-          scrollEnabled={true}
+          numColumns={3}
+
           keyExtractor={(item, index) => String(item?.id + `${index}`)}
           showsHorizontalScrollIndicator={false}
           renderItem={_renderCategories}
           ItemSeparatorComponent={() => (
             <View style={{ height: moderateScale(8) }} />
           )}
-        />
+        /> */}
       </View>
     ) : (
       <React.Fragment />
@@ -905,7 +911,7 @@ export default function SubcategoryVendor({ navigation, route }) {
               : item?.slug == 'vendors' ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
-                  <CategoriesView item={item} showTitle={false} />
+                  <CategoriesView item={item} showTitle={true} />
                 ) : item?.slug == 'best_sellers' ? (
                   <BestSellersView
                     item={item}
@@ -938,6 +944,16 @@ export default function SubcategoryVendor({ navigation, route }) {
 
   const keyExtractorUnique = useCallback((item, index) => !!item?.id ? String(item.id) : String(index))
 
+  const goToPosition = useCallback((index) => {
+    if (!!parentFlatRef?.current) {
+      setFlatIndex(index)
+      parentFlatRef.current.scrollToIndex({
+        index: index
+      })
+    }
+  }, [dataProvider])
+
+
   return (
     <View style={{ flex: 1, backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor }}>
       {isLoading ?
@@ -947,40 +963,85 @@ export default function SubcategoryVendor({ navigation, route }) {
             isDarkMode={memorizedIsDarkMode}
             appStyle={memorizedAppStyle}
             themeColors={memorizedThemeColors}
-          /></Animatable.View> : <>
-
+          />
+        </Animatable.View> :
+        <>
           <Animatable.View animation={'fadeIn'} easing={'ease-in-out-sine'} style={{ flex: 1 }}>
             <Ecomheader
               isDarkMode={memorizedIsDarkMode}
               navigation={navigation}
-              style={{ marginBottom: moderateScaleVertical(16) }}
+              style={{ marginVertical: moderateScaleVertical(16) }}
               themeColors={memorizedThemeColors}
               appStyle={memorizedAppStyle}
             />
 
             {!!dataProvider && !isEmpty(dataProvider) ?
-              <FlatList
-                data={dataProvider}
-                extraData={dataProvider}
-                renderItem={renderHomePageItems}
-                keyExtractor={keyExtractorUnique}
-                onScrollToIndexFailed={() => console.log("df")}
-                // refreshControl={
-                //   <RefreshControl
-                //     refreshing={isRefreshing}
-                //     onRefresh={handleRefresh}
-                //     tintColor={themeColors.primary_color}
-                //   />
-                // }
-                // ListHeaderComponent={ListHeaderComponent}
-                ListFooterComponent={() => <View
-                  style={{
-                    height:
-                      moderateScale(80)
-                  }}
+              <View style={{ flexDirection: 'row', backgroundColor: colors.white }}>
+
+                {true ?
+
+
+                  <ScrollView style={{
+                    width: width / 2.4,
+                    borderRightWidth: 0.5,
+                    borderRightColor: colors.grayOpacity51,
+                    height: height
+                  }}>
+                    <View style={{}}>
+                      {dataProvider.map((val, i) => {
+                        if (isEmpty(val?.data)) {
+                          return (
+                            <></>
+                          )
+                        }
+                        return (
+                          <TouchableOpacity
+                            key={String(i)}
+                            onPress={() => goToPosition(i)}
+                            style={{
+                              backgroundColor: i == flatIndex ? themeColors?.primary_color : colors.white,
+                              paddingHorizontal: moderateScale(8),
+
+                              height: 62,
+
+                              justifyContent: 'center',
+                            }}>
+                            <Text style={{
+                              fontSize: textScale(10),
+                              textTransform: 'uppercase',
+                              fontFamily: i == flatIndex ? fontFamily.medium : fontFamily.regular,
+                              color: i == flatIndex ? colors.white : colors.black,
+                            }}>{val?.title == 'NavCategories' ? 'Categories' : val?.title}</Text>
+                          </TouchableOpacity>
+                        )
+                      })}
+                    </View>
+                  </ScrollView> : null}
+                <FlatList
+
+                  ref={parentFlatRef}
+                  data={dataProvider}
+                  extraData={dataProvider}
+                  renderItem={renderHomePageItems}
+                  keyExtractor={keyExtractorUnique}
+                  onScrollToIndexFailed={() => console.log("on indexFailed")}
+                  // refreshControl={
+                  //   <RefreshControl
+                  //     refreshing={isRefreshing}
+                  //     onRefresh={handleRefresh}
+                  //     tintColor={themeColors.primary_color}
+                  //   />
+                  // }
+                  // ListHeaderComponent={ListHeaderComponent}
+                  ListFooterComponent={() => <View
+                    style={{
+                      height:
+                        moderateScale(80)
+                    }}
+                  />
+                  }
                 />
-                }
-              /> : null}
+              </View> : null}
 
 
 
@@ -1059,7 +1120,8 @@ const TitleViewHome = ({
       marginVertical: moderateScaleVertical(6),
       ...textStyle
     }}>
-    {!isEmpty(item?.translations) ? (item?.translations[0]?.title || item?.title) : item?.title}
+
+    {item?.title == 'NavCategories' ? 'Shop By Category' : !isEmpty(item?.translations) ? (item?.translations[0]?.title || item?.title) : item?.title}
   </Text>
   );
 }

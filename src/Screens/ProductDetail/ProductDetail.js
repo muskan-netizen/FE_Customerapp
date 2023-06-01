@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -301,6 +301,7 @@ export default function ProductDetail({ route, navigation }) {
   useEffect(() => {
     getProductDetail();
   }, [state.productId, state.isLoadingB]);
+
   const onShare = () => {
     console.log('onShare', appData);
     if (!!productDetailData?.share_link) {
@@ -404,10 +405,12 @@ export default function ProductDetail({ route, navigation }) {
 
   //Get Product detail based on varint selection
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    console.log('api hit getProductDetailBasedOnFilter');
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
+
+    console.log('api hit getProductDetailBasedOnFilter', data);
+    
     actions
       .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
         code: appData.profile.code,
@@ -415,7 +418,7 @@ export default function ProductDetail({ route, navigation }) {
         language: languages.primary_language.id,
       })
       .then((res) => {
-        console.log(res.data, 'res.data by vendor id ');
+        console.log(res.data, 'api hit getProductDetailBasedOnFilter res ');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -615,6 +618,8 @@ export default function ProductDetail({ route, navigation }) {
         .filter((x) => x != undefined);
       if (variantSetData.length) {
         updateState({ btnLoader: true });
+        console.log("variantSetDatavariantSetData", variantSetData)
+
         getProductDetailBasedOnFilter(variantSetData);
       } else {
         getProductDetail();
@@ -1055,24 +1060,8 @@ export default function ProductDetail({ route, navigation }) {
       </View>
     )
   }
-  const showAllVariants = () => {
-    let variantSetData = cloneDeep(variantSet);
-    console.log(variantSetData, 'vardatdatdat')
-    return (
-      <View style={{ marginBottom: moderateScaleVertical(16) }}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
-          numColumns={2}
-          data={!!variantSetData ? variantSetData : []}
-          renderItem={renderVariantSet}
-          keyExtractor={(item) => item?.variant_type_id.toString()}
-        />
-      </View>
-    );
-  };
 
-  console.log(typeId, "typeId>>>>>typeId", rentalProductDuration)
+
 
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
@@ -1955,51 +1944,85 @@ export default function ProductDetail({ route, navigation }) {
 
     </View>
   }
-  const renderVarient = ({ item }) => {
 
+  console.log("selectedVariant+++++", selectedVariant)
+
+  const renderColor = useCallback((item, index, options) => {
     return (
-      <View>
-        {item.title == 'Color' ? <View>
-          <Text style={{ fontSize: scale(18), marginLeft: moderateScale(12), fontWeight: 'bold' }}>{item.title}</Text>
-          <FlatList
-            data={item.options}
-            horizontal
-            renderItem={({ item }) => {
-              { console.log(item, 'setset') }
-              return (
-                <TouchableOpacity style={{ marginVertical:moderateScaleVertical(8),height: moderateScale(100), width: moderateScaleVertical(70), alignItems: 'center' }}>
-                  <Text>{item.title}</Text>
-                  <View style={{ backgroundColor: item.hexacode, height: moderateScale(30), width: moderateScale(30), borderRadius: 16,borderColor:colors.greyA,borderWidth:1 }}></View>
-                </TouchableOpacity>
-              )
+      <TouchableOpacity
+        onPress={() => selectSpecificOptions(options, item, index)}
+        activeOpacity={0.7}
+        style={{
+          ...styles.colorContainer,
+          borderColor: !!item?.value ? themeColors.primary_color : colors.greyA,
+        }}>
+        {!!item?.hexacode ? <View style={{
+          ...styles.colorView,
+          backgroundColor: item?.hexacode,
+        }} /> : null}
 
-            }}
+        <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
+        <Text style={{
+          ...commonStyles.mediumFont12,
+          color: !!item?.value ? themeColors.primary_color : isDarkMode? colors.white: colors.textGrey,
+          alignSelf: 'center',
+
+        }} >{item.title}</Text>
+
+      </TouchableOpacity>
+    )
+  }, [variantSet,isDarkMode])
+
+  const renderSize = useCallback((item, index, options) => {
+    return (
+      <TouchableOpacity
+        onPress={() => selectSpecificOptions(options, item, index)}
+        style={{
+          ...styles.sizeContainer,
+          backgroundColor: !!item?.value ? themeColors?.primary_color : colors.white,
+        }}>
+        <Text style={{
+          ...commonStyles.mediumFont12,
+          color: !!item?.value ? colors.white : colors.black
+        }}>{item.title}</Text>
+      </TouchableOpacity>
+    )
+  }, [variantSet,isDarkMode])
+
+
+  const renderVarient = useCallback(({ item, index }) => {
+    const { options } = item
+    return (
+      <View key={String(index)}>
+        <Text style={{
+           ...commonStyles.mediumFont16, 
+           fontSize: textScale(18),
+           color: isDarkMode? colors.white: colors.textGrey,
+            }}>{item.title}</Text>
+        {item.title == 'Color' ? <View>
+          <FlatList
+            data={item?.options || []}
+            horizontal
+            renderItem={({ item, index }) => renderColor(item, index, options)}
+            keyExtractor={(item, index) => String(item?.id || index)}
           />
+
         </View> : null}
         {item.title == 'Size' ? <View>
-          <Text style={{ fontSize: scale(18), marginLeft: moderateScale(7), fontWeight: 'bold' }}>{item.title}</Text>
           <FlatList
-            data={item.options}
+            data={item?.options || []}
             horizontal
-            renderItem={({ item }) => {
-              { console.log(item, 'setset') }
-              return (
-                <TouchableOpacity style={{ justifyContent: 'center', margin: 5, height: moderateScale(30), width: moderateScaleVertical(70), alignItems: 'center', borderRadius: 8, borderWidth: 1, borderColor: colors.greyA, marginVertical: moderateScaleVertical(12) }}>
-                  <Text>{item.title}</Text>
-                </TouchableOpacity>
-              )
-
-            }}
+            renderItem={({ item, index }) => renderSize(item, index, options)}
+            keyExtractor={(item, index) => String(item?.id || index)}
           />
-
         </View> : null}
-
       </View>
     )
-  }
+  }, [variantSet,isDarkMode])
 
 
-  console.log(themeColors, "variantState =>", variantState);
+
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -2368,7 +2391,6 @@ export default function ProductDetail({ route, navigation }) {
               />
 
 
-
               {plainHtml != null ? (
                 <>
                   <View
@@ -2390,12 +2412,13 @@ export default function ProductDetail({ route, navigation }) {
 
                       <RenderHtml
                         contentWidth={width}
-                        source={{ html: plainHtml }}
+                        source={{ html: `<div>${plainHtml}</div>` }}
                         tagsStyles={{
-                          p: {
+                          div: {
                             color: isDarkMode ? colors.white : colors.black,
                             textAlign: 'left',
                           },
+                      
                         }}
                       />
                       {/* <HTMLView
@@ -2405,7 +2428,7 @@ export default function ProductDetail({ route, navigation }) {
                     </View>
                   </View>
                   <HorizontalLine
-                    lineStyle={{ marginVertical: moderateScaleVertical(14) }}
+                    lineStyle={{ marginTop: moderateScaleVertical(14) }}
                   />
                 </>
               ) : null}
@@ -2548,9 +2571,7 @@ export default function ProductDetail({ route, navigation }) {
 
 
 
-              {/* // Product variants */}
-              {variantSet && variantSet.length ? showAllVariants() : null}
-              {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
+
               {typeId == 10 ? (
                 <View>
                   <View
@@ -2862,6 +2883,13 @@ export default function ProductDetail({ route, navigation }) {
                 />}
 
               {/* Add to Cart button */}
+              {!!productDetailData?.has_inventory && productTotalQuantity < 5 ?
+              <Text style={{
+                ...commonStyles.mediumFont14,
+                marginBottom:moderateScaleVertical(6),
+                color: colors?.redB
+              }} >{`only ${productTotalQuantity} lef in stock - order soon`}</Text>:null}
+
               {(productDetailData?.has_inventory == 0 ||
                 (!!productTotalQuantity && !!productTotalQuantity != 0) ||
                 (!!typeId && typeId == 8) ||
@@ -2883,6 +2911,7 @@ export default function ProductDetail({ route, navigation }) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
+                          
                         {getBundleId() !== appIds.danielleBejjani && typeId !== 10 && dine_In_Type != 'appointment' ?
                           <View
                             style={{
@@ -2956,7 +2985,6 @@ export default function ProductDetail({ route, navigation }) {
                           </View>
                           : null
                         }
-
                         <View />
                         <View style={{ flex: 1 }}>
                           <GradientButton
@@ -3149,42 +3177,42 @@ export default function ProductDetail({ route, navigation }) {
 
 
         {!!productDetailData && !!productDetailData?.reviews ? <View>
-        <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              rating={parseInt(
+          <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={parseInt(
+                  Number(productDetailData?.averageRating).toFixed(1),
+                )}
+                fullStarColor={colors.yellowB}
+                starSize={12}
+                containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
+              />
+              <Text>({parseInt(
                 Number(productDetailData?.averageRating).toFixed(1),
-              )}
-              fullStarColor={colors.yellowB}
-              starSize={12}
-              containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
-            />
-            <Text>({parseInt(
-              Number(productDetailData?.averageRating).toFixed(1),
-            )} out of 5)</Text>
+              )} out of 5)</Text>
+            </View>
+            <Text>{productDetailData?.reviews.length} global rating</Text>
           </View>
-          <Text>{productDetailData?.reviews.length} global rating</Text>
-        </View>
-        <FlatList
-          data={(!state.isLoading && productDetailData?.reviews) || []}
-          renderItem={renderreviews}
-          keyExtractor={(item, index) => String(index)}
-          keyboardShouldPersistTaps="always"
-          showsVerticalScrollIndicator={false}
-          style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-          contentContainerStyle={{ flexGrow: 1 }}
-          ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-          ListHeaderComponent={() => (
-            <View style={{ marginLeft: moderateScale(8) }} />
-          )}
-          ListFooterComponent={() => (
-            <View style={{ marginLeft: moderateScale(8) }} />
-          )}
-        />
-        </View>:null}
+          <FlatList
+            data={(!state.isLoading && productDetailData?.reviews) || []}
+            renderItem={renderreviews}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            ListHeaderComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+            ListFooterComponent={() => (
+              <View style={{ marginLeft: moderateScale(8) }} />
+            )}
+          />
+        </View> : null}
 
         <View style={{ marginBottom: moderateScale(40) }} />
       </KeyboardAwareScrollView>

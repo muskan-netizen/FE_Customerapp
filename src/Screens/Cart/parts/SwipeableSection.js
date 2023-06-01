@@ -47,23 +47,6 @@ function SwipeableSection(props) {
     const { themeColors } = useSelector((state) => state?.initBoot);
 
     const commonStyles = commonStylesFunc({ fontFamily });
-    const [isSelected, SetisSelected] = useState(true)
-    // const selectCartItem = (item) => {
-    //     const finalArr = [...isSelected]
-    //     const found = finalArr.map((itm)=>{
-    //           return(
-    //             itm.id==item.id
-    //           )
-            
-    //     })
-    //     console.log(found,'finalarr')
-    //     if (!found) {
-    //         SetisSelected(finalArr)
-    //     } else {
-    //         // finalArr[found.indexOf()].remove()
-    //         SetisSelected(finalArr)
-    //     }
-    // }
 
     return (
         
@@ -81,16 +64,12 @@ function SwipeableSection(props) {
                         // overshootFriction={8}
                         >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {showCheckBox ?<TouchableOpacity onPress={()=>selectCartItem({
-                                    currentItem: i,
-                                    currentIndex: inx, 
-                                    parentItem: item,
-                                    parentIndex: parentIndex
-                                })} style={{ marginHorizontal: moderateScale(5) }}>
+                                {showCheckBox ?<TouchableOpacity 
+                                onPress={()=>selectCartItem(i)} style={{ marginHorizontal: moderateScale(5) }}>
                                     <FastImage style={{
                                         height:moderateScale(20),
                                         width: moderateScale(20)
-                                    }} source={!i?.isSelected ? imagePath.checkBox2Active : imagePath.checkBox2InActive} />
+                                    }} source={i?.is_cart_checked ? imagePath.checkBox2Active : imagePath.checkBox2InActive} />
                                 </TouchableOpacity>:null}
                                 <Animated.View
                                     style={{

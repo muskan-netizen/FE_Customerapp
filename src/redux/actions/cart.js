@@ -37,6 +37,7 @@ import {
   DELETE_PRESCRIPTION,
   SAVED_CARD_LIST,
   DELETE_CARD,
+  CART_ITEM_CHECKED,
 } from '../../config/urls';
 import {
   apiGet,
@@ -546,4 +547,17 @@ export function getSavedCardsList(data = {}, headers = {}) {
 
 export function deleteCard(query ="",data = {}, headers = {}) {
   return apiGet(DELETE_CARD + query, data, headers);
+}
+
+export function cartItemChecked(data={},headers={}){
+  
+  return new Promise((resolve, reject) => {
+    apiPost(CART_ITEM_CHECKED, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }

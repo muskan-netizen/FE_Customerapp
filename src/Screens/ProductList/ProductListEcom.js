@@ -186,7 +186,7 @@ export default function Products({ route, navigation }) {
     updateTagFilter: false,
     differentAddsOnsModal: false,
     isShowFilter: false,
-    isShowSort:false,
+    isShowSort: false,
     showListEndLoader: false,
 
     slider1ActiveSlide: 0,
@@ -428,31 +428,28 @@ export default function Products({ route, navigation }) {
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
 
-  const renderSectionItem = useCallback(
-    ({ item, index, section }) => {
-      console.log("renderSectionItem =>", item, index, section)
+  const renderSectionItem = useCallback(({item, index, section }) => {
       return (
         <View>
-          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingHorizontal:moderateScale(12)}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: moderateScale(12) }}>
             <Text style={{ paddingVertical: moderateScale(8), fontSize: scale(21), fontWeight: 'bold' }}>{item?.translation[0]?.name}</Text>
             <TouchableOpacity>
-             <Text>See All</Text>
-              </TouchableOpacity>
+              <Text>See All</Text>
+            </TouchableOpacity>
           </View>
 
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
             data={item?.data}
-            ItemSeparatorComponent={() => <View style={{
-              height: moderateScaleVertical(10)
-            }} />}
-            renderItem={({ item, index }) =>
+            ItemSeparatorComponent={() => <View style={{height: moderateScaleVertical(10)}} />}
+
+            renderItem={(props) =>
               <ProductCardEcom
-                data={item}
-                index={index}
-                onPress={() => goToProductDetail(item)}
-                onAddtoWishlist={() => _onAddtoWishlist(item)}
+                data={props.item}
+                index={props.index}
+                onPress={() => goToProductDetail(props.item)}
+                onAddtoWishlist={() => _onAddtoWishlist(props.item, props.index, index)}
                 addToCart={() => () => { }}
                 onIncrement={() => () => { }}
                 onDecrement={() => () => { }}
@@ -466,7 +463,6 @@ export default function Products({ route, navigation }) {
                 section={section}
                 CartItems={CartItems}
                 wrapperListLoader={wrapperListLoader}
-
               />
             }
           />
@@ -615,7 +611,7 @@ export default function Products({ route, navigation }) {
             data={item}
             index={index}
             onPress={() => goToProductDetail(item)}
-            onAddtoWishlist={() => _onAddtoWishlist(item)}
+            onAddtoWishlist={() => _onAddtoWishlist(item, index)}
             addToCart={() => () => { }}
             onIncrement={() => () => { }}
             onDecrement={() => () => { }}
@@ -739,7 +735,7 @@ export default function Products({ route, navigation }) {
             />
           </TouchableOpacity>
         )}
-        <TouchableOpacity
+        {<TouchableOpacity
           onPress={onShowHideFilter}
           activeOpacity={0.7}
           style={{
@@ -763,7 +759,7 @@ export default function Products({ route, navigation }) {
               width: moderateScale(14)
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
     )
   }
@@ -782,11 +778,11 @@ export default function Products({ route, navigation }) {
                 color: isDarkMode ? colors.white : colors.black
               }}>{`Results (${totalProducts})`}</Text>
             </View>}
-            <View style={{flexDirection:'row'}}>
-            {filterView()}
-            {SortView()}
+            <View style={{ flexDirection: 'row' }}>
+              {filterView()}
+              {SortView()}
             </View>
-            
+
           </View>
           {horizontalLine({ marginVertical: 0, marginBottom: moderateScaleVertical(8) })}
         </View>
@@ -1567,10 +1563,7 @@ export default function Products({ route, navigation }) {
     if (productListId?.vendor && routeData) {
       fetchOffers();
     }
-    if (isLoadingC) {
-      getAllProductsByCategoryId(true);
-    }
-  }, [navigation, languages, currencies, reloadData, CartItems]);
+  }, []);
 
   const getAllProductTags = () => {
     actions
@@ -1842,6 +1835,8 @@ export default function Products({ route, navigation }) {
       .catch(errorMethod);
   };
 
+  console.log("loadMoreloadMoreloadMore", loadMore)
+
   //***************get products by vendor filter**************
   const newVendorFilter = async (pageNo, loading = false) => {
     console.log('api hit new vendorFilter', selectedFilters);
@@ -1852,7 +1847,7 @@ export default function Products({ route, navigation }) {
     data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
     data['range'] = `${minimumPrice};${maximumPrice}`;
     data['vendor_id'] = productListId.id;
-    // data['limit'] = limit;
+    data['limit'] = limit;
     data['page'] = pageNo;
     data['type'] = dineInType;
     data['tag_products'] =
@@ -1887,6 +1882,8 @@ export default function Products({ route, navigation }) {
           if (res?.data) {
             if (res.data.products.data?.length == 0) {
               updateState({ loadMore: false });
+            } else {
+              updateState({ loadMore: true });
             }
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
@@ -2048,7 +2045,7 @@ export default function Products({ route, navigation }) {
   };
 
   /*********Add product to wish list******* */
-  const _onAddtoWishlist = (item) => {
+  const _onAddtoWishlist = (item, index, parentIndex = null) => {
     playHapticEffect(hapticEffects.impactLight);
     if (!!userData?.auth_token) {
       actions
@@ -2064,7 +2061,16 @@ export default function Products({ route, navigation }) {
         .then((res) => {
           console.log(res, 'updateProductWishListData');
           showSuccess(res.message);
-          updateProductList(item);
+          if (parentIndex !== null) {
+            let cloneArr = [...sectionListData]
+            let cloneArrInner = cloneArr[parentIndex]
+            cloneArrInner.data[index].inwishlist = !item?.inwishlist
+            setSectionListData(cloneArr)
+          } else {
+            let cloneArr = [...productListData]
+            cloneArr[index].inwishlist = !item?.inwishlist
+            setProductListData(cloneArr)
+          }
         })
         .catch(errorMethod);
     } else {
@@ -2619,16 +2625,7 @@ export default function Products({ route, navigation }) {
       });
     }
   };
-  useLayoutEffect(() => {
-    if (isLoadingC) {
-      getAllProductsByCategoryId(1);
 
-      if (productListId?.vendor && routeData) {
-        fetchOffers();
-      }
-      getAllProductTags();
-    }
-  }, [isLoadingC]);
 
   const checkIfItemExist = (item, tags) => {
     let result = false;
@@ -2641,50 +2638,6 @@ export default function Products({ route, navigation }) {
   };
 
 
-
-  useLayoutEffect(() => {
-    let EnabledTags = ProductTags.filter((el) => el.isSelected);
-    if (EnabledTags?.length > 0) {
-      setApiHitAgain(true);
-      // appendData(null,1)
-      newVendorFilter(1, true);
-      const newArr = sectionListData
-        .map((el) => {
-          const records =
-            el.data &&
-            el.data.filter((item) => {
-              if (
-                item.tags?.length > 0 &&
-                checkIfItemExist(item.tags[0], EnabledTags)
-              )
-                return item;
-            });
-          const newObj = {
-            ...el,
-          };
-          if (records && records?.length) {
-            newObj.data = records;
-            return newObj;
-          } else {
-            return null;
-          }
-        })
-        .filter((x) => x != null);
-
-      setSectionListData(newArr)
-      setTagFilteredData(newArr);
-      setIsFilteredData(true);
-      console.log(newArr, 'newArrnewArr');
-    } else {
-      setSectionListData(sectionListData)
-      if (apiHitAgain) {
-        setIsFilteredData(false);
-        setApiHitAgain(false);
-        setLoading(true);
-        getAllProductsByVendor();
-      }
-    }
-  }, [updateTagFilter, ProductTags]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
@@ -3111,8 +3064,8 @@ export default function Products({ route, navigation }) {
   const onShowHideFilter = () => {
     updateState({ isShowFilter: !isShowFilter });
   };
-  const onShowHideSort =()=>{
-    updateState({isShowSort:!isShowSort})
+  const onShowHideSort = () => {
+    updateState({ isShowSort: !isShowSort })
   }
 
   const bottomSheetHeader = () => {
@@ -3234,7 +3187,7 @@ export default function Products({ route, navigation }) {
         section?.id == currentPage?.id
           ? `&page=${currentPage.current_page + 1}`
           : `&page=2`;
-      let totalLimit = `&limit=${15}`;
+      let totalLimit = `&limit=${limit}`;
 
       let apiData =
         `/${vendorId}?category_id=${section?.id}` + totalLimit + currPage;
@@ -3881,7 +3834,7 @@ export default function Products({ route, navigation }) {
       <EcomHeader
         isDarkMode={isDarkMode}
         navigation={navigation}
-        style={{ marginBottom: moderateScaleVertical(16) }}
+        style={{ marginVertical: moderateScaleVertical(16) }}
         themeColors={themeColors}
         appStyle={appStyle}
       />
@@ -3927,7 +3880,7 @@ export default function Products({ route, navigation }) {
 
 
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={goToTop}
         style={{
           width: 60,
@@ -3943,7 +3896,7 @@ export default function Products({ route, navigation }) {
 
       >
         <Text>Go To Top</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {isShowSort ? (
         <SortCompEcom
           isDarkMode={isDarkMode}
@@ -3960,7 +3913,7 @@ export default function Products({ route, navigation }) {
           updateMinMax={updateMinMax}
           filterData={allFilters}
         />
-       ) : null} 
+      ) : null}
 
       {isShowFilter ? (
         <FilterCompEcom

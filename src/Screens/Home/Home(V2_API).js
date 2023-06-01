@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import { Alert, BackHandler, Linking, StatusBar } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -48,6 +48,7 @@ export default function Home({ route, navigation }) {
     themeColor,
     themeToggle,
     allAddresss,
+    themeColors
   } = useSelector((state) => state?.initBoot);
   const { location, appMainData, dineInType, isLocationSearched } = useSelector((state) => state?.home || {});
 
@@ -1251,6 +1252,7 @@ export default function Home({ route, navigation }) {
       isLoading={searchDataLoader}
       isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 ? false : true}
     >
+        {appStyle?.homePageLayout == 10 ? <StatusBar backgroundColor={themeColors?.primary_color} />: null}
       <>{renderHomeScreen()}</>
       <LaundryAddonModal
         isVisible={isLaundryAddonModal}

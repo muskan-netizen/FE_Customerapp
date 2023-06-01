@@ -106,6 +106,7 @@ export default function DashBoardHeaderEcommerce({
           themeColors.primary_color.substr(1),
           40)]}
     >
+    <StatusBar backgroundColor={themeColors?.primary_color} />
       <SafeAreaView>
 
         <View
@@ -114,7 +115,7 @@ export default function DashBoardHeaderEcommerce({
             justifyContent: 'space-between',
             paddingHorizontal: moderateScale(16),
             alignItems: 'center',
-            marginTop: moderateScaleVertical(4),
+            // marginTop: moderateScaleVertical(4),
           }}>
           <TouchableOpacity
             activeOpacity={1}

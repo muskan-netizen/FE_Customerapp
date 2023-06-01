@@ -1,7 +1,7 @@
 //import liraries
 import { useNavigation } from '@react-navigation/native';
 import React, { Component } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
 import colors from '../styles/colors';
@@ -26,6 +26,7 @@ const Ecomheader = ({
                 themeColors.primary_color.substr(1),
                 40)]}
         >
+      
             <SafeAreaView>
                 <View style={{
                     ...styles.container,

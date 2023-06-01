@@ -578,13 +578,12 @@ function Cart({ navigation, route }) {
       data['type'] = dineInType;
       setBtnLoaderId(item?.id);
       updateState({ btnLoader: true });
-      actions
-        .increaseDecreaseItemQty(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        })
+      actions.increaseDecreaseItemQty(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
         .then((res) => {
           console.log('cart detail', res);
           actions.cartItemQty(res);
@@ -1214,7 +1213,7 @@ function Cart({ navigation, route }) {
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
     data['specific_instructions'] = instruction;
-    data['order_product'] = [54,56]
+    data['order_product'] = [54, 56]
 
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
@@ -2527,6 +2526,7 @@ function Cart({ navigation, route }) {
                   : ` ${strings.WE_ARE_NOT_ACCEPTING} ${item?.delaySlot} `}
               </Text>
             ) : null}
+
             {item?.is_vendor_closed ? (
               <Text
                 numberOfLines={1}
@@ -2541,36 +2541,37 @@ function Cart({ navigation, route }) {
           </View>
 
           {/************ start  render cart items *************/}
-                
-                <View style={{
-                  flexDirection:'row',
-                  alignItems:'center'
-                }}>
-         
-          <View>
-          <SwipeableSection
-            item={item}
-            openDeleteView={openDeleteView}
-            deleteItem={deleteItem}
-            addDeleteCartItems={addDeleteCartItems}
-            selectCartItem={selectCartItem}
-            swipeRef={swipeRef}
-            swipeKey={swipeKey}
-            swipeBtns={swipeBtns}
-            isDarkMode={isDarkMode}
-            styles={styles}
-            fontFamily={fontFamily}
-            btnLoadrId={btnLoadrId}
-            btnLoader={btnLoader}
-            digit_after_decimal={digit_after_decimal}
-            additional_preferences={additional_preferences}
-            currencies={currencies}
-            cartData={cartData}
-            scheduleType={scheduleType}
-            openPickerForPrescription={openPickerForPrescription}
-            parentIndex = {index}
-          />
-          </View>
+
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+
+            <View>
+              <SwipeableSection
+                item={item}
+                openDeleteView={openDeleteView}
+                deleteItem={deleteItem}
+                addDeleteCartItems={addDeleteCartItems}
+                selectCartItem={selectCartItem}
+                swipeRef={swipeRef}
+                swipeKey={swipeKey}
+                swipeBtns={swipeBtns}
+                isDarkMode={isDarkMode}
+                styles={styles}
+                fontFamily={fontFamily}
+                btnLoadrId={btnLoadrId}
+                btnLoader={btnLoader}
+                digit_after_decimal={digit_after_decimal}
+                additional_preferences={additional_preferences}
+                currencies={currencies}
+                cartData={cartData}
+                scheduleType={scheduleType}
+                openPickerForPrescription={openPickerForPrescription}
+                parentIndex={index}
+                showCheckBox
+              />
+            </View>
           </View>
           {/************ end render cart items *************/}
           <DeliverableSection item={item} fontFamily={fontFamily} styles={styles} />
@@ -2701,7 +2702,7 @@ function Cart({ navigation, route }) {
 
   //Header section of cart screen
 
-  console.log("cartDatacartData",cartData)
+  console.log("cartDatacartData", cartData)
 
   const homeType = (data) => {
     let value = strings.HOME;
@@ -4494,28 +4495,41 @@ function Cart({ navigation, route }) {
     );
   };
 
-  const selectCartItem =({
-    currentIndex,
-    parentItem,
-    currentItem,
-    parentIndex
-  })=>{
+  const selectCartItem = async (item) => {
 
+    console.log("item++++", item)
+
+    let apiHeader = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+      timezone: RNLocalize.getTimeZone(),
+      device_token: DeviceInfo.getUniqueId(),
+    };
+    let apiData = {
+      cart_id: item?.cart_id,
+      is_cart_checked: item?.is_cart_checked == 0 ? 1 : 0,
+      cart_product_id: item?.id,
+      type: dineInType
+    }
+    updateState({deliveryFeeLoader: true})
+
+    try {
+      console.log("item++++", item)
+      const res = await actions.cartItemChecked(apiData, apiHeader)
+      console.log('res+++++++', res)
+      actions.cartItemQty(res);
+      setCartItems(res.data.products);
+      setCartData(res.data);
+      updateState({deliveryFeeLoader: false})
       
-
-    const cloneArry = cloneDeep(cartItems)
-
-    let filterArry = cloneArry[parentIndex]?.vendor_products.map((val,i)=>{
-          if(val?.product_id == currentItem?.product_id){
-            return {...val, isSelected: !val?.isSelected }
-          }
-          return val
-    })
-
-    cloneArry[parentIndex]={...parentItem, vendor_products: filterArry }
-    setCartItems(cloneArry)
+    } catch (error) {
+      console.log("error raised", error)
+      updateState({deliveryFeeLoader: false})
+    }
   }
-  
+
 
   // Category KYC end
   console.log(cartItems, "cartItemscartItems");

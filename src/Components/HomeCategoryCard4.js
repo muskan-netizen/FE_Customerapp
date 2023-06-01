@@ -41,6 +41,8 @@ const HomeCategoryCard3 = ({
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
+  console.log("isSVGisSVGisSVG",isSVG)
+
   const onLoad = (evl) => { };
 
   let imgHeight = moderateScale(categoryHieght);

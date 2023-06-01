@@ -1320,6 +1320,7 @@ function Footer(props) {
         )
       }
 
+
       {
         !!(
           cartData?.deliver_status || cartData?.closed_store_order_scheduled
@@ -1330,7 +1331,7 @@ function Footer(props) {
 
             {!!(
               userData?.auth_token &&
-              !appData?.profile?.preferences?.off_scheduling_at_cart &&
+              appData?.profile?.preferences?.off_scheduling_at_cart &&
               businessType !== 'laundry'
             ) && (
                 <ButtonComponent

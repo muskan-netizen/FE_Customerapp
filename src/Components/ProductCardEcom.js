@@ -20,7 +20,7 @@ const ProductCardEcom = ({
     onPress = () => { },
     btnLoader,
     section = {},
-    onAddtoWishlist=()=>{}
+    onAddtoWishlist = () => { }
 }) => {
 
     const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -54,7 +54,7 @@ const ProductCardEcom = ({
                 backgroundColor: isDarkMode
                     ? colors.whiteOpacity15
                     : colors.white,
-                    width:width/2.1
+                width: width / 2.1
 
             }}>
 
@@ -80,9 +80,40 @@ const ProductCardEcom = ({
                         {/* <View style={{ backgroundColor: colors.blackOpacity66, borderRadius: scale(12)}}>
                             <Text style={{ color: colors.white, fontSize: scale(10),padding:moderateScale(5) }} >Best Seller</Text>
                         </View> */}
+                        {!!data?.averageRating ? (
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                                <View style={styles.ratingView}>
+                                    <Text style={{
+                                        ...commonStyles.mediumFont12,
+                                        color: colors.white
+                                    }}>{data?.averageRating}</Text>
+                                    <StarRating
+                                        disabled={false}
+                                        maxStars={1}
+                                        rating={1}
+                                        fullStarColor={colors.white}
+                                        starSize={15}
+                                        containerStyle={{ marginLeft: moderateScale(3) }}
+                                    />
+                                </View>
+                            </View>
+                        ) : null
+
+                        }
                         <View></View>
                         <TouchableOpacity onPress={onAddtoWishlist} style={{ backgroundColor: colors.grey1, borderRadius: 16, padding: moderateScale(4), justifyContent: 'center', alignItems: 'center' }}>
-                            <FastImage style={{ width: 20, height: 20 }} source={imagePath.heart2} />
+                        <FastImage
+                                style={{
+                                    height: 20,
+                                    width: 20,
+
+                                }}
+                                source={!!data?.inwishlist ? imagePath.whiteFilledHeart : imagePath.heart2}
+                                tintColor={isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color}
+                                    resizeMode={FastImage.resizeMode.contain}
+                            />
 
                         </TouchableOpacity>
                     </View>
@@ -104,6 +135,7 @@ const ProductCardEcom = ({
             <View style={{ paddingVertical: moderateScaleVertical(8), paddingHorizontal: moderateScale(8) }}>
                 <View style={{}}>
                     <Text
+                        numberOfLines={1}
                         style={{
                             ...commonStyles.futuraBtHeavyFont14,
                             color: isDarkMode ? colors.white : colors.black,
@@ -227,28 +259,28 @@ const ProductCardEcom = ({
                     {
                         !!Number(data?.variant[0]?.compare_at_price) ? (
                             <>
-                           
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    ...commonStyles.mediumFont14,
-                                    color: isDarkMode ? colors.white : colors.redB,
-                                    fontSize: textScale(12),
-                                    fontFamily: fontFamily.regular,
-                                    textDecorationLine: 'line-through',
-                                    // marginHorizontal: moderateScale(8),
-                                }}>
-                                {tokenConverterPlusCurrencyNumberFormater(
-                                    Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
-                                    digit_after_decimal,
-                                    additional_preferences,
-                                    currencies?.primary_currency?.symbol,
-                                )}
-                            </Text>
-                            <Text style={{ marginLeft: moderateScale(4), fontSize: scale(12), color: colors.green }}>{parseInt(((data.variant[0].compare_at_price - data?.variant[0]?.price) / data?.variant[0]?.price * 100).toFixed(3))}% Discount</Text>
+
+                                <Text
+                                    numberOfLines={1}
+                                    style={{
+                                        ...commonStyles.mediumFont14,
+                                        color: isDarkMode ? colors.white : colors.redB,
+                                        fontSize: textScale(12),
+                                        fontFamily: fontFamily.regular,
+                                        textDecorationLine: 'line-through',
+                                        // marginHorizontal: moderateScale(8),
+                                    }}>
+                                    {tokenConverterPlusCurrencyNumberFormater(
+                                        Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
+                                        digit_after_decimal,
+                                        additional_preferences,
+                                        currencies?.primary_currency?.symbol,
+                                    )}
+                                </Text>
+                                <Text style={{ marginLeft: moderateScale(4), fontSize: scale(12), color: colors.green }}>{parseInt(((data.variant[0].compare_at_price - data?.variant[0]?.price) / data?.variant[0]?.price * 100).toFixed(3))}% Discount</Text>
                             </>
-                        ):null}
-                    
+                        ) : null}
+
 
                 </View>
 
@@ -279,23 +311,7 @@ const ProductCardEcom = ({
                     ) : null}
 
                     {/* New rating view */}
-                    {!!data?.averageRating ? (
-                        <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-                        <View style={{flexDirection:'row',alignItems:'center',backgroundColor:colors.green,borderRadius:scale(8),padding:moderateScaleVertical(2),marginTop:moderateScaleVertical(4)}}>
-                            <Text style={{fontSize:scale(12),color:colors.white}}>{data?.averageRating}</Text>
-                            <StarRating
-                                disabled={false}
-                                maxStars={1}
-                                rating={1}
-                                fullStarColor={colors.white}
-                                starSize={15}
-                                containerStyle={{marginLeft:moderateScale(3)}}
-                            />
-                        </View>
-                        </View>
-                    ):null
 
-                    }
                 </View>
             </View>
         </TouchableOpacity>
@@ -351,6 +367,15 @@ function styleData({ themeColors, fontFamily }) {
 
             // flex: 1
         },
+        ratingView: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: colors.green,
+            borderRadius: scale(8),
+            paddingHorizontal: moderateScaleVertical(4),
+            marginTop: moderateScaleVertical(4),
+            paddingVertical: moderateScaleVertical(2)
+        }
     });
     return styles;
 }

@@ -160,7 +160,7 @@ const CustomDrawerContent = (props) => {
             }}
           />
          {!!userData && <DrawerItem
-            label={strings.MY_ORDERS}
+            label={'Order Again'}
             onPress={() => onPressItem(navigationStrings.MY_ORDERS, 1)} //tabIndex
 
             icon={({ focused }) => {
