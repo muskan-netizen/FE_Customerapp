@@ -41,6 +41,7 @@ import imagePath from '../../constants/imagePath';
 import HomeCategoryCard4 from '../../Components/HomeCategoryCard4';
 import SingleCategoryProducts from '../../Components/SingleCategoryProducts';
 import { Image } from 'react-native';
+import { UIActivityIndicator } from 'react-native-indicators';
 
 export default function SubcategoryVendor({ navigation, route }) {
   console.log(route, 'route>>>>route');
@@ -894,7 +895,7 @@ export default function SubcategoryVendor({ navigation, route }) {
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}
-      style={{marginBottom:moderateScaleVertical(12)}}
+        style={{ marginBottom: moderateScaleVertical(12) }}
       >
         {
           item?.slug == 'banners' ? (
@@ -960,6 +961,7 @@ export default function SubcategoryVendor({ navigation, route }) {
     <View style={{ flex: 1, backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor }}>
 
       <Animatable.View style={{ flex: 1 }}>
+
         <Ecomheader
           isDarkMode={memorizedIsDarkMode}
           navigation={navigation}
@@ -967,17 +969,16 @@ export default function SubcategoryVendor({ navigation, route }) {
           themeColors={memorizedThemeColors}
           appStyle={memorizedAppStyle}
         />
-
-        {!!dataProvider && !isEmpty(dataProvider) ?
+        {!!dataProvider && !isEmpty(dataProvider)?
           <View style={{ flexDirection: 'row', backgroundColor: colors.white }}>
-            <ScrollView 
-            scrollEnabled
-            style={{
-              width: width / 2.8,
-              borderRightWidth: 0.5,
-              borderRightColor: colors.grayOpacity51,
-              // height: height
-            }}>
+            <ScrollView
+              scrollEnabled
+              style={{
+                width: width / 2.8,
+                borderRightWidth: 0.5,
+                borderRightColor: colors.grayOpacity51,
+                // height: height
+              }}>
               <View style={{}}>
                 {dataProvider.map((val, i) => {
                   if (isEmpty(val?.data)) {
@@ -998,9 +999,9 @@ export default function SubcategoryVendor({ navigation, route }) {
                       <Text style={{
                         fontSize: textScale(10),
                         textTransform: 'uppercase',
-                        fontFamily:fontFamily.regular,
+                        fontFamily: fontFamily.regular,
                         color: i == flatIndex ? colors.white : colors.black,
-                        textAlign:'center'
+                        textAlign: 'center'
                       }}>{val?.title == 'NavCategories' ? 'Categories' : val?.title}</Text>
                     </TouchableOpacity>
                   )
@@ -1019,7 +1020,13 @@ export default function SubcategoryVendor({ navigation, route }) {
               ListFooterComponent={() => <View style={{ height: height / 3 }} />}
             />
 
-          </View> : null}
+          </View> : <View style={{
+            flex:1, 
+            justifyContent:'center',
+            alignItems:'center'
+          }}>
+            <UIActivityIndicator size={40} color={themeColors?.primary_color} />
+          </View>}
       </Animatable.View>
     </View>
   );
