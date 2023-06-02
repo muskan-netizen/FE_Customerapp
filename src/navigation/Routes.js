@@ -22,6 +22,7 @@ import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
+import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
 
 
 const Stack = createNativeStackNavigator();
@@ -29,9 +30,8 @@ const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot || {});
+  const { appStyle, themeColors, appData } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
-console.log(appSessionInfo,'appSessionInfoappSessionInfo')
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{
@@ -59,7 +59,7 @@ console.log(appSessionInfo,'appSessionInfoappSessionInfo')
               businessType === 4
                 ? TaxiTabRoutes
                 : businessType === 8
-                  ? TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
+                  ? !appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand : TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
                     : TabRoutes
             }
             options={{ gestureEnabled: false }}
