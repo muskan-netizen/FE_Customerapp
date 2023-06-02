@@ -646,7 +646,7 @@ export default function Products({ route, navigation }) {
   };
 
   const listHeaderComponent2 = () => {
-    console.log(categoryInfo, 'infoinfo');
+
     return (
       <View
         style={{
@@ -2196,19 +2196,14 @@ export default function Products({ route, navigation }) {
           updateState({ loadMore: true });
         } else {
           updateState({ loadMore: false });
-
-          if (
-            res?.data?.listData?.current_page == res.data?.listData?.last_page
-          ) {
-            updateState({ loadMore: false });
-          }
         }
       })
 
       .catch(errorMethod);
     // }
   };
-  console.log('productListData ++++', productListData);
+
+
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = useCallback(
     pageNo => {
@@ -2235,14 +2230,20 @@ export default function Products({ route, navigation }) {
           },
         )
         .then(res => {
-          console.log(productListData, 'dadsadsads');
+          console.log(res, "<==res getProductByCategoryFiltersOptamize")
           setLoading(false);
           setProductListData(
             pageNo == 1
               ? res?.data?.data
               : [...productListData, ...res?.data?.data],
           );
-          if (res.data.data?.length == 0) {
+          updateState({
+            lastPage: res.data?.last_page,
+          });
+          setApiPageNo(res?.data?.current_page)
+          if (res?.data?.current_page < res.data?.last_page) {
+            updateState({ loadMore: true });
+          } else {
             updateState({ loadMore: false });
           }
         })
