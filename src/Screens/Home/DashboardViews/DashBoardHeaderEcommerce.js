@@ -106,7 +106,7 @@ export default function DashBoardHeaderEcommerce({
           themeColors.primary_color.substr(1),
           40)]}
     >
-    <StatusBar backgroundColor={themeColors?.primary_color} />
+
       <SafeAreaView>
 
         <View

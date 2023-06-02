@@ -26,8 +26,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
     },
     productName: {
       color: colors.textGrey,
-      fontSize: textScale(12),
-      lineHeight: 18,
+      fontSize: textScale(16),
       fontFamily: fontFamily.medium,
     },
     productTypeAndBrand: {

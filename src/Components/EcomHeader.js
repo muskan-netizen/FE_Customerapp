@@ -17,14 +17,16 @@ const Ecomheader = ({
     isDarkMode = false,
     navigation = {},
     style = {},
-    themeColors = { primary_color: colors.themeColor }
+    themeColors = { primary_color: colors.themeColor },
+    showLeftIcon = true,
+    defaultBottomColor = 40
 }) => {
 
     return (
         <LinearGradient
             colors={[themeColors?.primary_color, themeColors?.primary_color, getColorCodeWithOpactiyNumber(
                 themeColors.primary_color.substr(1),
-                40)]}
+                defaultBottomColor)]}
         >
       
             <SafeAreaView>
@@ -32,10 +34,10 @@ const Ecomheader = ({
                     ...styles.container,
                     ...style,
                 }}>
-                    <TouchableOpacity
+                    {showLeftIcon ? <TouchableOpacity
                         onPress={() => navigation.goBack()} hitSlop={styles.hitSlop} style={{ marginLeft: moderateScale(8) }}>
                         <Image style={{ tintColor: isDarkMode ? colors.white : colors.black }} source={imagePath.backArrowCourier} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> : null}
 
                     <View style={{ flex: 1 }}>
                         <SearchBar3

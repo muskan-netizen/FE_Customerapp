@@ -227,7 +227,13 @@ function SwipeableSection(props) {
                                                     {getBundleId() !== appIds.rentzy &&
                                                         <View
                                                             pointerEvents={btnLoader ? 'none' : 'auto'}
-                                                            style={{ flex: .6, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+                                                            style={{ 
+                                                                flexDirection: 'row', 
+                                                                alignItems: 'center',
+                            
+                                                                justifyContent:'space-between'
+                                                                 }}>
+                                                            <View style={{flex:0.7}}>      
                                                             <View style={{
                                                                 ...commonStyles.buttonRect,
                                                                 borderWidth: 0.4,
@@ -313,9 +319,12 @@ function SwipeableSection(props) {
                                                                     />
                                                                 </TouchableOpacity>
                                                             </View>
+                                                            </View>
 
+                                                        
+                                                        <View style={{flex:0.3}}>
                                                             <TouchableOpacity
-                                                                style={{ marginRight: moderateScale(16) }}
+                                         
                                                                 onPress={() => openDeleteView(i)}>
                                                                 <FastImage
                                                                     source={imagePath.deleteRed}
@@ -323,10 +332,12 @@ function SwipeableSection(props) {
                                                                     style={{
                                                                         width: moderateScale(16),
                                                                         height: moderateScale(18),
-                                                                        marginRight: moderateScale(20)
+                                                            
                                                                     }}
                                                                 />
                                                             </TouchableOpacity>
+                                                            </View>
+
                                                         </View>}
                                                     {i?.variant_options.length > 0
                                                         ? i?.variant_options.map((j, jnx) => {

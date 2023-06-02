@@ -184,3 +184,5 @@ export {default as Addaddress2} from './TaxiAppNewDesign/Addaddress/Addaddress2'
 export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseVechile';
 export {default as ViewAllSearchItems} from './ViewAllSearchItems/ViewAllSearchItems';
 export {default as SubCategoryItems} from './SubCategoryItems/SubCategoryItems';
+export {default as EcomCategory} from './EcomTemps/EcomCategory';
+export {default as EcomOrderAgain} from './EcomTemps/EcomOrderAgain/EcomOrderAgain';

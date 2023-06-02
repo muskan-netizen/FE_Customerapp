@@ -147,38 +147,29 @@ const CustomDrawerContent = (props) => {
               return (
                 <Image style={{
                   ...imageStyle,
-                  tintColor: currentTab?.current == 1 ? themeColors.primary_color : colors.black
+                  resizeMode: 'contain',
+                  tintColor: themeColors.primary_color
                 }} source={imagePath.icEcomHomeInactive} />
               )
             }}
-            labelStyle={{ color: currentTab?.current == 1 ? themeColors?.primary_color : colors.black }}
-            style={{
-              backgroundColor: currentTab?.current == 1 ? getColorCodeWithOpactiyNumber(
-                themeColors.primary_color.substr(1),
-                10,
-              ) : colors.white
-            }}
+            labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
           />
-         {!!userData && <DrawerItem
+          {!!userData && 
+          <DrawerItem
             label={'Order Again'}
-            onPress={() => onPressItem(navigationStrings.MY_ORDERS, 1)} //tabIndex
+            onPress={() => onPressItem(navigationStrings.ORDER_AGAIN, 2)} //tabIndex
 
             icon={({ focused }) => {
               return (
                 <Image style={{
                   ...imageStyle,
                   resizeMode: 'contain',
-                  tintColor: currentTab?.current == 2 ? themeColors.primary_color : colors.black
-                }} source={imagePath.icEcomCart} />
+                  tintColor: themeColors.primary_color
+                }} source={imagePath.icRepeat} />
               )
             }}
-            labelStyle={{ color: currentTab?.current == 2 ? themeColors?.primary_color : colors.black }}
-            style={{
-              backgroundColor: currentTab?.current == 2 ? getColorCodeWithOpactiyNumber(
-                themeColors.primary_color.substr(1),
-                10,
-              ) : colors.white
-            }}
+            labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
+
           />}
 
           {/* <DrawerItem
@@ -201,26 +192,20 @@ const CustomDrawerContent = (props) => {
             }}
           /> */}
 
-      
+
           <DrawerItem
             label={strings.WISHLIST}
             onPress={() => onPressWishList(3)} //tabIndex
-
             icon={({ focused }) => {
               return (
                 <Image style={{
                   ...imageStyle,
-                  tintColor: currentTab?.current == 3 ? themeColors.primary_color : colors.black
+                  resizeMode: 'contain',
+                  tintColor: themeColors.primary_color
                 }} source={imagePath.wishlist2} />
               )
             }}
-            labelStyle={{ color: currentTab?.current == 3 ? themeColors?.primary_color : colors.black }}
-            style={{
-              backgroundColor: currentTab?.current == 3 ? getColorCodeWithOpactiyNumber(
-                themeColors.primary_color.substr(1),
-                10,
-              ) : colors.white
-            }}
+            labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
           />
 
           <DrawerItem
@@ -230,17 +215,12 @@ const CustomDrawerContent = (props) => {
               return (
                 <Image style={{
                   ...imageStyle,
-                  tintColor: currentTab?.current == 4 ? themeColors.primary_color : colors.black
+                  resizeMode: 'contain',
+                  tintColor: themeColors.primary_color
                 }} source={imagePath.icPrivacy} />
               )
             }}
-            labelStyle={{ color: currentTab?.current == 4 ? themeColors?.primary_color : colors.black }}
-            style={{
-              backgroundColor: currentTab?.current == 4 ? getColorCodeWithOpactiyNumber(
-                themeColors.primary_color.substr(1),
-                10,
-              ) : colors.white
-            }}
+            labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
           />
 
           <DrawerItem
@@ -250,18 +230,12 @@ const CustomDrawerContent = (props) => {
               return (
                 <Image style={{
                   ...imageStyle,
-                  tintColor: currentTab?.current == 5 ? themeColors.primary_color : colors.black
+                  resizeMode: 'contain',
+                  tintColor: themeColors.primary_color
                 }} source={imagePath.icTerms} />
               )
             }}
-            labelStyle={{ color: currentTab?.current == 5 ? themeColors?.primary_color : colors.black }}
-
-            style={{
-              backgroundColor: currentTab?.current == 5 ? getColorCodeWithOpactiyNumber(
-                themeColors.primary_color.substr(1),
-                10,
-              ) : colors.white
-            }}
+            labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
           />
 
         </View>

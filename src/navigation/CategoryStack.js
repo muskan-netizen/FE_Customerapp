@@ -64,7 +64,7 @@ export default function () {
                 headerShown: false,
             }}>
             <Stack.Screen
-                component={Screens.Category}
+                component={appStyle?.homePageLayout == 10 ? Screens.EcomCategory:  Screens.Category}
                 name={navigationStrings.CATEGORY}
             />
 

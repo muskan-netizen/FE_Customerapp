@@ -140,6 +140,8 @@ export default function Products({ route, navigation }) {
   let selectedFilters = useRef(null);
   const { data } = route.params;
 
+  console.log("routerouteroute",route.params)
+
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -428,49 +430,49 @@ export default function Products({ route, navigation }) {
     navigation.navigate(navigationStrings.PRODUCTDETAIL, { data, isProductList: true })
   }
 
-  const renderSectionItem = useCallback(({item, index, section }) => {
-      return (
-        <View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: moderateScale(12) }}>
-            <Text style={{ paddingVertical: moderateScale(8), fontSize: scale(21), fontWeight: 'bold' }}>{item?.translation[0]?.name}</Text>
-            <TouchableOpacity>
-              <Text>See All</Text>
-            </TouchableOpacity>
-          </View>
-
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={item?.data}
-            ItemSeparatorComponent={() => <View style={{height: moderateScaleVertical(10)}} />}
-
-            renderItem={(props) =>
-              <ProductCardEcom
-                data={props.item}
-                index={props.index}
-                onPress={() => goToProductDetail(props.item)}
-                onAddtoWishlist={() => _onAddtoWishlist(props.item, props.index, index)}
-                addToCart={() => () => { }}
-                onIncrement={() => () => { }}
-                onDecrement={() => () => { }}
-                selectedItemID={selectedItemID}
-                btnLoader={false}
-                selectedItemIndx={selectedItemIndx}
-                differentAddsOns={differentAddsOns}
-                businessType={businessType}
-                categoryInfo={categoryInfo}
-                animateText={animateText}
-                section={section}
-                CartItems={CartItems}
-                wrapperListLoader={wrapperListLoader}
-              />
-            }
-          />
-
+  const renderSectionItem = useCallback(({ item, index, section }) => {
+    return (
+      <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: moderateScale(12) }}>
+          <Text style={{ paddingVertical: moderateScale(8), fontSize: scale(21), fontWeight: 'bold' }}>{item?.translation[0]?.name}</Text>
+          <TouchableOpacity>
+            <Text>See All</Text>
+          </TouchableOpacity>
         </View>
 
-      );
-    },
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={item?.data}
+          ItemSeparatorComponent={() => <View style={{ height: moderateScaleVertical(10) }} />}
+
+          renderItem={(props) =>
+            <ProductCardEcom
+              data={props.item}
+              index={props.index}
+              onPress={() => goToProductDetail(props.item)}
+              onAddtoWishlist={() => _onAddtoWishlist(props.item, props.index, index)}
+              addToCart={() => () => { }}
+              onIncrement={() => () => { }}
+              onDecrement={() => () => { }}
+              selectedItemID={selectedItemID}
+              btnLoader={false}
+              selectedItemIndx={selectedItemIndx}
+              differentAddsOns={differentAddsOns}
+              businessType={businessType}
+              categoryInfo={categoryInfo}
+              animateText={animateText}
+              section={section}
+              CartItems={CartItems}
+              wrapperListLoader={wrapperListLoader}
+            />
+          }
+        />
+
+      </View>
+
+    );
+  },
     [
       btnLoader,
       productListId,
@@ -779,7 +781,7 @@ export default function Products({ route, navigation }) {
               }}>{`Results (${totalProducts})`}</Text>
             </View>}
             <View style={{ flexDirection: 'row' }}>
-              {filterView()}
+              {allFilters.length > 0 ? filterView() : null}
               {SortView()}
             </View>
 
@@ -1761,6 +1763,7 @@ export default function Products({ route, navigation }) {
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
       apiData = apiData + `&category_id=${data?.categoryExist}`;
+
     }
     actions
       .getProductByVendorIdOptamizeV2(
@@ -3911,7 +3914,7 @@ export default function Products({ route, navigation }) {
           maximumPrice={maximumPrice}
           minimumPrice={minimumPrice}
           updateMinMax={updateMinMax}
-          filterData={allFilters}
+
         />
       ) : null}
 

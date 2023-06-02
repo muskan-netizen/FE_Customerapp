@@ -8,7 +8,8 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  View
+  View,
+  StyleSheet
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
@@ -39,6 +40,7 @@ import MarketCard3V2 from '../../Components/MarketCard3V2';
 import imagePath from '../../constants/imagePath';
 import HomeCategoryCard4 from '../../Components/HomeCategoryCard4';
 import SingleCategoryProducts from '../../Components/SingleCategoryProducts';
+import { Image } from 'react-native';
 
 export default function SubcategoryVendor({ navigation, route }) {
   console.log(route, 'route>>>>route');
@@ -85,7 +87,6 @@ export default function SubcategoryVendor({ navigation, route }) {
   const [subcategoryVendorData, setSubcategoryVendorData] = useState(initState);
   const [isLoading, setLoading] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState({});
-  const [isApiLoading, setApiLoading] = useState(false);
   const [selectedTabType, setSelectedTabType] = useState({});
   const [currentActiveSlider, setCurrentActiveSlider] = useState(0)
   const [flatIndex, setFlatIndex] = useState(0)
@@ -101,7 +102,6 @@ export default function SubcategoryVendor({ navigation, route }) {
 
   const getSubCategoryVendors = useCallback(() => {
     if (!isEmpty(selectedFilter)) {
-      setApiLoading(true);
     }
     let latlongObj = {};
     if (appData?.profile?.preferences?.is_hyperlocal) {
@@ -133,9 +133,9 @@ export default function SubcategoryVendor({ navigation, route }) {
     actions.getSubCategoryVendorsV2(apiData, apiHeader)
       .then((res) => {
         console.log(res, 'res>>>>>>res...res');
-        setApiLoading(false);
-        setLoading(false);
         setSubcategoryVendorData(res?.data);
+        setLoading(false);
+
       })
       .catch(errorMethod);
   }, [selectedFilter]);
@@ -143,7 +143,6 @@ export default function SubcategoryVendor({ navigation, route }) {
   //Error handling in screen
   const errorMethod = useCallback((error) => {
     console.log("error raised", error)
-    setApiLoading(false);
     setLoading(false);
     showError(error?.message || error?.error);
   }, [selectedTabType, paramData]);
@@ -445,22 +444,22 @@ export default function SubcategoryVendor({ navigation, route }) {
           </View>
           {horizontalLine()}
           {/* <FlatList
-            horizontal
-            // data={subcategoryVendorData?.mobile_banners}
-            data={[{},{}]}
-            keyExtractor={(item, index) => String(index)}
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderBanners}
-            ItemSeparatorComponent={() => (
-              <View style={{ marginRight: moderateScale(12) }} />
-            )}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(16) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginRight: moderateScale(16) }} />
-            )}
-          /> */}
+          horizontal
+          // data={subcategoryVendorData?.mobile_banners}
+          data={[{},{}]}
+          keyExtractor={(item, index) => String(index)}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderBanners}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginRight: moderateScale(12) }} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{ marginLeft: moderateScale(16) }} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{ marginRight: moderateScale(16) }} />
+          )}
+        /> */}
         </View> : null}
       </View>
     )
@@ -488,8 +487,13 @@ export default function SubcategoryVendor({ navigation, route }) {
       width: 250
     })
     return (
-      <Pressable onPress={() => onPressVendor(data)} style={{ width: width / 3 }}>
-        <View style={{ borderRadius: 8, alignItems: 'center' }}>
+      <Pressable onPress={() => onPressVendor(data)}
+        style={{ width: width / 3, marginBottom: moderateScaleVertical(10) }}>
+        <View style={{
+          borderRadius: moderateScale(8),
+          marginLeft: moderateScale(12),
+          width: moderateScale(115),
+        }}>
           <FastImage
             source={{
               uri: imageUrl,
@@ -497,9 +501,9 @@ export default function SubcategoryVendor({ navigation, route }) {
               cache: FastImage.cacheControl.immutable,
             }}
             style={{
-              width: moderateScale(100),
-              height: moderateScale(100),
-              borderRadius: 8
+              width: moderateScale(115),
+              height: moderateScale(115),
+              borderRadius: moderateScale(8)
             }}
             resizeMode={FastImage.resizeMode.cover}
           />
@@ -508,7 +512,7 @@ export default function SubcategoryVendor({ navigation, route }) {
             style={{
               ...styles.vendorText,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              textAlign: 'center'
+
             }}>
             {data.name}
           </Text>
@@ -619,13 +623,9 @@ export default function SubcategoryVendor({ navigation, route }) {
       <View
         key={String(item?.id || '')}
         style={{
-          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : 'rgba(222,236,249,1)',
-          paddingVertical: moderateScaleVertical(8),
-          marginTop: moderateScaleVertical(8)
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
         }}>
-
-
-        <View style={{ ...styles.viewAllVeiw }}>
+        <View style={{ ...styles.viewAllVeiw, marginBottom: moderateScale(12) }}>
           <Text
             numberOfLines={1}
             style={{
@@ -653,16 +653,16 @@ export default function SubcategoryVendor({ navigation, route }) {
           })}
 
           {/* <FlatList
-            alwaysBounceVertical={true}
-            data={item?.data || []}
-            keyExtractor={(item, index) => String(item?.id + `${index}`)}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderVendors}
-            ListEmptyComponent={listEmptyComponent}
-            ItemSeparatorComponent={() => (
-              <View style={{ height: moderateScale(10) }} />
-            )}
-          /> */}
+          alwaysBounceVertical={true}
+          data={item?.data || []}
+          keyExtractor={(item, index) => String(item?.id + `${index}`)}
+          showsHorizontalScrollIndicator={false}
+          renderItem={_renderVendors}
+          ListEmptyComponent={listEmptyComponent}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: moderateScale(10) }} />
+          )}
+        /> */}
         </View>
       </View>
     ) : (
@@ -713,16 +713,16 @@ export default function SubcategoryVendor({ navigation, route }) {
         </View>
         {/* <FlatList
 
-          data={item?.data}
-          numColumns={3}
+        data={item?.data}
+        numColumns={3}
 
-          keyExtractor={(item, index) => String(item?.id + `${index}`)}
-          showsHorizontalScrollIndicator={false}
-          renderItem={_renderCategories}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScale(8) }} />
-          )}
-        /> */}
+        keyExtractor={(item, index) => String(item?.id + `${index}`)}
+        showsHorizontalScrollIndicator={false}
+        renderItem={_renderCategories}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: moderateScale(8) }} />
+        )}
+      /> */}
       </View>
     ) : (
       <React.Fragment />
@@ -893,9 +893,11 @@ export default function SubcategoryVendor({ navigation, route }) {
   const renderHomePageItems = useCallback(({ item, index }) => {
     let uniqueId = String(item?.id || index)
     return (
-      <View key={uniqueId}>
+      <View key={uniqueId}
+      style={{marginBottom:moderateScaleVertical(12)}}
+      >
         {
-          item?.slug == 'banner' ? (
+          item?.slug == 'banners' ? (
             <BannersView
               item={item}
               showTitle={false}
@@ -956,98 +958,69 @@ export default function SubcategoryVendor({ navigation, route }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor }}>
-      {isLoading ?
-        <Animatable.View animation={'fadeIn'} easing={'ease-in-out-sine'} style={{ flex: 1 }}>
-          <CompLoader
-            navigation={navigation}
-            isDarkMode={memorizedIsDarkMode}
-            appStyle={memorizedAppStyle}
-            themeColors={memorizedThemeColors}
-          />
-        </Animatable.View> :
-        <>
-          <Animatable.View animation={'fadeIn'} easing={'ease-in-out-sine'} style={{ flex: 1 }}>
-            <Ecomheader
-              isDarkMode={memorizedIsDarkMode}
-              navigation={navigation}
-              style={{ marginVertical: moderateScaleVertical(16) }}
-              themeColors={memorizedThemeColors}
-              appStyle={memorizedAppStyle}
+
+      <Animatable.View style={{ flex: 1 }}>
+        <Ecomheader
+          isDarkMode={memorizedIsDarkMode}
+          navigation={navigation}
+          style={{ marginVertical: moderateScaleVertical(16) }}
+          themeColors={memorizedThemeColors}
+          appStyle={memorizedAppStyle}
+        />
+
+        {!!dataProvider && !isEmpty(dataProvider) ?
+          <View style={{ flexDirection: 'row', backgroundColor: colors.white }}>
+            <ScrollView 
+            scrollEnabled
+            style={{
+              width: width / 2.8,
+              borderRightWidth: 0.5,
+              borderRightColor: colors.grayOpacity51,
+              // height: height
+            }}>
+              <View style={{}}>
+                {dataProvider.map((val, i) => {
+                  if (isEmpty(val?.data)) {
+                    return (
+                      <></>
+                    )
+                  }
+                  return (
+                    <TouchableOpacity
+                      key={String(i)}
+                      onPress={() => goToPosition(i)}
+                      style={{
+                        backgroundColor: i == flatIndex ? themeColors?.primary_color : colors.white,
+                        paddingHorizontal: moderateScale(6),
+                        height: moderateScale(50),
+                        justifyContent: 'center',
+                      }}>
+                      <Text style={{
+                        fontSize: textScale(10),
+                        textTransform: 'uppercase',
+                        fontFamily:fontFamily.regular,
+                        color: i == flatIndex ? colors.white : colors.black,
+                        textAlign:'center'
+                      }}>{val?.title == 'NavCategories' ? 'Categories' : val?.title}</Text>
+                    </TouchableOpacity>
+                  )
+                })}
+              </View>
+            </ScrollView>
+
+            <FlatList
+              ref={parentFlatRef}
+              data={dataProvider}
+              extraData={dataProvider}
+              renderItem={renderHomePageItems}
+              keyExtractor={keyExtractorUnique}
+              onScrollToIndexFailed={() => console.log("on indexFailed")}
+              contentContainerStyle={{ paddingTop: moderateScaleVertical(8) }}
+              ListFooterComponent={() => <View style={{ height: height / 3 }} />}
             />
 
-            {!!dataProvider && !isEmpty(dataProvider) ?
-              <View style={{ flexDirection: 'row', backgroundColor: colors.white }}>
-
-                {true ?
-
-
-                  <ScrollView style={{
-                    width: width / 2.4,
-                    borderRightWidth: 0.5,
-                    borderRightColor: colors.grayOpacity51,
-                    height: height
-                  }}>
-                    <View style={{}}>
-                      {dataProvider.map((val, i) => {
-                        if (isEmpty(val?.data)) {
-                          return (
-                            <></>
-                          )
-                        }
-                        return (
-                          <TouchableOpacity
-                            key={String(i)}
-                            onPress={() => goToPosition(i)}
-                            style={{
-                              backgroundColor: i == flatIndex ? themeColors?.primary_color : colors.white,
-                              paddingHorizontal: moderateScale(8),
-
-                              height: 62,
-
-                              justifyContent: 'center',
-                            }}>
-                            <Text style={{
-                              fontSize: textScale(10),
-                              textTransform: 'uppercase',
-                              fontFamily: i == flatIndex ? fontFamily.medium : fontFamily.regular,
-                              color: i == flatIndex ? colors.white : colors.black,
-                            }}>{val?.title == 'NavCategories' ? 'Categories' : val?.title}</Text>
-                          </TouchableOpacity>
-                        )
-                      })}
-                    </View>
-                  </ScrollView> : null}
-                <FlatList
-
-                  ref={parentFlatRef}
-                  data={dataProvider}
-                  extraData={dataProvider}
-                  renderItem={renderHomePageItems}
-                  keyExtractor={keyExtractorUnique}
-                  onScrollToIndexFailed={() => console.log("on indexFailed")}
-                  // refreshControl={
-                  //   <RefreshControl
-                  //     refreshing={isRefreshing}
-                  //     onRefresh={handleRefresh}
-                  //     tintColor={themeColors.primary_color}
-                  //   />
-                  // }
-                  // ListHeaderComponent={ListHeaderComponent}
-                  ListFooterComponent={() => <View
-                    style={{
-                      height:
-                        moderateScale(80)
-                    }}
-                  />
-                  }
-                />
-              </View> : null}
-
-
-
-          </Animatable.View>
-        </>
-      }
+          </View> : null}
+      </Animatable.View>
     </View>
   );
 }
@@ -1117,7 +1090,7 @@ const TitleViewHome = ({
       textAlign: 'left',
       color: isDarkMode ? colors.white : colors.black,
       marginHorizontal: moderateScale(16),
-      marginVertical: moderateScaleVertical(6),
+      marginBottom: moderateScaleVertical(12),
       ...textStyle
     }}>
 

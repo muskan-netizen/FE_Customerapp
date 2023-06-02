@@ -34,7 +34,7 @@ const ShortCode: FC = () => {
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
     // 6ca3a4 -> emart
-    const appCode = 'f34c51'
+    const appCode = '6ca3a4'
     
 
     let header = {};

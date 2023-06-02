@@ -215,14 +215,14 @@ const DashBoardFiveV2Api = ({
             alignItems: 'center',
             justifyContent: 'space-between',
             marginHorizontal: moderateScale(16),
-            marginBottom: moderateScaleVertical(15),
+            marginVertical: moderateScaleVertical(16),
           }}>
             <Text
               numberOfLines={1}
               style={{
                 ...styles.exploreStoresTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-
+                marginTop: 0,
                 flex: 1,
               }}>
               {getBundleId() == appIds.quickLube
@@ -232,22 +232,6 @@ const DashBoardFiveV2Api = ({
                 : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
             </Text>
 
-            {item?.data?.length > 1 && (
-              <TouchableOpacity
-                style={{ marginHorizontal: moderateScale(4) }}
-                onPress={() => onViewAll('vendor', appMainData?.vendors)}>
-                <Text
-                  style={{
-                    ...styles.viewAllText,
-                    marginRight: moderateScale(4),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : themeColors.primary_color,
-                  }}>
-                  {strings.VIEW_ALL}
-                </Text>
-              </TouchableOpacity>
-            )}
 
             {<Menu style={{ alignSelf: 'flex-end' }}>
               <MenuTrigger>
@@ -954,6 +938,30 @@ const DashBoardFiveV2Api = ({
             ItemSeparatorComponent={() => (
               <View style={{ height: moderateScale(10) }} />
             )}
+            ListFooterComponent={() => {
+              return (
+                <View style={{
+                  alignSelf: 'center', marginTop: moderateScaleVertical(8),
+                  borderBottomWidth: 1,
+                  borderBottomColor: themeColors?.primary_color
+                }}>
+                  {item?.data?.length > 1 && (
+                    <TouchableOpacity
+                      onPress={() => onViewAll('vendor', appMainData?.vendors)}>
+                      <Text
+                        style={{
+                          ...styles.viewAllText,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : themeColors.primary_color,
+                        }}>
+                        {strings.VIEW_ALL}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )
+            }}
           />
         </View>
       </View>
@@ -1061,7 +1069,6 @@ const DashBoardFiveV2Api = ({
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
     >
-     {appStyle?.homePageLayout == 10 ? <StatusBar backgroundColor={themeColors?.primary_color} />: null}
       {showAllTempCartOrders()}
 
       {!!dataProvider && !isEmpty(dataProvider) ?
@@ -1223,7 +1230,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
         item={item}
         isDarkMode={isDarkMode}
         appStyle={appStyle}
-        textStyle={{ fontFamily: fontFamily?.medium }}
+      
       />
       <FlatList
         showsHorizontalScrollIndicator={false}

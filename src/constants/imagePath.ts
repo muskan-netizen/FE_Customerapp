@@ -597,6 +597,7 @@ export default {
   icEcomHomeInactive: require('../assets/images/Ecommerce/ic_home_02.png'),
   icEcomCart: require('../assets/images/Ecommerce/ic_cart_01.png'),
   icEcomCartInactive: require('../assets/images/Ecommerce/ic_cart_02.png'),
+  icRepeat: require('../assets/images/Ecommerce/ic_repeat_02.png'),
   icEcomCeleb: require('../assets/images/Ecommerce/ic_celebrity_01.png'),
   icEcomCelebInactive: require('../assets/images/Ecommerce/ic_celebrity_02.png'),
   icEcomBrand: require('../assets/images/Ecommerce/ic_brand_01.png'),

@@ -53,6 +53,7 @@ import {
   ViewAllSearchItems,
   Wishlist,
   Wishlist2,
+  EcomOrderAgain
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -298,6 +299,10 @@ export default function () {
 <Stack.Screen
         name={navigationStrings.HOME_TEMP_3}
         component={HomeTemplate3}
+      />
+      <Stack.Screen
+        name={navigationStrings.ORDER_AGAIN}
+        component={EcomOrderAgain}
       />
 
     </Stack.Navigator>

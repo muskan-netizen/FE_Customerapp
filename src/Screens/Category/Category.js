@@ -153,6 +153,8 @@ export default function Category({ navigation, route }) {
       <BrandCard3
         data={item}
         onPress={() => onPressCategory(item)}
+        imageHeight={80}
+        imageWidth={80}
       />
     )
   }, [!!allCategories && allCategories?.data || []])

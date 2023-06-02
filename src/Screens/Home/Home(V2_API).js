@@ -577,24 +577,7 @@ export default function Home({ route, navigation }) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
           openUber();
         } else {
-          // if (item?.warning_page_id) {
-          //   if (item?.warning_page_id == 2) {
-          //     moveToNewScreen(navigationStrings.DELIVERY, item)();
-          //   } else {
-          //     moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          //   }
-          // } else {
-          //   if (item?.template_type_id == 1) {
-          //     moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
-          //   } else {
-          //     item['pickup_taxi'] = true;
-
-          //     // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-          //     moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
-          //   }
-          // }
           item['pickup_taxi'] = true;
-          // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
@@ -623,7 +606,6 @@ export default function Home({ route, navigation }) {
           isVendorList: true,
           fetchOffers: true,
         })();
-
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
@@ -1252,7 +1234,6 @@ export default function Home({ route, navigation }) {
       isLoading={searchDataLoader}
       isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 ? false : true}
     >
-        {appStyle?.homePageLayout == 10 ? <StatusBar backgroundColor={themeColors?.primary_color} />: null}
       <>{renderHomeScreen()}</>
       <LaundryAddonModal
         isVisible={isLaundryAddonModal}
