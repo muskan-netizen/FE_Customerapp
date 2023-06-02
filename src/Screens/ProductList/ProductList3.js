@@ -150,6 +150,7 @@ export default function Products({ route, navigation }) {
   const [listHeight, setListHeight] = useState(height / 3.2);
 
   const [checkSloatLoading, setCheckSloatLoading] = useState(false);
+  const [apiPageNo, setApiPageNo] = useState(1)
   const [state, setState] = useState({
     sortFilters: filtersData,
     searchInput: '',
@@ -2188,6 +2189,7 @@ export default function Products({ route, navigation }) {
         updateState({
           lastPage: res.data.listData?.last_page,
         });
+        setApiPageNo(res?.data?.listData?.current_page)
         // getAllVendorFilters()
         // updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
         if (res?.data?.listData?.current_page < res.data?.listData?.last_page) {
@@ -2347,7 +2349,7 @@ export default function Products({ route, navigation }) {
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
     if (loadMore) {
-      if (pageNo < lastPage) {
+      if (pageNo < lastPage && pageNo === apiPageNo) {
         updateState({ pageNo: pageNo + 1 });
         getAllListItems(pageNo + 1);
         setLoading(false);
