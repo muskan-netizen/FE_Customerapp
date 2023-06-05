@@ -66,7 +66,7 @@ const Reccuring = ({
     period = {},
     disabledDaysIndexes = [],
     selectedDaysIndexes = [],
-    date = new Date(),
+    recurringDate = new Date(),
     showDateTimeModal = false,
     slectedDate = new Date(),
     updateAddonState = () => { },
@@ -125,7 +125,7 @@ const Reccuring = ({
             period: {},
             disabledDaysIndexes: [],
             selectedDaysIndexes: [],
-            date: new Date(),
+            recurringDate: new Date(),
             showDateTimeModal: false,
             slectedDate: new Date(),
         })
@@ -303,6 +303,22 @@ const Reccuring = ({
                                                 {endTimeStamp ? moment(endTimeStamp).format('MM/DD/YY') : 'Select Date'}
                                             </Text>
                                         </View>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Text style={{ ...styles.dateText, marginRight: moderateScale(48) }}>
+                                                Select Time:
+                                            </Text>
+                                            <TouchableOpacity
+                                                onPress={_selectTime}
+                                                style={{ flexDirection: 'row', borderWidth: moderateScale(0.2), paddingRight: moderateScale(15) }}>
+                                                <Image source={imagePath.clock} style={{ marginRight: moderateScale(8), alignSelf: 'center', marginLeft: moderateScale(4), }} />
+                                                <Text style={{
+                                                    ...styles.productName, textAlign: 'center', fontFamily: fontFamily.medium,
+                                                    fontSize: textScale(12), marginVertical: moderateScaleVertical(4),
+                                                }}>
+                                                    {recurringDate ? moment(recurringDate).format('LT') : 'Select Time'}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
                                     : selectedPlanValues === 'Weekly' ?
                                         <View style={{ alignItems: 'flex-start' }}>
@@ -384,20 +400,20 @@ const Reccuring = ({
                                                 {`Select Day(s) for monthly delivery`}
                                             </Text>
                                             {/* <BorderTextInputWithLable
-                        label={'Select end Year and Month'}
-                        labelStyle={{
-                          fontFamily: fontFamily.regular,
-                          fontSize: textScale(12),
-                        }}
-                        textViewOnly={true}
-                        value={moment(slectedDate).format('YYYY-MM-DD')}
-                        disabled={false}
-                        mainStyle={{ zIndex: -1000, marginTop: moderateScaleVertical(10) }}
-                        onPress={openDateAndTimeModal('slectedDate')}
-                        onPressRight={openDateAndTimeModal('slectedDate')}
-                        rightIcon={imagePath.ic_calendar}
-                        tintColor={colors.blackB}
-                      /> */}
+                                                label={'Select end Year and Month'}
+                                                labelStyle={{
+                                                    fontFamily: fontFamily.regular,
+                                                    fontSize: textScale(12),
+                                                }}
+                                                textViewOnly={true}
+                                                value={moment(slectedDate).format('YYYY-MM-DD')}
+                                                disabled={false}
+                                                mainStyle={{ zIndex: -1000, marginTop: moderateScaleVertical(10) }}
+                                                onPress={openDateAndTimeModal('slectedDate')}
+                                                onPressRight={openDateAndTimeModal('slectedDate')}
+                                                rightIcon={imagePath.ic_calendar}
+                                                tintColor={colors.blackB}
+                                            /> */}
                                         </View>
                             }
                         </View>
@@ -833,15 +849,25 @@ const Reccuring = ({
     };
 
     const _onDateChange = (date) => {
-        updateAddonState({ slectedDate: date, date: date, showDateTimeModal: false });
+        updateAddonState({ slectedDate: date, recurringDate: date, showDateTimeModal: false });
     };
 
     const _selectTime = () => {
-        updateAddonState({ showDateTimeModal: false });
+        updateAddonState({ showDateTimeModal: !showDateTimeModal });
     };
     return (
         <View style={{ flex: 1 }}>
             {ShowReccuringView()}
+            <DatePicker
+                modal={true}
+                open={showDateTimeModal}
+                date={new Date()}
+                textColor={isDarkMode ? colors.white : colors.blackB}
+                mode="time"
+                // minimumDate={new Date()}
+                onCancel={_selectTime}
+                onConfirm={(value) => _onDateChange(value)}
+            />
         </View>
     );
 };
