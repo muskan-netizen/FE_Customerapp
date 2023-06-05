@@ -38,16 +38,14 @@ import { setItem } from '../../utils/utils';
 import RoundImg from '../../Components/RoundImg';
 import FooterLoader from '../../Components/FooterLoader';
 import styles from './styles';
-import CircularLoader from '../../Components/Loaders/CircularLoader';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
 import { getCurrentLocation } from '../../utils/helperFunctions';
 import { useFocusEffect } from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
-import { getBundleId } from 'react-native-device-info';
-import Vi from '../../constants/lang/vi';
 import { isEmpty } from 'lodash';
 import { enableFreeze } from "react-native-screens";
+import HorizontalLine from '../../Components/HorizontalLine';
+import { UIActivityIndicator } from 'react-native-indicators';
 enableFreeze(true);
 
 let isNoMore = false;
@@ -208,6 +206,26 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     })
       .then((response) => {
         console.log('res==>>>>++ search', response);
+        const planeArry = []
+        response.data.map((val, i) => {
+          val.result.map((item, i) => {
+            planeArry.push({
+              type: item?.response_type,
+              id: item?.id,
+              name: item?.name || item?.translation[0]?.title
+            })
+          })
+        })
+
+        console.log('res==>>>>++ planeArry', planeArry);
+        updateState({
+          searchData: planeArry,
+          isLoading: false,
+          isLoadMore: false,
+          showShimmer: false,
+        });
+
+        return;
         if (response.data.length == 0) {
           isNoMore = true;
         }
@@ -499,15 +517,15 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           }}
         />
         <Text
-        numberOfLines={2}
+          numberOfLines={2}
           style={{
             fontFamily: fontFamily.regular,
             fontSize: textScale(12),
             marginHorizontal: moderateScale(8),
             color: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.black,
-            textAlign:'justify'
+              ? MyDarkTheme.colors.text
+              : colors.black,
+            textAlign: 'justify'
           }}>
           {item?.dataname || item?.title || item?.name}
         </Text>
@@ -515,84 +533,47 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     );
   };
 
-  const onPresItem = (item) =>{
-    console.log("pressed item+++",item)
-    navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM,{
-      view_type: item?.title.toLowerCase(),
-      searchText: searchInput
+  const onPresItem = (item) => {
+    navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM, {
+      view_type: item?.type,
+      searchText: item?.name.toLowerCase(),
     })
   }
 
   const renderProduct = ({ item, index }) => {
     return (
-      <View
+      <TouchableOpacity
         key={String(item?.id || index)}
-        style={{
-          flex: 1,
-          flexDirection: 'row',
+        onPress={() => onPresItem(item)}
+      >
+        <View style={{
+          flexDirection: "row",
           alignItems: 'center',
-          marginHorizontal: moderateScale(20),
+          paddingHorizontal: moderateScale(8)
         }}>
-        {!!item?.image_url && (
-          <RoundImg
-            img={item?.image_url}
-            size={35}
-            isDarkMode={isDarkMode}
-            MyDarkTheme={MyDarkTheme}
-          />
-        )}
-        <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
-
-          <View style={{flexDirection:"row",alignItems:'center',justifyContent:'space-between'}}>
+            <View style={{flex:0.08}}>
+          <Image source={imagePath.icSearchb} />
+          </View>
+          <View style={{flex:0.8}}>
           <Text
             numberOfLines={1}
             style={{
-              fontSize: textScale(13),
+              fontSize: textScale(12),
               fontFamily: fontFamily.bold,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {item?.dataname || item?.title || item?.name}
-          </Text>
-            {
-              //!!item?.next_page_url > 1
-            }
-          {true ?<TouchableOpacity
-          activeOpacity={0.7}
-          onPress={()=>onPresItem(item)}
+            }}
           >
-            <Text style={{
-                 fontSize: textScale(12),
-                 fontFamily: fontFamily?.medium,
-                 color: themeColors?.primary_color,
-            }}>{strings.VIEW_ALL}</Text>
-          </TouchableOpacity>:null}
+            {item?.name || ''}
+          </Text>
           </View>
-          <View
-            style={{
-              marginLeft: moderateScale(10),
-            }}>
-            <FlatList
-              data={item?.result}
-              renderItem={renderSearchResults}
-              ListHeaderComponent={() => (
-                <View
-                  style={{
-                    height: moderateScaleVertical(10),
-                  }}
-                />
-              )}
-              ItemSeparatorComponent={() => (
-                <View
-                  style={{
-                    height: moderateScaleVertical(6),
-                  }}
-                />
-              )}
-              keyExtractor={(item, index) => String(item?.id || index)}
-            />
+          <View style={{flex:0.1,alignItems:'flex-end'}}>
+          <Image style={{
+            transform: [{ rotate: '-60deg' }],
+          tintColor: colors.grayOpacity51
+          }} source={imagePath.searchArrow} />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -763,21 +744,9 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
 
         <View style={{ flex: 1 }}>
           {showShimmer ? (
-            <View
-              style={{
-                flex: 1,
-                marginHorizontal: moderateScale(20),
-                marginTop: moderateScaleVertical(24),
-              }}>
-              {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}].map(() => {
-                return (
-                  <ContentLoader style={{ height: moderateScale(54) }}>
-                    <Circle cx="20" cy="20" r="20" />
-                    <Rect x="50" y="14" rx="2" ry="2" width="100" height="8" />
-                  </ContentLoader>
-                );
-              })}
-            </View>
+            <View style={{flex:0.5, alignItems:'center',justifyContent:'center'}}>
+                <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
+              </View>
           ) : (
             <FlatList
               data={searchData}
@@ -788,7 +757,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               style={{ flex: 1 }}
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(20) }} />
+                <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(8) }} />
               )}
               // onEndReached={onEndReached}
               ListHeaderComponent={() => (

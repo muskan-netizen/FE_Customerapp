@@ -73,6 +73,7 @@ import * as RNLocalize from 'react-native-localize';
 import Reccuring from '../../Components/Reccuring';
 import { enableFreeze } from "react-native-screens";
 import ProductsComp3 from '../../Components/ProductsComp3';
+import { ProductDetailInterface } from './interfaces';
 enableFreeze(true);
 
 
@@ -91,7 +92,7 @@ export default function ProductDetail({ route, navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
-    useSelector((state) => state?.initBoot);
+    useSelector((state) => state?.initBoot || {});
   const {
     additional_preferences,
     digit_after_decimal,
@@ -106,7 +107,19 @@ export default function ProductDetail({ route, navigation }) {
   const { data, isProductList = false } = route.params;
 
 
-  const [productDetails, setProductDetails] = useState()
+  const [productDetails, setProductDetails] = useState<ProductDetailInterface>({
+    coupon_list: [],
+    relatedProducts: [],
+    products: {
+      add_on: [],
+      variant: [],
+      category: {},
+      vendor: {},
+      sku: '',
+      minimum_order_count: 0,
+      translation: []
+    }
+  })
 
 
   const [state, setState] = useState({
@@ -272,7 +285,7 @@ export default function ProductDetail({ route, navigation }) {
     })
   }
 
-  let plainHtml = productDetailData?.translation[0]?.body_html || null;
+  let plainHtml = productDetails?.products.translation[0]?.body_html || null;
 
 
   useFocusEffect(
@@ -333,9 +346,9 @@ export default function ProductDetail({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log('res getProductDetail', res?.data?.products.variant_set);
+        console.log('res getProductDetail', res?.data);
 
-
+        setProductDetails(res.data)
 
         updateState({
           offersList: res?.data?.coupon_list,
@@ -408,7 +421,7 @@ export default function ProductDetail({ route, navigation }) {
     console.log('api hit getProductDetailBasedOnFilter', data);
 
     actions
-      .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
+      .getProductDetailByVariants(`/${productDetails.products.sku}`, data, {
         code: appData.profile.code,
         currency: currencies.primary_currency.id,
         language: languages.primary_language.id,
@@ -3179,7 +3192,7 @@ export default function ProductDetail({ route, navigation }) {
               color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
               marginLeft: moderateScale(8),
             }}>
-            Similar product by {productDetailNew?.vendor?.name}
+            Similar product by {productDetails?.products?.vendor?.name}
           </Text>
           <FlatList
             data={(!state.isLoading && suggestedVendorProducts) || []}
@@ -3201,7 +3214,7 @@ export default function ProductDetail({ route, navigation }) {
         </View> : null}
 
 
-        {!!productDetailData && !!productDetailData?.reviews ? <View>
+        {!!productDetails?.products && !!productDetails?.products?.reviews ? <View>
           <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
@@ -3209,20 +3222,20 @@ export default function ProductDetail({ route, navigation }) {
                 disabled={false}
                 maxStars={5}
                 rating={parseInt(
-                  Number(productDetailData?.averageRating).toFixed(1),
+                  Number(productDetails?.products?.averageRating).toFixed(1),
                 )}
                 fullStarColor={colors.yellowB}
                 starSize={12}
                 containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
               />
               <Text>({parseInt(
-                Number(productDetailData?.averageRating).toFixed(1),
+                Number(productDetails?.products?.averageRating).toFixed(1),
               )} out of 5)</Text>
             </View>
-            <Text>{productDetailData?.reviews.length} global rating</Text>
+            <Text>{productDetails?.products?.reviews.length} global rating</Text>
           </View>
           <FlatList
-            data={(!state.isLoading && productDetailData?.reviews) || []}
+            data={(!state.isLoading && productDetails?.products?.reviews) || []}
             renderItem={renderreviews}
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"

@@ -3853,7 +3853,6 @@ export default function Products({ route, navigation }) {
 
         :
         <>
-          {console.log("second")}
           <FlatList
             // onScroll={onScroll}
             numColumns={2}
@@ -3956,30 +3955,7 @@ export default function Products({ route, navigation }) {
         }
       /> : null}
 
-      {/* <Modal isVisible={false} style={{margin: 0}}>
-
-  <View style={{flex:1, backgroundColor: isDarkMode? MyDarkTheme.colors.background: colors.white}}>
-  <SafeAreaView>
-    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-        <Text>Filters</Text>
-        <Text>Close</Text>
-    </View>
-    {horizontalLine()}
-
-    <ScrollView>
-      {Array.from({ length:5 }, (_, index) => index).map((val,i)=>{
-        return(
-          <View>
-            <Text>{i}</Text>
-          </View>
-        )
-      })}
-
-    </ScrollView>
-    </SafeAreaView>
-  </View>
-
-</Modal> */}
+    
 
     </View>
   );
