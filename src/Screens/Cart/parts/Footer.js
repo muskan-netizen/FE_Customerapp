@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {
   moderateScale,
@@ -29,7 +29,7 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import strings from '../../../constants/lang';
 
 function Footer(props) {
-  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '',setVendorComment=null } = props;
+  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', setVendorComment = null } = props;
 
   return (
     <View style={{}}>
@@ -1319,7 +1319,6 @@ function Footer(props) {
           </TouchableOpacity>
         )
       }
-
       {
         !!(
           cartData?.deliver_status || cartData?.closed_store_order_scheduled
@@ -1365,15 +1364,16 @@ function Footer(props) {
                   }}
                 />
               )}
-
-            <ButtonComponent
-              onPress={placeOrder}
-              btnText={strings.PLACE_ORDER}
-              borderRadius={moderateScale(13)}
-              textStyle={{ color: colors.white }}
-              containerStyle={styles.placeOrderButtonStyle}
-              placeLoader={placeLoader}
-            />
+            {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate)) && (
+              <ButtonComponent
+                onPress={placeOrder}
+                btnText={strings.PLACE_ORDER}s
+                borderRadius={moderateScale(13)}
+                textStyle={{ color: colors.white }}
+                containerStyle={styles.placeOrderButtonStyle}
+                placeLoader={placeLoader}
+              />
+            )}
           </View>
         ) : cartData?.cart_error_message ? (
           <View style={styles.cartErrorMessageContainer}>
