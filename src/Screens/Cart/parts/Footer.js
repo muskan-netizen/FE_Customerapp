@@ -1319,8 +1319,6 @@ function Footer(props) {
           </TouchableOpacity>
         )
       }
-      {console.log(isEmpty(localeSheduledOrderDate), "dineInTypedineInType")}
-      {console.log(appData?.profile?.preferences?.off_scheduling_at_cart, "dineInTypedineInTypeprefre")}
       {
         !!(
           cartData?.deliver_status || cartData?.closed_store_order_scheduled
@@ -1366,29 +1364,16 @@ function Footer(props) {
                   }}
                 />
               )}
-
-            {getBundleId() == appIds.Waoo ?
-              (!appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate)) ?
-                null 
-                : <ButtonComponent
-                  onPress={placeOrder}
-                  btnText={strings.PLACE_ORDER}
-                  borderRadius={moderateScale(13)}
-                  textStyle={{ color: colors.white }}
-                  containerStyle={styles.placeOrderButtonStyle}
-                  placeLoader={placeLoader}
-                /> 
-                : (
-                <ButtonComponent
-                  onPress={placeOrder}
-                  btnText={strings.PLACE_ORDER}
-                  borderRadius={moderateScale(13)}
-                  textStyle={{ color: colors.white }}
-                  containerStyle={styles.placeOrderButtonStyle}
-                  placeLoader={placeLoader}
-                />
-              )
-            }
+            {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate)) && (
+              <ButtonComponent
+                onPress={placeOrder}
+                btnText={strings.PLACE_ORDER}s
+                borderRadius={moderateScale(13)}
+                textStyle={{ color: colors.white }}
+                containerStyle={styles.placeOrderButtonStyle}
+                placeLoader={placeLoader}
+              />
+            )}
           </View>
         ) : cartData?.cart_error_message ? (
           <View style={styles.cartErrorMessageContainer}>
