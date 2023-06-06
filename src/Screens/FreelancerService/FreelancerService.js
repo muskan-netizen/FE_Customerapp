@@ -63,9 +63,21 @@ const FreelancerService = ({ route, navigation }) => {
             "18:40 - 20:42",
         ], menuOpened: false, OrderOptionsType: 2,
         OrderOptionsTypeSelected: true,
+        isBookingTypeMenu: false,
+        selectedBookingType: {
+            id: 1,
+            name: "Book Now"
+        },
+        bookingTypes: [{
+            id: 1,
+            name: "Book Now"
+        }, {
+            id: 2,
+            name: "Schedule"
+        }]
     });
     const { pageNo, focused, selectedService, selectedVariant, openDateTimePicker,
-        serviceDateTime, isVisibleAddressModal, selectViaMap, isVisible, serviceTimeSlot, timeSlots, menuOpened, OrderOptionsTypeSelected, OrderOptionsType } = state;
+        serviceDateTime, isVisibleAddressModal, selectViaMap, isVisible, serviceTimeSlot, timeSlots, menuOpened, OrderOptionsTypeSelected, OrderOptionsType, isBookingTypeMenu, selectedBookingType, bookingTypes } = state;
 
     const updateState = (data) => { setState((state) => ({ ...state, ...data })) };
 
@@ -237,20 +249,25 @@ const FreelancerService = ({ route, navigation }) => {
         if (isEmpty(selectedService)) {
             return showError("Service and it's Variant should not be empty");
         }
-        if (!serviceDateTime || isEmpty(serviceTimeSlot)) {
-            return showError("Service Date and Time should not be empty");
+        if (selectedBookingType?.id == 2) {
+
+            if (!serviceDateTime || isEmpty(serviceTimeSlot)) {
+                return showError("Service Date and Time should not be empty");
+            }
         }
         if (isEmpty(selectedAddress)) {
             return showError("Service Address should not be empty");
         }
-        const item = {
+        let item = {
             "variant_id": selectedService?.variant[0].id,
             "address_id": selectedAddress?.id,
-            "bookingdateTime": moment(serviceDateTime).format("YYYY-MM-DD"),
-            "slot": serviceTimeSlot?.value,
             "sku": selectedService?.variant[0]?.sku,
-            "qty": selectedService?.qtyText
+            "qty": selectedService?.qtyText,
+            "booking_option": selectedBookingType?.id,
+            "slot": selectedBookingType?.id == 2 ? serviceTimeSlot?.value : serviceTimeSlot?.value,
+            "bookingdateTime": selectedBookingType?.id == 2 ? moment(serviceDateTime).format("YYYY-MM-DD") : moment(new Date()).format("YYYY-MM-DD HH:mm")
         }
+
         moveToNewScreen(navigationStrings.AVAILABLE_TECHNICIANS, item)()
     }
 
@@ -508,82 +525,157 @@ const FreelancerService = ({ route, navigation }) => {
                 </View>
 
 
-                <View style={styles.timeView}>
-                    <Text>{strings.SELECT_TIME}</Text>
-                </View>
+
                 <View style={styles.datePickerView}>
-                    <View style={styles.pickerStyle}>
-                        <Text style={[styles.textStyleTime]}>{strings.DATE}:</Text>
-                        <TouchableOpacity style={styles.pickerView} onPress={_chooseDay}>
-                            <Text style={[styles.textStyleTime, { width: moderateScale(140) }]}>
-                                {serviceDateTime ? moment(serviceDateTime).format("YYYY-MM-DD") : strings.SELECT_DATE}
-                            </Text>
-                            <Image
-                                style={styles.imageStyle}
-                                resizeMode="contain"
-                                source={imagePath.calendarA}
-                            />
-                        </TouchableOpacity>
+                    <View>
+                        <View style={styles.timeView}>
+                            <Text>{"BOOKING TYPE"}</Text>
+                        </View>
+                        <View style={{ ...styles.timePickerView, marginTop: 0, marginBottom: moderateScaleVertical(30) }}>
+                            <Text style={[styles.textStyleTime]}>{"Type"}:</Text>
+                            <Menu style={{ alignSelf: 'center' }} opened={isBookingTypeMenu} onBackdropPress={() => updateState({
+                                isBookingTypeMenu: !isBookingTypeMenu
+                            })}>
+                                <MenuTrigger onPress={() => {
+                                    updateState({
+                                        isBookingTypeMenu: !isBookingTypeMenu
+                                    })
+                                }} >
+                                    <View style={styles.pickerView}>
+                                        <Text style={[styles.textStyleTime, { width: moderateScale(140) }]}>
+                                            {!isEmpty(selectedBookingType) ? selectedBookingType?.name : "Select booking type"}
+                                        </Text>
+                                        <Image
+                                            style={[styles.imageStyle,]}
+                                            resizeMode="contain"
+                                            source={imagePath.icDropdown}
+                                        />
+                                    </View>
+                                </MenuTrigger>
+                                <MenuOptions
+                                    customStyles={{
+                                        optionsContainer: {
+                                            marginTop: moderateScaleVertical(36),
+                                            width: moderateScale(180),
+                                            height: moderateScale(100),
+                                        },
+                                        optionsWrapper: {
+                                            width: moderateScale(180),
+                                            height: moderateScale(100),
+                                        },
+                                    }}>
+                                    <ScrollView>
+                                        {bookingTypes.map((item, index) => {
+                                            // const time_12_1 = moment(item.split('-', 2)[0], 'HH:mm').format('hh:mm a')
+                                            // const time_12_2 = moment(item.split('-', 2)[1], 'HH:mm').format('hh:mm a')
+                                            return (
+                                                <View key={index}>
+                                                    <MenuOption
+                                                        onSelect={() => updateState({ selectedBookingType: item, isBookingTypeMenu: !isBookingTypeMenu })}
+                                                        key={String(index)}
+                                                        // text={`${time_12_1} - ${time_12_2}`}
+                                                        text={item.name}
+                                                        style={{
+                                                            marginVertical: moderateScaleVertical(5),
+                                                            backgroundColor: selectedBookingType?.name === item?.name ? colors.greyColor : colors.whiteOpacity15
+                                                        }}
+                                                        customStyles={{
+                                                            optionText: { textAlign: 'center', }
+                                                        }}
+                                                    />
+                                                    <View
+                                                        style={{
+                                                            borderBottomWidth: 1,
+                                                            borderBottomColor: colors.greyColor,
+                                                        }}
+                                                    />
+                                                </View>
+                                            );
+                                        })}
+                                    </ScrollView>
+                                </MenuOptions>
+                            </Menu>
+                        </View>
                     </View>
-                    <View style={styles.timePickerView}>
-                        <Text style={[styles.textStyleTime]}>{strings.TIME}:</Text>
-                        <Menu style={{ alignSelf: 'center' }} opened={menuOpened} onBackdropPress={checkDatIsSelected}>
-                            <MenuTrigger onPress={checkDatIsSelected} >
-                                <View style={styles.pickerView}>
+                    {
+                        selectedBookingType?.id == 2 && <View>
+                            <View style={styles.timeView}>
+                                <Text>{"SCHEDULE TIME"}</Text>
+                            </View>
+                            <View style={styles.pickerStyle}>
+                                <Text style={[styles.textStyleTime]}>{strings.DATE}:</Text>
+                                <TouchableOpacity style={styles.pickerView} onPress={_chooseDay}>
                                     <Text style={[styles.textStyleTime, { width: moderateScale(140) }]}>
-                                        {!isEmpty(serviceTimeSlot) ? serviceTimeSlot.name : strings.SELECT_SLOT}
+                                        {serviceDateTime ? moment(serviceDateTime).format("YYYY-MM-DD") : strings.SELECT_DATE}
                                     </Text>
                                     <Image
-                                        style={[styles.imageStyle,]}
+                                        style={styles.imageStyle}
                                         resizeMode="contain"
-                                        source={imagePath.icDropdown}
+                                        source={imagePath.calendarA}
                                     />
-                                </View>
-                            </MenuTrigger>
-                            <MenuOptions
-                                customStyles={{
-                                    optionsContainer: {
-                                        marginTop: moderateScaleVertical(36),
-                                        width: moderateScale(180),
-                                        height: moderateScale(100),
-                                    },
-                                    optionsWrapper: {
-                                        width: moderateScale(180),
-                                        height: moderateScale(100),
-                                    },
-                                }}>
-                                <ScrollView>
-                                    {timeSlots.map((item, index) => {
-                                        // const time_12_1 = moment(item.split('-', 2)[0], 'HH:mm').format('hh:mm a')
-                                        // const time_12_2 = moment(item.split('-', 2)[1], 'HH:mm').format('hh:mm a')
-                                        return (
-                                            <View key={index}>
-                                                <MenuOption
-                                                    onSelect={() => updateState({ serviceTimeSlot: item, menuOpened: !menuOpened })}
-                                                    key={String(index)}
-                                                    // text={`${time_12_1} - ${time_12_2}`}
-                                                    text={item.name}
-                                                    style={{
-                                                        marginVertical: moderateScaleVertical(5),
-                                                        backgroundColor: serviceTimeSlot === item ? colors.greyColor : colors.whiteOpacity15
-                                                    }}
-                                                    customStyles={{
-                                                        optionText: { textAlign: 'center', }
-                                                    }}
-                                                />
-                                                <View
-                                                    style={{
-                                                        borderBottomWidth: 1,
-                                                        borderBottomColor: colors.greyColor,
-                                                    }}
-                                                />
-                                            </View>
-                                        );
-                                    })}
-                                </ScrollView>
-                            </MenuOptions>
-                        </Menu>
-                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.timePickerView}>
+                                <Text style={[styles.textStyleTime]}>{strings.TIME}:</Text>
+                                <Menu style={{ alignSelf: 'center' }} opened={menuOpened} onBackdropPress={checkDatIsSelected}>
+                                    <MenuTrigger onPress={checkDatIsSelected} >
+                                        <View style={styles.pickerView}>
+                                            <Text style={[styles.textStyleTime, { width: moderateScale(140) }]}>
+                                                {!isEmpty(serviceTimeSlot) ? serviceTimeSlot.name : strings.SELECT_SLOT}
+                                            </Text>
+                                            <Image
+                                                style={[styles.imageStyle,]}
+                                                resizeMode="contain"
+                                                source={imagePath.icDropdown}
+                                            />
+                                        </View>
+                                    </MenuTrigger>
+                                    <MenuOptions
+                                        customStyles={{
+                                            optionsContainer: {
+                                                marginTop: moderateScaleVertical(36),
+                                                width: moderateScale(180),
+                                                height: moderateScale(100),
+                                            },
+                                            optionsWrapper: {
+                                                width: moderateScale(180),
+                                                height: moderateScale(100),
+                                            },
+                                        }}>
+                                        <ScrollView>
+                                            {timeSlots.map((item, index) => {
+                                                // const time_12_1 = moment(item.split('-', 2)[0], 'HH:mm').format('hh:mm a')
+                                                // const time_12_2 = moment(item.split('-', 2)[1], 'HH:mm').format('hh:mm a')
+                                                return (
+                                                    <View key={index}>
+                                                        <MenuOption
+                                                            onSelect={() => updateState({ serviceTimeSlot: item, menuOpened: !menuOpened })}
+                                                            key={String(index)}
+                                                            // text={`${time_12_1} - ${time_12_2}`}
+                                                            text={item.name}
+                                                            style={{
+                                                                marginVertical: moderateScaleVertical(5),
+                                                                backgroundColor: serviceTimeSlot === item ? colors.greyColor : colors.whiteOpacity15
+                                                            }}
+                                                            customStyles={{
+                                                                optionText: { textAlign: 'center', }
+                                                            }}
+                                                        />
+                                                        <View
+                                                            style={{
+                                                                borderBottomWidth: 1,
+                                                                borderBottomColor: colors.greyColor,
+                                                            }}
+                                                        />
+                                                    </View>
+                                                );
+                                            })}
+                                        </ScrollView>
+                                    </MenuOptions>
+                                </Menu>
+                            </View>
+                        </View>
+                    }
                     <View style={styles.addressView}>
                         <Text style={[styles.textStyleTime]}>{strings.ADDRESS}:</Text>
                         <TouchableOpacity style={styles.pickerView}

@@ -43,11 +43,14 @@ export default function DashBoardHeaderFive({
   currentLocation,
   nearestLoc,
   currentLoc,
+  onSeviceType = () => { }
 }) {
   const navigation = useNavigation();
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+  const { dineInType } = useSelector((state) => state?.home);
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -171,7 +174,8 @@ export default function DashBoardHeaderFive({
               flexDirection: 'row',
               alignItems: 'center',
               height: moderateScale(30),
-              width: moderateScale(80),
+
+
             }}>
             <TouchableOpacity
               style={{ marginHorizontal: moderateScale(8) }}
@@ -187,46 +191,49 @@ export default function DashBoardHeaderFive({
                 source={imagePath.search1}
               />
             </TouchableOpacity>
-            {isVoiceRecord ? (
-              <TouchableOpacity onPress={_onVoiceStop}>
-                <LottieView
-                  style={{
-                    height: moderateScale(43),
-                    width: moderateScale(30),
-                    marginLeft: moderateScale(-2),
-                  }}
-                  source={voiceListen}
-                  autoPlay
-                  loop
-                  colorFilters={[
-                    { keypath: 'layers', color: themeColors.primary_color },
-                    { keypath: 'transparent2', color: themeColors.primary_color },
-                    { keypath: 'transparent1', color: themeColors.primary_color },
-                    { keypath: '01', color: themeColors.primary_color },
-                    { keypath: '02', color: themeColors.primary_color },
-                    { keypath: '03', color: themeColors.primary_color },
-                    { keypath: '04', color: themeColors.primary_color },
-                  ]}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{ marginHorizontal: moderateScale(8) }}
-                onPress={_onVoiceListen}>
-                <Image
-                  source={imagePath.icVoice}
-                  style={{
-                    height: moderateScale(20),
-                    width: moderateScale(20),
-                    borderRadius: moderateScale(10),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
-                  }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            )}
+            {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection ? <TouchableOpacity onPress={onSeviceType}>
+              <Image source={imagePath.bag} />
+            </TouchableOpacity> :
+              isVoiceRecord ? (
+                <TouchableOpacity onPress={_onVoiceStop}>
+                  <LottieView
+                    style={{
+                      height: moderateScale(43),
+                      width: moderateScale(30),
+                      marginLeft: moderateScale(-2),
+                    }}
+                    source={voiceListen}
+                    autoPlay
+                    loop
+                    colorFilters={[
+                      { keypath: 'layers', color: themeColors.primary_color },
+                      { keypath: 'transparent2', color: themeColors.primary_color },
+                      { keypath: 'transparent1', color: themeColors.primary_color },
+                      { keypath: '01', color: themeColors.primary_color },
+                      { keypath: '02', color: themeColors.primary_color },
+                      { keypath: '03', color: themeColors.primary_color },
+                      { keypath: '04', color: themeColors.primary_color },
+                    ]}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={{ marginHorizontal: moderateScale(8) }}
+                  onPress={_onVoiceListen}>
+                  <Image
+                    source={imagePath.icVoice}
+                    style={{
+                      height: moderateScale(20),
+                      width: moderateScale(20),
+                      borderRadius: moderateScale(10),
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              )}
           </View>
         </View>
       ) : null}
