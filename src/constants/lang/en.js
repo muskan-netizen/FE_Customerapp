@@ -1117,5 +1117,10 @@ Amount`,
   ADDED_CART: "Item added in cart.",
   WAITING_TIME: "Waiting Time",
   FEE: "Fee",
-  NOTIFY_VENDOR:'Notify vendor that you have reached',
+  NOTIFY_VENDOR: 'Notify vendor that you have reached',
+  I_AM_CLIENT: "I'am a client",
+  I_AM_FREELANCER: "I'am a freelancer",
+  I_AM_VENDOR: "I'am a vendor",
+  JOIN_AS: "Join as a",
+  CLIENT_FREELANCER_VENDOR: "client, freelancer or vendor"
 };

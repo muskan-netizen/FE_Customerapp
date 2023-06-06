@@ -13,9 +13,8 @@ export default ({ themeColors, fontFamily, isDarkMode }) =>
                   flexDirection: 'row'
             },
             timeView: {
-                  marginTop: moderateScale(6),
-                  paddingHorizontal: moderateScale(24),
-                  marginBottom: moderateScaleVertical(4),
+
+                  marginBottom: moderateScaleVertical(16),
                   flexDirection: 'row'
             },
             dateView: {
