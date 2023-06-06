@@ -75,6 +75,8 @@ export default function Signup({ navigation }) {
     themeToggle,
     redirectedFrom,
   } = useSelector((state) => state?.initBoot || {});
+  const { dineInType } = useSelector((state) => state?.home);
+
 
   const {
     is_user_kyc_for_registration,
@@ -661,7 +663,7 @@ export default function Signup({ navigation }) {
           flex: 1,
         }}>
         <View style={{ flex: 1 }}>
-          {!isClinetType ? <View style={{
+          {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection && !isClinetType ? <View style={{
             marginHorizontal: moderateScale(24),
           }}>
             <Text style={{
