@@ -16,10 +16,10 @@ export default ({ fontFamily, themeColors }) => {
     },
     containerStyle2: {
       paddingVertical: 0,
-      height: moderateScaleVertical(70),
+      height: moderateScaleVertical(58),
       alignItems: 'center',
-      borderBottomColor: colors.borderColor,
-      borderBottomWidth: 0.49,
+      borderBottomColor: colors.transparent,
+      borderBottomWidth: 0.7,
       // flexDirection:'row'
     },
     loginView: {
