@@ -46,7 +46,7 @@ const CustomBottomTabBar = ({
 
     // >
     <View style={{
-      height: Platform.OS === 'ios' ? 45 + insets.bottom : 55 + insets.bottom,
+      height: Platform.OS === 'ios' ? 55 + insets.bottom : 55 + insets.bottom,
       flexDirection: 'row',
       paddingBottom: insets.bottom,
       // borderTopLeftRadius: 10,
