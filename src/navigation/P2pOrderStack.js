@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { MyOrders, OrderDetail, P2pOrderDetail, RentTypeList } from '../Screens';
+import { MyOrders, OrderDetail, P2pMyOrders, P2pOrderDetail, RentTypeList } from '../Screens';
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
@@ -13,7 +13,7 @@ export default function ({ navigation }) {
             screenOptions={{
                 headerShown: false,
             }}>
-            <Stack.Screen name={navigationStrings.MY_ORDERS} component={MyOrders} />
+            <Stack.Screen name={navigationStrings.MY_ORDERS} component={P2pMyOrders} />
             <Stack.Screen
                 name={navigationStrings.RENT_TYPE_LISTING}
                 component={RentTypeList}

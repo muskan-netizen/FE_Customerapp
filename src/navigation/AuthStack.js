@@ -9,27 +9,29 @@ import {
   VerifyAccount,
   OuterScreen5,
   OuterScreen,
-  WebLinks
+  WebLinks,
+  Login4,
+  Signup5
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 import navigationStrings from './navigationStrings';
 
-export default function (Stack, appStyle) {
+export default function (Stack, appStyle, appData) {
   return (
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
         component={appStyle?.homePageLayout === 8 ? OuterScreen5 : OuterScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={appStyle?.homePageLayout === 8 ? Signup4 : Signup}
+        component={!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? Signup5 : appStyle?.homePageLayout === 8 ? Signup4 : Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={appStyle?.homePageLayout === 8 ? Login3 : Login}
+        component={!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? Login4 : appStyle?.homePageLayout === 8 ? Login3 : Login}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -62,7 +64,7 @@ export default function (Stack, appStyle) {
         component={VerifyAccount}
         options={{ headerShown: false }}
       />
-     
+
     </>
   );
 }

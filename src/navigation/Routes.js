@@ -66,7 +66,7 @@ export default function Routes() {
           />
 
         ) : (
-          AuthStack(Stack, appStyle)
+          AuthStack(Stack, appStyle, appData)
         )}
 
         {CourierStack(Stack)}

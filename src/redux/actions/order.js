@@ -35,11 +35,15 @@ import {
   EDIT_CUSTOMER_ORDER,
   DISCARD_EDIT_CUSTOMER_ORDER,
   DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE,
+  ALL_ORDERS_P2P,
+  COMPLETE_PICKUP_DROP_OFF,
+  GET_UPCOMING_ONGOING_ORDERS,
+  P2P_ORDER_DETAIL,
 } from '../../config/urls';
-import {apiGet, apiPost} from '../../utils/utils';
+import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 //Get Order Detail For Billing
 export function getOrderDetailForBilling(data = {}, headers = {}) {
@@ -427,4 +431,24 @@ export function notificationDataForBid(data = {}) {
     type: types.NOTIFICATION_FOR_BIDE,
     payload: data,
   });
+}
+
+export function getAllP2pOrders(url = '', data = {}, headers = {}) {
+  return apiGet(ALL_ORDERS_P2P + url, data, headers);
+}
+
+
+
+export function pickUpDropoffComplete(data = {}, headers = {}) {
+  return apiPost(COMPLETE_PICKUP_DROP_OFF, data, headers);
+}
+
+
+export function getUpcomingAndOngoingOrders(url, data = {}, headers = {}) {
+  return apiGet(GET_UPCOMING_ONGOING_ORDERS + url, data, headers);
+}
+
+
+export function getP2pOrderDetail(data = {}, headers = {}) {
+  return apiPost(P2P_ORDER_DETAIL, data, headers);
 }

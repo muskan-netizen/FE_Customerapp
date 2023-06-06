@@ -1,61 +1,44 @@
 import { useScrollToTop } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   FlatList,
   Image,
-  Modal,
   Platform,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import DashedLine from 'react-native-dashed-line';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
-import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
-import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
-import GradientButton from '../../../Components/GradientButton';
-import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
 
-import BannerLoader from '../../../Components/Loaders/BannerLoader';
-import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import BannerHome2 from '../../../Components/BannerHome2';
+import HomeCategoryCard5 from '../../../Components/HomeCategoryCard5';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp2 from '../../../Components/ProductsComp2';
 import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
-import SubscriptionModal from '../../../Components/SubscriptionModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
-  itemWidth,
   moderateScale,
   moderateScaleVertical,
-  sliderWidth,
   textScale,
   width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl
 } from '../../../utils/helperFunctions';
-import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
-import BannerHome2 from '../../../Components/BannerHome2';
-import ButtonImage from '../../../Components/ImageComp';
 
 const DashBoardFiveV2Api = ({
   handleRefresh = () => { },
@@ -93,7 +76,7 @@ const DashBoardFiveV2Api = ({
   const _renderCategories = useCallback(({ item, index }) => {
     return (
       <View style={{ width: width / 4.2 }}>
-        <HomeCategoryCard3
+        <HomeCategoryCard5
           imgRadius={2}
           data={item}
           onPress={() => onPressCategory(item)}

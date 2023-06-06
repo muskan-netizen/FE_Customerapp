@@ -1,10 +1,10 @@
-import {Platform, StyleSheet} from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
+import { moderateScaleVertical } from '../../styles/responsiveSize';
 
-export default ({fontFamily, themeColors}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     containerStyle: {
       paddingVertical: 0,
@@ -16,10 +16,10 @@ export default ({fontFamily, themeColors}) => {
     },
     containerStyle2: {
       paddingVertical: 0,
-      height: moderateScaleVertical(58),
+      height: moderateScaleVertical(70),
       alignItems: 'center',
-      borderBottomColor: colors.transparent,
-      borderBottomWidth: 0.7,
+      borderBottomColor: colors.borderColor,
+      borderBottomWidth: 0.49,
       // flexDirection:'row'
     },
     loginView: {

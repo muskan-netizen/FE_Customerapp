@@ -14,14 +14,13 @@ import {
   ConfirmDetailsBuy,
   Delivery,
   Filter,
-  Home,
-  HomeV2Api,
   LaundryAvailableVendors,
   Location,
+  P2pOndemandHome,
+  P2pPayment,
   P2pProductDetail,
   P2pProducts,
   Payment,
-  PaymentScreen,
   PaymentSuccess,
   ProductDetail,
   ProductDetail2,
@@ -39,7 +38,6 @@ import {
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
-  TaxiHomeScreen,
   TrackDetail,
   Tracking,
   VendorDetail,
@@ -55,7 +53,8 @@ import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
 import { verticalAnimation } from '../utils/utils';
 import navigationStrings from './navigationStrings';
-import P2pOndemandHome from '../Screens/P2pOnDemnadBid/P2pOndemandHome(V2_API)';
+import P2pOndemandProducts from '../Screens/P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts';
+import P2pOndemandProductDetail from '../Screens/P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -132,8 +131,7 @@ export default function () {
         headerShown: false,
       }}>
       <Stack.Screen
-        name={navigationStrings.HOME
-        }
+        name={navigationStrings.HOME}
         component={P2pOndemandHome}
       />
       <Stack.Screen
@@ -247,11 +245,11 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
-        component={P2pProducts}
+        component={P2pOndemandProducts}
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={P2pProductDetail}
+        component={P2pOndemandProductDetail}
       />
 
       <Stack.Screen
@@ -277,7 +275,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.PAYMENT_SCREEN}
-        component={PaymentScreen}
+        component={P2pPayment}
       />
 
 

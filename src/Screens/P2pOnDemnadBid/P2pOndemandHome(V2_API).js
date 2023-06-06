@@ -49,7 +49,10 @@ import {
 import { openAppSetting } from '../../utils/openNativeApp';
 import { chekLocationPermission, onlyCheckLocationPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
-import { DashBoardFiveV2Api, DashBoardHeaderFive } from './DashboardViews/Index';
+import DashBoardFiveV2ApiLoader from './DashBoardParts/DashBoardFiveV2ApiLoader';
+import DashBoardHeaderFive from './DashBoardParts/DashBoardHeaderFive';
+import DashBoardFiveV2Api from './DashBoardParts/DashBoardFiveV2Api';
+
 enableFreeze(true);
 
 export default function P2pOndemandHome({ route, navigation }) {

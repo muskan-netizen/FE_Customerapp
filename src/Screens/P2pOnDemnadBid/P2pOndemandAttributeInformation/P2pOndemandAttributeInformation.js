@@ -16,7 +16,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import OoryksAccountsHeader from '../../../Components/AccountHeaderOoryks';
 import AddressBottomSheet from '../../../Components/AddressBottomSheet';
 import BorderTextInput from '../../../Components/BorderTextInput';
 import ButtonComponent from '../../../Components/ButtonComponent';
@@ -38,6 +37,7 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
 import {
   cameraHandler,
   checkValueExistInAry,
@@ -45,7 +45,6 @@ import {
 import { showError } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
-import { MyDarkTheme } from '../../../styles/theme';
 
 const theme = {
   // Define your custom colors here
@@ -515,7 +514,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           flex: 1,
 
         }}>
-        <OoryksAccountsHeader
+        <OoryksHeader
           leftIcon={imagePath.ic_backarrow}
           lefticonTitle={strings.ADD_AN_ITEM_FOR_RENT}
 

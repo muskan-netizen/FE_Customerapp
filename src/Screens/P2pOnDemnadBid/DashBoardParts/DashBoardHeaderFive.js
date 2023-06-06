@@ -120,13 +120,15 @@ export default function DashBoardHeaderFive({
         </TouchableOpacity>
 
         <ButtonImage
-          onPress={() => navigation.navigate(navigationStrings.NOTIFICATION)}
-          image={imagePath.ic_notification}
+          onPress={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
+          image={imagePath.icSearchNew}
           imgStyle={{ tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
         />
       </View>
 
-      <View
+      {/* <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -164,7 +166,7 @@ export default function DashBoardHeaderFive({
             tintColor: themeColors?.primary_color
           }}
         />
-      </View>
+      </View> */}
     </View>
   );
 }

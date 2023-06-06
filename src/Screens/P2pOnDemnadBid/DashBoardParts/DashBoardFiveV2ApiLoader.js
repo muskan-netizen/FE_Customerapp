@@ -1,16 +1,13 @@
 //import liraries
-import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
-import BannerLoader from '../../../Components/Loaders/BannerLoader';
-import ProductLoader from '../../../Components/Loaders/ProductLoader';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
-import ContentLoader from 'react-native-easy-content-loader';
-import { View } from 'react-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../../styles/theme';
-import colors from '../../../styles/colors';
 import { useSelector } from 'react-redux';
+import BannerLoader from '../../../Components/Loaders/BannerLoader';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import colors from '../../../styles/colors';
+import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
 
 // create a component
 

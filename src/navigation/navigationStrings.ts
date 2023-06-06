@@ -177,5 +177,7 @@ export default {
   PAYMENT_SCREEN: 'paymentScreen',
   P2P_ORDER_STACK: 'p2pOrderStack',
   RENT_TYPE_LISTING: "rentTypeListing",
-  P2P_ORDER_DETAIL: 'p2pOrderDetail'
+  P2P_ORDER_DETAIL: 'p2pOrderDetail',
+    ALL_CATEGORIES: 'allCategories',
+  PRODUCT_PRICE_DETAILS: 'productPriceDetails',
 };

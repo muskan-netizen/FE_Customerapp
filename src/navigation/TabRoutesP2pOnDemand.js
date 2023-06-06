@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { View } from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
@@ -9,16 +9,14 @@ import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import { moderateScale, textScale } from '../styles/responsiveSize';
+import { textScale } from '../styles/responsiveSize';
 import AccountStack from './AccountStack';
-import CartStack from './CartStack';
 import ChatStack from './ChatStack';
-import HomeStack from './HomeStack';
-import navigationStrings from './navigationStrings';
-import PostStack from './PostStack';
-import { ChatRoom, ChatScreenUser, MyOrders } from '../Screens';
-import P2pOrderStack from './P2pOrderStack';
 import HomeStackP2pOnDemand from './HomeStackP2pOnDemand';
+import P2pOrderStack from './P2pOrderStack';
+import PostStack from './PostStack';
+import navigationStrings from './navigationStrings';
+import P2pChatStack from './P2pChatStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -158,7 +156,7 @@ export default function TabRoutesOnDemandP2p(props) {
             />
 
             <Tab.Screen
-                component={ChatStack}
+                component={P2pChatStack}
                 name={navigationStrings.CHAT_STACK}
                 options={({ route, navigation }) => ({
                     tabBarVisible: getTabBarVisibility(route, navigation, [
