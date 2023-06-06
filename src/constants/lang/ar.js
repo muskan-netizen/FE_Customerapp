@@ -821,7 +821,7 @@ export default {
   SEARCH_FOR_PRODUCT: 'بحثعنعميل',
   PRODUCT: 'المنتوج',
   EXTRA_INSTRUCTION: 'تعليماتإضافية',
-  CLEAR_FILTER: 'مسح',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'نطاق السعر',
   SORRY_MSG: `عذرا ، نحن حاليا لا نوصل هنا ولكننا نقوم بذلك
   يتوسع بسرعة. يرجى التحقق مرة أخرى قريبا!`,

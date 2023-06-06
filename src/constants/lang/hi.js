@@ -833,7 +833,7 @@ export default {
   MYDELIERIES: 'मेरी डिलीवरी',
   NODELIVERIESFOUND: 'कोई डिलीवरी नहीं मिली',
   NODELIVERIESAGENTAVAILABLE: 'कोई डिलीवरी एजेंट उपलब्ध नहीं है',
-  CLEAR_FILTER: 'स्पष्ट निस्यंदक',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'मूल्य सीमा',
   CONTAINERCHARGES: 'कंटेनर शुल्क',
   TOTALCONTAINERCHARGES: 'कुल कंटेनर प्रभार',

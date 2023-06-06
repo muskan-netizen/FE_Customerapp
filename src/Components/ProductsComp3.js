@@ -30,7 +30,7 @@ import {
 let imageHeight = parseInt(moderateScale(140))
 let imageWidth = parseInt(moderateScale(140))
 
-const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
+const ProductsComp = ({containerStyle={}, isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
   const { themeColors, appStyle, currencies, themeColor, themeToggle,appData } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
@@ -77,6 +77,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         shadowRadius: 2,
         elevation: 4,
         margin: 1,
+        ...containerStyle,
         ...getScaleTransformationStyle(scaleInAnimated),
 
       }}

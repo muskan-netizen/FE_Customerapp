@@ -107,6 +107,7 @@ export function initApp(
           businessType: data.profile.preferences.business_type,
         };
 
+
         // setPrimaryCurrency
 
         if (reload) {

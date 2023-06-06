@@ -844,7 +844,7 @@ export default {
   PASTDELEIVERIES: 'विगतका डेलिभरीहरू',
   MYDELIERIES: 'मेरो डेलिभरीहरू',
   NODELIVERIESFOUND: 'कुनै डेलिभरी फेला परेन',
-  CLEAR_FILTER: 'फिल्टर खाली गर्नुहोस्',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'मूल्य दायरा',
   CONTAINERCHARGES: 'कन्टेनर शुल्कहरू',
   TOTALCONTAINERCHARGES: 'कुल कन्टेनर शुल्कहरू',

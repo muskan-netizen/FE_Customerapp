@@ -850,7 +850,7 @@ export default {
   PASTDELEIVERIES: 'Historial de Pedidos',
   MYDELIERIES: 'Mis Pedidos',
   NODELIVERIESFOUND: 'No encontramos pedidos seleccionados',
-  CLEAR_FILTER: 'Limpiar Filtro',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Rango de precios',
   CONTAINERCHARGES: 'Costo de Envío',
   TOTALCONTAINERCHARGES: 'Costo de Envío',

@@ -619,6 +619,9 @@ export default {
   icHamburger: require('../assets/images/Ecommerce/ic_hamburger_03.png'),
   icEcomCart2: require('../assets/images/Ecommerce/ic_cart_03.png'),
   searchArrow: require('../assets/images/Ecommerce/searchArrow.png'),
+  curLangCheck: require('../assets/images/Ecommerce/curLangCheck.png'),
+  icLang: require('../assets/images/Ecommerce/ic_language.png'),
+  icCurrency: require('../assets/images/Ecommerce/ic_currency.png'),
   icMenuIcon : require('../assets/images/ic_menu.png'),
   locationIcon: require('../assets/images/place.png'),
 

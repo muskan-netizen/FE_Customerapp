@@ -4,6 +4,7 @@ import {
   Alert,
   I18nManager,
   Image,
+  Platform,
   ScrollView,
   Share,
   Text,

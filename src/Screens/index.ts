@@ -186,3 +186,5 @@ export {default as ViewAllSearchItems} from './ViewAllSearchItems/ViewAllSearchI
 export {default as SubCategoryItems} from './SubCategoryItems/SubCategoryItems';
 export {default as EcomCategory} from './EcomTemps/EcomCategory';
 export {default as EcomOrderAgain} from './EcomTemps/EcomOrderAgain/EcomOrderAgain';
+export {default as EcomAccount} from './EcomTemps/EcomAccount/EcomAccount';
+export {default as EcomLangCurrency} from './EcomTemps/EcomLangCurrency/EcomLangCurrency';

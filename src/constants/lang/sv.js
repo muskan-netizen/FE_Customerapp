@@ -829,7 +829,7 @@ export default {
   PASTDELEIVERIES: 'Past Deliveries',
   MYDELIERIES: 'My Deliveries',
   NODELIVERIESFOUND: 'No Deliveries Found',
-  CLEAR_FILTER: 'Clear Filter',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Price Range',
   CUSTOMISABLE: 'Customisable',
   SORRY_MSG: `Sorry, we currently don’t deliver here but we are

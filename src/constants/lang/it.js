@@ -847,7 +847,7 @@ export default {
   MYDELIERIES: 'Le mie consegne',
   NODELIVERIESFOUND: 'Nessuna consegna trovata',
   NODELIVERIESAGENTAVAILABLE: 'Nessun agente di consegna disponibile',
-  CLEAR_FILTER: 'Filtro pulito',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Fascia di prezzo',
   CONTAINERCHARGES: 'Spese container',
   TOTALCONTAINERCHARGES: 'Spese totali per container',

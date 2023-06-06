@@ -980,7 +980,6 @@ const DashBoardFiveV2Api = ({
   }, [isDarkMode])
 
   const SpotlightDealsView = useCallback(({ item }) => {
-    console.log("SpotlightDealsView", item)
     return !isEmpty(item?.data) ? (
       <View
         key={String(item?.id || '')}

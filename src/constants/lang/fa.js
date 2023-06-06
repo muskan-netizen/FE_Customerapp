@@ -837,7 +837,7 @@ export default {
   MYDELIERIES: 'تحویل های من،',
   NODELIVERIESFOUND: 'هیچ تحویلی یافت نشد',
   NODELIVERIESAGENTAVAILABLE: 'هیچ عامل تحویل در دسترس نیست،',
-  CLEAR_FILTER: 'پاک کردن فیلتر،',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'حدود قیمت',
   CONTAINERCHARGES: 'هزینه کانتینر،',
   TOTALCONTAINERCHARGES: 'مجموع هزینه های کانتینر،',

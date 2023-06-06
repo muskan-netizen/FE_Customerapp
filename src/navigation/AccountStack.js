@@ -68,6 +68,8 @@ import {
   Wishlist,
   Wishlist2,
   Yoco,
+  EcomAccount,
+  EcomLangCurrency
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -84,6 +86,8 @@ export default function ({ navigation }) {
         return Account2;
       case 4:
         return Account4;
+      case 10:
+        return EcomAccount;
       default:
         return Account3;
     }
@@ -293,6 +297,10 @@ export default function ({ navigation }) {
       <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
+      />
+      <Stack.Screen
+        name={navigationStrings.ECOM_LANG_CURRENCY}
+        component={EcomLangCurrency}
       />
     </Stack.Navigator>
   );

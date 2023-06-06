@@ -856,7 +856,7 @@ export default {
   MYDELIERIES: 'Mizigo yangu Iliyoletwa',
   NODELIVERIESFOUND: 'Hakuna Mizigo ya Kuletwa Iliyopatikana',
   NODELIVERIESAGENTAVAILABLE: 'Hakuna wakala wa kupeleka mzigo anayepatikana',
-  CLEAR_FILTER: 'Futa Chujio',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Wigo wa Bei',
   CONTAINERCHARGES: 'Makato ya kontena',
   TOTALCONTAINERCHARGES: 'Jumla ya makato ya Kontena',

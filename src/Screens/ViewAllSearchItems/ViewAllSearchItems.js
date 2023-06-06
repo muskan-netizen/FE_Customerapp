@@ -186,10 +186,12 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
     //Naviagtion to specific screen
-    const moveToNewScreen =(screenName, data = {}) => {() => {
-                navigation.navigate(screenName, { data });
-            }}
-         
+    const moveToNewScreen = (screenName, data = {}) => {
+        () => {
+            navigation.navigate(screenName, { data });
+        }
+    }
+
     const _checkRedirectScreen = useCallback((item) => {
         {
             item?.is_show_category
@@ -210,6 +212,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
     const onPressCategory = useCallback((item) => {
+
         if (item?.redirect_to == staticStrings.P2P) {
             moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
             return;
@@ -233,14 +236,13 @@ export default function ViewAllSearchItems({ route, navigation }) {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
                 fetchOffers: true,
                 id: item.id,
-                vendor:
-                    item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-                        item.redirect_to == staticStrings.PRODUCT ||
-                        item?.redirect_to == staticStrings.LAUNDRY ||
-                        item?.redirect_to == staticStrings.APPOINTMENT ||
-                        item?.redirect_to == staticStrings.RENTAL
-                        ? false
-                        : true,
+                vendor: item?.redirect_to == staticStrings.ONDEMANDSERVICE ||
+                    item.redirect_to == staticStrings.PRODUCT ||
+                    item?.redirect_to == staticStrings.LAUNDRY ||
+                    item?.redirect_to == staticStrings.APPOINTMENT ||
+                    item?.redirect_to == staticStrings.RENTAL
+                    ? false
+                    : true,
                 name: item.name,
                 isVendorList: false,
             })();

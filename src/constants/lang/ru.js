@@ -829,7 +829,7 @@ export default {
   MYDELIERIES: ' МОИ ДОСТАВКИ ',
   NODELIVERIESFOUND: 'ДОСТАВКИ НЕ НАЙДЕНЫ',
   NODELIVERIESAGENTAVAILABLE: ' АГЕНТ ПО ДОСТАВКЕ ОТСУТСТВУЕТ ',
-  CLEAR_FILTER: ' ОЧИСТИТЬ ФИЛЬТР ',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: ' ЦЕНОВОЙ ДИАПАЗОН ',
   CONTAINERCHARGES: ' КОНТЕЙНЕРНЫЕ СБОРЫ ',
   TOTALCONTAINERCHARGES: ' ИТОГО КОНТЕЙНЕРНЫЕ СБОРЫ ',

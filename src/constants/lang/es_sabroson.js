@@ -849,7 +849,7 @@ export default {
     PASTDELEIVERIES: 'entregas Pasadas',
     MYDELIERIES: 'Mis Entregas',
     NODELIVERIESFOUND: 'No se encontraron entregas',
-    CLEAR_FILTER: 'Limpiar Filtro',
+    CLEAR_FILTER: 'Clear All Filter',
     PRICE_RANGE: 'Rango de precios',
     CONTAINERCHARGES: 'Cargos por contenedor',
     TOTALCONTAINERCHARGES: 'Cargos totales por contenedor',

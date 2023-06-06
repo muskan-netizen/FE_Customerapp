@@ -82,8 +82,7 @@ const FilterCompEcom = ({
         var variants = [];
         var options = [];
 
-        var allSelectedVariantOptionsPairs = allFilterData
-            .filter((i) => i?.id != -1 && i?.id != -2)
+        var allSelectedVariantOptionsPairs = allFilterData.filter((i) => i?.id != -1 && i?.id != -2)
             .map((itm, inx) => {
                 return itm?.value;
             })
@@ -114,7 +113,7 @@ const FilterCompEcom = ({
         }
 
         console.log(filterData, "filterDataaa")
-        onFilterApply(filterData)
+        onFilterApply(filterData, allFilterData)
         onShowHideFilter()
     }
 

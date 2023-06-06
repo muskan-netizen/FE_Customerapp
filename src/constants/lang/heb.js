@@ -839,7 +839,7 @@ export default {
     MYDELIERIES: 'המשלוחים שלי',
     NODELIVERIESFOUND: 'לא נמצאו משלוחים',
     NODELIVERIESAGENTAVAILABLE: 'אין סוכן משלוחים זמין',
-    CLEAR_FILTER: 'נקה מסנן',
+    CLEAR_FILTER: 'Clear All Filter',
     PRICE_RANGE: 'טווח מחירים',
     CONTAINERCHARGES: 'מטעני מיכל',
     TOTALCONTAINERCHARGES: 'סך חיובי מיכל',

@@ -22,7 +22,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal, { ReactNativeModal } from 'react-native-modal';
 import RenderHtml from 'react-native-render-html';
 import Share from 'react-native-share';
-import { Pagination } from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
 import Banner2 from '../../Components/Banner2';
@@ -146,7 +146,11 @@ export default function ProductDetail({ route, navigation }) {
     suggestedVendorProducts: [],
     upsellProducts: [],
     crossProducts: [],
+
   });
+  const [variantSetNew, setVariantSetNew] = useState(null)
+  const [variantSetOptions, setVariantOptions] = useState([])
+
   const [pinCode, setPinCode] = useState('');
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
   const [isPincodeValid, setIsPincodeValid] = useState(false);
@@ -330,10 +334,10 @@ export default function ProductDetail({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log('res getProductDetail', res?.data?.products.variant_set);
+        console.log('res getProductDetail', res?.data);
 
 
-
+        setVariantSetNew(res?.data?.products?.variant_set_new)
         updateState({
           offersList: res?.data?.coupon_list,
           relatedProducts: res?.data?.relatedProducts || [],
@@ -396,6 +400,8 @@ export default function ProductDetail({ route, navigation }) {
       .catch(errorMethod);
   };
 
+
+  console.log("variantSetNewvariantSetNew", variantSetNew)
   //Get Product detail based on varint selection
   const getProductDetailBasedOnFilter = (variantSetData) => {
     let data = {};
@@ -1311,6 +1317,9 @@ export default function ProductDetail({ route, navigation }) {
           onPress={() =>
             navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
           }
+          containerStyle={{
+            borderRadius: moderateScale(8)
+          }}
         />
       </View>
     );
@@ -2004,6 +2013,88 @@ export default function ProductDetail({ route, navigation }) {
     )
   }, [variantSet, isDarkMode])
 
+  const myVariant = (item) => {
+    setVariantOptions(item?.option3)
+  }
+
+  console.log("variantSetOptions",variantSetOptions)
+
+  const renderVariantOptions = ({ item }) => {
+    const data = item?.options100
+    if (variantSetNew.title == "Size") {
+      <TouchableOpacity
+      onPress={() => myVariant(item)}
+      disabled={!!data?.is_disabled}
+      style={{
+        ...styles.sizeContainer,
+        backgroundColor: !!item?.value ? themeColors?.primary_color : colors.white,
+        borderColor: !!data?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!data?.is_disabled ? colors.grayOpacity51 : colors.greyA,
+        borderStyle: !!data?.is_disabled ? 'dotted' : 'solid'
+
+      }}>
+      <Text style={{
+        ...commonStyles.mediumFont12,
+        color: !!data?.value ? colors.white : isDarkMode ? colors.white : !!data?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
+      }}>{data?.title}</Text>
+    </TouchableOpacity>
+    }
+    return (
+      <View>
+        <Text>{data?.title}</Text>
+      </View>
+    )
+  }
+
+  const renderOptions = ({ item, index }) => {
+    if (variantSetNew.title == "Size") {
+      return (
+        <TouchableOpacity
+          onPress={() => myVariant(item)}
+          disabled={!!item?.is_disabled}
+          style={{
+            ...styles.sizeContainer,
+            backgroundColor: !!item?.value ? themeColors?.primary_color : colors.white,
+            borderColor: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.greyA,
+            borderStyle: !!item?.is_disabled ? 'dotted' : 'solid'
+
+          }}>
+          <Text style={{
+            ...commonStyles.mediumFont12,
+            color: !!item?.value ? colors.white : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
+          }}>{item.title}</Text>
+        </TouchableOpacity>
+      )
+    }
+    return (
+      <TouchableOpacity
+        // onPress={() => selectSpecificOptions(options, item, index)}
+        onPress={() => myVariant(item)}
+        activeOpacity={0.7}
+        disabled={!!item?.is_disabled}
+        style={{
+          ...styles.colorContainer,
+          borderColor: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.greyA,
+          borderStyle: !!item?.is_disabled ? 'dotted' : 'solid'
+        }}
+      >
+        {!!item?.hexacode ? <View style={{
+          ...styles.colorView,
+          backgroundColor: item?.hexacode,
+        }} /> : null}
+
+        <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
+        <Text style={{
+          ...commonStyles.mediumFont12,
+          color: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
+          alignSelf: 'center',
+
+
+        }} >{item.title}</Text>
+
+      </TouchableOpacity>
+    )
+  }
+
 
   const renderVarient = useCallback(({ item, index }) => {
     const { options } = item
@@ -2042,9 +2133,9 @@ export default function ProductDetail({ route, navigation }) {
       ? getImageUrl(
         item.image.path.image_fit,
         item.image.path.image_path,
-        '400/400',
+        '800/800',
       )
-      : getImageUrl(item.image.image_fit, item.image.image_path, '400/400');
+      : getImageUrl(item.image.image_fit, item.image.image_path, '800/800');
     return (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -2061,7 +2152,6 @@ export default function ProductDetail({ route, navigation }) {
             width: "100%",
             height: "auto",
             aspectRatio: 1,
-            borderRadius: moderateScale(8)
           }}
           resizeMode='contain'
         />
@@ -2144,21 +2234,35 @@ export default function ProductDetail({ route, navigation }) {
               {!!productDetailData?.product_media.length ? (
                 <View
                   style={{
-                    flexDirection: 'row',
+
                     marginTop: moderateScaleVertical(20),
-                    justifyContent: 'space-between',
+
                   }}>
                   {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
                   <View style={{ flex: 1, alignItems: 'center' }}>
 
-                    <FlatList
+
+                    <Carousel
+                      autoplay={true}
+                      loop={true}
+                      autoplayInterval={2000}
+                      data={productDetailData?.product_media || []}
+                      renderItem={renderProductImages}
+                      sliderWidth={width}
+                      itemWidth={width}
+                    // onSnapToItem={(index) => setCurrentActiveSlider(index)}
+
+                    />
+
+                    {/* <FlatList
+      
                       data={productDetailData?.product_media || []}
                       renderItem={renderProductImages}
                       keyExtractor={(item, index) => String(`${item?.media_id} + ${index}`)}
-                    />
+                    /> */}
 
 
-                    <View style={{ paddingTop: 5 }}>
+                    {/* <View style={{ paddingTop: 5 }}>
                       <Pagination
                         dotsLength={productDetailData?.product_media?.length}
                         activeDotIndex={state.slider1ActiveSlide}
@@ -2168,7 +2272,7 @@ export default function ProductDetail({ route, navigation }) {
                         inactiveDotOpacity={0.4}
                         inactiveDotScale={0.8}
                       />
-                    </View>
+                    </View> */}
                   </View>
                 </View>
               ) : null}
@@ -2419,7 +2523,20 @@ export default function ProductDetail({ route, navigation }) {
 
               {/* products varient amazon style */}
 
-              {variantSet && variantSet.length ?
+              <FlatList
+                horizontal
+                data={variantSetNew?.options || []}
+                renderItem={renderOptions}
+              />
+
+              <FlatList
+                horizontal
+                data={variantSetOptions}
+                renderItem={renderVariantOptions}
+              />
+
+
+              {/* {variantSet && variantSet.length ?
                 <FlatList
                   data={(!state.isLoading && variantSet) || []}
                   renderItem={renderVarient}
@@ -2435,7 +2552,7 @@ export default function ProductDetail({ route, navigation }) {
                     <View style={{ marginLeft: moderateScale(8) }} />
                   )}
                 />
-                : null}
+                : null} */}
 
 
               {plainHtml != null ? (

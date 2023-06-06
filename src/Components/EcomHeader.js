@@ -10,6 +10,7 @@ import SearchBar3 from './SearchBar3';
 import navigationStrings from '../navigation/navigationStrings';
 import LinearGradient from 'react-native-linear-gradient';
 import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
+import { useSelector } from 'react-redux';
 
 
 // create a component
@@ -21,6 +22,10 @@ const Ecomheader = ({
     showLeftIcon = true,
     defaultBottomColor = 40
 }) => {
+
+    const userData = useSelector((state) => state?.auth?.userData || {});
+
+    console.log("userDatauserData",userData)
 
     return (
         <LinearGradient

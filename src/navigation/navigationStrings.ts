@@ -172,5 +172,6 @@ export default {
   SAVEDCARDS: 'SavedCards',
   SKIP_CASH: 'SkipCash',
   VIEW_ALL_SEARCH_ITEM:"ViewAllSearchItems",
-  ORDER_AGAIN:"OrderAgain"
+  ORDER_AGAIN:"OrderAgain",
+  ECOM_LANG_CURRENCY:"EcomLangCurrency"
 };

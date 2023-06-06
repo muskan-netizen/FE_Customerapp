@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Image, SafeAreaView, Text, TouchableOpacity, View, Animated, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
@@ -29,6 +29,9 @@ import SearchBar3 from '../../../Components/SearchBar3';
 import LinearGradient from 'react-native-linear-gradient';
 
 import * as Animatable from 'react-native-animatable';
+import DeviceCountry from 'react-native-device-country';
+import { countryJSON } from '../../../constants/constants';
+
 
 export default function DashBoardHeaderEcommerce({
   // navigation = {},
@@ -58,9 +61,7 @@ export default function DashBoardHeaderEcommerce({
   },
 }) {
   const navigation = useNavigation();
-  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
-    (state) => state?.initBoot,
-  );
+  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const { cartItemCount } = useSelector((state) => state?.cart || {});
   const { userData } = useSelector((state) => state?.auth);
 
@@ -71,7 +72,20 @@ export default function DashBoardHeaderEcommerce({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
 
-  console.log("profileInfoprofileInfo",profileInfo)
+  const [countryCode, setCountryCode] = useState('IN')
+
+  console.log("profileInfoprofileInfo", profileInfo)
+
+  useLayoutEffect(()=>{
+    DeviceCountry.getCountryCode()
+    .then((result) => {
+      console.log("DeviceCountry",result);
+      setCountryCode(result.code)
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  },[])
 
 
 
@@ -99,12 +113,15 @@ export default function DashBoardHeaderEcommerce({
     width: moderateScale(34),
     // borderRadius: moderateScale(28 / 2)
   }
+
+
+
   return (
 
     <LinearGradient
       colors={[themeColors?.primary_color, themeColors?.primary_color, getColorCodeWithOpactiyNumber(
-          themeColors.primary_color.substr(1),
-          40)]}
+        themeColors.primary_color.substr(1),
+        40)]}
     >
 
       <SafeAreaView>
@@ -126,8 +143,8 @@ export default function DashBoardHeaderEcommerce({
                 ...headerIconStyle,
                 tintColor: colors.white,
                 marginRight: moderateScale(8),
-                height:moderateScale(26),
-                width:moderateScale(26),
+                height: moderateScale(26),
+                width: moderateScale(26),
               }}
               source={imagePath.icHamburger}
               resizeMode="contain"
@@ -228,6 +245,36 @@ export default function DashBoardHeaderEcommerce({
 
             }}>
 
+{/* {console.log("country json",JSON.parse(countryJSON).IN)} */}
+            <TouchableOpacity
+              hitSlop={hitSlopProp}
+              style={{ marginHorizontal: moderateScale(8) }}
+              onPress={()=>navigation.navigate(navigationStrings.ACCOUNTS)}>
+
+                 
+             <Text style={{
+              fontSize: textScale(30)
+             }} >{(JSON.parse(countryJSON)[`${countryCode}`]).emoji}</Text>   
+
+                {/* <Text>{countryJSON[]}</Text> */}
+              {/* <CountryFlag style={{
+                borderRadius: moderateScale(14),
+                height: moderateScale(28),
+                width: moderateScale(28),
+              }} isoCode={countryCode} size={20} /> */}
+
+              {/* <SvgUri 
+              uri={(JSON.parse(countryJSON).US).image}
+ 
+              style={{
+                borderRadius: 20,
+                height: 40,
+                width: 40
+              }}
+              /> */}
+            </TouchableOpacity>
+
+
             {/* wish list */}
             <TouchableOpacity
               hitSlop={hitSlopProp}
@@ -261,7 +308,7 @@ export default function DashBoardHeaderEcommerce({
 
         <DeliveryTypeEcommerceComp
           selectedToggle={selcetedToggle}
-          themeColors={{primary_color: colors.black}}
+          themeColors={{ primary_color: colors.black }}
         />
         <Animatable.View
           animation={'fadeIn'}
@@ -271,8 +318,8 @@ export default function DashBoardHeaderEcommerce({
             onPress={() => navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)}
             containerStyle={{
               marginVertical: moderateScaleVertical(8),
-              marginBottom:moderateScaleVertical(12),
-              height:moderateScale(38)
+              marginBottom: moderateScaleVertical(12),
+              height: moderateScale(38)
             }}
           />
         </Animatable.View>

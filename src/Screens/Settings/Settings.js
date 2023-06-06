@@ -62,6 +62,11 @@ export default function Settings({ route, navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
+
+  console.log(languages,"currenciescurrenciescurrencies",currencies)
+
+  
+
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',

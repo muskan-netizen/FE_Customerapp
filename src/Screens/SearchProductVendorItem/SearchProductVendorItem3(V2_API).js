@@ -177,12 +177,12 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     data['keyword'] = searchInput;
     data['type'] = dineInType;
     data['limit'] = 10;
-    data['latitude'] = !!location?.latitude
-      ? location?.latitude
-      : userCurrentLatitude;
-    data['longitude'] = !!location?.longitude
-      ? location?.longitude
-      : userCurrentLongitude;
+    // data['latitude'] = !!location?.latitude
+    //   ? location?.latitude
+    //   : userCurrentLatitude;
+    // data['longitude'] = !!location?.longitude
+    //   ? location?.longitude
+    //   : userCurrentLongitude;
     data['page'] = pageCount;
     let query = '';
     let searchAction = null;
@@ -552,7 +552,9 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           paddingHorizontal: moderateScale(8)
         }}>
             <View style={{flex:0.08}}>
-          <Image source={imagePath.icSearchb} />
+          <Image style={{
+            tintColor: isDarkMode? colors.white: colors.black
+          }} source={imagePath.icSearchb} />
           </View>
           <View style={{flex:0.8}}>
           <Text
@@ -569,7 +571,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           <View style={{flex:0.1,alignItems:'flex-end'}}>
           <Image style={{
             transform: [{ rotate: '-60deg' }],
-          tintColor: colors.grayOpacity51
+          tintColor: isDarkMode? colors.whiteOpacity50: colors.grayOpacity51
           }} source={imagePath.searchArrow} />
           </View>
         </View>
@@ -757,7 +759,10 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               style={{ flex: 1 }}
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
-                <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(8) }} />
+                <HorizontalLine lineStyle={{ 
+                  marginVertical: moderateScaleVertical(8),
+                  borderBottomColor: isDarkMode? colors.whiteOpacity50: colors.blackOpacity10
+                 }} />
               )}
               // onEndReached={onEndReached}
               ListHeaderComponent={() => (

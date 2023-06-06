@@ -815,7 +815,7 @@ montant`,
   PASTDELEIVERIES: 'Livraisons passées',
   MYDELIERIES: 'Mes livraisons',
   NODELIVERIESFOUND: 'Aucune livraison trouvée',
-  CLEAR_FILTER: 'Clear Filter',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Price Range',
   SORRY_MSG: `Sorry, we currently don’t deliver here but we are
   expanding quickly. Kindly check back soon!`,

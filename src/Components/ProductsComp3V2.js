@@ -32,7 +32,7 @@ let imageRadius = 8
 
 
 const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle } =useSelector((state) => state?.initBoot || {});
+  const { themeColors, appStyle, currencies, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -41,7 +41,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
 
   const appMainData = useSelector((state) => state?.home?.appMainData || {});
 
-  const {category = {}} = item || {};
+  const { category = {} } = item || {};
 
   return (
     <TouchableOpacity
@@ -66,10 +66,10 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       <FastImage
         resizeMode={FastImage.resizeMode.contain}
         source={{
-          uri:getImageUrlNew({
+          uri: getImageUrlNew({
             url: item?.path || null,
             image_const_arr: appMainData.image_prefix,
-            type: 'image_fill',  
+            type: 'image_fill',
           }),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
@@ -117,7 +117,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           }}>
           {item?.title}
         </Text>
-        
+
         {!!item?.vendor_name ? <Text
           numberOfLines={1}
           style={{
@@ -173,7 +173,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                     ? MyDarkTheme.colors.text
                     : colors.blackOpacity66,
                   marginLeft: moderateScale(5),
-                  marginVertical:moderateScaleVertical(2)
+                  marginVertical: moderateScaleVertical(2)
                 }}>
                 {strings.IN} {category?.category_detail?.translation[0]?.name}
               </Text>
@@ -220,6 +220,27 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           </View>
         )}
       </View>
+      {!!Number(item?.compare_price_numeric) ?
+
+        <View
+          style={{
+            position: 'absolute',
+            backgroundColor: themeColors?.primary_color,
+            paddingVertical: moderateScaleVertical(4),
+            paddingHorizontal: moderateScale(6),
+            borderTopLeftRadius: moderateScale(6),
+            borderBottomRightRadius: moderateScale(10),
+          }}>
+          <Text style={{
+            fontSize: textScale(11),
+            color: colors.white,
+            fontFamily: fontFamily.medium,
+          }}>{parseInt(((item?.compare_price_numeric - item?.price_numeric) / item?.price_numeric * 100).toFixed(3))}% OFF</Text>
+        </View>
+
+        : null}
+
+
     </TouchableOpacity>
   );
 };

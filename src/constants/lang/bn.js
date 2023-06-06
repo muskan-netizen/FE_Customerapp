@@ -826,7 +826,7 @@ export default {
     MYDELIERIES: 'আমার বিতরণ',
     NODELIVERIESFOUND: 'কোন ডেলিভারি পাওয়া যায়নি',
     NODELIVERIESAGENTAVAILABLE: 'কোন ডেলিভারি এজেন্ট পাওয়া যায় না',
-    CLEAR_FILTER: 'ফিল্টার পরিষ্কার করুন',
+    CLEAR_FILTER: 'Clear All Filter',
     PRICE_RANGE: 'মূল্য পরিসীমা',
     CONTAINERCHARGES: 'কন্টেইনার চার্জ',
     TOTALCONTAINERCHARGES: 'মোট কনটেইনার চার্জ',

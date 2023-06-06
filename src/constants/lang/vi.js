@@ -833,7 +833,7 @@ export default {
   PASTDELEIVERIES: 'ĐÃ giao hàng',
   MYDELIERIES: 'Đơn hàng của tôi',
   NODELIVERIESFOUND: 'Không tìm thấy đơn hàng',
-  CLEAR_FILTER: 'Xóa bộ lọc',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Phạm vi giá',
   CONTAINERCHARGES: 'Phí đóng gói',
   TOTALCONTAINERCHARGES: 'Tổng phí vùng chứa',

@@ -171,6 +171,9 @@ const App = () => {
 
       }
       const getAppData = await getItem('appData');
+
+
+
       if (!!getAppData) {
         dispatch({
           type: types.APP_INIT,

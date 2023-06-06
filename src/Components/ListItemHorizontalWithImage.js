@@ -23,6 +23,7 @@ const ListItemHorizontal = ({
   centerContainerStyle = {},
   centerHeadingStyle = {},
   rightIconStyle = {},
+  rightText = ''
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -89,6 +90,20 @@ const ListItemHorizontal = ({
           </Text>
         )}
       </View>
+      {!!rightText && (
+          <Text
+            style={{
+              ...commonStyles.mediumFont14,
+              color: colors.grey,
+              lineHeight: textScale(20),
+              opacity: 0.7,
+              fontSize: textScale(13),
+              marginTop: moderateScaleVertical(5),
+              textAlign: I18nManager.isRTL ? 'right' : 'left',
+            }}>
+            {rightText}
+          </Text>
+        )}
       {iconRight && (
         <TouchableOpacity onPress={onRightIconPress}>
           <Image
