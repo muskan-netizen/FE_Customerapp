@@ -30,7 +30,9 @@ import strings from '../../../constants/lang';
 
 function Footer(props) {
   const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', setVendorComment = null } = props;
-
+  const foundRecurringProduct = cartData?.products?.some(item => {
+    return item?.vendor_products.some(item => item?.is_recurring_booking)
+  })
   return (
     <View style={{}}>
       {!!cartData?.category_kyc_count && !!userData?.auth_token && (
@@ -1329,7 +1331,7 @@ function Footer(props) {
 
             {!!(
               userData?.auth_token &&
-              !appData?.profile?.preferences?.off_scheduling_at_cart &&
+              !appData?.profile?.preferences?.off_scheduling_at_cart && !foundRecurringProduct &&
               businessType !== 'laundry' && dineInType !== 'appointment'
             ) && (
                 <ButtonComponent
@@ -1367,7 +1369,7 @@ function Footer(props) {
             {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate)) && (
               <ButtonComponent
                 onPress={placeOrder}
-                btnText={strings.PLACE_ORDER}s
+                btnText={strings.PLACE_ORDER}
                 borderRadius={moderateScale(13)}
                 textStyle={{ color: colors.white }}
                 containerStyle={styles.placeOrderButtonStyle}
