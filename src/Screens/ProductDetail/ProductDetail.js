@@ -220,7 +220,7 @@ export default function ProductDetail({route, navigation}) {
     period: {},
     disabledDaysIndexes: [],
     selectedDaysIndexes: [],
-    date: new Date(),
+    recurringDate: new Date(),
     showDateTimeModal: false,
     slectedDate: new Date(),
   });
@@ -241,7 +241,7 @@ export default function ProductDetail({route, navigation}) {
     initDate,
     disabledDaysIndexes,
     selectedDaysIndexes,
-    date,
+    recurringDate,
     showDateTimeModal,
     slectedDate,
   } = variantState;
@@ -265,7 +265,7 @@ export default function ProductDetail({route, navigation}) {
       period: {},
       disabledDaysIndexes: [],
       selectedDaysIndexes: [],
-      date: new Date(),
+      recurringDate: new Date(),
       showDateTimeModal: false,
       slectedDate: new Date(),
     });
@@ -1121,6 +1121,7 @@ export default function ProductDetail({route, navigation}) {
     recurringformPost['endDate'] = end.dateString ? end.dateString : '';
     recurringformPost['weekDay'] = weeDays;
     recurringformPost['selected_custom_dates'] = selectedCustomDates;
+    recurringformPost['schedule_time'] = moment(recurringDate).format('HH:MM');
 
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
@@ -2901,6 +2902,7 @@ export default function ProductDetail({route, navigation}) {
                     Reccuring
                   </Text>
                   <TouchableOpacity
+                    hitSlop={hitSlopProp}
                     style={{paddingLeft: moderateScale(5)}}
                     onPress={() => {
                       updateAddonState({reccuringCheckBox: !reccuringCheckBox});
@@ -2939,7 +2941,7 @@ export default function ProductDetail({route, navigation}) {
                   period={period}
                   disabledDaysIndexes={disabledDaysIndexes}
                   selectedDaysIndexes={selectedDaysIndexes}
-                  date={date}
+                  recurringDate={recurringDate}
                   showDateTimeModal={showDateTimeModal}
                   slectedDate={slectedDate}
                   updateAddonState={updateAddonState}

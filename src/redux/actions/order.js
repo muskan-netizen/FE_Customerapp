@@ -39,6 +39,7 @@ import {
   COMPLETE_PICKUP_DROP_OFF,
   GET_UPCOMING_ONGOING_ORDERS,
   P2P_ORDER_DETAIL,
+  SEND_NOTIFCATION_TO_VENDOR,
 } from '../../config/urls';
 import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
@@ -451,4 +452,7 @@ export function getUpcomingAndOngoingOrders(url, data = {}, headers = {}) {
 
 export function getP2pOrderDetail(data = {}, headers = {}) {
   return apiPost(P2P_ORDER_DETAIL, data, headers);
+}
+export function sendNotificationToVendor(data = {}, headers = {}) {
+  return apiPost(SEND_NOTIFCATION_TO_VENDOR, data, headers);
 }

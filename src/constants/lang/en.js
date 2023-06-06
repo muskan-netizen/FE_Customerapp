@@ -1117,7 +1117,6 @@ Amount`,
   ADDED_CART: "Item added in cart.",
   WAITING_TIME: "Waiting Time",
   FEE: "Fee",
-
   DETAILS: 'Details',
   ADD_YOUR_LOCATION: "Add Your Location",
   ALLOW_TRACK_YOUR_LOCATION: "Allow to track Current Loaction",
@@ -1161,5 +1160,11 @@ Amount`,
   LENT_BY: "Lent by",
   PICK_UP: "Pick up",
   DROP_OFF: "Drop off",
-  LOCATION_ON_MAP: "Location on map"
+  LOCATION_ON_MAP: "Location on map",
+  NOTIFY_VENDOR: 'Notify vendor that you have reached',
+  I_AM_CLIENT: "I'am a client",
+  I_AM_FREELANCER: "I'am a freelancer",
+  I_AM_VENDOR: "I'am a vendor",
+  JOIN_AS: "Join as a",
+  CLIENT_FREELANCER_VENDOR: "client, freelancer or vendor"
 };

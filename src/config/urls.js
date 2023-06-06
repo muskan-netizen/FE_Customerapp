@@ -816,3 +816,6 @@ export const SEND_PRODUCT_BOOKING_DATA = getApiUrl('/get_product_price_from_disp
 
 
 export const MTNGATEWAY = getApiUrl('/mtn/create-token')
+
+//sendNotificationToVendor ****************>
+export const SEND_NOTIFCATION_TO_VENDOR = getApiUrl('/order/vendorReached');

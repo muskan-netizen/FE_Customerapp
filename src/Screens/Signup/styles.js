@@ -91,6 +91,18 @@ export default ({ fontFamily }) => {
       fontFamily: fontFamily.regular,
       fontSize: textScale(16),
       paddingHorizontal: moderateScale(18),
+    },
+    workModeContainer: {
+      borderWidth: 2,
+      borderRadius: moderateScale(8),
+
+      padding: moderateScale(16),
+      marginTop: moderateScaleVertical(24)
+    },
+    radioBtn: {
+      height: moderateScale(25),
+      width: moderateScale(25),
+
     }
   });
   return styles;

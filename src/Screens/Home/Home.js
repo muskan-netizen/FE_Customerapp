@@ -96,6 +96,8 @@ export default function Home({ route, navigation }) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [nearestLocDis, setNearestLocDis] = useState(null)
+  const [ispriceTypeModal, setIsPriceTypeModal] = useState(false)
+  const [priceType, setPriceType] = useState('vendor')
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -472,13 +474,14 @@ export default function Home({ route, navigation }) {
         type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
         ...latlongObj,
         ...vendorFilterData,
+
       };
       let apiHeader = {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        freelancer: priceType === "freelancer" ? 1 : 0
       };
-      console.log('sending api data header', apiData, apiHeader);
 
       actions
         .homeData(apiData, apiHeader)
@@ -589,6 +592,7 @@ export default function Home({ route, navigation }) {
       })();
     }
   };
+
   //onPress Category
   const onPressCategory = (item) => {
     if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
@@ -1158,6 +1162,7 @@ export default function Home({ route, navigation }) {
                 _onVoiceStop={_onVoiceStop}
                 nearestLoc={nearestLocDis}
                 currentLoc={currentLocation}
+                onSeviceType={() => setIsPriceTypeModal(true)}
               />
 
               {dineInType == 'pick_drop' ? (
@@ -1613,6 +1618,66 @@ export default function Home({ route, navigation }) {
           onClose={_stopOrderModalClose}
         />
       )}
+      <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
+        <View style={{ height: moderateScaleVertical(170), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            fontSize: textScale(16)
+          }}>Select pricing type</Text>
+          <View style={{
+            margin: moderateScale(12)
+          }}>
+            <TouchableOpacity
+              onPress={() => setPriceType("vendor")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}>
+              <Image source={priceType == "vendor" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>From Vendor</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPriceType("freelancer")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: moderateScaleVertical(12)
+              }}>
+              <Image source={priceType == "freelancer" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>From Freelancer</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              setIsPriceTypeModal(false)
+              updateState({
+                searchDataLoader: true
+              })
+              homeData()
+            }} style={{
+              borderWidth: 1,
+              borderColor: themeColors?.primary_color,
+              height: 35,
+              borderRadius: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "flex-end",
+              marginTop: moderateScale(10),
+              paddingHorizontal: moderateScale(10)
+            }}>
+              <Text style={{
+                color: themeColors?.primary_color
+              }}>{strings.DONE}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }
