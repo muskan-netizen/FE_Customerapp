@@ -187,3 +187,16 @@ export {default as AvailableTechnicians} from './FreelancerService/AvailableTech
 export {default as TechnicianProfile} from './FreelancerService/TechnicianProfile/TechnicianProfile';
 
 
+//p2p Ondemand
+
+export {default as P2pOndemandHome} from './P2pOnDemnadBid/P2pOndemandHome(V2_API)';
+export {default as P2pPayment} from './P2pOnDemnadBid/P2pPayments/P2pPayment';
+export {default as AllCategories} from './P2pOnDemnadBid/AllCategories/AllCategories';
+export {default as ProductPriceDetails} from './P2pOnDemnadBid/ProductPriceDetails/ProductPriceDetails';
+export {default as RentTypeList} from './P2pOnDemnadBid/RentTypeList/RentTypeList';
+export { default as P2pOrderDetail } from './P2pOnDemnadBid/P2pOndemandOrderDetail/P2pOndemandOrderDetail';
+export { default as Login4 } from './Login/Login4';
+export {default as Signup5} from './Signup/Signup5';
+export {default as P2pMyOrders} from './P2pOnDemnadBid/P2pMyOrders/P2pMyOrders';
+export { default as P2pChatRoom } from './P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom';
+export { default as P2pChatScreen } from './P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen'

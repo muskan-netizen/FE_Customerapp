@@ -80,6 +80,18 @@ export default ({ fontFamily }) => {
       color: colors.blue,
       fontFamily: fontFamily.medium,
     },
+    boxStyle: {
+      backgroundColor: colors.blackOpacity05,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+      borderRadius: moderateScale(4),
+      backgroundColor: colors.white
+    },
+    placeholderTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(16),
+      paddingHorizontal: moderateScale(18),
+    },
     workModeContainer: {
       borderWidth: 2,
       borderRadius: moderateScale(8),
