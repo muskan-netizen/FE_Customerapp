@@ -143,7 +143,7 @@ const ForegroundHandler = (props) => {
       //   }
       // }
 
-      if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
+      if (Platform.OS == 'ios' && notification.sound == 'notification.wav' && data.type != 'reached_location') {
         actions.isVendorNotification(true);
         actions.refreshNotification(messageId);
       }

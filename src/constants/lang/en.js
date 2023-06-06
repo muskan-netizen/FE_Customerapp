@@ -1116,5 +1116,6 @@ Amount`,
   SELECT_SAME_PROVIDER_SERVICE: "Please select the service of same provider.",
   ADDED_CART: "Item added in cart.",
   WAITING_TIME: "Waiting Time",
-  FEE: "Fee"
+  FEE: "Fee",
+  NOTIFY_VENDOR:'Notify vendor that you have reached',
 };
