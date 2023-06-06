@@ -608,6 +608,7 @@ export default {
   icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
   icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
   icEcomSearch: require('../assets/images/Ecommerce/ic_search_01.png'),
+  ic_notification1: require('../assets/images/ic_notification1.png'),
 
   //Video
   // flank: require('../assets/flankSplash.mp4'),

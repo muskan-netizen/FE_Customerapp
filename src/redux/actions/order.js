@@ -35,6 +35,7 @@ import {
   EDIT_CUSTOMER_ORDER,
   DISCARD_EDIT_CUSTOMER_ORDER,
   DFROP_LOCATION_CHANGE_AFTER_ORDER_PLACE,
+  SEND_NOTIFCATION_TO_VENDOR,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -427,4 +428,8 @@ export function notificationDataForBid(data = {}) {
     type: types.NOTIFICATION_FOR_BIDE,
     payload: data,
   });
+}
+
+export function sendNotificationToVendor(data = {}, headers = {}) {
+  return apiPost(SEND_NOTIFCATION_TO_VENDOR, data, headers);
 }
