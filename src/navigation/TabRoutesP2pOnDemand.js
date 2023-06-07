@@ -17,6 +17,7 @@ import P2pOrderStack from './P2pOrderStack';
 import PostStack from './PostStack';
 import navigationStrings from './navigationStrings';
 import P2pChatStack from './P2pChatStack';
+import P2pPostStack from './P2pPostStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -128,7 +129,7 @@ export default function TabRoutesOnDemandP2p(props) {
             />
 
             <Tab.Screen
-                component={PostStack}
+                component={P2pPostStack}
                 name={navigationStrings.POST}
                 options={({ route, navigation }) => ({
                     tabBarVisible: getTabBarVisibility(route, navigation, []),

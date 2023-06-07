@@ -794,9 +794,6 @@ Amount`,
   CUSTOMIZZATION_FOR: 'Customizations for',
   ORDER_DELIVERED_SUCESSFULLY: 'Order delivered successfully !',
   ACCEPTING_ORDER_MSG: 'We are not accepting orders less then',
-  INVENTORY: 'Inventory',
-  UDHAARLEDGER: 'Udhaar ledger',
-  SALES_EXPENSES: 'Sales / Expenses',
   ADD_PRODUCT: 'Add Product',
   ADD_CUSTOMER: 'Add Customer',
   ADD_NEW_CUSTOMER: 'Add new customer',
@@ -1166,5 +1163,7 @@ Amount`,
   I_AM_FREELANCER: "I'am a freelancer",
   I_AM_VENDOR: "I'am a vendor",
   JOIN_AS: "Join as a",
-  CLIENT_FREELANCER_VENDOR: "client, freelancer or vendor"
+  CLIENT_FREELANCER_VENDOR: "client, freelancer or vendor",
+  AS_LENDER: "As Lender",
+  AS_BORROWER: "As Borrower"
 };

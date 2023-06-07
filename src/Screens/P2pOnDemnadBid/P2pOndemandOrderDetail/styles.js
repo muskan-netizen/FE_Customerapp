@@ -9,19 +9,8 @@ import { width, height } from '../../../styles/responsiveSize';
 
 export default ({ fontFamily, themeColors }) => {
   const styles = StyleSheet.create({
-
-    emptyContainer: {
-      height: height / 1.5,
-      alignItems: "center",
-      justifyContent: "center"
-    },
-    titleTxt: {
-      fontFamily: fontFamily?.medium,
-      fontSize: textScale(16),
-      color: colors.black,
-      marginBottom: moderateScaleVertical(12),
-      paddingLeft: moderateScale(16),
-    }
+    addressCont: { flexDirection: 'row', marginTop: moderateScaleVertical(14), marginHorizontal: moderateScale(16), },
+    addressTxt: { fontFamily: fontFamily?.regular, color: colors.textGreyN, marginLeft: moderateScale(8), fontSize: textScale(13) }
   });
   // export default styles;
   return styles;

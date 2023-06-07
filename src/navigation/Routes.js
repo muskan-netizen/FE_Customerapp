@@ -59,7 +59,7 @@ export default function Routes() {
               businessType === 4
                 ? TaxiTabRoutes
                 : businessType === 8
-                  ? !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand : TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
+                  ? !appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand : TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
                     : TabRoutes
             }
             options={{ gestureEnabled: false }}

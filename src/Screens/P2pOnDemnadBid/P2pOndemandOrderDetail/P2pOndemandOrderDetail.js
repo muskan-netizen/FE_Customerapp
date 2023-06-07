@@ -69,8 +69,8 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                 headerContainerStyle={{ borderBottomWidth: 1, borderBottomColor: colors.grey1 }}
             />
             {!isEmpty(orderData) && <View style={{ flex: 0.9, }}>
-                <View style={{ flexDirection: 'row', marginTop: moderateScaleVertical(14), marginHorizontal: moderateScale(16), }}>
-                    <Text style={{ fontFamily: fontFamily?.regular, color: colors.textGreyN, marginLeft: moderateScale(8), fontSize: textScale(13) }}>
+                <View style={styles.addressCont}>
+                    <Text style={styles.addressTxt}>
                         <Text style={{
                             color: isDarkMode ? MyDarkTheme.colors.text : colors.black
                         }}>{strings.ADDRESS}</Text> {productInfo?.product?.address}
