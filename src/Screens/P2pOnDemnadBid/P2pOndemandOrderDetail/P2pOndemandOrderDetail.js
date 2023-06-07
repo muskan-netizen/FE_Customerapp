@@ -79,7 +79,7 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                 <View style={{ borderWidth: 0.5, margin: moderateScale(16), borderColor: colors.greyA, borderRadius: moderateScale(8) }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Days {productInfo?.days}</Text>
-                        <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
+                        <Text style={{ fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
                             {`${moment(productInfo?.start_date_time).format("DD MMMM")} - ${moment(productInfo?.end_date_time).format("DD MMMM")}`}
                         </Text>
                     </View>
@@ -89,7 +89,7 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                             digit_after_decimal,
                             additional_preferences,
                             currencies?.primary_currency?.symbol)} x {productInfo?.days} days</Text>
-                        <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
+                        <Text style={{ fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
                             productInfo?.price * productInfo?.days,
                             digit_after_decimal,
                             additional_preferences,
@@ -97,7 +97,7 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Service Fee</Text>
-                        <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
+                        <Text style={{ fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
                             orderData?.total_service_fee,
                             digit_after_decimal,
                             additional_preferences,
@@ -105,7 +105,7 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Promo Code</Text>
-                        <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}></Text>
+                        <Text style={{ fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}></Text>
                     </View>
 
                     <View style={{
@@ -117,8 +117,8 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
 
                     }} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: moderateScale(8), marginHorizontal: moderateScale(12) }}>
-                        <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(16), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Total</Text>
-                        <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(16), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
+                        <Text style={{ fontFamily: fontFamily?.bold, fontSize: textScale(16), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Total</Text>
+                        <Text style={{ fontFamily: fontFamily?.bold, fontSize: textScale(16), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
                             orderData?.payable_amount,
                             digit_after_decimal,
                             additional_preferences,
@@ -137,7 +137,7 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                                 style={{ width: moderateScale(69), height: moderateScaleVertical(69), borderRadius: moderateScale(8) }}
                             />
                             <View style={{ marginLeft: moderateScale(10), width: moderateScale(199) }}>
-                                <Text style={{ fontFamily: fontFamily.bold }}>
+                                <Text style={{ fontFamily: fontFamily?.bold }}>
                                     {productInfo?.translation?.title}
                                 </Text>
                                 <HTMLView
