@@ -16,16 +16,7 @@ const AllCategories = ({ navigation }) => {
         appData,
         currencies,
         languages,
-        appStyle,
-        isDineInSelected,
-        themeColor,
-        themeToggle,
-        allAddresss,
-        themeColors
     } = useSelector(state => state?.initBoot);
-    const fontFamily = appStyle?.fontSizeData;
-    const styles = stylesFunc({ themeColors, fontFamily });
-
     const [allCategories, setAllCategories] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
@@ -46,12 +37,14 @@ const AllCategories = ({ navigation }) => {
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,
         }).then((res) => {
+            console.log(res, "<===getAllCategories")
             setIsLoading(false)
             setAllCategories(res?.data?.navCategories)
         }).catch(errorMethod)
     }
 
     const errorMethod = error => {
+        console.log(error, "<===getAllCategories")
         setIsLoading(false);
         showError(error?.message || error?.error);
     };

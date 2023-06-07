@@ -18,8 +18,6 @@ import {
   Location,
   P2pOndemandHome,
   P2pPayment,
-  P2pProductDetail,
-  P2pProducts,
   Payment,
   PaymentSuccess,
   ProductDetail,
@@ -47,20 +45,19 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
-  WebLinks
+  WebLinks,
+  P2pOndemandProductDetail,
+  AddVehicleDetails,
+  P2pOndemandProducts
 } from '../Screens';
-import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 
 import { verticalAnimation } from '../utils/utils';
 import navigationStrings from './navigationStrings';
-import P2pOndemandProducts from '../Screens/P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts';
-import P2pOndemandProductDetail from '../Screens/P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail';
 
 const Stack = createNativeStackNavigator();
 
 export default function () {
-  const { appStyle, appData } = useSelector((state) => state?.initBoot);
-  const businessType = appStyle?.homePageLayout;
+  const { appStyle } = useSelector((state) => state?.initBoot);
 
   const rendervendorScreen = () => {
     switch (appStyle?.homePageLayout) {

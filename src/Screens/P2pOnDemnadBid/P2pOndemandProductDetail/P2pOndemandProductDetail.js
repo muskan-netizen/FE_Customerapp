@@ -968,7 +968,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
 
           </View>
 
-          <Calendar markingType={'custom'} markedDates={selectedDates} onDayPress={handleDayPress} minDate={new Date()} />
+          <Calendar markingType={'custom'} markedDates={selectedDates} onDayPress={handleDayPress} minDate={String(new Date())} />
           <View
             style={{
               backgroundColor: colors.grey1,

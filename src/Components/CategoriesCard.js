@@ -1,10 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import colors from '../styles/colors';
 import { useSelector } from 'react-redux';
-import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
+import colors from '../styles/colors';
+import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { getImageUrl } from '../utils/helperFunctions';
 
 export default function CategoriesCard({ item = {}, onPress = () => { } }) {
     const {
@@ -12,6 +12,7 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
     } = useSelector(state => state?.initBoot);
     const fontFamily = appStyle?.fontSizeData;
 
+    const styles = stylesData({ fontFamily })
 
     let imageURI = getImageUrl(
         item?.image?.image_fit,
@@ -22,14 +23,7 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
         <TouchableOpacity style={{
             borderRadius: moderateScale(16),
         }} onPress={onPress}>
-            <View style={{
-                borderRadius: moderateScale(16),
-                height: moderateScaleVertical(149),
-                width: moderateScale(166),
-                position: "absolute",
-                backgroundColor: colors.blackOpacity10,
-                zIndex: 1
-            }} />
+            <View style={styles.shadowContainer} />
             <FastImage
                 style={{
                     borderRadius: moderateScale(16),
@@ -40,9 +34,24 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
                     uri: imageURI, cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.high,
                 }} />
-            <Text style={{ position: 'absolute', bottom: 10, left: 10, color: colors.white, fontFamily: fontFamily?.medium, fontSize: textScale(16), zIndex: 2 }}>{item?.name}</Text>
+            <Text style={styles.title}>{item?.name}</Text>
         </TouchableOpacity>
     )
 }
 
-const styles = StyleSheet.create({})
+function stylesData({ fontFamily }) {
+    const styles = StyleSheet.create({
+        shadowContainer: {
+            borderRadius: moderateScale(16),
+            height: moderateScaleVertical(149),
+            width: moderateScale(166),
+            position: "absolute",
+            backgroundColor: colors.blackOpacity10,
+            zIndex: 1
+        },
+        title: { position: 'absolute', bottom: 10, left: 10, color: colors.white, fontFamily: fontFamily?.medium, fontSize: textScale(16), zIndex: 2 }
+
+    })
+
+    return styles
+}
