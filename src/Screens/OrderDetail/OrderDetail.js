@@ -124,6 +124,8 @@ export default function OrderDetail({ navigation, route }) {
 
   const [orderDetailLoader, setOrderDetailLoader] = useState(true);
 
+  
+
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -733,6 +735,7 @@ export default function OrderDetail({ navigation, route }) {
                             justifyContent: "center",
                           }}
                         >
+                
                           {!!i?.product_addons.length > 0 && (
                             <View>
                               <Text
@@ -1146,6 +1149,9 @@ export default function OrderDetail({ navigation, route }) {
             ? MyDarkTheme.colors.background
             : colors.white,
           // marginVertical: moderateScale(10),
+
+
+
         }}
       >
         {/* show ETA Time */}
@@ -1218,6 +1224,8 @@ export default function OrderDetail({ navigation, route }) {
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(6),
+     
+                      // flexWrap:'wrap'
                     }}
                     key={inx}
                   >
@@ -1227,7 +1235,7 @@ export default function OrderDetail({ navigation, route }) {
                         backgroundColor: isDarkMode
                           ? MyDarkTheme.colors.background
                           : "#F8F8F8",
-                        flexDirection: "column",
+                        flexDirection: "column",                    
                       }}
                     >
                       <View style={{ flexDirection: "row" }}>
@@ -1263,12 +1271,14 @@ export default function OrderDetail({ navigation, route }) {
                               <View
                                 style={{
                                   justifyContent: 'center',
+                        
                                 }}>
                                 <Text
                                   style={{
                                     flexDirection: 'row',
                                     // alignItems: 'center',
                                     // backgroundColor: 'yellow',
+                                    width:width/1.5,
                                     justifyContent: 'space-between',
                                     color: isDarkMode
                                       ? MyDarkTheme.colors.text

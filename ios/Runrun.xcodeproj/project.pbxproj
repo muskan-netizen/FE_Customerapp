@@ -5362,8 +5362,8 @@
 		46DD2D29296ECA480030593B /* Messiaa(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 46DD2D28296ECA470030593B /* Messiaa(Production).xcconfig */; };
 		46DD2D2B296ECA6A0030593B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46DD2D2A296ECA690030593B /* Images.xcassets */; };
 		46DD2D2D296ECAD00030593B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46DD2D2C296ECACB0030593B /* GoogleService-Info.plist */; };
-		6A69527482EF0FEDC5559B5A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		6B702E67A11699454EBE1143 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		6A69527482EF0FEDC5559B5A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		6B702E67A11699454EBE1143 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		76693A5B269D9B87000F83B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		76693A5D269D9B87000F83B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		76693A63269D9B87000F83B2 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
@@ -9408,7 +9408,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -10229,7 +10229,7 @@
 		848CB12D278D662700DD824C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848CB12C278D662700DD824C /* Images.xcassets */; };
 		848CB1FB278D66F400DD824C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848CB1FA278D66F300DD824C /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -13655,9 +13655,9 @@
 		98E509EC2864942F00DACB21 /* NRSA(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 98E509EB2864942E00DACB21 /* NRSA(Development).xcconfig */; };
 		98E509EE2864945700DACB21 /* NRSA(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 98E509ED2864945700DACB21 /* NRSA(Production).xcconfig */; };
 		98E509F02864949100DACB21 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98E509EF2864949100DACB21 /* Images.xcassets */; };
-		9ADEA8BA419F5D966ACAEB55 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		B0938649A60E8870B52A572A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		DC67DB7422520EDD456FD224 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9ADEA8BA419F5D966ACAEB55 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		B0938649A60E8870B52A572A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		DC67DB7422520EDD456FD224 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E805B7D22892A75700899E5E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		E805B7D32892A75700899E5E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		E805B7D42892A75700899E5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -14180,7 +14180,7 @@
 		E84E21DF28A3883500D5CA81 /* LaundroZone(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E84E21DE28A3883400D5CA81 /* LaundroZone(Production).xcconfig */; };
 		E84E21E128A3888D00D5CA81 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E84E21E028A3888C00D5CA81 /* Images.xcassets */; };
 		E84E21E328A38B7100D5CA81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E84E21E228A38B6F00D5CA81 /* GoogleService-Info.plist */; };
-		E8521FB97D69A83B749A5FCC /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		E8521FB97D69A83B749A5FCC /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E8642848288FB15000102881 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		E8642849288FB15000102881 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		E864284A288FB15000102881 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -15160,14 +15160,14 @@
 		F415276429BB083A00412481 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F415276629BB083A00412481 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F415276729BB083A00412481 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
-		F415900D29BF69E100F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F415901029BF6B1800F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F415901229BF6BC800F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F415901429BF6E2C00F238B8 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073529C08C8D00B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073729C08CE300B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073A29C08F0E00B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F421073B29C08F0E00B336D3 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		F415900D29BF69E100F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F415901029BF6B1800F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F415901229BF6BC800F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F415901429BF6E2C00F238B8 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073529C08C8D00B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073729C08CE300B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073A29C08F0E00B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F421073B29C08F0E00B336D3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F424288D29C0B54500EA835E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F424288E29C0B54500EA835E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		F424288F29C0B54500EA835E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -15193,10 +15193,10 @@
 		F42428A929C0B54500EA835E /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		F42428AB29C0B54500EA835E /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		F42428AC29C0B54500EA835E /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
-		F42428BB29C0B93B00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F42428BC29C0B93B00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F42428BD29C0B93C00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		F42428BE29C0B93C00EA835E /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		F42428BB29C0B93B00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F42428BC29C0B93B00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F42428BD29C0B93C00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
+		F42428BE29C0B93C00EA835E /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F42D420028769DCC00BAE5E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		F42D420128769DCC00BAE5E9 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		F42D420228769DCC00BAE5E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -21330,8 +21330,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8521FB97D69A83B749A5FCC /* BuildFile in Frameworks */,
-				DC67DB7422520EDD456FD224 /* BuildFile in Frameworks */,
+				E8521FB97D69A83B749A5FCC /* (null) in Frameworks */,
+				DC67DB7422520EDD456FD224 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -22802,8 +22802,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A69527482EF0FEDC5559B5A /* BuildFile in Frameworks */,
-				6B702E67A11699454EBE1143 /* BuildFile in Frameworks */,
+				6A69527482EF0FEDC5559B5A /* (null) in Frameworks */,
+				6B702E67A11699454EBE1143 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -23371,7 +23371,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ADEA8BA419F5D966ACAEB55 /* BuildFile in Frameworks */,
+				9ADEA8BA419F5D966ACAEB55 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -23750,7 +23750,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0938649A60E8870B52A572A /* BuildFile in Frameworks */,
+				B0938649A60E8870B52A572A /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63269,10 +63269,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F421073729C08CE300B336D3 /* BuildFile in Resources */,
-				F421073A29C08F0E00B336D3 /* BuildFile in Resources */,
-				F421073B29C08F0E00B336D3 /* BuildFile in Resources */,
-				F421073529C08C8D00B336D3 /* BuildFile in Resources */,
+				F421073729C08CE300B336D3 /* (null) in Resources */,
+				F421073A29C08F0E00B336D3 /* (null) in Resources */,
+				F421073B29C08F0E00B336D3 /* (null) in Resources */,
+				F421073529C08C8D00B336D3 /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63347,25 +63347,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				F424289329C0B54500EA835E /* Eina02-Regular.ttf in Resources */,
-				F42428BD29C0B93C00EA835E /* BuildFile in Resources */,
+				F42428BD29C0B93C00EA835E /* (null) in Resources */,
 				F424289429C0B54500EA835E /* SFProDisplay-Regular.ttf in Resources */,
 				F424289529C0B54500EA835E /* Futura-Medium.ttf in Resources */,
 				F424289629C0B54500EA835E /* LaunchScreen.storyboard in Resources */,
 				F424289729C0B54500EA835E /* CircularStd-Book.otf in Resources */,
-				F42428BE29C0B93C00EA835E /* BuildFile in Resources */,
+				F42428BE29C0B93C00EA835E /* (null) in Resources */,
 				F424289829C0B54500EA835E /* Metropolis-Bold.otf in Resources */,
 				F424289929C0B54500EA835E /* Futura Hv BT.ttf in Resources */,
 				F424289A29C0B54500EA835E /* SFProText-Regular.ttf in Resources */,
 				F424289B29C0B54500EA835E /* SFProText-SemiBold.ttf in Resources */,
 				F424289C29C0B54500EA835E /* SFProText-Medium.ttf in Resources */,
-				F42428BB29C0B93B00EA835E /* BuildFile in Resources */,
+				F42428BB29C0B93B00EA835E /* (null) in Resources */,
 				F424289E29C0B54500EA835E /* notification.wav in Resources */,
 				F42428A129C0B54500EA835E /* Plists in Resources */,
 				F42428A229C0B54500EA835E /* Futura-Normal.ttf in Resources */,
 				F42428A329C0B54500EA835E /* Eina02-Bold.ttf in Resources */,
 				F42428A429C0B54500EA835E /* Futura-Book.ttf in Resources */,
 				F42428A529C0B54500EA835E /* CircularStd-Medium.otf in Resources */,
-				F42428BC29C0B93B00EA835E /* BuildFile in Resources */,
+				F42428BC29C0B93B00EA835E /* (null) in Resources */,
 				F42428A629C0B54500EA835E /* Metropolis-SemiBold.otf in Resources */,
 				F42428A729C0B54500EA835E /* FuturaBT-Heavy.ttf in Resources */,
 				F42428A829C0B54500EA835E /* CircularStd-Bold.ttf in Resources */,
@@ -63783,11 +63783,11 @@
 				F4BD7EB729BF5FC100EC70C0 /* Metropolis-Bold.otf in Resources */,
 				F4BD7EB829BF5FC100EC70C0 /* Futura Hv BT.ttf in Resources */,
 				F4BD7EB929BF5FC100EC70C0 /* SFProText-Regular.ttf in Resources */,
-				F415901229BF6BC800F238B8 /* BuildFile in Resources */,
+				F415901229BF6BC800F238B8 /* (null) in Resources */,
 				F4BD7EBA29BF5FC100EC70C0 /* SFProText-SemiBold.ttf in Resources */,
 				F4BD7EBB29BF5FC100EC70C0 /* SFProText-Medium.ttf in Resources */,
-				F415901029BF6B1800F238B8 /* BuildFile in Resources */,
-				F415901429BF6E2C00F238B8 /* BuildFile in Resources */,
+				F415901029BF6B1800F238B8 /* (null) in Resources */,
+				F415901429BF6E2C00F238B8 /* (null) in Resources */,
 				F4BD7EBD29BF5FC100EC70C0 /* notification.wav in Resources */,
 				F4BD7EC029BF5FC100EC70C0 /* Plists in Resources */,
 				F4BD7EC129BF5FC100EC70C0 /* Futura-Normal.ttf in Resources */,
@@ -63796,7 +63796,7 @@
 				F4BD7EC429BF5FC100EC70C0 /* CircularStd-Medium.otf in Resources */,
 				F4BD7EC529BF5FC100EC70C0 /* Metropolis-SemiBold.otf in Resources */,
 				F4BD7EC629BF5FC100EC70C0 /* FuturaBT-Heavy.ttf in Resources */,
-				F415900D29BF69E100F238B8 /* BuildFile in Resources */,
+				F415900D29BF69E100F238B8 /* (null) in Resources */,
 				F4BD7EC729BF5FC100EC70C0 /* CircularStd-Bold.ttf in Resources */,
 				F4BD7EC829BF5FC100EC70C0 /* Metropolis-Regular.otf in Resources */,
 				F4BD7ECA29BF5FC100EC70C0 /* SFProText-Bold.ttf in Resources */,
@@ -102193,7 +102193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -102287,7 +102287,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -109356,6 +109356,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6FXUMT5X23;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -109375,6 +109376,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = "Emart Order";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Emart Order";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

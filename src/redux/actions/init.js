@@ -16,6 +16,7 @@ import { changeLaguage } from '../../constants/lang';
 import { I18nManager } from 'react-native';
 const { dispatch } = store;
 import RNRestart from 'react-native-restart';
+import { isEmpty } from 'lodash';
 
 export function initApp(
   data = {},
@@ -32,6 +33,8 @@ export function initApp(
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
+
+        console.log("header api res",data)
 
 
         const currencies = !!data?.currencies
@@ -80,7 +83,7 @@ export function initApp(
 
         let currenciesData = {};
         currenciesData['all_currencies'] = currencies;
-        currenciesData['primary_currency'] =
+        currenciesData['primary_currency'] = !isEmpty(data?.primary_currencies) ? data?.primary_currencies?.currency :
           reload &&
             primary_curreny?.id &&
             data?.currencies.find((x) => x?.currency?.id == primary_curreny?.id)
@@ -91,7 +94,7 @@ export function initApp(
 
         let languagesData = {};
         languagesData['all_languages'] = languages;
-        languagesData['primary_language'] =
+        languagesData['primary_language'] =  !isEmpty(data?.primary_language) ? data?.primary_language?.language :
           reload &&
             primary_language?.id &&
             data?.languages.find((x) => x?.language?.id == primary_language?.id)
@@ -107,8 +110,7 @@ export function initApp(
           businessType: data.profile.preferences.business_type,
         };
 
-
-        // setPrimaryCurrency
+        console.log("languagesDatalanguagesData",languagesData)
 
         if (reload) {
           setItem('setPrimaryCurrent', currenciesData);
@@ -144,8 +146,7 @@ export function initApp(
             }
             setLanguage(getPrimaryLanguage);
           } else {
-            let primaryLang = data?.languages.filter((x) => x.is_primary)[0]
-              ?.language;
+            let primaryLang = languagesData?.primary_language
 
             // alert(JSON.stringify(I18nManager), 'I18nManager');
             setItem('setPrimaryLanguage', languagesData);
