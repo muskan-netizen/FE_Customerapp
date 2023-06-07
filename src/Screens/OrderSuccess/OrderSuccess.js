@@ -39,8 +39,12 @@ export default function OrderSuccess({ navigation, route }) {
   console.log(paramData, "paramData>>>>>>paramData")
 
   const viewOrderDetail = () => {
-    navigation.navigate(navigationStrings.HOME
-    );
+
+    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+      orderId: paramData?.orderDetail?.id,
+      fromActive: true, // this value use for useInterval
+      from: "cart"
+    });
   };
 
   const androidBackButtonHandler = () => {
