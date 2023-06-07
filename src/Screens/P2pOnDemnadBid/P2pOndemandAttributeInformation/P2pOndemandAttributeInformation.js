@@ -90,7 +90,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [originalPrice, setOriginalPrice] = useState('')
   const [rentalDays, setRentalDays] = useState('')
   const [isCalendarModal, setIsCalendarModal] = useState(false)
-  const [priceDayType, setPriceDayType] = useState("")
 
 
   const [state, setState] = useState({
@@ -226,59 +225,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     setLoadingSubmitAttributes(false);
 
     showError(error?.message || error?.error);
-  };
-
-  const onChangeDropDownOption = (value, item) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      itm => itm?.id == item?.id,
-    );
-    attributeInfoData[indexOfAttributeToUpdate].values = value;
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const onPressRadioButton = item => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      itm => itm?.id == item?.attribute_id,
-    );
-    attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const onChangeText = (text, item) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      itm => itm?.id == item?.id,
-    );
-    attributeInfoData[indexOfAttributeToUpdate].values = [text];
-    setAttributeInfo(attributeInfoData);
-  };
-
-  const onPressCheckBoxes = (value, data) => {
-    const attributeInfoData = [...attributeInfo];
-    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-      itm => itm?.id == value?.attribute_id,
-    );
-    if (!isEmpty(data?.values)) {
-      let existingItmIndx = data?.values.findIndex(itm => itm == value.id);
-      if (existingItmIndx == -1) {
-        attributeInfoData[indexOfAttributeToUpdate].values = [
-          ...data?.values,
-          value?.id,
-        ];
-      } else {
-        let index = attributeInfoData[indexOfAttributeToUpdate].values.indexOf(
-          value?.id,
-        );
-        if (index >= 0) {
-          attributeInfoData[indexOfAttributeToUpdate].values.splice(index, 1);
-        }
-      }
-    } else {
-      attributeInfoData[indexOfAttributeToUpdate].values = [value?.id];
-    }
-    setAttributeInfo(attributeInfoData);
   };
 
   const cameraHandle = async index => {
@@ -429,83 +375,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
     return `${moment(firstItemKey).format("DD MMMM YYYY")} - ${moment(lastItemKey).format("DD MMMM YYYY")}`
   }
-  // dynamic radio buttons
-  const renderRadioBtns = useCallback(
-    (item, data, index) => {
-      return (
-        <TouchableOpacity
-          key={String(index)}
-          onPress={() => onPressRadioButton(item)}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginRight: moderateScale(20),
-          }}>
-          <Image
-            source={
-              !isEmpty(data?.values) && data?.values[0] == item?.id
-                ? imagePath.icActiveRadio
-                : imagePath.icInActiveRadio
-            }
-            style={{
-              tintColor:
-                !isEmpty(data?.values) && data?.values[0] == item?.id
-                  ? themeColors.primary_color
-                  : colors.blackOpacity43,
-            }}
-          />
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(14),
-              marginLeft: moderateScale(6),
-            }}>
-            {item?.title}
-          </Text>
-        </TouchableOpacity>
-      );
-    },
-    [attributeInfo],
-  );
 
-  // dynamic check boxes buttons
-  const renderCheckBoxes = useCallback(
-    (item, data, index) => {
-      return (
-        <TouchableOpacity
-          key={String(index)}
-          onPress={() => onPressCheckBoxes(item, data)}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginRight: moderateScale(20),
-            marginBottom: moderateScaleVertical(10),
-          }}>
-          <Image
-            source={
-              checkValueExistInAry(item, data?.values)
-                ? imagePath.checkBox2Active
-                : imagePath.checkBox2InActive
-            }
-            style={{
-              tintColor: checkValueExistInAry(item, data?.values)
-                ? themeColors.primary_color
-                : colors.blackOpacity43,
-            }}
-          />
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(12),
-              marginLeft: moderateScale(6),
-            }}>
-            {item?.title}
-          </Text>
-        </TouchableOpacity>
-      );
-    },
-    [attributeInfo],
-  );
 
   return (
     <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} statusBarColor={colors.white} isLoading={isLoadingSubmitAttributes}>
@@ -701,15 +571,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
               <ButtonComponent
                 onPress={() => setIsCalendarModal(true)}
-                containerStyle={{
-                  borderWidth: 1,
-                  height: moderateScaleVertical(48),
-                  width: moderateScale(350),
-                  alignSelf: 'center',
-                  borderRadius: 8,
-                  marginBottom: moderateScaleVertical(60),
-                  backgroundColor: colors.white
-                }}
+                containerStyle={styles.availablityBtn}
                 textStyle={{
                   color: colors.black,
                 }}
@@ -808,7 +670,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   );
 };
 
-export default AttributeInformation;
+export default P2pOndemandAttributeInformation;
 
 function stylesFunc({ fontFamily, themeColors }) {
   const styles = StyleSheet.create({
@@ -992,6 +854,15 @@ function stylesFunc({ fontFamily, themeColors }) {
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
       marginTop: moderateScaleVertical(10),
+    },
+    availablityBtn: {
+      borderWidth: 1,
+      height: moderateScaleVertical(48),
+      width: moderateScale(350),
+      alignSelf: 'center',
+      borderRadius: 8,
+      marginBottom: moderateScaleVertical(60),
+      backgroundColor: colors.white
     }
 
   });

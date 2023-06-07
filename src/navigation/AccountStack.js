@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   AboutUs,
   Account,
@@ -8,7 +8,6 @@ import {
   Account3,
   Account4,
   AddMoney,
-  AddNewCustomer,
   AddProduct,
   AllinonePyments,
   BrandProducts,
@@ -17,9 +16,8 @@ import {
   ChatRoomForVendor,
   CMSLinks,
   ContactUs,
-  CustomerEarningHistory,
+
   Delivery,
-  Inventory,
   Location,
   Loyalty2,
   //Pyament Screens
@@ -45,7 +43,6 @@ import {
   ReferAndEarn,
   ReplaceOrder,
   ReturnOrder,
-  SalesExpenses,
   SavedCards,
   SearchProductVendorItem,
   SearchProductVendorItem2,
@@ -57,7 +54,6 @@ import {
   TipPaymentOptions,
   TrackDetail,
   Tracking,
-  UdhaarLedger,
   Vendors,
   Vendors2,
   Wallet,
@@ -66,16 +62,15 @@ import {
   WebviewScreen,
   Wishlist,
   Wishlist2,
-  Yoco,
+  Yoco
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
-export default function ({navigation}) {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+export default function ({ navigation }) {
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
-  console.log("appStyle?.homePageLayoutappStyle?.homePageLayout",appStyle?.homePageLayout)
   const checkAccountsLayout = (inx) => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -150,8 +145,8 @@ export default function ({navigation}) {
         name={navigationStrings.WISHLIST}
         component={
           appStyle?.homePageLayout === 3 ||
-          appStyle?.homePageLayout === 5 ||
-          appStyle?.homePageLayout === 8
+            appStyle?.homePageLayout === 5 ||
+            appStyle?.homePageLayout === 8
             ? Wishlist2
             : Wishlist
         }
@@ -161,7 +156,7 @@ export default function ({navigation}) {
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name={navigationStrings.TRACKING} component={Tracking} />
       <Stack.Screen
@@ -210,7 +205,7 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.PICKUPORDERDETAIL}
         component={PickupOrderDetail}
-        options={{tabBarVisible: false}}
+        options={{ tabBarVisible: false }}
       />
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
@@ -237,27 +232,12 @@ export default function ({navigation}) {
         name={navigationStrings.ALL_IN_ONE_PAYMENTS}
         component={AllinonePyments}
       />
-      <Stack.Screen name={navigationStrings.INVENTORY} component={Inventory} />
-      <Stack.Screen
-        name={navigationStrings.UDHAARLEDGER}
-        component={UdhaarLedger}
-      />
-      <Stack.Screen
-        name={navigationStrings.SALES_EXPENSES}
-        component={SalesExpenses}
-      />
+
       <Stack.Screen
         name={navigationStrings.ADD_PRODUCT}
         component={AddProduct}
       />
-      <Stack.Screen
-        name={navigationStrings.ADD_NEW_CUSTOMER}
-        component={AddNewCustomer}
-      />
-      <Stack.Screen
-        name={navigationStrings.CUSTOMER_EARNING_HISTORY}
-        component={CustomerEarningHistory}
-      />
+
       <Stack.Screen name={navigationStrings.CHAT_ROOM} component={ChatRoom} />
       <Stack.Screen
         name={navigationStrings.CHAT_ROOM_FOR_VENDOR}

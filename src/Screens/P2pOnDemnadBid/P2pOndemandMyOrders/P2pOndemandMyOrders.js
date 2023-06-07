@@ -11,13 +11,13 @@ import {
 } from 'react-native';
 import * as RNLocalize from 'react-native-localize';
 import { useSelector } from 'react-redux';
-import Header2 from '../../Components/Header2';
-import P2pProductComp from '../../Components/P2pProductComp';
-import SwitchableTabs from '../../Components/SwitchableTabs';
-import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
-import actions from '../../redux/actions';
-import colors from '../../styles/colors';
+import Header2 from '../../../Components/Header2';
+import P2pProductComp from '../../../Components/P2pProductComp';
+import SwitchableTabs from '../../../Components/SwitchableTabs';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+
+import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -28,6 +28,8 @@ import navigationStrings from '../../navigation/navigationStrings';
 import { showError } from '../../utils/helperFunctions';
 import { MyDarkTheme } from '../../styles/theme';
 import { useDarkMode } from 'react-native-dynamic';
+import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
 
 export default function P2pOndemandMyOrders({ navigation }) {
   const { appData, currencies, languages, appStyle, themeColors, themeToggle, themeColor } = useSelector(
@@ -112,16 +114,15 @@ export default function P2pOndemandMyOrders({ navigation }) {
 
   const getOngoingAndUpcomingOrders = type => {
     setIsLoadingOrders(true)
-    actions
-      .getUpcomingAndOngoingOrders(
-        `?type=${type?.id == 2 ? 'upcoming' : 'ongoing'}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+    actions.getUpcomingAndOngoingOrders(
+      `?type=${type?.id == 2 ? 'upcoming' : 'ongoing'}`,
+      {},
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then(res => {
         console.log(res, '<===res getUpcomingAndOngoingOrders');
         setIsLoadingOrders(false)
@@ -212,7 +213,7 @@ export default function P2pOndemandMyOrders({ navigation }) {
     <TouchableOpacity onPress={onPressRight}>
       <Text
         style={styles.rightTxt}>
-        View all
+        {strings.VIEW_ALL}
       </Text>
     </TouchableOpacity>
   </View>
@@ -271,7 +272,7 @@ export default function P2pOndemandMyOrders({ navigation }) {
               <View>
                 {!isEmpty(upcomingOngoingOrders?.lender) && (
                   <View>
-                    <HeaderView leftText={"As Lender"} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
+                    <HeaderView leftText={strings.AS_LENDER} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                       userType: "lender",
                       type: selectedTab?.id == 2 ? "upcoming" : "ongoing"
                     })} />
@@ -292,7 +293,7 @@ export default function P2pOndemandMyOrders({ navigation }) {
 
                 {!isEmpty(upcomingOngoingOrders?.borrower) && (
                   <View>
-                    <HeaderView leftText={"As Borrower"} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
+                    <HeaderView leftText={strings.AS_BORROWER} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                       userType: "borrower",
                       type: selectedTab?.id == 2 ? "upcoming" : "ongoing"
                     })} />
