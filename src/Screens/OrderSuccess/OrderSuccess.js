@@ -172,8 +172,8 @@ export default function OrderSuccess({ navigation, route }) {
             marginBottom: moderateScaleVertical(90),
           }}>
           <ButtonComponent
-            btnText={!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? "Start chat" : strings.VIEW_DETAIL}
-            onPress={!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? createRoom : viewOrderDetail}
+            btnText={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? strings.START_CHAT : strings.VIEW_DETAIL}
+            onPress={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? createRoom : viewOrderDetail}
             textStyle={{ color: themeColors.secondary_color }}
             borderRadius={moderateScale(13)}
             containerStyle={{

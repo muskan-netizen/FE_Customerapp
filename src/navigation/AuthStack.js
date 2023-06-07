@@ -26,12 +26,12 @@ export default function (Stack, appStyle, appData) {
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? Signup5 : appStyle?.homePageLayout === 8 ? Signup4 : Signup}
+        component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? Signup5 : appStyle?.homePageLayout === 8 ? Signup4 : Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? Login4 : appStyle?.homePageLayout === 8 ? Login3 : Login}
+        component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? Login4 : appStyle?.homePageLayout === 8 ? Login3 : Login}
         options={{ headerShown: false }}
       />
       <Stack.Screen
