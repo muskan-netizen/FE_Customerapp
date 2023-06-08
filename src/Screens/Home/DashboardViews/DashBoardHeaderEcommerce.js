@@ -1,10 +1,11 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Image, SafeAreaView, Text, TouchableOpacity, View, Animated, StatusBar } from 'react-native';
+import { Image, SafeAreaView, Text, TouchableOpacity, View, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -31,6 +32,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import DeviceCountry from 'react-native-device-country';
 import { countryJSON } from '../../../constants/constants';
+import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -59,6 +61,7 @@ export default function DashBoardHeaderEcommerce({
   cartItemCountNumber = {
     fontSize: textScale(8),
   },
+  animation
 }) {
   const navigation = useNavigation();
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
@@ -114,6 +117,22 @@ export default function DashBoardHeaderEcommerce({
     // borderRadius: moderateScale(28 / 2)
   }
 
+  const headerUperView = useAnimatedStyle(() => {
+    const heightv=interpolate(animation.value,
+      [0, 100, 0],
+      [height/14,0, height/14],
+      Extrapolate.CLAMP
+    )
+   const opacity=interpolate(animation.value,
+      [0, 100, 0],
+      [1,0, 1],
+      Extrapolate.CLAMP
+    )
+    return {
+      height: heightv,
+      opacity
+  }
+})
 
 
   return (
@@ -126,14 +145,14 @@ export default function DashBoardHeaderEcommerce({
 
       <SafeAreaView>
 
-        <View
-          style={{
+        <Animated.View
+          style={[{
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingHorizontal: moderateScale(16),
             alignItems: 'center',
             // marginTop: moderateScaleVertical(4),
-          }}>
+          },headerUperView]}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.openDrawer()}
@@ -254,7 +273,7 @@ export default function DashBoardHeaderEcommerce({
                  
              <Text style={{
               fontSize: textScale(30)
-             }} >{(JSON.parse(countryJSON)[`${countryCode}`]).emoji}</Text>   
+             }} >{(JSON?.parse(countryJSON)[`${countryCode}`])?.emoji}</Text>   
 
                 {/* <Text>{countryJSON[]}</Text> */}
               {/* <CountryFlag style={{
@@ -303,7 +322,7 @@ export default function DashBoardHeaderEcommerce({
             </TouchableOpacity>
 
           </View>
-        </View>
+        </Animated.View>
 
 
         <DeliveryTypeEcommerceComp

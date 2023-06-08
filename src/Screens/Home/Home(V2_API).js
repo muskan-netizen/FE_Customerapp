@@ -34,6 +34,7 @@ import { DashBoardHeaderFour } from './DashboardViews/Index';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import socketServices from '../../utils/scoketService';
 import { enableFreeze } from "react-native-screens";
+import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 enableFreeze(true);
 
 
@@ -53,6 +54,7 @@ export default function Home({ route, navigation }) {
   const { location, appMainData, dineInType, isLocationSearched } = useSelector((state) => state?.home || {});
 
   const isFocused = useIsFocused();
+  const animation = useSharedValue(0)
   const { cartItemCount } = useSelector((state) => state?.cart);
 
   const { userData } = useSelector((state) => state?.auth);
@@ -939,6 +941,15 @@ export default function Home({ route, navigation }) {
     });
   };
 
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    if (event.contentOffset.y > 170) {
+      animation.value=170
+      return
+    }
+    animation.value = event.contentOffset.y
+  
+  })
+
 
   const renderHeaders = useCallback(()=>{
     switch (appStyle?.homePageLayout) {
@@ -1088,6 +1099,7 @@ export default function Home({ route, navigation }) {
             _onVoiceListen={_onVoiceListen}
             isVoiceRecord={isVoiceRecord}
             _onVoiceStop={_onVoiceStop}
+            animation={animation}
           />
         )
 
@@ -1182,6 +1194,7 @@ export default function Home({ route, navigation }) {
             showAllProducts={showAllProducts}
             showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
             showVendorCategory={true}
+            scrollHandler={scrollHandler}
           />
         }
       </>

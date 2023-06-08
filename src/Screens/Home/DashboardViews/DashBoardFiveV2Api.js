@@ -59,6 +59,7 @@ import fontFamily from '../../../styles/fontFamily';
 import actions from '../../../redux/actions';
 import VendorMode from '../../../Components/VendorMode';
 import { enableFreeze } from "react-native-screens";
+import Animated from 'react-native-reanimated';
 enableFreeze(true);
 
 const homeFilter = [
@@ -86,7 +87,8 @@ const DashBoardFiveV2Api = ({
   onVendorFilterSeletion = () => { },
   selcetedToggle = () => { },
   showVendorCategory = true,
-  appMainData = {}
+  appMainData = {},
+  scrollHandler=()=>{}
 }) => {
 
 
@@ -1071,10 +1073,11 @@ const DashBoardFiveV2Api = ({
       {showAllTempCartOrders()}
 
       {!!dataProvider && !isEmpty(dataProvider) ?
-        <FlatList
+        <Animated.FlatList
           data={dataProvider}
           extraData={dataProvider}
           renderItem={renderHomePageItems}
+          onScroll={scrollHandler}
           keyExtractor={keyExtractorUnique}
           onScrollToIndexFailed={() => console.log("df")}
           refreshControl={
