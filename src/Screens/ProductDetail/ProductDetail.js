@@ -427,6 +427,7 @@ export default function ProductDetail({ route, navigation }) {
             multiplier: res?.data?.multiplier,
             price: res?.data?.price,
           },
+          productTotalQuantity: res?.data?.quantity,
           productSku: res?.data?.sku,
           productVariantId: res?.data?.id,
           showErrorMessageTitle: false,
@@ -2103,6 +2104,7 @@ export default function ProductDetail({ route, navigation }) {
         <Text style={{
           ...commonStyles.mediumFont14,
           color: isDarkMode ? colors.white : colors.textGrey,
+          textTransform:'capitalize'
         }}>{item.title}</Text>
 
         {item.title == 'Color' ? 
@@ -2116,6 +2118,7 @@ export default function ProductDetail({ route, navigation }) {
 
         </View> :
            <FlatList
+           showsHorizontalScrollIndicator={false}
            data={item?.options || []}
            horizontal
            renderItem={({ item, index }) => renderSize(item, index, options)}

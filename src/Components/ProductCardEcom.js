@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Pressable, TouchableWithoutFeedback } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -38,9 +38,11 @@ const ProductCardEcom = ({
     const getImage = (quality) => getImageUrl(url1, url2, quality);
 
     return (
-        <TouchableOpacity
+        <Pressable
             disabled={btnLoader}
             activeOpacity={0.6}
+            // unstable_pressDelay={5000}
+            // cancelable={false}
             onPress={onPress}
             style={{
                 ...commonStyles.shadowStyle,
@@ -72,14 +74,15 @@ const ProductCardEcom = ({
                     <View style={{ width: '100%', position: 'absolute', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: moderateScale(5), paddingHorizontal: moderateScale(10) }}>
                   
                         <View></View>
-                        <TouchableOpacity 
+                        <TouchableWithoutFeedback 
                         onPress={onAddtoWishlist} 
                         style={{ backgroundColor: colors.grey1, 
                         borderRadius: 16, 
                         padding: moderateScale(4), 
                         justifyContent: 'center', 
                         alignItems: 'center',
-                        marginTop: moderateScale(8)
+                        marginTop: moderateScale(8),
+
                          }}>
                             <FastImage
                                 style={{
@@ -94,7 +97,7 @@ const ProductCardEcom = ({
                                 resizeMode={FastImage.resizeMode.contain}
                             />
 
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
                     </View>
 
                 </>
@@ -203,7 +206,7 @@ const ProductCardEcom = ({
                         : null
                 }
             </View>
-        </TouchableOpacity>
+        </Pressable>
 
     );
 };

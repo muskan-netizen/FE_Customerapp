@@ -549,7 +549,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
         <View style={{
           flexDirection: "row",
           alignItems: 'center',
-          paddingHorizontal: moderateScale(8)
+          paddingHorizontal: moderateScale(12)
         }}>
             <View style={{flex:0.08}}>
           <Image style={{
@@ -760,7 +760,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
                 <HorizontalLine lineStyle={{ 
-                  marginVertical: moderateScaleVertical(8),
+                  marginVertical: moderateScaleVertical(10),
                   borderBottomColor: isDarkMode? colors.whiteOpacity50: colors.blackOpacity10
                  }} />
               )}

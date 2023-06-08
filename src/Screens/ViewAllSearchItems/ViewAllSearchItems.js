@@ -300,6 +300,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                         marginRight: moderateScale(4),
 
                     }}>
+                        {console.log("itemitemitem",item)}
                         <ProductsComp3
                             item={item}
                             onPress={() =>
@@ -307,8 +308,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
                             }
                             containerStyle={{
                                 width: '100%',
-                                height: height / 3.2,
-
+                                minHeight: height / 3.5,
                             }}
                             numberOfLines={1}
                         />

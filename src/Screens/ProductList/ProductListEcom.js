@@ -421,16 +421,18 @@ export default function Products({route, navigation}) {
   };
 
   const seeAllCategory = useCallback(item => {
-    console.log('item+++++', item);
-
     let data = {
       id: item.id,
-      vendor: true,
+      vendor: false,
       name: item.translation[0].name,
       fetchOffers: true,
     }
     navigation.push(navigationStrings.PRODUCT_LIST, {data});
   }, []);
+
+
+  console.log("noMoreDatanoMoreDatanoMoreData",noMoreData)
+  
   const renderSectionItem = useCallback(
     ({item, index, section}) => {
       return (
@@ -844,6 +846,7 @@ export default function Products({route, navigation}) {
     if (productListId?.vendor && routeData) {
       fetchOffers();
     }
+    return ()=> noMoreData = false
   }, []);
 
   const getAllProductTags = () => {
@@ -991,7 +994,7 @@ export default function Products({route, navigation}) {
   /****Get all list items by vendor id */
   const getAllProductsByVendor = pageNo => {
     setLoading(true);
-    console.log(data, 'api hit getAllProductsByVendor');
+
     updateState({wrapperListLoader: true});
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
@@ -1017,8 +1020,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then(async res => {
-        console.log(
-          'get all products by vendor res without filter',
+        console.log('get all products by vendor res without filter',
           res?.data?.products?.data,
         );
         setLoading(false);
@@ -1173,10 +1175,11 @@ export default function Products({route, navigation}) {
         if (!!res?.data) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
-          // checkSingleVendor(categoryInfo ? categoryInfo : res.data.category)
-          // setCategoryInfo(res.data.category);
           setLoading(false);
-          // onAtoZFilter()
+  
+          if(res?.data?.listData?.to == res?.data?.listData?.total){
+            noMoreData = true
+          }
           setProductListData(
             pageNo == 1
               ? res.data.listData.data
@@ -1211,6 +1214,8 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
     // }
   };
+
+  console.log("noMoreDatanoMoreData",noMoreData)
   console.log('productListData ++++', productListData);
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = useCallback(
@@ -3022,7 +3027,7 @@ export default function Products({route, navigation}) {
             onEndReached={onEndReached}
             onEndReachedThreshold={0.1}
             ListFooterComponent={
-              (!noMoreData && productListData.length > 9) && listFooterComponent
+              !noMoreData && listFooterComponent
             }
             ListEmptyComponent={listEmptyComponent}
             // style={{marginHorizontal: moderateScale(8)}}

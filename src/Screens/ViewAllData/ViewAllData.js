@@ -28,6 +28,9 @@ import { enableFreeze } from "react-native-screens";
 import { UIActivityIndicator } from 'react-native-indicators';
 enableFreeze(true);
 
+
+var noMoreData = false;
+
 export default function ViewAllData({ route, navigation }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot,
@@ -42,14 +45,14 @@ export default function ViewAllData({ route, navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({ fontFamily });
 
+
+
   const [state, setState] = useState({
     isLoading: true,
     pageNo: 1,
-    limit: 5,
+    limit: 10,
     isRefreshing: false,
     data: [],
-    totalProduct: 0,
-    loadMore: false,
     openVendor: 1,
     closeVendor: 0,
     bestSeller: 0,
@@ -62,8 +65,6 @@ export default function ViewAllData({ route, navigation }) {
     isRefreshing,
     limit,
     data,
-    totalProduct,
-    loadMore,
     openVendor,
     closeVendor,
     bestSeller,
@@ -76,21 +77,22 @@ export default function ViewAllData({ route, navigation }) {
   useEffect(() => {
     apiHit(pageNo);
 
-    const homeAllFilters = () => {
-      let homeFilter = [
-        { id: 1, type: strings.OPEN },
-        { id: 2, type: strings.CLOSE },
-        { id: 3, type: strings.BESTSELLER },
-      ];
-      if (!!appData?.profile?.preferences?.is_hyperlocal) {
-        homeFilter.push({ id: 4, type: strings.NEAR_BY });
-      } else {
-        if (homeFilter.length > 3) {
-          homeFilter.pop();
-        }
-      }
-      return homeFilter;
-    };
+    // const homeAllFilters = () => {
+    //   let homeFilter = [
+    //     { id: 1, type: strings.OPEN },
+    //     { id: 2, type: strings.CLOSE },
+    //     { id: 3, type: strings.BESTSELLER },
+    //   ];
+    //   if (!!appData?.profile?.preferences?.is_hyperlocal) {
+    //     homeFilter.push({ id: 4, type: strings.NEAR_BY });
+    //   } else {
+    //     if (homeFilter.length > 3) {
+    //       homeFilter.pop();
+    //     }
+    //   }
+    //   return homeFilter;
+    // };
+    return () => noMoreData = false
   }, []);
 
   //Home data
@@ -109,7 +111,9 @@ export default function ViewAllData({ route, navigation }) {
       near_me: 0,
     };
 
-    console.log(vendorFilterData, 'vendorFilterData');
+    console.log(noMoreData, 'noMoreDatanoMoreData');
+
+
     // let query = `?limit=${limit}&page=${pageNo}&close_vendor=${1}&open_vendor=${0}&best_vendor=${0}&near_me=${0}`
     let query = `?limit=${limit}&page=${pageNo}&type=${dineInType ? dineInType : dineInType
       }&latitude=${latlongObj?.latitude || ''}&longitude=${latlongObj?.longitude || ''
@@ -126,21 +130,19 @@ export default function ViewAllData({ route, navigation }) {
     actions
       .vendorAll(query, {}, headers)
       .then((res) => {
-        console.log('Home data++++++', res);
-        if (totalProduct == 0) {
-          updateState({ totalProduct: res?.data?.total });
+        console.log('Home data++++++', res?.data);
+        if (res?.data?.data?.length == 0) {
+          noMoreData = true
         }
         updateState({
           data: pageNo == 1 ? res?.data?.data : [...data, ...res?.data?.data],
           isLoading: false,
-          loadMore: false,
         });
       })
       .catch((error) => {
         console.log('error raised', error);
         updateState({
           isLoading: false,
-          loadMore: false,
         });
       });
   };
@@ -259,14 +261,27 @@ export default function ViewAllData({ route, navigation }) {
     );
   }
 
+  console.log("noMoreDatanoMoreData",noMoreData)
+
   const onEndReached = () => {
-    if (totalProduct !== data.length) {
-      updateState({ pageNo: pageNo + 1, loadMore: true });
+    if (!noMoreData) {
+      updateState({ pageNo: pageNo + 1 });
       apiHit(pageNo + 1);
-    } else {
-      updateState({ loadMore: false });
+    }else{
+      noMoreData = true
     }
   };
+
+  const listFooterComponent = () => {
+    return (
+      <View style={{ marginBottom: moderateScale(100), marginTop: moderateScaleVertical(16) }}>
+        <UIActivityIndicator
+          color={themeColors?.primary_color}
+          size={30}
+        />
+      </View>
+    )
+  }
 
   return (
     <WrapperContainer
@@ -310,15 +325,8 @@ export default function ViewAllData({ route, navigation }) {
             </View>
           )
         }
-        ListFooterComponent={!!loadMore ?
-          <View style={{ marginBottom: moderateScale(100) }}>
-
-            <UIActivityIndicator
-              color={themeColors.primary_color}
-              size={30}
-            />
-          </View>
-
+        ListFooterComponent={!noMoreData ?
+          <>{listFooterComponent()}</>
           : <View style={{ height: moderateScale(100) }} />}
       />
     </WrapperContainer>

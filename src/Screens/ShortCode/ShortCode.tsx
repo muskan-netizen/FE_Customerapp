@@ -66,7 +66,7 @@ const ShortCode: FC = () => {
     // const appCode = !!prevCode ? prevCode : getAppCode();
     // 6ca3a4 -> emart
     // f34c51 -> sanjay
-    const appCode = 'f34c51'
+    const appCode = '6ca3a4'
 
     let header = {};
     let locationObject = {

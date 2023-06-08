@@ -303,7 +303,7 @@ export default function DashBoardHeaderEcommerce({
               />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{ marginHorizontal: moderateScale(8) }}
               onPress={() => navigation.navigate(navigationStrings.CART)}>
               <Image
@@ -313,7 +313,7 @@ export default function DashBoardHeaderEcommerce({
                 }}
                 source={imagePath.icEcomCart2}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
           </View>
         </Animated.View>

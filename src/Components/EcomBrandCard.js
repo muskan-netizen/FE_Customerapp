@@ -39,8 +39,8 @@ const EcomBrandCard = ({
     const commonStyles = commonStylesFun({ fontFamily });
 
 
-    let imgHeight = parseInt(moderateScale(imageHeight));
-    let imgWidth = parseInt(moderateScale(imageWidth));
+    let imgHeight =imageHeight
+    let imgWidth = imageWidth
 
     const imageURI = data?.icon
         ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${imgHeight + 140}/${imgWidth + 140}`)
