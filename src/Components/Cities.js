@@ -44,7 +44,7 @@ const Cities = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLin
 
   const {category = {}} = item || {};
 
-console.log(item?.image,"item>>>>>>>>>>>><<<<<<<<");
+
   return (
     <TouchableOpacity
       onPress={onPress}

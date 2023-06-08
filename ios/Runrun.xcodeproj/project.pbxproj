@@ -5332,6 +5332,7 @@
 		2CFA607F28D205A80084347D /* Kwivar(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA607E28D205A70084347D /* Kwivar(Production).xcconfig */; };
 		2CFA608128D205C80084347D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA608028D205C70084347D /* Images.xcassets */; };
 		2CFA608328D206810084347D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA608228D206790084347D /* GoogleService-Info.plist */; };
+		39940718119E26AEFBC308AB /* libPods-available_pods-Emart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E9474460D5EC6B4B1ACC2E /* libPods-available_pods-Emart.a */; };
 		46DD2CE1296EC73C0030593B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		46DD2CE2296EC73C0030593B /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		46DD2CE3296EC73C0030593B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -13657,7 +13658,6 @@
 		9ADEA8BA419F5D966ACAEB55 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		B0938649A60E8870B52A572A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		DC67DB7422520EDD456FD224 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		DEDCF3AB5B6ECDE919247EFE /* libPods-available_pods-Emart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E9474460D5EC6B4B1ACC2E /* libPods-available_pods-Emart.a */; };
 		E805B7D22892A75700899E5E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		E805B7D32892A75700899E5E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		E805B7D42892A75700899E5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -19528,7 +19528,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEDCF3AB5B6ECDE919247EFE /* libPods-available_pods-Emart.a in Frameworks */,
+				39940718119E26AEFBC308AB /* libPods-available_pods-Emart.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107224,6 +107224,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6FXUMT5X23;
 				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -107243,6 +107244,7 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = "Emart Order";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Emart Order";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

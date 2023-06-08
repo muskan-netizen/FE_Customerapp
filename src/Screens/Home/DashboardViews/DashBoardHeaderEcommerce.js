@@ -64,9 +64,11 @@ export default function DashBoardHeaderEcommerce({
   animation
 }) {
   const navigation = useNavigation();
-  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
+  const { appData, themeColors, appStyle, themeColor, themeToggle, currencies } = useSelector((state) => state?.initBoot || {});
   const { cartItemCount } = useSelector((state) => state?.cart || {});
   const { userData } = useSelector((state) => state?.auth);
+
+  const { countryFlag } = useSelector((state) => state?.home || {});
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -77,18 +79,29 @@ export default function DashBoardHeaderEcommerce({
 
   const [countryCode, setCountryCode] = useState('IN')
 
-  console.log("profileInfoprofileInfo", profileInfo)
+  console.log("curriencescurriencescurriences", currencies)
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
     DeviceCountry.getCountryCode()
-    .then((result) => {
-      console.log("DeviceCountry",result);
-      setCountryCode(result.code)
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  },[])
+      .then((result) => {
+        console.log("DeviceCountry", result);
+        getItem('countryFlag').then((res) => {
+          if (!!res) {
+            console.log("resresres", res)
+            setCountryCode(res)
+            setCountryFlag(res)
+          } else {
+            setCountryCode(result.code)
+            setCountryFlag(result.code)
+          }
+        }).catch(error => {
+          console.log("error raised", error)
+        })
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [countryFlag])
 
 
 
@@ -263,9 +276,7 @@ export default function DashBoardHeaderEcommerce({
               alignItems: 'center',
 
             }}>
-
-{/* {console.log("country json",JSON.parse(countryJSON).IN)} */}
-            <TouchableOpacity
+            {!!(JSON.parse(countryJSON)[`${countryCode}`])?.emoji?<TouchableOpacity
               hitSlop={hitSlopProp}
               style={{ marginHorizontal: moderateScale(8) }}
               onPress={()=>navigation.navigate(navigationStrings.ACCOUNTS)}>
@@ -273,25 +284,8 @@ export default function DashBoardHeaderEcommerce({
                  
              <Text style={{
               fontSize: textScale(30)
-             }} >{(JSON?.parse(countryJSON)[`${countryCode}`])?.emoji}</Text>   
-
-                {/* <Text>{countryJSON[]}</Text> */}
-              {/* <CountryFlag style={{
-                borderRadius: moderateScale(14),
-                height: moderateScale(28),
-                width: moderateScale(28),
-              }} isoCode={countryCode} size={20} /> */}
-
-              {/* <SvgUri 
-              uri={(JSON.parse(countryJSON).US).image}
- 
-              style={{
-                borderRadius: 20,
-                height: 40,
-                width: 40
-              }}
-              /> */}
-            </TouchableOpacity>
+              }} >{(JSON?.parse(countryJSON)[`${countryCode}`])?.emoji}</Text>   
+            </TouchableOpacity>  :null}
 
 
             {/* wish list */}

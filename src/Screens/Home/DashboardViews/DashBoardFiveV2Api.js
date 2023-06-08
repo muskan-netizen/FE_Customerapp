@@ -1077,6 +1077,7 @@ const DashBoardFiveV2Api = ({
           data={dataProvider}
           extraData={dataProvider}
           renderItem={renderHomePageItems}
+          scrollEventThrottle={16}
           onScroll={scrollHandler}
           keyExtractor={keyExtractorUnique}
           onScrollToIndexFailed={() => console.log("df")}

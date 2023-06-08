@@ -426,7 +426,13 @@ export const clearLastBidData = () => {
 }
 
 
-
+export const setCountryFlag = (data) =>{
+    setItem('countryFlag', data)
+    dispatch({
+      type: types.COUNTRY_FLAG,
+      payload: data,
+    })
+}
 
 export const orderRideBidDetails = (data, headers = {}) => {
   return new Promise((resolve, reject) => {

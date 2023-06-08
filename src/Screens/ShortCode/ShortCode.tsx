@@ -11,11 +11,18 @@ import colors from '../../styles/colors';
 import { moderateScale } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { showError } from '../../utils/helperFunctions';
+import { getCurrentLocation, showError } from '../../utils/helperFunctions';
 import { getItem } from '../../utils/utils';
 import { getAppCode } from './getAppCode';
 import { IRootState } from './interfaces';
 import styles from './styles';
+import { chekLocationPermission } from '../../utils/permissions';
+
+interface locationInterface {
+  latitude: number,
+  longitude: number,
+  address: string,
+}
 
 const ShortCode: FC = () => {
   const { deepLinkUrl, auth, themeColor, themeToggle } = useSelector((state: IRootState) => state?.initBoot || {});
@@ -27,25 +34,60 @@ const ShortCode: FC = () => {
 
   const [loadingScreen, setLoadingScreen] = useState(true);
 
-  useEffect(() => {initApiHit()}, []);
 
-  const initApiHit = async () => {
+  useEffect(() => {
+    chekLocationPermission(true)
+      .then((result) => {
+        if (result !== 'goback' && result == 'granted') {
+          getCurrentLocation('home')
+            .then((curLoc) => {
+              let locData = curLoc;
+              console.log("locDatalocData", locData)
+              initApiHit(locData)
+              return;
+            })
+            .catch((err) => {
+              initApiHit(null)
+              return;
+            });
+        }
+      })
+      .catch((error) => {
+        initApiHit(null)
+      });
+  }, [])
+
+
+
+
+  const initApiHit = async (locData:locationInterface | null) => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     // const appCode = !!prevCode ? prevCode : getAppCode();
     // 6ca3a4 -> emart
-    //f34c51 -> sanjay
-    const appCode = '6ca3a4'
-    
+    // f34c51 -> sanjay
+    const appCode = 'f34c51'
 
     let header = {};
-    if (!!lang?.primary_language?.id) {
-      header = { code: appCode, language: lang?.primary_language?.id };
-    } else {
-      header = { code: appCode };
+    let locationObject = {
+      latitude: locData?.latitude,
+      longitude: locData?.longitude
     }
+    if (!!lang?.primary_language?.id) {
+      header = {
+        code: appCode,
+        language: lang?.primary_language?.id,
+      };
+    } else {
+      header = {
+        code: appCode
+      };
+    }
+
+   
+
     actions
-      .initApp({}, header, false, null, null, true)
+      .initApp(locData, header, false, null, null, true)
       .then(res => {
         console.log('header response--->', res);
         actions.saveShortCode(appCode);
@@ -71,20 +113,20 @@ const ShortCode: FC = () => {
       });
   };
   const navigateToNextScreen = useCallback((res: any) => {
-      getItem('firstTime').then(el => {
-        if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
-          actions.setAppSessionData('app_intro');
+    getItem('firstTime').then(el => {
+      if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
+        actions.setAppSessionData('app_intro');
+      } else {
+        if (!!auth?.userData && !!auth?.userData?.auth_token) {
+          actions.setAppSessionData('guest_login');
+        } else if (deepLinkUrl && !auth?.userData?.auth_token) {
+          actions.setAppSessionData('on_login');
         } else {
-          if (!!auth?.userData && !!auth?.userData?.auth_token) {
-            actions.setAppSessionData('guest_login');
-          } else if (deepLinkUrl && !auth?.userData?.auth_token) {
-            actions.setAppSessionData('on_login');
-          } else {
-            actions.setAppSessionData('guest_login');
-          }
+          actions.setAppSessionData('guest_login');
         }
-      });
-    },
+      }
+    });
+  },
     [auth, deepLinkUrl],
   );
   const _renderSplash = useCallback(() => {

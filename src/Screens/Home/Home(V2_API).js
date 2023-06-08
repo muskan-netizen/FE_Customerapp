@@ -72,6 +72,8 @@ export default function Home({ route, navigation }) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
 
+
+
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,

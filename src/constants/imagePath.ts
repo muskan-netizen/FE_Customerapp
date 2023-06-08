@@ -621,6 +621,7 @@ export default {
   searchArrow: require('../assets/images/Ecommerce/searchArrow.png'),
   curLangCheck: require('../assets/images/Ecommerce/curLangCheck.png'),
   icLang: require('../assets/images/Ecommerce/ic_language.png'),
+  icCountry: require('../assets/images/Ecommerce/ic_country.png'),
   icCurrency: require('../assets/images/Ecommerce/ic_currency.png'),
   icMenuIcon : require('../assets/images/ic_menu.png'),
   locationIcon: require('../assets/images/place.png'),

@@ -417,7 +417,7 @@ export default function ProductDetail({ route, navigation }) {
         language: languages.primary_language.id,
       })
       .then((res) => {
-        // console.log(res.data, 'api hit getProductDetailBasedOnFilter res ');
+        console.log(res.data, 'api hit getProductDetailBasedOnFilter res ');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -1090,13 +1090,12 @@ export default function ProductDetail({ route, navigation }) {
             keyExtractor={(item, index) => String(item?.id || index)}
           />
           : null}
-
-
-
       </View>
     )
   }
 
+
+  console.log("productTotalQuantity",productTotalQuantity)
 
 
   useEffect(() => {
@@ -2097,6 +2096,7 @@ export default function ProductDetail({ route, navigation }) {
 
 
   const renderVarient = useCallback(({ item, index }) => {
+    
     const { options } = item
     return (
       <View key={String(index)}>
@@ -2105,7 +2105,8 @@ export default function ProductDetail({ route, navigation }) {
           color: isDarkMode ? colors.white : colors.textGrey,
         }}>{item.title}</Text>
 
-        {item.title == 'Color' ? <View>
+        {item.title == 'Color' ? 
+        <View>
           <FlatList
             data={item?.options || []}
             horizontal
@@ -2113,15 +2114,15 @@ export default function ProductDetail({ route, navigation }) {
             keyExtractor={(item, index) => String(item?.id || index)}
           />
 
-        </View> : null}
-        {item.title == 'Size' ? <View>
-          <FlatList
-            data={item?.options || []}
-            horizontal
-            renderItem={({ item, index }) => renderSize(item, index, options)}
-            keyExtractor={(item, index) => String(item?.id || index)}
-          />
-        </View> : null}
+        </View> :
+           <FlatList
+           data={item?.options || []}
+           horizontal
+           renderItem={({ item, index }) => renderSize(item, index, options)}
+           keyExtractor={(item, index) => String(item?.id || index)}
+         />
+        }
+       
       </View>
     )
   }, [variantSet, isDarkMode])
@@ -2254,13 +2255,7 @@ export default function ProductDetail({ route, navigation }) {
 
                     />
 
-                    {/* <FlatList
-      
-                      data={productDetailData?.product_media || []}
-                      renderItem={renderProductImages}
-                      keyExtractor={(item, index) => String(`${item?.media_id} + ${index}`)}
-                    /> */}
-
+              
 
                     {/* <View style={{ paddingTop: 5 }}>
                       <Pagination
@@ -2523,7 +2518,7 @@ export default function ProductDetail({ route, navigation }) {
 
               {/* products varient amazon style */}
 
-              <FlatList
+              {/* <FlatList
                 horizontal
                 data={variantSetNew?.options || []}
                 renderItem={renderOptions}
@@ -2533,10 +2528,10 @@ export default function ProductDetail({ route, navigation }) {
                 horizontal
                 data={variantSetOptions}
                 renderItem={renderVariantOptions}
-              />
+              /> */}
 
 
-              {/* {variantSet && variantSet.length ?
+              {variantSet && variantSet.length ?
                 <FlatList
                   data={(!state.isLoading && variantSet) || []}
                   renderItem={renderVarient}
@@ -2552,7 +2547,7 @@ export default function ProductDetail({ route, navigation }) {
                     <View style={{ marginLeft: moderateScale(8) }} />
                   )}
                 />
-                : null} */}
+                : null}
 
 
               {plainHtml != null ? (

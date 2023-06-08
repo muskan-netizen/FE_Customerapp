@@ -112,7 +112,7 @@ export default function Login4({navigation}) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    return navigation.navigate(screenName, {data});
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {

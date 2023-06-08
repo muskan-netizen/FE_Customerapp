@@ -54,7 +54,7 @@ export default function EcomAccount({ navigation }) {
     } = useSelector((state) => state?.initBoot);
 
 
-    console.log("languageslanguages+++",languages)
+    console.log("languageslanguages+++", languages)
 
     const businessType = appStyle?.homePageLayout;
     const [state, setState] = useState({ isLoading: false });
@@ -68,16 +68,14 @@ export default function EcomAccount({ navigation }) {
 
     //Navigation to specific screen
     const moveToNewScreen = (screenName, data = {}) => () => {
-        navigation.navigate(screenName, { data });
+        return navigation.navigate(screenName, { data });
     };
 
 
 
     console.log("appDataappData", appData)
     const userData = useSelector((state) => state.auth.userData);
-    const { dineInType, appMainData } = useSelector((state) => state?.home || {});
-
-
+    const { dineInType, appMainData,countryFlag } = useSelector((state) => state?.home || {});
 
     useEffect(() => {
         if (!!appMainData?.is_admin) {
@@ -546,10 +544,24 @@ export default function EcomAccount({ navigation }) {
                     />
                 )}
 
+
                 <ListItemHorizontal
                     centerContainerStyle={{ flexDirection: "row" }}
                     leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, {type: 'currency'})}
+                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { type: 'country' })}
+                    iconLeft={imagePath.icCountry}
+                    centerHeading={strings.COUNTRY}
+                    containerStyle={styles.containerStyle2}
+                    showCountry={countryFlag}
+                    centerHeadingStyle={{
+                        fontSize: textScale(14),
+                        fontFamily: fontFamily.regular,
+                    }}
+                />
+                <ListItemHorizontal
+                    centerContainerStyle={{ flexDirection: "row" }}
+                    leftIconStyle={{ flex: 0.1, alignItems: "center" }}
+                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { type: 'currency' })}
                     iconLeft={imagePath.icCurrency}
                     centerHeading={strings.CURRENCIES}
                     containerStyle={styles.containerStyle2}
@@ -558,14 +570,14 @@ export default function EcomAccount({ navigation }) {
                         fontFamily: fontFamily.regular,
                     }}
                     rightText={currencies?.primary_currency?.iso_code}
-                    
+
                 />
 
                 <ListItemHorizontal
                     centerContainerStyle={{ flexDirection: "row" }}
                     leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, {type: 'language'})}
-                    rightText={languages?.primary_language?.name}
+                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { type: 'language' })}
+                    rightText={languages?.primary_language?.name || languages?.primary_language?.value}
                     iconLeft={imagePath.icLang}
                     centerHeading={strings.LANGUAGES}
                     containerStyle={styles.containerStyle2}

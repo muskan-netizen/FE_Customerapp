@@ -96,7 +96,7 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
   const styles = stylesFunc({fontFamily, themeColors});
 
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {});
+    return navigation.navigate(screenName, {});
   };
 
   const _onChangeText = (key) => (val) => {

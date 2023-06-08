@@ -187,7 +187,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
     //Naviagtion to specific screen
     const moveToNewScreen = (screenName, data = {}) => {
-        () => {
+       return () => {
             navigation.navigate(screenName, { data });
         }
     }
