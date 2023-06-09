@@ -1111,7 +1111,7 @@ export default function Products({route, navigation}) {
         } else {
           // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
-            if (res?.data?.products.data.length == 0) {
+            if (res?.data?.products?.data?.length == 0) {
               noMoreData = true;
             } else {
               noMoreData = false;
@@ -1140,15 +1140,6 @@ export default function Products({route, navigation}) {
   };
   /**********Get all list items by category id productListData*/
 
-  console.log(
-    productListData.length !== totalProducts,
-    'totalProductstotalProducts',
-  );
-  console.log(
-    productListData.length,
-    'totalProductstotalProducts',
-    totalProducts,
-  );
 
   const getAllProductsByCategoryId = pageNo => {
     const productWithCategoryId = data?.productWithSingleCategory

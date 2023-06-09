@@ -3020,7 +3020,7 @@ export default function ProductDetail({ route, navigation }) {
                 />}
 
               {/* Add to Cart button */}
-              {!!productDetailData?.has_inventory && productTotalQuantity < 5 ?
+              {!!productDetailData?.has_inventory && productTotalQuantity < 5 && productTotalQuantity > 0 ?
                 <Text style={{
                   ...commonStyles.mediumFont14,
                   marginBottom: moderateScaleVertical(6),

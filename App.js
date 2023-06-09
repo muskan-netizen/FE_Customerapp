@@ -32,6 +32,8 @@ import {
 import { getItem, getUserData, setItem, getLastBidInfo } from './src/utils/utils';
 
 
+
+
 import { View, Text } from 'react-native';
 
 import codePush from 'react-native-code-push';
