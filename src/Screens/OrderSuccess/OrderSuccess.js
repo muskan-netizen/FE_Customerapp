@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Platform } from 'react-native';
-import { Image, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useCallback, useEffect, useState } from 'react';
+import { BackHandler, Platform } from 'react-native';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import ButtonComponent from '../../Components/ButtonComponent';
@@ -20,31 +19,88 @@ import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getBuildId } from 'react-native-device-info';
+import actions from '../../redux/actions';
+import { showError } from '../../utils/helperFunctions';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function OrderSuccess({ navigation, route }) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const currentTheme = useSelector((state) => state.appTheme);
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const paramData = route?.params?.data;
 
+  const { appStyle, themeColors, themeColor, themeToggle, appData, currencies,
+    languages, } = useSelector((state) => state?.initBoot);
+  const { userData } = useSelector(state => state?.auth);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
-  const paramData = route?.params?.data;
-  console.log(paramData, 'paramData');
-  const [state, setState] = useState({});
-  const { } = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  // const {themeColors, themeLayouts} = currentTheme;
-console.log(paramData?.orderDetail?.id,'paramData?.orderDetail?.idparamData?.orderDetail?.id')
+  const [isLoadingChat, setLoadingChat] = useState(false)
+
+  console.log(paramData, "paramData>>>>>>paramData")
+
   const viewOrderDetail = () => {
-    
+
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
       orderId: paramData?.orderDetail?.id,
       fromActive: true, // this value use for useInterval
-      from:"cart"
+      from: "cart"
+    });
+  };
+
+  const androidBackButtonHandler = () => {
+
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+
+  const createRoom = async () => {
+    if (!userData?.auth_token) {
+      actions.setAppSessionData('on_login');
+      return;
+    }
+    setLoadingChat(true);
+    try {
+      const apiData = {
+        sub_domain: '192.168.101.88', //this is static value
+        client_id: String(appData?.profile.id),
+        db_name: appData?.profile?.database_name,
+        user_id: String(userData?.id),
+        type: 'user_to_user',
+        product_id: String(paramData?.product_id),
+        vendor_id: String(paramData?.orderDetail?.vendors[0]?.vendor_id),
+      };
+
+      console.log('sending api data', apiData);
+      const res = await actions.onStartChat(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      });
+
+      if (!!res?.roomData) {
+        onChat(res.roomData);
+      }
+      setLoadingChat(false);
+    } catch (error) {
+      setLoadingChat(false);
+      console.log('error raised in start chat api', error);
+      showError(error?.message);
+    }
+  };
+
+  const onChat = (item) => {
+    navigation.navigate(navigationStrings.CHAT_SCREEN, {
+      data: {
+        ...item, vendor_id_order: paramData?.orderDetail?.vendors[0]?.id
+      }
     });
   };
   return (
@@ -59,12 +115,12 @@ console.log(paramData?.orderDetail?.id,'paramData?.orderDetail?.idparamData?.ord
         style={{ marginHorizontal: moderateScaleVertical(20) }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.goBack();
+            navigation.navigate(navigationStrings.HOME)
           }}>
-          {/* <Image
+          <Image
             style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
             source={imagePath.cross}
-          /> */}
+          />
         </TouchableOpacity>
         <View style={styles.doneIconView}>
           <Image
@@ -94,7 +150,7 @@ console.log(paramData?.orderDetail?.id,'paramData?.orderDetail?.idparamData?.ord
                 ? [styles.successfully, { color: MyDarkTheme.colors.text }]
                 : styles.successfully
             }>
-            {appIds.qdelo ===getBuildId()? strings.THANKS_FOR_ORDERING_WITH_US :strings.THANKS_FOR_YOUR_PURCHASE}
+            {appIds.qdelo === getBuildId() ? strings.THANKS_FOR_ORDERING_WITH_US : strings.THANKS_FOR_YOUR_PURCHASE}
           </Text>
         </View>
         <View
@@ -109,29 +165,29 @@ console.log(paramData?.orderDetail?.id,'paramData?.orderDetail?.idparamData?.ord
                 : styles.yourAWBText
             }>
             {`${strings.YOUR_ORDER_NUMBER} ${paramData && paramData?.orderDetail
-                ? paramData?.orderDetail?.order_number
-                : ''
+              ? paramData?.orderDetail?.order_number
+              : ''
               }`}
           </Text>
         </View>
         <View
-        style={{
-          alignItems: 'center',
-          marginBottom: moderateScaleVertical(90),
-        }}>
-        <ButtonComponent
-          btnText={strings.VIEW_DETAIL}
-          onPress={viewOrderDetail}
-          textStyle={{ color: themeColors.secondary_color }}
-          borderRadius={moderateScale(13)}
-          containerStyle={{
-            backgroundColor: themeColors.primary_color,
-            width: width / 1.2,
-          }}
-        />
-      </View>
+          style={{
+            alignItems: 'center',
+            marginBottom: moderateScaleVertical(90),
+          }}>
+          <ButtonComponent
+            btnText={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? strings.START_CHAT : strings.VIEW_DETAIL}
+            onPress={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? createRoom : viewOrderDetail}
+            textStyle={{ color: themeColors.secondary_color }}
+            borderRadius={moderateScale(13)}
+            containerStyle={{
+              backgroundColor: themeColors.primary_color,
+              width: width / 1.2,
+            }}
+          />
+        </View>
       </KeyboardAwareScrollView>
-     
+
       {/* */}
     </WrapperContainer>
   );

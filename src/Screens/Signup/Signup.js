@@ -33,6 +33,7 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { cameraHandler } from '../../utils/commonFunction';
@@ -74,6 +75,8 @@ export default function Signup({ navigation }) {
     themeToggle,
     redirectedFrom,
   } = useSelector((state) => state?.initBoot || {});
+  const { dineInType } = useSelector((state) => state?.home);
+
 
   const {
     is_user_kyc_for_registration,
@@ -160,6 +163,8 @@ export default function Signup({ navigation }) {
     ifscCode,
   } = state;
   const [pickerType, setPickerType] = useState(0);
+  const [workType, setWorkType] = useState('client')
+  const [isClinetType, setisClinetType] = useState(false)
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -223,7 +228,7 @@ export default function Signup({ navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'userRegistrationDocumentres');
+        console.log(res, '<==res userRegistrationDocumentres');
         updateState({
           addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
           addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
@@ -597,9 +602,28 @@ export default function Signup({ navigation }) {
     });
   };
 
+  const onJoinAs = () => {
+    workType == "freelancer" ? navigation.navigate(navigationStrings.WEBLINKS, { id: 3, slug: 'freelancer', title: strings.FREELANCER }) : workType == "client" ? setisClinetType(true) : navigation.navigate(navigationStrings.WEBLINKS, { id: 1, slug: 'vendor', title: strings.VENDER })
+  }
+
   const _isCheck = () => {
     isAccept(!accept);
   };
+
+  const WorkMode = ({ type = '', title = '' }) => <TouchableOpacity onPress={() => setWorkType(type)}
+    style={{ ...styles.workModeContainer, borderColor: workType == type ? themeColors?.primary_color : colors.borderColorB, }}>
+    <View style={{
+      flexDirection: "row",
+      justifyContent: "space-between",
+    }}>
+      <Text style={{
+        fontFamily: fontFamily?.medium,
+        fontSize: textScale(14),
+      }}>{title}</Text>
+      <Image source={workType == type ? imagePath.radioNewActive : imagePath.radioNewInActive} style={{ ...styles.radioBtn, tintColor: workType == type ? themeColors?.primary_color : colors.borderColorB }} />
+    </View>
+  </TouchableOpacity>
+
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -639,323 +663,345 @@ export default function Signup({ navigation }) {
           flex: 1,
         }}>
         <View style={{ flex: 1 }}>
-          <View style={{ marginTop: moderateScaleVertical(50) }}>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.header, { color: MyDarkTheme.colors.text }]
-                  : styles.header
-              }>
-              {strings.CREATE_YOUR_ACCOUNT}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
-                  : styles.txtSmall
-              }>
-              {strings.ENTER_DETAILS_BELOW}
-            </Text>
-          </View>
+          {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection && !isClinetType ? <View style={{
+            marginHorizontal: moderateScale(24),
+          }}>
+            <Text style={{
+              fontFamily: fontFamily?.bold,
+              fontSize: textScale(18)
+            }}>{strings.JOIN_AS} {strings.CLIENT_FREELANCER_VENDOR}</Text>
 
-          <View
-            style={{
-              marginTop: moderateScaleVertical(50),
-              marginHorizontal: moderateScale(24),
-            }}>
-            {!concise_signup && (
-              <BorderTextInput
-                onChangeText={_onChangeText('name')}
-                placeholder={strings.YOUR_NAME}
-                value={name}
-                returnKeyType={'next'}
-              />
-            )}
-            {!concise_signup && (
-              <BorderTextInput
-                // autoCapitalize={'none'}
-                onChangeText={_onChangeText('email')}
-                placeholder={strings.YOUR_EMAIL}
-                value={email}
-                require={true}
-                keyboardType={'email-address'}
-                returnKeyType={'next'}
-              />
-            )}
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(phoneNumber) =>
-                updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
-              }
-              cca2={cca2}
-              phoneNumber={phoneNumber}
-              callingCode={state.callingCode}
-              placeholder={strings.YOUR_PHONE_NUMBER}
-              require={true}
-              keyboardType={'phone-pad'}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
+            <WorkMode type={"client"} title={strings.I_AM_CLIENT} />
+            <WorkMode type={"freelancer"} title={strings.I_AM_FREELANCER} />
+            <WorkMode type={"vendor"} title={strings.I_AM_VENDOR} />
+
+            <GradientButton
+              onPress={onJoinAs}
+              marginTop={moderateScaleVertical(40)}
+              btnText={`${strings.JOIN_AS} ${workType}`}
+              textStyle={{
+                textTransform: "none"
+              }}
             />
-            <View style={{ height: moderateScaleVertical(20) }} />
-            <BorderTextInput
-              secureTextEntry={isShowPassword ? false : true}
-              onChangeText={_onChangeText('password')}
-              placeholder={strings.ENTER_PASSWORD}
-              value={password}
-              rightIcon={
-                password.length > 0
-                  ? !isShowPassword
-                    ? imagePath.icShowPassword
-                    : imagePath.icHidePassword
-                  : false
-              }
-              onPressRight={showHidePassword}
-              isShowPassword={isShowPassword}
-              rightIconStyle={{}}
-              require
-              returnKeyType={'next'}
-            />
-            {!appData?.profile?.preferences?.concise_signup && appIds.sxm2go != getBundleId() && (
-              <BorderTextInput
-                onChangeText={_onChangeText('referralCode')}
-                placeholder={
-                  !!referral_code ? referral_code : strings.ENTERREFERALCODE
-                }
-                value={referralCode}
-                returnKeyType={'next'}
-              />
-            )}
-
-            {!isEmpty(addtionalTextInputs) &&
-              addtionalTextInputs.map((item, index) => {
-                return getTextInputField(item, index);
-              })}
-
-            {!isEmpty(addtionalImages) && (
-              <View style={styles.viewStyleForUploadImage}>
-                {addtionalImages.map((item, index) => {
-                  return getImageFieldView(item, index);
-                })}
-              </View>
-            )}
-
-            {!isEmpty(addtionalPdfs) && (
-              <View style={styles.viewStyleForUploadImage}>
-                {addtionalPdfs.map((item, index) => {
-                  return getPdfView(item, index);
-                })}
-              </View>
-            )}
-            {!!is_user_kyc_for_registration ? (
-              <View>
-                <View
-                  style={{
-                    marginTop: moderateScale(10),
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginHorizontal: 20,
-                  }}>
-                  <View>
-                    {!isEmpty(aadharFront) ? (
-                      <View>
-                        <Image
-                          source={{ uri: aadharFront?.uri }}
-                          style={{
-                            height: 115,
-                            width: 115,
-                            borderRadius: moderateScale(5),
-                          }}
-                        />
-                        <TouchableOpacity
-                          onPress={() =>
-                            updateState({
-                              aadharFront: {},
-                            })
-                          }
-                          style={{
-                            position: 'absolute',
-                            right: -10,
-                            top: -10,
-                          }}>
-                          <Image
-                            source={imagePath.crossB}
-                            style={{
-                              height: 20,
-                              width: 20,
-                              tintColor: colors.black,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          showActionSheet();
-                          setPickerType(0);
-                        }}
-                        style={styles.imageUpload}>
-                        <Image source={imagePath?.icPhoto} />
-                      </TouchableOpacity>
-                    )}
-
-                    <Text
-                      numberOfLines={2}
-                      style={{ ...styles.label3, minHeight: moderateScale(25) }}>
-                      {!!aadhaar_front ? aadhaar_front : strings.AADHAR_FRONT}*
-                    </Text>
-                  </View>
-                  <View>
-                    {!isEmpty(aadharBack) ? (
-                      <View>
-                        <Image
-                          source={{ uri: aadharBack?.uri }}
-                          style={{
-                            height: 115,
-                            width: 115,
-                            borderRadius: moderateScale(5),
-                          }}
-                        />
-                        <TouchableOpacity
-                          onPress={() =>
-                            updateState({
-                              aadharBack: {},
-                            })
-                          }
-                          style={{
-                            position: 'absolute',
-                            right: -10,
-                            top: -10,
-                          }}>
-                          <Image
-                            source={imagePath.crossB}
-                            style={{
-                              height: 20,
-                              width: 20,
-                              tintColor: colors.black,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          showActionSheet();
-                          setPickerType(1);
-                        }}
-                        style={styles.imageUpload}>
-                        <Image source={imagePath?.icPhoto} />
-                      </TouchableOpacity>
-                    )}
-
-                    <Text
-                      numberOfLines={2}
-                      style={{ ...styles.label3, minHeight: moderateScale(25) }}>
-                      {!!aadhaar_back ? aadhaar_back : strings.AADHAR_BACK}*
-                    </Text>
-                  </View>
-                </View>
-                <BorderTextInput
-                  placeholder={`${!!aadhaar_number ? aadhaar_number : strings.AADHAR_NUMBER}*`}
-                  onChangeText={_onChangeText('aadharNumber')}
-                  value={aadharNumber}
-                  keyboardType={'number-pad'}
-                  maxLength={12}
-                />
-                <BorderTextInput
-                  placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
-                  onChangeText={_onChangeText('upiId')}
-                  value={upiId}
-                />
-                <BorderTextInput
-                  value={bankName}
-                  placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME}*`}
-                  onChangeText={_onChangeText('bankName')}
-                />
-                <BorderTextInput
-                  value={beneficiaryName}
-                  placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME}*`}
-                  onChangeText={_onChangeText('beneficiaryName')}
-                />
-                <BorderTextInput
-                  value={accountNumber}
-                  placeholder={`${!!account_number ? account_number : strings.ACCOUNT_NUMBER}*`}
-                  onChangeText={_onChangeText('accountNumber')}
-                  keyboardType={'number-pad'}
-                />
-                <BorderTextInput
-                  value={ifscCode}
-                  placeholder={`${!!ifsc_code ? ifsc_code : strings.IFSC_CODE}*`}
-                  onChangeText={_onChangeText('ifscCode')}
-                  maxLength={12}
-                />
-              </View>
-            ) : null}
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={_isCheck}
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginRight: 10,
-                }}>
-                <FastImage
-                  style={{
-                    width: moderateScale(15),
-                    height: moderateScale(15),
-                  }}
-                  tintColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.black
-                  }
-                  source={
-                    accept
-                      ? imagePath.checkBox2Active
-                      : imagePath.checkBox2InActive
-                  }
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                <Text
-                  style={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {strings.I_ACCEPT}
-                </Text>
-                <Text
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
-                  }
-                  style={{ color: colors.themeColor }}>
-                  {' '}
-                  {`${strings.TERMS_CONDITIONS} `}
-                </Text>
-                <Text
-                  style={{
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {strings.HAVE_READ}
-                </Text>
-                <Text
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
-                  }
-                  style={{ color: colors.themeColor }}>
-                  {`${strings.PRICACY_POLICY}`}.
-                </Text>
-              </View>
+          </View> : <View>
+            <View style={{ marginTop: moderateScaleVertical(50) }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.header, { color: MyDarkTheme.colors.text }]
+                    : styles.header
+                }>
+                {strings.CREATE_YOUR_ACCOUNT}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
+                    : styles.txtSmall
+                }>
+                {strings.ENTER_DETAILS_BELOW}
+              </Text>
             </View>
 
-            {/* <ButtonWithLoader
+            <View
+              style={{
+                marginTop: moderateScaleVertical(50),
+                marginHorizontal: moderateScale(24),
+              }}>
+              {!concise_signup && (
+                <BorderTextInput
+                  onChangeText={_onChangeText('name')}
+                  placeholder={strings.YOUR_NAME}
+                  value={name}
+                  returnKeyType={'next'}
+                />
+              )}
+              {!concise_signup && (
+                <BorderTextInput
+                  // autoCapitalize={'none'}
+                  onChangeText={_onChangeText('email')}
+                  placeholder={strings.YOUR_EMAIL}
+                  value={email}
+                  require={true}
+                  keyboardType={'email-address'}
+                  returnKeyType={'next'}
+                />
+              )}
+              <PhoneNumberInput
+                onCountryChange={_onCountryChange}
+                onChangePhone={(phoneNumber) =>
+                  updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
+                }
+                cca2={cca2}
+                phoneNumber={phoneNumber}
+                callingCode={state.callingCode}
+                placeholder={strings.YOUR_PHONE_NUMBER}
+                require={true}
+                keyboardType={'phone-pad'}
+                color={isDarkMode ? MyDarkTheme.colors.text : null}
+              />
+              <View style={{ height: moderateScaleVertical(20) }} />
+              <BorderTextInput
+                secureTextEntry={isShowPassword ? false : true}
+                onChangeText={_onChangeText('password')}
+                placeholder={strings.ENTER_PASSWORD}
+                value={password}
+                rightIcon={
+                  password.length > 0
+                    ? !isShowPassword
+                      ? imagePath.icShowPassword
+                      : imagePath.icHidePassword
+                    : false
+                }
+                onPressRight={showHidePassword}
+                isShowPassword={isShowPassword}
+                rightIconStyle={{}}
+                require
+                returnKeyType={'next'}
+              />
+              {!appData?.profile?.preferences?.concise_signup && appIds.sxm2go != getBundleId() && (
+                <BorderTextInput
+                  onChangeText={_onChangeText('referralCode')}
+                  placeholder={
+                    !!referral_code ? referral_code : strings.ENTERREFERALCODE
+                  }
+                  value={referralCode}
+                  returnKeyType={'next'}
+                />
+              )}
+
+              {!isEmpty(addtionalTextInputs) &&
+                addtionalTextInputs.map((item, index) => {
+                  return getTextInputField(item, index);
+                })}
+
+              {!isEmpty(addtionalImages) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {addtionalImages.map((item, index) => {
+                    return getImageFieldView(item, index);
+                  })}
+                </View>
+              )}
+
+              {!isEmpty(addtionalPdfs) && (
+                <View style={styles.viewStyleForUploadImage}>
+                  {addtionalPdfs.map((item, index) => {
+                    return getPdfView(item, index);
+                  })}
+                </View>
+              )}
+              {!!is_user_kyc_for_registration ? (
+                <View>
+                  <View
+                    style={{
+                      marginTop: moderateScale(10),
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginHorizontal: 20,
+                    }}>
+                    <View>
+                      {!isEmpty(aadharFront) ? (
+                        <View>
+                          <Image
+                            source={{ uri: aadharFront?.uri }}
+                            style={{
+                              height: 115,
+                              width: 115,
+                              borderRadius: moderateScale(5),
+                            }}
+                          />
+                          <TouchableOpacity
+                            onPress={() =>
+                              updateState({
+                                aadharFront: {},
+                              })
+                            }
+                            style={{
+                              position: 'absolute',
+                              right: -10,
+                              top: -10,
+                            }}>
+                            <Image
+                              source={imagePath.crossB}
+                              style={{
+                                height: 20,
+                                width: 20,
+                                tintColor: colors.black,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
+                        <TouchableOpacity
+                          onPress={() => {
+                            showActionSheet();
+                            setPickerType(0);
+                          }}
+                          style={styles.imageUpload}>
+                          <Image source={imagePath?.icPhoto} />
+                        </TouchableOpacity>
+                      )}
+
+                      <Text
+                        numberOfLines={2}
+                        style={{ ...styles.label3, minHeight: moderateScale(25) }}>
+                        {!!aadhaar_front ? aadhaar_front : strings.AADHAR_FRONT}*
+                      </Text>
+                    </View>
+                    <View>
+                      {!isEmpty(aadharBack) ? (
+                        <View>
+                          <Image
+                            source={{ uri: aadharBack?.uri }}
+                            style={{
+                              height: 115,
+                              width: 115,
+                              borderRadius: moderateScale(5),
+                            }}
+                          />
+                          <TouchableOpacity
+                            onPress={() =>
+                              updateState({
+                                aadharBack: {},
+                              })
+                            }
+                            style={{
+                              position: 'absolute',
+                              right: -10,
+                              top: -10,
+                            }}>
+                            <Image
+                              source={imagePath.crossB}
+                              style={{
+                                height: 20,
+                                width: 20,
+                                tintColor: colors.black,
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
+                        <TouchableOpacity
+                          onPress={() => {
+                            showActionSheet();
+                            setPickerType(1);
+                          }}
+                          style={styles.imageUpload}>
+                          <Image source={imagePath?.icPhoto} />
+                        </TouchableOpacity>
+                      )}
+
+                      <Text
+                        numberOfLines={2}
+                        style={{ ...styles.label3, minHeight: moderateScale(25) }}>
+                        {!!aadhaar_back ? aadhaar_back : strings.AADHAR_BACK}*
+                      </Text>
+                    </View>
+                  </View>
+                  <BorderTextInput
+                    placeholder={`${!!aadhaar_number ? aadhaar_number : strings.AADHAR_NUMBER}*`}
+                    onChangeText={_onChangeText('aadharNumber')}
+                    value={aadharNumber}
+                    keyboardType={'number-pad'}
+                    maxLength={12}
+                  />
+                  <BorderTextInput
+                    placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
+                    onChangeText={_onChangeText('upiId')}
+                    value={upiId}
+                  />
+                  <BorderTextInput
+                    value={bankName}
+                    placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME}*`}
+                    onChangeText={_onChangeText('bankName')}
+                  />
+                  <BorderTextInput
+                    value={beneficiaryName}
+                    placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME}*`}
+                    onChangeText={_onChangeText('beneficiaryName')}
+                  />
+                  <BorderTextInput
+                    value={accountNumber}
+                    placeholder={`${!!account_number ? account_number : strings.ACCOUNT_NUMBER}*`}
+                    onChangeText={_onChangeText('accountNumber')}
+                    keyboardType={'number-pad'}
+                  />
+                  <BorderTextInput
+                    value={ifscCode}
+                    placeholder={`${!!ifsc_code ? ifsc_code : strings.IFSC_CODE}*`}
+                    onChangeText={_onChangeText('ifscCode')}
+                    maxLength={12}
+                  />
+                </View>
+              ) : null}
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={_isCheck}
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 10,
+                  }}>
+                  <FastImage
+                    style={{
+                      width: moderateScale(15),
+                      height: moderateScale(15),
+                    }}
+                    tintColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    }
+                    source={
+                      accept
+                        ? imagePath.checkBox2Active
+                        : imagePath.checkBox2InActive
+                    }
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                  <Text
+                    style={{
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    {strings.I_ACCEPT}
+                  </Text>
+                  <Text
+                    onPress={() =>
+                      navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
+                    }
+                    style={{ color: colors.themeColor }}>
+                    {' '}
+                    {`${strings.TERMS_CONDITIONS} `}
+                  </Text>
+                  <Text
+                    style={{
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    {strings.HAVE_READ}
+                  </Text>
+                  <Text
+                    onPress={() =>
+                      navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
+                    }
+                    style={{ color: colors.themeColor }}>
+                    {`${strings.PRICACY_POLICY}`}.
+                  </Text>
+                </View>
+              </View>
+
+              {/* <ButtonWithLoader
               btnText={strings.SIGNUP_AN_ACCOUNT}
               btnStyle={{marginTop: moderateScaleVertical(10)}}
               onPress={onSignup}
             /> */}
-            <GradientButton
-              onPress={onSignup}
-              marginTop={moderateScaleVertical(10)}
-              btnText={strings.SIGNUP_AN_ACCOUNT}
-            />
-          </View>
+              <GradientButton
+                onPress={onSignup}
+                marginTop={moderateScaleVertical(10)}
+                btnText={strings.SIGNUP_AN_ACCOUNT}
+              />
+            </View>
+          </View>}
           <View style={styles.bottomContainer}>
             <Text
               style={
@@ -976,6 +1022,7 @@ export default function Signup({ navigation }) {
               </Text>
             </Text>
           </View>
+
         </View>
       </KeyboardAwareScrollView>
       <ActionSheet

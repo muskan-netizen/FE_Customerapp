@@ -412,7 +412,7 @@ const _openApp = () => {
 
     if (
       Platform.OS == 'android' &&
-      notification.android.sound == 'notification'
+      notification.android.sound == 'notification' && data.type != 'reached_location'
     ) {
       actions.isVendorNotification(true);
     }

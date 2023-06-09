@@ -816,3 +816,26 @@ export const SEND_PRODUCT_BOOKING_DATA = getApiUrl('/get_product_price_from_disp
 
 
 export const MTNGATEWAY = getApiUrl('/mtn/create-token')
+
+//sendNotificationToVendor ****************>
+export const SEND_NOTIFCATION_TO_VENDOR = getApiUrl('/order/vendorReached');
+
+export const VIEW_ALL_CATEGORIES = getApiUrl(
+  '/v2/categoriesAll',
+);
+
+export const GET_UPCOMING_ONGOING_ORDERS = getApiUrl(
+  '/orders_upcoming_ongoing',
+);
+
+export const ALL_ORDERS_P2P = getApiUrl(
+  '/orders-all',
+);
+
+export const P2P_ORDER_DETAIL = getApiUrl(
+  '/order-detail_p2p',
+);
+
+export const COMPLETE_PICKUP_DROP_OFF = getApiUrl(
+  '/user/orderVenderStatusUpdate',
+);

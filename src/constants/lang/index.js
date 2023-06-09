@@ -25,6 +25,7 @@ import es_sabroson from './es_sabroson';
 import swa from './swa';
 import heb from './heb'
 import fr_oxo from './fr_oxo';
+import ar_oneStop from './ar_oneStop';
 
 //Spanish fils
 
@@ -45,6 +46,8 @@ const arbicFile = () => {
   switch (DeviceInfo.getBundleId()) {
     case appIds?.baytukom:
       return ar_baytukom;
+    case appIds.oneStop:
+      return ar_oneStop;
     default:
       return ar;
   }
