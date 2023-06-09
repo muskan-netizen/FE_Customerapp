@@ -1,11 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import { PermissionsAndroid, Platform } from 'react-native';
-import NavigationService, { navigate } from '../navigation/NavigationService';
+
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import { getItem } from './utils';
 import { PERMISSIONS } from 'react-native-permissions';
+import { redirectFromNotification } from './helperFunctions';
+import * as NavigationService from '../navigation/NavigationService';
 
 export async function requestUserPermission(callback = () => { }) {
 
@@ -232,33 +234,40 @@ export const notificationListener = async () => {
   messaging().onNotificationOpenedApp(remoteMessage => {
 
     const { notification } = remoteMessage;
-    console.log(remoteMessage,'remoteMessageremoteMessage')
+    console.log(remoteMessage, 'remoteMessageremoteMessage')
     if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "2") {
       if (remoteMessage?.data?.redirect_type_value == 'Subcategory') {
         setTimeout(() => {
-          navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data, fromNotification: true, })
-          // navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data })
+          NavigationService.navigate(navigationStrings.VENDOR_DETAIL, {data: remoteMessage?.data?.redirect_data, fromNotification: true})
+       
         }, 1200);
       }
       else if (remoteMessage?.data?.redirect_type_value == 'Product') {
         setTimeout(() => {
-          navigate(navigationStrings.PRODUCT_LIST, { data: remoteMessage?.data?.redirect_data, })
-          // navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data })
+          NavigationService.navigate(navigationStrings.PRODUCT_LIST,
+          {data: remoteMessage?.data?.redirect_data,}
+        )
+        
         }, 1200);
       }
       else if (remoteMessage?.data?.redirect_type_value == 'Vendor') {
         setTimeout(() => {
-          navigate(navigationStrings.VENDOR, { data: remoteMessage?.data?.redirect_data, })
-          // navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data })
+          NavigationService.navigate(navigationStrings.VENDOR,{data: remoteMessage?.data?.redirect_data,},)
         }, 1200);
       }
     }
+
     else if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "3") {
-  
+
       setTimeout(() => {
-        navigate(navigationStrings.PRODUCT_LIST, { data: remoteMessage?.data?.redirect_data, fromNotification: true, })
+        NavigationService.navigate( navigationStrings.PRODUCT_LIST,
+        {
+              data: remoteMessage?.data?.redirect_data, fromNotification: true,
+            },
+          )
+     
       }, 1200);
-  
+
     }
     // if (
     //   notification?.sound == 'notification.mp3' ||
@@ -299,23 +308,49 @@ export const notificationListener = async () => {
           'Notification caused app to open from quit state:',
           remoteMessage,
         );
+
+
         if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "2") {
           if (remoteMessage?.data?.redirect_type_value == 'Subcategory') {
             setTimeout(() => {
-              navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data, fromNotification: true, })
-              // navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data })
+              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+                screen: navigationStrings.HOMESTACK,
+                params: {
+                  screen: navigationStrings.VENDOR_DETAIL,
+                  params: {
+                    data: remoteMessage?.data?.redirect_data, fromNotification: true
+                  },
+                },
+              })
+             
             }, 1200);
           }
           else if (remoteMessage?.data?.redirect_type_value == 'Product') {
             setTimeout(() => {
-              navigate(navigationStrings.PRODUCT_LIST, { data: remoteMessage?.data?.redirect_data, })
-              // navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data })
+              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+                screen: navigationStrings.HOMESTACK,
+                params: {
+                  screen: navigationStrings.PRODUCT_LIST,
+                  params: {
+                    data: remoteMessage?.data?.redirect_data,
+                  },
+                },
+              })
+          
             }, 1200);
           }
           else if (remoteMessage?.data?.redirect_type_value == 'Vendor') {
             setTimeout(() => {
-              navigate(navigationStrings.VENDOR, { data: remoteMessage?.data?.redirect_data, })
-              // navigate(navigationStrings.VENDOR_DETAIL, { data: remoteMessage?.data?.redirect_data })
+              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+                screen: navigationStrings.HOMESTACK,
+                params: {
+                  screen: navigationStrings.VENDOR,
+                  params: {
+                    data: remoteMessage?.data?.redirect_data,
+                  },
+                },
+              })
+            
             }, 1200);
           }
         }
@@ -323,7 +358,16 @@ export const notificationListener = async () => {
         else if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "3") {
 
           setTimeout(() => {
-            navigate(navigationStrings.PRODUCT_LIST, { data: remoteMessage?.data?.redirect_data, fromNotification: true, })
+            NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+              screen: navigationStrings.HOMESTACK,
+              params: {
+                screen: navigationStrings.PRODUCT_LIST,
+                params: {
+                  data: remoteMessage?.data?.redirect_data, fromNotification: true,
+                },
+              },
+            })
+           
           }, 1200);
 
         }
@@ -377,7 +421,7 @@ const _openApp = () => {
     }
   });
   console.log('i am here>>>>>');
- 
+
 };
 
 const _onRedirectOrderScreen = (id) => {

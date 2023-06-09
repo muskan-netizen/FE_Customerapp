@@ -43,8 +43,8 @@ export default function SelctFromMap({
     region: {
       latitude: constCurrLoc?.latitude || 30.7333,
       longitude: constCurrLoc?.longitude || 76.7794,
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
+      latitudeDelta: 0.002,
+      longitudeDelta: 0.0003,
     },
     coordinate: {
       latitude: constCurrLoc?.latitude || 30.7333,
