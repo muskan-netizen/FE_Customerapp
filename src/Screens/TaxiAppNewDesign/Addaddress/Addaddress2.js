@@ -73,7 +73,7 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
-  const { book_for_friend } = appData?.profile?.preferences || {};
+  const { book_for_friend, is_bid_ride_enable, is_cab_pooling ,is_particular_driver} = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
 
   const commonStyles = commonStylesFun({ fontFamily });
@@ -337,6 +337,7 @@ export default function Addaddress({ navigation, route }) {
       case 0: return ('Booking')
       case 1: return ('Pooling')
       case 2: return ('bidRide')
+      case 3: return ('RequestForDriver')
       default: return ('Booking')
     }
   }
@@ -468,7 +469,7 @@ export default function Addaddress({ navigation, route }) {
       isBookingType: type,
     });
   };
-
+  
   const renderAddressess = (item) => {
     return (
       <TouchableOpacity
@@ -1064,7 +1065,7 @@ export default function Addaddress({ navigation, route }) {
           </View>
 
 
-          {/* {is_cab_pooling || is_bid_ride_enable ? (
+          {is_cab_pooling || is_bid_ride_enable? (
             <View
               style={{
 
@@ -1150,9 +1151,35 @@ export default function Addaddress({ navigation, route }) {
                   }}
                 />
               }
+                {!!(is_particular_driver) &&
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 3
+                      ? [themeColors.primary_color, themeColors.primary_color]
+                      : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 3 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                  }}
+                  onPress={() => onBooking(3)}
+                  btnText={"REQUEST FOR DRIVER"}
+              
+                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
+                    fontSize:textScale(10)
 
+                  }}
+                />
+              }
             </View>
-          ) : null} */}
+          ) : null}
 
           <View style={{ flex: 1 }}>
             <View>
