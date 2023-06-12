@@ -11,13 +11,14 @@ import {
     Pressable, Text,
     TouchableOpacity,
     View,
+    TextInput,
     ScrollView
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
-import {  gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import * as RNLocalize from 'react-native-localize';
 import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
@@ -158,7 +159,10 @@ function ChooseVechile({ navigation, route }) {
         isModalVisibleForPayFlutterWave: false,
         paymentDataFlutterWave: null,
         disableButton: false,
-        showBidPriceModal: false
+        showBidPriceModal: false,
+        uID: '',
+        isBookingType: paramData?.rideType,
+
     });
     const {
         selectedPayment,
@@ -196,7 +200,10 @@ function ChooseVechile({ navigation, route }) {
         isModalVisibleForPayFlutterWave,
         paymentDataFlutterWave,
         disableButton,
-        showBidPriceModal
+        showBidPriceModal,
+        uID,
+        isBookingType
+
     } = state;
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -286,7 +293,7 @@ function ChooseVechile({ navigation, route }) {
         });
         updateState({ isScheduleModalVisible: false });
         _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
-    }, [date])
+    }, [date, selectedCarOption])
 
     const clearScheduleDate = useCallback(() => {
         actions.saveSchduleTime('now');
@@ -793,6 +800,7 @@ function ChooseVechile({ navigation, route }) {
         data['currency_id'] = currencies?.primary_currency?.id;
         data['tasks'] = paramData?.tasks;
         data['images_array'] = uploadImages;
+        data["unique_id"] = uID
         data['agent_id'] = paramData?.bidData?.driver_id
         if (paramData?.bidData?.driver_id) {
             data['bid_task_type'] = paramData?.bidData?.task_type
@@ -1123,8 +1131,8 @@ function ChooseVechile({ navigation, route }) {
 
     const _selectCarModalView = () => {
         return (
-          
-             <AvailableDriver
+
+            <AvailableDriver
                 isCabPooling={!!cabBookingType && cabBookingType == 'Pooling' ? true : false}
                 onPressAvailableCar={_selectedProductForDrivers}
                 rideType={cabBookingType}
@@ -1165,7 +1173,7 @@ function ChooseVechile({ navigation, route }) {
                 navigation={navigation}
                 _onShowBidePriceModal={_onShowBidePriceModal}
             />
-           
+
 
         );
     };
@@ -1806,11 +1814,26 @@ function ChooseVechile({ navigation, route }) {
                     animateOnMount={true}
                     handleComponent={carModalHeader}
                     onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
+                         {isBookingType == "RequestForDriver" &&
+                            <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
+                                <TextInput
+                                    onChangeText={txt => updateState({ uID: txt })}
+                                    placeholder='Enter Driver id'
+                                    value={uID}
+                                    style={{
+                                        borderWidth: 1,
+                                        height: 48,
+                                        borderRadius: moderateScale(8),
+                                        borderColor: colors.greyColor3,
+                                        paddingLeft: moderateScale(10)
+                                    }}
+                                />
+                            </View>}
                     <BottomSheetScrollView
                         keyboardShouldPersistTaps="handled"
                         showsVerticalScrollIndicator={false}
                         style={{
-                            marginBottom:moderateScaleVertical(10),
+                            marginBottom: moderateScaleVertical(10),
                             backgroundColor: isDarkMode
                                 ? MyDarkTheme.colors.background
                                 : colors.white,
