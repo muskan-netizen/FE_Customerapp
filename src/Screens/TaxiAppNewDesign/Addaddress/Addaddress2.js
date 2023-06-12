@@ -73,7 +73,7 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
-  const { book_for_friend, is_bid_ride_enable, is_cab_pooling ,is_particular_driver} = appData?.profile?.preferences || {};
+  const { book_for_friend, is_bid_ride_enable, is_cab_pooling, is_particular_driver } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
 
   const commonStyles = commonStylesFun({ fontFamily });
@@ -469,7 +469,7 @@ export default function Addaddress({ navigation, route }) {
       isBookingType: type,
     });
   };
-  
+
   const renderAddressess = (item) => {
     return (
       <TouchableOpacity
@@ -1065,7 +1065,7 @@ export default function Addaddress({ navigation, route }) {
           </View>
 
 
-          {is_cab_pooling || is_bid_ride_enable? (
+          {is_cab_pooling || is_bid_ride_enable ? (
             <View
               style={{
 
@@ -1088,6 +1088,7 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 0 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(0)}
                   btnText={"BOOKING"}
@@ -1113,6 +1114,7 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 1 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(1)}
                   btnText={"POOLING"}
@@ -1139,9 +1141,10 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 2 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(2)}
-                  btnText={"BIDE & RIDE"}
+                  btnText={"BID & RIDE"}
                   containerStyle={{ flex: 1 }}
                   btnStyle={{
                     borderRadius: moderateScale(4),
@@ -1151,7 +1154,7 @@ export default function Addaddress({ navigation, route }) {
                   }}
                 />
               }
-                {!!(is_particular_driver) &&
+              {!!(is_particular_driver) &&
                 <GradientButton
                   colorsArray={
                     isBookingType == 3
@@ -1164,16 +1167,17 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 3 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(3)}
                   btnText={"REQUEST FOR DRIVER"}
-              
+
                   containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     borderColor: colors.textGreyLight,
                     borderWidth: moderateScale(0.5),
-                    fontSize:textScale(10)
+
 
                   }}
                 />
