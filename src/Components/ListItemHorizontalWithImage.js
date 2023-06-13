@@ -11,6 +11,7 @@ import {
 import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
 import { countryJSON } from '../constants/constants';
+import FastImage from 'react-native-fast-image';
 
 const ListItemHorizontal = ({
   leftIconStyle,
@@ -27,7 +28,7 @@ const ListItemHorizontal = ({
   rightText = '',
   showCountry = false
 }) => {
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const { appStyle, primary_country } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -98,11 +99,15 @@ const ListItemHorizontal = ({
       </View>
       {showCountry ?
         <>
-          {!!(JSON.parse(countryJSON)[`${showCountry}`])?.emoji ?
-            <Text style={{
-              fontSize: textScale(30)
-            }} >{(JSON.parse(countryJSON)[`${showCountry}`])?.emoji}</Text>
-            : null}
+          {!!primary_country?.primary_country && !!primary_country?.primary_country?.flag ? <FastImage
+            source={{ uri: primary_country?.primary_country.flag }}
+            style={{
+              width: moderateScale(36),
+              height: moderateScale(24),
+              marginRight: moderateScale(8)
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          /> : null}
         </>
         : null
       }

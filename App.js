@@ -42,6 +42,7 @@ import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
 import { clearLastBidData } from './src/redux/actions/home';
+import { setCountry } from './src/redux/actions/init';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -285,6 +286,11 @@ const App = () => {
 
       if (!!getLanguage) {
         strings.setLanguage(getLanguage);
+      }
+      const getCountry = await getItem('setPrimaryCountry');
+      
+      if(!!getCountry){
+        setCountry(getCountry)
       }
 
       //saveShortCode

@@ -25,6 +25,7 @@ export function initApp(
   primary_curreny,
   primary_language,
   refreshlang = false,
+  primary_country,
 ) {
 
 
@@ -34,7 +35,7 @@ export function initApp(
       .then(async (res) => {
         let data = res?.data;
 
-        console.log("header api res",data)
+        console.log("header api res", data)
 
 
         const currencies = !!data?.currencies
@@ -60,6 +61,7 @@ export function initApp(
           })
           : {};
 
+
         let fontSizeData = {};
         fontSizeData['regular'] = data?.profile?.preferences?.regular_font;
         fontSizeData['medium'] = data?.profile?.preferences?.medium_font;
@@ -82,6 +84,8 @@ export function initApp(
           data?.profile?.preferences?.secondary_color;
 
         let currenciesData = {};
+        let countryData = {};
+
         currenciesData['all_currencies'] = currencies;
         currenciesData['primary_currency'] = !isEmpty(data?.primary_currencies) ? data?.primary_currencies?.currency :
           reload &&
@@ -94,13 +98,22 @@ export function initApp(
 
         let languagesData = {};
         languagesData['all_languages'] = languages;
-        languagesData['primary_language'] =  !isEmpty(data?.primary_language) ? data?.primary_language?.language :
+        languagesData['primary_language'] = !isEmpty(data?.primary_language) ? data?.primary_language?.language :
           reload &&
             primary_language?.id &&
             data?.languages.find((x) => x?.language?.id == primary_language?.id)
             ? primary_language
             : data?.languages
               ? data?.languages.filter((x) => x?.is_primary)[0]?.language
+              : {};
+
+        countryData['primary_country'] = !isEmpty(data?.primary_country) ? data?.primary_country?.country :
+          reload &&
+          primary_country?.id &&
+            data?.countries.find((x) => x?.country?.id == primary_country?.id)
+            ? primary_country
+            : data?.countries
+              ? data?.countries.filter((x) => x?.is_primary)[0]?.country
               : {};
 
         let appData = {
@@ -110,7 +123,7 @@ export function initApp(
           businessType: data.profile.preferences.business_type,
         };
 
-        console.log("languagesDatalanguagesData",languagesData)
+        console.log("languagesDatalanguagesData", languagesData)
 
         if (reload) {
           setItem('setPrimaryCurrent', currenciesData);
@@ -124,6 +137,21 @@ export function initApp(
             setCurrentcy(currenciesData);
           }
         }
+
+        if (reload) {
+          setItem('setPrimaryCountry', countryData);
+          setCountry(countryData);
+        } else {
+          const getPrimaryCountry = await getItem('setPrimaryCountry');
+          if (getPrimaryCountry) {
+            setCountry(getPrimaryCountry);
+          } else {
+            setItem('setPrimaryCountry', countryData);
+            setCountry(countryData);
+          }
+        }
+
+
 
         //Set Language
         if (reload) {
@@ -180,6 +208,13 @@ export function initApp(
 export function setCurrentcy(data = {}) {
   dispatch({
     type: types.SET_CURRENCY,
+    payload: data,
+  });
+}
+
+export function setCountry(data = {}) {
+  dispatch({
+    type: types.SET_COUNTRY,
     payload: data,
   });
 }

@@ -25,9 +25,8 @@ import { moderateScale, moderateScaleVertical, textScale } from '../../../styles
 import { MyDarkTheme } from '../../../styles/theme';
 import { setItem } from '../../../utils/utils';
 import stylesFunc from './styles';
-import { countryJSON } from '../../../constants/constants';
-import { setCountryFlag } from '../../../redux/actions/home';
-
+import FastImage from 'react-native-fast-image';
+import { setCountry } from '../../../redux/actions/init';
 
 export default function EcomLangCurrency({ route, navigation }) {
     const {
@@ -38,13 +37,13 @@ export default function EcomLangCurrency({ route, navigation }) {
         themeColors,
         themeToggle,
         themeColor,
+        primary_country
     } = useSelector((state) => state?.initBoot);
     const { data = {} } = route?.params || {}
 
-    const { countryFlag } = useSelector((state) => state?.home || {});
 
     let renderType = data.type == "language" ? strings.LANGUAGES : data.type == 'country' ? strings.COUNTRY : strings.CURRENCIES
-
+    let renderIndex = data?.renderIndex
 
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -60,11 +59,11 @@ export default function EcomLangCurrency({ route, navigation }) {
     const initialState = {
         appCurrencies: currencies || [],
         appLanguages: languages || [],
+        appCountries: appData?.countries || []
     }
 
     const [state, setState] = useState({
         isLoading: false,
-        initialCountries: [],
         ...initialState
     });
 
@@ -72,8 +71,7 @@ export default function EcomLangCurrency({ route, navigation }) {
         isLoading,
         appCurrencies,
         appLanguages,
-        countries,
-        initialCountries
+        appCountries
     } = state;
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -81,7 +79,7 @@ export default function EcomLangCurrency({ route, navigation }) {
     const styles = stylesFunc({ fontFamily, themeColors });
     const commonStyles = commonStylesFunc({ fontFamily });
 
-    console.log("appLanguagesappLanguages", appLanguages)
+    console.log("appCountriesappCountries", appCountries)
 
 
     const updateCurrency = (item) => {
@@ -227,7 +225,7 @@ export default function EcomLangCurrency({ route, navigation }) {
         let result = []
         array.filter(function (item) {
             console.log("itemitem", item)
-            let searchFirstKey = item.country.name
+            let searchFirstKey = item?.country?.nicename
             if (searchFirstKey?.toLowerCase().includes(searchText.toLowerCase())) {
                 result.push(item)
             }
@@ -236,71 +234,78 @@ export default function EcomLangCurrency({ route, navigation }) {
     }
 
     const updateCountry = (data) => {
-        console.log("data", data)
-        setCountryFlag(data?.iso_code)
+        let countryData = { primary_country: data }
+        setItem('setPrimaryCountry', countryData).then((res) => {
+            setCountry(countryData)
+        }).catch((error) => alert("Country not saved"))
     }
 
 
     const renderCountries = useCallback(({ item, index }) => {
         let data = item?.country
         return (
-            <View style={{height: 60}}>
-            <TouchableOpacity
-                style={{
-                    flexDirection: "row",
-                    alignItems: 'center',
-                    marginBottom: moderateScaleVertical(12),
-                    justifyContent: 'space-between',
+            <View style={{ height: 60 }}>
+                <TouchableOpacity
+                    style={{
+                        flexDirection: "row",
+                        alignItems: 'center',
+                        marginBottom: moderateScaleVertical(12),
+                        justifyContent: 'space-between',
 
-                }}
-                activeOpacity={0.7}
-                onPress={() => updateCountry(data)}
-            >
-                <View style={{ flexDirection: 'row', alignItems: "center" }}>
-                    <Text style={{
-                        fontSize: textScale(30),
-                        marginRight: moderateScale(8)
-                    }} >{data?.emoji || ''}</Text>
-                    <View>
-                        <Text style={{
-                            ...commonStyles.mediumFont14,
-                            color: countryFlag == data?.iso_code ? themeColors?.primary_color : isDarkMode ? colors.white : colors.black,
-                        }} >{data?.name}</Text>
+                    }}
+                    activeOpacity={0.7}
+                    onPress={() => updateCountry(data)}
+                >
+                    <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                        <FastImage
+                            source={{ uri: data?.flag }}
+                            style={{
+                                width: moderateScale(36),
+                                height: moderateScale(24),
+                                marginRight: moderateScale(8)
+                            }}
+                            resizeMode={FastImage.resizeMode.contain}
+                        />
+
+                        <View>
+                            <Text style={{
+                                ...commonStyles.mediumFont14,
+                                color: primary_country?.primary_country?.id == data?.id ? themeColors?.primary_color : isDarkMode ? colors.white : colors.black,
+                            }} >{data?.nicename}</Text>
+                        </View>
                     </View>
-                </View>
-                {countryFlag == data?.iso_code ? <Image style={{ tintColor: themeColors.primary_color }} source={imagePath.curLangCheck} /> : null}
-            </TouchableOpacity>
+                    {primary_country?.primary_country?.id == data?.id? <Image style={{ tintColor: themeColors.primary_color }} source={imagePath.curLangCheck} /> : null}
+                </TouchableOpacity>
             </View>
         )
-    }, [countryFlag])
+    }, [primary_country])
 
 
 
 
 
-    useEffect(() => {
-        const jsonObject = JSON.parse(countryJSON);
-        const arrayObjects = Object.entries(jsonObject).map(([key, value]) => ({
-            country: { ...value, iso_code: key },
-        }));
-        if (renderType.toLowerCase() == 'country') {
-            updateState({ countries: arrayObjects, initialCountries: arrayObjects })
+    // useEffect(() => {
+        // const arrayObjects = Object.entries(jsonObject).map(([key, value]) => ({
+        //     country: { ...value, iso_code: key },
+        // }));
+        // if (renderIndex == 1) {
+        //     updateState({ countries: arrayObjects, initialCountries: arrayObjects })
 
-            if (!!flatListRef?.current) {
-                // Find the index of the item in the data array
-                const index = arrayObjects.findIndex((listItem) => listItem.country.iso_code == countryFlag);
-                console.log("indexindex", index)
-                if (index >= 0) {
-                    setTimeout(() => {
-                        flatListRef.current.scrollToIndex({ 
-                            index:index,
-                            viewPosition: 0.5
-                         });
-                    }, 700);
-                }
-            }
-        }
-    }, [])
+        //     if (!!flatListRef?.current) {
+        //         // Find the index of the item in the data array
+        //         const index = arrayObjects.findIndex((listItem) => listItem.country.iso_code == countryFlag);
+        //         console.log("indexindex", index)
+        //         if (index >= 0) {
+        //             setTimeout(() => {
+        //                 flatListRef.current.scrollToIndex({ 
+        //                     index:index,
+        //                     viewPosition: 0.5
+        //                  });
+        //             }, 700);
+        //         }
+        //     }
+        // }
+    // }, [])
 
 
     function searchObjects(array, searchText) {
@@ -324,41 +329,34 @@ export default function EcomLangCurrency({ route, navigation }) {
     const filterData = (text = '') => {
         console.log("texttext", text)
         setSearchText(text)
-        if (renderType.toLowerCase() == "language") {
+        if (renderIndex == 3) {
             let result = searchObjects(initialState.appLanguages.all_languages, text)
             console.log("language resultresult", result)
             updateState({ appLanguages: { ...initialState.appLanguages, all_languages: result } })
             return;
         }
 
-        if (renderType.toLowerCase() == "language") {
+        if (renderIndex == 2) {
             let result = searchObjects(initialState.appCurrencies.all_currencies, text)
             console.log("currency resultresult", result)
             updateState({ appCurrencies: { ...initialState.appCurrencies, all_currencies: result } })
             return
         }
 
-        if (renderType.toLowerCase() == "country") {
-            let result = searchCountry(initialCountries, text)
-            updateState({ countries: result })
+        if (renderIndex == 1) {
+            let result = searchCountry(initialState.appCountries, text)
+            updateState({ appCountries: result })
             return
         }
-
     }
 
-
-
-    console.log("renderTyperenderType", renderType.toLowerCase())
-
- 
-       
 
     const getItemLayout = (data, index) => ({
         length: 60,
         offset: 60 * index,
         index,
-      });
-      
+    });
+
 
     return (
         <WrapperContainer
@@ -416,7 +414,7 @@ export default function EcomLangCurrency({ route, navigation }) {
 
                     }}>
 
-                    {renderType.toLowerCase() == "language" ?
+                    {renderIndex == 3 ?
                         <FlatList
                             data={appLanguages?.all_languages || []}
                             extraData={appCurrencies.all_languages}
@@ -424,13 +422,13 @@ export default function EcomLangCurrency({ route, navigation }) {
                             keyExtractor={(item, index) => String(item?.id || index)}
 
                         />
-                        : renderType.toLowerCase() == 'country' ?
+                        : renderIndex == 1 ?
                             <FlatList
                                 ref={flatListRef}
-                                data={countries}
-                                extraData={countries}
+                                data={appCountries}
+                                extraData={appCountries}
                                 renderItem={renderCountries}
-                                keyExtractor={(item, index) => String(item?.id || index)}
+                                keyExtractor={(item, index) => String(item?.country_id || index)}
                                 onScrollToIndexFailed={() => console.log("failed")}
                                 getItemLayout={getItemLayout}
                             /> :

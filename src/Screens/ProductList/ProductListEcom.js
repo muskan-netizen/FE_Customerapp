@@ -102,7 +102,7 @@ export default function Products({route, navigation}) {
   let selectedSorts = useRef(null);
   const {data} = route.params;
 
-  console.log('routerouteroute', route.params);
+
 
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
@@ -431,7 +431,7 @@ export default function Products({route, navigation}) {
   }, []);
 
 
-  console.log("noMoreDatanoMoreDatanoMoreData",noMoreData)
+
   
   const renderSectionItem = useCallback(
     ({item, index, section}) => {
@@ -960,9 +960,6 @@ export default function Products({route, navigation}) {
     }
   };
 
-  {
-    console.log('allFiltersallFilters', allFilters);
-  }
 
   const onFilterApply = (
     filterData = {},
@@ -1020,9 +1017,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then(async res => {
-        console.log('get all products by vendor res without filter',
-          res?.data?.products?.data,
-        );
+        console.log('get all products by vendor res without filter',res?.data);
         setLoading(false);
         updateState({wrapperListLoader: false});
 
@@ -1068,7 +1063,6 @@ export default function Products({route, navigation}) {
 
   //***************get products by vendor filter**************
   const newVendorFilter = async (pageNo, loading = false) => {
-    console.log('api hit new vendorFilter', selectedFilters);
     let data = {};
     data['variants'] = selectedFilters?.current?.selectedVariants || [];
     data['options'] = selectedFilters?.current?.selectedOptions || [];
@@ -1206,8 +1200,8 @@ export default function Products({route, navigation}) {
     // }
   };
 
-  console.log("noMoreDatanoMoreData",noMoreData)
-  console.log('productListData ++++', productListData);
+
+
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = useCallback(
     pageNo => {

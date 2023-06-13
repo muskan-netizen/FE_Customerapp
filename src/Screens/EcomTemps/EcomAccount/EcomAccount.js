@@ -548,7 +548,10 @@ export default function EcomAccount({ navigation }) {
                 <ListItemHorizontal
                     centerContainerStyle={{ flexDirection: "row" }}
                     leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { type: 'country' })}
+                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { 
+                        type: 'country',
+                        renderIndex: 1
+                     })}
                     iconLeft={imagePath.icCountry}
                     centerHeading={strings.COUNTRY}
                     containerStyle={styles.containerStyle2}
@@ -561,7 +564,10 @@ export default function EcomAccount({ navigation }) {
                 <ListItemHorizontal
                     centerContainerStyle={{ flexDirection: "row" }}
                     leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { type: 'currency' })}
+                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { 
+                        type: 'currency',
+                        renderIndex: 2
+                     })}
                     iconLeft={imagePath.icCurrency}
                     centerHeading={strings.CURRENCIES}
                     containerStyle={styles.containerStyle2}
@@ -576,7 +582,10 @@ export default function EcomAccount({ navigation }) {
                 <ListItemHorizontal
                     centerContainerStyle={{ flexDirection: "row" }}
                     leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { type: 'language' })}
+                    onPress={moveToNewScreen(navigationStrings.ECOM_LANG_CURRENCY, { 
+                        type: 'language',
+                        renderIndex: 3
+                     })}
                     rightText={languages?.primary_language?.name || languages?.primary_language?.value}
                     iconLeft={imagePath.icLang}
                     centerHeading={strings.LANGUAGES}

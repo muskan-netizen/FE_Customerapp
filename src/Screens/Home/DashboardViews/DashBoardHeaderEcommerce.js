@@ -31,7 +31,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import * as Animatable from 'react-native-animatable';
 import DeviceCountry from 'react-native-device-country';
-import { countryJSON } from '../../../constants/constants';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
 
@@ -64,7 +63,7 @@ export default function DashBoardHeaderEcommerce({
   animation
 }) {
   const navigation = useNavigation();
-  const { appData, themeColors, appStyle, themeColor, themeToggle, currencies } = useSelector((state) => state?.initBoot || {});
+  const { appData, themeColors, appStyle, themeColor, themeToggle, currencies, primary_country } = useSelector((state) => state?.initBoot || {});
   const { cartItemCount } = useSelector((state) => state?.cart || {});
   const { userData } = useSelector((state) => state?.auth);
 
@@ -79,7 +78,7 @@ export default function DashBoardHeaderEcommerce({
 
   const [countryCode, setCountryCode] = useState('IN')
 
-  console.log("curriencescurriencescurriences", currencies)
+  console.log("primary_countryprimary_country", primary_country)
 
   useLayoutEffect(() => {
     DeviceCountry.getCountryCode()
@@ -131,21 +130,21 @@ export default function DashBoardHeaderEcommerce({
   }
 
   const headerUperView = useAnimatedStyle(() => {
-    const heightv=interpolate(animation.value,
+    const heightv = interpolate(animation.value,
       [0, 100, 0],
-      [height/14,0, height/14],
+      [height / 14, 0, height / 14],
       Extrapolate.CLAMP
     )
-   const opacity=interpolate(animation.value,
+    const opacity = interpolate(animation.value,
       [0, 100, 0],
-      [1,0, 1],
+      [1, 0, 1],
       Extrapolate.CLAMP
     )
     return {
       height: heightv,
       opacity
-  }
-})
+    }
+  })
 
 
   return (
@@ -165,7 +164,7 @@ export default function DashBoardHeaderEcommerce({
             paddingHorizontal: moderateScale(16),
             alignItems: 'center',
             // marginTop: moderateScaleVertical(4),
-          },headerUperView]}>
+          }, headerUperView]}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.openDrawer()}
@@ -276,17 +275,22 @@ export default function DashBoardHeaderEcommerce({
               alignItems: 'center',
 
             }}>
-            {!!(JSON.parse(countryJSON)[`${countryCode}`])?.emoji?<TouchableOpacity
+            {!!primary_country?.primary_country ? <TouchableOpacity
               hitSlop={hitSlopProp}
               style={{ marginHorizontal: moderateScale(8) }}
-              onPress={()=>navigation.navigate(navigationStrings.ACCOUNTS)}>
+              onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}>
 
-                 
-             <Text style={{
-              fontSize: textScale(30)
-              }} >{(JSON?.parse(countryJSON)[`${countryCode}`])?.emoji}</Text>   
-            </TouchableOpacity>  :null}
+              {!!primary_country?.primary_country && !!primary_country?.primary_country?.flag ? <FastImage
+                source={{ uri: primary_country?.primary_country.flag }}
+                style={{
+                  width: moderateScale(36),
+                  height: moderateScale(24),
+                  marginRight: moderateScale(8)
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              /> : null}
 
+            </TouchableOpacity> : null}
 
             {/* wish list */}
             <TouchableOpacity
