@@ -89,6 +89,8 @@ import ButtonWithLoader from "../../Components/ButtonWithLoader";
 const { height, width } = Dimensions.get("window");
 import { enableFreeze } from "react-native-screens";
 import ScreenLoader from "./ScreenLoader";
+import BrowseMenuButton from "../../Components/BrowseMenuButton";
+
 enableFreeze(true);
 
 
@@ -2958,9 +2960,41 @@ export default function OrderDetail({ navigation, route }) {
               }}
             />
           )}
+
+        {/* takeaway notification button */}
+        {!!(preferences.is_enable_curb_side &&
+          orderStatus?.current_status?.title == "Out For Delivery" &&
+          dineInType == 'takeaway') &&
+          <BrowseMenuButton
+            fontFamily={fontFamily}
+            onMenuTap={sendNotificationToVendor}
+            btnText={strings.NOTIFY_VENDOR}
+            btnImage={imagePath.ic_notification1}
+            btnImageStyle={{ tintColor: colors.white }}
+          // containerStyle={{ marginBottom: moderateScale(-58) }}
+          />
+        }
       </View>
     );
   };
+
+  // send notification to vendor by customer ************************************>
+  const sendNotificationToVendor = () => {
+    const apiData = {
+      order_id: cartData?.id,
+      vendor_id: cartItems[0]?.vendor_id,
+    }
+    const apiHeader = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+    actions.sendNotificationToVendor(apiData, apiHeader).then((res) => {
+      showSuccess(res?.message);
+    }).catch((error) => {
+      showError(error?.error || error?.message || "");
+    })
+  }
 
   const selectedTip = (tip) => {
     if (selectedTipvalue == "custom") {
@@ -3853,6 +3887,58 @@ export default function OrderDetail({ navigation, route }) {
                     </Text>
                   </View>
                 )}
+
+              <View style={{ paddingHorizontal: moderateScale(8) }}>
+
+                <TouchableOpacity>
+                  <Text></Text>
+                </TouchableOpacity>
+                
+                {driverStatus.tasks.map((val, i) => {
+                  return (
+                    <View>
+                      <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
+
+                        <View style={{flex:1, flexDirection: "row", alignItems: 'center' }}>
+                          {/* {val?.task_status == '4' ? */}
+                          {i < 5 ?
+                            <Image style={{
+                              tintColor: themeColors?.primary_color,
+                              width: 20,
+                              height:20,
+                              resizeMode:'contain'
+                            }} source={imagePath.ecomCheck} />
+                            :
+                            <Image style={{
+                              width: 20,
+                              height:20,
+                              resizeMode:'contain'
+                          }} source={imagePath.ecomUnCheck} />}
+                          <Text style={{
+                            color: colors?.black,
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.regular,
+                            marginLeft: moderateScale(4)
+                          }} >{val?.address}</Text>
+                        </View>
+                        <Text style={{
+                          color: colors?.black,
+                          fontSize: textScale(12),
+                          fontFamily: fontFamily.regular,
+                        }}>{moment(val?.created_at).format('LL')}</Text>
+                      </View>
+                      {(driverStatus?.tasks?.length - 1) !== i ? <View
+                        style={{
+                          height: 20,
+                          width: 2,
+                         backgroundColor: i < 5 ? themeColors?.primary_color: colors.blackOpacity10,
+                          marginLeft: 8
+                        }}
+                      /> : null}
+                    </View>
+                  )
+                })}
+              </View>
             </View>
           )}
 

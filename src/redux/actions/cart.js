@@ -37,6 +37,8 @@ import {
   DELETE_PRESCRIPTION,
   SAVED_CARD_LIST,
   DELETE_CARD,
+  PESAPAL_SUCCESS,
+  MTNGATEWAY,
 } from '../../config/urls';
 import {
   apiGet,
@@ -346,7 +348,7 @@ export const differentAddOns = (data, headers = {}) => {
 };
 
 export const checkVendorSlots = (data, headers = {}) => {
-  return apiGet(VENDOR_SLOTS + data, {}, headers);
+  return apiPost(VENDOR_SLOTS + data, {}, headers);
 };
 
 //Get List of payment method
@@ -546,4 +548,8 @@ export function getSavedCardsList(data = {}, headers = {}) {
 
 export function deleteCard(query ="",data = {}, headers = {}) {
   return apiGet(DELETE_CARD + query, data, headers);
+}
+
+export function mtnGateway(data = {}, headers = {}) {
+  return apiPost(MTNGATEWAY, data, headers);
 }

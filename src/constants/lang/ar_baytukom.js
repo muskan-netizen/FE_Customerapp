@@ -424,7 +424,7 @@ export default {
   CONFIRM_PASSWORD: 'تأكيد كلمة المرور',
   PASSWORD_NOT_MATCH: 'كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقان',
   MESSAGE: 'الرسالة',
-  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS: "Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'تم تقديم طلبك!',
   YOUR_ORDER_NUMBER: 'رقم الطلب الخاص بك هو',
   ANY_RESTAURANT_REQUESTS: 'لديك أي طلبات مطعم؟ سنبذل قصارى جهدنا لتوصيلها',
@@ -592,7 +592,7 @@ export default {
   ANYTIME_YOUR_CAR_BREAKS: 'في أي وقت تتعطل سيارتك ، نحن هنا من أجلك!',
   ENTER_YOUR: 'أدخل',
   ENTER_YOUR_NAME: "Enter your name",
-  ENTER_YOUR_EMAIL:"Enter your email",
+  ENTER_YOUR_EMAIL: "Enter your email",
   REGISTER: 'سجل',
   ENTER_EMAIL_ADDRESS: 'أدخل معرف البريد الإلكتروني هنا',
   ENTER_PHONE_NUMBER: 'أدخل رقم هاتفك هنا',
@@ -811,7 +811,6 @@ export default {
   ALCOHAL: 'كحول',
   ORDER_DELIVERED_SUCESSFULLY: 'تم تسليم الطلب بنجاح',
   INVENTORY: 'جرد',
-  UDHAARLEDGER: 'دفترالأستاذUdhaar',
   SALES_EXPENSES: 'المبيعات/النفقات',
   ADD_CUSTOMER: 'إضافةعميل',
   ADD_NEW_CUSTOMER: 'إضافةعميل جديد',
@@ -930,5 +929,5 @@ export default {
   CATEGORY_KYC: 'Categoory KYC',
   VISIT_INSTAGRAM: 'Visit Instagram',
   SOS: 'SOS',
-  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
+  THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us'
 };

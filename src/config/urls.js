@@ -1,8 +1,9 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
+// export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 // export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
 // export const API_BASE_URL='https://eathalalonly.com/api/v1'
@@ -812,3 +813,29 @@ export const DELETE_CARD = getApiUrl('/user/deleteCard');
 // time slots of driver
 export const GET_DRIVER_SLOTS = getApiUrl('/getDispatcherGerenalSlot');
 export const SEND_PRODUCT_BOOKING_DATA = getApiUrl('/get_product_price_from_dispatcher');
+
+
+export const MTNGATEWAY = getApiUrl('/mtn/create-token')
+
+//sendNotificationToVendor ****************>
+export const SEND_NOTIFCATION_TO_VENDOR = getApiUrl('/order/vendorReached');
+
+export const VIEW_ALL_CATEGORIES = getApiUrl(
+  '/v2/categoriesAll',
+);
+
+export const GET_UPCOMING_ONGOING_ORDERS = getApiUrl(
+  '/orders_upcoming_ongoing',
+);
+
+export const ALL_ORDERS_P2P = getApiUrl(
+  '/orders-all',
+);
+
+export const P2P_ORDER_DETAIL = getApiUrl(
+  '/order-detail_p2p',
+);
+
+export const COMPLETE_PICKUP_DROP_OFF = getApiUrl(
+  '/user/orderVenderStatusUpdate',
+);

@@ -1,4 +1,4 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { isEmpty } from 'lodash';
@@ -10,7 +10,9 @@ import {
     Platform,
     Pressable, Text,
     TouchableOpacity,
-    View
+    View,
+    TextInput,
+    ScrollView
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { getBundleId } from 'react-native-device-info';
@@ -59,6 +61,10 @@ import AvailableDriver from '../Comps/AvailableDriver';
 import SelectPaymentModalView from '../../TaxiApp/ChooseCarTypeAndTime/SelectPaymentModalView';
 import stylesFun from './styles';
 import FastImage from 'react-native-fast-image';
+import axios from 'axios';
+import useInterval from '../../../utils/useInterval';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -68,7 +74,7 @@ function ChooseVechile({ navigation, route }) {
     const paramData = route?.params?.promocodeDetail
         ? route?.params?.promocodeDetail
         : route?.params;
-
+    console.log(paramData, 'paramData')
     const bottomSheetRef = useRef(null);
     const mapRef = useRef();
 
@@ -89,7 +95,10 @@ function ChooseVechile({ navigation, route }) {
     const fontFamily = appStyle?.fontSizeData;
     const { additional_preferences, digit_after_decimal, distance_unit_for_time, is_bid_ride_enable, is_cab_pooling } = appData?.profile?.preferences || {};
     const styles = stylesFun({ fontFamily, themeColors });
-
+    const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+    const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
+    const [responseTimer, setResponseTimer] = useState(420)
+    const [pickuporderdetails, setPickuporderdetails] = useState('')
     const [state, setState] = useState({
         region: {
             latitude: paramData?.location[0]?.latitude
@@ -150,7 +159,10 @@ function ChooseVechile({ navigation, route }) {
         isModalVisibleForPayFlutterWave: false,
         paymentDataFlutterWave: null,
         disableButton: false,
-        showBidPriceModal: false
+        showBidPriceModal: false,
+        uID: '',
+        isBookingType: paramData?.rideType,
+
     });
     const {
         selectedPayment,
@@ -188,7 +200,10 @@ function ChooseVechile({ navigation, route }) {
         isModalVisibleForPayFlutterWave,
         paymentDataFlutterWave,
         disableButton,
-        showBidPriceModal
+        showBidPriceModal,
+        uID,
+        isBookingType
+
     } = state;
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -255,6 +270,14 @@ function ChooseVechile({ navigation, route }) {
         !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
     }, [updateSeatNO]);
 
+    useEffect(() => {
+        if (!isVisibleMtnGateway && mtnGatewayResponse) {
+            showError('Request TimeOut')
+            //   navigation.goBack()
+            updateState({ indicatorLoader: false, })
+        }
+    }, [isVisibleMtnGateway])
+
     const onDateSet = useCallback((date) => {
         let time = moment(date).format("HH:mm ");
         let dateSelectd = moment(date).format("YYYY-MM-DD");
@@ -270,7 +293,7 @@ function ChooseVechile({ navigation, route }) {
         });
         updateState({ isScheduleModalVisible: false });
         _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
-    }, [date])
+    }, [date, selectedCarOption])
 
     const clearScheduleDate = useCallback(() => {
         actions.saveSchduleTime('now');
@@ -547,6 +570,9 @@ function ChooseVechile({ navigation, route }) {
             case 47: //Khalti Payment Gatway
                 navigation.navigate(navigationStrings.KHALTI, paymentData);
                 break;
+            case 57: //PesaPal Payment Gatway
+                navigation.navigate(navigationStrings.PESAPAL, paymentData);
+                break;
             case 30: //FlutterWave Payment Getway
                 updateState({
                     isModalVisibleForPayFlutterWave: true,
@@ -565,6 +591,46 @@ function ChooseVechile({ navigation, route }) {
                 break;
         }
     };
+
+    const paymentReponse = (res, extraData) => {
+        axios({
+            method: "get",
+            url: res?.responseUrl,
+            headers: {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+                authorization: `${userData.auth_token}`
+
+            },
+        }).then((response) => {
+            console.log(response, 'reseserserseeseers');
+            if (response?.data?.status == "SUCCESSFUL") {
+                setIsVisibleMtnGateway(false)
+                navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS,
+                    extraData
+                );
+                showSuccess(response?.data?.message)
+            }
+        })
+            .catch((error) => {
+                console.log(error, 'error');
+                setMtnGatewayResponse('')
+                setIsVisibleMtnGateway(false)
+                showError(error?.response?.data?.message)
+                updateState({ indicatorLoader: false, })
+
+            })
+    }
+    useInterval(
+        () => {
+            if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse, pickuporderdetails); }
+        },
+        !!isVisibleMtnGateway ? 5000 : null,
+    );
+
+
+
     const _paymentWithPlugnPayMethods = (extraData, response, data) => {
 
         console.log(extraData, response, paramData, 'extradataextradata')
@@ -611,6 +677,43 @@ function ChooseVechile({ navigation, route }) {
                 showError(err?.msg)
             })
     }
+
+    const mtnGateway = (extraData, response, data) => {
+        console.log(response, 'rsresresrersserres')
+        let dataforGateway = {}
+        dataforGateway['amount'] = response?.data?.payable_amount || data?.amount
+        dataforGateway['currency'] = currencies?.primary_currency?.iso_code
+        dataforGateway['order_no'] = response?.data?.order_number
+        dataforGateway['subscription_id'] = ''
+        dataforGateway['reload_route'] = response?.data?.dispatch_traking_url
+        dataforGateway['from'] = 'pickup_delivery'
+
+        actions.mtnGateway(dataforGateway, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+        })
+            .then((res) => {
+                console.log(res, 'rsrseereeseresre')
+                if (res?.status == 'Success') {
+
+                    setIsVisibleMtnGateway(true)
+                    setMtnGatewayResponse(res)
+                    setPickuporderdetails(extraData)
+                    paymentReponse(res, extraData)
+
+                }
+
+            })
+            .catch((err) => {
+                console.log(err, 'ererrerererere')
+                updateState({ isLoadingB: false, placeLoader: false })
+                showError(err?.message)
+            })
+    }
+
+
+
     const _finalPayment = (data) => {
         if (isEmpty(selectedPayment)) {
             // showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
@@ -643,7 +746,11 @@ function ChooseVechile({ navigation, route }) {
                         selectedCarOption: selectedCarOption?.sku,
                     };
                     console.log(extraData, data, "extraData, data");
+
                     if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res, data) }
+                    else if (selectedPayment?.id == 48) {
+                        mtnGateway(extraData, res, data)
+                    }
                     else { checkPaymentOptions(extraData, data); }
 
                 } else {
@@ -693,6 +800,7 @@ function ChooseVechile({ navigation, route }) {
         data['currency_id'] = currencies?.primary_currency?.id;
         data['tasks'] = paramData?.tasks;
         data['images_array'] = uploadImages;
+        data["unique_id"] = uID
         data['agent_id'] = paramData?.bidData?.driver_id
         if (paramData?.bidData?.driver_id) {
             data['bid_task_type'] = paramData?.bidData?.task_type
@@ -863,6 +971,7 @@ function ChooseVechile({ navigation, route }) {
     const carModalHeader = () => {
         if (!!showPaymentModal) {
             return (
+
                 <View
                     style={{
                         backgroundColor: isDarkMode
@@ -924,6 +1033,7 @@ function ChooseVechile({ navigation, route }) {
             );
         }
         return (
+
             <View
                 style={{
                     backgroundColor: isDarkMode
@@ -932,7 +1042,7 @@ function ChooseVechile({ navigation, route }) {
                     borderRadius: 8,
                     borderBottomLeftRadius: 0,
                     borderBottomRightRadius: 0,
-                    marginTop: moderateScaleVertical(18),
+                    marginTop: moderateScaleVertical(18)
                 }}>
                 <View
                     style={{
@@ -972,7 +1082,7 @@ function ChooseVechile({ navigation, route }) {
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
-                        {is_cab_pooling &&
+                        {!!is_cab_pooling &&
                             <TouchableOpacity onPress={() => setCabBookingType('Pooling')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
@@ -1021,6 +1131,7 @@ function ChooseVechile({ navigation, route }) {
 
     const _selectCarModalView = () => {
         return (
+
             <AvailableDriver
                 isCabPooling={!!cabBookingType && cabBookingType == 'Pooling' ? true : false}
                 onPressAvailableCar={_selectedProductForDrivers}
@@ -1062,6 +1173,7 @@ function ChooseVechile({ navigation, route }) {
                 navigation={navigation}
                 _onShowBidePriceModal={_onShowBidePriceModal}
             />
+
 
         );
     };
@@ -1593,6 +1705,7 @@ function ChooseVechile({ navigation, route }) {
     }
 
     return (
+
         <View style={{ ...styles.container }}>
             <View style={{ flex: 1 }}>
                 {!!paramData?.location.length > 0 && (
@@ -1694,23 +1807,49 @@ function ChooseVechile({ navigation, route }) {
                 </TouchableOpacity>
                 <BottomSheet
                     ref={bottomSheetRef}
-                    index={availableCarList.length <= 2 ? bottomSheetIndex : 1}
-                    snapPoints={[height / 1.6, height / 1.25]}
-                    activeOffsetY={[-1, 1]}
+                    index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
+                    snapPoints={[height / 1.8, height / 1.6]}
+                    // activeOffsetY={[-1, 1]}
                     failOffsetX={[-5, 5]}
                     animateOnMount={true}
                     handleComponent={carModalHeader}
                     onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-                    <View
+                         {isBookingType == "RequestForDriver" &&
+                            <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
+                                <TextInput
+                                    onChangeText={txt => updateState({ uID: txt })}
+                                    placeholder='Enter Driver id'
+                                    value={uID}
+                                    style={{
+                                        borderWidth: 1,
+                                        height: 48,
+                                        borderRadius: moderateScale(8),
+                                        borderColor: colors.greyColor3,
+                                        paddingLeft: moderateScale(10)
+                                    }}
+                                />
+                            </View>}
+                    <BottomSheetScrollView
+                        keyboardShouldPersistTaps="handled"
+                        showsVerticalScrollIndicator={false}
                         style={{
-                            flex: 1,
+                            marginBottom: moderateScaleVertical(10),
                             backgroundColor: isDarkMode
                                 ? MyDarkTheme.colors.background
                                 : colors.white,
                         }}>
-                        {!!showCarModal && _selectCarModalView()}
-                        {!!showPaymentModal && _selectPaymentView()}
-                    </View>
+                        <View
+                            style={{
+                                //  height:height/1.7,
+                                flex: 1,
+                                backgroundColor: isDarkMode
+                                    ? MyDarkTheme.colors.background
+                                    : colors.white,
+                            }}>
+                            {!!showCarModal && _selectCarModalView()}
+                            {!!showPaymentModal && _selectPaymentView()}
+                        </View>
+                    </BottomSheetScrollView>
                 </BottomSheet>
 
 
@@ -1841,7 +1980,38 @@ function ChooseVechile({ navigation, route }) {
                     />
                 )
             }
+            {!!isVisibleMtnGateway && <Modal
+                isVisible={isVisibleMtnGateway}
+
+            >
+                <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15), justifyContent: "center", alignContent: "center" }}>
+                    <Text style={{ color: isDarkMode ? 'white' : themeColors?.primary_color, fontSize: textScale(15), padding: moderateScale(10) }}>Waiting for response ....</Text>
+                    <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
+
+                        <CountdownCircleTimer
+                            isPlaying
+                            duration={Number(responseTimer)}
+                            colors={[themeColors?.primary_color]}
+                            size={40}
+                            strokeWidth={5}
+                        >
+                            {({ remainingTime }) => {
+
+                                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                                return (<>
+                                    <Text>{format}</Text>
+                                </>
+                                )
+
+                            }}
+                        </CountdownCircleTimer>
+                    </View>
+                </View>
+            </Modal>}
         </View >
+
     );
 }
 

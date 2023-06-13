@@ -24,6 +24,7 @@ import {
   Paylink,
   PayPhone,
   Paystack,
+  Pesapal,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -201,6 +202,7 @@ export default function () {
         component={VerifyAccount}
       />
       <Stack.Screen name={navigationStrings.CONEKTA} component={Conekta} />
+      <Stack.Screen name={navigationStrings.PESAPAL} component={Pesapal} />
     </Stack.Navigator>
   );
 }

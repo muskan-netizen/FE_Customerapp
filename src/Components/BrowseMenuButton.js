@@ -7,8 +7,15 @@ import {moderateScale,moderateScaleVertical, textScale} from '../styles/responsi
 import {MyDarkTheme} from '../styles/theme';
 import {useSelector} from 'react-redux';
 
-const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+const BrowseMenuButton = ({
+  fontFamily,
+  containerStyle,
+  onMenuTap,
+  btnText = strings.BROWSE_MENU,
+  btnImage = imagePath.whiteMenu,
+  btnImageStyle={}
+}) => {
+  const { appStyle } = useSelector((state) => state?.initBoot);
   return (
     <TouchableOpacity
       onPress={onMenuTap}
@@ -28,11 +35,12 @@ const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
         ...containerStyle,
       }}>
       <Image
-        source={imagePath.whiteMenu}
+        source={btnImage}
         style={{
           width: moderateScale(12),
           height: moderateScale(12),
           marginRight: moderateScale(8),
+          ...btnImageStyle
         }}
       />
       <Text
@@ -41,7 +49,7 @@ const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
           fontSize: textScale(13),
           fontFamily: fontFamily.medium,
         }}>
-        {strings.BROWSE_MENU}
+        {btnText}
       </Text>
     </TouchableOpacity>
   );

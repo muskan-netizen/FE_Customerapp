@@ -161,6 +161,7 @@ export default function () {
             : navigationStrings.HOME
         }
         component={getHomeScreen()}
+        options={{ tabBarVisible: false }}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
