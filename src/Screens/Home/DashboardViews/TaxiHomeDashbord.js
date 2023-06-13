@@ -359,7 +359,7 @@ export default function TaxiHomeDashbord({
     return (
       <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} mainViewStyle={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey }} />
     );
-  }, [appMainData?.categories || []])
+  }, [appMainData?.categories, isDarkMode])
 
 
   const moveToScreen = (details) => {
