@@ -75,7 +75,7 @@ export default function TaxiHomeDashbord({
     indicator: false,
     type: 'addAddress',
     newAddressAdded: null,
-    isLoadingModal: false,
+    isLoadingModal: true,
     fullMapShow: false,
     isVisibleAddressModal: false,
     pickupAddress: {},
@@ -83,6 +83,11 @@ export default function TaxiHomeDashbord({
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
+  useEffect(()=>{
+    if(!!appMainData?.categories){
+      updateState({isLoadingModal:false})
+    }
+  },[appMainData])
   const fontFamily = appStyle?.fontSizeData;
   const { bannerRef } = useRef();
   const {
