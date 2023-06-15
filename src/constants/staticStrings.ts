@@ -23,4 +23,5 @@ export default {
   CASH_FREE: 'Cash free',
   FOOD_TEMPLATE: 'Food',
   P2P: 'P2P',
+  RENTAL_SERVICE: 'Rental Service',
 };

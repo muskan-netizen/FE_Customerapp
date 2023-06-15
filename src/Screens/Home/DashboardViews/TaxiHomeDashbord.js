@@ -83,11 +83,11 @@ export default function TaxiHomeDashbord({
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  useEffect(()=>{
-    if(!!appMainData?.categories){
-      updateState({isLoadingModal:false})
+  useEffect(() => {
+    if (!!appMainData?.categories) {
+      updateState({ isLoadingModal: false })
     }
-  },[appMainData])
+  }, [appMainData])
   const fontFamily = appStyle?.fontSizeData;
   const { bannerRef } = useRef();
   const {
@@ -930,6 +930,7 @@ export default function TaxiHomeDashbord({
                       longitude: Number(coordinate?.agentlog?.long),
                     }}>
                     <Image
+
                       style={{
                         zIndex: 99,
                         // height:46,

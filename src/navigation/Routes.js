@@ -7,7 +7,9 @@ import {
   ChatRoom,
   ChatRoomForVendor,
   ChatScreen,
-  ChatScreenForVendor
+  ChatScreenForVendor,
+  P2pChatRoom,
+  P2pChatScreen
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -32,6 +34,7 @@ export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
   const { appStyle, themeColors, appData } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{
@@ -56,11 +59,14 @@ export default function Routes() {
           <Stack.Screen
             name={navigationStrings.TAB_ROUTES}
             component={
-              businessType === 4
-                ? TaxiTabRoutes
-                : businessType === 8
-                  ? !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand : TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
-                    : TabRoutes
+              !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand :
+                businessType === 4
+                  ? TaxiTabRoutes
+                  : businessType === 8
+                    ? TabRoutesP2p
+                    : businessType === 10
+                      ? TabRoutesEcommerce
+                      : TabRoutes
             }
             options={{ gestureEnabled: false }}
           />
@@ -75,7 +81,7 @@ export default function Routes() {
 
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN}
-          component={ChatScreen}
+          component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pChatScreen : ChatScreen}
         />
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
@@ -83,7 +89,7 @@ export default function Routes() {
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM}
-          component={ChatRoom}
+          component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pChatRoom : ChatRoom}
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM_FOR_VENDOR}

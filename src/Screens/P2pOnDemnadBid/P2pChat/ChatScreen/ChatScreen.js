@@ -55,6 +55,7 @@ export default function ChatScreen({ route, navigation }) {
     const isChatRefresh = useSelector(
         (state) => state?.chatRefresh.isChatRefresh,
     );
+
     const styles = stylesFun({ fontFamily, isDarkMode });
 
     let defaultImage =
@@ -834,6 +835,7 @@ export default function ChatScreen({ route, navigation }) {
                             />
                         </TouchableOpacity>
                     </View>
+
 
                     <ScrollView>
                         {roomUsers.map((val, i) => {

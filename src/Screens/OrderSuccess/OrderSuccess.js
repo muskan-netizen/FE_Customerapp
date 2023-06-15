@@ -22,6 +22,7 @@ import { getBuildId } from 'react-native-device-info';
 import actions from '../../redux/actions';
 import { showError } from '../../utils/helperFunctions';
 import { useFocusEffect } from '@react-navigation/native';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 export default function OrderSuccess({ navigation, route }) {
   const paramData = route?.params?.data;
@@ -175,16 +176,19 @@ export default function OrderSuccess({ navigation, route }) {
             alignItems: 'center',
             marginBottom: moderateScaleVertical(90),
           }}>
-          <ButtonComponent
+          <ButtonWithLoader
+            isLoading={isLoadingChat}
             btnText={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? strings.START_CHAT : strings.VIEW_DETAIL}
             onPress={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? createRoom : viewOrderDetail}
             textStyle={{ color: themeColors.secondary_color }}
             borderRadius={moderateScale(13)}
-            containerStyle={{
+            btnStyle={{
               backgroundColor: themeColors.primary_color,
               width: width / 1.2,
+              borderWidth: 0
             }}
           />
+
         </View>
       </KeyboardAwareScrollView>
 

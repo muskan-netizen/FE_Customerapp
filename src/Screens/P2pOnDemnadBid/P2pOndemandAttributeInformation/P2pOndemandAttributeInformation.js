@@ -1,28 +1,29 @@
-import { isEmpty } from 'lodash';
-import moment from 'moment';
+import { cloneDeep, isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  FlatList,
   Image,
   Platform,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { Calendar } from 'react-native-calendars';
 import { useDarkMode } from 'react-native-dynamic';
+import { MultiSelect, Dropdown } from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
+import WebView from 'react-native-webview';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import AddressBottomSheet from '../../../Components/AddressBottomSheet';
-import BorderTextInput from '../../../Components/BorderTextInput';
-import ButtonComponent from '../../../Components/ButtonComponent';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 import GradientButton from '../../../Components/GradientButton';
+import Header from '../../../Components/Header';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import OoryksHeader from '../../../Components/OoryksHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -37,7 +38,6 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
 import {
   cameraHandler,
   checkValueExistInAry,
@@ -45,13 +45,19 @@ import {
 import { showError } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
+import ToggleSwitch from 'toggle-switch-react-native';
+import OoryksHeader from '../../../Components/OoryksHeader';
+import { MyDarkTheme } from '../../../styles/theme';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import ButtonComponent from '../../../Components/ButtonComponent';
+import { Calendar } from 'react-native-calendars';
+import moment from 'moment';
 
 const theme = {
   // Define your custom colors here
   selectedDayBackgroundColor: colors.black,
   selectedDayTextColor: colors.white,
 };
-
 
 const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   let paramData = route?.params;
@@ -83,7 +89,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
   const [price, setPrice] = useState('');
-  const [emirateId, setEmirateId] = useState('')
+  // const [emirateId, setEmirateId] = useState('')
   const [productLocation, setProductLocation] = useState({})
   const [weeklyPrice, setWeeklyPrice] = useState('')
   const [monthlyPrice, setMonthlyPrice] = useState('')
@@ -99,10 +105,11 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     selectViaMap: false,
     isVisible: false,
     selectedId: '',
+    isDelivery: false
   })
-  const { updateData, indicator, type, selectViaMap, isVisible } = state;
+  const [selectedLocationAtt, setSelectedLocationAtt] = useState({})
   const [selectedDates, setSelectedDates] = useState([]);
-
+  const { updateData, indicator, type, selectViaMap, isVisible, isDelivery } = state;
   const updateState = data => setState(state => ({ ...state, ...data }));
 
 
@@ -122,22 +129,20 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           language: languages?.primary_language?.id,
         },
       )
-      .then(res => {
-        console.log(res, '<===res');
+      .then((res) => {
+        console.log(res, '<===res getAvailableAttributes');
         setLoadingAttributes(false);
         setAttributeInfo(res?.data || []);
       })
       .catch(errorMethod);
   };
 
-
-
   const isValidData = () => {
     const error = validations({
       productImg: productImgs,
       productName: name,
       productDetail: description,
-      emirateId: emirateId,
+      // emirateId: emirateId,
       productLocation: productLocation,
       price: price,
       originalPrice: originalPrice,
@@ -187,6 +192,9 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       });
     });
 
+
+
+
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
     formData.append('body_html', description);
@@ -195,16 +203,52 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     formData.append('longitude', productLocation?.longitude);
     formData.append('week_price', weeklyPrice);
     formData.append('month_price', monthlyPrice);
-    formData.append('emirate', emirateId);
+    // formData.append('emirate', emirateId);
     formData.append('address', productLocation?.address);
     formData.append('compare_at_price', originalPrice);
     formData.append('minimum_duration', rentalDays);
-    // formData.append('date_availability', datesAry);
+    formData.append('delivery', isDelivery ? 1 : 0);
+
     productImgs.map(item => {
       formData.append('file[]', item);
     });
 
+    productImgs.map((item) => {
+      formData.append('file[]', item);
+    });
+    product360Imgs.map((item) => {
+      formData.append('file_360[]', item);
+    });
+    let apiObj = {};
+    attributeInfo.map((item, index) => {
+      let optionData = [];
+      item?.option?.map((itm, inx) => {
+        optionData[inx] = {
+          option_id: itm?.id,
+          option_title: itm?.title,
+        };
+      });
+      if (item?.values) {
+        apiObj[item?.id] = {
+          type: item?.type,
+          id: item?.id,
+          attribute_title: item?.title,
+          option: optionData,
+          value: item?.values,
+        };
+        if (item?.type == 6) {
+          apiObj[item?.id].latitude = item?.values?.latitude;
+          apiObj[item?.id].longitude = item?.values?.longitude;
+          apiObj[item?.id].address = item?.values?.value;
+        }
+      }
+    });
+
+    console.log(apiObj, "apiObj>>>>>>>apiObj")
+    formData.append('attribute', JSON.stringify(apiObj));
     console.log(formData, '<===formData onSubmitAttributes');
+
+
     actions
       .submitProductWithAttributes(formData, {
         code: appData?.profile?.code,
@@ -212,7 +256,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
         language: languages?.primary_language?.id,
         'Content-Type': 'multipart/form-data',
       })
-      .then(res => {
+      .then((res) => {
         setLoadingSubmitAttributes(false);
         console.log(res, '<===response onSubmitAttributes');
         setIsProductAddedModal(true);
@@ -220,13 +264,67 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       .catch(errorMethod);
   };
 
-  const errorMethod = error => {
+
+  const errorMethod = (error) => {
     setLoadingAttributes(false);
     setLoadingSubmitAttributes(false);
 
     showError(error?.message || error?.error);
   };
 
+  const onChangeDropDownOption = (value, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = value;
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onPressRadioButton = (item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.attribute_id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
+    setAttributeInfo(attributeInfoData);
+  };
+
+  const onChangeText = (text, item) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == item?.id,
+    );
+    attributeInfoData[indexOfAttributeToUpdate].values = [text];
+    setAttributeInfo(attributeInfoData);
+  };
+
+
+  const onPressCheckBoxes = (value, data) => {
+    const attributeInfoData = [...attributeInfo];
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == value?.attribute_id,
+    );
+    if (!isEmpty(data?.values)) {
+      let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
+      if (existingItmIndx == -1) {
+        attributeInfoData[indexOfAttributeToUpdate].values = [
+          ...data?.values,
+          value?.id,
+        ];
+      } else {
+        let index = attributeInfoData[indexOfAttributeToUpdate].values.indexOf(
+          value?.id,
+        );
+        if (index >= 0) {
+          attributeInfoData[indexOfAttributeToUpdate].values.splice(index, 1);
+        }
+      }
+    } else {
+      attributeInfoData[indexOfAttributeToUpdate].values = [value?.id];
+    }
+    setAttributeInfo(attributeInfoData);
+  };
   const cameraHandle = async index => {
     const permissionStatus = await androidCameraPermission();
     if (!!permissionStatus) {
@@ -246,20 +344,10 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               type: res?.mime,
               uri: res?.path,
             };
-            if (isImagePickerModal) {
-              setProductImgs([...productImgs, file]);
-              setImagePickerModal(false);
-            } else {
-              if (res?.height >= 4096 && res?.width >= 2048) {
-                setProduct360Imgs([...product360Imgs, file]);
-                set360ImgPicker(false);
-              } else {
-                showError(
-                  'Please upload atleast 4096x2048 size image for 360° media',
-                );
-                return;
-              }
-            }
+            // if (isImagePickerModal) {
+            setProductImgs([...productImgs, file]);
+            setImagePickerModal(false);
+            // } 
           } else {
             closeMediaPicker();
           }
@@ -267,7 +355,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
         .catch(closeMediaPicker);
     }
   };
-
   const closeMediaPicker = () => {
     set360ImgPicker(false);
     setImagePickerModal(false);
@@ -276,16 +363,26 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const removeProductImg = (item, type) => {
     if (type == 1) {
       const productImgsData = [...productImgs];
-      let itmIndx = productImgsData.findIndex(itm => itm?.id == item?.uri);
+      let itmIndx = productImgsData.findIndex((itm) => itm?.id == item?.uri);
       productImgsData.splice(itmIndx, 1);
       setProductImgs(productImgsData);
     } else {
       const product360ImgsData = [...product360Imgs];
-      let itmIndx = product360ImgsData.findIndex(itm => itm?.id == item?.uri);
+      let itmIndx = product360ImgsData.findIndex((itm) => itm?.id == item?.uri);
       product360ImgsData.splice(itmIndx, 1);
       setProduct360Imgs(product360ImgsData);
     }
   };
+
+  const onClearLocationField = () => {
+    const attributeInfoData = cloneDeep(attributeInfo)
+    let indexOfAttributeToUpdate = attributeInfoData.findIndex(
+      (itm) => itm?.id == selectedLocationAtt?.id,
+    );
+    delete attributeInfoData[indexOfAttributeToUpdate].values
+    setAttributeInfo(attributeInfoData);
+  }
+
 
   const addUpdateLocation = childData => {
     updateState({
@@ -314,8 +411,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       selectedId: id,
     });
   };
-
-
   const handleDateSelect = (day) => {
     const selectedDate = day.dateString;
     const newSelectedDates = [...selectedDates];
@@ -339,6 +434,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
     setSelectedDates(newSelectedDates);
   };
+
 
 
   const getMarkedDates = () => {
@@ -376,6 +472,154 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     return `${moment(firstItemKey).format("DD MMMM YYYY")} - ${moment(lastItemKey).format("DD MMMM YYYY")}`
   }
 
+  const renderRadioBtns = useCallback(
+    (item, data, index) => {
+      return (
+        <TouchableOpacity
+          key={String(index)}
+          onPress={() => onPressRadioButton(item)}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: moderateScale(20),
+          }}>
+          <Image
+            source={
+              !isEmpty(data?.values) && data?.values[0] == item?.id
+                ? imagePath.icActiveRadio
+                : imagePath.icInActiveRadio
+            }
+            style={{
+              tintColor:
+                !isEmpty(data?.values) && data?.values[0] == item?.id
+                  ? themeColors.primary_color
+                  : colors.blackOpacity43,
+            }}
+          />
+          <Text
+            style={styles.titleTxt}>
+            {item?.title}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [attributeInfo],
+  );
+
+  const renderCheckBoxes = useCallback(
+    (item, data, index) => {
+      return (
+        <TouchableOpacity
+          key={String(index)}
+          onPress={() => onPressCheckBoxes(item, data)}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: moderateScale(20),
+            marginBottom: moderateScaleVertical(10),
+          }}>
+          <Image
+            source={
+              checkValueExistInAry(item, data?.values)
+                ? imagePath.checkBox2Active
+                : imagePath.checkBox2InActive
+            }
+            style={{
+              tintColor: checkValueExistInAry(item, data?.values)
+                ? themeColors.primary_color
+                : colors.blackOpacity43,
+            }}
+          />
+          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: textScale(12),
+              marginLeft: moderateScale(6),
+            }}>
+            {item?.title}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [attributeInfo],
+  );
+
+  const renderAttributeOptions = useCallback(
+    ({ item, index }) => {
+      return (
+        <View>
+          <Text
+            style={{
+              ...styles.attributeTitle,
+              marginBottom: moderateScaleVertical(6),
+            }}>
+            {item?.title}
+          </Text>
+          {item?.type == 1 ? (
+            <Dropdown
+              style={styles.multiSelect}
+              labelField="title"
+              valueField="id"
+              value={!isEmpty(item?.values) ? item?.values : []}
+              data={item?.option}
+              onChange={(value) => onChangeDropDownOption(value, item)}
+              placeholder={'Select value'}
+              fontFamily={fontFamily.regular}
+              placeholderStyle={styles.multiSelectPlaceholder}
+            />
+          ) : item?.type == 3 ? (
+            <View style={styles.radioBtn}>
+              {item?.option?.map((itm, indx) =>
+                renderRadioBtns(itm, item, indx),
+              )}
+            </View>
+          ) : item?.type == 4 ? (
+            <TextInput
+              placeholder={strings.TYPE_HERE}
+              onChangeText={(text) => onChangeText(text, item)}
+              style={styles.textInput}
+            />
+          ) : item?.type == 6 ? <TouchableOpacity
+            onPress={() => {
+              updateState({
+                isVisible: true
+              })
+              setSelectedLocationAtt(item)
+            }}
+            style={styles.addLocationBtn}>
+            <Text numberOfLines={1} style={{
+              flex: 1,
+              ...styles.titleTxt
+            }}>{!isEmpty(item?.values) ? item?.values?.value : "Add Location"}</Text>
+            {!isEmpty(item?.values) && <TouchableOpacity onPress={onClearLocationField}><Image source={imagePath.closeButton} /></TouchableOpacity>}
+          </TouchableOpacity> : (
+            <View style={styles.checkBox}>
+              {item?.option?.map((itm, index) =>
+                renderCheckBoxes(itm, item, index),
+              )}
+            </View>
+          )}
+        </View>
+      );
+    },
+    [attributeInfo],
+  );
+
+
+  const listFooterComponent = () => {
+    return (
+      <ButtonWithLoader
+        btnText="Submit"
+        btnStyle={styles.submitBtn}
+        onPress={onSubmitAttributes}
+        colorsArray={['#FF8D8A', '#FC7049', '#FD312C']}
+        isLoading={isLoadingSubmitAttributes}
+        btnTextStyle={{
+          textTransform: 'none',
+        }}
+      />
+    );
+  };
 
   return (
     <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} statusBarColor={colors.white} isLoading={isLoadingSubmitAttributes}>
@@ -386,221 +630,224 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
         }}>
         <OoryksHeader
           leftIcon={imagePath.ic_backarrow}
-          lefticonTitle={strings.ADD_AN_ITEM_FOR_RENT}
+          leftTitle={strings.ADD_AN_ITEM_FOR_RENT}
 
         />
-        {isLoadingAttributes ? (
-          <View style={{ flex: 1 }}>
-            {['', '', '', '', '', '', '', '', ''].map((itm, indx) => (
-              <View
-                key={String(indx)}
-                style={{
-                  marginTop: moderateScaleVertical(20),
-                }}>
-                <HeaderLoader
-                  isRight={false}
-                  widthLeft={moderateScale(100)}
-                  rectWidthLeft={moderateScale(100)}
-                  heightLeft={moderateScaleVertical(30)}
-                  rectHeightLeft={moderateScaleVertical(30)}
-                  rx={5}
-                  ry={5}
-                />
-                <HeaderLoader
-                  isRight={false}
-                  widthLeft={width - moderateScale(30)}
-                  rectWidthLeft={width - moderateScale(30)}
-                  heightLeft={moderateScaleVertical(35)}
-                  rectHeightLeft={moderateScaleVertical(35)}
-                  rx={5}
-                  ry={5}
-                  viewStyles={{
-                    marginTop: moderateScaleVertical(5),
-                  }}
-                />
-              </View>
-            ))}
-          </View>
-        ) : (
-          <KeyboardAwareScrollView
-            keyboardShouldPersistTaps={'handled'}
-            showsVerticalScrollIndicator={false}>
 
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={'handled'}
+          showsVerticalScrollIndicator={false}>
+
+          <View
+            style={{
+              paddingHorizontal: moderateScale(16),
+              backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
+            }}>
+            <View
+              style={styles.imgContainer}>
+              {!isEmpty(productImgs) &&
+                productImgs.map((itm, indx) => (
+                  <View key={String(itm?.id)}>
+                    <Image
+                      style={styles.productImgs}
+                      source={{ uri: itm?.uri }}
+                    />
+                    <TouchableOpacity
+                      hitSlop={hitSlopProp}
+                      onPress={() => removeProductImg(itm, 1)}
+                      style={{ position: 'absolute', right: 4, top: -2 }}>
+                      <Image source={imagePath.icRemoveIcon} />
+                    </TouchableOpacity>
+                  </View>
+                ))}
+
+            </View>
+            <TouchableOpacity
+              onPress={() => setImagePickerModal(true)}
+              activeOpacity={0.7}
+              style={{ marginBottom: moderateScaleVertical(16), alignItems: 'center', height: moderateScaleVertical(150), justifyContent: "center", borderWidth: 1, borderColor: colors.borderColorNew, backgroundColor: isDarkMode ? MyDarkTheme.colors.text : colors.white, borderRadius: moderateScale(8) }}>
+              <Image source={imagePath.ic_camPicker} />
+              <Text
+                style={styles.uploadImgTxt}>
+                {strings.UPLOAD_IMAGE}
+              </Text>
+            </TouchableOpacity>
+            <BorderTextInput
+              onChangeText={text => setName(text)}
+              placeholder={strings.ITEM_NAME}
+              value={name}
+              containerStyle={styles.containerStyle}
+              textInputStyle={styles.txtInputStyle}
+            />
+            <BorderTextInput
+              onChangeText={text => setDescription(text)}
+              placeholder={strings.DESCRIPTION}
+              value={description}
+              multiLine={true}
+              containerStyle={{ ...styles.containerStyle, height: moderateScaleVertical(118) }}
+              textInputStyle={styles.txtInputStyle}
+            />
+
+            {/* <BorderTextInput
+              onChangeText={(text) => setEmirateId(text)}
+              placeholder={strings.EMIRATES}
+              value={emirateId}
+              containerStyle={styles.containerStyle}
+              textInputStyle={styles.txtInputStyle}
+            /> */}
+            <TouchableOpacity
+              onPress={() => {
+                updateState({
+                  isVisible: true
+                })
+              }}
+              style={{ ...styles.addLocationBtn, backgroundColor: colors.white }}>
+              <Text numberOfLines={1} style={{
+                flex: 1,
+                ...styles.titleTxt,
+                color: !isEmpty(productLocation) ? colors.black : colors.blackOpacity30
+              }}>{!isEmpty(productLocation) ? productLocation?.address : strings.LOCATION_AVAILABLITY}</Text>
+              <TouchableOpacity onPress={() => setProductLocation({})}>
+                <Image style={{
+                  height: 15, width: 15
+                }} resizeMode="contain" source={imagePath.closeButton} />
+              </TouchableOpacity>
+            </TouchableOpacity>
+            <Text
+              style={{
+                marginLeft: moderateScale(1),
+                fontSize: textScale(14),
+                fontFamily: fontFamily?.medium,
+                marginTop: moderateScaleVertical(16)
+              }}>
+              {strings.PRICING_DETAILS_FOR} :
+            </Text>
             <View
               style={{
-                paddingHorizontal: moderateScale(16),
-                backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: moderateScaleVertical(14),
               }}>
-              <View
-                style={styles.imgContainer}>
-                {!isEmpty(productImgs) &&
-                  productImgs.map((itm, indx) => (
-                    <View style={String(itm?.id)}>
-                      <Image
-                        style={styles.productImgs}
-                        source={{ uri: itm?.uri }}
-                      />
-                      <TouchableOpacity
-                        hitSlop={hitSlopProp}
-                        onPress={() => removeProductImg(itm, 1)}
-                        style={{ position: 'absolute', right: 4, top: -2 }}>
-                        <Image source={imagePath.icRemoveIcon} />
-                      </TouchableOpacity>
-                    </View>
-                  ))}
-
-              </View>
-              <TouchableOpacity
-                onPress={() => setImagePickerModal(true)}
-                activeOpacity={0.7}
-                style={{ marginBottom: moderateScaleVertical(16), alignItems: 'center', height: moderateScaleVertical(150), justifyContent: "center", borderWidth: 1, borderColor: colors.borderColorNew, backgroundColor: isDarkMode ? MyDarkTheme.colors.text : colors.white, borderRadius: moderateScale(8) }}>
-                <Image source={imagePath.ic_camPicker} />
-                <Text
-                  style={styles.uploadImgTxt}>
-                  {strings.UPLOAD_IMAGE}
-                </Text>
-              </TouchableOpacity>
               <BorderTextInput
-                onChangeText={text => setName(text)}
-                placeholder={strings.ITEM_NAME}
-                value={name}
-                containerStyle={styles.containerStyle}
-                textInputStyle={styles.txtInputStyle}
-              />
-              <BorderTextInput
-                onChangeText={text => setDescription(text)}
-                placeholder={strings.DESCRIPTION}
-                value={description}
-                multiLine={true}
-                containerStyle={{ ...styles.containerStyle, height: moderateScaleVertical(118) }}
-                textInputStyle={styles.txtInputStyle}
-              />
-
-              <BorderTextInput
-                onChangeText={(text) => setEmirateId(text)}
-                placeholder={strings.EMIRATES}
-                value={emirateId}
-                containerStyle={styles.containerStyle}
-                textInputStyle={styles.txtInputStyle}
-              />
-              <TouchableOpacity
-                onPress={() => {
-                  updateState({
-                    isVisible: true
-                  })
-                }}
-                style={{ ...styles.addLocationBtn, backgroundColor: colors.white }}>
-                <Text numberOfLines={1} style={{
-                  flex: 1,
-                  ...styles.titleTxt,
-                  color: !isEmpty(productLocation) ? colors.black : colors.blackOpacity30
-                }}>{!isEmpty(productLocation) ? productLocation?.address : strings.LOCATION_AVAILABLITY}</Text>
-                <TouchableOpacity onPress={() => setProductLocation({})}>
-                  <Image style={{
-                    height: 15, width: 15
-                  }} resizeMode="contain" source={imagePath.closeButton} />
-                </TouchableOpacity>
-              </TouchableOpacity>
-              <Text
-                style={{
-                  marginLeft: moderateScale(1),
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily?.medium,
-                  marginTop: moderateScaleVertical(16)
-                }}>
-                {strings.PRICING_DETAILS_FOR} :
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: moderateScaleVertical(14),
-                }}>
-                <BorderTextInput
-                  value={price}
-                  keyboardType={"number-pad"}
-                  onChangeText={(text) => {
-                    setPrice(text)
-                    let weekPrice = ((Number(text) * 4) / 7).toFixed(0)
-                    let monthPrice = ((Number(text) * 4 * 3) / 30).toFixed(0)
-                    setWeeklyPrice(text == "" ? "" : String(weekPrice))
-                    setMonthlyPrice(text == "" ? "" : String(monthPrice))
-                  }}
-                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_DAY}`}
-                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                  textInputStyle={styles.txtInputStyle}
-                />
-                <BorderTextInput
-                  // onChangeText={(text) => setWeeklyPrice(text)}
-
-                  value={weeklyPrice}
-                  editable={false}
-                  keyboardType={"number-pad"}
-                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_WEEK}`}
-                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                  textInputStyle={styles.txtInputStyle}
-                />
-                <BorderTextInput
-                  // onChangeText={(text) => setMonthlyPrice(text)}
-                  value={monthlyPrice}
-                  editable={false}
-                  keyboardType={"number-pad"}
-                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_MONTH}`}
-                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                  textInputStyle={styles.txtInputStyle}
-                />
-              </View>
-              <BorderTextInput
-                onChangeText={(text) => setOriginalPrice(text)}
-                value={originalPrice}
+                value={price}
                 keyboardType={"number-pad"}
-                placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
-                containerStyle={styles.containerStyle}
+                onChangeText={(text) => {
+                  setPrice(text)
+                  let weekPrice = ((Number(text) * 4) / 7).toFixed(0)
+                  let monthPrice = ((Number(text) * 4 * 3) / 30).toFixed(0)
+                  setWeeklyPrice(text == "" ? "" : String(weekPrice))
+                  setMonthlyPrice(text == "" ? "" : String(monthPrice))
+                }}
+                placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_DAY}`}
+                containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
                 textInputStyle={styles.txtInputStyle}
               />
               <BorderTextInput
-                onChangeText={(text) => setRentalDays(text)}
-                value={rentalDays}
+                // onChangeText={(text) => setWeeklyPrice(text)}
+
+                value={weeklyPrice}
+                editable={false}
                 keyboardType={"number-pad"}
-                placeholder={strings.MINIMAL_RENTAL_DAYS}
-                rightIcon={imagePath.ic_down_arrow}
-                containerStyle={styles.containerStyle}
+                placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_WEEK}`}
+                containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
                 textInputStyle={styles.txtInputStyle}
               />
-
-
-              <ButtonComponent
-                onPress={() => setIsCalendarModal(true)}
-                containerStyle={styles.availablityBtn}
-                textStyle={{
-                  color: colors.black,
-                }}
-                btnText={isEmpty(selectedDates) ? "Choose Availablity" : getDates()}
-              />
-              <ButtonComponent
-                onPress={onSubmitAttributes}
-                containerStyle={{ ...styles.submitBtn, backgroundColor: isDarkMode ? themeColors?.primary_color : colors.black }}
-                btnText={strings.CONFIRM_AND_CONTINUE}
+              <BorderTextInput
+                // onChangeText={(text) => setMonthlyPrice(text)}
+                value={monthlyPrice}
+                editable={false}
+                keyboardType={"number-pad"}
+                placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_MONTH}`}
+                containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
+                textInputStyle={styles.txtInputStyle}
               />
             </View>
+            <BorderTextInput
+              onChangeText={(text) => setOriginalPrice(text)}
+              value={originalPrice}
+              keyboardType={"number-pad"}
+              placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
+              containerStyle={styles.containerStyle}
+              textInputStyle={styles.txtInputStyle}
+            />
+            <BorderTextInput
+              onChangeText={(text) => setRentalDays(text)}
+              value={rentalDays}
+              keyboardType={"number-pad"}
+              placeholder={strings.MINIMAL_RENTAL_DAYS}
+              rightIcon={imagePath.ic_down_arrow}
+              containerStyle={styles.containerStyle}
+              textInputStyle={styles.txtInputStyle}
+            />
 
-          </KeyboardAwareScrollView>
-        )}
+
+            <ButtonComponent
+              onPress={() => setIsCalendarModal(true)}
+              containerStyle={styles.availablityBtn}
+              textStyle={{
+                color: colors.black,
+              }}
+              btnText={isEmpty(selectedDates) ? "Choose Availablity" : getDates()}
+            />
+            {/* <ButtonComponent
+              onPress={onSubmitAttributes}
+              containerStyle={{ ...styles.submitBtn, backgroundColor: isDarkMode ? themeColors?.primary_color : colors.black }}
+              btnText={strings.CONFIRM_AND_CONTINUE}
+            /> */}
+            <FlatList
+              data={attributeInfo}
+              keyboardShouldPersistTaps={'handled'}
+              scrollEnabled={false}
+              keyExtractor={(item, index) => String(index)}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{
+                    height: moderateScaleVertical(18),
+                  }}
+                />
+              )}
+              renderItem={renderAttributeOptions}
+              ListFooterComponent={listFooterComponent}
+            />
+            <View style={{ height: moderateScaleVertical(65) }} />
+          </View>
+
+
+
+        </KeyboardAwareScrollView>
+
+
       </View>
       <GallaryCameraImgPicker
         isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}
         onGallary={() => cameraHandle(1)}
+        // isVisbleCamera={!is360ImgPicker}
         onCancel={closeMediaPicker}
         onClose={closeMediaPicker}
       />
 
       <Modal isVisible={isProductAddedModal}>
         <View
-          style={styles.postAddedContainer}>
+          style={{
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: moderateScale(15),
+            marginHorizontal: moderateScale(30),
+            paddingVertical: moderateScaleVertical(50),
+          }}>
           <Image source={imagePath.check3} />
           <Text
-            style={{ ...styles.postAddedTxt, color: isDarkMode ? colors.white : colors.black, }}>
+            style={{
+              color: isDarkMode ? colors.white : colors.black,
+              fontFamily: fontFamily.medium,
+              fontSize: textScale(19),
+              maxWidth: '70%',
+              textAlign: 'center',
+              marginVertical: moderateScale(18),
+              lineHeight: moderateScaleVertical(30),
+            }}>
             {strings.POST_UPLOADED_SUCCESS}
           </Text>
           <GradientButton
@@ -609,14 +856,12 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               setIsProductAddedModal(false);
               navigation.goBack();
             }}
-            containerStyle={{
-              width: '50%',
-              marginVertical: moderateScaleVertical(5),
-            }}
+            containerStyle={{ width: '50%', marginTop: moderateScaleVertical(5) }}
             colorsArray={['#FC7049', '#FD312C']}
           />
         </View>
       </Modal>
+
 
       {isVisible ? <AddressBottomSheet
         navigation={navigation}
@@ -661,7 +906,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                 setIsCalendarModal(false)
               }
             }}
-            containerStyle={{ ...styles.submitBtn, marginTop: moderateScaleVertical(100) }}
+            containerStyle={{ ...styles.submitBtn, marginTop: moderateScaleVertical(100), marginHorizontal: moderateScale(16) }}
             btnText={strings.DONE}
           />
         </View>
@@ -754,6 +999,7 @@ function stylesFunc({ fontFamily, themeColors }) {
       height: moderateScaleVertical(40),
       backgroundColor: colors.blackOpacity05,
       borderRadius: moderateScale(5),
+      paddingHorizontal: moderateScale(20)
     },
     multiSelectPlaceholder: {
       color: colors.black,
@@ -771,24 +1017,10 @@ function stylesFunc({ fontFamily, themeColors }) {
       flexWrap: 'wrap',
       marginTop: moderateScaleVertical(5),
     },
-    submitBtn:
-    {
-      backgroundColor: colors.black,
-      height: moderateScaleVertical(48),
-      width: moderateScale(343),
-      alignSelf: 'center',
-      borderRadius: 8,
-      marginBottom: moderateScaleVertical(60),
-
-    },
-    submitBtnNew:
-    {
-      backgroundColor: colors.white,
-      height: moderateScaleVertical(48),
-      width: moderateScale(343),
-      alignSelf: 'center',
-      borderRadius: 8,
-      borderWidth: 1
+    submitBtn: {
+      marginBottom: moderateScaleVertical(20),
+      backgroundColor: themeColors.primary_color,
+      borderWidth: 0,
     },
     addLocationBtn: {
       borderWidth: 1,
@@ -798,13 +1030,15 @@ function stylesFunc({ fontFamily, themeColors }) {
       height: moderateScaleVertical(48),
       justifyContent: "space-between",
       flexDirection: "row",
-      alignItems: "center",
+      alignItems: "center"
+
     },
     titleTxt: {
       fontFamily: fontFamily.regular,
       fontSize: textScale(14),
-
+      marginLeft: moderateScale(6),
     },
+
     containerStyle: {
       borderWidth: 1,
       borderColor: colors.profileInputborder,
@@ -864,7 +1098,6 @@ function stylesFunc({ fontFamily, themeColors }) {
       marginBottom: moderateScaleVertical(60),
       backgroundColor: colors.white
     }
-
   });
   return styles;
 }

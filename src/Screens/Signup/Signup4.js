@@ -11,10 +11,10 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
+import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,6 @@ import { setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 
 // import { enableFreeze } from "react-native-screens";
@@ -74,6 +73,7 @@ export default function Signup4({ navigation }) {
     languages,
     themeColor,
     themeToggle,
+    themeColors
   } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily });
@@ -707,17 +707,11 @@ export default function Signup4({ navigation }) {
                 })}
               </View>
             )}
-
-            {/* <ButtonWithLoader
-              btnText={strings.CONTINUE}
-              btnStyle={{ marginTop: moderateScaleVertical(10) }}
-              onPress={onSignup}
-            /> */}
-
             <GradientButton
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.CONTINUE}
+              colorsArray={['#FC7049', '#FD312C']}
             />
           </View>
         </View>

@@ -414,6 +414,8 @@ const P2pPayment = ({ navigation, route, item }) => {
         );
     };
 
+
+
     const renderPaymentMethods = useCallback(
         ({ item, index }) => {
             return (

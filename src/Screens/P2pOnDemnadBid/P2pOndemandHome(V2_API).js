@@ -52,6 +52,7 @@ import socketServices from '../../utils/scoketService';
 import DashBoardFiveV2ApiLoader from './DashBoardParts/DashBoardFiveV2ApiLoader';
 import DashBoardHeaderFive from './DashBoardParts/DashBoardHeaderFive';
 import DashBoardFiveV2Api from './DashBoardParts/DashBoardFiveV2Api';
+import { isEmpty } from 'lodash';
 
 enableFreeze(true);
 
@@ -207,8 +208,10 @@ export default function P2pOndemandHome({ route, navigation }) {
     getLocationPermissionStatus()
   }, []);
 
+
+
   const getLocationPermissionStatus = () => {
-    if (location?.latitude === "") {
+    if (isEmpty(location)) {
       onlyCheckLocationPermission().then((res) => {
         setisLocationModal(false)
         onGetCurrentLoc()
@@ -952,18 +955,11 @@ export default function P2pOndemandHome({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
-  const getLocationStatus = () => {
-    onlyCheckLocationPermission().then((res) => {
-      setisLocationModal(false)
-    }).catch((err) => {
-      setisLocationModal(true)
-      homeData()
-    })
-  }
+
 
   const addressDone = async (data_) => {
     setisLocationModal(false)
-    // getLocationStatus()
+
     let res = await getPlaceDetails(
       data_.place_id,
       profile?.preferences?.map_key,

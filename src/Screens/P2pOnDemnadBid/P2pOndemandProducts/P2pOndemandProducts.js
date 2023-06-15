@@ -7,8 +7,8 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-
 //custom components
+import SearchBar2 from '../../../Components/NewComponents/SearchBar2';
 import TopHeader from '../../../Components/NewComponents/TopHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 //styling
@@ -32,20 +32,23 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import Header from '../../../Components/Header';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import {
+    getColorCodeWithOpactiyNumber,
     getImageUrl,
-    showError
+    showError,
 } from '../../../utils/helperFunctions';
 
 import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
-import OoryksHeader from '../../../Components/OoryksHeader';
+import GradientView from '../../../Components/GradientView';
 import {
     checkValueExistInAry,
     tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
+import OoryksHeader from '../../../Components/OoryksHeader';
 
 const P2pOndemandProducts = ({ route, navigation }) => {
     const flatlistRef = useRef(null);
@@ -58,8 +61,8 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         themeColors,
         themeToggle,
         themeColor,
-    } = useSelector(state => state?.initBoot);
-    const { userData } = useSelector(state => state?.auth);
+    } = useSelector((state) => state?.initBoot);
+    const { userData } = useSelector((state) => state?.auth);
     const { additional_preferences, digit_after_decimal } =
         appData?.profile?.preferences || {};
     const darkthemeusingDevice = useDarkMode();
@@ -76,9 +79,9 @@ const P2pOndemandProducts = ({ route, navigation }) => {
 
     useEffect(() => {
         getP2pProductsByCategoryId();
-        // if (!!userData?.auth_token) {
-        //   getListOfAvailableAttributes();
-        // }
+        if (!!userData?.auth_token) {
+            getListOfAvailableAttributes();
+        }
     }, []);
 
     const getListOfAvailableAttributes = () => {
@@ -92,11 +95,11 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     language: languages?.primary_language?.id,
                 },
             )
-            .then(res => {
+            .then((res) => {
                 console.log(res, '<===response getListOfAvailableAttributes');
                 setAttributeInfo(res?.data || []);
             })
-            .catch(error => showError(error?.message || error?.error));
+            .catch((error) => showError(error?.message || error?.error));
     };
 
     const getP2pProductsByCategoryId = (pageNo = 1, filterAry = []) => {
@@ -113,7 +116,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     systemuser: deviceInfoModule.getUniqueId(),
                 },
             )
-            .then(res => {
+            .then((res) => {
                 console.log(res, '<===response getP2pProductsByCategoryId');
                 if (
                     res?.data?.listData?.current_page < res?.data?.listData?.last_page
@@ -132,7 +135,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
             .catch(errorMethod);
     };
 
-    const errorMethod = error => {
+    const errorMethod = (error) => {
         setIsLoading(false);
         showError(error?.message || error?.error);
     };
@@ -140,16 +143,16 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const onChangeDropDownOption = (value, item) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == item?.id,
+            (itm) => itm?.id == item?.id,
         );
         attributeInfoData[indexOfAttributeToUpdate].values = value;
         setAttributeInfo(attributeInfoData);
     };
 
-    const onPressRadioButton = item => {
+    const onPressRadioButton = (item) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == item?.attribute_id,
+            (itm) => itm?.id == item?.attribute_id,
         );
         attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
         setAttributeInfo(attributeInfoData);
@@ -158,7 +161,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const onChangeText = (text, item) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == item?.id,
+            (itm) => itm?.id == item?.id,
         );
         attributeInfoData[indexOfAttributeToUpdate].values = [text];
         setAttributeInfo(attributeInfoData);
@@ -167,10 +170,10 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const onPressCheckBoxes = (value, data) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == value?.attribute_id,
+            (itm) => itm?.id == value?.attribute_id,
         );
         if (!isEmpty(data?.values)) {
-            let existingItmIndx = data?.values.findIndex(itm => itm == value.id);
+            let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
             if (existingItmIndx == -1) {
                 attributeInfoData[indexOfAttributeToUpdate].values = [
                     ...data?.values,
@@ -200,12 +203,17 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     };
 
     const onApplyAttributeFilter = () => {
+        let newAttributeInfo = [...attributeInfo];
+        if (isEmpty(newAttributeInfo)) {
+            alert("Please select filters!")
+            return
+        }
         setIsAttributeFilterModal(false);
         setIsLoading(true);
-        let newAttributeInfo = [...attributeInfo];
         let attributeFilterAry = [];
-        newAttributeInfo.map(itm => {
+        newAttributeInfo.map((itm) => {
             if (!isEmpty(itm?.values)) {
+
                 attributeFilterAry.push({ attribute_id: itm?.id, options: itm?.values });
             }
         });
@@ -223,7 +231,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
 
     const onResetFilter = () => {
         const attributeInfoData = [...attributeInfo];
-        attributeInfoData.map(itm => {
+        attributeInfoData.map((itm) => {
             delete itm['values'];
         });
         setAttributeInfo(attributeInfoData);
@@ -486,7 +494,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             valueField="id"
                             value={!isEmpty(item?.values) ? item?.values : []}
                             data={item?.option}
-                            onChange={value => onChangeDropDownOption(value, item)}
+                            onChange={(value) => onChangeDropDownOption(value, item)}
                             placeholder={'Select value'}
                             fontFamily={fontFamily.regular}
                             placeholderStyle={styles.multiSelectPlaceholder}
@@ -500,7 +508,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     ) : item?.type == 4 ? (
                         <TextInput
                             placeholder={strings.TYPE_HERE}
-                            onChangeText={text => onChangeText(text, item)}
+                            onChangeText={(text) => onChangeText(text, item)}
                             style={styles.textInput}
                         />
                     ) : (
@@ -522,17 +530,17 @@ const P2pOndemandProducts = ({ route, navigation }) => {
             isLoading={isLoading}>
             <OoryksHeader
                 leftTitle={paramData?.name || ''}
-                onPressRight={() =>
-                    navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                }
-
+                onPressRight={onFilterPress}
                 isRight
+                rightIcon={imagePath.filter}
+
+
             />
+
             <View
                 style={{
                     flex: 1,
                     paddingHorizontal: moderateScale(15),
-                    marginTop: moderateScaleVertical(8)
                 }}>
                 <FlatList
                     ref={flatlistRef}
