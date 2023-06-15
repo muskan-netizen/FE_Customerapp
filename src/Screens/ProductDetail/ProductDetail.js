@@ -1965,11 +1965,11 @@ export default function ProductDetail({ route, navigation }) {
       <TouchableOpacity
         onPress={() => selectSpecificOptions(options, item, index)}
         activeOpacity={0.7}
-        disabled={!!item?.is_disabled}
+        disabled={!item?.quantity}
         style={{
           ...styles.colorContainer,
-          borderColor: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.greyA,
-          borderStyle: !!item?.is_disabled ? 'dotted' : 'solid'
+          borderColor: !item?.quantity ?  colors.grayOpacity51 :  !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
+          borderStyle: !!item?.quantity ? 'solid' : 'dotted'
 
         }}
       >
@@ -1981,7 +1981,7 @@ export default function ProductDetail({ route, navigation }) {
         <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
+          color: !item?.quantity ?  colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
           alignSelf: 'center',
 
 
