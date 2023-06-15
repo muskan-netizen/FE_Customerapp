@@ -1803,6 +1803,25 @@ function ChooseVechile({ navigation, route }) {
                 handleComponent={carModalHeader}
                 onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
 
+                <BottomSheetScrollView
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                    style={{
+                        marginBottom: moderateScaleVertical(10),
+                        height:height / 1.4,
+                        backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.background
+                            : colors.white,
+                    }}>
+                    <View
+                        style={{
+                            //  height:height/1.7,
+                            flex: 1,
+                            backgroundColor: isDarkMode
+                                ? MyDarkTheme.colors.background
+                                : colors.white,
+                        }}>
+
                 {!!profile?.preferences?.is_particular_driver && cabBookingType === "Booking" && !showPaymentModal &&
                     <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
                         <BorderTextInputWithLable
@@ -1826,23 +1845,6 @@ function ChooseVechile({ navigation, route }) {
                         />
 
                     </View>}
-                <BottomSheetScrollView
-                    keyboardShouldPersistTaps="handled"
-                    showsVerticalScrollIndicator={false}
-                    style={{
-                        marginBottom: moderateScaleVertical(10),
-                        backgroundColor: isDarkMode
-                            ? MyDarkTheme.colors.background
-                            : colors.white,
-                    }}>
-                    <View
-                        style={{
-                            //  height:height/1.7,
-                            flex: 1,
-                            backgroundColor: isDarkMode
-                                ? MyDarkTheme.colors.background
-                                : colors.white,
-                        }}>
                         {!!showCarModal && _selectCarModalView()}
                         {!!showPaymentModal && _selectPaymentView()}
                     </View>
