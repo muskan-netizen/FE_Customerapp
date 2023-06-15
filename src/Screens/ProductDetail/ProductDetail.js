@@ -148,8 +148,6 @@ export default function ProductDetail({ route, navigation }) {
     crossProducts: [],
 
   });
-  const [variantSetNew, setVariantSetNew] = useState(null)
-  const [variantSetOptions, setVariantOptions] = useState([])
 
   const [pinCode, setPinCode] = useState('');
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
@@ -159,6 +157,8 @@ export default function ProductDetail({ route, navigation }) {
   const [availableVendorSlots, setAvailableVendorSlots] = useState([]);
   const [isLoadingPinCode, setLoadingPinCode] = useState(false);
   const [isLoadingGetSlots, setLoadingGetSlots] = useState(false);
+  const [variantSet, setVariantSet] = useState([])
+
   const [selectedVendorDeliverySlot, setSelectedVendorDeliverySlot] = useState(
     {},
   );
@@ -184,6 +184,7 @@ export default function ProductDetail({ route, navigation }) {
 
   //Saving the initial state
   const initialState = cloneDeep(state);
+  
   const userData = useSelector((state) => state?.auth?.userData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -193,7 +194,6 @@ export default function ProductDetail({ route, navigation }) {
     productPriceData,
     isLoadingC,
     addonSet,
-    variantSet,
     showListOfAddons,
     venderDetail,
     productTotalQuantity,
@@ -276,29 +276,32 @@ export default function ProductDetail({ route, navigation }) {
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
 
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (variantSet.length) {
-        let variantSetData = variantSet
-          .map((i, inx) => {
-            let find = i.options.filter((x) => x.value);
-            if (find.length) {
-              return {
-                variant_id: find[0].variant_id,
-                optionId: find[0].id,
-              };
-            }
-          })
-          .filter((x) => x != undefined);
-        console.log(variantSetData, 'variantSetData');
-        if (variantSetData.length) {
-          getProductDetailBasedOnFilter(variantSetData);
-        } else {
-          getProductDetail();
-        }
-      }
-    }, [variantSet]),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (variantSet.length) {
+  //       let variantSetData = variantSet
+  //         .map((i, inx) => {
+  //           let find = i.options.filter((x) => x.value);
+  //           if (find.length) {
+  //             return {
+  //               variant_id: find[0].variant_id,
+  //               optionId: find[0].id,
+  //             };
+  //           }
+  //         })
+  //         .filter((x) => x != undefined);
+  //       console.log(variantSetData, 'variantSetData');
+  //       if (variantSetData.length) {
+  //         getProductDetailBasedOnFilter(variantSetData);
+  //       } else {
+  //         getProductDetail();
+  //       }
+  //     }
+  //   }, [variantSet]),
+  // );
+
+
+  // console.log("variantSetvariantSetvariantSet",variantSet)
 
   useEffect(() => {
     getProductDetail();
@@ -321,10 +324,10 @@ export default function ProductDetail({ route, navigation }) {
     alert('link not found');
   };
 
+
   const getProductDetail = () => {
     console.log('api hit getProductDetail', state.productId);
-    actions
-      .getProductDetailByProductId(
+    actions.getProductDetailByProductId(
         `/${state.productId}`,
         {},
         {
@@ -337,7 +340,6 @@ export default function ProductDetail({ route, navigation }) {
         console.log('res getProductDetail', res?.data);
 
 
-        setVariantSetNew(res?.data?.products?.variant_set_new)
         updateState({
           offersList: res?.data?.coupon_list,
           relatedProducts: res?.data?.relatedProducts || [],
@@ -394,14 +396,16 @@ export default function ProductDetail({ route, navigation }) {
             return { ...val, options: options }
           })
           console.log("defaultValuedefaultValue", defaultValue)
-          updateState({ variantSet: defaultValue });
+          setVariantSet(res.data.products.variant_set)
         }
       })
       .catch(errorMethod);
   };
 
 
-  console.log("variantSetNewvariantSetNew", variantSetNew)
+  console.log("variant set++",variantSet)
+
+
   //Get Product detail based on varint selection
   const getProductDetailBasedOnFilter = (variantSetData) => {
     let data = {};
@@ -410,31 +414,44 @@ export default function ProductDetail({ route, navigation }) {
 
     console.log('api hit getProductDetailBasedOnFilter', data);
 
-    actions
-      .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
+    actions.getProductDetailByVariants(`/${productDetailData.sku}`, data, {
         code: appData.profile.code,
         currency: currencies.primary_currency.id,
         language: languages.primary_language.id,
       })
       .then((res) => {
         console.log(res.data, 'api hit getProductDetailBasedOnFilter res ');
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          isLoadingC: false,
+        if(!!res?.data){
+          let modifyArry = res.data.availableSets.map((val,i)=>{
+            return {
+              options: val?.option2,
+              product_id: val?.product_id,
+              product_variant_id: val?.product_variant_id,
+              title: val?.variant_detail.title,
+              type: val?.variant_option_id,
+              variant_type_id: val?.variant_type_id
+            }
+          })
+          setVariantSet(modifyArry)
+        }
 
-          productPriceData: {
-            multiplier: res?.data?.multiplier,
-            price: res?.data?.price,
-          },
-          productTotalQuantity: res?.data?.quantity,
-          productSku: res?.data?.sku,
-          productVariantId: res?.data?.id,
-          showErrorMessageTitle: false,
-          selectedVariant: null,
-          btnLoader: false,
-          productDetailNew: res?.data,
-        });
+        // updateState({
+        //   isLoading: false,
+        //   isLoadingB: false,
+        //   isLoadingC: false,
+
+        //   productPriceData: {
+        //     multiplier: res?.data?.multiplier,
+        //     price: res?.data?.price,
+        //   },
+        //   productTotalQuantity: res?.data?.quantity,
+        //   productSku: res?.data?.sku,
+        //   productVariantId: res?.data?.id,
+        //   showErrorMessageTitle: false,
+        //   selectedVariant: null,
+        //   btnLoader: false,
+        //   productDetailNew: res?.data,
+        // });
       })
       .catch(errorMethod);
   };
@@ -597,10 +614,8 @@ export default function ProductDetail({ route, navigation }) {
         return vi;
       }
     });
-    updateState({
-      variantSet: modifyVariants,
-      selectedOption: i,
-    });
+    setVariantSet(modifyVariants)
+    updateState({selectedOption: i});
   };
 
   const onSelect = () => {
@@ -1015,24 +1030,7 @@ export default function ProductDetail({ route, navigation }) {
     );
   };
 
-  const renderVariantSet = ({ item, index }) => {
-    return (
-      <View
-        key={String(index)}
-        style={{
-          flex: 1,
-          marginRight: moderateScale(8),
-        }}>
-        <Text
-          style={{
-            ...styles.variantLable,
-            marginBottom: moderateScale(5),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>{`${item?.title}`}</Text>
-        {item?.options ? variantSetValue(item) : null}
-      </View>
-    );
-  };
+
   //show reviews
 
   const renderReviewImage = ({ item }) => {
@@ -2013,88 +2011,6 @@ export default function ProductDetail({ route, navigation }) {
     )
   }, [variantSet, isDarkMode])
 
-  const myVariant = (item) => {
-    setVariantOptions(item?.option3)
-  }
-
-  console.log("variantSetOptions",variantSetOptions)
-
-  const renderVariantOptions = ({ item }) => {
-    const data = item?.options100
-    if (variantSetNew.title == "Size") {
-      <TouchableOpacity
-      onPress={() => myVariant(item)}
-      disabled={!!data?.is_disabled}
-      style={{
-        ...styles.sizeContainer,
-        backgroundColor: !!item?.value ? themeColors?.primary_color : colors.white,
-        borderColor: !!data?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!data?.is_disabled ? colors.grayOpacity51 : colors.greyA,
-        borderStyle: !!data?.is_disabled ? 'dotted' : 'solid'
-
-      }}>
-      <Text style={{
-        ...commonStyles.mediumFont12,
-        color: !!data?.value ? colors.white : isDarkMode ? colors.white : !!data?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
-      }}>{data?.title}</Text>
-    </TouchableOpacity>
-    }
-    return (
-      <View>
-        <Text>{data?.title}</Text>
-      </View>
-    )
-  }
-
-  const renderOptions = ({ item, index }) => {
-    if (variantSetNew.title == "Size") {
-      return (
-        <TouchableOpacity
-          onPress={() => myVariant(item)}
-          disabled={!!item?.is_disabled}
-          style={{
-            ...styles.sizeContainer,
-            backgroundColor: !!item?.value ? themeColors?.primary_color : colors.white,
-            borderColor: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.greyA,
-            borderStyle: !!item?.is_disabled ? 'dotted' : 'solid'
-
-          }}>
-          <Text style={{
-            ...commonStyles.mediumFont12,
-            color: !!item?.value ? colors.white : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
-          }}>{item.title}</Text>
-        </TouchableOpacity>
-      )
-    }
-    return (
-      <TouchableOpacity
-        // onPress={() => selectSpecificOptions(options, item, index)}
-        onPress={() => myVariant(item)}
-        activeOpacity={0.7}
-        disabled={!!item?.is_disabled}
-        style={{
-          ...styles.colorContainer,
-          borderColor: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.greyA,
-          borderStyle: !!item?.is_disabled ? 'dotted' : 'solid'
-        }}
-      >
-        {!!item?.hexacode ? <View style={{
-          ...styles.colorView,
-          backgroundColor: item?.hexacode,
-        }} /> : null}
-
-        <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
-        <Text style={{
-          ...commonStyles.mediumFont12,
-          color: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.is_disabled ? colors.grayOpacity51 : colors.textGrey,
-          alignSelf: 'center',
-
-
-        }} >{item.title}</Text>
-
-      </TouchableOpacity>
-    )
-  }
-
 
   const renderVarient = useCallback(({ item, index }) => {
     
@@ -2521,19 +2437,7 @@ export default function ProductDetail({ route, navigation }) {
 
               {/* products varient amazon style */}
 
-              {/* <FlatList
-                horizontal
-                data={variantSetNew?.options || []}
-                renderItem={renderOptions}
-              />
-
-              <FlatList
-                horizontal
-                data={variantSetOptions}
-                renderItem={renderVariantOptions}
-              /> */}
-
-
+  
               {variantSet && variantSet.length ?
                 <FlatList
                   data={(!state.isLoading && variantSet) || []}

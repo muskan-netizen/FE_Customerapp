@@ -43,6 +43,7 @@ import {
   GET_SLOTS_FOR_APPOINTMENT,
   CREATE_BID_REQUEST,
   GET_SLOTS_FOR_APPOINTMENT_FROM_DISPATHCER,
+  GET_PRODUCT_DATA_BASED_VARIANTS_2,
 } from '../../config/urls';
 import { apiGet, apiPost, setWalletData } from '../../utils/utils';
 import store from '../store';
@@ -230,7 +231,7 @@ export function getProductDetailByVariants(
   headers = {},
 ) {
   return new Promise((resolve, reject) => {
-    apiPost(GET_PRODUCT_DATA_BASED_VARIANTS + query, data, headers)
+    apiPost(GET_PRODUCT_DATA_BASED_VARIANTS_2 + query, data, headers)
       .then((res) => {
         // dispatch({
         //   type: types.PRODUCT_DETAIL,

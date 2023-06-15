@@ -1,8 +1,8 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
-export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
+// export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
 // export const API_BASE_URL = 'http://192.168.100.214:8001/api/v1'
 // export const API_BASE_URL = 'https://uat-order.royoorders.com/api/v1';
 
@@ -495,6 +495,7 @@ export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl(
 );
 export const GET_DATA_BY_VENDOR_FILTERS = getApiUrl('/vendor/filters');
 export const GET_PRODUCT_DATA_BASED_VARIANTS = getApiUrl('/productByVariant');
+export const GET_PRODUCT_DATA_BASED_VARIANTS_2 = getApiUrl('/v2/productByVariant');
 export const GET_PRODUCT_TAGS = getApiUrl('/getAllProductTags');
 export const GET_BRANDPRODUCTS_DATA_BASED_VARIANTS =
   getApiUrl('/brand/filters');
