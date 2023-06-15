@@ -1712,163 +1712,144 @@ function ChooseVechile({ navigation, route }) {
     return (
 
         <View style={{ ...styles.container }}>
-            <View style={{ flex: 1 }}>
-                {!!paramData?.location.length > 0 && (
-                    <MapView
-                        ref={mapRef}
-                        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
-                        customMapStyle={
-                            mapStyleGrey
+
+            {!!paramData?.location.length > 0 && (
+                <MapView
+                    ref={mapRef}
+                    provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
+                    customMapStyle={
+                        mapStyleGrey
+                    }
+                    style={{ height: height / 1.25 }}
+                    region={region}
+                    initialRegion={region}
+                    tracksViewChanges={false}>
+                    <CustomCallouts data={paramData?.tasks} />
+
+                    {allListedDrivers?.map((coordinate, index) => {
+                        return (
+                            <Marker.Animated
+                                // tracksViewChanges={agent_location == null}
+                                coordinate={{
+                                    latitude: Number(coordinate?.agentlog?.lat),
+                                    longitude: Number(coordinate?.agentlog?.long),
+                                }}>
+                                <Image
+                                    style={{
+                                        zIndex: 99,
+                                        // height:46,
+                                        // width: 32,
+                                        transform: [
+                                            {
+                                                rotate: `${Number(
+                                                    coordinate?.agentlog?.heading_angle
+                                                        ? coordinate?.agentlog?.heading_angle
+                                                        : 0,
+                                                )}deg`,
+                                            },
+                                        ],
+                                    }}
+                                    source={renderDriverTypeMarkes(coordinate)}
+                                />
+                            </Marker.Animated>
+                        );
+                    })}
+
+                    <MapViewDirections
+                        origin={paramData?.location[0]}
+                        waypoints={
+                            paramData?.location?.length > 2
+                                ? paramData?.location.slice(1, -1)
+                                : []
                         }
-                        style={{ height: height / 1.25 }}
-                        region={region}
-                        initialRegion={region}
-                        tracksViewChanges={false}>
-                        <CustomCallouts data={paramData?.tasks} />
+                        destination={paramData?.location[paramData?.location.length - 1]}
+                        apikey={profile?.preferences?.map_key}
+                        strokeWidth={4}
+                        strokeColor={colors.black}
+                        optimizeWaypoints={true}
+                        onStart={(params) => {
+                            // console.log(Started routing between "${params.origin}" and "${params.destination}");
+                        }}
+                        precision={'high'}
+                        timePrecision={'now'}
+                        mode={'DRIVING'}
+                        // maxZoomLevel={20}
+                        onReady={(result) => {
+                            console.log(result, 'result>>>>');
+                            console.log(`Distance: ${result.distance} km`);
+                            console.log(`Duration: ${result.duration} min.`);
+                            updateState({
+                                totalDistance: distance_unit_for_time
+                                    ? distance_unit_for_time === 'mile'
+                                        ? (result.distance * 0.621371).toFixed(2)
+                                        : result.distance.toFixed(2)
+                                    : result.distance.toFixed(2),
+                                totalDuration: result.duration.toFixed(2),
+                            });
+                        }}
+                        onError={(errorMessage) => {
+                            // console.log('GOT AN ERROR');
+                        }}
+                    />
+                </MapView>
+            )}
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
+                snapPoints={[height / 1.6, height / 1.4]}
+                // activeOffsetY={[-1, 1]}
+                failOffsetX={[-5, 5]}
+                animateOnMount={true}
+                handleComponent={carModalHeader}
+                onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
 
-                        {allListedDrivers?.map((coordinate, index) => {
-                            return (
-                                <Marker.Animated
-                                    // tracksViewChanges={agent_location == null}
-                                    coordinate={{
-                                        latitude: Number(coordinate?.agentlog?.lat),
-                                        longitude: Number(coordinate?.agentlog?.long),
-                                    }}>
-                                    <Image
-                                        style={{
-                                            zIndex: 99,
-                                            // height:46,
-                                            // width: 32,
-                                            transform: [
-                                                {
-                                                    rotate: `${Number(
-                                                        coordinate?.agentlog?.heading_angle
-                                                            ? coordinate?.agentlog?.heading_angle
-                                                            : 0,
-                                                    )}deg`,
-                                                },
-                                            ],
-                                        }}
-                                        source={renderDriverTypeMarkes(coordinate)}
-                                    />
-                                </Marker.Animated>
-                            );
-                        })}
+                {!!profile?.preferences?.is_particular_driver && cabBookingType === "Booking" && !showPaymentModal &&
+                    <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
+                        <BorderTextInputWithLable
+                            marginBottom={8}
 
-                        <MapViewDirections
-                            origin={paramData?.location[0]}
-                            waypoints={
-                                paramData?.location?.length > 2
-                                    ? paramData?.location.slice(1, -1)
-                                    : []
-                            }
-                            destination={paramData?.location[paramData?.location.length - 1]}
-                            apikey={profile?.preferences?.map_key}
-                            strokeWidth={4}
-                            strokeColor={colors.black}
-                            optimizeWaypoints={true}
-                            onStart={(params) => {
-                                // console.log(Started routing between "${params.origin}" and "${params.destination}");
+                            value={uID}
+                            labelStyle={{
+                                fontSize: textScale(12),
+                                fontFamily: fontFamily?.regular
                             }}
-                            precision={'high'}
-                            timePrecision={'now'}
-                            mode={'DRIVING'}
-                            // maxZoomLevel={20}
-                            onReady={(result) => {
-                                console.log(result, 'result>>>>');
-                                console.log(`Distance: ${result.distance} km`);
-                                console.log(`Duration: ${result.duration} min.`);
-                                updateState({
-                                    totalDistance: distance_unit_for_time
-                                        ? distance_unit_for_time === 'mile'
-                                            ? (result.distance * 0.621371).toFixed(2)
-                                            : result.distance.toFixed(2)
-                                        : result.distance.toFixed(2),
-                                    totalDuration: result.duration.toFixed(2),
-                                });
+                            label={strings.REQUEST_FOR_PARTICULAR_DRIVER}
+
+                            placeholder={strings.ENTER_DRIVER_ID}
+                            onChangeText={txt => updateState({ uID: txt })}
+                            textInputStyle={{
+                                fontSize: textScale(12)
                             }}
-                            onError={(errorMessage) => {
-                                // console.log('GOT AN ERROR');
+                            containerStyle={{
+                                borderRadius: moderateScale(8)
                             }}
                         />
-                    </MapView>
-                )}
 
-                <TouchableOpacity
+                    </View>}
+                <BottomSheetScrollView
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
                     style={{
-                        position: 'absolute',
-                        top: 60,
-                        right: 20,
-                    }}
-                    onPress={onCenter}>
-                    <Image
+                        marginBottom: moderateScaleVertical(10),
+                        backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.background
+                            : colors.white,
+                    }}>
+                    <View
                         style={{
-                            width: moderateScale(34),
-                            height: moderateScale(34),
-                            borderRadius: moderateScale(34 / 2),
-                        }}
-                        source={imagePath.mapNavigation}
-                    />
-                </TouchableOpacity>
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
-                    snapPoints={[height / 1.8, height / 1.6]}
-                    // activeOffsetY={[-1, 1]}
-                    failOffsetX={[-5, 5]}
-                    animateOnMount={true}
-                    handleComponent={carModalHeader}
-                    onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-                    {!!profile?.preferences?.is_particular_driver &&
-                        <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
-                            <BorderTextInputWithLable
-                                value={uID}
-                                labelStyle={{
-                                    fontSize: textScale(12),
-                                    fontFamily: fontFamily?.regular
-                                }}
-                                label={"Request for particular Driver ?"}
-
-                                placeholder={"Enter driver ID"}
-                                onChangeText={txt => updateState({ uID: txt })}
-                                textInputStyle={{
-                                    fontSize: textScale(12)
-                                }}
-                                containerStyle={{
-                                    borderRadius: moderateScale(8)
-                                }}
-                            />
-
-                        </View>}
-                    <BottomSheetScrollView
-                        keyboardShouldPersistTaps="handled"
-                        showsVerticalScrollIndicator={false}
-                        style={{
-                            marginBottom: moderateScaleVertical(10),
+                            //  height:height/1.7,
+                            flex: 1,
                             backgroundColor: isDarkMode
                                 ? MyDarkTheme.colors.background
                                 : colors.white,
                         }}>
-                        <View
-                            style={{
-                                //  height:height/1.7,
-                                flex: 1,
-                                backgroundColor: isDarkMode
-                                    ? MyDarkTheme.colors.background
-                                    : colors.white,
-                            }}>
-                            {!!showCarModal && _selectCarModalView()}
-                            {!!showPaymentModal && _selectPaymentView()}
-                        </View>
-                    </BottomSheetScrollView>
-                </BottomSheet>
-
-
-
-            </View>
+                        {!!showCarModal && _selectCarModalView()}
+                        {!!showPaymentModal && _selectPaymentView()}
+                    </View>
+                </BottomSheetScrollView>
+            </BottomSheet>
 
             {/* BottomView */}
-
             <View style={styles.topView}>
 
                 <TouchableOpacity
@@ -1890,6 +1871,18 @@ function ChooseVechile({ navigation, route }) {
                         style={{
                             tintColor: colors.black,
                         }}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+
+                    onPress={onCenter}>
+                    <Image
+                        style={{
+                            width: moderateScale(34),
+                            height: moderateScale(34),
+                            borderRadius: moderateScale(34 / 2),
+                        }}
+                        source={imagePath.mapNavigation}
                     />
                 </TouchableOpacity>
 
