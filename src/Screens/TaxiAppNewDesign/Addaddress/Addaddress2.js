@@ -1065,7 +1065,7 @@ export default function Addaddress({ navigation, route }) {
           </View>
 
 
-          {is_cab_pooling || is_bid_ride_enable ? (
+        {!!is_particular_driver ? (
             <View
               style={{
 
@@ -1075,7 +1075,7 @@ export default function Addaddress({ navigation, route }) {
 
               }}
             >
-              {!!(is_cab_pooling || is_bid_ride_enable) &&
+          {/*       {!!(is_cab_pooling || is_bid_ride_enable) &&
                 <GradientButton
                   colorsArray={
                     isBookingType == 0
@@ -1154,7 +1154,7 @@ export default function Addaddress({ navigation, route }) {
                   }}
                 />
               }
-              {!!(is_particular_driver) &&
+            */}
                 <GradientButton
                   colorsArray={
                     isBookingType == 3
@@ -1181,9 +1181,9 @@ export default function Addaddress({ navigation, route }) {
 
                   }}
                 />
-              }
+              
             </View>
-          ) : null}
+          ) : null} 
 
           <View style={{ flex: 1 }}>
             <View>

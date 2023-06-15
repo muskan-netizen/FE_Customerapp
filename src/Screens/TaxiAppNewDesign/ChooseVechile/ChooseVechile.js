@@ -264,11 +264,6 @@ function ChooseVechile({ navigation, route }) {
     }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
 
 
-    useEffect(() => {
-        //if pickupTimeType is now then we hit direct api withhout schedule date 
-        //otherwise we pass the shcedule date onDateSet function and hit api accordingly
-        !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
-    }, [updateSeatNO]);
 
     useEffect(() => {
         if (!isVisibleMtnGateway && mtnGatewayResponse) {
@@ -307,7 +302,8 @@ function ChooseVechile({ navigation, route }) {
 
 
     //Get list of all orders api
-    const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null) => {
+    const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null, _isCabPooling=false, seatNo=1, _isBidRide=false) => {
+
         if (showInitalModal) {
             updateState({ showCarModal: true });
         }
@@ -320,8 +316,8 @@ function ChooseVechile({ navigation, route }) {
                 ? scheduleDateTime?.selectedDateAndTime
                 : `${pickedUpDate ? pickedUpDate : ''} ${pickedUpTime ? pickedUpTime : ''
                 }`,
-            is_cab_pooling: !!cabBookingType == 'Pooling' ? 1 : 0,
-            no_seats_for_pooling: updateSeatNO,
+            is_cab_pooling: !!_isCabPooling ? 1 : 0,
+            no_seats_for_pooling: !!_isCabPooling ?  seatNo  : 0,
         }
 
         const apiHeader = {
@@ -330,12 +326,12 @@ function ChooseVechile({ navigation, route }) {
             language: languages?.primary_language?.id,
         }
 
-        console.log(apiData, "apiDataapiDataapiData");
+        console.log(apiData,"apiData>>>>>")
 
         actions
             .getAllCarAndPrices(apiQuery, apiData, apiHeader)
             .then((res) => {
-                const bidModalStatus = cabBookingType == 'bidRide' ? true : false
+           
                 updateState({
                     loyalityAmount: res?.data?.loyalty_amount_saved
                         ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -347,22 +343,28 @@ function ChooseVechile({ navigation, route }) {
                             ? res?.data?.products?.data
                             : [...availableCarList, ...res?.data?.products?.data],
                     selectedCarOption: res?.data?.products?.data[0],
-                    showBidPriceModal: (res?.data?.products?.data[0] && bidModalStatus) ? true : false,
+                    showBidPriceModal: (res?.data?.products?.data[0] && _isBidRide) ? true : false,
                     isLoading: false,
                     isRefreshing: false,
                 });
-                setShowFinalUpdatedSeatNo(updateSeatNO);
+                setShowFinalUpdatedSeatNo(seatNo);
                 setBidRidePrice(Number(res?.data?.products?.data[0]?.tags_price))
             })
             .catch(errorMethod);
     };
 
     const _onUpdateSeatNo = (type) => {
+        let seatNo = updateSeatNO
         if (type == 'increase') {
-            setUpdateSeatNo(updateSeatNO + 1);
+            seatNo=seatNo+1
+            setUpdateSeatNo(seatNo);
+            
         } else {
-            setUpdateSeatNo(updateSeatNO - 1);
+            seatNo=seatNo-1
+            setUpdateSeatNo(seatNo);
         }
+
+        !!pickUpTimeType && pickUpTimeType == 'now' ?   _getAllCarAndPrices(true, null, true, seatNo) : onDateSet(pickUpTimeType)
     };
 
     let redirectTimeout = useRef();
@@ -583,7 +585,6 @@ function ChooseVechile({ navigation, route }) {
 
                 break;
             default:
-                console.log('i mah shfjgdghdjgs');
                 navigation.navigate(
                     navigationStrings.PICKUPTAXIORDERDETAILS,
                     extraData,
@@ -813,6 +814,9 @@ function ChooseVechile({ navigation, route }) {
             data['coupon_id'] = couponInfo?.id;
         }
         data['order_time_zone'] = RNLocalize.getTimeZone();
+        data["is_cab_pooling"] =cabBookingType == 'Pooling' ? 1 : 0,
+        data["no_seats_for_pooling"]= updateSeatNO,
+       
         data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
         (data[
             'friendName'
@@ -1077,19 +1081,28 @@ function ChooseVechile({ navigation, route }) {
                         }}
                     >
                         {!!(is_cab_pooling || is_bid_ride_enable) &&
-                            <TouchableOpacity onPress={() => setCabBookingType('Booking')} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
+                            <TouchableOpacity onPress={() => {
+                                   _getAllCarAndPrices()
+                                setCabBookingType('Booking')}} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_booking} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_cab_pooling &&
-                            <TouchableOpacity onPress={() => setCabBookingType('Pooling')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
+                            <TouchableOpacity onPress={() => {
+                                setCabBookingType('Pooling')
+                                _getAllCarAndPrices(true, null, true)
+                              
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_bid_ride_enable &&
-                            <TouchableOpacity onPress={() => setCabBookingType('bidRide')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
+                            <TouchableOpacity onPress={() => {
+                                setCabBookingType('bidRide')
+                                _getAllCarAndPrices(true, null, false, 1, true)
+                                }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_bid_ride} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.black }}>  {strings.BID_RIDE}</Text>
                             </TouchableOpacity>
@@ -1417,13 +1430,6 @@ function ChooseVechile({ navigation, route }) {
         updateState({
             isScheduleModalVisible: false,
         });
-    };
-
-    const _modalCloseModal = () => {
-        updateState({
-            isScheduleModalVisible: false,
-        });
-        _getAllCarAndPrices(false);
     };
 
     const _openDateTimeModal = () => {
