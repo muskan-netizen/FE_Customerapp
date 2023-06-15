@@ -65,6 +65,7 @@ import axios from 'axios';
 import useInterval from '../../../utils/useInterval';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import BorderTextInputWithLable from '../../../Components/BorderTextInputWithLable';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -161,7 +162,6 @@ function ChooseVechile({ navigation, route }) {
         disableButton: false,
         showBidPriceModal: false,
         uID: '',
-        isBookingType: paramData?.rideType,
 
     });
     const {
@@ -202,8 +202,6 @@ function ChooseVechile({ navigation, route }) {
         disableButton,
         showBidPriceModal,
         uID,
-        isBookingType
-
     } = state;
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -290,6 +288,8 @@ function ChooseVechile({ navigation, route }) {
         _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
     }, [date, selectedCarOption])
 
+    console.log(scheduleDateTime, "scheduleDateTime>>>>>>")
+
     const clearScheduleDate = useCallback(() => {
         actions.saveSchduleTime('now');
         updateState({
@@ -302,7 +302,7 @@ function ChooseVechile({ navigation, route }) {
 
 
     //Get list of all orders api
-    const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null, _isCabPooling=false, seatNo=1, _isBidRide=false) => {
+    const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null, _isCabPooling = false, seatNo = 1, _isBidRide = false) => {
 
         if (showInitalModal) {
             updateState({ showCarModal: true });
@@ -317,7 +317,7 @@ function ChooseVechile({ navigation, route }) {
                 : `${pickedUpDate ? pickedUpDate : ''} ${pickedUpTime ? pickedUpTime : ''
                 }`,
             is_cab_pooling: !!_isCabPooling ? 1 : 0,
-            no_seats_for_pooling: !!_isCabPooling ?  seatNo  : 0,
+            no_seats_for_pooling: !!_isCabPooling ? seatNo : 0,
         }
 
         const apiHeader = {
@@ -326,12 +326,12 @@ function ChooseVechile({ navigation, route }) {
             language: languages?.primary_language?.id,
         }
 
-        console.log(apiData,"apiData>>>>>")
+        console.log(apiData, "<===apiData")
 
         actions
             .getAllCarAndPrices(apiQuery, apiData, apiHeader)
             .then((res) => {
-           
+
                 updateState({
                     loyalityAmount: res?.data?.loyalty_amount_saved
                         ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -356,15 +356,15 @@ function ChooseVechile({ navigation, route }) {
     const _onUpdateSeatNo = (type) => {
         let seatNo = updateSeatNO
         if (type == 'increase') {
-            seatNo=seatNo+1
+            seatNo = seatNo + 1
             setUpdateSeatNo(seatNo);
-            
+
         } else {
-            seatNo=seatNo-1
+            seatNo = seatNo - 1
             setUpdateSeatNo(seatNo);
         }
 
-        !!pickUpTimeType && pickUpTimeType == 'now' ?   _getAllCarAndPrices(true, null, true, seatNo) : onDateSet(pickUpTimeType)
+        !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices(true, null, true, seatNo) : onDateSet(pickUpTimeType)
     };
 
     let redirectTimeout = useRef();
@@ -727,6 +727,7 @@ function ChooseVechile({ navigation, route }) {
             indicatorLoader: true,
         });
 
+        console.log(data, "<===sending data")
         actions
             .placeDelievryOrder(data, {
                 code: appData?.profile?.code,
@@ -734,7 +735,7 @@ function ChooseVechile({ navigation, route }) {
                 language: languages?.primary_language?.id,
             })
             .then((res) => {
-                console.log(res, 'resresresresplaceDelievryOrder');
+                console.log(res, '<===placeDelievryOrder');
                 if (res && res?.status == 200) {
                     let extraData = {
                         orderId: res?.data?.id,
@@ -768,9 +769,6 @@ function ChooseVechile({ navigation, route }) {
             .catch(errorMethod);
     };
     const _confirmAndPay = () => {
-        console.log(selectedPayment, 'selectedPayment.id');
-
-
         const orderFinalPrice = paramData?.bidData?.bid_price ? Number(paramData?.bidData?.bid_price) : selectedCarOption?.total_tags_price ? selectedCarOption?.total_tags_price : selectedCarOption?.tags_price;
 
         let data = {};
@@ -814,10 +812,10 @@ function ChooseVechile({ navigation, route }) {
             data['coupon_id'] = couponInfo?.id;
         }
         data['order_time_zone'] = RNLocalize.getTimeZone();
-        data["is_cab_pooling"] =cabBookingType == 'Pooling' ? 1 : 0,
-        data["no_seats_for_pooling"]= updateSeatNO,
-       
-        data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
+        data["is_cab_pooling"] = cabBookingType == 'Pooling' ? 1 : 0,
+            data["no_seats_for_pooling"] = updateSeatNO,
+
+            data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
         (data[
             'friendName'
         ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
@@ -1082,8 +1080,9 @@ function ChooseVechile({ navigation, route }) {
                     >
                         {!!(is_cab_pooling || is_bid_ride_enable) &&
                             <TouchableOpacity onPress={() => {
-                                   _getAllCarAndPrices()
-                                setCabBookingType('Booking')}} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
+                                _getAllCarAndPrices()
+                                setCabBookingType('Booking')
+                            }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_booking} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
@@ -1092,7 +1091,7 @@ function ChooseVechile({ navigation, route }) {
                             <TouchableOpacity onPress={() => {
                                 setCabBookingType('Pooling')
                                 _getAllCarAndPrices(true, null, true)
-                              
+
                             }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
@@ -1102,7 +1101,7 @@ function ChooseVechile({ navigation, route }) {
                             <TouchableOpacity onPress={() => {
                                 setCabBookingType('bidRide')
                                 _getAllCarAndPrices(true, null, false, 1, true)
-                                }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_bid_ride} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.black }}>  {strings.BID_RIDE}</Text>
                             </TouchableOpacity>
@@ -1670,7 +1669,7 @@ function ChooseVechile({ navigation, route }) {
                                     ? `${scheduleDateTime?.selectedDateAndTime}`
                                     : slectedDate || selectedTime
                                         ? `${slectedDate} ${selectedTime}`
-                                        : 'Schedule a ride'
+                                        : strings.SCHEDULE_A_RIDE
                                     }`}
                                 btnStyle={styles.scheduleBtnStyle}
                             />
@@ -1820,21 +1819,27 @@ function ChooseVechile({ navigation, route }) {
                     animateOnMount={true}
                     handleComponent={carModalHeader}
                     onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-                         {isBookingType == "RequestForDriver" &&
-                            <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
-                                <TextInput
-                                    onChangeText={txt => updateState({ uID: txt })}
-                                    placeholder='Enter Driver id'
-                                    value={uID}
-                                    style={{
-                                        borderWidth: 1,
-                                        height: 48,
-                                        borderRadius: moderateScale(8),
-                                        borderColor: colors.greyColor3,
-                                        paddingLeft: moderateScale(10)
-                                    }}
-                                />
-                            </View>}
+                    {!!profile?.preferences?.is_particular_driver &&
+                        <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
+                            <BorderTextInputWithLable
+                                value={uID}
+                                labelStyle={{
+                                    fontSize: textScale(12),
+                                    fontFamily: fontFamily?.regular
+                                }}
+                                label={"Request for particular Driver ?"}
+
+                                placeholder={"Enter driver ID"}
+                                onChangeText={txt => updateState({ uID: txt })}
+                                textInputStyle={{
+                                    fontSize: textScale(12)
+                                }}
+                                containerStyle={{
+                                    borderRadius: moderateScale(8)
+                                }}
+                            />
+
+                        </View>}
                     <BottomSheetScrollView
                         keyboardShouldPersistTaps="handled"
                         showsVerticalScrollIndicator={false}
