@@ -6,6 +6,7 @@ import React, {
   Fragment,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -24,6 +25,7 @@ import {
   Animated,
   Linking,
   Alert,
+  RefreshControl,
 } from "react-native";
 
 import Communications from "react-native-communications";
@@ -89,6 +91,9 @@ import ButtonWithLoader from "../../Components/ButtonWithLoader";
 const { height, width } = Dimensions.get("window");
 import { enableFreeze } from "react-native-screens";
 import ScreenLoader from "./ScreenLoader";
+import BrowseMenuButton from "../../Components/BrowseMenuButton";
+import HorizontalLine from "../../Components/HorizontalLine";
+
 enableFreeze(true);
 
 
@@ -101,6 +106,8 @@ export default function OrderDetail({ navigation, route }) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const [lalaMoveUrl, setLalaMoveUrl] = useState(null);
   const [modalType, setModalType] = useState("");
+  const [isRefreshing, setRefreshing] = useState(false)
+
   const [laundrySelectedPickupDate, setLaundrySelectedPickupDate] = useState(
     null
   );
@@ -124,7 +131,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const [orderDetailLoader, setOrderDetailLoader] = useState(true);
 
-  
+  const [arrowUp, setArrowDown] = useState(false)
 
   const [state, setState] = useState({
     isLoading: true,
@@ -247,24 +254,28 @@ export default function OrderDetail({ navigation, route }) {
   };
   const isFocused = useIsFocused();
 
-  useInterval(
-    () => {
-      if (paramData?.fromActive) {
-        getOrders();
-      }
-    },
-    isFocused ? 5000 : null
-  );
+  // useInterval(
+  //   () => {
+  //     if (paramData?.fromActive) {
+  //       getOrders();
+  //     }
+  //   },
+  //   isFocused ? 5000 : null
+  // );
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (paramData?.fromActive) {
-        return;
-      } else {
-        getOrders();
-      }
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (paramData?.fromActive) {
+  //       return;
+  //     } else {
+  //       getOrders();
+  //     }
+  //   }, [])
+  // );
+
+  useLayoutEffect(() => {
+    getOrders();
+  }, [])
 
   const getOrders = () => {
     if (!!userData?.auth_token) {
@@ -330,17 +341,15 @@ export default function OrderDetail({ navigation, route }) {
     if (!!new_dispatch_traking_url) {
       data["new_dispatch_traking_url"] = new_dispatch_traking_url;
     }
+    // console.log("sending api data", data);
 
-    console.log("sending api data", data);
-
-    actions
-      .getOrderDetail(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        timezone: RNLocalize.getTimeZone(),
-        // systemuser: DeviceInfo.getUniqueId(),
-      })
+    actions.getOrderDetail(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      timezone: RNLocalize.getTimeZone(),
+      // systemuser: DeviceInfo.getUniqueId(),
+    })
       .then((res) => {
         setOrderDetailLoader(false);
         console.log(res.data, "order detail res===>>>>");
@@ -448,6 +457,7 @@ export default function OrderDetail({ navigation, route }) {
             orderStatus: res?.data?.vendors[0]?.order_status,
           });
         }
+        setRefreshing(false)
       })
       .catch(errorMethod);
   };
@@ -455,6 +465,7 @@ export default function OrderDetail({ navigation, route }) {
   const errorMethod = (error) => {
     console.log(error, "Error>>>>>>");
     updateState({ isLoading: false, isLoadingA: false, isLoadingC: false });
+    setRefreshing(false)
     // showError(error?.message || error?.error);
   };
 
@@ -735,7 +746,6 @@ export default function OrderDetail({ navigation, route }) {
                             justifyContent: "center",
                           }}
                         >
-                
                           {!!i?.product_addons.length > 0 && (
                             <View>
                               <Text
@@ -1149,13 +1159,10 @@ export default function OrderDetail({ navigation, route }) {
             ? MyDarkTheme.colors.background
             : colors.white,
           // marginVertical: moderateScale(10),
-
-
-
         }}
       >
         {/* show ETA Time */}
-        <View style={{ paddingHorizontal: moderateScale(10) }}>
+        <View style={{ paddingHorizontal: moderateScale(0) }}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
@@ -1164,9 +1171,12 @@ export default function OrderDetail({ navigation, route }) {
               type={strings.VENDER}
               containerStyle={{
                 backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
+                  ? colors.whiteOpacity22
                   : colors.white,
-                flex: 1,
+                borderBottomRightRadius: 0,
+                borderBottomLeftRadius: 0,
+                paddingHorizontal: moderateScale(8),
+                flex: 1
               }}
               textStyle={{
                 color: isDarkMode
@@ -1174,48 +1184,64 @@ export default function OrderDetail({ navigation, route }) {
                   : colors.blackOpacity86,
               }}
             />
-            {!userData?.is_superadmin ? (
-              <View>
-                {!!appData?.profile?.socket_url ? (
-                  <TouchableOpacity
-                    onPress={() => createRoom(item, "vendor_to_user")}
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginTop: 8,
-                    }}
-                  >
-                    <Text style={styles.startChatText}>{strings.VENDOR}</Text>
-                    <Image
-                      resizeMode="contain"
-                      style={styles.agentUserIcon}
-                      source={imagePath.icVendorChat}
-                    />
-                  </TouchableOpacity>
-                ) : null}
-
-                {!!appData?.profile?.socket_url &&
-                  !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
-                  <TouchableOpacity
-                    onPress={() => createRoom(item, "agent_to_user")}
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginTop: 8,
-                    }}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={styles.startChatText}>{strings.DRIVER}</Text>
-                    <Image
-                      resizeMode="contain"
-                      style={styles.agentUserIcon}
-                      source={imagePath.icUserChat}
-                    />
-                  </TouchableOpacity>
-                ) : null}
-              </View>
-            ) : null}
           </View>
+
+
+          {!userData?.is_superadmin ? (
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: moderateScaleVertical(8),
+              paddingHorizontal: moderateScale(8),
+            }}
+            >
+              {!!appData?.profile?.socket_url ? (
+                <TouchableOpacity
+                  onPress={() => createRoom(item, "vendor_to_user")}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 8,
+                    marginRight: moderateScale(16)
+                  }}
+                >
+                  <Text style={{
+                    ...styles.startChatText,
+                    color: isDarkMode ? colors.white : colors.black
+                  }}>{strings.VENDOR}</Text>
+                  <Image
+                    resizeMode="contain"
+                    style={{ ...styles.agentUserIcon, tintColor: themeColors?.primary_color }}
+                    source={imagePath.ecomChat}
+                  />
+                </TouchableOpacity>
+              ) : null}
+
+              {!!appData?.profile?.socket_url &&
+                !!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
+                <TouchableOpacity
+                  onPress={() => createRoom(item, "agent_to_user")}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 8,
+                  }}
+                  activeOpacity={0.7}
+                >
+                  <Text style={{
+                    ...styles.startChatText,
+                    color: isDarkMode ? colors.white : colors.black
+                  }}>{strings.DRIVER}</Text>
+                  <Image
+                    resizeMode="contain"
+                    style={{ ...styles.agentUserIcon, tintColor: themeColors?.primary_color }}
+                    source={imagePath.ecomChat}
+                  />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          ) : null}
+          {!userData?.is_superadmin && appData?.profile?.socket_url ? <HorizontalLine /> : null}
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1224,8 +1250,8 @@ export default function OrderDetail({ navigation, route }) {
                   <View
                     style={{
                       marginBottom: moderateScaleVertical(6),
-     
-                      // flexWrap:'wrap'
+                      paddingHorizontal: moderateScale(8),
+                      marginTop: moderateScaleVertical(16)
                     }}
                     key={inx}
                   >
@@ -1235,7 +1261,7 @@ export default function OrderDetail({ navigation, route }) {
                         backgroundColor: isDarkMode
                           ? MyDarkTheme.colors.background
                           : "#F8F8F8",
-                        flexDirection: "column",                    
+                        flexDirection: "column",
                       }}
                     >
                       <View style={{ flexDirection: "row" }}>
@@ -1271,14 +1297,12 @@ export default function OrderDetail({ navigation, route }) {
                               <View
                                 style={{
                                   justifyContent: 'center',
-                        
                                 }}>
                                 <Text
                                   style={{
                                     flexDirection: 'row',
                                     // alignItems: 'center',
                                     // backgroundColor: 'yellow',
-                                    width:width/1.5,
                                     justifyContent: 'space-between',
                                     color: isDarkMode
                                       ? MyDarkTheme.colors.text
@@ -2545,6 +2569,19 @@ export default function OrderDetail({ navigation, route }) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {!!(cartData?.total_waiting_price > 0) && (
+            <LeftRightText
+              leftText={`${strings.WAITING_TIME} (${cartData?.total_waiting_time} ${strings.MIN})`}
+              rightText={tokenConverterPlusCurrencyNumberFormater(
+                Number(cartData?.total_waiting_price),
+                digit_after_decimal,
+                additional_preferences,
+                currencies?.primary_currency?.symbol
+              )}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           {!!cartData?.wallet_amount_used &&
             cartData?.wallet_amount_used > 0 && (
               <LeftRightText
@@ -2955,9 +2992,41 @@ export default function OrderDetail({ navigation, route }) {
               }}
             />
           )}
+
+        {/* takeaway notification button */}
+        {!!(preferences.is_enable_curb_side &&
+          orderStatus?.current_status?.title == "Out For Delivery" &&
+          dineInType == 'takeaway') &&
+          <BrowseMenuButton
+            fontFamily={fontFamily}
+            onMenuTap={sendNotificationToVendor}
+            btnText={strings.NOTIFY_VENDOR}
+            btnImage={imagePath.ic_notification1}
+            btnImageStyle={{ tintColor: colors.white }}
+          // containerStyle={{ marginBottom: moderateScale(-58) }}
+          />
+        }
       </View>
     );
   };
+
+  // send notification to vendor by customer ************************************>
+  const sendNotificationToVendor = () => {
+    const apiData = {
+      order_id: cartData?.id,
+      vendor_id: cartItems[0]?.vendor_id,
+    }
+    const apiHeader = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }
+    actions.sendNotification(apiData, apiHeader).then((res) => {
+      showSuccess(res?.message);
+    }).catch((error) => {
+      showError(error?.error || error?.message || "");
+    })
+  }
 
   const selectedTip = (tip) => {
     if (selectedTipvalue == "custom") {
@@ -2989,12 +3058,12 @@ export default function OrderDetail({ navigation, route }) {
     mapRef.current.fitToCoordinates(
       [
         {
-          latitude: Number(driverStatus.tasks[0]?.latitude),
-          longitude: Number(driverStatus.tasks[0]?.longitude),
+          latitude: Number(driverStatus?.tasks[driverStatus?.tasks.length - 2]?.latitude),
+          longitude: Number(driverStatus?.tasks[driverStatus?.tasks.length - 2]?.longitude),
         },
         {
-          latitude: Number(driverStatus.tasks[1]?.latitude),
-          longitude: Number(driverStatus.tasks[1]?.longitude),
+          latitude: Number(driverStatus?.tasks[driverStatus?.tasks.length - 1]?.latitude),
+          longitude: Number(driverStatus?.tasks[driverStatus?.tasks.length - 1]?.longitude),
         },
         {
           latitude: Number(driverStatus?.agent_location?.lat),
@@ -3473,6 +3542,11 @@ export default function OrderDetail({ navigation, route }) {
 
   // give Driver Rating
 
+
+
+
+  console.log("driverStatus?.tasks", driverStatus?.tasks)
+
   const onStarRatingForDriverPress = (rating) => {
     const data = {
       order_id: cartData?.driver_rating?.order_id
@@ -3499,25 +3573,65 @@ export default function OrderDetail({ navigation, route }) {
       .catch(errorMethod);
   };
 
+
+  {/* 
+  //1 assigned - pickup
+  // 1 pending - drop
+  //2 on the way
+  // 3 ready for pickup - pickup
+  // 3 ready for dipatrture - drop
+  
+*/}
+
+  const orderStatusTitle = (val) => {
+    console.log("valvalvalvalval", val)
+    let title = ''
+    //  val?.task_status == '4' ? strings.DELIVERED : ''
+    if (val?.task_type_id == 1 && val?.task_status == '1') {
+      return 'Assigned'
+    }
+    if (val?.task_type_id == 2 && val?.task_status == '1') {
+      return 'Pending'
+    }
+    if (val?.task_status == '2') {
+      return 'On the way'
+    }
+    if (val?.task_type_id == 1 && val?.task_status == '3') {
+      return 'Ready for pickup'
+    }
+    if (val?.task_type_id == 2 && val?.task_status == '3') {
+      return 'Ready for departure'
+    }
+    
+    if (val?.task_status == '4') {
+      return 'Delivered'
+    }
+    return ''
+  }
+
   const getHeader = () => {
-    let getUserImage = getImageUrl(
-      cartData?.user_image?.image_fit,
-      cartData?.user_image?.image_path,
-      "500/500"
-    );
-
-    console.log(
-      cartData,
-      "cartData?.driver_rating"
-    );
-
+    let showMapDriver = driverStatus?.tasks?.length == 2 ? true : driverStatus?.tasks[driverStatus?.tasks.length - 3]?.task_status == '4' ? true : false
+    // let showMapDriver = false
     return (
       <View>
-        {!!(driverStatus?.order && driverStatus?.agent_location?.lat) ? (
+        {!!(driverStatus?.order && driverStatus?.agent_location?.lat) && showMapDriver ? (
           <UserDetail
             data={driverStatus}
             type={strings.DRIVER}
-            containerStyle={{ paddingHorizontal: moderateScale(8) }}
+            containerStyle={{
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity22
+                : colors.white,
+              borderBottomRightRadius: 0,
+              borderBottomLeftRadius: 0,
+              paddingHorizontal: moderateScale(8),
+              flex: 1
+            }}
+            textStyle={{
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackOpacity86,
+            }}
             isDriver={cartData?.order_data?.order?.driver_id}
             _onRateDriver={() =>
               _onRateOrderOrDriver({
@@ -3536,22 +3650,24 @@ export default function OrderDetail({ navigation, route }) {
           />
         ) : null}
 
+
+
         {!!driverStatus &&
-          !!driverStatus?.agent_location?.lat &&
-          !lalaMoveUrl ? (
+          !!driverStatus?.agent_location?.lat && orderStatus?.current_status?.title != "Delivered" &&
+          !lalaMoveUrl && showMapDriver ? (
           <View style={{ width: "100%", height: height / 2.2 }}>
             <MapView
               ref={mapRef}
               style={StyleSheet.absoluteFillObject}
               initialRegion={{
-                latitude: Number(driverStatus.tasks[0]?.latitude),
-                longitude: Number(driverStatus.tasks[0]?.longitude),
+                latitude: Number(driverStatus?.tasks[driverStatus?.tasks?.length - 2]?.latitude),
+                longitude: Number(driverStatus?.tasks[driverStatus?.tasks?.length - 2]?.longitude),
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.032,
               }}
               rotateEnabled={true}
             >
-              {!!driverStatus.tasks[1]?.latitude && (!!driverStatus?.agent_location?.lat) ?
+              {!!driverStatus?.tasks[1]?.latitude && (!!driverStatus?.agent_location?.lat) ?
                 <MapViewDirections
                   resetOnChange={false}
 
@@ -3564,11 +3680,11 @@ export default function OrderDetail({ navigation, route }) {
                           driverStatus?.agent_location?.lng
                         ),
                       }
-                      : driverStatus.tasks[0]
+                      : driverStatus?.tasks[driverStatus?.tasks?.length - 2]
                   }
                   destination={{
-                    latitude: Number(driverStatus.tasks[1]?.latitude),
-                    longitude: Number(driverStatus.tasks[1]?.longitude),
+                    latitude: Number(driverStatus?.tasks[driverStatus?.tasks?.length - 1]?.latitude),
+                    longitude: Number(driverStatus?.tasks[driverStatus?.tasks?.length - 1]?.longitude),
                     latitudeDelta: 0.0222,
                     longitudeDelta: 0.032,
                   }}
@@ -3601,8 +3717,8 @@ export default function OrderDetail({ navigation, route }) {
                 /> : null}
               <Marker
                 coordinate={{
-                  latitude: Number(driverStatus.tasks[0]?.latitude),
-                  longitude: Number(driverStatus.tasks[0]?.longitude),
+                  latitude: Number(driverStatus?.tasks[0]?.latitude),
+                  longitude: Number(driverStatus?.tasks[0]?.longitude),
                   latitudeDelta: 0.0222,
                   longitudeDelta: 0.032,
                 }}
@@ -3610,8 +3726,8 @@ export default function OrderDetail({ navigation, route }) {
               />
               <Marker
                 coordinate={{
-                  latitude: Number(driverStatus.tasks[1]?.latitude),
-                  longitude: Number(driverStatus.tasks[1]?.longitude),
+                  latitude: Number(driverStatus?.tasks[1]?.latitude),
+                  longitude: Number(driverStatus?.tasks[1]?.longitude),
                   latitudeDelta: 0.0222,
                   longitudeDelta: 0.032,
                 }}
@@ -3790,6 +3906,7 @@ export default function OrderDetail({ navigation, route }) {
             </Text>
           </View>
         )}
+
         {!!orderStatus &&
           orderStatus?.current_status?.title != "Rejected" &&
           orderStatus?.current_status?.title != "Placed" &&
@@ -3799,7 +3916,7 @@ export default function OrderDetail({ navigation, route }) {
                 marginVertical: moderateScaleVertical(20),
               }}
             >
-              {!!dispatcherStatus ? (
+              {!!dispatcherStatus && showMapDriver ? (
                 <StepIndicators
                   labels={[]}
                   currentPosition={currentPosition}
@@ -3807,12 +3924,12 @@ export default function OrderDetail({ navigation, route }) {
                   dispatcherStatus={dispatcherStatus}
                 />
               ) : null}
-              {!!dispatcherStatus ? (
+              {!!dispatcherStatus && showMapDriver ? (
                 <Text
                   style={{
                     marginTop: moderateScaleVertical(15),
                     marginVertical: moderateScaleVertical(10),
-                    marginHorizontal: moderateScale(31),
+                    marginHorizontal: moderateScale(8),
                     color: themeColors?.primary_color,
                     fontFamily: fontFamily?.bold,
                   }}
@@ -3830,7 +3947,7 @@ export default function OrderDetail({ navigation, route }) {
                 dispatcherStatus?.order_status?.current_status?.title !==
                 strings.REJECTED &&
                 (!!cartData.vendors[0]?.scheduled_date_time ||
-                  !!cartData?.vendors[0].ETA) && (
+                  !!cartData?.vendors[0].ETA) && showMapDriver && (
                   <View
                     style={{
                       ...styles.ariveView,
@@ -3850,6 +3967,102 @@ export default function OrderDetail({ navigation, route }) {
                     </Text>
                   </View>
                 )}
+
+              <View style={{
+                padding: moderateScale(8),
+                backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white
+              }}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => setArrowDown(!arrowUp)}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={{
+                    ...styles.ariveTextStyle,
+                    color: isDarkMode ? colors.white : colors.blackC,
+                    fontSize: textScale(16)
+                  }}>{strings.ORDER_STATUS}</Text>
+
+                  <Image style={{
+                    tintColor: isDarkMode ? colors.white : colors.black,
+                    transform: [{
+                      rotate: !arrowUp ? '180deg' : '0deg'
+                    }]
+                  }} source={imagePath.icUpArrow} />
+
+                </TouchableOpacity>
+
+                {arrowUp ? <View style={{ flex: 1, marginTop: moderateScaleVertical(16) }}>
+                  {driverStatus?.tasks?.map((val, i) => {
+                    return (
+                      <Animatable.View
+                        // animation={'slideInDown'}
+                        delay={i}
+                        key={String(i)}
+                      >
+                        <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
+
+                          <View style={{ flex: 0.7, flexDirection: "row", alignItems: 'center' }}>
+                            {/* {val?.task_status == '4' ? */}
+                            {val?.task_status == '4' ?
+                              <FastImage
+                                tintColor={themeColors?.primary_color}
+                                style={{
+                                  width: 20,
+                                  height: 20,
+                                  resizeMode: 'contain'
+                                }}
+                                source={imagePath.ecomCheck}
+                              />
+                              :
+                              <Image style={{
+                                width: 20,
+                                height: 20,
+                                resizeMode: 'contain'
+                              }} source={imagePath.ecomUnCheck} />}
+
+                            <View style={{
+                                   marginLeft: moderateScale(4),
+                            }}>
+                              <Text style={{
+                                color: isDarkMode ? colors.white : colors.blackC,
+                                fontSize: textScale(12),
+                                fontFamily: fontFamily.regular,
+                           
+                              }} >{val?.address}</Text>
+                              <Text style={{
+                                color: isDarkMode ? colors.white : colors.blackC,
+                                fontSize: textScale(12),
+                                fontFamily: fontFamily.medium,
+                              }}>{orderStatusTitle(val)}</Text>
+                            </View>
+                          </View>
+
+                          {(val?.task_status !== '0' && 
+                          val?.task_type_id == 1 && val?.task_status == '1') || val?.task_status == '4'
+                          ? <Text style={{
+                            color: colors?.black,
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.regular,
+                          }}>{moment(val?.updated_at).calendar()}</Text> : null}
+                        </View>
+                        {(driverStatus?.tasks?.length - 1) !== i ?
+                          <View
+                            style={{
+                              minHeight: 20,
+                              width: 2,
+                              backgroundColor: val?.task_status == '4' ? themeColors?.primary_color : colors.blackOpacity10,
+                              marginLeft: 8
+                            }}
+                          /> : null}
+                      </Animatable.View>
+                    )
+                  })}
+                </View> : null}
+              </View>
             </View>
           )}
 
@@ -3872,6 +4085,7 @@ export default function OrderDetail({ navigation, route }) {
             }}
           />
         )}
+
       </View>
     );
   };
@@ -4081,6 +4295,7 @@ export default function OrderDetail({ navigation, route }) {
         setLaundryAvailableDropOffSlot(res);
       } catch (error) {
         console.log("error riased", error);
+        showError(error?.error || error?.message || '')
       }
     } else {
       try {
@@ -4096,6 +4311,7 @@ export default function OrderDetail({ navigation, route }) {
         setLaundryAvailablePickupSlot(res);
       } catch (error) {
         console.log("error riased", error);
+        showError(error?.error || error?.message || '')
       }
     }
   };
@@ -4198,6 +4414,11 @@ export default function OrderDetail({ navigation, route }) {
       });
   };
 
+  const handleRefresh = () => {
+    setRefreshing(true)
+    _getOrderDetailScreen()
+  }
+
   if (isLoading) {
     return (
       <ScreenLoader
@@ -4250,8 +4471,6 @@ export default function OrderDetail({ navigation, route }) {
             : colors.greyColor,
         }}
       >
-
-
         <FlatList
           data={cartItems}
           extraData={cartItems}
@@ -4267,6 +4486,14 @@ export default function OrderDetail({ navigation, route }) {
           contentContainerStyle={{
             flexGrow: 1,
           }}
+          refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
         />
       </View>
 

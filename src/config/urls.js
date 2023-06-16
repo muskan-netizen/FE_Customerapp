@@ -7,6 +7,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://uat-order.royoorders.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.100.156:9001/api/v1'; //sanjay local url
+// export const API_BASE_URL = 'http://192.168.102.30:8000/api/v1'; //gaurav local url
 
 
 

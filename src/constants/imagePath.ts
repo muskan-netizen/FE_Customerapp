@@ -612,7 +612,8 @@ export default {
   wishlist2: require('../assets/images/Ecommerce/ic_wishlist_01.png'),
   wishlist3: require('../assets/images/Ecommerce/ic_wishlist_03.png'),
   icCart3:require('../assets/images/Ecommerce/ic_cart_03.png'),
-
+  ecomCheck: require('../assets/images/Ecommerce/ic_tickmark_01.png'),
+  ecomUnCheck: require('../assets/images/Ecommerce/ic_tickmark_02.png'),
   icCategory: require('../assets/images/Ecommerce/ic_categories_02.png'),
   icPrivacy: require('../assets/images/Ecommerce/ic_privacypolicy_02.png'),
   icTerms: require('../assets/images/Ecommerce/ic_terms&condition_02.png'),
@@ -621,6 +622,7 @@ export default {
   searchArrow: require('../assets/images/Ecommerce/searchArrow.png'),
   curLangCheck: require('../assets/images/Ecommerce/curLangCheck.png'),
   icLang: require('../assets/images/Ecommerce/ic_language.png'),
+  ecomChat: require('../assets/images/Ecommerce/IC_CHAT.png'),
   icCountry: require('../assets/images/Ecommerce/ic_country.png'),
   icCurrency: require('../assets/images/Ecommerce/ic_currency.png'),
   icMenuIcon : require('../assets/images/ic_menu.png'),
