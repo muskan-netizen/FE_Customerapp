@@ -25,7 +25,7 @@ import styleFun from './styles';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
-import { isEmpty } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import deviceInfoModule from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -102,10 +102,10 @@ const P2pOndemandProducts = ({ route, navigation }) => {
             .catch((error) => showError(error?.message || error?.error));
     };
 
-    const getP2pProductsByCategoryId = (pageNo = 1, filterAry = []) => {
+    const getP2pProductsByCategoryId = (pageNo = 1, filterAry = [], limit = 10) => {
         actions
             .getProductByP2pCategoryId(
-                `/${paramData?.id}?page=${pageNo}&product_list=true&type=p2p`,
+                `/${paramData?.id}?page=${pageNo}&limit=${limit}&product_list=true&type=p2p`,
                 {
                     attributes: filterAry,
                 },
@@ -243,6 +243,11 @@ const P2pOndemandProducts = ({ route, navigation }) => {
             getP2pProductsByCategoryId(pageNo + 1);
         }
     };
+
+    const onEndReachedDelayed = debounce(onEndReached, 1000, {
+        leading: true,
+        trailing: false,
+    });
 
     const renderP2pProducts = useCallback(
         ({ item, index }) => {
@@ -551,6 +556,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     renderItem={renderP2pProducts}
                     keyExtractor={(itm, indx) => String(indx)}
                     showsVerticalScrollIndicator={false}
+                    initialNumToRender={10}
                     ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                     ListEmptyComponent={() =>
                         !isLoading && (
@@ -575,7 +581,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             </View>
                         )
                     }
-                    onEndReached={onEndReached}
+                    onEndReached={onEndReachedDelayed}
                     onEndReachedThreshold={0.5}
                     ListFooterComponent={() => (
                         <View>
@@ -583,6 +589,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                 <Text
                                     style={{
                                         textAlign: 'center',
+                                        marginVertical: moderateScaleVertical(10)
                                     }}>
                                     Loading ...{' '}
                                 </Text>
