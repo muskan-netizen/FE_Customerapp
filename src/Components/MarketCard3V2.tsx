@@ -82,6 +82,13 @@ const MarketCard3: FC<CompProps> = ({
 
   const appMainData = useSelector((state:any) => state?.home?.appMainData || {});
 
+
+  // let imageUrl = getImageUrl(
+  //   data?.banner?.proxy_url || data?.image?.proxy_url,
+  //   data?.banner?.image_path || data?.image?.image_path,
+  //   '700/300',
+  // );
+
   let imageUrl = getImageUrlNew({
     url: data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,

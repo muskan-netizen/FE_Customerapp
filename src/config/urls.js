@@ -495,6 +495,7 @@ export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl(
 );
 export const GET_DATA_BY_VENDOR_FILTERS = getApiUrl('/vendor/filters');
 export const GET_PRODUCT_DATA_BASED_VARIANTS = getApiUrl('/productByVariant');
+export const GET_PRODUCT_DATA_BASED_VARIANTS_2 = getApiUrl('/v2/productByVariant');
 export const GET_PRODUCT_TAGS = getApiUrl('/getAllProductTags');
 export const GET_BRANDPRODUCTS_DATA_BASED_VARIANTS =
   getApiUrl('/brand/filters');

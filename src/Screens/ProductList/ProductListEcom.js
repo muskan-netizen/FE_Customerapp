@@ -1,7 +1,7 @@
 import Clipboard from '@react-native-community/clipboard';
-import _, {cloneDeep, isEmpty} from 'lodash';
+import _, { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, {useCallback, useLayoutEffect, useRef, useState} from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -13,15 +13,15 @@ import {
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import Share from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 // import SectionList from 'react-native-tabs-section-list';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import BottomSlideModal from '../../Components/BottomSlideModal';
 import NoDataFound from '../../Components/NoDataFound';
 import imagePath from '../../constants/imagePath';
@@ -38,8 +38,8 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
+import { MyDarkTheme } from '../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import {
   getImageUrl,
   hapticEffects,
@@ -48,7 +48,7 @@ import {
   showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {removeItem} from '../../utils/utils';
+import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 
 let timeOut = undefined;
@@ -89,23 +89,25 @@ const filtersData = [
   },
 ];
 
-import {enableFreeze} from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 import EcomHeader from '../../Components/EcomHeader';
 import FilterCompEcom from '../../Components/FilterCompEcom';
 import ProductCardEcom from '../../Components/ProductCardEcom';
 import SortCompEcom from '../../Components/SortCompEcom';
+import staticStrings from '../../constants/staticStrings';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 enableFreeze(true);
 
-export default function Products({route, navigation}) {
+export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
   let selectedSorts = useRef(null);
-  const {data} = route.params;
+  const { data } = route.params;
 
 
 
   const routeData = data?.fetchOffers;
-  const {blurRef} = useRef();
+  const { blurRef } = useRef();
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector(state => state?.home?.dineInType);
   const dineInType = useSelector(state => state?.home?.dineInType);
@@ -196,7 +198,7 @@ export default function Products({route, navigation}) {
     internetConnection,
     appStyle,
   } = useSelector(state => state?.initBoot);
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
   let businessType = appData?.profile?.preferences?.business_type || null;
 
@@ -322,25 +324,29 @@ export default function Products({route, navigation}) {
   const [pressedItemInx, setPressedItemInx] = useState(0);
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
-  const styles = stylesFunc({themeColors, fontFamily, isDarkMode, MyDarkTheme});
+  const commonStyles = commonStylesFunc({ fontFamily });
+  const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
 
   //Saving the initial state
   const initialState = cloneDeep(state);
   //Logged in user data
   const userData = useSelector(state => state?.auth?.userData);
   //app Main Data
-  const {appMainData, location} = useSelector(state => state?.home);
+  const { appMainData, location } = useSelector(state => state?.home);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
-    (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+    (screenName, data = {}, isPush = false) =>
+      () => {
+        if (isPush) {
+          navigation.push(screenName, { data });
+        } else {
+          navigation.navigate(screenName, { data });
+        }
+      };
 
   const updateState = data => {
-    setState(state => ({...state, ...data}));
+    setState(state => ({ ...state, ...data }));
   };
 
   const [variantState, setVariantState] = useState({
@@ -385,7 +391,7 @@ export default function Products({route, navigation}) {
     slectedDate,
   } = variantState;
   const updateAddonState = data => {
-    setVariantState(state => ({...state, ...data}));
+    setVariantState(state => ({ ...state, ...data }));
   };
 
   const resetVariantState = () => {
@@ -420,21 +426,99 @@ export default function Products({route, navigation}) {
     });
   };
 
+  const onPressCategory = useCallback((item) => {
+    if (item?.redirect_to == staticStrings.P2P) {
+      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      return;
+    }
+    if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
+      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+
+      return;
+    }
+    if (item.redirect_to == staticStrings.VENDOR) {
+
+      moveToNewScreen(navigationStrings.VENDOR, item)();
+    } else if (
+      item.redirect_to == staticStrings.PRODUCT ||
+      item.redirect_to == staticStrings.CATEGORY ||
+      item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+      item?.redirect_to == staticStrings.LAUNDRY ||
+      item?.redirect_to == staticStrings.APPOINTMENT ||
+      item?.redirect_to == staticStrings.RENTAL
+    ) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT ||
+            item?.redirect_to == staticStrings.RENTAL
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      }, true)();
+    } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
+      if (!!userData?.auth_token) {
+        if (shortCodes.arenagrub == appData?.profile?.code) {
+          //   openUber();
+        } else {
+          item['pickup_taxi'] = true;
+          moveToNewScreen(navigationStrings.ADDADDRESS, item)();
+        }
+      } else {
+        actions.setAppSessionData('on_login');
+      }
+    } else if (item.redirect_to == staticStrings.DISPATCHER) {
+      // moveToNewScreen(navigationStrings.DELIVERY, item)();
+    } else if (item.redirect_to == staticStrings.CELEBRITY) {
+      moveToNewScreen(navigationStrings.CELEBRITY)();
+    } else if (item.redirect_to == staticStrings.BRAND) {
+      moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
+    } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
+    } else if (!item.is_show_category || item.is_show_category) {
+      item?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
+    }
+  }, [])
+
+
   const seeAllCategory = useCallback(item => {
+
+    console.log("item", item)
+    onPressCategory(item)
+
+    return
     let data = {
       id: item.id,
       vendor: false,
       name: item.translation[0].name,
       fetchOffers: true,
     }
-    navigation.push(navigationStrings.PRODUCT_LIST, {data});
+    navigation.push(navigationStrings.PRODUCT_LIST, { data });
   }, []);
 
 
 
-  
+
   const renderSectionItem = useCallback(
-    ({item, index, section}) => {
+    ({ item, index, section }) => {
       return (
         <View>
           <View
@@ -462,7 +546,7 @@ export default function Products({route, navigation}) {
             showsHorizontalScrollIndicator={false}
             data={item?.data}
             ItemSeparatorComponent={() => (
-              <View style={{height: moderateScaleVertical(10)}} />
+              <View style={{ height: moderateScaleVertical(10) }} />
             )}
             renderItem={props => (
               <ProductCardEcom
@@ -472,9 +556,9 @@ export default function Products({route, navigation}) {
                 onAddtoWishlist={() =>
                   _onAddtoWishlist(props.item, props.index, index)
                 }
-                addToCart={() => () => {}}
-                onIncrement={() => () => {}}
-                onDecrement={() => () => {}}
+                addToCart={() => () => { }}
+                onIncrement={() => () => { }}
+                onDecrement={() => () => { }}
                 selectedItemID={selectedItemID}
                 btnLoader={false}
                 selectedItemIndx={selectedItemIndx}
@@ -523,7 +607,7 @@ export default function Products({route, navigation}) {
 
   const renderSectionHeader = useCallback(
     props => {
-      const {section} = props;
+      const { section } = props;
 
       console.log('propspropsprops', sectionListData[0].id);
       return (
@@ -556,13 +640,13 @@ export default function Products({route, navigation}) {
 
   const renderSectionTab = useCallback(
     props => {
-      const {translation, isActive, index} = props;
+      const { translation, isActive, index } = props;
 
       if (isActive) {
         // activeIdx = props.index;
       }
       if (!AnimatedHeaderValue) {
-        return <TouchableOpacity style={{width: 40}} />;
+        return <TouchableOpacity style={{ width: 40 }} />;
       }
       return (
         <View
@@ -611,7 +695,7 @@ export default function Products({route, navigation}) {
     return (
       <>
         {totalProducts.length !== productListData.length && (
-          <View style={{height: moderateScale(60)}}>
+          <View style={{ height: moderateScale(60) }}>
             <UIActivityIndicator color={themeColors?.primary_color} />
           </View>
         )}
@@ -620,17 +704,17 @@ export default function Products({route, navigation}) {
   };
 
   const renderProduct = useCallback(
-    ({item, index}) => {
+    ({ item, index }) => {
       return (
-        <View key={String(index)} style={{width: width / 2}}>
+        <View key={String(index)} style={{ width: width / 2 }}>
           <ProductCardEcom
             data={item}
             index={index}
             onPress={() => goToProductDetail(item)}
             onAddtoWishlist={() => _onAddtoWishlist(item, index)}
-            addToCart={() => () => {}}
-            onIncrement={() => () => {}}
-            onDecrement={() => () => {}}
+            addToCart={() => () => { }}
+            onIncrement={() => () => { }}
+            onDecrement={() => () => { }}
             selectedItemID={selectedItemID}
             btnLoader={false}
             selectedItemIndx={selectedItemIndx}
@@ -638,7 +722,7 @@ export default function Products({route, navigation}) {
             businessType={businessType}
             categoryInfo={categoryInfo}
             animateText={animateText}
-            // section={section}
+          // section={section}
           />
           {/* <View style={{ ...styles.horizontalLine, marginVertical: moderateScaleVertical(6) }} /> */}
         </View>
@@ -663,7 +747,7 @@ export default function Products({route, navigation}) {
         if (val?.media?.length > 0) {
           const url1 = val?.media[0]?.image?.path?.image_fit;
           const url2 = val?.media[0]?.image?.path?.image_path;
-          FastImage.preload([{uri: getImageUrl(url1, url2, '200/200')}]);
+          FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
         }
       });
     });
@@ -688,7 +772,7 @@ export default function Products({route, navigation}) {
   );
 
   const SortView = () => (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity
         onPress={onShowHideSort}
         activeOpacity={0.7}
@@ -722,11 +806,11 @@ export default function Products({route, navigation}) {
 
   const filterView = () => {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         {offersModalVisible && (
           <TouchableOpacity
             onPress={() =>
-              updateState({offersModalVisible: !offersModalVisible})
+              updateState({ offersModalVisible: !offersModalVisible })
             }
             activeOpacity={0.7}
             style={{
@@ -757,7 +841,7 @@ export default function Products({route, navigation}) {
             <Image
               source={imagePath.icBackb}
               style={{
-                transform: [{rotate: '-90deg'}],
+                transform: [{ rotate: '-90deg' }],
                 width: moderateScale(11),
                 height: moderateScale(11),
                 resizeMode: 'contain',
@@ -814,7 +898,7 @@ export default function Products({route, navigation}) {
           {!!categoryInfo?.is_show_products_with_category ? (
             <View />
           ) : (
-            <View style={{marginHorizontal: moderateScale(4)}}>
+            <View style={{ marginHorizontal: moderateScale(4) }}>
               <Text
                 style={{
                   ...styles.filterText,
@@ -823,7 +907,7 @@ export default function Products({route, navigation}) {
                 }}>{`Results (${totalProducts})`}</Text>
             </View>
           )}
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             {allFilters.length > 0 ? filterView() : null}
             {SortView()}
           </View>
@@ -840,13 +924,13 @@ export default function Products({route, navigation}) {
 
   useLayoutEffect(() => {
     // setLoading(true)
-    updateState({pageNo: 1});
+    updateState({ pageNo: 1 });
     setSelectedAppointmentSlot({});
     getAllListItems(1);
     if (productListId?.vendor && routeData) {
       fetchOffers();
     }
-    return ()=> noMoreData = false
+    return () => noMoreData = false
   }, []);
 
   const getAllProductTags = () => {
@@ -972,7 +1056,7 @@ export default function Products({route, navigation}) {
       selectedFilters.current = filterData;
     }
     setAllFilter(currentVariants);
-    updateState({pageNo: 1});
+    updateState({ pageNo: 1 });
     noMoreData = false;
     getAllListItems(1);
   };
@@ -992,12 +1076,11 @@ export default function Products({route, navigation}) {
   const getAllProductsByVendor = pageNo => {
     setLoading(true);
 
-    updateState({wrapperListLoader: true});
+    updateState({ wrapperListLoader: true });
     let vendorId = !!data?.vendorData ? data?.vendorData.id : productListId.id;
 
-    let apiData = `/${vendorId}?page=${
-      pageNo ? pageNo : 1
-    }&type=${dineInType}&limit=${limit}`;
+    let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1
+      }&type=${dineInType}&limit=${limit}`;
 
     if (!!data?.categoryExist) {
       //sent category id if user comes from category>>vendor>>productList
@@ -1017,9 +1100,9 @@ export default function Products({route, navigation}) {
         },
       )
       .then(async res => {
-        console.log('get all products by vendor res without filter',res?.data);
+        console.log('get all products by vendor res without filter', res?.data);
         setLoading(false);
-        updateState({wrapperListLoader: false});
+        updateState({ wrapperListLoader: false });
 
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
@@ -1030,13 +1113,13 @@ export default function Products({route, navigation}) {
           fetchTags(resData);
           setLoading(false);
         } else {
-          if (res?.data) {
+          if (!!res?.data) {
             if (res?.data?.products.data.length == 0) {
               noMoreData = true;
             } else {
               noMoreData = false;
             }
-            updateState({lastPage: res?.data?.products?.last_page});
+            updateState({ lastPage: res?.data?.products?.last_page });
             setCategoryInfo(res?.data?.vendor);
             setLoading(false);
             setProductListData(
@@ -1049,9 +1132,10 @@ export default function Products({route, navigation}) {
             });
           } else {
             setLoading(false);
+            noMoreData = false;
           }
         }
-        if (res?.data) {
+        if (!!res?.data) {
           updateBrandAndCategoryFilter(
             res?.data?.filterData,
             appMainData?.brands,
@@ -1076,8 +1160,8 @@ export default function Products({route, navigation}) {
     data['tag_products'] =
       ProductTags && ProductTags?.length
         ? ProductTags.map(i => {
-            return i?.isSelected ? i?.id : null;
-          }).filter(x => x != null)
+          return i?.isSelected ? i?.id : null;
+        }).filter(x => x != null)
         : [];
     console.log('sending data filters', data);
     setLoading(loading ? false : true);
@@ -1117,7 +1201,7 @@ export default function Products({route, navigation}) {
                 ? res.data.products.data
                 : [...productListData, ...res.data.products.data],
             );
-            updateState({totalProducts: res?.data?.products?.total || 0});
+            updateState({ totalProducts: res?.data?.products?.total || 0 });
           } else {
             setLoading(false);
           }
@@ -1144,8 +1228,7 @@ export default function Products({route, navigation}) {
     console.log('<==api hit getProductByCategoryIdOptamize');
     actions
       .getProductByCategoryIdOptamize(
-        `/${productWithCategoryId}?page=${pageNo}&product_list=${
-          data?.rootProducts ? true : false
+        `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }&type=${dineInType} `,
         {},
         {
@@ -1161,8 +1244,8 @@ export default function Products({route, navigation}) {
           console.log(res, 'res getProductByCategoryId');
           setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
           setLoading(false);
-  
-          if(res?.data?.listData?.to == res?.data?.listData?.total){
+
+          if (res?.data?.listData?.to == res?.data?.listData?.total) {
             noMoreData = true
           }
           setProductListData(
@@ -1215,8 +1298,7 @@ export default function Products({route, navigation}) {
 
       actions
         .getProductByCategoryFiltersOptamize(
-          `/${productListId.id}?page=${pageNo}&product_list=${
-            data?.rootProducts ? true : false
+          `/${productListId.id}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
           }&type=${dineInType}`,
           data,
           {
@@ -1300,6 +1382,7 @@ export default function Products({route, navigation}) {
       btnLoader: false,
       wrapperListLoader: false,
     });
+    noMoreData = false;
     setLoading(false);
     if (error?.message == 'Recurring booking type not be empty.') {
       showSuccess('Schedule the product in product detail page');
@@ -1310,13 +1393,13 @@ export default function Products({route, navigation}) {
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1});
+    updateState({ pageNo: 1 });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
+  const onEndReached = ({ distanceFromEnd }) => {
     if (!noMoreData) {
-      updateState({pageNo: pageNo + 1});
+      updateState({ pageNo: pageNo + 1 });
       getAllListItems(pageNo + 1);
       setLoading(false);
     }
@@ -1328,7 +1411,7 @@ export default function Products({route, navigation}) {
   // });
 
   const hideDifferentAddOns = () => {
-    updateState({differentAddsOnsModal: false});
+    updateState({ differentAddsOnsModal: false });
     setDifferentAddsOns([]);
   };
 
@@ -1502,7 +1585,7 @@ export default function Products({route, navigation}) {
       });
       setStoreLocalQty(differentAddsOnsQty);
       setProductListData(updateArray);
-      updateState({selectedItemID: -1});
+      updateState({ selectedItemID: -1 });
     }
   };
 
@@ -1529,7 +1612,7 @@ export default function Products({route, navigation}) {
     let isExistproductId = diffAdOnId;
     let isExistCartId =
       !!itemToUpdate?.check_if_in_cart_app &&
-      !!itemToUpdate?.check_if_in_cart_app.length > 0
+        !!itemToUpdate?.check_if_in_cart_app.length > 0
         ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id
         : cartId;
     console.log('removeProductFromCart =>', itemToUpdate, 'cartId', cartId);
@@ -1537,7 +1620,7 @@ export default function Products({route, navigation}) {
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
     data['type'] = dineInType;
-    updateState({btnLoader: true});
+    updateState({ btnLoader: true });
     actions
       .removeProductFromCart(data, {
         code: appData?.profile?.code,
@@ -1616,7 +1699,7 @@ export default function Products({route, navigation}) {
   const errorMethodSecond = (error, addonSet = [], item, section, inx) => {
     console.log(error, 'Error>>>>>');
     console.log('sectin++++', section);
-    updateState({updateQtyLoader: false});
+    updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
       updateState({
         isLoadingC: false,
@@ -1675,7 +1758,7 @@ export default function Products({route, navigation}) {
 
   const onRepeat = async () => {
     console.log('repeate items', repeatItems);
-    const {item, isExistqty, productId, parentCartId, updateLocalQty} =
+    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
       repeatItems;
     await addDeleteCartItems(
       item,
@@ -1765,13 +1848,13 @@ export default function Products({route, navigation}) {
         setDifferentAddsOns(res?.data || []);
         setSelectedDiffAdsOnItem(item);
         setSelectedDiffAdsOnSection(section);
-        updateState({differentAddsOnsModal: true});
-        return {data: res?.data, goNext: true};
+        updateState({ differentAddsOnsModal: true });
+        return { data: res?.data, goNext: true };
       }
-      return {data: res?.data, goNext: false};
+      return { data: res?.data, goNext: false };
     } catch (error) {
       console.log('error raised,error');
-      return {data: null, goNext: false};
+      return { data: null, goNext: false };
     }
   };
 
@@ -1885,7 +1968,7 @@ export default function Products({route, navigation}) {
 
   const onPressMenuOption = index => {
     setActiveIdx(index);
-    updateState({MenuModalVisible: !MenuModalVisible});
+    updateState({ MenuModalVisible: !MenuModalVisible });
     sectionListRef.current.sectionList.current.scrollToLocation({
       sectionIndex: index,
       itemIndex: 0,
@@ -1912,8 +1995,8 @@ export default function Products({route, navigation}) {
 
   const RenderMenuView = () => {
     return (
-      <View style={{marginBottom: moderateScaleVertical(16)}}>
-        <ScrollView style={{width: '100%'}}>
+      <View style={{ marginBottom: moderateScaleVertical(16) }}>
+        <ScrollView style={{ width: '100%' }}>
           <Text
             style={{
               paddingHorizontal: moderateScale(16),
@@ -1987,7 +2070,7 @@ export default function Products({route, navigation}) {
             marginVertical: moderateScaleVertical(10),
           }}
         />
-        <ScrollView style={{width: '100%'}}>
+        <ScrollView style={{ width: '100%' }}>
           {offerList?.length > 0 &&
             offerList.map((el, indx) => {
               console.log(el, 'el');
@@ -2074,14 +2157,14 @@ export default function Products({route, navigation}) {
   };
 
   const updateMinMax = (min, max) => {
-    updateState({minimumPrice: min, maximumPrice: max});
+    updateState({ minimumPrice: min, maximumPrice: max });
   };
 
   const onShowHideFilter = () => {
-    updateState({isShowFilter: !isShowFilter});
+    updateState({ isShowFilter: !isShowFilter });
   };
   const onShowHideSort = () => {
-    updateState({isShowSort: !isShowSort});
+    updateState({ isShowSort: !isShowSort });
   };
 
   const bottomSheetHeader = () => {
@@ -2091,7 +2174,7 @@ export default function Products({route, navigation}) {
           setIsVisibleModal(false);
           resetVariantState();
         }}
-        style={{alignSelf: 'center', marginBottom: moderateScaleVertical(16)}}>
+        style={{ alignSelf: 'center', marginBottom: moderateScaleVertical(16) }}>
         <Image source={imagePath.icClose4} />
       </TouchableOpacity>
     );
@@ -2101,7 +2184,7 @@ export default function Products({route, navigation}) {
     console.log('onShare', categoryInfo);
     if (!!categoryInfo.share_link) {
       let hyperLink = categoryInfo.share_link;
-      let options = {url: hyperLink};
+      let options = { url: hyperLink };
       Share.open(options)
         .then(res => {
           console.log(res);
@@ -2146,7 +2229,7 @@ export default function Products({route, navigation}) {
   };
 
   const onScroll = props => {
-    const {nativeEvent} = props;
+    const { nativeEvent } = props;
     if (
       productListData &&
       productListData?.length &&
@@ -2159,13 +2242,13 @@ export default function Products({route, navigation}) {
     let index = parseInt(offset / 8); // your cell height
     if (index > moderateScale(36)) {
       if (!AnimatedHeaderValue) {
-        updateState({AnimatedHeaderValue: true});
+        updateState({ AnimatedHeaderValue: true });
       }
       return;
     }
     if (index < moderateScale(36)) {
       if (AnimatedHeaderValue) {
-        updateState({AnimatedHeaderValue: false});
+        updateState({ AnimatedHeaderValue: false });
         return;
       }
       return;
@@ -2218,8 +2301,8 @@ export default function Products({route, navigation}) {
       data['tag_products'] =
         ProductTags && ProductTags?.length
           ? ProductTags.map(i => {
-              return i?.isSelected ? i?.id : null;
-            }).filter(x => x != null)
+            return i?.isSelected ? i?.id : null;
+          }).filter(x => x != null)
           : [];
       console.log(data, '>data>data');
       console.log(ProductTags, 'ProductTags?ProductTags');
@@ -2290,9 +2373,9 @@ export default function Products({route, navigation}) {
 
     addOnsAdditionalPrice = tokenConverterPlusCurrencyNumberFormater(
       Number(productPriceData?.multiplier) *
-        Number(productPriceData?.price) *
-        productQuantityForCart +
-        addOnsAdditionalPrice,
+      Number(productPriceData?.price) *
+      productQuantityForCart +
+      addOnsAdditionalPrice,
       digit_after_decimal,
       additional_preferences,
       currencies?.primary_currency?.symbol,
@@ -2399,12 +2482,12 @@ export default function Products({route, navigation}) {
           }
         });
         let CloneArr = addonSet;
-        CloneArr[inx] = {...CloneArr[inx], errorShow: false};
-        updateState({addonSet: CloneArr});
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
+        updateState({ addonSet: CloneArr });
       } else {
         let CloneArr = addonSet;
-        CloneArr[inx] = {...CloneArr[inx], errorShow: true};
-        updateState({addonSet: CloneArr});
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
+        updateState({ addonSet: CloneArr });
       }
     });
 
@@ -2419,16 +2502,16 @@ export default function Products({route, navigation}) {
           itm === 'Mo'
             ? 1
             : itm === 'Tu'
-            ? 2
-            : itm === 'We'
-            ? 3
-            : itm === 'Th'
-            ? 4
-            : itm === 'Fr'
-            ? 5
-            : itm === 'Sa'
-            ? 6
-            : itm === 'Su' && 0;
+              ? 2
+              : itm === 'We'
+                ? 3
+                : itm === 'Th'
+                  ? 4
+                  : itm === 'Fr'
+                    ? 5
+                    : itm === 'Sa'
+                      ? 6
+                      : itm === 'Su' && 0;
         weeDays.push(value);
       });
     }
@@ -2453,14 +2536,14 @@ export default function Products({route, navigation}) {
       selectedPlanValues == 'Daily'
         ? 1
         : selectedPlanValues == 'Weekly'
-        ? 2
-        : selectedPlanValues == 'Monthly'
-        ? 3
-        : selectedPlanValues == 'Alternate Days'
-        ? 6
-        : selectedPlanValues == 'Custom'
-        ? 4
-        : 5;
+          ? 2
+          : selectedPlanValues == 'Monthly'
+            ? 3
+            : selectedPlanValues == 'Alternate Days'
+              ? 6
+              : selectedPlanValues == 'Custom'
+                ? 4
+                : 5;
     recurringformPost['startDate'] = start.dateString ? start.dateString : '';
     recurringformPost['endDate'] = end.dateString ? end.dateString : '';
     recurringformPost['weekDay'] = weeDays;
@@ -2510,7 +2593,7 @@ export default function Products({route, navigation}) {
       data['recurringformPost'] = recurringformPost;
 
       console.log(JSON.stringify(data), 'data for cart');
-      updateState({btnLoader: true});
+      updateState({ btnLoader: true });
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
@@ -2528,7 +2611,7 @@ export default function Products({route, navigation}) {
             res.data.cart_product_id,
             res.data.id,
           );
-          updateState({isLoadingC: false, btnLoader: false});
+          updateState({ isLoadingC: false, btnLoader: false });
           // onClose();
         })
         .catch(error => {
@@ -2738,7 +2821,7 @@ export default function Products({route, navigation}) {
                 }}
               />
             )}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 onPress={() => onSlotSelect(item, index)}
                 style={{
@@ -2778,7 +2861,7 @@ export default function Products({route, navigation}) {
                 }}
               />
             )}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 onPress={() => {
                   setSelectedAppointmentSlot(item);
@@ -2848,7 +2931,7 @@ export default function Products({route, navigation}) {
                         width: moderateScale(40),
                         borderRadius: moderateScale(20),
                       }}
-                      source={{uri: item?.image_url}}
+                      source={{ uri: item?.image_url }}
                     />
                   </View>
                   <Text
@@ -2871,7 +2954,7 @@ export default function Products({route, navigation}) {
   };
 
   const renderSectionFooter = props => {
-    const {section} = props;
+    const { section } = props;
     return (
       //   section?.data.length >= 15 && searchInput =='' && section?.data.length !== section?.data_count  ?
       //   <View style={{height: moderateScale(50)}}>
@@ -2905,7 +2988,7 @@ export default function Products({route, navigation}) {
       section?.data.length !== section?.data_count &&
         section?.data.length >= 15 &&
         hideViewMore ? (
-        <View style={{height: moderateScale(50)}}>
+        <View style={{ height: moderateScale(50) }}>
           <TouchableOpacity
             onPress={() => appendData(section)}
             style={{
@@ -2941,7 +3024,7 @@ export default function Products({route, navigation}) {
           </TouchableOpacity>
         </View>
       ) : (
-        <View style={{height: moderateScale(50)}} />
+        <View style={{ height: moderateScale(50) }} />
       )
     );
   };
@@ -2977,7 +3060,7 @@ export default function Products({route, navigation}) {
       <EcomHeader
         isDarkMode={isDarkMode}
         navigation={navigation}
-        style={{marginVertical: moderateScaleVertical(16)}}
+        style={{ marginVertical: moderateScaleVertical(16) }}
         themeColors={themeColors}
         appStyle={appStyle}
       />
@@ -3005,7 +3088,7 @@ export default function Products({route, navigation}) {
             renderItem={renderProduct}
             ListHeaderComponent={listHeaderComponent2()}
             keyExtractor={awesomeChildListKeyExtractor}
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             //  getItemLayout={getItemLayoutFlat}
             // refreshing={isRefreshing}
             initialNumToRender={10}
@@ -3015,7 +3098,7 @@ export default function Products({route, navigation}) {
               !noMoreData && listFooterComponent
             }
             ListEmptyComponent={listEmptyComponent}
-            // style={{marginHorizontal: moderateScale(8)}}
+          // style={{marginHorizontal: moderateScale(8)}}
           />
         </>
       )}
@@ -3047,7 +3130,7 @@ export default function Products({route, navigation}) {
           onShowHideFilter={onShowHideSort}
           allClearFilters={allClearFilters}
           selectedSortFilter={selectedSortFilter}
-          onSelectedSortFilter={val => updateState({selectedSortFilter: val})}
+          onSelectedSortFilter={val => updateState({ selectedSortFilter: val })}
           maximumPrice={maximumPrice}
           minimumPrice={minimumPrice}
           updateMinMax={updateMinMax}
@@ -3064,7 +3147,7 @@ export default function Products({route, navigation}) {
           onShowHideFilter={onShowHideFilter}
           allClearFilters={allClearFilters}
           selectedSortFilter={selectedSortFilter}
-          onSelectedSortFilter={val => updateState({selectedSortFilter: val})}
+          onSelectedSortFilter={val => updateState({ selectedSortFilter: val })}
           maximumPrice={maximumPrice}
           minimumPrice={minimumPrice}
           updateMinMax={updateMinMax}
@@ -3088,7 +3171,7 @@ export default function Products({route, navigation}) {
             marginHorizontal: 0,
           }}
           onBackdropPress={() =>
-            updateState({offersModalVisible: !offersModalVisible})
+            updateState({ offersModalVisible: !offersModalVisible })
           }
         />
       ) : null}

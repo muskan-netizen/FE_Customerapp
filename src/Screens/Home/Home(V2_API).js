@@ -74,14 +74,6 @@ export default function Home({ route, navigation }) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
 
-
-
-  const memorizsedAppMainData = useMemo(() => appMainData, [appMainData])
-  const memorizsedLocation = useMemo(() => location, [location])
-  const memorizedAppData = useMemo(() => appData, [appData])
-
-
-
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -131,9 +123,18 @@ export default function Home({ route, navigation }) {
     curLatLong,
   } = state;
 
+  const memorizedAppData = useMemo(() => appData, [appData])  
+  const memorizsedAppMainData = useMemo(() => appMainData, [appMainData])
+  const memorizsedLocation = useMemo(() => location, [location])
+  const memorizedSelectedTabType = useMemo(()=> selectedTabType, [selectedTabType])
+  const memorizedAllAddresss = useMemo(()=> allAddresss, [allAddresss])
+  const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData])
+
   const { profile } = memorizedAppData;
 
-  const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData])
+  useLayoutEffect(() => {
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+  }, []);
 
   useEffect(() => {
     chekLocationPermission(true)
@@ -232,7 +233,7 @@ export default function Home({ route, navigation }) {
         homeData();
         return;
       });
-  }, [selectedTabType, appData, allAddresss])
+  }, [memorizedSelectedTabType, memorizedAppData, memorizedAllAddresss])
 
 
   useEffect(() => {
@@ -250,6 +251,7 @@ export default function Home({ route, navigation }) {
       return () => backHandler.remove();
     }, []),
   );
+
   useEffect(() => {
     updateState({ updatedData: memorizsedAppMainData?.categories });
   }, [memorizsedAppMainData]);
@@ -285,11 +287,6 @@ export default function Home({ route, navigation }) {
     }, []),
   );
 
-
-
-  useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
-  }, []);
 
   const _getLocationFromParams = () => {
     actions.isLocationSearched(true);
