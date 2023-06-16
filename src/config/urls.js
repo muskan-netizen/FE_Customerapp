@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
 // export const API_BASE_URL = 'https://ace.focushires.com/api/v1'; //Dev
 // export const API_BASE_URL = 'http://192.168.100.214:8001/api/v1'
 // export const API_BASE_URL = 'https://uat-order.royoorders.com/api/v1';
@@ -66,7 +66,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1'; //Staging
 // export const API_BASE_URL = 'https://mobimarket.com.mx/api/v1';
 // export const API_BASE_URL = 'https://swiffy.royoorders.com/api/v1'
 // export const API_BASE_URL = 'https://tasmeem.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://sales.focushires.com/api/v1'; //sales demo
+export const API_BASE_URL = 'https://sales.focushires.com/api/v1'; //sales demo
 // export const API_BASE_URL = 'https://delivery.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://maxisdelivery.net/api/v1';
 
