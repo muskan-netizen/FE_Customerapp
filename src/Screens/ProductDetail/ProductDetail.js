@@ -88,6 +88,8 @@ export default function ProductDetail({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
+    const userData = useSelector((state) => state?.auth?.userData);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
@@ -184,8 +186,7 @@ export default function ProductDetail({ route, navigation }) {
 
   //Saving the initial state
   const initialState = cloneDeep(state);
-  const userData = useSelector((state) => state?.auth?.userData);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const { bannerRef } = useRef();
   const {
@@ -2131,9 +2132,8 @@ export default function ProductDetail({ route, navigation }) {
   }, [variantSet, isDarkMode])
 
 
-  const renderProductImages = useCallback(({ item, index }) => {
-    console.log("renderProductImages", item)
-    const imageUrl = item?.image?.path
+  const renderProductImages = ({item, index}) => {
+      const imageUrl = item?.image?.path
       ? getImageUrl(
         item.image.path.image_fit,
         item.image.path.image_path,
@@ -2191,7 +2191,7 @@ export default function ProductDetail({ route, navigation }) {
         </TouchableOpacity>
       </TouchableOpacity>
     )
-  }, [productDetailData, isDarkMode])
+    }
 
   return (
     <WrapperContainer
