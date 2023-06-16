@@ -41,7 +41,7 @@ const ForegroundHandler = (props) => {
         name: 'Default Channel',
         vibration: true,
         lightColor: AndroidColor.YELLOW,
-        sound: notification?.android?.sound ||'customnotii',
+        sound: notification?.android?.sound || 'customnotii',
         importance: AndroidImportance.HIGH,
 
       });
@@ -111,20 +111,13 @@ const ForegroundHandler = (props) => {
 
       if (
         Platform.OS == 'android' &&
-        notification.android.sound == 'notification'
+        notification.android.sound == 'notification' &&
+        data.type != 'reached_location'
       ) {
         actions.isVendorNotification(true);
         actions.refreshNotification(messageId);
         const { data } = remoteMessage.data;
         let _data = JSON.parse(data);
-        console.log(
-          'foreground notification listener checking data >>>>',
-          _data,
-        );
-        console.log(
-          'foreground notification listener checking data >>>>',
-          _data.vendors[0].vendor.auto_accept_order == 1,
-        );
         if (_data.vendors[0].vendor.auto_accept_order == 1) {
           StartPrinting(_data);
         }
