@@ -284,15 +284,15 @@ function Cart({ navigation, route }) {
     });
     Keyboard.dismiss();
   };
-  useFocusEffect(
-    useCallback(() => {
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        androidBackButtonHandler,
-      );
-      return () => backHandler.remove();
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const backHandler = BackHandler.addEventListener(
+  //       'hardwareBackPress',
+  //       androidBackButtonHandler,
+  //     );
+  //     return () => backHandler.remove();
+  //   }, []),
+  // );
 
   const androidBackButtonHandler = () => {
     setPaymentModal(false)

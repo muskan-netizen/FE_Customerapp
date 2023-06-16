@@ -129,9 +129,10 @@ export default function TabRoutesEcommerce(props) {
 
       // tabBar={getCustomTabBar}
       initialRouteName={
-        redirectedFrom == 'cart'
-          ? navigationStrings.CART
-          : navigationStrings.HOMESTACK
+        // redirectedFrom == 'cart'
+        //   ? navigationStrings.CART
+        //   :
+           navigationStrings.HOMESTACK
       }
     >
       <Tab.Screen
