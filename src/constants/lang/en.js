@@ -1167,5 +1167,8 @@ Amount`,
   AS_LENDER: "As Lender",
   AS_BORROWER: "As Borrower",
   SCHEDULE_A_RIDE: "Schedule a ride",
-  ENTER_DRIVER_ID: "Enter driver ID"
+  ENTER_DRIVER_ID: "Enter driver ID",
+  FROM_VENDOR: "From Vendor",
+  FROM_FREELANCER: "From Freelancer",
+  SELECT_PRICE_TYPE: "Select pricing type"
 };
