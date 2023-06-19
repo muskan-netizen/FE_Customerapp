@@ -65,6 +65,7 @@ import axios from 'axios';
 import useInterval from '../../../utils/useInterval';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import BorderTextInputWithLable from '../../../Components/BorderTextInputWithLable';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -161,7 +162,6 @@ function ChooseVechile({ navigation, route }) {
         disableButton: false,
         showBidPriceModal: false,
         uID: '',
-        isBookingType: paramData?.rideType,
 
     });
     const {
@@ -202,8 +202,6 @@ function ChooseVechile({ navigation, route }) {
         disableButton,
         showBidPriceModal,
         uID,
-        isBookingType
-
     } = state;
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -264,11 +262,6 @@ function ChooseVechile({ navigation, route }) {
     }, [paramData?.couponInfo, paramData?.couponInfo?.new_amount]);
 
 
-    useEffect(() => {
-        //if pickupTimeType is now then we hit direct api withhout schedule date 
-        //otherwise we pass the shcedule date onDateSet function and hit api accordingly
-        !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices() : onDateSet(pickUpTimeType)
-    }, [updateSeatNO]);
 
     useEffect(() => {
         if (!isVisibleMtnGateway && mtnGatewayResponse) {
@@ -295,6 +288,8 @@ function ChooseVechile({ navigation, route }) {
         _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
     }, [date, selectedCarOption])
 
+    console.log(scheduleDateTime, "scheduleDateTime>>>>>>")
+
     const clearScheduleDate = useCallback(() => {
         actions.saveSchduleTime('now');
         updateState({
@@ -307,7 +302,8 @@ function ChooseVechile({ navigation, route }) {
 
 
     //Get list of all orders api
-    const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null) => {
+    const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null, _isCabPooling = false, seatNo = 1, _isBidRide = false) => {
+
         if (showInitalModal) {
             updateState({ showCarModal: true });
         }
@@ -320,8 +316,8 @@ function ChooseVechile({ navigation, route }) {
                 ? scheduleDateTime?.selectedDateAndTime
                 : `${pickedUpDate ? pickedUpDate : ''} ${pickedUpTime ? pickedUpTime : ''
                 }`,
-            is_cab_pooling: !!cabBookingType == 'Pooling' ? 1 : 0,
-            no_seats_for_pooling: updateSeatNO,
+            is_cab_pooling: !!_isCabPooling ? 1 : 0,
+            no_seats_for_pooling: !!_isCabPooling ? seatNo : 0,
         }
 
         const apiHeader = {
@@ -330,12 +326,12 @@ function ChooseVechile({ navigation, route }) {
             language: languages?.primary_language?.id,
         }
 
-        console.log(apiData, "apiDataapiDataapiData");
+        console.log(apiData, "<===apiData")
 
         actions
             .getAllCarAndPrices(apiQuery, apiData, apiHeader)
             .then((res) => {
-                const bidModalStatus = cabBookingType == 'bidRide' ? true : false
+
                 updateState({
                     loyalityAmount: res?.data?.loyalty_amount_saved
                         ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -347,22 +343,28 @@ function ChooseVechile({ navigation, route }) {
                             ? res?.data?.products?.data
                             : [...availableCarList, ...res?.data?.products?.data],
                     selectedCarOption: res?.data?.products?.data[0],
-                    showBidPriceModal: (res?.data?.products?.data[0] && bidModalStatus) ? true : false,
+                    showBidPriceModal: (res?.data?.products?.data[0] && _isBidRide) ? true : false,
                     isLoading: false,
                     isRefreshing: false,
                 });
-                setShowFinalUpdatedSeatNo(updateSeatNO);
+                setShowFinalUpdatedSeatNo(seatNo);
                 setBidRidePrice(Number(res?.data?.products?.data[0]?.tags_price))
             })
             .catch(errorMethod);
     };
 
     const _onUpdateSeatNo = (type) => {
+        let seatNo = updateSeatNO
         if (type == 'increase') {
-            setUpdateSeatNo(updateSeatNO + 1);
+            seatNo = seatNo + 1
+            setUpdateSeatNo(seatNo);
+
         } else {
-            setUpdateSeatNo(updateSeatNO - 1);
+            seatNo = seatNo - 1
+            setUpdateSeatNo(seatNo);
         }
+
+        !!pickUpTimeType && pickUpTimeType == 'now' ? _getAllCarAndPrices(true, null, true, seatNo) : onDateSet(pickUpTimeType)
     };
 
     let redirectTimeout = useRef();
@@ -583,7 +585,6 @@ function ChooseVechile({ navigation, route }) {
 
                 break;
             default:
-                console.log('i mah shfjgdghdjgs');
                 navigation.navigate(
                     navigationStrings.PICKUPTAXIORDERDETAILS,
                     extraData,
@@ -726,6 +727,7 @@ function ChooseVechile({ navigation, route }) {
             indicatorLoader: true,
         });
 
+        console.log(data, "<===sending data")
         actions
             .placeDelievryOrder(data, {
                 code: appData?.profile?.code,
@@ -733,7 +735,7 @@ function ChooseVechile({ navigation, route }) {
                 language: languages?.primary_language?.id,
             })
             .then((res) => {
-                console.log(res, 'resresresresplaceDelievryOrder');
+                console.log(res, '<===placeDelievryOrder');
                 if (res && res?.status == 200) {
                     let extraData = {
                         orderId: res?.data?.id,
@@ -767,9 +769,6 @@ function ChooseVechile({ navigation, route }) {
             .catch(errorMethod);
     };
     const _confirmAndPay = () => {
-        console.log(selectedPayment, 'selectedPayment.id');
-
-
         const orderFinalPrice = paramData?.bidData?.bid_price ? Number(paramData?.bidData?.bid_price) : selectedCarOption?.total_tags_price ? selectedCarOption?.total_tags_price : selectedCarOption?.tags_price;
 
         let data = {};
@@ -813,7 +812,10 @@ function ChooseVechile({ navigation, route }) {
             data['coupon_id'] = couponInfo?.id;
         }
         data['order_time_zone'] = RNLocalize.getTimeZone();
-        data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
+        data["is_cab_pooling"] = cabBookingType == 'Pooling' ? 1 : 0,
+            data["no_seats_for_pooling"] = updateSeatNO,
+
+            data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
         (data[
             'friendName'
         ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
@@ -1077,19 +1079,29 @@ function ChooseVechile({ navigation, route }) {
                         }}
                     >
                         {!!(is_cab_pooling || is_bid_ride_enable) &&
-                            <TouchableOpacity onPress={() => setCabBookingType('Booking')} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
+                            <TouchableOpacity onPress={() => {
+                                _getAllCarAndPrices()
+                                setCabBookingType('Booking')
+                            }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_booking} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_cab_pooling &&
-                            <TouchableOpacity onPress={() => setCabBookingType('Pooling')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
+                            <TouchableOpacity onPress={() => {
+                                setCabBookingType('Pooling')
+                                _getAllCarAndPrices(true, null, true)
+
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_bid_ride_enable &&
-                            <TouchableOpacity onPress={() => setCabBookingType('bidRide')} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
+                            <TouchableOpacity onPress={() => {
+                                setCabBookingType('bidRide')
+                                _getAllCarAndPrices(true, null, false, 1, true)
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_bid_ride} />
                                 <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.black }}>  {strings.BID_RIDE}</Text>
                             </TouchableOpacity>
@@ -1419,13 +1431,6 @@ function ChooseVechile({ navigation, route }) {
         });
     };
 
-    const _modalCloseModal = () => {
-        updateState({
-            isScheduleModalVisible: false,
-        });
-        _getAllCarAndPrices(false);
-    };
-
     const _openDateTimeModal = () => {
         updateState({
             isScheduleModalVisible: true,
@@ -1664,7 +1669,7 @@ function ChooseVechile({ navigation, route }) {
                                     ? `${scheduleDateTime?.selectedDateAndTime}`
                                     : slectedDate || selectedTime
                                         ? `${slectedDate} ${selectedTime}`
-                                        : 'Schedule a ride'
+                                        : strings.SCHEDULE_A_RIDE
                                     }`}
                                 btnStyle={styles.scheduleBtnStyle}
                             />
@@ -1707,157 +1712,146 @@ function ChooseVechile({ navigation, route }) {
     return (
 
         <View style={{ ...styles.container }}>
-            <View style={{ flex: 1 }}>
-                {!!paramData?.location.length > 0 && (
-                    <MapView
-                        ref={mapRef}
-                        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
-                        customMapStyle={
-                            mapStyleGrey
-                        }
-                        style={{ height: height / 1.25 }}
-                        region={region}
-                        initialRegion={region}
-                        tracksViewChanges={false}>
-                        <CustomCallouts data={paramData?.tasks} />
 
-                        {allListedDrivers?.map((coordinate, index) => {
-                            return (
-                                <Marker.Animated
-                                    // tracksViewChanges={agent_location == null}
-                                    coordinate={{
-                                        latitude: Number(coordinate?.agentlog?.lat),
-                                        longitude: Number(coordinate?.agentlog?.long),
-                                    }}>
-                                    <Image
-                                        style={{
-                                            zIndex: 99,
-                                            // height:46,
-                                            // width: 32,
-                                            transform: [
-                                                {
-                                                    rotate: `${Number(
-                                                        coordinate?.agentlog?.heading_angle
-                                                            ? coordinate?.agentlog?.heading_angle
-                                                            : 0,
-                                                    )}deg`,
-                                                },
-                                            ],
-                                        }}
-                                        source={renderDriverTypeMarkes(coordinate)}
-                                    />
-                                </Marker.Animated>
-                            );
-                        })}
+            {!!paramData?.location.length > 0 && (
+                <MapView
+                    ref={mapRef}
+                    provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
+                    customMapStyle={
+                        mapStyleGrey
+                    }
+                    style={{ height: height / 1.25 }}
+                    region={region}
+                    initialRegion={region}
+                    tracksViewChanges={false}>
+                    <CustomCallouts data={paramData?.tasks} />
 
-                        <MapViewDirections
-                            origin={paramData?.location[0]}
-                            waypoints={
-                                paramData?.location?.length > 2
-                                    ? paramData?.location.slice(1, -1)
-                                    : []
-                            }
-                            destination={paramData?.location[paramData?.location.length - 1]}
-                            apikey={profile?.preferences?.map_key}
-                            strokeWidth={4}
-                            strokeColor={colors.black}
-                            optimizeWaypoints={true}
-                            onStart={(params) => {
-                                // console.log(Started routing between "${params.origin}" and "${params.destination}");
-                            }}
-                            precision={'high'}
-                            timePrecision={'now'}
-                            mode={'DRIVING'}
-                            // maxZoomLevel={20}
-                            onReady={(result) => {
-                                console.log(result, 'result>>>>');
-                                console.log(`Distance: ${result.distance} km`);
-                                console.log(`Duration: ${result.duration} min.`);
-                                updateState({
-                                    totalDistance: distance_unit_for_time
-                                        ? distance_unit_for_time === 'mile'
-                                            ? (result.distance * 0.621371).toFixed(2)
-                                            : result.distance.toFixed(2)
-                                        : result.distance.toFixed(2),
-                                    totalDuration: result.duration.toFixed(2),
-                                });
-                            }}
-                            onError={(errorMessage) => {
-                                // console.log('GOT AN ERROR');
-                            }}
-                        />
-                    </MapView>
-                )}
-
-                <TouchableOpacity
-                    style={{
-                        position: 'absolute',
-                        top: 60,
-                        right: 20,
-                    }}
-                    onPress={onCenter}>
-                    <Image
-                        style={{
-                            width: moderateScale(34),
-                            height: moderateScale(34),
-                            borderRadius: moderateScale(34 / 2),
-                        }}
-                        source={imagePath.mapNavigation}
-                    />
-                </TouchableOpacity>
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
-                    snapPoints={[height / 1.8, height / 1.6]}
-                    // activeOffsetY={[-1, 1]}
-                    failOffsetX={[-5, 5]}
-                    animateOnMount={true}
-                    handleComponent={carModalHeader}
-                    onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
-                         {isBookingType == "RequestForDriver" &&
-                            <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
-                                <TextInput
-                                    onChangeText={txt => updateState({ uID: txt })}
-                                    placeholder='Enter Driver id'
-                                    value={uID}
+                    {allListedDrivers?.map((coordinate, index) => {
+                        return (
+                            <Marker.Animated
+                                // tracksViewChanges={agent_location == null}
+                                coordinate={{
+                                    latitude: Number(coordinate?.agentlog?.lat),
+                                    longitude: Number(coordinate?.agentlog?.long),
+                                }}>
+                                <Image
                                     style={{
-                                        borderWidth: 1,
-                                        height: 48,
-                                        borderRadius: moderateScale(8),
-                                        borderColor: colors.greyColor3,
-                                        paddingLeft: moderateScale(10)
+                                        zIndex: 99,
+                                        // height:46,
+                                        // width: 32,
+                                        transform: [
+                                            {
+                                                rotate: `${Number(
+                                                    coordinate?.agentlog?.heading_angle
+                                                        ? coordinate?.agentlog?.heading_angle
+                                                        : 0,
+                                                )}deg`,
+                                            },
+                                        ],
                                     }}
+                                    source={renderDriverTypeMarkes(coordinate)}
                                 />
-                            </View>}
-                    <BottomSheetScrollView
-                        keyboardShouldPersistTaps="handled"
-                        showsVerticalScrollIndicator={false}
+                            </Marker.Animated>
+                        );
+                    })}
+
+                    <MapViewDirections
+                        origin={paramData?.location[0]}
+                        waypoints={
+                            paramData?.location?.length > 2
+                                ? paramData?.location.slice(1, -1)
+                                : []
+                        }
+                        destination={paramData?.location[paramData?.location.length - 1]}
+                        apikey={profile?.preferences?.map_key}
+                        strokeWidth={4}
+                        strokeColor={colors.black}
+                        optimizeWaypoints={true}
+                        onStart={(params) => {
+                            // console.log(Started routing between "${params.origin}" and "${params.destination}");
+                        }}
+                        precision={'high'}
+                        timePrecision={'now'}
+                        mode={'DRIVING'}
+                        // maxZoomLevel={20}
+                        onReady={(result) => {
+                            console.log(result, 'result>>>>');
+                            console.log(`Distance: ${result.distance} km`);
+                            console.log(`Duration: ${result.duration} min.`);
+                            updateState({
+                                totalDistance: distance_unit_for_time
+                                    ? distance_unit_for_time === 'mile'
+                                        ? (result.distance * 0.621371).toFixed(2)
+                                        : result.distance.toFixed(2)
+                                    : result.distance.toFixed(2),
+                                totalDuration: result.duration.toFixed(2),
+                            });
+                        }}
+                        onError={(errorMessage) => {
+                            // console.log('GOT AN ERROR');
+                        }}
+                    />
+                </MapView>
+            )}
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
+                snapPoints={[height / 1.6, height / 1.4]}
+                // activeOffsetY={[-1, 1]}
+                failOffsetX={[-5, 5]}
+                animateOnMount={true}
+                handleComponent={carModalHeader}
+                onChange={() => playHapticEffect(hapticEffects.impactMedium)}>
+
+                <BottomSheetScrollView
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                    style={{
+                        marginBottom: moderateScaleVertical(10),
+                        height:height / 1.4,
+                        backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.background
+                            : colors.white,
+                    }}>
+                    <View
                         style={{
-                            marginBottom: moderateScaleVertical(10),
+                            //  height:height/1.7,
+                            flex: 1,
                             backgroundColor: isDarkMode
                                 ? MyDarkTheme.colors.background
                                 : colors.white,
                         }}>
-                        <View
-                            style={{
-                                //  height:height/1.7,
-                                flex: 1,
-                                backgroundColor: isDarkMode
-                                    ? MyDarkTheme.colors.background
-                                    : colors.white,
-                            }}>
-                            {!!showCarModal && _selectCarModalView()}
-                            {!!showPaymentModal && _selectPaymentView()}
-                        </View>
-                    </BottomSheetScrollView>
-                </BottomSheet>
 
+                {!!profile?.preferences?.is_particular_driver && cabBookingType === "Booking" && !showPaymentModal &&
+                    <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
+                        <BorderTextInputWithLable
+                            marginBottom={8}
 
+                            value={uID}
+                            labelStyle={{
+                                fontSize: textScale(12),
+                                fontFamily: fontFamily?.regular
+                            }}
+                            label={strings.REQUEST_FOR_PARTICULAR_DRIVER}
 
-            </View>
+                            placeholder={strings.ENTER_DRIVER_ID}
+                            onChangeText={txt => updateState({ uID: txt })}
+                            textInputStyle={{
+                                fontSize: textScale(12)
+                            }}
+                            containerStyle={{
+                                borderRadius: moderateScale(8)
+                            }}
+                        />
+
+                    </View>}
+                        {!!showCarModal && _selectCarModalView()}
+                        {!!showPaymentModal && _selectPaymentView()}
+                    </View>
+                </BottomSheetScrollView>
+            </BottomSheet>
 
             {/* BottomView */}
-
             <View style={styles.topView}>
 
                 <TouchableOpacity
@@ -1879,6 +1873,18 @@ function ChooseVechile({ navigation, route }) {
                         style={{
                             tintColor: colors.black,
                         }}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+
+                    onPress={onCenter}>
+                    <Image
+                        style={{
+                            width: moderateScale(34),
+                            height: moderateScale(34),
+                            borderRadius: moderateScale(34 / 2),
+                        }}
+                        source={imagePath.mapNavigation}
                     />
                 </TouchableOpacity>
 

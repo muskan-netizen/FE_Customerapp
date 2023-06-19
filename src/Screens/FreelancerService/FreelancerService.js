@@ -92,7 +92,13 @@ const FreelancerService = ({ route, navigation }) => {
     const [selectedAddress, setSelectedAddress] = useState(selectedAddressData ? selectedAddressData : null);
 
     useEffect(() => {
-        getAllProductsByCategoryId();
+        if (!!data?.isVendorList) {
+            getAllProductsByVendor()
+        }
+        else {
+            getAllProductsByCategoryId();
+        }
+
     }, [navigation, languages, currencies, reloadData, productListId]);
 
     const getAllProductsByCategoryId = () => {
@@ -109,8 +115,8 @@ const FreelancerService = ({ route, navigation }) => {
                 console.log(res, '<===res getProductByCategoryIdOptamize');
                 if (!!res?.data) {
                     setCategoryInfo(categoryInfo ? categoryInfo : res.data.category);
-                    const productListData = pageNo == 1 ? res.data.listData.data : [...productListData, ...res.data.listData.data]
-                    const newProductListDataWithQty = productListData.map(v => ({ ...v, qtyText: 1 }))
+                    const newProductData = res.data.listData.data.map(v => ({ ...v, qtyText: 1 }))
+                    const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, newProductData]
 
                     setProductListData(newProductListDataWithQty);
 
@@ -133,6 +139,47 @@ const FreelancerService = ({ route, navigation }) => {
 
             .catch(errorMethod);
     };
+
+
+    /****Get all list items by vendor id */
+    const getAllProductsByVendor = (pageNo = 1) => {
+
+
+        let vendorId = data?.id
+
+        let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1
+            }&type=${dineInType}&limit=40`;
+
+        if (!!data?.categoryExist) {
+            apiData = apiData + `&category_id=${data?.categoryExist}`;
+        }
+        actions
+            .getProductByVendorIdOptamizeV2(
+                apiData,
+                {},
+                {
+                    code: appData.profile.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                    latitude: location?.latitude,
+                    longitude: location?.longitude,
+                    systemuser: DeviceInfo.getUniqueId(),
+                },
+            )
+            .then(async res => {
+                console.log('get all products by vendor res', res?.data, pageNo);
+                setLoading(false);
+
+                const newProductData = res?.data?.products?.data?.map(v => ({ ...v, qtyText: 1 }))
+                const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, newProductData]
+
+                setProductListData(newProductListDataWithQty);
+
+            })
+            .catch(errorMethod);
+    };
+
+
 
     const getDriverTimeSlots = (date) => {
         actions.getDriverSlots(`?date=${moment(date).format('YYYY-MM-DD')}`, {},
@@ -291,7 +338,6 @@ const FreelancerService = ({ route, navigation }) => {
         }
     };
     const setAppSessionRedirection = () => {
-        actions.setRedirection('cart');
         actions.setAppSessionData('on_login');
     };
 
@@ -428,6 +474,32 @@ const FreelancerService = ({ route, navigation }) => {
                 })
         }
     }
+
+    const listEmptyComponent = () => <View>
+        <FastImage
+            source={imagePath.noDataFound}
+            resizeMode="contain"
+            style={{
+                width: moderateScale(140),
+                height: moderateScale(140),
+                alignSelf: 'center',
+                marginTop: moderateScaleVertical(30),
+            }}
+        />
+        <Text
+            style={{
+                textAlign: 'center',
+                fontSize: textScale(11),
+                fontFamily: fontFamily.regular,
+                marginHorizontal: moderateScale(10),
+                lineHeight: moderateScale(20),
+                marginTop: moderateScale(5),
+            }}>
+            {strings.NO_SERVICE_FOUND}
+        </Text>
+    </View>
+
+
     return (
         <WrapperContainer
             isLoading={isLoading}
@@ -493,34 +565,7 @@ const FreelancerService = ({ route, navigation }) => {
                                 </View>
                             )
                         }}
-                        ListEmptyComponent={() => (
-                            <>
-                                {
-                                    <View>
-                                        <FastImage
-                                            source={imagePath.noDataFound}
-                                            resizeMode="contain"
-                                            style={{
-                                                width: moderateScale(140),
-                                                height: moderateScale(140),
-                                                alignSelf: 'center',
-                                                marginTop: moderateScaleVertical(30),
-                                            }}
-                                        />
-                                        <Text
-                                            style={{
-                                                textAlign: 'center',
-                                                fontSize: textScale(11),
-                                                fontFamily: fontFamily.regular,
-                                                marginHorizontal: moderateScale(10),
-                                                lineHeight: moderateScale(20),
-                                                marginTop: moderateScale(5),
-                                            }}>
-                                            {strings.NO_SERVICE_FOUND}
-                                        </Text>
-                                    </View>}
-                            </>
-                        )}
+                        ListEmptyComponent={listEmptyComponent}
                     />
                 </View>
 
@@ -713,6 +758,7 @@ const FreelancerService = ({ route, navigation }) => {
                     </View>
                     <GradientButton onPress={sendProductVariantData} btnText={strings.PROCEED} />
                 </View>
+                <View style={{ height: moderateScaleVertical(80) }} />
             </ScrollView>
             <DatePicker
                 date={moment().toDate()}

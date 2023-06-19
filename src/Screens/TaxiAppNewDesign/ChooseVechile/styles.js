@@ -30,7 +30,7 @@ export default ({ fontFamily, themeColors }) => {
     },
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: colors.white,
     },
     map: {
       ...StyleSheet.absoluteFillObject,

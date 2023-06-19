@@ -1165,5 +1165,7 @@ Amount`,
   JOIN_AS: "Join as a",
   CLIENT_FREELANCER_VENDOR: "client, freelancer or vendor",
   AS_LENDER: "As Lender",
-  AS_BORROWER: "As Borrower"
+  AS_BORROWER: "As Borrower",
+  SCHEDULE_A_RIDE: "Schedule a ride",
+  ENTER_DRIVER_ID: "Enter driver ID"
 };
