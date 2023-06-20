@@ -397,7 +397,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
             alignItems: 'center',
             // justifyContent: 'space-between',
           }}>
-          {data && data.length
+          {data && data?.length
             ? data.map((item, index) => {
               console.log(item, 'itemitem');
               return (
@@ -564,7 +564,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                 <View>{recentlyData(previousSearches)}</View>
               </View>
             ) : null}
-            {!!recommendedVendorsdata.length && (
+            {!!recommendedVendorsdata?.length && (
               <View>
                 <Text
                   style={{
