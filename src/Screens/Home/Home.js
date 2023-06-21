@@ -608,7 +608,7 @@ export default function Home({ route, navigation }) {
   //onPress Category
   const onPressCategory = (item) => {
 
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
