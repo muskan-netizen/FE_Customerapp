@@ -145,8 +145,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       // emirateId: emirateId,
       productLocation: productLocation,
       price: price,
-      originalPrice: originalPrice,
-      markedDates: getMarkedDates()
+      // originalPrice: originalPrice,
+      // markedDates: getMarkedDates()
 
     });
     if (error) {
@@ -163,10 +163,10 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       return;
     }
     let markedDates = getMarkedDates()
-    if (isEmpty(markedDates)) {
-      showError("Please select product availablity")
-      return
-    }
+    // if (isEmpty(markedDates)) {
+    //   showError("Please select product availablity")
+    //   return
+    // }
     setLoadingSubmitAttributes(true);
     let datesAry = []
     let formData = new FormData();
@@ -688,13 +688,18 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               textInputStyle={styles.txtInputStyle}
             />
 
-            {/* <BorderTextInput
-              onChangeText={(text) => setEmirateId(text)}
-              placeholder={strings.EMIRATES}
-              value={emirateId}
+            {paramData?.type_id !== 10 && <BorderTextInput
+              value={price}
+              keyboardType={"number-pad"}
+              onChangeText={(text) => {
+                setPrice(text)
+
+              }}
+              placeholder={`${currencies?.primary_currency?.symbol} ${strings.PRICE}`}
               containerStyle={styles.containerStyle}
               textInputStyle={styles.txtInputStyle}
-            /> */}
+
+            />}
             <TouchableOpacity
               onPress={() => {
                 updateState({
@@ -713,87 +718,94 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                 }} resizeMode="contain" source={imagePath.closeButton} />
               </TouchableOpacity>
             </TouchableOpacity>
-            <Text
-              style={{
-                marginLeft: moderateScale(1),
-                fontSize: textScale(14),
-                fontFamily: fontFamily?.medium,
-                marginTop: moderateScaleVertical(16)
-              }}>
-              {strings.PRICING_DETAILS_FOR} :
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(14),
-              }}>
+
+            {paramData?.type_id == 10 ? <View>
+              <Text
+                style={{
+                  marginLeft: moderateScale(1),
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily?.medium,
+                  marginTop: moderateScaleVertical(16)
+                }}>
+                {strings.PRICING_DETAILS_FOR} :
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: moderateScaleVertical(14),
+                }}>
+                <BorderTextInput
+                  value={price}
+                  keyboardType={"number-pad"}
+                  onChangeText={(text) => {
+                    setPrice(text)
+                    let weekPrice = ((Number(text) * 4) / 7).toFixed(0)
+                    let monthPrice = ((Number(text) * 4 * 3) / 30).toFixed(0)
+                    setWeeklyPrice(text == "" ? "" : String(weekPrice))
+                    setMonthlyPrice(text == "" ? "" : String(monthPrice))
+                  }}
+                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_DAY}`}
+                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
+                  textInputStyle={styles.txtInputStyle}
+                />
+                <BorderTextInput
+                  // onChangeText={(text) => setWeeklyPrice(text)}
+
+                  value={weeklyPrice}
+                  editable={false}
+                  keyboardType={"number-pad"}
+                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_WEEK}`}
+                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
+                  textInputStyle={styles.txtInputStyle}
+                />
+                <BorderTextInput
+                  // onChangeText={(text) => setMonthlyPrice(text)}
+                  value={monthlyPrice}
+                  editable={false}
+                  keyboardType={"number-pad"}
+                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_MONTH}`}
+                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
+                  textInputStyle={styles.txtInputStyle}
+                />
+              </View>
               <BorderTextInput
-                value={price}
+                onChangeText={(text) => setOriginalPrice(text)}
+                value={originalPrice}
                 keyboardType={"number-pad"}
-                onChangeText={(text) => {
-                  setPrice(text)
-                  let weekPrice = ((Number(text) * 4) / 7).toFixed(0)
-                  let monthPrice = ((Number(text) * 4 * 3) / 30).toFixed(0)
-                  setWeeklyPrice(text == "" ? "" : String(weekPrice))
-                  setMonthlyPrice(text == "" ? "" : String(monthPrice))
+                placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
+                containerStyle={styles.containerStyle}
+                textInputStyle={styles.txtInputStyle}
+              />
+              <BorderTextInput
+                onChangeText={(text) => setRentalDays(text)}
+                value={rentalDays}
+                keyboardType={"number-pad"}
+                placeholder={strings.MINIMAL_RENTAL_DAYS}
+                rightIcon={imagePath.ic_down_arrow}
+                containerStyle={styles.containerStyle}
+                textInputStyle={styles.txtInputStyle}
+              />
+
+
+              <ButtonComponent
+                onPress={() => setIsCalendarModal(true)}
+                containerStyle={styles.availablityBtn}
+                textStyle={{
+                  color: colors.black,
                 }}
-                placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_DAY}`}
-                containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                textInputStyle={styles.txtInputStyle}
+                marginBottom={0}
+                btnText={isEmpty(selectedDates) ? "Choose Availablity" : getDates()}
               />
-              <BorderTextInput
-                // onChangeText={(text) => setWeeklyPrice(text)}
-
-                value={weeklyPrice}
-                editable={false}
-                keyboardType={"number-pad"}
-                placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_WEEK}`}
-                containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                textInputStyle={styles.txtInputStyle}
-              />
-              <BorderTextInput
-                // onChangeText={(text) => setMonthlyPrice(text)}
-                value={monthlyPrice}
-                editable={false}
-                keyboardType={"number-pad"}
-                placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_MONTH}`}
-                containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                textInputStyle={styles.txtInputStyle}
-              />
-            </View>
-            <BorderTextInput
-              onChangeText={(text) => setOriginalPrice(text)}
-              value={originalPrice}
-              keyboardType={"number-pad"}
-              placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
-              containerStyle={styles.containerStyle}
-              textInputStyle={styles.txtInputStyle}
-            />
-            <BorderTextInput
-              onChangeText={(text) => setRentalDays(text)}
-              value={rentalDays}
-              keyboardType={"number-pad"}
-              placeholder={strings.MINIMAL_RENTAL_DAYS}
-              rightIcon={imagePath.ic_down_arrow}
-              containerStyle={styles.containerStyle}
-              textInputStyle={styles.txtInputStyle}
-            />
-
-
-            <ButtonComponent
-              onPress={() => setIsCalendarModal(true)}
-              containerStyle={styles.availablityBtn}
-              textStyle={{
-                color: colors.black,
-              }}
-              btnText={isEmpty(selectedDates) ? "Choose Availablity" : getDates()}
-            />
+            </View> : <View />}
             {/* <ButtonComponent
               onPress={onSubmitAttributes}
               containerStyle={{ ...styles.submitBtn, backgroundColor: isDarkMode ? themeColors?.primary_color : colors.black }}
               btnText={strings.CONFIRM_AND_CONTINUE}
             /> */}
+            <View style={{
+              height: moderateScaleVertical(16)
+            }} />
             <FlatList
               data={attributeInfo}
               keyboardShouldPersistTaps={'handled'}
@@ -1095,7 +1107,7 @@ function stylesFunc({ fontFamily, themeColors }) {
       width: moderateScale(350),
       alignSelf: 'center',
       borderRadius: 8,
-      marginBottom: moderateScaleVertical(60),
+      // marginBottom: moderateScaleVertical(60),
       backgroundColor: colors.white
     }
   });

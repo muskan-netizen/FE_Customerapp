@@ -32,7 +32,9 @@ const AllCategories = ({ navigation }) => {
 
     const getCategories = () => {
         setIsLoading(true)
-        actions.getAllCategories({}, {
+        actions.getAllCategories({
+            type: "p2p"
+        }, {
             code: appData?.profile?.code,
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,

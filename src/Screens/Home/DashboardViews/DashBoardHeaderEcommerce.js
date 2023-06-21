@@ -62,13 +62,14 @@ export default function DashBoardHeaderEcommerce({
   );
 
 
+
   return (
     <View
       style={{
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
-          backgroundColor: isDarkMode
+        backgroundColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.white
       }}>

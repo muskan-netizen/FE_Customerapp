@@ -407,7 +407,7 @@ export default function Account3({ navigation }) {
         )} */}
 
           {!!userData?.auth_token &&
-            (businessType == 4 ? null : (
+            ((businessType == 4 || !!appData?.profile?.preferences?.is_rental_weekly_monthly_price) ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}

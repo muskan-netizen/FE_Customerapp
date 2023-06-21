@@ -470,14 +470,14 @@ const DashBoardFiveV2Api = ({
         >
           <FlatList
             key={'6'}
-            data={item?.data}
+            data={item?.data.slice(0, 8)}
             keyExtractor={(item) => item?.id?.toString()}
             showsHorizontalScrollIndicator={false}
             numColumns={4}
             renderItem={_renderCategories}
             ItemSeparatorComponent={() => (
               <View style={{ height: moderateScale(8), }} />
-            )} s
+            )}
           />
         </View>
 

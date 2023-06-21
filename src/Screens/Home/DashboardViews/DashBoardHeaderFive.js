@@ -69,6 +69,8 @@ export default function DashBoardHeaderFive({
     '200/400',
   );
 
+  console.log(imageURI, ">>>>>imageURI")
+
   return (
     <View
       style={{

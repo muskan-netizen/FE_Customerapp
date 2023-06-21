@@ -211,7 +211,7 @@ export default function P2pOndemandHome({ route, navigation }) {
 
 
   const getLocationPermissionStatus = () => {
-    if (isEmpty(location)) {
+    if (location?.address == "") {
       onlyCheckLocationPermission().then((res) => {
         setisLocationModal(false)
         onGetCurrentLoc()
@@ -232,6 +232,7 @@ export default function P2pOndemandHome({ route, navigation }) {
 
     chekLocationPermission(true)
       .then(result => {
+        console.log(result, "faskdjfkjashdf")
         if (result !== 'goback' && result == 'granted') {
           onGetCurrentLoc()
         } else if (result === "blocked") {
@@ -261,6 +262,7 @@ export default function P2pOndemandHome({ route, navigation }) {
   const onGetCurrentLoc = () => {
     getCurrentLocation('home')
       .then(curLoc => {
+        console.log(curLoc, "fadsjhfds")
         setisLocationModal(false)
         updateState({
           curLatLong: curLoc,
