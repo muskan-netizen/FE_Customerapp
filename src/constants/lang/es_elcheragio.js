@@ -746,9 +746,11 @@ export default {
   DROP: 'Dejar',
   QUESTION: 'Pregunta:',
   ANSWER: 'Respuesta:',
-
   COMPLETE: 'Completado',
   ASSIGNED: 'Asignado',
+  ON_THE_WAY:"On the way",
+  READY_FOR_PICKUP:"Ready for pickup",
+  READY_FOR_DEPARTURE:"Ready for departure",
   UNASSIGNED: 'Sin asignar',
   ARRIVED: 'Llegó',
   DRIVERDETAIL: 'Datos del repartidor',

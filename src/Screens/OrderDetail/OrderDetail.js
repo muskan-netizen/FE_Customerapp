@@ -254,14 +254,14 @@ export default function OrderDetail({ navigation, route }) {
   };
   const isFocused = useIsFocused();
 
-  // useInterval(
-  //   () => {
-  //     if (paramData?.fromActive) {
-  //       getOrders();
-  //     }
-  //   },
-  //   isFocused ? 5000 : null
-  // );
+  useInterval(
+    () => {
+      if (paramData?.fromActive) {
+        getOrders();
+      }
+    },
+    isFocused ? 5000 : null
+  );
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -3584,27 +3584,23 @@ export default function OrderDetail({ navigation, route }) {
 */}
 
   const orderStatusTitle = (val) => {
-    console.log("valvalvalvalval", val)
-    let title = ''
-    //  val?.task_status == '4' ? strings.DELIVERED : ''
     if (val?.task_type_id == 1 && val?.task_status == '1') {
-      return 'Assigned'
+      return strings.ASSIGNED
     }
     if (val?.task_type_id == 2 && val?.task_status == '1') {
-      return 'Pending'
+      return strings.PENDING
     }
     if (val?.task_status == '2') {
-      return 'On the way'
+      return strings.ON_THE_WAY
     }
     if (val?.task_type_id == 1 && val?.task_status == '3') {
-      return 'Ready for pickup'
+      return strings.READY_FOR_PICKUP
     }
     if (val?.task_type_id == 2 && val?.task_status == '3') {
-      return 'Ready for departure'
+      return strings.READY_FOR_DEPARTURE
     }
-    
     if (val?.task_status == '4') {
-      return 'Delivered'
+      return strings.DELIVERED
     }
     return ''
   }
@@ -4033,11 +4029,11 @@ export default function OrderDetail({ navigation, route }) {
                                 fontFamily: fontFamily.regular,
                            
                               }} >{val?.address}</Text>
-                              <Text style={{
+                              {!!orderStatusTitle(val)?<Text style={{
                                 color: isDarkMode ? colors.white : colors.blackC,
                                 fontSize: textScale(12),
                                 fontFamily: fontFamily.medium,
-                              }}>{orderStatusTitle(val)}</Text>
+                              }}>{orderStatusTitle(val)}</Text>:null}
                             </View>
                           </View>
 

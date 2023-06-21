@@ -747,6 +747,10 @@ export default {
 
   COMPLETE: 'Completado',
   ASSIGNED: 'Asignado',
+  ON_THE_WAY:"On the way",
+  READY_FOR_PICKUP:"Ready for pickup",
+  READY_FOR_DEPARTURE:"Ready for departure",
+  PENDING: 'Pending',
   UNASSIGNED: 'Sin asignar',
   ARRIVED: 'Llegado',
   DRIVERDETAIL: 'Detalles del conductor',

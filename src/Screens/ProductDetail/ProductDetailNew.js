@@ -649,7 +649,7 @@ export default function ProductDetail({ route, navigation }) {
     });
     console.log(options, "modifyVariantsmodifyVariants", modifyVariants)
     setVariantSet(modifyVariants)
-    // getProductDetailBasedOnFilter(modifyVariants, options, i)
+    getProductDetailBasedOnFilter(modifyVariants, options, i)
   };
 
 
