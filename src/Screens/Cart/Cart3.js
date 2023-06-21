@@ -375,8 +375,8 @@ function Cart({ navigation, route }) {
           updateState({
             isLoadingB: false,
           });
-          if (res.data) {
-            actions.saveAllUserAddress(res.data);
+          if (res?.data) {
+            actions.saveAllUserAddress(res?.data);
           }
         })
         .catch(errorMethod);
@@ -421,7 +421,7 @@ function Cart({ navigation, route }) {
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({ deliveryFeeLoader: false, isSubmitFaqLoader: false });
 
-        if (!!checkDate && res.data.schedule_type == 'schedule') {
+        if (!!checkDate && res?.data?.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
           setLocaleSheduledOrderDate(
             timeInLocalLangauge(formatDate, selectedLanguage),
@@ -476,19 +476,19 @@ function Cart({ navigation, route }) {
             res?.data?.vendor_details?.vendor_tables.forEach(
               (item, indx) =>
               (tableData[indx] = {
-                id: item.id,
-                label: `${strings.CATEGORY}: ${item.category.title ? item.category.title : ''
-                  } | ${strings.TABLE}: ${item.table_number ? item.table_number : 0
-                  } | ${strings.SEAT_CAPACITY}: ${item.seating_number ? item.seating_number : 0
+                id: item?.id,
+                label: `${strings.CATEGORY}: ${item?.category?.title ? item?.category?.title : ''
+                  } | ${strings.TABLE}: ${item?.table_number ? item?.table_number : 0
+                  } | ${strings.SEAT_CAPACITY}: ${item?.seating_number ? item?.seating_number : 0
                   }`,
-                value: `${strings.CATEGORY}: ${item.category.title ? item.category.title : ''
-                  } | ${strings.TABLE}: ${item.table_number ? item.table_number : 0
-                  } | ${strings.SEAT_CAPACITY}: ${item.seating_number ? item.seating_number : 0
+                value: `${strings.CATEGORY}: ${item?.category?.title ? item?.category?.title : ''
+                  } | ${strings.TABLE}: ${item?.table_number ? item?.table_number : 0
+                  } | ${strings.SEAT_CAPACITY}: ${item?.seating_number ? item?.seating_number : 0
                   }`,
-                title: item.category.title,
-                table_number: item.table_number,
-                seating_number: item.seating_number,
-                vendor_id: res.data.vendor_details.vendor_address.id,
+                title: item?.category?.title,
+                table_number: item?.table_number,
+                seating_number: item?.seating_number,
+                vendor_id: res?.data?.vendor_details?.vendor_address.id,
               }),
               setTableData(tableData),
             );
@@ -507,7 +507,7 @@ function Cart({ navigation, route }) {
             var month = months.indexOf(monthname);
             return month ? month + 1 : 0;
           }
-          if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
+          if (!!res?.data?.products.length && res?.data?.products[0]?.delaySlot) {
             var delaySlot = res?.data?.products[0]?.delaySlot.replace(/,/g, "").split(" ");
             const mont = monthNameToNum(delaySlot[1])
             const timeSlot = `${delaySlot[2]}-${mont > 9 ? '' : '0'}${mont}-${delaySlot[0]}`
@@ -524,23 +524,23 @@ function Cart({ navigation, route }) {
           //   if (currentDate == sheduledorderdate || currentDate == getApiScheduledDate) {
           //     setAvailableTimeSlots([])
           //   } else {
-          //     setAvailableTimeSlots(res.data.slots)
+          //     setAvailableTimeSlots(res?.data?.slots)
           //   }
           // } else {
-          //   setAvailableTimeSlots(res.data.slots);
+          //   setAvailableTimeSlots(res?.data?.slots);
           // }
-          // getBundleId == appIds.masa ? currentDate == sheduledorderdate ||  currentDate == getApiScheduledDate ? setAvailableTimeSlots([]):  setAvailableTimeSlots(res.data.slots): setAvailableTimeSlots(res.data.slots)
-          setAvailableTimeSlots(res.data.slots);
-          // setLaundryAvailablePickupSlot(res.data.slots);
-          // setLaundryAvailableDropOffSlot(res.data.slots);
+          // getBundleId == appIds.masa ? currentDate == sheduledorderdate ||  currentDate == getApiScheduledDate ? setAvailableTimeSlots([]):  setAvailableTimeSlots(res?.data?.slots): setAvailableTimeSlots(res?.data?.slots)
+          setAvailableTimeSlots(res?.data?.slots);
+          // setLaundryAvailablePickupSlot(res?.data?.slots);
+          // setLaundryAvailableDropOffSlot(res?.data?.slots);
 
-          setCartData(res.data);
+          setCartData(res?.data);
 
           updateState({
             isLoadingB: false,
             isRefreshing: false,
           });
-          if (!res?.data?.schedule_type && !isEmpty(res.data.products) && res.data.products.length > 0) {
+          if (!res?.data?.schedule_type && !isEmpty(res?.data?.products) && res?.data?.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -601,8 +601,8 @@ function Cart({ navigation, route }) {
         .then((res) => {
           console.log('cart detail', res);
           actions.cartItemQty(res);
-          setCartItems(res.data.products);
-          setCartData(res.data);
+          setCartItems(res?.data?.products);
+          setCartData(res?.data);
           actions.reloadData(!reloadData);
 
           updateState({
@@ -637,8 +637,8 @@ function Cart({ navigation, route }) {
         actions.reloadData(!reloadData);
         if (!!res?.data && !!res?.data?.products) {
           actions.cartItemQty(res);
-          setCartItems(res.data.products || []);
-          setCartData(res.data);
+          setCartItems(res?.data?.products || []);
+          setCartData(res?.data);
           actions.reloadData(!reloadData);
           updateState({
             isLoadingB: false,
@@ -731,7 +731,7 @@ function Cart({ navigation, route }) {
   const _getAllOffers = (vendor, cartData) => {
     moveToNewScreen(navigationStrings.OFFERS, {
       vendor: vendor,
-      cartId: cartData.id,
+      cartId: cartData?.id,
     })();
   };
 
@@ -883,7 +883,7 @@ function Cart({ navigation, route }) {
           : 0)
       ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
       payment_option_id: selectedPayment?.id,
-      orderDetail: res.data,
+      orderDetail: res?.data,
       redirectFrom: 'cart',
       selectedPayment: selectedPayment,
     };
@@ -895,7 +895,7 @@ function Cart({ navigation, route }) {
       )
     ) {
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
-        orderDetail: res.data,
+        orderDetail: res?.data,
       })();
       updateState({ placeLoader: false });
       return;
@@ -1057,11 +1057,11 @@ function Cart({ navigation, route }) {
           businessType == 'home_service' &&
           res?.data?.vendors?.length == 1
         ) {
-          _getOrderDetail(res.data.vendors[0]);
+          _getOrderDetail(res?.data?.vendors[0]);
         }
         else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
-            orderDetail: res.data,
+            orderDetail: res?.data,
           })();
           actions.cartItemQty({});
         }
@@ -1314,7 +1314,7 @@ function Cart({ navigation, route }) {
             });
             showSuccess(res?.message);
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
+              orderDetail: res?.data,
             })();
             return;
           }
@@ -1359,16 +1359,16 @@ function Cart({ navigation, route }) {
               orderId: order_id,
               fromVendorApp: true,
               selectedVendor: { id: vendor_id },
-              orderDetail: res.data.vendors[0],
+              orderDetail: res?.data?.vendors[0],
               showRating:
-                res.data.vendors[0]?.order_status?.current_status?.id != 6
+                res?.data?.vendors[0]?.order_status?.current_status?.id != 6
                   ? false
                   : true,
             });
             actions.cartItemQty({});
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
+              orderDetail: res?.data,
             })();
             setCartItems([]);
             setCartData({});
@@ -1818,7 +1818,7 @@ function Cart({ navigation, route }) {
   //                             placeLoader: false,
   //                           });
   //                           moveToNewScreen(navigationStrings.ORDERSUCESS, {
-  //                             orderDetail: res.data,
+  //                             orderDetail: res?.data,
   //                           })();
   //                           showSuccess(res?.message);
   //                         } else {
@@ -1943,7 +1943,7 @@ function Cart({ navigation, route }) {
                       placeLoader: false,
                     });
                     moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                      orderDetail: res.data,
+                      orderDetail: res?.data,
                     })();
                     showSuccess(res?.message);
                   } else {
@@ -2039,7 +2039,7 @@ function Cart({ navigation, route }) {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        authorization: `${userData.auth_token}`
+        authorization: `${userData?.auth_token}`
 
       },
     }).then((response) => {
@@ -2121,8 +2121,8 @@ function Cart({ navigation, route }) {
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data &&
-      !!checkCartItem?.data.products &&
-      !!checkCartItem?.data.products?.length
+      !!checkCartItem?.data?.products &&
+      !!checkCartItem?.data?.products?.length
     ) {
       setDateAndTimeSchedule();
     }
@@ -2183,7 +2183,7 @@ function Cart({ navigation, route }) {
       }
     }
     else {
-      if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+      if (availableTimeSlots.length > 0 || cartData?.slots.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
 
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
@@ -2259,7 +2259,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
-        setWishlistArray(res.data.data);
+        setWishlistArray(res?.data?.data);
         updateState({
           isLoadingB: false,
           isRefreshing: false,
@@ -2426,9 +2426,9 @@ function Cart({ navigation, route }) {
       fetchOffers: true,
       id: item?.vendor?.id,
       vendor:
-        item.redirect_to == staticStrings.ONDEMANDSERVICE
+        item?.redirect_to == staticStrings.ONDEMANDSERVICE
           ? false
-          : item.redirect_to == staticStrings.PRODUCT
+          : item?.redirect_to == staticStrings.PRODUCT
             ? false
             : true,
       name: item?.vendor?.name,
@@ -2965,17 +2965,62 @@ function Cart({ navigation, route }) {
   }, []);
 
   //Add and update the addreess
-  const addUpdateLocation = (childData, isSAveAddAdress )=> {
-   
+  const addUpdateLocation = (childData, isSAveAddAdress) => {
+
     // setModalVisible(false);
-    console.log(childData,isSAveAddAdress,"childDatachildData");
-    console.log(isSAveAddAdress,"childDatachildDataisSAveAddAdress");
+    console.log(childData, isSAveAddAdress, "childDatachildData");
+    console.log(isSAveAddAdress, "childDatachildDataisSAveAddAdress");
     // alert(isSAveAddAdress)
     updateState({ isLoading: true });
-   
+
     if (getBundleId() === appIds.bumprkar) {
-      if ( isSAveAddAdress) {
+      if (isSAveAddAdress) {
         actions
+          .addAddress(childData, {
+            code: appData?.profile?.code,
+          })
+          .then(res => {
+            updateState({
+              isLoading: false,
+              isLoadingB: false,
+              isVisible: false,
+              isVisibleAddressModal: false,
+              placeLoader: false,
+              selectViaMap: false,
+            });
+            getAllAddress();
+            setTimeout(() => {
+              let address = res?.data;
+              address['is_primary'] = 1;
+              setSelectedAddress(address);
+              actions.saveAddress(address);
+            });
+            showSuccess(res.message);
+          })
+          .catch(error => {
+            updateState({
+              isLoading: false,
+              isLoadingB: false,
+              isVisible: false,
+              isVisibleAddressModal: false,
+            });
+            showError(error?.message || error?.error);
+          });
+      } else {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          // isVisible: false,
+          // isVisibleAddressModal: false,
+          isVisibleAddressModal: true,
+          placeLoader: false,
+          selectViaMap: false,
+        });
+      }
+
+
+    } else {
+      actions
         .addAddress(childData, {
           code: appData?.profile?.code,
         })
@@ -2990,7 +3035,7 @@ function Cart({ navigation, route }) {
           });
           getAllAddress();
           setTimeout(() => {
-            let address = res.data;
+            let address = res?.data;
             address['is_primary'] = 1;
             setSelectedAddress(address);
             actions.saveAddress(address);
@@ -3006,51 +3051,6 @@ function Cart({ navigation, route }) {
           });
           showError(error?.message || error?.error);
         });
-      }else{
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          // isVisible: false,
-          // isVisibleAddressModal: false,
-          isVisibleAddressModal: true,
-          placeLoader: false,
-          selectViaMap: false,
-        });
-      }
-
-     
-    } else{
-      actions
-      .addAddress(childData, {
-        code: appData?.profile?.code,
-      })
-      .then(res => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          isVisible: false,
-          isVisibleAddressModal: false,
-          placeLoader: false,
-          selectViaMap: false,
-        });
-        getAllAddress();
-        setTimeout(() => {
-          let address = res.data;
-          address['is_primary'] = 1;
-          setSelectedAddress(address);
-          actions.saveAddress(address);
-        });
-        showSuccess(res.message);
-      })
-      .catch(error => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          isVisible: false,
-          isVisibleAddressModal: false,
-        });
-        showError(error?.message || error?.error);
-      });
     }
   };
 
@@ -3126,7 +3126,7 @@ function Cart({ navigation, route }) {
 
   const _onTableSelection = (item) => {
     const data = {
-      vendor_id: item.vendor_id,
+      vendor_id: item?.vendor_id,
       table: item?.id,
     };
     _vendorTableCart(data, item);
@@ -3149,7 +3149,7 @@ function Cart({ navigation, route }) {
   };
 
   const onPressRecommendedVendors = (item) => {
-    if (!item.is_show_category || item.is_show_category) {
+    if (!item?.is_show_category || item?.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
           item,
@@ -3640,7 +3640,7 @@ function Cart({ navigation, route }) {
   };
 
   const checkValidSlotSelected = (item) => {
-    console.log(item, "item....item", localeSheduledOrderDate, selectedDateFromCalendar)
+    console.log(item, "item?....item", localeSheduledOrderDate, selectedDateFromCalendar)
 
   }
 
@@ -3688,7 +3688,7 @@ function Cart({ navigation, route }) {
   };
 
   const isSlotSelected = (item) => {
-    if (selectedTimeSlots == item.value) {
+    if (selectedTimeSlots == item?.value) {
       return true;
     } else {
       return false;
@@ -3696,7 +3696,7 @@ function Cart({ navigation, route }) {
   };
 
   const isSlotSelected1 = (item) => {
-    if (laundrySelectedPickupSlot == item.value) {
+    if (laundrySelectedPickupSlot == item?.value) {
       return true;
     } else {
       return false;
@@ -3704,7 +3704,7 @@ function Cart({ navigation, route }) {
   };
 
   const isSlotSelected2 = (item) => {
-    if (laundrySelectedDropOffSlot == item.value) {
+    if (laundrySelectedDropOffSlot == item?.value) {
       return true;
     } else {
       return false;
@@ -4064,9 +4064,9 @@ function Cart({ navigation, route }) {
       )
       .then((res) => {
         console.log(res?.data, 'res?.data>>>');
-        setKycTxtInpts(res?.data.filter((x) => x?.file_type == 'Text'));
-        setKycImages(res?.data.filter((x) => x?.file_type == 'Image'));
-        setKycPdfs(res?.data.filter((x) => x?.file_type == 'Pdf'));
+        setKycTxtInpts(res?.data?.filter((x) => x?.file_type == 'Text'));
+        setKycImages(res?.data?.filter((x) => x?.file_type == 'Image'));
+        setKycPdfs(res?.data?.filter((x) => x?.file_type == 'Pdf'));
 
         updateState({
           isCategoryKycLoader: false,
@@ -4119,14 +4119,14 @@ function Cart({ navigation, route }) {
           .then((res) => {
             if (isPrescriptionModal) {
               let imgData = [...selectedPrescriptionImgs];
-              const isFound = imgData.some(
+              const isFound = imgData?.some(
                 (item) => item?.filename == res?.filename,
               );
               if (isFound) {
                 alert('File already uploaded');
                 return;
               }
-              imgData.push({
+              imgData?.push({
                 mime: res?.mime,
                 path: res?.path,
                 filename: res?.filename,
@@ -4149,12 +4149,12 @@ function Cart({ navigation, route }) {
 
   const onSubmitKycDocs = () => {
     let formdata = new FormData();
-    formdata.append('category_ids', cartData?.category_ids);
+    formdata?.append('category_ids', cartData?.category_ids);
     var isRequired = true;
     if (!isEmpty(kycTxtInpts)) {
       kycTxtInpts.map((i, inx) => {
         if (i?.contents != '' && !!i?.contents) {
-          formdata.append(i?.translations[0].slug, i?.contents);
+          formdata?.append(i?.translations[0].slug, i?.contents);
         } else if (i?.is_required) {
           if (isRequired) {
             alert(
@@ -4172,14 +4172,14 @@ function Cart({ navigation, route }) {
     if (!isEmpty(concatinatedArray)) {
       concatinatedArray.map((i, inx) => {
         if (i?.value) {
-          formdata.append(
+          formdata?.append(
             i?.translations[0].slug,
             i?.file_type == 'Image'
               ? {
-                uri: i.fileData.path,
-                name: i.fileData.filename,
-                filename: i.fileData.filename,
-                type: i.fileData.mime,
+                uri: i.fileData?.path,
+                name: i.fileData?.filename,
+                filename: i.fileData?.filename,
+                type: i.fileData?.mime,
               }
               : i?.fileData,
           );
@@ -4413,11 +4413,11 @@ function Cart({ navigation, route }) {
     }
     setPrescriptionLoading(true);
     let formdata = new FormData();
-    formdata.append('vendor_id', selectedItemForPrescription?.vendor_id);
-    formdata.append('product_id', selectedItemForPrescription?.product_id);
+    formdata?.append('vendor_id', selectedItemForPrescription?.vendor_id);
+    formdata?.append('product_id', selectedItemForPrescription?.product_id);
 
     selectedPrescriptionImgs.map((item) => {
-      formdata.append('prescriptions[]', {
+      formdata?.append('prescriptions[]', {
         name: item?.filename || item?.mime,
         type: item?.mime,
         uri: item?.path,
@@ -4465,10 +4465,10 @@ function Cart({ navigation, route }) {
     }
 
     const imgData = [...selectedPrescriptionImgs];
-    const indexOfObject = imgData.findIndex((object) => {
+    const indexOfObject = imgData?.findIndex((object) => {
       return object.filename === item?.filename;
     });
-    imgData.splice(indexOfObject, 1);
+    imgData?.splice(indexOfObject, 1);
     setPrescriptionImgs(imgData);
   };
 
@@ -4591,7 +4591,7 @@ function Cart({ navigation, route }) {
               {selectedPrescriptionImgs.map((item) => (
                 <View>
                   <Image
-                    source={{ uri: item.path }}
+                    source={{ uri: item?.path }}
                     style={{
                       height: width / 4.5,
                       width: width / 4.5,
@@ -4851,7 +4851,7 @@ function Cart({ navigation, route }) {
                             showsHorizontalScrollIndicator={false}
                             data={laundryAvailablePickupSlot || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
                             )}
@@ -4903,7 +4903,7 @@ function Cart({ navigation, route }) {
                             showsHorizontalScrollIndicator={false}
                             data={laundryAvailableDropOffSlot || []}
                             renderItem={renderTimeSlots2}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
                             )}
@@ -4991,7 +4991,7 @@ function Cart({ navigation, route }) {
                             horizontal
                             data={availableTimeSlots || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             showsHorizontalScrollIndicator={false}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
@@ -5029,7 +5029,7 @@ function Cart({ navigation, route }) {
                             horizontal
                             data={availableTimeSlots || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             showsHorizontalScrollIndicator={false}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
@@ -5080,7 +5080,7 @@ function Cart({ navigation, route }) {
                             horizontal
                             data={availableTimeSlots || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             showsHorizontalScrollIndicator={false}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
