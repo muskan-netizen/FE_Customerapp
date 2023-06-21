@@ -32,7 +32,7 @@ const ServicesCard = ({
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const styles = stylesFunc({ themeColors, fontFamily });
     const { symbol } = currencies?.all_currencies[0]
-    const { id, translation_title, variant = [], qtyText } = data
+    const { id, translation_title, variant = [], qtyText, } = data
     const { price, id: variantId } = !isEmpty(variant) && variant[0]
 
     return (
@@ -51,7 +51,7 @@ const ServicesCard = ({
                             fontFamily: fontFamily.medium,
                             color: colors.black,
                         }}>
-                        {translation_title}
+                        {translation_title || data?.translation[0]?.title}
                     </Text>
 
                 </TouchableOpacity>

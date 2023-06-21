@@ -1602,7 +1602,7 @@ export default function OrderDetail({ navigation, route }) {
                       </View>
 
                       {!!driverStatus?.order &&
-                        driverStatus?.order?.status === 'completed' ? (
+                        driverStatus?.order?.status === 'completed' ||  paramData?.orderStatus?.current_status?.title === 'Delivered' ? (
                         <View
                           style={{
                             flexDirection: 'row',

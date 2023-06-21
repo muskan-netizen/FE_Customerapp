@@ -445,6 +445,7 @@ export default function Signup({ navigation }) {
   const getTextInputField = (type, index) => {
     return (
       <BorderTextInput
+        key={String(index)}
         placeholder={type?.translations[0]?.name || ''}
         onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
       />
@@ -453,6 +454,7 @@ export default function Signup({ navigation }) {
 
   //Update Images
   const updateImages = (type, index) => {
+    setPickerType(2)
     addtionSelectedImageIndex = index;
     showActionSheet(false);
   };
@@ -460,6 +462,7 @@ export default function Signup({ navigation }) {
   const getImageFieldView = (type, index) => {
     return (
       <View
+        key={String(index)}
         style={{
           marginRight: moderateScale(15),
           marginTop: moderateScale(10),
@@ -513,6 +516,7 @@ export default function Signup({ navigation }) {
   const getPdfView = (type, index) => {
     return (
       <View
+        key={String(index)}
         style={{ marginRight: moderateScale(20), marginTop: moderateScale(20) }}>
         <TouchableOpacity
           onPress={() => getDoc(type, index)}
