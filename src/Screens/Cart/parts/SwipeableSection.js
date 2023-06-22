@@ -362,6 +362,7 @@ function SwipeableSection(props) {
                                                         : colors.textGreyB,
                                                     marginBottom: moderateScale(2),
                                                 }} >{i?.scheduled_date_time} {i?.schedule_slot}</Text> : null}
+                                                
                                                 {!!(
                                                     !!i?.pvariant &&
                                                     Number(i?.pvariant?.container_charges)
