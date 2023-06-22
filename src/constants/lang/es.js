@@ -992,5 +992,6 @@ export default {
   YOUR_ORDER_WILL_ARRIVE_BY_MRVELOZ:"Tu pedido llegará a las",
   ORDER_ID_MRVELOZ:"ID del Pedido",
   SELECT_INFLUENCER_CATEGORY:"Selecciona una categoría de Influencer",
-  WHAT_WHOULD_YOU_LIKE_TO_DO_MRVELOZ:'¿Qué te gustaría pedir?'
+  WHAT_WHOULD_YOU_LIKE_TO_DO_MRVELOZ:'¿Qué te gustaría pedir?',
+  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
 };

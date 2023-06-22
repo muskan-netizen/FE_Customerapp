@@ -1002,5 +1002,6 @@ export default {
     ADDITIONAL_CHARGES: 'অতিরিক্ত চার্জ',
     TOLL_FEE:"শুল্ক মূল্য",
     SERVICE_CHARGES:"সেবা মূল্য",
+    APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
   };
   

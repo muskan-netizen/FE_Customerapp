@@ -1008,4 +1008,5 @@ export default {
     PLEASE_SELECT_DATE: ' אנא בחר תאריך.',
     SLOTS_NOT_FOUND_FOR_DATE: ' לא נמצאו משבצות לתאריך שנבחר',
     ADDITIONAL_CHARGES: 'חיובים נוספים',
+    APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
 };

@@ -1076,4 +1076,5 @@ Amount`,
   HOUR: 'heure',
   SELECT_INFLUENCER_CATEGORY: 'Sélectionner la catégorie d’influenceur',
   INFLUENCER_ORDER_HISTORY: 'Historique des ordres d’influenceur',
+  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
 };

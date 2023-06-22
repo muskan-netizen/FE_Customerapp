@@ -1167,5 +1167,6 @@ Amount`,
   AS_LENDER: "As Lender",
   AS_BORROWER: "As Borrower",
   SCHEDULE_A_RIDE: "Schedule a ride",
-  ENTER_DRIVER_ID: "Enter driver ID"
+  ENTER_DRIVER_ID: "Enter driver ID",
+  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date."
 };

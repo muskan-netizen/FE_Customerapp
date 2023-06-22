@@ -846,5 +846,6 @@ export default {
   ORDER: 'Orders',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
-  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters"
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
+  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
 };

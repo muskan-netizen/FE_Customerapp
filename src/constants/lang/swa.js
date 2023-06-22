@@ -1018,4 +1018,5 @@ export default {
   DELETE_ADDRESS_CONFIRM_MSG: 'Je, una uhakika unataka kufuta anuani?',
   MINIMUM_ORDER_VALUE: 'Thamani ya kiwango cha chini ya oda',
   ORDER: 'Oda',
+  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
 };

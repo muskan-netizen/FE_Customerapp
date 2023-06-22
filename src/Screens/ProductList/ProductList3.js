@@ -4002,6 +4002,12 @@ export default function Products({ route, navigation }) {
           );
 
           console.log(res, 'res for slots vendor');
+          if (!!res?.data && _.isEmpty(res?.data)) {
+            setLoadingGetSlots(false);
+            setAppointmentPicker(false);
+            alert(strings.APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE)
+            return;
+          }
           if (res) {
             setAppointmentAvailableSlots(res.data);
             setLoadingGetSlots(false);
@@ -5137,6 +5143,7 @@ export default function Products({ route, navigation }) {
 
       <ReactNativeModal
         isVisible={isAppointmentSlotsModal}
+        onBackdropPress={() => setAppointmentSlotsModal(false)}
         style={{
           justifyContent: 'flex-end',
           margin: 0,

@@ -957,4 +957,5 @@ export default {
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   ORDER: 'Orders',
   THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
+  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
 };
