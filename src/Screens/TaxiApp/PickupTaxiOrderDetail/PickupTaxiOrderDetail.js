@@ -1402,13 +1402,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           }}
         >
           <TouchableOpacity
-            onPress={
-              paramData?.fromCab
-                ? () => appStyle?.homePageLayout == 3 ? navigation.navigate(navigationStrings.HOME) : navigation.navigate(navigationStrings.TAXIHOMESCREEN)
-                : paramData?.pickup_taxi
-                  ? () => navigation.navigate(navigationStrings.HOME)
-                  : () => navigation.goBack()
-            }
+            onPress={()=> navigation.popToTop()}
             activeOpacity={0.8}
           >
             <Image
