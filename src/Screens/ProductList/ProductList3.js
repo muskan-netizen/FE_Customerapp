@@ -637,6 +637,7 @@ export default function Products({ route, navigation }) {
     data.map(item => {
       item?.data.map(val => {
         if (val?.media?.length > 0 && !!val?.media[0]?.image) {
+          // if (val?.media?.length > 0) {
           const url1 = val?.media[0]?.image?.path?.image_fit;
           const url2 = val?.media[0]?.image?.path?.image_path;
           FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
@@ -2008,7 +2009,7 @@ export default function Products({ route, navigation }) {
           let resData = res?.data?.categories || [];
 
           console.log('resDataresDataresData', resData);
-          // await preLoadImages(resData);
+          await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
           // setFilterData(res?.data?.filterData)
