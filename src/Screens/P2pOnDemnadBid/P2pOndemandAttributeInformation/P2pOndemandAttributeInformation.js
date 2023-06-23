@@ -1,4 +1,5 @@
 import { cloneDeep, isEmpty } from 'lodash';
+import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
@@ -10,20 +11,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Calendar } from 'react-native-calendars';
 import { useDarkMode } from 'react-native-dynamic';
-import { MultiSelect, Dropdown } from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
-import WebView from 'react-native-webview';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import AddressBottomSheet from '../../../Components/AddressBottomSheet';
+import BorderTextInput from '../../../Components/BorderTextInput';
+import ButtonComponent from '../../../Components/ButtonComponent';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 import GradientButton from '../../../Components/GradientButton';
-import Header from '../../../Components/Header';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import OoryksHeader from '../../../Components/OoryksHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -38,6 +40,7 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
 import {
   cameraHandler,
   checkValueExistInAry,
@@ -45,13 +48,6 @@ import {
 import { showError } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
-import ToggleSwitch from 'toggle-switch-react-native';
-import OoryksHeader from '../../../Components/OoryksHeader';
-import { MyDarkTheme } from '../../../styles/theme';
-import BorderTextInput from '../../../Components/BorderTextInput';
-import ButtonComponent from '../../../Components/ButtonComponent';
-import { Calendar } from 'react-native-calendars';
-import moment from 'moment';
 
 const theme = {
   // Define your custom colors here
@@ -137,6 +133,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       .catch(errorMethod);
   };
 
+
   const isValidData = () => {
     const error = validations({
       productImg: productImgs,
@@ -158,42 +155,31 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
 
   const onSubmitAttributes = () => {
+
     const checkValid = isValidData();
     if (!checkValid) {
       return;
     }
     let markedDates = getMarkedDates()
-    // if (isEmpty(markedDates)) {
-    //   showError("Please select product availablity")
-    //   return
-    // }
+    if (isEmpty(markedDates) && paramData?.type_id == 10) {
+      showError(strings.PLEASE_SELECT_PRODUCT_AVAILBILITY)
+      return
+    }
     setLoadingSubmitAttributes(true);
     let datesAry = []
     let formData = new FormData();
     for (const property in markedDates) {
-      // if (markedDates[property]?.customStyles?.container?.backgroundColor === colors.redB) {
-      //   datesAry.push({
-      //     "not_available": 1,
-      //     "date_time": property
-      //   })
-      // }
-      // else {
       datesAry.push({
         "not_available": 0,
         "date_time": property
       })
-      // }
-
     }
 
-    datesAry.forEach((obj, index) => {
+    paramData?.type_id == 10 && datesAry.forEach((obj, index) => {
       Object.keys(obj).forEach(key => {
         formData.append(`date_availability[${index}][${key}]`, obj[key]);
       });
     });
-
-
-
 
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
@@ -201,12 +187,11 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     formData.append('price', price);
     formData.append('latitude', productLocation?.latitude);
     formData.append('longitude', productLocation?.longitude);
-    formData.append('week_price', weeklyPrice);
-    formData.append('month_price', monthlyPrice);
-    // formData.append('emirate', emirateId);
     formData.append('address', productLocation?.address);
-    formData.append('compare_at_price', originalPrice);
-    formData.append('minimum_duration', rentalDays);
+    paramData?.type_id == 10 && formData.append('week_price', weeklyPrice);
+    paramData?.type_id == 10 && formData.append('month_price', monthlyPrice);
+    paramData?.type_id == 10 && formData.append('compare_at_price', originalPrice);
+    paramData?.type_id == 10 && formData.append('minimum_duration', rentalDays);
     formData.append('delivery', isDelivery ? 1 : 0);
 
     productImgs.map(item => {
@@ -244,8 +229,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       }
     });
 
-    console.log(apiObj, "apiObj>>>>>>>apiObj")
-    formData.append('attribute', JSON.stringify(apiObj));
+
     console.log(formData, '<===formData onSubmitAttributes');
 
 

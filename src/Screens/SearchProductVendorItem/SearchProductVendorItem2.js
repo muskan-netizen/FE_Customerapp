@@ -297,7 +297,15 @@ export default function SearchProductVendorItem2({ navigation, route }) {
     }
 
     if (item.response_type == 'category') {
-      if (item?.redirect_to == staticStrings.VENDOR) {
+      if (item?.redirect_to == staticStrings.P2P) {
+        navigation.push(navigationStrings.P2P_PRODUCTS, {
+          data: {
+            id: item.id,
+            name: item.dataname,
+          },
+        });
+      }
+      else if (item?.redirect_to == staticStrings.VENDOR) {
         navigation.push(navigationStrings.VENDOR, {
           data: {
             id: item.id,

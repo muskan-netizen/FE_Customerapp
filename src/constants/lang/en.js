@@ -1170,5 +1170,6 @@ Amount`,
   ENTER_DRIVER_ID: "Enter driver ID",
   FROM_VENDOR: "From Vendor",
   FROM_FREELANCER: "From Freelancer",
-  SELECT_PRICE_TYPE: "Select pricing type"
+  SELECT_PRICE_TYPE: "Select pricing type",
+  PLEASE_SELECT_PRODUCT_AVAILBILITY: "Please select product availablity"
 };

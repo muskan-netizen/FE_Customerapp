@@ -25,6 +25,7 @@ const FilterComp = ({
     maximumPrice = 50000,
     updateMinMax,
     filterData = [],
+    isProductListFilter = true
 }) => {
 
 
@@ -71,13 +72,13 @@ const FilterComp = ({
             }
         ]
     })
-    const { filterTypes,sortFilters } = state
+    const { filterTypes, sortFilters } = state
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
     useEffect(() => {
-        updateState({ 
+        updateState({
             filterTypes: filterData,
-         })
+        })
     }, [])
 
 
@@ -118,14 +119,14 @@ const FilterComp = ({
             sleectdBrands: []
         }
 
-        console.log(filterData ,"filterDataaa")
+        console.log(filterData, "filterDataaa")
         onFilterApply(filterData)
-        onShowHideFilter()
+        isProductListFilter && onShowHideFilter()
     }
 
     const onClearFilter = () => {
         updateState({ selectedSorting: null })
-        onShowHideFilter()
+        isProductListFilter && onShowHideFilter()
         allClearFilters()
     }
 
@@ -159,7 +160,7 @@ const FilterComp = ({
 
 
 
-    const _selectFilterData = (item) => {   
+    const _selectFilterData = (item) => {
         let allFilterData = cloneDeep(filterTypes);
         let modifyFilter = [
             ...allFilterData.map((i, inx) => {

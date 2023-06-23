@@ -240,7 +240,7 @@ export default function P2pMyOrders({ navigation }) {
                 onChangeTab={onChangeTab}
                 mainContainerStyle={{
                     marginHorizontal: moderateScale(10),
-                    marginVertical: moderateScaleVertical(20),
+                    marginTop: moderateScaleVertical(20),
                 }}
             />
 
@@ -270,7 +270,9 @@ export default function P2pMyOrders({ navigation }) {
                             !isEmpty(upcomingOngoingOrders?.borrower) ? (
                             <View>
                                 {!isEmpty(upcomingOngoingOrders?.lender) && (
-                                    <View>
+                                    <View style={{
+                                        marginTop: moderateScaleVertical(16)
+                                    }}>
                                         <HeaderView leftText={"As Lender"} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                                             userType: "lender",
                                             type: selectedTab?.id == 2 ? "upcoming" : "ongoing"
@@ -291,7 +293,9 @@ export default function P2pMyOrders({ navigation }) {
                                 )}
 
                                 {!isEmpty(upcomingOngoingOrders?.borrower) && (
-                                    <View>
+                                    <View style={{
+                                        marginTop: moderateScaleVertical(16)
+                                    }}>
                                         <HeaderView leftText={"As Borrower"} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                                             userType: "borrower",
                                             type: selectedTab?.id == 2 ? "upcoming" : "ongoing"

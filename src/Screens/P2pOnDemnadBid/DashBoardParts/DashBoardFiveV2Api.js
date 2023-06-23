@@ -75,7 +75,7 @@ const DashBoardFiveV2Api = ({
 
   const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <View style={{ width: width / 4.2 }}>
+      <View style={{ width: width / 4.2, paddingHorizontal: moderateScale(5) }}>
         <HomeCategoryCard5
           imgRadius={2}
           data={item}
@@ -217,8 +217,9 @@ const DashBoardFiveV2Api = ({
             (item?.slug == 'new_products' ||
               item?.slug == 'featured_products' ||
               item?.slug == 'on_sale' ||
-              item?.slug == 'most_popular_products') ? <ProductsThemeView item={item} /> : item?.slug == 'vendors' ?
-              <VendorsView item={item} />
+              item?.slug == 'most_popular_products') ? <ProductsThemeView item={item} />
+              // : item?.slug == 'vendors' ?
+              // <VendorsView item={item} />
               : item?.slug == 'nav_categories' ? (
                 <CategoriesView item={item} showTitle={false} />
               ) : item?.slug == 'best_sellers' ? (

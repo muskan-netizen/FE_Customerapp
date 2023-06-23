@@ -24,7 +24,7 @@ import {
     textScale,
 } from '../../../styles/responsiveSize';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
-import { getImageUrl } from '../../../utils/helperFunctions';
+import { getImageUrl, showError } from '../../../utils/helperFunctions';
 import { MyDarkTheme } from '../../../styles/theme';
 
 // create a component
@@ -133,8 +133,7 @@ const ProductPriceDetails = ({ navigation }) => {
             ? moment(productDetails?.end_date_time).format('DD MMM')
             : ''
         }`;
-    const priceOnTimeBase = !isEmpty(productDetails) ? productDetails?.price : '';
-
+    const priceOnTimeBase = !isEmpty(productDetails) ? productDetails?.price || productDetails?.variants?.price : '';
 
 
     return (
@@ -176,7 +175,42 @@ const ProductPriceDetails = ({ navigation }) => {
                         borderColor: colors.greyA,
                         borderRadius: moderateScale(8),
                     }}>
-                    <View
+
+                    {productDetails?.product?.productcategory?.type_id !== 13 ? <View>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: moderateScaleVertical(8),
+                                marginHorizontal: moderateScale(12),
+                            }}>
+                            <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
+                                Days {!isEmpty(productDetails) && productDetails?.days}
+                            </Text>
+                            <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
+                                {startEndDate}
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: moderateScaleVertical(8),
+                                marginHorizontal: moderateScale(12),
+                            }}>
+                            <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
+                                {currencyWithSymbol({ price: priceOnTimeBase })} x{' '}
+                                {!isEmpty(productDetails) && productDetails?.days} days
+                            </Text>
+                            <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
+                                {currencyWithSymbol({
+                                    price: priceOnTimeBase,
+                                    multiplier:
+                                        !isEmpty(productDetails) && Number(productDetails?.days),
+                                })}
+                            </Text>
+                        </View>
+                    </View> : <View
                         style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
@@ -184,31 +218,16 @@ const ProductPriceDetails = ({ navigation }) => {
                             marginHorizontal: moderateScale(12),
                         }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
-                            Days {!isEmpty(productDetails) && productDetails?.days}
+                            Price
                         </Text>
                         <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
-                            {startEndDate}
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginTop: moderateScaleVertical(8),
-                            marginHorizontal: moderateScale(12),
-                        }}>
-                        <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
-                            {currencyWithSymbol({ price: priceOnTimeBase })} x{' '}
-                            {!isEmpty(productDetails) && productDetails?.days} days
-                        </Text>
-                        <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
                             {currencyWithSymbol({
                                 price: priceOnTimeBase,
-                                multiplier:
-                                    !isEmpty(productDetails) && Number(productDetails?.days),
+
                             })}
+
                         </Text>
-                    </View>
+                    </View>}
                     <View
                         style={{
                             flexDirection: 'row',
@@ -356,7 +375,7 @@ const ProductPriceDetails = ({ navigation }) => {
                             : imagePath.checkBox2InActive} />
                         <Text
                             onPress={() => navigation.navigate(navigationStrings.WEBLINKS, {
-                                id: 5,
+                                id: 4,
                                 slug: 'cancelation-policy',
                                 title: 'Cancelation Policy',
                             })}
