@@ -334,7 +334,7 @@ const ProductCard3 = ({
                 }}>
                 {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
-                  data?.variant[0]?.compare_at_price * data?.variant[0]?.multiplier,
+                  Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
