@@ -433,7 +433,7 @@ export default function P2pOndemandHome({ route, navigation }) {
       console.log('sending api data header', apiData, apiHeader);
 
       actions
-        .homeDataV2(apiData, apiHeader)
+        .homeDataV2({ ...apiData, action: 2 }, apiHeader)
         .then(async res => {
           console.log('Home data++++++', res);
           updateState({ searchDataLoader: false });
