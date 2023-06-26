@@ -97,6 +97,9 @@ let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 import { enableFreeze } from "react-native-screens";
 import { CouponDiscount, DeliverableSection, PromoCodeAvailableSection, SwipeableSection } from './parts';
 import Footer from './parts/Footer';
+import useInterval from '../../utils/useInterval';
+import axios from 'axios';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 enableFreeze(true);
 
 
@@ -171,6 +174,9 @@ function Cart({ navigation, route }) {
   const [isCheckSlotLoading, setCheckSloatLoading] = useState(false);
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [isValidSlot, setIsValidSlot] = useState(true);
+  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
+  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
+  const [responseTimer, setResponseTimer] = useState(420)
   const [paymentModal, setPaymentModal] = useState(false)
 
 
@@ -253,7 +259,7 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
-  console.log(preferences, 'perferences-------')
+  console.log(preferences, cartData, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -327,7 +333,14 @@ function Cart({ navigation, route }) {
       checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
-
+  useEffect(() => {
+    if (!isVisibleMtnGateway && mtnGatewayResponse) {
+      showError('Request TimeOut')
+      //   navigation.goBack()
+      updateState({ placeLoader: false, isLoading: false })
+      getCartDetail()
+    }
+  }, [isVisibleMtnGateway])
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
     if (allAddresss?.length == 0) {
@@ -362,8 +375,8 @@ function Cart({ navigation, route }) {
           updateState({
             isLoadingB: false,
           });
-          if (res.data) {
-            actions.saveAllUserAddress(res.data);
+          if (res?.data) {
+            actions.saveAllUserAddress(res?.data);
           }
         })
         .catch(errorMethod);
@@ -408,7 +421,7 @@ function Cart({ navigation, route }) {
         let checkDate = !!res?.data?.scheduled_date_time;
         updateState({ deliveryFeeLoader: false, isSubmitFaqLoader: false });
 
-        if (!!checkDate && res.data.schedule_type == 'schedule') {
+        if (!!checkDate && res?.data?.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
           setLocaleSheduledOrderDate(
             timeInLocalLangauge(formatDate, selectedLanguage),
@@ -463,19 +476,19 @@ function Cart({ navigation, route }) {
             res?.data?.vendor_details?.vendor_tables.forEach(
               (item, indx) =>
               (tableData[indx] = {
-                id: item.id,
-                label: `${strings.CATEGORY}: ${item.category.title ? item.category.title : ''
-                  } | ${strings.TABLE}: ${item.table_number ? item.table_number : 0
-                  } | ${strings.SEAT_CAPACITY}: ${item.seating_number ? item.seating_number : 0
+                id: item?.id,
+                label: `${strings.CATEGORY}: ${item?.category?.title ? item?.category?.title : ''
+                  } | ${strings.TABLE}: ${item?.table_number ? item?.table_number : 0
+                  } | ${strings.SEAT_CAPACITY}: ${item?.seating_number ? item?.seating_number : 0
                   }`,
-                value: `${strings.CATEGORY}: ${item.category.title ? item.category.title : ''
-                  } | ${strings.TABLE}: ${item.table_number ? item.table_number : 0
-                  } | ${strings.SEAT_CAPACITY}: ${item.seating_number ? item.seating_number : 0
+                value: `${strings.CATEGORY}: ${item?.category?.title ? item?.category?.title : ''
+                  } | ${strings.TABLE}: ${item?.table_number ? item?.table_number : 0
+                  } | ${strings.SEAT_CAPACITY}: ${item?.seating_number ? item?.seating_number : 0
                   }`,
-                title: item.category.title,
-                table_number: item.table_number,
-                seating_number: item.seating_number,
-                vendor_id: res.data.vendor_details.vendor_address.id,
+                title: item?.category?.title,
+                table_number: item?.table_number,
+                seating_number: item?.seating_number,
+                vendor_id: res?.data?.vendor_details?.vendor_address.id,
               }),
               setTableData(tableData),
             );
@@ -494,13 +507,13 @@ function Cart({ navigation, route }) {
             var month = months.indexOf(monthname);
             return month ? month + 1 : 0;
           }
-          if (!!res?.data.products.length && res?.data.products[0].delaySlot) {
+          if (!!res?.data?.products.length && res?.data?.products[0]?.delaySlot) {
             var delaySlot = res?.data?.products[0]?.delaySlot.replace(/,/g, "").split(" ");
             const mont = monthNameToNum(delaySlot[1])
             const timeSlot = `${delaySlot[2]}-${mont > 9 ? '' : '0'}${mont}-${delaySlot[0]}`
             setMinimumDelayVendorDate(timeSlot);
           }
-          setCartItems(res.data.products);
+          setCartItems((!!res?.data && !!res?.data?.products) ? res?.data?.products : []);
           let currentDate = moment(new Date()).format('YYYY-MM-DD');
           // console.log(res?.data?.scheduled_date_time.slice(0, -6), "res?.data?.scheduled_date_time")
           let getApiScheduledDate =
@@ -511,23 +524,23 @@ function Cart({ navigation, route }) {
           //   if (currentDate == sheduledorderdate || currentDate == getApiScheduledDate) {
           //     setAvailableTimeSlots([])
           //   } else {
-          //     setAvailableTimeSlots(res.data.slots)
+          //     setAvailableTimeSlots(res?.data?.slots)
           //   }
           // } else {
-          //   setAvailableTimeSlots(res.data.slots);
+          //   setAvailableTimeSlots(res?.data?.slots);
           // }
-          // getBundleId == appIds.masa ? currentDate == sheduledorderdate ||  currentDate == getApiScheduledDate ? setAvailableTimeSlots([]):  setAvailableTimeSlots(res.data.slots): setAvailableTimeSlots(res.data.slots)
-          setAvailableTimeSlots(res.data.slots);
-          // setLaundryAvailablePickupSlot(res.data.slots);
-          // setLaundryAvailableDropOffSlot(res.data.slots);
+          // getBundleId == appIds.masa ? currentDate == sheduledorderdate ||  currentDate == getApiScheduledDate ? setAvailableTimeSlots([]):  setAvailableTimeSlots(res?.data?.slots): setAvailableTimeSlots(res?.data?.slots)
+          setAvailableTimeSlots(res?.data?.slots);
+          // setLaundryAvailablePickupSlot(res?.data?.slots);
+          // setLaundryAvailableDropOffSlot(res?.data?.slots);
 
-          setCartData(res.data);
+          setCartData(res?.data);
 
           updateState({
             isLoadingB: false,
             isRefreshing: false,
           });
-          if (!res?.data?.schedule_type && !isEmpty(res.data.products) && res.data.products.length > 0) {
+          if (!res?.data?.schedule_type && !isEmpty(res?.data?.products) && res?.data?.products.length > 0) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -550,7 +563,7 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data_++++++++', cartData);
+  console.log('cart data_++++++++', cartData, businessType, dineInType);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -587,8 +600,8 @@ function Cart({ navigation, route }) {
         .then((res) => {
           console.log('cart detail', res);
           actions.cartItemQty(res);
-          setCartItems(res.data.products);
-          setCartData(res.data);
+          setCartItems(res?.data?.products);
+          setCartData(res?.data);
           actions.reloadData(!reloadData);
 
           updateState({
@@ -623,8 +636,8 @@ function Cart({ navigation, route }) {
         actions.reloadData(!reloadData);
         if (!!res?.data && !!res?.data?.products) {
           actions.cartItemQty(res);
-          setCartItems(res.data.products || []);
-          setCartData(res.data);
+          setCartItems(res?.data?.products || []);
+          setCartData(res?.data);
           actions.reloadData(!reloadData);
           updateState({
             isLoadingB: false,
@@ -717,7 +730,7 @@ function Cart({ navigation, route }) {
   const _getAllOffers = (vendor, cartData) => {
     moveToNewScreen(navigationStrings.OFFERS, {
       vendor: vendor,
-      cartId: cartData.id,
+      cartId: cartData?.id,
     })();
   };
 
@@ -856,6 +869,8 @@ function Cart({ navigation, route }) {
 
     let paymentId = res?.data?.payment_option_id;
     let order_number = res?.data?.order_number;
+
+
     // setSelectedPayment(selectedPayment);
     console.log('api res success', res);
 
@@ -867,7 +882,7 @@ function Cart({ navigation, route }) {
           : 0)
       ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
       payment_option_id: selectedPayment?.id,
-      orderDetail: res.data,
+      orderDetail: res?.data,
       redirectFrom: 'cart',
       selectedPayment: selectedPayment,
     };
@@ -879,7 +894,7 @@ function Cart({ navigation, route }) {
       )
     ) {
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
-        orderDetail: res.data,
+        orderDetail: res?.data,
       })();
       updateState({ placeLoader: false });
       return;
@@ -887,6 +902,8 @@ function Cart({ navigation, route }) {
 
     switch (paymentId) {
       case 4: _offineLinePayment(order_number);
+        return;
+      case 48: mtnGateway(res);
         return;
       case 5: //Paystack Payment Getway
         updateState({ placeLoader: false });
@@ -1029,18 +1046,21 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         return;
-
+      case 57: //stafood: pesapal  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.PESAPAL, paymentData);
+        return;
       default:
         if (
           !!businessType &&
           businessType == 'home_service' &&
           res?.data?.vendors?.length == 1
         ) {
-          _getOrderDetail(res.data.vendors[0]);
+          _getOrderDetail(res?.data?.vendors[0]);
         }
         else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
-            orderDetail: res.data,
+            orderDetail: res?.data,
           })();
           actions.cartItemQty({});
         }
@@ -1283,7 +1303,8 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 44 &&
           selectedPayment?.id != 49 &&
           selectedPayment?.id != 50 &&
-          selectedPayment?.id != 53
+          selectedPayment?.id != 53 &&
+          selectedPayment?.id != 48
         ) {
           setCartItems([]);
           setCartData({});
@@ -1295,7 +1316,7 @@ function Cart({ navigation, route }) {
             });
             showSuccess(res?.message);
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
+              orderDetail: res?.data,
             })();
             return;
           }
@@ -1340,16 +1361,16 @@ function Cart({ navigation, route }) {
               orderId: order_id,
               fromVendorApp: true,
               selectedVendor: { id: vendor_id },
-              orderDetail: res.data.vendors[0],
+              orderDetail: res?.data?.vendors[0],
               showRating:
-                res.data.vendors[0]?.order_status?.current_status?.id != 6
+                res?.data?.vendors[0]?.order_status?.current_status?.id != 6
                   ? false
                   : true,
             });
             actions.cartItemQty({});
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
+              orderDetail: res?.data,
             })();
             setCartItems([]);
             setCartData({});
@@ -1695,6 +1716,7 @@ function Cart({ navigation, route }) {
 
           setSelectedPayment(selectedPayment);
         }
+
       })
       .catch(errorMethod);
   };
@@ -1798,7 +1820,7 @@ function Cart({ navigation, route }) {
   //                             placeLoader: false,
   //                           });
   //                           moveToNewScreen(navigationStrings.ORDERSUCESS, {
-  //                             orderDetail: res.data,
+  //                             orderDetail: res?.data,
   //                           })();
   //                           showSuccess(res?.message);
   //                         } else {
@@ -1923,7 +1945,7 @@ function Cart({ navigation, route }) {
                       placeLoader: false,
                     });
                     moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                      orderDetail: res.data,
+                      orderDetail: res?.data,
                     })();
                     showSuccess(res?.message);
                   } else {
@@ -2011,6 +2033,85 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  const paymentReponse = (res) => {
+    axios({
+      method: "get",
+      url: res?.responseUrl,
+      headers: {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        authorization: `${userData?.auth_token}`
+
+      },
+    }).then((response) => {
+      console.log(response, 'reseserserseeseers');
+      if (response?.data?.status == "SUCCESSFUL") {
+        setIsVisibleMtnGateway(false)
+
+        showSuccess(response?.data?.message)
+        // getAllSubscriptions(true);
+        updateState({ isLoading: false, placeLoader: false })
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: {
+            order_number:
+              response?.data?.order_number,
+            id: response?.data?.order_id,
+          },
+        })()
+
+      }
+    })
+      .catch((error) => {
+        console.log(error, 'error');
+        setMtnGatewayResponse('')
+        setIsVisibleMtnGateway(false)
+        showError(error?.response?.data?.message)
+      })
+  }
+
+
+  useInterval(
+    () => {
+      if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse); }
+    },
+    !!isVisibleMtnGateway ? 5000 : null,
+  );
+
+
+  const mtnGateway = (res) => {
+
+    updateState({ isLoadingB: true, placeLoader: true })
+    let data = {}
+
+    data['amount'] = res?.data?.total_amount
+    data['currency'] = currencies?.primary_currency?.iso_code
+    data['order_no'] = res?.data?.order_number
+    data['subscription_id'] = ''
+    data['from'] = 'cart'
+
+    actions.mtnGateway(data, {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    })
+      .then((response) => {
+        console.log(response, 'rsrseereeseresre')
+        updateState({ isLoadingB: false, placeLoader: false })
+        if (response?.status == 'Success') {
+          setIsVisibleMtnGateway(true)
+          setMtnGatewayResponse(response)
+          paymentReponse(response)
+
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'ererrerererere')
+        updateState({ isLoadingB: false, placeLoader: false })
+        showError(err?.message)
+      })
+  }
+
   const clearSceduleDate = async () => {
     setScheduleType('now');
     setLocaleSheduledOrderDate(null);
@@ -2022,8 +2123,8 @@ function Cart({ navigation, route }) {
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data &&
-      !!checkCartItem?.data.products &&
-      !!checkCartItem?.data.products?.length
+      !!checkCartItem?.data?.products &&
+      !!checkCartItem?.data?.products?.length
     ) {
       setDateAndTimeSchedule();
     }
@@ -2084,7 +2185,7 @@ function Cart({ navigation, route }) {
       }
     }
     else {
-      if (availableTimeSlots.length > 0 || cartData.slots.length > 0) {
+      if (availableTimeSlots.length > 0 || cartData?.slots.length > 0) {
         if (selectedDateFromCalendar == '' || selectedTimeSlots == '') {
 
           alert(strings.PLEASE_SELECT_DATETIME_SLOTS);
@@ -2160,7 +2261,7 @@ function Cart({ navigation, route }) {
         },
       )
       .then((res) => {
-        setWishlistArray(res.data.data);
+        setWishlistArray(res?.data?.data);
         updateState({
           isLoadingB: false,
           isRefreshing: false,
@@ -2327,9 +2428,9 @@ function Cart({ navigation, route }) {
       fetchOffers: true,
       id: item?.vendor?.id,
       vendor:
-        item.redirect_to == staticStrings.ONDEMANDSERVICE
+        item?.redirect_to == staticStrings.ONDEMANDSERVICE
           ? false
-          : item.redirect_to == staticStrings.PRODUCT
+          : item?.redirect_to == staticStrings.PRODUCT
             ? false
             : true,
       name: item?.vendor?.name,
@@ -2569,7 +2670,7 @@ function Cart({ navigation, route }) {
                 scheduleType={scheduleType}
                 openPickerForPrescription={openPickerForPrescription}
                 parentIndex={index}
-                showCheckBox
+                showCheckBox={appStyle?.homePageLayout == 10}
               />
             </View>
           </View>
@@ -2584,7 +2685,7 @@ function Cart({ navigation, route }) {
           {/* offerview end */}
 
           {/* start amount view       */}
-          <CouponDiscount item={item} isDarkMode={isDarkMode} styles={styles} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} currencies={currencies} preferences={preferences} />
+          <CouponDiscount item={item} isDarkMode={isDarkMode} styles={styles} digit_after_decimal={digit_after_decimal} additional_preferences={additional_preferences} currencies={currencies} preferences={preferences} renderDropDown={renderDropDown} sel_types={sel_types} />
         </View >
       </View >
     );
@@ -2688,6 +2789,7 @@ function Cart({ navigation, route }) {
         setVendorComment={setVendorComment}
         _renderUpSellProducts={_renderUpSellProducts}
         _renderCrossSellProducts={_renderCrossSellProducts}
+        dineInType={dineInType}
         onSelectPaymentMethod={() =>
           !!userData?.auth_token
             ? setPaymentModal(true)
@@ -2879,40 +2981,93 @@ function Cart({ navigation, route }) {
   }, []);
 
   //Add and update the addreess
-  const addUpdateLocation = (childData) => {
+  const addUpdateLocation = (childData, isSAveAddAdress) => {
+
     // setModalVisible(false);
+    console.log(childData, isSAveAddAdress, "childDatachildData");
+    console.log(isSAveAddAdress, "childDatachildDataisSAveAddAdress");
+    // alert(isSAveAddAdress)
     updateState({ isLoading: true });
-    actions
-      .addAddress(childData, {
-        code: appData?.profile?.code,
-      })
-      .then((res) => {
+
+    if (getBundleId() === appIds.bumprkar) {
+      if (isSAveAddAdress) {
+        actions
+          .addAddress(childData, {
+            code: appData?.profile?.code,
+          })
+          .then(res => {
+            updateState({
+              isLoading: false,
+              isLoadingB: false,
+              isVisible: false,
+              isVisibleAddressModal: false,
+              placeLoader: false,
+              selectViaMap: false,
+            });
+            getAllAddress();
+            setTimeout(() => {
+              let address = res?.data;
+              address['is_primary'] = 1;
+              setSelectedAddress(address);
+              actions.saveAddress(address);
+            });
+            showSuccess(res.message);
+          })
+          .catch(error => {
+            updateState({
+              isLoading: false,
+              isLoadingB: false,
+              isVisible: false,
+              isVisibleAddressModal: false,
+            });
+            showError(error?.message || error?.error);
+          });
+      } else {
         updateState({
           isLoading: false,
           isLoadingB: false,
-          isVisible: false,
-          isVisibleAddressModal: false,
+          // isVisible: false,
+          // isVisibleAddressModal: false,
+          isVisibleAddressModal: true,
           placeLoader: false,
           selectViaMap: false,
         });
-        getAllAddress();
-        setTimeout(() => {
-          let address = res.data;
-          address['is_primary'] = 1;
-          setSelectedAddress(address);
-          actions.saveAddress(address);
+      }
+
+
+    } else {
+      actions
+        .addAddress(childData, {
+          code: appData?.profile?.code,
+        })
+        .then(res => {
+          updateState({
+            isLoading: false,
+            isLoadingB: false,
+            isVisible: false,
+            isVisibleAddressModal: false,
+            placeLoader: false,
+            selectViaMap: false,
+          });
+          getAllAddress();
+          setTimeout(() => {
+            let address = res?.data;
+            address['is_primary'] = 1;
+            setSelectedAddress(address);
+            actions.saveAddress(address);
+          });
+          showSuccess(res.message);
+        })
+        .catch(error => {
+          updateState({
+            isLoading: false,
+            isLoadingB: false,
+            isVisible: false,
+            isVisibleAddressModal: false,
+          });
+          showError(error?.message || error?.error);
         });
-        showSuccess(res.message);
-      })
-      .catch((error) => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          isVisible: false,
-          isVisibleAddressModal: false,
-        });
-        showError(error?.message || error?.error);
-      });
+    }
   };
 
   //Pull to refresh
@@ -2987,7 +3142,7 @@ function Cart({ navigation, route }) {
 
   const _onTableSelection = (item) => {
     const data = {
-      vendor_id: item.vendor_id,
+      vendor_id: item?.vendor_id,
       table: item?.id,
     };
     _vendorTableCart(data, item);
@@ -3010,7 +3165,7 @@ function Cart({ navigation, route }) {
   };
 
   const onPressRecommendedVendors = (item) => {
-    if (!item.is_show_category || item.is_show_category) {
+    if (!item?.is_show_category || item?.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
           item,
@@ -3440,6 +3595,7 @@ function Cart({ navigation, route }) {
     );
   };
 
+
   const checkVendorSlots = async (date) => {
     if (businessType == 'laundry') {
       if (modalType !== 'pickup') {
@@ -3455,7 +3611,9 @@ function Cart({ navigation, route }) {
             },
           );
           setCheckSloatLoading(false);
-          setLaundryAvailableDropOffSlot(res);
+          const availableSlots = !!res && Array.isArray(res) ? res : !!res?.data && Array.isArray(res?.data) ? res?.data : []
+
+          setLaundryAvailableDropOffSlot(availableSlots);
         } catch (error) {
           setCheckSloatLoading(false);
 
@@ -3480,10 +3638,12 @@ function Cart({ navigation, route }) {
         },
       );
 
+      const availableSlots = !!res && Array.isArray(res) ? res : !!res?.data && Array.isArray(res?.data) ? res?.data : []
+      setCheckSloatLoading(false);
       if (modalType == 'pickup') {
-        setLaundryAvailablePickupSlot(res);
+        setLaundryAvailablePickupSlot(availableSlots);
       }
-      setAvailableTimeSlots(res);
+      setAvailableTimeSlots(availableSlots);
       if (res?.length == 0) {
         setSelectedTimeSlots('');
       }
@@ -3496,7 +3656,7 @@ function Cart({ navigation, route }) {
   };
 
   const checkValidSlotSelected = (item) => {
-    console.log(item, "item....item", localeSheduledOrderDate, selectedDateFromCalendar)
+    console.log(item, "item?....item", localeSheduledOrderDate, selectedDateFromCalendar)
 
   }
 
@@ -3544,7 +3704,7 @@ function Cart({ navigation, route }) {
   };
 
   const isSlotSelected = (item) => {
-    if (selectedTimeSlots == item.value) {
+    if (selectedTimeSlots == item?.value) {
       return true;
     } else {
       return false;
@@ -3552,7 +3712,7 @@ function Cart({ navigation, route }) {
   };
 
   const isSlotSelected1 = (item) => {
-    if (laundrySelectedPickupSlot == item.value) {
+    if (laundrySelectedPickupSlot == item?.value) {
       return true;
     } else {
       return false;
@@ -3560,7 +3720,7 @@ function Cart({ navigation, route }) {
   };
 
   const isSlotSelected2 = (item) => {
-    if (laundrySelectedDropOffSlot == item.value) {
+    if (laundrySelectedDropOffSlot == item?.value) {
       return true;
     } else {
       return false;
@@ -3920,9 +4080,9 @@ function Cart({ navigation, route }) {
       )
       .then((res) => {
         console.log(res?.data, 'res?.data>>>');
-        setKycTxtInpts(res?.data.filter((x) => x?.file_type == 'Text'));
-        setKycImages(res?.data.filter((x) => x?.file_type == 'Image'));
-        setKycPdfs(res?.data.filter((x) => x?.file_type == 'Pdf'));
+        setKycTxtInpts(res?.data?.filter((x) => x?.file_type == 'Text'));
+        setKycImages(res?.data?.filter((x) => x?.file_type == 'Image'));
+        setKycPdfs(res?.data?.filter((x) => x?.file_type == 'Pdf'));
 
         updateState({
           isCategoryKycLoader: false,
@@ -3975,14 +4135,14 @@ function Cart({ navigation, route }) {
           .then((res) => {
             if (isPrescriptionModal) {
               let imgData = [...selectedPrescriptionImgs];
-              const isFound = imgData.some(
+              const isFound = imgData?.some(
                 (item) => item?.filename == res?.filename,
               );
               if (isFound) {
                 alert('File already uploaded');
                 return;
               }
-              imgData.push({
+              imgData?.push({
                 mime: res?.mime,
                 path: res?.path,
                 filename: res?.filename,
@@ -4005,12 +4165,12 @@ function Cart({ navigation, route }) {
 
   const onSubmitKycDocs = () => {
     let formdata = new FormData();
-    formdata.append('category_ids', cartData?.category_ids);
+    formdata?.append('category_ids', cartData?.category_ids);
     var isRequired = true;
     if (!isEmpty(kycTxtInpts)) {
       kycTxtInpts.map((i, inx) => {
         if (i?.contents != '' && !!i?.contents) {
-          formdata.append(i?.translations[0].slug, i?.contents);
+          formdata?.append(i?.translations[0].slug, i?.contents);
         } else if (i?.is_required) {
           if (isRequired) {
             alert(
@@ -4028,14 +4188,14 @@ function Cart({ navigation, route }) {
     if (!isEmpty(concatinatedArray)) {
       concatinatedArray.map((i, inx) => {
         if (i?.value) {
-          formdata.append(
+          formdata?.append(
             i?.translations[0].slug,
             i?.file_type == 'Image'
               ? {
-                uri: i.fileData.path,
-                name: i.fileData.filename,
-                filename: i.fileData.filename,
-                type: i.fileData.mime,
+                uri: i.fileData?.path,
+                name: i.fileData?.filename,
+                filename: i.fileData?.filename,
+                type: i.fileData?.mime,
               }
               : i?.fileData,
           );
@@ -4269,11 +4429,11 @@ function Cart({ navigation, route }) {
     }
     setPrescriptionLoading(true);
     let formdata = new FormData();
-    formdata.append('vendor_id', selectedItemForPrescription?.vendor_id);
-    formdata.append('product_id', selectedItemForPrescription?.product_id);
+    formdata?.append('vendor_id', selectedItemForPrescription?.vendor_id);
+    formdata?.append('product_id', selectedItemForPrescription?.product_id);
 
     selectedPrescriptionImgs.map((item) => {
-      formdata.append('prescriptions[]', {
+      formdata?.append('prescriptions[]', {
         name: item?.filename || item?.mime,
         type: item?.mime,
         uri: item?.path,
@@ -4321,10 +4481,10 @@ function Cart({ navigation, route }) {
     }
 
     const imgData = [...selectedPrescriptionImgs];
-    const indexOfObject = imgData.findIndex((object) => {
+    const indexOfObject = imgData?.findIndex((object) => {
       return object.filename === item?.filename;
     });
-    imgData.splice(indexOfObject, 1);
+    imgData?.splice(indexOfObject, 1);
     setPrescriptionImgs(imgData);
   };
 
@@ -4447,7 +4607,7 @@ function Cart({ navigation, route }) {
               {selectedPrescriptionImgs.map((item) => (
                 <View>
                   <Image
-                    source={{ uri: item.path }}
+                    source={{ uri: item?.path }}
                     style={{
                       height: width / 4.5,
                       width: width / 4.5,
@@ -4513,7 +4673,7 @@ function Cart({ navigation, route }) {
       cart_product_id: item?.id,
       type: dineInType
     }
-    updateState({deliveryFeeLoader: true})
+    updateState({ deliveryFeeLoader: true })
 
     try {
       console.log("item++++", item)
@@ -4522,11 +4682,11 @@ function Cart({ navigation, route }) {
       actions.cartItemQty(res);
       setCartItems(res.data.products);
       setCartData(res.data);
-      updateState({deliveryFeeLoader: false})
-      
+      updateState({ deliveryFeeLoader: false })
+
     } catch (error) {
       console.log("error raised", error)
-      updateState({deliveryFeeLoader: false})
+      updateState({ deliveryFeeLoader: false })
     }
   }
 
@@ -4602,7 +4762,7 @@ function Cart({ navigation, route }) {
         isVisible={isVisibleAddressModal}
         onClose={() => setModalVisibleForAddessModal(!isVisibleAddressModal)}
         type={type}
-        passLocation={(data) => addUpdateLocation(data)}
+        passLocation={(data, value) => addUpdateLocation(data, value)}
         navigation={navigation}
         selectViaMap={selectViaMap}
         openCloseMapAddress={openCloseMapAddress}
@@ -4743,7 +4903,7 @@ function Cart({ navigation, route }) {
                             showsHorizontalScrollIndicator={false}
                             data={laundryAvailablePickupSlot || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
                             )}
@@ -4795,7 +4955,7 @@ function Cart({ navigation, route }) {
                             showsHorizontalScrollIndicator={false}
                             data={laundryAvailableDropOffSlot || []}
                             renderItem={renderTimeSlots2}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
                             )}
@@ -4883,7 +5043,7 @@ function Cart({ navigation, route }) {
                             horizontal
                             data={availableTimeSlots || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             showsHorizontalScrollIndicator={false}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
@@ -4921,7 +5081,7 @@ function Cart({ navigation, route }) {
                             horizontal
                             data={availableTimeSlots || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             showsHorizontalScrollIndicator={false}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
@@ -4972,7 +5132,7 @@ function Cart({ navigation, route }) {
                             horizontal
                             data={availableTimeSlots || []}
                             renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item.value || ''}
+                            keyExtractor={(item) => item?.value || ''}
                             showsHorizontalScrollIndicator={false}
                             ItemSeparatorComponent={() => (
                               <View style={{ marginRight: moderateScale(12) }} />
@@ -5184,6 +5344,47 @@ function Cart({ navigation, route }) {
           }
         </View >
       </Modal >
+      <Modal
+        isVisible={isVisibleMtnGateway}
+        style={{
+          // // margin: 0,
+          // // justifyContent: 'flex-end',
+          // // marginBottom: 20,
+          // // height:moderateScaleVertical(100),
+          // marginHorizontal:moderateScale(20),
+
+        }}
+      >
+        <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
+          <Text style={{
+            color: isDarkMode ? 'white' : themeColors?.primary_color,
+            fontSize: textScale(15),
+            padding: moderateScale(10)
+          }}>Waiting for response ....</Text>
+          <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
+
+            <CountdownCircleTimer
+              isPlaying
+              duration={Number(responseTimer)}
+              colors={[themeColors?.primary_color]}
+              size={40}
+              strokeWidth={5}
+            >
+              {({ remainingTime }) => {
+
+                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
+                return (<>
+                  <Text>{format}</Text>
+                </>
+                )
+
+              }}
+            </CountdownCircleTimer>
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer >
   );
 }

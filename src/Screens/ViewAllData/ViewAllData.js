@@ -26,6 +26,7 @@ import FooterLoader from '../../Components/FooterLoader';
 
 import { enableFreeze } from "react-native-screens";
 import { UIActivityIndicator } from 'react-native-indicators';
+import { debounce } from 'lodash';
 enableFreeze(true);
 
 
@@ -261,16 +262,19 @@ export default function ViewAllData({ route, navigation }) {
     );
   }
 
-  console.log("noMoreDatanoMoreData",noMoreData)
 
   const onEndReached = () => {
     if (!noMoreData) {
       updateState({ pageNo: pageNo + 1 });
       apiHit(pageNo + 1);
-    }else{
+    } else {
       noMoreData = true
     }
   };
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
 
   const listFooterComponent = () => {
     return (
@@ -288,7 +292,8 @@ export default function ViewAllData({ route, navigation }) {
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
-      statusBarColor={colors.backgroundGrey}>
+      statusBarColor={colors.backgroundGrey}
+      isLoading={loadMore}>
 
       <Header3
         leftIcon={imagePath.icBackb}
@@ -310,7 +315,7 @@ export default function ViewAllData({ route, navigation }) {
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
         onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
+        onEndReached={onEndReachedDelayed}
         initialNumToRender={6}
         ListEmptyComponent={
           !isLoading && (

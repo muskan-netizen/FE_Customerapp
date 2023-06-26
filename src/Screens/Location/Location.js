@@ -50,7 +50,7 @@ export default function Location({ route, navigation }) {
 
   const paramsDataForEditDropLocation = data;
 
-
+  const { location } = useSelector((state) => state?.home);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const userData = useSelector((state) => state?.auth?.userData);
@@ -60,8 +60,8 @@ export default function Location({ route, navigation }) {
     isLoading: true,
     address: "",
     curLatLng: {
-      latitude: 30.7333,
-      longitude: 76.7794,
+      latitude: location?.latitude || 30.7333,
+      longitude:location?.longitude||  76.7794,
     },
     nearByAddressess: [],
     searchResult: [],
@@ -141,6 +141,7 @@ export default function Location({ route, navigation }) {
   const getCurrentPosition = () => {
     getCurrentLocation("home")
       .then((res) => {
+     
         let details = {};
         updateState({ address: res.address });
         details = {

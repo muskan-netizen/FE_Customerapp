@@ -88,7 +88,7 @@ const DashBoardFiveV2Api = ({
   selcetedToggle = () => { },
   showVendorCategory = true,
   appMainData = {},
-  scrollHandler=()=>{}
+  scrollHandler = () => { }
 }) => {
 
 
@@ -841,7 +841,7 @@ const DashBoardFiveV2Api = ({
 
         }}>
 
-        {appStyle?.homePageLayout == 6 && showVendorCategory ? <View>
+        {appStyle?.homePageLayout == 6 && showVendorCategory && getBundleId() == appIds?.dropOff ? <View>
           <View>
             <Text
               style={{
@@ -1065,7 +1065,6 @@ const DashBoardFiveV2Api = ({
 
 
 
-  console.log("dataProvider", dataProvider)
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
@@ -1233,7 +1232,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
         item={item}
         isDarkMode={isDarkMode}
         appStyle={appStyle}
-      
+
       />
       <FlatList
         showsHorizontalScrollIndicator={false}

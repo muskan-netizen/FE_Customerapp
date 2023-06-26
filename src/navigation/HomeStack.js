@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   Addaddress,
   Addaddress2,
+  AvailableTechnicians,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
@@ -15,6 +16,8 @@ import {
   Delivery,
   Filter,
   HomeTemplate3,
+  FreelancerService,
+  Home,
   HomeV2Api,
   LaundryAvailableVendors,
   Location,
@@ -41,6 +44,7 @@ import {
   SuperMarket,
   TaxiHome,
   TaxiHomeScreen,
+  TechnicianProfile,
   TrackDetail,
   Tracking,
   VendorDetail,
@@ -161,6 +165,7 @@ export default function () {
             : navigationStrings.HOME
         }
         component={getHomeScreen()}
+        options={{ tabBarVisible: false }}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
@@ -285,6 +290,18 @@ export default function () {
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
         component={SpotdealProductAndSelectedProducts}
       />
+      <Stack.Screen
+        name={navigationStrings.FREELANCER_SERVICE}
+        component={FreelancerService}
+      />
+      <Stack.Screen
+        name={navigationStrings.AVAILABLE_TECHNICIANS}
+        component={AvailableTechnicians}
+      />
+      <Stack.Screen
+        name={navigationStrings.TECHNICIAN_PROFILE}
+        component={TechnicianProfile}
+      />
 
       <Stack.Screen
         name={navigationStrings.WISHLIST}
@@ -296,7 +313,7 @@ export default function () {
         component={ViewAllSearchItems}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={navigationStrings.HOME_TEMP_3}
         component={HomeTemplate3}
       />
@@ -304,6 +321,7 @@ export default function () {
         name={navigationStrings.ORDER_AGAIN}
         component={EcomOrderAgain}
       />
+
 
     </Stack.Navigator>
   );

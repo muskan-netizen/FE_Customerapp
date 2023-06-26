@@ -12,6 +12,7 @@ import {
   PaymentOptions,
   PayPhone,
   Paystack,
+  Pesapal,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
   RateOrder,
@@ -128,6 +129,11 @@ export default function (Stack) {
           headerShown: false,
           unmountOnBlur: false,
         }}
+      />
+      <Stack.Screen
+        name={navigationStrings.PESAPAL}
+        component={Pesapal}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT_TAXI}

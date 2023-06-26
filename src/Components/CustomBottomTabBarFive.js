@@ -1,7 +1,7 @@
-import React, {Fragment, useRef} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
+import React, { Fragment, useRef } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -9,9 +9,9 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import Elevations from 'react-native-elevation';
-import {BlurView} from '@react-native-community/blur';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { BlurView } from '@react-native-community/blur';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
 const CustomBottomTabBarFive = ({
   state,
   descriptors,
@@ -21,12 +21,13 @@ const CustomBottomTabBarFive = ({
   ...props
 }) => {
   const insets = useSafeAreaInsets();
+  const { themeColors } = useSelector((state) => state.initBoot);
 
-  const {appStyle} = useSelector((state) => state?.initBoot || {});
+  const { appStyle } = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesData({fontFamily});
+  const styles = stylesData({ fontFamily });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -41,14 +42,14 @@ const CustomBottomTabBarFive = ({
       }}>
       <View style={[styles.tabBarStyle]}>
         {state.routes.map((route, index) => {
-          const {options} = descriptors[route.key];
+          const { options } = descriptors[route.key];
           const isFocused = state.index === index;
           const label =
             options.tabBarLabel !== undefined
               ? options.tabBarLabel
               : options.title !== undefined
-              ? options.title
-              : route.name;
+                ? options.title
+                : route.name;
           const onPress = () => {
             const event = navigation.emit({
               type: 'tabPress',
@@ -78,7 +79,14 @@ const CustomBottomTabBarFive = ({
 
                   // marginBottom:20
                 }}>
-                {options.tabBarIcon({focused: isFocused})}
+                {options.tabBarIcon({
+                  focused: isFocused,
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : isFocused
+                      ? themeColors.primary_color
+                      : colors.black,
+                })}
                 <Text
                   style={{
                     ...props.labelStyle,
@@ -88,8 +96,8 @@ const CustomBottomTabBarFive = ({
                         ? MyDarkTheme.colors.text
                         : MyDarkTheme.colors.text
                       : isFocused
-                      ? colors.black
-                      : colors.textGrey,
+                        ? themeColors?.primary_color
+                        : colors.textGrey,
                     opacity: isFocused ? 1 : 0.6,
                   }}>
                   {label}
@@ -103,9 +111,9 @@ const CustomBottomTabBarFive = ({
   );
 };
 
-export function stylesData({fontFamily}) {
+export function stylesData({ fontFamily }) {
   const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors} = currentTheme;
+  const { themeColors } = currentTheme;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();

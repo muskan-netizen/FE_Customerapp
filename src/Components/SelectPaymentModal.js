@@ -45,6 +45,8 @@ import { showError } from '../utils/helperFunctions';
 import HomeLoader from './Loaders/HomeLoader';
 import PaymentGateways from './PaymentGateways';
 import TextTabBar from './TextTabBar';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 
 export default function SelectPaymentModal({
   onSelectPayment,
@@ -619,7 +621,8 @@ export default function SelectPaymentModal({
                             ]
                             : styles.caseOnDeliveryText
                         }>
-                        {item?.title_lng ? item?.title_lng : item?.title}
+                   
+                        {appIds?.qdelo === getBundleId() ? item?.id == 10 ? `Online / ${(item?.title_lng ? item?.title_lng : item?.title)}` : (item?.title_lng ? item?.title_lng : item?.title) : item?.title_lng ? item?.title_lng : item?.title}
                       </Text>
                     </TouchableOpacity>
                     {!!(

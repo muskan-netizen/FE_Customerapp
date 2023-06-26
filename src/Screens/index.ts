@@ -134,12 +134,7 @@ export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
 export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
 export {default as Simplify} from './PaymentGateways/Simplify';
 export {default as Square} from './PaymentGateways/Square';
-export {default as Inventory} from './Inventory/Inventory';
-export {default as SalesExpenses} from './SalesExpenses/SalesExpenses';
-export {default as UdhaarLedger} from './UdhaarLedger/UdhaarLedger';
 export {default as AddProduct} from './AddProduct/AddProduct';
-export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
-export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';
 export {default as Paystack} from './PaymentGateways/Paystack';
 export {default as AuthorizeNet} from './PaymentGateways/AuthorizeNet';
 export {default as Avenue} from './PaymentGateways/Avenue';
@@ -166,7 +161,7 @@ export {default as ReplaceOrder} from './ReplaceOrder/ReplaceOrder';
 export {default as Category} from './Category/Category';
 export {default as SkipCash} from './PaymentGateways/SkipCash';
 export {default as SavedCards} from './SavedCards/SavedCards';
-
+export {default as Pesapal} from './PaymentGateways/Pesapal';
 // P2p template
 export {default as Post} from './P2P/Post/PostCategory';
 export {default as P2pProducts} from './P2P/P2pProducts/P2pProducts';
@@ -188,3 +183,26 @@ export {default as EcomCategory} from './EcomTemps/EcomCategory/EcomCategory';
 export {default as EcomOrderAgain} from './EcomTemps/EcomOrderAgain/EcomOrderAgain';
 export {default as EcomAccount} from './EcomTemps/EcomAccount/EcomAccount';
 export {default as EcomLangCurrency} from './EcomTemps/EcomLangCurrency/EcomLangCurrency';
+
+//FreelancerService
+export {default as FreelancerService} from './FreelancerService/FreelancerService';
+export {default as AvailableTechnicians} from './FreelancerService/AvailableTechnicians/AvailableTechnicians';
+export {default as TechnicianProfile} from './FreelancerService/TechnicianProfile/TechnicianProfile';
+
+//p2p Ondemand
+export {default as P2pOndemandHome} from './P2pOnDemnadBid/P2pOndemandHome(V2_API)';
+export {default as P2pPayment} from './P2pOnDemnadBid/P2pPayments/P2pPayment';
+export {default as AllCategories} from './P2pOnDemnadBid/AllCategories/AllCategories';
+export {default as ProductPriceDetails} from './P2pOnDemnadBid/ProductPriceDetails/ProductPriceDetails';
+export {default as RentTypeList} from './P2pOnDemnadBid/RentTypeList/RentTypeList';
+export {default as P2pOrderDetail} from './P2pOnDemnadBid/P2pOndemandOrderDetail/P2pOndemandOrderDetail';
+export {default as Login4} from './Login/Login4';
+export {default as Signup5} from './Signup/Signup5';
+export {default as P2pMyOrders} from './P2pOnDemnadBid/P2pMyOrders/P2pMyOrders';
+export {default as P2pChatRoom} from './P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom';
+export {default as P2pChatScreen} from './P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen';
+export {default as AddVehicleDetails} from './AddVehicleDetails/AddVehicleDetails';
+export {default as P2pOndemandProductDetail} from './P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail';
+export {default as P2pOndemandProducts} from './P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts';
+export {default as P2pOndemandAttributeInformation} from './P2pOnDemnadBid/P2pOndemandAttributeInformation/P2pOndemandAttributeInformation';
+export {default as P2pOndemandPostCategory} from './P2pOnDemnadBid/P2pOndemandPostCategory/P2pOndemandPostCategory';

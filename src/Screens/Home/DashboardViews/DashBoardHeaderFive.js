@@ -24,6 +24,9 @@ import {
 import FastImage from 'react-native-fast-image';
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getBundleId } from 'react-native-device-info';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { color } from 'react-native-reanimated';
 
 
 function DashBoardHeaderFive({
@@ -40,11 +43,14 @@ function DashBoardHeaderFive({
   currentLocation,
   nearestLoc,
   currentLoc,
+  onSeviceType = () => { }
 }) {
   const navigation = useNavigation();
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+  const { dineInType } = useSelector((state) => state?.home);
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -64,7 +70,7 @@ function DashBoardHeaderFive({
   );
 
 
- 
+
 
   return (
     <View
@@ -72,6 +78,7 @@ function DashBoardHeaderFive({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
+        backgroundColor: getBundleId() == appIds?.eatHalal ? colors?.redFireBrick : null
       }}>
       {showAboveView ? (
         <View
@@ -83,7 +90,7 @@ function DashBoardHeaderFive({
             // borderBottomWidth: 0,
           }}>
 
-          <TouchableOpacity
+          {appStyle?.homePageLayout == 10 ? <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.openDrawer()}
             style={{ alignItems: 'center', }}>
@@ -97,7 +104,7 @@ function DashBoardHeaderFive({
               source={imagePath.icMenuIcon}
               resizeMode="contain"
             />
-          </TouchableOpacity>
+          </TouchableOpacity> : null}
           <View
             style={{
               flexDirection: 'row',
@@ -136,14 +143,19 @@ function DashBoardHeaderFive({
                   marginLeft: moderateScale(8),
                 }}>
                 <Image
-                  style={styles.locationIcon}
-                  source={imagePath.locationIcon}
+                  style={[styles.locationIcon, { tintColor: getBundleId() == appIds?.eatHalal ? colors?.white : themeColors.primary_color }]}
+                  source={imagePath.redLocation}
                   resizeMode="contain"
-                  
+
                 />
                 <View>
                   {!!location?.type && (
-                    <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                    <Text numberOfLines={1} style={[styles.locationTypeTxt, {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : getBundleId() == appIds?.eatHalal ? colors?.white : colors.blackOpacity30,
+                      fontFamily: fontFamily.medium,
+                    }]}>
                       {location?.type === 3
                         ? !!(
                           location?.type_name != 0 &&
@@ -165,7 +177,7 @@ function DashBoardHeaderFive({
                       {
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
-                          : colors.blackOpacity30,
+                          : getBundleId() == appIds?.eatHalal ? colors?.white : colors.blackOpacity30,
                         fontFamily: fontFamily.medium,
                       },
                     ]}>
@@ -182,7 +194,8 @@ function DashBoardHeaderFive({
               flexDirection: 'row',
               alignItems: 'center',
               height: moderateScale(30),
-              width: moderateScale(80),
+
+
             }}>
             <TouchableOpacity
               style={{ marginHorizontal: moderateScale(8) }}
@@ -193,61 +206,64 @@ function DashBoardHeaderFive({
                 style={{
                   tintColor: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : themeColors.primary_color,
+                    : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
                 }}
                 source={imagePath.search1}
               />
             </TouchableOpacity>
-            {isVoiceRecord ? (
-              <TouchableOpacity onPress={_onVoiceStop}>
-                <LottieView
-                  style={{
-                    height: moderateScale(43),
-                    width: moderateScale(30),
-                    marginLeft: moderateScale(-2),
-                  }}
-                  source={voiceListen}
-                  autoPlay
-                  loop
-                  colorFilters={[
-                    { keypath: 'layers', color: themeColors.primary_color },
-                    { keypath: 'transparent2', color: themeColors.primary_color },
-                    { keypath: 'transparent1', color: themeColors.primary_color },
-                    { keypath: '01', color: themeColors.primary_color },
-                    { keypath: '02', color: themeColors.primary_color },
-                    { keypath: '03', color: themeColors.primary_color },
-                    { keypath: '04', color: themeColors.primary_color },
-                  ]}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{ marginHorizontal: moderateScale(8) }}
-                onPress={_onVoiceListen}>
-                <Image
-                  source={imagePath.icVoice}
-                  style={{
-                    height: moderateScale(20),
-                    width: moderateScale(20),
-                    borderRadius: moderateScale(10),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      :themeColors.primary_color,
-                  }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            )}
+            {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection ? <TouchableOpacity onPress={onSeviceType}>
+              <Image source={imagePath.bag} />
+            </TouchableOpacity> :
+              isVoiceRecord ? (
+                <TouchableOpacity onPress={_onVoiceStop}>
+                  <LottieView
+                    style={{
+                      height: moderateScale(43),
+                      width: moderateScale(30),
+                      marginLeft: moderateScale(-2),
+                    }}
+                    source={voiceListen}
+                    autoPlay
+                    loop
+                    colorFilters={[
+                      { keypath: 'layers', color: themeColors.primary_color },
+                      { keypath: 'transparent2', color: themeColors.primary_color },
+                      { keypath: 'transparent1', color: themeColors.primary_color },
+                      { keypath: '01', color: themeColors.primary_color },
+                      { keypath: '02', color: themeColors.primary_color },
+                      { keypath: '03', color: themeColors.primary_color },
+                      { keypath: '04', color: themeColors.primary_color },
+                    ]}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={{ marginHorizontal: moderateScale(8) }}
+                  onPress={_onVoiceListen}>
+                  <Image
+                    source={imagePath.icVoice}
+                    style={{
+                      height: moderateScale(20),
+                      width: moderateScale(20),
+                      borderRadius: moderateScale(10),
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              )}
           </View>
         </View>
       ) : null}
 
-      {appStyle?.homePageLayout !== 6 ?<DeliveryTypeComp
+      {getBundleId() !== appIds?.dropOff ? <DeliveryTypeComp
         selectedToggle={selcetedToggle}
         tabMainStyle={{
           marginBottom: 0,
         }}
-      />:null}
+      /> : null}
 
       <CustomAnimatedLoader
         source={loaderOne}

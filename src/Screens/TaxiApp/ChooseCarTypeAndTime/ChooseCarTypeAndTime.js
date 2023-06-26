@@ -549,6 +549,9 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
       case 52: //SKIP_CASH Payment Gatway
         navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         break;
+        case 57: //Peaspal Payment Gatway
+        navigation.navigate(navigationStrings.PESAPAL, paymentData);
+        break;
       case 30: //FlutterWave Payment Getway
         updateState({
           isModalVisibleForPayFlutterWave: true,
@@ -1381,7 +1384,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
             customMapStyle={
               mapStyleGrey
             }
-            style={{ height: height / 1.25 }}
+            style={{ height: height / 4 }}
             region={region}
             initialRegion={region}
             tracksViewChanges={false}>
@@ -1482,7 +1485,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         <BottomSheet
           ref={bottomSheetRef}
           index={1}
-          snapPoints={[height / 2.2, height / 1.25]}
+          snapPoints={[height / 1.25, height / 1.25]}
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
           animateOnMount={true}

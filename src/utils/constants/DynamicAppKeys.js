@@ -516,7 +516,7 @@ const shortCodes = {
   oaks: 'db5f29',
   buzy: '5e7246',
   etaim: '4b3283',
-  dotTaxiApp: 'ba540d',
+  dotTaxiApp: 'f9e0e1',
   airvoltTaxi: '41ca60',
   melakPharmacy: '4dbfe1',
   wiEnergi: '39c65c',
@@ -644,7 +644,7 @@ const appIds = {
   }),
   shariff: Platform.select({
     ios: 'com.codebrew.shariff',
-    android: 'com.shariff',
+    android: 'com.shariffOrder.royoorder',
   }),
   gajamove: Platform.select({
     ios: 'com.codebrew.gajamove',
@@ -1259,7 +1259,7 @@ const appIds = {
     android: 'com.app.gomeat',
   }),
   shopcentral: Platform.select({
-    ios: 'com.shopcentral',
+    ios: 'com.shopcentralOrder.royoorderapp',
     android: 'com.shopcentral',
   }),
   skidoo: Platform.select({
@@ -1732,7 +1732,7 @@ const appIds = {
     android: 'com.curblerLLC',
   }),
   cartnar: Platform.select({
-    ios: 'com.cartnar',
+    ios: 'com.shoparixOrder.royoorder',
     android: 'com.cartnar',
   }),
   uven: Platform.select({
@@ -1849,7 +1849,7 @@ const appIds = {
     android: 'com.medicab',
   }),
   fazeiTeam: Platform.select({
-    ios: 'com.fazeiTeam',
+    ios: 'com.fazei.ordersapp',
     android: 'com.fazeiTeam',
   }),
   weTogether: Platform.select({
@@ -1898,7 +1898,7 @@ const appIds = {
   }),
   busTaMove: Platform.select({
     ios: 'com.bustamove',
-    android: 'com.bustamove',
+    android: 'com.bustamove.order',
   }),
   atasktt: Platform.select({
     ios: 'com.atasktt',
@@ -2392,7 +2392,7 @@ const appIds = {
   }),
   greenhippo: Platform.select({
     ios: 'com.greenhippo.royoorders',
-    android: 'com.greenhippo.royoorders',
+    android: 'com.greenhippo.orders',
   }),
   mymeddy: Platform.select({
     ios: 'com.mymeddy.royoorders',
@@ -2612,8 +2612,8 @@ const appIds = {
     android: 'com.etiam.orderApp',
   }),
   dotTaxiApp: Platform.select({
-    ios: 'com.dotTaxiApp.royoorder',
-    android: 'com.dotTaxiApp.royoorder',
+    ios: 'com.dotTaxi.order',
+    android: 'com.dotTaxi.order',
   }),
   airvoltTaxi: Platform.select({
     ios: 'com.airvoltTaxi.royoorder',

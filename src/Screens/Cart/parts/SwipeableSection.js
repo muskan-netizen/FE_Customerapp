@@ -43,13 +43,13 @@ import commonStylesFunc, { hitSlopProp } from '../../../styles/commonStyles';
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription,selectCartItem,parentIndex, showCheckBox=false} = props;
+    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription, selectCartItem, parentIndex, showCheckBox = false } = props;
     const { themeColors } = useSelector((state) => state?.initBoot);
 
     const commonStyles = commonStylesFunc({ fontFamily });
 
     return (
-        
+
         <>
             {item?.vendor_products.length > 0
                 ? item?.vendor_products.map((i, inx) => {
@@ -64,13 +64,13 @@ function SwipeableSection(props) {
                         // overshootFriction={8}
                         >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {showCheckBox ?<TouchableOpacity 
-                                onPress={()=>selectCartItem(i)} style={{ marginHorizontal: moderateScale(5) }}>
+                                {showCheckBox ? <TouchableOpacity
+                                    onPress={() => selectCartItem(i)} style={{ marginHorizontal: moderateScale(5) }}>
                                     <FastImage style={{
-                                        height:moderateScale(20),
+                                        height: moderateScale(20),
                                         width: moderateScale(20)
                                     }} source={i?.is_cart_checked ? imagePath.checkBox2Active : imagePath.checkBox2InActive} />
-                                </TouchableOpacity>:null}
+                                </TouchableOpacity> : null}
                                 <Animated.View
                                     style={{
                                         backgroundColor: isDarkMode
@@ -87,7 +87,7 @@ function SwipeableSection(props) {
                                         style={{
                                             ...styles.cartItemMainContainer,
                                             minHeight: moderateScaleVertical(110),
-                                            width: showCheckBox? moderateScale(330): width/1.05,
+                                            width: showCheckBox ? moderateScale(330) : width / 1.05,
                                             alignItems: 'center'
                                         }}>
 
@@ -227,115 +227,115 @@ function SwipeableSection(props) {
                                                     {getBundleId() !== appIds.rentzy &&
                                                         <View
                                                             pointerEvents={btnLoader ? 'none' : 'auto'}
-                                                            style={{ 
-                                                                flexDirection: 'row', 
-                                                                alignItems: 'center',
-                            
-                                                                justifyContent:'space-between'
-                                                                 }}>
-                                                            <View style={{flex:0.7}}>      
-                                                            <View style={{
-                                                                ...commonStyles.buttonRect,
-                                                                borderWidth: 0.4,
-                                                                borderRadius: moderateScale(4),
+                                                            style={{
                                                                 flexDirection: 'row',
-                                                                justifyContent: 'space-between',
-                                                                paddingHorizontal: moderateScale(12),
-                                                                backgroundColor: getColorCodeWithOpactiyNumber(
-                                                                    themeColors.primary_color.substr(1),
-                                                                    15,
-                                                                ),
-                                                                width: moderateScale(90),
-                                                                borderColor: themeColors?.primary_color,
-                                                                height: moderateScale(24),
-                                                                marginVertical:moderateScaleVertical(4)
+                                                                alignItems: 'center',
+
+                                                                justifyContent: 'space-between'
                                                             }}>
-                                                                <TouchableOpacity
-                                                                    style={{ alignItems: 'center' }}
-                                                                    onPress={() =>
-                                                                        addDeleteCartItems(i, inx, 2)
-                                                                    }>
-                                                                    <FastImage
-                                                                        tintColor={themeColors?.primary_color}
+                                                            <View style={{ flex: 0.7 }}>
+                                                                <View style={{
+                                                                    ...commonStyles.buttonRect,
+                                                                    borderWidth: 0.4,
+                                                                    borderRadius: moderateScale(4),
+                                                                    flexDirection: 'row',
+                                                                    justifyContent: 'space-between',
+                                                                    paddingHorizontal: moderateScale(12),
+                                                                    backgroundColor: getColorCodeWithOpactiyNumber(
+                                                                        themeColors.primary_color.substr(1),
+                                                                        15,
+                                                                    ),
+                                                                    width: moderateScale(90),
+                                                                    borderColor: themeColors?.primary_color,
+                                                                    height: moderateScale(24),
+                                                                    marginVertical: moderateScaleVertical(4)
+                                                                }}>
+                                                                    <TouchableOpacity
+                                                                        style={{ alignItems: 'center' }}
+                                                                        onPress={() =>
+                                                                            addDeleteCartItems(i, inx, 2)
+                                                                        }>
+                                                                        <FastImage
+                                                                            tintColor={themeColors?.primary_color}
+                                                                            style={{
+                                                                                height: moderateScale(10),
+                                                                                width: moderateScale(10),
+
+
+                                                                            }}
+                                                                            resizeMode='contain'
+                                                                            source={imagePath.icMinus2}
+                                                                        />
+                                                                    </TouchableOpacity>
+                                                                    <View
                                                                         style={{
-                                                                            height: moderateScale(10),
-                                                                            width: moderateScale(10),
+                                                                            alignItems: 'center',
+                                                                            // width: moderateScale(20),
+                                                                            height: moderateScale(20),
+                                                                            justifyContent: 'center',
+                                                                        }}>
 
+                                                                        <View style={{
 
-                                                                        }}
-                                                                        resizeMode='contain'
-                                                                        source={imagePath.icMinus2}
-                                                                    />
-                                                                </TouchableOpacity>
-                                                                <View
-                                                                    style={{
-                                                                        alignItems: 'center',
-                                                                        // width: moderateScale(20),
-                                                                        height: moderateScale(20),
-                                                                        justifyContent: 'center',
-                                                                    }}>
+                                                                            width: moderateScale(40),
+                                                                            alignItems: 'center'
+                                                                        }}>
+                                                                            {btnLoadrId === i.id && btnLoader ? (
+                                                                                <UIActivityIndicator
+                                                                                    size={moderateScale(16)}
+                                                                                    color={themeColors?.primary_color}
+                                                                                />
+                                                                            ) : (
+                                                                                <Text style={{
 
-                                                                    <View style={{
+                                                                                    fontSize: textScale(13),
+                                                                                    color: isDarkMode
+                                                                                        ? MyDarkTheme.colors.text
+                                                                                        : colors.textGreyOpcaity7,
+                                                                                    fontFamily: fontFamily.medium,
+                                                                                }}>
+                                                                                    {i?.quantity}
+                                                                                </Text>
+                                                                            )}
+                                                                        </View>
 
-                                                                        width: moderateScale(40),
-                                                                        alignItems: 'center'
-                                                                    }}>
-                                                                        {btnLoadrId === i.id && btnLoader ? (
-                                                                            <UIActivityIndicator
-                                                                                size={moderateScale(16)}
-                                                                                color={themeColors?.primary_color}
-                                                                            />
-                                                                        ) : (
-                                                                            <Text style={{
-
-                                                                                fontSize: textScale(13),
-                                                                                color: isDarkMode
-                                                                                    ? MyDarkTheme.colors.text
-                                                                                    : colors.textGreyOpcaity7,
-                                                                                fontFamily: fontFamily.medium,
-                                                                            }}>
-                                                                                {i?.quantity}
-                                                                            </Text>
-                                                                        )}
                                                                     </View>
 
+                                                                    <TouchableOpacity
+                                                                        style={{ alignItems: 'center' }}
+                                                                        onPress={() =>
+                                                                            addDeleteCartItems(i, inx, 1)
+                                                                        }>
+                                                                        <FastImage
+                                                                            tintColor={themeColors?.primary_color}
+                                                                            style={{
+                                                                                height: moderateScale(10),
+                                                                                width: moderateScale(10),
+
+                                                                                marginLeft: moderateScale(3)
+                                                                            }}
+                                                                            resizeMode='contain'
+                                                                            source={imagePath.plus}
+                                                                        />
+                                                                    </TouchableOpacity>
                                                                 </View>
+                                                            </View>
 
+
+                                                            <View style={{ flex: 0.3 }}>
                                                                 <TouchableOpacity
-                                                                    style={{ alignItems: 'center' }}
-                                                                    onPress={() =>
-                                                                        addDeleteCartItems(i, inx, 1)
-                                                                    }>
-                                                                    <FastImage
-                                                                        tintColor={themeColors?.primary_color}
-                                                                        style={{
-                                                                            height: moderateScale(10),
-                                                                            width: moderateScale(10),
 
-                                                                            marginLeft: moderateScale(3)
+                                                                    onPress={() => openDeleteView(i)}>
+                                                                    <FastImage
+                                                                        source={imagePath.deleteRed}
+                                                                        resizeMode="contain"
+                                                                        style={{
+                                                                            width: moderateScale(16),
+                                                                            height: moderateScale(18),
+
                                                                         }}
-                                                                        resizeMode='contain'
-                                                                        source={imagePath.plus}
                                                                     />
                                                                 </TouchableOpacity>
-                                                            </View>
-                                                            </View>
-
-                                                        
-                                                        <View style={{flex:0.3}}>
-                                                            <TouchableOpacity
-                                         
-                                                                onPress={() => openDeleteView(i)}>
-                                                                <FastImage
-                                                                    source={imagePath.deleteRed}
-                                                                    resizeMode="contain"
-                                                                    style={{
-                                                                        width: moderateScale(16),
-                                                                        height: moderateScale(18),
-                                                            
-                                                                    }}
-                                                                />
-                                                            </TouchableOpacity>
                                                             </View>
 
                                                         </View>}

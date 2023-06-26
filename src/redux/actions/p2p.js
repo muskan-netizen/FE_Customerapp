@@ -6,10 +6,11 @@ import {
   GET_PRODUCT_BY_P2P_CATEGORY,
   SAVE_INFULENCER_INFO,
   SUBMIT_PRODUCT_WITH_ATTRIBUTE,
+  VIEW_ALL_CATEGORIES,
 } from '../../config/urls';
-import {apiGet, apiPost} from '../../utils/utils';
+import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
-const {dispatch} = store;
+const { dispatch } = store;
 
 export function getP2pCategories(data = {}, headers = {}) {
   return apiGet(GET_P2P_CATEGORIES, data, headers);
@@ -41,4 +42,9 @@ export function getDetailsOfSelectedInfluenceCategory(
 
 export function saveInfluencerInfo(data = {}, headers = {}) {
   return apiPost(SAVE_INFULENCER_INFO, data, headers);
+}
+
+
+export function getAllCategories(data = {}, headers = {}) {
+  return apiPost(VIEW_ALL_CATEGORIES, data, headers);
 }

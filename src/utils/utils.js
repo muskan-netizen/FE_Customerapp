@@ -52,7 +52,7 @@ export function saveShortCodeData(data) {
 
 export function setItem(key, data) {
   data = JSON.stringify(data);
-  return AsyncStorage.setItem(key, data);
+    return AsyncStorage.setItem(key, data);
 }
 
 export function getItem(key) {

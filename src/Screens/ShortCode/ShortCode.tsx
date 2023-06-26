@@ -1,31 +1,33 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Image, View } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
-import { MaterialIndicator } from 'react-native-indicators';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {Image, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
+import {useDarkMode} from 'react-native-dynamic';
+import {MaterialIndicator} from 'react-native-indicators';
 import Video from 'react-native-video';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../../constants/imagePath';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { moderateScale } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getCurrentLocation, showError } from '../../utils/helperFunctions';
-import { getItem } from '../../utils/utils';
-import { getAppCode } from './getAppCode';
-import { IRootState } from './interfaces';
+import {moderateScale} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {getCurrentLocation, showError} from '../../utils/helperFunctions';
+import {getItem} from '../../utils/utils';
+import {getAppCode} from './getAppCode';
+import {IRootState} from './interfaces';
 import styles from './styles';
-import { chekLocationPermission } from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 
 interface locationInterface {
-  latitude: number,
-  longitude: number,
-  address: string,
+  latitude: number;
+  longitude: number;
+  address: string;
 }
 
 const ShortCode: FC = () => {
-  const { deepLinkUrl, auth, themeColor, themeToggle } = useSelector((state: IRootState) => state?.initBoot || {});
+  const {deepLinkUrl, auth, themeColor, themeToggle} = useSelector(
+    (state: IRootState) => state?.initBoot || {},
+  );
   const theme = themeColor;
   const toggleTheme = themeToggle;
   const darkthemeusingDevice = useDarkMode();
@@ -34,46 +36,33 @@ const ShortCode: FC = () => {
 
   const [loadingScreen, setLoadingScreen] = useState(true);
 
-
   useEffect(() => {
     chekLocationPermission(true)
-      .then((result) => {
+      .then(result => {
         if (result !== 'goback' && result == 'granted') {
           getCurrentLocation('home')
-            .then((curLoc) => {
-              let locData = curLoc;
-              console.log("locDatalocData", locData)
-              initApiHit(locData)
+            .then(curLoc => {
+              initApiHit(curLoc);
               return;
             })
-            .catch((err) => {
-              initApiHit(null)
+            .catch(err => {
+              initApiHit(null);
               return;
             });
         }
       })
-      .catch((error) => {
-        initApiHit(null)
+      .catch(error => {
+        initApiHit(null);
       });
-  }, [])
+  }, []);
 
-
-
-
-  const initApiHit = async (locData:locationInterface | null) => {
+  const initApiHit = async (locData: locationInterface | null) => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
-    // const appCode = !!prevCode ? prevCode : getAppCode();
-    // 6ca3a4 -> emart
-    // f34c51 -> sanjay
-    // 0a0885 -> gaurav
-    const appCode = '6ca3a4'
+    const appCode = !!prevCode ? prevCode : getAppCode();
 
     let header = {};
-    let locationObject = {
-      latitude: locData?.latitude,
-      longitude: locData?.longitude
-    }
+
     if (!!lang?.primary_language?.id) {
       header = {
         code: appCode,
@@ -81,11 +70,9 @@ const ShortCode: FC = () => {
       };
     } else {
       header = {
-        code: appCode
+        code: appCode,
       };
     }
-
-   
 
     actions
       .initApp(locData, header, false, null, null, true)
@@ -113,21 +100,22 @@ const ShortCode: FC = () => {
         }, 500);
       });
   };
-  const navigateToNextScreen = useCallback((res: any) => {
-    getItem('firstTime').then(el => {
-      if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
-        actions.setAppSessionData('app_intro');
-      } else {
-        if (!!auth?.userData && !!auth?.userData?.auth_token) {
-          actions.setAppSessionData('guest_login');
-        } else if (deepLinkUrl && !auth?.userData?.auth_token) {
-          actions.setAppSessionData('on_login');
+  const navigateToNextScreen = useCallback(
+    (res: any) => {
+      getItem('firstTime').then(el => {
+        if (!el && !!res?.data && res?.data?.dynamic_tutorial.length > 0) {
+          actions.setAppSessionData('app_intro');
         } else {
-          actions.setAppSessionData('guest_login');
+          if (!!auth?.userData && !!auth?.userData?.auth_token) {
+            actions.setAppSessionData('guest_login');
+          } else if (deepLinkUrl && !auth?.userData?.auth_token) {
+            actions.setAppSessionData('on_login');
+          } else {
+            actions.setAppSessionData('guest_login');
+          }
         }
-      }
-    });
-  },
+      });
+    },
     [auth, deepLinkUrl],
   );
   const _renderSplash = useCallback(() => {
@@ -162,15 +150,15 @@ const ShortCode: FC = () => {
   }, []);
   const imageSplash = useCallback(() => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View style={styles.splashStyle}>
-          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {loadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
         </View>
-        <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
       </View>
     );
   }, [loadingScreen]);
@@ -208,7 +196,6 @@ const ShortCode: FC = () => {
       {_renderSplash()}
     </View>
   );
-}
+};
 
-
-export default ShortCode
+export default ShortCode;

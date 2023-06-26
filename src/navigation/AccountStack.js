@@ -8,7 +8,6 @@ import {
   Account3,
   Account4,
   AddMoney,
-  AddNewCustomer,
   AddProduct,
   AllinonePyments,
   BrandProducts,
@@ -17,9 +16,8 @@ import {
   ChatRoomForVendor,
   CMSLinks,
   ContactUs,
-  CustomerEarningHistory,
+
   Delivery,
-  Inventory,
   Location,
   Loyalty2,
   //Pyament Screens
@@ -46,7 +44,6 @@ import {
   ReferAndEarn,
   ReplaceOrder,
   ReturnOrder,
-  SalesExpenses,
   SavedCards,
   SearchProductVendorItem,
   SearchProductVendorItem3V2,
@@ -57,7 +54,6 @@ import {
   TipPaymentOptions,
   TrackDetail,
   Tracking,
-  UdhaarLedger,
   Vendors,
   Vendors2,
   ViewAllSearchItems,
@@ -254,27 +250,12 @@ export default function ({ navigation }) {
         name={navigationStrings.ALL_IN_ONE_PAYMENTS}
         component={AllinonePyments}
       />
-      <Stack.Screen name={navigationStrings.INVENTORY} component={Inventory} />
-      <Stack.Screen
-        name={navigationStrings.UDHAARLEDGER}
-        component={UdhaarLedger}
-      />
-      <Stack.Screen
-        name={navigationStrings.SALES_EXPENSES}
-        component={SalesExpenses}
-      />
+
       <Stack.Screen
         name={navigationStrings.ADD_PRODUCT}
         component={AddProduct}
       />
-      <Stack.Screen
-        name={navigationStrings.ADD_NEW_CUSTOMER}
-        component={AddNewCustomer}
-      />
-      <Stack.Screen
-        name={navigationStrings.CUSTOMER_EARNING_HISTORY}
-        component={CustomerEarningHistory}
-      />
+
       <Stack.Screen name={navigationStrings.CHAT_ROOM} component={ChatRoom} />
       <Stack.Screen
         name={navigationStrings.CHAT_ROOM_FOR_VENDOR}

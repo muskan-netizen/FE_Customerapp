@@ -33,15 +33,16 @@ enableFreeze(true);
 
 export default function VendorDetail3({ navigation, route }) {
   let vendorParams = route?.params?.data;
-  console.log('vendor params', vendorParams);
+  const fromNotification =route?.params?.fromNotification || false
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
+  
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({
-    vendorId: vendorParams?.item?.id || vendorParams?.id,
+    vendorId: vendorParams?.item?.id || vendorParams?.id || vendorParams,
     vendordName: vendorParams.name || '',
     vendorData: [],
     isLoading: true,
@@ -53,8 +54,8 @@ export default function VendorDetail3({ navigation, route }) {
   useEffect(() => {
     if (
       vendorParams &&
-      vendorParams?.item &&
-      vendorParams?.item?.redirect_to == staticStrings.SUBCATEGORY
+      ((vendorParams?.item &&
+        vendorParams?.item?.redirect_to == staticStrings.SUBCATEGORY) || (fromNotification))
     ) {
       getSubCategoryDetailData();
     } else {
@@ -113,6 +114,7 @@ export default function VendorDetail3({ navigation, route }) {
           isVendorList: false,
           category_slug: item?.slug,
           categoryExist: item?.id || null,
+          screenName: 'category'
         },
       });
       return;

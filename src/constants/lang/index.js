@@ -16,6 +16,7 @@ import tr from './tr';
 import vi from './vi';
 import zh from './zh';
 import bn from './bn'
+
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import ar_baytukom from './ar_baytukom';
 import es_elcheragio from './es_elcheragio';
@@ -23,6 +24,8 @@ import es_heybuddy from './es_heybuddy';
 import es_sabroson from './es_sabroson';
 import swa from './swa';
 import heb from './heb'
+import fr_oxo from './fr_oxo';
+import ar_oneStop from './ar_oneStop';
 
 //Spanish fils
 
@@ -43,19 +46,28 @@ const arbicFile = () => {
   switch (DeviceInfo.getBundleId()) {
     case appIds?.baytukom:
       return ar_baytukom;
-    case appIds?.messiaa:
-      return heb;
+    case appIds.oneStop:
+      return ar_oneStop;
     default:
       return ar;
   }
 };
+const frenchFile = () => {
+  switch (DeviceInfo.getBundleId()) {
+    case appIds?.oxo:
+      return fr_oxo;
+    default:
+      return fr;
+  }
+};
+
 
 let strings = new LocalizedStrings({
   en: en,
   ar: arbicFile(),
   es: spanishfile(),
   de: de,
-  fr: fr,
+  fr: frenchFile(),
   tr: tr,
   sv: sv,
   zh: zh,

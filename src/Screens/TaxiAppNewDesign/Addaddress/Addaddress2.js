@@ -73,7 +73,7 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
-  const { book_for_friend } = appData?.profile?.preferences || {};
+  const { book_for_friend, is_bid_ride_enable, is_cab_pooling, is_particular_driver } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
 
   const commonStyles = commonStylesFun({ fontFamily });
@@ -337,6 +337,7 @@ export default function Addaddress({ navigation, route }) {
       case 0: return ('Booking')
       case 1: return ('Pooling')
       case 2: return ('bidRide')
+      case 3: return ('RequestForDriver')
       default: return ('Booking')
     }
   }
@@ -1064,7 +1065,7 @@ export default function Addaddress({ navigation, route }) {
           </View>
 
 
-          {/* {is_cab_pooling || is_bid_ride_enable ? (
+          {/*   {!!is_particular_driver ? (
             <View
               style={{
 
@@ -1074,7 +1075,7 @@ export default function Addaddress({ navigation, route }) {
 
               }}
             >
-              {!!(is_cab_pooling || is_bid_ride_enable) &&
+               {!!(is_cab_pooling || is_bid_ride_enable) &&
                 <GradientButton
                   colorsArray={
                     isBookingType == 0
@@ -1087,6 +1088,7 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 0 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(0)}
                   btnText={"BOOKING"}
@@ -1112,6 +1114,7 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 1 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(1)}
                   btnText={"POOLING"}
@@ -1138,9 +1141,10 @@ export default function Addaddress({ navigation, route }) {
                     color:
                       isBookingType == 2 ? colors.white : themeColors?.primary_color,
                     marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
                   }}
                   onPress={() => onBooking(2)}
-                  btnText={"BIDE & RIDE"}
+                  btnText={"BID & RIDE"}
                   containerStyle={{ flex: 1 }}
                   btnStyle={{
                     borderRadius: moderateScale(4),
@@ -1150,9 +1154,37 @@ export default function Addaddress({ navigation, route }) {
                   }}
                 />
               }
+           
+                <GradientButton
+                  colorsArray={
+                    isBookingType == 3
+                      ? [themeColors.primary_color, themeColors.primary_color]
+                      : [colors.white, colors.white]
+                  }
+                  textStyle={{
+                    textTransform: "none",
+                    fontSize: textScale(14),
+                    color:
+                      isBookingType == 3 ? colors.white : themeColors?.primary_color,
+                    marginHorizontal: moderateScale(5),
+                    fontSize: textScale(10)
+                  }}
+                  onPress={() => onBooking(3)}
+                  btnText={"REQUEST FOR DRIVER"}
 
+                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    borderColor: colors.textGreyLight,
+                    borderWidth: moderateScale(0.5),
+
+
+                  }}
+                />
+              
             </View>
-          ) : null} */}
+            ) : null} 
+             */}
 
           <View style={{ flex: 1 }}>
             <View>

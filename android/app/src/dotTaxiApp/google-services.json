@@ -1,64 +1,40 @@
 {
   "project_info": {
-    "project_number": "14351280931",
-    "project_id": "dottaxiapp-order",
-    "storage_bucket": "dottaxiapp-order.appspot.com"
+    "project_number": "910060793051",
+    "project_id": "dot-taxi",
+    "storage_bucket": "dot-taxi.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:14351280931:android:aa6906ac6beb48c53cba96",
+        "mobilesdk_app_id": "1:910060793051:android:6622461a7be0ae598f70fe",
         "android_client_info": {
-          "package_name": "com.dotTaxiApp.royoorder"
+          "package_name": "com.dotTaxi.order"
         }
       },
       "oauth_client": [
         {
-          "client_id": "14351280931-h6s8bsopdvkahg2n3vtko71skm5op0e9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dotTaxiApp.royoorder",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "14351280931-juh0u2md9ckthgi9ps93626jfqc326f7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dotTaxiApp.royoorder",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "14351280931-oeld900l52a02splvd1aaofv0lbiv6kd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dotTaxiApp.royoorder",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "14351280931-cs8kvvad10lf5o7dthrt4r5ibs5er73n.apps.googleusercontent.com",
+          "client_id": "910060793051-1nsp5692t09l429214jeqqq92uqlo7cm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB9EZmWhxH6NXTP_uAfXMcwyl1aOzyo2jY"
+          "current_key": "AIzaSyCz0U23_pQwa44IszOpFTmsHBoeBfCBVWE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "14351280931-cs8kvvad10lf5o7dthrt4r5ibs5er73n.apps.googleusercontent.com",
+              "client_id": "910060793051-1nsp5692t09l429214jeqqq92uqlo7cm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "14351280931-bab405ck8dfr6up6pa2krgqkd0jal3cr.apps.googleusercontent.com",
+              "client_id": "910060793051-cq344ohutgjsltl612t6n10a757h0aie.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.dotTaxiApp.royoorder"
+                "bundle_id": "com.dotTaxi.order"
               }
             }
           ]

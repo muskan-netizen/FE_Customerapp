@@ -430,7 +430,7 @@ export default {
   PASSWORD_NOT_MATCH:
     'Neno la Siri Jipya na Neno la Siri la Kuthibitisha havijafanana',
   MESSAGE: 'Meseji',
-  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS:"Please enter at least 6 characters",
+  PLEASE_ENTER_AT_LEAST_SIX_CHARACTERS: "Please enter at least 6 characters",
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Oda yako imetumwa!',
   YOUR_ORDER_NUMBER: 'Namba ya oda yako ni',
   ANY_RESTAURANT_REQUESTS:
@@ -640,7 +640,7 @@ export default {
     'Muda wowote gari lako likiharibika, \n tupo kwa ajili yako !',
   ENTER_YOUR: 'Ingiza taarifa yako ya',
   ENTER_YOUR_NAME: "Enter your name",
-  ENTER_YOUR_EMAIL:"Enter your email",
+  ENTER_YOUR_EMAIL: "Enter your email",
   REGISTER: 'Jiunge',
   ENTER_EMAIL_ADDRESS: 'Ingiza Barua pepe yako hapa',
   ENTER_PHONE_NUMBER: 'Ingiza namba yako ya simu hapa',
@@ -817,9 +817,6 @@ export default {
   CUSTOMIZZATION_FOR: 'Mipangilio kwa ajili ya',
   ORDER_DELIVERED_SUCESSFULLY: 'Oda imefikishwa kikamilifu !',
   ACCEPTING_ORDER_MSG: 'Hatupokei oda chini ya',
-  INVENTORY: 'Hifadhi ya Bidhaa',
-  UDHAARLEDGER: 'Leja ya Udhaar',
-  SALES_EXPENSES: 'Mauzo / Matumizi',
   ADD_PRODUCT: 'Ongeza Bidhaa',
   ADD_CUSTOMER: 'Ongeza Mteja',
   ADD_NEW_CUSTOMER: 'Ongeza mteja mpya',

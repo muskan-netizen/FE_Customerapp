@@ -1,26 +1,55 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
-import {Platform} from 'react-native';
-import {navigate} from '../navigation/NavigationService';
+import { PermissionsAndroid, Platform } from 'react-native';
+
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
+import { getItem } from './utils';
+import { PERMISSIONS } from 'react-native-permissions';
+import { redirectFromNotification } from './helperFunctions';
+import * as NavigationService from '../navigation/NavigationService';
 
-import {getItem} from './utils';
+export async function requestUserPermission(callback = () => { }) {
 
+  if (Platform.OS === 'ios') {
+    await messaging().registerDeviceForRemoteMessages();
+    // await messaging().registerForRemoteNotifications()
+  }
+  if (Platform.Version >= 33) {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+        {
+          title: 'Notification Permission',
+          message: 'Allow this app to post notifications?',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        getFcmToken();
+        callback(false);
+      } else {
+        callback(true)
+      }
+    } catch (err) {
+      console.warn(err);
+    }
 
-export async function requestUserPermission() {
-  // if (Platform.OS == 'ios') {
-  //     await messaging().registerDeviceForRemoteMessages();
-  // }
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-    getFcmToken();
+  } else {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      getFcmToken();
+      callback(false);
+    } else callback(true);
   }
 }
+
+
 
 const getFcmToken = async () => {
   let fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -42,7 +71,7 @@ const getFcmToken = async () => {
 
 const _getOrderDetail = async (id) => {
   const getAppData = await getItem('appData');
-  const {appData} = getAppData;
+  const { appData } = getAppData;
   console.log('manage Redirections', appData);
   let data = {};
   data['order_id'] = id;
@@ -88,8 +117,8 @@ const manageRedirections = async (data) => {
 //   //   popInitialNotification: true,
 //   // });
 
- 
-  
+
+
 
 
 //   messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -201,14 +230,45 @@ const manageRedirections = async (data) => {
 
 
 export const notificationListener = async () => {
-  console.log('i am calleding bhai')
   //Backgorund
   messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'i am calleding bhai too',
-      JSON.stringify(remoteMessage),
-    );
-    const {notification} = remoteMessage;
+
+    const { notification } = remoteMessage;
+    console.log(remoteMessage, 'remoteMessageremoteMessage')
+    if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "2") {
+      if (remoteMessage?.data?.redirect_type_value == 'Subcategory') {
+        setTimeout(() => {
+          NavigationService.navigate(navigationStrings.VENDOR_DETAIL, {data: remoteMessage?.data?.redirect_data, fromNotification: true})
+       
+        }, 1200);
+      }
+      else if (remoteMessage?.data?.redirect_type_value == 'Product') {
+        setTimeout(() => {
+          NavigationService.navigate(navigationStrings.PRODUCT_LIST,
+          {data: remoteMessage?.data?.redirect_data,}
+        )
+        
+        }, 1200);
+      }
+      else if (remoteMessage?.data?.redirect_type_value == 'Vendor') {
+        setTimeout(() => {
+          NavigationService.navigate(navigationStrings.VENDOR,{data: remoteMessage?.data?.redirect_data,},)
+        }, 1200);
+      }
+    }
+
+    else if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "3") {
+
+      setTimeout(() => {
+        NavigationService.navigate( navigationStrings.PRODUCT_LIST,
+        {
+              data: remoteMessage?.data?.redirect_data, fromNotification: true,
+            },
+          )
+     
+      }, 1200);
+
+    }
     // if (
     //   notification?.sound == 'notification.mp3' ||
     //   notification?.android?.sound == 'notification'
@@ -243,11 +303,74 @@ export const notificationListener = async () => {
           'remote message inital notification',
           JSON.stringify(remoteMessage),
         );
-        const {notification} = remoteMessage;
+        const { notification } = remoteMessage;
         console.log(
           'Notification caused app to open from quit state:',
           remoteMessage,
         );
+
+
+        if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "2") {
+          if (remoteMessage?.data?.redirect_type_value == 'Subcategory') {
+            setTimeout(() => {
+              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+                screen: navigationStrings.HOMESTACK,
+                params: {
+                  screen: navigationStrings.VENDOR_DETAIL,
+                  params: {
+                    data: remoteMessage?.data?.redirect_data, fromNotification: true
+                  },
+                },
+              })
+             
+            }, 1200);
+          }
+          else if (remoteMessage?.data?.redirect_type_value == 'Product') {
+            setTimeout(() => {
+              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+                screen: navigationStrings.HOMESTACK,
+                params: {
+                  screen: navigationStrings.PRODUCT_LIST,
+                  params: {
+                    data: remoteMessage?.data?.redirect_data,
+                  },
+                },
+              })
+          
+            }, 1200);
+          }
+          else if (remoteMessage?.data?.redirect_type_value == 'Vendor') {
+            setTimeout(() => {
+              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+                screen: navigationStrings.HOMESTACK,
+                params: {
+                  screen: navigationStrings.VENDOR,
+                  params: {
+                    data: remoteMessage?.data?.redirect_data,
+                  },
+                },
+              })
+            
+            }, 1200);
+          }
+        }
+
+        else if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "3") {
+
+          setTimeout(() => {
+            NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+              screen: navigationStrings.HOMESTACK,
+              params: {
+                screen: navigationStrings.PRODUCT_LIST,
+                params: {
+                  data: remoteMessage?.data?.redirect_data, fromNotification: true,
+                },
+              },
+            })
+           
+          }, 1200);
+
+        }
         // if (
         //   notification?.sound == 'notification.mp3' ||
         //   notification?.android?.sound == 'notification'
@@ -283,13 +406,13 @@ const _openApp = () => {
       'Notification caused app to open from background state bla bla:',
       remoteMessage,
     );
-    const {data, messageId, notification} = remoteMessage;
+    const { data, messageId, notification } = remoteMessage;
 
     manageRedirections(data);
 
     if (
       Platform.OS == 'android' &&
-      notification.android.sound == 'notification'
+      notification.android.sound == 'notification' && data.type != 'reached_location'
     ) {
       actions.isVendorNotification(true);
     }
@@ -298,6 +421,7 @@ const _openApp = () => {
     }
   });
   console.log('i am here>>>>>');
+
 };
 
 const _onRedirectOrderScreen = (id) => {

@@ -1634,7 +1634,7 @@ export default function OrderDetail({ navigation, route }) {
                       </View>
 
                       {!!driverStatus?.order &&
-                        driverStatus?.order?.status === 'completed' ? (
+                        driverStatus?.order?.status === 'completed' || paramData?.orderStatus?.current_status?.title === 'Delivered' ? (
                         <View
                           style={{
                             flexDirection: 'row',
@@ -4021,29 +4021,29 @@ export default function OrderDetail({ navigation, route }) {
                               }} source={imagePath.ecomUnCheck} />}
 
                             <View style={{
-                                   marginLeft: moderateScale(4),
+                              marginLeft: moderateScale(4),
                             }}>
                               <Text style={{
                                 color: isDarkMode ? colors.white : colors.blackC,
                                 fontSize: textScale(12),
                                 fontFamily: fontFamily.regular,
-                           
+
                               }} >{val?.address}</Text>
-                              {!!orderStatusTitle(val)?<Text style={{
+                              {!!orderStatusTitle(val) ? <Text style={{
                                 color: isDarkMode ? colors.white : colors.blackC,
                                 fontSize: textScale(12),
                                 fontFamily: fontFamily.medium,
-                              }}>{orderStatusTitle(val)}</Text>:null}
+                              }}>{orderStatusTitle(val)}</Text> : null}
                             </View>
                           </View>
 
-                          {(val?.task_status !== '0' && 
-                          val?.task_type_id == 1 && val?.task_status == '1') || val?.task_status == '4'
-                          ? <Text style={{
-                            color: colors?.black,
-                            fontSize: textScale(12),
-                            fontFamily: fontFamily.regular,
-                          }}>{moment(val?.updated_at).calendar()}</Text> : null}
+                          {(val?.task_status !== '0' &&
+                            val?.task_type_id == 1 && val?.task_status == '1') || val?.task_status == '4'
+                            ? <Text style={{
+                              color: colors?.black,
+                              fontSize: textScale(12),
+                              fontFamily: fontFamily.regular,
+                            }}>{moment(val?.updated_at).calendar()}</Text> : null}
                         </View>
                         {(driverStatus?.tasks?.length - 1) !== i ?
                           <View

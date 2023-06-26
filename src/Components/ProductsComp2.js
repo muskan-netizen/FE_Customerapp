@@ -32,7 +32,7 @@ let imageHeight = parseInt(moderateScale(100))
 let imageWidth = parseInt(width / 3.2)
 
 const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle } =
+  const { themeColors, appStyle, currencies, themeColor, themeToggle,appData } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
@@ -93,7 +93,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && item?.averageRating !== '0.0' && (
+        {!!appData?.profile?.preferences?.rating_check && !!item?.averageRating && item?.averageRating !== '0.0' && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{

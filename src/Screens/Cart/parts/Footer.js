@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {
   moderateScale,
@@ -29,8 +29,10 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import strings from '../../../constants/lang';
 
 function Footer(props) {
-  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { } } = props;
-
+  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', cartItems, setVendorComment = null } = props;
+  const foundRecurringProduct = cartData?.products?.some(item => {
+    return item?.vendor_products.some(item => item?.is_recurring_booking)
+  })
   return (
     <View style={{}}>
       {!!cartData?.category_kyc_count && !!userData?.auth_token && (
@@ -842,8 +844,8 @@ function Footer(props) {
                     ? MyDarkTheme.colors.text
                     : colors.textGreyB,
                 }}>
-                {/* {strings.TAXES_FEES} */}
-                {`Taxes`}
+                {strings.TAXES_FEES}
+                {/* {`Taxes`} */}
               </Text>
 
               <Image
@@ -1331,8 +1333,8 @@ function Footer(props) {
 
             {!!(
               userData?.auth_token &&
-              appData?.profile?.preferences?.off_scheduling_at_cart &&
-              businessType !== 'laundry'
+              !appData?.profile?.preferences?.off_scheduling_at_cart && !foundRecurringProduct &&
+              businessType !== 'laundry' && dineInType !== 'appointment'
             ) && (
                 <ButtonComponent
                   onPress={
@@ -1366,15 +1368,16 @@ function Footer(props) {
                   }}
                 />
               )}
-
-            <ButtonComponent
-              onPress={placeOrder}
-              btnText={strings.PLACE_ORDER}
-              borderRadius={moderateScale(13)}
-              textStyle={{ color: colors.white }}
-              containerStyle={styles.placeOrderButtonStyle}
-              placeLoader={placeLoader}
-            />
+            {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate) && (dineInType == 'appointment' ? (cartItems?.some(item => item?.scheduled_date_time == null)) : true)) && (
+              <ButtonComponent
+                onPress={placeOrder}
+                btnText={strings.PLACE_ORDER}
+                borderRadius={moderateScale(13)}
+                textStyle={{ color: colors.white }}
+                containerStyle={styles.placeOrderButtonStyle}
+                placeLoader={placeLoader}
+              />
+            )}
           </View>
         ) : cartData?.cart_error_message ? (
           <View style={styles.cartErrorMessageContainer}>

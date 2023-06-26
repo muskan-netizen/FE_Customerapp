@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import {Alert, PermissionsAndroid, Platform} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {
   check,
@@ -10,33 +10,54 @@ import {
   RESULTS,
 } from 'react-native-permissions';
 import strings from '../constants/lang';
-import {showError} from './helperFunctions';
-import {openAppSetting} from './openNativeApp';
+import { showError } from './helperFunctions';
+import { openAppSetting } from './openNativeApp';
+import { err } from 'react-native-svg/lib/typescript/xml';
 
 export const androidCameraPermission = () =>
   new Promise(async (resolve, reject) => {
+    console.log(Platform.Version, '');
     try {
-      if (Platform.OS === 'android' && Platform.Version > 22) {
-        const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-        ]);
-        console.log(granted, 'the granted value');
-
-        if (
-          granted['android.permission.CAMERA'] !== 'granted' ||
-          granted['android.permission.WRITE_EXTERNAL_STORAGE'] !== 'granted' ||
-          granted['android.permission.READ_EXTERNAL_STORAGE'] !== 'granted'
-        ) {
-          Alert.alert(
-            strings.ALERT,
-            strings.CAMERA_PERMISSION_DENIED_MSG,
-            [{text: strings.OK}],
-            {cancelable: true},
-          );
-          return resolve(false);
-          // alert(strings.DO_NOT_HAVE_PERMISSIONS_TO_SELECT_IMAGE);
+      console.log(Platform.Version, 'Platform.VersionPlatform.Version')
+      if (Platform.OS === "android" && Platform.Version > 22) {
+        if (Platform.Version >= 33) {
+          const granted = await PermissionsAndroid.requestMultiple([
+            PERMISSIONS.ANDROID.CAMERA,
+            PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+          ]);
+          if (
+            granted["android.permission.CAMERA"] !== "granted" ||
+            granted["android.permission.READ_MEDIA_IMAGES"] !== "granted"
+          ) {
+            Alert.alert(
+              "Alert",
+              "Don't have permission to open camera",
+              [{ text: "Okay" }],
+              { cancelable: true }
+            );
+            return resolve(false);
+            // alert(strings.DO_NOT_HAVE_PERMISSIONS_TO_SELECT_IMAGE);
+          }
+        } else {
+          const granted = await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          ]);
+          if (
+            granted["android.permission.CAMERA"] !== "granted" ||
+            granted["android.permission.WRITE_EXTERNAL_STORAGE"] !== "granted" ||
+            granted["android.permission.READ_EXTERNAL_STORAGE"] !== "granted"
+          ) {
+            Alert.alert(
+              "Alert",
+              "Don't have permission to open camera",
+              [{ text: "Okay" }],
+              { cancelable: true }
+            );
+            return resolve(false);
+            // alert(strings.DO_NOT_HAVE_PERMISSIONS_TO_SELECT_IMAGE);
+          }
         }
         return resolve(true);
       }
@@ -211,10 +232,10 @@ export const checkCameraAndGallaryPermision = () => {
         Platform.OS === 'ios'
           ? [PERMISSIONS.IOS.CAMERA]
           : [
-              PERMISSIONS.ANDROID.CAMERA,
-              PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-              PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-            ],
+            PERMISSIONS.ANDROID.CAMERA,
+            PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+            PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+          ],
       )
         .then((result) => {
           switch (result) {
@@ -226,10 +247,10 @@ export const checkCameraAndGallaryPermision = () => {
                 Platform.OS === 'ios'
                   ? [PERMISSIONS.IOS.CAMERA]
                   : [
-                      PERMISSIONS.ANDROID.CAMERA,
-                      PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-                      PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-                    ],
+                    PERMISSIONS.ANDROID.CAMERA,
+                    PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+                    PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+                  ],
               )
                 .then((result) => {
                   return reject(result);
@@ -271,3 +292,66 @@ export const checkCameraAndGallaryPermision = () => {
     }
   });
 };
+
+
+
+export const bluetoothPermission = () =>
+  new Promise(async (resolve, reject) => {
+
+    try {
+      if (Number(Platform.constants.Release) <= Number(11)) {
+        return resolve(true)
+      }
+      else {
+        const granted = await PermissionsAndroid.requestMultiple(
+          [PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,],
+          {
+            title: 'Bluetooth Scanning Permission',
+            message: 'Allow this app to Bluetooth Scan?',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        console.log(granted, 'grantedgrantedgrantedgranted>>>>>');
+        if (
+          granted['android.permission.BLUETOOTH_SCAN'] == 'granted' &&
+          granted['android.permission.BLUETOOTH_CONNECT'] == 'granted'
+
+        ) {
+          return resolve('grant')
+        }
+        else {
+          return resolve('denied')
+        }
+      }
+    }
+    catch (error) {
+      return reject(error);
+    }
+  })
+
+export const onlyCheckLocationPermission = (showAlert = true) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      check(
+        Platform.OS === 'ios'
+          ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+          : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+      )
+        .then((result) => {
+          if (result === "granted") {
+            return resolve(result)
+          }
+          else {
+            return reject(result);
+          }
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    } catch (error) {
+      return reject(error);
+    }
+  });

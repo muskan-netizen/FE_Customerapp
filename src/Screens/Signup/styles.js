@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import {
   moderateScale,
@@ -7,8 +7,8 @@ import {
 } from '../../styles/responsiveSize';
 import commonStylesFun from '../../styles/commonStyles';
 
-export default ({fontFamily}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     header: {
       color: colors.black,
@@ -80,6 +80,30 @@ export default ({fontFamily}) => {
       color: colors.blue,
       fontFamily: fontFamily.medium,
     },
+    boxStyle: {
+      backgroundColor: colors.blackOpacity05,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+      borderRadius: moderateScale(4),
+      backgroundColor: colors.white
+    },
+    placeholderTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(16),
+      paddingHorizontal: moderateScale(18),
+    },
+    workModeContainer: {
+      borderWidth: 2,
+      borderRadius: moderateScale(8),
+
+      padding: moderateScale(16),
+      marginTop: moderateScaleVertical(24)
+    },
+    radioBtn: {
+      height: moderateScale(25),
+      width: moderateScale(25),
+
+    }
   });
   return styles;
 };

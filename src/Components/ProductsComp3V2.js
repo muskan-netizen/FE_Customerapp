@@ -88,22 +88,31 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && item?.averageRating !== '0.0' && (
-          <View style={styles.hdrRatingTxtView}>
-            <Text
-              style={{
-                ...styles.ratingTxt,
-                fontFamily: fontFamily.medium,
-              }}>
-              {Number(item?.averageRating).toFixed(1)}
-            </Text>
-            <Image
-              style={styles.starImg}
-              source={imagePath.star}
-              resizeMode="contain"
-            />
-          </View>
-        )}
+
+        <View style={{
+          position: 'absolute',
+          right: moderateScale(0),
+          top: moderateScale(0),
+        }} >
+
+          {!!item?.averageRating && item?.averageRating !== '0.0' && (
+            <View style={styles.hdrRatingTxtView}>
+              <Text
+                style={{
+                  ...styles.ratingTxt,
+                  fontFamily: fontFamily.medium,
+                }}>
+                {Number(item?.averageRating).toFixed(1)}
+              </Text>
+              <Image
+                style={styles.starImg}
+                source={imagePath.star}
+                resizeMode="contain"
+              />
+            </View>
+          )}
+        </View>
+
       </FastImage>
       <View style={{ marginVertical: moderateScaleVertical(8) }}>
         <Text
@@ -221,7 +230,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         )}
       </View>
       {!!Number(item?.compare_price_numeric) ?
-
         <View
           style={{
             position: 'absolute',
@@ -237,9 +245,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             fontFamily: fontFamily.medium,
           }}>{parseInt(((item?.compare_price_numeric - item?.price_numeric) / item?.price_numeric * 100).toFixed(3))}% OFF</Text>
         </View>
-
         : null}
-
 
     </TouchableOpacity>
   );
@@ -252,9 +258,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
     paddingVertical: moderateScale(2),
     paddingHorizontal: moderateScale(4),
-    alignSelf: 'flex-start',
-    borderRadius: moderateScale(2),
-    marginTop: moderateScaleVertical(16),
+    borderTopRighttRadius: moderateScale(6),
+    // borderBottomLeftRadius: moderateScale(10),
+
+
+    // marginTop: moderateScaleVertical(16),
   },
   ratingTxt: {
     textAlign: 'left',

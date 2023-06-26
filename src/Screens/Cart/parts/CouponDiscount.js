@@ -16,16 +16,16 @@ import imagePath from '../../../constants/imagePath';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { MyDarkTheme } from '../../../styles/theme';
 import strings from '../../../constants/lang';
-
+import ModalDropdown from 'react-native-modal-dropdown';
 /**
  * CouponDiscount Part
- * @param {item, isDarkMode,styles,digit_after_decimal,additional_preferences,currencies,preferences} props 
+ * @param {item, isDarkMode,styles,digit_after_decimal,additional_preferences,currencies,preferences, sel_types, renderDropDown} props 
  * @returns 
  */
 
 function CouponDiscount(props) {
 
-    const { item, isDarkMode, styles, digit_after_decimal, additional_preferences, currencies, preferences } = props;
+    const { item, isDarkMode, styles, digit_after_decimal, additional_preferences, currencies, preferences, sel_types, renderDropDown } = props;
 
     return (
         <>
@@ -173,7 +173,7 @@ function CouponDiscount(props) {
                         ) : null}
 
                         {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
-                            <Text>{`${item?.delivery_types[0]?.courier_name
+                            <Text>{`${getBundleId() != appIds.hokitch ? item?.delivery_types[0]?.courier_name : ''
                                 } ${tokenConverterPlusCurrencyNumberFormater(
                                     Number(item?.delivery_types[0]?.rate),
                                     digit_after_decimal,

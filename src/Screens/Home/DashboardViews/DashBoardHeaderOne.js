@@ -68,7 +68,7 @@ export default function DashBoardHeaderOne({ navigation = {}, location = [] }) {
           { flex: 1, flexDirection: 'row', alignItems: 'center' },
         ]}>
 
-        <TouchableOpacity
+        {appStyle?.homePageLayout == 10 ? <TouchableOpacity
           activeOpacity={1}
           onPress={() => navigation.openDrawer()}
           style={{ alignItems: 'center', }}>
@@ -82,7 +82,7 @@ export default function DashBoardHeaderOne({ navigation = {}, location = [] }) {
             source={imagePath.icHamburger}
             resizeMode="contain"
           />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
 
         <View>
           {!!(profileInfo && profileInfo?.logo) ? (

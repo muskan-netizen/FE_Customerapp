@@ -70,7 +70,7 @@ export default {
   MY_ACCOUNT: 'Mi Cuenta',
   MY_PROFILE: 'Mi Perfil',
   MY_ORDERS: 'Mis Órdenes',
-  WALLET: 'billetera',
+  WALLET_MRVELOZ: 'Billetera',
   ADD_MONEY: 'Agregar Dinero',
   AVAILABLE_BALANCE: 'Saldo Disponible',
   TRANSACTION_HISTORY: 'HISTORIAL DE TRANSACCIONES',
@@ -711,7 +711,7 @@ export default {
     'Algo salió mal, vuelva a establecer la conexión con la impresora.',
   PLACE_ID_NOT_FOUND: 'ID de lugar no encontrado',
   PLEASE_FILL_ADDRESS: 'Por favor complete la dirección existente',
-  TAXES_FEES: 'Impuestos y Pagos',
+  TAXES_FEES: 'Impuestos',
   TOTAL_SERVICE_FEE: 'Tarifa de servicio',
   HOUSE_NO: 'Número de Casa',
   WELCOME_NEXT_TIME: 'Bienvenido la próxima vez',
@@ -989,5 +989,12 @@ export default {
   SERVICE_CHARGES: 'Service Charges',
   ENTER_YOUR_NAME: "Enter your name",
   ENTER_YOUR_EMAIL:"Enter your email",
-  REFER_AND_EARN:'Referir y Ganar'
+  REFER_AND_EARN:'Referir y Ganar',
+  MY_ORDERS_MRVELOZ:"Mis Pedidos",
+  CONTACT_US_MRVELOZ:"Contacta con nosotros",
+  ACTIVE_ORDERS_MRVELOZ:"Pedidos Activos",
+  YOUR_ORDER_WILL_ARRIVE_BY_MRVELOZ:"Tu pedido llegará a las",
+  ORDER_ID_MRVELOZ:"ID del Pedido",
+  SELECT_INFLUENCER_CATEGORY:"Selecciona una categoría de Influencer",
+  WHAT_WHOULD_YOU_LIKE_TO_DO_MRVELOZ:'¿Qué te gustaría pedir?'
 };

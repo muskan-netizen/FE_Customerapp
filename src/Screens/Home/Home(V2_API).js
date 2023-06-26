@@ -123,11 +123,11 @@ export default function Home({ route, navigation }) {
     curLatLong,
   } = state;
 
-  const memorizedAppData = useMemo(() => appData, [appData])  
+  const memorizedAppData = useMemo(() => appData, [appData])
   const memorizsedAppMainData = useMemo(() => appMainData, [appMainData])
   const memorizsedLocation = useMemo(() => location, [location])
-  const memorizedSelectedTabType = useMemo(()=> selectedTabType, [selectedTabType])
-  const memorizedAllAddresss = useMemo(()=> allAddresss, [allAddresss])
+  const memorizedSelectedTabType = useMemo(() => selectedTabType, [selectedTabType])
+  const memorizedAllAddresss = useMemo(() => allAddresss, [allAddresss])
   const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData])
 
   const { profile } = memorizedAppData;
@@ -477,18 +477,18 @@ export default function Home({ route, navigation }) {
         .catch(errorMethod);
     }
   };
-  
 
-  const preLoadImages = useCallback((data)=>{
-    if(!!data?.data){
+
+  const preLoadImages = useCallback((data) => {
+    if (!!data?.data) {
       data.data.map((data) => {
         const imageURI = data?.icon
-        ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${80 + 140}/${80 + 140}`)
-        : getImageUrl(data.image.image_fit, data.image.image_path, `${80 + 140}/${80 + 140}`);
-          FastImage.preload([{ uri: imageURI }])
-        });
+          ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${80 + 140}/${80 + 140}`)
+          : getImageUrl(data.image.image_fit, data.image.image_path, `${80 + 140}/${80 + 140}`);
+        FastImage.preload([{ uri: imageURI }])
+      });
     }
-  },[])
+  }, [])
 
   //Error handling in screen
   const errorMethod = (error) => {
@@ -756,7 +756,7 @@ export default function Home({ route, navigation }) {
   };
 
   const selcetedToggle = (type) => {
-    if (appStyle?.homePageLayout == 6) {
+    if (appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff) {
       actions.dineInData(type);
       navigation.navigate(navigationStrings.HOME_TEMP_3, { type: type })
       return;
@@ -969,15 +969,16 @@ export default function Home({ route, navigation }) {
 
   const scrollHandler = useAnimatedScrollHandler((event) => {
     if (event.contentOffset.y > 170) {
-      animation.value=170
+      animation.value = 170
       return
     }
     animation.value = event.contentOffset.y
-  
+
   })
 
 
-  const renderHeaders = useCallback(()=>{
+
+  const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
@@ -1093,21 +1094,21 @@ export default function Home({ route, navigation }) {
       case 7:
         return (
           <>
-             <DashBoardHeaderFive
-                showToggles={false}
-                navigation={navigation}
-                location={memorizsedLocation}
-                selcetedToggle={selcetedToggle}
-                toggleData={memorizedAppData}
-                isLoading={isLoading}
-                currentLocation={curLatLong}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-                nearestLoc={nearestLocDis}
-                currentLoc={currentLocation}
-              />
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={curLatLong}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
+            />
           </>
         );
 
@@ -1166,7 +1167,7 @@ export default function Home({ route, navigation }) {
           />
         </>
     }
-  },[
+  }, [
     appStyle?.homePageLayout,
     memorizsedLocation,
     memorizedAppData,
@@ -1175,7 +1176,7 @@ export default function Home({ route, navigation }) {
     isLoadingB,
     isVoiceRecord
   ])
- 
+
 
 
   const renderHomeScreen = () => {
