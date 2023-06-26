@@ -15,6 +15,7 @@ import {
   ConfirmDetailsBuy,
   Delivery,
   Filter,
+  HomeTemplate3,
   FreelancerService,
   Home,
   HomeV2Api,
@@ -29,14 +30,15 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductListEcom,
   ProductWithCategory,
   ScrollableCategory,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   ShippingDetails,
   SpotdealProductAndSelectedProducts,
+  SubCategoryItems,
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
@@ -52,6 +54,10 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
+  ViewAllSearchItems,
+  Wishlist,
+  Wishlist2,
+  EcomOrderAgain
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -90,12 +96,10 @@ export default function () {
 
   const renderProductListScreen = () => {
     switch (appStyle?.homePageLayout) {
-      case 1:
-        return ProductList;
-      case 2:
-        return ProductList2;
-      default:
-        return ProductList3;
+      case 1: return ProductList;
+      case 2: return ProductList2;
+      case 10: return ProductListEcom;
+      default: return ProductList3;
     }
   };
 
@@ -126,7 +130,7 @@ export default function () {
       case 10:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
 
@@ -139,7 +143,7 @@ export default function () {
       case 10:
         return HomeV2Api;
       default:
-        return Home;
+        return HomeV2Api;
     }
   }
 
@@ -271,7 +275,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.SUBCATEGORY_VENDORS}
-        component={SubcategoryVendor}
+        component={appStyle?.homePageLayout == 10 ? SubCategoryItems : SubcategoryVendor}
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
@@ -297,8 +301,28 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.TECHNICIAN_PROFILE}
         component={TechnicianProfile}
-
       />
+
+      <Stack.Screen
+        name={navigationStrings.WISHLIST}
+        component={Wishlist2}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.HOME_TEMP_3}
+        component={HomeTemplate3}
+      />
+      <Stack.Screen
+        name={navigationStrings.ORDER_AGAIN}
+        component={EcomOrderAgain}
+      />
+
+
     </Stack.Navigator>
   );
 }

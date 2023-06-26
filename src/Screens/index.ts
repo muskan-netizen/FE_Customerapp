@@ -12,7 +12,7 @@ export {default as ResetPassword} from './ResetPassword/ResetPassword';
 export {default as WebLinks} from './WebLinks/WebLinks';
 export {default as VerifyAccount} from './VerifyAccount/VerifyAccount';
 
-export {default as Home} from './Home/Home';
+export {default as HomeTemplate3} from './Home/HomeTemplate3';
 export {default as HomeV2Api} from './Home/Home(V2_API)';
 export {default as Offers} from './Offers/Offers';
 export {default as Brands} from './Brands/Brands';
@@ -23,6 +23,8 @@ export {default as SuperMarket} from './Supermarket/Supermarket';
 export {default as Vendors} from './Vendors/Vendors';
 export {default as VendorDetail} from './VendorDetail/VendorDetail';
 export {default as ProductList} from './ProductList/ProductList';
+export {default as ProductListEcom} from './ProductList/ProductListEcom';
+
 export {default as MyProfile} from './MyProfile/MyProfile';
 export {default as MyOrders} from './MyOrders/MyOrders';
 export {default as OrderDetail} from './OrderDetail/OrderDetail';
@@ -175,12 +177,17 @@ export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAn
 export {default as TaxiHome} from './TaxiAppNewDesign/TaxiHome';
 export {default as Addaddress2} from './TaxiAppNewDesign/Addaddress/Addaddress2';
 export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseVechile';
+export {default as ViewAllSearchItems} from './ViewAllSearchItems/ViewAllSearchItems';
+export {default as SubCategoryItems} from './SubCategoryItems/SubCategoryItems';
+export {default as EcomCategory} from './EcomTemps/EcomCategory/EcomCategory';
+export {default as EcomOrderAgain} from './EcomTemps/EcomOrderAgain/EcomOrderAgain';
+export {default as EcomAccount} from './EcomTemps/EcomAccount/EcomAccount';
+export {default as EcomLangCurrency} from './EcomTemps/EcomLangCurrency/EcomLangCurrency';
 
 //FreelancerService
 export {default as FreelancerService} from './FreelancerService/FreelancerService';
 export {default as AvailableTechnicians} from './FreelancerService/AvailableTechnicians/AvailableTechnicians';
 export {default as TechnicianProfile} from './FreelancerService/TechnicianProfile/TechnicianProfile';
-
 
 //p2p Ondemand
 export {default as P2pOndemandHome} from './P2pOnDemnadBid/P2pOndemandHome(V2_API)';
@@ -188,14 +195,14 @@ export {default as P2pPayment} from './P2pOnDemnadBid/P2pPayments/P2pPayment';
 export {default as AllCategories} from './P2pOnDemnadBid/AllCategories/AllCategories';
 export {default as ProductPriceDetails} from './P2pOnDemnadBid/ProductPriceDetails/ProductPriceDetails';
 export {default as RentTypeList} from './P2pOnDemnadBid/RentTypeList/RentTypeList';
-export { default as P2pOrderDetail } from './P2pOnDemnadBid/P2pOndemandOrderDetail/P2pOndemandOrderDetail';
-export { default as Login4 } from './Login/Login4';
+export {default as P2pOrderDetail} from './P2pOnDemnadBid/P2pOndemandOrderDetail/P2pOndemandOrderDetail';
+export {default as Login4} from './Login/Login4';
 export {default as Signup5} from './Signup/Signup5';
 export {default as P2pMyOrders} from './P2pOnDemnadBid/P2pMyOrders/P2pMyOrders';
-export { default as P2pChatRoom } from './P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom';
-export { default as P2pChatScreen } from './P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen'
-export { default as AddVehicleDetails } from './AddVehicleDetails/AddVehicleDetails'
-export { default as P2pOndemandProductDetail } from './P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail'
-export { default as P2pOndemandProducts } from './P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts'
-export { default as P2pOndemandAttributeInformation } from './P2pOnDemnadBid/P2pOndemandAttributeInformation/P2pOndemandAttributeInformation'
-export { default as P2pOndemandPostCategory } from './P2pOnDemnadBid/P2pOndemandPostCategory/P2pOndemandPostCategory'
+export {default as P2pChatRoom} from './P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom';
+export {default as P2pChatScreen} from './P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen';
+export {default as AddVehicleDetails} from './AddVehicleDetails/AddVehicleDetails';
+export {default as P2pOndemandProductDetail} from './P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail';
+export {default as P2pOndemandProducts} from './P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts';
+export {default as P2pOndemandAttributeInformation} from './P2pOnDemnadBid/P2pOndemandAttributeInformation/P2pOndemandAttributeInformation';
+export {default as P2pOndemandPostCategory} from './P2pOnDemnadBid/P2pOndemandPostCategory/P2pOndemandPostCategory';

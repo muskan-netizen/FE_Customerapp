@@ -1,8 +1,8 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Alert, BackHandler, Linking, StatusBar } from 'react-native';
 import AppLink from 'react-native-app-link';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
@@ -13,21 +13,30 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
-import { enableFreeze } from "react-native-screens";
+
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
+  getImageUrl,
   getNearestLocation,
   showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import { DashBoardFiveV2Api, DashBoardHeaderFive } from './DashboardViews/Index';
+import { DashBoardFiveV2Api, DashBoardHeaderFive, TaxiHomeDashbord } from './DashboardViews/Index';
 import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
+import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
+import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
+import { DashBoardHeaderFour } from './DashboardViews/Index';
+import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
+import socketServices from '../../utils/scoketService';
+import { enableFreeze } from "react-native-screens";
+import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
+import FastImage from 'react-native-fast-image';
 enableFreeze(true);
 
 
@@ -42,13 +51,16 @@ export default function Home({ route, navigation }) {
     themeColor,
     themeToggle,
     allAddresss,
+    themeColors
   } = useSelector((state) => state?.initBoot);
   const { location, appMainData, dineInType, isLocationSearched } = useSelector((state) => state?.home || {});
 
   const isFocused = useIsFocused();
+  const animation = useSharedValue(0)
   const { cartItemCount } = useSelector((state) => state?.cart);
 
   const { userData } = useSelector((state) => state?.auth);
+  const [nearestLocDis, setNearestLocDis] = useState(null)
   const { pendingNotifications } = useSelector((state) => state?.pendingNotifications || {});
 
   const darkthemeusingDevice = useDarkMode();
@@ -111,58 +123,18 @@ export default function Home({ route, navigation }) {
     curLatLong,
   } = state;
 
-  const { profile } = appData;
+  const memorizedAppData = useMemo(() => appData, [appData])
+  const memorizsedAppMainData = useMemo(() => appMainData, [appMainData])
+  const memorizsedLocation = useMemo(() => location, [location])
+  const memorizedSelectedTabType = useMemo(() => selectedTabType, [selectedTabType])
+  const memorizedAllAddresss = useMemo(() => allAddresss, [allAddresss])
+  const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData])
 
-  useEffect(() => {
-    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
-      // socketServices.initializeSocket(appData?.profile?.socket_url);
-    }
-  }, [appData]);
+  const { profile } = memorizedAppData;
 
-  useFocusEffect(
-    useCallback(() => {
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        androidBackButtonHandler,
-      );
-      return () => backHandler.remove();
-    }, []),
-  );
-  useEffect(() => {
-    updateState({ updatedData: appMainData?.categories });
-  }, [appMainData]);
-
-  useEffect(() => {
-    if (
-      paramData?.details &&
-      paramData?.details?.formatted_address != location?.address
-    ) {
-      _getLocationFromParams();
-      updateState({
-        selectedFilterType: {},
-      });
-    }
-  }, [paramData?.details]);
-
-  useFocusEffect(
-    useCallback(() => {
-      Voice.onSpeechStart = onSpeechStartHandler;
-      Voice.onSpeechEnd = onSpeechEndHandler;
-      Voice.onSpeechResults = onSpeechResultsHandler;
-      return () => {
-        Voice.destroy().then(Voice.removeAllListeners);
-      };
-    }, []),
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      if (!!userData?.auth_token) {
-        getAllTempOrders();
-      }
-    }, []),
-  );
-
+  useLayoutEffect(() => {
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+  }, []);
 
   useEffect(() => {
     chekLocationPermission(true)
@@ -172,6 +144,7 @@ export default function Home({ route, navigation }) {
             .then((curLoc) => {
               updateState({
                 curLatLong: curLoc,
+                isLoading: true
               });
               let locData = location?.latitude ? location : curLoc;
               if (!!userData?.auth_token) {
@@ -260,11 +233,60 @@ export default function Home({ route, navigation }) {
         homeData();
         return;
       });
-  }, [selectedTabType, appData, allAddresss]);
+  }, [memorizedSelectedTabType, memorizedAppData, memorizedAllAddresss])
+
 
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
-  }, []);
+    if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
+      socketServices.initializeSocket(appData?.profile?.socket_url);
+    }
+  }, [memorizedAppData]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+
+  useEffect(() => {
+    updateState({ updatedData: memorizsedAppMainData?.categories });
+  }, [memorizsedAppMainData]);
+
+  useEffect(() => {
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
+      _getLocationFromParams();
+      updateState({
+        selectedFilterType: {},
+      });
+    }
+  }, [paramData?.details]);
+
+  useFocusEffect(
+    useCallback(() => {
+      Voice.onSpeechStart = onSpeechStartHandler;
+      Voice.onSpeechEnd = onSpeechEndHandler;
+      Voice.onSpeechResults = onSpeechResultsHandler;
+      return () => {
+        Voice.destroy().then(Voice.removeAllListeners);
+      };
+    }, []),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!!userData?.auth_token) {
+        getAllTempOrders();
+      }
+    }, []),
+  );
+
 
   const _getLocationFromParams = () => {
     actions.isLocationSearched(true);
@@ -375,10 +397,10 @@ export default function Home({ route, navigation }) {
       };
     }
 
+
+    console.log("selectedFilterselectedFilter", selectedFilter)
     let vendorFilterData = {
-      open_vendor: selectedFilter?.id == 1 ? 1 : 0,
-      close_vendor: selectedFilter?.id == 2 ? 1 : 0,
-      best_vendor: selectedFilter?.id == 3 ? 1 : 0,
+      open_close_vendor: selectedFilter?.id == 2 ? 1 : 0
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
       updateState({ singleVendor: true });
@@ -401,10 +423,13 @@ export default function Home({ route, navigation }) {
       if (!selectedVendorType) {
         actions.dineInData(defaultVendorType);
       }
+
+      let vendorType = appStyle?.homePageLayout == 6 ? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
       let apiData = {
-        type: !!selectedVendorType ? selectedVendorType : defaultVendorType,
+        type: vendorType,
         ...latlongObj,
         ...vendorFilterData,
+        action: '2'
       };
 
       let apiHeader = {
@@ -412,13 +437,19 @@ export default function Home({ route, navigation }) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
       };
-      console.log('sending api data header', apiData, apiHeader);
+      console.log('sending api data header', apiData);
 
       actions
         .homeDataV2(apiData, apiHeader)
         .then(async (res) => {
           console.log('Home data++++++', res);
           updateState({ searchDataLoader: false, isRefreshing: false });
+
+          const checkLayout = res?.data?.homePageLabels || []
+          const filterCat = checkLayout.find(layout => layout?.slug == 'nav_categories')
+
+          preLoadImages(filterCat)
+
           if (
             appData?.profile?.preferences?.is_hyperlocal &&
             location?.latitude == '' &&
@@ -437,17 +468,27 @@ export default function Home({ route, navigation }) {
               actions.locationData(data);
             }
           }
-          setTimeout(() => {
-            updateState({
-              isLoading: false,
-              isLoadingB: false,
-              searchDataLoader: false,
-            });
-          }, 1500);
+          updateState({
+            isLoading: false,
+            isLoadingB: false,
+            searchDataLoader: false,
+          });
         })
         .catch(errorMethod);
     }
   };
+
+
+  const preLoadImages = useCallback((data) => {
+    if (!!data?.data) {
+      data.data.map((data) => {
+        const imageURI = data?.icon
+          ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${80 + 140}/${80 + 140}`)
+          : getImageUrl(data.image.image_fit, data.image.image_path, `${80 + 140}/${80 + 140}`);
+        FastImage.preload([{ uri: imageURI }])
+      });
+    }
+  }, [])
 
   //Error handling in screen
   const errorMethod = (error) => {
@@ -494,6 +535,7 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressVendor = (item) => {
+
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -530,9 +572,14 @@ export default function Home({ route, navigation }) {
     }
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
-
       return;
     }
+    if (item?.redirect_to == staticStrings.SUBCATEGORY && appStyle?.homePageLayout == 10) {
+      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      return;
+    }
+
+
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -558,24 +605,7 @@ export default function Home({ route, navigation }) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
           openUber();
         } else {
-          // if (item?.warning_page_id) {
-          //   if (item?.warning_page_id == 2) {
-          //     moveToNewScreen(navigationStrings.DELIVERY, item)();
-          //   } else {
-          //     moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          //   }
-          // } else {
-          //   if (item?.template_type_id == 1) {
-          //     moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
-          //   } else {
-          //     item['pickup_taxi'] = true;
-
-          //     // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-          //     moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
-          //   }
-          // }
           item['pickup_taxi'] = true;
-          // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
           moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
@@ -604,7 +634,6 @@ export default function Home({ route, navigation }) {
           isVendorList: true,
           fetchOffers: true,
         })();
-
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
@@ -704,7 +733,6 @@ export default function Home({ route, navigation }) {
     };
 
     actions
-
       .initApp(
         {},
         header,
@@ -728,8 +756,12 @@ export default function Home({ route, navigation }) {
   };
 
   const selcetedToggle = (type) => {
+    if (appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff) {
+      actions.dineInData(type);
+      navigation.navigate(navigationStrings.HOME_TEMP_3, { type: type })
+      return;
+    }
     actions.dineInData(type);
-
     updateState({
       selectedFilterType: {},
     });
@@ -935,51 +967,263 @@ export default function Home({ route, navigation }) {
     });
   };
 
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    if (event.contentOffset.y > 170) {
+      animation.value = 170
+      return
+    }
+    animation.value = event.contentOffset.y
+
+  })
+
+
+
+  const renderHeaders = useCallback(() => {
+    switch (appStyle?.homePageLayout) {
+      case 1:
+        return (
+          <>
+            <DashBoardHeaderOne navigation={navigation} location={memorizsedLocation} />
+          </>
+        );
+
+      case 2:
+        return (
+          <>
+            <DashBoardHeaderOne navigation={navigation} location={memorizsedLocation} />
+          </>
+        );
+      case 3:
+        if (getBundleId() === appIds.onTheWheel) {
+          return (
+            <>
+              <DashBoardHeaderSix
+                showToggles={false}
+                navigation={navigation}
+                location={memorizsedLocation}
+                selcetedToggle={selcetedToggle}
+                toggleData={memorizedAppData}
+                isLoading={isLoading}
+                currentLocation={currentLocation}
+                isLoadingB={isLoadingB}
+                _onVoiceListen={_onVoiceListen}
+                isVoiceRecord={isVoiceRecord}
+                _onVoiceStop={_onVoiceStop}
+              />
+            </>
+          );
+        } else {
+          return (
+            <>
+              {console.log('curLatLong=>', curLatLong)}
+              <DashBoardHeaderFive
+                showToggles={false}
+                navigation={navigation}
+                location={memorizsedLocation}
+                selcetedToggle={selcetedToggle}
+                toggleData={memorizedAppData}
+                isLoading={isLoading}
+                currentLocation={curLatLong}
+                isLoadingB={isLoadingB}
+                _onVoiceListen={_onVoiceListen}
+                isVoiceRecord={isVoiceRecord}
+                _onVoiceStop={_onVoiceStop}
+                nearestLoc={nearestLocDis}
+                currentLoc={currentLocation}
+              />
+            </>
+          );
+        }
+
+      case 4:
+        return (
+          <>
+            <DashBoardHeaderFour
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+            />
+
+          </>
+        );
+
+      case 5: // 5
+        return (
+          <>
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
+            />
+          </>
+        );
+      case 6:
+        return (
+          <>
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
+            />
+          </>
+        );
+
+      case 7:
+        return (
+          <>
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={curLatLong}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
+            />
+          </>
+        );
+
+      case 10:
+        return (
+          <DashBoardHeaderEcommerce
+            showToggles={false}
+            navigation={navigation}
+            location={memorizsedLocation}
+            selcetedToggle={selcetedToggle}
+            toggleData={memorizedAppData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            animation={animation}
+          />
+        )
+
+      case 8:
+        return (
+          <>
+            <DashBoardHeaderSeven
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              curLatLong={curLatLong}
+            />
+          </>
+        );
+
+      default:
+        return <>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={memorizsedLocation}
+            selcetedToggle={selcetedToggle}
+            toggleData={memorizedAppData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+          />
+        </>
+    }
+  }, [
+    appStyle?.homePageLayout,
+    memorizsedLocation,
+    memorizedAppData,
+    isLoading,
+    currentLocation,
+    isLoadingB,
+    isVoiceRecord
+  ])
+
+
+
   const renderHomeScreen = () => {
     return (
       <>
-        <DashBoardHeaderEcommerce
-          showToggles={false}
-          navigation={navigation}
-          location={location}
-          selcetedToggle={selcetedToggle}
-          toggleData={appData}
-          isLoading={isLoading}
-          currentLocation={currentLocation}
-          isLoadingB={isLoadingB}
-          _onVoiceListen={_onVoiceListen}
-          isVoiceRecord={isVoiceRecord}
-          _onVoiceStop={_onVoiceStop}
-        />
-        <DashBoardFiveV2Api
-          handleRefresh={() => handleRefresh()}
-          bannerPress={(item) => bannerPress(item)}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          appMainData={appMainData}
-          onPressCategory={(item) => {
-            onPressCategory(item);
-          }}
-          onPressVendor={(item) => {
-            onPressVendor(item);
-          }}
-          isDineInSelected={isDineInSelected}
-          selcetedToggle={selcetedToggle}
-          tempCartData={tempCartData}
-          toggleData={appData}
-          navigation={navigation}
-          onVendorFilterSeletion={onVendorFilterSeletion}
-          singleVendor={singleVendor}
-          onPressAddLaundryItem={onPressAddLaundryItem}
-          isLoadingAddons={isLoadingAddons}
-          selectedHomeCategory={selectedHomeCategory}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-          isSubscription={isSubscription}
-          selectedFilterType={selectedFilterType}
-          showAllProducts={showAllProducts}
-          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-        />
+        {renderHeaders()}
+        {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ?
+          <TaxiHomeDashbord
+            handleRefresh={() => handleRefresh()}
+            bannerPress={(item) => bannerPress(item)}
+            isLoading={isLoading}
+            isRefreshing={isRefreshing}
+            appMainData={memorizsedAppMainData}
+            onPressCategory={(item) => onPressCategory(item)}
+            toggleData={memorizedAppData}
+            location={memorizsedLocation}
+            curLatLong={curLatLong}
+            currentLocation={currentLocation}
+          /> :
+          <DashBoardFiveV2Api
+            handleRefresh={() => handleRefresh()}
+            bannerPress={(item) => bannerPress(item)}
+            isLoading={isLoading}
+            isRefreshing={isRefreshing}
+            appMainData={memorizsedAppMainData}
+            onPressCategory={(item) => { onPressCategory(item) }}
+            onPressVendor={(item) => { onPressVendor(item) }}
+            isDineInSelected={isDineInSelected}
+            selcetedToggle={selcetedToggle}
+            tempCartData={memorizedTempCartData}
+            toggleData={memorizedAppData}
+            navigation={navigation}
+            onVendorFilterSeletion={onVendorFilterSeletion}
+            singleVendor={singleVendor}
+            onPressAddLaundryItem={onPressAddLaundryItem}
+            isLoadingAddons={isLoadingAddons}
+            selectedHomeCategory={selectedHomeCategory}
+            onClose={_closeModal}
+            onPressSubscribe={_onPressSubscribe}
+            isSubscription={isSubscription}
+            selectedFilterType={selectedFilterType}
+            showAllProducts={showAllProducts}
+            showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+            showVendorCategory={true}
+            scrollHandler={scrollHandler}
+          />
+        }
       </>
     );
   };
@@ -1018,7 +1262,8 @@ export default function Home({ route, navigation }) {
     });
   };
 
-  const { blurRef } = useRef();
+
+
 
   return (
     <WrapperContainer
@@ -1026,7 +1271,9 @@ export default function Home({ route, navigation }) {
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor
       }
-      isLoading={searchDataLoader}>
+      isLoading={searchDataLoader}
+      isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 ? false : true}
+    >
       <>{renderHomeScreen()}</>
       <LaundryAddonModal
         isVisible={isLaundryAddonModal}
@@ -1044,7 +1291,7 @@ export default function Home({ route, navigation }) {
         unPresentAry={unPresentAry}
       />
 
-      {!!appData?.stop_order_acceptance_for_users && (
+      {!!memorizedAppData?.stop_order_acceptance_for_users && (
         <StopAcceptingOrderModal
           isVisible={stopOrderModalVisible}
           onClose={_stopOrderModalClose}

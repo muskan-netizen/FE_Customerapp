@@ -105,7 +105,7 @@ const VariantAddons = ({
   const isDarkMode = themeColor;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
-
+  console.log(productdetail,"productdetailproductdetailproductdetailproductdetail");
   const resetVariantState = () => {
     updateAddonState({
       planValues: ["Daily", "Weekly","Alternate Days", "Custom"],
@@ -1355,7 +1355,7 @@ const VariantAddons = ({
  
 
   return (
-    <View style={{flex: 1}}>
+    <View>
       {showShimmer ? (
         shimmerShow()
       ) : (

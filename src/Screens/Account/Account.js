@@ -5,6 +5,7 @@ import {
   Alert,
   I18nManager,
   Image,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,

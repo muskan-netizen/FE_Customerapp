@@ -44,9 +44,13 @@ const AppIntro = ({route, navigation}) => {
     setItem('firstTime', true);
   }, []);
 
-  const _renderItem = ({item}) => {
+  const _renderItem = ({item, index}) => {
+    console.log(index,"itemitem",item)
     return (
-      <View style={[styles.slide, {backgroundColor: 'white'}]}>
+      <View 
+      style={[styles.slide, {backgroundColor: 'white'}]}
+      key={String(item?.key + index)}
+      >
         <FastImage
           source={{
             uri: item.image,
@@ -212,6 +216,7 @@ const AppIntro = ({route, navigation}) => {
           onScroll={() => onScroll()}
           renderNextButton={() => <View></View>}
           renderPagination={renderPagination}
+          keyExtractor={(item, index)=> String(item?.key || index)}
         />
       </View>
       <View style={{flex: 0.1}}>{_renderDoneButton()}</View>

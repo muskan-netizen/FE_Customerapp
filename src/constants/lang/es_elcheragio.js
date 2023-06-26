@@ -9,6 +9,7 @@ export default {
   DONT_HAVE_ACCOUNT: 'Qihubo ¿aún sin cuenta?',
   CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
   GUEST_LOGIN: 'SALTAR',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'O Regístrate con',
   OR_CONTINUE_WITH: 'O Continua con',
   OR_LOGIN_WITH: 'O Inicia Sesión con',
@@ -745,9 +746,11 @@ export default {
   DROP: 'Dejar',
   QUESTION: 'Pregunta:',
   ANSWER: 'Respuesta:',
-
   COMPLETE: 'Completado',
   ASSIGNED: 'Asignado',
+  ON_THE_WAY:"On the way",
+  READY_FOR_PICKUP:"Ready for pickup",
+  READY_FOR_DEPARTURE:"Ready for departure",
   UNASSIGNED: 'Sin asignar',
   ARRIVED: 'Llegó',
   DRIVERDETAIL: 'Datos del repartidor',
@@ -849,7 +852,7 @@ export default {
   PASTDELEIVERIES: 'Historial de Pedidos',
   MYDELIERIES: 'Mis Pedidos',
   NODELIVERIESFOUND: 'No encontramos pedidos seleccionados',
-  CLEAR_FILTER: 'Limpiar Filtro',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Rango de precios',
   CONTAINERCHARGES: 'Costo de Envío',
   TOTALCONTAINERCHARGES: 'Costo de Envío',
@@ -975,6 +978,5 @@ export default {
   ORDER:'Orders',
   THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
   TOLL_FEE:"Toll Fee",
-  SERVICE_CHARGES:"Service Charges",
-  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
+  SERVICE_CHARGES:"Service Charges"
 };

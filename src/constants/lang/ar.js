@@ -8,6 +8,7 @@ export default {
   CREATE_AN_ACCOUNT: 'إنشاء حساب جديد',
   CREATE_NEW_ACCOUNT: 'انشاء حساب جديد',
   GUEST_LOGIN: 'SKIP',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'أو تسجيل اشتراك من خلال',
   OR_LOGIN_WITH: 'أو تسجيل دخول من خلال',
   ALREADY_HAVE_AN_ACCOUNT: 'هل لديك حساب بالفعل؟',
@@ -683,6 +684,9 @@ export default {
   ANSWER: 'إجابه : ',
   COMPLETE: 'اكتمال',
   ASSIGNED: 'تعيين',
+  ON_THE_WAY:"On the way",
+  READY_FOR_PICKUP:"Ready for pickup",
+  READY_FOR_DEPARTURE:"Ready for departure",
   UNASSIGNED: 'غير معين',
   ARRIVED: 'وصل',
   DRIVERDETAIL: 'تفاصيل السائق',
@@ -816,7 +820,7 @@ export default {
   SEARCH_FOR_PRODUCT: 'بحثعنعميل',
   PRODUCT: 'المنتوج',
   EXTRA_INSTRUCTION: 'تعليماتإضافية',
-  CLEAR_FILTER: 'مسح',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'نطاق السعر',
   SORRY_MSG: `عذرا ، نحن حاليا لا نوصل هنا ولكننا نقوم بذلك
   يتوسع بسرعة. يرجى التحقق مرة أخرى قريبا!`,
@@ -945,6 +949,5 @@ export default {
   MINIMUM_ORDER_VALUE: 'Minimum order value',
   THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
   TOLL_FEE: "Toll Fee",
-  SERVICE_CHARGES: "Service Charges",
-  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
+  SERVICE_CHARGES: "Service Charges"
 };

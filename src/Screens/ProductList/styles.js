@@ -291,4 +291,11 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(12),
     },
+    filterText: {
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      color: colors.black,
+      fontSize: textScale(12),
+      marginRight:moderateScale(6)
+    }
   });

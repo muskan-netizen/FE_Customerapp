@@ -25,6 +25,7 @@ export default {
   TO_ENJOY_SHOPPING:
     'Para disfrutar de las compras desde nuestra aplicación, verifique la siguiente información. Por lo tanto, no enfrentará ninguna interrupción en el futuro.',
   YOUR_NAME: 'Tu nombre',
+  GUSET_USER:"Guest User",
   YOUR_EMAIL: 'Tu correo electrónico',
   ENTER_TITLE: 'Introduce el título',
   ENTER_HERE: 'Ingresa Aquí',
@@ -937,6 +938,9 @@ export default {
   TRANSACTIONS: 'Transactions',
   SIGN_OUT: 'Signout',
   PENDING: 'Pending',
+  ON_THE_WAY:"On the way",
+  READY_FOR_PICKUP:"Ready for pickup",
+  READY_FOR_DEPARTURE:"Ready for departure",
   REFUNDS: 'Refunds',
   ORDER_TOTAL: 'Order Total',
   ORDERS: 'Pedidos',
@@ -992,6 +996,5 @@ export default {
   YOUR_ORDER_WILL_ARRIVE_BY_MRVELOZ:"Tu pedido llegará a las",
   ORDER_ID_MRVELOZ:"ID del Pedido",
   SELECT_INFLUENCER_CATEGORY:"Selecciona una categoría de Influencer",
-  WHAT_WHOULD_YOU_LIKE_TO_DO_MRVELOZ:'¿Qué te gustaría pedir?',
-  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
+  WHAT_WHOULD_YOU_LIKE_TO_DO_MRVELOZ:'¿Qué te gustaría pedir?'
 };

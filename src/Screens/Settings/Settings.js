@@ -62,6 +62,11 @@ export default function Settings({ route, navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
+
+  console.log(languages,"currenciescurrenciescurrencies",currencies)
+
+  
+
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
@@ -99,6 +104,9 @@ export default function Settings({ route, navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors });
   const commonStyles = commonStylesFunc({ fontFamily });
+
+
+  console.log(appLanguages, "appLanguagesappLanguagesappLanguages")
 
   useFocusEffect(
     React.useCallback(() => {
@@ -507,6 +515,8 @@ export default function Settings({ route, navigation }) {
         }
       
         <View style={{ height: moderateScaleVertical(30) }} />
+
+        {appStyle.homePageLayout !== 10 ? <View>
         {Platform.OS === 'android' ? (
           <LinearGradient
             style={{
@@ -545,7 +555,7 @@ export default function Settings({ route, navigation }) {
               </Text>
             </View>
             <DropDownPicker
-              items={appCurrencies.all_currencies}
+              items={appCurrencies?.all_currencies || []}
               defaultValue={
                 appCurrencies?.primary_currency?.name ||
                 appCurrencies?.primary_currency?.label ||
@@ -596,7 +606,7 @@ export default function Settings({ route, navigation }) {
               </Text>
             </View>
             <DropDownPicker
-              items={appLanguages.all_languages}
+              items={appLanguages?.all_languages || []}
               defaultValue={
                 appLanguages?.primary_language?.nativeName ||
                 appLanguages?.primary_language?.name ||
@@ -766,6 +776,8 @@ export default function Settings({ route, navigation }) {
             />
           </View>
         )}
+        </View>:null}
+        
         <View
           style={{
             zIndex: -1,

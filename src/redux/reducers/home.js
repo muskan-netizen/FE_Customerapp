@@ -21,7 +21,8 @@ const initial_state = {
   },
   pickUpTimeType: 'now',
   isLocationSearched: false,
-  lastBidInfo: null
+  lastBidInfo: null,
+  countryFlag: 'IN'
 };
 
 export default function (state = initial_state, action) {
@@ -71,6 +72,14 @@ export default function (state = initial_state, action) {
       return {
         ...state,
         constCurrLoc: data,
+      };
+    }
+
+    case types.COUNTRY_FLAG: {
+      const data = action.payload;
+      return {
+        ...state,
+        countryFlag: data,
       };
     }
 

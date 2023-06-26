@@ -596,6 +596,7 @@ export default {
   icEcomHomeInactive: require('../assets/images/Ecommerce/ic_home_02.png'),
   icEcomCart: require('../assets/images/Ecommerce/ic_cart_01.png'),
   icEcomCartInactive: require('../assets/images/Ecommerce/ic_cart_02.png'),
+  icRepeat: require('../assets/images/Ecommerce/ic_repeat_02.png'),
   icEcomCeleb: require('../assets/images/Ecommerce/ic_celebrity_01.png'),
   icEcomCelebInactive: require('../assets/images/Ecommerce/ic_celebrity_02.png'),
   icEcomBrand: require('../assets/images/Ecommerce/ic_brand_01.png'),
@@ -606,10 +607,26 @@ export default {
   icEcomAccountInactive: require('../assets/images/Ecommerce/ic_account_02.png'),
   icEcomHeaderLocation: require('../assets/images/Ecommerce/ic_location_01.png'),
   icEcomDropArrow: require('../assets/images/Ecommerce/ic_downarrow_01.png'),
-  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01.png'),
-  ic_notification1: require('../assets/images/ic_notification1.png'),
+  icEcomSearch: require('../assets/images/Ecommerce/ic_search_01-1.png'),
+  wishlist2: require('../assets/images/Ecommerce/ic_wishlist_01.png'),
+  wishlist3: require('../assets/images/Ecommerce/ic_wishlist_03.png'),
+  icCart3: require('../assets/images/Ecommerce/ic_cart_03.png'),
   ecomCheck: require('../assets/images/Ecommerce/ic_tickmark_01.png'),
   ecomUnCheck: require('../assets/images/Ecommerce/ic_tickmark_02.png'),
+  icCategory: require('../assets/images/Ecommerce/ic_categories_02.png'),
+  icPrivacy: require('../assets/images/Ecommerce/ic_privacypolicy_02.png'),
+  icTerms: require('../assets/images/Ecommerce/ic_terms&condition_02.png'),
+  icHamburger: require('../assets/images/Ecommerce/ic_hamburger_03.png'),
+  icEcomCart2: require('../assets/images/Ecommerce/ic_cart_03.png'),
+  searchArrow: require('../assets/images/Ecommerce/searchArrow.png'),
+  curLangCheck: require('../assets/images/Ecommerce/curLangCheck.png'),
+  icLang: require('../assets/images/Ecommerce/ic_language.png'),
+  ecomChat: require('../assets/images/Ecommerce/IC_CHAT.png'),
+  icCountry: require('../assets/images/Ecommerce/ic_country.png'),
+  icCurrency: require('../assets/images/Ecommerce/ic_currency.png'),
+  icMenuIcon: require('../assets/images/ic_menu.png'),
+  locationIcon: require('../assets/images/place.png'),
+  ic_notification1: require('../assets/images/ic_notification1.png'),
 
   //Video
   // flank: require('../assets/flankSplash.mp4'),
@@ -621,8 +638,6 @@ export default {
   // 'https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/app_splashscreen/73jvbtlLAQCkDgO58NZ8Zx9tdoOnoxlgNICcS7Gp.mp4',
 
   // flanksplash: require('../assets/Flanksplash.mp4'),
-
-
 
   // ooryks assets
   Ooryks_logo: require('../assets/images/Ooryks/Ooryks_logo.png'),

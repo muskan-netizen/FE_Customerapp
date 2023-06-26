@@ -1382,7 +1382,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     );
   }
 
-  console.log("taskstaskstaskstaskstasks", tasks)
+  console.log("paramDataparamDataparamData", paramData)
 
   return (
     <WrapperContainer
@@ -1402,7 +1402,13 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           }}
         >
           <TouchableOpacity
-            onPress={()=> navigation.popToTop()}
+            onPress={
+              paramData?.fromCab
+                ? () => navigation.popToTop()
+                : paramData?.pickup_taxi
+                  ? () => navigation.popToTop()
+                  : () => navigation.goBack()
+            }
             activeOpacity={0.8}
           >
             <Image
@@ -2098,7 +2104,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                                   driverRatingData: driverRatingData
                                     ? driverRatingData
                                     : orderFullDetail?.order_driver_rating,
-                                    trackingUrl:paramData?.orderDetail?.dispatch_traking_url
+                                  trackingUrl: paramData?.orderDetail?.dispatch_traking_url
                                 })
                               }
                             >

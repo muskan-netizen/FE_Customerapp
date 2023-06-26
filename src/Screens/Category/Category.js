@@ -31,6 +31,8 @@ export default function Category({ navigation, route }) {
 
   const { location, appMainData, dineInType } = useSelector((state) => state?.home || {});
 
+  const userData = useSelector((state) => state?.auth?.userData || {});
+
   const checkLayout = appMainData?.homePageLabels || []
   const allCategories = checkLayout.find(layout => layout?.slug == 'nav_categories')
 
@@ -151,9 +153,13 @@ export default function Category({ navigation, route }) {
       <BrandCard3
         data={item}
         onPress={() => onPressCategory(item)}
+        imageHeight={80}
+        imageWidth={80}
       />
     )
   }, [!!allCategories && allCategories?.data || []])
+
+
 
   return (
     <WrapperContainer

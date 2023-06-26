@@ -241,7 +241,7 @@ export default function TipPaymentOptions({ navigation, route }) {
               .then(async (res) => {
                 console.log(res, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
-                  const { paymentIntent, error } = await handleCardAction(
+                  const { paymentIntent, error } = await handleNextAction(
                     res?.client_secret,
                   );
                   if (paymentIntent) {

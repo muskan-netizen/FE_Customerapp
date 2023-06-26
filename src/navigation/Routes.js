@@ -13,16 +13,15 @@ import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
 import AuthStack from './AuthStack';
 import CourierStack from './CourierStack';
+import DrawerRoutes from './DrawerRoutes';
 import { navigationRef } from './NavigationService';
-import navigationStrings from './navigationStrings';
-import TabRoutes from './TabRoutes';
-import TabRoutesEcommerce from './TabRoutesEcommerce';
-import TabRoutesP2p from './TabRoutesP2p';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
-import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
+import navigationStrings from './navigationStrings';
 import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
+import TabRoutes from './TabRoutes';
+import TaxiTabRoutes from './TaxiTabRoutes';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,9 +33,7 @@ export default function Routes() {
   const businessType = appStyle?.homePageLayout;
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{
-        headerShown: false
-      }} >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
 
         {appSessionInfo == 'shortcode' ||
           appSessionInfo == 'show_shortcode' ? (
@@ -53,17 +50,26 @@ export default function Routes() {
             options={{ gestureEnabled: false }}
           />
         ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
-          <Stack.Screen
-            name={navigationStrings.TAB_ROUTES}
-            component={
-              businessType === 4
-                ? TaxiTabRoutes
-                : businessType === 8
-                  ? !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand : TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
-                    : TabRoutes
-            }
-            options={{ gestureEnabled: false }}
-          />
+          <React.Fragment>
+            {
+              businessType === 10 ? <Stack.Screen
+                name={navigationStrings.DRAWER_ROUTES}
+                component={DrawerRoutes}
+                options={{ gestureEnabled: false }}
+              /> : <Stack.Screen
+                name={navigationStrings.TAB_ROUTES}
+                component={
+                  businessType === 4
+                    ? TaxiTabRoutes
+                    : businessType === 8
+                      ? !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand : TabRoutesP2p : businessType === 10 ? TabRoutesEcommerce
+                        : TabRoutes
+                }
+                options={{ gestureEnabled: false }}
+              />
+            }</React.Fragment>
+
+
 
         ) : (
           AuthStack(Stack, appStyle, appData)
@@ -100,6 +106,7 @@ export default function Routes() {
           component={TabRoutesVendorNewTemplate}
           options={{ gestureEnabled: false }}
         />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

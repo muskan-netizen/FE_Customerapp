@@ -8,6 +8,7 @@ export default {
   CREATE_AN_ACCOUNT: 'YENİ HESAP OLUŞTUR',
   CREATE_NEW_ACCOUNT: 'Yeni hesap oluştur',
   GUEST_LOGIN: 'SKIP',
+  GUSET_USER:"Guest User",
   OR_SIGNUP_WITH: 'Veya kaydolun',
   OR_LOGIN_WITH: 'Veya giriş yapın',
   ALREADY_HAVE_AN_ACCOUNT: 'Zaten bir hesabınız var mı?',
@@ -677,6 +678,9 @@ export default {
   ANSWER: 'Answer : ',
   COMPLETE: 'Complete',
   ASSIGNED: 'Assigned',
+  ON_THE_WAY:"On the way",
+  READY_FOR_PICKUP:"Ready for pickup",
+  READY_FOR_DEPARTURE:"Ready for departure",
   UNASSIGNED: 'Unassigned',
   ARRIVED: 'Arrived',
   DRIVERDETAIL: 'Driver Details',
@@ -766,7 +770,7 @@ export default {
   PASTDELEIVERIES: 'Past Deliveries',
   MYDELIERIES: 'My Deliveries',
   NODELIVERIESFOUND: 'No Deliveries Found',
-  CLEAR_FILTER: 'Clear Filter',
+  CLEAR_FILTER: 'Clear All Filter',
   PRICE_RANGE: 'Price Range',
   SORRY_MSG: `Sorry, we currently don’t deliver here but we are
     expanding quickly. Kindly check back soon!`,
@@ -885,6 +889,5 @@ export default {
   START_CHAT: 'Start Chat',
   ORDER: 'Orders',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
-  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
-  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
+  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us'
 };

@@ -139,6 +139,8 @@ export default function Products({ route, navigation }) {
   const CartItems = useSelector(state => state?.cart?.cartItemCount);
   const reloadData = useSelector(state => state?.reloadData?.reloadData);
 
+
+
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
@@ -636,8 +638,7 @@ export default function Products({ route, navigation }) {
   const preLoadImages = async data => {
     data.map(item => {
       item?.data.map(val => {
-        if (val?.media?.length > 0 && !!val?.media[0]?.image) {
-          // if (val?.media?.length > 0) {
+        if (val?.media?.length > 0) {
           const url1 = val?.media[0]?.image?.path?.image_fit;
           const url2 = val?.media[0]?.image?.path?.image_path;
           FastImage.preload([{ uri: getImageUrl(url1, url2, '200/200') }]);
@@ -1352,7 +1353,7 @@ export default function Products({ route, navigation }) {
               horizontal
               style={{
                 // marginHorizontal: moderateScale(0),
-                marginTop: moderateScaleVertical(5),
+                marginVertical: moderateScaleVertical(8),
               }}>
               {/* <View><Image source={imagePath.}/></View> */}
               {categoryInfo.childs.map((item, inx) => {
@@ -4003,12 +4004,6 @@ export default function Products({ route, navigation }) {
           );
 
           console.log(res, 'res for slots vendor');
-          if (!!res?.data && _.isEmpty(res?.data)) {
-            setLoadingGetSlots(false);
-            setAppointmentPicker(false);
-            alert(strings.APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE)
-            return;
-          }
           if (res) {
             setAppointmentAvailableSlots(res.data);
             setLoadingGetSlots(false);
@@ -5001,6 +4996,7 @@ export default function Products({ route, navigation }) {
               minimumPrice={minimumPrice}
               updateMinMax={updateMinMax}
               filterData={allFilters}
+              currencies={currencies}
             />
           ) : null}
         </View>
@@ -5144,7 +5140,6 @@ export default function Products({ route, navigation }) {
 
       <ReactNativeModal
         isVisible={isAppointmentSlotsModal}
-        onBackdropPress={() => setAppointmentSlotsModal(false)}
         style={{
           justifyContent: 'flex-end',
           margin: 0,

@@ -29,7 +29,7 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import strings from '../../../constants/lang';
 
 function Footer(props) {
-  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '',cartItems, setVendorComment = null } = props;
+  const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', cartItems, setVendorComment = null } = props;
   const foundRecurringProduct = cartData?.products?.some(item => {
     return item?.vendor_products.some(item => item?.is_recurring_booking)
   })
@@ -1321,6 +1321,8 @@ function Footer(props) {
           </TouchableOpacity>
         )
       }
+
+
       {
         !!(
           cartData?.deliver_status || cartData?.closed_store_order_scheduled
@@ -1366,7 +1368,7 @@ function Footer(props) {
                   }}
                 />
               )}
-            {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate)  && (dineInType == 'appointment' ? (cartItems?.some(item => item?.scheduled_date_time == null)) : true) ) && (
+            {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate) && (dineInType == 'appointment' ? (cartItems?.some(item => item?.scheduled_date_time == null)) : true)) && (
               <ButtonComponent
                 onPress={placeOrder}
                 btnText={strings.PLACE_ORDER}

@@ -19,7 +19,7 @@ import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
-export default function Wishlist2({navigation}) {
+export default function Wishlist2({navigation,route}) {
   const {
     appData,
     appStyle,
@@ -124,6 +124,14 @@ export default function Wishlist2({navigation}) {
     updateState({pageNo: pageNo + 1});
   };
 
+  const onPressGoBack = () => {
+    if (!!route?.params && route?.params?.isComeFromDrawer) {
+      navigation.openDrawer()
+    } else {
+      navigation.goBack()
+    }
+  }
+
   return (
     <WrapperContainer
       bgColor={
@@ -148,6 +156,7 @@ export default function Wishlist2({navigation}) {
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
+        onPressLeft={onPressGoBack}
       />
       <View style={{...commonStyles.headerTopLine}} />
       <View

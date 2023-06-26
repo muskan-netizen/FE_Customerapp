@@ -9,6 +9,7 @@ export default {
     DONT_HAVE_ACCOUNT: '¿No tienes una cuenta?',
     CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
     GUEST_LOGIN: 'SALTAR',
+    GUSET_USER:"Guest User",
     OR_SIGNUP_WITH: 'O Regístrate con',
     OR_CONTINUE_WITH: 'O Continua con',
     OR_LOGIN_WITH: 'O Inicia Sesión con',
@@ -746,6 +747,9 @@ export default {
   
     COMPLETE: 'Completado',
     ASSIGNED: 'Asignado',
+    ON_THE_WAY:"On the way",
+    READY_FOR_PICKUP:"Ready for pickup",
+    READY_FOR_DEPARTURE:"Ready for departure",
     UNASSIGNED: 'Sin asignar',
     ARRIVED: 'Llegado',
     DRIVERDETAIL: 'Detalles del conductor',
@@ -848,7 +852,7 @@ export default {
     PASTDELEIVERIES: 'entregas Pasadas',
     MYDELIERIES: 'Mis Entregas',
     NODELIVERIESFOUND: 'No se encontraron entregas',
-    CLEAR_FILTER: 'Limpiar Filtro',
+    CLEAR_FILTER: 'Clear All Filter',
     PRICE_RANGE: 'Rango de precios',
     CONTAINERCHARGES: 'Cargos por contenedor',
     TOTALCONTAINERCHARGES: 'Cargos totales por contenedor',
@@ -977,7 +981,6 @@ export default {
     ORDER:'Orders',
     THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
     TOLL_FEE:"Toll Fee",
-    SERVICE_CHARGES:"Service Charges",
-    APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
+    SERVICE_CHARGES:"Service Charges"
   };
   

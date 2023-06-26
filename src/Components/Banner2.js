@@ -47,13 +47,14 @@ const Banner2 = ({
     setActiveState(index);
   };
   const bannerDataImages = ({item, index}) => {
+    console.log("itemitemitemitem",item)
     const imageUrl = item?.image?.path
       ? getImageUrl(
-          item.image.path.image_fit,
+          item.image.path.proxy_url,
           item.image.path.image_path,
-          '600/800',
+          '800/800',
         )
-      : getImageUrl(item.image.image_fit, item.image.image_path, '600/800');
+      : getImageUrl(item.image.proxy_url, item.image.image_path, '800/800');
 
     return (
       <>
@@ -74,8 +75,8 @@ const Banner2 = ({
             //  onLoadStart={()=>}
             onLoadEnd={() => updateState({imageLoader: false})}
             style={{
-              height: moderateScale(180),
-              width: '100%',
+              height: 800,
+              width: 800,
               ...BackgroundImageStyle,
             }}
             imageStyle={imagestyle}

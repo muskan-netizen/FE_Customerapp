@@ -24,12 +24,10 @@ export default function () {
 
     const renderProductListScreen = () => {
         switch (appStyle?.homePageLayout) {
-            case 1:
-                return Screens.ProductList;
-            case 2:
-                return Screens.ProductList2;
-            default:
-                return Screens.ProductList3;
+            case 1: return Screens.ProductList;
+            case 2: return Screens.ProductList2;
+            case 10: return Screens.ProductListEcom;
+            default: return Screens.ProductList3;
         }
     };
 
@@ -55,7 +53,7 @@ export default function () {
             case 10:
                 return Screens.SearchProductVendorItem3V2;
             default:
-                return Screens.SearchProductVendorItem2;
+                return Screens.SearchProductVendorItem3V2;
         }
     };
 
@@ -66,7 +64,7 @@ export default function () {
                 headerShown: false,
             }}>
             <Stack.Screen
-                component={Screens.Category}
+                component={appStyle?.homePageLayout == 10 ? Screens.EcomCategory:  Screens.Category}
                 name={navigationStrings.CATEGORY}
             />
 
@@ -87,7 +85,12 @@ export default function () {
             <Stack.Screen
                 name={navigationStrings.SEARCHPRODUCTOVENDOR}
                 component={checkSearchProductVendorItemLayout()}
-    
+
+            />
+
+            <Stack.Screen
+                name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+                component={Screens.ViewAllSearchItems}
             />
 
         </Stack.Navigator>

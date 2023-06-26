@@ -140,7 +140,7 @@ export default function Login3({navigation}) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    return navigation.navigate(screenName, {data});
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {

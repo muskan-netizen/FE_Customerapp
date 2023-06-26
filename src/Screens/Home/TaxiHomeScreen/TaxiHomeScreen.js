@@ -20,7 +20,7 @@ import {
 import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
-import DashBoardSeven from '../DashboardViews/DashBoardSeven';
+// import DashBoardSeven from '../DashboardViews/DashBoardSeven';
 import socketServices from '../../../utils/scoketService';
 import { MyDarkTheme } from '../../../styles/theme';
 
@@ -305,7 +305,7 @@ console.log(res, "res>>>>>>>>>")
       };
     }
 
-    console.log(appStyle?.homePageLayout, ">fksldfk;lsdkf")
+
 
     var selectedVendorType = null;
     var defaultVendorType = null;
@@ -631,20 +631,23 @@ console.log(res, "res>>>>>>>>>")
         );
       case 5:
         return (
-          <DashBoardSeven
-            handleRefresh={() => handleRefresh()}
-            bannerPress={(item) => bannerPress(item)}
-            isLoading={isLoading}
-            isRefreshing={isRefreshing}
-            appMainData={appMainData}
-            onPressCategory={(item) => {
-              onPressCategory(item);
-            }}
-            isDineInSelected={isDineInSelected}
-            selcetedToggle={false}
-            toggleData={appData}
-            navigation={navigation}
-          />
+          <View>
+            
+          </View>
+          // <DashBoardSeven
+          //   handleRefresh={() => handleRefresh()}
+          //   bannerPress={(item) => bannerPress(item)}
+          //   isLoading={isLoading}
+          //   isRefreshing={isRefreshing}
+          //   appMainData={appMainData}
+          //   onPressCategory={(item) => {
+          //     onPressCategory(item);
+          //   }}
+          //   isDineInSelected={isDineInSelected}
+          //   selcetedToggle={false}
+          //   toggleData={appData}
+          //   navigation={navigation}
+          // />
         );
     }
   };

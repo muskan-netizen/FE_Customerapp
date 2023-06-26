@@ -1069,6 +1069,5 @@
   JOIN_AS: "انضم كملف",
   CLIENT_FREELANCER_VENDOR: "العميل أو المستقل أو البائع",
   AS_LENDER: "كمقرض",
-  AS_BORROWER: "كمقترض",
-  APOLOGIES_BUT_THERE_ARE_NO_SLOTS_AVAILABLE:"Apologies, but there are no slots available on the chosen date. Please select another date.",
+  AS_BORROWER: "كمقترض"
 }

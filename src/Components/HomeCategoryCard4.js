@@ -20,7 +20,10 @@ const HomeCategoryCard3 = ({
   data = {},
   onPress = () => { },
   isLoading = false,
-  applyRadius = true,
+  applyRadius = null,
+  categoryHieght = 78,
+  categoryWidth = 78,
+
   index = 0
 }) => {
 
@@ -40,9 +43,9 @@ const HomeCategoryCard3 = ({
 
   const onLoad = (evl) => { };
 
-  let imgHeight = moderateScale(78);
-  let imgWidth = moderateScale(78);
-  let imgRadius = moderateScale(applyRadius ? 4 : 0);
+  let imgHeight = moderateScale(categoryHieght);
+  let imgWidth = moderateScale(categoryWidth);
+  let imgRadius = moderateScale(!!applyRadius ? applyRadius : 0);
 
   const navigation = useNavigation()
 
@@ -51,10 +54,7 @@ const HomeCategoryCard3 = ({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => navigation.navigate(navigationStrings.CATEGORY)}
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }} >
+        >
         <View style={{
           height: imgHeight,
           width: imgWidth,
@@ -66,26 +66,17 @@ const HomeCategoryCard3 = ({
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-          <View style={{
-            height: 60,
-            width: 60,
-            borderRadius: 30,
-            backgroundColor: colors.white,
-            alignItems: 'center',
-            justifyContent: "center"
-          }}>
             <Text
               style={{
                 color: themeColors?.primary_color,
                 fontFamily: fontFamily.medium,
                 fontSize: textScale(10),
                 textAlign: 'center',
-                marginTop: moderateScaleVertical(4),
-                width: moderateScale(80),
+                width: moderateScale(80), 
               }}>
               {strings.VIEW_ALL}
             </Text>
-          </View>
+          
         </View>
       </TouchableOpacity>
     )
