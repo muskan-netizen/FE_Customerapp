@@ -1,13 +1,8 @@
-import {Platform, StyleSheet} from 'react-native';
-import colors from '../../styles/colors';
-import commonStyles from '../../styles/commonStyles';
+import { StyleSheet } from 'react-native';
 import {
-  height,
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../../styles/responsiveSize';
+    moderateScale,
+    moderateScaleVertical
+} from '../../../styles/responsiveSize';
 
 export default ({themeColors, fontFamily}) =>
   StyleSheet.create({

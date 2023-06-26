@@ -1,35 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, StatusBar, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
-import BrandCard3 from '../../Components/BrandCard3';
-import Header from '../../Components/Header';
-import WrapperContainer from '../../Components/WrapperContainer';
-import strings from '../../constants/lang';
-import navigationStrings from '../../navigation/navigationStrings';
-import colors from '../../styles/colors';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import navigationStrings from '../../../navigation/navigationStrings';
+import colors from '../../../styles/colors';
 import {
     moderateScale,
     moderateScaleVertical,
-    textScale,
-    width
-} from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+    textScale
+} from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { shortCodes } from '../../../utils/constants/DynamicAppKeys';
 
-import NoDataFound from '../../Components/NoDataFound';
-import staticStrings from '../../constants/staticStrings';
-import actions from '../../redux/actions';
-import stylesFunc from './styles';
-import { getColorCodeWithOpactiyNumber, getImageUrl, showError } from '../../utils/helperFunctions';
 import { Text } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import commonStyles from '../../styles/commonStyles';
-import EcomBrandCard from '../../Components/EcomBrandCard';
-import EcomHeader from '../../Components/EcomHeader';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import EcomBrandCard from '../../../Components/EcomBrandCard';
+import EcomHeader from '../../../Components/EcomHeader';
+import staticStrings from '../../../constants/staticStrings';
+import actions from '../../../redux/actions';
+import { getColorCodeWithOpactiyNumber, getImageUrl } from '../../../utils/helperFunctions';
+import stylesFunc from './styles';
 
 export default function EcomCategory({ navigation, route }) {
     const { data = null } = route?.params || {};
