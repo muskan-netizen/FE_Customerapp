@@ -2540,6 +2540,7 @@ function Cart({ navigation, route }) {
   };
 
   const _renderItem = ({ item, index }) => {
+    console.log("cart itemitem",item)
     return (
       <View>
         {index === 0 && (

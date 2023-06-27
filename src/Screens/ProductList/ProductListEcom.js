@@ -1086,8 +1086,7 @@ export default function Products({ route, navigation }) {
       //sent category id if user comes from category>>vendor>>productList
       apiData = apiData + `&category_id=${data?.categoryExist}`;
     }
-    actions
-      .getProductByVendorIdOptamizeV2(
+    actions.getProductByVendorIdOptamizeV2(
         apiData,
         {},
         {

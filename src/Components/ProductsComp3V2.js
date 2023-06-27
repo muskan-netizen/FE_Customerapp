@@ -89,10 +89,13 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             : colors.greyColor,
         }}>
 
-        <View style={{
-          position: 'absolute',
-          right: moderateScale(0),
-          top: moderateScale(0),
+
+
+      </FastImage>
+      <View style={{ marginVertical: moderateScaleVertical(8) }}>
+      <View style={{
+          alignSelf:'flex-start',
+          marginBottom:moderateScaleVertical(4)
         }} >
 
           {!!item?.averageRating && item?.averageRating !== '0.0' && (
@@ -112,9 +115,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             </View>
           )}
         </View>
-
-      </FastImage>
-      <View style={{ marginVertical: moderateScaleVertical(8) }}>
         <Text
           numberOfLines={numberOfLines}
           style={{

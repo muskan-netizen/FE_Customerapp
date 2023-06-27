@@ -293,7 +293,8 @@ export default function ViewAllData({ route, navigation }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}
-      isLoading={loadMore}>
+      // isLoading={loadMore}
+      >
 
       <Header3
         leftIcon={imagePath.icBackb}

@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, BackHandler, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useSelector } from 'react-redux';
@@ -76,12 +76,19 @@ export default function TaxiHomeScreen({ route, navigation }) {
     locationObj,
   } = state;
 
+  const memorizedAppData = useMemo(() => appData, [appData])
+  const memorizsedAppMainData = useMemo(() => appMainData, [appMainData])
+  const memorizsedLocation = useMemo(() => location, [location])
+
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
       socketServices.initializeSocket(appData?.profile?.socket_url);
     }
   }, [appData]);
+
+  
+
 
 
   useFocusEffect(
@@ -610,7 +617,6 @@ console.log(res, "res>>>>>>>>>")
   };
 
 
-
   const renderHomeScreen = () => {
 
     switch (appStyle?.homePageLayout) {
@@ -621,11 +627,13 @@ console.log(res, "res>>>>>>>>>")
             bannerPress={(item) => bannerPress(item)}
             isLoading={isLoading}
             isRefreshing={isRefreshing}
-            appMainData={appMainData}
             onPressCategory={(item) => onPressCategory(item)}
             selectedToggle={selectedToggle}
-            toggleData={appData}
-            location={locationObj}
+
+            appMainData={memorizsedAppMainData}
+            toggleData={memorizedAppData}
+            location={memorizsedLocation}
+
             currentLocation={locationObj}
           />
         );

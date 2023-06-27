@@ -241,6 +241,8 @@ export const ADD_PRESCRIPTIONS = getApiUrl('/upload/prescriptions');
 export const DELETE_PRESCRIPTION = getApiUrl('/delete/prescriptions');
 export const GET_SUBCATEGORY_VENDORS = getApiUrl('/get/subcategory/vendor');
 export const VENDER_UPDATE_ORDER = getApiUrl('/order-update');
+export const GET_SUBCATEGORY_VENDORS_V2 = getApiUrl('/v2/get/subcategory/vendor');
+export const SERACH_ALL_ITEMS = getApiUrl('/v2/search/all');
 
 //Chat Apis
 export const START_CHAT = getApiUrl('/chat/startChat');

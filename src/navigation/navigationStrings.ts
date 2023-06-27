@@ -180,4 +180,5 @@ export default {
   P2P_ORDER_DETAIL: 'p2pOrderDetail',
   ALL_CATEGORIES: 'allCategories',
   PRODUCT_PRICE_DETAILS: 'productPriceDetails',
+  DEVELOPER_MODE:"DeveloeprMode",
 };

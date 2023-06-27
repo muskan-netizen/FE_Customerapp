@@ -55,7 +55,6 @@ export default function TaxiHomeDashbord({
   location = {},
   curLatLong = {},
   currentLocation = {},
-  isLoading = true,
 }) {
 
   const navigation = useNavigation();
@@ -81,6 +80,7 @@ export default function TaxiHomeDashbord({
     isVisibleAddressModal: false,
     pickupAddress: {},
     allListedDrivers: [],
+    isLoading: true
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
@@ -99,6 +99,7 @@ export default function TaxiHomeDashbord({
     fullMapShow,
     selectViaMap,
     allListedDrivers,
+    isLoading
   } = state;
   const styles = stylesFunc({ themeColors, fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -119,24 +120,24 @@ export default function TaxiHomeDashbord({
     }
   }, [appMainData])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!!userData?.auth_token) {
-        getAllAddress();
-      }
-    }, []),
-  );
-
 
   const isFocused = useIsFocused();
-  useInterval(
-    () => {
-      if (location?.latitude && location?.longitude && userData?.auth_token) {
-        getAllDrivers();
-      }
-    },
-    isFocused ? 5000 : null,
-  );
+
+
+  useEffect(()=>{
+    if (location?.latitude && location?.longitude && userData?.auth_token) {
+      getAllDrivers();
+    }
+  },[])
+
+  // useInterval(
+  //   () => {
+  //     if (location?.latitude && location?.longitude && userData?.auth_token) {
+  //       getAllDrivers();
+  //     }
+  //   },
+  //   isFocused ? 5000 : null,
+  // );
 
   const mapRef = useRef();
 
@@ -262,6 +263,7 @@ export default function TaxiHomeDashbord({
         console.log(res, 'res>res>res');
         updateState({ del: del ? false : true });
         showSuccess(res.message);
+        updateState({ isLoading: false });
         setModalVisible(false);
       })
       .catch((error) => {
@@ -583,6 +585,7 @@ export default function TaxiHomeDashbord({
     }, 2000);
   }
 
+  console.log("isloading value",isLoading)
 
   return (
     <WrapperContainer
@@ -592,7 +595,7 @@ export default function TaxiHomeDashbord({
           ? MyDarkTheme.colors.background
           : colors.white,
       }}
-      isLoading={isLoading}
+      // isLoading={isLoading}
     >
 
       <ScrollView
@@ -626,7 +629,6 @@ export default function TaxiHomeDashbord({
           />
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
-        {/* <Loader isLoading={isLoadingModal} /> */}
 
         {isLoading ? null : <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}

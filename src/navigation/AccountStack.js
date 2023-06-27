@@ -65,7 +65,8 @@ import {
   Wishlist2,
   Yoco,
   EcomAccount,
-  EcomLangCurrency
+  EcomLangCurrency,
+  DeveloperMode
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -282,6 +283,10 @@ export default function ({ navigation }) {
       <Stack.Screen
         name={navigationStrings.ECOM_LANG_CURRENCY}
         component={EcomLangCurrency}
+      />
+        <Stack.Screen
+        name={navigationStrings.DEVELOPER_MODE}
+        component={DeveloperMode}
       />
     </Stack.Navigator>
   );
