@@ -227,15 +227,14 @@ function SwipeableSection(props) {
                                                             )}
                                                         </Text>
                                                     </View>
-                                                    <Text style={{
+                                                    {!!i?.schedule_slot ?<Text style={{
                                                         fontFamily:fontFamily.regular,
                                                         fontSize:textScale(10),
                                                          color: isDarkMode
                                                          ? MyDarkTheme.colors.text
                                                          : colors.blackOpacity40,
                                                         marginBottom:moderateScaleVertical(4)
-
-                                                    }} > {i?.scheduled_date_time} {i?.schedule_slot}</Text>
+                                                    }} > {i?.scheduled_date_time} {i?.schedule_slot}</Text>:null}
                                                     {getBundleId() !== appIds.rentzy &&
                                                         <View
                                                             pointerEvents={btnLoader ? 'none' : 'auto'}

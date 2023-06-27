@@ -4098,6 +4098,13 @@ export default function Products({ route, navigation }) {
     console.log("selectedAllProductDataForAppointment",selectedAppointmentSlot)
     // return;
     if(!!selectedAppointmentSlot?.value){
+      if(!!typeId && typeId == 8){
+        setAppointmentSlotsModal(false);
+        setTimeout(() => {
+          setIsVisibleModal(true)
+        }, 500);
+        return;
+      }
       setAppointmentSlotsModal(false);
       setAppointmentPicker(false);
       setSelectedAgent({});
