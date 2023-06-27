@@ -70,26 +70,6 @@ const App = () => {
   }
 
 
-  // async function handleDynamicLink(deepLinkUrl) {
-  //   console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrsssl');
-  //   if (deepLinkUrl != null) {
-  //     setItem('deepLinkUrl', deepLinkUrl)
-  //       .then((res) => {
-  //         actions.setDeeplinkUrl(deepLinkUrl);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error, 'erroror');
-  //       });
-
-  //     let routeName = getUrlRoutes(deepLinkUrl, 2);
-  //     console.log(routeName, 'routeName');
-  //     if (routeName === 'vendor') {
-  //       return;
-  //     } else if (routeName === 'track') {
-  //       openSpecificScreenByDeeplink(deepLinkUrl);
-  //     }
-  //   }
-  // }
 
   //open screens based on deep link url
   const openSpecificScreenByDeeplink = async (deepLinkUrl) => {
