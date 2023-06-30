@@ -1089,7 +1089,7 @@ export default function Home({ route, navigation }) {
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
             />
-             </SafeAreaView>
+          </SafeAreaView>
         );
 
       case 7:
@@ -1110,7 +1110,7 @@ export default function Home({ route, navigation }) {
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
             />
-         </SafeAreaView>
+          </SafeAreaView>
         );
 
       case 10:
@@ -1148,7 +1148,7 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
               curLatLong={curLatLong}
             />
-         </SafeAreaView>
+          </SafeAreaView>
         );
 
       default:
