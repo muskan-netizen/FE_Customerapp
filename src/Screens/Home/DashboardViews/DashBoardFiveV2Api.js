@@ -488,7 +488,7 @@ const DashBoardFiveV2Api = ({
 
   const _renderSelectedProducts = useCallback(({ item, index }) => {
     return (
-      <View style={{ marginRight: 8 }}>
+      <View>
         <ProductsComp3V2
           item={item}
           onPress={() =>
@@ -1314,7 +1314,7 @@ const _renderProducts = ({ item, navigation }) => {
       onPress={() =>
         !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
       }
-    />
+      />
   )
 }
 
