@@ -1,14 +1,14 @@
-import {ALL_NEARBY_DRIVERS, GET_ALL_CAR_AND_PRICE, PLACE_DELIVERY_ORDER, STATIC_DROP_LOCATIONS} from '../../config/urls';
-import {apiGet, apiPost} from '../../utils/utils';
+import { ALL_NEARBY_DRIVERS, GET_ALL_CAR_AND_PRICE, PLACE_DELIVERY_ORDER, STATIC_DROP_LOCATIONS } from '../../config/urls';
+import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 // save vendor listing and category data
 
 //Get vendor info and Category data
 export function getAllCarAndPrices(query = '', data = {}, headers = {}) {
-  console.log(GET_ALL_CAR_AND_PRICE + query, data, headers,'queryquery');
+
   return new Promise((resolve, reject) => {
     apiPost(GET_ALL_CAR_AND_PRICE + query, data, headers)
       .then((res) => {
@@ -47,7 +47,7 @@ export function getAllNearByDrivers(data = {}, headers = {}) {
 }
 
 
-export const getStaticLocations = (query = '', data={}, headers = {}) => {
+export const getStaticLocations = (query = '', data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiGet(STATIC_DROP_LOCATIONS + query, data, headers)
       .then((res) => {

@@ -368,7 +368,7 @@ export default function DashBoardHeaderFive({
           alignItems: 'center',
         }}>
 
-        <TouchableOpacity
+        {appStyle?.homePageLayout == 10 ? <TouchableOpacity
           activeOpacity={1}
           onPress={() => navigation.openDrawer()}
           style={{ alignItems: 'center', }}>
@@ -382,7 +382,7 @@ export default function DashBoardHeaderFive({
             source={imagePath.icHamburger}
             resizeMode="contain"
           />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
 
         {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity

@@ -34,7 +34,8 @@ import strings from '../constants/lang';
 import { string } from 'prop-types';
 import MarketCard3 from './MarketCard3';
 const MarketCard = ({ data = {}, onPress = () => { }, activeOpacity = 1 }) => {
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const { appStyle ,appData} = useSelector((state) => state?.initBoot);
+  
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -185,7 +186,7 @@ const MarketCard = ({ data = {}, onPress = () => { }, activeOpacity = 1 }) => {
                   text={'1.7km'}
                 /> */}
               </View>
-              {!!data?.product_avg_average_rating && (
+              {!!appData?.profile?.preferences?.rating_check && !!data?.product_avg_average_rating && (
                 <View>
                   <TouchableOpacity
                     style={{

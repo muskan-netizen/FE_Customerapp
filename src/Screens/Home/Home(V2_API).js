@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking, StatusBar } from 'react-native';
+import { Alert, BackHandler, Linking, SafeAreaView, StatusBar } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -123,11 +123,11 @@ export default function Home({ route, navigation }) {
     curLatLong,
   } = state;
 
-  const memorizedAppData = useMemo(() => appData, [appData])  
+  const memorizedAppData = useMemo(() => appData, [appData])
   const memorizsedAppMainData = useMemo(() => appMainData, [appMainData])
   const memorizsedLocation = useMemo(() => location, [location])
-  const memorizedSelectedTabType = useMemo(()=> selectedTabType, [selectedTabType])
-  const memorizedAllAddresss = useMemo(()=> allAddresss, [allAddresss])
+  const memorizedSelectedTabType = useMemo(() => selectedTabType, [selectedTabType])
+  const memorizedAllAddresss = useMemo(() => allAddresss, [allAddresss])
   const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData])
 
   const { profile } = memorizedAppData;
@@ -477,18 +477,18 @@ export default function Home({ route, navigation }) {
         .catch(errorMethod);
     }
   };
-  
 
-  const preLoadImages = useCallback((data)=>{
-    if(!!data?.data){
+
+  const preLoadImages = useCallback((data) => {
+    if (!!data?.data) {
       data.data.map((data) => {
         const imageURI = data?.icon
-        ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${80 + 140}/${80 + 140}`)
-        : getImageUrl(data.image.image_fit, data.image.image_path, `${80 + 140}/${80 + 140}`);
-          FastImage.preload([{ uri: imageURI }])
-        });
+          ? getImageUrl(data.icon.image_fit, data.icon.image_path, `${80 + 140}/${80 + 140}`)
+          : getImageUrl(data.image.image_fit, data.image.image_path, `${80 + 140}/${80 + 140}`);
+        FastImage.preload([{ uri: imageURI }])
+      });
     }
-  },[])
+  }, [])
 
   //Error handling in screen
   const errorMethod = (error) => {
@@ -756,7 +756,7 @@ export default function Home({ route, navigation }) {
   };
 
   const selcetedToggle = (type) => {
-    if (appStyle?.homePageLayout == 6) {
+    if (appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff) {
       actions.dineInData(type);
       navigation.navigate(navigationStrings.HOME_TEMP_3, { type: type })
       return;
@@ -969,33 +969,35 @@ export default function Home({ route, navigation }) {
 
   const scrollHandler = useAnimatedScrollHandler((event) => {
     if (event.contentOffset.y > 170) {
-      animation.value=170
+      animation.value = 170
       return
     }
     animation.value = event.contentOffset.y
-  
+
   })
 
 
-  const renderHeaders = useCallback(()=>{
+
+
+  const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
-          <>
+          <SafeAreaView>
             <DashBoardHeaderOne navigation={navigation} location={memorizsedLocation} />
-          </>
+          </SafeAreaView>
         );
 
       case 2:
         return (
-          <>
+          <SafeAreaView>
             <DashBoardHeaderOne navigation={navigation} location={memorizsedLocation} />
-          </>
+          </SafeAreaView>
         );
       case 3:
         if (getBundleId() === appIds.onTheWheel) {
           return (
-            <>
+            <SafeAreaView>
               <DashBoardHeaderSix
                 showToggles={false}
                 navigation={navigation}
@@ -1009,11 +1011,11 @@ export default function Home({ route, navigation }) {
                 isVoiceRecord={isVoiceRecord}
                 _onVoiceStop={_onVoiceStop}
               />
-            </>
+            </SafeAreaView>
           );
         } else {
           return (
-            <>
+            <SafeAreaView>
               {console.log('curLatLong=>', curLatLong)}
               <DashBoardHeaderFive
                 showToggles={false}
@@ -1030,13 +1032,13 @@ export default function Home({ route, navigation }) {
                 nearestLoc={nearestLocDis}
                 currentLoc={currentLocation}
               />
-            </>
+            </SafeAreaView>
           );
         }
 
       case 4:
         return (
-          <>
+          <SafeAreaView>
             <DashBoardHeaderFour
               showToggles={false}
               navigation={navigation}
@@ -1046,12 +1048,12 @@ export default function Home({ route, navigation }) {
               isLoading={isLoading}
             />
 
-          </>
+          </SafeAreaView>
         );
 
       case 5: // 5
         return (
-          <>
+          <SafeAreaView>
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
@@ -1067,11 +1069,11 @@ export default function Home({ route, navigation }) {
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
             />
-          </>
+          </SafeAreaView>
         );
       case 6:
         return (
-          <>
+          <SafeAreaView>
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
@@ -1087,28 +1089,28 @@ export default function Home({ route, navigation }) {
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
             />
-          </>
+          </SafeAreaView>
         );
 
       case 7:
         return (
-          <>
-             <DashBoardHeaderFive
-                showToggles={false}
-                navigation={navigation}
-                location={memorizsedLocation}
-                selcetedToggle={selcetedToggle}
-                toggleData={memorizedAppData}
-                isLoading={isLoading}
-                currentLocation={curLatLong}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-                nearestLoc={nearestLocDis}
-                currentLoc={currentLocation}
-              />
-          </>
+          <SafeAreaView>
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={curLatLong}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
+            />
+          </SafeAreaView>
         );
 
       case 10:
@@ -1131,7 +1133,7 @@ export default function Home({ route, navigation }) {
 
       case 8:
         return (
-          <>
+          <SafeAreaView>
             <DashBoardHeaderSeven
               showToggles={false}
               navigation={navigation}
@@ -1146,11 +1148,11 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
               curLatLong={curLatLong}
             />
-          </>
+          </SafeAreaView>
         );
 
       default:
-        return <>
+        return <SafeAreaView>
           <DashBoardHeaderFive
             showToggles={false}
             navigation={navigation}
@@ -1164,9 +1166,9 @@ export default function Home({ route, navigation }) {
             isVoiceRecord={isVoiceRecord}
             _onVoiceStop={_onVoiceStop}
           />
-        </>
+        </SafeAreaView>
     }
-  },[
+  }, [
     appStyle?.homePageLayout,
     memorizsedLocation,
     memorizedAppData,
@@ -1175,7 +1177,7 @@ export default function Home({ route, navigation }) {
     isLoadingB,
     isVoiceRecord
   ])
- 
+
 
 
   const renderHomeScreen = () => {
@@ -1188,10 +1190,12 @@ export default function Home({ route, navigation }) {
             bannerPress={(item) => bannerPress(item)}
             isLoading={isLoading}
             isRefreshing={isRefreshing}
-            appMainData={memorizsedAppMainData}
             onPressCategory={(item) => onPressCategory(item)}
+
+            appMainData={memorizsedAppMainData}
             toggleData={memorizedAppData}
             location={memorizsedLocation}
+
             curLatLong={curLatLong}
             currentLocation={currentLocation}
           /> :

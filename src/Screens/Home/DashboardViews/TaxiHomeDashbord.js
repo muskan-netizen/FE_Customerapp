@@ -55,8 +55,6 @@ export default function TaxiHomeDashbord({
   location = {},
   curLatLong = {},
   currentLocation = {},
-  isLoading = true,
-  appMainData = {}
 }) {
 
   const navigation = useNavigation();
@@ -77,13 +75,14 @@ export default function TaxiHomeDashbord({
     indicator: false,
     type: 'addAddress',
     newAddressAdded: null,
-    isLoadingModal: false,
+    isLoadingModal: true,
     fullMapShow: false,
     isVisibleAddressModal: false,
     pickupAddress: {},
     allListedDrivers: [],
+    isLoading: true
   });
-
+  const appMainData = useSelector((state) => state?.home?.appMainData);
   const fontFamily = appStyle?.fontSizeData;
   const { bannerRef } = useRef();
   const {
@@ -100,39 +99,45 @@ export default function TaxiHomeDashbord({
     fullMapShow,
     selectViaMap,
     allListedDrivers,
+    isLoading
   } = state;
   const styles = stylesFunc({ themeColors, fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
 
-  let myCategories = [{data: []}]
-  
-   myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val,i)=>{
-    if(val.slug == 'nav_categories'){
+  let myCategories = [{ data: [] }]
+
+  myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
+    if (val.slug == 'nav_categories') {
       return val
     }
   })
-console.log("myCategoriesmyCategories",myCategories)
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!!userData?.auth_token) {
-        getAllAddress();
-      }
-    }, []),
-  );
+  useEffect(() => {
+    if (!!appMainData?.categories) {
+      updateState({ isLoadingModal: false })
+    }
+  }, [appMainData])
 
 
   const isFocused = useIsFocused();
-  useInterval(
-    () => {
-      if (location?.latitude && location?.longitude && userData?.auth_token) {
-        getAllDrivers();
-      }
-    },
-    isFocused ? 5000 : null,
-  );
+
+
+  useEffect(()=>{
+    if (location?.latitude && location?.longitude && userData?.auth_token) {
+      getAllDrivers();
+    }
+  },[])
+
+  // useInterval(
+  //   () => {
+  //     if (location?.latitude && location?.longitude && userData?.auth_token) {
+  //       getAllDrivers();
+  //     }
+  //   },
+  //   isFocused ? 5000 : null,
+  // );
 
   const mapRef = useRef();
 
@@ -172,16 +177,16 @@ console.log("myCategoriesmyCategories",myCategories)
 
   const getAllDrivers = () => {
     actions.getAllNearByDrivers(
-        {
-          latitude: location?.latitude,
-          longitude: location?.longitude,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+      {
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then((res) => {
         updateState({
           allListedDrivers: res?.data,
@@ -258,6 +263,7 @@ console.log("myCategoriesmyCategories",myCategories)
         console.log(res, 'res>res>res');
         updateState({ del: del ? false : true });
         showSuccess(res.message);
+        updateState({ isLoading: false });
         setModalVisible(false);
       })
       .catch((error) => {
@@ -296,7 +302,6 @@ console.log("myCategoriesmyCategories",myCategories)
 
   /********************** instunt order place api code written here ************************/
 
-  console.log(currentLocation, "currentLocation");
 
   const _onInstuntOrderPlace = () => {
 
@@ -367,13 +372,13 @@ console.log("myCategoriesmyCategories",myCategories)
   /*********************************************** instunt booking module code ends here *************************/
 
 
-  console.log("myCategories?.data",myCategories)
+  console.log("myCategories?.data", myCategories)
   const _renderItem = useCallback(({ item }) => {
 
     return (
-      <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} />
+      <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} mainViewStyle={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey }} />
     );
-  }, [myCategories || []])
+  }, [appMainData?.categories, isDarkMode])
 
 
   const moveToScreen = (details) => {
@@ -580,6 +585,7 @@ console.log("myCategoriesmyCategories",myCategories)
     }, 2000);
   }
 
+  console.log("isloading value",isLoading)
 
   return (
     <WrapperContainer
@@ -589,8 +595,8 @@ console.log("myCategoriesmyCategories",myCategories)
           ? MyDarkTheme.colors.background
           : colors.white,
       }}
-      isLoading={isLoading}
-      >
+      // isLoading={isLoading}
+    >
 
       <ScrollView
         // bounces={false}
@@ -618,14 +624,13 @@ console.log("myCategoriesmyCategories",myCategories)
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
             onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
-            cardViewStyle={{marginTop:moderateScaleVertical(8)}}
+            cardViewStyle={{ marginTop: moderateScaleVertical(8) }}
           // onPress={(item) => bannerPress(item)}
           />
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
-        <Loader isLoading={isLoadingModal} />
 
-        {isLoading ? null:<FlatList
+        {isLoading ? null : <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={myCategories[0]?.data || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
@@ -646,7 +651,7 @@ console.log("myCategoriesmyCategories",myCategories)
             <View style={{ marginRight: moderateScale(12) }} />
           )}
         />
-}
+        }
         {/* findCabCategory */}
         {true && (
           <>

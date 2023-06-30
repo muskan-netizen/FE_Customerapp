@@ -135,5 +135,26 @@ export default {
   boxGrey: '#EDEDED',
   textColor: "#646464",
   inactiveText: "#898989",
-  borderStroke: "#CFCFCF"
+  borderStroke: "#CFCFCF",
+
+  orangeBtn: '#FF5C01',
+  safety_orange: '#FF5C01',
+  borderColor: "#E3E3E3",
+  light_orange_bg: "rgba(255, 127, 0, 0.07)",
+  light_gray: '#E6E6E6',
+  profileInputborder: '#E9E9E9',
+  inactiveBlack: '#3A3A3A',
+  topBarOrange: '#FF7F00',
+  lightGreyText: '#707070',
+  headingBlack: '#1C1C1C',
+  tabBarGrey: "#B3B3B3",
+  textGreyL: "#575757",
+  borderColorE: "rgba(0, 0, 0, 0.12)",
+  textGreyM: "#434343",
+  greyNew1: "#AEAEAE",
+  textGreyN: "#7D7D7D",
+  textGreyO: "#CACACA",
+  textGreyP: "#4D4D4D",
+  textGreyQ: "#808080",
+  grey3: "#F4F4F4"
 };

@@ -88,7 +88,7 @@ const DashBoardFiveV2Api = ({
   selcetedToggle = () => { },
   showVendorCategory = true,
   appMainData = {},
-  scrollHandler=()=>{}
+  scrollHandler = () => { }
 }) => {
 
 
@@ -445,6 +445,8 @@ const DashBoardFiveV2Api = ({
     );
   }, [isDarkMode])
 
+
+
   const SingleCategoryProductsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View>
@@ -540,6 +542,7 @@ const DashBoardFiveV2Api = ({
   }, [themeColors, fontFamily, appMainData, isDarkMode])
 
 
+
   const _renderCategories = useCallback(({ item, index }) => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -559,8 +562,8 @@ const DashBoardFiveV2Api = ({
         return (
           <View
             style={{
-              marginRight: appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
-              width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
+
+              width: appStyle?.homePageLayout == 5 ? '20%' : '25%',
             }}>
             <CategoryTemplate.HomeCategoryCard_3_5_7
               data={item}
@@ -841,7 +844,7 @@ const DashBoardFiveV2Api = ({
 
         }}>
 
-        {appStyle?.homePageLayout == 6 && showVendorCategory ? <View>
+        {appStyle?.homePageLayout == 6 && showVendorCategory && getBundleId() == appIds?.dropOff ? <View>
           <View>
             <Text
               style={{
@@ -1065,7 +1068,6 @@ const DashBoardFiveV2Api = ({
 
 
 
-  console.log("dataProvider", dataProvider)
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
@@ -1074,6 +1076,7 @@ const DashBoardFiveV2Api = ({
 
       {!!dataProvider && !isEmpty(dataProvider) ?
         <Animated.FlatList
+          ref={ref}
           data={dataProvider}
           extraData={dataProvider}
           renderItem={renderHomePageItems}
@@ -1233,7 +1236,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
         item={item}
         isDarkMode={isDarkMode}
         appStyle={appStyle}
-      
+
       />
       <FlatList
         showsHorizontalScrollIndicator={false}
@@ -1258,13 +1261,9 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
 }
 const _renderCities = ({ item, navigation }) => {
   return (
-    <View >
+    <View>
       <Cities
         item={item}
-        onPress={() => {
-          alert("hfdnxmb vncf")
-        }
-        }
       />
     </View>
   )
@@ -1278,6 +1277,10 @@ const CitiesView = ({ item = {},
   moveToNewScreen = () => { },
   isDarkMode = false }) => {
   console.log(item, "awdbatufgjdhvgjncjn");
+
+  if (isEmpty(item?.data || [])) {
+    return <></>
+  }
   return (
     <View>
       <TitleViewHome
@@ -1288,7 +1291,7 @@ const CitiesView = ({ item = {},
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
-        data={item?.data}
+        data={item?.data || []}
         renderItem={({ item }) => _renderCities({ item, isDarkMode, appMainData, moveToNewScreen })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (

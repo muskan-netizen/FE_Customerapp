@@ -193,7 +193,7 @@ const ProductCard3demo = ({
             </View>
 
             {/* rating View */}
-            {!!data?.averageRating && (
+            {!!appData?.profile?.preferences?.rating_check && !!data?.averageRating && (
               <View
                 style={{
                   borderWidth: 0.5,

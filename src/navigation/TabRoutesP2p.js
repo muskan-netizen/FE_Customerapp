@@ -8,12 +8,14 @@ import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import { textScale } from '../styles/responsiveSize';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 import AccountStack from './AccountStack';
 import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
 import PostStack from './PostStack';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -79,7 +81,7 @@ export default function TabRoutesP2p(props) {
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
-            navigationStrings.P2P_PRODUCTS,
+            // navigationStrings.P2P_PRODUCTS,
             navigationStrings.P2P_PRODUCT_DETAIL,
           ]),
           tabBarLabel: strings.HOME,
@@ -152,57 +154,6 @@ export default function TabRoutesP2p(props) {
         })}
       />
 
-      {/* <Tab.Screen
-        component={CartStack}
-        name={navigationStrings.CART}
-        options={({ route, navigation }) => ({
-          tabBarVisible: getTabBarVisibility(route, navigation, [
-            navigationStrings.PRODUCT_LIST,
-            navigationStrings.PRODUCTDETAIL,
-          ]),
-          tabBarLabel: strings.CART,
-          tabBarIcon: ({ focused, tintColor }) => (
-            <View style={{ alignItems: 'center' }}>
-              {cartItemCount?.data?.item_count ? (
-                <View
-                  style={{
-                    ...styles.cartItemCountView,
-                    width:
-                      cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(18),
-                    height:
-                      cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(18),
-                    top: cartItemCount?.data?.item_count > 999 ? -10 : -7,
-                    right: cartItemCount?.data?.item_count > 999 ? -13 : -8,
-                  }}>
-                  <Text style={styles.cartItemCountNumber}>
-                    {cartItemCount?.data?.item_count > 999
-                      ? '999+'
-                      : cartItemCount?.data?.item_count}
-                  </Text>
-                </View>
-              ) : null}
-              <Image
-                style={{
-                  tintColor: focused
-                    ? themeColors?.primary_color
-                    : isDarkMode
-                      ? colors.whiteOpacity50
-                      : colors.blackOpacity43,
-                }}
-                source={
-                  focused ? imagePath.icCartP2p : imagePath.icCartP2pInActive
-                }
-              />
-            </View>
-          ),
-          unmountOnBlur: true,
-          gestureEnabled: true,
-        })}
-      /> */}
 
       <Tab.Screen
         component={AccountStack}

@@ -37,6 +37,7 @@ import {
 import stylesFunc from "./styles";
 
 export default function RateOrder({ navigation, route }) {
+  const trackingurl=route?.params?.trackingUrl || null
   const ratingData = route?.params?.item?.product_rating;
   const isDriverRateData = route?.params?.item;
 
@@ -162,7 +163,8 @@ export default function RateOrder({ navigation, route }) {
           updateState({ isLoading: false });
           console.log("res++++++", res);
           showSuccess(res?.message);
-          navigation.goBack();
+          navigation.navigate(navigationStrings.HOMESTACK)
+          // navigation.goBack();
         })
         .catch(errorMethod);
       return;
@@ -272,7 +274,7 @@ export default function RateOrder({ navigation, route }) {
   const getDriverReviewRatings = () => {
     actions
     .getDriverRating(
-      `?id=${isDriverRateData?.driverRatingData?.id}`,
+      `?id=${isDriverRateData?.driverRatingData?.id}&dispatch_traking_url=${trackingurl}`,
       {},
       {
         code: appData?.profile?.code,

@@ -30,8 +30,8 @@ import {
 let imageHeight = parseInt(moderateScale(140))
 let imageWidth = parseInt(moderateScale(140))
 
-const ProductsComp = ({containerStyle={}, isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle,appData } =
+const ProductsComp = ({ containerStyle = {}, isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
+  const { themeColors, appStyle, currencies, themeColor, themeToggle, appData } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
@@ -97,7 +97,7 @@ const ProductsComp = ({containerStyle={}, isDiscount, item, imageStyle, onPress 
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
           // borderTopLeftRadius: moderateScale(5),
           // borderTopRightRadius: moderateScale(5),
-          alignSelf:'center',
+          alignSelf: 'center',
           ...imageStyle,
         }}
         imageStyle={{
@@ -150,7 +150,7 @@ const ProductsComp = ({containerStyle={}, isDiscount, item, imageStyle, onPress 
         {!isDiscount ? (
           <View style={{ flexDirection: 'row', flex: 1, marginHorizontal: moderateScale(8) }}>
             <View style={{
-            //   flex: 1,
+              //   flex: 1,
             }}>
               <Text
                 style={{
@@ -164,7 +164,7 @@ const ProductsComp = ({containerStyle={}, isDiscount, item, imageStyle, onPress 
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
-                  
+
                 )}
               </Text>
             </View>
@@ -172,7 +172,7 @@ const ProductsComp = ({containerStyle={}, isDiscount, item, imageStyle, onPress 
               <View style={{
                 // flex: 0.4,
                 alignItems: "flex-end",
-                marginLeft:moderateScale(8)
+                marginLeft: moderateScale(8)
               }}>
                 <Text
                   numberOfLines={1}

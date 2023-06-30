@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { MyDarkTheme } from '../styles/theme';
+import { moderateScale } from '../styles/responsiveSize';
 
 
 const CustomBottomTabBar = ({
@@ -45,7 +46,7 @@ const CustomBottomTabBar = ({
 
     // >
     <View style={{
-      height: Platform.OS === 'ios' ? 45 + insets.bottom : 55 + insets.bottom,
+      height: Platform.OS === 'ios' ? 55 + insets.bottom : 55 + insets.bottom,
       flexDirection: 'row',
       paddingBottom: insets.bottom,
       // borderTopLeftRadius: 10,
@@ -103,6 +104,7 @@ const CustomBottomTabBar = ({
                       ? themeColors.secondary_color
                       : colors.whiteOpacity85,
                     opacity: isFocused ? 1 : 0.6,
+                    marginBottom: moderateScale(6)
                   }}>
                   {label}
                 </Text>

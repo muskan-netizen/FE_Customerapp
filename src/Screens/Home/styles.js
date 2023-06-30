@@ -10,7 +10,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 
-export default ({ themeColors, fontFamily }) => {
+export default ({ themeColors, fontFamily, isDarkMode }) => {
   const styles = StyleSheet.create({
     modalContainer: {
       backgroundColor: colors.white,
@@ -267,7 +267,7 @@ export default ({ themeColors, fontFamily }) => {
       height: moderateScale(25),
       width: moderateScale(25),
       tintColor: themeColors.primary_color,
-      marginTop:4
+      marginTop: 4
     },
     locationTxt: {
       paddingLeft: 5,
@@ -319,7 +319,7 @@ export default ({ themeColors, fontFamily }) => {
       fontFamily: fontFamily?.medium,
       fontSize: textScale(14),
       textAlign: 'left',
-      marginTop:moderateScaleVertical(16)
+      marginTop: moderateScaleVertical(16)
     },
     dotStyle: {
       height: 6,
@@ -364,7 +364,7 @@ export default ({ themeColors, fontFamily }) => {
       marginVertical: moderateScale(10),
     },
     viewAllText: {
-      color: themeColors.primary_color,
+      color: isDarkMode ? MyDarkTheme.colors.text : themeColors.primary_color,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
       // marginTop: moderateScaleVertical(16),
@@ -523,18 +523,18 @@ export default ({ themeColors, fontFamily }) => {
       justifyContent: "center",
       alignItems: "center"
     },
-    bannerDotStyle:{
-      height: moderateScale(8), 
-      width: moderateScale(8), 
-      borderRadius: moderateScale(4), 
-      marginRight:moderateScale(4),
+    bannerDotStyle: {
+      height: moderateScale(8),
+      width: moderateScale(8),
+      borderRadius: moderateScale(4),
+      marginRight: moderateScale(4),
 
     },
     dotView: {
-      flexDirection:"row",
-      alignItems:'center',
-      marginTop:moderateScaleVertical(8),
-      alignSelf:'center'
+      flexDirection: "row",
+      alignItems: 'center',
+      marginTop: moderateScaleVertical(8),
+      alignSelf: 'center'
     }
   });
 

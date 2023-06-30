@@ -43,8 +43,8 @@ export default function SelctFromMap({
     region: {
       latitude: constCurrLoc?.latitude || 30.7333,
       longitude: constCurrLoc?.longitude || 76.7794,
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
+      latitudeDelta: 0.002,
+      longitudeDelta: 0.0003,
     },
     coordinate: {
       latitude: constCurrLoc?.latitude || 30.7333,
@@ -80,6 +80,8 @@ export default function SelctFromMap({
     Geocoder.from({
       latitude: region.latitude,
       longitude: region.longitude,
+      // latitudeDelta: 0.0922,
+      // longitudeDelta: 0.0421,
     })
       .then((json) => {
         console.log(json, 'jsonjsonjsonjson');
@@ -219,11 +221,12 @@ export default function SelctFromMap({
           ...StyleSheet.absoluteFillObject,
           height: height,
         }}
-
+        // zoomEnabled={true}
         // region={region}
         initialRegion={region}
         // pointerEvents={'none'}
-
+        // zoomControlEnabled={true}
+        // showsScale={true}
         onRegionChangeComplete={_onRegionChange}>
         {/* <MarkerAnimated
           ref={markerRef}

@@ -135,7 +135,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
         disabled={item?.isActive}
         onPress={() => onPressItem(item, index)}
         key={index}
-      hitSlop={hitSlopProp}
+        hitSlop={hitSlopProp}
       >
         <View
           style={{
@@ -148,11 +148,12 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
                   : isDarkMode
                     ? colors.blackOpacity0
                     : colors.greyColor1,
-            width:
-              tabs.length == 2
-                ? width / 2
-                : width / 4,
-            // marginRight: 24
+
+            // width:
+            //   tabs.length == 2
+            //     ? width / 2
+            //     : width / 4,
+            marginRight: moderateScale(16),
           }}
         >
           <Text

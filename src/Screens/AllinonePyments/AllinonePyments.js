@@ -52,6 +52,7 @@ export default function AllinonePyments({navigation, route}) {
         queryParams?.status == 200 ||
         url.includes('payment/checkoutSuccess')
       ) {
+   
         if (paramsData?.action == 'cart') {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: {

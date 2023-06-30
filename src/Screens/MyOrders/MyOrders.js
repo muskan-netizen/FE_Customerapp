@@ -177,7 +177,7 @@ export default function MyOrders(props) {
         }
       )
       .then((res) => {
-        console.log(res, "res my orders >>>");
+        console.log(res, "<==res orders");
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],

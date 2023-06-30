@@ -96,7 +96,7 @@ const WishlistCard = ({data, onPress}) => {
                 currencies?.primary_currency?.symbol,
               )}
             </Text>
-            {data?.averageRating && (
+            {(!!appData?.profile?.preferences?.rating_check && data?.averageRating) && (
               <View style={styles.ratingView}>
                 <Text style={styles.ratingTxt}>
                   {Number(data?.averageRating).toFixed(1)}

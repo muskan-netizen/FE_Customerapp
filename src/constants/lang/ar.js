@@ -13,7 +13,7 @@ export default {
   OR_LOGIN_WITH: 'أو تسجيل دخول من خلال',
   ALREADY_HAVE_AN_ACCOUNT: 'هل لديك حساب بالفعل؟',
   ENTER_YOUR_NAME: "Enter your name",
-  ENTER_YOUR_EMAIL:"Enter your email",
+  ENTER_YOUR_EMAIL: "Enter your email",
   LOGIN: 'تسجيل دخول',
   SKIP: 'تخطى',
   VERIFIED: 'تم التحقق',
@@ -813,10 +813,6 @@ export default {
   PLEASEFILDALLREQUIREDFIELDS: 'يرجىملءجميعالحقولالمطلوبةفينموذجتفصيلي',
   ALCOHAL: 'كحول',
   ORDER_DELIVERED_SUCESSFULLY: 'تمتسليمالطلببنجاح!',
-  INVENTORY: 'جرد',
-  UDHAARLEDGER: 'دفترالأستاذUdhaar',
-  SALES_EXPENSES: 'المبيعات/النفقات',
-  ADD_CUSTOMER: 'إضافةعميل',
   ADD_NEW_CUSTOMER: 'إضافةعميلجديد',
   PURCHASE_PRODUCT: 'شراءالمنتج',
   UNITS_SET: 'الوحداتلكلمجموعة',
@@ -951,7 +947,7 @@ export default {
   START_CHAT: 'Start Chat',
   RECENTORDERS: 'الطلبيات الأخيرة',
   MINIMUM_ORDER_VALUE: 'Minimum order value',
-  THANKS_FOR_ORDERING_WITH_US:'Thank you For Ordering With Us',
-  TOLL_FEE:"Toll Fee",
-  SERVICE_CHARGES:"Service Charges"
+  THANKS_FOR_ORDERING_WITH_US: 'Thank you For Ordering With Us',
+  TOLL_FEE: "Toll Fee",
+  SERVICE_CHARGES: "Service Charges"
 };
