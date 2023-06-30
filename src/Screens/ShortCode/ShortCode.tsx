@@ -54,8 +54,16 @@ export default function ShortCode() {
     if (!!lang?.primary_language?.id) {
       header = { code: appCode, language: lang?.primary_language?.id };
     } else {
+<<<<<<< HEAD
       header = { code: appCode };
     }
+=======
+      header = {
+        code: appCode,
+      };
+    }
+
+>>>>>>> bc7aee049fd99bcd467b5f5e2f59676334277c23
     actions
       .initApp({}, header, false, null, null, true)
       .then(res => {
@@ -101,13 +109,13 @@ export default function ShortCode() {
       }}>
       <View style={{ flex: 1 }}>
         <View style={styles.splashStyle}>
-          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {loadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
         </View>
-        <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
+        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
       </View>
     </View>
   );

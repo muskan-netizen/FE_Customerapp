@@ -90,7 +90,6 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         }}>
 
 
-
       </FastImage>
       <View style={{ marginVertical: moderateScaleVertical(8) }}>
       <View style={{
