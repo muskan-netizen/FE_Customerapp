@@ -105,14 +105,20 @@ export default function TaxiHomeDashbord({
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
+console.log("appMainDataappMainData",appMainData)
 
   let myCategories = [{ data: [] }]
 
-  myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
-    if (val.slug == 'nav_categories') {
-      return val
-    }
-  })
+  if(!!appMainData?.homePageLabels){
+    myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
+      if (val.slug == 'nav_categories') {
+        return val
+      }
+    })
+  }else{
+    myCategories = !!appMainData?.categories &&  [{data: appMainData?.categories || []}]
+  }
+
 
   useEffect(() => {
     if (!!appMainData?.categories) {
