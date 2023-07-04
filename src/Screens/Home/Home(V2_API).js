@@ -978,6 +978,7 @@ export default function Home({ route, navigation }) {
 
 
 
+
   const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {
       case 1:

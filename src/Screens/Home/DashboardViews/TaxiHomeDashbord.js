@@ -47,6 +47,7 @@ import {
 import useInterval from '../../../utils/useInterval';
 import stylesFunc from '../styles';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
+import { isEmpty } from 'lodash';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -108,15 +109,21 @@ export default function TaxiHomeDashbord({
 
   let myCategories = [{ data: [] }]
 
-  myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
-    if (val.slug == 'nav_categories') {
-      return val
-    }
-  })
+  if(!!appMainData?.homePageLabels){
+    myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
+      if (val.slug == 'nav_categories') {
+        return val
+      }
+    })
+  }else{
+    myCategories = !!appMainData?.categories &&  [{data: appMainData?.categories || []}]
+  }
+
+  console.log("myCategoriesmyCategories",myCategories)
 
   useEffect(() => {
     if (!!appMainData?.categories) {
-      updateState({ isLoadingModal: false })
+      updateState({ isLoadingModal: false,isLoading:false })
     }
   }, [appMainData])
 
@@ -190,6 +197,7 @@ export default function TaxiHomeDashbord({
       .then((res) => {
         updateState({
           allListedDrivers: res?.data,
+          isLoading: false
         });
       })
       .catch((error) => {
@@ -630,7 +638,7 @@ export default function TaxiHomeDashbord({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
 
-        {isLoading ? null : <FlatList
+        {isEmpty(myCategories[0]?.data)  ? null : <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
           data={myCategories[0]?.data || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
