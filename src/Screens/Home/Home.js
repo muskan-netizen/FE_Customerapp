@@ -564,6 +564,18 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressVendor = (item) => {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        id: item?.id,
+        vendor: true,
+        name: item?.name,
+        isVendorList: true,
+        fetchOffers: true,
+        screenName: 'vendor'
+      })();
+      return
+    }
+
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -595,7 +607,27 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
+
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT ||
+            item?.redirect_to == staticStrings.RENTAL
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
+
     if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
         id: item.id,
@@ -626,6 +658,7 @@ export default function Home({ route, navigation }) {
       item?.redirect_to == staticStrings.APPOINTMENT ||
       item?.redirect_to == staticStrings.RENTAL
     ) {
+
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
@@ -1147,7 +1180,7 @@ export default function Home({ route, navigation }) {
         } else {
           return (
             <>
-              {console.log('curLatLong=>', curLatLong)}
+
               <DashBoardHeaderFive
                 showToggles={false}
                 navigation={navigation}
@@ -1503,6 +1536,7 @@ export default function Home({ route, navigation }) {
             _onVoiceStop={_onVoiceStop}
             nearestLoc={nearestLocDis}
             currentLoc={currentLocation}
+            onSeviceType={() => setIsPriceTypeModal(true)}
           />
           {dineInType == 'pick_drop' ? (
             <TaxiHomeDashbord
