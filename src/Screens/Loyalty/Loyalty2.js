@@ -20,6 +20,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  scale,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -209,8 +210,8 @@ export default function Loyalty({ navigation }) {
                 style={{
                   ...styles.loyaltyPointsUsed,
                   textTransform: 'uppercase',
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(10),
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(14),
                   marginTop: moderateScaleVertical(6),
                 }}>
                 {strings.POINTS_EARNED}
@@ -236,8 +237,8 @@ export default function Loyalty({ navigation }) {
                   ...styles.loyaltyPointsUsed,
                   color: colors.redC,
                   textTransform: 'uppercase',
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(10),
+                  fontFamily: fontFamily.medium,
+                  fontSize:textScale(14),
                   marginTop: moderateScaleVertical(6),
                 }}>
                 {strings.POINTS_SPENT}

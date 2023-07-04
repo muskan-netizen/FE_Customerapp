@@ -767,7 +767,13 @@ export default function ProductDetail({ route, navigation }) {
       <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12) }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage style={{ width: moderateScale(20), height: moderateScale(20), marginRight: moderateScaleVertical(10) }} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }} />
-          <Text>{item?.user?.name}</Text>
+          <Text style={{
+          ...commonStyles.regularFont11,
+          color: isDarkMode ? colors.white : colors.black,
+          marginBottom: moderateScaleVertical(8),
+          fontSize: textScale(14),
+
+        }}>{item?.user?.name}</Text>
         </View>
         <StarRating
           disabled={false}
@@ -2926,7 +2932,7 @@ export default function ProductDetail({ route, navigation }) {
 
         {!!productDetailData && !!productDetailData?.reviews ? <View>
           <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 18, color:isDarkMode?colors.white:colors.black }}>Customer reviews</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
               <StarRating
                 disabled={false}
@@ -2938,11 +2944,11 @@ export default function ProductDetail({ route, navigation }) {
                 starSize={12}
                 containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
               />
-              <Text>({parseInt(
+              <Text style={{color:isDarkMode?colors.white:colors.black }}>({parseInt(
                 Number(productDetailData?.averageRating).toFixed(1),
               )} out of 5)</Text>
             </View>
-            <Text>{productDetailData?.reviews.length} global rating</Text>
+            <Text style={{color:isDarkMode?colors.white:colors.black }}>{productDetailData?.reviews.length} global rating</Text>
           </View>
           <FlatList
             data={(!state.isLoading && productDetailData?.reviews) || []}
