@@ -97,6 +97,7 @@ const SubscriptionComponent2 = ({
         }}
         borderRadius={10}
         resizeMode="cover">
+          <View style={{...styles.imageBackground,backgroundColor:colors.blackOpacity43}}>
         <View style={styles.titleBagView}>
           <Text
             style={
@@ -272,6 +273,7 @@ const SubscriptionComponent2 = ({
             </View>
           )}
         </View>
+        </View>
       </ImageBackground>
       {!!(
         !!subscriptionData?.plan?.deleted_at == null &&
@@ -345,13 +347,13 @@ export function stylesFunc({fontFamily, themeColors}) {
     title: {
       color: colors.white,
       fontFamily: fontFamily.bold,
-      fontSize: textScale(15),
+      fontSize: textScale(18),
       textAlign: 'left',
     },
     subtitle: {
       color: colors.white,
       fontFamily: fontFamily.regular,
-      fontSize: textScale(13),
+      fontSize: textScale(16),
       textAlign: 'left',
     },
     freeDelivery: {

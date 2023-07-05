@@ -568,7 +568,7 @@ function SwipeableSection(props) {
                                                                     marginBottom: moderateScaleVertical(24),
                                                                 }}>
                                                                 {/* <Image source={imagePath.icAddPlaceholder} /> */}
-                                                                <Image source={imagePath.icPrescription} />
+                                                                <Image tintColor={isDarkMode?colors.white:colors.black} source={imagePath.icPrescription} />
                                                             </TouchableOpacity>
                                                         )}
 

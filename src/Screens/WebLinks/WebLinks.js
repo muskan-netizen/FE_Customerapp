@@ -1643,7 +1643,7 @@ export default function WebLinks(props) {
                 />
                 <View
                   style={{
-                    height: moderateScaleVertical(24),
+                    height: moderateScaleVertical(54),
                     marginBottom: moderateScaleVertical(44),
                   }}
                 />

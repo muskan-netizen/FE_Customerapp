@@ -652,9 +652,9 @@ export default function Products({ route, navigation }) {
     return (
       <View
         style={{
-          height: !!categoryInfo?.is_show_products_with_category
-            ? listHeight
-            : 'auto',
+          // height: !!categoryInfo?.is_show_products_with_category
+          //   ? listHeight
+          //   : 'auto',
           marginBottom: moderateScaleVertical(8),
         }}>
         {false ? (

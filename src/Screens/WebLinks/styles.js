@@ -54,7 +54,7 @@ export default ({fontFamily}) => {
       marginHorizontal: moderateScale(20),
     },
     labelTxt: {
-      color: colors.blackOpacity43,
+      color: isDarkMode?MyDarkTheme.colors.text: colors.blackOpacity43,
       fontFamily: fontFamily.medium,
       fontSize: textScale(13),
       marginBottom: moderateScale(5),

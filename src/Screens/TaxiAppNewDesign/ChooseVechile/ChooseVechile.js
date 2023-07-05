@@ -1084,7 +1084,7 @@ function ChooseVechile({ navigation, route }) {
                                 setCabBookingType('Booking')
                             }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_booking} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.black }}>  {strings.BOOKING}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : isDarkMode?colors.white:colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_cab_pooling &&
@@ -1094,7 +1094,7 @@ function ChooseVechile({ navigation, route }) {
 
                             }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.black }}>  {strings.POOLING}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color :isDarkMode?colors.white:colors.black }}>  {strings.POOLING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_bid_ride_enable &&
@@ -1143,7 +1143,6 @@ function ChooseVechile({ navigation, route }) {
 
     const _selectCarModalView = () => {
         return (
-
             <AvailableDriver
                 isCabPooling={!!cabBookingType && cabBookingType == 'Pooling' ? true : false}
                 onPressAvailableCar={_selectedProductForDrivers}
