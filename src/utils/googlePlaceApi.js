@@ -4,7 +4,6 @@ import Geolocation from 'react-native-geolocation-service';
 import { google_map_key } from '../constants/constants';
 
 export const googlePlacesApi = async (data, key, latLng, region) => {
-    // console.log("key", key)
     try {
         let res = await fetch(
             `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${data}&location=${latLng}&key=${key}`,
