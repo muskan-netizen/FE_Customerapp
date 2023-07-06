@@ -277,33 +277,6 @@ export default function ProductDetail({ route, navigation }) {
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
 
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  // if (variantSet.length) {
-  //   let variantSetData = variantSet
-  //     .map((i, inx) => {
-  //       let find = i.options.filter((x) => x.value);
-  //       if (find.length) {
-  //         return {
-  //           variant_id: find[0].variant_id,
-  //           optionId: find[0].id,
-  //         };
-  //       }
-  //     })
-  //     .filter((x) => x != undefined);
-  //   console.log(variantSetData, 'variantSetData');
-  //   if (variantSetData.length) {
-  //     getProductDetailBasedOnFilter(variantSetData);
-  //   } else {
-  //     getProductDetail();
-  //   }
-  //     }
-  //   }, [variantSet]),
-  // );
-
-
-  // console.log("variantSetvariantSetvariantSet",variantSet)
-
   useEffect(() => {
     getProductDetail();
   }, [state.productId, state.isLoadingB]);
@@ -376,7 +349,7 @@ export default function ProductDetail({ route, navigation }) {
             suggestedVendorProducts: res?.data?.suggested_vendor_products || [],
             upsellProducts: res?.data?.upSellProducts || [],
             crossProducts: res?.data?.crossProducts || [],
-            frequently_bought: res?.data.frequently_bought || []
+            frequently_bought: res?.data?.frequently_bought || []
           })
         }
         if (
@@ -384,7 +357,8 @@ export default function ProductDetail({ route, navigation }) {
           variantSet &&
           !variantSet.length
         ) {
-          setVariantSet(res.data.products.variant_set)
+          console.log('res getProductDetail my vairants', res.data.products.variant_set);
+          setDefaultValue(res.data.products.variant_set, res?.data?.products.sku)
         }
       })
       .catch(errorMethod);
@@ -394,97 +368,95 @@ export default function ProductDetail({ route, navigation }) {
   console.log("variant set", variantSet)
 
 
+  const setDefaultValue = (array, sku) => {
+
+    // console.log("my array+++++", arryClone)
+
+    const arryClone = array.map(item => {
+      const updatedOptions = item.options.map((option, index) => {
+        if (index === 0) {
+          return { ...option, isSelected: true };
+        }
+        return option;
+      });
+      return { ...item, options: updatedOptions };
+    });
+
+
+    console.log("arryClonearryClone", arryClone)
+
+    // return;
+    getProductDetailBasedOnFilter(arryClone, sku)
+  }
+
+
+  function compareAndReplaceOptions(data1, data2, selectedOption) {
+
+    const updatedData = data1.map((item1) => {
+      const matchingItem = data2.find((item2) => item2.variant_type_id === item1.variant_type_id);
+      if (!!matchingItem) {
+        let isSelectedAdded = false; // Flag to track if isSelected value has been added
+        return {
+          ...item1,
+          options: matchingItem.option2.map((val, i) => {
+            if (val.quantity == 0) {
+              val.isSelected = false; // Set isSelected to true for the first item, false for the rest
+            } else if (selectedOption?.variant_option_id === val.variant_option_id) {
+              val.isSelected = true;
+              isSelectedAdded = true; // Set the flag to true after adding isSelected value
+            } else {
+              val.isSelected = false; // Set isSelected value to false for remaining options
+            }
+            return val;
+          }),
+        };
+      } else {
+        return item1;
+      }
+    });
+    return updatedData
+  }
+
+
 
   //Get Product detail based on varint selection
-  const getProductDetailBasedOnFilter = (variantSetData, options, i) => {
-
-    const optionsWithValueTrue = variantSetData.flatMap(item => item.options.filter(option => option.value === true));
-
+  const getProductDetailBasedOnFilter = (variantSetData, sku, selectedOption = null) => {
+    const cloneVariantSetData = cloneDeep(variantSetData)
+    const optionsWithValueTrue = cloneVariantSetData.flatMap(item => item.options.filter(option => option?.isSelected === true));
     let data = {};
-    data['variants'] = optionsWithValueTrue.map((i) => i.variant_id);
-    data['options'] = optionsWithValueTrue.map((i) => i.id);
+    data['variants'] = optionsWithValueTrue.map((i) => i?.variant_type_id);
+    data['options'] = optionsWithValueTrue.map((i) => i?.id || i?.variant_option_id);
+    data['selected_title'] = cloneVariantSetData[0]?.title
+    console.log("datadatadatadata", data)
 
-
-    actions.getProductDetailByVariants(`/${productDetailData.sku}`, data, {
+    actions.getProductDetailByVariants(`/${sku}`, data, {
       code: appData.profile.code,
       currency: currencies.primary_currency.id,
       language: languages.primary_language.id,
     })
       .then((res) => {
-        console.log(res?.data, 'api hit getProductDetailBasedOnFilter res ');
+        console.log(res, 'api hit getProductDetailBasedOnFilter res 2');
 
-        // return;
-        if (!!res?.data) {
-          let cloneArry = _.cloneDeep(variantSet)
+ 
+        const modifyres = compareAndReplaceOptions(variantSetData, res?.data?.availableSets, selectedOption)
 
-          if (cloneArry.length > 0) {
+        setVariantSet(modifyres)
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          isLoadingC: false,
 
-            // const selectedItemOptions = cloneArry.find((item, i) => i === 0)?.options;
-
-            // Find the new options from the API response
-            const newOptions = res?.data.availableSets.find((item, i) => i !== 0)?.option2;
-
-            console.log("newOptionsnewOptions",newOptions)
-
-            // Replace the previous options with the new options for non-selected items
-            cloneArry.forEach((item, i) => {
-              if (i !== 0) {
-                item.options = newOptions.map((val,i)=> {return {...val}});
-              }
-            });
-
-            console.log("cloneArrycloneArry++", cloneArry);
-
-            let newArray = cloneDeep(options);
-            let modifyVariants = cloneArry.map((vi, vnx) => {
-              if (vi.variant_type_id == i.variant_id) {
-                return {
-                  ...vi,
-                  options: newArray.map((j, jnx) => {
-                    if (j.id == i.id) {
-                      return {
-                        ...j,
-                        value: true,
-                      };
-                    }
-                    return {
-                      ...j,
-                      value: false,
-                    };
-                  }),
-                };
-              } else {
-                return vi;
-              }
-            });
-            console.log("modifyVariantsmodifyVariants", modifyVariants)
-            setVariantSet(modifyVariants)
-
-            // setVariantSet(cloneArry)
-          } else {
-
-          }
-
-          // setVariantSet([variantSet[parentIndex], ...modifyArry])
-        }
-
-        // updateState({
-        //   isLoading: false,
-        //   isLoadingB: false,
-        //   isLoadingC: false,
-
-        //   productPriceData: {
-        //     multiplier: res?.data?.multiplier,
-        //     price: res?.data?.price,
-        //   },
-        //   productTotalQuantity: res?.data?.quantity,
-        //   productSku: res?.data?.sku,
-        //   productVariantId: res?.data?.id,
-        //   showErrorMessageTitle: false,
-        //   selectedVariant: null,
-        //   btnLoader: false,
-        //   productDetailNew: res?.data,
-        // });
+          productPriceData: {
+            price: res?.data?.selected_variant?.price,
+          },
+          productTotalQuantity: res?.data?.selected_variant?.quantity,
+          // productSku: res?.data?.sku,
+          productVariantId: res?.data?.selected_variant?.product_variant_id,
+          showErrorMessageTitle: false,
+          selectedVariant: null,
+          btnLoader: false,
+          // productDetailNew: res?.data,
+        });
       })
       .catch(errorMethod);
   };
@@ -624,31 +596,59 @@ export default function ProductDetail({ route, navigation }) {
     myRef.current.scrollToPosition(1, 0, true);
   }, [state.productId]);
 
-  const selectSpecificOptions = (options, i, inx) => {
-    let newArray = cloneDeep(options);
-    let modifyVariants = variantSet.map((vi, vnx) => {
-      if (vi.variant_type_id == i.variant_id) {
-        return {
-          ...vi,
-          options: newArray.map((j, jnx) => {
-            if (j.id == i.id) {
-              return {
-                ...j,
-                value: true,
-              };
-            }
-            return {
-              ...j,
-              value: false,
-            };
-          }),
-        };
-      } else {
-        return vi;
+  const selectSpecificOptions = (item, parentIndex) => {
+
+    const existVariants = cloneDeep(variantSet)
+
+    console.log("selected item",item)
+
+    let modifyVariants = existVariants.map((val, i) => {
+      if (parentIndex === i) {
+        val.options.map(option => {
+          let isTrue = (option?.id || option?.variant_option_id) === (item?.id || item?.variant_option_id) 
+          if (isTrue) {
+            option.isSelected = true;
+          }else{
+            option.isSelected = false;
+          }
+          return option;
+        });
       }
-    });
-    console.log(options, "modifyVariantsmodifyVariants", modifyVariants)
-    setVariantSet(modifyVariants)
+      return val;
+    })
+
+    // console.log("modifyVariantsmodifyVariants", modifyVariants)
+    // setVariantSet(modifyVariants)
+
+    // return;
+    getProductDetailBasedOnFilter(modifyVariants, productSku, item)
+    // console.log("item++++++",item)
+    // // variant_option_id
+
+    // let newArray = cloneDeep(options);
+    // let modifyVariants = variantSet.map((vi, vnx) => {
+    //   if (vi.variant_type_id == item.variant_id ) {
+    //     return {
+    //       ...vi,
+    //       options: newArray.map((j, jnx) => {
+    //         if (j?.variant_option_id == item?.id) {
+    //           return {
+    //             ...j,
+    //             isSelected: true,
+    //           };
+    //         }
+    //         return {
+    //           ...j,
+    //           isSelected: false,
+    //         };
+    //       }),
+    //     };
+    //   } else {
+    //     return vi;
+    //   }
+    // });
+    // console.log(options, "modifyVariantsmodifyVariants", modifyVariants)
+    // setVariantSet(modifyVariants)
     // getProductDetailBasedOnFilter(modifyVariants, options, i)
   };
 
@@ -803,6 +803,32 @@ export default function ProductDetail({ route, navigation }) {
 
 
   console.log("productTotalQuantity", productTotalQuantity)
+
+
+
+
+  function checkIsApiHit(data) {
+    let flag = true;
+
+    for (const item of data) {
+      const options = item.options;
+      let optionFlag = false;
+  
+      for (const option of options) {
+        if (option.isSelected) {
+          optionFlag = true;
+          break;
+        }
+      }
+  
+      if (!optionFlag) {
+        flag = false;
+        break;
+      }
+    }
+
+    return flag;
+  }
 
 
   useEffect(() => {
@@ -976,6 +1002,15 @@ export default function ProductDetail({ route, navigation }) {
         }
       }
     }
+
+
+  const isApiHit   =  checkIsApiHit(variantSet)
+
+    if(!isApiHit){
+      showError('Please select all variants option!');
+      return;
+    }
+
     {
       addonSet && addonSet.length
         ? updateState({ isVisibleAddonModal: true })
@@ -1018,7 +1053,7 @@ export default function ProductDetail({ route, navigation }) {
     // item.showAddToCart = true;
     return (
       <View style={{ flex: 1, width: width / 2.5 }}>
-        <ProductsComp3
+        {/* <ProductsComp3
           item={item}
           onPress={() =>
             navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
@@ -1026,7 +1061,7 @@ export default function ProductDetail({ route, navigation }) {
           containerStyle={{
             borderRadius: moderateScale(8)
           }}
-        />
+        /> */}
       </View>
     );
   };
@@ -1668,15 +1703,15 @@ export default function ProductDetail({ route, navigation }) {
 
   console.log("selectedVariant+++++", selectedVariant)
 
-  const renderColor = useCallback((item, index, options) => {
+  const renderColor = useCallback((item, index, options, parentIndex) => {
     return (
       <TouchableOpacity
-        onPress={() => selectSpecificOptions(options, item, index)}
+        onPress={() => selectSpecificOptions(item, parentIndex)}
         activeOpacity={0.7}
         disabled={!item?.quantity}
         style={{
           ...styles.colorContainer,
-          borderColor: !item?.quantity ? colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
+          borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
           borderStyle: !!item?.quantity ? 'solid' : 'dotted'
 
         }}
@@ -1689,9 +1724,8 @@ export default function ProductDetail({ route, navigation }) {
         <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !item?.quantity ? colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
+          color: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
           alignSelf: 'center',
-
 
         }} >{item.title}</Text>
 
@@ -1699,21 +1733,24 @@ export default function ProductDetail({ route, navigation }) {
     )
   }, [variantSet, isDarkMode])
 
-  const renderSize = useCallback((item, index, options) => {
+
+  console.log("variantSetvariantSetvariantSet", variantSet)
+
+  const renderSize = useCallback((item, index, options, parentIndex) => {
     return (
       <TouchableOpacity
-        onPress={() => selectSpecificOptions(options, item, index)}
-        // disabled={!item?.quantity}
+        onPress={() => selectSpecificOptions(item, parentIndex)}
+        disabled={parentIndex == 0 ? false:  !item?.quantity}
         style={{
           ...styles.sizeContainer,
-          backgroundColor: !!item?.value ? themeColors?.primary_color : colors.white,
-          borderColor: !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : !!item?.value ? colors.grayOpacity51 : colors.greyA,
-          borderStyle: !!item?.quantity ? 'solid' : 'dotted'
+          backgroundColor:  !!item?.isSelected ? themeColors?.primary_color : colors.white,
+          borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
+          borderStyle: !!item?.quantity || parentIndex == 0  ? 'solid' : 'dotted'
 
         }}>
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !!item?.value ? colors.white : isDarkMode ? colors.white : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
+          color: !!item?.isSelected ? colors.white : isDarkMode ? colors.white : colors.textGrey,
         }}>{item.title}</Text>
       </TouchableOpacity>
     )
@@ -1721,7 +1758,7 @@ export default function ProductDetail({ route, navigation }) {
 
 
   const renderVarient = useCallback(({ item, index }) => {
-
+    let parentIndex = index
     const { options } = item
     return (
       <View key={String(index)}>
@@ -1736,16 +1773,15 @@ export default function ProductDetail({ route, navigation }) {
             <FlatList
               data={item?.options || []}
               horizontal
-              renderItem={({ item, index }) => renderColor(item, index, options)}
+              renderItem={({ item, index }) => renderColor(item, index, options, parentIndex)}
               keyExtractor={(item, index) => String(item?.id || index)}
             />
-
           </View> :
           <FlatList
             showsHorizontalScrollIndicator={false}
             data={item?.options || []}
             horizontal
-            renderItem={({ item, index }) => renderSize(item, index, options)}
+            renderItem={({ item, index }) => renderSize(item, index, options, parentIndex)}
             keyExtractor={(item, index) => String(item?.id || index)}
           />
         }
