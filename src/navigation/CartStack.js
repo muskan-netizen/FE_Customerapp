@@ -53,6 +53,7 @@ import KongaPay from '../Screens/PaymentGateways/KongaPay';
 import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import StripeIdeal from '../Screens/PaymentGateways/StripeIdeal';
 import navigationStrings from './navigationStrings';
+import Livees from '../Screens/PaymentGateways/Livees';
 
 const Stack = createNativeStackNavigator();
 export default function () {
@@ -203,6 +204,7 @@ export default function () {
       />
       <Stack.Screen name={navigationStrings.CONEKTA} component={Conekta} />
       <Stack.Screen name={navigationStrings.PESAPAL} component={Pesapal} />
+      <Stack.Screen name={navigationStrings.LIVESS} component={Livees} />
     </Stack.Navigator>
   );
 }

@@ -24,6 +24,7 @@ import DirectPayOnline from '../Screens/PaymentGateways/DirectPayOnline';
 import Khalti from '../Screens/PaymentGateways/Khalti';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
 import navigationStrings from './navigationStrings';
+import Livees from '../Screens/PaymentGateways/Livees';
 
 export default function (Stack) {
   return (
@@ -143,6 +144,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.BIDINGDRIVERSLIST}
         component={BidingDriversList}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name={navigationStrings.LIVESS}
+        component={Livees}
         options={{ headerShown: false }}
       />
     </>

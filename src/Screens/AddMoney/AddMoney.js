@@ -67,7 +67,7 @@ export default function AddMoney({ navigation }) {
   const [cvc, setCvc] = useState()
   const [expiryDate, setExpiryDate] = useState()
   const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
-  const[responseTimer,setResponseTimer] = useState(420)
+  const [responseTimer, setResponseTimer] = useState(420)
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -104,7 +104,7 @@ export default function AddMoney({ navigation }) {
   const [year, setYear] = useState()
   const [date, setDate] = useState()
   const [accept, isAccept] = useState(false);
-  const[mtnGatewayResponse,setMtnGatewayResponse] = useState('')
+  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
   const commonStyles = commonStylesFun({ fontFamily });
   const {
     allAvailAblePaymentMethods,
@@ -410,7 +410,7 @@ export default function AddMoney({ navigation }) {
     }
   };
   const _renderItemPayments = ({ item, index }) => {
- 
+
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -477,7 +477,7 @@ export default function AddMoney({ navigation }) {
               />
             </View>
           )}
-        {console.log(selectedPaymentMethod, "selectedPaymentMethod>>>>")}
+
 
         {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
@@ -771,13 +771,13 @@ export default function AddMoney({ navigation }) {
 
       },
     }).then((response) => {
-      console.log(response,isVisibleMtnGateway, 'reseserserseeseers');
-      if (response?.data?.status ==  "SUCCESSFUL") {
+      console.log(response, isVisibleMtnGateway, 'reseserserseeseers');
+      if (response?.data?.status == "SUCCESSFUL") {
         setIsVisibleMtnGateway(false)
         showSuccess(response?.data?.message)
         navigation.goBack()
       }
-      
+
     })
       .catch((error) => {
         console.log(error, 'error');
@@ -787,17 +787,16 @@ export default function AddMoney({ navigation }) {
         navigation.goBack()
       })
   }
-  useEffect(()=>{
-    if(!isVisibleMtnGateway && mtnGatewayResponse) {
+  useEffect(() => {
+    if (!isVisibleMtnGateway && mtnGatewayResponse) {
       showError('Request TimeOut')
       navigation.goBack()
     }
-  },[isVisibleMtnGateway])
+  }, [isVisibleMtnGateway])
 
   useInterval(
     () => {
-     if(!!isVisibleMtnGateway) 
-     {  paymentReponse(mtnGatewayResponse);}
+      if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse); }
     },
     !!isVisibleMtnGateway ? 3000 : null,
   );
@@ -838,7 +837,7 @@ export default function AddMoney({ navigation }) {
       selectedPaymentMethod,
       'selectedPaymentMethodselectedPaymentMethod',
     );
- 
+
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
       return;
@@ -1030,12 +1029,14 @@ export default function AddMoney({ navigation }) {
   };
 
   const _webPayment = () => {
+    console.log('hihihihiihihhiihih')
     let queryData
     let selectedMethod = selectedPaymentMethod.code;
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
     queryData = `/${selectedMethod}?amount=${amount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet`
     if (selectedPaymentMethod?.id == 57) { queryData = queryData + `&come_from=app` }
+    if (selectedPaymentMethod?.id == 59) { queryData = queryData + `&come_from=app&auth_token=${userData?.auth_token}` }
     updateState({ isLoadingB: true });
     actions
       .openPaymentWebUrl(
@@ -1075,7 +1076,6 @@ export default function AddMoney({ navigation }) {
       .catch(errorMethod);
   };
   const _createPaymentMethod = async (cardInfo, res2) => {
-    console.log(cardInfo, res2, 'hgreutiergtry')
     if (res2) {
       await createPaymentMethod({
         paymentMethodType: 'Card',
@@ -1431,10 +1431,11 @@ export default function AddMoney({ navigation }) {
         }}
       >
         <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
-          <Text style={{ 
+          <Text style={{
             color: isDarkMode ? 'white' : themeColors?.primary_color,
-             fontSize: textScale(15),
-              padding: moderateScale(10) }}>Waiting for response ....</Text>
+            fontSize: textScale(15),
+            padding: moderateScale(10)
+          }}>Waiting for response ....</Text>
           <View style={{ justifyContent: "center", alignItems: "center", padding: moderateScale(25) }}>
 
             <CountdownCircleTimer
@@ -1446,11 +1447,11 @@ export default function AddMoney({ navigation }) {
             >
               {({ remainingTime }) => {
 
-                remainingTime == 1 && responseTimer !=null && setIsVisibleMtnGateway(false)
-               var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
-                var format =  moment.duration(seconds,'seconds').minutes() + ':' + moment.duration(seconds,'seconds').seconds();
+                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
+                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
+                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
                 return (<>
-                <Text>{format}</Text>
+                  <Text>{format}</Text>
                 </>
                 )
 

@@ -331,7 +331,7 @@ function ChooseVechile({ navigation, route }) {
         actions
             .getAllCarAndPrices(apiQuery, apiData, apiHeader)
             .then((res) => {
-
+                console.log(res,'resrsersersesrers')
                 updateState({
                     loyalityAmount: res?.data?.loyalty_amount_saved
                         ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -574,6 +574,9 @@ function ChooseVechile({ navigation, route }) {
                 break;
             case 57: //PesaPal Payment Gatway
                 navigation.navigate(navigationStrings.PESAPAL, paymentData);
+                break;
+                case 59: //PesaPal Payment Gatway
+                navigation.navigate(navigationStrings.LIVESS, paymentData);
                 break;
             case 30: //FlutterWave Payment Getway
                 updateState({
