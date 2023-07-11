@@ -184,7 +184,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
     formData.append('body_html', description);
-    formData.append('price', price);
+    formData.append('price', parseInt(price));
     formData.append('latitude', productLocation?.latitude);
     formData.append('longitude', productLocation?.longitude);
     formData.append('address', productLocation?.address);

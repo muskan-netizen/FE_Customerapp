@@ -427,7 +427,9 @@ const DashBoardFiveV2Api = ({
       <ProductsComp3V2
         item={item}
         onPress={() =>
-          !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+            product_id: item?.id,
+          })
         }
         imageStyle={{
           width: moderateScale(100),
@@ -492,7 +494,9 @@ const DashBoardFiveV2Api = ({
         <ProductsComp3V2
           item={item}
           onPress={() =>
-            navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+            navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+              product_id: item?.id,
+            })
           }
         />
       </View>
@@ -840,50 +844,34 @@ const DashBoardFiveV2Api = ({
         key={String(item?.id || '')}
         style={{
           marginBottom: moderateScaleVertical(0),
-          marginHorizontal: moderateScale(10)
+          marginHorizontal: moderateScale(10),
+          marginTop: moderateScaleVertical(20)
 
         }}>
 
-        {appStyle?.homePageLayout == 6 && showVendorCategory && getBundleId() == appIds?.dropOff ? <View>
-          <View>
-            <Text
-              style={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginHorizontal: moderateScale(10),
-                marginTop: moderateScaleVertical(20),
-                marginBottom: moderateScaleVertical(8)
-              }}>
-              {strings.WHAT_WHOULD_YOU_LIKE_TO_DO}
-            </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(16) }}>
+          <Text style={{ fontSize: textScale(16), fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{strings.CATEGORIES}</Text>
+          <TouchableOpacity
+            onPress={() => { navigation.navigate(navigationStrings.ALL_CATEGORIES) }}>
+            <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.regular, fontSize: textScale(12) }}>{strings.VIEW_ALL}</Text>
+          </TouchableOpacity>
+        </View>
 
-            <FlatList
-              data={appData?.profile?.preferences?.vendorMode || []}
-              renderItem={renderMode}
-              numColumns={4}
-              ItemSeparatorComponent={() => <View style={{ height: moderateScale(10) }} />}
-              keyExtractor={(item, index) => String(item?.type || index)}
-            />
-          </View>
-        </View> :
-          <View>
-            {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-            <FlatList
-              horizontal={categoryFlatViewStyle().horizontal}
-              data={item?.data}
-              scrollEnabled={categoryFlatViewStyle().scrollEnabled}
-              keyExtractor={(item, index) => String(item?.id + `${index}`)}
-              showsHorizontalScrollIndicator={false}
-              numColumns={categoryFlatViewStyle().numColumns}
-              renderItem={_renderCategories}
-              ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(8) }} />
-              )}
-            />
-          </View>
-        }
-      </View>
+        <FlatList
+          horizontal={categoryFlatViewStyle().horizontal}
+          data={item?.data}
+          scrollEnabled={categoryFlatViewStyle().scrollEnabled}
+          keyExtractor={(item, index) => String(item?.id + `${index}`)}
+          showsHorizontalScrollIndicator={false}
+          numColumns={categoryFlatViewStyle().numColumns}
+          renderItem={_renderCategories}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: moderateScale(8) }} />
+          )}
+        />
+
+
+      </View >
     ) : (
       <React.Fragment />
     );
@@ -978,8 +966,11 @@ const DashBoardFiveV2Api = ({
     return (
       <ProductsComp3V2
         item={item}
-        onPress={() => navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })}
-        numberOfLines={1}
+        onPress={() =>
+          navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+            product_id: item?.id,
+          })
+        } numberOfLines={1}
       />
     )
   }, [isDarkMode])
@@ -1312,7 +1303,9 @@ const _renderProducts = ({ item, navigation }) => {
     <ProductsComp3V2
       item={item}
       onPress={() =>
-        !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+          product_id: item?.id,
+        })
       }
     />
   )

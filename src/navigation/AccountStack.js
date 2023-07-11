@@ -66,7 +66,8 @@ import {
   Yoco,
   EcomAccount,
   EcomLangCurrency,
-  DeveloperMode
+  DeveloperMode,
+  P2pOndemandProductDetail
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -268,7 +269,7 @@ export default function ({ navigation }) {
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={P2pProductDetail}
+        component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pOndemandProductDetail : P2pProductDetail}
       />
       <Stack.Screen name={navigationStrings.MY_POSTS} component={MyP2pPosts} />
       <Stack.Screen
@@ -284,7 +285,7 @@ export default function ({ navigation }) {
         name={navigationStrings.ECOM_LANG_CURRENCY}
         component={EcomLangCurrency}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.DEVELOPER_MODE}
         component={DeveloperMode}
       />
