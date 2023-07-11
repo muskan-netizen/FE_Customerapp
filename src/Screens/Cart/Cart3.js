@@ -1554,7 +1554,7 @@ function Cart({ navigation, route }) {
         return;
       }
 
-      if (cartData?.without_category_kyc === 0) {
+      if (cartData?.without_category_kyc === 0 && cartData?.category_kyc_count !== 0) {
         showError('Please submit KYC form!');
         return;
       }
@@ -2781,6 +2781,11 @@ function Cart({ navigation, route }) {
             ? setPaymentModal(true)
             : setAppSessionRedirection()
         }
+        onCategoryKYC={onCategoryKYC}
+        containerStyle={{
+          ...styles.placeOrderButtonStyle,
+          marginHorizontal: moderateScale(10),
+        }}
 
       />
     )
