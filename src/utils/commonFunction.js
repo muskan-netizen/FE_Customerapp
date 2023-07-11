@@ -1,7 +1,7 @@
-import {isEmpty} from 'lodash';
-import {Keyboard} from 'react-native';
-import {API_BASE_URL} from '../config/urls';
-import {openCamera, openPicker} from './imagePicker';
+import { isEmpty } from 'lodash';
+import { Keyboard } from 'react-native';
+import { API_BASE_URL } from '../config/urls';
+import { openCamera, openPicker } from './imagePicker';
 
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
@@ -161,4 +161,17 @@ export const checkValueExistInAry = (item = {}, arr2 = []) => {
   return found;
 };
 
-export {cameraHandler, currencyNumberFormatter};
+
+export function getImageUrlNew({
+  url = '',
+  image_const_arr = '',
+  type = "image_fit",
+  height = "260",
+  width = "260",
+}) {
+  const values = image_const_arr[type];
+  let return_url = `${values}${height}/${width}${image_const_arr['proxy_url']}/${image_const_arr['s3_url']}${url}@webp`;
+  return return_url;
+}
+
+export { cameraHandler, currencyNumberFormatter };

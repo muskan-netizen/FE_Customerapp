@@ -20,7 +20,7 @@ import {
   width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
-import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
+import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -32,11 +32,13 @@ let imageHeight = parseInt(moderateScale(100))
 let imageWidth = parseInt(width / 3.2)
 
 const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle,appData } =
+  const { themeColors, appStyle, currencies, themeColor, themeToggle, appData } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
+  const appMainData = useSelector((state) => state?.home?.appMainData || {});
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -49,7 +51,10 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
     media = [],
     vendor = {},
     variant = [],
+
   } = item;
+
+
 
 
   const imageUrl = getImageUrl(
@@ -74,7 +79,11 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       <FastImage
         resizeMode={FastImage.resizeMode.contain}
         source={{
-          uri: imageUrl,
+          uri: getImageUrlNew({
+            url: item?.path || null,
+            image_const_arr: appMainData.image_prefix,
+            type: 'image_fill',
+          }),
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
         }}
@@ -168,7 +177,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 }}>
 
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0].price,
+                  item?.price_numeric,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
@@ -205,7 +214,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                   marginVertical: moderateScaleVertical(8),
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0]?.price,
+                  item?.price_numeric,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
@@ -221,7 +230,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                   marginLeft: moderateScale(12),
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0]?.price,
+                  item?.price_numeric,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
