@@ -158,7 +158,6 @@ export default ({fontFamily}) => {
       // paddingHorizontal: moderateScale(10),
       backgroundColor: colors.white,
       borderRadius: moderateScale(10),
-      width:width
     },
     cartItemImage: {
       height: width / 4.5,
