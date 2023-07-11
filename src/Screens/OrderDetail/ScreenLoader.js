@@ -43,29 +43,7 @@ const ScreenLoader = ({
                         : () => navigation.goBack()
                 }
             />
-            <HeaderLoader
-                widthLeft={moderateScale(30)}
-                rectWidthLeft={moderateScale(30)}
-                heightLeft={moderateScaleVertical(30)}
-                rectHeightLeft={moderateScaleVertical(30)}
-                widthRight={moderateScale(200)}
-                rectWidthRight={moderateScale(200)}
-                heightRight={moderateScale(20)}
-                rectHeightRight={moderateScale(20)}
-                isRight={true}
-                rx={5}
-                ry={5}
-                viewStyles={{
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    width: width - moderateScale(30),
-                }}
-                rightViewStyle={{
-                    marginLeft: width / 5.5,
-                }}
-            />
-
-            <HeaderLoader
+                     <HeaderLoader
                 widthLeft={moderateScale(width / 1.2)}
                 rectWidthLeft={moderateScale(width / 1.2)}
                 heightLeft={moderateScaleVertical(140)}

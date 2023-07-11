@@ -491,14 +491,11 @@ export const RESEND_OTP = getApiUrl('/auth/sendToken');
 // export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
 // export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
 export const GET_DATA_BY_CATEGORY_FILTERS = getApiUrl('/category/filters');
-export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl(
-  '/v2/category/filters',
-);
+export const GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE = getApiUrl('/v2/category/filters');
 export const GET_DATA_BY_VENDOR_FILTERS = getApiUrl('/vendor/filters');
 export const GET_PRODUCT_DATA_BASED_VARIANTS = getApiUrl('/productByVariant');
 export const GET_PRODUCT_TAGS = getApiUrl('/getAllProductTags');
-export const GET_BRANDPRODUCTS_DATA_BASED_VARIANTS =
-  getApiUrl('/brand/filters');
+export const GET_BRANDPRODUCTS_DATA_BASED_VARIANTS = getApiUrl('/brand/filters');
 export const MY_WALLET = getApiUrl('/myWallet');
 export const SOCAIL_LOGIN_API = getApiUrl('/social/login');
 export const ADD_PRODUCT_TO_CART = getApiUrl('/cart/add');
@@ -697,6 +694,8 @@ export const ADD_PRESCRIPTIONS = getApiUrl('/upload/prescriptions');
 export const DELETE_PRESCRIPTION = getApiUrl('/delete/prescriptions');
 export const GET_SUBCATEGORY_VENDORS = getApiUrl('/get/subcategory/vendor');
 export const VENDER_UPDATE_ORDER = getApiUrl('/order-update');
+export const GET_SUBCATEGORY_VENDORS_V2 = getApiUrl('/v2/get/subcategory/vendor');
+export const SERACH_ALL_ITEMS = getApiUrl('/v2/search/all');
 
 //Chat Apis
 export const START_CHAT = getApiUrl('/chat/startChat');
@@ -839,3 +838,7 @@ export const P2P_ORDER_DETAIL = getApiUrl(
 export const COMPLETE_PICKUP_DROP_OFF = getApiUrl(
   '/user/orderVenderStatusUpdate',
 );
+
+export const CART_ITEM_CHECKED = getApiUrl('/cart/updateCartCheckedStatus')
+export const SEARCH_ALL_ITEMS = getApiUrl('/v2/search/all');
+export const GET_PRODUCT_DATA_BASED_VARIANTS_2 = getApiUrl('/v2/productByVariant')

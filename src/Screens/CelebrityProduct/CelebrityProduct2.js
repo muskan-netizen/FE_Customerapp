@@ -379,7 +379,7 @@ export default function CelebrityProduct2({route, navigation}) {
   };
   //render product list view
   const renderProduct = ({item, index}) => {
-    console.log(item, 'itemitemitem');
+  
     return (
       <ProductCard3
         data={item}

@@ -179,21 +179,32 @@ export default function Login({ navigation }) {
     updateState({ [key]: val });
   };
 
+
+  const emailValidation = ()=>{
+    let EmailRegex =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    if(!EmailRegex.test(email?.value)){
+      // showError('email is not in valid format')
+      return true
+    }
+   
+  }
   //Validate form
   const isValidData = () => {
+ 
     const error = getValuebyKeyInArray(
       'is_phone_signup',
       additional_preferences,
     )
       ? validator({ phoneNumber: phoneNumberOnly })
       : email.focus
-        ? validator({ email: email.value, password })
+        ? emailValidation()
         : validator({
           phoneNumber: mobilNo.phoneNo,
           callingCode: mobilNo.callingCode,
         });
-    if (error) {
-      showError(error);
+        console.log(error,'errrrorrr')
+    if (error ) {
+      showError(!!error ?'Email is not in valid format':error);
       return;
     }
     return true;

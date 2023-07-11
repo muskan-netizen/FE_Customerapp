@@ -1318,6 +1318,8 @@ function Footer(props) {
           </TouchableOpacity>
         )
       }
+
+
       {
         !!(
           cartData?.deliver_status || cartData?.closed_store_order_scheduled

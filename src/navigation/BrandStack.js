@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   BrandProducts,
   BrandProducts2,
@@ -14,19 +14,20 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductListEcom,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   Vendors,
   Vendors2,
+  ViewAllSearchItems,
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
 export default function () {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -34,9 +35,30 @@ export default function () {
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
+
+
+
+
+  const productListView = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductList2
+      case 3:
+        return ProductList3
+      case 5:
+        return ProductList3
+      case 10: 
+      return ProductListEcom  
+      default:
+        return ProductList
+    }
+  }
+
+
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -88,14 +110,13 @@ export default function () {
       <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
 
       <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
+      />
+
+      <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={
-          appStyle?.homePageLayout === 2
-            ? ProductList2
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? ProductList3
-            : ProductList
-        }
+        component={productListView()}
       />
     </Stack.Navigator>
   );

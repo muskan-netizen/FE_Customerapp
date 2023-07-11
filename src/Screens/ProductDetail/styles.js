@@ -26,8 +26,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
     },
     productName: {
       color: colors.textGrey,
-      fontSize: textScale(12),
-      lineHeight: 18,
+      fontSize: textScale(16),
       fontFamily: fontFamily.medium,
     },
     productTypeAndBrand: {
@@ -292,4 +291,34 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       borderBottomWidth: 0.5,
       marginVertical: moderateScaleVertical(8),
     },
+    colorContainer: {
+      marginVertical: moderateScaleVertical(8),
+      height: moderateScale(80),
+      width: moderateScaleVertical(60),
+      marginRight: moderateScale(8),
+      borderRadius: moderateScale(8),
+      justifyContent: 'center',
+      borderWidth: 1,
+    },
+    colorView: {
+      height: moderateScale(40),
+      width: moderateScale(40),
+      borderRadius: moderateScale(20),
+      borderColor: colors.greyA,
+      borderWidth: 1,
+      alignSelf: 'center'
+    },
+    sizeContainer: {
+      justifyContent: 'center',
+       marginRight: moderateScale(6), 
+       height: moderateScale(30), 
+       minWidth: moderateScaleVertical(70), 
+       alignItems: 'center', 
+       borderRadius: moderateScale(8), 
+       paddingHorizontal:moderateScale(8),
+       borderWidth: 1, 
+       borderColor: colors.greyA, 
+       marginVertical: moderateScaleVertical(12)
+    }
+ 
   });

@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   AllinonePyments,
   AllPaymentMethods,
@@ -30,6 +30,7 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductListEcom,
   ScrollableCategory,
   Simplify,
   SkipCash,
@@ -56,16 +57,14 @@ import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
 export default function () {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot || {});
+  const { appData, appStyle } = useSelector((state) => state?.initBoot || {});
 
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
-      case 1:
-        return ProductList;
-      case 2:
-        return ProductList2;
-      default:
-        return ProductList3;
+      case 1: return ProductList;
+      case 2: return ProductList2;
+      case 10: return ProductListEcom
+      default: return ProductList3;
     }
   };
 
@@ -87,24 +86,24 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.CART}
         component={Cart3}
-        options={{animationEnabled: false}}
+        options={{ animationEnabled: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.OFFERS}
         component={Offers}
-        options={{animationEnabled: false}}
+        options={{ animationEnabled: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.ALL_PAYMENT_METHODS}
         component={AllPaymentMethods}
-        options={{animationEnabled: false}}
+        options={{ animationEnabled: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDERSUCESS}
         component={OrderSuccess}
-        options={{animationEnabled: false}}
+        options={{ animationEnabled: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
@@ -119,8 +118,8 @@ export default function () {
         name={navigationStrings.WISHLIST}
         component={
           appStyle?.homePageLayout === 3 ||
-          appStyle?.homePageLayout === 5 ||
-          appStyle?.homePageLayout === 8
+            appStyle?.homePageLayout === 5 ||
+            appStyle?.homePageLayout === 8
             ? Wishlist2
             : Wishlist
         }

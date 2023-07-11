@@ -94,7 +94,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
     useSelector((state) => state?.initBoot);
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const recommendedVendorsdata = appMainData?.vendors;
+  const recommendedVendorsdata = appMainData?.vendors || [];
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
 

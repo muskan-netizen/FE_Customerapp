@@ -1,50 +1,40 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator
+} from '@react-navigation/drawer';
 import React from 'react';
+import { Image } from 'react-native';
 import { useSelector } from 'react-redux';
+import CustomDrawerContent from '../Components/CustomDrawerContent';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
-import colors from '../styles/colors';
-import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
-import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
-import { Image, Text, StyleSheet } from 'react-native';
-import { moderateScale, textScale } from '../styles/responsiveSize';
-import fontFamily from '../styles/fontFamily';
-import CustomDrawerContent from '../Components/CustomDrawerContent';
-import { View } from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
-import TaxiTabRoutes from './TaxiTabRoutes';
+import TabRoutesEcommerce from './TabRoutesEcommerce';
 import TabRoutesP2p from './TabRoutesP2p';
+import TaxiTabRoutes from './TaxiTabRoutes';
+import { WebLinks } from '../Screens';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
-  const { shortCodeStatus, appStyle, appData } = useSelector(
-    (state) => state?.initBoot,
-  );
-
-  const businessType = appStyle?.homePageLayout;
+  const {appStyle, appData } = useSelector((state) => state?.initBoot);  const businessType = appStyle?.homePageLayout;
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
-  // const checkForCeleb =
-  //   allCategory &&
-  //   allCategory.find((x) => x?.redirect_to == staticStrings.CELEBRITY);
   const checkForBrand =
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
 
   var celebTab = null;
   var brandTab = null;
-  var gestureEnabled = false;
-  var swipeEnabled = false;
+  var gestureEnabled = true;
+  var swipeEnabled = true;
   if (checkForCeleb) {
     celebTab = (
       <Drawer.Screen
@@ -83,99 +73,55 @@ export default function DrawerRoutes(props) {
     );
   }
 
+
   return (
     <Drawer.Navigator
       drawerPosition={'left'}
-      backBehavior={'initialRoute'}
+      backBehavior={'none'}
       drawerType={'front'}
       overlayColor={'rgba(0,0,0,0.6)'}
-      // hideStatusBar={true}
-      drawerStyle={{ width: '75%', backgroundColor: colors.blueHeaderColor }}
-      drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      screenOptions={{ headerShown: false }}
+      initialRouteName={businessType === 4
+        ? navigationStrings.TAXITABROUTES
+        : navigationStrings.TAB_ROUTES}
+    >
+
       <Drawer.Screen
-        component={
-          businessType === 4
-            ? TaxiTabRoutes
-            : businessType === 8
-              ? TabRoutesP2p
-              :
-              TabRoutes
+        component={businessType === 4
+          ? TaxiTabRoutes : businessType === 8
+            ? TabRoutesP2p : businessType === 10
+              ? TabRoutesEcommerce : TabRoutes
         }
         name={
           businessType === 4
             ? navigationStrings.TAXITABROUTES
             : navigationStrings.TAB_ROUTES
         }
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.HOME,
-          drawerIcon: ({ focused }) => (
-            <Image
-              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
-            />
-          ),
-        }}
+
       />
       <Drawer.Screen
         component={CartStack}
         name={navigationStrings.CART}
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.CART,
-          drawerIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center' }}>
-              {cartItemCount?.data?.item_count ? (
-                <View style={[styles.cartItemCountView]}>
-                  <Text style={styles.cartItemCountNumber}>
-                    {cartItemCount?.data?.item_count}
-                  </Text>
-                </View>
-              ) : null}
-              <Image
-                source={focused ? imagePath.cartActive : imagePath.cartInActive}
-              />
-            </View>
-          ),
-        }}
       />
+
+
+      <Drawer.Screen
+        name={navigationStrings.WEBLINKS}
+        component={WebLinks}
+        options={{ headerShown: false}}
+        
+      />
+         {/* <Drawer.Screen
+        name={navigationStrings.CATEGORY}
+        component={Category}
+        options={{ headerShown: false}}
+        
+      /> */}
       {brandTab}
       {celebTab}
-      <Drawer.Screen
-        component={AccountStack}
-        name={navigationStrings.ACCOUNTS}
-        options={{
-          gestureEnabled: gestureEnabled,
-          swipeEnabled: swipeEnabled,
-          drawerLabel: strings.ACCOUNTS,
-          drawerIcon: ({ focused }) => (
-            <Image
-              source={focused ? imagePath.tabEActive : imagePath.tabEInActive}
-            />
-          ),
-        }}
-      />
+
     </Drawer.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  cartItemCountView: {
-    position: 'absolute',
-    zIndex: 100,
-    top: -5,
-    right: -5,
-    backgroundColor: colors.cartItemPrice,
-    width: moderateScale(18),
-    height: moderateScale(18),
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cartItemCountNumber: {
-    fontFamily: fontFamily.futuraBtHeavy,
-    color: colors.white,
-    fontSize: textScale(8),
-  },
-});

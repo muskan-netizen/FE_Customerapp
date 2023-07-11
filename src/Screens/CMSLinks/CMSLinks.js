@@ -85,7 +85,7 @@ export default function CMSLinks({navigation}) {
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    return navigation.navigate(screenName, {data});
   };
 
   const _renderCmsLinks = ({item, index}) => {

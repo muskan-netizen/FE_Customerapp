@@ -176,15 +176,26 @@ export default function Signup({ navigation }) {
     navigation.navigate(screenName, { data });
   };
 
+  const emailValidation = () => {
+    let EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    if (!EmailRegex.test(email)) {
+      showError('email is not coprrect')
+      return true
+    }
+    return false
+  }
   const isValidData = () => {
     const error = validations({
-      email: email,
+// email:email,
       password: password,
-      callingCode: callingCode,
+      name: name,
       phoneNumber: phoneNumber,
+      callingCode: callingCode,
     });
-    if (error) {
-      showError(error);
+    let emailValidate = emailValidation()
+    if (error || !!emailValidate) {
+      console.log(error, emailValidate, 'errrororor')
+      showError(error || 'Email is not in valid format');
       return;
     }
     return true;

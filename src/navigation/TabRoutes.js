@@ -71,7 +71,6 @@ export default function TabRoutes(props) {
 
   const getCustomTabBar = (props) => {
     if (showBottomBar_) {
-
       switch (appStyle?.tabBarLayout) {
         case 1:
           return <CustomBottomTabBar {...props} />;
@@ -87,7 +86,6 @@ export default function TabRoutes(props) {
           return <CustomBottomTabBar {...props} />;
       }
     }
-
   }
 
   const getHomeIcons = (focused = false) => {
@@ -292,6 +290,7 @@ export default function TabRoutes(props) {
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
+            navigationStrings.BRANDDETAIL
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => {

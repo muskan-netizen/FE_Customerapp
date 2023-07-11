@@ -372,6 +372,7 @@ const ProductCard5 = ({
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
+                
               )}
             </Text>
           </View>

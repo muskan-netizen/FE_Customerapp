@@ -69,6 +69,19 @@ export function getImageUrl(url1, url2, dimentions) {
   return `${url1}${dimentions}${url2}`;
 }
 
+
+export function getImageUrlNew({
+  url = '',
+  image_const_arr = '',
+  type = "image_fit",
+  height = "260",
+  width = "260",
+}) {
+  const values = image_const_arr[type];
+  let return_url = `${values}${height}/${width}${image_const_arr['proxy_url']}/${image_const_arr['s3_url']}${url}@webp`;
+  return return_url;
+}
+
 export const ifDataExist = (data) => {
   if (data && data !== null) {
     return true;
@@ -160,18 +173,5 @@ export const checkValueExistInAry = (item = {}, arr2 = []) => {
   let found = arr2.includes(item?.id);
   return found;
 };
-
-
-export function getImageUrlNew({
-  url = '',
-  image_const_arr = '',
-  type = "image_fit",
-  height = "260",
-  width = "260",
-}) {
-  const values = image_const_arr[type];
-  let return_url = `${values}${height}/${width}${image_const_arr['proxy_url']}/${image_const_arr['s3_url']}${url}@webp`;
-  return return_url;
-}
 
 export { cameraHandler, currencyNumberFormatter };

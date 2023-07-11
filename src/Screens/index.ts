@@ -12,7 +12,7 @@ export {default as ResetPassword} from './ResetPassword/ResetPassword';
 export {default as WebLinks} from './WebLinks/WebLinks';
 export {default as VerifyAccount} from './VerifyAccount/VerifyAccount';
 
-export {default as Home} from './Home/Home';
+export {default as HomeTemplate3} from './Home/HomeTemplate3';
 export {default as HomeV2Api} from './Home/Home(V2_API)';
 export {default as Offers} from './Offers/Offers';
 export {default as Brands} from './Brands/Brands';
@@ -23,6 +23,8 @@ export {default as SuperMarket} from './Supermarket/Supermarket';
 export {default as Vendors} from './Vendors/Vendors';
 export {default as VendorDetail} from './VendorDetail/VendorDetail';
 export {default as ProductList} from './ProductList/ProductList';
+export {default as ProductListEcom} from './ProductList/ProductListEcom';
+
 export {default as MyProfile} from './MyProfile/MyProfile';
 export {default as MyOrders} from './MyOrders/MyOrders';
 export {default as OrderDetail} from './OrderDetail/OrderDetail';
@@ -175,6 +177,12 @@ export {default as SpotdealProductAndSelectedProducts} from './SpotdealProductAn
 export {default as TaxiHome} from './TaxiAppNewDesign/TaxiHome';
 export {default as Addaddress2} from './TaxiAppNewDesign/Addaddress/Addaddress2';
 export {default as ChooseVechile} from './TaxiAppNewDesign/ChooseVechile/ChooseVechile';
+export {default as ViewAllSearchItems} from './ViewAllSearchItems/ViewAllSearchItems';
+export {default as SubCategoryItems} from './SubCategoryItems/SubCategoryItems';
+export {default as EcomCategory} from './EcomTemps/EcomCategory/EcomCategory';
+export {default as EcomOrderAgain} from './EcomTemps/EcomOrderAgain/EcomOrderAgain';
+export {default as EcomAccount} from './EcomTemps/EcomAccount/EcomAccount';
+export {default as EcomLangCurrency} from './EcomTemps/EcomLangCurrency/EcomLangCurrency';
 
 //FreelancerService
 export {default as FreelancerService} from './FreelancerService/FreelancerService';
@@ -199,3 +207,4 @@ export {default as P2pOndemandProducts} from './P2pOnDemnadBid/P2pOndemandProduc
 export {default as P2pOndemandAttributeInformation} from './P2pOnDemnadBid/P2pOndemandAttributeInformation/P2pOndemandAttributeInformation';
 export {default as P2pOndemandPostCategory} from './P2pOnDemnadBid/P2pOndemandPostCategory/P2pOndemandPostCategory';
 export {default as Account7} from './Account/Account7';
+export {default as DeveloperMode} from './DeveloperMode/DeveloperMode';

@@ -558,12 +558,17 @@ const shortCodes = {
   ping: '17c374',
   chutneyeah: '85de17',
   ineeda: 'aaabf3',
+  dropOff: '30f2f1',
 };
 
 const appIds = {
   royoorder: Platform.select({
     ios: 'com.codebrew.royoordersreactnative',
     android: 'com.codebrew.royoorder',
+  }),
+  dropOff: Platform.select({
+    ios: 'com.dropoff.royorder',
+    android: 'com.dropoff.royorder',
   }),
   runrun: Platform.select({
     ios: 'com.codebrew.runrun',

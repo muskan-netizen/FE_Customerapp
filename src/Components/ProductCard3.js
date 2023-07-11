@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isArray, isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
   Animated,
@@ -317,11 +317,13 @@ const ProductCard3 = ({
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
+              currencies
             )}
           </Text>
 
           {Number(data?.variant[0]?.compare_at_price) >
             Number(data?.variant[0]?.price) && (
+        
               <Text
                 numberOfLines={1}
                 style={{
@@ -331,15 +333,18 @@ const ProductCard3 = ({
                   fontFamily: fontFamily.regular,
                   textDecorationLine: 'line-through',
                   marginHorizontal: moderateScale(8),
+           
+        
                 }}>
-                {/* { currencies?.primary_currency?.symbol} */}
                 {tokenConverterPlusCurrencyNumberFormater(
                   Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
+                  currencies
                 )}
               </Text>
+           
             )}
 
           {!!data?.is_recurring_booking &&
@@ -587,7 +592,7 @@ const ProductCard3 = ({
                 </>
               )}
               {(!!data?.add_on_count && data?.add_on_count !== 0) ||
-                (!!data?.variant_set_count && data?.variant_set_count !== 0) ? (
+                (!!data?.variant_set_count && data?.variant_set_count !== 0) || (!!isArray(data?.add_on)  && data?.add_on?.length !== 0 )? (
                 <Text
                   style={{
                     ...styles.customTextStyle,

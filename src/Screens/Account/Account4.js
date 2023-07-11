@@ -65,7 +65,7 @@ export default function Account4({ navigation }) {
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data = {}) => () => {
-    navigation.navigate(screenName, { data });
+    return navigation.navigate(screenName, { data });
   };
 
 

@@ -196,16 +196,17 @@ export default function DashBoardHeaderSix({
   const SearchBarView = () => {
     return (
       <TouchableOpacity
-      onPress={() =>
-        navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-      }
+        onPress={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
         style={styles.searchBarView}
       >
+
         <View style={{ flexDirection: 'row', }} >
           <Image
             style={{
               tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.blackLight,
-              marginRight:moderateScale(10),
+              marginRight: moderateScale(10),
             }}
             source={imagePath.icSearchb}
           />
@@ -264,6 +265,22 @@ export default function DashBoardHeaderSix({
                 }}
               />
             ) : null} */}
+            {appStyle?.homePageLayout == 10 ?
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => navigation.openDrawer()}
+                style={{ alignItems: 'center', }}>
+                <Image
+                  style={{
+                    tintColor: themeColors.primary_color,
+                    marginRight: moderateScale(16),
+                    height: moderateScale(30),
+                    width: moderateScale(30),
+                  }}
+                  source={imagePath.icHamburger}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity> : null}
 
             {!!appData?.profile?.preferences?.is_hyperlocal && (
               <TouchableOpacity
@@ -386,7 +403,7 @@ export default function DashBoardHeaderSix({
       ) : null}
 
       {SearchBarView()}
-      {/* <DeliveryTypeCompTwo selectedToggle={selcetedToggle} /> */}
+      <DeliveryTypeCompTwo selectedToggle={selcetedToggle} />
 
       <CustomAnimatedLoader
         source={loaderOne}

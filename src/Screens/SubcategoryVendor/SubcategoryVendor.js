@@ -4,15 +4,16 @@ import {
   FlatList,
   Image,
   Linking,
+  SafeAreaView,
   ScrollView, Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import WrapperContainer from '../../Components/WrapperContainer';
 import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
+import { MyDarkTheme } from '../../styles/theme';
+import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
 import actions from '../../redux/actions';
 import Header3 from '../../Components/Header3';
 import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
@@ -44,9 +45,10 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import FastImage from 'react-native-fast-image';
+import SearchBar3 from '../../Components/SearchBar3';
+
 
 export default function SubcategoryVendor({ navigation, route }) {
-  console.log(route, 'route>>>>route');
   const paramData = route?.params?.data;
   const {
     appData,
@@ -399,14 +401,37 @@ export default function SubcategoryVendor({ navigation, route }) {
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }
-      isLoading={isApiLoading}>
-      <Header3
-        leftIcon={imagePath.icBackb}
-        rightIcon={imagePath.search}
-        location={location}
-      />
+      isLoading={isApiLoading}
+      isSafeArea={false}
+      >
+        <SafeAreaView>
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
+        <TouchableOpacity 
+        
+        onPress={() => navigation.goBack()} hitSlop={{
+            top: 50,
+            right: 50,
+            left: 50,
+            bottom: 50,
+        }} style={{ marginLeft: moderateScale(8)}}>
+          <Image style={{tintColor: isDarkMode? colors.white: colors.black}} source={imagePath.backArrowCourier} />
+        </TouchableOpacity>
+
+        <View style={{ flex: 1 }}>
+          <SearchBar3
+            onPress={() => navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)}
+            containerStyle={{
+              marginVertical: moderateScaleVertical(0),
+              marginBottom: moderateScaleVertical(0),
+              height: moderateScale(38),
+              backgroundColor:   isDarkMode ?colors.whiteOpacity22: colors.blackOpacity10
+            }}
+          />
+        </View>
+      </View>
+      </SafeAreaView>
       <DeliveryTypeComp selectedToggle={selectedToggle} />
       {isLoading ? (
         <ScrollView

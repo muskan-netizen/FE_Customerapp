@@ -158,7 +158,7 @@ const OrderCardVendorComponent2 = ({
     };
   }, []);
 
-  console.log(data, 'datdadtatda')
+
   const onCancelOrder = (item) => {
     setIsCancelOrderContentLoader(true);
     setCancellationItem(item);
@@ -477,7 +477,8 @@ const OrderCardVendorComponent2 = ({
                   Number(data?.payable_amount),
                   digit_after_decimal,
                   additional_preferences,
-                  currencies?.primary_currency?.symbol
+                  currencies?.primary_currency?.symbol,
+                  
                 )}
               </Text>
             </View>
