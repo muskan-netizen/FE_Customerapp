@@ -962,7 +962,7 @@ function ChooseVechile({ navigation, route }) {
                     style={{
                         fontSize: textScale(14),
                         fontFamily: fontFamily?.bold,
-                        color: colors.black,
+                        color: isDarkMode?colors.white: colors.black,
                     }}>
                     {item?.name || item?.translation_title}
                 </Text>
@@ -1082,9 +1082,9 @@ function ChooseVechile({ navigation, route }) {
                             <TouchableOpacity onPress={() => {
                                 _getAllCarAndPrices()
                                 setCabBookingType('Booking')
-                            }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : colors.borderColorB }}>
+                            }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : isDarkMode?colors.white:colors.borderColorB }}>
                                 <Image source={imagePath.ic_booking} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? themeColors?.primary_color : isDarkMode?colors.white:colors.black }}>  {strings.BOOKING}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? isDarkMode?colors.white:themeColors?.primary_color : isDarkMode?colors.white:colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_cab_pooling &&
@@ -1092,18 +1092,18 @@ function ChooseVechile({ navigation, route }) {
                                 setCabBookingType('Pooling')
                                 _getAllCarAndPrices(true, null, true)
 
-                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : colors.borderColorB }}>
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : isDarkMode?colors.white:colors.borderColorB  }}>
                                 <Image source={imagePath.ic_cab_pooling} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? themeColors?.primary_color :isDarkMode?colors.white:colors.black }}>  {strings.POOLING}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? isDarkMode?colors.white:themeColors?.primary_color : isDarkMode?colors.white:colors.black }}>  {strings.POOLING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_bid_ride_enable &&
                             <TouchableOpacity onPress={() => {
                                 setCabBookingType('bidRide')
                                 _getAllCarAndPrices(true, null, false, 1, true)
-                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.borderColorB }}>
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ?themeColors?.primary_color : isDarkMode?colors.white:colors.borderColorB }}>
                                 <Image source={imagePath.ic_bid_ride} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? themeColors?.primary_color : colors.black }}>  {strings.BID_RIDE}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? isDarkMode?colors.white:themeColors?.primary_color : isDarkMode?colors.white:colors.black}}>  {strings.BID_RIDE}</Text>
                             </TouchableOpacity>
                         }
                     </View>
