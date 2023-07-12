@@ -511,8 +511,6 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
     return <WrapperContainer isLoading={isLoading} />;
   }
 
-  const { month_price: monthPrice = '', week_price: weekPrice = '', price: dayPrice = ''
-  } = productInfo && productInfo?.variant ? productInfo?.variant[0] : {}
   return (
     <View
       style={{
@@ -536,15 +534,15 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   onSnapToItem={index => onSelect(index)}
                 />
               ) : (
-                <></>
-                // <FastImage
-                //   source={imagePath.icDefaultImg}
-                //   style={{
-                //     height: moderateScale(250),
-                //     width: width,
 
-                //   }}
-                // />
+                <FastImage
+                  source={imagePath.icDefaultImg}
+                  style={{
+                    height: moderateScale(250),
+                    width: width,
+
+                  }}
+                />
               )}
             </View>
             <TouchableOpacity
@@ -646,7 +644,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   marginHorizontal: moderateScale(16),
                   color: isDarkMode ? MyDarkTheme.colors.text : themeColors?.primary_color
                 }}>
-                {tokenConverterPlusCurrencyNumberFormater(dayPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}
+                {tokenConverterPlusCurrencyNumberFormater(productInfo?.price || productInfo?.variant[0]?.price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}
               </Text>}
             </View>
             <View
@@ -757,15 +755,15 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                     <Text style={{
                       fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                       fontSize: textScale(14)
-                    }}>Day {tokenConverterPlusCurrencyNumberFormater(dayPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}</Text>
+                    }}>Day {tokenConverterPlusCurrencyNumberFormater(productInfo?.price || productInfo?.variant[0]?.price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}</Text>
                     <Text style={{
                       fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                       fontSize: textScale(14)
-                    }}>Week {tokenConverterPlusCurrencyNumberFormater(weekPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
+                    }}>Week {tokenConverterPlusCurrencyNumberFormater(productInfo?.week_price || productInfo?.variant[0]?.week_price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
                     <Text style={{
                       fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                       fontSize: textScale(14)
-                    }}>Month {tokenConverterPlusCurrencyNumberFormater(monthPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
+                    }}>Month {tokenConverterPlusCurrencyNumberFormater(productInfo?.month_price || productInfo?.variant[0]?.month_price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
                   </View>
                 </View>
                 <TouchableOpacity
