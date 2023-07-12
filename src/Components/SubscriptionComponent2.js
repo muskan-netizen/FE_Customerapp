@@ -97,7 +97,7 @@ const SubscriptionComponent2 = ({
         }}
         borderRadius={10}
         resizeMode="cover">
-          <View style={{...styles.imageBackground,backgroundColor:colors.blackOpacity43}}>
+          <View style={{...styles.imageBackground,backgroundColor:colors.blackOpacity66}}>
         <View style={styles.titleBagView}>
           <Text
             style={

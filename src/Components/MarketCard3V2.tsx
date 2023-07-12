@@ -66,7 +66,7 @@ const MarketCard3: FC<CompProps> = ({
   fastImageStyle,
   isMaxSaftey,
 }: CompProps) => {
-  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector((state:any) => state?.initBoot || {});
+  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector((state: any) => state?.initBoot || {});
 
   let vendorDistance: any = 0
   if (!!data?.lineOfSightDistance) {
@@ -80,7 +80,7 @@ const MarketCard3: FC<CompProps> = ({
   const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
-  const appMainData = useSelector((state:any) => state?.home?.appMainData || {});
+  const appMainData = useSelector((state: any) => state?.home?.appMainData || {});
 
 
   // let imageUrl = getImageUrl(
@@ -243,7 +243,7 @@ const MarketCard3: FC<CompProps> = ({
         ) : !!data?.is_vendor_closed &&
           data?.closed_store_order_scheduled == 0 ? (
           <Grayscale>
-            <View style={{ justifyContent: 'center' }}>
+            <View style={{ justifyContent: 'center', backgroundColor: colors.blackOpacity86 }}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -253,7 +253,7 @@ const MarketCard3: FC<CompProps> = ({
                 style={{
                   ...styles.mainImage,
                   ...fastImageStyle,
-                  opacity: 0.8,
+                  opacity: 0.2,
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
@@ -392,7 +392,7 @@ const MarketCard3: FC<CompProps> = ({
   );
 };
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }:any) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }: any) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
