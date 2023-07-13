@@ -921,19 +921,20 @@ export default function Products({ route, navigation }) {
 
                           !DeviceInfo.getBundleId() === appIds.hokitch || DeviceInfo.getBundleId() === appIds.bumprkar
                             ? 'auto'
-                            : 'flex-end',
+                            : 'auto',
                       }}>
+                        
                       {!DeviceInfo.getBundleId() === appIds.hokitch ? (
                         <Text
                           // numberOfLines={2}
                           style={{
                             ...styles.hdrTitleTxt,
-                            flex: 0,
+                            // flex: 0,
                             fontSize: textScale(12.5),
                             fontFamily: fontFamily.regular,
-                            textAlign: 'left',
+                            // textAlign: 'left',
                             color: isDarkMode ? colors.white : colors.white,
-                            width: width / 1.5,
+                            // width: width / 1.5,
                           }}>
                           {categoryInfo?.address || ''}
                         </Text>
