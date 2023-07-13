@@ -76,7 +76,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [attributeInfo, setAttributeInfo] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [isLoadingAttributes, setLoadingAttributes] = useState(false);
+  const [isLoadingAttributes, setLoadingAttributes] = useState(true);
   const [isLoadingSubmitAttributes, setLoadingSubmitAttributes] =
     useState(false);
   const [productImgs, setProductImgs] = useState([]);
@@ -606,7 +606,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   };
 
   return (
-    <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} statusBarColor={colors.white} isLoading={isLoadingSubmitAttributes}>
+    <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} statusBarColor={colors.white} isLoading={isLoadingAttributes}>
       <View
         style={{
           flex: 1,
@@ -826,7 +826,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       <Modal isVisible={isProductAddedModal}>
         <View
           style={{
-            backgroundColor: 'white',
+            backgroundColor: isDarkMode ? colors.blackOpacity86 : colors.black,
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: moderateScale(15),
@@ -836,7 +836,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           <Image source={imagePath.check3} />
           <Text
             style={{
-              color: isDarkMode ? colors.white : colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               fontFamily: fontFamily.medium,
               fontSize: textScale(19),
               maxWidth: '70%',
@@ -859,17 +859,18 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       </Modal>
 
 
-      {isVisible ? <AddressBottomSheet
-        navigation={navigation}
-        updateData={updateData}
-        indicator={indicator}
-        type={type}
-        passLocation={data => addUpdateLocation(data)}
-        openCloseMapAddress={openCloseMapAddress}
-        selectViaMap={selectViaMap}
-        onCloseSheet={onModalClose}
-      />
-        : null
+      {
+        isVisible ? <AddressBottomSheet
+          navigation={navigation}
+          updateData={updateData}
+          indicator={indicator}
+          type={type}
+          passLocation={data => addUpdateLocation(data)}
+          openCloseMapAddress={openCloseMapAddress}
+          selectViaMap={selectViaMap}
+          onCloseSheet={onModalClose}
+        />
+          : null
       }
       <Modal isVisible={isCalendarModal} style={{
         margin: 0
@@ -907,7 +908,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           />
         </View>
       </Modal>
-    </WrapperContainer>
+    </WrapperContainer >
   );
 };
 

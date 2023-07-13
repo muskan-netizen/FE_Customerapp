@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -10,11 +10,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import GradientButton from '../../Components/GradientButton';
@@ -30,8 +30,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {showError} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
@@ -58,11 +58,11 @@ DeviceCountry.getCountryCode()
   });
 
 import RNOtpVerify from 'react-native-otp-verify';
-import {setUserData} from '../../utils/utils';
-import {getValuebyKeyInArray} from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { setUserData } from '../../utils/utils';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 
-export default function Login3({navigation}) {
+export default function Login3({ navigation }) {
   const {
     appData,
     themeColors,
@@ -84,7 +84,7 @@ export default function Login3({navigation}) {
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   const [withEmail, setwithEmail] = useState(true);
   const [state, setState] = useState({
@@ -94,21 +94,21 @@ export default function Login3({navigation}) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+        getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
-            '-',
-            '',
-          )
+          '-',
+          '',
+        )
         : appData?.profile.country?.phonecode
-        ? appData?.profile?.country?.phonecode
-        : '91',
+          ? appData?.profile?.country?.phonecode
+          : '91',
     cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-      getBundleId() !== appIds.sxm2go
+        getBundleId() !== appIds.sxm2go
         ? getPhonesCallingCodeAndCountryData[0].isoCode2
         : appData?.profile?.country?.code
-        ? appData?.profile?.country?.code
-        : 'IN',
+          ? appData?.profile?.country?.code
+          : 'IN',
   });
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function Login3({navigation}) {
   }, []);
 
   //Update states
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //all states used in this screen
   const {
@@ -140,21 +140,22 @@ export default function Login3({navigation}) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    return navigation.navigate(screenName, {data});
+    return navigation.navigate(screenName, { data });
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {
-    updateState({[key]: val});
+    const sanitizedText = val.replace(/[\u{1F300}-\u{1F64F}]/gu, '');
+    updateState({ [key]: sanitizedText });
   };
 
   //Validate form
   const isValidData = () => {
     const error = !!withEmail
-      ? validator({email: email, password: password})
+      ? validator({ email: email, password: password })
       : validator({
-          phoneNumber: phoneNumber,
-          callingCode: callingCode,
-        });
+        phoneNumber: phoneNumber,
+        callingCode: callingCode,
+      });
     if (error) {
       showError(error);
       return;
@@ -194,7 +195,7 @@ export default function Login3({navigation}) {
     if (Platform.OS === 'android' && !!appHashKey) {
       data['app_hash_key'] = appHashKey;
     }
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
 
     console.log(data, 'postdata.....');
 
@@ -219,7 +220,7 @@ export default function Login3({navigation}) {
             checkIfEmailVerification(res.data);
           }
         }
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         getCartDetail();
       })
       .catch(errorMethod);
@@ -241,12 +242,12 @@ export default function Login3({navigation}) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
   //Error handling in api
   const errorMethod = (error) => {
     console.log(error, 'errorrrrr');
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -288,7 +289,7 @@ export default function Login3({navigation}) {
       })
       .then((res) => {
         console.log(res, 'res>>>SOCIAL');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
 
         if (!!res.data) {
           checkEmailPhoneVerified(res?.data);
@@ -325,44 +326,44 @@ export default function Login3({navigation}) {
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({isLoading: false});
+    updateState({ isLoading: false });
     handleAppleLogin()
       .then((res) => {
         _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     googleLogin()
       .then((res) => {
         if (res?.user) {
           console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
         }
       })
       .catch((err) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       });
   };
 
   const _responseInfoCallback = (error, result) => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     if (error) {
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     } else {
       if (result && result?.id) {
         console.log(result, 'fbresult');
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
       }
     }
   };
@@ -379,7 +380,7 @@ export default function Login3({navigation}) {
           _saveSocailLogin(res, 'twitter');
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const _onCountryChange = (data) => {
@@ -390,7 +391,7 @@ export default function Login3({navigation}) {
   };
 
   const showHidePassword = () => {
-    updateState({isShowPassword: !isShowPassword});
+    updateState({ isShowPassword: !isShowPassword });
   };
 
   return (
@@ -400,7 +401,7 @@ export default function Login3({navigation}) {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{alignSelf: 'flex-start'}}>
+          style={{ alignSelf: 'flex-start' }}>
           <Image
             source={
               appStyle?.homePageLayout === 3 ? imagePath.back1 : imagePath.back1
@@ -408,10 +409,10 @@ export default function Login3({navigation}) {
             style={
               isDarkMode
                 ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                  tintColor: MyDarkTheme.colors.text,
+                }
+                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
             }
           />
         </TouchableOpacity>
@@ -425,7 +426,7 @@ export default function Login3({navigation}) {
         }}
         enableOnAndroid={true}>
         <View>
-          <View style={{height: moderateScaleVertical(28)}} />
+          <View style={{ height: moderateScaleVertical(28) }} />
 
           {appIds.zonesso === getBundleId() && (
             <Image
@@ -436,7 +437,7 @@ export default function Login3({navigation}) {
             />
           )}
 
-          <View style={{height: moderateScaleVertical(30)}} />
+          <View style={{ height: moderateScaleVertical(30) }} />
 
           <View>
             {!!withEmail && (
@@ -456,7 +457,7 @@ export default function Login3({navigation}) {
                     fontSize: textScale(16),
                     fontFamily: fontFamily.regular,
                   }}
-                  placeholder={'Enter your email'}
+                  placeholder={strings.ENTER_YOUR_EMAIL}
                   value={email}
                   keyboardType={'email-address'}
                   autoCapitalize={'none'}
@@ -487,12 +488,12 @@ export default function Login3({navigation}) {
                   onPressRight={showHidePassword}
                   isShowPassword={isShowPassword}
                   rightIconStyle={{}}
-                  // returnKeyType={'next'}
+                // returnKeyType={'next'}
                 />
               </>
             )}
             {!withEmail && (
-              <View style={{marginBottom: moderateScale(18)}}>
+              <View style={{ marginBottom: moderateScale(18) }}>
                 <PhoneNumberInput
                   containerStyle={{
                     backgroundColor: colors.blackOpacity05,
@@ -536,8 +537,8 @@ export default function Login3({navigation}) {
             </View>
           )}
           <GradientButton
-            containerStyle={{marginTop: moderateScaleVertical(18)}}
-            colorsArray={['#FC7049', '#FD312C']}
+            containerStyle={{ marginTop: moderateScaleVertical(18) }}
+            colorsArray={[themeColors?.primary_color, themeColors?.primary_color]}
             onPress={_onLogin}
             btnText={strings.SIGN_IN}
           />
@@ -546,7 +547,7 @@ export default function Login3({navigation}) {
             activeOpacity={0.7}
             style={{
               borderWidth: 1,
-              borderColor: colors.orange,
+              borderColor: themeColors?.primary_color,
               marginTop: moderateScale(18),
               borderRadius: moderateScale(12),
               height: 48,
@@ -556,13 +557,16 @@ export default function Login3({navigation}) {
             }}>
             <Image
               source={!!withEmail ? imagePath.phone_button : imagePath.message}
+              style={{
+                tintColor: themeColors?.primary_color
+              }}
             />
             <Text
               style={{
                 fontFamily: fontFamily?.regular,
                 textTransform: 'uppercase',
                 textAlign: 'center',
-                color: colors.orange,
+                color: themeColors?.primary_color,
                 fontSize: 16,
                 marginLeft: moderateScale(8),
               }}>
@@ -571,24 +575,24 @@ export default function Login3({navigation}) {
                 : strings.SIGN_IN_WITH_EMAIL}
             </Text>
           </TouchableOpacity>
-          <View style={{marginTop: moderateScaleVertical(30)}}>
+          <View style={{ marginTop: moderateScaleVertical(30) }}>
             {(!!google_login ||
               !!fb_login ||
               !!twitter_login ||
               !!apple_login) && (
-              <View style={styles.socialRow}>
-                <View style={styles.hyphen} />
-                <Text
-                  style={
-                    isDarkMode
-                      ? [styles.orText, {color: MyDarkTheme.colors.text}]
-                      : styles.orText
-                  }>
-                  {strings.OR_LOGIN_WITH}
-                </Text>
-                <View style={styles.hyphen} />
-              </View>
-            )}
+                <View style={styles.socialRow}>
+                  <View style={styles.hyphen} />
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.orText, { color: MyDarkTheme.colors.text }]
+                        : styles.orText
+                    }>
+                    {strings.OR_LOGIN_WITH}
+                  </Text>
+                  <View style={styles.hyphen} />
+                </View>
+              )}
             <View
               style={{
                 flexDirection: 'row',
@@ -599,29 +603,29 @@ export default function Login3({navigation}) {
               {!!google_login && (
                 <TouchableOpacity
                   onPress={() => openGmailLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.gmail} />
                 </TouchableOpacity>
               )}
               {!!fb_login && (
                 <TouchableOpacity
                   onPress={() => openFacebookLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.facebook} />
                 </TouchableOpacity>
               )}
-              {!!twitter_login && (
+              {/* {!!twitter_login && (
                 <TouchableOpacity
                   onPress={() => openTwitterLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.twitterIcon} />
                 </TouchableOpacity>
-              )}
+              )} */}
 
               {!!apple_login && Platform.OS == 'ios' && (
                 <TouchableOpacity
                   onPress={() => openAppleLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
+                  style={{ marginHorizontal: moderateScale(20) }}>
                   <Image source={imagePath.apple1} />
                 </TouchableOpacity>
               )}
@@ -632,7 +636,7 @@ export default function Login3({navigation}) {
           'is_phone_signup',
           additional_preferences,
         ) ? null : (
-          <View style={{marginTop: '10%'}}>
+          <View style={{ marginTop: '10%' }}>
             <Text
               style={{
                 textAlign: 'center',
@@ -648,7 +652,7 @@ export default function Login3({navigation}) {
                 style={{
                   fontFamily: fontFamily.bold,
                   fontSize: textScale(14),
-                  color: '#FC7049',
+                  color: themeColors?.primary_color,
                   textDecorationLine: 'underline',
                 }}>
                 {' '}

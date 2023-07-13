@@ -61,6 +61,8 @@ export default function OuterScreen5({ navigation }) {
     redirectedFrom,
   } = useSelector((state) => state?.initBoot || {});
 
+
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
@@ -443,9 +445,9 @@ export default function OuterScreen5({ navigation }) {
             containerStyle={{
               marginTop: moderateScaleVertical(100),
             }}
-            btnText={'Create new Account'}
+            btnText={strings.CREATE_NEW_ACCOUNT}
             textStyle={{
-              color: isDarkMode ? colors.white : colors.orange,
+              color: isDarkMode ? colors.white : themeColors?.primary_color,
             }}
             colorsArray={
               isDarkMode
@@ -463,16 +465,16 @@ export default function OuterScreen5({ navigation }) {
             onPress={() => onGuestLogin()}
             style={{
               borderBottomWidth: 1,
-              borderBottomColor: colors.orange,
+              borderBottomColor: themeColors?.primary_color,
               alignSelf: 'center',
               marginTop: moderateScaleVertical(20),
             }}>
             <Text
               style={{
-                color: colors.orange,
+                color: themeColors?.primary_color,
                 fontFamily: fontFamily.medium,
               }}>
-              Continue as a Guest{' '}
+              {strings.CONTINUE}{' '}
             </Text>
           </TouchableOpacity>
 
@@ -490,7 +492,7 @@ export default function OuterScreen5({ navigation }) {
                     marginHorizontal: moderateScale(4),
                     marginBottom: moderateScale(4),
                   }}>
-                  or login with
+                  {strings.OR_LOGIN_WITH}
                 </Text>
                 <View style={styles.hyphen} />
               </View>
@@ -517,13 +519,13 @@ export default function OuterScreen5({ navigation }) {
                   <Image source={imagePath.facebook} />
                 </TouchableOpacity>
               )}
-              {!!twitter_login && (
+              {/* {!!twitter_login && (
                 <TouchableOpacity
                   onPress={() => openTwitterLogin()}
                   style={{ marginHorizontal: moderateScale(20) }}>
-                  <Image source={imagePath.twitterIcon} />
+                  <Image source={imagePath.ic_twitter2} />
                 </TouchableOpacity>
-              )}
+              )} */}
 
               {!!apple_login && Platform.OS == 'ios' && (
                 <TouchableOpacity
@@ -566,7 +568,7 @@ export default function OuterScreen5({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}>
                 <Text
                   style={{
-                    color: colors.orange,
+                    color: themeColors?.primary_color,
                     fontFamily: fontFamily.bold,
                   }}>
                   {strings.LOGIN}

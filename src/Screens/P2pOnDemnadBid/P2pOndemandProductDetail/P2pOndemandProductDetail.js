@@ -43,7 +43,8 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import {
   getImageUrl,
-  showError
+  showError,
+  showSuccess
 } from '../../../utils/helperFunctions';
 import styleFun from './styles';
 import moment from 'moment';
@@ -497,6 +498,37 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
       .catch((error) => showError('something went wrong'));
   };
 
+  //add Product to wishlist
+  const _onAddtoWishlist = () => {
+    const item = cloneDeep(productInfo)
+    if (!!userData?.auth_token) {
+      actions
+        .updateProductWishListData(
+          `/${item.product_id || item.id}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then(res => {
+          showSuccess(res.message);
+
+          if (item?.is_wishlist) {
+            item.is_wishlist = null;
+            setProductInfo(item)
+          } else {
+            item.is_wishlist = { product_id: item?.id };
+            setProductInfo(item)
+          }
+        })
+        .catch(errorMethod);
+    } else {
+      actions.setAppSessionData('on_login');
+    }
+  };
+
   const distance = () => {
     return getDistance(
       {
@@ -544,6 +576,20 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   }}
                 />
               )}
+
+              <TouchableOpacity
+                style={{
+                  position: 'absolute', right: 20, bottom: 20,
+                }}
+                onPress={_onAddtoWishlist}>
+                <Image source={!!productInfo?.is_wishlist ? imagePath.icHeart : imagePath.wishlist} style={{
+                  height: moderateScale(30),
+                  width: moderateScale(30),
+                  resizeMode: 'contain',
+                  tintColor: themeColors?.primary_color
+
+                }} />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.back}

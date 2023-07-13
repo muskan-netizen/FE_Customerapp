@@ -2189,7 +2189,6 @@ export default function WebLinks(props) {
                 renderItem={_renderTransportTypes}
               />
 
-              {console.log(pageData?.driver_registration_documents, 'pageData')}
               <FlatList
                 keyExtractor={(itm, indx) => indx.toString()}
                 data={pageData?.driver_registration_documents}

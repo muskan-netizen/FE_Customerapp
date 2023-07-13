@@ -746,16 +746,20 @@ export default function ChatScreen({ route, navigation }) {
                         fontSize: textScale(14),
                         opacity: 0.8
                     }}>{productDetails?.title}</Text>
-                    <Text style={{
-                        fontFamily: fontFamily?.regular,
-                        fontSize: textScale(12),
-                        color: colors.textGreyP,
-                        opacity: 0.5,
-                        marginTop: moderateScaleVertical(4),
-                        flex: 0.9
-                    }}>{productDetails?.address}</Text>
+                    {!!productDetails?.address && <Text
+                        numberOfLines={2}
+                        style={{
+                            fontFamily: fontFamily?.regular,
+                            fontSize: textScale(12),
+                            color: colors.textGreyP,
+                            opacity: 0.5,
+                            marginTop: moderateScaleVertical(4),
+
+                        }}>{productDetails?.address} </Text>}
                 </View>
-                <ButtonImage onPress={openGoogleMap} image={imagePath.icInfoMark} />
+                <ButtonImage onPress={openGoogleMap} image={imagePath.icRoute} imgStyle={{
+                    height: 30, width: 30
+                }} />
             </View>
 
             <ImageBackground

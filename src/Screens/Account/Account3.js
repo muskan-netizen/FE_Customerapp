@@ -66,7 +66,6 @@ export default function Account3({ navigation }) {
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
-  console.log("appDataappDataappData", appData, languages)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -114,7 +113,6 @@ export default function Account3({ navigation }) {
     }
   };
 
-  console.log(userData, 'appDataappData');
   const getListOfPaymentMethod = () => {
     actions
       .getListOfPaymentMethod(
@@ -163,12 +161,13 @@ export default function Account3({ navigation }) {
     alert('link not found');
   };
 
+
   // initalize Zendesk
   useEffect(() => {
     ZendeskChat.init(
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
-    );
+    )
 
   }, [
     preferences?.customer_support_application_id,
@@ -182,7 +181,7 @@ export default function Account3({ navigation }) {
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
 
-    });
+    })
     ZendeskChat.startChat({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',

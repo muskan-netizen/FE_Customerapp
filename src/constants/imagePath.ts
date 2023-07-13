@@ -688,4 +688,6 @@ export default {
   icLocationOrders: require('../assets/images/Ooryks/ic_location.png'),
   icTimeOrders: require('../assets/images/Ooryks/ic_time.png'),
   icArrw: require('../assets/images/Ooryks/ic_arrw.png'),
+  icRoute: require('../assets/images/Ooryks/route.png'),
+  icHeart: require('../assets/images/Ooryks/heart.png'),
 };

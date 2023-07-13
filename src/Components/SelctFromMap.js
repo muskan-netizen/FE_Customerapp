@@ -1,21 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, StyleSheet, TouchableOpacity, View, Platform } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
-import MapView, { PROVIDER_GOOGLE, MarkerAnimated, PROVIDER_DEFAULT } from 'react-native-maps';
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
 import { useSelector } from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import {
+  StatusBarHeightSecond,
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeightSecond,
   width,
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
@@ -137,7 +136,6 @@ export default function SelctFromMap({
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log(res, "resultresultresultresult");
               Geolocation.getCurrentPosition(
                 //Will give you the current location
                 (position) => {
@@ -220,6 +218,7 @@ export default function SelctFromMap({
         style={{
           ...StyleSheet.absoluteFillObject,
           height: height,
+
         }}
         // zoomEnabled={true}
         // region={region}
