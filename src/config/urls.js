@@ -839,3 +839,7 @@ export const P2P_ORDER_DETAIL = getApiUrl(
 export const COMPLETE_PICKUP_DROP_OFF = getApiUrl(
   '/user/orderVenderStatusUpdate',
 );
+
+export const UPLOAD_FILE_S3 = getApiUrl(
+  '/chat/s3-sign?filename=',
+);

@@ -620,8 +620,6 @@ export default {
 
   // flanksplash: require('../assets/Flanksplash.mp4'),
 
-
-
   // ooryks assets
   Ooryks_logo: require('../assets/images/Ooryks/Ooryks_logo.png'),
   Ooryks_google: require('../assets/images/Ooryks/google_icon.png'),
@@ -671,4 +669,7 @@ export default {
   icLocationOrders: require('../assets/images/Ooryks/ic_location.png'),
   icTimeOrders: require('../assets/images/Ooryks/ic_time.png'),
   icArrw: require('../assets/images/Ooryks/ic_arrw.png'),
+  icPlayVideo: require('../assets/images/play.png'),
+  icPauseVideo: require('../assets/images/pause.png'),
+  icPdf: require('../assets/images/p2p/pdf.png'),
 };
