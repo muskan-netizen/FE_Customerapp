@@ -1,8 +1,8 @@
-import React, {createRef, useEffect, useRef, useState} from 'react';
-import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
+import React, { createRef, useEffect, useRef, useState } from 'react';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
@@ -21,17 +21,17 @@ import {
   showSuccess,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import {RadioButton} from 'react-native-paper';
+import { RadioButton } from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../../../styles/theme';
 import strings from '../../../constants/lang';
-import {string} from 'prop-types';
-import {BlurView} from '@react-native-community/blur';
+import { string } from 'prop-types';
+import { BlurView } from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import {
   loaderOne,
@@ -41,8 +41,8 @@ import LottieView from 'lottie-react-native';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import Header from '../../../Components/Header';
-import {chekLocationPermission} from '../../../utils/permissions';
-import {isEmpty} from 'lodash';
+import { chekLocationPermission } from '../../../utils/permissions';
+import { isEmpty } from 'lodash';
 
 export default function DashBoardHeaderSeven({
   // navigation = {},
@@ -51,14 +51,14 @@ export default function DashBoardHeaderSeven({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  _onVoiceListen = () => {},
+  _onVoiceListen = () => { },
   isVoiceRecord = false,
-  _onVoiceStop = () => {},
+  _onVoiceStop = () => { },
   showAboveView = true,
   curLatLong = {},
 }) {
   const navigation = useNavigation();
-  const {appData, themeColors, appStyle, themeColor, themeToggle} = useSelector(
+  const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
   const darkthemeusingDevice = useDarkMode();
@@ -77,8 +77,25 @@ export default function DashBoardHeaderSeven({
           marginTop: moderateScaleVertical(15),
           marginBottom: moderateScaleVertical(5),
         }}>
+
+        {appStyle?.homePageLayout == 10 ? <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigation.openDrawer()}
+          style={{ alignItems: 'center', }}>
+          <Image
+            style={{
+              tintColor: themeColors.primary_color,
+              marginRight: moderateScale(16),
+              height: moderateScale(24),
+              width: moderateScale(24),
+            }}
+            source={imagePath.icHamburger}
+            resizeMode="contain"
+          />
+        </TouchableOpacity> : null}
+
         <TouchableOpacity
-          style={{flexDirection: 'row'}}
+          style={{ flexDirection: 'row' }}
           activeOpacity={0.7}
           disabled={!appData?.profile?.preferences?.is_hyperlocal}
           onPress={() =>
@@ -96,9 +113,8 @@ export default function DashBoardHeaderSeven({
                 color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
               }}>
               {!isEmpty(curLatLong)
-                ? `${curLatLong?.address?.substring(0, 30)} ${
-                    curLatLong?.address?.length >= 30 ? '...' : ''
-                  }`
+                ? `${curLatLong?.address?.substring(0, 30)} ${curLatLong?.address?.length >= 30 ? '...' : ''
+                }`
                 : ''}
             </Text>
           ) : (

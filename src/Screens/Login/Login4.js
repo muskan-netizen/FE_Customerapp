@@ -76,8 +76,6 @@ export default function Login3({ navigation }) {
         themeToggle,
     } = useSelector((state) => state?.initBoot || {});
 
-
-
     const {
         apple_login,
         fb_login,

@@ -1657,7 +1657,7 @@ export default function Home({ route, navigation }) {
           <Text style={{
             fontFamily: fontFamily?.bold,
             fontSize: textScale(16)
-          }}>Select pricing type</Text>
+          }}>{strings.SELECT_PRICE_TYPE}</Text>
           <View style={{
             margin: moderateScale(12)
           }}>
@@ -1672,7 +1672,7 @@ export default function Home({ route, navigation }) {
                 fontFamily: fontFamily?.regular,
                 fontSize: textScale(14),
                 marginLeft: moderateScale(8)
-              }}>From Vendor</Text>
+              }}>{strings.FROM_VENDOR}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setPriceType("freelancer")}
@@ -1686,7 +1686,7 @@ export default function Home({ route, navigation }) {
                 fontFamily: fontFamily?.regular,
                 fontSize: textScale(14),
                 marginLeft: moderateScale(8)
-              }}>From Freelancer</Text>
+              }}>{strings.FROM_FREELANCER}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
               setIsPriceTypeModal(false)

@@ -94,7 +94,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
     useSelector((state) => state?.initBoot);
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const recommendedVendorsdata = appMainData?.vendors;
+  const recommendedVendorsdata = appMainData?.vendors || [];
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
 
@@ -297,7 +297,15 @@ export default function SearchProductVendorItem2({ navigation, route }) {
     }
 
     if (item.response_type == 'category') {
-      if (item?.redirect_to == staticStrings.VENDOR) {
+      if (item?.redirect_to == staticStrings.P2P) {
+        navigation.push(navigationStrings.P2P_PRODUCTS, {
+          data: {
+            id: item.id,
+            name: item.dataname,
+          },
+        });
+      }
+      else if (item?.redirect_to == staticStrings.VENDOR) {
         navigation.push(navigationStrings.VENDOR, {
           data: {
             id: item.id,
@@ -397,7 +405,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
             alignItems: 'center',
             // justifyContent: 'space-between',
           }}>
-          {data && data.length
+          {data && data?.length
             ? data.map((item, index) => {
               console.log(item, 'itemitem');
               return (
@@ -564,7 +572,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                 <View>{recentlyData(previousSearches)}</View>
               </View>
             ) : null}
-            {!!recommendedVendorsdata.length && (
+            {!!recommendedVendorsdata?.length && (
               <View>
                 <Text
                   style={{

@@ -96,7 +96,7 @@ export default function MyP2pPosts({ route, navigation }) {
     trailing: false,
   });
 
-  console.log(userData, 'asfklfslakdjf');
+
 
   const renderAllPostsItem = useCallback(
     ({ item, index }) => {
@@ -162,7 +162,7 @@ export default function MyP2pPosts({ route, navigation }) {
                 marginTop: moderateScaleVertical(4),
               }}>
               {tokenConverterPlusCurrencyNumberFormater(
-                Number(item?.variant[0]?.price),
+                Number(item?.variant[0]?.price || 0),
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
@@ -177,7 +177,7 @@ export default function MyP2pPosts({ route, navigation }) {
 
   return (
     <WrapperContainer isLoading={isLoading} bgColor={
-      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      isDarkMode ? MyDarkTheme.colors.background : colors.white
     } >
       <Header centerTitle={'My Posts'} leftIcon={imagePath.backArrow} headerStyle={
         isDarkMode
@@ -192,6 +192,7 @@ export default function MyP2pPosts({ route, navigation }) {
         <FlatList
           data={allPosts}
           renderItem={renderAllPostsItem}
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
               onRefresh={handleRefresh}

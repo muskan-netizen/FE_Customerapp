@@ -48,7 +48,7 @@ export default function ForgotPassword({ navigation }) {
     return;
   };
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, { data });
+    return navigation.navigate(screenName, { data });
   };
 
   //Validated form

@@ -39,13 +39,13 @@ import {
   ProductDetail2,
   ProductList,
   ProductList2,
+  ProductListEcom,
   RateOrder,
   ReferAndEarn,
   ReplaceOrder,
   ReturnOrder,
   SavedCards,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   SendRefferal,
@@ -56,13 +56,18 @@ import {
   Tracking,
   Vendors,
   Vendors2,
+  ViewAllSearchItems,
   Wallet,
   WebLinks,
   WebPayment,
   WebviewScreen,
   Wishlist,
   Wishlist2,
-  Yoco
+  Yoco,
+  EcomAccount,
+  EcomLangCurrency,
+  DeveloperMode,
+  P2pOndemandProductDetail
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -79,6 +84,8 @@ export default function ({ navigation }) {
         return Account2;
       case 4:
         return Account4;
+      case 10:
+        return EcomAccount;
       default:
         return Account3;
     }
@@ -101,9 +108,22 @@ export default function ({ navigation }) {
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
+
+  const productListView = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductList2
+      case 10:
+        return ProductListEcom
+      default:
+        return ProductList
+    }
+  }
+
+
 
   return (
     <Stack.Navigator
@@ -186,7 +206,7 @@ export default function ({ navigation }) {
       <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
+        component={productListView()}
       />
       <Stack.Screen name={navigationStrings.RATEORDER} component={RateOrder} />
       <Stack.Screen
@@ -249,7 +269,7 @@ export default function ({ navigation }) {
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={P2pProductDetail}
+        component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pOndemandProductDetail : P2pProductDetail}
       />
       <Stack.Screen name={navigationStrings.MY_POSTS} component={MyP2pPosts} />
       <Stack.Screen
@@ -257,6 +277,18 @@ export default function ({ navigation }) {
         component={ReferAndEarn}
       />
       <Stack.Screen name={navigationStrings.SAVEDCARDS} component={SavedCards} />
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
+      />
+      <Stack.Screen
+        name={navigationStrings.ECOM_LANG_CURRENCY}
+        component={EcomLangCurrency}
+      />
+      <Stack.Screen
+        name={navigationStrings.DEVELOPER_MODE}
+        component={DeveloperMode}
+      />
     </Stack.Navigator>
   );
 }

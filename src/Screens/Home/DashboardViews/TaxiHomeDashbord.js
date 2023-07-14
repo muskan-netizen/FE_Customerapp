@@ -47,6 +47,7 @@ import {
 import useInterval from '../../../utils/useInterval';
 import stylesFunc from '../styles';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
+import { isEmpty } from 'lodash';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -54,7 +55,7 @@ export default function TaxiHomeDashbord({
   onPressCategory = () => { },
   location = {},
   curLatLong = {},
-  currentLocation = {}
+  currentLocation = {},
 }) {
 
   const navigation = useNavigation();
@@ -80,14 +81,14 @@ export default function TaxiHomeDashbord({
     isVisibleAddressModal: false,
     pickupAddress: {},
     allListedDrivers: [],
+    isLoading: true
   });
-
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  useEffect(()=>{
-    if(!!appMainData?.categories){
-      updateState({isLoadingModal:false})
+  useEffect(() => {
+    if (!!appMainData?.categories) {
+      updateState({ isLoadingModal: false })
     }
-  },[appMainData])
+  }, [appMainData])
   const fontFamily = appStyle?.fontSizeData;
   const { bannerRef } = useRef();
   const {
@@ -104,28 +105,51 @@ export default function TaxiHomeDashbord({
     fullMapShow,
     selectViaMap,
     allListedDrivers,
+    isLoading
   } = state;
   const styles = stylesFunc({ themeColors, fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!!userData?.auth_token) {
-        getAllAddress();
+
+
+  let myCategories = [{ data: [] }]
+
+  if (!!appMainData?.homePageLabels) {
+    myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
+      if (val.slug == 'nav_categories') {
+        return val
       }
-    }, []),
-  );
+    })
+  } else {
+    myCategories = !!appMainData?.categories && [{ data: appMainData?.categories || [] }]
+  }
+
+  console.log("myCategoriesmyCategories", myCategories)
+
+  useEffect(() => {
+    if (!!appMainData?.categories) {
+      updateState({ isLoadingModal: false, isLoading: false })
+    }
+  }, [appMainData])
 
 
   const isFocused = useIsFocused();
-  useInterval(
-    () => {
-      if (location?.latitude && location?.longitude && userData?.auth_token) {
-        getAllDrivers();
-      }
-    },
-    isFocused ? 5000 : null,
-  );
+
+
+  useEffect(() => {
+    if (location?.latitude && location?.longitude && userData?.auth_token) {
+      getAllDrivers();
+    }
+  }, [])
+
+  // useInterval(
+  //   () => {
+  //     if (location?.latitude && location?.longitude && userData?.auth_token) {
+  //       getAllDrivers();
+  //     }
+  //   },
+  //   isFocused ? 5000 : null,
+  // );
 
   const mapRef = useRef();
 
@@ -164,21 +188,21 @@ export default function TaxiHomeDashbord({
   };
 
   const getAllDrivers = () => {
-    actions
-      .getAllNearByDrivers(
-        {
-          latitude: location?.latitude,
-          longitude: location?.longitude,
-        },
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        },
-      )
+    actions.getAllNearByDrivers(
+      {
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+      },
+      {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      },
+    )
       .then((res) => {
         updateState({
           allListedDrivers: res?.data,
+          isLoading: false
         });
       })
       .catch((error) => {
@@ -252,6 +276,7 @@ export default function TaxiHomeDashbord({
         console.log(res, 'res>res>res');
         updateState({ del: del ? false : true });
         showSuccess(res.message);
+        updateState({ isLoading: false });
         setModalVisible(false);
       })
       .catch((error) => {
@@ -290,7 +315,6 @@ export default function TaxiHomeDashbord({
 
   /********************** instunt order place api code written here ************************/
 
-  console.log(currentLocation, "currentLocation");
 
   const _onInstuntOrderPlace = () => {
 
@@ -360,7 +384,10 @@ export default function TaxiHomeDashbord({
 
   /*********************************************** instunt booking module code ends here *************************/
 
+
+  console.log("myCategories?.data", myCategories)
   const _renderItem = useCallback(({ item }) => {
+
     return (
       <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} mainViewStyle={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey }} />
     );
@@ -538,7 +565,7 @@ export default function TaxiHomeDashbord({
     scheduleDate = null,
     prefillAdress = null
   }) => {
-    let item = appMainData.categories[0]
+    let item = !!appMainData?.categories ? appMainData?.categories[0] : null
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
       updateState({ fullMapShow: false })
@@ -571,6 +598,7 @@ export default function TaxiHomeDashbord({
     }, 2000);
   }
 
+  console.log("isloading value", isLoading)
 
   return (
     <WrapperContainer
@@ -579,7 +607,9 @@ export default function TaxiHomeDashbord({
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : colors.white,
-      }}>
+      }}
+    // isLoading={isLoading}
+    >
 
       <ScrollView
         // bounces={false}
@@ -607,15 +637,15 @@ export default function TaxiHomeDashbord({
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
             onSnapToItem={(index) => updateState({ slider1ActiveSlide: index })}
+            cardViewStyle={{ marginTop: moderateScaleVertical(8) }}
           // onPress={(item) => bannerPress(item)}
           />
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
-        <Loader isLoading={isLoadingModal} />
 
-        <FlatList
+        {isEmpty(myCategories[0]?.data) ? null : <FlatList
           horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
-          data={appMainData?.categories || []}
+          data={myCategories[0]?.data || []}
           numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
           style={{
             marginTop: moderateScaleVertical(10),
@@ -634,7 +664,7 @@ export default function TaxiHomeDashbord({
             <View style={{ marginRight: moderateScale(12) }} />
           )}
         />
-
+        }
         {/* findCabCategory */}
         {true && (
           <>
@@ -930,6 +960,7 @@ export default function TaxiHomeDashbord({
                       longitude: Number(coordinate?.agentlog?.long),
                     }}>
                     <Image
+
                       style={{
                         zIndex: 99,
                         // height:46,

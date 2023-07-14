@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   BrandProducts,
   BuyProduct,
@@ -15,18 +15,19 @@ import {
   ProductList,
   ProductList2,
   ProductList3,
+  ProductListEcom,
   SearchProductVendorItem,
-  SearchProductVendorItem2,
   SearchProductVendorItem3V2,
   SendProduct,
   Vendors,
   Vendors2,
+  ViewAllSearchItems,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
 export default function () {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
       case 1:
@@ -34,18 +35,16 @@ export default function () {
       case 8:
         return SearchProductVendorItem3V2;
       default:
-        return SearchProductVendorItem2;
+        return SearchProductVendorItem3V2;
     }
   };
 
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
-      case 1:
-        return ProductList;
-      case 2:
-        return ProductList2;
-      default:
-        return ProductList3;
+      case 1: return ProductList;
+      case 2: return ProductList2;
+      case 10: return ProductListEcom;
+      default: return ProductList3;
     }
   };
 
@@ -58,8 +57,8 @@ export default function () {
         name={navigationStrings.CELEBRITY}
         component={
           appStyle?.homePageLayout === 3 ||
-          appStyle?.homePageLayout === 5 ||
-          appStyle?.homePageLayout === 8
+            appStyle?.homePageLayout === 5 ||
+            appStyle?.homePageLayout === 8
             ? Celebrity2
             : Celebrity
         }
@@ -111,6 +110,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={checkProductListLayout()}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
       />
     </Stack.Navigator>
   );

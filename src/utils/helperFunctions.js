@@ -184,6 +184,11 @@ The first six values (the red, green, and blue ones) stay the exact same. The on
       return `#${color}99`;
     case '70':
       return `#${color}B3`;
+    case '80':
+      return `#${color}B4`;
+    case '90':
+      return `#${color}B5`;
+
   }
 }
 

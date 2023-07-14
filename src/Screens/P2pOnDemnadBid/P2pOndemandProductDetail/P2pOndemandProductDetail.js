@@ -43,7 +43,8 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import {
   getImageUrl,
-  showError
+  showError,
+  showSuccess
 } from '../../../utils/helperFunctions';
 import styleFun from './styles';
 import moment from 'moment';
@@ -178,7 +179,8 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
         if (!isEmpty(res?.data?.products?.product_availability)) {
           let dateObj = {}
           res?.data?.products?.product_availability?.map((item, index) => {
-            dateObj[moment(item?.date_time).format("YYYY-MM-DD")] = { selected: true, customStyles: { container: { backgroundColor: !!item?.not_available ? colors.grey1 : colors.black }, text: { color: colors.white } }, is_blocked: !!item?.not_available }
+            if (moment(item?.date_time).format("YYYY-MM-DD") >= moment(new Date()).format("YYYY-MM-DD"))
+              dateObj[moment(item?.date_time).format("YYYY-MM-DD")] = { selected: true, customStyles: { container: { backgroundColor: !!item?.not_available ? colors.grey1 : colors.black }, text: { color: colors.white } }, is_blocked: !!item?.not_available }
           })
           setSelectedDates({ ...selectedDates, ...dateObj })
         }
@@ -433,9 +435,12 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
     data['quantity'] = 1;
     data['product_variant_id'] = productInfo?.variant[0]?.id;
     data['type'] = dineInType;
-    data['start_date_time'] = `${startDate} ${String(moment(pickUpTime, "hh:mm:ss").format("hh:mm:ss"))}`;
-    data['end_date_time'] = `${endDate} ${String(moment(dropOffTime, "hh:mm:ss").format("hh:mm:ss"))}`;
+    if (productInfo?.category?.category_detail?.type_id !== 13) {
 
+
+      data['start_date_time'] = `${startDate} ${String(moment(pickUpTime, "hh:mm:ss").format("hh:mm:ss"))}`;
+      data['end_date_time'] = `${endDate} ${String(moment(dropOffTime, "hh:mm:ss").format("hh:mm:ss"))}`;
+    }
     console.log(data, 'data for cart');
 
     actions.addProductsToCart(data, {
@@ -465,7 +470,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
       return;
     }
 
-    if (!startDate || !endDate) {
+    if ((!startDate || !endDate) && productInfo?.category?.category_detail?.type_id !== 13) {
       showError("Please select rental date range")
       return
     }
@@ -493,6 +498,37 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
       .catch((error) => showError('something went wrong'));
   };
 
+  //add Product to wishlist
+  const _onAddtoWishlist = () => {
+    const item = cloneDeep(productInfo)
+    if (!!userData?.auth_token) {
+      actions
+        .updateProductWishListData(
+          `/${item.product_id || item.id}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then(res => {
+          showSuccess(res.message);
+
+          if (item?.is_wishlist) {
+            item.is_wishlist = null;
+            setProductInfo(item)
+          } else {
+            item.is_wishlist = { product_id: item?.id };
+            setProductInfo(item)
+          }
+        })
+        .catch(errorMethod);
+    } else {
+      actions.setAppSessionData('on_login');
+    }
+  };
+
   const distance = () => {
     return getDistance(
       {
@@ -507,8 +543,6 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
     return <WrapperContainer isLoading={isLoading} />;
   }
 
-  const { month_price: monthPrice = '', week_price: weekPrice = '', price: dayPrice = ''
-  } = productInfo && productInfo?.variant ? productInfo?.variant[0] : {}
   return (
     <View
       style={{
@@ -532,16 +566,30 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   onSnapToItem={index => onSelect(index)}
                 />
               ) : (
-                <></>
-                // <FastImage
-                //   source={imagePath.icDefaultImg}
-                //   style={{
-                //     height: moderateScale(250),
-                //     width: width,
 
-                //   }}
-                // />
+                <FastImage
+                  source={imagePath.icDefaultImg}
+                  style={{
+                    height: moderateScale(250),
+                    width: width,
+
+                  }}
+                />
               )}
+
+              <TouchableOpacity
+                style={{
+                  position: 'absolute', right: 20, bottom: 20,
+                }}
+                onPress={_onAddtoWishlist}>
+                <Image source={!!productInfo?.is_wishlist ? imagePath.icHeart : imagePath.wishlist} style={{
+                  height: moderateScale(30),
+                  width: moderateScale(30),
+                  resizeMode: 'contain',
+                  tintColor: themeColors?.primary_color
+
+                }} />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.back}
@@ -613,17 +661,38 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                 })
               }
             </View>
+            <View style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginHorizontal: moderateScale(16),
+              marginTop: moderateScale(11),
 
-            <Text
-              style={{
-                marginTop: moderateScale(11),
-                fontFamily: fontFamily?.medium,
-                fontSize: textScale(20),
-                marginHorizontal: moderateScale(16),
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-              }}>
-              {productInfo?.translation[0]?.title}
-            </Text>
+            }}>
+
+              <Text
+                style={{
+
+                  fontFamily: fontFamily?.medium,
+                  fontSize: textScale(20),
+
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }}>
+                {productInfo?.translation[0]?.title}
+              </Text>
+
+
+              {productInfo?.category?.category_detail?.type_id == 13 && <Text
+                style={{
+                  marginTop: moderateScale(11),
+                  fontFamily: fontFamily?.medium,
+                  fontSize: textScale(16),
+                  marginHorizontal: moderateScale(16),
+                  color: isDarkMode ? MyDarkTheme.colors.text : themeColors?.primary_color
+                }}>
+                {tokenConverterPlusCurrencyNumberFormater(productInfo?.price || productInfo?.variant[0]?.price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}
+              </Text>}
+            </View>
             <View
               style={{
                 flexDirection: 'row',
@@ -706,84 +775,91 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
             }
 
 
-            <View
-              style={{
-                flexDirection: 'row',
-                marginHorizontal: moderateScale(16),
-                marginTop: moderateScale(20),
-                width: width - moderateScale(30),
-              }}>
-              <Text style={{
-                fontFamily: fontFamily?.regular,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                fontSize: textScale(13)
-              }}>Offers for a:</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(6),
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flex: 1,
-                }}>
-                <Text style={{
-                  fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontSize: textScale(14)
-                }}>Day {tokenConverterPlusCurrencyNumberFormater(dayPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}</Text>
-                <Text style={{
-                  fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontSize: textScale(14)
-                }}>Week {tokenConverterPlusCurrencyNumberFormater(weekPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
-                <Text style={{
-                  fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontSize: textScale(14)
-                }}>Month {tokenConverterPlusCurrencyNumberFormater(monthPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
+            {productInfo?.category?.category_detail?.type_id !== 13 &&
+
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginHorizontal: moderateScale(16),
+                    marginTop: moderateScale(20),
+                    width: width - moderateScale(30),
+                  }}>
+                  <Text style={{
+                    fontFamily: fontFamily?.regular,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    fontSize: textScale(13)
+                  }}>Offers for a:</Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginHorizontal: moderateScale(6),
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flex: 1,
+                    }}>
+                    <Text style={{
+                      fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      fontSize: textScale(14)
+                    }}>Day {tokenConverterPlusCurrencyNumberFormater(productInfo?.price || productInfo?.variant[0]?.price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}</Text>
+                    <Text style={{
+                      fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      fontSize: textScale(14)
+                    }}>Week {tokenConverterPlusCurrencyNumberFormater(productInfo?.week_price || productInfo?.variant[0]?.week_price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
+                    <Text style={{
+                      fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      fontSize: textScale(14)
+                    }}>Month {tokenConverterPlusCurrencyNumberFormater(productInfo?.month_price || productInfo?.variant[0]?.month_price || 0, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol,) || ''}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  onPress={toggleModal}
+                  style={styles.dateBox}>
+                  <Text style={{ ...styles.dateTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyM }}>
+                    {moment(startDate || new Date()).format("dddd DD MMMM'YY")} {'\n'}
+                    {pickUpTime}{' '}
+                  </Text>
+                  <Image style={{ margin: moderateScale(10) }} source={imagePath.ic_right_arrow} />
+                  <Text style={{ ...styles.dateTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyM }}>
+                    {moment(endDate || new Date()).format("dddd DD MMMM'YY")} {'\n'}
+                    {dropOffTime}{' '}
+                  </Text>
+                </TouchableOpacity>
               </View>
-            </View>
-            <TouchableOpacity
-              onPress={toggleModal}
-              style={styles.dateBox}>
-              <Text style={{ ...styles.dateTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyM }}>
-                {moment(startDate || new Date()).format("dddd DD MMMM'YY")} {'\n'}
-                {pickUpTime}{' '}
+            }
+            {!!productInfo?.translation[0]?.body_html && <View>
+              <Text
+                style={{
+                  fontFamily: fontFamily?.bold,
+                  marginHorizontal: moderateScale(16),
+                  marginTop: moderateScale(20),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }}>
+                {strings.DESCRIPTION}
               </Text>
-              <Image style={{ margin: moderateScale(10) }} source={imagePath.ic_right_arrow} />
-              <Text style={{ ...styles.dateTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyM }}>
-                {moment(endDate || new Date()).format("dddd DD MMMM'YY")} {'\n'}
-                {dropOffTime}{' '}
-              </Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: fontFamily?.bold,
+              <View style={{
                 marginHorizontal: moderateScale(16),
-                marginTop: moderateScale(20),
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                marginTop: moderateScale(4)
               }}>
-              {strings.DESCRIPTION}
-            </Text>
-            <View style={{
-              marginHorizontal: moderateScale(16),
-              marginTop: moderateScale(4)
-            }}>
 
-              <RenderHTML
-                contentWidth={width}
-                source={{
-                  html: productInfo?.translation[0]?.body_html
-                    ? productInfo?.translation[0]?.body_html
-                    : ''
-                }}
-                tagsStyles={{
-                  p: {
-                    color: isDarkMode ? colors.white : colors.black,
-                    textAlign: 'left',
-                  },
+                <RenderHTML
+                  contentWidth={width}
+                  source={{
+                    html: productInfo?.translation[0]?.body_html
+                      ? productInfo?.translation[0]?.body_html
+                      : ''
+                  }}
+                  tagsStyles={{
+                    p: {
+                      color: isDarkMode ? colors.white : colors.black,
+                      textAlign: 'left',
+                    },
 
-                }}
-              />
+                  }}
+                />
 
-            </View>
+              </View>
+            </View>}
 
 
 
@@ -833,9 +909,9 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                 APS-C Size / DX-Format
               </Text>
             </View> */}
-            <View
+            {!!region?.latitude && <View
               style={{
-                marginVertical: moderateScaleVertical(40),
+                marginTop: moderateScaleVertical(40),
                 marginHorizontal: moderateScale(12),
               }}>
               <Text
@@ -853,7 +929,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   width: width - 20,
                   alignSelf: 'center',
                 }}>
-                {!!region?.latitude && <MapView
+                <MapView
                   ref={mapRef}
                   provider={
                     Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
@@ -873,14 +949,15 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                       latitude: Number(region?.latitude),
                       longitude: Number(region?.longitude),
                     }}
-                  ></MapView.Marker></MapView>}
+                  ></MapView.Marker></MapView>
               </View>
-            </View>
+            </View>}
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginHorizontal: moderateScale(12),
+                marginTop: moderateScaleVertical(24)
               }}>
               <Text
                 style={{ fontFamily: fontFamily?.bold, fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
@@ -924,7 +1001,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
         }}>
         <ButtonWithLoader
           isLoading={isLoadingAddToCart}
-          btnText={strings.CHECK_FINAL_PRICE}
+          btnText={productInfo?.category?.category_detail?.type_id == 13 ? strings.ADD : strings.CHECK_FINAL_PRICE}
           onPress={clearEntireCart}
           btnStyle={{
             backgroundColor: isDarkMode ? themeColors?.primary_color : colors.black,

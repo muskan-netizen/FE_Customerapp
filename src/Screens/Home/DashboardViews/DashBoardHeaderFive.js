@@ -29,7 +29,7 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { color } from 'react-native-reanimated';
 
 
-export default function DashBoardHeaderFive({
+function DashBoardHeaderFive({
   // navigation = {},
   location = [],
   selcetedToggle,
@@ -69,6 +69,9 @@ export default function DashBoardHeaderFive({
     '200/400',
   );
 
+
+
+
   return (
     <View
       style={{
@@ -86,6 +89,22 @@ export default function DashBoardHeaderFive({
               : colors.borderColorD,
             // borderBottomWidth: 0,
           }}>
+
+          {appStyle?.homePageLayout == 10 ? <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.openDrawer()}
+            style={{ alignItems: 'center', }}>
+            <Image
+              style={{
+                tintColor: themeColors.primary_color,
+                marginRight: moderateScale(16),
+                height: moderateScale(20),
+                width: moderateScale(20),
+              }}
+              source={imagePath.icMenuIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity> : null}
           <View
             style={{
               flexDirection: 'row',
@@ -119,7 +138,7 @@ export default function DashBoardHeaderFive({
                 }
                 style={{
                   flexDirection: 'row',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
                   flex: 0.85,
                   marginLeft: moderateScale(8),
                 }}>
@@ -127,6 +146,7 @@ export default function DashBoardHeaderFive({
                   style={[styles.locationIcon, { tintColor: getBundleId() == appIds?.eatHalal ? colors?.white : themeColors.primary_color }]}
                   source={imagePath.redLocation}
                   resizeMode="contain"
+
                 />
                 <View>
                   {!!location?.type && (
@@ -238,12 +258,12 @@ export default function DashBoardHeaderFive({
         </View>
       ) : null}
 
-      <DeliveryTypeComp
+      {getBundleId() !== appIds?.dropOff ? <DeliveryTypeComp
         selectedToggle={selcetedToggle}
         tabMainStyle={{
           marginBottom: 0,
         }}
-      />
+      /> : null}
 
       <CustomAnimatedLoader
         source={loaderOne}
@@ -263,3 +283,5 @@ export default function DashBoardHeaderFive({
     </View>
   );
 }
+
+export default React.memo(DashBoardHeaderFive)

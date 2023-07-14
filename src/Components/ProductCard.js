@@ -124,6 +124,7 @@ const ProductCard = ({
               digit_after_decimal,
               Number(additional_preferences),
               currencies?.primary_currency?.symbol,
+              currencies
             )}`}
           </Text>
         </View>

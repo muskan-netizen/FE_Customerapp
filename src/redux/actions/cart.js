@@ -1,55 +1,53 @@
 import {
-  GET_CART_DETAIL,
-  REMOVE_CART_PRODUCTS,
-  UPDATE_CART,
-  CLEAR_CART,
-  GET_ALL_PROMO_CODES,
-  VERIFY_PROMO_CODE,
-  REMOVE_PROMO_CODE,
-  PLACE_ORDER,
-  LIST_OF_PAYMENTS,
-  GETWEBURL,
-  GET_ALL_PROMO_CODES_CAB_ORDER,
-  VERIFY_PROMO_CODE_CAB_ORDER,
-  VENDOR_TABLE_CART,
-  SCHEDULE_ORDER,
+  ADD_PRESCRIPTIONS,
+  CANCELPAYTABURL,
+  CART_ITEM_CHECKED,
   CART_PRODUCT_SCHEDULE,
-  TIP_AFTER_ORDER,
-  VALIDATE_PROMO_CODE,
-  GET_ALL_PROMO_CODES_FOR_PRODUCTLIST,
-  LAST_ADDED,
-  DIFFERENT_ADD_ONS,
-  VENDOR_SLOTS,
-  GET_PAYMENT_INTENT,
+  CLEAR_CART,
   CONFIRM_PAYMENT_INTENT,
-  GET_PRODUCT_FAQS,
-  UPDATE_PRODUCT_FAQS_CART,
+  DELETE_CARD,
+  DELETE_PRESCRIPTION,
+  DIFFERENT_ADD_ONS,
+  GETWEBURL,
+  GET_ALL_PROMO_CODES,
+  GET_ALL_PROMO_CODES_CAB_ORDER,
+  GET_ALL_PROMO_CODES_FOR_PRODUCTLIST,
+  GET_CART_DETAIL,
   GET_CATEGORY_KYC_DOCUMENT,
-  SUBMIT_CATEGORY_KYC,
+  GET_PAYMENT_INTENT,
+  GET_PRODUCT_FAQS,
+  LAST_ADDED,
+  LIST_OF_PAYMENTS,
+  MTNGATEWAY,
   ORDER_AFTER_PAYMENT,
   PAYTABURL,
-  CANCELPAYTABURL,
-  FLUTTERWAVEURL,
-  SDKPAYMENTWAVEURL,
-  SDKPAYMENTCANCELWAVEURL,
-  VENDOR_DROPOFF_SLOTS,
-  ADD_PRESCRIPTIONS,
-  DELETE_PRESCRIPTION,
+  PLACE_ORDER,
+  REMOVE_CART_PRODUCTS,
+  REMOVE_PROMO_CODE,
   SAVED_CARD_LIST,
-  DELETE_CARD,
-  PESAPAL_SUCCESS,
-  MTNGATEWAY,
+  SCHEDULE_ORDER,
+  SDKPAYMENTCANCELWAVEURL,
+  SDKPAYMENTWAVEURL,
+  SUBMIT_CATEGORY_KYC,
+  TIP_AFTER_ORDER,
+  UPDATE_CART,
+  UPDATE_PRODUCT_FAQS_CART,
+  VALIDATE_PROMO_CODE,
+  VENDOR_DROPOFF_SLOTS,
+  VENDOR_SLOTS,
+  VENDOR_TABLE_CART,
+  VERIFY_PROMO_CODE,
+  VERIFY_PROMO_CODE_CAB_ORDER
 } from '../../config/urls';
 import {
   apiGet,
   apiPost,
-  removeItem,
   saveSelectedAddress,
-  setItem,
+  setItem
 } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 export const saveAddress = (data) => {
   saveSelectedAddress(data).then((suc) => {
@@ -546,10 +544,24 @@ export function getSavedCardsList(data = {}, headers = {}) {
   return apiGet(SAVED_CARD_LIST, data, headers);
 }
 
-export function deleteCard(query ="",data = {}, headers = {}) {
+export function deleteCard(query = "", data = {}, headers = {}) {
   return apiGet(DELETE_CARD + query, data, headers);
+}
+
+export function cartItemChecked(data = {}, headers = {}) {
+
+  return new Promise((resolve, reject) => {
+    apiPost(CART_ITEM_CHECKED, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 export function mtnGateway(data = {}, headers = {}) {
   return apiPost(MTNGATEWAY, data, headers);
+
 }

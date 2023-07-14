@@ -38,16 +38,14 @@ import { setItem } from '../../utils/utils';
 import RoundImg from '../../Components/RoundImg';
 import FooterLoader from '../../Components/FooterLoader';
 import styles from './styles';
-import CircularLoader from '../../Components/Loaders/CircularLoader';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
 import { getCurrentLocation } from '../../utils/helperFunctions';
 import { useFocusEffect } from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
-import { getBundleId } from 'react-native-device-info';
-import Vi from '../../constants/lang/vi';
 import { isEmpty } from 'lodash';
 import { enableFreeze } from "react-native-screens";
+import HorizontalLine from '../../Components/HorizontalLine';
+import { UIActivityIndicator } from 'react-native-indicators';
 enableFreeze(true);
 
 let isNoMore = false;
@@ -61,13 +59,13 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     isLoading: true,
     searchInput: !!paramData?.voiceInput || '',
     searchData: [],
-    showRightIcon: false,
     pageCount: 1,
     isLoadMore: false,
     showShimmer: false,
     userCurrentLatitude: null,
     userCurrentLongitude: null,
     isVoiceRecord: false,
+    showRightIcon: false,
   });
 
   const { location } = useSelector((state) => state?.home);
@@ -179,12 +177,12 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     data['keyword'] = searchInput;
     data['type'] = dineInType;
     data['limit'] = 10;
-    data['latitude'] = !!location?.latitude
-      ? location?.latitude
-      : userCurrentLatitude;
-    data['longitude'] = !!location?.longitude
-      ? location?.longitude
-      : userCurrentLongitude;
+    // data['latitude'] = !!location?.latitude
+    //   ? location?.latitude
+    //   : userCurrentLatitude;
+    // data['longitude'] = !!location?.longitude
+    //   ? location?.longitude
+    //   : userCurrentLongitude;
     data['page'] = pageCount;
     let query = '';
     let searchAction = null;
@@ -207,7 +205,27 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
       language: languages?.primary_language?.id,
     })
       .then((response) => {
-        console.log('res==>>>>++', response);
+        console.log('res==>>>>++ search', response);
+        const planeArry = []
+        response.data.map((val, i) => {
+          val.result.map((item, i) => {
+            planeArry.push({
+              type: item?.response_type,
+              id: item?.id,
+              name: item?.name || item?.translation[0]?.title
+            })
+          })
+        })
+
+        console.log('res==>>>>++ planeArry', planeArry);
+        updateState({
+          searchData: planeArry,
+          isLoading: false,
+          isLoadMore: false,
+          showShimmer: false,
+        });
+
+        return;
         if (response.data.length == 0) {
           isNoMore = true;
         }
@@ -499,10 +517,15 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           }}
         />
         <Text
+          numberOfLines={2}
           style={{
             fontFamily: fontFamily.regular,
             fontSize: textScale(12),
-            marginLeft: moderateScale(8),
+            marginHorizontal: moderateScale(8),
+            color: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.black,
+            textAlign: 'justify'
           }}>
           {item?.dataname || item?.title || item?.name}
         </Text>
@@ -510,58 +533,49 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     );
   };
 
-  const renderProduct = ({ item }) => {
+  const onPresItem = (item) => {
+    navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM, {
+      view_type: item?.type,
+      searchText: item?.name.toLowerCase(),
+    })
+  }
+
+  const renderProduct = ({ item, index }) => {
     return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
+      <TouchableOpacity
+        key={String(item?.id || index)}
+        onPress={() => onPresItem(item)}
+      >
+        <View style={{
+          flexDirection: "row",
           alignItems: 'center',
-          marginHorizontal: moderateScale(20),
+          paddingHorizontal: moderateScale(12)
         }}>
-        {!!item?.image_url && (
-          <RoundImg
-            img={item?.image_url}
-            size={35}
-            isDarkMode={isDarkMode}
-            MyDarkTheme={MyDarkTheme}
-          />
-        )}
-        <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontSize: textScale(13),
-              fontFamily: fontFamily.bold,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {item?.dataname || item?.title || item?.name}
-          </Text>
-          <View
-            style={{
-              marginLeft: moderateScale(10),
-            }}>
-            <FlatList
-              data={item?.result}
-              renderItem={renderSearchResults}
-              ListHeaderComponent={() => (
-                <View
-                  style={{
-                    height: moderateScaleVertical(10),
-                  }}
-                />
-              )}
-              ItemSeparatorComponent={() => (
-                <View
-                  style={{
-                    height: moderateScaleVertical(6),
-                  }}
-                />
-              )}
-            />
+          <View style={{ flex: 0.08 }}>
+            <Image style={{
+              tintColor: isDarkMode ? colors.white : colors.black
+            }} source={imagePath.icSearchb} />
+          </View>
+          <View style={{ flex: 0.8 }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: textScale(12),
+                fontFamily: fontFamily.bold,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
+            >
+              {item?.name || ''}
+            </Text>
+          </View>
+          <View style={{ flex: 0.1, alignItems: 'flex-end' }}>
+            <Image style={{
+              transform: [{ rotate: '-60deg' }],
+              tintColor: isDarkMode ? colors.whiteOpacity50 : colors.grayOpacity51
+            }} source={imagePath.searchArrow} />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -588,50 +602,57 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
   const _listEmptyComponent = () => {
     return (
       <View>
-        {!!searchInput && searchInput?.length > 1 ? null : (
-          <>
-            {!isEmpty(previousSearches) ? (
-              <View style={{ marginHorizontal: moderateScale(20) }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-
-                    width: width - 16,
-                  }}>
+        {!!searchInput && searchInput?.length > 1 ?
+          !showShimmer ?
+            <Text style={{
+              textAlign: "center",
+              marginTop: moderateScaleVertical(16),
+              fontFamily: fontFamily?.bold
+            }}>{strings.NODATAFOUND}!</Text>
+            : null : (
+            <>
+              {!isEmpty(previousSearches) ? (
+                <View style={{ marginHorizontal: moderateScale(20) }}>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+
                       width: width - 16,
                     }}>
-                    <Text
+                    <View
                       style={{
-                        fontSize: textScale(16),
-                        fontFamily: fontFamily.medium,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        width: width - 16,
                       }}>
-                      {strings.RECENTLY_SEARCH}
-                    </Text>
-                    <TouchableOpacity onPress={() => _clearRecentSearches()}>
                       <Text
                         style={{
-                          paddingHorizontal: moderateScale(20),
-                          fontSize: textScale(12),
-                          fontFamily: fontFamily.regular,
-                          color: themeColors.primary_color,
+                          fontSize: textScale(16),
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
                         }}>
-                        {strings.CLEAR}
+                        {strings.RECENTLY_SEARCH}
                       </Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity onPress={() => _clearRecentSearches()}>
+                        <Text
+                          style={{
+                            paddingHorizontal: moderateScale(20),
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.regular,
+                            color: themeColors.primary_color,
+                          }}>
+                          {strings.CLEAR}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
+                  <View>{recentlyData(previousSearches)}</View>
                 </View>
-                <View>{recentlyData(previousSearches)}</View>
-              </View>
-            ) : null}
-            {!isEmpty(recommendedVendorsdata[0]?.data) && (
+              ) : null}
+              {/* {!isEmpty(recommendedVendorsdata[0]?.data) && (
               <View>
                 <Text
                   style={{
@@ -647,7 +668,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                   horizontal
                   data={recommendedVendorsdata[0]?.data}
                   renderItem={renderRecommendedVendors}
-                  keyExtractor={(item, index) => item?.id.toString()}
+                  keyExtractor={(item, index) => String(item?.id || index)}
                   keyboardShouldPersistTaps="always"
                   showsHorizontalScrollIndicator={false}
                   style={{
@@ -659,9 +680,9 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                   ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
                 />
               </View>
-            )}
-          </>
-        )}
+            )} */}
+            </>
+          )}
       </View>
     );
   };
@@ -732,34 +753,25 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
 
         <View style={{ flex: 1 }}>
           {showShimmer ? (
-            <View
-              style={{
-                flex: 1,
-                marginHorizontal: moderateScale(20),
-                marginTop: moderateScaleVertical(24),
-              }}>
-              {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}].map(() => {
-                return (
-                  <ContentLoader style={{ height: moderateScale(54) }}>
-                    <Circle cx="20" cy="20" r="20" />
-                    <Rect x="50" y="14" rx="2" ry="2" width="100" height="8" />
-                  </ContentLoader>
-                );
-              })}
+            <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
+              <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
             </View>
           ) : (
             <FlatList
               data={searchData}
               renderItem={renderProduct}
-              keyExtractor={(item, index) => String(index)}
+              keyExtractor={(item, index) => String(item?.id || index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
               style={{ flex: 1 }}
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(20) }} />
+                <HorizontalLine lineStyle={{
+                  marginVertical: moderateScaleVertical(10),
+                  borderBottomColor: isDarkMode ? colors.whiteOpacity50 : colors.blackOpacity10
+                }} />
               )}
-              onEndReached={onEndReached}
+              // onEndReached={onEndReached}
               ListHeaderComponent={() => (
                 <View style={{ height: moderateScale(16) }} />
               )}

@@ -18,6 +18,7 @@ const SearchBar3 = ({
   navigation,
   placeHolderTxt = strings.SEARCH_HERE,
   containerStyle,
+  onPress = null
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -32,11 +33,10 @@ const SearchBar3 = ({
       activeOpacity={0.8}
       style={{
         ...styles.mainContainer,
-        backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
         ...containerStyle,
       }}
       onPress={() =>
-        navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+       !!onPress? onPress(): navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
       }>
       <Image source={imagePath.search2} />
       <View style={{flex: 1}}>
@@ -50,12 +50,12 @@ export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
     mainContainer: {
       flexDirection: 'row',
-      backgroundColor: colors.grey2,
-      borderRadius: moderateScale(15),
+      backgroundColor: colors.white,
+      borderRadius: moderateScale(8),
       paddingHorizontal: moderateScale(15),
       marginHorizontal: moderateScale(15),
-      marginVertical: moderateScale(13),
-      paddingVertical: moderateScaleVertical(15),
+      marginVertical: moderateScale(12),
+      height: moderateScaleVertical(42),
       alignItems: 'center',
     },
     placeHolderTxt: {

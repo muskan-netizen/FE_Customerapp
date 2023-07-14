@@ -22,11 +22,16 @@ import {
 import { MyDarkTheme } from '../styles/theme';
 import { getColorCodeWithOpactiyNumber, showError, showSuccess } from '../utils/helperFunctions';
 
-function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
+function DeliveryTypeComp({
+  selectedToggle = () => { }, 
+  tabMainStyle = {},
+  themeColors =  {
+    primary_color: colors.themeColor
+  }
+ }) {
   const { cartItemCount } = useSelector((state) => state?.cart);
   const {
     appData,
-    themeColors,
     appStyle,
     currencies,
     languages,

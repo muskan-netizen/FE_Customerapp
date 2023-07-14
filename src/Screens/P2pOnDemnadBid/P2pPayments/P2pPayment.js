@@ -414,6 +414,8 @@ const P2pPayment = ({ navigation, route, item }) => {
         );
     };
 
+
+
     const renderPaymentMethods = useCallback(
         ({ item, index }) => {
             return (
@@ -462,6 +464,8 @@ const P2pPayment = ({ navigation, route, item }) => {
         [paymentMethods, selectedPayment],
     );
 
+
+
     return (
         <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
             <OoryksHeader leftTitle={strings.PAYMENT} />
@@ -505,16 +509,16 @@ const P2pPayment = ({ navigation, route, item }) => {
                                         fontWeight: '400',
                                     }}
                                     numberOfLines={2}>
-                                    CDCL, Sector 28 b, Chandigarh 80274732434
+                                    {paramData?.productDetails?.product?.address}
                                 </Text>
                             </View>
                         </View>
-                        <TouchableOpacity>
+                        {/* <TouchableOpacity>
                             <Image
                                 source={imagePath.icEdit1}
                                 style={{ tintColor: colors.black }}
                             />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <Text
                         style={{

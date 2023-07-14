@@ -140,7 +140,7 @@ const Header = ({
           </View>
         </View>
 
-        <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
+        <View style={{ flex: 0.4, alignItems: 'flex-end' }}>
           {isRightText ? (
             <TouchableOpacity
               activeOpacity={0.7}

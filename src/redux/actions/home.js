@@ -24,6 +24,8 @@ import {
   DECLINE_RIDE_BID,
   ACCEPT_RIDE_BID,
   ACCEPT_RIDE_FOR_BID,
+  SERACH_ALL_ITEMS,
+  GET_SUBCATEGORY_VENDORS_V2,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
@@ -321,6 +323,19 @@ export const getSubCategoryVendors = (data, headers = {}) => {
   });
 };
 
+export const getSubCategoryVendorsV2 = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_SUBCATEGORY_VENDORS_V2, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
 export const isLocationSearched = (flag) => {
   dispatch({
     type: types.IS_LOCATION_SEARCHED,
@@ -329,15 +344,19 @@ export const isLocationSearched = (flag) => {
 };
 
 //Get Homme banners and Category data
-export function homeDataV2(data = {}, headers = {}, isShortCode = false) {
+export function homeDataV2(data = {}, headers = {}, isShortCode = false, isSaveRedux= true) {
   return new Promise((resolve, reject) => {
+
+
     apiPost(HOMEPAGE_DATA_URL_V2, data, headers)
       .then((res) => {
         if (!isShortCode) {
+          if(isSaveRedux){
           dispatch({
             type: types.HOME_DATA,
             payload: res.data,
           });
+        }
         }
         resolve(res);
       })
@@ -351,6 +370,20 @@ export function onGlobalSearchV2(query = '', data = {}, headers = {}) {
   console.log('search global');
   return new Promise((resolve, reject) => {
     apiPost(SEARCH_V2 + query, data, headers)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+export function viewAllSearchItemV2(query = '', data = {}, headers = {}) {
+  console.log('search global');
+  return new Promise((resolve, reject) => {
+    apiPost(SERACH_ALL_ITEMS + query, data, headers)
       .then((response) => {
         resolve(response);
       })
@@ -393,7 +426,13 @@ export const clearLastBidData = () => {
 }
 
 
-
+export const setCountryFlag = (data) =>{
+    setItem('countryFlag', data)
+    dispatch({
+      type: types.COUNTRY_FLAG,
+      payload: data,
+    })
+}
 
 export const orderRideBidDetails = (data, headers = {}) => {
   return new Promise((resolve, reject) => {

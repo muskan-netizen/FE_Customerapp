@@ -6,7 +6,8 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical
+  moderateScaleVertical,
+  width
 } from '../../../styles/responsiveSize';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
@@ -55,6 +56,7 @@ export default function DashBoardHeaderFive({
     '200/400',
   );
 
+
   return (
     <View
       style={{
@@ -72,10 +74,10 @@ export default function DashBoardHeaderFive({
         ) ? (
           <FastImage
             style={{
-              width: moderateScale(45),
-              height: moderateScale(55),
+              width: moderateScale(width / 6),
+              height: moderateScale(40),
             }}
-            resizeMode={FastImage.resizeMode.cover}
+            resizeMode={FastImage.resizeMode.contain}
             source={{
               uri: imageURI,
               priority: FastImage.priority.high,

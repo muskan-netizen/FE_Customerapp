@@ -32,7 +32,7 @@ let imageHeight = parseInt(moderateScale(100))
 let imageWidth = parseInt(width / 3.2)
 
 const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1 }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle,appData } =
+  const { themeColors, appStyle, currencies, themeColor, themeToggle, appData } =
     useSelector((state) => state?.initBoot);
   const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
@@ -168,7 +168,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 }}>
 
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0].price,
+                  variant[0]?.price,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,

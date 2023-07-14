@@ -139,6 +139,8 @@ export default function Products({ route, navigation }) {
   const CartItems = useSelector(state => state?.cart?.cartItemCount);
   const reloadData = useSelector(state => state?.reloadData?.reloadData);
 
+
+
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
@@ -1351,7 +1353,7 @@ export default function Products({ route, navigation }) {
               horizontal
               style={{
                 // marginHorizontal: moderateScale(0),
-                marginTop: moderateScaleVertical(5),
+                marginVertical: moderateScaleVertical(8),
               }}>
               {/* <View><Image source={imagePath.}/></View> */}
               {categoryInfo.childs.map((item, inx) => {
@@ -3935,7 +3937,7 @@ export default function Products({ route, navigation }) {
     Linking.openURL(item?.url);
   };
 
-  const onDateSelected = async date => {
+  const onDateSelected = async (date) => {
     setLoadingGetSlots(true);
     setAppointmentSelectedDate(date);
     const apiData = {
@@ -3954,6 +3956,7 @@ export default function Products({ route, navigation }) {
           .getAppointmentSlots(apiData, apiHeader)
           .then(res => {
             console.log(res, '<===res getAppointmentSlots');
+
             if (res?.dispatchAgents) {
               if (!isEmpty(res?.dispatchAgents?.slots)) {
                 const slots = res?.dispatchAgents?.slots;
@@ -4002,6 +4005,14 @@ export default function Products({ route, navigation }) {
           );
 
           console.log(res, 'res for slots vendor');
+          if (!!res && !!res?.data && isEmpty(res?.data)) {
+            setLoadingGetSlots(false);
+            setAppointmentPicker(false);
+            setSelectedAppointmentIndx(null);
+            setSelectedAppointmentSlot({});
+            alert("Please choose a different date as the selected slots are not available at the moment.")
+            return;
+          }
           if (res) {
             setAppointmentAvailableSlots(res.data);
             setLoadingGetSlots(false);
@@ -4083,14 +4094,29 @@ export default function Products({ route, navigation }) {
       alert('please select agent');
       return;
     }
-    setAppointmentSlotsModal(false);
-    setAppointmentPicker(false);
-    setSelectedAgent({});
-    addSingleItem(
-      selectedAllProductDataForAppointment,
-      selectedSection,
-      selectedItemIndx,
-    );
+
+    console.log("selectedAllProductDataForAppointment",selectedAppointmentSlot)
+    // return;
+    if(!!selectedAppointmentSlot?.value){
+      if(!!typeId && typeId == 8){
+        setAppointmentSlotsModal(false);
+        setTimeout(() => {
+          setIsVisibleModal(true)
+        }, 500);
+        return;
+      }
+      setAppointmentSlotsModal(false);
+      setAppointmentPicker(false);
+      setSelectedAgent({});
+      addSingleItem(
+        selectedAllProductDataForAppointment,
+        selectedSection,
+        selectedItemIndx,
+      );
+    }else{
+      alert("Please select slot")
+    }
+   
   };
 
   const AppointmentSlotModal = () => {
@@ -4117,6 +4143,7 @@ export default function Products({ route, navigation }) {
             }}>
             Select slot
           </Text>
+          
           <TouchableOpacity onPress={_onDonePressAfterSlotSelect}>
             <Text
               style={{
@@ -4994,6 +5021,7 @@ export default function Products({ route, navigation }) {
               minimumPrice={minimumPrice}
               updateMinMax={updateMinMax}
               filterData={allFilters}
+              currencies={currencies}
             />
           ) : null}
         </View>
@@ -5140,7 +5168,9 @@ export default function Products({ route, navigation }) {
         style={{
           justifyContent: 'flex-end',
           margin: 0,
-        }}>
+        }}
+        onBackdropPress={() => setAppointmentSlotsModal(false)}
+      >
         <AppointmentSlotModal />
       </ReactNativeModal>
     </WrapperContainer>

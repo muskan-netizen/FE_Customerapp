@@ -8,9 +8,6 @@ import {
   BrandProducts2,
   BuyProduct,
   CategoryBrands,
-  ChatRoom,
-  ChatRoomForVendor,
-  ChatScreen,
   ConfirmDetailsBuy,
   Delivery,
   Filter,
@@ -48,7 +45,8 @@ import {
   WebLinks,
   P2pOndemandProductDetail,
   AddVehicleDetails,
-  P2pOndemandProducts
+  P2pOndemandProducts,
+  ChatScreen
 } from '../Screens';
 
 import { verticalAnimation } from '../utils/utils';
@@ -214,11 +212,7 @@ export default function () {
         name={navigationStrings.CATEGORY_BRANDS}
         component={CategoryBrands}
       />
-      <Stack.Screen
-        name={navigationStrings.CHAT_SCREEN}
-        component={ChatScreen}
-        options={{ gestureEnabled: true }}
-      />
+
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
         component={ScrollableCategory}
@@ -227,11 +221,7 @@ export default function () {
         name={navigationStrings.LAUNDRY_AVAILABLE_VENDORS}
         component={LaundryAvailableVendors}
       />
-      <Stack.Screen name={navigationStrings.CHAT_ROOM} component={ChatRoom} />
-      <Stack.Screen
-        name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
-        component={ChatRoomForVendor}
-      />
+
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
         component={Subscriptions2}

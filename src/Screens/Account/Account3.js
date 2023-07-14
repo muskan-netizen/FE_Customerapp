@@ -66,7 +66,6 @@ export default function Account3({ navigation }) {
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
-  console.log("appDataappDataappData", appData, languages)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -114,7 +113,6 @@ export default function Account3({ navigation }) {
     }
   };
 
-  console.log(userData, 'appDataappData');
   const getListOfPaymentMethod = () => {
     actions
       .getListOfPaymentMethod(
@@ -163,12 +161,13 @@ export default function Account3({ navigation }) {
     alert('link not found');
   };
 
+
   // initalize Zendesk
   useEffect(() => {
     ZendeskChat.init(
       `${preferences?.customer_support_key}`,
       `${preferences?.customer_support_application_id}`,
-    );
+    )
 
   }, [
     preferences?.customer_support_application_id,
@@ -182,7 +181,7 @@ export default function Account3({ navigation }) {
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
 
-    });
+    })
     ZendeskChat.startChat({
       name: userData?.name,
       phone: userData?.phone_number ? userData?.phone_number : '',
@@ -407,7 +406,7 @@ export default function Account3({ navigation }) {
         )} */}
 
           {!!userData?.auth_token &&
-            (businessType == 4 ? null : (
+            ((businessType == 4 || !!appData?.profile?.preferences?.is_rental_weekly_monthly_price) ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -625,7 +624,7 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-          {console.log(appMainData, 'appMainDataappMainData')}
+
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
             !!appMainData?.is_admin ? (

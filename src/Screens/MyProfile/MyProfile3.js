@@ -1228,6 +1228,14 @@ export default function MyProfile3({route, navigation}) {
 
   const sheetRef = useRef(null);
 
+  const onPressGoBack = () => {
+    if (!!route?.params && !!route?.params?.isComeFromDrawer) {
+      navigation.openDrawer()
+    } else {
+      navigation.goBack()
+    }
+  }
+
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -1244,6 +1252,7 @@ export default function MyProfile3({route, navigation}) {
             ? MyDarkTheme.colors.background
             : colors.backgroundGreyC,
         }}
+        onPressLeft={onPressGoBack}
       />
       <View style={{...commonStyles.headerTopLine}} />
       {/* top section user general info */}

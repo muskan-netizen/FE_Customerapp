@@ -18,6 +18,7 @@ const initial_state = {
   appData: {},
   currencies: {},
   languages: {},
+  primary_country: {},
   allAddresss: [],
   shortCodeStatus: null,
   appStyle: {
@@ -74,6 +75,14 @@ export default function (state = initial_state, action) {
       };
     }
 
+    case types.SET_COUNTRY: {
+      let countryData = action.payload;
+      return {
+        ...state,
+        primary_country: countryData,
+      };
+    }
+
     case types.SET_LANGUAGE: {
       let languagesData = action.payload;
       return {
@@ -96,6 +105,8 @@ export default function (state = initial_state, action) {
         },
       };
     }
+
+  
 
     case types.UPDATE_LANGAUGE: {
       let languagesData = {};

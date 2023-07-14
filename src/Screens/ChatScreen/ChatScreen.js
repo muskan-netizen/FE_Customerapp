@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,18 +9,18 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import {GiftedChat, Send, InputToolbar} from 'react-native-gifted-chat';
+import { GiftedChat, Send, InputToolbar } from 'react-native-gifted-chat';
 import socketServices from '../../utils/scoketService';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
+import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
 import imagePath from '../../constants/imagePath';
 import Header from '../../Components/Header';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import WrapperContainer from '../../Components/WrapperContainer';
 import actions from '../../redux/actions';
-import {getImageUrl} from '../../utils/helperFunctions';
+import { getImageUrl } from '../../utils/helperFunctions';
 import {
   height,
   moderateScale,
@@ -33,31 +33,31 @@ import moment from 'moment';
 import _ from 'lodash';
 import CircularImages from '../../Components/CircularImages';
 import Modal from 'react-native-modal';
-import {ScrollView} from 'react-native-gesture-handler';
-import {cameraHandler, getSubDomain} from '../../utils/commonFunction';
+import { ScrollView } from 'react-native-gesture-handler';
+import { cameraHandler, getSubDomain } from '../../utils/commonFunction';
 import LottieView from 'lottie-react-native';
-import {voiceListen} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { voiceListen } from '../../Components/Loaders/AnimatedLoaderFiles';
 import Voice from '@react-native-voice/voice';
-import {androidCameraPermission} from '../../utils/permissions';
+import { androidCameraPermission } from '../../utils/permissions';
 import strings from '../../constants/lang';
 
-export default function ChatScreen({route, navigation}) {
+export default function ChatScreen({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params.data;
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const {userData} = useSelector((state) => state?.auth);
-  const {dineInType} = useSelector((state) => state?.home);
+  const { userData } = useSelector((state) => state?.auth);
+  const { dineInType } = useSelector((state) => state?.home);
 
   const isChatRefresh = useSelector(
     (state) => state?.chatRefresh.isChatRefresh,
   );
-  const styles = stylesFun({fontFamily, isDarkMode});
+  const styles = stylesFun({ fontFamily, isDarkMode });
 
   let defaultImage =
     'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png';
@@ -83,9 +83,11 @@ export default function ChatScreen({route, navigation}) {
     productDetails,
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const isFocused = useIsFocused();
+
+  console.log(roomUsers, "roomUsers>>>>roomUsers")
 
   useFocusEffect(
     useCallback(() => {
@@ -97,8 +99,8 @@ export default function ChatScreen({route, navigation}) {
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused
             ? setMessages((previousMessages) =>
-                GiftedChat.append(previousMessages, data.message.chatData),
-              )
+              GiftedChat.append(previousMessages, data.message.chatData),
+            )
             : null;
           isFocused ? fetchAllRoomUser() : null;
         }
@@ -149,7 +151,7 @@ export default function ChatScreen({route, navigation}) {
 
   useEffect(() => {
     if (isFocused) {
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       fetchAllRoomUser();
       fetchAllMessages();
     }
@@ -160,16 +162,16 @@ export default function ChatScreen({route, navigation}) {
       const apiData = `/${paramData?._id}`;
       const res = await actions.getAllMessages(apiData, {});
       console.log('fetchAllMessages res', res);
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
       if (!!res && isFocused) {
         let filterArry = res.map((val, i) => {
-          return {...val, user: {}};
+          return { ...val, user: {} };
         });
         setMessages(filterArry.reverse());
       }
     } catch (error) {
       console.log('error raised in fetchAllMessages api', error);
-      updateState({isLoading: false});
+      updateState({ isLoading: false });
     }
   }, []);
 
@@ -251,10 +253,10 @@ export default function ChatScreen({route, navigation}) {
       console.log('phoneNumberphoneNumber', userData);
       let userImage = !!userData?.source
         ? getImageUrl(
-            userData?.source?.proxy_url,
-            userData?.source?.image_path,
-            '200/200',
-          )
+          userData?.source?.proxy_url,
+          userData?.source?.image_path,
+          '200/200',
+        )
         : null;
 
       try {
@@ -304,13 +306,13 @@ export default function ChatScreen({route, navigation}) {
   const sendToUserNotification = (id, text) => {
     let notificaionAgentIds =
       allAgentIds.length == 0
-        ? [{auth_user_id: !!paramData?.agent_id ? paramData?.agent_id : ''}]
+        ? [{ auth_user_id: !!paramData?.agent_id ? paramData?.agent_id : '' }]
         : allAgentIds;
 
     let apiData = {
       user_ids:
         allRoomUsersAppartFromAgent.length == 0
-          ? [{auth_user_id: paramData?.vendor_id}]
+          ? [{ auth_user_id: paramData?.vendor_id }]
           : allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
@@ -350,7 +352,7 @@ export default function ChatScreen({route, navigation}) {
       return (
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => updateState({showParticipant: true})}>
+          onPress={() => updateState({ showParticipant: true })}>
           <CircularImages
             size={28}
             isDarkMode={isDarkMode}
@@ -364,7 +366,7 @@ export default function ChatScreen({route, navigation}) {
   );
 
   const renderMessage = useCallback((props) => {
-    const {currentMessage} = props;
+    const { currentMessage } = props;
     let isRight = currentMessage?.auth_user_id == userData?.id;
 
     if (isRight) {
@@ -377,8 +379,8 @@ export default function ChatScreen({route, navigation}) {
             backgroundColor: isDarkMode ? '#005246' : '#e2ffd3',
             borderBottomRightRadius: 0,
           }}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{marginHorizontal: 8, flexShrink: 1}}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
               {currentMessage?.username || currentMessage?.phone_num ? (
                 <Text
                   style={{
@@ -392,7 +394,7 @@ export default function ChatScreen({route, navigation}) {
                 </Text>
               ) : null}
 
-              <View style={{alignItems: 'center', flex: 1}}>
+              <View style={{ alignItems: 'center', flex: 1 }}>
                 <Text
                   style={{
                     ...styles.descText,
@@ -416,7 +418,7 @@ export default function ChatScreen({route, navigation}) {
     }
 
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <FastImage
           source={{
             uri: currentMessage?.display_image,
@@ -434,7 +436,7 @@ export default function ChatScreen({route, navigation}) {
             borderBottomLeftRadius: moderateScale(0),
             maxWidth: width / 1.2,
           }}>
-          <View style={{marginHorizontal: 8, flexShrink: 1}}>
+          <View style={{ marginHorizontal: 8, flexShrink: 1 }}>
             {currentMessage?.username || currentMessage?.phone_num ? (
               <Text
                 style={{
@@ -483,7 +485,7 @@ export default function ChatScreen({route, navigation}) {
     );
   }, []);
 
-  const onSpeechStartHandler = (e) => {};
+  const onSpeechStartHandler = (e) => { };
   const onSpeechEndHandler = (e) => {
     updateState({
       isVoiceRecord: false,
@@ -493,16 +495,16 @@ export default function ChatScreen({route, navigation}) {
   const onSpeechResultsHandler = (e) => {
     let text = e.value[0];
     console.log('this is the text');
-    onSend([{text: text}]);
+    onSend([{ text: text }]);
     _onVoiceStop();
   };
 
   const _onVoiceListen = async () => {
     const langType = languages?.primary_language?.sort_code;
-    updateState({isVoiceRecord: true});
+    updateState({ isVoiceRecord: true });
     try {
       await Voice.start(langType);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const _onVoiceStop = async () => {
@@ -534,7 +536,7 @@ export default function ChatScreen({route, navigation}) {
         })
           .then((res) => {
             if (res?.data) {
-              updateState({isLoading: true});
+              updateState({ isLoading: true });
             }
             let data = {
               type: 'jpg',
@@ -556,18 +558,18 @@ export default function ChatScreen({route, navigation}) {
                   source,
                 };
 
-                updateState({isLoading: false});
+                updateState({ isLoading: false });
               })
-              .catch((err) => {});
+              .catch((err) => { });
           })
-          .catch((err) => {});
+          .catch((err) => { });
       }
     }
   };
 
   const renderSend = (props) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {/* <TouchableOpacity 
         style={{ marginLeft: 8 }}
         activeOpacity={0.7}
@@ -628,7 +630,7 @@ export default function ChatScreen({route, navigation}) {
 
         <Send
           alwaysShowSend
-          containerStyle={{backgroundColor: 'red'}}
+          containerStyle={{ backgroundColor: 'red' }}
           children={<SendButton />}
           {...props}
         />
@@ -645,8 +647,8 @@ export default function ChatScreen({route, navigation}) {
             : appStyle?.homePageLayout === 3 ||
               appStyle?.homePageLayout === 5 ||
               appStyle?.homePageLayout === 8
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={
           dineInType == 'p2p'
@@ -654,18 +656,18 @@ export default function ChatScreen({route, navigation}) {
             : `# ${paramData?.room_id || ''}`
         }
         customRight={showRoomUser}
-        headerStyle={{backgroundColor: isDarkMode ? '#171717' : '#f6f6f6'}}
-        // onPressLeft={onBack}
+        headerStyle={{ backgroundColor: isDarkMode ? '#171717' : '#f6f6f6' }}
+      // onPressLeft={onBack}
       />
 
       <ImageBackground
         source={isDarkMode ? imagePath.icBgDark : imagePath.icBgLight}
-        style={{flex: 1}}>
+        style={{ flex: 1 }}>
         <GiftedChat
           // messagesContainerStyle={{ backgroundColor: isDarkMode?"#171717": "#f6f6f6"}}
           messages={messages}
           onSend={(messages) => onSend(messages)}
-          user={{_id: userData?.id}}
+          user={{ _id: userData?.id }}
           renderMessage={renderMessage}
           isKeyboardInternallyHandled={true}
           extraData={messages}
@@ -708,7 +710,7 @@ export default function ChatScreen({route, navigation}) {
           margin: 0,
           justifyContent: 'flex-end',
         }}
-        onBackdropPress={() => updateState({showParticipant: false})}>
+        onBackdropPress={() => updateState({ showParticipant: false })}>
         <View
           style={{
             ...styles.modalStyle,
@@ -728,9 +730,9 @@ export default function ChatScreen({route, navigation}) {
 
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => updateState({showParticipant: false})}>
+              onPress={() => updateState({ showParticipant: false })}>
               <Image
-                style={{tintColor: isDarkMode ? colors.white : colors.black}}
+                style={{ tintColor: isDarkMode ? colors.white : colors.black }}
                 source={imagePath.closeButton}
               />
             </TouchableOpacity>
@@ -761,7 +763,7 @@ export default function ChatScreen({route, navigation}) {
                         : colors.blackOpacity30,
                     }}
                   />
-                  <View style={{marginLeft: moderateScale(8)}}>
+                  <View style={{ marginLeft: moderateScale(8) }}>
                     <Text
                       style={{
                         fontSize: textScale(12),
@@ -796,7 +798,7 @@ export default function ChatScreen({route, navigation}) {
   );
 }
 
-const stylesFun = ({fontFamily, isDarkMode}) => {
+const stylesFun = ({ fontFamily, isDarkMode }) => {
   const styles = StyleSheet.create({
     imgStyle: {
       width: moderateScale(35),

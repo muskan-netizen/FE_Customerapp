@@ -46,7 +46,7 @@ function stylesData({ fontFamily }) {
             height: moderateScaleVertical(149),
             width: moderateScale(166),
             position: "absolute",
-            backgroundColor: colors.blackOpacity10,
+            backgroundColor: colors.blackOpacity40,
             zIndex: 1
         },
         title: { position: 'absolute', bottom: 10, left: 10, color: colors.white, fontFamily: fontFamily?.medium, fontSize: textScale(16), zIndex: 2 }
