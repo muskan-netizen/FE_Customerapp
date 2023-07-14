@@ -66,7 +66,6 @@ export default function Account3({ navigation }) {
 
   const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
-  console.log("appDataappDataappData", appData, languages)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -114,7 +113,6 @@ export default function Account3({ navigation }) {
     }
   };
 
-  console.log(userData, 'appDataappData');
   const getListOfPaymentMethod = () => {
     actions
       .getListOfPaymentMethod(
@@ -625,7 +623,6 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-          {console.log(appMainData, 'appMainDataappMainData')}
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
             !!appMainData?.is_admin ? (

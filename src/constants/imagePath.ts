@@ -672,4 +672,8 @@ export default {
   icPlayVideo: require('../assets/images/play.png'),
   icPauseVideo: require('../assets/images/pause.png'),
   icPdf: require('../assets/images/p2p/pdf.png'),
+  icDocx: require('../assets/images/Ooryks/docx.png'),
+  icZip: require('../assets/images/Ooryks/zip.png'),
+  icXls: require('../assets/images/Ooryks/xls.png'),
+  icPpt: require('../assets/images/Ooryks/ppt.png'),
 };

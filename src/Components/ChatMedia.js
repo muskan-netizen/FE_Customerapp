@@ -1,178 +1,150 @@
-import React, { memo, useRef, useState } from 'react';
-import {
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import moment from 'moment';
+import React, { memo } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import colors from '../styles/colors';
 import {
     moderateScale,
     moderateScaleVertical,
-    textScale
+    textScale,
 } from '../styles/responsiveSize';
-
-import imagePath from '../constants/imagePath';
-import colors from '../styles/colors';
 import VideoPlayer from './VideoPlayer';
-import moment from 'moment';
 
 const ChatMedia = ({
     currentMessage = {},
     isRight = false,
     onPressMedia = () => { },
+    containerStyle = {},
 }) => {
     const { themeColor, themeToggle, themeColors, appStyle } = useSelector(
         state => state?.initBoot || {},
     );
     const darkthemeusingDevice = useDarkMode();
-    const videoRef = useRef(null)
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
-
     const styles = styleFunc({ fontFamily, themeColors, isDarkMode });
 
-    const [pdfInfo, setPdfInfo] = useState(null);
-    const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+    let docName =
+        ((currentMessage?.mediaType == 'application/pdf' ||
+            currentMessage?.mediaType == 'docs') &&
+            currentMessage?.name) ||
+        decodeURIComponent(currentMessage?.mediaUrl).substring(
+            decodeURIComponent(currentMessage?.mediaUrl).lastIndexOf('/') + 1,
+        );
 
-    const handleLoadComplete = (numberOfPages, filePath) => {
-
-        const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
-        const fileSize = getFileSize(filePath);
-
-        setPdfInfo({
-            name: fileName,
-            pages: numberOfPages,
-            size: fileSize,
-        });
-    };
-
-    const getFileSize = filePath => {
-        // Use a suitable method to determine the file size of the PDF
-        // For example, you can use the 'react-native-fs' library's `stat()` method
-        // to get the file size in bytes and then format it as required.
-        // Here's an example using 'react-native-fs':
-        // const stat = await RNFS.stat(filePath);
-        // const fileSize = stat.size;
-        // // Format the file size (e.g., convert bytes to kilobytes or megabytes)
-        // const formattedSize = `${(fileSize / 1024).toFixed(2)} KB`;
-        // return formattedSize;
-
-        // For simplicity, let's assume the file size is unknown
-        return '5';
+    const getImgSrc = () => {
+        return docName?.includes('.pdf')
+            ? imagePath.icPdf
+            : docName?.includes('.zip')
+                ? imagePath.icZip
+                : docName?.includes('.xls') ?
+                    imagePath.icXls
+                    : docName?.includes('.ppt')
+                        ? imagePath.icPpt
+                        : imagePath.icDocx
     };
 
     return (
-        <View style={{
-            marginBottom: moderateScale(10),
-            alignSelf: isRight ? 'flex-end' : 'flex-start',
-            marginHorizontal: moderateScale(8),
-
-        }}>
+        <View
+            style={{
+                marginBottom: moderateScale(10),
+                alignSelf: isRight ? 'flex-end' : 'flex-start',
+                marginHorizontal: moderateScale(8),
+            }}>
             <TouchableOpacity
+                disabled={currentMessage?.isLoading}
+                activeOpacity={0.7}
                 onPress={onPressMedia}
                 style={{
                     ...styles.mainContainer,
-                    backgroundColor: currentMessage?.mediaType == 'video/mp4' ? colors.transparent : isRight
-                        ? isDarkMode
-                            ? '#005246'
-                            : '#e2ffd3'
-                        : isDarkMode
-                            ? '#363638'
-                            : '#ffffff',
-
+                    backgroundColor:
+                        isRight
+                            ? isDarkMode
+                                ? '#005246'
+                                : '#e2ffd3'
+                            : isDarkMode
+                                ? '#363638'
+                                : '#ffffff',
+                    ...containerStyle,
                 }}>
+                {!isRight && (currentMessage?.username || currentMessage?.phone_num) ? (
+                    <Text
+                        style={styles.userName}>
+                        {currentMessage?.username || currentMessage?.phone_num}{' '}
 
-                {currentMessage?.mediaType == 'application/pdf' ? (
+                    </Text>
+                ) : null}
+                {currentMessage?.mediaType == 'application/pdf' ||
+                    currentMessage?.mediaType == 'docs' ? (
                     <View
                         style={{
                             ...styles.chatMsgStyle,
-                            height: moderateScaleVertical(80)
+                            height: moderateScaleVertical(80),
                         }}>
                         <Image
-                            source={imagePath.icPdf}
-                            style={{
-                                height: moderateScale(28),
-                                width: moderateScale(25),
-                            }}
+                            source={getImgSrc()}
+                            style={styles.docTypeImg}
                         />
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                height: '30%',
-                            }}>
 
-                            <View
-                                style={{
-                                    marginLeft: moderateScale(4),
-                                    flex: 1,
-                                }}>
-                                <Text
-                                    numberOfLines={1}
-                                    style={{
-                                        fontFamily: fontFamily?.regular,
-                                        fontSize: textScale(14),
-                                    }}>
-                                    {currentMessage?.mediaUrl.substring(currentMessage?.mediaUrl.lastIndexOf('/') + 1)}
-                                </Text>
-                            </View>
-                        </View>
+                        <Text
+                            numberOfLines={1}
+                            style={styles.docTypeTxt}>
+                            {docName}
+                        </Text>
+
+
                     </View>
                 ) : currentMessage?.mediaType == 'video/mp4' ? (
                     <View
                         containerStyle={{
-                            ...styles.chatMsgStyle
+                            ...styles.chatMsgStyle,
+
                         }}>
                         <VideoPlayer
+                            disabled
                             currentMessage={currentMessage}
                             containerStyle={{
-                                ...styles.chatMsgStyle
+                                ...styles.chatMsgStyle,
+                                backgroundColor: colors.blackOpacity20,
+                                borderRadius: moderateScale(4)
                             }}
                             source={{ uri: currentMessage?.mediaUrl }}
-                            onLoad={(event) => {
-                                console.log(event, "<===videoEvent")
-                                setIsVideoLoaded(true)
-                            }}
-
                             videoStyle={{
-                                ...styles.chatMsgStyle
+                                ...styles.chatMsgStyle,
                             }}
                             resizeMode="contain"
                         />
-
-                        {/* } */}
                     </View>
-
                 ) : (
-                    <View style={{
-                        ...styles.chatMsgStyle,
-                    }}>
+                    <View
+                        style={{
+                            ...styles.chatMsgStyle,
+                        }}>
                         <FastImage
                             source={{ uri: currentMessage?.mediaUrl }}
                             style={styles.imgStyle}
-
                         />
                     </View>
                 )}
                 <Text
                     style={{
-                        fontSize: textScale(10),
-                        fontFamily: fontFamily.regular,
-                        textTransform: 'uppercase',
-                        color: colors.blackOpacity43,
-                        marginLeft: moderateScale(12),
-                        marginTop: moderateScaleVertical(6),
-                        alignSelf: 'flex-end',
-                        color: isDarkMode ? '#84acaa' : colors.blackOpacity40,
+                        ...styles.dateTxt,
+                        color: isDarkMode
+                            ? '#84acaa'
+                            : colors.blackOpacity40,
                     }}>
                     {moment(currentMessage?.created_date).format('LT')}
                 </Text>
             </TouchableOpacity>
-            {!!currentMessage?.isLoading && <Text style={{ textAlign: "right", fontSize: textScale(12), color: colors.textGreyB }}>sending...</Text>}
+            {!!currentMessage?.isLoading && (
+                <Text
+                    style={styles.sending}>
+                    sending...
+                </Text>
+            )}
         </View>
     );
 };
@@ -183,11 +155,8 @@ const styleFunc = ({ fontFamily, themeColors, isDarkMode }) => {
     const styles = StyleSheet.create({
         mainContainer: {
             padding: 6,
-            borderTopLeftRadius: moderateScale(8),
-            borderBottomLeftRadius: moderateScale(8),
-            borderBottomRightRadius: moderateScale(8)
-
-
+            borderBottomLeftRadius: moderateScale(12),
+            borderBottomRightRadius: moderateScale(12),
         },
         imgStyle: {
             height: moderateScale(140),
@@ -197,10 +166,40 @@ const styleFunc = ({ fontFamily, themeColors, isDarkMode }) => {
         chatMsgStyle: {
             height: moderateScale(140),
             width: moderateScale(250),
-            alignItems: "center",
-            justifyContent: "center",
-
-
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        dateTxt: {
+            fontSize: textScale(10),
+            fontFamily: fontFamily.regular,
+            textTransform: 'uppercase',
+            color: colors.blackOpacity43,
+            marginLeft: moderateScale(12),
+            marginTop: moderateScaleVertical(6),
+            alignSelf: 'flex-end',
+        },
+        userName: {
+            fontSize: textScale(12),
+            fontFamily: fontFamily.medium,
+            textTransform: 'capitalize',
+            color: isDarkMode ? colors.white : colors.black,
+            marginBottom: moderateScaleVertical(4)
+        },
+        docTypeImg: {
+            height: moderateScale(35),
+            width: moderateScale(35),
+            resizeMode: "contain"
+        },
+        docTypeTxt: {
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(14),
+            textAlign: "center",
+            marginTop: moderateScaleVertical(4)
+        },
+        sending: {
+            textAlign: 'right',
+            fontSize: textScale(12),
+            color: colors.textGreyB,
         }
     });
     return styles;

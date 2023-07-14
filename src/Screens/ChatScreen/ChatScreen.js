@@ -17,18 +17,19 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { createThumbnail } from 'react-native-create-thumbnail';
+import DocumentPicker from 'react-native-document-picker';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';
 import ReactModal from 'react-native-modal';
-import Video from 'react-native-video';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import ChatMedia from '../../Components/ChatMedia';
 import CircularImages from '../../Components/CircularImages';
 import Header from '../../Components/Header';
 import ButtonImage from '../../Components/ImageComp';
+import VideoPlayer from '../../Components/VideoPlayer';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -46,16 +47,17 @@ import { cameraImgVideoHandler } from '../../utils/commonFunction';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
-import DocumentPicker from 'react-native-document-picker';
-import VideoPlayer from '../../Components/VideoPlayer';
-
-
 
 export default function ChatScreen({ route, navigation }) {
-
-  const { appData, themeColors, currencies, languages, appStyle, themeToggle, themeColor } = useSelector(
-    state => state.initBoot,
-  );
+  const {
+    appData,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    themeToggle,
+    themeColor,
+  } = useSelector(state => state.initBoot);
   const darkthemeusingDevice = useDarkMode();
   let actionSheet = useRef();
 
@@ -66,7 +68,6 @@ export default function ChatScreen({ route, navigation }) {
   const { userData } = useSelector(state => state?.auth);
   const { dineInType } = useSelector(state => state?.home);
 
-  const isChatRefresh = useSelector(state => state?.chatRefresh.isChatRefresh);
   const styles = stylesFun({ fontFamily, isDarkMode });
 
   let defaultImage =
@@ -110,7 +111,6 @@ export default function ChatScreen({ route, navigation }) {
         if (paramData?.room_id == data?.message?.roomData?.room_id) {
           isFocused
             ? setMessages(previousMessages => {
-
               const updatedMessages = previousMessages.filter(
                 message => message.isLoading !== true,
               );
@@ -177,7 +177,7 @@ export default function ChatScreen({ route, navigation }) {
 
   const fetchAllMessages = useCallback(async () => {
     try {
-      const apiData = `/${paramData?._id}`;
+      let apiData = `/${paramData?._id}`;
       const res = await actions.getAllMessages(apiData, {});
       console.log('fetchAllMessages res', res);
       updateState({ isLoading: false });
@@ -373,15 +373,6 @@ export default function ChatScreen({ route, navigation }) {
       });
   };
 
-  const onPressMedia = currentMessage => {
-    if (currentMessage?.mediaType == 'application/pdf') {
-      Linking.openURL(currentMessage?.mediaUrl);
-      return;
-    }
-
-    setisVisible(true);
-    setCurrentMsg(currentMessage);
-  };
 
 
   const showRoomUser = useCallback(
@@ -415,6 +406,9 @@ export default function ChatScreen({ route, navigation }) {
           currentMessage={currentMessage}
           isRight
           onPressMedia={() => onPressMedia(currentMessage)}
+          containerStyle={{
+            borderTopLeftRadius: moderateScale(12),
+          }}
         />
       ) : (
         <View
@@ -471,6 +465,9 @@ export default function ChatScreen({ route, navigation }) {
             onPressMedia={() => {
               setCurrentMsg(currentMessage);
               setisVisible(true);
+            }}
+            containerStyle={{
+              borderTopRightRadius: moderateScale(12),
             }}
           />
         ) : (
@@ -576,38 +573,10 @@ export default function ChatScreen({ route, navigation }) {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("fskdafkldf")
-  //   const urls = [
-  //     'https://catfact.ninja/fact',
-  //     'https://catfact.ninja/fact',
-  //     'https://catfact.ninja/fact',
-  //     'https://catfact.ninja/fact',
-  //     'https://catfact.ninja/fact',
-
-  //   ];
-
-  //   const fetchData = async () => {
-
-  //     try {
-  //       const responses = await Promise.all(
-  //         urls.map(url => axios.get(url))
-  //       );
-
-  //       // Process the responses
-  //       responses.forEach(response => {
-  //         console.log(response, "kasdkfahsdkhf"); // Do something with the response data
-  //       });
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
 
   // this funtion use for camera handle
   const cameraHandle = async (index = 0) => {
-    if (index === 2) {
+    if (index === 2) { // to open device's document gallary
       try {
         const granted = await PermissionsAndroid.requestMultiple([
           PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
@@ -621,18 +590,25 @@ export default function ChatScreen({ route, navigation }) {
         ) {
           try {
             const res = await DocumentPicker.pick({
-              type: [DocumentPicker.types.pdf],
+              type: [
+                DocumentPicker.types.pdf,
+                DocumentPicker.types.zip,
+                DocumentPicker.types.doc,
+                DocumentPicker.types.docx,
+                DocumentPicker.types.ppt,
+                DocumentPicker.types.pptx,
+                DocumentPicker.types.xls,
+                DocumentPicker.types.xlsx,
+              ],
             });
 
             if (!!res) {
-              console.log(res, '>>>>>>Docs');
-
               let fileObj = {
                 path: res[0]?.uri,
-                mime: res[0]?.type,
+                mime: 'docs',
+                name: res[0]?.name,
               };
-
-              uploadMedia(fileObj); // upload media directly from gallary
+              uploadMedia(fileObj, (name = res[0]?.name));
               appendMediaPreview(fileObj);
             }
           } catch (err) {
@@ -652,17 +628,13 @@ export default function ChatScreen({ route, navigation }) {
 
     const permissionStatus = await androidCameraPermission();
 
-    if (permissionStatus) {
+    if (permissionStatus) { // to open device's image / video gallary
       cameraImgVideoHandler(index, {
-        // width: 300,
-        // height: 400,
-        // cropping: true,
-        // cropperCircleOverlay: true,
         mediaType: 'any',
       })
         .then(async res => {
           if (!!res?.path) {
-            console.log(res, "<====cameraImgVideoHandler")
+            console.log(res, '<====cameraImgVideoHandler');
             var thumbnailPath = {};
             if (res?.mime == 'video/mp4') {
               thumbnailPath = await createThumbnail({
@@ -674,14 +646,14 @@ export default function ChatScreen({ route, navigation }) {
 
             // return;
             appendMediaPreview(res, thumbnailPath);
-            uploadMedia(res); // upload media directly from gallary
+            uploadMedia(res, res.path.split('/').pop()); // upload media directly from gallary
           }
         })
         .catch(err => { });
     }
   };
 
-  const appendMediaPreview = (media, thumbnail = '') => {
+  const appendMediaPreview = (media, thumbnail = '') => { // to set preview/thumbnail of image/video/document while uploading video
     let allMessages = cloneDeep(messages);
     let newMsg = {
       ...allMessages[0], // Copy properties from the first item
@@ -690,23 +662,20 @@ export default function ChatScreen({ route, navigation }) {
       mediaUrl: media?.path,
       _id: allMessages[0]?._id + uuidv4(),
       isLoading: true,
-      auth_user_id: userData?.id
+      auth_user_id: userData?.id,
+      name: media?.name,
     };
 
     if (media?.mime == 'video/mp4') {
       newMsg.thumbnailUrl = thumbnail;
     }
-
     allMessages.unshift(newMsg);
-
     setMessages(allMessages);
   };
 
-
-  const uploadMedia = (fileRes = []) => {
+  const uploadMedia = (fileRes = [], fileName = '') => { // To upload media filed to S3 server
     console.log(fileRes, '<====fileRes');
     if (!isEmpty(fileRes)) {
-      let fileName = fileRes.path.split('/').pop(); // get file name
       let encodedData = encodeURIComponent(
         `uploads/${userData?.id}/${paramData?._id}/${fileName}`,
       ); //encoded media data for AWS-S3
@@ -756,69 +725,25 @@ export default function ChatScreen({ route, navigation }) {
     }
   };
 
+  const onPressMedia = currentMessage => {
+    if (
+      currentMessage?.mediaType == 'application/pdf' ||
+      currentMessage?.mediaType == 'docs'
+    ) {
+      Linking.openURL(currentMessage?.mediaUrl);
+      return;
+    }
+
+    setisVisible(true);
+    setCurrentMsg(currentMessage);
+  };
+
   const renderSend = props => {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {/* <TouchableOpacity 
-        style={{ marginLeft: 8 }}
-        activeOpacity={0.7}
-        onPress={cameraHandle}
-        >
-          <Image
-            source={imagePath.ic_cameraColored}
-            resizeMode="contain"
-            style={{
-              height: moderateScale(20),
-              width: moderateScale(20),
-              tintColor: colors.black,
-            }}
-          />
-        </TouchableOpacity>
-
-        {isVoiceRecord ? (
-          <TouchableOpacity
-            onPress={_onVoiceStop}
-          >
-            <LottieView
-              style={{
-                height: moderateScale(43),
-                width: moderateScale(30),
-                marginLeft: moderateScale(-2),
-              }}
-              source={voiceListen}
-              autoPlay
-              loop
-              colorFilters={[
-                { keypath: 'layers', color: themeColors.primary_color },
-                { keypath: 'transparent2', color: themeColors.primary_color },
-                { keypath: 'transparent1', color: themeColors.primary_color },
-                { keypath: '01', color: themeColors.primary_color },
-                { keypath: '02', color: themeColors.primary_color },
-                { keypath: '03', color: themeColors.primary_color },
-                { keypath: '04', color: themeColors.primary_color },
-              ]}
-            />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={{ marginLeft: moderateScale(8) }}
-            onPress={_onVoiceListen}
-          >
-            <Image
-              source={imagePath.icVoice}
-              style={{
-                height: moderateScale(20),
-                width: moderateScale(20),
-                borderRadius: moderateScale(10),
-                tintColor: themeColors.primary_color,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        )} */}
-        <ButtonImage
+        <ButtonImage //Send attachements button
           onPress={() => actionSheet.current.show()}
-          image={imagePath.cameraRoyo}
+          image={imagePath.icAttachments}
           btnStyle={{
             marginLeft: 10,
           }}
@@ -869,7 +794,6 @@ export default function ChatScreen({ route, navigation }) {
           // messagesContainerStyle={{ backgroundColor: isDarkMode?"#171717": "#f6f6f6"}}
           messages={messages}
           extraData={messages}
-
           onSend={messages => onSend(messages)}
           user={{ _id: userData?.id }}
           renderMessage={renderMessage}
@@ -1014,10 +938,7 @@ export default function ChatScreen({ route, navigation }) {
         style={{}}
         animationType="slide"
         transparent={false}
-        visible={isVisible}
-        onRequestClose={() => {
-          alert('Modal has been closed.');
-        }}>
+        visible={isVisible}>
         <View
           style={{
             flex: 1,
@@ -1040,21 +961,25 @@ export default function ChatScreen({ route, navigation }) {
             style={{
               flex: 1,
             }}>
-            {currentMsg?.mediaType === 'application/pdf' ? (
+            {currentMsg?.mediaType === 'application/pdf' ||
+              currentMsg?.mediaType === 'docs' ? (
               <></>
             ) : currentMsg?.mediaType === 'video/mp4' ? (
               <VideoPlayer
                 pause={false}
-                source={{ uri: "file:///data/user/0/com.codebrew.royoorder/cache/react-native-image-crop-picker/uploads_2_6499607c3cd36541c8dd8591_uploads_2_649d84b4d597da4460346aaa_video (2160p).mp4" }} containerStyle={{
+                source={{
+                  uri: currentMsg?.mediaUrl,
+                }}
+                containerStyle={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   bottom: 0,
                   right: 0,
-                  alignItems: "center",
-                  justifyContent: "center"
-                }} />
-
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              />
             ) : (
               <FastImage
                 source={{ uri: currentMsg?.mediaUrl }}
