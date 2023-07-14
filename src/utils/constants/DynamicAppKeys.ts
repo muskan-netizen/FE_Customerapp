@@ -1,5 +1,5 @@
-import { Platform } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
+import {Platform} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 
 const shortCodes = {
   royoorder: '245bae',
@@ -244,7 +244,6 @@ const shortCodes = {
   knockknock: '3403fc',
   qrider: 'b715e7',
   dlvrd: '525456',
-  delivery: 'd477fd',
   timHomeServices: 'ab2892',
   beakme: '6dcadc',
   onscart: '10abb5',
@@ -488,7 +487,7 @@ const shortCodes = {
   zynoBidandRide: '958bb4',
   glamguide: 'e428fc',
   // solace: '6d065d',
-  solace: "2b7742",
+  solace: '2b7742',
   superpana: '9242b4',
   kero: '776666',
   godamPAY: '2ae863',
@@ -545,7 +544,7 @@ const shortCodes = {
   ambosSafariExpress: 'ec16dd',
   zulbrand: '873380',
   emart: '6ca3a4',
-  oyeeRides: "634188",
+  oyeeRides: '634188',
   royoRides: '87406e',
   tempcorner: '84a472',
   autobox: '5db7c1',
@@ -2556,7 +2555,7 @@ const appIds = {
   }),
   ondgoo: Platform.select({
     ios: 'com.ondgoo.royoorders',
-    android: 'com.ondgoo.royoorders'
+    android: 'com.ondgoo.royoorders',
   }),
 
   zonesso: Platform.select({
@@ -2786,26 +2785,26 @@ const socialKeys = {
     getBundleId() == appIds.runrun
       ? 'OCOQeRWzRoDAnGNbNFsbN5kuk'
       : getBundleId() == appIds.royoorder
-        ? 'R66DHARfuoYAPowApUxNxwbPi'
-        : getBundleId() == appIds.capcorp
-          ? 'R66DHARfuoYAPowApUxNxwbPi'
-          : getBundleId() == appIds.tranzit
-            ? 'iOOPhwfIqnQfmyjZqDbKzMNgP'
-            : getBundleId() == appIds.hmoobhub
-              ? 'AvNzKlREbm3Aan3sEKYbXv0k8'
-              : 'R66DHARfuoYAPowApUxNxwbPi',
+      ? 'R66DHARfuoYAPowApUxNxwbPi'
+      : getBundleId() == appIds.capcorp
+      ? 'R66DHARfuoYAPowApUxNxwbPi'
+      : getBundleId() == appIds.tranzit
+      ? 'iOOPhwfIqnQfmyjZqDbKzMNgP'
+      : getBundleId() == appIds.hmoobhub
+      ? 'AvNzKlREbm3Aan3sEKYbXv0k8'
+      : 'R66DHARfuoYAPowApUxNxwbPi',
   TWITTER_CONSUMER_SECRET:
     getBundleId() == appIds.runrun
       ? 'zBfzttCBVAzimuaIsDWDU1MjqI4pWzvNsrW6YOYPVZtgtzTlN8'
       : getBundleId() == appIds.royoorder
-        ? 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15'
-        : getBundleId() == appIds.capcorp
-          ? 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15'
-          : getBundleId() == appIds.tranzit
-            ? 'pg72uq6SVPkUn0Ts3lQWPfqHSXwR09Tb64d3bPrnIcPnZdd5Tq'
-            : getBundleId() == appIds.hmoobhub
-              ? '5UW5ukiVG49CmpAh7hBWP333K68gz8hfeUXzmoL3p6jIWy0qQa'
-              : 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15',
+      ? 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15'
+      : getBundleId() == appIds.capcorp
+      ? 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15'
+      : getBundleId() == appIds.tranzit
+      ? 'pg72uq6SVPkUn0Ts3lQWPfqHSXwR09Tb64d3bPrnIcPnZdd5Tq'
+      : getBundleId() == appIds.hmoobhub
+      ? '5UW5ukiVG49CmpAh7hBWP333K68gz8hfeUXzmoL3p6jIWy0qQa'
+      : 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15',
 };
 
-export { appIds, socialKeys, shortCodes };
+export {appIds, socialKeys, shortCodes};
