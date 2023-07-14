@@ -624,7 +624,6 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-
           {!!userData?.auth_token &&
             Platform.OS === 'android' &&
             !!appMainData?.is_admin ? (

@@ -2,7 +2,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 // export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
@@ -310,7 +310,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';
@@ -838,7 +838,10 @@ export const P2P_ORDER_DETAIL = getApiUrl(
 export const COMPLETE_PICKUP_DROP_OFF = getApiUrl(
   '/user/orderVenderStatusUpdate',
 );
-
 export const CART_ITEM_CHECKED = getApiUrl('/cart/updateCartCheckedStatus')
 export const SEARCH_ALL_ITEMS = getApiUrl('/v2/search/all');
 export const GET_PRODUCT_DATA_BASED_VARIANTS_2 = getApiUrl('/v2/productByVariant')
+
+export const UPLOAD_FILE_S3 = getApiUrl(
+  '/chat/s3-sign?filename=',
+);

@@ -29,13 +29,43 @@ const cameraHandler = async (data, option) => {
       cropperCircleOverlay: true,
       ...option,
     };
-    console.log(options, 'odfsdfsdfsdfsdfsf');
     try {
       const res = await openPicker(options);
       // if (res && (res.sourceURL || res.path)) {
       //   // return Platform.OS == 'ios' ? res.data : res.path;
       //   return res
       // }
+      if (res) {
+        return res;
+      }
+    } catch (err) {
+      console.log(err, 'err');
+    }
+  } else {
+    return null;
+  }
+};
+
+
+
+const cameraImgVideoHandler = async (data, options) => {
+  Keyboard.dismiss();
+  //this condition use for open camera
+  if (data == 0) {
+
+    try {
+      const res = await openCamera({ ...options });
+      if (res) {
+        return res;
+      }
+    } catch (err) {
+      console.log(err, 'err');
+    }
+  }
+  //this condition use for open gallery
+  else if (data == 1) {
+    try {
+      const res = await openPicker({ ...options });
       if (res) {
         return res;
       }
@@ -174,4 +204,4 @@ export const checkValueExistInAry = (item = {}, arr2 = []) => {
   return found;
 };
 
-export { cameraHandler, currencyNumberFormatter };
+export { cameraHandler, currencyNumberFormatter, cameraImgVideoHandler };

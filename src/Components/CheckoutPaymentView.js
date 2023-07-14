@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View,I18nManager} from 'react-native';
+import { StyleSheet, Text, View, I18nManager } from 'react-native';
 import {
   Frames,
   CardNumber,
@@ -14,12 +14,12 @@ import {
   width,
 } from '../styles/responsiveSize';
 import colors from '../styles/colors';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function CheckoutPaymentView({
-  cardTokenized = () => {},
-  cardTokenizationFailed = () => {},
-  onPressSubmit = () => {},
+  cardTokenized = () => { },
+  cardTokenizationFailed = () => { },
+  onPressSubmit = () => { },
   btnTitle = '',
   isSubmitBtn = false,
   submitBtnStyle = {},
@@ -27,14 +27,13 @@ export default function CheckoutPaymentView({
   btnsMainView = {},
   mainContainer = {},
 }) {
-  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
+  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors});
-console.log(appData,'appDataappData')
+  const styles = stylesFunc({ fontFamily, themeColors });
   return (
-    <View style={{...styles.container, ...mainContainer}}>
+    <View style={{ ...styles.container, ...mainContainer }}>
       <Frames
         config={{
           debug: true,
@@ -42,13 +41,13 @@ console.log(appData,'appDataappData')
         }}
         cardTokenized={cardTokenized}
         cardTokenizationFailed={cardTokenizationFailed}
-        >
+      >
         <CardNumber
           style={styles.cardNumber}
           placeholder="Card Details"
           placeholderTextColor={colors.greyD}
-          
-    
+
+
         />
 
         <View style={styles.dateAndCode}>
@@ -74,7 +73,7 @@ console.log(appData,'appDataappData')
 
             <SubmitButton
               title={btnTitle}
-              style={{...styles.button, ...submitBtnStyle}}
+              style={{ ...styles.button, ...submitBtnStyle }}
               textStyle={styles.buttonText}
               onPress={onPressSubmit}
             />
@@ -86,13 +85,13 @@ console.log(appData,'appDataappData')
     </View>
   );
 }
-export function stylesFunc({fontFamily, themeColors}) {
+export function stylesFunc({ fontFamily, themeColors }) {
   const styles = StyleSheet.create({
     container: {
       alignItems: 'center',
       justifyContent: 'flex-start',
       paddingHorizontal: moderateScale(10),
-      
+
     },
     dateAndCode: {
       marginTop: moderateScaleVertical(15),

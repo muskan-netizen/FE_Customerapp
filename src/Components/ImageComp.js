@@ -2,6 +2,7 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
+import { hitSlopProp } from '../styles/commonStyles';
 
 // create a component
 const ButtonImage = ({
@@ -10,12 +11,11 @@ const ButtonImage = ({
     onPress = () => { },
     btnStyle = {}
 }) => {
-    const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
-        (state) => state?.initBoot,
-    );
     return (
-        <TouchableOpacity style={{ ...btnStyle }} onPress={onPress}
+        <TouchableOpacity
+            hitSlop={hitSlopProp}
+            style={{ ...btnStyle }}
+            onPress={onPress}
         >
             <Image
                 source={image}

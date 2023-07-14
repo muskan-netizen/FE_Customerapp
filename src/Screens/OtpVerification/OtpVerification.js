@@ -121,7 +121,6 @@ export default function OtpVerification({ navigation, route }) {
   const { appData, appStyle, themeColors } = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appData, 'appDataappData')
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors });
 
@@ -225,7 +224,7 @@ export default function OtpVerification({ navigation, route }) {
           <View >
             {(!!appData?.profile?.preferences?.static_otp) &&
               <View style={{}}>
-                <Text style={{ ...styles.txtSmall, color: colors.blackB,fontSize:textScale(15) }}>
+                <Text style={{ ...styles.txtSmall, color: colors.blackB, fontSize: textScale(15) }}>
                   {strings.YOUR_OTP}
                 </Text>
               </View>}
