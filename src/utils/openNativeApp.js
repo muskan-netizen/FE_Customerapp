@@ -1,9 +1,9 @@
-import {Linking, Platform} from 'react-native';
+import { Linking, Platform } from 'react-native';
 // import DeviceInfo from 'react-native-device-info';
 // import IntentLauncher, {IntentConstant} from 'react-native-intent-launcher';
 
 export const openGps = (lat, lng) => {
-  const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+  const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
   const latLng = `${lat},${lng}`;
   const label = 'Custom Label';
   const url = Platform.select({
@@ -14,7 +14,12 @@ export const openGps = (lat, lng) => {
   Linking.openURL(url);
 };
 
-export function dialCall(phoneNumber) {
+export function dialCall(phoneNumber, type) {
+  if (type == "text") {
+    phoneNumber = `sms:${phoneNumber}`
+    Linking.openURL(phoneNumber);
+    return
+  }
   if (Platform.OS === 'android') {
     phoneNumber = `tel:${phoneNumber}`;
   } else {

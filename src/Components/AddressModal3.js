@@ -1002,7 +1002,6 @@ const AddressModal3 = ({
                     placeholder={strings.PINCODE}
                     textInputStyle={getTextInputStyle(pincode)}
                     value={pincode}
-                    keyboardType={'numeric'}
                     borderWidth={0}
                     borderRadius={0}
                     returnKeyType={'next'}
