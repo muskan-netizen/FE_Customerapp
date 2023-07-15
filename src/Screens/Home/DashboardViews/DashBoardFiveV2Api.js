@@ -1073,7 +1073,14 @@ const DashBoardFiveV2Api = ({
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
     >
       {showAllTempCartOrders()}
-
+      <TouchableOpacity
+        onPress={() => alert('okii')}
+        style={{
+          backgroundColor: colors.green, height: 60, width: 100,
+          position: 'absolute', top: -10, right: 10, padding: 8
+        }} >
+        <Text style={{ fontSize: 14, }} >Filter </Text>
+      </TouchableOpacity>
       {!!dataProvider && !isEmpty(dataProvider) ?
         <Animated.FlatList
           ref={ref}

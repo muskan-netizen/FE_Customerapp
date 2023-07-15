@@ -208,3 +208,4 @@ export {default as P2pOndemandAttributeInformation} from './P2pOnDemnadBid/P2pOn
 export {default as P2pOndemandPostCategory} from './P2pOnDemnadBid/P2pOndemandPostCategory/P2pOndemandPostCategory';
 export {default as Account7} from './Account/Account7';
 export {default as DeveloperMode} from './DeveloperMode/DeveloperMode';
+export {default as ProductPowerConumption} from './ProductPowerConumption/ProductPowerConumption';
