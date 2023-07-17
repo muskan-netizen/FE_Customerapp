@@ -1057,7 +1057,7 @@ export default function WebLinks(props) {
                 source={{ html: htmlContent }}
                 tagsStyles={{
                   p: {
-                    color: isDarkMode ? colors.white : colors.black,
+               
                     width: '100%',
                     textAlign: 'justify',
                     color: isDarkMode
@@ -1094,6 +1094,11 @@ export default function WebLinks(props) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyOpcaity7,
                   },
+                  body:{
+                    color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyOpcaity7,
+                  }
                 }}
               />
               //  </View>

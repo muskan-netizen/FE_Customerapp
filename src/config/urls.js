@@ -3,7 +3,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
+export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
 // export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
 // export const API_BASE_URL='https://eathalalonly.com/api/v1'
@@ -310,7 +310,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'http://192.168.97.160:9091/api/v1';
 // export const API_BASE_URL = 'https://releezer.shop/api/v1';
-export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
+// export const API_BASE_URL = 'https://sales.focushires.com/api/v1';
 // export const API_BASE_URL = 'https://meateasy.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://order.veg-hub.com/api/v1';
 // export const API_BASE_URL = 'https://seratho.com/api/v1';

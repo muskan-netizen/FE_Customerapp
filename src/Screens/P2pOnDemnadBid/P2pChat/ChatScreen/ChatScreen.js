@@ -85,11 +85,13 @@ export default function ChatScreen({ route, navigation }) {
     } = state;
     const [orderVendorDetail, setOrderVendorDetail] = useState({})
 
+    console.log(productDetails, 'pppppppppppppp')
+
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
     const isFocused = useIsFocused();
 
-
+    console.log(dineInType, 'dineInTypedineInType')
     useFocusEffect(
         useCallback(() => {
             if (dineInType == 'p2p') {

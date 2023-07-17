@@ -438,7 +438,8 @@ export default function Subscriptions2({ navigation, route }) {
               marginTop: currentSubscription ? moderateScale(40) : null,
               marginBottom: moderateScale(20),
             }}>
-            <Text style={styles.subscriptionTitle}>
+            
+            <Text style={{...styles.subscriptionTitle,color:isDarkMode?colors.white:colors.blackC}}>
               {currentSubscription
                 ? strings.OTHERSUBSCRIPTION
                 : strings.ALLSUBSCRIPTION}
@@ -1617,7 +1618,7 @@ export default function Subscriptions2({ navigation, route }) {
           <FlatList
             data={(!isLoadingB && allSubscriptions) || []}
             renderItem={renderProduct}
-            ListHeaderComponent={listHeaderComponent()}
+            // ListHeaderComponent={listHeaderComponent()}
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}
@@ -1673,7 +1674,8 @@ export default function Subscriptions2({ navigation, route }) {
               height: height / 8,
               justifyContent: 'flex-end',
             }}>
-            {!!appData?.profile?.preferences?.flutterwave_public_key && <PayWithFlutterwave
+            {/* {!!appData?.profile?.preferences?.flutterwave_public_key && 
+            <PayWithFlutterwave
               onAbort={() =>
                 updateState({ isModalVisibleForPayFlutterWave: false })
               }
@@ -1690,7 +1692,8 @@ export default function Subscriptions2({ navigation, route }) {
                 currency: currencies?.primary_currency?.iso_code,
                 payment_options: 'card',
               }}
-            />}
+            />
+            } */}
           </View>
         </Modal>
       </StripeProvider>

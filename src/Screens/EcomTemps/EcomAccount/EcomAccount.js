@@ -574,6 +574,7 @@ export default function EcomAccount({ navigation }) {
                     centerHeadingStyle={{
                         fontSize: textScale(14),
                         fontFamily: fontFamily.regular,
+                       
                     }}
                     rightText={currencies?.primary_currency?.iso_code}
 

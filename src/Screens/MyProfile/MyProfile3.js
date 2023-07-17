@@ -387,6 +387,7 @@ export default function MyProfile3({route, navigation}) {
           updateState({isLoading: false});
           // navigation.goBack()
           showSuccess(res.message);
+        
           // updateState({name: '', email: '', phoneNumber: ''});
         })
         .catch(errorMethod);

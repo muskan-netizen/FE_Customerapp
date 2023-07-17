@@ -115,7 +115,7 @@ const ListItemHorizontal = ({
         <Text
           style={{
             ...commonStyles.mediumFont14,
-            color: colors.grey,
+            color: isDarkMode? colors.white:colors.black,
             lineHeight: textScale(20),
             opacity: 0.7,
             fontSize: textScale(13),
