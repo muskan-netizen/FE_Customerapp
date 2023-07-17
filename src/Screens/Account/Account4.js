@@ -70,7 +70,6 @@ export default function Account4({ navigation }) {
 
 
 
-  console.log("appDataappData", appData)
   const userData = useSelector((state) => state.auth.userData);
   const { dineInType, appMainData } = useSelector((state) => state?.home || {});
 

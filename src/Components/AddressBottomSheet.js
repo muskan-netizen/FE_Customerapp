@@ -118,7 +118,7 @@ const AddressBottomSheet = ({
     isCountry: false,
     isPincode: false,
     isAddress: false,
-    isHouse:false
+    isHouse: false
   });
 
   const styles = stylesData({ fontFamily, themeColors });
@@ -314,7 +314,7 @@ const AddressBottomSheet = ({
         isCountry: false,
         isPincode: false,
         isAddress: false,
-        isHouse:true
+        isHouse: true
       });
     }
     if (
@@ -330,7 +330,7 @@ const AddressBottomSheet = ({
         isAddress: false,
       });
     }
-    
+
     // if (
     //   error ==
     //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.STATE
@@ -903,7 +903,6 @@ const AddressBottomSheet = ({
                     placeholder={strings.PINCODE}
                     textInputStyle={getTextInputStyle(pincode)}
                     value={pincode}
-                    keyboardType={'numeric'}
                     borderWidth={0}
                     borderRadius={0}
                     returnKeyType={'next'}

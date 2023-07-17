@@ -7,10 +7,11 @@ import {
   SEND_MESSAGE,
   SEND_NOTIFCATION,
   START_CHAT,
+  UPLOAD_FILE_S3,
   USER_CHAT,
   VENDOR_CHAT,
 } from '../../config/urls';
-import { apiGet, apiPost, getItem } from '../../utils/utils';
+import { apiGet, apiPost, apiPut, getItem } from '../../utils/utils';
 
 export function onStartChat(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -149,4 +150,13 @@ export function fetchP2pUserToUsertChat(data = {}, headers = {}) {
 
 export function getProuctDetailsRelatedToChat(data = {}, headers = {}) {
   return apiPost(GET_PRODUCT_RELATED_TO_CHAT, data, headers);
+}
+
+
+export function uploadMediaS3(uri = '', data = {}, headers = {}) {
+  return apiGet(UPLOAD_FILE_S3 + uri, data, headers);
+}
+
+export function putMediaS3(uri = '', data = {}) {
+  return apiPut(uri, data);
 }

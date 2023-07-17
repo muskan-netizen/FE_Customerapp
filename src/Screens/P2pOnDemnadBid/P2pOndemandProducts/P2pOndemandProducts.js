@@ -444,7 +444,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                         digit_after_decimal,
                                         additional_preferences,
                                         currencies?.primary_currency?.symbol,
-                                    )} / Day
+                                    )}
                                     <Text>
 
 

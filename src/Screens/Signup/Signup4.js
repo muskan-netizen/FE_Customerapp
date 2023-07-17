@@ -140,7 +140,9 @@ export default function Signup4({ navigation }) {
 
   const isValidData = () => {
     const error = validations({
-      // email: email,
+
+      name: name,
+      email: email,
       password: password,
       callingCode: callingCode,
       phoneNumber: phoneNumber,
@@ -335,7 +337,8 @@ export default function Signup4({ navigation }) {
   };
 
   const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
+    const sanitizedText = val.replace(/[\u{1F300}-\u{1F64F}]/gu, '');
+    updateState({ [key]: sanitizedText });
   };
 
   const showHidePassword = () => {
@@ -711,7 +714,7 @@ export default function Signup4({ navigation }) {
               onPress={onSignup}
               marginTop={moderateScaleVertical(10)}
               btnText={strings.CONTINUE}
-              colorsArray={['#FC7049', '#FD312C']}
+              colorsArray={[themeColors?.primary_color, themeColors?.primary_color]}
             />
           </View>
         </View>
@@ -742,7 +745,7 @@ export default function Signup4({ navigation }) {
           <Text
             onPress={moveToNewScreen(navigationStrings.LOGIN)}
             style={{
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.orange,
+              color: isDarkMode ? MyDarkTheme.colors.text : themeColors?.primary_color,
               fontFamily: fontFamily.medium,
               fontSize: 16,
             }}>

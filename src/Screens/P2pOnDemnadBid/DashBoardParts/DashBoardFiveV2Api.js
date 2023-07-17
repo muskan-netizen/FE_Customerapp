@@ -699,6 +699,7 @@ const DashBoardFiveV2Api = ({
     showTitle = true,
   }) => {
     let myBanner = item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners || []
+
     return (
       !isEmpty(myBanner) ?
         <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0) }}>
@@ -742,10 +743,10 @@ const DashBoardFiveV2Api = ({
         item?.image.image_fit,
         item?.image.image_path,
         appStyle?.homePageLayout === 5
-          ? '800/600'
+          ? '2000/1800'
           : DeviceInfo.getBundleId() == appIds.masa
             ? '800/600'
-            : '1200/1000',
+            : '2000/1800',
       );
 
     return (

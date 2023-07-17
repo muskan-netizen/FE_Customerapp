@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   Keyboard,
@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -23,13 +23,13 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {getAddressComponent} from '../utils/helperFunctions';
-import {chekLocationPermission} from '../utils/permissions';
+import { getAddressComponent } from '../utils/helperFunctions';
+import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
-import {TextInput} from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import AutoUpLabelTxtInput from './AutoUpLabelTxtInput';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
@@ -48,9 +48,9 @@ const AddressModal2 = ({
 }) => {
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors, themeLayouts, appStyle} = currentTheme;
+  const { themeColors, themeLayouts, appStyle } = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
-  const {profile} = appData;
+  const { profile } = appData;
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -72,14 +72,14 @@ const AddressModal2 = ({
         lable: strings.HOME_1,
         icon: imagePath.home,
       },
-      {id: 2, lable: 'Work', icon: imagePath.workInActive},
+      { id: 2, lable: 'Work', icon: imagePath.workInActive },
     ],
     address_type: 1,
     country_code: '',
     viewHeight: 0,
   });
 
-  const styles = stylesData({fontFamily, themeColors});
+  const styles = stylesData({ fontFamily, themeColors });
 
   //To update the states
   useEffect(() => {
@@ -118,10 +118,10 @@ const AddressModal2 = ({
     is_primary,
     viewHeight,
   } = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
   }, []);
 
   const _onChangeText = (key) => (val) => {
@@ -129,7 +129,7 @@ const AddressModal2 = ({
       getPlacesPrediction(val);
     }
 
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Cleaer all state
@@ -156,7 +156,7 @@ const AddressModal2 = ({
             lable: 'Home',
             icon: imagePath.home,
           },
-          {id: 2, lable: 'Work', icon: imagePath.workInActive},
+          { id: 2, lable: 'Work', icon: imagePath.workInActive },
         ],
         address_type: 1,
       });
@@ -169,20 +169,20 @@ const AddressModal2 = ({
     // console.log(data, 'data>>>>');
     RNGooglePlaces.getAutocompletePredictions(data)
       .then((results) => {
-        updateState({dropDownData: results});
+        updateState({ dropDownData: results });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   /*************************** On Text Change
    */ const addressHelper = (results) => {
-    let clonedArrayData = {...state};
-    clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
+    let clonedArrayData = { ...state };
+    clonedArrayData = { ...clonedArrayData, ...results, showDialogBox: false };
     updateState(clonedArrayData);
   };
 
   const handleAddressOnKeyUp = (text) => {
-    updateState({address: text});
+    updateState({ address: text });
   };
 
   /*************************** Place Id look Up
@@ -190,16 +190,16 @@ const AddressModal2 = ({
     if (data?.placeID) {
       RNGooglePlaces.lookUpPlaceByID(data.placeID)
         .then((results) =>
-          addressHelper({...results, address: data.fullText || data.address}),
+          addressHelper({ ...results, address: data.fullText || data.address }),
         )
-        .catch((error) => {});
+        .catch((error) => { });
     } else {
     }
   };
 
   /*************************** On Text Change
    */ const placeSelectionHandler = (data) => {
-    updateState({showDialogBox: false});
+    updateState({ showDialogBox: false });
     placeIdLookUp(data);
     Keyboard.dismiss();
   };
@@ -212,7 +212,7 @@ const AddressModal2 = ({
           {dropDownData.map((x, i) => (
             <TouchableOpacity onPress={() => placeSelectionHandler(x)} key={i}>
               <Text style={styles.textInput}>{x.fullText}</Text>
-              <View style={{paddingVertical: (height * 1.2) / 100}}></View>
+              <View style={{ paddingVertical: (height * 1.2) / 100 }}></View>
             </TouchableOpacity>
           ))}
         </View>
@@ -303,7 +303,7 @@ const AddressModal2 = ({
           .catch((error) => console.log(error, 'errro geocode'));
       },
       (error) => console.log(error.message),
-      {enableHighAccuracy: true, timeout: 20000},
+      { enableHighAccuracy: true, timeout: 20000 },
     );
   };
 
@@ -317,7 +317,7 @@ const AddressModal2 = ({
   const getTextInputStyle = (input, type) => {
     return input != '' && input != undefined
       ? styles.textInput
-      : {fontSize: textScale(12)};
+      : { fontSize: textScale(12) };
   };
 
   return (
@@ -327,12 +327,12 @@ const AddressModal2 = ({
       animationType={'none'}
       style={styles.modalContainer}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image
           source={imagePath.crossB}
-          style={{tintColor: themeColors.secondary_color}}
+          style={{ tintColor: themeColors.secondary_color }}
         />
       </TouchableOpacity>
 
@@ -340,7 +340,7 @@ const AddressModal2 = ({
         keyboardShouldPersistTaps="always"
         style={[
           styles.modalMainViewContainer,
-          {paddingHorizontal: moderateScale(24)},
+          { paddingHorizontal: moderateScale(24) },
         ]}>
         <View style={styles.addAddessView}>
           <Text numberOfLines={1} style={styles.addNewAddeessText}>
@@ -366,7 +366,7 @@ const AddressModal2 = ({
           }}>
           <View style={styles.useCurrentLocationView}>
             <Image
-              style={{tintColor: themeColors.primary_color}}
+              style={{ tintColor: themeColors.primary_color }}
               source={imagePath.locationGreen}
             />
             <TouchableOpacity onPress={currentLocation}>
@@ -386,14 +386,14 @@ const AddressModal2 = ({
             value={city}
             label={strings.CITY}
             onChangeText={_onChangeText('city')}
-            containerStyle={{marginTop: moderateScale(15)}}
+            containerStyle={{ marginTop: moderateScale(15) }}
           />
 
           <AutoUpLabelTxtInput
             value={states}
             label={strings.STATE}
             onChangeText={_onChangeText('states')}
-            containerStyle={{marginTop: moderateScale(15)}}
+            containerStyle={{ marginTop: moderateScale(15) }}
           />
 
           <View
@@ -422,18 +422,18 @@ const AddressModal2 = ({
                 height: moderateScaleVertical(55),
                 justifyContent: 'center',
               }}
-              keyboardType={'numeric'}
+
             />
           </View>
           <Text
-            style={{fontFamily: fontFamily.bold, marginTop: moderateScale(15)}}>
+            style={{ fontFamily: fontFamily.bold, marginTop: moderateScale(15) }}>
             {strings.SAVE_AS}
           </Text>
           <View style={styles.addressTypeView}>
             {addressTypeArray.map((item, index) => {
               return (
                 <TouchableOpacity
-                  onPress={() => updateState({address_type: item.id})}
+                  onPress={() => updateState({ address_type: item.id })}
                   style={styles.addressHomeOrOfficeView}>
                   <Image
                     source={item.icon}
@@ -478,8 +478,8 @@ const AddressModal2 = ({
   );
 };
 
-export function stylesData({fontFamily, themeColors}) {
-  const commonStyles = commonStylesFun({fontFamily});
+export function stylesData({ fontFamily, themeColors }) {
+  const commonStyles = commonStylesFun({ fontFamily });
 
   const styles = StyleSheet.create({
     addressTypeView: {

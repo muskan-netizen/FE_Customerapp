@@ -252,7 +252,6 @@ const P2pOndemandPostCategory = ({ navigation }) => {
     }
     else {
       const filteredItems = allCategories.filter(item => item.type_id === selectedFilter?.id);
-      console.log(filteredItems, "fjasgDF")
       setp2pCategories(filteredItems)
     }
 

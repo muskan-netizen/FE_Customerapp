@@ -14,7 +14,7 @@ import { useDarkMode } from 'react-native-dynamic';
 import RenderHTML from 'react-native-render-html';
 
 
-export default function P2pProductComp({ item = {}, isMoreDetails = false, isViewDetails = true, onViewDetails = () => { }, numberOfLines = 3 }) {
+const P2pProductComp = ({ item = {}, isMoreDetails = false, isViewDetails = true, onViewDetails = () => { }, numberOfLines = 3 }) => {
     const {
         appData,
         themeColors,
@@ -57,6 +57,8 @@ export default function P2pProductComp({ item = {}, isMoreDetails = false, isVie
         },
     };
 
+    console.log(item, "aflkjfkasdhf")
+
     return (
         <TouchableOpacity style={{ ...styles.touchContainer, backgroundColor: colors.whiteSmokeColor, }}>
             <View style={{
@@ -75,7 +77,7 @@ export default function P2pProductComp({ item = {}, isMoreDetails = false, isVie
                         <Text style={{
                             fontFamily: fontFamily?.medium,
                             fontSize: textScale(14)
-                        }}>{item?.product_details[0]?.translation[0]?.title || item?.product_details[0].title}</Text>
+                        }}>{item?.product_details[0]?.translation[0]?.title || item?.product_details[0]?.title || ''}</Text>
                         <RenderHTML
                             contentWidth={width}
                             renderersProps={renderersProps}
@@ -112,6 +114,8 @@ export default function P2pProductComp({ item = {}, isMoreDetails = false, isVie
         </TouchableOpacity>
     )
 }
+
+export default React.memo(P2pProductComp)
 
 export function stylesFunc({ fontFamily, themeColors }) {
     const styles = StyleSheet.create({

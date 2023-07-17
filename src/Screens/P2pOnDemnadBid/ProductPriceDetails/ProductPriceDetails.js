@@ -385,7 +385,7 @@ const ProductPriceDetails = ({ navigation }) => {
                                 fontSize: textScale(14),
                                 textDecorationLine: "underline"
                             }}>
-                            Cancellation policy.
+                            {strings.CANCELLATION_POLICY}
                         </Text>
                     </TouchableOpacity>
                 </View>

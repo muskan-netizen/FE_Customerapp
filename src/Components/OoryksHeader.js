@@ -22,7 +22,9 @@ const OoryksHeader = ({
   isRight = false,
   onPressRight = () => { },
   titleStyle = {},
-  isCustomLeftPress = false
+  isCustomLeftPress = false,
+  isCustomView = false,
+  customView = () => <></>
 }) => {
   const { appStyle, themeToggle, themeColor } = useSelector((state) => state?.initBoot || {});
   const darkthemeusingDevice = useDarkMode();
@@ -45,7 +47,7 @@ const OoryksHeader = ({
       {isRight ? <View >
         <ButtonImage image={rightIcon} onPress={onPressRight} />
       </View>
-        : <React.Fragment />}
+        : isCustomView ? <View>{customView()}</View> : <React.Fragment />}
     </View>
   );
 };
