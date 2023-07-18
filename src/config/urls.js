@@ -1,14 +1,9 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
-<<<<<<< HEAD
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
-=======
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
->>>>>>> aefbe6854dd20326d293a442669414ede6aeda82
 
 // export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
 // export const API_BASE_URL='https://eathalalonly.com/api/v1'

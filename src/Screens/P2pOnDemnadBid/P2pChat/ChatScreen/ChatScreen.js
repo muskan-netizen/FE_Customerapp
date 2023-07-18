@@ -99,12 +99,8 @@ export default function ChatScreen({ route, navigation }) {
     } = state;
     const [orderVendorDetail, setOrderVendorDetail] = useState({})
 
-<<<<<<< HEAD
-    console.log(productDetails, 'pppppppppppppp')
-=======
     const [isVisible, setisVisible] = useState(false);
     const [currentMsg, setCurrentMsg] = useState({});
->>>>>>> aefbe6854dd20326d293a442669414ede6aeda82
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
