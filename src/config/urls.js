@@ -2,7 +2,9 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
+export const API_BASE_URL = 'https://solarprimex.netsolutionindia.com/api/v1';
 // export const API_BASE_URL = 'https://crestarides.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
@@ -843,3 +845,5 @@ export const COMPLETE_PICKUP_DROP_OFF = getApiUrl(
 export const CART_ITEM_CHECKED = getApiUrl('/cart/updateCartCheckedStatus')
 export const SEARCH_ALL_ITEMS = getApiUrl('/v2/search/all');
 export const GET_PRODUCT_DATA_BASED_VARIANTS_2 = getApiUrl('/v2/productByVariant')
+export const POWER_CONSUMPTION_CALCULATOR = getApiUrl('/power-consumption-calculator')
+export const GET_APPLIANCES = getApiUrl('/appliances')

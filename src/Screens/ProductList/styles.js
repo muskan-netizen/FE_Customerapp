@@ -299,12 +299,4 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       fontSize: textScale(12),
       marginRight:moderateScale(6)
     },
-    filterElctConsumpView:{
-      width:width -30,
-      alignSelf:'center',
-      height:moderateScaleVertical(280),
-      backgroundColor:getColorCodeWithOpactiyNumber(colors.greyA.substring(1),60),
-      padding:moderateScale(16),
-      borderRadius:moderateScale(10)
-    }
   });

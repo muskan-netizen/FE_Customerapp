@@ -313,12 +313,23 @@ const DashBoardFiveV2Api = ({
 
 
   const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) }
-
+  const renderFilterBtn = () => {
+    return (
+      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate(navigationStrings.PRODUCT_POWER_CONSUMPTION)}
+        style={styles.PowerConsumptionWrapper} >
+        <Text style={{ ...styles.PowerConsumptiontext, color: isDarkMode ? colors.white : colors.black, }} >
+          Power Consumption Calculator
+        </Text>
+        <Image source={imagePath.goRight} />
+      </TouchableOpacity>
+    )
+  }
 
   const renderHomePageItems = useCallback(({ item, index }) => {
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}>
+        {index == 0 && appIds?.solarPrimex && renderFilterBtn()}
         {
           item?.slug == 'banner' ? (
             <BannersView
@@ -1073,14 +1084,6 @@ const DashBoardFiveV2Api = ({
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
     >
       {showAllTempCartOrders()}
-      <TouchableOpacity
-        onPress={() => alert('okii')}
-        style={{
-          backgroundColor: colors.green, height: 60, width: 100,
-          position: 'absolute', top: -10, right: 10, padding: 8
-        }} >
-        <Text style={{ fontSize: 14, }} >Filter </Text>
-      </TouchableOpacity>
       {!!dataProvider && !isEmpty(dataProvider) ?
         <Animated.FlatList
           ref={ref}
