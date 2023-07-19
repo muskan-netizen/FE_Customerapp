@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "821974289132",
-    "project_id": "homeric-89b19",
-    "storage_bucket": "homeric-89b19.appspot.com"
+    "project_number": "425997098127",
+    "project_id": "homeric-cb4b7",
+    "storage_bucket": "homeric-cb4b7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:821974289132:android:b52e9021eed0e1f36f33c9",
+        "mobilesdk_app_id": "1:425997098127:android:aee62fbb2a55dc93dce4fa",
         "android_client_info": {
-          "package_name": "com.homeric"
+          "package_name": "com.homeric.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "821974289132-2hc36kfv6c4hlcndqp6rvgtrgpv6ud5t.apps.googleusercontent.com",
+          "client_id": "425997098127-d3u796nri9ri29cin45cvit59jm0m1vp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.homeric",
+            "package_name": "com.homeric.app",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "821974289132-opm3vbi4aihsc4r6av8redbd6du9ro1o.apps.googleusercontent.com",
+          "client_id": "425997098127-r356shl6alcolr3p9h607j3aabmc4o7a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.homeric",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "821974289132-ve6t4jupntuo629ns3srd5ai1oj7qul2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.homeric",
+            "package_name": "com.homeric.app",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "821974289132-kj9kvb476ugk7ffptfhj2kvli5tvjqk7.apps.googleusercontent.com",
+          "client_id": "425997098127-ub0bs20km6vccv5ck1smvtvcf2ihnfdg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.homeric.app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "425997098127-8nvvfb57g6qi029rcfmon8nh6tlvevt3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCenCVYEx2U8l1zPdzZICk14-fJnPfhhFk"
+          "current_key": "AIzaSyCEzvv_5EL6JaWBgpDk2ybDKcik02c8yZc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "821974289132-kj9kvb476ugk7ffptfhj2kvli5tvjqk7.apps.googleusercontent.com",
+              "client_id": "425997098127-8nvvfb57g6qi029rcfmon8nh6tlvevt3.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "821974289132-jo8ou4ru7h60h0eon2fegrsu8btjnetu.apps.googleusercontent.com",
+              "client_id": "425997098127-0at89m7dtq57aq44ge9hcteh4hsntbc1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.homeric"
+                "bundle_id": "com.homeric.app"
               }
             }
           ]
