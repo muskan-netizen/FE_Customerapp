@@ -61,7 +61,7 @@ export default ({ fontFamily }) => {
     imageUpload: {
       borderStyle: 'dashed',
       justifyContent: 'center',
-      alignItems: 'center',
+      // alignItems: 'center',
       marginBottom: moderateScaleVertical(10),
     },
     imageStyle2: {

@@ -816,7 +816,7 @@ export default function Signup({ navigation }) {
                       flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      marginHorizontal: 20,
+                      // marginHorizontal: 20,
                     }}>
                     <View>
                       {!isEmpty(aadharFront) ? (
