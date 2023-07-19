@@ -59,8 +59,7 @@ const ShortCode: FC = () => {
   const initApiHit = async (locData: locationInterface | null) => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
-    // const appCode = !!prevCode ? prevCode : getAppCode();
-    const appCode = '88c2ba';
+    const appCode = !!prevCode ? prevCode : getAppCode();
 
     let header = {};
 
