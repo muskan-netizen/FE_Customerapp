@@ -14,7 +14,12 @@ export const openGps = (lat, lng) => {
   Linking.openURL(url);
 };
 
-export function dialCall(phoneNumber) {
+export function dialCall(phoneNumber, type) {
+  if (type == "text") {
+    phoneNumber = `sms:${phoneNumber}`
+    Linking.openURL(phoneNumber);
+    return
+  }
   if (Platform.OS === 'android') {
     phoneNumber = `tel:${phoneNumber}`;
   } else {
