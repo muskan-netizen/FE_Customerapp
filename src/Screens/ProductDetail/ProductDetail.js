@@ -2803,6 +2803,7 @@ export default function ProductDetail({ route, navigation }) {
                 onClose={() => setModalVisibleForAddonModal(false)}
                 // onPress={(data) => alert('123')}
                 addonSet={addonSet}
+                resizeMode='stretch'
               // onPress={currentLocation}
               />
             </>
