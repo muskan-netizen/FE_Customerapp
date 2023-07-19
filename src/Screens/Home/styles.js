@@ -535,7 +535,30 @@ export default ({ themeColors, fontFamily, isDarkMode }) => {
       alignItems: 'center',
       marginTop: moderateScaleVertical(8),
       alignSelf: 'center'
-    }
+    },
+    PowerConsumptionWrapper:{
+      padding:10,
+      flexDirection: 'row', 
+      justifyContent: 'space-between', 
+      alignItems: 'center', 
+      paddingHorizontal:moderateScale(16),
+      marginVertical:moderateScaleVertical(5),
+      borderRadius: moderateScale(10),
+      shadowColor: '#000',
+      shadowOffset: {width: 0, height: 0},
+      shadowOpacity: 0.15,
+      shadowRadius: 1.84,
+      elevation: 2,
+      backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+      margin: 6, 
+    },
+    PowerConsumptiontext: {
+      color: colors.black2Color,
+      fontSize: textScale(16),
+      lineHeight: textScale(28),
+      textAlign: 'center',
+      fontFamily: fontFamily.medium,
+    },
   });
 
   return styles;

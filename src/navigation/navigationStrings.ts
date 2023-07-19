@@ -181,5 +181,6 @@ export default {
   ALL_CATEGORIES: 'allCategories',
   PRODUCT_PRICE_DETAILS: 'productPriceDetails',
   DEVELOPER_MODE: 'DeveloeprMode',
+  PRODUCT_POWER_CONSUMPTION: 'ProductPowerConumption',
   LIVESS: 'Livees',
 };

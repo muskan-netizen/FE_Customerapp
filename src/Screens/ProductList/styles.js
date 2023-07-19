@@ -9,6 +9,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
 
 export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
   StyleSheet.create({
@@ -297,5 +298,5 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       color: colors.black,
       fontSize: textScale(12),
       marginRight:moderateScale(6)
-    }
+    },
   });

@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  TextInput
 } from 'react-native';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -122,6 +123,8 @@ const filtersData = [
 import DatePicker from 'react-native-date-picker';
 import { enableFreeze } from 'react-native-screens';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import DropDown from '../../Components/DropDown';
+
 enableFreeze(true);
 
 export default function Products({ route, navigation }) {
@@ -346,7 +349,6 @@ export default function Products({ route, navigation }) {
   ] = useState({});
   const [selectedAgent, setSelectedAgent] = useState({});
   const [pressedItemInx, setPressedItemInx] = useState(0);
-
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
@@ -646,6 +648,7 @@ export default function Products({ route, navigation }) {
       });
     });
   };
+
 
   const listHeaderComponent2 = () => {
 
@@ -2134,7 +2137,7 @@ export default function Products({ route, navigation }) {
     // }
   };
   /**********Get all list items by category id productListData*/
-  const getAllProductsByCategoryId = pageNo => {
+  const getAllProductsByCategoryId = (pageNo, filterValue) => {
     const productWithCategoryId = data?.productWithSingleCategory
       ? data?.id
       : !!productListId.id
@@ -2143,10 +2146,18 @@ export default function Products({ route, navigation }) {
     const rootproduct =
       data?.rootProducts || data?.productWithSingleCategory ? true : false;
     console.log('<==api hit getProductByCategoryIdOptamize');
+
+    let apiUri;
+    if (filterValue) {
+      apiUri = `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        }&type=${dineInType}&${filterValue} `
+    } else {
+      apiUri = `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        }&type=${dineInType} `
+    }
     actions
       .getProductByCategoryIdOptamize(
-        `/${productWithCategoryId}?page=${pageNo}&product_list=${data?.rootProducts ? true : false
-        }&type=${dineInType} `,
+        apiUri,
         {},
         {
           code: appData?.profile?.code,
@@ -4095,10 +4106,10 @@ export default function Products({ route, navigation }) {
       return;
     }
 
-    console.log("selectedAllProductDataForAppointment",selectedAppointmentSlot)
+    console.log("selectedAllProductDataForAppointment", selectedAppointmentSlot)
     // return;
-    if(!!selectedAppointmentSlot?.value){
-      if(!!typeId && typeId == 8){
+    if (!!selectedAppointmentSlot?.value) {
+      if (!!typeId && typeId == 8) {
         setAppointmentSlotsModal(false);
         setTimeout(() => {
           setIsVisibleModal(true)
@@ -4113,10 +4124,10 @@ export default function Products({ route, navigation }) {
         selectedSection,
         selectedItemIndx,
       );
-    }else{
+    } else {
       alert("Please select slot")
     }
-   
+
   };
 
   const AppointmentSlotModal = () => {
@@ -4143,7 +4154,7 @@ export default function Products({ route, navigation }) {
             }}>
             Select slot
           </Text>
-          
+
           <TouchableOpacity onPress={_onDonePressAfterSlotSelect}>
             <Text
               style={{
