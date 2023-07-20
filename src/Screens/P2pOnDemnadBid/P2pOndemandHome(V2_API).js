@@ -52,6 +52,7 @@ import socketServices from '../../utils/scoketService';
 import DashBoardFiveV2ApiLoader from './DashBoardParts/DashBoardFiveV2ApiLoader';
 import DashBoardHeaderFive from './DashBoardParts/DashBoardHeaderFive';
 import DashBoardFiveV2Api from './DashBoardParts/DashBoardFiveV2Api';
+import { isEmpty } from 'lodash';
 
 enableFreeze(true);
 
@@ -207,8 +208,10 @@ export default function P2pOndemandHome({ route, navigation }) {
     getLocationPermissionStatus()
   }, []);
 
+
+
   const getLocationPermissionStatus = () => {
-    if (location?.latitude === "") {
+    if (location?.address == "") {
       onlyCheckLocationPermission().then((res) => {
         setisLocationModal(false)
         onGetCurrentLoc()
@@ -229,6 +232,7 @@ export default function P2pOndemandHome({ route, navigation }) {
 
     chekLocationPermission(true)
       .then(result => {
+        console.log(result, "faskdjfkjashdf")
         if (result !== 'goback' && result == 'granted') {
           onGetCurrentLoc()
         } else if (result === "blocked") {
@@ -258,6 +262,7 @@ export default function P2pOndemandHome({ route, navigation }) {
   const onGetCurrentLoc = () => {
     getCurrentLocation('home')
       .then(curLoc => {
+        console.log(curLoc, "fadsjhfds")
         setisLocationModal(false)
         updateState({
           curLatLong: curLoc,
@@ -428,7 +433,7 @@ export default function P2pOndemandHome({ route, navigation }) {
       console.log('sending api data header', apiData, apiHeader);
 
       actions
-        .homeDataV2(apiData, apiHeader)
+        .homeDataV2({ ...apiData, action: 2 }, apiHeader)
         .then(async res => {
           console.log('Home data++++++', res);
           updateState({ searchDataLoader: false });
@@ -952,18 +957,11 @@ export default function P2pOndemandHome({ route, navigation }) {
       stopOrderModalVisible: false,
     });
   };
-  const getLocationStatus = () => {
-    onlyCheckLocationPermission().then((res) => {
-      setisLocationModal(false)
-    }).catch((err) => {
-      setisLocationModal(true)
-      homeData()
-    })
-  }
+
 
   const addressDone = async (data_) => {
     setisLocationModal(false)
-    // getLocationStatus()
+
     let res = await getPlaceDetails(
       data_.place_id,
       profile?.preferences?.map_key,

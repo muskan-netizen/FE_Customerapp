@@ -21,72 +21,10 @@ abstract_target 'available_pods' do
    pod 'react-native-google-places', :path => '../node_modules/react-native-google-places'
   
 
-# 1 RoyoOrder Target
-target 'RoyoOrder' do
-
- end
-
-# 2 Ace Target
-target 'Ace' do
-  
-end
-
-
-# 3 Grub Target
-target 'Grub' do
-  
-end
-
-# 4 Gusto Target
-target 'Gusto' do
-  
-end
-
-# 5 Punnet Target
-target 'Punnet' do
-  
-end
-
-
-# 6 Suel Target
-target 'Suel' do
-  
-end
-
-# 7 Voltaic Target
-target 'Voltaic' do
-  
-end
-
-# 8 Emart
+#Emart
 target 'Emart' do
-
 end
 
-# 9 Elixir Target
-target 'Elixir' do
-  
-end
-
-# 10 Homeric Target
-target 'Homeric' do
-  
-end
-
-# 11 GoKab Target
-target 'GoKab' do
-  
-end
-
-# 12 Zest Target
-target 'Zest' do
-  
-end
-
-# 13 Spa Target
-target 'Spa' do
-  
-end
 
 
 post_install do |installer|

@@ -1050,6 +1050,10 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PESAPAL, paymentData);
         return;
+        case 59: //stafood: pesapal  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.LIVESS, paymentData);
+        return;
       default:
         if (
           !!businessType &&
@@ -1304,7 +1308,8 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 49 &&
           selectedPayment?.id != 50 &&
           selectedPayment?.id != 53 &&
-          selectedPayment?.id != 48
+          selectedPayment?.id != 48 && 
+          selectedPayment?.id != 59
         ) {
           setCartItems([]);
           setCartData({});
@@ -1556,7 +1561,7 @@ function Cart({ navigation, route }) {
         return;
       }
 
-      if (cartData?.without_category_kyc === 0) {
+      if (cartData?.without_category_kyc === 0 && cartData?.category_kyc_count !== 0) {
         showError('Please submit KYC form!');
         return;
       }
@@ -2796,6 +2801,11 @@ function Cart({ navigation, route }) {
             ? setPaymentModal(true)
             : setAppSessionRedirection()
         }
+        onCategoryKYC={onCategoryKYC}
+        containerStyle={{
+          ...styles.placeOrderButtonStyle,
+          marginHorizontal: moderateScale(10),
+        }}
 
       />
     )

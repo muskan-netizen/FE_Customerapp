@@ -15,6 +15,7 @@ import {
   DELETE_VENDOR_PRODUCT,
   GET_ALL_PRODUCTSBY_STORE_ID,
   GET_ALL_PRODUCTSBY_VENDOR_ID,
+  GET_APPLIANCES,
   GET_DATA_BY_CATEGORY,
   GET_DATA_BY_CATEGORY_FILTERS,
   GET_DATA_BY_CATEGORY_FILTERS_OPTAMIZE,
@@ -35,6 +36,7 @@ import {
   GET_WISHLIST_PRODUCT,
   MY_WALLET,
   NEW_VENDOR_FILTER,
+  POWER_CONSUMPTION_CALCULATOR,
   SEND_PRODUCT_BOOKING_DATA,
   UPDATE_PRODUCT_STATUS,
   UPDATE_VENDOR_PRODUCT,
@@ -587,4 +589,13 @@ export function getDriverSlots(query = '', data = {}, headers = {}) {
 export function sendProductBookingData(data = {}, headers = {}) {
   return apiPost(SEND_PRODUCT_BOOKING_DATA, data, headers);
 }
+
+export function getPowerConsumptionCalculation(data = {}, headers = {}) {
+  return apiPost(POWER_CONSUMPTION_CALCULATOR, data, headers);
+}
+
+export function getAppliances(data = {}, headers = {}) {
+  return apiGet(GET_APPLIANCES, data, headers);
+}
+
 

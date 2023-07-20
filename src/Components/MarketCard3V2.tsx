@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import {
   Animated,
   Image,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Grayscale } from 'react-native-color-matrix-image-filters';
-import { useDarkMode } from 'react-native-dynamic';
-import { getBundleId } from 'react-native-device-info';
+import {Grayscale} from 'react-native-color-matrix-image-filters';
+import {useDarkMode} from 'react-native-dynamic';
+import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -22,8 +22,8 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { appIds } from '../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../styles/theme';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -32,32 +32,29 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import { getImageUrlNew } from '../utils/commonFunction';
-
+import {getImageUrlNew} from '../utils/commonFunction';
 
 interface lineOfSightDistanceInterface {
-  lineOfSightDistance?: string | number,
-  is_vendor_closed?: boolean,
-  timeofLineOfSightDistance?: string | number,
-  closed_store_order_scheduled?: number,
-  delaySlot?: string,
-  product_avg_average_rating?: number,
-  categoriesList?: string,
-  path?: string | object | null,
-  logo?: string | object | null,
-  show_slot?: boolean | number,
-  name?: string
+  lineOfSightDistance?: string | number;
+  is_vendor_closed?: boolean;
+  timeofLineOfSightDistance?: string | number;
+  closed_store_order_scheduled?: number;
+  delaySlot?: string;
+  product_avg_average_rating?: number;
+  categoriesList?: string;
+  path?: string | object | null;
+  logo?: string | object | null;
+  show_slot?: boolean | number;
+  name?: string;
 }
-
 
 interface CompProps {
-  data: lineOfSightDistanceInterface,
-  onPress: () => {},
-  extraStyles?: {},
-  fastImageStyle?: {},
-  isMaxSaftey?: true,
+  data: lineOfSightDistanceInterface;
+  onPress: () => {};
+  extraStyles?: {};
+  fastImageStyle?: {};
+  isMaxSaftey?: true;
 }
-
 
 const MarketCard3: FC<CompProps> = ({
   data,
@@ -66,22 +63,28 @@ const MarketCard3: FC<CompProps> = ({
   fastImageStyle,
   isMaxSaftey,
 }: CompProps) => {
-  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector((state: any) => state?.initBoot || {});
+  const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
+    (state: any) => state?.initBoot || {},
+  );
 
-  let vendorDistance: any = 0
+  let vendorDistance: any = 0;
   if (!!data?.lineOfSightDistance) {
-    vendorDistance = typeof (data?.lineOfSightDistance) == 'string' ? parseInt(data?.lineOfSightDistance.split(" ")[0]) : data.lineOfSightDistance.toFixed(0)
+    vendorDistance =
+      typeof data?.lineOfSightDistance == 'string'
+        ? parseInt(data?.lineOfSightDistance.split(' ')[0])
+        : data.lineOfSightDistance.toFixed(0);
   }
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
+  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
 
-  const appMainData = useSelector((state: any) => state?.home?.appMainData || {});
-
+  const appMainData = useSelector(
+    (state: any) => state?.home?.appMainData || {},
+  );
 
   // let imageUrl = getImageUrl(
   //   data?.banner?.proxy_url || data?.image?.proxy_url,
@@ -94,12 +97,12 @@ const MarketCard3: FC<CompProps> = ({
     image_const_arr: appMainData.image_prefix,
     type: 'image_fill',
     height: (height / 2).toFixed(0),
-    width: width.toFixed(0)
-  })
+    width: width.toFixed(0),
+  });
 
   const distanceView = () => {
     return (
-      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
         {!!appData?.profile?.preferences?.is_hyperlocal ? (
           <View
             style={{
@@ -113,37 +116,71 @@ const MarketCard3: FC<CompProps> = ({
                 color: data?.show_slot
                   ? colors.green
                   : data?.is_vendor_closed
-                    ? colors.redB
-                    : colors.green,
+                  ? colors.redB
+                  : colors.green,
               }}>
               {data?.show_slot
                 ? strings.OPEN
                 : data?.is_vendor_closed
-                  ? strings.CLOSE
-                  : strings.OPEN}
+                ? strings.CLOSE
+                : strings.OPEN}
             </Text>
           </View>
         ) : (
           <View />
         )}
 
-        {
-          appIds.sxm2go != getBundleId()
-            && (!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance) ? (
-            <View
-              style={{
-                ...styles.ratingView,
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: 'white',
-              }}>
-              {!!data?.lineOfSightDistance && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {appIds.sxm2go != getBundleId() &&
+        (!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance) ? (
+          <View
+            style={{
+              ...styles.ratingView,
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: 'white',
+            }}>
+            {!!data?.lineOfSightDistance && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Image
+                    style={{
+                      tintColor: data?.is_vendor_closed
+                        ? colors.black
+                        : themeColors.primary_color,
+                      width: moderateScale(12),
+                      height: moderateScale(12),
+                      opacity: data?.is_vendor_closed ? 0.5 : 1,
+                    }}
+                    resizeMode="contain"
+                    source={imagePath.location2}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.distanceTimeStyle,
+                    }}>
+                    {vendorDistance} km
+                  </Text>
+                </View>
+
+                {!!data?.timeofLineOfSightDistance && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <View
+                      style={{
+                        height: moderateScale(12),
+                        borderRightWidth: 0.8,
+                        marginHorizontal: moderateScale(8),
+                        borderRightColor: colors.black,
+                      }}
+                    />
                     <Image
                       style={{
                         tintColor: data?.is_vendor_closed
@@ -154,51 +191,17 @@ const MarketCard3: FC<CompProps> = ({
                         opacity: data?.is_vendor_closed ? 0.5 : 1,
                       }}
                       resizeMode="contain"
-                      source={imagePath.location2}
+                      source={imagePath.icTime2}
                     />
-                    <Text
-                      numberOfLines={1}
-                      style={{
-                        ...styles.distanceTimeStyle,
-                      }}>
-                      {vendorDistance} km
-
+                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                      {data?.timeofLineOfSightDistance}
                     </Text>
                   </View>
-
-                  {!!data?.timeofLineOfSightDistance && (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <View
-                        style={{
-                          height: moderateScale(12),
-                          borderRightWidth: 0.8,
-                          marginHorizontal: moderateScale(8),
-                          borderRightColor: colors.black,
-                        }}
-                      />
-                      <Image
-                        style={{
-                          tintColor: data?.is_vendor_closed
-                            ? colors.black
-                            : themeColors.primary_color,
-                          width: moderateScale(12),
-                          height: moderateScale(12),
-                          opacity: data?.is_vendor_closed ? 0.5 : 1,
-                        }}
-                        resizeMode="contain"
-                        source={imagePath.icTime2}
-                      />
-                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>{data?.timeofLineOfSightDistance}</Text>
-                    </View>
-                  )}
-                </View>
-              )}
-            </View>
-          ) : null}
+                )}
+              </View>
+            )}
+          </View>
+        ) : null}
       </View>
     );
   };
@@ -217,7 +220,7 @@ const MarketCard3: FC<CompProps> = ({
       <View>
         {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
           <View>
-            <View style={{ justifyContent: 'center' }}>
+            <View style={{justifyContent: 'center'}}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -229,7 +232,7 @@ const MarketCard3: FC<CompProps> = ({
                   ...fastImageStyle,
                   // opacity: 0.8,
                 }}
-              // resizeMode={FastImage.resizeMode.cover}
+                // resizeMode={FastImage.resizeMode.cover}
               />
               <View style={styles.vendorScheduledView}>
                 <Text style={styles.vendorScheduledText}>
@@ -243,7 +246,11 @@ const MarketCard3: FC<CompProps> = ({
         ) : !!data?.is_vendor_closed &&
           data?.closed_store_order_scheduled == 0 ? (
           <Grayscale>
-            <View style={{ justifyContent: 'center', backgroundColor: colors.blackOpacity86 }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                backgroundColor: colors.blackOpacity86,
+              }}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -257,7 +264,7 @@ const MarketCard3: FC<CompProps> = ({
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-              <Text style={{ ...styles.currentlyUnavailable }}>
+              <Text style={{...styles.currentlyUnavailable}}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
             </View>
@@ -286,9 +293,9 @@ const MarketCard3: FC<CompProps> = ({
           backgroundColor:
             !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
               ? getColorCodeWithOpactiyNumber(
-                colors.textGreyLight.substring(1),
-                20,
-              )
+                  colors.textGreyLight.substring(1),
+                  20,
+                )
               : colors.whiteOpacity15,
         }}>
         <View style={styles.descView}>
@@ -348,8 +355,8 @@ const MarketCard3: FC<CompProps> = ({
         ) : null}
 
         {!!appData?.profile?.preferences?.max_safety_mod &&
-          isMaxSaftey &&
-          appStyle?.homePageLayout === 5 ? (
+        isMaxSaftey &&
+        appStyle?.homePageLayout === 5 ? (
           <View>
             <View
               style={{
@@ -392,12 +399,17 @@ const MarketCard3: FC<CompProps> = ({
   );
 };
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }: any) {
+export function stylesFunc({
+  fontFamily,
+  extraStyles,
+  isDarkMode,
+  MyDarkTheme,
+}: any) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
+      shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,

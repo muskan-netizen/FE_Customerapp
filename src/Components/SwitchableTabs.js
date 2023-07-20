@@ -58,6 +58,7 @@ const SwitchableTabs = ({
                             selectedTab?.id === item?.id ? colors.white : isDarkMode ? MyDarkTheme.colors.text : colors.black,
                         fontSize: textScale(13),
                         fontFamily: fontFamily?.regular,
+                        textTransform: "none"
                     }}
                     btnStyle={{
                         flex: 0.5,

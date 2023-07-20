@@ -206,4 +206,6 @@ export {default as P2pOndemandProductDetail} from './P2pOnDemnadBid/P2pOndemandP
 export {default as P2pOndemandProducts} from './P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts';
 export {default as P2pOndemandAttributeInformation} from './P2pOnDemnadBid/P2pOndemandAttributeInformation/P2pOndemandAttributeInformation';
 export {default as P2pOndemandPostCategory} from './P2pOnDemnadBid/P2pOndemandPostCategory/P2pOndemandPostCategory';
+export {default as Account7} from './Account/Account7';
 export {default as DeveloperMode} from './DeveloperMode/DeveloperMode';
+export {default as ProductPowerConumption} from './ProductPowerConumption/ProductPowerConumption';

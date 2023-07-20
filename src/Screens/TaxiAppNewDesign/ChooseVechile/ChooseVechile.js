@@ -331,7 +331,6 @@ function ChooseVechile({ navigation, route }) {
         actions
             .getAllCarAndPrices(apiQuery, apiData, apiHeader)
             .then((res) => {
-
                 updateState({
                     loyalityAmount: res?.data?.loyalty_amount_saved
                         ? Number(res?.data?.loyalty_amount_saved).toFixed(
@@ -574,6 +573,9 @@ function ChooseVechile({ navigation, route }) {
                 break;
             case 57: //PesaPal Payment Gatway
                 navigation.navigate(navigationStrings.PESAPAL, paymentData);
+                break;
+            case 59: //PesaPal Payment Gatway
+                navigation.navigate(navigationStrings.LIVESS, paymentData);
                 break;
             case 30: //FlutterWave Payment Getway
                 updateState({
@@ -962,7 +964,7 @@ function ChooseVechile({ navigation, route }) {
                     style={{
                         fontSize: textScale(14),
                         fontFamily: fontFamily?.bold,
-                        color: isDarkMode?colors.white: colors.black,
+                        color: isDarkMode ? colors.white : colors.black,
                     }}>
                     {item?.name || item?.translation_title}
                 </Text>
@@ -1082,9 +1084,9 @@ function ChooseVechile({ navigation, route }) {
                             <TouchableOpacity onPress={() => {
                                 _getAllCarAndPrices()
                                 setCabBookingType('Booking')
-                            }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : isDarkMode?colors.white:colors.borderColorB }}>
+                            }} style={{ ...styles.cabBookingTyp, borderColor: cabBookingType == 'Booking' ? themeColors?.primary_color : isDarkMode ? colors.white : colors.borderColorB }}>
                                 <Image source={imagePath.ic_booking} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? isDarkMode?colors.white:themeColors?.primary_color : isDarkMode?colors.white:colors.black }}>  {strings.BOOKING}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Booking' ? isDarkMode ? colors.white : themeColors?.primary_color : isDarkMode ? colors.white : colors.black }}>  {strings.BOOKING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_cab_pooling &&
@@ -1092,18 +1094,18 @@ function ChooseVechile({ navigation, route }) {
                                 setCabBookingType('Pooling')
                                 _getAllCarAndPrices(true, null, true)
 
-                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : isDarkMode?colors.white:colors.borderColorB  }}>
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'Pooling' ? themeColors?.primary_color : isDarkMode ? colors.white : colors.borderColorB }}>
                                 <Image source={imagePath.ic_cab_pooling} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? isDarkMode?colors.white:themeColors?.primary_color : isDarkMode?colors.white:colors.black }}>  {strings.POOLING}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'Pooling' ? isDarkMode ? colors.white : themeColors?.primary_color : isDarkMode ? colors.white : colors.black }}>  {strings.POOLING}</Text>
                             </TouchableOpacity>
                         }
                         {!!is_bid_ride_enable &&
                             <TouchableOpacity onPress={() => {
                                 setCabBookingType('bidRide')
                                 _getAllCarAndPrices(true, null, false, 1, true)
-                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ?themeColors?.primary_color : isDarkMode?colors.white:colors.borderColorB }}>
+                            }} style={{ ...styles.cabBookingTyp, marginLeft: moderateScale(24), borderColor: cabBookingType == 'bidRide' ? themeColors?.primary_color : isDarkMode ? colors.white : colors.borderColorB }}>
                                 <Image source={imagePath.ic_bid_ride} />
-                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? isDarkMode?colors.white:themeColors?.primary_color : isDarkMode?colors.white:colors.black}}>  {strings.BID_RIDE}</Text>
+                                <Text style={{ ...styles.bookingTitle, color: cabBookingType == 'bidRide' ? isDarkMode ? colors.white : themeColors?.primary_color : isDarkMode ? colors.white : colors.black }}>  {strings.BID_RIDE}</Text>
                             </TouchableOpacity>
                         }
                     </View>
@@ -1807,7 +1809,7 @@ function ChooseVechile({ navigation, route }) {
                     showsVerticalScrollIndicator={false}
                     style={{
                         marginBottom: moderateScaleVertical(10),
-                        height:height / 1.4,
+                        height: height / 1.4,
                         backgroundColor: isDarkMode
                             ? MyDarkTheme.colors.background
                             : colors.white,
@@ -1821,29 +1823,29 @@ function ChooseVechile({ navigation, route }) {
                                 : colors.white,
                         }}>
 
-                {!!profile?.preferences?.is_particular_driver && cabBookingType === "Booking" && !showPaymentModal &&
-                    <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
-                        <BorderTextInputWithLable
-                            marginBottom={8}
+                        {!!profile?.preferences?.is_particular_driver && cabBookingType === "Booking" && !showPaymentModal &&
+                            <View style={{ marginHorizontal: moderateScale(18), marginBottom: moderateScaleVertical(8) }}>
+                                <BorderTextInputWithLable
+                                    marginBottom={8}
 
-                            value={uID}
-                            labelStyle={{
-                                fontSize: textScale(12),
-                                fontFamily: fontFamily?.regular
-                            }}
-                            label={strings.REQUEST_FOR_PARTICULAR_DRIVER}
+                                    value={uID}
+                                    labelStyle={{
+                                        fontSize: textScale(12),
+                                        fontFamily: fontFamily?.regular
+                                    }}
+                                    label={strings.REQUEST_FOR_PARTICULAR_DRIVER}
 
-                            placeholder={strings.ENTER_DRIVER_ID}
-                            onChangeText={txt => updateState({ uID: txt })}
-                            textInputStyle={{
-                                fontSize: textScale(12)
-                            }}
-                            containerStyle={{
-                                borderRadius: moderateScale(8)
-                            }}
-                        />
+                                    placeholder={strings.ENTER_DRIVER_ID}
+                                    onChangeText={txt => updateState({ uID: txt })}
+                                    textInputStyle={{
+                                        fontSize: textScale(12)
+                                    }}
+                                    containerStyle={{
+                                        borderRadius: moderateScale(8)
+                                    }}
+                                />
 
-                    </View>}
+                            </View>}
                         {!!showCarModal && _selectCarModalView()}
                         {!!showPaymentModal && _selectPaymentView()}
                     </View>

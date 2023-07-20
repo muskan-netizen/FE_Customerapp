@@ -23,14 +23,13 @@ import stylesFun from './styles';
 export default function ChatRoom({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const {appData, currencies, languages, appStyle} = useSelector((state) => state.initBoot || {});
-  const {dineInType} = useSelector((state) => state?.home);
+  const { appData, currencies, languages, appStyle } = useSelector((state) => state.initBoot || {});
+  const { dineInType } = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData....paramData');
   const styles = stylesFun({ fontFamily, isDarkMode });
   const [state, setState] = useState({ roomData: [], isLoading: true });
   const { roomData, isLoading } = state;

@@ -313,12 +313,23 @@ const DashBoardFiveV2Api = ({
 
 
   const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) }
-
+  const renderFilterBtn = () => {
+    return (
+      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate(navigationStrings.PRODUCT_POWER_CONSUMPTION)}
+        style={styles.PowerConsumptionWrapper} >
+        <Text style={{ ...styles.PowerConsumptiontext, color: isDarkMode ? colors.white : colors.black, }} >
+          Power Consumption Calculator
+        </Text>
+        <Image source={imagePath.goRight} />
+      </TouchableOpacity>
+    )
+  }
 
   const renderHomePageItems = useCallback(({ item, index }) => {
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}>
+        {index == 0 && appIds?.solarPrimex && renderFilterBtn()}
         {
           item?.slug == 'banner' ? (
             <BannersView
@@ -488,7 +499,7 @@ const DashBoardFiveV2Api = ({
 
   const _renderSelectedProducts = useCallback(({ item, index }) => {
     return (
-      <View>
+      <View style={{ marginRight: 8 }}>
         <ProductsComp3V2
           item={item}
           onPress={() =>
@@ -1073,7 +1084,6 @@ const DashBoardFiveV2Api = ({
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
     >
       {showAllTempCartOrders()}
-
       {!!dataProvider && !isEmpty(dataProvider) ?
         <Animated.FlatList
           ref={ref}
@@ -1314,7 +1324,7 @@ const _renderProducts = ({ item, navigation }) => {
       onPress={() =>
         !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
       }
-      />
+    />
   )
 }
 

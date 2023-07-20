@@ -287,8 +287,9 @@ export default function ChatRoom({ navigation, route }) {
                 fontFamily: fontFamily?.bold,
                 fontSize: textScale(18),
                 marginLeft: moderateScale(16),
-                marginVertical: moderateScaleVertical(20)
-            }}>Chats</Text>
+                marginVertical: moderateScaleVertical(20),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+            }}>{strings.CHATS}</Text>
             <View style={{
                 flex: 1
             }}>

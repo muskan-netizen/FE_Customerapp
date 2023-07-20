@@ -7,7 +7,7 @@ import {
 } from '../../../styles/responsiveSize';
 import { width, height } from '../../../styles/responsiveSize';
 
-export default ({ themeColor, toggleTheme, fontFamily }) => {
+export default ({ themeColors, fontFamily, themeColor }) => {
     const styles = StyleSheet.create({
         imgBack: {
             width: width / 1.1,
@@ -168,6 +168,23 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
             flexWrap: 'wrap',
             marginTop: moderateScaleVertical(5),
         },
+        filterBtns: {
+            flex: 0.48,
+            borderRadius: moderateScale(8),
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            height: moderateScale(26),
+            borderColor: themeColors?.primary_color,
+        },
+        filterBtnImg: {
+            height: moderateScale(20), width: moderateScale(20)
+        },
+        filterBtnTxt: {
+            fontFamily: fontFamily?.mediium,
+            fontSize: textScale(16),
+            marginLeft: moderateScale(6),
+        }
     });
     // export default styles;
     return styles;

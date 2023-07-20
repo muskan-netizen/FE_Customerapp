@@ -552,28 +552,28 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           alignItems: 'center',
           paddingHorizontal: moderateScale(12)
         }}>
-            <View style={{flex:0.08}}>
-          <Image style={{
-            tintColor: isDarkMode? colors.white: colors.black
-          }} source={imagePath.icSearchb} />
+          <View style={{ flex: 0.08 }}>
+            <Image style={{
+              tintColor: isDarkMode ? colors.white : colors.black
+            }} source={imagePath.icSearchb} />
           </View>
-          <View style={{flex:0.8}}>
-          <Text
-            numberOfLines={1}
-            style={{
-              fontSize: textScale(12),
-              fontFamily: fontFamily.bold,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
-          >
-            {item?.name || ''}
-          </Text>
+          <View style={{ flex: 0.8 }}>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: textScale(12),
+                fontFamily: fontFamily.bold,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
+            >
+              {item?.name || ''}
+            </Text>
           </View>
-          <View style={{flex:0.1,alignItems:'flex-end'}}>
-          <Image style={{
-            transform: [{ rotate: '-60deg' }],
-          tintColor: isDarkMode? colors.whiteOpacity50: colors.grayOpacity51
-          }} source={imagePath.searchArrow} />
+          <View style={{ flex: 0.1, alignItems: 'flex-end' }}>
+            <Image style={{
+              transform: [{ rotate: '-60deg' }],
+              tintColor: isDarkMode ? colors.whiteOpacity50 : colors.grayOpacity51
+            }} source={imagePath.searchArrow} />
           </View>
         </View>
       </TouchableOpacity>
@@ -603,50 +603,57 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
   const _listEmptyComponent = () => {
     return (
       <View>
-        {!!searchInput && searchInput?.length > 1 ? null : (
-          <>
-            {!isEmpty(previousSearches) ? (
-              <View style={{ marginHorizontal: moderateScale(20) }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-
-                    width: width - 16,
-                  }}>
+        {!!searchInput && searchInput?.length > 1 ?
+          !showShimmer ?
+            <Text style={{
+              textAlign: "center",
+              marginTop: moderateScaleVertical(16),
+              fontFamily: fontFamily?.bold
+            }}>{strings.NODATAFOUND}!</Text>
+            : null : (
+            <>
+              {!isEmpty(previousSearches) ? (
+                <View style={{ marginHorizontal: moderateScale(20) }}>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+
                       width: width - 16,
                     }}>
-                    <Text
+                    <View
                       style={{
-                        fontSize: textScale(16),
-                        fontFamily: fontFamily.medium,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        width: width - 16,
                       }}>
-                      {strings.RECENTLY_SEARCH}
-                    </Text>
-                    <TouchableOpacity onPress={() => _clearRecentSearches()}>
                       <Text
                         style={{
-                          paddingHorizontal: moderateScale(20),
-                          fontSize: textScale(12),
-                          fontFamily: fontFamily.regular,
-                          color: themeColors.primary_color,
+                          fontSize: textScale(16),
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
                         }}>
-                        {strings.CLEAR}
+                        {strings.RECENTLY_SEARCH}
                       </Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity onPress={() => _clearRecentSearches()}>
+                        <Text
+                          style={{
+                            paddingHorizontal: moderateScale(20),
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.regular,
+                            color: themeColors.primary_color,
+                          }}>
+                          {strings.CLEAR}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
+                  <View>{recentlyData(previousSearches)}</View>
                 </View>
-                <View>{recentlyData(previousSearches)}</View>
-              </View>
-            ) : null}
-            {/* {!isEmpty(recommendedVendorsdata[0]?.data) && (
+              ) : null}
+              {/* {!isEmpty(recommendedVendorsdata[0]?.data) && (
               <View>
                 <Text
                   style={{
@@ -675,8 +682,8 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                 />
               </View>
             )} */}
-          </>
-        )}
+            </>
+          )}
       </View>
     );
   };
@@ -747,9 +754,9 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
 
         <View style={{ flex: 1 }}>
           {showShimmer ? (
-            <View style={{flex:0.5, alignItems:'center',justifyContent:'center'}}>
-                <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
-              </View>
+            <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
+              <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
+            </View>
           ) : !isEmpty(searchData) ? (
             <FlatList
               data={searchData}
@@ -760,10 +767,10 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               style={{ flex: 1 }}
               ListEmptyComponent={_listEmptyComponent}
               ItemSeparatorComponent={() => (
-                <HorizontalLine lineStyle={{ 
+                <HorizontalLine lineStyle={{
                   marginVertical: moderateScaleVertical(10),
-                  borderBottomColor: isDarkMode? colors.whiteOpacity50: colors.blackOpacity10
-                 }} />
+                  borderBottomColor: isDarkMode ? colors.whiteOpacity50 : colors.blackOpacity10
+                }} />
               )}
               // onEndReached={onEndReached}
               ListHeaderComponent={() => (
@@ -780,8 +787,8 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                 )
               }
             />
-          ):(     
-          <NoDataFound text=''/>
+          ) : (
+            <NoDataFound text='' />
           )}
         </View>
       </View>

@@ -31,7 +31,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 //3rd party
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
@@ -44,7 +44,13 @@ import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import navigationStrings from '../../../navigation/navigationStrings';
-import { SvgUri } from 'react-native-svg';
+import { G, SvgUri } from 'react-native-svg';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 const P2pOndemandPostCategory = ({ navigation }) => {
   const modalRef = useRef();
@@ -76,6 +82,9 @@ const P2pOndemandPostCategory = ({ navigation }) => {
   const [isP2pCategoriesRefreshing, setP2pCategoriesRefreshing] =
     useState(false);
   const [isLoadingAttributes, setLoadingAttributes] = useState(false);
+  const [currSelectedFilter, setcurrSelectedFilter] = useState({ id: 1, type: 'All' })
+  const [showMenu, setshowMenu] = useState(false)
+  const [initCategories, setinitCategories] = useState([])
 
   useEffect(() => {
     getP2Pcategories();
@@ -93,11 +102,12 @@ const P2pOndemandPostCategory = ({ navigation }) => {
     return true;
   };
 
+
   const getP2Pcategories = () => {
     actions
       .getAllCategories(
         {
-          // type: 'p2p',
+          type: 'p2p',
           // open_vendor: 0,
           // close_vendor: 0,
           // best_vendor: 0,
@@ -114,6 +124,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
       .then((res) => {
         console.log(res, '<===response getP2pCategories');
         setp2pCategories(res?.data?.navCategories || []);
+        setinitCategories(res?.data?.navCategories || []);
         setLoadingP2pCategories(false);
         setP2pCategoriesRefreshing(false);
       })
@@ -225,12 +236,39 @@ const P2pOndemandPostCategory = ({ navigation }) => {
     if (!!userData?.auth_token) {
       navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
         category_id: item?.id,
+        type_id: item?.type_id
       });
     } else {
       actions.setRedirection('p2pPost');
       actions.setAppSessionData('on_login');
     }
   };
+
+  const onSelectedFilter = (selectedFilter) => {
+    setcurrSelectedFilter(selectedFilter)
+    let allCategories = cloneDeep(initCategories)
+    if (selectedFilter?.id == 1) {
+      setp2pCategories(allCategories)
+    }
+    else {
+      const filteredItems = allCategories.filter(item => item.type_id === selectedFilter?.id);
+      setp2pCategories(filteredItems)
+    }
+
+
+
+  };
+
+  const homeAllFilters = () => {
+    let homeFilter = [
+      { id: 1, type: "All" },
+      { id: 10, type: "Rental" },
+      { id: 13, type: "Sell" },
+    ];
+
+    return homeFilter;
+  };
+
 
   const renderAttributeOptions = useCallback(
     ({ item, index }) => {
@@ -466,6 +504,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
             setIsAutofillModal(false);
             navigation.navigate(navigationStrings.ATTRIBUTE_INFORMATION, {
               category_id: selectedP2Pcategory?.id,
+
             });
           }}>
           <Text style={styles.linkStyle}>{strings.FILL_MANUALLY}</Text>
@@ -559,13 +598,81 @@ const P2pOndemandPostCategory = ({ navigation }) => {
       }>
       <View style={{ marginBottom: moderateScale(18) }}>
         <View style={{ marginHorizontal: moderateScale(15) }}>
-          <Text
-            style={{
-              ...styles.header,
-              color: !!themeColor ? colors.white : colors.black,
-            }}>
-            {strings.SELECT_YOUR_CATEGORY}
-          </Text>
+          <View style={{
+            flexDirection: "row",
+
+            justifyContent: "space-between",
+            marginBottom: moderateScale(20),
+            marginTop: moderateScale(32),
+          }}>
+
+
+            <Text
+              style={{
+                ...styles.header,
+                color: !!themeColor ? colors.white : colors.black,
+              }}>
+              {strings.SELECT_YOUR_CATEGORY}
+            </Text>
+            <Menu style={{ alignSelf: 'flex-end' }}>
+              <MenuTrigger>
+                <View style={styles.menuView}>
+                  <FastImage
+                    style={{
+                      height: moderateScaleVertical(16),
+                      width: moderateScale(16),
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : colors.black,
+                    }}
+                    resizeMode="contain"
+                    source={isDarkMode ? imagePath.sortSelected : imagePath.sort}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(12),
+                      marginHorizontal: moderateScale(5),
+                      fontFamily: fontFamily.regular,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {!currSelectedFilter
+                      ? strings.RELEVANCE
+                      : currSelectedFilter?.type}
+                  </Text>
+                </View>
+              </MenuTrigger>
+              <MenuOptions
+                customStyles={{
+                  optionsContainer: {
+                    marginTop: moderateScaleVertical(36),
+                    width: moderateScale(100),
+                  },
+                }}>
+                {homeAllFilters()?.map((item, index) => {
+                  return (
+                    <View key={index}>
+                      <MenuOption
+                        onSelect={() => onSelectedFilter(item)}
+                        key={String(index)}
+                        text={item?.type}
+                        style={{
+                          marginVertical: moderateScaleVertical(5),
+                        }}
+                      />
+                      <View
+                        style={{
+                          borderBottomWidth: 1,
+                          borderBottomColor: colors.greyColor,
+                        }}
+                      />
+                    </View>
+                  );
+                })}
+              </MenuOptions>
+            </Menu>
+          </View>
           {isLoadingP2pCategories ? (
             <View>
               {['', '', '', ''].map(() => (
@@ -666,8 +773,8 @@ function stylesFunc({ fontFamily, themeColor }) {
   // alert(!!themeColor);
   const styles = StyleSheet.create({
     header: {
-      marginTop: moderateScale(32),
-      marginBottom: moderateScale(20),
+
+
       fontSize: 19,
       fontFamily: fontFamily.medium,
     },
@@ -736,6 +843,16 @@ function stylesFunc({ fontFamily, themeColor }) {
       marginTop: moderateScaleVertical(5),
       borderRadius: moderateScale(5),
       paddingHorizontal: moderateScale(5),
+    },
+    menuView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: moderateScale(4),
+      borderWidth: 0.3,
+      borderColor: colors.textGreyB,
+      width: moderateScale(100),
+      height: moderateScale(30)
     },
   });
   return styles;

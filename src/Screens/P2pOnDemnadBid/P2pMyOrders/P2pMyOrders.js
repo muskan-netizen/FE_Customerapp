@@ -5,6 +5,7 @@ import {
     FlatList,
     Image,
     RefreshControl,
+    ScrollView,
     Text,
     TouchableOpacity,
     View
@@ -76,9 +77,11 @@ export default function P2pMyOrders({ navigation }) {
             }
             if (selectedTab?.id == 1) {
                 getOrders();
+                setIsLoadingOrders(true);
             }
             else {
                 getOngoingAndUpcomingOrders(selectedTab);
+                setIsLoadingOrders(true);
             }
         }, []),
     );
@@ -111,7 +114,6 @@ export default function P2pMyOrders({ navigation }) {
     };
 
     const getOngoingAndUpcomingOrders = type => {
-        setIsLoadingOrders(true)
         actions
             .getUpcomingAndOngoingOrders(
                 `?type=${type?.id == 2 ? 'upcoming' : 'ongoing'}`,
@@ -132,7 +134,7 @@ export default function P2pMyOrders({ navigation }) {
     };
 
     const getOrders = (pageNo = 1, type = 'all') => {
-        setIsLoadingOrders(true);
+
         actions
             .getAllP2pOrders(
                 `?limit=${12}&page=${pageNo}&type=${type}`,
@@ -240,7 +242,7 @@ export default function P2pMyOrders({ navigation }) {
                 onChangeTab={onChangeTab}
                 mainContainerStyle={{
                     marginHorizontal: moderateScale(10),
-                    marginVertical: moderateScaleVertical(20),
+                    marginTop: moderateScaleVertical(20),
                 }}
             />
 
@@ -265,12 +267,14 @@ export default function P2pMyOrders({ navigation }) {
                         ListEmptyComponent={ListEmptyComp}
                     />
                 ) : (
-                    <View style={{ flex: 1 }}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         {!isEmpty(upcomingOngoingOrders?.lender) ||
                             !isEmpty(upcomingOngoingOrders?.borrower) ? (
                             <View>
                                 {!isEmpty(upcomingOngoingOrders?.lender) && (
-                                    <View>
+                                    <View style={{
+                                        marginTop: moderateScaleVertical(16)
+                                    }}>
                                         <HeaderView leftText={"As Lender"} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                                             userType: "lender",
                                             type: selectedTab?.id == 2 ? "upcoming" : "ongoing"
@@ -278,6 +282,7 @@ export default function P2pMyOrders({ navigation }) {
                                         <FlatList
                                             data={upcomingOngoingOrders?.lender}
                                             renderItem={renderUpcomingOngoingOrders}
+                                            scrollEnabled={false}
                                             refreshControl={
                                                 <RefreshControl
                                                     refreshing={isRefreshing}
@@ -286,17 +291,21 @@ export default function P2pMyOrders({ navigation }) {
                                                 />
                                             }
                                             ItemSeparatorComponent={ItemSeparatorComponent}
+
                                         />
                                     </View>
                                 )}
 
                                 {!isEmpty(upcomingOngoingOrders?.borrower) && (
-                                    <View>
+                                    <View style={{
+                                        marginTop: moderateScaleVertical(16)
+                                    }}>
                                         <HeaderView leftText={"As Borrower"} onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                                             userType: "borrower",
                                             type: selectedTab?.id == 2 ? "upcoming" : "ongoing"
                                         })} />
                                         <FlatList
+                                            scrollEnabled={false}
                                             data={upcomingOngoingOrders?.borrower}
                                             renderItem={renderUpcomingOngoingOrders}
                                             refreshControl={
@@ -307,12 +316,16 @@ export default function P2pMyOrders({ navigation }) {
                                                 />
                                             }
                                             ItemSeparatorComponent={ItemSeparatorComponent}
+
                                         />
                                     </View>
                                 )}
                             </View>
                         ) : <ListEmptyComp />}
-                    </View>
+                        <View style={{
+                            height: moderateScaleVertical(100)
+                        }} />
+                    </ScrollView>
                 )}
             </View>
         </WrapperContainer>

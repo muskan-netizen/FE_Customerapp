@@ -7,13 +7,14 @@ import { useSelector } from 'react-redux';
 import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
 import { getImageUrl } from "../utils/helperFunctions";
 import HTMLView from 'react-native-htmlview';
 import { useDarkMode } from 'react-native-dynamic';
+import RenderHTML from 'react-native-render-html';
 
 
-export default function P2pProductComp({ item = {}, isMoreDetails = false, isViewDetails = true, onViewDetails = () => { } }) {
+const P2pProductComp = ({ item = {}, isMoreDetails = false, isViewDetails = true, onViewDetails = () => { }, numberOfLines = 3 }) => {
     const {
         appData,
         themeColors,
@@ -45,6 +46,19 @@ export default function P2pProductComp({ item = {}, isMoreDetails = false, isVie
         <Text style={styles.rightTxt}>{text}</Text>
     </View>
 
+    const renderersProps = {
+        p: {
+            renderersProps: {
+                base: {
+                    numberOfLines,
+                    ellipsizeMode: 'tail',
+                },
+            },
+        },
+    };
+
+    console.log(item, "aflkjfkasdhf")
+
     return (
         <TouchableOpacity style={{ ...styles.touchContainer, backgroundColor: colors.whiteSmokeColor, }}>
             <View style={{
@@ -58,19 +72,27 @@ export default function P2pProductComp({ item = {}, isMoreDetails = false, isVie
                 />
                 <View style={styles.mainContainer}>
                     <View style={{
-                        flex: 1,
+                        flex: 0.98,
                     }}>
                         <Text style={{
                             fontFamily: fontFamily?.medium,
                             fontSize: textScale(14)
-                        }}>{item?.product_details[0]?.translation[0]?.title || item?.product_details[0].title}</Text>
-                        <HTMLView
-                            value={
-                                item?.product_details[0]?.translation[0]?.body_html
+                        }}>{item?.product_details[0]?.translation[0]?.title || item?.product_details[0]?.title || ''}</Text>
+                        <RenderHTML
+                            contentWidth={width}
+                            renderersProps={renderersProps}
+                            source={{
+                                html: item?.product_details[0]?.translation[0]?.body_html
                                     ? item?.product_details[0]?.translation[0]?.body_html
                                     : ''
-                            }
+                            }}
+                            tagsStyles={{
+                                p: {
+                                    color: isDarkMode ? colors.white : colors.textGreyB,
+                                },
+                            }}
                         />
+
                     </View>
                     {isViewDetails && <TouchableOpacity
                         onPress={onViewDetails}
@@ -93,13 +115,16 @@ export default function P2pProductComp({ item = {}, isMoreDetails = false, isVie
     )
 }
 
+export default React.memo(P2pProductComp)
+
 export function stylesFunc({ fontFamily, themeColors }) {
     const styles = StyleSheet.create({
         viewDetailsBtn: {
             padding: moderateScale(6),
             backgroundColor: "green",
             borderRadius: moderateScale(4),
-            backgroundColor: colors.black
+            backgroundColor: colors.black,
+
         },
         descTxt: {
             fontFamily: fontFamily?.medium,

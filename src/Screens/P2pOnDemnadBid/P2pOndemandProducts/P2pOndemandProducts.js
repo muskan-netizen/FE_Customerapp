@@ -7,8 +7,8 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-
 //custom components
+import SearchBar2 from '../../../Components/NewComponents/SearchBar2';
 import TopHeader from '../../../Components/NewComponents/TopHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 //styling
@@ -25,27 +25,31 @@ import styleFun from './styles';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
-import { isEmpty } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import deviceInfoModule from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import Header from '../../../Components/Header';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import {
+    getColorCodeWithOpactiyNumber,
     getImageUrl,
-    showError
+    showError,
 } from '../../../utils/helperFunctions';
 
-import { MultiSelect } from 'react-native-element-dropdown';
+import { MultiSelect, Dropdown } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
-import OoryksHeader from '../../../Components/OoryksHeader';
+import GradientView from '../../../Components/GradientView';
 import {
     checkValueExistInAry,
     tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
+import OoryksHeader from '../../../Components/OoryksHeader';
+import FilterComp from '../../../Components/FilterComp';
 
 const P2pOndemandProducts = ({ route, navigation }) => {
     const flatlistRef = useRef(null);
@@ -58,14 +62,17 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         themeColors,
         themeToggle,
         themeColor,
-    } = useSelector(state => state?.initBoot);
-    const { userData } = useSelector(state => state?.auth);
+    } = useSelector((state) => state?.initBoot);
+    const { userData } = useSelector((state) => state?.auth);
+    const { dineInType, location } = useSelector(state => state?.home);
+    const darkthemeusingDevice = useDarkMode();
+
     const { additional_preferences, digit_after_decimal } =
         appData?.profile?.preferences || {};
-    const darkthemeusingDevice = useDarkMode();
+
     const fontFamily = appStyle?.fontSizeData;
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const styles = styleFun({ themeColor, themeToggle, fontFamily });
+    const styles = styleFun({ themeColors, fontFamily, themeColor });
 
     const [isLoading, setIsLoading] = useState(true);
     const [p2pProducts, setP2pProducts] = useState([]);
@@ -73,12 +80,29 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const [isAttributeFilterModal, setIsAttributeFilterModal] = useState(false);
     const [isLoadMore, setLoadMore] = useState(false);
     const [pageNo, setPageNo] = useState(1);
+    const [state, setState] = useState({
+        selectedSortFilter: null,
+        minimumPrice: 0,
+        maximumPrice: 50000,
+        isShowFilter: false,
+
+    })
+    const [filterType, setfilterType] = useState('filters')
+
+    const {
+        selectedSortFilter, minimumPrice, maximumPrice,
+        isShowFilter
+    } = state;
+
+    const updateState = data => {
+        setState(state => ({ ...state, ...data }));
+    };
 
     useEffect(() => {
         getP2pProductsByCategoryId();
-        // if (!!userData?.auth_token) {
-        //   getListOfAvailableAttributes();
-        // }
+        if (!!userData?.auth_token) {
+            getListOfAvailableAttributes();
+        }
     }, []);
 
     const getListOfAvailableAttributes = () => {
@@ -92,17 +116,17 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     language: languages?.primary_language?.id,
                 },
             )
-            .then(res => {
+            .then((res) => {
                 console.log(res, '<===response getListOfAvailableAttributes');
                 setAttributeInfo(res?.data || []);
             })
-            .catch(error => showError(error?.message || error?.error));
+            .catch((error) => showError(error?.message || error?.error));
     };
 
-    const getP2pProductsByCategoryId = (pageNo = 1, filterAry = []) => {
+    const getP2pProductsByCategoryId = (pageNo = 1, filterAry = [], limit = 7) => {
         actions
             .getProductByP2pCategoryId(
-                `/${paramData?.id}?page=${pageNo}&product_list=true&type=p2p`,
+                `/${paramData?.id}?page=${pageNo}&limit=${limit}&product_list=true&type=p2p`,
                 {
                     attributes: filterAry,
                 },
@@ -113,7 +137,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     systemuser: deviceInfoModule.getUniqueId(),
                 },
             )
-            .then(res => {
+            .then((res) => {
                 console.log(res, '<===response getP2pProductsByCategoryId');
                 if (
                     res?.data?.listData?.current_page < res?.data?.listData?.last_page
@@ -132,24 +156,72 @@ const P2pOndemandProducts = ({ route, navigation }) => {
             .catch(errorMethod);
     };
 
-    const errorMethod = error => {
+    const getFilteredProductList = (pageNo = 1, filterData = {}, limit = 7) => {
+        let data = {};
+        data['variants'] = filterData?.selectedVariants || [];
+        data['options'] = filterData?.selectedOptions || [];
+        data['brands'] = filterData?.sleectdBrands || [];
+        data['order_type'] = filterData?.selectedSorting || 0;
+        data['range'] = `${minimumPrice};${maximumPrice}`;
+        console.log('api hit getAllProductsCategoryFilter', data);
+
+        actions
+            .getProductByCategoryFiltersOptamize(
+                `/${paramData.id}?page=${pageNo}&limit=${limit}&product_list=${data?.rootProducts ? true : false
+                }&type=${dineInType}`,
+                data,
+                {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                    latitude: location?.latitude,
+                    longitude: location?.longitude,
+                    systemuser: deviceInfoModule.getUniqueId(),
+                },
+            )
+            .then(res => {
+                console.log(res, "<==res getProductByCategoryFiltersOptamize")
+                setIsLoading(false)
+                if (
+                    res?.data?.current_page < res?.data?.last_page
+                ) {
+                    setLoadMore(true);
+                } else {
+                    setLoadMore(false);
+                }
+                setP2pProducts(
+                    pageNo == 1
+                        ? res?.data?.data
+                        : [...p2pProducts, ...res?.data?.data],
+                );
+
+
+            })
+            .catch(errorMethod);
+
+
+    }
+    const errorMethod = (error) => {
+
         setIsLoading(false);
         showError(error?.message || error?.error);
     };
 
+
+
     const onChangeDropDownOption = (value, item) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == item?.id,
+            (itm) => itm?.id == item?.id,
         );
         attributeInfoData[indexOfAttributeToUpdate].values = value;
         setAttributeInfo(attributeInfoData);
     };
 
-    const onPressRadioButton = item => {
+    const onPressRadioButton = (item) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == item?.attribute_id,
+            (itm) => itm?.id == item?.attribute_id,
         );
         attributeInfoData[indexOfAttributeToUpdate].values = [item?.id];
         setAttributeInfo(attributeInfoData);
@@ -158,7 +230,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const onChangeText = (text, item) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == item?.id,
+            (itm) => itm?.id == item?.id,
         );
         attributeInfoData[indexOfAttributeToUpdate].values = [text];
         setAttributeInfo(attributeInfoData);
@@ -167,10 +239,10 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const onPressCheckBoxes = (value, data) => {
         const attributeInfoData = [...attributeInfo];
         let indexOfAttributeToUpdate = attributeInfoData.findIndex(
-            itm => itm?.id == value?.attribute_id,
+            (itm) => itm?.id == value?.attribute_id,
         );
         if (!isEmpty(data?.values)) {
-            let existingItmIndx = data?.values.findIndex(itm => itm == value.id);
+            let existingItmIndx = data?.values.findIndex((itm) => itm == value.id);
             if (existingItmIndx == -1) {
                 attributeInfoData[indexOfAttributeToUpdate].values = [
                     ...data?.values,
@@ -190,6 +262,18 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         setAttributeInfo(attributeInfoData);
     };
 
+    const onFilterApply = (filterData = {}) => {
+        setfilterType("filters")
+        setIsLoading(true)
+        setPageNo(1)
+        setLoadMore(false);
+        updateState({
+            isShowFilter: false
+        })
+        setIsAttributeFilterModal(false)
+        getFilteredProductList(1, filterData)
+    };
+
     const onFilterPress = () => {
         if (!!userData?.auth_token) {
             setIsAttributeFilterModal(true);
@@ -200,12 +284,18 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     };
 
     const onApplyAttributeFilter = () => {
+
+        let newAttributeInfo = [...attributeInfo];
+        if (isEmpty(newAttributeInfo)) {
+            alert("Please select filters!")
+            return
+        }
         setIsAttributeFilterModal(false);
         setIsLoading(true);
-        let newAttributeInfo = [...attributeInfo];
         let attributeFilterAry = [];
-        newAttributeInfo.map(itm => {
+        newAttributeInfo.map((itm) => {
             if (!isEmpty(itm?.values)) {
+
                 attributeFilterAry.push({ attribute_id: itm?.id, options: itm?.values });
             }
         });
@@ -213,28 +303,55 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         getP2pProductsByCategoryId(1, attributeFilterAry);
     };
 
-    const onClearAttributeFilter = () => {
+    const onResetAllFilter = () => {
         flatlistRef.current.scrollToOffset({ animated: true, offset: 0 });
-        onResetFilter();
+        onClearAttributeFilter();
         setIsAttributeFilterModal(false);
         setIsLoading(true);
         getP2pProductsByCategoryId();
     };
 
-    const onResetFilter = () => {
+    const onClearAttributeFilter = () => {
         const attributeInfoData = [...attributeInfo];
-        attributeInfoData.map(itm => {
+        attributeInfoData.map((itm) => {
             delete itm['values'];
         });
         setAttributeInfo(attributeInfoData);
+
     };
+
+    const onClearSortByFilter = () => {
+        updateState({
+            selectedSortFilter: null,
+            minimumPrice: 0,
+            maximumPrice: 50000,
+        });
+    }
+
+    const updateMinMax = (min, max) => {
+        updateState({ minimumPrice: min, maximumPrice: max });
+    };
+
+    const onShowHideFilter = () => {
+        updateState({ isShowFilter: !isShowFilter });
+        setfilterType("filters")
+    };
+
 
     const onEndReached = () => {
         if (isLoadMore) {
             setPageNo(pageNo + 1);
-            getP2pProductsByCategoryId(pageNo + 1);
+
+            !!selectedSortFilter ? getFilteredProductList(pageNo + 1) : getP2pProductsByCategoryId(pageNo + 1);
         }
     };
+
+    const onEndReachedDelayed = debounce(onEndReached, 1000, {
+        leading: true,
+        trailing: false,
+    });
+
+
 
     const renderP2pProducts = useCallback(
         ({ item, index }) => {
@@ -264,7 +381,6 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                 padding: 11,
                             }}>
                             <FastImage
-
                                 source={{
                                     uri: getImage('240/240'), cache: FastImage.cacheControl.immutable,
                                     priority: FastImage.priority.high,
@@ -328,64 +444,17 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                         digit_after_decimal,
                                         additional_preferences,
                                         currencies?.primary_currency?.symbol,
-                                    )} / Day
+                                    )}
                                     <Text>
 
 
                                     </Text>
                                 </Text>
-                                {/* <Text style={styles.txt3}>
-                  {item?.translation[0]?.title || item?.title || item?.sku}
-                </Text> */}
+
                             </View>
                         </View>
-                        {/* <FastImage
-              style={styles.imgBack}
-              source={{uri: getImage('700/700')}}
-            /> */}
-                        {/* <FastImage
-              source={
-                !!item?.vendor?.logo?.image_fit
-                  ? {
-                      uri: getImageUrl(
-                        item?.vendor?.logo?.image_fit,
-                        item?.vendor?.logo?.image_path,
-                        '400/400',
-                      ),
-                    }
-                  : imagePath.icProfile
-              }
-              style={{
-                height: moderateScale(50),
-                width: moderateScale(50),
-                borderRadius: moderateScale(25),
-                position: 'absolute',
-                top: moderateScaleVertical(15),
-                left: moderateScale(15),
-              }}
-            /> */}
-                    </TouchableOpacity>
 
-                    {/* <GradientView
-            title={tokenConverterPlusCurrencyNumberFormater(
-              Number(item?.variant[0]?.price),
-              digit_after_decimal,
-              additional_preferences,
-              currencies?.primary_currency?.symbol,
-            )}
-            colorsArray={[
-              getColorCodeWithOpactiyNumber(
-                themeColors?.primary_color.substr(1),
-                30,
-              ),
-              getColorCodeWithOpactiyNumber(
-                themeColors?.primary_color.substr(1),
-                60,
-              ),
-              themeColors?.primary_color,
-            ]}
-            btnStyle={{ marginTop: moderateScale(4) }}
-          /> */}
+                    </TouchableOpacity>
                 </View>
             );
         },
@@ -470,6 +539,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
 
     const renderAttributeOptions = useCallback(
         ({ item, index }) => {
+
             return (
                 <View>
                     <Text
@@ -480,13 +550,13 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                         {item?.title}
                     </Text>
                     {item?.type == 1 ? (
-                        <MultiSelect
+                        <Dropdown
                             style={styles.multiSelect}
                             labelField="title"
                             valueField="id"
                             value={!isEmpty(item?.values) ? item?.values : []}
                             data={item?.option}
-                            onChange={value => onChangeDropDownOption(value, item)}
+                            onChange={(value) => onChangeDropDownOption(value, item)}
                             placeholder={'Select value'}
                             fontFamily={fontFamily.regular}
                             placeholderStyle={styles.multiSelectPlaceholder}
@@ -498,11 +568,15 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             )}
                         </View>
                     ) : item?.type == 4 ? (
-                        <TextInput
-                            placeholder={strings.TYPE_HERE}
-                            onChangeText={text => onChangeText(text, item)}
-                            style={styles.textInput}
-                        />
+                        <View>
+
+                            <TextInput
+                                value={!isEmpty(item?.values) ? item?.values[0] : ""}
+                                placeholder={strings.TYPE_HERE}
+                                onChangeText={(text) => onChangeText(text, item)}
+                                style={styles.textInput}
+                            />
+                        </View>
                     ) : (
                         <View style={styles.checkBox}>
                             {item?.option?.map((itm, index) =>
@@ -516,23 +590,72 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         [attributeInfo],
     );
 
+    const ListHeaderComponent = () => <View style={{
+        marginVertical: moderateScaleVertical(12),
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    }}>
+        <TouchableOpacity
+            onPress={() => setfilterType("filters")}
+            style={{
+                ...styles.filterBtns,
+                borderBottomWidth: filterType == "filters" ? 2 : 0,
+
+            }}>
+            <Image source={imagePath.filter} style={{
+                ...styles.filterBtnImg,
+                tintColor: filterType == "filters" ? themeColors?.primary_color : colors.black,
+
+            }} />
+            <Text style={{
+                ...styles.filterBtnTxt,
+                color: filterType == "filters" ? themeColors?.primary_color : colors.black,
+
+            }}>Choose By</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => {
+                setfilterType("sortBy")
+                updateState({
+                    isShowFilter: true
+                })
+            }}
+            style={{
+                ...styles.filterBtns,
+                borderBottomWidth: filterType == "sortBy" ? 2 : 0,
+
+            }}>
+            <Image source={imagePath.sortSelected} style={{
+                height: moderateScale(14), width: moderateScale(14),
+                tintColor: filterType == "sortBy" ? themeColors?.primary_color : colors.black,
+            }} />
+            <Text style={{
+                ...styles.filterBtnTxt,
+                color: filterType == "sortBy" ? themeColors?.primary_color : colors.black,
+
+            }}>Sort By</Text>
+        </TouchableOpacity>
+
+    </View>
+
     return (
         <WrapperContainer
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
             isLoading={isLoading}>
             <OoryksHeader
                 leftTitle={paramData?.name || ''}
-                onPressRight={() =>
-                    navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                }
-
+                onPressRight={onFilterPress}
                 isRight
+                rightIcon={imagePath.filter}
+
+
             />
+
             <View
                 style={{
                     flex: 1,
                     paddingHorizontal: moderateScale(15),
-                    marginTop: moderateScaleVertical(8)
                 }}>
                 <FlatList
                     ref={flatlistRef}
@@ -543,6 +666,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     renderItem={renderP2pProducts}
                     keyExtractor={(itm, indx) => String(indx)}
                     showsVerticalScrollIndicator={false}
+                    initialNumToRender={7}
                     ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                     ListEmptyComponent={() =>
                         !isLoading && (
@@ -567,7 +691,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             </View>
                         )
                     }
-                    onEndReached={onEndReached}
+                    onEndReached={onEndReachedDelayed}
                     onEndReachedThreshold={0.5}
                     ListFooterComponent={() => (
                         <View>
@@ -575,6 +699,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                 <Text
                                     style={{
                                         textAlign: 'center',
+                                        marginVertical: moderateScaleVertical(10)
                                     }}>
                                     Loading ...{' '}
                                 </Text>
@@ -593,67 +718,103 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     overflow: 'hidden',
                     marginHorizontal: 0,
                     marginBottom: 0,
+                    marginTop: 0,
+                    flex: 1
                 }}
                 visible={isAttributeFilterModal}
+
                 onRequestClose={() => setIsAttributeFilterModal(false)}>
                 <View
                     style={{
                         flex: 1,
                         backgroundColor: colors.white,
                         paddingHorizontal: moderateScale(15),
-                        borderTopLeftRadius: moderateScale(12),
-                        borderTopRightRadius: moderateScale(12),
+                        // borderTopLeftRadius: moderateScale(12),
+                        // borderTopRightRadius: moderateScale(12),
                     }}>
                     <TopHeader
                         onPressLeft={() => setIsAttributeFilterModal(false)}
-                        onPressRight={onResetFilter}
+                        onPressRight={onResetAllFilter}
                     />
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
                         style={{ flexGrow: 1 }}>
-                        <FlatList
-                            data={attributeInfo}
-                            keyboardShouldPersistTaps={'handled'}
-                            scrollEnabled={false}
-                            ItemSeparatorComponent={() => (
-                                <View
-                                    style={{
-                                        height: moderateScaleVertical(18),
-                                    }}
+                        <ListHeaderComponent />
+                        {
+                            filterType == "filters" && <View>
+                                <FlatList
+                                    data={attributeInfo}
+                                    extraData={attributeInfo}
+                                    keyboardShouldPersistTaps={'handled'}
+                                    scrollEnabled={false}
+                                    ItemSeparatorComponent={() => (
+                                        <View
+                                            style={{
+                                                height: moderateScaleVertical(18),
+                                            }}
+                                        />
+                                    )}
+                                    ListHeaderComponent={() => <View style={{
+                                        height: moderateScaleVertical(20)
+                                    }} />}
+                                    renderItem={renderAttributeOptions}
+                                    ListEmptyComponent={() => <View><Text style={{
+                                        fontFamily: fontFamily?.regular,
+                                        fontSize: textScale(14),
+                                        textAlign: "center",
+                                        marginTop: moderateScaleVertical(16)
+                                    }}>Filters not available!</Text></View>}
+                                // ListFooterComponent={listFooterComponent}
                                 />
-                            )}
-                            renderItem={renderAttributeOptions}
-                        // ListFooterComponent={listFooterComponent}
-                        />
-                        <View style={styles.btnStyle}>
-                            <ButtonWithLoader
-                                btnText="Apply Filter"
-                                onPress={onApplyAttributeFilter}
-                                btnStyle={{
-                                    flex: 0.48,
-                                    backgroundColor: themeColors.primary_color,
-                                    borderWidth: 0,
-                                }}
-                                btnTextStyle={{
-                                    textTransform: 'none',
-                                }}
-                            />
-                            <ButtonWithLoader
-                                onPress={onClearAttributeFilter}
-                                btnText="Clear Filter"
-                                btnStyle={{
-                                    flex: 0.48,
-                                    borderColor: themeColors.primary_color,
-                                }}
-                                btnTextStyle={{
-                                    color: themeColors.primary_color,
-                                    textTransform: 'none',
-                                }}
-                            />
-                        </View>
+                                {!isEmpty(attributeInfo) && <View style={styles.btnStyle}>
+                                    <ButtonWithLoader
+                                        btnText="Apply Filter"
+                                        onPress={onApplyAttributeFilter}
+                                        btnStyle={{
+                                            flex: 0.48,
+                                            backgroundColor: themeColors.primary_color,
+                                            borderWidth: 0,
+                                        }}
+                                        btnTextStyle={{
+                                            textTransform: 'none',
+                                        }}
+                                    />
+                                    <ButtonWithLoader
+                                        onPress={onClearAttributeFilter}
+                                        btnText="Clear Filter"
+                                        btnStyle={{
+                                            flex: 0.48,
+                                            borderColor: themeColors.primary_color,
+                                        }}
+                                        btnTextStyle={{
+                                            color: themeColors.primary_color,
+                                            textTransform: 'none',
+                                        }}
+                                    />
+                                </View>}
+                            </View>
+                        }
                     </KeyboardAwareScrollView>
                 </View>
             </Modal>
+            {isShowFilter ? (
+                <FilterComp
+                    isDarkMode={isDarkMode}
+                    themeColors={themeColors}
+                    onFilterApply={onFilterApply}
+                    onShowHideFilter={onShowHideFilter}
+                    allClearFilters={onClearSortByFilter}
+                    selectedSortFilter={selectedSortFilter}
+                    onSelectedSortFilter={val =>
+                        updateState({ selectedSortFilter: val })
+                    }
+                    maximumPrice={maximumPrice}
+                    minimumPrice={minimumPrice}
+                    updateMinMax={updateMinMax}
+
+                    isProductListFilter={false}
+                />
+            ) : null}
         </WrapperContainer>
     );
 };

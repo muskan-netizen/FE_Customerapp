@@ -1,7 +1,7 @@
 import validator from 'is_js';
 import strings from '../constants/lang';
-import {parsePhoneNumber, isValidPhoneNumber} from 'libphonenumber-js';
-import {isEmpty} from 'lodash';
+import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import { isEmpty } from 'lodash';
 const checkEmpty = (val, key, key2 = true) => {
   if (validator.empty(val.trim())) {
     return `${strings.PLEASE_ENTER} ${key2 ? `${strings.YOUR} ` : ''}${key}`;
@@ -82,12 +82,20 @@ export default function (data) {
     beneficiaryName,
     accountNumber,
     ifscCode,
-   houseNo,
-   aadhaar_number_title,
-      aadhaar_front_title,
-      aadhaar_back_title,
+    houseNo,
+    aadhaar_number_title,
+    aadhaar_front_title,
+    aadhaar_back_title,
+    productImg,
+    productLocation
   } = data;
-  console.log(message, 'message');
+
+  if (productImg !== undefined) {
+    if (isEmpty(productImg)) {
+      return 'Please upload product images';
+    }
+  }
+
   if (username !== undefined) {
     let emptyValidationText = checkEmpty(username, strings.NAME);
     if (emptyValidationText !== '') {
@@ -129,6 +137,7 @@ export default function (data) {
       return emptyValidationText;
     }
   }
+
   if (productName !== undefined) {
     let emptyValidationText = checkEmpty(
       productName,
@@ -169,6 +178,13 @@ export default function (data) {
       return checkNumericValue;
     }
   }
+
+  if (productLocation !== undefined) {
+    if (isEmpty(productLocation)) {
+      return "Please select product availablity location"
+    }
+  }
+
   if (price !== undefined) {
     let emptyValidationText = checkEmpty(price, strings.PRICE, false);
     if (emptyValidationText !== '') {
