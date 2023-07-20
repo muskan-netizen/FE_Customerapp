@@ -1717,7 +1717,7 @@ export default function ProductDetail({ route, navigation }) {
         style={{
           ...styles.colorContainer,
           borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
-          borderStyle: !!item?.quantity ? 'solid' : 'dotted'
+          borderStyle: !!item?.quantity ? 'solid' : 'dotted',
 
         }}
       >
@@ -1729,7 +1729,7 @@ export default function ProductDetail({ route, navigation }) {
         <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !item?.quantity ? colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
+          color: !item?.quantity ? isDarkMode?colors.white: colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
           alignSelf: 'center',
 
 
@@ -1756,7 +1756,7 @@ export default function ProductDetail({ route, navigation }) {
         }}>
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !!item?.value ? colors.white : isDarkMode ? colors.white : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
+          color: !!item?.value ? colors.white : isDarkMode ? colors.textGrey : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
         }}>{item.title}</Text>
       </TouchableOpacity>
     )
