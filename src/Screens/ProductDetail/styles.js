@@ -28,6 +28,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       color: colors.textGrey,
       fontSize: textScale(16),
       fontFamily: fontFamily.medium,
+      width:moderateScale(width/1.7)
     },
     productTypeAndBrand: {
       color: colors.textGrey,

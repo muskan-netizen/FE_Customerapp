@@ -2972,7 +2972,7 @@ export default function ProductDetail({ route, navigation }) {
 
         {!!productDetailData && !!productDetailData?.reviews ? <View>
           <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
-            <Text style={{ fontFamily: fontFamily?.medium, fontSize: textScale(16), color: isDarkMode ? colors.white : colors.textGrey }}>Customer reviews</Text>
+            <Text style={{ fontFamily: fontFamily?.medium, fontSize: textScale(16), color: isDarkMode ? colors.white : colors.textGrey }}>{strings.CUSTOMER_REVIEWS}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
               <StarRating
                 disabled={false}

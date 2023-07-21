@@ -1180,5 +1180,6 @@ Amount`,
   OR_LOGIN_WITH: "or login with",
   CANCELLATION_POLICY: "Cancellation policy",
   ENTER_PINCODE:'Enter pincode',
-  ENTER_VALID_PINCODE:'Enter valid pincode'
+  ENTER_VALID_PINCODE:'Enter valid pincode',
+  CUSTOMER_REVIEWS:'Customer Reviews'
 };
