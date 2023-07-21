@@ -815,7 +815,7 @@ export default function MyProfile3({route, navigation}) {
         style={{
           marginVertical: moderateScaleVertical(30),
           marginHorizontal: moderateScale(24),
-          height: height / 2,
+          height: height / 1.5,
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {userData?.refferal_code &&

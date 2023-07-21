@@ -1178,5 +1178,7 @@ Amount`,
   PLEASE_SELECT_PRODUCT_AVAILBILITY: "Please select product availablity",
   CONTINUE_AS_GUEST: "Continue as a Guest",
   OR_LOGIN_WITH: "or login with",
-  CANCELLATION_POLICY: "Cancellation policy"
+  CANCELLATION_POLICY: "Cancellation policy",
+  ENTER_PINCODE:'Enter pincode',
+  ENTER_VALID_PINCODE:'Enter valid pincode'
 };

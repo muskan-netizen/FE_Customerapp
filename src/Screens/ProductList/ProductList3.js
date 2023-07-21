@@ -4373,7 +4373,7 @@ export default function Products({ route, navigation }) {
                   fontFamily: fontFamily?.medium,
                   marginHorizontal: moderateScale(10),
                 }}>
-                View More
+                {strings.VIEW_MORE}
               </Text>
             ) : null}
           </TouchableOpacity>
@@ -4654,7 +4654,7 @@ export default function Products({ route, navigation }) {
                 ListEmptyComponent={listEmptyComponent}
               />
             )}
-            {/* <View style={{height: moderateScaleVertical(60)}} /> */}
+            {!isVisibleModal &&<View style={{height: moderateScaleVertical(30)}} />}
 
             {isVisibleModal ? (
               <TouchableWithoutFeedback

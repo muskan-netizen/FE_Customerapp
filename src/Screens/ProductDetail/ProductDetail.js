@@ -461,6 +461,7 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const errorMethod = (error) => {
+    console.log(error,'eroorrr')
     setLoadingPinCode(false);
     if (error?.message?.alert == 1) {
       updateState({
@@ -2255,7 +2256,7 @@ export default function ProductDetail({ route, navigation }) {
                       style={{
                         fontFamily: fontFamily?.bold,
                         fontSize: textScale(12),
-                        color: colors.black,
+                        color:isDarkMode ? colors.white : colors.black,
                       }}>
                       Enter 6 digit pincode for hassale free timely delivery
                     </Text>
@@ -2274,7 +2275,7 @@ export default function ProductDetail({ route, navigation }) {
                         <BorderTextInput
                           onChangeText={onChangePinCode}
                           value={pinCode}
-                          placeholder={'Enter Pincode'}
+                          placeholder={strings.ENTER_PINCODE}
                           containerStyle={{
 
                             borderRadius: moderateScale(10),
@@ -2294,7 +2295,7 @@ export default function ProductDetail({ route, navigation }) {
                                 fontSize: textScale(10),
                                 marginTop: moderateScaleVertical(4)
                               }}>
-                              Enter valid pincode
+                              {strings.ENTER_VALID_PINCODE}
                             </Text>
                           )}
                       </View>

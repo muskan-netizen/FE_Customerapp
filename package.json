@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "royoorder": "react-native run-android --variant=royoorderDebug --appIdSuffix=royoorder",
-    "emart": "react-native run-android --variant=emartDebug --appIdSuffix=emart",
     "grub": "react-native run-android --variant=grubDebug --appIdSuffix=grub",
     "gusto": "react-native run-android --variant=gustoDebug --appIdSuffix=gusto",
     "punnet": "react-native run-android --variant=punnetDebug --appIdSuffix=punnet",
@@ -19,7 +18,6 @@
     "skyline": "react-native run-android --variant=skylineDebug --appIdSuffix=skyline",
     "rentzy": "react-native run-android --variant=rentzyDebug --appIdSuffix=rentzy",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
-    "emartRelease": "cd android && ./gradlew assembleemartRelease",
     "homericRelease": "cd android && ./gradlew assembleHomericRelease",
     "grubRelease": "cd android && ./gradlew assembleGrubRelease",
     "gustoRelease": "cd android && ./gradlew assembleGustoRelease",
