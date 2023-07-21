@@ -1150,7 +1150,7 @@ export default function ChatScreen({ route, navigation }) {
                 transparent={false}
                 visible={isVisible}
                 onRequestClose={() => {
-                    alert('Modal has been closed.');
+                    setisVisible(false)
                 }}>
                 <View
                     style={{
