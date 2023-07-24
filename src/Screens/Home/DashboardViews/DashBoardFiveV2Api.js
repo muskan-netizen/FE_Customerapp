@@ -325,11 +325,12 @@ const DashBoardFiveV2Api = ({
     )
   }
 
+
   const renderHomePageItems = useCallback(({ item, index }) => {
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}>
-        {index == 0 && appIds?.solarPrimex && renderFilterBtn()}
+        {index == 0 && appIds?.solarPrimex === getBundleId() && renderFilterBtn()}
         {
           item?.slug == 'banner' ? (
             <BannersView
