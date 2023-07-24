@@ -48,7 +48,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       alignItems: 'center',
     },
     addMoneyText: {
-      fontSize: moderateScale(11),
+      fontSize: textScale(13),
       fontFamily: fontFamily.medium,
       color: themeColors?.secondary_color,
     },

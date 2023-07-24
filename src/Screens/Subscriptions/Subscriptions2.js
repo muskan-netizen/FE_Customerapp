@@ -438,7 +438,8 @@ export default function Subscriptions2({ navigation, route }) {
               marginTop: currentSubscription ? moderateScale(40) : null,
               marginBottom: moderateScale(20),
             }}>
-            <Text style={styles.subscriptionTitle}>
+            
+            <Text style={{...styles.subscriptionTitle,color:isDarkMode?colors.white:colors.blackC}}>
               {currentSubscription
                 ? strings.OTHERSUBSCRIPTION
                 : strings.ALLSUBSCRIPTION}
@@ -1195,11 +1196,13 @@ export default function Subscriptions2({ navigation, route }) {
       })
   }
   const _webPayment = () => {
+    let selectedPlanPrice
+    selectedPlanPrice = selectedPaymentMethod?.id == 59 ? Number(planPrice).toFixed(2) : null
     let selectedMethod = selectedPaymentMethod?.code?.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
-    let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
-    if (selectedPaymentMethod?.id == 57) { queryData = queryData + `&come_from=app` }
+    let queryData = `/${selectedMethod}?amount=${!!selectedPlanPrice ? selectedPlanPrice : planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
+    if (selectedPaymentMethod?.id == 57 || selectedPaymentMethod?.id == 59) { queryData = queryData + `&come_from=app` }
     updateState({ isLoading: true });
     console.log('query data', queryData);
     actions
@@ -1616,7 +1619,7 @@ export default function Subscriptions2({ navigation, route }) {
           <FlatList
             data={(!isLoadingB && allSubscriptions) || []}
             renderItem={renderProduct}
-            ListHeaderComponent={listHeaderComponent()}
+            // ListHeaderComponent={listHeaderComponent()}
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}
@@ -1672,7 +1675,8 @@ export default function Subscriptions2({ navigation, route }) {
               height: height / 8,
               justifyContent: 'flex-end',
             }}>
-            {!!appData?.profile?.preferences?.flutterwave_public_key && <PayWithFlutterwave
+            {/* {!!appData?.profile?.preferences?.flutterwave_public_key && 
+            <PayWithFlutterwave
               onAbort={() =>
                 updateState({ isModalVisibleForPayFlutterWave: false })
               }
@@ -1689,7 +1693,8 @@ export default function Subscriptions2({ navigation, route }) {
                 currency: currencies?.primary_currency?.iso_code,
                 payment_options: 'card',
               }}
-            />}
+            />
+            } */}
           </View>
         </Modal>
       </StripeProvider>

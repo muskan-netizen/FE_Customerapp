@@ -598,7 +598,6 @@ export default function TaxiHomeDashbord({
     }, 2000);
   }
 
-  console.log("isloading value", isLoading)
 
   return (
     <WrapperContainer

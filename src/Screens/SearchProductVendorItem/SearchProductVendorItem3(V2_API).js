@@ -46,6 +46,7 @@ import { isEmpty } from 'lodash';
 import { enableFreeze } from "react-native-screens";
 import HorizontalLine from '../../Components/HorizontalLine';
 import { UIActivityIndicator } from 'react-native-indicators';
+import NoDataFound from '../../Components/NoDataFound';
 enableFreeze(true);
 
 let isNoMore = false;
@@ -756,7 +757,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
             <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
               <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
             </View>
-          ) : (
+          ) : !isEmpty(searchData) ? (
             <FlatList
               data={searchData}
               renderItem={renderProduct}
@@ -786,6 +787,8 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                 )
               }
             />
+          ) : (
+            <NoDataFound text='' />
           )}
         </View>
       </View>

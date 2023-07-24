@@ -560,6 +560,7 @@ class PrinterScreen extends Component {
         />
         <Header
           leftIcon={imagePath.icBackb}
+          leftIconStyle={{tintColor:colors.black}}
           centerTitle={''}
           // headerStyle={
           //   isDarkMode

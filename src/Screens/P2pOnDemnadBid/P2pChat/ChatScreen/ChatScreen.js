@@ -106,7 +106,7 @@ export default function ChatScreen({ route, navigation }) {
 
     const isFocused = useIsFocused();
 
-
+    console.log(dineInType, 'dineInTypedineInType')
     useFocusEffect(
         useCallback(() => {
             if (dineInType == 'p2p') {
@@ -1150,7 +1150,7 @@ export default function ChatScreen({ route, navigation }) {
                 transparent={false}
                 visible={isVisible}
                 onRequestClose={() => {
-                    alert('Modal has been closed.');
+                    setisVisible(false)
                 }}>
                 <View
                     style={{

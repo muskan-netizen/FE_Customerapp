@@ -206,6 +206,9 @@ export default function Signup({ navigation }) {
       aadharFrontImg: aadharFront,
       aadharBackImg: aadharBack,
       aadharNumber: aadharNumber,
+      aadhaar_number_title:aadhaar_number,
+      aadhaar_front_title:aadhaar_front,
+      aadhaar_back_title:aadhaar_back,
       upiId: upiId,
       bankName: bankName,
       beneficiaryName: beneficiaryName,
@@ -813,7 +816,7 @@ export default function Signup({ navigation }) {
                       flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      marginHorizontal: 20,
+                      // marginHorizontal: 20,
                     }}>
                     <View>
                       {!isEmpty(aadharFront) ? (

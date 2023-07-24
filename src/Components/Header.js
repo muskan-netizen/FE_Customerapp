@@ -98,9 +98,10 @@ const Header = ({
                   source={leftIcon}
 
                   style={{
-                    ...leftIconStyle,
                     transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    ...leftIconStyle,
+                    
                   }}
                 />
               </TouchableOpacity>

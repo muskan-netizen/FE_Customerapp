@@ -272,6 +272,7 @@ const SubscriptionComponent2 = ({
             )}
           </View>
         </View>
+
       </ImageBackground>
       {!!(
         !!subscriptionData?.plan?.deleted_at == null &&

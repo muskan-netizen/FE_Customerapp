@@ -1,39 +1,15 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
-export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
+// export const API_BASE_URL = 'https://solarprimex.netsolutionindia.com/api/v1';
+// export const API_BASE_URL = 'https://crestarides.com/api/v1';
 // export const API_BASE_URL = 'https://api.focushires.com/api/v1'; //Dev
 
-// export const API_BASE_URL = 'https://test.tempcorner.com/api/v1'
-// export const API_BASE_URL='https://eathalalonly.com/api/v1'
-// export const API_BASE_URL = 'https://sta.ug/api/v1';
-// export const API_BASE_URL='https://tiimollc.com/api/v1'
-// export const API_BASE_URL='https://ngoalapp.com/api/v1'
-// export const API_BASE_URL ='https://mygreenhippo.com/api/v1'
-// export const API_BASE_URL='https://order.westvirginiahub.com/api/v1'
-// export const API_BASE_URL='https://bukam.app/api/v1'
-// export const API_BASE_URL='https://app.baubau.app/api/v1'
-// export const API_BASE_URL='http://192.168.102.169:8001/api/v1'
-// export const API_BASE_URL='https://hattafoodhub.com/api/v1'
-// export const API_BASE_URL='https://demo.qdelo.com/api/v1'
-// export const API_BASE_URL = 'https://app.bendeta.biz/api/v1';
-// export const API_BASE_URL='https://vduonline.co.in/api/v1';
-// export const API_BASE_URL='https://ubierweeds.com/api/v1'
-// export const API_BASE_URL = 'https://00cc-112-196-88-218.ngrok-free.app/api/v1';
+// export const API_BASE_URL = 'http://192.168.102.19:8000/api/v1'; //Dev
 
-// export const API_BASE_URL = 'https://ihelp.app.br/api/v1';
-// export const API_BASE_URL = 'http://192.168.102.169:8001/api/v1';
-// export const API_BASE_URL = 'https://speedy.com.do/api/v1';
-// export const API_BASE_URL = 'https://kaypee.app//api/v1';
-// export const API_BASE_URL = 'https://jeevannapp.com/api/v1';
-// export const API_BASE_URL = 'https://mywaysride.com/api/v1';
-// export const API_BASE_URL = 'https://kaypee.app/api/v1';
-// export const API_BASE_URL = 'https://shophairrun.app/api/v1';
-// export const API_BASE_URL = 'https://nittosadai.com/api/v1';
-// export const API_BASE_URL = 'https://classicab.org/api/v1';
-// export const API_BASE_URL = 'https://order.mrveloz.com.mx/api/v1';
-// export const API_BASE_URL = 'https://carryfood.org/api/v1';
 
 // export const API_BASE_URL = 'https://nittosadai.com/api/v1';
 // export const API_BASE_URL = 'https://laundrozone.net/api/v1';
@@ -845,3 +821,5 @@ export const GET_PRODUCT_DATA_BASED_VARIANTS_2 = getApiUrl('/v2/productByVariant
 export const UPLOAD_FILE_S3 = getApiUrl(
   '/chat/s3-sign?filename=',
 );
+export const POWER_CONSUMPTION_CALCULATOR = getApiUrl('/power-consumption-calculator')
+export const GET_APPLIANCES = getApiUrl('/appliances')

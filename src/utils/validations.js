@@ -83,6 +83,9 @@ export default function (data) {
     accountNumber,
     ifscCode,
     houseNo,
+    aadhaar_number_title,
+    aadhaar_front_title,
+    aadhaar_back_title,
     productImg,
     productLocation
   } = data;
@@ -519,7 +522,7 @@ export default function (data) {
   //
 
   if (aadharNumber !== undefined) {
-    let emptyValidationText = checkEmpty(aadharNumber, 'Aadhar number', false);
+    let emptyValidationText = checkEmpty(aadharNumber, aadhaar_number_title, false);
     if (emptyValidationText !== '') {
       return emptyValidationText;
     }
@@ -527,13 +530,13 @@ export default function (data) {
 
   if (aadharFrontImg !== undefined) {
     if (isEmpty(aadharFrontImg)) {
-      return 'Please upload Aadhar front image';
+      return `Please upload ${aadhaar_front_title}`;
     }
   }
 
   if (aadharBackImg !== undefined) {
     if (isEmpty(aadharBackImg)) {
-      return 'Please upload Aadhar back image';
+      return `Please upload ${aadhaar_back_title}`;
     }
   }
 

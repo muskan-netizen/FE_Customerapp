@@ -1057,6 +1057,16 @@ export default function WebLinks(props) {
                 source={{ html: htmlContent }}
                 tagsStyles={{
                   p: {
+
+                    width: '100%',
+                    textAlign: 'justify',
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    fontFamily: fontFamily.medium,
+                    fontSize: textScale(14),
+                  },
+                  ul: {
                     color: isDarkMode ? colors.white : colors.black,
                     width: '100%',
                     textAlign: 'justify',
@@ -1094,6 +1104,11 @@ export default function WebLinks(props) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyOpcaity7,
                   },
+                  body: {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                  }
                 }}
               />
               //  </View>
@@ -1643,7 +1658,7 @@ export default function WebLinks(props) {
                 />
                 <View
                   style={{
-                    height: moderateScaleVertical(24),
+                    height: moderateScaleVertical(54),
                     marginBottom: moderateScaleVertical(44),
                   }}
                 />

@@ -183,7 +183,7 @@ function SwipeableSection(props) {
                                                             style={{
                                                                 ...styles.priceItemLabel2,
                                                                 fontSize: textScale(12),
-                                                                fontFamily:fontFamily.regular,
+                                                                fontFamily: fontFamily.regular,
                                                                 color: isDarkMode
                                                                     ? MyDarkTheme.colors.text
                                                                     : colors.textGreyOpcaity7,
@@ -199,7 +199,7 @@ function SwipeableSection(props) {
                                                         </Text>
                                                         <Text
                                                             style={{
-                                                                fontFamily:fontFamily.regular,
+                                                                fontFamily: fontFamily.regular,
                                                                 color: isDarkMode
                                                                     ? MyDarkTheme.colors.text
                                                                     : colors.textGreyOpcaity7,
@@ -214,7 +214,7 @@ function SwipeableSection(props) {
                                                         <Text> = </Text>
                                                         <Text
                                                             style={{
-                                                                fontFamily:fontFamily.regular,
+                                                                fontFamily: fontFamily.regular,
                                                                 color: isDarkMode
                                                                     ? MyDarkTheme.colors.text
                                                                     : colors.black,
@@ -227,14 +227,14 @@ function SwipeableSection(props) {
                                                             )}
                                                         </Text>
                                                     </View>
-                                                    {!!i?.schedule_slot ?<Text style={{
-                                                        fontFamily:fontFamily.regular,
-                                                        fontSize:textScale(10),
-                                                         color: isDarkMode
-                                                         ? MyDarkTheme.colors.text
-                                                         : colors.blackOpacity40,
-                                                        marginBottom:moderateScaleVertical(4)
-                                                    }} > {i?.scheduled_date_time} {i?.schedule_slot}</Text>:null}
+                                                    {!!i?.schedule_slot ? <Text style={{
+                                                        fontFamily: fontFamily.regular,
+                                                        fontSize: textScale(10),
+                                                        color: isDarkMode
+                                                            ? MyDarkTheme.colors.text
+                                                            : colors.blackOpacity40,
+                                                        marginBottom: moderateScaleVertical(4)
+                                                    }} > {i?.scheduled_date_time} {i?.schedule_slot}</Text> : null}
                                                     {getBundleId() !== appIds.rentzy &&
                                                         <View
                                                             pointerEvents={btnLoader ? 'none' : 'auto'}
@@ -568,7 +568,7 @@ function SwipeableSection(props) {
                                                                     marginBottom: moderateScaleVertical(24),
                                                                 }}>
                                                                 {/* <Image source={imagePath.icAddPlaceholder} /> */}
-                                                                <Image source={imagePath.icPrescription} />
+                                                                <Image tintColor={isDarkMode ? colors.white : colors.black} source={imagePath.icPrescription} />
                                                             </TouchableOpacity>
                                                         )}
 

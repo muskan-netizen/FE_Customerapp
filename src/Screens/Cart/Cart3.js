@@ -1050,6 +1050,10 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PESAPAL, paymentData);
         return;
+        case 59: //stafood: pesapal  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.LIVESS, paymentData);
+        return;
       default:
         if (
           !!businessType &&
@@ -1304,7 +1308,8 @@ function Cart({ navigation, route }) {
           selectedPayment?.id != 49 &&
           selectedPayment?.id != 50 &&
           selectedPayment?.id != 53 &&
-          selectedPayment?.id != 48
+          selectedPayment?.id != 48 && 
+          selectedPayment?.id != 59
         ) {
           setCartItems([]);
           setCartData({});

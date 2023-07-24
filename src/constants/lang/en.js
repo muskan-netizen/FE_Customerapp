@@ -247,7 +247,7 @@ export default {
   ENTER_NEW_ADDRESS: 'new address',
   ENTER_STREET: 'Street (Building, Street area)',
   STATE: 'State',
-  PINCODE: 'Pincode/Zipcode',
+  PINCODE: 'Postal Code',
   SEARCH_LOCATION: 'Search Location',
   SAVE_ADDRESS: 'Save Address',
   SELECT_AN_ADDRESS: 'Select an address',
@@ -1178,5 +1178,8 @@ Amount`,
   PLEASE_SELECT_PRODUCT_AVAILBILITY: "Please select product availablity",
   CONTINUE_AS_GUEST: "Continue as a Guest",
   OR_LOGIN_WITH: "or login with",
-  CANCELLATION_POLICY: "Cancellation policy"
+  CANCELLATION_POLICY: "Cancellation policy",
+  ENTER_PINCODE:'Enter pincode',
+  ENTER_VALID_PINCODE:'Enter valid pincode',
+  CUSTOMER_REVIEWS:'Customer Reviews'
 };

@@ -57,7 +57,8 @@ import {
   ViewAllSearchItems,
   Wishlist,
   Wishlist2,
-  EcomOrderAgain
+  EcomOrderAgain,
+  ProductPowerConumption
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -320,6 +321,10 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.ORDER_AGAIN}
         component={EcomOrderAgain}
+      />
+      <Stack.Screen
+        name={navigationStrings.PRODUCT_POWER_CONSUMPTION}
+        component={ProductPowerConumption}
       />
 
 

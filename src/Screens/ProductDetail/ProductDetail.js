@@ -365,7 +365,6 @@ export default function ProductDetail({ route, navigation }) {
   };
 
 
-  console.log("variant set", variantSet)
 
 
   const setDefaultValue = (array, sku) => {
@@ -437,7 +436,7 @@ export default function ProductDetail({ route, navigation }) {
       .then((res) => {
         console.log(res, 'api hit getProductDetailBasedOnFilter res 2');
 
- 
+
         const modifyres = compareAndReplaceOptions(variantSetData, res?.data?.availableSets, selectedOption)
 
         setVariantSet(modifyres)
@@ -462,6 +461,7 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const errorMethod = (error) => {
+    console.log(error,'eroorrr')
     setLoadingPinCode(false);
     if (error?.message?.alert == 1) {
       updateState({
@@ -600,15 +600,15 @@ export default function ProductDetail({ route, navigation }) {
 
     const existVariants = cloneDeep(variantSet)
 
-    console.log("selected item",item)
+    console.log("selected item", item)
 
     let modifyVariants = existVariants.map((val, i) => {
       if (parentIndex === i) {
         val.options.map(option => {
-          let isTrue = (option?.id || option?.variant_option_id) === (item?.id || item?.variant_option_id) 
+          let isTrue = (option?.id || option?.variant_option_id) === (item?.id || item?.variant_option_id)
           if (isTrue) {
             option.isSelected = true;
-          }else{
+          } else {
             option.isSelected = false;
           }
           return option;
@@ -767,7 +767,14 @@ export default function ProductDetail({ route, navigation }) {
       <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12) }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage style={{ width: moderateScale(20), height: moderateScale(20), marginRight: moderateScaleVertical(10) }} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }} />
-          <Text>{item?.user?.name}</Text>
+          <Text style={{
+            ...commonStyles.regularFont11,
+            color: isDarkMode ? colors.white : colors.black,
+            marginBottom: moderateScaleVertical(8),
+            fontSize: textScale(14),
+
+          }}>{item?.user?.name}</Text>
+          <Text style={{ color: isDarkMode ? colors.white : colors.textGrey }}>{item?.user?.name}</Text>
         </View>
         <StarRating
           disabled={false}
@@ -802,7 +809,6 @@ export default function ProductDetail({ route, navigation }) {
   }
 
 
-  console.log("productTotalQuantity", productTotalQuantity)
 
 
 
@@ -813,14 +819,14 @@ export default function ProductDetail({ route, navigation }) {
     for (const item of data) {
       const options = item.options;
       let optionFlag = false;
-  
+
       for (const option of options) {
         if (option.isSelected) {
           optionFlag = true;
           break;
         }
       }
-  
+
       if (!optionFlag) {
         flag = false;
         break;
@@ -1004,9 +1010,9 @@ export default function ProductDetail({ route, navigation }) {
     }
 
 
-  const isApiHit   =  checkIsApiHit(variantSet)
+    const isApiHit = checkIsApiHit(variantSet)
 
-    if(!isApiHit){
+    if (!isApiHit) {
       showError('Please select all variants option!');
       return;
     }
@@ -1053,7 +1059,7 @@ export default function ProductDetail({ route, navigation }) {
     // item.showAddToCart = true;
     return (
       <View style={{ flex: 1, width: width / 2.5 }}>
-        {/* <ProductsComp3
+        <ProductsComp3
           item={item}
           onPress={() =>
             navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
@@ -1061,7 +1067,7 @@ export default function ProductDetail({ route, navigation }) {
           containerStyle={{
             borderRadius: moderateScale(8)
           }}
-        /> */}
+        />
       </View>
     );
   };
@@ -1712,7 +1718,7 @@ export default function ProductDetail({ route, navigation }) {
         style={{
           ...styles.colorContainer,
           borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
-          borderStyle: !!item?.quantity ? 'solid' : 'dotted'
+          borderStyle: !!item?.quantity ? 'solid' : 'dotted',
 
         }}
       >
@@ -1724,8 +1730,9 @@ export default function ProductDetail({ route, navigation }) {
         <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
+          color: !item?.quantity ? isDarkMode?colors.white: colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
           alignSelf: 'center',
+
 
         }} >{item.title}</Text>
 
@@ -1740,17 +1747,17 @@ export default function ProductDetail({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() => selectSpecificOptions(item, parentIndex)}
-        disabled={parentIndex == 0 ? false:  !item?.quantity}
+        disabled={parentIndex == 0 ? false : !item?.quantity}
         style={{
           ...styles.sizeContainer,
-          backgroundColor:  !!item?.isSelected ? themeColors?.primary_color : colors.white,
+          backgroundColor: !!item?.isSelected ? themeColors?.primary_color : colors.white,
           borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
-          borderStyle: !!item?.quantity || parentIndex == 0  ? 'solid' : 'dotted'
+          borderStyle: !!item?.quantity || parentIndex == 0 ? 'solid' : 'dotted'
 
         }}>
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !!item?.isSelected ? colors.white : isDarkMode ? colors.white : colors.textGrey,
+          color: !!item?.value ? colors.white : isDarkMode ? colors.textGrey : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
         }}>{item.title}</Text>
       </TouchableOpacity>
     )
@@ -2100,14 +2107,16 @@ export default function ProductDetail({ route, navigation }) {
                     flexDirection: 'row',
                     marginTop: moderateScaleVertical(10),
                     marginHorizontal: moderateScale(10),
+                    alignItems: 'center'
                   }}>
-                  <Image source={imagePath.icRefundable} />
+                  <Image style={{ tintColor: isDarkMode ? colors.white : colors.textGrey }}
+                    source={imagePath.icRefundable} />
                   <Text
                     style={{
                       marginLeft: moderateScale(10),
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(12),
-                      color: colors.textGrey,
+                      color: isDarkMode ? colors.white : colors.textGrey,
                     }}>
                     {strings.WE_HAVE}{' '}
                     {!!productDetailData?.is_return_days
@@ -2247,7 +2256,7 @@ export default function ProductDetail({ route, navigation }) {
                       style={{
                         fontFamily: fontFamily?.bold,
                         fontSize: textScale(12),
-                        color: colors.black,
+                        color:isDarkMode ? colors.white : colors.black,
                       }}>
                       Enter 6 digit pincode for hassale free timely delivery
                     </Text>
@@ -2266,7 +2275,7 @@ export default function ProductDetail({ route, navigation }) {
                         <BorderTextInput
                           onChangeText={onChangePinCode}
                           value={pinCode}
-                          placeholder={'Enter Pincode'}
+                          placeholder={strings.ENTER_PINCODE}
                           containerStyle={{
 
                             borderRadius: moderateScale(10),
@@ -2286,7 +2295,7 @@ export default function ProductDetail({ route, navigation }) {
                                 fontSize: textScale(10),
                                 marginTop: moderateScaleVertical(4)
                               }}>
-                              Enter valid pincode
+                              {strings.ENTER_VALID_PINCODE}
                             </Text>
                           )}
                       </View>
@@ -2833,6 +2842,7 @@ export default function ProductDetail({ route, navigation }) {
                 onClose={() => setModalVisibleForAddonModal(false)}
                 // onPress={(data) => alert('123')}
                 addonSet={addonSet}
+                resizeMode='stretch'
               // onPress={currentLocation}
               />
             </>
@@ -2962,7 +2972,7 @@ export default function ProductDetail({ route, navigation }) {
 
         {!!productDetailData && !!productDetailData?.reviews ? <View>
           <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Customer reviews</Text>
+            <Text style={{ fontFamily: fontFamily?.medium, fontSize: textScale(16), color: isDarkMode ? colors.white : colors.textGrey }}>{strings.CUSTOMER_REVIEWS}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
               <StarRating
                 disabled={false}
@@ -2974,12 +2984,12 @@ export default function ProductDetail({ route, navigation }) {
                 starSize={12}
                 containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
               />
-              <Text>({parseInt(
+              <Text style={{ color: isDarkMode ? colors.white : colors.black }}>({parseInt(
                 Number(productDetailData?.averageRating).toFixed(1),
               )} out of 5)</Text>
-            </View>
-            <Text>{productDetailData?.reviews.length} global rating</Text>
-          </View>
+            </View >
+            <Text style={{ color: isDarkMode ? colors.white : colors.black }}>{productDetailData?.reviews.length} global rating</Text>
+          </View >
           <FlatList
             data={(!state.isLoading && productDetailData?.reviews) || []}
             renderItem={renderreviews}
@@ -2996,10 +3006,11 @@ export default function ProductDetail({ route, navigation }) {
               <View style={{ marginLeft: moderateScale(8) }} />
             )}
           />
-        </View> : null}
+        </View > : null
+        }
 
         <View style={{ marginBottom: moderateScale(40) }} />
-      </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView >
 
 
       <Modal
