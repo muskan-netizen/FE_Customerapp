@@ -32,8 +32,6 @@ import {
 import { getItem, getUserData, setItem, getLastBidInfo } from './src/utils/utils';
 
 
-
-
 import { View, Text } from 'react-native';
 
 import codePush from 'react-native-code-push';
@@ -42,7 +40,6 @@ import Modal from 'react-native-modal';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
 import { clearLastBidData } from './src/redux/actions/home';
-import { setCountry } from './src/redux/actions/init';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -73,26 +70,6 @@ const App = () => {
   }
 
 
-  // async function handleDynamicLink(deepLinkUrl) {
-  //   console.log(deepLinkUrl, 'deepLinkUrldeepLinkUrsssl');
-  //   if (deepLinkUrl != null) {
-  //     setItem('deepLinkUrl', deepLinkUrl)
-  //       .then((res) => {
-  //         actions.setDeeplinkUrl(deepLinkUrl);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error, 'erroror');
-  //       });
-
-  //     let routeName = getUrlRoutes(deepLinkUrl, 2);
-  //     console.log(routeName, 'routeName');
-  //     if (routeName === 'vendor') {
-  //       return;
-  //     } else if (routeName === 'track') {
-  //       openSpecificScreenByDeeplink(deepLinkUrl);
-  //     }
-  //   }
-  // }
 
   //open screens based on deep link url
   const openSpecificScreenByDeeplink = async (deepLinkUrl) => {
@@ -173,9 +150,6 @@ const App = () => {
 
       }
       const getAppData = await getItem('appData');
-
-
-
       if (!!getAppData) {
         dispatch({
           type: types.APP_INIT,
@@ -286,11 +260,6 @@ const App = () => {
         console.log(getLanguage, "getLanguagegetLanguagegetLanguagegetLanguage");
         strings.setLanguage(getLanguage);
       }
-      const getCountry = await getItem('setPrimaryCountry');
-      
-      if(!!getCountry){
-        setCountry(getCountry)
-      }
 
       //saveShortCode
       const saveShortCode = await getItem('saveShortCode');
@@ -322,6 +291,7 @@ const App = () => {
   }, []);
 
   const { blurRef } = useRef();
+
 
 
 
@@ -446,7 +416,6 @@ const App = () => {
       </View>
     );
   };
-
 
   return (
     <SafeAreaProvider>

@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: true,  // clean and rebuild if changing
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -218,7 +218,7 @@ android {
     flavorDimensions "appType"
 
       productFlavors {
-               royoorder {
+                royoorder {
                 dimension "appType"
                 versionCode 3
                 versionName "1.0"
@@ -229,6 +229,150 @@ android {
                 resValue "string", "app_name", "RoyoOrder"
                 resValue "string", "host_name", "sales.royoorders.com"
             }
+            grub{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.customer.grub'
+                    resValue "string", "app_name", "Grub"
+                    resValue "string", "host_name", ""
+                }
+            gusto{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.customer.gusto'
+                    resValue "string", "app_name", "Gusto"
+                    resValue "string", "host_name", ""
+                }
+                punnet{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.punnet'
+                    resValue "string", "app_name", "Punnet"
+                    resValue "string", "host_name", ""
+                }
+                suel{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.suel'
+                    resValue "string", "app_name", "Suel"
+                    resValue "string", "host_name", ""
+                }
+                voltaic{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.voltaic'
+                    resValue "string", "app_name", "Voltaic"
+                    resValue "string", "host_name", ""
+                }
+                    emart{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.emart.order'
+                    resValue "string", "app_name", "Emart"
+                    resValue "string", "host_name", ""
+                }
+
+                elixir{
+                    dimension "appType"
+                    versionCode 2
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.elixir.customer'
+                    resValue "string", "app_name", "Elixir"
+                    resValue "string", "host_name", ""
+                }
+
+                homeric{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.homeric.app'
+                    resValue "string", "app_name", "Homeric"
+                    resValue "string", "host_name", ""  
+                }
+
+                gokab{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.gokab'
+                    resValue "string", "app_name", "GoKab"
+                    resValue "string", "host_name", ""
+                }
+
+                zest{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.zest.customer'
+                    resValue "string", "app_name", "Zest"
+                    resValue "string", "host_name", ""
+                }
+                ace{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion         
+                    applicationId 'com.customer.ace'
+                    resValue "string", "app_name", "Ace"
+                    resValue "string", "host_name", ""
+                }
+                spa{
+                dimension "appType"
+                versionCode 1
+                versionName "1.0"
+                minSdkVersion rootProject.ext.minSdkVersion
+                targetSdkVersion rootProject.ext.targetSdkVersion
+                applicationId 'com.customerApp.spa'
+                resValue "string", "app_name", "Spa"
+                resValue "string", "host_name", ""
+                }
+                rentzy {
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.rentzy'
+                    resValue "string", "app_name", "Rentzy"
+                    resValue "string", "host_name", ""
+                }
+                skyline {
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.skyline'
+                    resValue "string", "app_name", "Skyline"
+                    resValue "string", "host_name", ""
+                }
     }
 }
    dependencies {
