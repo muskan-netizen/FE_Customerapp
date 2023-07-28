@@ -1054,13 +1054,8 @@ export default function WebLinks(props) {
               //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
               <RenderHtml
                 contentWidth={width}
-                source={{ html: `
-                    <body style="backgroundColor:red color: red"; >${htmlContent}</p></span></body>
-                ` }}
+                source={{ html: htmlContent }}
                 tagsStyles={{
-                  span: {
-                    color: 'red',
-                  },
                   p: {
                     width: '90%',
                     textAlign: 'justify',
@@ -1108,7 +1103,11 @@ export default function WebLinks(props) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyOpcaity7,
                   },
-            
+                  body: {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                  }
                 }}
               />
               //  </View>
