@@ -684,11 +684,11 @@ const RoyoOrderDetail = (props) => {
                   source={imagePath.whatsAppRoyo}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() =>
                   Share.share({
                     // message: 'https://www.google.com',
-                    title: 'this is my title',
+                    title: 'OrderDetails',
                     url: 'https://www.google.com',
                   })
                 }>
@@ -698,7 +698,7 @@ const RoyoOrderDetail = (props) => {
                   }}
                   source={imagePath.shareRoyo}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
 

@@ -327,6 +327,7 @@ const DashBoardFiveV2Api = ({
 
 
   const renderHomePageItems = useCallback(({ item, index }) => {
+    console.log(item,"jhjfkhgkjhjkhjkhjkhj");
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}>
@@ -1052,7 +1053,7 @@ const DashBoardFiveV2Api = ({
     })
     return filterData
   }, [appMainData?.homePageLabels])
-
+console.log(appMainData?.homePageLabels,"appMainData?.homePageLabelsappMainData?.homePageLabels");
 
   const dataProvider = useMemo(() => optamizeValue, [appMainData?.homePageLabels])
 
