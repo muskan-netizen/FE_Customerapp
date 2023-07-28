@@ -251,7 +251,6 @@ export default function Home({ route, navigation }) {
       return () => backHandler.remove();
     }, []),
   );
-
   useEffect(() => {
     updateState({ updatedData: memorizsedAppMainData?.categories });
   }, [memorizsedAppMainData]);
@@ -977,7 +976,7 @@ export default function Home({ route, navigation }) {
   })
 
 
-
+console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePageLayout");
 
   const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {

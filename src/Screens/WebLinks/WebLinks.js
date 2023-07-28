@@ -1057,8 +1057,7 @@ export default function WebLinks(props) {
                 source={{ html: htmlContent }}
                 tagsStyles={{
                   p: {
-
-                    width: '100%',
+                    width: '90%',
                     textAlign: 'justify',
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
@@ -1068,23 +1067,23 @@ export default function WebLinks(props) {
                   },
                   ul: {
                     color: isDarkMode ? colors.white : colors.black,
-                    width: '100%',
+                    width: '90%',
                     textAlign: 'justify',
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                    fontFamily: fontFamily.medium,
-                    fontSize: textScale(14),
+                    // color: isDarkMode
+                    //   ? MyDarkTheme.colors.text
+                    //   : colors.textGreyOpcaity7,
+                    // fontFamily: fontFamily.medium,
+                    fontSize: textScale(20),
                   },
-                  ul: {
+                  ol: {
                     color: isDarkMode ? colors.white : colors.black,
-                    width: '100%',
+                    width: '90%',
                     textAlign: 'justify',
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
+                    // color: isDarkMode
+                    //   ? MyDarkTheme.colors.text
+                    //   : colors.textGreyOpcaity7,
                     fontFamily: fontFamily.medium,
-                    fontSize: textScale(14),
+                    fontSize: textScale(20),
                   },
                   h2: {
                     width: height / 2,

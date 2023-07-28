@@ -66,6 +66,7 @@ const MarketCard3: FC<CompProps> = ({
   const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
     (state: any) => state?.initBoot || {},
   );
+console.log(data,"datadatadatadatadatadatadata");
 
   let vendorDistance: any = 0;
   if (!!data?.lineOfSightDistance) {
