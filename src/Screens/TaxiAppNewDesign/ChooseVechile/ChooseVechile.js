@@ -774,58 +774,40 @@ function ChooseVechile({ navigation, route }) {
         const orderFinalPrice = paramData?.bidData?.bid_price ? Number(paramData?.bidData?.bid_price) : selectedCarOption?.total_tags_price ? selectedCarOption?.total_tags_price : selectedCarOption?.tags_price;
 
         let data = {};
-        data['task_type'] = scheduleDateTime?.selectedDateAndTime
-            ? ''
-            : pickUpTimeType
-                ? pickUpTimeType
-                : '';
-        data['schedule_time'] = scheduleDateTime?.selectedDateAndTime
-            ? `${scheduleDateTime?.selectedDateAndTime}`
-            : pickUpTimeType == 'now'
-                ? ''
-                : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
+        data['task_type'] = scheduleDateTime?.selectedDateAndTime ? '' : pickUpTimeType ? pickUpTimeType : '';
+        data['schedule_time'] = scheduleDateTime?.selectedDateAndTime ? `${scheduleDateTime?.selectedDateAndTime}`
+            : pickUpTimeType == 'now' ? '' : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
         data['recipient_phone'] = '';
         data['recipient_email'] = '';
         data['task_description'] = taskInstruction;
         data['amount'] = orderFinalPrice
         data['tags_amount'] = selectedCarOption?.tags_price;
-        data['tollamount'] = selectedCarOption?.toll_fee
-            ? selectedCarOption?.toll_fee
-            : 0;
-        data['servicechargeamount'] = selectedCarOption?.service_charge_amount
-            ? selectedCarOption?.service_charge_amount
-            : 0;
+        data['tollamount'] = selectedCarOption?.toll_fee ? selectedCarOption?.toll_fee : 0;
+        data['servicechargeamount'] = selectedCarOption?.service_charge_amount ? selectedCarOption?.service_charge_amount : 0;
         data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
         data['vendor_id'] = selectedCarOption?.vendor_id;
         data['product_id'] = selectedCarOption?.id;
         data['currency_id'] = currencies?.primary_currency?.id;
         data['tasks'] = paramData?.tasks;
         data['images_array'] = uploadImages;
-        data["unique_id"] = uID
-        data['agent_id'] = paramData?.bidData?.driver_id
+        data["unique_id"] = uID;
+        data['agent_id'] = paramData?.bidData?.driver_id;
         if (paramData?.bidData?.driver_id) {
             data['bid_task_type'] = paramData?.bidData?.task_type
         }
-        data['user_product_order_form'] = allSubmittedAnswers
-            ? allSubmittedAnswers
-            : [];
+        data['user_product_order_form'] = allSubmittedAnswers ? allSubmittedAnswers : [];
         data["is_postpay"] = profile?.preferences?.is_postpay_enable
         if (couponInfo) {
             data['coupon_id'] = couponInfo?.id;
         }
         data['order_time_zone'] = RNLocalize.getTimeZone();
-        data["is_cab_pooling"] = cabBookingType == 'Pooling' ? 1 : 0,
-            data["no_seats_for_pooling"] = updateSeatNO,
-
-            data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
-        (data[
-            'friendName'
-        ] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`),
-            (data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType
-                ? paramData?.friendBookingDetails?.mobileNumber?.includes('+')
-                    ? paramData?.friendBookingDetails?.mobileNumber
-                    : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}`
-                : '')
+        data["is_cab_pooling"] = cabBookingType == 'Pooling' ? 1 : 0;
+        data["no_seats_for_pooling"] = updateSeatNO;
+        data['bookingType'] = paramData?.friendBookingDetails?.bookingType;
+        (data['friendName'] = `${paramData?.friendBookingDetails?.firstName} ${paramData?.friendBookingDetails?.lastName}`);
+        (data['friendPhoneNumber'] = paramData?.friendBookingDetails?.bookingType ? paramData?.friendBookingDetails?.mobileNumber?.includes('+')
+            ? paramData?.friendBookingDetails?.mobileNumber : ` ${defaultDeviceCountryCode}${paramData?.friendBookingDetails?.mobileNumber}` : '');
+        data["call_notification"] = 1;
 
         if (
             !!(
