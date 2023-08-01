@@ -59,7 +59,9 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
     }
 
 
-    const productInfo = !isEmpty(orderData) ? orderData?.vendors[0]?.products[0] : {}
+    const productInfo = !isEmpty(orderData) && Array.isArray(orderData?.vendors) && orderData?.vendors?.length > 0
+        ? orderData?.vendors[0]?.products[0]
+        : {};
 
 
     return (
