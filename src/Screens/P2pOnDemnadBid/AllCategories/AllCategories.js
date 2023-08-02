@@ -183,7 +183,7 @@ const AllCategories = ({ navigation }) => {
 
 
     return (
-        <WrapperContainer isLoading={isLoading}>
+        <WrapperContainer isLoading={isLoading} bgColor={isDarkMode?MyDarkTheme.colors.background:colors.white}>
             <OoryksHeader leftTitle={strings.CATEGORIES} isCustomView customView={customView} />
             <View style={{ marginTop: moderateScaleVertical(12), paddingHorizontal: moderateScale(16) }}>
                 <FlatList
@@ -205,6 +205,7 @@ const AllCategories = ({ navigation }) => {
                 />
             </View>
         </WrapperContainer>
+        
     );
 };
 

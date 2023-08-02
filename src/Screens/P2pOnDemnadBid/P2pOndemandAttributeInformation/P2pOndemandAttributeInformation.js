@@ -648,7 +648,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
             </View>
             <TouchableOpacity
               onPress={() => setImagePickerModal(true)}
-              activeOpacity={0.7}
+             activeOpacity={0.7}
               style={{ marginBottom: moderateScaleVertical(16), alignItems: 'center', height: moderateScaleVertical(150), justifyContent: "center", borderWidth: 1, borderColor: colors.borderColorNew, backgroundColor: isDarkMode ? MyDarkTheme.colors.text : colors.white, borderRadius: moderateScale(8) }}>
               <Image source={imagePath.ic_camPicker} />
               <Text
@@ -660,7 +660,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               onChangeText={text => setName(text)}
               placeholder={strings.ITEM_NAME}
               value={name}
-              containerStyle={styles.containerStyle}
+              containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
               textInputStyle={styles.txtInputStyle}
             />
             <BorderTextInput
@@ -668,7 +668,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               placeholder={strings.DESCRIPTION}
               value={description}
               multiLine={true}
-              containerStyle={{ ...styles.containerStyle, height: moderateScaleVertical(118) }}
+              containerStyle={{ ...styles.containerStyle, height: moderateScaleVertical(118),backgroundColor: isDarkMode ? MyDarkTheme.colors.text : colors.white }}
               textInputStyle={styles.txtInputStyle}
             />
 
@@ -1040,7 +1040,7 @@ function stylesFunc({ fontFamily, themeColors }) {
       borderWidth: 1,
       borderColor: colors.profileInputborder,
       borderRadius: 4,
-      backgroundColor: colors.white,
+      backgroundColor:colors.white,
       height: moderateScaleVertical(48),
       alignSelf: 'center',
     },
@@ -1080,7 +1080,7 @@ function stylesFunc({ fontFamily, themeColors }) {
       flexWrap: 'wrap',
     },
     uploadImgTxt: {
-      opacity: 0.3,
+      opacity: 0.7,
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),

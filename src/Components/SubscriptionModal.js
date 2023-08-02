@@ -29,7 +29,7 @@ const SubscriptionModal = ({
      >
       <View
         style={{
-          height: '30%',
+          height: '40%',
           justifyContent: 'center',
           backgroundColor: colors.white,
           width: '80%',
@@ -76,9 +76,9 @@ const SubscriptionModal = ({
         <TouchableOpacity
           style={{
             position: 'absolute',
-            top: 0,
+            top: 5,
             bottom: 0,
-            right: 0,
+            right: 5,
           }}
           onPress={onClose}>
           <Image
@@ -88,6 +88,7 @@ const SubscriptionModal = ({
         </TouchableOpacity>
       </View>
     </Modal>
+
   );
 };
 
