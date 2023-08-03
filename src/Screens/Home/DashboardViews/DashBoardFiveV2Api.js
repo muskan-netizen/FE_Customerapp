@@ -88,7 +88,8 @@ const DashBoardFiveV2Api = ({
   selcetedToggle = () => { },
   showVendorCategory = true,
   appMainData = {},
-  scrollHandler = () => { }
+  scrollHandler = () => { },
+  priceType = "vendor"
 }) => {
 
 
@@ -327,7 +328,6 @@ const DashBoardFiveV2Api = ({
 
 
   const renderHomePageItems = useCallback(({ item, index }) => {
-    console.log(item,"jhjfkhgkjhjkhjkhjkhj");
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}>
@@ -653,14 +653,15 @@ const DashBoardFiveV2Api = ({
 
         )
       default:
-        <HomeCategoryCard4
+        return <HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
           applyRadius={4}
           index={index}
+          priceType={priceType}
         />
     }
-  }, [appStyle, isDarkMode])
+  }, [appStyle, isDarkMode, priceType])
 
 
   const categoryFlatViewStyle = () => {
@@ -1053,7 +1054,6 @@ const DashBoardFiveV2Api = ({
     })
     return filterData
   }, [appMainData?.homePageLabels])
-console.log(appMainData?.homePageLabels,"appMainData?.homePageLabelsappMainData?.homePageLabels");
 
   const dataProvider = useMemo(() => optamizeValue, [appMainData?.homePageLabels])
 

@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Alert, BackHandler, Linking, SafeAreaView, StatusBar } from 'react-native';
+import { Alert, BackHandler, Image, Linking, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -37,6 +37,10 @@ import socketServices from '../../utils/scoketService';
 import { enableFreeze } from "react-native-screens";
 import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import FastImage from 'react-native-fast-image';
+import Modal from "react-native-modal";
+import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import imagePath from '../../constants/imagePath';
+
 enableFreeze(true);
 
 
@@ -65,6 +69,8 @@ export default function Home({ route, navigation }) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const fontFamily = appStyle?.fontSizeData;
+
 
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
   const [isLoadingAddons, setLoadingAddons] = useState(true);
@@ -73,6 +79,8 @@ export default function Home({ route, navigation }) {
   const [minMaxError, setMinMaxError] = useState([]);
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
+  const [ispriceTypeModal, setIsPriceTypeModal] = useState(false)
+  const [priceType, setPriceType] = useState('vendor')
 
   const [state, setState] = useState({
     isLoading: true,
@@ -435,6 +443,7 @@ export default function Home({ route, navigation }) {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        freelancer: priceType === "freelancer" ? 1 : 0
       };
       console.log('sending api data header', apiData);
 
@@ -562,8 +571,41 @@ export default function Home({ route, navigation }) {
       })();
     }
   };
+
+
+
+
   //onPress Category
   const onPressCategory = (item) => {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT ||
+            item?.redirect_to == staticStrings.RENTAL
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
+
+    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        fetchOffers: true,
+        id: item.id,
+        vendor: false,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
 
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
@@ -976,7 +1018,6 @@ export default function Home({ route, navigation }) {
   })
 
 
-console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePageLayout");
 
   const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {
@@ -1030,6 +1071,8 @@ console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePage
                 _onVoiceStop={_onVoiceStop}
                 nearestLoc={nearestLocDis}
                 currentLoc={currentLocation}
+
+
               />
             </SafeAreaView>
           );
@@ -1164,6 +1207,8 @@ console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePage
             _onVoiceListen={_onVoiceListen}
             isVoiceRecord={isVoiceRecord}
             _onVoiceStop={_onVoiceStop}
+            onSeviceType={() => setIsPriceTypeModal(true)}
+            priceType={priceType}
           />
         </SafeAreaView>
     }
@@ -1174,7 +1219,8 @@ console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePage
     isLoading,
     currentLocation,
     isLoadingB,
-    isVoiceRecord
+    isVoiceRecord,
+    priceType
   ])
 
 
@@ -1204,8 +1250,8 @@ console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePage
             isLoading={isLoading}
             isRefreshing={isRefreshing}
             appMainData={memorizsedAppMainData}
-            onPressCategory={(item) => { onPressCategory(item) }}
-            onPressVendor={(item) => { onPressVendor(item) }}
+            onPressCategory={(item) => onPressCategory(item)}
+            onPressVendor={(item) => onPressVendor(item)}
             isDineInSelected={isDineInSelected}
             selcetedToggle={selcetedToggle}
             tempCartData={memorizedTempCartData}
@@ -1224,6 +1270,9 @@ console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePage
             showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
             showVendorCategory={true}
             scrollHandler={scrollHandler}
+            priceType={priceType}
+
+
           />
         }
       </>
@@ -1299,6 +1348,66 @@ console.log(appStyle?.homePageLayout,"appStyle?.homePageLayoutappStyle?.homePage
           onClose={_stopOrderModalClose}
         />
       )}
+      <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
+        <View style={{ height: moderateScaleVertical(170), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            fontSize: textScale(16)
+          }}>{strings.SELECT_PRICE_TYPE}</Text>
+          <View style={{
+            margin: moderateScale(12)
+          }}>
+            <TouchableOpacity
+              onPress={() => setPriceType("vendor")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}>
+              <Image source={priceType == "vendor" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>{strings.FROM_VENDOR}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPriceType("freelancer")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: moderateScaleVertical(12)
+              }}>
+              <Image source={priceType == "freelancer" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>{strings.FROM_FREELANCER}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              setIsPriceTypeModal(false)
+              updateState({
+                searchDataLoader: true
+              })
+              homeData()
+            }} style={{
+              borderWidth: 1,
+              borderColor: themeColors?.primary_color,
+              height: 35,
+              borderRadius: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "flex-end",
+              marginTop: moderateScale(10),
+              paddingHorizontal: moderateScale(10)
+            }}>
+              <Text style={{
+                color: themeColors?.primary_color
+              }}>{strings.DONE}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }
