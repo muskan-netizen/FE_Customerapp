@@ -514,14 +514,15 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
         )
         .then(res => {
           showSuccess(res.message);
-
-          if (item?.is_wishlist) {
-            item.is_wishlist = null;
-            setProductInfo(item)
-          } else {
-            item.is_wishlist = { product_id: item?.id };
-            setProductInfo(item)
-          }
+          getP2pProductDetail()
+          // if (item?.is_wishlist) {
+          //   console.log('herere')
+          //   item.is_wishlist = null;
+          //   setProductInfo(item)
+          // } else {
+          //   item.is_wishlist = { product_id: item?.id };
+          //   setProductInfo(item)
+          // }
         })
         .catch(errorMethod);
     } else {
@@ -576,13 +577,13 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   }}
                 />
               )}
-
+{console.log(productInfo?.is_wishlist ,'productInfo?.is_wishlist productInfo?.is_wishlist ')}
               <TouchableOpacity
                 style={{
                   position: 'absolute', right: 20, bottom: 20,
                 }}
                 onPress={_onAddtoWishlist}>
-                <Image source={!!productInfo?.is_wishlist ? imagePath.icHeart : imagePath.wishlist} style={{
+                <Image source={!!productInfo?.inwishlist ? imagePath.icHeart : imagePath.wishlist} style={{
                   height: moderateScale(30),
                   width: moderateScale(30),
                   resizeMode: 'contain',
@@ -797,6 +798,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       flex: 1,
+                      flexWrap:'wrap'
                     }}>
                     <Text style={{
                       fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
@@ -995,7 +997,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
       {<View
         style={{
           position: "absolute",
-          bottom: moderateScaleVertical(10),
+          bottom: moderateScaleVertical(20),
           width: width - moderateScale(30),
           alignSelf: "center",
         }}>
