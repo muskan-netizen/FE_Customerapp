@@ -175,9 +175,10 @@ export default function TrackiDetail({ navigation, route }) {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error,'testt');
         updateState({ isLoading: false })
         showError(error?.message || error?.msg)
+        navigation.goBack()
       });
   };
 

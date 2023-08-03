@@ -12,7 +12,7 @@ export default ({fontFamily}) => {
       fontFamily: fontFamily.medium,
       fontSize: moderateScale(16),
       color: colors.blackC,
-      opacity: 0.5,
+      opacity: 1,
     },
     subscription2:{
         fontFamily: fontFamily.bold,

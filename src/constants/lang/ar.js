@@ -1082,5 +1082,9 @@ export default
     SELECT_PRICE_TYPE: "حدد نوع التسعير",
     PLEASE_SELECT_PRODUCT_AVAILBILITY: "الرجاء تحديد مدى توفر المنتج",
     CONTINUE_AS_GUEST: "تواصل كضيف",
-    CANCELLATION_POLICY: "سياسة الإلغاء"
+    CANCELLATION_POLICY: "سياسة الإلغاء",
+    FOR_MORE_OFFERS:'لمزيد من العروض!',
+    SUBSCRIBE_NOW:'إشترك الآن',
+    PLEASE_SELECT_RENTAL_DATE_RANGE:'الرجاء تحديد نطاق تاريخ الإيجار',
+    PRODUCT_IS_ADDED_BY_YOU:'تمت إضافة المنتج بواسطتك!'
   }

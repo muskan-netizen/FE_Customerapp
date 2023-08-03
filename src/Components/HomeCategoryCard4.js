@@ -122,7 +122,7 @@ const HomeCategoryCard3 = ({
         <Text
           numberOfLines={1}
           style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
+            color: isDarkMode ? MyDarkTheme.colors.blackOpacity70 : colors.blackOpacity70,
             fontFamily: fontFamily.medium,
             fontSize: textScale(10),
             textAlign: 'center',

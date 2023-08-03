@@ -12,6 +12,7 @@ import { getImageUrl } from "../utils/helperFunctions";
 import HTMLView from 'react-native-htmlview';
 import { useDarkMode } from 'react-native-dynamic';
 import RenderHTML from 'react-native-render-html';
+import strings from '../constants/lang';
 
 
 const P2pProductComp = ({ item = {}, isMoreDetails = false, isViewDetails = true, onViewDetails = () => { }, numberOfLines = 3 }) => {
@@ -88,7 +89,7 @@ const P2pProductComp = ({ item = {}, isMoreDetails = false, isViewDetails = true
                             }}
                             tagsStyles={{
                                 p: {
-                                    color: isDarkMode ? colors.white : colors.textGreyB,
+                                    color: isDarkMode ? colors.black : colors.textGreyB,
                                 },
                             }}
                         />
@@ -100,7 +101,7 @@ const P2pProductComp = ({ item = {}, isMoreDetails = false, isViewDetails = true
                         <Text style={{
                             fontFamily: fontFamily?.regular,
                             color: colors.white
-                        }}>View Details</Text>
+                        }}>{strings.VIEW_DETAILS}</Text>
                     </TouchableOpacity>}
                 </View>
             </View>

@@ -53,7 +53,7 @@ const SubscriptionModal = ({
             color: colors.redB,
             marginVertical:moderateScaleVertical(6)
           }}>
-          For more offers!
+          {strings.FOR_MORE_OFFERS}
         </Text>
         <TouchableOpacity
           style={{
@@ -70,7 +70,7 @@ const SubscriptionModal = ({
               fontSize: textScale(14),
               fontFamily: fontFamily.bold,
             }}>
-            Subscribe Now
+           {strings.SUBSCRIBE_NOW}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

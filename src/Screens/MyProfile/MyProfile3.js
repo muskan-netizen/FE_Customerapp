@@ -365,6 +365,7 @@ export default function MyProfile3({route, navigation}) {
       updateState({isLoading: true});
       actions
         .profileBasicInfo(formdata, {
+          language: languages?.primary_language?.id,
           code: appData?.profile?.code,
           'Content-Type': 'multipart/form-data',
         })
@@ -519,6 +520,7 @@ export default function MyProfile3({route, navigation}) {
     actions
       .setPrimaryAddress(query, data, {
         code: appData?.profile?.code,
+        language: languages?.primary_language?.id,
       })
       .then(res => {
         const allAddresses = address;

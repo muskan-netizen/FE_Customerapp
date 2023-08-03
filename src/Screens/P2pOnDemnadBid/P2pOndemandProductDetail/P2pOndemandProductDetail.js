@@ -471,13 +471,13 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
     }
 
     if ((!startDate || !endDate) && productInfo?.category?.category_detail?.type_id !== 13) {
-      showError("Please select rental date range")
+      showError(strings.PLEASE_SELECT_RENTAL_DATE_RANGE)
       return
     }
 
 
     if (productInfo?.vendor?.id === userData?.vendor_id) {
-      showError("Product is added by you!")
+      showError(strings.PRODUCT_IS_ADDED_BY_YOU)
       return;
     }
     setisLoadingAddToCart(true)
@@ -843,7 +843,7 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                 marginHorizontal: moderateScale(16),
                 marginTop: moderateScale(4)
               }}>
-
+{console.log(productInfo,'productInfoproductInfo')}
                 <RenderHTML
                   contentWidth={width}
                   source={{
@@ -856,6 +856,10 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                       color: isDarkMode ? colors.white : colors.black,
                       textAlign: 'left',
                     },
+                    body:{
+                      color: isDarkMode ? colors.textGreyB : colors.black,
+                      textAlign: 'left',
+                    }
 
                   }}
                 />

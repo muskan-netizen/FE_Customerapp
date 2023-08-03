@@ -322,7 +322,7 @@ export default function DashBoardHeaderEcommerce({
           </View>
         </Animated.View>
 
-
+<View style={{marginTop:moderateScale(12)}}></View>
         <DeliveryTypeEcommerceComp
           selectedToggle={selcetedToggle}
           themeColors={{ primary_color: colors.black }}

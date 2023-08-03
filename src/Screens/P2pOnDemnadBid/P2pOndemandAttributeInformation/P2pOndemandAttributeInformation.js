@@ -536,12 +536,13 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
             style={{
               ...styles.attributeTitle,
               marginBottom: moderateScaleVertical(6),
+              color:isDarkMode?colors.whiteOpacity77:colors.black
             }}>
             {item?.title}
           </Text>
           {item?.type == 1 ? (
             <Dropdown
-              style={styles.multiSelect}
+              style={{...styles.multiSelect,backgroundColor:isDarkMode? MyDarkTheme.colors.lightDark:colors.blackOpacity05}}
               labelField="title"
               valueField="id"
               value={!isEmpty(item?.values) ? item?.values : []}
@@ -549,7 +550,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               onChange={(value) => onChangeDropDownOption(value, item)}
               placeholder={'Select value'}
               fontFamily={fontFamily.regular}
-              placeholderStyle={styles.multiSelectPlaceholder}
+              placeholderStyle={{...styles.multiSelectPlaceholder,color:isDarkMode?colors.whiteOpacity77:colors.black}}
             />
           ) : item?.type == 3 ? (
             <View style={styles.radioBtn}>
@@ -573,6 +574,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
             style={styles.addLocationBtn}>
             <Text numberOfLines={1} style={{
               flex: 1,
+              color:isDarkMode?colors.whiteOpacity77:colors.black,
               ...styles.titleTxt
             }}>{!isEmpty(item?.values) ? item?.values?.value : "Add Location"}</Text>
             {!isEmpty(item?.values) && <TouchableOpacity onPress={onClearLocationField}><Image source={imagePath.closeButton} /></TouchableOpacity>}
@@ -661,15 +663,15 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               placeholder={strings.ITEM_NAME}
               value={name}
               containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
-              textInputStyle={styles.txtInputStyle}
+              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
             />
             <BorderTextInput
               onChangeText={text => setDescription(text)}
               placeholder={strings.DESCRIPTION}
               value={description}
               multiLine={true}
-              containerStyle={{ ...styles.containerStyle, height: moderateScaleVertical(118),backgroundColor: isDarkMode ? MyDarkTheme.colors.text : colors.white }}
-              textInputStyle={styles.txtInputStyle}
+              containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,height: moderateScaleVertical(118),textAlignVertical:'top'}}
+              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
             />
 
             {paramData?.type_id !== 10 && <BorderTextInput
@@ -680,8 +682,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
               }}
               placeholder={`${currencies?.primary_currency?.symbol} ${strings.PRICE}`}
-              containerStyle={styles.containerStyle}
-              textInputStyle={styles.txtInputStyle}
+              containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
+              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
 
             />}
             <TouchableOpacity
@@ -690,14 +692,16 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                   isVisible: true
                 })
               }}
-              style={{ ...styles.addLocationBtn, backgroundColor: colors.white }}>
+              style={{ ...styles.addLocationBtn, }}>
               <Text numberOfLines={1} style={{
                 flex: 1,
                 ...styles.titleTxt,
-                color: !isEmpty(productLocation) ? colors.black : colors.blackOpacity30
+                color: !isEmpty(productLocation) ? isDarkMode?colors.whiteOpacity77: colors.black : isDarkMode?colors.whiteOpacity77:colors.blackOpacity30
               }}>{!isEmpty(productLocation) ? productLocation?.address : strings.LOCATION_AVAILABLITY}</Text>
               <TouchableOpacity onPress={() => setProductLocation({})}>
-                <Image style={{
+                <Image
+                tintColor={isDarkMode?colors.whiteOpacity77:colors.black}
+                 style={{
                   height: 15, width: 15
                 }} resizeMode="contain" source={imagePath.closeButton} />
               </TouchableOpacity>
@@ -709,7 +713,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                   marginLeft: moderateScale(1),
                   fontSize: textScale(14),
                   fontFamily: fontFamily?.medium,
-                  marginTop: moderateScaleVertical(16)
+                  marginTop: moderateScaleVertical(16),
+                  color:isDarkMode?colors.white:colors.black
                 }}>
                 {strings.PRICING_DETAILS_FOR} :
               </Text>
@@ -836,7 +841,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           <Image source={imagePath.check3} />
           <Text
             style={{
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
               fontFamily: fontFamily.medium,
               fontSize: textScale(19),
               maxWidth: '70%',

@@ -160,7 +160,7 @@ const ProductsComp = ({ containerStyle = {}, isDiscount, item, imageStyle, onPre
 
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  variant[0].price,
+                  variant[0]?.price,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,

@@ -1181,5 +1181,10 @@ Amount`,
   CANCELLATION_POLICY: "Cancellation policy",
   ENTER_PINCODE:'Enter pincode',
   ENTER_VALID_PINCODE:'Enter valid pincode',
-  CUSTOMER_REVIEWS:'Customer Reviews'
+  CUSTOMER_REVIEWS:'Customer Reviews',
+  FOR_MORE_OFFERS:'For more offers!',
+  SUBSCRIBE_NOW:'Subscribe Now',
+  PLEASE_SELECT_RENTAL_DATE_RANGE:'Please select rental date range',
+  PRODUCT_IS_ADDED_BY_YOU:"Product is added by you!"
+
 };

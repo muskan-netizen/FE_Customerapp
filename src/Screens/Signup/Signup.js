@@ -179,25 +179,42 @@ export default function Signup({ navigation }) {
   const emailValidation = () => {
     let EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     if (!EmailRegex.test(email)) {
-      showError('email is not coprrect')
+      showError('email is not correct')
       return true
     }
     return false
   }
+  const nameValidation = () => {
+    let nameRegex = /^[a-zA-Z'’ ]{2,50}$/
+    if (!nameRegex.test(name)) {
+      showError('Name is not correct')
+      return true
+    }
+    return false
+  }
+
   const isValidData = () => {
     const error = validations({
-// email:email,
+email:email,
       password: password,
       name: name,
       phoneNumber: phoneNumber,
       callingCode: callingCode,
     });
+    let nameValidate = nameValidation()
+    if (error || !!nameValidate) {
+      console.log(error, nameValidate, 'errrororor')
+      showError(error || 'Name is not in valid format');
+      return;
+    }
     let emailValidate = emailValidation()
     if (error || !!emailValidate) {
       console.log(error, emailValidate, 'errrororor')
       showError(error || 'Email is not in valid format');
       return;
     }
+    
+    
     return true;
   };
 

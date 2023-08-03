@@ -29,6 +29,7 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import { showError } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
+import strings from '../../../constants/lang';
 
 export default function P2pMyOrders({ navigation }) {
     const { appData, currencies, languages, appStyle, themeColors, themeToggle, themeColor } = useSelector(
@@ -47,15 +48,15 @@ export default function P2pMyOrders({ navigation }) {
     const [tabsData, setTabsData] = useState([
         {
             id: 1,
-            title: 'All',
+            title: strings.ALL,
         },
         {
             id: 2,
-            title: 'Upcoming rents',
+            title: strings.UPCOMING_RENTS,
         },
         {
             id: 3,
-            title: 'Ongoing rents',
+            title: strings.ONGOING_RENTS,
         },
     ]);
     const [selectedTab, setSelectedTab] = useState({
@@ -171,8 +172,9 @@ export default function P2pMyOrders({ navigation }) {
     }
 
     const renderOrders = useCallback(
-        ({ item }) => {
-            return <P2pProductComp item={item} onViewDetails={() => navigation?.navigate(navigationStrings.P2P_ORDER_DETAIL, {
+        ({ item }) =>  {
+
+            return    <P2pProductComp item={item} onViewDetails={() => navigation?.navigate(navigationStrings.P2P_ORDER_DETAIL, {
                 order_id: item?.order_id
             })} />;
         },
@@ -224,7 +226,7 @@ export default function P2pMyOrders({ navigation }) {
     return (
         <WrapperContainer isLoading={isLoadingOrders} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} >
             <Header2
-                centerTitle="Orders"
+                centerTitle={strings.ORDERS}
                 textStyle={{
                     fontFamily: fontFamily?.medium,
                     fontSize: textScale(16),
@@ -249,6 +251,7 @@ export default function P2pMyOrders({ navigation }) {
             <View
                 style={{
                     flex: 1,
+                    marginTop:moderateScale(10)
                 }}>
                 {selectedTab?.id == 1 ? (
                     <FlatList

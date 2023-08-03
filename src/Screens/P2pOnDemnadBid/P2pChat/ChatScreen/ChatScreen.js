@@ -927,11 +927,12 @@ export default function ChatScreen({ route, navigation }) {
                     alignItems: "center"
                 }}>
                     <ButtonImage onPress={() => !!paramData?.isFromOrder ? navigation.navigate(navigationStrings.HOME) : navigation.goBack()} image={imagePath.ic_backarrow} />
-                    <FastImage style={{
+                    <FastImage 
+                    style={{
                         height: moderateScale(28),
                         width: moderateScale(28),
                         borderRadius: moderateScale(14),
-                        marginLeft: moderateScale(8)
+                        marginLeft: moderateScale(8),
                     }} source={{
                         uri: getImageUrl(productDetails?.vendor?.logo?.image_fit, productDetails?.vendor?.logo?.image_path, "200/200"),
                         priority: FastImage.priority.high,
@@ -994,7 +995,7 @@ export default function ChatScreen({ route, navigation }) {
                     flex: 0.9
                 }}>{productDetails?.address}</Text>
 
-                <ButtonImage onPress={openGoogleMap} image={imagePath.icInfoMark} />
+                <ButtonImage onPress={openGoogleMap} image={imagePath.icLocation1} />
             </TouchableOpacity>
 
             <ImageBackground
