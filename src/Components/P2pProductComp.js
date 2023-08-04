@@ -106,10 +106,11 @@ const P2pProductComp = ({ item = {}, isMoreDetails = false, isViewDetails = true
                 </View>
             </View>
             {
-                isMoreDetails && <View>
-                    <LeftImgRightTxt image={imagePath.icTimeOrders} text={moment(item?.products[0]?.start_date_time).format("MMM DD, YYYY hh:mm") + " - " + moment(item?.products[0]?.end_date_time).format("MMM DD, YYYY hh:mm")} />
-                    <LeftImgRightTxt image={imagePath.icLocationOrders} text={item?.products[0]?.product?.address} />
-                    <LeftImgRightTxt image={imagePath.icProfileOrders} text={`Lent by ${item?.vendor?.name}`} />
+                !!isMoreDetails && <View>
+                    {console.log(item,'itemitemitemitemitem')}
+                   {!isEmpty(item?.products)&& <LeftImgRightTxt image={imagePath.icTimeOrders} text={moment(item?.products[0]?.start_date_time).format("MMM DD, YYYY hh:mm") + " - " + moment(item?.products[0]?.end_date_time).format("MMM DD, YYYY hh:mm")} />}
+                    {!isEmpty(item?.products)&&<LeftImgRightTxt image={imagePath.icLocationOrders} text={item?.products[0]?.product?.address} />}
+                    <LeftImgRightTxt image={imagePath.icProfileOrders} text={`Lent by ${item?.vendor?.name}`} /> 
                 </View>
             }
         </TouchableOpacity>

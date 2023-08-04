@@ -735,8 +735,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                     setMonthlyPrice(text == "" ? "" : String(monthPrice))
                   }}
                   placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_DAY}`}
-                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                  textInputStyle={styles.txtInputStyle}
+                   containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, width: moderateScale(100)}}
+              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
                 />
                 <BorderTextInput
                   // onChangeText={(text) => setWeeklyPrice(text)}
@@ -745,8 +745,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                   editable={false}
                   keyboardType={"number-pad"}
                   placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_WEEK}`}
-                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                  textInputStyle={styles.txtInputStyle}
+                  containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, width: moderateScale(100)}}
+                  textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
                 />
                 <BorderTextInput
                   // onChangeText={(text) => setMonthlyPrice(text)}
@@ -754,8 +754,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                   editable={false}
                   keyboardType={"number-pad"}
                   placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_MONTH}`}
-                  containerStyle={{ ...styles.containerStyle, width: moderateScale(100), }}
-                  textInputStyle={styles.txtInputStyle}
+                  containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, width: moderateScale(100)}}
+                  textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
                 />
               </View>
               <BorderTextInput
@@ -763,8 +763,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                 value={originalPrice}
                 keyboardType={"number-pad"}
                 placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
-                containerStyle={styles.containerStyle}
-                textInputStyle={styles.txtInputStyle}
+                containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
+                textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
               />
               <BorderTextInput
                 onChangeText={(text) => setRentalDays(text)}
@@ -772,8 +772,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                 keyboardType={"number-pad"}
                 placeholder={strings.MINIMAL_RENTAL_DAYS}
                 rightIcon={imagePath.ic_down_arrow}
-                containerStyle={styles.containerStyle}
-                textInputStyle={styles.txtInputStyle}
+                ccontainerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
+                textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
               />
 
 

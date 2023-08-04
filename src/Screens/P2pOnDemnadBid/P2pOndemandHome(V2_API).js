@@ -362,6 +362,7 @@ export default function P2pOndemandHome({ route, navigation }) {
         {},
         {
           code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
         },
       )
       .then(res => {
