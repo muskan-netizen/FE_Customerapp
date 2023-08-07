@@ -346,11 +346,11 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
             ) ?
               <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} />
-              : item?.slug == 'vendors' ?
+              : item?.slug == 'vendors' && getBundleId() !== appIds?.greenhippo ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
                   <CategoriesView item={item} showTitle={false} />
-                ) : item?.slug == 'best_sellers' ? (
+                ) : item?.slug == 'best_sellers' && getBundleId() !== appIds?.greenhippo ? (
                   <BestSellersView
                     item={item}
                     onPressVendor={onPressVendor}
