@@ -32,10 +32,14 @@ import fontFamily from '../../styles/fontFamily';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError, showSuccess } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
+import { hitSlopProp } from '../../styles/commonStyles';
+import * as Animatable from 'react-native-animatable';
+
 
 // create a component
 const FreelancerService = ({ route, navigation }) => {
     const { data } = route.params;
+    console.log(data,"ajsdfga")
     const moveToNewScreen = (screenName, data) => () => {
         navigation.navigate(screenName, { data });
     };
@@ -51,7 +55,7 @@ const FreelancerService = ({ route, navigation }) => {
     const styles = stylesFunc({ themeColors, fontFamily, isDarkMode });
 
     const [state, setState] = useState({
-        pageNo: 1, focused: false, selectedService: {}, selectedVariant: {}, openDateTimePicker: false,
+        pageNo: 1, focused: false, selectedService:   {}, selectedVariant: {}, openDateTimePicker: false,
         serviceDateTime: '', serviceTimeSlot: {}, isVisibleAddressModal: false, selectViaMap: false, isVisible: false,
         timeSlots: [
             "08:00 - 10:00",
@@ -81,6 +85,7 @@ const FreelancerService = ({ route, navigation }) => {
 
     const updateState = (data) => { setState((state) => ({ ...state, ...data })) };
 
+
     const currentDate = moment(new Date()).format('YYYY-MM-DD');
 
     const [productListId, setProductListId] = useState(data);
@@ -90,16 +95,44 @@ const FreelancerService = ({ route, navigation }) => {
     const [isLoading, setLoading] = useState(true);
     const [type, setType] = useState('');
     const [selectedAddress, setSelectedAddress] = useState(selectedAddressData ? selectedAddressData : null);
+    const [pageNoV, setPageNoV] = useState(1)
+    const [isLoadMore, setLoadMore] = useState(true);
 
     useEffect(() => {
-        if (!!data?.isVendorList) {
-            getAllProductsByVendor()
+        if (!data?.is_product) {
+            if (!!data?.isVendorList) {
+                getAllProductsByVendor()
+            }
+            else {
+                getAllProductsByCategoryId();
+            }
+
         }
         else {
-            getAllProductsByCategoryId();
+            getProductDetailById()
         }
 
     }, [navigation, languages, currencies, reloadData, productListId]);
+
+    const getProductDetailById = ()=>{
+        actions.getProductDetailByProductId(
+            `/${data.product?.id}`,
+            {},
+            {
+              code: appData.profile.code,
+              currency: currencies.primary_currency.id,
+              language: languages.primary_language.id,
+            },
+          ).then((res)=>{
+            setLoading(false)
+            updateState({
+                selectedService:{...res?.data?.products, qtyText:1}
+            })
+
+          }).catch(errorMethod)
+    }
+
+
 
     const getAllProductsByCategoryId = () => {
         actions.getProductByCategoryIdOptamize(
@@ -147,8 +180,7 @@ const FreelancerService = ({ route, navigation }) => {
 
         let vendorId = data?.id
 
-        let apiData = `/${vendorId}?page=${pageNo ? pageNo : 1
-            }&type=${dineInType}&limit=40`;
+        let apiData = `/${vendorId}?page=${pageNo}&type=${dineInType}&limit=10`;
 
         if (!!data?.categoryExist) {
             apiData = apiData + `&category_id=${data?.categoryExist}`;
@@ -167,12 +199,18 @@ const FreelancerService = ({ route, navigation }) => {
                 },
             )
             .then(async res => {
-                console.log('get all products by vendor res', res?.data, pageNo);
+                console.log('get all products by vendor res', res?.data);
+                console.log("fjskajhfkjdhfd")
+
+               
+                if (
+                    res?.data?.products?.current_page == res?.data?.products?.last_page
+                ) {
+                    setLoadMore(false);
+                }
                 setLoading(false);
-
                 const newProductData = res?.data?.products?.data?.map(v => ({ ...v, qtyText: 1 }))
-                const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, newProductData]
-
+                const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, ...newProductData]
                 setProductListData(newProductListDataWithQty);
 
             })
@@ -207,6 +245,7 @@ const FreelancerService = ({ route, navigation }) => {
             btnLoader: false,
         });
         setLoading(false);
+        setLoadMore(false)
         showError(error?.message || error?.error);
     };
 
@@ -286,6 +325,7 @@ const FreelancerService = ({ route, navigation }) => {
 
         });
     };
+
 
     const sendProductVariantData = () => {
 
@@ -475,6 +515,16 @@ const FreelancerService = ({ route, navigation }) => {
         }
     }
 
+
+    const onEndReached = () => {
+
+        if (isLoadMore) {
+            setPageNoV(pageNoV + 1);
+            getAllProductsByVendor(pageNoV + 1);
+        }
+
+    }
+
     const listEmptyComponent = () => <View>
         <FastImage
             source={imagePath.noDataFound}
@@ -551,23 +601,139 @@ const FreelancerService = ({ route, navigation }) => {
                         </ScrollView>
                     </View>
                 )}
-                <View style={{}}>
-                    <FlatList
-                        data={productListData || []}
-                        keyExtractor={(item, index) => index.toString()}
-                        renderItem={renderChooseService}
-                        ListHeaderComponent={() => {
-                            return (
-                                <View style={styles.mainView}>
-                                    <Text style={{
-                                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-                                    }}>{strings.CHOOSE_SERVICES}</Text>
-                                </View>
-                            )
-                        }}
-                        ListEmptyComponent={listEmptyComponent}
-                    />
+                <View style={{ height: data?.is_product ? moderateScaleVertical(80) : height / 2, justifyContent: "center", }}>
+                    {
+                        data?.is_product ?
+                            <View style={{
+
+                                paddingHorizontal: moderateScale(24)
+
+                            }}>
+
+                                <View style={{
+                                    height: moderateScaleVertical(52),
+                                    backgroundColor: colors.grey1,
+                                    flexDirection:"row",
+                                    justifyContent:"space-between",
+                                    paddingHorizontal: moderateScale(12),
+                                    borderRadius:moderateScale(4)
+
+                                }}>
+                                    <TouchableOpacity
+                                        style={{ flexDirection: 'row', alignItems: "center", }}
+                                    >
+                                        <Image style={{ height: moderateScaleVertical(18), width: moderateScale(18) }}
+                                            source={imagePath.icCheck1} />
+                                        <Text
+                                            numberOfLines={4}
+                                            style={{
+                                                fontSize: textScale(12),
+                                                padding: moderateScale(10),
+                                                fontFamily: fontFamily.medium,
+                                                color: colors.black,
+                                            }}>
+                                            {data?.product?.title}
+                                        </Text>
+
+                                    </TouchableOpacity>
+
+                <View
+                    style={{
+                        borderWidth: 1,
+                        borderRadius: moderateScale(8),
+                        borderColor: themeColors.primary_color,
+                        paddingVertical: 0,
+                        height: moderateScale(36),
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        paddingHorizontal: moderateScale(12),
+                        alignSelf: 'center',
+                        backgroundColor: isDarkMode
+                            ? themeColors.primary_color
+                            : colors.greyColor2,
+                      
+                    }}>
+                    <TouchableOpacity
+                        // disabled={selectedItemID == data?.id}
+                        onPress={()=> checkIsCustomize(selectedService, 0, 2)}
+                        activeOpacity={0.8}
+                        hitSlop={hitSlopProp}>
+                        <Image
+                            style={{
+                                tintColor: isDarkMode
+                                    ? colors.white
+                                    : themeColors.primary_color,
+                            }}
+                            source={imagePath.icMinus2}
+                        />
+                    </TouchableOpacity>
+
+                    <Animatable.View>
+                        <Animatable.View style={{ overflow: 'hidden' }}>
+                            <Animatable.Text
+                                duration={200}
+                                numberOfLines={2}
+                                style={{
+                                    fontFamily: fontFamily.medium,
+                                    fontSize: moderateScale(14),
+                                    color: isDarkMode
+                                        ? colors.white
+                                        : themeColors.primary_color,
+                                    marginHorizontal: moderateScale(8),
+                                }}>
+                                {selectedService?.qtyText}
+                            </Animatable.Text>
+                        </Animatable.View>
+                    </Animatable.View>
+
+                    <TouchableOpacity
+                        // disabled={selectedItemID == data?.id}
+                        activeOpacity={0.8}
+                        hitSlop={hitSlopProp}
+                        onPress={()=>checkIsCustomize(selectedService, 0, 1)}
+                        >
+                        <Image
+                            style={{
+                                tintColor: isDarkMode
+                                    ? colors.white
+                                    : themeColors.primary_color,
+                            }}
+                            source={imagePath.icAdd4}
+                        />
+                    </TouchableOpacity>
                 </View>
+
+                                </View>
+
+                            </View> : <FlatList
+                                nestedScrollEnabled
+                                data={productListData || []}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={renderChooseService}
+                                onEndReached={onEndReached}
+                                onEndReachedThreshold={0.5}
+                                ListHeaderComponent={() => {
+                                    return (
+                                        <View style={styles.mainView}>
+                                            <Text style={{
+                                                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                                            }}>{strings.CHOOSE_SERVICES}</Text>
+                                        </View>
+                                    )
+                                }}
+                                ListEmptyComponent={listEmptyComponent}
+                                ListFooterComponent={() => <View>
+                                    {
+                                        isLoadMore ? <Text style={{
+                                            textAlign: "center"
+                                        }}>Loading...</Text> : <></>
+                                    }
+                                </View>}
+                            />
+                    }
+                </View>
+
 
 
 
