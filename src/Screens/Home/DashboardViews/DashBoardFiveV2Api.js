@@ -1324,13 +1324,13 @@ const _renderProducts = ({ item, navigation }) => {
     <ProductsComp3V2
       item={item}
       onPress={() =>
-        // !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
-          data: {
-            is_product: true,
-            product: item
-          }
-        })
+        !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        // navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
+        //   data: {
+        //     is_product: true,
+        //     product: item
+        //   }
+        // })
       }
     />
   )

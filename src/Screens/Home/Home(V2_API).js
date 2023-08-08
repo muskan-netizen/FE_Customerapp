@@ -544,7 +544,7 @@ export default function Home({ route, navigation }) {
 
 
   const onPressVendor = (item) => {
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         id: item?.id,
         vendor: true,
@@ -557,17 +557,7 @@ export default function Home({ route, navigation }) {
     }
 
 
-    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
 
-      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
-        fetchOffers: true,
-        id: item.id,
-        vendor: false,
-        name: item.name,
-        isVendorList: false,
-      })();
-      return
-    }
 
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
@@ -1013,7 +1003,6 @@ export default function Home({ route, navigation }) {
   }
 
   const showAllSpotDealAndSelectedProducts = (item) => {
-    console.log(item, "selected product for spoatdeals");
     moveToNewScreen(navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS, item)();
   }
 
