@@ -43,19 +43,19 @@ const HomeCategoryCard3 = ({
       ? moderateScale(60)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
         ? moderateScale(70)
-        : moderateScale(50);
+        : moderateScale(65);
   let imgWidth =
     appStyle?.homePageLayout === 5
       ? moderateScale(60)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
         ? moderateScale(70)
-        : moderateScale(50);
+        : moderateScale(65);
   let imgRadius =
     appStyle?.homePageLayout === 5
       ? moderateScale(30)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
         ? moderateScale(35)
-        : moderateScale(25);
+        : moderateScale(65/2);
 
   return (
     <TouchableOpacity

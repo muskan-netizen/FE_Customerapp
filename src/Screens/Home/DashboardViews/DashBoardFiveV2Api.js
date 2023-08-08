@@ -557,6 +557,7 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderCategories = useCallback(({ item, index }) => {
+    console.log(appStyle?.homePageLayout)
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
