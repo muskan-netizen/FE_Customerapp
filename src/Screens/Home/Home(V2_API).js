@@ -542,7 +542,33 @@ export default function Home({ route, navigation }) {
       });
   };
 
+
   const onPressVendor = (item) => {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        id: item?.id,
+        vendor: true,
+        name: item?.name,
+        isVendorList: true,
+        fetchOffers: true,
+        screenName: 'vendor'
+      })();
+      return
+    }
+
+
+    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        fetchOffers: true,
+        id: item.id,
+        vendor: false,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
+
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -1130,6 +1156,8 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+
             />
           </SafeAreaView>
         );
@@ -1151,6 +1179,8 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+
             />
           </SafeAreaView>
         );
@@ -1209,6 +1239,7 @@ export default function Home({ route, navigation }) {
             _onVoiceStop={_onVoiceStop}
             onSeviceType={() => setIsPriceTypeModal(true)}
             priceType={priceType}
+
           />
         </SafeAreaView>
     }

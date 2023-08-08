@@ -1,22 +1,22 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {Image, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
-import {MaterialIndicator} from 'react-native-indicators';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { Image, View } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import { MaterialIndicator } from 'react-native-indicators';
 import Video from 'react-native-video';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../../constants/imagePath';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScale} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {getCurrentLocation, showError} from '../../utils/helperFunctions';
-import {getItem} from '../../utils/utils';
-import {getAppCode} from './getAppCode';
-import {IRootState} from './interfaces';
+import { moderateScale } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getCurrentLocation, showError } from '../../utils/helperFunctions';
+import { getItem } from '../../utils/utils';
+import { getAppCode } from './getAppCode';
+import { IRootState } from './interfaces';
 import styles from './styles';
-import {chekLocationPermission} from '../../utils/permissions';
+import { chekLocationPermission } from '../../utils/permissions';
 
 interface locationInterface {
   latitude: number;
@@ -25,7 +25,7 @@ interface locationInterface {
 }
 
 const ShortCode: FC = () => {
-  const {deepLinkUrl, auth, themeColor, themeToggle} = useSelector(
+  const { deepLinkUrl, auth, themeColor, themeToggle } = useSelector(
     (state: IRootState) => state?.initBoot || {},
   );
   const theme = themeColor;
@@ -60,6 +60,8 @@ const ShortCode: FC = () => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     const appCode = !!prevCode ? prevCode : getAppCode();
+
+    // const appCode = "b7e0ad"
 
     let header = {};
 
@@ -150,15 +152,15 @@ const ShortCode: FC = () => {
   }, []);
   const imageSplash = useCallback(() => {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.splashStyle}>
-          <View style={{position: 'absolute', bottom: moderateScale(100)}}>
+          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
             {loadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
         </View>
-        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+        <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
       </View>
     );
   }, [loadingScreen]);

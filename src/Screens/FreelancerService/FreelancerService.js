@@ -39,7 +39,7 @@ import * as Animatable from 'react-native-animatable';
 // create a component
 const FreelancerService = ({ route, navigation }) => {
     const { data } = route.params;
-    console.log(data,"ajsdfga")
+    console.log(data, "ajsdfga")
     const moveToNewScreen = (screenName, data) => () => {
         navigation.navigate(screenName, { data });
     };
@@ -55,7 +55,7 @@ const FreelancerService = ({ route, navigation }) => {
     const styles = stylesFunc({ themeColors, fontFamily, isDarkMode });
 
     const [state, setState] = useState({
-        pageNo: 1, focused: false, selectedService:   {}, selectedVariant: {}, openDateTimePicker: false,
+        pageNo: 1, focused: false, selectedService: {}, selectedVariant: {}, openDateTimePicker: false,
         serviceDateTime: '', serviceTimeSlot: {}, isVisibleAddressModal: false, selectViaMap: false, isVisible: false,
         timeSlots: [
             "08:00 - 10:00",
@@ -96,7 +96,7 @@ const FreelancerService = ({ route, navigation }) => {
     const [type, setType] = useState('');
     const [selectedAddress, setSelectedAddress] = useState(selectedAddressData ? selectedAddressData : null);
     const [pageNoV, setPageNoV] = useState(1)
-    const [isLoadMore, setLoadMore] = useState(true);
+    const [isLoadMore, setLoadMore] = useState(false);
 
     useEffect(() => {
         if (!data?.is_product) {
@@ -114,22 +114,22 @@ const FreelancerService = ({ route, navigation }) => {
 
     }, [navigation, languages, currencies, reloadData, productListId]);
 
-    const getProductDetailById = ()=>{
+    const getProductDetailById = () => {
         actions.getProductDetailByProductId(
             `/${data.product?.id}`,
             {},
             {
-              code: appData.profile.code,
-              currency: currencies.primary_currency.id,
-              language: languages.primary_language.id,
+                code: appData.profile.code,
+                currency: currencies.primary_currency.id,
+                language: languages.primary_language.id,
             },
-          ).then((res)=>{
+        ).then((res) => {
             setLoading(false)
             updateState({
-                selectedService:{...res?.data?.products, qtyText:1}
+                selectedService: { ...res?.data?.products, qtyText: 1 }
             })
 
-          }).catch(errorMethod)
+        }).catch(errorMethod)
     }
 
 
@@ -200,14 +200,7 @@ const FreelancerService = ({ route, navigation }) => {
             )
             .then(async res => {
                 console.log('get all products by vendor res', res?.data);
-                console.log("fjskajhfkjdhfd")
-
-               
-                if (
-                    res?.data?.products?.current_page == res?.data?.products?.last_page
-                ) {
-                    setLoadMore(false);
-                }
+                setLoadMore(res?.data?.products?.current_page < res?.data?.products?.last_page);
                 setLoading(false);
                 const newProductData = res?.data?.products?.data?.map(v => ({ ...v, qtyText: 1 }))
                 const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, ...newProductData]
@@ -613,10 +606,10 @@ const FreelancerService = ({ route, navigation }) => {
                                 <View style={{
                                     height: moderateScaleVertical(52),
                                     backgroundColor: colors.grey1,
-                                    flexDirection:"row",
-                                    justifyContent:"space-between",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
                                     paddingHorizontal: moderateScale(12),
-                                    borderRadius:moderateScale(4)
+                                    borderRadius: moderateScale(4)
 
                                 }}>
                                     <TouchableOpacity
@@ -637,72 +630,72 @@ const FreelancerService = ({ route, navigation }) => {
 
                                     </TouchableOpacity>
 
-                <View
-                    style={{
-                        borderWidth: 1,
-                        borderRadius: moderateScale(8),
-                        borderColor: themeColors.primary_color,
-                        paddingVertical: 0,
-                        height: moderateScale(36),
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        paddingHorizontal: moderateScale(12),
-                        alignSelf: 'center',
-                        backgroundColor: isDarkMode
-                            ? themeColors.primary_color
-                            : colors.greyColor2,
-                      
-                    }}>
-                    <TouchableOpacity
-                        // disabled={selectedItemID == data?.id}
-                        onPress={()=> checkIsCustomize(selectedService, 0, 2)}
-                        activeOpacity={0.8}
-                        hitSlop={hitSlopProp}>
-                        <Image
-                            style={{
-                                tintColor: isDarkMode
-                                    ? colors.white
-                                    : themeColors.primary_color,
-                            }}
-                            source={imagePath.icMinus2}
-                        />
-                    </TouchableOpacity>
+                                    <View
+                                        style={{
+                                            borderWidth: 1,
+                                            borderRadius: moderateScale(8),
+                                            borderColor: themeColors.primary_color,
+                                            paddingVertical: 0,
+                                            height: moderateScale(36),
+                                            alignItems: 'center',
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            paddingHorizontal: moderateScale(12),
+                                            alignSelf: 'center',
+                                            backgroundColor: isDarkMode
+                                                ? themeColors.primary_color
+                                                : colors.greyColor2,
 
-                    <Animatable.View>
-                        <Animatable.View style={{ overflow: 'hidden' }}>
-                            <Animatable.Text
-                                duration={200}
-                                numberOfLines={2}
-                                style={{
-                                    fontFamily: fontFamily.medium,
-                                    fontSize: moderateScale(14),
-                                    color: isDarkMode
-                                        ? colors.white
-                                        : themeColors.primary_color,
-                                    marginHorizontal: moderateScale(8),
-                                }}>
-                                {selectedService?.qtyText}
-                            </Animatable.Text>
-                        </Animatable.View>
-                    </Animatable.View>
+                                        }}>
+                                        <TouchableOpacity
+                                            // disabled={selectedItemID == data?.id}
+                                            onPress={() => checkIsCustomize(selectedService, 0, 2)}
+                                            activeOpacity={0.8}
+                                            hitSlop={hitSlopProp}>
+                                            <Image
+                                                style={{
+                                                    tintColor: isDarkMode
+                                                        ? colors.white
+                                                        : themeColors.primary_color,
+                                                }}
+                                                source={imagePath.icMinus2}
+                                            />
+                                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        // disabled={selectedItemID == data?.id}
-                        activeOpacity={0.8}
-                        hitSlop={hitSlopProp}
-                        onPress={()=>checkIsCustomize(selectedService, 0, 1)}
-                        >
-                        <Image
-                            style={{
-                                tintColor: isDarkMode
-                                    ? colors.white
-                                    : themeColors.primary_color,
-                            }}
-                            source={imagePath.icAdd4}
-                        />
-                    </TouchableOpacity>
-                </View>
+                                        <Animatable.View>
+                                            <Animatable.View style={{ overflow: 'hidden' }}>
+                                                <Animatable.Text
+                                                    duration={200}
+                                                    numberOfLines={2}
+                                                    style={{
+                                                        fontFamily: fontFamily.medium,
+                                                        fontSize: moderateScale(14),
+                                                        color: isDarkMode
+                                                            ? colors.white
+                                                            : themeColors.primary_color,
+                                                        marginHorizontal: moderateScale(8),
+                                                    }}>
+                                                    {selectedService?.qtyText}
+                                                </Animatable.Text>
+                                            </Animatable.View>
+                                        </Animatable.View>
+
+                                        <TouchableOpacity
+                                            // disabled={selectedItemID == data?.id}
+                                            activeOpacity={0.8}
+                                            hitSlop={hitSlopProp}
+                                            onPress={() => checkIsCustomize(selectedService, 0, 1)}
+                                        >
+                                            <Image
+                                                style={{
+                                                    tintColor: isDarkMode
+                                                        ? colors.white
+                                                        : themeColors.primary_color,
+                                                }}
+                                                source={imagePath.icAdd4}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
 
                                 </View>
 

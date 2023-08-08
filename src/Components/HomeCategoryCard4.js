@@ -48,7 +48,6 @@ const HomeCategoryCard3 = ({
   let imgRadius = moderateScale(!!applyRadius ? applyRadius : 0);
 
   const navigation = useNavigation()
-  console.log(priceType, "afsdfashdjkfa")
 
   if (index == 7) {
     return (

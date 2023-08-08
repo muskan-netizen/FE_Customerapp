@@ -181,6 +181,7 @@ const DashBoardFiveV2Api = ({
   };
 
 
+
   const _renderVendors = useCallback(({ item, index }) => (
     <View style={{ width: '100%' }}>
       <MarketCard3V2
@@ -189,7 +190,7 @@ const DashBoardFiveV2Api = ({
         extraStyles={{ margin: 2 }}
       />
     </View>
-  ), [isDarkMode])
+  ), [isDarkMode, priceType])
 
 
   const onViewAll = useCallback((type, data) => {
@@ -1288,7 +1289,6 @@ const CitiesView = ({ item = {},
   appStyle = {},
   moveToNewScreen = () => { },
   isDarkMode = false }) => {
-  console.log(item, "awdbatufgjdhvgjncjn");
 
   if (isEmpty(item?.data || [])) {
     return <></>
@@ -1324,7 +1324,13 @@ const _renderProducts = ({ item, navigation }) => {
     <ProductsComp3V2
       item={item}
       onPress={() =>
-        !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        // !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
+          data: {
+            is_product: true,
+            product: item
+          }
+        })
       }
     />
   )
