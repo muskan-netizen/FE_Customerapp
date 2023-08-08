@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>425997098127-0at89m7dtq57aq44ge9hcteh4hsntbc1.apps.googleusercontent.com</string>
+	<string>821974289132-jo8ou4ru7h60h0eon2fegrsu8btjnetu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.425997098127-0at89m7dtq57aq44ge9hcteh4hsntbc1</string>
+	<string>com.googleusercontent.apps.821974289132-jo8ou4ru7h60h0eon2fegrsu8btjnetu</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>425997098127-d3u796nri9ri29cin45cvit59jm0m1vp.apps.googleusercontent.com</string>
+	<string>821974289132-2hc36kfv6c4hlcndqp6rvgtrgpv6ud5t.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBcq6369kyylpcrICve5PXXrCObSwzquEo</string>
+	<string>AIzaSyDeVQ8eCanEPZGwV-gcYfgmhREpfLqBRsE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>425997098127</string>
+	<string>821974289132</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.homeric.app</string>
+	<string>com.homeric</string>
 	<key>PROJECT_ID</key>
-	<string>homeric-cb4b7</string>
+	<string>homeric-89b19</string>
 	<key>STORAGE_BUCKET</key>
-	<string>homeric-cb4b7.appspot.com</string>
+	<string>homeric-89b19.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:425997098127:ios:ede0f2213a396b7bdce4fa</string>
+	<string>1:821974289132:ios:68aa72d7a2bc21cc6f33c9</string>
 </dict>
 </plist>
