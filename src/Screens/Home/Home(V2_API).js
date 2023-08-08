@@ -232,6 +232,9 @@ export default function Home({ route, navigation }) {
               homeData();
               return;
             }
+          }else{
+            homeData();
+            return;
           }
         }
       })

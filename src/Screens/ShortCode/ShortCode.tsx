@@ -49,6 +49,9 @@ const ShortCode: FC = () => {
               initApiHit(null);
               return;
             });
+        }else{
+          initApiHit(null);
+          return;
         }
       })
       .catch(error => {

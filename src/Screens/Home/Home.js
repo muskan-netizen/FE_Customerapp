@@ -314,6 +314,7 @@ export default function Home({ route, navigation }) {
           }
           else {
             homeData();
+            return
           }
         }
       })
