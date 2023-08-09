@@ -661,7 +661,7 @@ const DashBoardFiveV2Api = ({
           priceType={priceType}
         />
     }
-  }, [appStyle, isDarkMode, priceType])
+  }, [appStyle, isDarkMode, priceType, dineInType])
 
 
   const categoryFlatViewStyle = () => {
