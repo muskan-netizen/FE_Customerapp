@@ -89,7 +89,8 @@ const DashBoardFiveV2Api = ({
   showVendorCategory = true,
   appMainData = {},
   scrollHandler = () => { },
-  priceType = "vendor"
+  priceType = "vendor",
+  onPressProduct = () => { }
 }) => {
 
 
@@ -97,6 +98,8 @@ const DashBoardFiveV2Api = ({
   const { appData, themeColors, appStyle, currencies, languages, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const userData = useSelector((state) => state?.auth?.userData);
   const { cartItemCount } = useSelector((state) => state?.cart);
+  const { dineInType } = useSelector((state) => state?.home || {});
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -190,7 +193,7 @@ const DashBoardFiveV2Api = ({
         extraStyles={{ margin: 2 }}
       />
     </View>
-  ), [isDarkMode, priceType])
+  ), [isDarkMode, priceType, dineInType])
 
 
   const onViewAll = useCallback((type, data) => {
@@ -346,7 +349,7 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'most_popular_products' ||
               item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
             ) ?
-              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} />
+              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} />
               : item?.slug == 'vendors' && getBundleId() !== appIds?.greenhippo ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
@@ -440,9 +443,7 @@ const DashBoardFiveV2Api = ({
     return (
       <ProductsComp3V2
         item={item}
-        onPress={() =>
-          !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
+        onPress={() => onPressProduct(item)}
         imageStyle={{
           width: moderateScale(100),
           height: moderateScale(100),
@@ -457,7 +458,7 @@ const DashBoardFiveV2Api = ({
 
 
     );
-  }, [isDarkMode])
+  }, [isDarkMode, priceType])
 
 
 
@@ -505,13 +506,11 @@ const DashBoardFiveV2Api = ({
       <View style={{ marginRight: 8 }}>
         <ProductsComp3V2
           item={item}
-          onPress={() =>
-            navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-          }
+          onPress={() => onPressProduct(item)}
         />
       </View>
     )
-  }, [appMainData, isDarkMode, themeColors])
+  }, [appMainData, isDarkMode, themeColors, priceType])
 
   const SelectedProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
@@ -1237,7 +1236,7 @@ const TitleViewHome = ({
 }
 
 //product theme view
-const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
+const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { } }) => {
 
   return !isEmpty(item?.data) ? (
     <View
@@ -1255,7 +1254,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
         showsHorizontalScrollIndicator={false}
         horizontal
         data={item?.data}
-        renderItem={({ item, }) => _renderProducts({ item, navigation })}
+        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
           <View style={{ marginRight: moderateScale(16) }} />
@@ -1319,12 +1318,12 @@ const CitiesView = ({ item = {},
     </View>
   )
 }
-const _renderProducts = ({ item, navigation }) => {
+const _renderProducts = ({ item, navigation, onPressProduct = () => { } }) => {
   return (
     <ProductsComp3V2
       item={item}
-      onPress={() =>
-        !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+      onPress={() => onPressProduct(item)
+        // !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
         // navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
         //   data: {
         //     is_product: true,

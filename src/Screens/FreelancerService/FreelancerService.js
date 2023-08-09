@@ -200,11 +200,15 @@ const FreelancerService = ({ route, navigation }) => {
             )
             .then(async res => {
                 console.log('get all products by vendor res', res?.data);
-                setLoadMore(res?.data?.products?.current_page < res?.data?.products?.last_page);
+                if (!isEmpty(res?.data?.products?.data)) {
+                    const newProductData = res?.data?.products?.data?.map(v => ({ ...v, qtyText: 1 }))
+                    const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, ...newProductData]
+                    setProductListData(newProductListDataWithQty);
+                }
+
+                setLoadMore(res?.data?.products?.current_page < res?.data?.products?.last_page || !isEmpty(res?.data?.products?.data));
                 setLoading(false);
-                const newProductData = res?.data?.products?.data?.map(v => ({ ...v, qtyText: 1 }))
-                const newProductListDataWithQty = pageNo == 1 ? newProductData : [...productListData, ...newProductData]
-                setProductListData(newProductListDataWithQty);
+
 
             })
             .catch(errorMethod);
@@ -508,6 +512,7 @@ const FreelancerService = ({ route, navigation }) => {
         }
     }
 
+    console.log(isLoadMore, "fasdkfasdfjs")
 
     const onEndReached = () => {
 
