@@ -431,7 +431,7 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
-      let vendorType = appStyle?.homePageLayout == 6 ? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
+      let vendorType = appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
       let apiData = {
         type: vendorType,
         ...latlongObj,
