@@ -416,8 +416,11 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const getLiveLocation = async () => {
-    const locPermissionDenied = await locationPermission();
-    if (locPermissionDenied) {
+    const isLocationGranted = await chekLocationPermission();
+
+    console.log("isLocationGranted",isLocationGranted)
+
+    if (isLocationGranted ==  'granted') {
       const { latitude, longitude } = await getCurrentLocationFromApi();
 
       updateState({ curLatLng: { latitude, longitude } });
@@ -428,9 +431,9 @@ export default function Addaddress({ navigation, route }) {
         appData.profile.preferences?.map_key
       );
       let cloneArr = [...dropLocationData];
-      if (paramData?.prefillAdress?.isFromSavedAddress) {
-        cloneArr[0].pre_address = res.address;
-        cloneArr[0].address = res.address;
+      if (!!paramData?.prefillAdress && paramData?.prefillAdress?.isFromSavedAddress) {
+        cloneArr[0].pre_address = res?.address || '';
+        cloneArr[0].address = res?.address || '';
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
         cloneArr[1].pre_address = paramData?.prefillAdress?.address || '';
@@ -441,11 +444,22 @@ export default function Addaddress({ navigation, route }) {
         updateState({ dropLocationData: cloneArr });
       }
       else {
-        cloneArr[0].pre_address = res.address;
-        cloneArr[0].address = res.address;
+        cloneArr[0].pre_address = res?.address || '';
+        cloneArr[0].address = res?.address || '';
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
         cloneArr[0].task_type_id = 1;
+        updateState({ dropLocationData: cloneArr });
+      }
+    }else{
+      let cloneArr = [...dropLocationData];
+      console.log("paramData?.prefillAdress",paramData?.prefillAdress )
+      if (!!paramData?.prefillAdress && paramData?.prefillAdress?.isFromSavedAddress) {
+        cloneArr[1].pre_address = paramData?.prefillAdress?.address || '';
+        cloneArr[1].address = paramData?.prefillAdress?.address || '';
+        cloneArr[1].latitude = paramData?.prefillAdress?.latitude || '';
+        cloneArr[1].longitude = paramData?.prefillAdress?.longitude || '';
+        cloneArr[1].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
       }
     }

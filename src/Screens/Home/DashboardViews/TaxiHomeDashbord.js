@@ -394,8 +394,30 @@ export default function TaxiHomeDashbord({
   }, [appMainData?.categories, isDarkMode])
 
 
-  const moveToScreen = (details) => {
+  const moveToScreen = (details, mapView) => {
+  
     updateState({ fullMapShow: false });
+
+    if(!mapView){
+      if (!!userData?.auth_token) {
+        let prefillAdress = null;
+        if (!!details) {
+          prefillAdress = {
+            longitude: Number(details?.longitude),
+            latitude: Number(details?.latitude),
+            address: details?.address,
+            task_type_id: 1,
+            pre_address: details?.address,
+            isFromSavedAddress: true
+          };
+        }
+        actions.saveSchduleTime('now');
+        goToAddress({ prefillAdress })
+      } else {
+        actions.setAppSessionData('on_login');
+      }
+      return;
+    }
     setTimeout(() => {
       if (!!userData?.auth_token) {
         let prefillAdress = null;
@@ -406,6 +428,7 @@ export default function TaxiHomeDashbord({
             address: details?.address,
             task_type_id: 1,
             pre_address: details?.address,
+            isFromSavedAddress: true
           };
         }
         actions.saveSchduleTime('now');
@@ -418,7 +441,7 @@ export default function TaxiHomeDashbord({
 
   const addressView = (image) => {
     return (
-      allSavedAddress &&
+      !!allSavedAddress &&
       allSavedAddress.map((itm, inx) => {
         return (
           <ScrollView
@@ -435,7 +458,7 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={() => moveToScreen(itm)}>
+              onPress={() => moveToScreen(itm, false)}>
               <View
                 style={{
                   flexDirection: 'row',

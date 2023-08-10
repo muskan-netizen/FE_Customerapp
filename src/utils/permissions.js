@@ -16,9 +16,9 @@ import { err } from 'react-native-svg/lib/typescript/xml';
 
 export const androidCameraPermission = () =>
   new Promise(async (resolve, reject) => {
-    console.log(Platform.Version, '');
+
     try {
-      console.log(Platform.Version, 'Platform.VersionPlatform.Version')
+
       if (Platform.OS === "android" && Platform.Version > 22) {
         if (Platform.Version >= 33) {
           const granted = await PermissionsAndroid.requestMultiple([
@@ -114,11 +114,15 @@ export const chekLocationPermission = (showAlert = true) =>
           : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
       )
         .then((result) => {
+          console.log("permission result",result)
           switch (result) {
             case RESULTS.UNAVAILABLE:
               showError(strings.LOCATION_UNAVAILABLE);
               break;
             case RESULTS.DENIED:
+                if(Platform.OS == 'android'){
+                  return resolve(result);
+                }
               request(
                 Platform.OS === 'ios'
                   ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
