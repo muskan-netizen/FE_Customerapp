@@ -31,7 +31,7 @@ let imageWidth = 160
 let imageRadius = 8
 
 
-const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
+const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {}, priceType = "vendor" }) => {
   const { themeColors, appStyle, currencies, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
   const darkthemeusingDevice = useDarkMode();
@@ -93,9 +93,9 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
 
       </FastImage>
       <View style={{ marginVertical: moderateScaleVertical(8) }}>
-      <View style={{
-          alignSelf:'flex-start',
-          marginBottom:moderateScaleVertical(4)
+        <View style={{
+          alignSelf: 'flex-start',
+          marginBottom: moderateScaleVertical(4)
         }} >
 
           {!!item?.averageRating && item?.averageRating !== '0.0' && (
@@ -141,7 +141,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
         </Text> : null}
         {(!item?.hasOwnProperty('compare_price_numeric') || Number(item?.compare_price_numeric) == 0) ? (
           <View style={{ flexDirection: 'row', marginHorizontal: moderateScale(8) }}>
-            <Text
+            {priceType !== "freelancer" && <Text
               style={{
                 fontSize: textScale(12),
                 // fontFamily: fontFamily.bold,
@@ -154,7 +154,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 currencies?.primary_currency?.symbol,
                 currencies
               )}
-            </Text>
+            </Text>}
             {!!category?.category_detail?.translation[0]?.name && (
               <Text
                 numberOfLines={2}
@@ -187,7 +187,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 {strings.IN} {category?.category_detail?.translation[0]?.name}
               </Text>
             )}
-            <View
+            {priceType !== "freelancer" && <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -225,11 +225,11 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                   currencies?.primary_currency?.symbol,
                 )}
               </Text>
-            </View>
+            </View>}
           </View>
         )}
       </View>
-      {!!Number(item?.compare_price_numeric) ?
+      {priceType !== "freelancer" && !!Number(item?.compare_price_numeric) ?
         <View
           style={{
             position: 'absolute',

@@ -461,7 +461,7 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const errorMethod = (error) => {
-    console.log(error,'eroorrr')
+    console.log(error, 'eroorrr')
     setLoadingPinCode(false);
     if (error?.message?.alert == 1) {
       updateState({
@@ -1293,7 +1293,7 @@ export default function ProductDetail({ route, navigation }) {
     if (isAppointmentPicker) {
       if (productDetailData?.is_slot_from_dispatch) {
         const apiData = {
-          cur_date: moment(appointmentSelectedDate).format("YYYY-MM-DD"),
+          cur_date: moment(date).format("YYYY-MM-DD"),
           product_id: productDetailData?.id
         }
         const apiHeader = {
@@ -1341,7 +1341,7 @@ export default function ProductDetail({ route, navigation }) {
           let vendorId = productDetailData?.vendor_id
           // vendor_id,date,delivery
           const res = await actions.checkVendorSlots(
-            `?vendor_id=${vendorId}&date=${moment(appointmentSelectedDate).format("YYYY-MM-DD")}&delivery=${dine_In_Type}`,
+            `?vendor_id=${vendorId}&date=${moment(date).format("YYYY-MM-DD")}&delivery=${dine_In_Type}`,
             {
               code: appData?.profile?.code,
               // currency: currencies?.primary_currency?.id,
@@ -1730,7 +1730,7 @@ export default function ProductDetail({ route, navigation }) {
         <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !item?.quantity ? isDarkMode?colors.white: colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
+          color: !item?.quantity ? isDarkMode ? colors.white : colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
           alignSelf: 'center',
 
 
@@ -2256,7 +2256,7 @@ export default function ProductDetail({ route, navigation }) {
                       style={{
                         fontFamily: fontFamily?.bold,
                         fontSize: textScale(12),
-                        color:isDarkMode ? colors.white : colors.black,
+                        color: isDarkMode ? colors.white : colors.black,
                       }}>
                       Enter 6 digit pincode for hassale free timely delivery
                     </Text>
@@ -3135,7 +3135,7 @@ export default function ProductDetail({ route, navigation }) {
             onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
           />
           <ButtonWithLoader
-            onPress={() => onDateSelected(isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date()))}
+            onPress={() => onDateSelected(isAppointmentPicker ? !!appointmentSelectedDate ? appointmentSelectedDate : new Date() : !!selectedDate ? selectedDate : new Date())}
             btnText="Done"
             isLoading={isLoadingGetSlots}
             btnStyle={{

@@ -237,7 +237,7 @@ export default function MyOrders(props) {
 
   const onPressViewEditAndReplace = (item) => {
     if (
-      item?.dispatch_traking_url &&
+      !!item?.dispatch_traking_url &&
       (item?.product_details[0]?.category_type ==
         staticStrings.PICKUPANDDELIEVRY ||
         item?.product_details[0]?.category_type ==
@@ -626,7 +626,7 @@ export default function MyOrders(props) {
   };
 
 
-  const listEmptyComp = useCallback(()=>{
+  const listEmptyComp = useCallback(() => {
     return (
       <View
         style={{
@@ -656,7 +656,7 @@ export default function MyOrders(props) {
         />
       </View>
     )
-  },[orders])
+  }, [orders])
 
 
   return (

@@ -349,7 +349,7 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'most_popular_products' ||
               item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
             ) ?
-              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} />
+              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} priceType={priceType} />
               : item?.slug == 'vendors' && getBundleId() !== appIds?.greenhippo ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
@@ -454,6 +454,7 @@ const DashBoardFiveV2Api = ({
           // alignItems: 'center',
           borderRadius: 8
         }}
+        priceType={priceType}
       />
 
 
@@ -507,6 +508,7 @@ const DashBoardFiveV2Api = ({
         <ProductsComp3V2
           item={item}
           onPress={() => onPressProduct(item)}
+          priceType={priceType}
         />
       </View>
     )
@@ -1236,7 +1238,7 @@ const TitleViewHome = ({
 }
 
 //product theme view
-const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { } }) => {
+const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { }, priceType }) => {
 
   return !isEmpty(item?.data) ? (
     <View
@@ -1254,7 +1256,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPres
         showsHorizontalScrollIndicator={false}
         horizontal
         data={item?.data}
-        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct })}
+        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct, priceType })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
           <View style={{ marginRight: moderateScale(16) }} />
@@ -1318,11 +1320,12 @@ const CitiesView = ({ item = {},
     </View>
   )
 }
-const _renderProducts = ({ item, navigation, onPressProduct = () => { } }) => {
+const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceType }) => {
   return (
     <ProductsComp3V2
       item={item}
       onPress={() => onPressProduct(item)
+
         // !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
         // navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
         //   data: {
@@ -1331,6 +1334,7 @@ const _renderProducts = ({ item, navigation, onPressProduct = () => { } }) => {
         //   }
         // })
       }
+      priceType={priceType}
     />
   )
 }
