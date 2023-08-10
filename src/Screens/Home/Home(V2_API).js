@@ -232,6 +232,9 @@ export default function Home({ route, navigation }) {
               homeData();
               return;
             }
+          } else {
+            homeData();
+            return;
           }
         }
       })
@@ -542,7 +545,24 @@ export default function Home({ route, navigation }) {
       });
   };
 
+
   const onPressVendor = (item) => {
+
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        id: item?.id,
+        vendor: true,
+        name: item?.name,
+        isVendorList: true,
+        fetchOffers: true,
+        screenName: 'vendor'
+      })();
+      return
+    }
+
+
+
+
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -764,6 +784,23 @@ export default function Home({ route, navigation }) {
       }
     }
   };
+
+  const onPressProduct = (item) => {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+      navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
+        data: {
+          is_product: true,
+          product: item
+        }
+      })
+    }
+    else {
+      !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+
+    }
+  }
+
+
 
   //Reloads the screen
   const initApiHit = () => {
@@ -987,7 +1024,6 @@ export default function Home({ route, navigation }) {
   }
 
   const showAllSpotDealAndSelectedProducts = (item) => {
-    console.log(item, "selected product for spoatdeals");
     moveToNewScreen(navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS, item)();
   }
 
@@ -1130,6 +1166,8 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+
             />
           </SafeAreaView>
         );
@@ -1151,6 +1189,8 @@ export default function Home({ route, navigation }) {
               _onVoiceStop={_onVoiceStop}
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+
             />
           </SafeAreaView>
         );
@@ -1209,6 +1249,7 @@ export default function Home({ route, navigation }) {
             _onVoiceStop={_onVoiceStop}
             onSeviceType={() => setIsPriceTypeModal(true)}
             priceType={priceType}
+
           />
         </SafeAreaView>
     }
@@ -1271,7 +1312,7 @@ export default function Home({ route, navigation }) {
             showVendorCategory={true}
             scrollHandler={scrollHandler}
             priceType={priceType}
-
+            onPressProduct={onPressProduct}
 
           />
         }
