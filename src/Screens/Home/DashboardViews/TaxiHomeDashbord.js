@@ -111,7 +111,11 @@ export default function TaxiHomeDashbord({
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
-
+  const navCatergories = appMainData?.homePageLabels.find((item) => {
+    if (item?.slug == 'nav_categories') {
+    return  item
+    }
+  })
   let myCategories = [{ data: [] }]
 
   if (!!appMainData?.homePageLabels) {
@@ -513,7 +517,7 @@ export default function TaxiHomeDashbord({
             actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                data: appMainData?.categories[0],
+                data: !!appMainData?.categories ? appMainData?.categories[0] : navCatergories?.data[0],
               })
               : actions.setAppSessionData('on_login');
           }}>
@@ -565,7 +569,7 @@ export default function TaxiHomeDashbord({
     scheduleDate = null,
     prefillAdress = null
   }) => {
-    let item = !!appMainData?.categories ? appMainData?.categories[0] : null
+    let item = !!appMainData?.categories ? appMainData?.categories[0] : navCatergories?.data[0];
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
       updateState({ fullMapShow: false })
