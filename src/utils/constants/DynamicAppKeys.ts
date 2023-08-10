@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
-  royoorder: 'b7e0ad',
+  royoorder: '245bae',
   grub: '2f3120',
   gusto: 'd1b1a0',
   gokab: 'fb78f0', // live
