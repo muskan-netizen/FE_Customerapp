@@ -447,7 +447,8 @@ const DashBoardFiveV2Api = ({
         imageStyle={{
           width: moderateScale(100),
           height: moderateScale(100),
-          borderRadius: 8
+          borderRadius: 8,
+          alignSelf:'center'
         }}
         containerStyle={{
           width: width / 3.2,
@@ -882,7 +883,7 @@ const DashBoardFiveV2Api = ({
             />
           </View>
         </View> :
-          <View>
+          <View style={{alignItems:'center'}}>
             {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
             <FlatList
               horizontal={categoryFlatViewStyle().horizontal}

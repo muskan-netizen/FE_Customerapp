@@ -173,8 +173,10 @@ function CouponDiscount(props) {
                         ) : null}
 
                         {!!item?.delivery_types && item?.delivery_types.length == 1 ? (
-                            <Text>{`${getBundleId() != appIds.hokitch ? item?.delivery_types[0]?.courier_name : ''
-                                } ${tokenConverterPlusCurrencyNumberFormater(
+                            <Text>
+                                {/* {`${getBundleId() != appIds.hokitch ? item?.delivery_types[0]?.courier_name : ''
+                                }`} */}
+                                {`${tokenConverterPlusCurrencyNumberFormater(
                                     Number(item?.delivery_types[0]?.rate),
                                     digit_after_decimal,
                                     additional_preferences,
