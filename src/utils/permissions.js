@@ -114,21 +114,35 @@ export const chekLocationPermission = (showAlert = true) =>
           : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
       )
         .then((result) => {
-          console.log("permission result",result)
+          console.log("permission result", result)
           switch (result) {
             case RESULTS.UNAVAILABLE:
               showError(strings.LOCATION_UNAVAILABLE);
               break;
             case RESULTS.DENIED:
-                if(Platform.OS == 'android'){
-                  return resolve(result);
-                }
               request(
                 Platform.OS === 'ios'
                   ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
                   : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
               )
                 .then((result) => {
+                  if (result == "blocked") {
+                    if (showAlert) {
+                      Alert.alert('', strings.LOCATION_DISABLED_MSG, [
+                        {
+                          text: strings.CANCEL,
+                          onPress: () => resolve('goback'),
+                        },
+                        {
+                          text: strings.CONFIRM,
+                          onPress: () => {
+                            const locationPath = 'LOCATION_SERVICES';
+                            openAppSetting(locationPath);
+                          },
+                        },
+                      ]);
+                    }
+                  }
                   return resolve(result);
                 })
                 .catch((error) => {
@@ -161,13 +175,13 @@ export const chekLocationPermission = (showAlert = true) =>
           }
         })
         .catch((error) => {
-          console.log('errorrrrrrrrr', error);
           return reject(error);
         });
     } catch (error) {
       return reject(error);
     }
   });
+
 
 export const checkContactPermission = () => {
   return new Promise(async (resolve, reject) => {
