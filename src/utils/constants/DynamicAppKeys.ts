@@ -854,8 +854,8 @@ const appIds = {
     android: 'com.punnet',
   }),
   homeric: Platform.select({
-    ios: 'com.homeric.app',
-    android: 'com.homeric.app',
+    ios: 'com.homeric',
+    android: 'com.homeric',
   }),
   voltaic: Platform.select({
     ios: 'com.voltaic',

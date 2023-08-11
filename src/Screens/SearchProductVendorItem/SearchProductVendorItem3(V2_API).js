@@ -58,7 +58,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
   console.log('param data', paramData);
   const [state, setState] = useState({
     isLoading: true,
-    searchInput: !!paramData?.voiceInput || '',
+    searchInput: !!paramData?.voiceInput ? paramData?.voiceInput : '',
     searchData: [],
     pageCount: 1,
     isLoadMore: false,

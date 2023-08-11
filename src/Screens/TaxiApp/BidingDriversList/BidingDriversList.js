@@ -49,7 +49,7 @@ export default function BidingDriversList(props) {
 
   useEffect(() => {
     _onOrderBidRideDetails()
-  }, [notificationForBide])
+  }, [notificationForBide,allDriverBidesList])
 
   useEffect(() => {
     let timeDiffInSeconds = (endDate.getTime() - startDate.getTime()) / 1000;
@@ -76,6 +76,7 @@ export default function BidingDriversList(props) {
       language: languages?.primary_language?.id,
     }
     actions.orderRideBidDetails(data, headerData).then((res) => {
+      console.log(res,'restesttt')
       setAllDriverBidesList(res?.data?.biddata)
       if (!lastBidInfo) {
         var bidExpiryTime = new Date();

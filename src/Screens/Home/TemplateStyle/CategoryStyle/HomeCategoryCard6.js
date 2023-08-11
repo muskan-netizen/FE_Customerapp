@@ -37,9 +37,9 @@ const HomeCategoryCard6 = ({
   const onLoad = (evl) => { };
 
   let imgHeight =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
+    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(75);
   let imgWidth =
-    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(50);
+    appStyle?.homePageLayout === 5 ? moderateScale(80) : moderateScale(75);
   let imgRadius =
     appStyle?.homePageLayout === 5 ? moderateScale(40) : moderateScale(25);
 

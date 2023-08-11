@@ -1,13 +1,13 @@
 #include "Pods/Target Support Files/Pods-available_pods-Homeric/Pods-available_pods-Homeric.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1588392676
-PROJECT_BUNDLE_ID = com.homeric.app
+PROJECT_BUNDLE_ID = com.homeric
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 64
 PROJECT_APP_NAME =Homeric
-PROJECT_GOOGLE_CLIENT_ID =425997098127-0at89m7dtq57aq44ge9hcteh4hsntbc1.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.425997098127-0at89m7dtq57aq44ge9hcteh4hsntbc1
+PROJECT_GOOGLE_CLIENT_ID =821974289132-jo8ou4ru7h60h0eon2fegrsu8btjnetu.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.821974289132-jo8ou4ru7h60h0eon2fegrsu8btjnetu
 PROJECT_FACEBOOK_ID =204712378394090
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =HomericInfo
-CODE_PUSH_KEY = uXgEYWMf0MRI7SHRzUKkH1UyKqkGKjv_savlC
+CODE_PUSH_KEY = 7wd5Va9YFJ0Yt_ynxBZsYMmajv4-6i-g_jSaS

@@ -21,8 +21,8 @@ const HomeCategoryCard3 = ({
   onPress = () => { },
   isLoading = false,
   applyRadius = null,
-  categoryHieght = 78,
-  categoryWidth = 78,
+  categoryHieght = moderateScaleVertical(78),
+  categoryWidth = moderateScale(78),
   index = 0,
   priceType = "vendor"
 }) => {

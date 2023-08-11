@@ -437,8 +437,6 @@ const DashBoardFiveV2Api = ({
       </View>
     );
   }, [fontFamily, themeColors, tempCartData, isDarkMode])
-
-
   const _renderSingleCategoryProducts = useCallback(({ item, index }) => {
     return (
       <ProductsComp3V2
@@ -447,7 +445,8 @@ const DashBoardFiveV2Api = ({
         imageStyle={{
           width: moderateScale(100),
           height: moderateScale(100),
-          borderRadius: 8
+          borderRadius: 8,
+          alignSelf:'center'
         }}
         containerStyle={{
           width: width / 3.2,
@@ -559,6 +558,7 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderCategories = useCallback(({ item, index }) => {
+    console.log(appStyle?.homePageLayout)
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
@@ -883,7 +883,7 @@ const DashBoardFiveV2Api = ({
             />
           </View>
         </View> :
-          <View>
+          <View style={{alignItems:appStyle?.homePageLayout==9?'center':null}}>
             {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
             <FlatList
               horizontal={categoryFlatViewStyle().horizontal}

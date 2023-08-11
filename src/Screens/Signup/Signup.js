@@ -177,22 +177,35 @@ export default function Signup({ navigation }) {
   };
 
   const emailValidation = () => {
-    let EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    let EmailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (!EmailRegex.test(email)) {
-      showError('email is not coprrect')
+      showError('email is not correct')
+      return true
+    }
+    return false
+  }
+  const nameValidation = () => {
+    let nameRegex = /^[a-zA-Z'’ ]{2,50}$/
+    if (!nameRegex.test(name)) {
+      showError('Name is not valid')
       return true
     }
     return false
   }
   const isValidData = () => {
     const error = validations({
-// email:email,
+      // email:email,
       password: password,
       name: name,
       phoneNumber: phoneNumber,
       callingCode: callingCode,
     });
+    let namevalidation = nameValidation()
     let emailValidate = emailValidation()
+    if (error || !!namevalidation) {
+      showError(error || 'Name is not in valid format');
+      return;
+    }
     if (error || !!emailValidate) {
       console.log(error, emailValidate, 'errrororor')
       showError(error || 'Email is not in valid format');
@@ -206,9 +219,9 @@ export default function Signup({ navigation }) {
       aadharFrontImg: aadharFront,
       aadharBackImg: aadharBack,
       aadharNumber: aadharNumber,
-      aadhaar_number_title:aadhaar_number,
-      aadhaar_front_title:aadhaar_front,
-      aadhaar_back_title:aadhaar_back,
+      aadhaar_number_title: aadhaar_number,
+      aadhaar_front_title: aadhaar_front,
+      aadhaar_back_title: aadhaar_back,
       upiId: upiId,
       bankName: bankName,
       beneficiaryName: beneficiaryName,
