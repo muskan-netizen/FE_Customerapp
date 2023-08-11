@@ -747,8 +747,12 @@ export default function Signup({ navigation }) {
               )}
               <PhoneNumberInput
                 onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) =>
-                  updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
+                onChangePhone={(phoneNumber) =>{
+                  if ( phoneNumber.length > 10 && getBundleId() == appIds.pave ) {
+                    return 
+                  }else{
+                    updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })}
+                  } 
                 }
                 cca2={cca2}
                 phoneNumber={phoneNumber}

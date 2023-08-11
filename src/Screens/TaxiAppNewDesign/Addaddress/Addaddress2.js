@@ -628,7 +628,11 @@ export default function Addaddress({ navigation, route }) {
     }
 
     let isFill = true;
-    if (dropLocationData.length > 5) {
+    if (dropLocationData.length > 5 && getBundleId() !== appIds.pave) {
+      return;
+    }
+    
+    if (dropLocationData.length > 3 && getBundleId() === appIds.pave) {
       return;
     }
     dropLocationData.map((val) => {

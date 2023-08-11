@@ -236,8 +236,16 @@ export default function TaxiHomeDashbord({
     if (!!userData?.auth_token) {
       getAllAddress();
     }
-  }, [del]);
+  }, [del ]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
+    }, [])
+  )
+  
   const getAllAddress = () => {
     actions
       .getAddress(
@@ -395,10 +403,10 @@ export default function TaxiHomeDashbord({
 
 
   const moveToScreen = (details, mapView) => {
-  
+
     updateState({ fullMapShow: false });
 
-    if(!mapView){
+    if (!mapView) {
       if (!!userData?.auth_token) {
         let prefillAdress = null;
         if (!!details) {
@@ -1002,6 +1010,22 @@ export default function TaxiHomeDashbord({
                   </Marker.Animated>
                 );
               })}
+             {getBundleId() == appIds.pave && <Marker
+                coordinate={{
+                  latitude: !!curLatLong?.latitude
+                    ? parseFloat(curLatLong?.latitude)
+                    : !!location?.latitude
+                      ? parseFloat(location?.latitude)
+                      : 30.733315,
+                  longitude: !!curLatLong?.longitude
+                    ? parseFloat(curLatLong?.longitude)
+                    : !!location?.longitude
+                      ? parseFloat(location?.longitude)
+                      : 76.779419,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.0121,
+                }}
+              />}
             </MapView>
             <SafeAreaView>
               <TouchableOpacity
