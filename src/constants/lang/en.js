@@ -1181,5 +1181,6 @@ Amount`,
   CANCELLATION_POLICY: "Cancellation policy",
   ENTER_PINCODE:'Enter pincode',
   ENTER_VALID_PINCODE:'Enter valid pincode',
-  CUSTOMER_REVIEWS:'Customer Reviews'
+  CUSTOMER_REVIEWS:'Customer Reviews',
+  CURRENT_PASSWORD:'Current password',
 };

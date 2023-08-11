@@ -468,7 +468,7 @@ export default function MyProfile3({route, navigation}) {
   //this function use for chnage password
   const isValidDataOfChangePass = () => {
     const error = validations({
-      password: currentpassword,
+      currentpassword:currentpassword,
       newPassword: newPassword,
       confirmPassword: confirmPassword,
     });

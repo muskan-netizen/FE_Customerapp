@@ -87,7 +87,8 @@ export default function (data) {
     aadhaar_front_title,
     aadhaar_back_title,
     productImg,
-    productLocation
+    productLocation,
+    currentpassword,
   } = data;
 
   if (productImg !== undefined) {
@@ -333,6 +334,21 @@ export default function (data) {
       let minLengthValidation = checkMinLength(password, 6, strings.PASSWORD);
       if (minLengthValidation !== '') {
         if (password != undefined) {
+          return strings.PASSWORD_REQUIRE_SIX_CHARACTRES;
+        }
+        return strings.INVALID_PASSWORD;
+      }
+    }
+  }
+
+  if (currentpassword !== undefined) {
+    let emptyValidationText = checkEmpty(currentpassword, strings.CURRENT_PASSWORD);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else {
+      let minLengthValidation = checkMinLength(currentpassword, 6, strings.CURRENT_PASSWORD);
+      if (minLengthValidation !== '') {
+        if (currentpassword != undefined) {
           return strings.PASSWORD_REQUIRE_SIX_CHARACTRES;
         }
         return strings.INVALID_PASSWORD;
