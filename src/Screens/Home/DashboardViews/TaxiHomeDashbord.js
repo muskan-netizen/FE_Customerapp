@@ -548,7 +548,7 @@ export default function TaxiHomeDashbord({
             actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                data: !!appMainData?.categories ? appMainData?.categories[0] : myCategories?.data[0],
+                data: !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0],
               })
               : actions.setAppSessionData('on_login');
           }}>
@@ -600,7 +600,7 @@ export default function TaxiHomeDashbord({
     scheduleDate = null,
     prefillAdress = null
   }) => {
-    let item = !!appMainData?.categories ? appMainData?.categories[0] : myCategories?.data[0];
+    let item = !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0];
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
       updateState({ fullMapShow: false })
