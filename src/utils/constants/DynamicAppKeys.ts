@@ -256,7 +256,7 @@ const shortCodes = {
   dingDongDelivers: '380c49',
   torunz: 'f23b31',
   kurs: '046761',
-  spa: '9022c6',
+  spa: 'ceeb2e',
   capitalDiagnostic: 'fd6dd6',
   abbeRides: '8501b6',
   nrsa: 'e9f97c',
@@ -1177,6 +1177,10 @@ const appIds = {
   emart: Platform.select({
     ios: 'com.emart.order',
     android: 'com.emart.order',
+  }),
+  spa: Platform.select({
+    ios: 'com.customerApp.spa',
+    android: 'com.customerApp.spa',
   }),
 };
 
