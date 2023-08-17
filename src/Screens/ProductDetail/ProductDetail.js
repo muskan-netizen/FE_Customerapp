@@ -1354,7 +1354,7 @@ export default function ProductDetail({ route, navigation }) {
 
           console.log(res, "res for slots vendor");
           if (res) {
-            setAppointmentAvailableSlots(res)
+            setAppointmentAvailableSlots(res?.data||res)
             setLoadingGetSlots(false);
             setAppointmentPicker(false);
             setSelectedAppointmentIndx(null);

@@ -2677,6 +2677,7 @@ function Cart({ navigation, route }) {
                 openPickerForPrescription={openPickerForPrescription}
                 parentIndex={index}
                 showCheckBox={appStyle?.homePageLayout == 10}
+                getProductFAQs={getProductFAQs}
               />
             </View>
           </View>
