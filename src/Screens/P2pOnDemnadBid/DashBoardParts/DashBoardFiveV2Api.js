@@ -644,12 +644,12 @@ const DashBoardFiveV2Api = ({
 
         )
       default:
-        <HomeCategoryCard4
+        return (<HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
           applyRadius={4}
           index={index}
-        />
+        />)
     }
   }, [appStyle, isDarkMode])
 

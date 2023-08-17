@@ -18,6 +18,7 @@ import {
     moderateScale,
     moderateScaleVertical,
     textScale,
+    width,
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import styleFun from './styles';
@@ -395,8 +396,8 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             <View
                                 style={{
                                     marginLeft: moderateScale(20),
-                                    width: moderateScale(199),
-                                    justifyContent: "center"
+                                    width: moderateScale(width/2),
+                                    justifyContent: "center",
                                 }}>
                                 <Text style={styles.txt1}>
                                     {item?.translation[0]?.title || item?.title || item?.sku}
