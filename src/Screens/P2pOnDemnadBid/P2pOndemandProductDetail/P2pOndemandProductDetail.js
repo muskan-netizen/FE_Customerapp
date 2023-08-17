@@ -577,10 +577,9 @@ const P2pOndemandProductDetail = ({ navigation, route, item }) => {
                   }}
                 />
               )}
-{console.log(productInfo?.is_wishlist ,'productInfo?.is_wishlist productInfo?.is_wishlist ')}
               <TouchableOpacity
                 style={{
-                  position: 'absolute', right: 20, bottom: 20,
+                  position: 'absolute', right: 20, top: 20,
                 }}
                 onPress={_onAddtoWishlist}>
                 <Image source={!!productInfo?.inwishlist ? imagePath.icHeart : imagePath.wishlist} style={{

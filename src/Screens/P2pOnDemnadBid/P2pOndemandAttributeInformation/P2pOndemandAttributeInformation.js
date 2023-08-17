@@ -694,7 +694,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               }}
               style={{ ...styles.addLocationBtn, }}>
               <Text numberOfLines={1} style={{
-                flex: 1,
+                flex: 0.9,
                 ...styles.titleTxt,
                 color: !isEmpty(productLocation) ? isDarkMode?colors.whiteOpacity77: colors.black : isDarkMode?colors.whiteOpacity77:colors.blackOpacity30
               }}>{!isEmpty(productLocation) ? productLocation?.address : strings.LOCATION_AVAILABLITY}</Text>
@@ -771,7 +771,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                 value={rentalDays}
                 keyboardType={"number-pad"}
                 placeholder={strings.MINIMAL_RENTAL_DAYS}
-                rightIcon={imagePath.ic_down_arrow}
+                // rightIcon={imagePath.ic_down_arrow}
                 ccontainerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
                 textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
               />

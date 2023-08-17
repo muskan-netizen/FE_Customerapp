@@ -100,7 +100,7 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
       borderRadius: 20,
       marginTop: moderateScale(8),
     },
-    back: { borderRadius: 8, position: 'absolute', left: 18, top: 38, height: 41, width: 41., justifyContent: 'center', alignItems: 'center' },
+    back: { borderRadius: 8, position: 'absolute', left: 18, top: 20, height: 41, width: 41., justifyContent: 'center', alignItems: 'center' },
     heart: { position: 'absolute', right: 18, top: 42 },
     leftRightBtn: {
       alignItems: 'center',
