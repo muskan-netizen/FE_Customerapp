@@ -102,19 +102,19 @@ export default function Signup({ navigation }) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery  && getBundleId() !== appIds.pave)
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
           '-',
           '',
         )
-        : getBundleId() == appIds.speedyDelivery ? "1" : appData?.profile?.country?.code
+        : getBundleId() == appIds.speedyDelivery ? "1"  : getBundleId() == appIds.pave ? '44' : appData?.profile?.country?.code
           ? appData?.profile?.country?.phonecode
           : '91',
     cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery && getBundleId() !== appIds.pave)
         ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
-        : getBundleId() == appIds.speedyDelivery ? "DO" : appData?.profile?.country?.code
+        : getBundleId() == appIds.speedyDelivery ? "DO" : getBundleId() == appIds.pave ? 'GB' : appData?.profile?.country?.code
           ? appData?.profile?.country?.code
           : 'IN',
     name: '',
@@ -177,7 +177,7 @@ export default function Signup({ navigation }) {
   };
 
   const emailValidation = () => {
-    let EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    let EmailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (!EmailRegex.test(email)) {
       showError('email is not correct')
       return true
@@ -195,19 +195,18 @@ export default function Signup({ navigation }) {
 
   const isValidData = () => {
     const error = validations({
-email:email,
+      // email:email,
       password: password,
       name: name,
       phoneNumber: phoneNumber,
       callingCode: callingCode,
     });
-    let nameValidate = nameValidation()
-    if (error || !!nameValidate) {
-      console.log(error, nameValidate, 'errrororor')
+    let namevalidation = nameValidation()
+    let emailValidate = emailValidation()
+    if (error || !!namevalidation) {
       showError(error || 'Name is not in valid format');
       return;
     }
-    let emailValidate = emailValidation()
     if (error || !!emailValidate) {
       console.log(error, emailValidate, 'errrororor')
       showError(error || 'Email is not in valid format');
@@ -223,9 +222,9 @@ email:email,
       aadharFrontImg: aadharFront,
       aadharBackImg: aadharBack,
       aadharNumber: aadharNumber,
-      aadhaar_number_title:aadhaar_number,
-      aadhaar_front_title:aadhaar_front,
-      aadhaar_back_title:aadhaar_back,
+      aadhaar_number_title: aadhaar_number,
+      aadhaar_front_title: aadhaar_front,
+      aadhaar_back_title: aadhaar_back,
       upiId: upiId,
       bankName: bankName,
       beneficiaryName: beneficiaryName,
@@ -764,8 +763,12 @@ email:email,
               )}
               <PhoneNumberInput
                 onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) =>
-                  updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
+                onChangePhone={(phoneNumber) =>{
+                  if ( phoneNumber.length > 10 && getBundleId() == appIds.pave ) {
+                    return 
+                  }else{
+                    updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })}
+                  } 
                 }
                 cca2={cca2}
                 phoneNumber={phoneNumber}

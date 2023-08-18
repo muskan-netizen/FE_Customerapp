@@ -1185,6 +1185,6 @@ Amount`,
   FOR_MORE_OFFERS:'For more offers!',
   SUBSCRIBE_NOW:'Subscribe Now',
   PLEASE_SELECT_RENTAL_DATE_RANGE:'Please select rental date range',
-  PRODUCT_IS_ADDED_BY_YOU:"Product is added by you!"
-
+  PRODUCT_IS_ADDED_BY_YOU:"Product is added by you!",
+  CURRENT_PASSWORD:'Current password',
 };

@@ -701,7 +701,7 @@ const AddressModal3 = ({
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyD,
                 textAlign: 'left',
               }}>
-              {strings.YOUR_LOCATION}
+              {strings.YOUR_LOCATION} {getBundleId() == appIds?.greenhippo ? '(with map)' : '' }
             </Text>
 
             <View>
@@ -844,7 +844,7 @@ const AddressModal3 = ({
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('houseNo')}
                 placeholder={strings.HOUSE_NO}
-                label={strings.COMPLETE_ADDRESS}
+                label={`${strings.COMPLETE_ADDRESS } ${getBundleId() == appIds?.greenhippo ? '(Manually)' : '' }`}
                 textInputStyle={getTextInputStyle(houseNo)}
                 value={houseNo}
                 multiline={false}

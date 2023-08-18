@@ -21,10 +21,10 @@ const HomeCategoryCard3 = ({
   onPress = () => { },
   isLoading = false,
   applyRadius = null,
-  categoryHieght = 78,
-  categoryWidth = 78,
-
-  index = 0
+  categoryHieght = moderateScaleVertical(78),
+  categoryWidth = moderateScale(78),
+  index = 0,
+  priceType = "vendor"
 }) => {
 
   const { themeColor, themeToggle, themeColors, appStyle } = useSelector((state) => state?.initBoot);
@@ -53,30 +53,34 @@ const HomeCategoryCard3 = ({
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => navigation.navigate(navigationStrings.CATEGORY)}
-        >
+        onPress={() => navigation.navigate(navigationStrings.CATEGORY, {
+          data: {
+            priceType: priceType
+          }
+        })}
+      >
         <View style={{
           height: imgHeight,
           width: imgWidth,
           borderRadius: imgRadius,
-          backgroundColor:   getColorCodeWithOpactiyNumber(
+          backgroundColor: getColorCodeWithOpactiyNumber(
             themeColors?.primary_color.substr(1),
             20,
           ),
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-            <Text
-              style={{
-                color: themeColors?.primary_color,
-                fontFamily: fontFamily.medium,
-                fontSize: textScale(10),
-                textAlign: 'center',
-                width: moderateScale(80), 
-              }}>
-              {strings.VIEW_ALL}
-            </Text>
-          
+          <Text
+            style={{
+              color: themeColors?.primary_color,
+              fontFamily: fontFamily.medium,
+              fontSize: textScale(10),
+              textAlign: 'center',
+              width: moderateScale(80),
+            }}>
+            {strings.VIEW_ALL}
+          </Text>
+
         </View>
       </TouchableOpacity>
     )

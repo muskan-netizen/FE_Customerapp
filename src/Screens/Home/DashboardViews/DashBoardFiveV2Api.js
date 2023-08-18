@@ -88,7 +88,9 @@ const DashBoardFiveV2Api = ({
   selcetedToggle = () => { },
   showVendorCategory = true,
   appMainData = {},
-  scrollHandler = () => { }
+  scrollHandler = () => { },
+  priceType = "vendor",
+  onPressProduct = () => { }
 }) => {
 
 
@@ -96,6 +98,8 @@ const DashBoardFiveV2Api = ({
   const { appData, themeColors, appStyle, currencies, languages, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const userData = useSelector((state) => state?.auth?.userData);
   const { cartItemCount } = useSelector((state) => state?.cart);
+  const { dineInType } = useSelector((state) => state?.home || {});
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -180,6 +184,7 @@ const DashBoardFiveV2Api = ({
   };
 
 
+
   const _renderVendors = useCallback(({ item, index }) => (
     <View style={{ width: '100%' }}>
       <MarketCard3V2
@@ -188,7 +193,7 @@ const DashBoardFiveV2Api = ({
         extraStyles={{ margin: 2 }}
       />
     </View>
-  ), [isDarkMode])
+  ), [isDarkMode, priceType, dineInType])
 
 
   const onViewAll = useCallback((type, data) => {
@@ -327,7 +332,6 @@ const DashBoardFiveV2Api = ({
 
 
   const renderHomePageItems = useCallback(({ item, index }) => {
-    console.log(item,"jhjfkhgkjhjkhjkhjkhj");
     let uniqueId = String(item?.id || index)
     return (
       <View key={uniqueId}>
@@ -345,12 +349,12 @@ const DashBoardFiveV2Api = ({
               item?.slug == 'most_popular_products' ||
               item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
             ) ?
-              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} />
-              : item?.slug == 'vendors' ?
+              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} priceType={priceType} />
+              : item?.slug == 'vendors' && getBundleId() !== appIds?.greenhippo ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
                   <CategoriesView item={item} showTitle={false} />
-                ) : item?.slug == 'best_sellers' ? (
+                ) : item?.slug == 'best_sellers' && getBundleId() !== appIds?.greenhippo ? (
                   <BestSellersView
                     item={item}
                     onPressVendor={onPressVendor}
@@ -433,30 +437,28 @@ const DashBoardFiveV2Api = ({
       </View>
     );
   }, [fontFamily, themeColors, tempCartData, isDarkMode])
-
-
   const _renderSingleCategoryProducts = useCallback(({ item, index }) => {
     return (
       <ProductsComp3V2
         item={item}
-        onPress={() =>
-          !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        }
+        onPress={() => onPressProduct(item)}
         imageStyle={{
           width: moderateScale(100),
           height: moderateScale(100),
-          borderRadius: 8
+          borderRadius: 8,
+          alignSelf:'center'
         }}
         containerStyle={{
           width: width / 3.2,
           // alignItems: 'center',
           borderRadius: 8
         }}
+        priceType={priceType}
       />
 
 
     );
-  }, [isDarkMode])
+  }, [isDarkMode, priceType])
 
 
 
@@ -504,13 +506,12 @@ const DashBoardFiveV2Api = ({
       <View style={{ marginRight: 8 }}>
         <ProductsComp3V2
           item={item}
-          onPress={() =>
-            navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-          }
+          onPress={() => onPressProduct(item)}
+          priceType={priceType}
         />
       </View>
     )
-  }, [appMainData, isDarkMode, themeColors])
+  }, [appMainData, isDarkMode, themeColors, priceType])
 
   const SelectedProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
@@ -557,6 +558,7 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderCategories = useCallback(({ item, index }) => {
+    console.log(appStyle?.homePageLayout)
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
@@ -653,14 +655,15 @@ const DashBoardFiveV2Api = ({
 
         )
       default:
-        <HomeCategoryCard4
+        return <HomeCategoryCard4
           data={item}
           onPress={() => onPressCategory(item)}
           applyRadius={4}
           index={index}
+          priceType={priceType}
         />
     }
-  }, [appStyle, isDarkMode])
+  }, [appStyle, isDarkMode, priceType, dineInType])
 
 
   const categoryFlatViewStyle = () => {
@@ -880,7 +883,7 @@ const DashBoardFiveV2Api = ({
             />
           </View>
         </View> :
-          <View>
+          <View style={{alignItems:appStyle?.homePageLayout==9?'center':null}}>
             {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
             <FlatList
               horizontal={categoryFlatViewStyle().horizontal}
@@ -1053,7 +1056,6 @@ const DashBoardFiveV2Api = ({
     })
     return filterData
   }, [appMainData?.homePageLabels])
-console.log(appMainData?.homePageLabels,"appMainData?.homePageLabelsappMainData?.homePageLabels");
 
   const dataProvider = useMemo(() => optamizeValue, [appMainData?.homePageLabels])
 
@@ -1236,7 +1238,7 @@ const TitleViewHome = ({
 }
 
 //product theme view
-const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
+const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { }, priceType }) => {
 
   return !isEmpty(item?.data) ? (
     <View
@@ -1254,7 +1256,7 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {} }) => {
         showsHorizontalScrollIndicator={false}
         horizontal
         data={item?.data}
-        renderItem={({ item, }) => _renderProducts({ item, navigation })}
+        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct, priceType })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
           <View style={{ marginRight: moderateScale(16) }} />
@@ -1288,7 +1290,6 @@ const CitiesView = ({ item = {},
   appStyle = {},
   moveToNewScreen = () => { },
   isDarkMode = false }) => {
-  console.log(item, "awdbatufgjdhvgjncjn");
 
   if (isEmpty(item?.data || [])) {
     return <></>
@@ -1319,13 +1320,21 @@ const CitiesView = ({ item = {},
     </View>
   )
 }
-const _renderProducts = ({ item, navigation }) => {
+const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceType }) => {
   return (
     <ProductsComp3V2
       item={item}
-      onPress={() =>
-        !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+      onPress={() => onPressProduct(item)
+
+        // !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
+        // navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
+        //   data: {
+        //     is_product: true,
+        //     product: item
+        //   }
+        // })
       }
+      priceType={priceType}
     />
   )
 }

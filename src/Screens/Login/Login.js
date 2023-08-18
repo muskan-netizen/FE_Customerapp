@@ -94,19 +94,19 @@ export default function Login({ navigation }) {
       phoneNo: '',
       callingCode:
         !isEmpty(getPhonesCallingCodeAndCountryData) &&
-          (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
+          (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery && getBundleId() !== appIds.pave)
           ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
             '-',
             '',
           )
-          : getBundleId() == appIds.speedyDelivery ? '1' : appData?.profile.country?.phonecode
+          : getBundleId() == appIds.speedyDelivery ? '1' : getBundleId() == appIds.pave ? '44' : appData?.profile.country?.phonecode
             ? appData?.profile?.country?.phonecode
             : '91',
       cca2:
         !isEmpty(getPhonesCallingCodeAndCountryData) &&
-          (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery)
+          (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery && getBundleId() !== appIds.pave)
           ? getPhonesCallingCodeAndCountryData[0].isoCode2
-          : getBundleId() == appIds.speedyDelivery ? 'DO' : appData?.profile?.country?.code
+          : getBundleId() == appIds.speedyDelivery ? 'DO' : getBundleId() == appIds.pave ? 'GB' : appData?.profile?.country?.code
             ? appData?.profile?.country?.code
             : 'IN',
       focus: false,

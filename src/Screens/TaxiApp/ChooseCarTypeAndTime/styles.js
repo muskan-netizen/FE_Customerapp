@@ -78,7 +78,7 @@ export default ({fontFamily, themeColors}) => {
     bottomView: {
       backgroundColor: colors.white,
 
-      minHeight: height / 2,
+      minHeight: moderateScaleVertical(height/1.3),
       width: width,
     },
     bottomView3: {

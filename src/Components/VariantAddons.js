@@ -50,6 +50,7 @@ import { Calendar, CalendarList } from 'react-native-calendars';
 import { ScrollView } from 'react-native-gesture-handler';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
 import Reccuring from './Reccuring';
+import { UIActivityIndicator } from 'react-native-indicators';
 
 const VariantAddons = ({
   productdetail = null,
@@ -106,6 +107,7 @@ const VariantAddons = ({
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
   console.log(productdetail,"productdetailproductdetailproductdetailproductdetail");
+  const [isdataloading,setisdataloading]=useState(true)
   const resetVariantState = () => {
     updateAddonState({
       planValues: ["Daily", "Weekly","Alternate Days", "Custom"],
@@ -127,7 +129,9 @@ const VariantAddons = ({
       slectedDate: new Date(),
     })
   }
-
+  useEffect(() => {
+    getProductDetail();
+  }, []);
   useFocusEffect(
     React.useCallback(() => {
       if (variantSet.length) {
@@ -150,7 +154,7 @@ const VariantAddons = ({
       }
     }, [variantSet]),
   );
-
+  
   const getProductDetailBasedOnFilter = (variantSetData) => {
     console.log('api hit getProductDetailBasedOnFilter', variantSetData);
     let data = {};
@@ -163,6 +167,7 @@ const VariantAddons = ({
         language: languages.primary_language.id,
       })
       .then((res) => {
+        setisdataloading(false)
         console.log(res.data, 'res.data by vendor id ');
         updateState({
           productDetailNew: res?.data,
@@ -180,9 +185,6 @@ const VariantAddons = ({
       .catch((error) => console.log(error, 'errrorrrr'));
   };
 
-  useEffect(() => {
-    getProductDetail();
-  }, []);
   useEffect(() => {
     if (!isEmpty(productDetailNew)) {
       checkProductAvailibility();
@@ -202,6 +204,7 @@ const VariantAddons = ({
         },
       )
       .then((res) => {
+        setisdataloading(false)
         console.log(res?.data, 'res.data++ prodcut detail');
         updateState({
           productDetailData: res?.data?.products,
@@ -1377,7 +1380,14 @@ const VariantAddons = ({
                 alignItems: 'center',
                 paddingTop: moderateScale(10),
               }}>
-              <Banner
+                {!!isdataloading?
+                <View style={{alignItems:'center',justifyContent:'center',width:width,height:moderateScaleVertical(width * 0.7)}}>
+                  <UIActivityIndicator
+                    color={themeColors.primary_color}
+                    size={40}
+                  />
+                </View>
+              :<Banner
                 bannerRef={bannerRef}
                 bannerData={productDetailData?.product_media}
                 sliderWidth={width}
@@ -1393,7 +1403,8 @@ const VariantAddons = ({
                     isProductImageLargeViewVisible: true,
                   })
                 }
-              />
+              />}
+              
               {!isEmpty(productDetailData) ? (
                 <View style={{paddingTop: 5}}>
                   <Pagination

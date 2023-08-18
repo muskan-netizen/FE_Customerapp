@@ -43,7 +43,7 @@ import commonStylesFunc, { hitSlopProp } from '../../../styles/commonStyles';
 
 function SwipeableSection(props) {
 
-    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription, selectCartItem, parentIndex, showCheckBox = false } = props;
+    const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription, selectCartItem, parentIndex, showCheckBox = false,getProductFAQs=()=>{} } = props;
     const { themeColors } = useSelector((state) => state?.initBoot);
 
     const commonStyles = commonStylesFunc({ fontFamily });

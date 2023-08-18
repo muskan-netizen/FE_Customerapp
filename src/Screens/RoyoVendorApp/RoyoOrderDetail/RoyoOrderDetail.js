@@ -46,9 +46,9 @@ const RoyoOrderDetail = (props) => {
   const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot || {},
   );
-  const {additional_preferences, digit_after_decimal} =
+  const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
-  const {preferences} = appData?.profile;
+  const { preferences } = appData?.profile;
 
   const navigation = useNavigation();
 
@@ -60,12 +60,12 @@ const RoyoOrderDetail = (props) => {
     upcoming_status: data?.order_status.upcoming_status,
     orderInfo: {},
     userDocumentList: [],
-    isUpdateOrder:false,
-    updateReason:'',
-    updatedPrice:'',
-    order_vendor_product_id:'',
-    order_product_old_price:'',
-    isLoading:false
+    isUpdateOrder: false,
+    updateReason: '',
+    updatedPrice: '',
+    order_vendor_product_id: '',
+    order_product_old_price: '',
+    isLoading: false
   });
   const {
     showUpcomingStatus,
@@ -84,7 +84,7 @@ const RoyoOrderDetail = (props) => {
   } = state;
 
 
-   const onWhatsapp = async () => {
+  const onWhatsapp = async () => {
     const vendorPhoneNumber = orderInfo?.user?.phone_number.replace(/\s/g, "")
     let url = `whatsapp://send?phone=${orderInfo?.user?.dial_code}${vendorPhoneNumber}`;
     Linking.openURL(url)
@@ -111,10 +111,10 @@ const RoyoOrderDetail = (props) => {
   useEffect(() => {
     _getOrderDetailScreen();
   }, []);
- //On change textinput
- const _onChangeText = (key) => (val) => {
-  updateState({[key]: val});
-};
+  //On change textinput
+  const _onChangeText = (key) => (val) => {
+    updateState({ [key]: val });
+  };
   const createRoom = async (item) => {
     try {
       const apiData = {
@@ -188,7 +188,7 @@ const RoyoOrderDetail = (props) => {
       isLoadingB: false,
       isLoading: false,
       isLoadingC: false,
-      isUpdateOrder:false
+      isUpdateOrder: false
     });
     showError(error?.message || error?.error);
   };
@@ -270,15 +270,15 @@ const RoyoOrderDetail = (props) => {
     //   </View>
     // </View>
   };
-  const editOrder = (item)=>{
+  const editOrder = (item) => {
     updateState({
-      isUpdateOrder:true,
-      order_vendor_product_id:item?.id,
-      order_product_old_price:item?.price
+      isUpdateOrder: true,
+      order_vendor_product_id: item?.id,
+      order_product_old_price: item?.price
 
     })
   }
-  const renderItem = useCallback(({item, index}) => {
+  const renderItem = useCallback(({ item, index }) => {
     return (
       <View style={styles.itemBox}>
         <Image
@@ -291,36 +291,36 @@ const RoyoOrderDetail = (props) => {
             ),
           }}
         />
-        <View style={{flex: 1, justifyContent: 'space-around'}}>
-          <View style={{ }}>
+        <View style={{ flex: 1, justifyContent: 'space-around' }}>
+          <View style={{}}>
             <View style={{
-             
-              flexDirection:'row',
-              justifyContent:'space-between'
+
+              flexDirection: 'row',
+              justifyContent: 'space-between'
             }}>
-            <View style={{flex: 0.8}}>
-              <Text style={styles.font16Medium}>
-                {item?.translation?.title}
-              </Text>
+              <View style={{ flex: 0.8 }}>
+                <Text style={styles.font16Medium}>
+                  {item?.translation?.title}
+                </Text>
+              </View>
+              {!!appData?.profile?.preferences?.update_order_product_price ? (
+                <TouchableOpacity
+                  hitSlop={{
+                    top: 50,
+                    bottom: 50,
+                    right: 50,
+                    left: 50,
+                  }}
+                  onPress={() => editOrder(item)}
+                  style={{
+
+                  }}
+                >
+                  <Image source={imagePath?.edit1Royo} />
+                </TouchableOpacity>) : <></>}
             </View>
-            {!!appData?.profile?.preferences?.update_order_product_price ?(
-           <TouchableOpacity 
-           hitSlop={{
-            top:50,
-            bottom:50,
-            right:50,
-            left:50,
-           }}
-            onPress={()=>editOrder(item)}
-            style={{
-              
-            }}
-           >
-           <Image  source={imagePath?.edit1Royo}/>
-           </TouchableOpacity>) : <></>}
-            </View>
-            
-            
+
+
 
             {!userData?.is_superadmin ? (
               <View style={{ marginVertical: moderateScaleVertical(8) }}>
@@ -341,30 +341,30 @@ const RoyoOrderDetail = (props) => {
               </View>
             ) : null}
           </View>
-          <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View>
-            <Text style={styles.font13Regular}>
-              {item.quantity}
-              {strings.UNIT} {'x'}{' '}
-            </Text>
-            <Text style={styles.font14Regular}>
-              {tokenConverterPlusCurrencyNumberFormater(
-                Number(item.price),
-                digit_after_decimal,
-                additional_preferences,
-                currencies?.primary_currency?.symbol,
-              )}
-            </Text>
+              <Text style={styles.font13Regular}>
+                {item.quantity}
+                {strings.UNIT} {'x'}{' '}
+              </Text>
+              <Text style={styles.font14Regular}>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(item.price),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+              </Text>
             </View>
             <View>
-               <Text style={styles.font16Semibold}>
-          {`${currencies?.primary_currency?.symbol} ${Number(
-            item.quantity * item.price,
-          ).toFixed(2)}`}
-        </Text>
+              <Text style={styles.font16Semibold}>
+                {`${currencies?.primary_currency?.symbol} ${Number(
+                  item.quantity * item.price,
+                ).toFixed(2)}`}
+              </Text>
             </View>
           </View>
-          {!!item?.product_variant_sets ? <View style={{marginTop:moderateScale(2)}} >
+          {!!item?.product_variant_sets ? <View style={{ marginTop: moderateScale(2) }} >
             <Text style={styles.font14Regular}>
               {item?.product_variant_sets}
             </Text>
@@ -372,53 +372,54 @@ const RoyoOrderDetail = (props) => {
           }
           {item?.product_addons.length > 0
             ? item?.product_addons.map((j) => {
-                return (
-                  <View>
-                    <Text>
-                      {`(${j.option_title})`} ={' '}
-                      {`${tokenConverterPlusCurrencyNumberFormater(
-                        Number(j.price),
-                        digit_after_decimal,
-                        additional_preferences,
-                        currencies?.primary_currency?.symbol,
-                      )}`}
+              return (
+                <View>
+                  <Text>
+                    {`(${j.option_title})`} ={' '}
+                    {`${tokenConverterPlusCurrencyNumberFormater(
+                      Number(j.price),
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}`}
                   </Text>
                 </View>
               );
             })
             : null}
         </View>
-     
+
       </View>
     );
   }, []);
 
-  const onSubmit = ()=>{
+  const onSubmit = () => {
     updateState({
-      isLoading:true
+      isLoading: true
     })
 
-    let data ={}
-    data["order_vendor_product_id"]=order_vendor_product_id,
-    data["order_product_old_price"]=order_product_old_price,
-    data["new_product_price"]=updatedPrice,
-    data["update_price_reason"]=updateReason,
+    let data = {}
+    data["order_vendor_product_id"] = order_vendor_product_id,
+      data["order_product_old_price"] = order_product_old_price,
+      data["new_product_price"] = updatedPrice,
+      data["update_price_reason"] = updateReason,
 
-     console.log(data,"sending Dataaaaa")
-     actions?.venderUpdateOrder(data,{
+      console.log(data, "sending Dataaaaa")
+    actions?.venderUpdateOrder(data, {
       code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-     }).then(
-      (res)=>{
-        console.log(res,"resssupdate"),
-        updateState({isUpdateOrder:false,
-         isLoading:false
-        })
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+    }).then(
+      (res) => {
+        console.log(res, "resssupdate"),
+          updateState({
+            isUpdateOrder: false,
+            isLoading: false
+          })
         showSuccess(res?.message)
         _getOrderDetailScreen()
       }
-     ).catch(errorMethod)
+    ).catch(errorMethod)
   }
   return (
     <WrapperContainer
@@ -510,19 +511,19 @@ const RoyoOrderDetail = (props) => {
             Number(data?.total_amount) &&
             !!Number(data?.total_amount) !== 0
           ) && (
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
-              <Text style={styles.font15Semibold}>
-                {tokenConverterPlusCurrencyNumberFormater(
-                  Number(data?.vendors[0].subtotal_amount),
-                  digit_after_decimal,
-                  additional_preferences,
-                  currencies?.primary_currency?.symbol,
-                )}
-              </Text>
-            </View>
-          )}
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={styles.font15Medium}>{strings.SUBTOTAL}</Text>
+                <Text style={styles.font15Semibold}>
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    Number(data?.vendors[0].subtotal_amount),
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
+                </Text>
+              </View>
+            )}
           {!!data?.total_delivery_fee && !!Number(data?.total_delivery_fee) && (
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -560,20 +561,20 @@ const RoyoOrderDetail = (props) => {
 
           {Number(data?.total_service_fee) + Number(data?.taxable_amount) !==
             0 && (
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
-              <Text style={styles.font15Semibold}>
-                {tokenConverterPlusCurrencyNumberFormater(
-                  Number(data?.total_service_fee) +
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={styles.font15Medium}>{strings.TAXES_FEES}</Text>
+                <Text style={styles.font15Semibold}>
+                  {tokenConverterPlusCurrencyNumberFormater(
+                    Number(data?.total_service_fee) +
                     Number(data?.taxable_amount),
-                  digit_after_decimal,
-                  additional_preferences,
-                  currencies?.primary_currency?.symbol,
-                )}
-              </Text>
-            </View>
-          )}
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol,
+                  )}
+                </Text>
+              </View>
+            )}
 
           {!!data?.total_container_charges &&
             Number(data?.total_container_charges) !== 0 && (
@@ -624,9 +625,9 @@ const RoyoOrderDetail = (props) => {
             </View>
           )}
 
-{!!orderInfo?.advance_paid_amount && Number(orderInfo?.advance_paid_amount) > 0 && (
+          {!!orderInfo?.advance_paid_amount && Number(orderInfo?.advance_paid_amount) > 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{"Advance Paid Amount"}</Text>
               <Text style={styles.font15Semibold}>
                 {currencies?.primary_currency?.symbol}{' '}
@@ -634,9 +635,9 @@ const RoyoOrderDetail = (props) => {
               </Text>
             </View>
           )}
-        {Number(orderInfo?.advance_paid_amount) > 0 && !!orderInfo?.pending_amount && Number(orderInfo?.pending_amount) > 0 && (
+          {Number(orderInfo?.advance_paid_amount) > 0 && !!orderInfo?.pending_amount && Number(orderInfo?.pending_amount) > 0 && (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.font15Medium}>{"Pending Amount"}</Text>
               <Text style={styles.font15Semibold}>
                 {currencies?.primary_currency?.symbol}{' '}
@@ -647,7 +648,7 @@ const RoyoOrderDetail = (props) => {
           <View style={styles.dashLine} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text style={styles.font15Medium}>{strings.TOTAL}</Text>
-            <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
+            <Text style={{ ...styles.font15Semibold, color: colors.themeColor2 }}>
               {tokenConverterPlusCurrencyNumberFormater(
                 data?.payable_amount,
                 digit_after_decimal,
@@ -668,11 +669,11 @@ const RoyoOrderDetail = (props) => {
             </Text>
             <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity onPress={() =>
-             
-             dialCall(
-            `+${orderInfo?.user?.dial_code}${orderInfo?.user?.phone_number}`
-             )
-           }>
+
+                dialCall(
+                  `+${orderInfo?.user?.dial_code}${orderInfo?.user?.phone_number}`
+                )
+              }>
                 <Image source={imagePath.callRoyo} />
               </TouchableOpacity>
               <TouchableOpacity onPress={onWhatsapp}>
@@ -753,85 +754,85 @@ const RoyoOrderDetail = (props) => {
             />
           </View>
         ) : null}
-          </ScrollView>
-        {
-          !!isUpdateOrder  ?
+      </ScrollView>
+      {
+        !!isUpdateOrder ?
           (
             <BottomSheet
-            ref={bottomSheetRef}
-            index={0}
-            snapPoints={[height]}
-            activeOffsetY={[-1, 1]}
-            failOffsetX={[-5, 5]}
-            animateOnMount={true}
-            handleComponent={null}
-           
-            > 
-              <TouchableOpacity 
-              style={{
-                alignSelf:"center",
-                
-              }}
-                onPress={()=>{
+              ref={bottomSheetRef}
+              index={0}
+              snapPoints={[height]}
+              activeOffsetY={[-1, 1]}
+              failOffsetX={[-5, 5]}
+              animateOnMount={true}
+              handleComponent={null}
+
+            >
+              <TouchableOpacity
+                style={{
+                  alignSelf: "center",
+
+                }}
+                onPress={() => {
                   updateState({
-                    isUpdateOrder:false
+                    isUpdateOrder: false
                   })
                 }}
               >
-                 <Image 
+                <Image
                   source={imagePath?.close2}
                 />
               </TouchableOpacity>
               <View style={{
-                flex:1,
-                backgroundColor:colors?.grey2
+                flex: 1,
+                backgroundColor: colors?.grey2
               }}>
-                <View 
-                 style={{
-                  marginTop:moderateScale(40),
-                  flex:1,
-                  marginHorizontal:moderateScale(16)
-                 }}
+                <View
+                  style={{
+                    marginTop: moderateScale(40),
+                    flex: 1,
+                    marginHorizontal: moderateScale(16)
+                  }}
                 >
-                   <BorderTextInput
-               
-                 onChangeText={_onChangeText('updatedPrice')}
-                  placeholder={"Enter updated price"}
-                  
-                 
-                  autoCapitalize={'none'}
-                  autoFocus={true}
-                  returnKeyType={'next'}
-                />
-                <BorderTextInput
-                containerStyle={{
-                  height:moderateScale(100)
-                }}
-                 onChangeText={_onChangeText('updateReason')}
-                  placeholder={"Reason"}
-                  
-                 
-                  autoCapitalize={'none'}
-                  autoFocus={true}
-                  returnKeyType={'next'}
-                />
-                <GradientButton 
-                indicator={isLoading}
-                onPress={onSubmit}
-                btnText={"Submit"}
-                colorsArray={[colors?.black,colors?.black]} 
-                 containerStyle={{
-                 
-                 }}
-                /> 
+                  <BorderTextInput
+
+                    onChangeText={_onChangeText('updatedPrice')}
+                    placeholder={"Enter updated price"}
+
+
+                    autoCapitalize={'none'}
+                    autoFocus={true}
+                    returnKeyType={'next'}
+                  />
+                  <BorderTextInput
+                    containerStyle={{
+                      height: moderateScale(100)
+                    }}
+                    onChangeText={_onChangeText('updateReason')}
+                    placeholder={"Reason"}
+
+
+                    autoCapitalize={'none'}
+                    autoFocus={true}
+                    returnKeyType={'next'}
+                  />
+                  <GradientButton
+                    indicator={isLoading}
+                    onPress={onSubmit}
+                    btnText={"Submit"}
+                    colorsArray={[colors?.black, colors?.black]}
+                    containerStyle={{
+
+                    }}
+                  />
 
                 </View>
               </View>
             </BottomSheet>
           )
-           :null
-        }
-    
+          : null
+      }
+
     </WrapperContainer>
   );
 };

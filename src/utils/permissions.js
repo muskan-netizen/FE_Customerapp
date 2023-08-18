@@ -16,9 +16,9 @@ import { err } from 'react-native-svg/lib/typescript/xml';
 
 export const androidCameraPermission = () =>
   new Promise(async (resolve, reject) => {
-    console.log(Platform.Version, '');
+
     try {
-      console.log(Platform.Version, 'Platform.VersionPlatform.Version')
+
       if (Platform.OS === "android" && Platform.Version > 22) {
         if (Platform.Version >= 33) {
           const granted = await PermissionsAndroid.requestMultiple([
@@ -114,6 +114,7 @@ export const chekLocationPermission = (showAlert = true) =>
           : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
       )
         .then((result) => {
+          console.log("permission result", result)
           switch (result) {
             case RESULTS.UNAVAILABLE:
               showError(strings.LOCATION_UNAVAILABLE);
@@ -125,6 +126,23 @@ export const chekLocationPermission = (showAlert = true) =>
                   : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
               )
                 .then((result) => {
+                  if (result == "blocked") {
+                    if (showAlert) {
+                      Alert.alert('', strings.LOCATION_DISABLED_MSG, [
+                        {
+                          text: strings.CANCEL,
+                          onPress: () => resolve('goback'),
+                        },
+                        {
+                          text: strings.CONFIRM,
+                          onPress: () => {
+                            const locationPath = 'LOCATION_SERVICES';
+                            openAppSetting(locationPath);
+                          },
+                        },
+                      ]);
+                    }
+                  }
                   return resolve(result);
                 })
                 .catch((error) => {
@@ -157,13 +175,13 @@ export const chekLocationPermission = (showAlert = true) =>
           }
         })
         .catch((error) => {
-          console.log('errorrrrrrrrr', error);
           return reject(error);
         });
     } catch (error) {
       return reject(error);
     }
   });
+
 
 export const checkContactPermission = () => {
   return new Promise(async (resolve, reject) => {

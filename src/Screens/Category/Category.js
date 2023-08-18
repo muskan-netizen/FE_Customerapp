@@ -1,29 +1,24 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, View, ScrollView, RefreshControl } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import BrandCard3 from '../../Components/BrandCard3';
 import Header from '../../Components/Header';
+import NoDataFound from '../../Components/NoDataFound';
 import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical,
-  width,
+  moderateScaleVertical
 } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import CardLoader from '../../Components/Loaders/CardLoader';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import stylesFunc from './styles';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import actions from '../../redux/actions';
-import { showError } from '../../utils/helperFunctions';
-import { debounce } from 'lodash';
-import NoDataFound from '../../Components/NoDataFound';
-import staticStrings from '../../constants/staticStrings';
+import imagePath from '../../constants/imagePath';
 
 export default function Category({ navigation, route }) {
   const { data } = route?.params || {};
@@ -75,6 +70,37 @@ export default function Category({ navigation, route }) {
 
 
   const onPressCategory = useCallback((item) => {
+
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && data?.priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT ||
+            item?.redirect_to == staticStrings.RENTAL
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
+
+    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+
+      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
+        fetchOffers: true,
+        id: item.id,
+        vendor: false,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return
+    }
+
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
       return;
@@ -144,8 +170,7 @@ export default function Category({ navigation, route }) {
           fetchOffers: true,
         })();
     }
-  }, [shortCodes, appData])
-
+  }, [shortCodes, appData, data])
 
 
   const _renderItem = useCallback(({ item }) => {
@@ -169,7 +194,7 @@ export default function Category({ navigation, route }) {
       statusBarColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
-      <Header centerTitle={strings.CATEGORY} leftIcon={false} />
+      <Header centerTitle={strings.CATEGORY} leftIcon={imagePath.back} />
 
 
       <View style={{ height: 1, backgroundColor: colors.borderLight }} />

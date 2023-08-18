@@ -46,6 +46,7 @@ interface lineOfSightDistanceInterface {
   logo?: string | object | null;
   show_slot?: boolean | number;
   name?: string;
+  banner?:string | object | null;
 }
 
 interface CompProps {
@@ -66,7 +67,6 @@ const MarketCard3: FC<CompProps> = ({
   const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
     (state: any) => state?.initBoot || {},
   );
-console.log(data,"datadatadatadatadatadatadata");
 
   let vendorDistance: any = 0;
   if (!!data?.lineOfSightDistance) {
@@ -94,10 +94,10 @@ console.log(data,"datadatadatadatadatadatadata");
   // );
 
   let imageUrl = getImageUrlNew({
-    url: data?.path || data?.logo || null,
+    url: data?.banner|| data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
     type: 'image_fill',
-    height: (height / 2).toFixed(0),
+    height: (height*2 / 2).toFixed(0),
     width: width.toFixed(0),
   });
 

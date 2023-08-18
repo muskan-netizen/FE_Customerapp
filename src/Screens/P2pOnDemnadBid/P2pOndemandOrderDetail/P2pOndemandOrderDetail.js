@@ -81,9 +81,9 @@ export default function P2pOndemandOrderDetail({ route, navigation }) {
                 <View style={{ borderWidth: 0.5, margin: moderateScale(16), borderColor: colors.greyA, borderRadius: moderateScale(8) }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Days {productInfo?.days}</Text>
-                        <Text style={{ fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
+                        {(productInfo?.start_date_time&&productInfo?.end_date_time)&&<Text style={{ fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
                             {`${moment(productInfo?.start_date_time).format("DD MMMM")} - ${moment(productInfo?.end_date_time).format("DD MMMM")}`}
-                        </Text>
+                        </Text>}
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}> {tokenConverterPlusCurrencyNumberFormater(

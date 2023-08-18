@@ -111,17 +111,21 @@ export default function TaxiHomeDashbord({
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
-
+  // const navCatergories = appMainData?.homePageLabels.find((item) => {
+  //   if (item?.slug == 'nav_categories') {
+  //   return  item
+  //   }
+  // })
   let myCategories = [{ data: [] }]
 
-  if (!!appMainData?.homePageLabels) {
+  if (!isEmpty(appMainData?.homePageLabels)) {
     myCategories = !!appMainData?.homePageLabels && appMainData?.homePageLabels.filter((val, i) => {
       if (val.slug == 'nav_categories') {
         return val
       }
     })
   } else {
-    myCategories = !!appMainData?.categories && [{ data: appMainData?.categories || [] }]
+    myCategories = !isEmpty(appMainData?.categories) && [{ data: appMainData?.categories || [] }]
   }
 
   console.log("myCategoriesmyCategories", myCategories)
@@ -236,8 +240,16 @@ export default function TaxiHomeDashbord({
     if (!!userData?.auth_token) {
       getAllAddress();
     }
-  }, [del]);
+  }, [del ]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
+    }, [])
+  )
+  
   const getAllAddress = () => {
     actions
       .getAddress(
@@ -394,8 +406,30 @@ export default function TaxiHomeDashbord({
   }, [appMainData?.categories, isDarkMode])
 
 
-  const moveToScreen = (details) => {
+  const moveToScreen = (details, mapView) => {
+
     updateState({ fullMapShow: false });
+
+    if (!mapView) {
+      if (!!userData?.auth_token) {
+        let prefillAdress = null;
+        if (!!details) {
+          prefillAdress = {
+            longitude: Number(details?.longitude),
+            latitude: Number(details?.latitude),
+            address: details?.address,
+            task_type_id: 1,
+            pre_address: details?.address,
+            isFromSavedAddress: true
+          };
+        }
+        actions.saveSchduleTime('now');
+        goToAddress({ prefillAdress })
+      } else {
+        actions.setAppSessionData('on_login');
+      }
+      return;
+    }
     setTimeout(() => {
       if (!!userData?.auth_token) {
         let prefillAdress = null;
@@ -406,6 +440,7 @@ export default function TaxiHomeDashbord({
             address: details?.address,
             task_type_id: 1,
             pre_address: details?.address,
+            isFromSavedAddress: true
           };
         }
         actions.saveSchduleTime('now');
@@ -418,7 +453,7 @@ export default function TaxiHomeDashbord({
 
   const addressView = (image) => {
     return (
-      allSavedAddress &&
+      !!allSavedAddress &&
       allSavedAddress.map((itm, inx) => {
         return (
           <ScrollView
@@ -435,7 +470,7 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={() => moveToScreen(itm)}>
+              onPress={() => moveToScreen(itm, false)}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -513,7 +548,7 @@ export default function TaxiHomeDashbord({
             actions.saveSchduleTime('now');
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                data: appMainData?.categories[0],
+                data: !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0],
               })
               : actions.setAppSessionData('on_login');
           }}>
@@ -565,7 +600,7 @@ export default function TaxiHomeDashbord({
     scheduleDate = null,
     prefillAdress = null
   }) => {
-    let item = !!appMainData?.categories ? appMainData?.categories[0] : null
+    let item = !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0];
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
       updateState({ fullMapShow: false })
@@ -979,6 +1014,22 @@ export default function TaxiHomeDashbord({
                   </Marker.Animated>
                 );
               })}
+             {getBundleId() == appIds.pave && <Marker
+                coordinate={{
+                  latitude: !!curLatLong?.latitude
+                    ? parseFloat(curLatLong?.latitude)
+                    : !!location?.latitude
+                      ? parseFloat(location?.latitude)
+                      : 30.733315,
+                  longitude: !!curLatLong?.longitude
+                    ? parseFloat(curLatLong?.longitude)
+                    : !!location?.longitude
+                      ? parseFloat(location?.longitude)
+                      : 76.779419,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.0121,
+                }}
+              />}
             </MapView>
             <SafeAreaView>
               <TouchableOpacity
