@@ -84,7 +84,7 @@ const touchableHitSlopProp = {
 }
 
 export default function ProductDetail({ route, navigation }) {
-  console.log('my route', route.params.data);
+  console.log('my route', route.params);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
@@ -104,7 +104,7 @@ export default function ProductDetail({ route, navigation }) {
   const styles = stylesFunc({ themeColors, fontFamily });
   const commonStyles = commonStylesFunc({ fontFamily });
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
-  const { data, isProductList = false } = route.params;
+  const { data, isProductList = false,previousScreenData } = route.params;
 
 
   const [state, setState] = useState({
@@ -970,7 +970,9 @@ export default function ProductDetail({ route, navigation }) {
             data: {
               item: data,
               isLoading: true,
-              data: res?.data
+              data: res?.data,
+              vendor: previousScreenData?.vendor,
+              isVendorList: previousScreenData?.isVendorList,
             }
           });
         } else {
