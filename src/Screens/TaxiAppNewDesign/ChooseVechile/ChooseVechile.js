@@ -1610,7 +1610,7 @@ function ChooseVechile({ navigation, route }) {
                                 fontSize: textScale(14),
                                 color: colors.textColor
                             }}>
-                            {"  • "}{allListedDrivers[0]?.arrival_time} min away
+                            {"  • "}{allListedDrivers[0]?.arrival_time} away
                         </Text>
                     </View>}
 

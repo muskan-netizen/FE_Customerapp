@@ -131,24 +131,13 @@ export default function BidingDriversList(props) {
   }
 
   const onPressLeft = () => {
-    Alert.alert('', strings.DO_YOU_WANT_TO_CANCEL_BID_REQUEST, [
-      {
-        text: strings.CANCEL,
-        onPress: () => console.log('Cancel Pressed'),
-        // style: 'destructive',
-      },
-      {
-        text: strings.YES,
-        onPress: () => {    actions.clearLastBidData()
-          if (!lastBidInfo) {
-            navigation.goBack()
-          }
-          else {
-            navigation.navigate(navigationStrings.TAXIHOMESCREEN)
-          }},
-      },
-    ]);
-
+    actions.clearLastBidData()
+    if (!lastBidInfo) {
+      navigation.goBack()
+    }
+    else {
+      navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+    }
   }
 
   const renderDriverListCard = useCallback(({ item, index }) => {
