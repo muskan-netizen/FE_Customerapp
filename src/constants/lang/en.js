@@ -1187,4 +1187,5 @@ Amount`,
   PLEASE_SELECT_RENTAL_DATE_RANGE:'Please select rental date range',
   PRODUCT_IS_ADDED_BY_YOU:"Product is added by you!",
   CURRENT_PASSWORD:'Current password',
+  DO_YOU_WANT_TO_CANCEL_BID_REQUEST:"Do you want to cancel the bid request"
 };
