@@ -62,7 +62,7 @@ const HomeCategoryCard3 = ({
       onPress={onPress}
       activeOpacity={0.9}
       style={{
-        // width: (width - moderateScale(16)) / 4,
+        width: width / 4.5,
         marginVertical: moderateScale(1),
         justifyContent: 'center',
         alignItems: 'center',
