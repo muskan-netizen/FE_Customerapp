@@ -914,8 +914,8 @@ function ChooseVechile({ navigation, route }) {
         actions
             .getAllNearByDrivers(
                 {
-                    latitude: myCurrentLocationDetails?.latitude,
-                    longitude: myCurrentLocationDetails?.longitude,
+                    latitude: paramData?.location[0]?.latitude||myCurrentLocationDetails?.latitude,
+                    longitude: paramData?.location[0]?.longitude||myCurrentLocationDetails?.longitude,
                     tag: selectedCarOption?.tags,
                 },
                 {
