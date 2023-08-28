@@ -32,6 +32,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import DeviceCountry from 'react-native-device-country';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import { getItem } from '../../../utils/utils';
+import { setCountryFlag } from '../../../redux/actions/home';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -322,7 +324,7 @@ export default function DashBoardHeaderEcommerce({
           </View>
         </Animated.View>
 
-<View style={{marginTop:moderateScale(12)}}></View>
+        <View style={{ marginTop: moderateScale(12) }}></View>
         <DeliveryTypeEcommerceComp
           selectedToggle={selcetedToggle}
           themeColors={{ primary_color: colors.black }}

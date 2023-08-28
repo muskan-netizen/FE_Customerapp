@@ -40,6 +40,7 @@ import {
   ProductList,
   ProductList2,
   ProductListEcom,
+  ProductListOnDemand,
   RateOrder,
   ReferAndEarn,
   ReplaceOrder,
@@ -118,6 +119,8 @@ export default function ({ navigation }) {
         return ProductList2
       case 10:
         return ProductListEcom
+        case 11:
+          return ProductListOnDemand
       default:
         return ProductList
     }

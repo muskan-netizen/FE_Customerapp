@@ -270,7 +270,6 @@ export default ({ themeColors, fontFamily, isDarkMode }) => {
       marginTop: 4
     },
     locationTxt: {
-      paddingLeft: 5,
       lineHeight: 20,
       fontFamily: fontFamily.regular,
       color: colors.textGrey,
@@ -416,15 +415,13 @@ export default ({ themeColors, fontFamily, isDarkMode }) => {
     locationTxt: {
       fontFamily: fontFamily.medium,
       fontSize: moderateScale(12),
-      marginLeft: 2,
     },
     locationView: {
       marginLeft: 5,
     },
     locationTypeTxt: {
       fontFamily: fontFamily.bold,
-      fontSize: moderateScale(15),
-      marginLeft: 2,
+      fontSize: moderateScale(14),
       color: themeColors.primary_color,
     },
     modal: {
@@ -559,6 +556,16 @@ export default ({ themeColors, fontFamily, isDarkMode }) => {
       textAlign: 'center',
       fontFamily: fontFamily.medium,
     },
+    searchStyle: {
+      flexDirection: 'row',
+      paddingHorizontal: moderateScale(16),
+      height: moderateScaleVertical(48),
+      alignItems: 'center',
+      marginHorizontal: moderateScale(16),
+      marginTop: moderateScaleVertical(8),
+      borderRadius: moderateScale(8),
+      borderWidth: 0.5,
+    }
   });
 
   return styles;

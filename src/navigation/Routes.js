@@ -9,7 +9,16 @@ import {
   ChatScreen,
   ChatScreenForVendor,
   P2pChatRoom,
-  P2pChatScreen
+  P2pChatScreen,
+  ProductList,
+  ProductList2,
+  ProductList3,
+  ProductListEcom,
+  ProductListOnDemand,
+  ProductDetail2,
+  ProductDetail,
+  SearchProductVendorItem,
+  SearchProductVendorItem3V2
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -25,6 +34,7 @@ import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
 import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesP2p from './TabRoutesP2p';
+import { verticalAnimation } from '../utils/utils';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +44,35 @@ export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
   const { appStyle, themeColors, appData } = useSelector((state) => state?.initBoot || {});
   const businessType = appStyle?.homePageLayout;
+
+
+  const renderProductListScreen = () => {
+    switch (appStyle?.homePageLayout) {
+      case 1: return ProductList;
+      case 2: return ProductList2;
+      case 10: return ProductListEcom;
+      case 11: return ProductListOnDemand;
+      default: return ProductList3;
+    }
+  };
+
+  const renderProductDetailsScreens = () => {
+    switch (appStyle?.homePageLayout) {
+      case 2:
+        return ProductDetail2;
+      default:
+        return ProductDetail;
+    }
+  };
+
+  const checkSearchProductVendorItemLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 1:
+        return SearchProductVendorItem;
+      default:
+        return SearchProductVendorItem3V2;
+    }
+  };
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -113,6 +152,24 @@ export default function Routes() {
           component={TabRoutesVendorNewTemplate}
           options={{ gestureEnabled: false }}
         />
+
+        <Stack.Screen
+          name={navigationStrings.PRODUCT_LIST}
+          component={renderProductListScreen()}
+          options={{ gestureEnabled: false }}
+        />
+
+        <Stack.Screen
+          name={navigationStrings.PRODUCTDETAIL}
+          component={renderProductDetailsScreens()}
+        />
+
+        <Stack.Screen
+          name={navigationStrings.SEARCHPRODUCTOVENDOR}
+          component={checkSearchProductVendorItemLayout()}
+          options={verticalAnimation}
+        />
+
 
       </Stack.Navigator>
     </NavigationContainer>

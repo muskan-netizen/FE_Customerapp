@@ -17,7 +17,6 @@ import {
   Filter,
   HomeTemplate3,
   FreelancerService,
-  Home,
   HomeV2Api,
   LaundryAvailableVendors,
   Location,
@@ -59,7 +58,8 @@ import {
   Wishlist2,
   EcomOrderAgain,
   ProductPowerConumption,
-  Category
+  Category,
+  ProductListOnDemand
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -101,6 +101,7 @@ export default function () {
       case 1: return ProductList;
       case 2: return ProductList2;
       case 10: return ProductListEcom;
+      case 11: return ProductListOnDemand;
       default: return ProductList3;
     }
   };
@@ -188,10 +189,10 @@ export default function () {
         name={navigationStrings.VENDOR_DETAIL}
         component={renderVendorDetailsScreens()}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={renderProductListScreen()}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.ADD_VEHICLE_DETAILS}
@@ -216,15 +217,15 @@ export default function () {
         name={navigationStrings.CONFIRM_DETAILS_BUY}
         component={ConfirmDetailsBuy}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={renderProductDetailsScreens()}
-      />
-      <Stack.Screen
+      /> */}
+      {/* <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={checkSearchProductVendorItemLayout()}
         options={verticalAnimation}
-      />
+      /> */}
 
       <Stack.Screen name={navigationStrings.LOCATION} component={Location} />
 
@@ -238,6 +239,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PAYMENT_SUCCESS}
         component={PaymentSuccess}
+
       />
 
       <Stack.Screen

@@ -40,6 +40,7 @@ import FastImage from 'react-native-fast-image';
 import Modal from "react-native-modal";
 import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
 import imagePath from '../../constants/imagePath';
+import DashBoardHeaderEleven from './DashboardViews/DashBoardHeaderEleven';
 
 enableFreeze(true);
 
@@ -434,7 +435,7 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
-      let vendorType = appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
+      let vendorType = appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff ? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
       let apiData = {
         type: vendorType,
         ...latlongObj,
@@ -1195,23 +1196,6 @@ export default function Home({ route, navigation }) {
           </SafeAreaView>
         );
 
-      case 10:
-        return (
-          <DashBoardHeaderEcommerce
-            showToggles={false}
-            navigation={navigation}
-            location={memorizsedLocation}
-            selcetedToggle={selcetedToggle}
-            toggleData={memorizedAppData}
-            isLoading={isLoading}
-            currentLocation={currentLocation}
-            isLoadingB={isLoadingB}
-            _onVoiceListen={_onVoiceListen}
-            isVoiceRecord={isVoiceRecord}
-            _onVoiceStop={_onVoiceStop}
-            animation={animation}
-          />
-        )
 
       case 8:
         return (
@@ -1233,9 +1217,10 @@ export default function Home({ route, navigation }) {
           </SafeAreaView>
         );
 
-      default:
-        return <SafeAreaView>
-          <DashBoardHeaderFive
+
+      case 10: // ecommerce style
+        return (
+          <DashBoardHeaderEcommerce
             showToggles={false}
             navigation={navigation}
             location={memorizsedLocation}
@@ -1247,11 +1232,45 @@ export default function Home({ route, navigation }) {
             _onVoiceListen={_onVoiceListen}
             isVoiceRecord={isVoiceRecord}
             _onVoiceStop={_onVoiceStop}
-            onSeviceType={() => setIsPriceTypeModal(true)}
-            priceType={priceType}
-
+            animation={animation}
           />
-        </SafeAreaView>
+        )
+
+      case 11: // on_deman service template 
+        return (
+          <SafeAreaView style={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white }}>
+            <DashBoardHeaderEleven
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+              priceType={priceType}
+              animation={animation}
+            />
+          </SafeAreaView>
+        )
+
+      default:
+        return (
+          <SafeAreaView>
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+              priceType={priceType}
+            />
+          </SafeAreaView>
+        )
     }
   }, [
     appStyle?.homePageLayout,
@@ -1261,11 +1280,12 @@ export default function Home({ route, navigation }) {
     currentLocation,
     isLoadingB,
     isVoiceRecord,
-    priceType
+    priceType,
+    isDarkMode
   ])
 
 
-
+  console.log("appStyle?.homePageLayout", appStyle?.homePageLayout)
   const renderHomeScreen = () => {
     return (
       <>
@@ -1364,7 +1384,7 @@ export default function Home({ route, navigation }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor
       }
       isLoading={searchDataLoader}
-      isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 ? false : true}
+      isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 || appStyle?.homePageLayout == 11 ? false : true}
     >
       <>{renderHomeScreen()}</>
       <LaundryAddonModal

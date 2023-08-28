@@ -15,6 +15,7 @@ import {
   ProductList2,
   ProductList3,
   ProductListEcom,
+  ProductListOnDemand,
   SearchProductVendorItem,
   SearchProductVendorItem3V2,
   SendProduct,
@@ -52,6 +53,8 @@ export default function () {
         return ProductList3
       case 10: 
       return ProductListEcom  
+      case 10: 
+      return ProductListOnDemand  
       default:
         return ProductList
     }

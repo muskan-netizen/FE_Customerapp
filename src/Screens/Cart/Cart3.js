@@ -2807,6 +2807,7 @@ function Cart({ navigation, route }) {
           ...styles.placeOrderButtonStyle,
           marginHorizontal: moderateScale(10),
         }}
+        
 
       />
     )
@@ -4705,6 +4706,8 @@ function Cart({ navigation, route }) {
 
   // Category KYC end
   console.log(cartItems, "cartItemscartItems");
+
+  console.log("availableTimeSlotsavailableTimeSlots",cartItems)
   return (
     <WrapperContainer
       bgColor={
@@ -4828,6 +4831,7 @@ function Cart({ navigation, route }) {
                 {strings.SELECTDATEANDTIME}
               </Text>
             </View>
+
 
             {businessType == 'laundry' ? (
               <View>
@@ -5032,93 +5036,10 @@ function Cart({ navigation, route }) {
                           arrowColor: themeColors.primary_color,
                           textDayFontFamily: fontFamily.medium,
                           textMonthFontFamily: fontFamily.medium,
-                          textDayHeaderFontFamily: fontFamily.bold,
-                          // textDayFontSize: textScale(12),
-                          // textMonthFontSize: textScale(10),
-                          // textDayHeaderFontSize: textScale(10),
+                          textDayHeaderFontFamily: fontFamily.bold
                         }}
                       />
-                      {/* {
-                        getBundleId == appIds.masa ? currentDate == sheduledorderdate || currentDate == apiScheduledDate ? null : (<View>
-                          <Text
-                            style={{
-                              marginHorizontal: moderateScale(24),
-                              fontFamily: fontFamily.medium,
-                              fontSize: textScale(12),
-                              marginBottom: moderateScaleVertical(8),
-                              // height:moderateScale(20)
-                            }}>
-                            {strings.TIME_SLOT}
-                          </Text>
-                          {console.log(availableTimeSlots, "availableTimeSlots")}
-                          <FlatList
-                            horizontal
-                            data={availableTimeSlots || []}
-                            renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item?.value || ''}
-                            showsHorizontalScrollIndicator={false}
-                            ItemSeparatorComponent={() => (
-                              <View style={{ marginRight: moderateScale(12) }} />
-                            )}
-                            ListHeaderComponent={() => (
-                              <View style={{ marginLeft: moderateScale(24) }} />
-                            )}
-                            ListFooterComponent={() => (
-                              <View style={{ marginRight: moderateScale(24) }} />
-                            )}
-                            ListEmptyComponent={() => (
-                              <View>
-                                <Text
-                                  style={{
-                                    fontFamily: fontFamily.medium,
-                                    color: colors.redB,
-                                  }}>
-                                  {strings.SLOT_NOT_AVAILABAL}
-                                </Text>
-                              </View>
-                            )}
-                          />
-                        </View>) : (<View>
-                          <Text
-                            style={{
-                              marginHorizontal: moderateScale(24),
-                              fontFamily: fontFamily.medium,
-                              fontSize: textScale(12),
-                              marginBottom: moderateScaleVertical(8),
-                              // height:moderateScale(20)
-                            }}>
-                            {strings.TIME_SLOT}
-                          </Text>
-                          <FlatList
-                            horizontal
-                            data={availableTimeSlots || []}
-                            renderItem={renderTimeSlots}
-                            keyExtractor={(item) => item?.value || ''}
-                            showsHorizontalScrollIndicator={false}
-                            ItemSeparatorComponent={() => (
-                              <View style={{ marginRight: moderateScale(12) }} />
-                            )}
-                            ListHeaderComponent={() => (
-                              <View style={{ marginLeft: moderateScale(24) }} />
-                            )}
-                            ListFooterComponent={() => (
-                              <View style={{ marginRight: moderateScale(24) }} />
-                            )}
-                            ListEmptyComponent={() => (
-                              <View>
-                                <Text
-                                  style={{
-                                    fontFamily: fontFamily.medium,
-                                    color: colors.redB,
-                                  }}>
-                                  {strings.SLOT_NOT_AVAILABAL}
-                                </Text>
-                              </View>
-                            )}
-                          />
-                        </View>)
-                      } */}
-
+               
                       <View>
                         <Text
                           style={{

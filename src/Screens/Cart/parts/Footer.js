@@ -1195,6 +1195,53 @@ function Footer(props) {
         </Text>
       </View>
 
+
+      {!!localeSheduledOrderDate ? <View style={{
+        ...styles.amountPayable,
+        marginBottom: moderateScaleVertical(16),
+        marginTop: moderateScaleVertical(24),
+        marginHorizontal: moderateScale(20)
+
+      }}>
+
+        <View style={{
+          flexDirection: "row",
+          alignItems: 'center',
+        }}>
+          <Image style={{
+            tintColor: isDarkMode ? colors.white : colors.black,
+            marginRight: moderateScale(8)
+          }} source={imagePath.icTime} />
+
+          <Text
+            style={{
+              ...styles.priceItemLabel2,
+              color: isDarkMode ? colors.white : colors.black,
+              marginLeft: moderateScale(8)
+
+            }}>
+            {localeSheduledOrderDate}
+          </Text>
+        </View>
+        <TouchableOpacity
+          onPress={
+            !!cartData?.editing_order?.id
+              ? () =>
+                Alert.alert('Info', "you can't reschedule this order", [
+                  {
+                    text: strings.CANCEL,
+                    onPress: () => console.log('Cancel Pressed'),
+                  },
+                  { text: strings.OK, onPress: () => console.log('') },
+                ])
+              : _selectTime
+          }
+        >
+          <Image style={{ tintColor: isDarkMode ? colors.white : colors.black }} source={imagePath.editRoyo} />
+        </TouchableOpacity>
+
+      </View> : null}
+
       {
         cartData &&
         Number(cartData?.total_payable_amount) +
@@ -1209,6 +1256,7 @@ function Footer(props) {
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.lightDark
                 : colors.greyNew,
+                paddingHorizontal: moderateScale(8)
             }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <FastImage
@@ -1284,7 +1332,7 @@ function Footer(props) {
           businessType !== 'laundry' &&
           !cartData?.cart_error_message
         ) &&
-        !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
+        !!(scheduleType == 'schedule' && localeSheduledOrderDate && businessType !== 'home_service') && (
           <TouchableOpacity
             style={{
               marginTop: moderateScale(16),
@@ -1328,11 +1376,12 @@ function Footer(props) {
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
 
+
             {!!(
               userData?.auth_token &&
               !appData?.profile?.preferences?.off_scheduling_at_cart && !foundRecurringProduct &&
               businessType !== 'laundry' && dineInType !== 'appointment'
-            ) && (
+            ) && (!localeSheduledOrderDate && businessType == 'home_service') && (
                 <ButtonComponent
                   onPress={
                     !!cartData?.editing_order?.id
@@ -1349,11 +1398,12 @@ function Footer(props) {
                   btnText={
                     localeSheduledOrderDate
                       ? localeSheduledOrderDate
-                      : strings.SCHEDULE_ORDER
+                      : businessType == 'home_service' ? strings.SELECT_SLOT: strings.SCHEDULE_ORDER
                   }
                   borderRadius={moderateScale(13)}
                   textStyle={{
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    // textTransform: 'capitalize'
                   }}
                   containerStyle={{
                     ...styles.placeOrderButtonStyle,
@@ -1365,7 +1415,8 @@ function Footer(props) {
                   }}
                 />
               )}
-            {!(getBundleId() == appIds.wow && !appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate) && (dineInType == 'appointment' ? (cartItems?.some(item => item?.scheduled_date_time == null)) : true)) && (
+
+            {!(!appData?.profile?.preferences?.off_scheduling_at_cart && isEmpty(localeSheduledOrderDate) && (dineInType == 'appointment' ? (cartItems?.some(item => item?.scheduled_date_time == null)) : true)) && (
               <ButtonComponent
                 onPress={placeOrder}
                 btnText={strings.PLACE_ORDER}

@@ -31,6 +31,7 @@ import {
   ProductList2,
   ProductList3,
   ProductListEcom,
+  ProductListOnDemand,
   ScrollableCategory,
   Simplify,
   SkipCash,
@@ -64,7 +65,8 @@ export default function () {
     switch (appStyle?.homePageLayout) {
       case 1: return ProductList;
       case 2: return ProductList2;
-      case 10: return ProductListEcom
+      case 10: return ProductListEcom;
+      case 11: return ProductListOnDemand;
       default: return ProductList3;
     }
   };
