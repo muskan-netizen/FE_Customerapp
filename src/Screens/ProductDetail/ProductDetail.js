@@ -385,11 +385,15 @@ export default function ProductDetail({ route, navigation }) {
     console.log("arryClonearryClone", arryClone)
 
     // return;
+
+
     getProductDetailBasedOnFilter(arryClone, sku)
   }
 
 
-  function compareAndReplaceOptions(data1, data2, selectedOption) {
+  function compareAndReplaceOptions(data1, data2, selectedOption, preSelect = []) {
+
+    console.log(data1,"selectedOptionselectedOption",data2)
 
     const updatedData = data1.map((item1) => {
       const matchingItem = data2.find((item2) => item2.variant_type_id === item1.variant_type_id);
@@ -400,7 +404,7 @@ export default function ProductDetail({ route, navigation }) {
           options: matchingItem.option2.map((val, i) => {
             if (val.quantity == 0) {
               val.isSelected = false; // Set isSelected to true for the first item, false for the rest
-            } else if (selectedOption?.variant_option_id === val.variant_option_id) {
+            } else if ((selectedOption?.variant_option_id === val.variant_option_id) || preSelect.includes(val?.variant_option_id)) {
               val.isSelected = true;
               isSelectedAdded = true; // Set the flag to true after adding isSelected value
             } else {
@@ -437,9 +441,16 @@ export default function ProductDetail({ route, navigation }) {
         console.log(res, 'api hit getProductDetailBasedOnFilter res 2');
 
 
-        const modifyres = compareAndReplaceOptions(variantSetData, res?.data?.availableSets, selectedOption)
+        const modifyres = 
+        compareAndReplaceOptions(
+          variantSetData, 
+          res?.data?.availableSets, 
+          selectedOption,
+          data?.options || []
+          )
 
         setVariantSet(modifyres)
+
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -1759,7 +1770,7 @@ export default function ProductDetail({ route, navigation }) {
         }}>
         <Text style={{
           ...commonStyles.mediumFont12,
-          color: !!item?.value ? colors.white : isDarkMode ? colors.textGrey : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
+          color: !!item?.value ? colors.black : isDarkMode ? colors.textGrey : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
         }}>{item.title}</Text>
       </TouchableOpacity>
     )
