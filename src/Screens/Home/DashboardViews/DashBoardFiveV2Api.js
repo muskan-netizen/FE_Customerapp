@@ -936,8 +936,8 @@ const DashBoardFiveV2Api = ({
             />
           </View>
         </View> :
-          <View style={{ alignItems: appStyle?.homePageLayout == 9 ? 'center' : null }}>
-            {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : null}
+          <View>
+            {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
             <FlatList
               horizontal={categoryFlatViewStyle().horizontal}
               data={item?.data}

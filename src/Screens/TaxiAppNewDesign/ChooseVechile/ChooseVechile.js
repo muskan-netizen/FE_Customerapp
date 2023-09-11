@@ -914,8 +914,8 @@ function ChooseVechile({ navigation, route }) {
         actions
             .getAllNearByDrivers(
                 {
-                    latitude: myCurrentLocationDetails?.latitude,
-                    longitude: myCurrentLocationDetails?.longitude,
+                    latitude: paramData?.location[0]?.latitude||myCurrentLocationDetails?.latitude,
+                    longitude: paramData?.location[0]?.longitude||myCurrentLocationDetails?.longitude,
                     tag: selectedCarOption?.tags,
                 },
                 {
@@ -1610,7 +1610,7 @@ function ChooseVechile({ navigation, route }) {
                                 fontSize: textScale(14),
                                 color: colors.textColor
                             }}>
-                            {"  • "}{allListedDrivers[0]?.arrival_time} min away
+                            {"  • "}{allListedDrivers[0]?.arrival_time} away
                         </Text>
                     </View>}
 

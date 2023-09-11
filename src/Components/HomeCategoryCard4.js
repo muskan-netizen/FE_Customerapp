@@ -11,7 +11,8 @@ import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
+  width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
@@ -94,6 +95,7 @@ const HomeCategoryCard3 = ({
           marginVertical: moderateScale(0),
           justifyContent: 'center',
           alignItems: 'center',
+          width:width/4.2
         }}>
 
         {isSVG ? (
