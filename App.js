@@ -24,7 +24,7 @@ import actions from './src/redux/actions';
 
 import { appIds } from './src/utils/constants/DynamicAppKeys';
 import ForegroundHandler from './src/utils/ForegroundHandler';
-// import { getUrlRoutes } from './src/utils/helperFunctions';
+
 import {
   notificationListener,
   requestUserPermission,

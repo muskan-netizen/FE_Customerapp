@@ -382,7 +382,7 @@ export default function OuterScreen({ navigation }) {
               : languages?.primary_language?.sort_code
           }
           rightTxtContainerStyle={{
-            backgroundColor: themeColors.primary_color,
+            backgroundColor: isDarkMode? themeColors.primary_color:colors.grey1,
             height: moderateScale(30),
             width: moderateScale(30),
             borderRadius: moderateScale(30),
