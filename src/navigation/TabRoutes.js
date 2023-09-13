@@ -20,17 +20,16 @@ import colors from '../styles/colors';
 import { moderateScale, textScale } from '../styles/responsiveSize';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 
-import HomeStack from './HomeStack';
-import CartStack from './CartStack';
-import MyOrdersStack from './MyOrdersStack';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
+import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
+import HomeStack from './HomeStack';
+import MyOrdersStack from './MyOrdersStack';
+
 
 import navigationStrings from './navigationStrings';
 import SearchProductVendorStack from './SearchProductVendorStack';
-import CustomBottomTabBarSix from '../Components/CustomBottomTabBarSix';
-import { useDarkMode } from 'react-native-dynamic';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,11 +39,7 @@ export default function TabRoutes(props) {
 
   const { cartItemCount } = useSelector((state) => state?.cart || {});
   const { appMainData } = useSelector((state) => state?.home) || {};
-  const { appStyle, appData, redirectedFrom, themeToggle, themeColor } = useSelector((state) => state?.initBoot || {});
-
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
+  const { appStyle, appData, redirectedFrom } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
   const businessType = appStyle?.homePageLayout;
@@ -87,8 +82,6 @@ export default function TabRoutes(props) {
           return <CustomBottomTabBarFour {...props} />;
         case 5:
           return <CustomBottomTabBarFive {...props} />;
-        case 6:
-          return <CustomBottomTabBarSix {...props} />;
         default:
           return <CustomBottomTabBar {...props} />;
       }
@@ -97,23 +90,19 @@ export default function TabRoutes(props) {
 
   const getHomeIcons = (focused = false) => {
     switch (appStyle?.tabBarLayout) {
-      case 1:
-        return focused
-          ? imagePath.ic_home2NewTab
-          : imagePath.ic_home2NewTab;
-      case 4:
-        return focused
-          ? imagePath.homeActive
-          : imagePath.homeInActive;
       case 5:
         return focused
           ? imagePath.homeRedActive
           : imagePath.homeRedInActive;
-      case 6:
+      case 4:
         return focused
-          ? imagePath.homeRedActive
-          : imagePath.homeRedInActive;
+          ? imagePath.homeActive
+          : imagePath.homeInActive;
 
+      case 1:
+        return focused
+          ? imagePath.ic_home2NewTab
+          : imagePath.ic_home2NewTab;
       default:
         return focused
           ? imagePath.tabAActive
@@ -150,10 +139,6 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.ic_account2NewTab
           : imagePath.ic_account2NewTab
-      case 6:
-        return focused
-          ? imagePath.accountRedActive
-          : imagePath.accountRedInActive;
       default:
         return focused
           ? imagePath.tabEActive
@@ -228,11 +213,6 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.ic_cart2NewTab
           : imagePath.ic_cart2NewTab
-
-      case 6:
-        return focused
-          ? imagePath.cartRedActive
-          : imagePath.cartRedInActive
       default:
         return focused
           ? imagePath.cartActive
@@ -241,12 +221,7 @@ export default function TabRoutes(props) {
   }
 
   const getTintColor = (focused = false, tintColor) => {
-    switch (appStyle?.tabBarLayout) {
-      case 1: return focused ? colors.white : colors.whiteOpacity77
-      case 4: return null
-      case 6: return focused ? isDarkMode? colors.white: colors.black : isDarkMode? colors.whiteOpacity77: colors.blackOpacity70 //on_demand service template 
-      default: return appStyle?.tabBarLayout === 1 ? focused ? colors.white : colors.whiteOpacity70 : appStyle?.tabBarLayout === 4 ? null : tintColor
-    }
+    return appStyle?.tabBarLayout === 1 ? focused ? colors.white : colors.whiteOpacity77 : appStyle?.tabBarLayout === 4 ? null : tintColor
   }
 
 
@@ -310,6 +285,13 @@ export default function TabRoutes(props) {
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
         options={({ route, navigation }) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.PRODUCT_LIST,
+            navigationStrings.PRODUCTDETAIL,
+            navigationStrings.ADDADDRESS,
+            navigationStrings.CHOOSECARTYPEANDTIMETAXI,
+            navigationStrings.BRANDDETAIL
+          ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => {
             return (
@@ -432,7 +414,6 @@ export default function TabRoutes(props) {
 export function stylesData(params) {
   const { themeColors, appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-
 
   const styles = StyleSheet.create({
     cartItemCountView: {

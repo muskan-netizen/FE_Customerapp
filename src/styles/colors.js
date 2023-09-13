@@ -41,7 +41,6 @@ export default {
   textGreyB: '#8E9193',
   buyBgDark: '#282828',
   whiteOpacity77: 'rgba(255,255,255,0.77)',
-  whiteOpacity70: 'rgba(255,255,255,0.7)',
   lightGreyBg: '#e8e8e8',
   borderColorB: '#DFE7ED',
   lightGreyBgColor: '#979797',
@@ -133,9 +132,7 @@ export default {
   statusbarColor: '#F4F8FB',
   whiteOpacity85: 'rgba(255,255,255,0.85)',
   grey1: '#E5E5E5',
-  grey5: '#f5f5f5',
   boxGrey: '#EDEDED',
-  
   textColor: "#646464",
   inactiveText: "#898989",
   borderStroke: "#CFCFCF",

@@ -114,16 +114,13 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       height: moderateScale(42),
     },
     hitSlopProp: {
-      top: 25,
-      right: 25,
-      left: 25,
-      bottom: 25,
+      top: 50,
+      right: 50,
+      left: 50,
+      bottom: 10,
     },
     header2: { height: height * 0.3 },
-    imageBackgroundHdr: { 
-      width: width, 
-      height: '100%' 
-    },
+    imageBackgroundHdr: { width: width, height: '100%' },
     linearGradientHdr: {
       height: '100%',
       width: width,
@@ -302,25 +299,4 @@ export default ({ themeColors, fontFamily, isDarkMode, MyDarkTheme }) =>
       fontSize: textScale(12),
       marginRight: moderateScale(6)
     },
-    circularStyle: {
-      height: moderateScale(40),
-      width: moderateScale(40),
-      borderRadius:moderateScale(20),
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    flexView: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginHorizontal: moderateScale(16),
-      position: 'absolute',
-      top: 10
-    },
-    horizontalView: {
-      flexDirection:'row',
-      alignItems:'center',
-      justifyContent:"space-between",
-      marginTop:moderateScaleVertical(8)
-    }
   });

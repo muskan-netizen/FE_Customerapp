@@ -89,8 +89,7 @@ export {default as Account4} from './Account/Account4';
 
 export {default as ReturnOrder} from './ReturnOrder/ReturnOrder';
 export {default as Vendors3} from './Vendors/Vendors3';
-export {default as ProductList3} from './ProductList/ProductListOnDemand';
-export {default as ProductListOnDemand} from './ProductList/ProductListOnDemand';
+export {default as ProductList3} from './ProductList/ProductList3';
 export {default as SearchProductVendorItem2} from './SearchProductVendorItem/SearchProductVendorItem2';
 export {default as SearchProductVendorItem3V2} from './SearchProductVendorItem/SearchProductVendorItem3(V2_API)';
 export {default as OrderDetail2} from './OrderDetail/OrderDetail2';
