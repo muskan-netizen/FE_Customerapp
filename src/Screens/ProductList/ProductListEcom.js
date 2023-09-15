@@ -1308,6 +1308,20 @@ export default function Products({ route, navigation }) {
           },
         )
         .then(res => {
+          console.log(res,'filterres')
+          if (res?.data?.listData?.to == res?.data?.listData?.total) {
+            noMoreData = true
+          }
+          setProductListData(
+            pageNo == 1
+              ? res.data.data
+              : [...productListData, ...res.data.data],
+          );
+          updateState({
+            totalProducts: res?.data?.total,
+            lastPage: res?.data?.last_page,
+            wrapperListLoader:true
+          });
           setLoading(false);
         })
         .catch(errorMethod);
