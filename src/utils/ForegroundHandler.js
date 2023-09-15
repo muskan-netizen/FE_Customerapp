@@ -81,6 +81,9 @@ const ForegroundHandler = (props) => {
                 picture: notification?.android?.imageUrl,
               },
             },
+            ios: {
+              sound: 'notification.wav',
+              },
 
             data: { ...data },
           };
@@ -98,7 +101,9 @@ const ForegroundHandler = (props) => {
             },
             importance: AndroidImportance.HIGH
           },
-
+          ios: {
+            sound: 'notification.wav',
+            },
           data: { ...data },
         };
       }
