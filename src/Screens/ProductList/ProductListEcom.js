@@ -96,6 +96,7 @@ import ProductCardEcom from '../../Components/ProductCardEcom';
 import SortCompEcom from '../../Components/SortCompEcom';
 import staticStrings from '../../constants/staticStrings';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import WrapperContainer from '../../Components/WrapperContainer';
 enableFreeze(true);
 
 export default function Products({ route, navigation }) {
@@ -188,6 +189,7 @@ export default function Products({ route, navigation }) {
     isProductAvailable: false,
     wrapperListLoader: false,
     totalProducts: 0,
+    ecomloading:false
   });
   const {
     appData,
@@ -249,6 +251,7 @@ export default function Products({ route, navigation }) {
     isProductAvailable,
     wrapperListLoader,
     totalProducts,
+    ecomloading,
   } = state;
   const [showShimmer, setShowShimmer] = useState(true);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -1287,6 +1290,7 @@ export default function Products({ route, navigation }) {
   /**********Get all list items category filters */
   const getAllProductsCategoryFilter = useCallback(
     pageNo => {
+      updateState({ecomloading:true})
       let data = {};
       data['variants'] = selectedFilters?.current?.selectedVariants || [];
       data['options'] = selectedFilters?.current?.selectedOptions || [];
@@ -1323,8 +1327,9 @@ export default function Products({ route, navigation }) {
             wrapperListLoader:true
           });
           setLoading(false);
+          updateState({ecomloading:false})
         })
-        .catch(errorMethod);
+        .catch({errorMethod});
       // }
     },
     [productListData],
@@ -1394,6 +1399,7 @@ export default function Products({ route, navigation }) {
       selectedItemID: -1,
       btnLoader: false,
       wrapperListLoader: false,
+      ecomloading:true
     });
     noMoreData = false;
     setLoading(false);
@@ -3062,6 +3068,7 @@ export default function Products({ route, navigation }) {
   };
 
   return (
+    <WrapperContainer isSafeArea={false} isLoading={ecomloading}>
     <View
       isLoading={wrapperListLoader}
       style={{
@@ -3189,5 +3196,6 @@ export default function Products({ route, navigation }) {
         />
       ) : null}
     </View>
+    </WrapperContainer>
   );
 }
