@@ -697,21 +697,43 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const onDateChange = (val) => {
-    isRentalEndDatePicker
-      ? updateState({
-        endDateRental: val,
-      })
-      : updateState({
-        startDateRental: val,
-        endDateRental: addRemoveMinutes(
-          Number(productDetailData?.minimum_duration) * 60 +
-          Number(productDetailData?.minimum_duration_min),
-          val,
-        ),
-        rentalProductDuration:
-          Number(productDetailData?.minimum_duration * 60) +
-          Number(productDetailData?.minimum_duration_min),
-      });
+   if(isRentalEndDatePicker){
+    const minutesDifference = moment(val).diff(moment(startDateRental), 'minutes');
+    updateState({
+      endDateRental: val,
+      rentalProductDuration:Number(minutesDifference)
+    })
+   }else{
+    updateState({
+      startDateRental: val,
+      endDateRental: addRemoveMinutes(
+        Number(productDetailData?.minimum_duration) * 60 +
+        Number(productDetailData?.minimum_duration_min),
+        val,
+      ),
+      rentalProductDuration:
+        Number(productDetailData?.minimum_duration * 60) +
+        Number(productDetailData?.minimum_duration_min),
+    });
+   }
+   
+   console.log(rentalProductDuration,'rentalProductDurationrentalProductDuration')  
+    // isRentalEndDatePicker
+    //   ? 
+    //   updateState({
+    //     endDateRental: val,
+    //   })
+    //   : updateState({
+    //     startDateRental: val,
+    //     endDateRental: addRemoveMinutes(
+    //       Number(productDetailData?.minimum_duration) * 60 +
+    //       Number(productDetailData?.minimum_duration_min),
+    //       val,
+    //     ),
+    //     rentalProductDuration:
+    //       Number(productDetailData?.minimum_duration * 60) +
+    //       Number(productDetailData?.minimum_duration_min),
+    //   });
   };
 
   const addRemoveDuration = (key) => {
