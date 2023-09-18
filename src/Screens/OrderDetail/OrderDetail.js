@@ -189,6 +189,7 @@ export default function OrderDetail({ navigation, route }) {
     isLoadingA: false,
     submitedRatingToDriver: null,
     driverRatingData: null,
+    isloader:false,
   });
   const {
     showTaxFeeArea,
@@ -216,6 +217,7 @@ export default function OrderDetail({ navigation, route }) {
     isLoadingA,
     submitedRatingToDriver,
     driverRatingData,
+    isloader,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -287,7 +289,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const createRoom = async (item, type) => {
     console.log('driverStatus?.agent_location', driverStatus);
-
+  
     try {
       const apiData = {
         sub_domain: "192.168.101.88", //this is static value
@@ -307,7 +309,7 @@ export default function OrderDetail({ navigation, route }) {
       // agent_id: String(item?.order?.driver_id),
       // agent_db: clientInfo?.database_name,
 
-      updateState({ isLoading: true });
+      updateState({ isloader: true });
 
       console.log('sending create room data', apiData);
       const res = await actions.onStartChat(apiData, {
@@ -316,14 +318,14 @@ export default function OrderDetail({ navigation, route }) {
         language: languages?.primary_language?.id,
       });
       console.log("start chat res", res);
-      updateState({ isLoading: false });
+      updateState({ isLoading: false ,isloader:false});
       if (!!res?.roomData) {
         onChat(res.roomData);
       }
     } catch (error) {
       console.log("error raised in start chat api", error);
       showError(error?.message);
-      updateState({ isLoading: false });
+      updateState({ isLoading: false,isloader:false });
     }
   };
 
@@ -4430,6 +4432,7 @@ export default function OrderDetail({ navigation, route }) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
+      isLoading={isloader}
     >
       <Header
         leftIcon={
