@@ -1348,10 +1348,12 @@ export default function Home({ route, navigation }) {
   }, []);
 
   const _onPressSubscribe = () => {
-    moveToNewScreen(navigationStrings.SUBSCRIPTION)();
     updateState({
       isSubscription: false,
     });
+    setTimeout(() => {
+      moveToNewScreen(navigationStrings.SUBSCRIPTION)();
+    }, 500);
   };
 
 
