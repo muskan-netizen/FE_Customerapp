@@ -1091,8 +1091,8 @@ export default function Subscriptions2({ navigation, route }) {
       })
   }
   const payAmount = () => {
-    updateState({ isModalVisibleForPayment: false });
     if (!!selectedPaymentMethod) {
+      updateState({ isModalVisibleForPayment: false });
       if (selectedPaymentMethod?.id == 4) {
         console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id>>');
         _offineLinePayment();
@@ -1399,7 +1399,9 @@ export default function Subscriptions2({ navigation, route }) {
           updateState({ isLoadingB: false });
         });
     } else {
-      updateState({ isLoading: false });
+        alert(strings.ENTER_VALID_DETAILS)
+        updateState({ isLoading: false,isModalVisibleForPayment:true });
+        
     }
   };
 

@@ -842,6 +842,10 @@ export default function AddMoney({ navigation }) {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
       return;
     }
+    if (!selectedPaymentMethod) {
+      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+      return;
+    }
     // if (!selectedPaymentMethod) {
     //   showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
     //   return;
@@ -1178,6 +1182,10 @@ export default function AddMoney({ navigation }) {
 
         })
         .catch(errorMethod);
+    }
+
+    else if(!cardInfo){
+      showError(strings.ENTER_VALID_DETAILS)
     }
   };
 

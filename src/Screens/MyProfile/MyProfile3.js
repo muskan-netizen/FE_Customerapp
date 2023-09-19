@@ -506,7 +506,7 @@ export default function MyProfile3({route, navigation}) {
             confirmPassword: '',
           });
         })
-        .catch(err => {});
+        .catch(err => {showError(err?.error || err?.message)});
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
@@ -1275,13 +1275,13 @@ export default function MyProfile3({route, navigation}) {
           <TouchableWithoutFeedback onPress={showActionSheet}>
             <View
               style={{
-                backgroundColor: colors.backgroundGrey,
+                backgroundColor: themeColors?.primary_color,
                 alignSelf: 'center',
                 height: moderateScale(90),
                 width: moderateScale(90),
                 borderRadius: moderateScale(12),
                 borderWidth: moderateScale(5),
-                borderColor: colors.white,
+                borderColor: themeColors?.primary_color,
                 marginTop: moderateScale(20),
               }}>
               <FastImage

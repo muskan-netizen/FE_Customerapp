@@ -188,14 +188,14 @@ export default function Wishlist({ navigation, route }) {
               : imagePath.back
         }
         centerTitle={strings.WISHLIST}
-        rightIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icSearchb
-            : imagePath.search
-        }
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
+        // rightIcon={
+        //   appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+        //     ? imagePath.icSearchb
+        //     : imagePath.search
+        // }
+        // onPressRight={() =>
+        //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        // }
         onPressLeft={onPressGoBack}
       />
       <View style={{ ...commonStyles.headerTopLine }} />
