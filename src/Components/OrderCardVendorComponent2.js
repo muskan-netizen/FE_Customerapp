@@ -956,7 +956,7 @@ const OrderCardVendorComponent2 = ({
         </Modal>
       </TouchableOpacity>
 
-      {!!Number(data?.is_editable === 1) ? (
+      {!!Number(data?.is_editable === 1)&& data?.order_status?.current_status?.title!=='Delivered' ? (
         <TouchableOpacity
           style={{
             marginVertical: moderateScaleVertical(5),
