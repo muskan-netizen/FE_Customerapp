@@ -615,7 +615,7 @@ export default function Home({ route, navigation }) {
       return
     }
 
-    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
 
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
