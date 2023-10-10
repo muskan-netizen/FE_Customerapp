@@ -46,7 +46,7 @@
 		38EE44F2F317144EF24A32C6 /* libPods-available_pods-Voltaic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE64D5C98B52EF49BB13C11 /* libPods-available_pods-Voltaic.a */; };
 		45B53C7DA188F9DC718F3C71 /* libPods-available_pods-Suel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E46056EC26C1A6DA1E5B6E4 /* libPods-available_pods-Suel.a */; };
 		6988B6606DAA48455EDDF1A7 /* libPods-available_pods-GoKab.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3BBEA7450976A05AF99330 /* libPods-available_pods-GoKab.a */; };
-		713C8CE9356AC4DE3FA8B46F /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		713C8CE9356AC4DE3FA8B46F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		8424513727071D32005473D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8424513827071D32005473D3 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8424513927071D32005473D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -610,7 +610,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				713C8CE9356AC4DE3FA8B46F /* (null) in Frameworks */,
+				713C8CE9356AC4DE3FA8B46F /* BuildFile in Frameworks */,
 				8ABC6BEE077928242731DBAD /* libPods-available_pods-Emart.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -37,7 +37,6 @@ export default function OrderSuccess({ navigation, route }) {
 
   const [isLoadingChat, setLoadingChat] = useState(false)
 
-  console.log(paramData, "paramData>>>>>>paramData")
 
   const viewOrderDetail = () => {
 
@@ -52,17 +51,12 @@ export default function OrderSuccess({ navigation, route }) {
 
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        androidBackButtonHandler,
-      );
-      return () => backHandler.remove();
-    }, []),
-  );
+  useEffect(() => {
+    createRoom("onFocus")
+  }, [])
 
-  const createRoom = async () => {
+  const createRoom = async (type = '') => {
+
     if (!userData?.auth_token) {
       actions.setAppSessionData('on_login');
       return;
@@ -77,7 +71,9 @@ export default function OrderSuccess({ navigation, route }) {
         type: 'user_to_user',
         product_id: String(paramData?.product_id),
         vendor_id: String(paramData?.orderDetail?.vendors[0]?.vendor_id),
+        order_number: paramData?.orderDetail?.order_number
       };
+
 
       console.log('sending api data', apiData);
       const res = await actions.onStartChat(apiData, {
@@ -87,7 +83,7 @@ export default function OrderSuccess({ navigation, route }) {
       });
 
       if (!!res?.roomData) {
-        onChat(res.roomData);
+        type !== "onFocus" && onChat(res.roomData);
       }
       setLoadingChat(false);
     } catch (error) {
@@ -96,6 +92,18 @@ export default function OrderSuccess({ navigation, route }) {
       showError(error?.message);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+
+
 
   const onChat = (item) => {
     navigation.navigate(navigationStrings.CHAT_SCREEN, {

@@ -1,29 +1,27 @@
 //import liraries
 import {
-    CardField,
-    StripeProvider,
     createPaymentMethod,
     createToken,
     handleNextAction,
+    StripeProvider
 } from '@stripe/stripe-react-native';
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     FlatList,
     Image,
-    Keyboard,
     ScrollView,
     StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
-import Modal from 'react-native-modal';
+import { Shadow } from 'react-native-shadow-2';
 import { useSelector } from 'react-redux';
+import AddPaymentCard from '../../../Components/AddPaymentCard';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import GradientButton from '../../../Components/GradientButton';
 import OoryksHeader from '../../../Components/OoryksHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -35,27 +33,37 @@ import {
     moderateScale,
     moderateScaleVertical,
     textScale,
+    width,
 } from '../../../styles/responsiveSize';
-import { showError } from '../../../utils/helperFunctions';
 import { MyDarkTheme } from '../../../styles/theme';
-import { useDarkMode } from 'react-native-dynamic';
+import { getCardImage } from '../../../utils/commonFunction';
+import { getColorCodeWithOpactiyNumber, showError, showSuccess } from '../../../utils/helperFunctions';
 
 // create a component
 const P2pPayment = ({ navigation, route, item }) => {
     const paramData = route?.params?.data?.data;
     const bottomSheetRef = useRef(null);
 
-    const { appData, currencies, languages, appStyle, themeColors, themeToggle, themeColor } = useSelector(
-        state => state?.initBoot,
-    );
+    const {
+        appData,
+        currencies,
+        languages,
+        appStyle,
+        themeColors,
+        themeToggle,
+        themeColor,
+    } = useSelector(state => state?.initBoot);
     const { reloadData } = useSelector(state => state?.reloadData || {});
     const { selectedAddress } = useSelector(state => state?.cart || {});
     const { dineInType, location } = useSelector(state => state?.home);
+    const { cartItemCount } = useSelector((state) => state?.cart);
+
     const { preferences } = appData?.profile;
     const fontFamily = appStyle?.fontSizeData;
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const styles = stylesFunc({ fontFamily });
+
 
     const moveToNewScreen =
         (screenName, data = {}) =>
@@ -70,7 +78,13 @@ const P2pPayment = ({ navigation, route, item }) => {
     };
 
     const [paymentMethods, setPaymentMethods] = useState([]);
-    const [opensheet, setOpensheet] = useState(false);
+    const [isAddNewCardModal, setisAddNewCardModal] = useState(false);
+    const [cardHolderName, setCardHolderName] = useState('')
+    const [cardBankName, setCardBankName] = useState('')
+    const [isLoadingSaveCard, setisLoadingSaveCard] = useState(false)
+    const [cardDetails, setcardDetails] = useState({})
+    const [isLoading, setisLoading] = useState(false)
+
     const [selectedPayment, setSelectedPayment] = useState({
         code: 'cod',
         credentials: '{"cod_min_amount": "1"}',
@@ -83,11 +97,21 @@ const P2pPayment = ({ navigation, route, item }) => {
     const [cardInfo, setCardInfo] = useState(null);
     const [tokenInfo, setTokenInfo] = useState(null);
     const [isPlaceOrderLoading, setisPlaceOrderLoading] = useState(false);
+    const [savedPaymentCards, setsavedPaymentCards] = useState([]);
+    const [selectedPaymentCard, setSelectedPaymentCard] = useState({})
+    const [cvv, setCvv] = useState('')
+
+    useEffect(() => {
+        getListOfPaymentMethod();
+    }, []);
+
 
     //Error handling in screen
     const errorMethod = error => {
         console.log(error, '<==errorOccurred');
         setisPlaceOrderLoading(false);
+        setisLoading(false)
+        setisAddNewCardModal(false)
         showError(
             error?.error?.description ||
             error?.description ||
@@ -97,9 +121,6 @@ const P2pPayment = ({ navigation, route, item }) => {
         );
     };
 
-    useEffect(() => {
-        getListOfPaymentMethod();
-    }, []);
 
     //Get list of all payment method
     const getListOfPaymentMethod = () => {
@@ -110,12 +131,45 @@ const P2pPayment = ({ navigation, route, item }) => {
                 console.log(res, 'allpayments gate');
                 if (res && res?.data) {
                     setPaymentMethods(res?.data);
+                    setSelectedPayment(res?.data[0])
+                    if (res?.data[0]?.id === 4) {
+                        getAllPaymentCards()
+
+                    }
+
                 }
             })
             .catch(errorMethod);
     };
 
+    const getAllPaymentCards = () => {
+        actions
+            .getAllPaymentCards(
+                {},
+                {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                },
+            )
+            .then(res => {
+                console.log(res, '<-----res');
+                setisLoading(false)
+                setisLoadingSaveCard(false)
+                setisAddNewCardModal(false)
+                if (!isEmpty(res?.data)) {
+                    setsavedPaymentCards(res?.data);
+                    setSelectedPaymentCard(res?.data[0])
+                }
+
+
+            })
+            .catch(errorMethod);
+    };
+
+
     const _directOrderPlace = () => {
+        console.log(paramData, "paramDataparamData")
         if (isEmpty(selectedPayment)) {
             showError(strings.SELECT_PAYMENT_METHOD);
             return;
@@ -129,8 +183,13 @@ const P2pPayment = ({ navigation, route, item }) => {
         data['is_gift'] = 0;
         data['specific_instructions'] = '';
         data['amount'] = Number(paramData?.totalPayableAmount);
+        data['plateform_fee'] = Number(cartItemCount?.data?.plateform_fee);
+        data['days'] = cartItemCount?.data?.products[0]?.vendor_products[0]?.days
+        data['product_price'] = paramData?.productDetails?.price
+        data['total_rental_price'] = paramData?.productDetails?.price * paramData?.productDetails.days
         placeOrderData(data);
     };
+
 
     const placeOrderData = data => {
         setisPlaceOrderLoading(true);
@@ -139,59 +198,84 @@ const P2pPayment = ({ navigation, route, item }) => {
             latitude: !isEmpty(location) ? location?.latitude.toString() : '',
             longitude: !isEmpty(location) ? location?.longitude.toString() : '',
         };
-
         actions
             .placeOrder(data, headerData)
-            .then(res => {
-                setisPlaceOrderLoading(false);
-                console.log(res, '<===res placeOrder');
-                actions.reloadData(!reloadData);
-                actions.cartItemQty(0);
-                moveToNewScreen(navigationStrings.ORDERSUCESS, {
-                    orderDetail: res?.data,
-                    product_id: paramData?.productDetails?.product_id,
-                })();
-                // if (selectedPayment?.id === 49 || selectedPayment?.id === 50) {
-                //     // _paymentWithPlugnPayMethods(res);
-                //     return;
-                // } else {
-                //     checkPaymentOptions(res);
-                // }
+            .then(respo => {
+                console.log(respo, '<===res placeOrder');
+                if (selectedPayment?.id === 4) {
+                    let apiData = {
+                        payment_option_id: selectedPayment?.id,
+                        action: 'cart',
+                        amount: Number(cartItemCount?.data?.total_payable_amount),
+                        payment_method_id: selectedPaymentCard?.id,
+                        order_number: respo?.data?.order_number,
+                        days: cartItemCount?.data?.products[0]?.vendor_products[0]?.days
+                    }
+                    console.log(apiData, "<=== apiData")
+                    actions
+                        .stripePaymentIntent(
+                            apiData
+                            ,
+                            {
+                                code: appData?.profile?.code,
+                                currency: currencies?.primary_currency?.id,
+                                language: languages?.primary_language?.id,
+                            },
+                        ).then(async (res) => {
+                            console.log(res, "<===res getStripePaymentIntent")
+                            if (!res?.error) {
+                                const { paymentIntent, error } = await handleNextAction(
+                                    res?.payment_intent_client_secret,
+                                );
+                                console.log(paymentIntent, "paymentIntentfromNexT")
+                                if (!!paymentIntent) {
+
+                                    // actions.stripePaymentIntent(
+                                    //     {
+                                    //         ...apiData,
+                                    //         payment_intent_id: paymentIntent?.id,
+
+                                    //     },
+                                    //     {
+                                    //         code: appData?.profile?.code,
+                                    //         currency: currencies?.primary_currency?.id,
+                                    //         language: languages?.primary_language?.id,
+                                    //     },
+                                    // )
+                                    //     .then((res) => {
+                                    //         console.log(res, '<===res confirmPaymentIntentStripe');
+                                    //         showOrderSuccess(respo)
+                                    //     })
+                                    //     .catch(errorMethod);
+                                    showOrderSuccess(respo)
+
+                                }
+                                else {
+                                    errorMethod(error?.localizedMessage)
+                                }
+                            }
+                            else {
+                                errorMethod(res?.error)
+                            }
+
+                        }).catch(errorMethod)
+                }
+                else {
+                    showOrderSuccess(respo)
+                }
             })
             .catch(errorMethod);
     };
 
-    const checkPaymentOptions = res => {
-        let paymentId = res?.data?.payment_option_id;
-        let order_number = res?.data?.order_number;
-        // setSelectedPayment(selectedPayment);
-        console.log('api res success', res);
-
-        // let paymentData = {
-        //     total_payable_amount: (
-        //         Number(cartData?.total_payable_amount) +
-        //         (selectedTipAmount != null && selectedTipAmount != ''
-        //             ? Number(selectedTipAmount)
-        //             : 0)
-        //     ).toFixed(appData?.profile?.preferences?.digit_after_decimal),
-        //     payment_option_id: selectedPayment?.id,
-        //     orderDetail: res.data,
-        //     redirectFrom: 'cart',
-        //     selectedPayment: selectedPayment,
-        // };
-        // if (!!paymentId &&
-        //     !!(Number(cartData?.total_payable_amount) + Number(selectedTipAmount) === 0)) {
-        //     moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data, })();
-        //     return;
-        // }
-
-        console.log('paymentIdpaymentIdpaymentIdpaymentId', paymentId);
-        switch (paymentId) {
-            case 4:
-                _offineLinePayment(order_number);
-                return;
-        }
-    };
+    const showOrderSuccess = (res) => {
+        setisPlaceOrderLoading(false);
+        actions.reloadData(!reloadData);
+        actions.cartItemQty(0);
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: res?.data,
+            product_id: paramData?.productDetails?.product_id,
+        })();
+    }
 
     //Offline payments
     const _offineLinePayment = async order_number => {
@@ -217,7 +301,6 @@ const P2pPayment = ({ navigation, route, item }) => {
             order_number: order_number,
             card: cardInfo,
         };
-        console.log('_paymentWithStripe => data', data);
         actions
             .getStripePaymentIntent(data, headers)
             .then(async res => {
@@ -247,20 +330,6 @@ const P2pPayment = ({ navigation, route, item }) => {
                                         setCartItems([]);
                                         setCartData({});
                                         actions.reloadData(!reloadData);
-                                        // setSelectedPayment({
-                                        //     id: 1,
-                                        //     off_site: 0,
-                                        //     title: 'Cash On Delivery',
-                                        //     title_lng: strings.CASH_ON_DELIVERY,
-                                        // });
-                                        // setPickupDriverComment(null);
-                                        // setDropOffDriverComment(null);
-                                        // setVendorComment(null);
-                                        // setLocalPickupDate(null);
-                                        // setLocaleDropOffDate(null);
-                                        // setModalType(null);
-                                        // setSheduledpickupdate(null);
-
                                         moveToNewScreen(navigationStrings.ORDERSUCESS, {
                                             orderDetail: res.data,
                                         })();
@@ -287,7 +356,6 @@ const P2pPayment = ({ navigation, route, item }) => {
     };
 
     const _onChangeStripeData = cardDetails => {
-        console.log('_onChangeStripeData_onChangeStripeData', cardDetails);
         if (cardDetails?.complete) {
             selectPaymentOption(cardDetails);
         } else {
@@ -314,12 +382,10 @@ const P2pPayment = ({ navigation, route, item }) => {
                 });
         } else {
             alert(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
-            //   showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
     };
 
     const _createPaymentMethod = async (cardInfo, res2) => {
-        console.log(cardInfo, '_createPaymentMethod>>>ardInfo');
         if (res2) {
             await createPaymentMethod({
                 token: res2,
@@ -357,62 +423,52 @@ const P2pPayment = ({ navigation, route, item }) => {
         }
     };
 
-    const mainView = () => {
-        return (
-            <>
-                <ScrollView
-                    style={{
-                        marginHorizontal: moderateScaleVertical(16),
-                        // marginTop: moderateScaleVertical(10),
-                    }}>
-                    <View>
-                        <CardField
-                            postalCodeEnabled={false}
-                            placeholder={{
-                                number: '4242 4242 4242 4242',
-                            }}
-                            cardStyle={{
-                                backgroundColor: colors.white,
-                                textColor: colors.black,
-                            }}
-                            style={{
-                                width: '100%',
-                                height: 50,
-                                marginVertical: 10,
-                            }}
-                            onCardChange={cardDetails => {
-                                _onChangeStripeData(cardDetails);
-                            }}
-                            onFocus={focusedField => {
-                                console.log('focusField', focusedField);
-                            }}
-                            onBlur={() => {
-                                Keyboard.dismiss();
-                            }}
-                        />
-                    </View>
-                </ScrollView>
+    const onCardChange = (cardDetails) => {
+        if (cardDetails?.validCVC === "Valid") {
+            setcardDetails(cardDetails)
+        }
+    }
 
-                {/* <View
-                    style={{
-                        marginHorizontal: moderateScaleVertical(20),
-                        marginBottom:
-                            keyboardHeight == 0
-                                ? keyboardHeight
-                                : moderateScale(keyboardHeight - 80),
-                    }}>
-                    <GradientButton
-                        onPress={selectPaymentOption}
-                        marginTop={moderateScaleVertical(10)}
-                        marginBottom={height / 9}
-                        btnText={strings.SELECT}
-                        indicator={btnLoader}
-                        indicatorColor={colors.white}
-                    />
-                </View> */}
-            </>
-        );
-    };
+
+    const onSaveCardDetails = async () => {
+        if (cardHolderName.replace(/\s/g, "").length < 3) {
+            alert("Please enter valid card holder name")
+            return
+        }
+        if (cardBankName.replace(/\s/g, "").length < 3) {
+            alert("Please enter valid bank name")
+            return
+        }
+        if (isEmpty(cardDetails)) {
+            alert("Please enter valid card details")
+            return
+        }
+        setisLoadingSaveCard(true)
+        try {
+            let cardTokenDetails = await createToken({ ...cardDetails, type: "Card" })
+            if (!isEmpty(cardTokenDetails?.token)) {
+                actions.addPaymentCard({
+                    token: cardTokenDetails?.token?.id,
+                    bank_name: cardBankName,
+                    card_holder_name: cardHolderName,
+                }, {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                }).then((res) => {
+                    console.log(res, "<===addPaymentCard")
+                    getAllPaymentCards()
+                    showSuccess(res?.message)
+                }).catch(errorMethod)
+
+            }
+            else throw "Invalid card details"
+
+        } catch (error) {
+            setisLoadingSaveCard(false)
+            alert(JSON.stringify(error))
+        }
+    }
 
 
 
@@ -425,7 +481,13 @@ const P2pPayment = ({ navigation, route, item }) => {
                         justifyContent: 'flex-end',
                     }}>
                     <ButtonWithLoader
-                        onPress={() => setSelectedPayment(item)}
+                        onPress={() => {
+                            setSelectedPayment(item);
+                            if (item?.id === 4) {
+                                setisLoading(true)
+                                getAllPaymentCards();
+                            }
+                        }}
                         btnText={item?.title}
                         btnTextStyle={{
                             color:
@@ -464,20 +526,115 @@ const P2pPayment = ({ navigation, route, item }) => {
         [paymentMethods, selectedPayment],
     );
 
+    const renderSavedCards = useCallback(
+        ({ item, index }) => {
+            return (
+                <View style={{
+                    paddingHorizontal: moderateScale(10),
+                    borderBottomWidth: 1,
+                    borderColor: colors.borderColorB,
 
+
+                }}>
+                    <TouchableOpacity
+                        onPress={() => setSelectedPaymentCard(item)}
+                        style={{
+                            justifyContent: "space-between",
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingBottom: moderateScaleVertical(8)
+
+                        }}>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center"
+                        }}>
+                            <View style={{
+                                borderWidth: 1,
+                                borderColor: colors.borderColorB,
+                                borderRadius: moderateScale(5),
+                                paddingHorizontal: 2
+                            }}>
+                                <FastImage
+                                    source={getCardImage(item?.brand)}
+                                    resizeMode="contain"
+                                    style={{
+                                        width: moderateScale(35),
+                                        height: moderateScaleVertical(35),
+
+
+                                    }}
+                                />
+                            </View>
+
+                            <View>
+                                <Text
+                                    style={{
+                                        fontFamily: fontFamily?.medium,
+                                        fontSize: textScale(14),
+                                        marginLeft: moderateScale(12),
+                                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                                    }}
+                                    numberOfLines={1}>
+                                    {item.bank_name}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontFamily: fontFamily?.medium,
+                                        fontSize: textScale(14),
+                                        marginLeft: moderateScale(12),
+                                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                                    }}
+                                    numberOfLines={1}>
+                                    xxxx xxxx xxxx {item.last4}
+                                </Text>
+                            </View>
+                        </View>
+
+                        <Image source={selectedPaymentCard?.id === item?.id ? imagePath.radioNewActive : imagePath.radioNewInActive} style={{
+                            height: moderateScale(16), width: moderateScale(16),
+                            tintColor: themeColors?.primary_color
+                        }} />
+
+
+                    </TouchableOpacity>
+
+                    {/* {selectedPaymentCard?.id === item?.id && <BorderTextInput
+                        keyboardType="numeric"
+                        maxLength={4}
+                        secureTextEntry
+                        onChangeText={(text)=>setCvv(text)}
+                        containerStyle={{
+                            height: moderateScaleVertical(40),
+                            width: moderateScale(60),
+                            borderRadius: 6
+                        }}
+                        placeholder='CVV'
+
+                    />} */}
+                </View>
+            );
+        },
+        [savedPaymentCards, selectedPaymentCard, isDarkMode],
+    );
 
     return (
-        <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
+        <WrapperContainer
+            bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+            isLoading={isLoading}>
             <OoryksHeader leftTitle={strings.PAYMENT} />
-
-            <View style={{ flex: 0.75 }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    flexGrow: 1,
+                }}>
                 <View
                     style={{
                         borderRadius: 12,
                         marginTop: moderateScaleVertical(8),
                         marginHorizontal: moderateScale(16),
                     }}>
-                    <View
+                    {/*    <View
                         style={{
                             padding: moderateScale(7),
                             flexDirection: 'row',
@@ -493,9 +650,13 @@ const P2pPayment = ({ navigation, route, item }) => {
                                     height: moderateScaleVertical(69),
                                 }}
                             />
-                            <View style={{ marginLeft: moderateScale(9) }}>
+                           <View style={{ marginLeft: moderateScale(9) }}>
                                 <Text
-                                    style={{ fontSize: textScale(14), fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                                    style={{
+                                        fontSize: textScale(14),
+                                        fontFamily: fontFamily?.medium,
+                                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                                    }}
                                     numberOfLines={1}>
                                     Home
                                 </Text>
@@ -509,31 +670,28 @@ const P2pPayment = ({ navigation, route, item }) => {
                                         fontWeight: '400',
                                     }}
                                     numberOfLines={2}>
-                                    {paramData?.productDetails?.product?.address}
+                                    {location?.address}
                                 </Text>
                             </View>
                         </View>
-                        {/* <TouchableOpacity>
-                            <Image
-                                source={imagePath.icEdit1}
-                                style={{ tintColor: colors.black }}
-                            />
-                        </TouchableOpacity> */}
                     </View>
+                    */}
                     <Text
                         style={{
                             color: colors.greyD,
                             fontSize: textScale(12),
                             fontFamily: fontFamily?.medium,
-                            marginTop: moderateScaleVertical(37),
+                            marginTop: moderateScaleVertical(12),
                         }}>
                         {strings.PAYMENT.toUpperCase()}
                     </Text>
                 </View>
 
+
                 <View
                     style={{
                         marginVertical: moderateScaleVertical(24),
+
                     }}>
                     <FlatList
                         data={paymentMethods}
@@ -542,6 +700,7 @@ const P2pPayment = ({ navigation, route, item }) => {
                         renderItem={renderPaymentMethods}
                         ListHeaderComponent={() => (
                             <View
+
                                 style={{
                                     width: moderateScale(20),
                                 }}
@@ -560,96 +719,141 @@ const P2pPayment = ({ navigation, route, item }) => {
                     />
                 </View>
 
-                <TouchableOpacity style={styles.cardView}>
-                    <Image source={imagePath.ic_master} />
-                    <Text style={styles.cardText}>XXXX XXXX XXXX 1234</Text>
-                </TouchableOpacity>
-                <Text
-                    style={{
-                        textAlign: 'center',
-                        color: colors.greyLight,
-                        marginVertical: moderateScale(10),
-                    }}>
-                    -- OR --
-                </Text>
                 {selectedPayment?.id == 4 && (
-                    <StripeProvider
-                        publishableKey={preferences?.stripe_publishable_key}
-                        merchantIdentifier="merchant.identifier">
-                        {mainView()}
-                    </StripeProvider>
-                )}
-                <TouchableOpacity
-                    style={{ ...styles.cardView, marginTop: moderateScaleVertical(14) }}
-                    onPress={() => setOpensheet(true)}>
-                    <Image source={imagePath.icAdd} />
-                    <Text style={styles.cardText}>{strings.ADD_NEW_CARD}</Text>
-                </TouchableOpacity>
-            </View>
+                    <View style={{
+                        paddingHorizontal: moderateScale(12)
+                    }}>
+                        <Shadow
+                            distance={2}
+                            style={{
+                                width: "100%",
+                                paddingVertical: moderateScaleVertical(20),
+                                borderRadius: moderateScale(8),
 
-            <View style={{ flex: 0.2, justifyContent: 'flex-end' }}>
-                <ButtonWithLoader
-                    isLoading={isPlaceOrderLoading}
-                    btnText={strings.PAYNOW}
-                    onPress={_directOrderPlace}
-                    btnStyle={{
-                        marginHorizontal: moderateScale(20),
-                        backgroundColor: isDarkMode ? themeColors?.primary_color : colors.black,
-                        borderWidth: 0,
-                        borderRadius: moderateScale(8),
-                    }}
-                    btnTextStyle={{}}
-                />
-            </View>
+                                backgroundColor: isDarkMode
+                                    ? MyDarkTheme?.colors?.lightDark
+                                    : colors.white,
 
-            <Modal
-                isVisible={opensheet}
-                onBackdropPress={() => setOpensheet(false)}
-                style={{
-                    margin: 0,
-                    justifyContent: 'flex-end',
-                }}>
-                <View style={styles.mainView}>
-                    <Text style={styles.numStyle}>{strings.ADD_NEW_CARD}</Text>
-                    <Text style={styles.labelStyle}>{strings.CARD_NUMBER}</Text>
 
-                    <TextInput
-                        style={{
-                            ...styles.inputStyle,
-                            marginBottom: moderateScaleVertical(24),
-                        }}
-                    />
-                    <Text style={styles.labelStyle}>{strings.CARD_HOLDER_NAME}</Text>
-
-                    <TextInput style={styles.inputStyle} />
-
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginVertical: moderateScaleVertical(24),
-                        }}>
-                        <View style={{ flex: 0.48 }}>
-                            <Text style={styles.labelStyle}>{strings.EXPIRY}</Text>
-                            <TextInput style={{ ...styles.inputStyle, width: '100%' }} />
-                        </View>
-                        <View style={{ flex: 0.48 }}>
-                            <Text style={styles.labelStyle}>{strings.CVV}</Text>
-                            <TextInput style={{ ...styles.inputStyle, width: '100%' }} />
-                        </View>
+                            }}>
+                            <StripeProvider
+                                publishableKey={preferences?.stripe_publishable_key}
+                                merchantIdentifier="merchant.identifier">
+                                {/*      <View
+                                style={{
+                                    paddingHorizontal: moderateScale(16),
+                                    marginBottom: moderateScale(12),
+                                }}>
+                                <Text
+                                    style={{
+                                        fontFamily: fontFamily?.medium,
+                                        fontSize: textScale(14),
+                                    }}>
+                                    {'Card Details'}
+                                </Text>
+                                <CardField
+                                    postalCodeEnabled={false}
+                                    placeholder={{
+                                        number: '4242 4242 4242 4242',
+                                    }}
+                                    cardStyle={{
+                                        backgroundColor: colors.white,
+                                        textColor: colors.black,
+                                        borderWidth: 1,
+                                        borderRadius: moderateScale(4),
+                                        borderColor: colors.profileInputborder,
+                                    }}
+                                    style={{
+                                        width: '100%',
+                                        height: 50,
+                                        marginTop: 10,
+                                    }}
+                                    onCardChange={cardDetails => {
+                                        _onChangeStripeData(cardDetails);
+                                    }}
+                                    onFocus={focusedField => {
+                                        console.log('focusField', focusedField);
+                                    }}
+                                    onBlur={() => {
+                                        Keyboard.dismiss();
+                                    }}
+                                />
+                            </View>
+                        </StripeProvider>
+                        <Text
+                            style={{
+                                fontFamily: fontFamily?.bold,
+                                fontSize: textScale(12),
+                                color: colors.textGreyB,
+                                textAlign: 'center',
+                            }}>
+                            -- or --
+                        </Text> */}
+                                <View
+                                    style={{
+                                        paddingHorizontal: moderateScale(16),
+                                        // marginTop: moderateScaleVertical(12),
+                                    }}>
+                                    <FlatList
+                                        data={savedPaymentCards}
+                                        renderItem={renderSavedCards}
+                                        ItemSeparatorComponent={() => (
+                                            <View
+                                                style={{
+                                                    height: moderateScaleVertical(12),
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                </View>
+                            </StripeProvider>
+                            <TouchableOpacity
+                                style={{
+                                    ...styles.cardView,
+                                    marginTop: moderateScaleVertical(24),
+                                    marginBottom: moderateScaleVertical(28)
+                                }}
+                                onPress={() => setisAddNewCardModal(true)}>
+                                <Image source={imagePath.icAdd} />
+                                <Text style={styles.cardText}>{strings.ADD_NEW_CARD}</Text>
+                            </TouchableOpacity>
+                        </Shadow>
                     </View>
-                    <GradientButton
-                        onPress={() => setOpensheet(false)}
-                        btnText={strings.SAVE}
-                        btnStyle={{ marginTop: 0 }}
-                    />
-                    <View
-                        style={{
-                            height: moderateScaleVertical(10),
-                        }}
-                    />
-                </View>
-            </Modal>
+
+                )}
+            </ScrollView>
+
+
+            <ButtonWithLoader
+                isLoading={isPlaceOrderLoading}
+                btnText={strings.PAYNOW}
+                disabled={selectedPayment?.id === 4 && isEmpty(selectedPaymentCard)}
+                onPress={_directOrderPlace}
+                btnStyle={{
+                    marginHorizontal: moderateScale(20),
+                    backgroundColor: selectedPayment?.id === 4 && isEmpty(selectedPaymentCard) ? getColorCodeWithOpactiyNumber(
+                        themeColors?.primary_color.substr(1),
+                        20,
+                    ) : themeColors?.primary_color
+                    ,
+                    borderWidth: 0,
+                    borderRadius: moderateScale(8),
+                    position: 'absolute',
+                    bottom: 20,
+                    width: width - moderateScale(40),
+                }}
+                btnTextStyle={{}}
+            />
+            <AddPaymentCard isVisible={isAddNewCardModal}
+                onBackdropPress={() => setisAddNewCardModal(false)}
+                cardHolderName={cardHolderName}
+                cardBankName={cardBankName}
+                onSave={onSaveCardDetails}
+                isLoading={isLoadingSaveCard}
+                onCardChange={onCardChange}
+                onChangeBankName={(text) => setCardBankName(text)}
+                onChangeAccountHolderName={(text) => setCardHolderName(text)}
+            />
         </WrapperContainer>
     );
 };

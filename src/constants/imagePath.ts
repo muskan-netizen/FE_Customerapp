@@ -697,4 +697,15 @@ export default {
   icZip: require('../assets/images/Ooryks/zip.png'),
   icXls: require('../assets/images/Ooryks/xls.png'),
   icPpt: require('../assets/images/Ooryks/ppt.png'),
+  circleplus: require('../assets/images/Ooryks/circleplus.png'),
+
+  icJcbCard: require('../assets/images/Ooryks/ic_jcb_card.png'),
+  icMasterCard: require('../assets/images/Ooryks/ic_master_card.png'),
+  icVisaCard: require('../assets/images/Ooryks/ic_visa_card.png'),
+  icUnknownCard: require('../assets/images/Ooryks/ic_unknown_card.png'),
+  icUnionPay: require('../assets/images/Ooryks/ic_union_pay.png'),
+  icDinersClubCard: require('../assets/images/Ooryks/ic_diners_club_card.png'),
+  icAmericanExpressCard: require('../assets/images/Ooryks/ic_american_exp.png'),
+  icDiscoverCard: require('../assets/images/Ooryks/ic_discover.png'),
+  icCardBg: require('../assets/images/Ooryks/card_bg.png'),
 };

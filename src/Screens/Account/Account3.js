@@ -443,9 +443,8 @@ export default function Account3({ navigation }) {
             }
           })}
           {!!userData?.auth_token &&
-            dineInType == 'p2p' &&
-            !!appMainData?.is_admin &&
-            (businessType == 4 ? null : (
+
+            (!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -544,6 +543,22 @@ export default function Account3({ navigation }) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
+          {!!userData?.auth_token && dineInType == 'p2p' && <ListItemHorizontal
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            onPress={moveToNewScreen(navigationStrings.SAVED_PAYMENT_CARDS, {
+              isBack: true,
+            })}
+            iconLeft={imagePath.card}
+            centerHeading={"Saved Cards"}
+            containerStyle={styles.containerStyle2}
+
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+          />
+          }
           {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal

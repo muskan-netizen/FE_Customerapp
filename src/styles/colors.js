@@ -156,5 +156,6 @@ export default {
   textGreyO: "#CACACA",
   textGreyP: "#4D4D4D",
   textGreyQ: "#808080",
-  grey3: "#F4F4F4"
+  grey3: "#F4F4F4",
+  orangeooryks: "#FF7F00"
 };

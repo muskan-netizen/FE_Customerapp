@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';  //Live
-// export const API_BASE_URL='http://192.168.102.171:8000/api/v1'
+export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
+// export const API_BASE_URL = 'http://192.168.101.161:8002/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
 // export const API_BASE_URL = 'https://solarprimex.netsolutionindia.com/api/v1';
@@ -823,3 +823,41 @@ export const UPLOAD_FILE_S3 = getApiUrl(
 );
 export const POWER_CONSUMPTION_CALCULATOR = getApiUrl('/power-consumption-calculator')
 export const GET_APPLIANCES = getApiUrl('/appliances')
+
+
+
+
+export const GET_ALL_NOTIFICATIONS = getApiUrl(
+  '/notification-list',
+);
+
+export const DELETE_NOTIFICATIONS = getApiUrl(
+  '/delete-notification',
+);
+
+export const ADD_PAYMENT_CARD = getApiUrl(
+  '/add-card',
+);
+
+
+export const GET_ALL_PAYMENT_CARDS = getApiUrl(
+  '/get-card-details',
+);
+
+export const DELETE_PAYMENT_CARD = getApiUrl(
+  '/delete-card',
+);
+
+export const STRIPE_PAYMENT_INTENT = getApiUrl('/payment-intent');
+
+
+export const VENDOR_DELETE_PRODUCT = getApiUrl('/mystore/product/deleteProductWithAttributes');
+export const CONNECT_TO_STRIP = getApiUrl('/connecttowallet');
+
+export const UPDATE_EMIRATES_INFO = getApiUrl('/update_emirates');
+
+export const SEND_ADMIN_NOTIFICATION = getApiUrl('/sendAdminNotification');
+
+export const SAVE_PAYOUT_DETAILS = getApiUrl('/user/saveVenderBankDetails');
+
+export const USE_WALLET_AMOUNT = getApiUrl('/cart/updateCartWalletAmount');

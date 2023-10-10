@@ -73,6 +73,7 @@ const CustomBottomTabBar = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 height: moderateScaleVertical(50),
+                paddingTop: moderateScaleVertical(6)
               }}>
               {options.tabBarIcon({ focused: isFocused })}
               <Text

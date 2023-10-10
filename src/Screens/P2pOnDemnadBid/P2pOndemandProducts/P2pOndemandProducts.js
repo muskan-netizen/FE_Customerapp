@@ -8,7 +8,6 @@ import {
     View
 } from 'react-native';
 //custom components
-import SearchBar2 from '../../../Components/NewComponents/SearchBar2';
 import TopHeader from '../../../Components/NewComponents/TopHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 //styling
@@ -33,24 +32,21 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import Header from '../../../Components/Header';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import {
-    getColorCodeWithOpactiyNumber,
     getImageUrl,
-    showError,
+    showError
 } from '../../../utils/helperFunctions';
 
-import { MultiSelect, Dropdown } from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
-import GradientView from '../../../Components/GradientView';
+import FilterComp from '../../../Components/FilterComp';
+import OoryksHeader from '../../../Components/OoryksHeader';
 import {
     checkValueExistInAry,
     tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
-import OoryksHeader from '../../../Components/OoryksHeader';
-import FilterComp from '../../../Components/FilterComp';
 
 const P2pOndemandProducts = ({ route, navigation }) => {
     const flatlistRef = useRef(null);
@@ -91,8 +87,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const [filterType, setfilterType] = useState('filters')
 
     const {
-        selectedSortFilter, minimumPrice, maximumPrice,
-        isShowFilter
+        selectedSortFilter, minimumPrice, maximumPrice, isShowFilter
     } = state;
 
     const updateState = data => {
@@ -310,6 +305,9 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         setIsAttributeFilterModal(false);
         setIsLoading(true);
         getP2pProductsByCategoryId();
+        updateState({
+            isShowFilter: false
+        })
     };
 
     const onClearAttributeFilter = () => {
@@ -382,6 +380,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                 padding: 11,
                             }}>
                             <FastImage
+
                                 source={{
                                     uri: getImage('240/240'), cache: FastImage.cacheControl.immutable,
                                     priority: FastImage.priority.high,
@@ -396,8 +395,8 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             <View
                                 style={{
                                     marginLeft: moderateScale(20),
-                                    width: moderateScale(width/2),
-                                    justifyContent: "center",
+                                    width: moderateScale(199),
+                                    justifyContent: "center"
                                 }}>
                                 <Text style={styles.txt1}>
                                     {item?.translation[0]?.title || item?.title || item?.sku}
@@ -451,11 +450,58 @@ const P2pOndemandProducts = ({ route, navigation }) => {
 
                                     </Text>
                                 </Text>
-
+                                {/* <Text style={styles.txt3}>
+                      {item?.translation[0]?.title || item?.title || item?.sku}
+                    </Text> */}
                             </View>
                         </View>
-
+                        {/* <FastImage
+                  style={styles.imgBack}
+                  source={{uri: getImage('700/700')}}
+                /> */}
+                        {/* <FastImage
+                  source={
+                    !!item?.vendor?.logo?.image_fit
+                      ? {
+                          uri: getImageUrl(
+                            item?.vendor?.logo?.image_fit,
+                            item?.vendor?.logo?.image_path,
+                            '400/400',
+                          ),
+                        }
+                      : imagePath.icProfile
+                  }
+                  style={{
+                    height: moderateScale(50),
+                    width: moderateScale(50),
+                    borderRadius: moderateScale(25),
+                    position: 'absolute',
+                    top: moderateScaleVertical(15),
+                    left: moderateScale(15),
+                  }}
+                /> */}
                     </TouchableOpacity>
+
+                    {/* <GradientView
+                title={tokenConverterPlusCurrencyNumberFormater(
+                  Number(item?.variant[0]?.price),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                )}
+                colorsArray={[
+                  getColorCodeWithOpactiyNumber(
+                    themeColors?.primary_color.substr(1),
+                    30,
+                  ),
+                  getColorCodeWithOpactiyNumber(
+                    themeColors?.primary_color.substr(1),
+                    60,
+                  ),
+                  themeColors?.primary_color,
+                ]}
+                btnStyle={{ marginTop: moderateScale(4) }}
+              /> */}
                 </View>
             );
         },
@@ -598,7 +644,12 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         justifyContent: "space-between"
     }}>
         <TouchableOpacity
-            onPress={() => setfilterType("filters")}
+            onPress={() => {
+                setfilterType("filters")
+                updateState({
+                    isShowFilter: false
+                })
+            }}
             style={{
                 ...styles.filterBtns,
                 borderBottomWidth: filterType == "filters" ? 2 : 0,
@@ -649,14 +700,14 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                 onPressRight={onFilterPress}
                 isRight
                 rightIcon={imagePath.filter}
-
-
             />
 
             <View
                 style={{
                     flex: 1,
                     paddingHorizontal: moderateScale(15),
+                    marginTop: moderateScaleVertical(8),
+
                 }}>
                 <FlatList
                     ref={flatlistRef}
@@ -667,7 +718,6 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                     renderItem={renderP2pProducts}
                     keyExtractor={(itm, indx) => String(indx)}
                     showsVerticalScrollIndicator={false}
-                    initialNumToRender={7}
                     ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                     ListEmptyComponent={() =>
                         !isLoading && (
@@ -692,7 +742,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                             </View>
                         )
                     }
-                    onEndReached={onEndReachedDelayed}
+                    onEndReached={onEndReached}
                     onEndReachedThreshold={0.5}
                     ListFooterComponent={() => (
                         <View>
@@ -700,7 +750,6 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                 <Text
                                     style={{
                                         textAlign: 'center',
-                                        marginVertical: moderateScaleVertical(10)
                                     }}>
                                     Loading ...{' '}
                                 </Text>
@@ -725,79 +774,87 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                 visible={isAttributeFilterModal}
 
                 onRequestClose={() => setIsAttributeFilterModal(false)}>
-                <View
-                    style={{
-                        flex: 1,
-                        backgroundColor: colors.white,
-                        paddingHorizontal: moderateScale(15),
-                        // borderTopLeftRadius: moderateScale(12),
-                        // borderTopRightRadius: moderateScale(12),
-                    }}>
-                    <TopHeader
-                        onPressLeft={() => setIsAttributeFilterModal(false)}
-                        onPressRight={onResetAllFilter}
-                    />
-                    <KeyboardAwareScrollView
-                        showsVerticalScrollIndicator={false}
-                        style={{ flexGrow: 1 }}>
-                        <ListHeaderComponent />
-                        {
-                            filterType == "filters" && <View>
-                                <FlatList
-                                    data={attributeInfo}
-                                    extraData={attributeInfo}
-                                    keyboardShouldPersistTaps={'handled'}
-                                    scrollEnabled={false}
-                                    ItemSeparatorComponent={() => (
-                                        <View
-                                            style={{
-                                                height: moderateScaleVertical(18),
+                <WrapperContainer>
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: colors.white,
+                            paddingHorizontal: moderateScale(15),
+                            // borderTopLeftRadius: moderateScale(12),
+                            // borderTopRightRadius: moderateScale(12),
+                        }}>
+                        <TopHeader
+                            onPressLeft={() => {
+                                setIsAttributeFilterModal(false)
+                                updateState({
+                                    isShowFilter: false
+                                })
+                            }}
+                            onPressRight={onResetAllFilter}
+                        />
+                        <KeyboardAwareScrollView
+                            showsVerticalScrollIndicator={false}
+                            style={{ flexGrow: 1 }}>
+                            <ListHeaderComponent />
+                            {
+                                filterType == "filters" && <View>
+                                    <FlatList
+                                        data={attributeInfo}
+                                        extraData={attributeInfo}
+                                        keyboardShouldPersistTaps={'handled'}
+                                        scrollEnabled={false}
+                                        ItemSeparatorComponent={() => (
+                                            <View
+                                                style={{
+                                                    height: moderateScaleVertical(18),
+                                                }}
+                                            />
+                                        )}
+                                        ListHeaderComponent={() => <View style={{
+                                            height: moderateScaleVertical(20)
+                                        }} />}
+                                        renderItem={renderAttributeOptions}
+                                        ListEmptyComponent={() => <View><Text style={{
+                                            fontFamily: fontFamily?.regular,
+                                            fontSize: textScale(14),
+                                            textAlign: "center",
+                                            marginTop: moderateScaleVertical(16)
+                                        }}>Filters not available!</Text></View>}
+                                    // ListFooterComponent={listFooterComponent}
+                                    />
+                                    {!isEmpty(attributeInfo) && <View style={styles.btnStyle}>
+                                        <ButtonWithLoader
+                                            btnText="Apply Filter"
+                                            onPress={onApplyAttributeFilter}
+                                            btnStyle={{
+                                                flex: 0.48,
+                                                backgroundColor: themeColors.primary_color,
+                                                borderWidth: 0,
+                                            }}
+                                            btnTextStyle={{
+                                                textTransform: 'none',
                                             }}
                                         />
-                                    )}
-                                    ListHeaderComponent={() => <View style={{
-                                        height: moderateScaleVertical(20)
-                                    }} />}
-                                    renderItem={renderAttributeOptions}
-                                    ListEmptyComponent={() => <View><Text style={{
-                                        fontFamily: fontFamily?.regular,
-                                        fontSize: textScale(14),
-                                        textAlign: "center",
-                                        marginTop: moderateScaleVertical(16)
-                                    }}>Filters not available!</Text></View>}
-                                // ListFooterComponent={listFooterComponent}
-                                />
-                                {!isEmpty(attributeInfo) && <View style={styles.btnStyle}>
-                                    <ButtonWithLoader
-                                        btnText="Apply Filter"
-                                        onPress={onApplyAttributeFilter}
-                                        btnStyle={{
-                                            flex: 0.48,
-                                            backgroundColor: themeColors.primary_color,
-                                            borderWidth: 0,
-                                        }}
-                                        btnTextStyle={{
-                                            textTransform: 'none',
-                                        }}
-                                    />
-                                    <ButtonWithLoader
-                                        onPress={onClearAttributeFilter}
-                                        btnText="Clear Filter"
-                                        btnStyle={{
-                                            flex: 0.48,
-                                            borderColor: themeColors.primary_color,
-                                        }}
-                                        btnTextStyle={{
-                                            color: themeColors.primary_color,
-                                            textTransform: 'none',
-                                        }}
-                                    />
-                                </View>}
-                            </View>
-                        }
-                    </KeyboardAwareScrollView>
-                </View>
+                                        <ButtonWithLoader
+                                            onPress={onClearAttributeFilter}
+                                            btnText="Clear Filter"
+                                            btnStyle={{
+                                                flex: 0.48,
+                                                borderColor: themeColors.primary_color,
+                                            }}
+                                            btnTextStyle={{
+                                                color: themeColors.primary_color,
+                                                textTransform: 'none',
+                                            }}
+                                        />
+                                    </View>}
+                                </View>
+                            }
+                        </KeyboardAwareScrollView>
+                    </View>
+                </WrapperContainer>
             </Modal>
+
             {isShowFilter ? (
                 <FilterComp
                     isDarkMode={isDarkMode}

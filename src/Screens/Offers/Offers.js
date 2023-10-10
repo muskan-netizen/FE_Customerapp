@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, TouchableOpacity, View, Text } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
+import BorderTextInput from '../../Components/BorderTextInput';
 import Header from '../../Components/Header';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import OffersCard from '../../Components/OffersCard';
+import OffersCard2 from '../../Components/OffersCard2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { showError, showSuccess } from '../../utils/helperFunctions';
-import ListEmptyOffers from './ListEmptyOffers';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import OffersCard2 from '../../Components/OffersCard2';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import fontFamily from '../../styles/fontFamily';
-import BorderTextInput from '../../Components/BorderTextInput';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import validator from '../../utils/validations';
+import ListEmptyOffers from './ListEmptyOffers';
 
 export default function Offer({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
   const paramsData = route?.params?.data;
+  console.log(paramsData, "fadsfkasdjf")
 
-  console.log(paramsData, "paramsDataparamsDataparamsData");
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -41,10 +39,6 @@ export default function Offer({ route, navigation }) {
     isLoadingB: false,
     promocode: '',
   });
-
-
-
-
 
   const { isTaxi } = paramsData;
   const { appData, appStyle, themeColors, themeLayouts, currencies, languages } =
@@ -60,7 +54,6 @@ export default function Offer({ route, navigation }) {
     }
   }, []);
 
-  console.log("appStyle", appStyle)
   //Get all promo codes for cab booking
   const _getAllPromoCodesForCabs = () => {
     let data = {};
@@ -128,9 +121,7 @@ export default function Offer({ route, navigation }) {
         updateState({ isLoadingB: false });
         if (res) {
           showSuccess(res?.message || res?.error);
-
-
-          navigation.navigate(navigationStrings.CART, {
+          navigation.navigate(!!paramsData?.isP2p ? navigationStrings.PRODUCT_PRICE_DETAILS : navigationStrings.CART, {
             promocodeDetail: {
               couponInfo: item,
               vendorInfo: paramsData,
@@ -145,13 +136,13 @@ export default function Offer({ route, navigation }) {
 
   //Verify your promo code
   const _verifyPromoCodeForCab = (item) => {
-    updateState({ isLoadingB: true, isLoading: true });
     let data = {};
     data['vendor_id'] = paramsData?.vendor?.vendor_id;
     data['product_id'] = paramsData?.vendor?.id;
     data['coupon_id'] = item.id;
     data['amount'] = paramsData?.vendor?.tags_price;
     console.log(data, 'data-verify-promo');
+    updateState({ isLoadingB: true });
     actions
       .verifyPromocodeForCabOrders(data, {
         code: appData?.profile?.code,
@@ -161,7 +152,7 @@ export default function Offer({ route, navigation }) {
       })
       .then((res) => {
         console.log(res, 'res');
-        updateState({ isLoadingB: false, isLoading: false });
+        updateState({ isLoadingB: false });
         if (res) {
           showSuccess(res?.message || res?.error);
 

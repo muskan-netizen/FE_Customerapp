@@ -35,6 +35,8 @@ const BorderTextInput = ({
   require = false,
   keyboardType = 'default',
   maxLength,
+  onBlur = () => { },
+  onFocus = () => { },
   ...props
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -100,6 +102,8 @@ const BorderTextInput = ({
         value={value}
         secureTextEntry={secureTextEntry}
         autoCapitalize={'none'}
+        onFocus={onFocus}
+        onBlur={onBlur}
         {...props}
       />
 

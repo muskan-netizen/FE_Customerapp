@@ -48,6 +48,9 @@ import {
 import { showError } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
+import OoryksAccountsHeader from '../../../Components/OoryksAccountsHeader';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import SelectSearchFromMap from '../../../Components/SelectSearchFromMap';
 
 const theme = {
   // Define your custom colors here
@@ -57,7 +60,23 @@ const theme = {
 
 const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   let paramData = route?.params;
-  console.log(paramData, '<===paramData');
+  const productData = !isEmpty(paramData?.productData)
+    ? paramData?.productData
+    : null;
+  let dateNewRange = []
+  if (!isEmpty(productData?.availablityDates)) {
+    const selectedDates = Object.keys(productData?.availablityDates).filter(date => productData?.availablityDates[date].selected);
+    // const dateKeys = Object.keys(productData?.availablityDates);
+    const dateKeys = selectedDates;
+    const startDate = dateKeys[0];
+    const endDate = dateKeys[dateKeys.length - 1];
+    dateNewRange = [{
+      start_date: startDate,
+      end_date: endDate,
+      date_range: dateKeys
+    }];
+  }
+
   const darkthemeusingDevice = useDarkMode();
 
   const {
@@ -69,30 +88,57 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     themeColor,
     themeToggle,
   } = useSelector(state => state?.initBoot);
+  const { location } = useSelector(state => state?.home);
+
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors });
   const [attributeInfo, setAttributeInfo] = useState([]);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState(productData?.name || '');
+  const [description, setDescription] = useState(
+    productData?.description || '',
+  );
   const [isLoadingAttributes, setLoadingAttributes] = useState(true);
   const [isLoadingSubmitAttributes, setLoadingSubmitAttributes] =
     useState(false);
-  const [productImgs, setProductImgs] = useState([]);
-  const [product360Imgs, setProduct360Imgs] = useState([]);
+  const [productImgs, setProductImgs] = useState(
+    productData?.productImgs || [],
+  ); const [product360Imgs, setProduct360Imgs] = useState([]);
   const [isImagePickerModal, setImagePickerModal] = useState(false);
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
-  const [price, setPrice] = useState('');
-  // const [emirateId, setEmirateId] = useState('')
-  const [productLocation, setProductLocation] = useState({})
-  const [weeklyPrice, setWeeklyPrice] = useState('')
-  const [monthlyPrice, setMonthlyPrice] = useState('')
-  const [originalPrice, setOriginalPrice] = useState('')
-  const [rentalDays, setRentalDays] = useState('')
+  const [price, setPrice] = useState(
+    !!productData?.price ? String(productData?.price) : '',
+  );  // const [emirateId, setEmirateId] = useState('')
+  const [productLocation, setProductLocation] = useState(
+    productData?.productLocation || {},
+  );
+  const [weeklyPrice, setWeeklyPrice] = useState(
+    !!productData?.weeklyPrice ? String(productData?.weeklyPrice) : '',
+  );
+  const [monthlyPrice, setMonthlyPrice] = useState(
+    !!productData?.monthlyPrice ? String(productData?.monthlyPrice) : '',
+  );
+  const [originalPrice, setOriginalPrice] = useState(
+    !!productData?.originalPrice ? String(productData?.originalPrice) : '',
+  ); const [rentalDays, setRentalDays] = useState('')
   const [isCalendarModal, setIsCalendarModal] = useState(false)
-
+  const [priceDayType, setPriceDayType] = useState('');
+  const [emiratesType, setemiratesType] = useState(
+    !!productData?.emirateId
+      ? appData?.emirates?.find(item => item.id === productData?.emirateId)
+      : '',
+  );
+  const [isSelectViaMap, setisSelectViaMap] = useState(false);
+  const [availablityDates, setAvailablityDates] = useState(
+    productData?.availablityDates || {},
+  );
+  const [selectedDates, setSelectedDates] = useState(
+    productData?.selectedDates || [],
+  );
+  const [dateRange, setDateRange] = useState(!isEmpty(dateNewRange) ? dateNewRange : []);
+  const [isPayoutErrorModal, setIsPayoutErrorModal] = useState(false)
 
   const [state, setState] = useState({
     updateData: {},
@@ -104,7 +150,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     isDelivery: false
   })
   const [selectedLocationAtt, setSelectedLocationAtt] = useState({})
-  const [selectedDates, setSelectedDates] = useState([]);
   const { updateData, indicator, type, selectViaMap, isVisible, isDelivery } = state;
   const updateState = data => setState(state => ({ ...state, ...data }));
 
@@ -136,7 +181,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
   const isValidData = () => {
     const error = validations({
-      productImg: productImgs,
+      // productImg: productImgs,
       productName: name,
       productDetail: description,
       // emirateId: emirateId,
@@ -181,12 +226,17 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       });
     });
 
+    let updatedPrice
+    if (!!price && !!price.endsWith('/day')) {
+      updatedPrice = price.replace('/day', '')
+    }
+
     formData.append('category_id', paramData?.category_id);
     formData.append('product_name', name);
     formData.append('body_html', description);
-    formData.append('price', parseInt(price));
-    formData.append('latitude', productLocation?.latitude);
-    formData.append('longitude', productLocation?.longitude);
+    formData.append('price', updatedPrice);
+    formData.append('latitude', String(productLocation?.latitude));
+    formData.append('longitude', String(productLocation?.longitude));
     formData.append('address', productLocation?.address);
     paramData?.type_id == 10 && formData.append('week_price', weeklyPrice);
     paramData?.type_id == 10 && formData.append('month_price', monthlyPrice);
@@ -536,13 +586,13 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
             style={{
               ...styles.attributeTitle,
               marginBottom: moderateScaleVertical(6),
-              color:isDarkMode?colors.whiteOpacity77:colors.black
+              color: isDarkMode ? colors.whiteOpacity77 : colors.black
             }}>
             {item?.title}
           </Text>
           {item?.type == 1 ? (
             <Dropdown
-              style={{...styles.multiSelect,backgroundColor:isDarkMode? MyDarkTheme.colors.lightDark:colors.blackOpacity05}}
+              style={{ ...styles.multiSelect, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.blackOpacity05 }}
               labelField="title"
               valueField="id"
               value={!isEmpty(item?.values) ? item?.values : []}
@@ -550,7 +600,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               onChange={(value) => onChangeDropDownOption(value, item)}
               placeholder={'Select value'}
               fontFamily={fontFamily.regular}
-              placeholderStyle={{...styles.multiSelectPlaceholder,color:isDarkMode?colors.whiteOpacity77:colors.black}}
+              placeholderStyle={{ ...styles.multiSelectPlaceholder, color: isDarkMode ? colors.whiteOpacity77 : colors.black }}
             />
           ) : item?.type == 3 ? (
             <View style={styles.radioBtn}>
@@ -574,7 +624,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
             style={styles.addLocationBtn}>
             <Text numberOfLines={1} style={{
               flex: 1,
-              color:isDarkMode?colors.whiteOpacity77:colors.black,
+              color: isDarkMode ? colors.whiteOpacity77 : colors.black,
               ...styles.titleTxt
             }}>{!isEmpty(item?.values) ? item?.values?.value : "Add Location"}</Text>
             {!isEmpty(item?.values) && <TouchableOpacity onPress={onClearLocationField}><Image source={imagePath.closeButton} /></TouchableOpacity>}
@@ -590,6 +640,18 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     },
     [attributeInfo],
   );
+
+  const handleBlur = () => {
+    if (!!price && !price.endsWith('/day')) {
+      setPrice(price + '/day');
+    }
+  };
+
+  const handleFocus = () => {
+    if (!!price && !!price.endsWith('/day')) {
+      setPrice(price.replace('/day', ''));
+    }
+  }
 
 
   const listFooterComponent = () => {
@@ -608,247 +670,327 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   };
 
   return (
-    <WrapperContainer bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} statusBarColor={colors.white} isLoading={isLoadingAttributes}>
+    <WrapperContainer
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      statusBarColor={colors.white}
+      isLoading={isLoadingSubmitAttributes}>
       <View
         style={{
           flex: 1,
-
         }}>
-        <OoryksHeader
+        <OoryksAccountsHeader
           leftIcon={imagePath.ic_backarrow}
-          leftTitle={strings.ADD_AN_ITEM_FOR_RENT}
-
+          lefticonTitle={strings.ADD_AN_ITEM_FOR_RENT}
         />
-
-        <KeyboardAwareScrollView
-          keyboardShouldPersistTaps={'handled'}
-          showsVerticalScrollIndicator={false}>
-
-          <View
-            style={{
-              paddingHorizontal: moderateScale(16),
-              backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
-            }}>
-            <View
-              style={styles.imgContainer}>
-              {!isEmpty(productImgs) &&
-                productImgs.map((itm, indx) => (
-                  <View key={String(itm?.id)}>
-                    <Image
-                      style={styles.productImgs}
-                      source={{ uri: itm?.uri }}
-                    />
-                    <TouchableOpacity
-                      hitSlop={hitSlopProp}
-                      onPress={() => removeProductImg(itm, 1)}
-                      style={{ position: 'absolute', right: 4, top: -2 }}>
-                      <Image source={imagePath.icRemoveIcon} />
-                    </TouchableOpacity>
-                  </View>
-                ))}
-
-            </View>
-            <TouchableOpacity
-              onPress={() => setImagePickerModal(true)}
-             activeOpacity={0.7}
-              style={{ marginBottom: moderateScaleVertical(16), alignItems: 'center', height: moderateScaleVertical(150), justifyContent: "center", borderWidth: 1, borderColor: colors.borderColorNew, backgroundColor: isDarkMode ? MyDarkTheme.colors.text : colors.white, borderRadius: moderateScale(8) }}>
-              <Image source={imagePath.ic_camPicker} />
-              <Text
-                style={styles.uploadImgTxt}>
-                {strings.UPLOAD_IMAGE}
-              </Text>
-            </TouchableOpacity>
-            <BorderTextInput
-              onChangeText={text => setName(text)}
-              placeholder={strings.ITEM_NAME}
-              value={name}
-              containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
-              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-            />
-            <BorderTextInput
-              onChangeText={text => setDescription(text)}
-              placeholder={strings.DESCRIPTION}
-              value={description}
-              multiLine={true}
-              containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,height: moderateScaleVertical(118),textAlignVertical:'top'}}
-              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-            />
-
-            {paramData?.type_id !== 10 && <BorderTextInput
-              value={price}
-              keyboardType={"number-pad"}
-              onChangeText={(text) => {
-                setPrice(text)
-
-              }}
-              placeholder={`${currencies?.primary_currency?.symbol} ${strings.PRICE}`}
-              containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
-              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-
-            />}
-            <TouchableOpacity
-              onPress={() => {
-                updateState({
-                  isVisible: true
-                })
-              }}
-              style={{ ...styles.addLocationBtn, }}>
-              <Text numberOfLines={1} style={{
-                flex: 0.9,
-                ...styles.titleTxt,
-                color: !isEmpty(productLocation) ? isDarkMode?colors.whiteOpacity77: colors.black : isDarkMode?colors.whiteOpacity77:colors.blackOpacity30
-              }}>{!isEmpty(productLocation) ? productLocation?.address : strings.LOCATION_AVAILABLITY}</Text>
-              <TouchableOpacity onPress={() => setProductLocation({})}>
-                <Image
-                tintColor={isDarkMode?colors.whiteOpacity77:colors.black}
-                 style={{
-                  height: 15, width: 15
-                }} resizeMode="contain" source={imagePath.closeButton} />
-              </TouchableOpacity>
-            </TouchableOpacity>
-
-            {paramData?.type_id == 10 ? <View>
-              <Text
-                style={{
-                  marginLeft: moderateScale(1),
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily?.medium,
-                  marginTop: moderateScaleVertical(16),
-                  color:isDarkMode?colors.white:colors.black
-                }}>
-                {strings.PRICING_DETAILS_FOR} :
-              </Text>
+        {isLoadingAttributes ? (
+          <View style={{ flex: 1 }}>
+            {['', '', '', '', '', '', '', '', ''].map((itm, indx) => (
               <View
+                key={String(indx)}
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: moderateScaleVertical(14),
+                  marginTop: moderateScaleVertical(20),
                 }}>
+                <HeaderLoader
+                  isRight={false}
+                  widthLeft={moderateScale(100)}
+                  rectWidthLeft={moderateScale(100)}
+                  heightLeft={moderateScaleVertical(30)}
+                  rectHeightLeft={moderateScaleVertical(30)}
+                  rx={5}
+                  ry={5}
+                />
+                <HeaderLoader
+                  isRight={false}
+                  widthLeft={width - moderateScale(30)}
+                  rectWidthLeft={width - moderateScale(30)}
+                  heightLeft={moderateScaleVertical(35)}
+                  rectHeightLeft={moderateScaleVertical(35)}
+                  rx={5}
+                  ry={5}
+                  viewStyles={{
+                    marginTop: moderateScaleVertical(5),
+                  }}
+                />
+              </View>
+            ))}
+          </View>
+        ) : (
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps={'handled'}
+            showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                paddingHorizontal: moderateScale(16),
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : colors.white,
+              }}>
+              <View style={styles.imgContainer}>
+                {!isEmpty(productImgs) &&
+                  productImgs.map((itm, indx) => (
+                    <View key={String(itm?.id)}>
+                      <Image
+                        style={styles.productImgs}
+                        source={{ uri: itm?.uri }}
+                      />
+                      <TouchableOpacity
+                        hitSlop={hitSlopProp}
+                        onPress={() => removeProductImg(itm, 1)}
+                        style={{ position: 'absolute', right: 4, top: -2 }}>
+                        <Image source={imagePath.icRemoveIcon} />
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+              </View>
+              <TouchableOpacity
+                onPress={() => setImagePickerModal(true)}
+                activeOpacity={0.7}
+                style={{
+                  marginBottom: moderateScaleVertical(16),
+                  alignItems: 'center',
+                  height: moderateScaleVertical(150),
+                  justifyContent: 'center',
+                  borderWidth: 1,
+                  borderColor: colors.borderColorNew,
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.white,
+                  borderRadius: moderateScale(8),
+                }}>
+                <Image source={imagePath.ic_camPicker} />
+                <Text style={styles.uploadImgTxt}>{strings.UPLOAD_IMAGE}</Text>
+              </TouchableOpacity>
+              <BorderTextInput
+                onChangeText={text => setName(text)}
+                placeholder={strings.ITEM_NAME}
+                value={name}
+                containerStyle={styles.containerStyle}
+                textInputStyle={styles.txtInputStyle}
+              />
+              <BorderTextInput
+                onChangeText={text => setDescription(text)}
+                placeholder={strings.DESCRIPTION}
+                value={description}
+                multiLine={true}
+                containerStyle={{
+                  ...styles.containerStyle,
+                  height: moderateScaleVertical(118),
+                }}
+                textInputStyle={styles.txtInputStyle}
+              />
+              {paramData?.type_id !== 10 &&
                 <BorderTextInput
                   value={price}
                   keyboardType={"number-pad"}
                   onChangeText={(text) => {
                     setPrice(text)
-                    let weekPrice = ((Number(text) * 4) / 7).toFixed(0)
-                    let monthPrice = ((Number(text) * 4 * 3) / 30).toFixed(0)
-                    setWeeklyPrice(text == "" ? "" : String(weekPrice))
-                    setMonthlyPrice(text == "" ? "" : String(monthPrice))
+
                   }}
-                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_DAY}`}
-                   containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, width: moderateScale(100)}}
-              textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-                />
-                <BorderTextInput
-                  // onChangeText={(text) => setWeeklyPrice(text)}
+                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.PRICE}`}
+                  containerStyle={{ ...styles.containerStyle, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white }}
+                  textInputStyle={{ ...styles.txtInputStyle, color: isDarkMode ? colors.white : colors.black }}
 
-                  value={weeklyPrice}
-                  editable={false}
-                  keyboardType={"number-pad"}
-                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_WEEK}`}
-                  containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, width: moderateScale(100)}}
-                  textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-                />
-                <BorderTextInput
-                  // onChangeText={(text) => setMonthlyPrice(text)}
-                  value={monthlyPrice}
-                  editable={false}
-                  keyboardType={"number-pad"}
-                  placeholder={`${currencies?.primary_currency?.symbol} ${strings.DOLLAR_MONTH}`}
-                  containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, width: moderateScale(100)}}
-                  textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-                />
-              </View>
-              <BorderTextInput
-                onChangeText={(text) => setOriginalPrice(text)}
-                value={originalPrice}
-                keyboardType={"number-pad"}
-                placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
-                containerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
-                textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-              />
-              <BorderTextInput
-                onChangeText={(text) => setRentalDays(text)}
-                value={rentalDays}
-                keyboardType={"number-pad"}
-                placeholder={strings.MINIMAL_RENTAL_DAYS}
-                // rightIcon={imagePath.ic_down_arrow}
-                ccontainerStyle={{...styles.containerStyle,backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white}}
-                textInputStyle={{...styles.txtInputStyle,color:isDarkMode?colors.white:colors.black}}
-              />
-
-
-              <ButtonComponent
-                onPress={() => setIsCalendarModal(true)}
-                containerStyle={styles.availablityBtn}
-                textStyle={{
-                  color: colors.black,
-                }}
-                marginBottom={0}
-                btnText={isEmpty(selectedDates) ? "Choose Availablity" : getDates()}
-              />
-            </View> : <View />}
-            {/* <ButtonComponent
-              onPress={onSubmitAttributes}
-              containerStyle={{ ...styles.submitBtn, backgroundColor: isDarkMode ? themeColors?.primary_color : colors.black }}
-              btnText={strings.CONFIRM_AND_CONTINUE}
-            /> */}
-            <View style={{
-              height: moderateScaleVertical(16)
-            }} />
-            <FlatList
-              data={attributeInfo}
-              keyboardShouldPersistTaps={'handled'}
-              scrollEnabled={false}
-              keyExtractor={(item, index) => String(index)}
-              ItemSeparatorComponent={() => (
+                />}
+              {/* {paramData?.type_id == 10 &&
+                <Dropdown
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.profileInputborder,
+                    borderRadius: 4,
+                    backgroundColor: colors.white,
+                    height: moderateScaleVertical(48),
+                    marginBottom: moderateScaleVertical(16),
+                    paddingHorizontal: moderateScale(8),
+                  }}
+                  labelField="name"
+                  valueField="id"
+                  data={appData?.emirates || []}
+                  value={emiratesType?.id}
+                  onChange={value => {
+                    setemiratesType(value);
+                  }}
+                  placeholder={'Select Emirate'}
+                  fontFamily={fontFamily?.regular}
+                  placeholderStyle={styles.multiSelectPlaceholder}
+                />} */}
+              <TouchableOpacity
+                onPress={() => setisSelectViaMap(true)}
+                style={{
+                  ...styles.addLocationBtn,
+                  backgroundColor: colors.white,
+                }}>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    flex: 1,
+                    ...styles.titleTxt,
+                    color: !isEmpty(productLocation)
+                      ? colors.black
+                      : colors.blackOpacity30,
+                  }}>
+                  {!isEmpty(productLocation)
+                    ? productLocation?.address
+                    : strings.LOCATION_AVAILABLITY}
+                </Text>
+                {!isEmpty(productLocation) && (
+                  <TouchableOpacity
+                    hitSlop={hitSlopProp}
+                    onPress={() => setProductLocation({})}>
+                    <Image
+                      style={{
+                        height: 15,
+                        width: 15,
+                      }}
+                      resizeMode="contain"
+                      source={imagePath.closeButton}
+                    />
+                  </TouchableOpacity>
+                )}
+              </TouchableOpacity>
+              {paramData?.type_id == 10 && <View>
+                <Text
+                  style={{
+                    marginLeft: moderateScale(1),
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily?.medium,
+                    marginTop: moderateScaleVertical(16),
+                  }}>
+                  {strings.PRICING_DETAILS_FOR} :
+                </Text>
                 <View
                   style={{
-                    height: moderateScaleVertical(18),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: moderateScaleVertical(14),
+                  }}>
+                  <BorderTextInput
+                    value={price}
+                    keyboardType={'number-pad'}
+                    onChangeText={text => {
+                      setPrice(text);
+                      let weekPrice = ((Number(text) * 4) / 7).toFixed(0);
+                      let monthPrice = ((Number(text) * 4 * 3) / 30).toFixed(0);
+                      setWeeklyPrice(
+                        text == '' ? '' : text == '1' ? '1' : String(weekPrice),
+                      );
+                      setMonthlyPrice(
+                        text == '' ? '' : text == '1' ? '1' : String(monthPrice),
+                      );
+                    }}
+                    placeholder={`Daily`}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      width: moderateScale(100),
+                    }}
+                    onBlur={handleBlur}
+                    onFocus={handleFocus}
+                    textInputStyle={styles.txtInputStyle}
+                  />
+                  <BorderTextInput
+                    // onChangeText={(text) => setWeeklyPrice(text)}
+
+                    value={!!weeklyPrice && `${weeklyPrice}/day`}
+                    editable={false}
+                    keyboardType={'number-pad'}
+                    placeholder={`7 Days +`}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      width: moderateScale(100),
+                    }}
+                    textInputStyle={styles.txtInputStyle}
+                  />
+                  <BorderTextInput
+                    // onChangeText={(text) => setMonthlyPrice(text)}
+                    value={!!monthlyPrice && `${monthlyPrice}/day`}
+                    editable={false}
+                    keyboardType={'number-pad'}
+                    placeholder={`30 Days +`}
+                    containerStyle={{
+                      ...styles.containerStyle,
+                      width: moderateScale(110),
+                    }}
+                    textInputStyle={styles.txtInputStyle}
+                  />
+                </View>
+              </View>
+              }
+              {paramData?.type_id == 10 &&
+                <BorderTextInput
+                  onChangeText={text => setOriginalPrice(text)}
+                  value={originalPrice}
+                  keyboardType={'number-pad'}
+                  placeholder={strings.ORIGINAL_PRICE_OF_ITEM}
+                  containerStyle={styles.containerStyle}
+                  textInputStyle={styles.txtInputStyle}
+                />}
+              {/* <BorderTextInput
+              onChangeText={(text) => setRentalDays(text)}
+              value={rentalDays}
+              keyboardType={"number-pad"}
+              placeholder={strings.MINIMAL_RENTAL_DAYS}
+              rightIcon={imagePath.ic_down_arrow}
+              containerStyle={styles.containerStyle}
+              textInputStyle={styles.txtInputStyle}
+            /> */}
+
+              {paramData?.type_id == 10 &&
+                <ButtonComponent
+                  onPress={() => setIsCalendarModal(true)}
+                  containerStyle={{
+                    borderWidth: 1,
+                    height: moderateScaleVertical(48),
+                    width: moderateScale(350),
+                    alignSelf: 'center',
+                    borderRadius: 8,
+                    marginBottom: moderateScaleVertical(60),
+                    backgroundColor: colors.white,
                   }}
+                  textStyle={{
+                    color: colors.black,
+                  }}
+                  btnText={
+                    isEmpty(availablityDates) ? 'Choose Availablity' : getDates()
+                  }
                 />
-              )}
-              renderItem={renderAttributeOptions}
-              ListFooterComponent={listFooterComponent}
-            />
-            <View style={{ height: moderateScaleVertical(65) }} />
-          </View>
+              }
+              <View style={{
+                height: moderateScaleVertical(16)
+              }} />
+              <FlatList
+                data={attributeInfo}
+                keyboardShouldPersistTaps={'handled'}
+                scrollEnabled={false}
+                keyExtractor={(item, index) => String(index)}
+                ItemSeparatorComponent={() => (
+                  <View
+                    style={{
+                      height: moderateScaleVertical(18),
+                    }}
+                  />
+                )}
+                renderItem={renderAttributeOptions}
+                ListFooterComponent={listFooterComponent}
+              />
+              <View style={{ height: moderateScaleVertical(65) }} />
 
-
-
-        </KeyboardAwareScrollView>
-
-
+            </View>
+          </KeyboardAwareScrollView>
+        )}
       </View>
       <GallaryCameraImgPicker
         isVisible={isImagePickerModal || is360ImgPicker}
         onCamera={() => cameraHandle(0)}
         onGallary={() => cameraHandle(1)}
-        // isVisbleCamera={!is360ImgPicker}
         onCancel={closeMediaPicker}
         onClose={closeMediaPicker}
       />
 
       <Modal isVisible={isProductAddedModal}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? colors.blackOpacity86 : colors.black,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: moderateScale(15),
-            marginHorizontal: moderateScale(30),
-            paddingVertical: moderateScaleVertical(50),
-          }}>
-          <Image source={imagePath.check3} />
-          <Text
-            style={{
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
-              fontFamily: fontFamily.medium,
-              fontSize: textScale(19),
-              maxWidth: '70%',
-              textAlign: 'center',
-              marginVertical: moderateScale(18),
-              lineHeight: moderateScaleVertical(30),
-            }}>
+        <View style={styles.postAddedContainer}>
+          <Image source={imagePath.check3} style={{
+            tintColor: themeColors?.primary_color
+          }} />
+          <Text style={{ ...styles.postAddedTxt, color: colors.black }}>
             {strings.POST_UPLOADED_SUCCESS}
           </Text>
           <GradientButton
@@ -857,36 +999,47 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               setIsProductAddedModal(false);
               navigation.goBack();
             }}
-            containerStyle={{ width: '50%', marginTop: moderateScaleVertical(5) }}
-            colorsArray={['#FC7049', '#FD312C']}
+            containerStyle={{
+              width: '50%',
+              marginVertical: moderateScaleVertical(5),
+            }}
+            colorsArray={[themeColors?.primary_color, themeColors?.primary_color]}
           />
         </View>
       </Modal>
 
-
-      {
-        isVisible ? <AddressBottomSheet
-          navigation={navigation}
-          updateData={updateData}
-          indicator={indicator}
-          type={type}
-          passLocation={data => addUpdateLocation(data)}
-          openCloseMapAddress={openCloseMapAddress}
-          selectViaMap={selectViaMap}
-          onCloseSheet={onModalClose}
-        />
-          : null
-      }
-      <Modal isVisible={isCalendarModal} style={{
-        margin: 0
-      }}>
-        <View style={{ backgroundColor: colors.white, flex: 1, paddingTop: Platform.OS == "ios" ? StatusBarHeight : 0 }}>
+      {/* {isVisible ? <AddressBottomSheet
+      navigation={navigation}
+      updateData={updateData}
+      indicator={indicator}
+      type={type}
+      passLocation={data => addUpdateLocation(data)}
+      openCloseMapAddress={openCloseMapAddress}
+      selectViaMap={selectViaMap}
+      onCloseSheet={onModalClose}
+    />
+      : null
+    } */}
+      <Modal
+        isVisible={isCalendarModal}
+        style={{
+          margin: 0,
+        }}>
+        <View
+          style={{
+            backgroundColor: colors.white,
+            flex: 1,
+            paddingTop: Platform.OS == 'ios' ? StatusBarHeight : 0,
+          }}>
           <OoryksHeader
-            leftTitle={"Calendar"}
-            onPressLeft={() => setIsCalendarModal(false)}
+            leftTitle={'Calendar'}
+            onPressLeft={() => {
+              setIsCalendarModal(false);
+              isEmpty(availablityDates) && setSelectedDates([]);
+            }}
             isCustomLeftPress
             titleStyle={{
-              color: colors.black
+              color: colors.black,
             }}
           />
           <View>
@@ -894,26 +1047,73 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
               onDayPress={handleDateSelect}
               markedDates={getMarkedDates()}
               theme={theme}
-              minDate={new Date()}
+              minDate={String(new Date())}
             />
           </View>
 
-
           <ButtonComponent
             onPress={() => {
-              if (isEmpty(selectedDates)) {
-                alert("Please select a date range")
-              }
-              else {
-                setIsCalendarModal(false)
+              if (isEmpty(getMarkedDates())) {
+                alert('Please select a date range');
+              } else {
+                setIsCalendarModal(false);
+                setAvailablityDates(getMarkedDates());
               }
             }}
-            containerStyle={{ ...styles.submitBtn, marginTop: moderateScaleVertical(100), marginHorizontal: moderateScale(16) }}
+            containerStyle={{
+              ...styles.submitBtn,
+              marginTop: moderateScaleVertical(100),
+              marginHorizontal: moderateScale(16)
+            }}
             btnText={strings.DONE}
           />
         </View>
       </Modal>
-    </WrapperContainer >
+
+      <Modal
+        visible={isSelectViaMap}
+        style={{
+          margin: 0,
+        }}>
+        <WrapperContainer>
+          <OoryksHeader
+            onPressLeft={() => setisSelectViaMap(false)}
+            leftTitle="Add Your Location"
+            isCustomLeftPress
+          />
+
+          <View
+            style={{
+              flex: 1,
+              marginHorizontal: moderateScale(12),
+              overflow: 'hidden',
+              borderRadius: moderateScale(12),
+            }}>
+            <SelectSearchFromMap
+              addressDone={item => {
+                setisSelectViaMap(false);
+                setProductLocation(item);
+              }}
+              currentLocation={location}
+              location={location}
+            />
+          </View>
+        </WrapperContainer>
+      </Modal>
+      <Modal isVisible={isPayoutErrorModal} >
+        <View style={{ height: height / 4.5, borderRadius: 10, padding: 16, backgroundColor: colors.white }} >
+          <Text style={{ alignSelf: 'center', marginBottom: 10, lineHeight: 18, fontFamily: fontFamily.bold, }} >Error </Text>
+          <Text style={{ textAlign: 'center', lineHeight: 18, fontFamily: fontFamily.medium, }} >{`You are almost there! But first, please go to Account->Payout to submit your IBAN account details.`}</Text>
+
+          <GradientButton
+            containerStyle={{ width: width - 60, marginTop: 45, alignSelf: 'center' }}
+            btnText={'Ok'}
+            onPress={() => setIsPayoutErrorModal(false)}
+          />
+        </View>
+
+      </Modal>
+    </WrapperContainer>
   );
 };
 
@@ -1045,7 +1245,7 @@ function stylesFunc({ fontFamily, themeColors }) {
       borderWidth: 1,
       borderColor: colors.profileInputborder,
       borderRadius: 4,
-      backgroundColor:colors.white,
+      backgroundColor: colors.white,
       height: moderateScaleVertical(48),
       alignSelf: 'center',
     },

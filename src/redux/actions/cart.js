@@ -25,13 +25,16 @@ import {
   REMOVE_CART_PRODUCTS,
   REMOVE_PROMO_CODE,
   SAVED_CARD_LIST,
+  SAVE_PAYOUT_DETAILS,
   SCHEDULE_ORDER,
   SDKPAYMENTCANCELWAVEURL,
   SDKPAYMENTWAVEURL,
+  STRIPE_PAYMENT_INTENT,
   SUBMIT_CATEGORY_KYC,
   TIP_AFTER_ORDER,
   UPDATE_CART,
   UPDATE_PRODUCT_FAQS_CART,
+  USE_WALLET_AMOUNT,
   VALIDATE_PROMO_CODE,
   VENDOR_DROPOFF_SLOTS,
   VENDOR_SLOTS,
@@ -564,4 +567,16 @@ export function cartItemChecked(data = {}, headers = {}) {
 export function mtnGateway(data = {}, headers = {}) {
   return apiPost(MTNGATEWAY, data, headers);
 
+}
+//Get List of payment method
+export function stripePaymentIntent(data = {}, headers = {}) {
+  return apiPost(STRIPE_PAYMENT_INTENT, data, headers)
+}
+
+export function savePayoutDetails(data = {}, headers = {}) {
+  return apiPost(SAVE_PAYOUT_DETAILS, data, headers)
+}
+
+export function useWalletAmount(data = {}, headers = {}) {
+  return apiPost(USE_WALLET_AMOUNT, data, headers)
 }

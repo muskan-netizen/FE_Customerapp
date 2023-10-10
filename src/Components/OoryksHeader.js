@@ -1,17 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
-import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  StatusBarHeight,
+  textScale,
 } from '../styles/responsiveSize';
+import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
 import ButtonImage from './ImageComp';
+import imagePath from '../constants/imagePath';
 const OoryksHeader = ({
   leftIcon = imagePath.ic_backarrow,
   headerContainerStyle = {},
@@ -22,9 +23,10 @@ const OoryksHeader = ({
   isRight = false,
   onPressRight = () => { },
   titleStyle = {},
-  isCustomLeftPress = false,
-  isCustomView = false,
-  customView = () => <></>
+  isCustomLeftPress = false, rightText = '',
+  isRightText = false,
+  rightTxtStyle = {},
+  disabled = false
 }) => {
   const { appStyle, themeToggle, themeColor } = useSelector((state) => state?.initBoot || {});
   const darkthemeusingDevice = useDarkMode();
@@ -45,9 +47,9 @@ const OoryksHeader = ({
         <Text style={{ ...styles.titleStyle, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, ...titleStyle }}>{leftTitle}</Text>
       </View>
       {isRight ? <View >
-        <ButtonImage image={rightIcon} onPress={onPressRight} />
+        {!isRightText ? <ButtonImage image={rightIcon} onPress={onPressRight} /> : <TouchableOpacity disabled={disabled} onPress={onPressRight}><Text style={{ ...styles.rightTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.redB, ...rightTxtStyle }}>{rightText}</Text></TouchableOpacity>}
       </View>
-        : isCustomView ? <View>{customView()}</View> : <React.Fragment />}
+        : <React.Fragment />}
     </View>
   );
 };
@@ -81,6 +83,12 @@ export function stylesFunc({ fontFamily }) {
       fontSize: textScale(16),
       color: colors.black,
       marginLeft: moderateScale(16)
+    },
+    rightTxt: {
+      fontFamily: fontFamily?.regular,
+      fontSize: textScale(12),
+      color: colors.redB,
+
     }
   });
   return styles;

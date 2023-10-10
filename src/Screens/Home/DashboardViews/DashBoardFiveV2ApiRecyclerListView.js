@@ -1,17 +1,14 @@
+import { useScrollToTop } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
   Modal,
-  Platform,
-  RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Animated
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DashedLine from 'react-native-dashed-line';
@@ -22,15 +19,15 @@ import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import {
+  DataProvider,
+  LayoutProvider,
+  RecyclerListView
+} from 'recyclerlistview'; // Version can be specified in package.json
 import GradientButton from '../../../Components/GradientButton';
-import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
-import BannerLoader from '../../../Components/Loaders/BannerLoader';
-import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp2 from '../../../Components/ProductsComp2';
-import ProductsComp3 from '../../../Components/ProductsComp3';
 import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -38,23 +35,17 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import { useScrollToTop } from '@react-navigation/native';
-import {
-  DataProvider,
-  LayoutProvider,
-  RecyclerListView
-} from 'recyclerlistview'; // Version can be specified in package.json
 
 
 const ViewTypes = {
   BANNER: 0,
   VENDORS: 1,
-  NAV_CATEGORIES:2,
+  NAV_CATEGORIES: 2,
   BEST_SELLERS: 3,
-  BRANDS:4,
+  BRANDS: 4,
   SPOTLIGHT_DEALS: 5,
   SELECTED_PRODUCTS: 6,
-  SINGLE_CATEGORY_PRODUCTS:7,
+  SINGLE_CATEGORY_PRODUCTS: 7,
   NEW_PRODUCTS: 8,
   FEATURED_PRODUCTS: 9,
   ON_SALE: 10,
@@ -64,6 +55,7 @@ const ViewTypes = {
 };
 
 
+import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 import {
   height,
   moderateScale,
@@ -72,6 +64,7 @@ import {
   width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getImageUrlNew } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
@@ -80,8 +73,6 @@ import {
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
-import { getImageUrlNew } from '../../../utils/commonFunction';
-import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 
 const DashBoardFiveV2Api = ({
   handleRefresh = () => { },
@@ -917,7 +908,6 @@ const DashBoardFiveV2Api = ({
 
 
   const rowRenderer = (type, item) => {
-    console.log("datadatadata", item)
 
     let uniqueId = String(item?.id || index)
     return (
@@ -1070,15 +1060,15 @@ const DashBoardFiveV2Api = ({
 }
 
 
-const switchReturn = () =>{
-    switch (viewt) {
-      case value:
-        
-        return ;
-    
-      default:
-        break;
-    }
+const switchReturn = () => {
+  switch (viewt) {
+    case value:
+
+      return;
+
+    default:
+      break;
+  }
 }
 
 
@@ -1125,7 +1115,7 @@ const layoutMaker = () =>
           break;
         case ViewTypes.NEW_PRODUCTS:
           dim.width = width;
-          dim.height =height / 2;
+          dim.height = height / 2;
           break;
         case ViewTypes.FEATURED_PRODUCTS:
           dim.width = width;
@@ -1133,7 +1123,7 @@ const layoutMaker = () =>
           break;
         case ViewTypes.ON_SALE:
           dim.width = width;
-          dim.height =height / 2;
+          dim.height = height / 2;
           break;
         case ViewTypes.MOST_POPULAR_PRODUCTS:
           dim.width = width;

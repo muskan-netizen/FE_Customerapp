@@ -7,7 +7,7 @@ import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  textScale
 } from '../../../styles/responsiveSize';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import ButtonImage from '../../../Components/ImageComp';
+import actions from '../../../redux/actions';
 import { MyDarkTheme } from '../../../styles/theme';
 
 export default function DashBoardHeaderFive({
@@ -33,11 +34,14 @@ export default function DashBoardHeaderFive({
   currentLocation,
   nearestLoc,
   currentLoc,
+  onPressAddress = () => { }
 }) {
   const navigation = useNavigation();
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     state => state?.initBoot,
   );
+  const { userData } = useSelector(state => state?.auth);
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -56,12 +60,10 @@ export default function DashBoardHeaderFive({
     '200/400',
   );
 
-
   return (
     <View
       style={{
         paddingHorizontal: moderateScale(16),
-
       }}>
       <View style={{
         flexDirection: "row",
@@ -74,10 +76,10 @@ export default function DashBoardHeaderFive({
         ) ? (
           <FastImage
             style={{
-              width: moderateScale(width / 6),
-              height: moderateScale(40),
+              width: moderateScale(45),
+              height: moderateScale(55),
             }}
-            resizeMode={FastImage.resizeMode.contain}
+            resizeMode={FastImage.resizeMode.cover}
             source={{
               uri: imageURI,
               priority: FastImage.priority.high,
@@ -86,11 +88,7 @@ export default function DashBoardHeaderFive({
           />
         ) : null}
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate(navigationStrings.LOCATION, {
-              type: 'Home1',
-            })
-          }
+          onPress={onPressAddress}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -122,19 +120,18 @@ export default function DashBoardHeaderFive({
         </TouchableOpacity>
 
         <ButtonImage
-          onPress={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }
-          image={imagePath.icSearchNew}
+          onPress={() => !!userData?.auth_token ? navigation.navigate(navigationStrings.NOTIFICATION) : actions.setAppSessionData('on_login')}
+          image={imagePath.ic_notification}
           imgStyle={{ tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
         />
       </View>
 
-      {/* <View
+      <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
+          marginTop: moderateScaleVertical(16)
         }}>
         <View
           style={{
@@ -147,7 +144,7 @@ export default function DashBoardHeaderFive({
             borderColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.borderColor
           }}>
           <TouchableOpacity
-            style={{ marginHorizontal: moderateScale(8) }}
+            style={{ marginHorizontal: moderateScale(8), flexDirection: "row", alignItems: "center" }}
             onPress={() =>
               navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
             }>
@@ -159,16 +156,15 @@ export default function DashBoardHeaderFive({
               }}
               source={imagePath.icSearchNew}
             />
+            <Text style={{
+              fontFamily: fontFamily?.medium, fontSize: textScale(14),
+              marginLeft: moderateScale(16),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70
+            }}>Search here...</Text>
           </TouchableOpacity>
         </View>
-        <ButtonImage
-          image={imagePath.filter}
-          btnStyle={{ marginLeft: moderateScale(8) }}
-          imgStyle={{
-            tintColor: themeColors?.primary_color
-          }}
-        />
-      </View> */}
+
+      </View>
     </View>
   );
 }

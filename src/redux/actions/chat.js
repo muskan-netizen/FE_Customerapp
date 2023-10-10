@@ -137,7 +137,6 @@ export function fetchP2pUserToUsertChat(data = {}, headers = {}) {
   return new Promise(async (resolve, reject) => {
     const getAppData = await getItem('appData');
     const socketUrl = getAppData?.appData?.profile?.socket_url;
-    console.log(socketUrl + P2P_USER_TO_USER_CHAT, "aksjfkjdshf")
     apiPost(socketUrl + P2P_USER_TO_USER_CHAT, data, headers)
       .then((response) => {
         resolve(response);

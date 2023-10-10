@@ -8,6 +8,7 @@ import {
   CHECK_SLOTS_LIMIT,
   CHECK_VENDORS,
   CHECK_VENDOR_PINCODE,
+  CONNECT_TO_STRIP,
   CREATE_BID_REQUEST,
   CREATE_PRODUCT_VARIANT,
   DELETE_PRODUCT_IMAGE,
@@ -41,6 +42,7 @@ import {
   UPDATE_PRODUCT_STATUS,
   UPDATE_VENDOR_PRODUCT,
   VENDOR_CATEGORIES,
+  VENDOR_DELETE_PRODUCT,
   VENDOR_OPTIMIZE,
   VENDOR_OPTIMIZE_FILTERS,
   VENDOR_OPTIMIZE_V2,
@@ -597,5 +599,10 @@ export function getPowerConsumptionCalculation(data = {}, headers = {}) {
 export function getAppliances(data = {}, headers = {}) {
   return apiGet(GET_APPLIANCES, data, headers);
 }
+
+export function vendorDeleteProduct(data = {}, headers = {}) {
+  return apiPost(VENDOR_DELETE_PRODUCT, data, headers);
+}
+
 
 

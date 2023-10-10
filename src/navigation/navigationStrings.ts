@@ -183,4 +183,5 @@ export default {
   DEVELOPER_MODE: 'DeveloeprMode',
   PRODUCT_POWER_CONSUMPTION: 'ProductPowerConumption',
   LIVESS: 'Livees',
+  SAVED_PAYMENT_CARDS:"savedPaymentCards"
 };

@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash';
 import { Keyboard } from 'react-native';
 import { API_BASE_URL } from '../config/urls';
 import { openCamera, openPicker } from './imagePicker';
+import imagePath from '../constants/imagePath';
 
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
@@ -203,5 +204,17 @@ export const checkValueExistInAry = (item = {}, arr2 = []) => {
   let found = arr2.includes(item?.id);
   return found;
 };
+
+export const getCardImage = (brand) => {
+  return brand == "Visa" ? imagePath.icVisaCard :
+    brand == "MasterCard" ? imagePath.icMasterCard :
+      brand == "JCB" ? imagePath.icJcbCard :
+        brand == "Discover" ? imagePath.icDiscoverCard :
+          brand == "DinersClub" ? imagePath.icDinersClubCard :
+            brand == "UnionPay" ? imagePath.icUnionPay :
+              brand == "American Express" ? imagePath.icAmericanExpressCard :
+                imagePath.icUnknownCard
+}
+
 
 export { cameraHandler, currencyNumberFormatter, cameraImgVideoHandler };

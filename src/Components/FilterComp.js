@@ -253,6 +253,7 @@ const FilterComp = ({
                 style={{
                     margin: 0,
                     justifyContent: 'flex-end',
+
                     // height: height / 2
                 }}
             >
@@ -261,7 +262,8 @@ const FilterComp = ({
                     maxHeight: height / 1.2,
                     borderTopLeftRadius: 16,
                     borderTopRightRadius: 16,
-                    padding: moderateScale(16)
+                    padding: moderateScale(16),
+
                     // flex:1
                 }}>
                     <ScrollView
@@ -364,6 +366,7 @@ const FilterComp = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
     },
     sortingView: {
         flexDirection: 'row',

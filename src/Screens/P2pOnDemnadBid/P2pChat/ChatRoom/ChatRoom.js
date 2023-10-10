@@ -30,7 +30,6 @@ export default function ChatRoom({ navigation, route }) {
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const paramData = route?.params;
-    console.log(paramData, 'paramData....paramData');
     const styles = stylesFun({ fontFamily, isDarkMode });
     const [state, setState] = useState({ roomData: [], isLoading: true });
     const { roomData, isLoading } = state;

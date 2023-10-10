@@ -51,6 +51,7 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import CategoriesCard from '../../../Components/CategoriesCard';
 
 const P2pOndemandPostCategory = ({ navigation }) => {
   const modalRef = useRef();
@@ -397,59 +398,11 @@ const P2pOndemandPostCategory = ({ navigation }) => {
     [attributeInfo],
   );
 
-  const renderP2Pcategories = useCallback(
-    ({ item, index }) => {
-      let imageURI = getImageUrl(
-        item?.icon?.image_fit,
-        item?.icon?.image_path,
-        '200/200',
-      );
-      const isSVG = imageURI ? imageURI.includes('.svg') : null;
-      return (
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            style={{
-              ...styles.categoryStyle,
-              backgroundColor: !!themeColor
-                ? colors.whiteOpacity15
-                : colors.blackOpacity05,
-            }}
-            activeOpacity={0.7}
-            onPress={() => onPressP2pCategory(item)}>
-            {isSVG ? (
-              <SvgUri
-                height={moderateScale(70)}
-                width={moderateScale(70)}
-                uri={imageURI}
-              />
-            ) : (
-              <FastImage
-                style={{
-                  height: moderateScale(70),
-                  width: moderateScale(70),
-                  borderRadius: moderateScale(10),
-                }}
-                source={{
-                  uri: imageURI,
-                  cache: FastImage.cacheControl.immutable,
-                  priority: FastImage.priority.high,
-                }}
-                resizeMode="contain"
-              />
-            )}
-            <Text
-              style={{
-                ...styles.textStyle,
-                color: !!themeColor ? colors.white : colors.black,
-              }}>
-              {item?.name || item?.translation_one?.name || ''}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      );
-    },
-    [themeColor],
-  );
+  const renderP2Pcategories = ({ item, index }) => {
+    return (
+      <CategoriesCard item={item} onPress={() => onPressP2pCategory(item)} />
+    )
+  }
 
   const listFooterComponent = () => {
     return (
@@ -711,40 +664,21 @@ const P2pOndemandPostCategory = ({ navigation }) => {
             </View>
           ) : (
             <FlatList
-              showsHorizontalScrollIndicator={false}
               data={p2pCategories}
               renderItem={renderP2Pcategories}
               numColumns={2}
-              keyExtractor={(item) => item.id}
-              refreshing={isP2pCategoriesRefreshing}
-              refreshControl={
-                <RefreshControl
-                  refreshing={isP2pCategoriesRefreshing}
-                  onRefresh={handleRefresh}
-                  tintColor={themeColors.primary_color}
-                />
-              }
-              ListEmptyComponent={() => (
-                <View>
-                  <Image
-                    source={imagePath.noDataFound}
-                    style={{
-                      marginTop: height / 6,
-                      height: moderateScaleVertical(200),
-                      width: moderateScale(200),
-                      alignSelf: 'center',
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontFamily: fontFamily.bold,
-                      fontSize: textScale(17),
-                      textAlign: 'center',
-                    }}>
-                    {strings.NODATAFOUND}
-                  </Text>
-                </View>
-              )}
+              showsVerticalScrollIndicator={false}
+              columnWrapperStyle={{
+                justifyContent: "space-between"
+              }}
+              ItemSeparatorComponent={() => {
+                return (
+                  <View style={{ height: moderateScale(12) }} />
+                )
+              }}
+              ListFooterComponent={() => <View style={{
+                height: moderateScaleVertical(80)
+              }} />}
             />
           )}
         </View>

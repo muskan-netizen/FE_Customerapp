@@ -24,7 +24,7 @@ const Tab = createBottomTabNavigator();
 let showBottomBar_ = true;
 
 export default function TabRoutesOnDemandP2p(props) {
-    const { cartItemCount } = useSelector((state) => state?.cart);
+    const { cartItemCount } = useSelector(state => state?.cart);
     const {
         appStyle,
         appData,
@@ -32,7 +32,7 @@ export default function TabRoutesOnDemandP2p(props) {
         themeColors,
         themeToggle,
         themeColor,
-    } = useSelector((state) => state?.initBoot);
+    } = useSelector(state => state?.initBoot);
     const darkthemeusingDevice = useDarkMode();
     const fontFamily = appStyle?.fontSizeData;
     const styles = stylesData();
@@ -59,10 +59,10 @@ export default function TabRoutesOnDemandP2p(props) {
                     fontFamily: fontFamily?.medium,
                     fontSize: textScale(12),
                     color: colors.white,
-                }
+                },
             }}
             backBehavior={navigationStrings.HOMESTACK}
-            tabBar={(props) => {
+            tabBar={props => {
                 if (showBottomBar_) {
                     return <CustomBottomTabBarP2p {...props} />;
                 }
@@ -91,14 +91,10 @@ export default function TabRoutesOnDemandP2p(props) {
                         <Image
                             style={[
                                 {
-                                    tintColor: focused
-                                        ? themeColors?.primary_color
-                                        : undefined,
+                                    tintColor: focused ? themeColors?.primary_color : undefined,
                                 },
                             ]}
-                            source={
-                                imagePath.icHome
-                            }
+                            source={imagePath.icHome}
                         />
                     ),
                 })}
@@ -118,11 +114,11 @@ export default function TabRoutesOnDemandP2p(props) {
                             style={{
                                 tintColor: focused
                                     ? themeColors?.primary_color
-                                    : isDarkMode ? colors.grey1 : undefined,
+                                    : isDarkMode
+                                        ? colors.grey1
+                                        : undefined,
                             }}
-                            source={
-                                focused ? imagePath.icOrdersActive : imagePath.icOrders
-                            }
+                            source={focused ? imagePath.icOrdersActive : imagePath.icOrders}
                         />
                     ),
                 })}
@@ -133,24 +129,26 @@ export default function TabRoutesOnDemandP2p(props) {
                 name={navigationStrings.POST}
                 options={({ route, navigation }) => ({
                     tabBarVisible: getTabBarVisibility(route, navigation, []),
-                    tabBarLabel: "",
+                    tabBarLabel: '',
                     tabBarIcon: ({ focused, tintColor }) => (
                         <View style={{}}>
                             <Image
                                 style={{
                                     position: 'absolute',
-                                    top: -40,
-                                    left: -29,
-                                    height: 85,
-                                    width: 85,
+                                    top: -30,
+                                    left: -18,
+                                    height: 60,
+                                    width: 60,
+                                    tintColor: themeColors?.primary_color,
                                 }}
-                                source={imagePath.icAddPost}
+                                source={imagePath.circleplus}
                             />
                             <View
                                 style={{
                                     height: 25,
                                     width: 25,
-                                }} />
+                                }}
+                            />
                         </View>
                     ),
                 })}
@@ -174,9 +172,7 @@ export default function TabRoutesOnDemandP2p(props) {
                                         ? colors.whiteOpacity50
                                         : undefined,
                             }}
-                            source={
-                                focused ? imagePath.icChatActive : imagePath.ic_chat
-                            }
+                            source={focused ? imagePath.icChatActive : imagePath.ic_chat}
                         />
                     ),
                 })}
@@ -207,7 +203,7 @@ export default function TabRoutesOnDemandP2p(props) {
 }
 
 export function stylesData(params) {
-    const { appStyle } = useSelector((state) => state.initBoot);
+    const { appStyle } = useSelector(state => state.initBoot);
     const fontFamily = appStyle?.fontSizeData;
 
     const styles = StyleSheet.create({

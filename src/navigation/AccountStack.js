@@ -67,7 +67,10 @@ import {
   EcomAccount,
   EcomLangCurrency,
   DeveloperMode,
-  P2pOndemandProductDetail
+  P2pOndemandProductDetail,
+  AttributeInformation,
+  P2pOndemandAttributeInformation,
+  SavedPaymentCards
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -272,6 +275,7 @@ export default function ({ navigation }) {
         component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pOndemandProductDetail : P2pProductDetail}
       />
       <Stack.Screen name={navigationStrings.MY_POSTS} component={MyP2pPosts} />
+      <Stack.Screen name={navigationStrings.ATTRIBUTE_INFORMATION} component={P2pOndemandAttributeInformation} />
       <Stack.Screen
         name={navigationStrings.REFER_AND_EARN}
         component={ReferAndEarn}
@@ -288,6 +292,10 @@ export default function ({ navigation }) {
       <Stack.Screen
         name={navigationStrings.DEVELOPER_MODE}
         component={DeveloperMode}
+      />
+      <Stack.Screen
+        name={navigationStrings.SAVED_PAYMENT_CARDS}
+        component={SavedPaymentCards}
       />
     </Stack.Navigator>
   );

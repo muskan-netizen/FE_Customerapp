@@ -100,7 +100,7 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
       borderRadius: 20,
       marginTop: moderateScale(8),
     },
-    back: { borderRadius: 8, position: 'absolute', left: 18, top: 20, height: 41, width: 41., justifyContent: 'center', alignItems: 'center' },
+    back: { position: 'absolute', top: 32, height: 41, justifyContent: "space-between", alignItems: 'center', width: width - moderateScale(16), flexDirection: "row" },
     heart: { position: 'absolute', right: 18, top: 42 },
     leftRightBtn: {
       alignItems: 'center',
@@ -124,14 +124,13 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: width - moderateScale(30),
     },
     customMarker: {
       alignItems: 'center',
       justifyContent: "center",
-      height: moderateScaleVertical(26),
+      height: moderateScaleVertical(24),
       backgroundColor: colors.white,
-      width: moderateScale(66),
+      width: moderateScale(50),
       borderRadius: moderateScale(22),
     },
     sliderContainer: {
@@ -140,6 +139,23 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
       marginTop: moderateScaleVertical(8),
       justifyContent: "space-between",
       paddingHorizontal: moderateScale(20)
+    },
+    priceBtn: {
+      borderWidth: 1,
+      borderRadius: moderateScale(8),
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: moderateScaleVertical(24),
+      flex: 0.3,
+
+    },
+    priceType: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(14)
+    },
+    price: {
+      fontFamily: fontFamily?.medium,
+      marginTop: moderateScaleVertical(6),
     }
   });
   // export default styles;

@@ -21,8 +21,7 @@ const initial_state = {
   },
   pickUpTimeType: 'now',
   isLocationSearched: false,
-  lastBidInfo: null,
-  countryFlag: 'IN'
+  refreshType: "N"
 };
 
 export default function (state = initial_state, action) {
@@ -75,14 +74,6 @@ export default function (state = initial_state, action) {
       };
     }
 
-    case types.COUNTRY_FLAG: {
-      const data = action.payload;
-      return {
-        ...state,
-        countryFlag: data,
-      };
-    }
-
     case types.PROFILE_ADDRESS: {
       const data = action.payload;
       return {
@@ -113,11 +104,12 @@ export default function (state = initial_state, action) {
         isLocationSearched: data,
       };
     }
-    case types.LAST_BID_INFO: {
+
+    case types.IS_REFRESH_HOME: {
       const data = action.payload;
       return {
         ...state,
-        lastBidInfo: data,
+        refreshType: data,
       };
     }
 

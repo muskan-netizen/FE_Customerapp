@@ -80,11 +80,6 @@ export default function Signup4({ navigation }) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  // var getPhonesCallingCodeAndCountryData = codes.filter(x => x.isoCode2 == RNLocalize.getCountry())
-  console.log(
-    getPhonesCallingCodeAndCountryData,
-    ' getPhonesCallingCodeAndCountryData[0].countryCodes[0]',
-  );
   const [state, setState] = useState({
     isLoading: false,
     callingCode:
@@ -174,7 +169,6 @@ export default function Signup4({ navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'userRegistrationDocumentres');
         updateState({
           addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
           addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
@@ -287,15 +281,9 @@ export default function Signup4({ navigation }) {
       .then((res) => {
         console.log(res, 'THIS IS RESPONSE');
         updateState({ isLoading: false });
-        navigation.navigate(navigationStrings.OTP_VERIFICATION, {
-          username: phoneNumber,
-          dialCode: callingCode,
-          countryData: cca2,
-        });
-
-        // if (!!res.data) {
-        //   checkEmailPhoneVerified(res.data);
-        // }
+        if (!!res.data) {
+          checkEmailPhoneVerified(res.data);
+        }
       })
       .catch(errorMethod);
     // } else {

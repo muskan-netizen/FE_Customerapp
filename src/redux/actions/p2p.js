@@ -1,4 +1,7 @@
 import {
+  ADD_PAYMENT_CARD,
+  DELETE_PAYMENT_CARD,
+  GET_ALL_PAYMENT_CARDS,
   GET_AVAILABLE_ATTRIBUTES,
   GET_DETAILS_OF_INFLUENCE_CATEGORY,
   GET_INFLUENCER_REFER_EARN_CATEGORIES,
@@ -6,6 +9,7 @@ import {
   GET_PRODUCT_BY_P2P_CATEGORY,
   SAVE_INFULENCER_INFO,
   SUBMIT_PRODUCT_WITH_ATTRIBUTE,
+  UPDATE_EMIRATES_INFO,
   VIEW_ALL_CATEGORIES,
 } from '../../config/urls';
 import { apiGet, apiPost } from '../../utils/utils';
@@ -47,4 +51,21 @@ export function saveInfluencerInfo(data = {}, headers = {}) {
 
 export function getAllCategories(data = {}, headers = {}) {
   return apiPost(VIEW_ALL_CATEGORIES, data, headers);
+}
+
+export function addPaymentCard(data = {}, headers = {}) {
+  return apiPost(ADD_PAYMENT_CARD, data, headers);
+}
+
+
+export function getAllPaymentCards(data = {}, headers = {}) {
+  return apiGet(GET_ALL_PAYMENT_CARDS, data, headers);
+}
+
+export function deletePaymentCard(data = {}, headers = {}) {
+  return apiPost(DELETE_PAYMENT_CARD, data, headers);
+}
+
+export function updateEmiratesInfo(data = {}, headers = {}) {
+  return apiPost(UPDATE_EMIRATES_INFO, data, headers);
 }

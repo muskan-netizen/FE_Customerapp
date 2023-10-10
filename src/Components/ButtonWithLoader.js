@@ -1,11 +1,11 @@
 import React from 'react';
-import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
-import {useSelector} from 'react-redux';
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
-import {moderateScaleVertical} from '../styles/responsiveSize';
+import { moderateScaleVertical } from '../styles/responsiveSize';
 const ButtonWithLoader = ({
-  onPress = () => {},
+  onPress = () => { },
   btnText = '',
   btnTextStyle = {},
   btnStyle = {},
@@ -13,9 +13,9 @@ const ButtonWithLoader = ({
   color = colors.white,
   disabled = false,
 }) => {
-  const {appStyle} = useSelector((state) => state?.initBoot || {});
+  const { appStyle } = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
   return (
     <TouchableOpacity
       style={{
@@ -29,7 +29,7 @@ const ButtonWithLoader = ({
       {isLoading ? (
         <ActivityIndicator size="small" color={color} />
       ) : (
-        <Text style={{...commonStyles.buttonTextWhite, color, ...btnTextStyle}}>
+        <Text style={{ ...commonStyles.buttonTextWhite, color, ...btnTextStyle }}>
           {btnText}
         </Text>
       )}
