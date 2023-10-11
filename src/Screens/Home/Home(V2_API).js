@@ -434,7 +434,7 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
-      let vendorType = appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
+      let vendorType = appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff ? 'delivery' : !!selectedVendorType ? selectedVendorType : defaultVendorType
       let apiData = {
         type: vendorType,
         ...latlongObj,
@@ -547,8 +547,7 @@ export default function Home({ route, navigation }) {
 
 
   const onPressVendor = (item) => {
-
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         id: item?.id,
         vendor: true,
@@ -597,7 +596,7 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
@@ -615,7 +614,7 @@ export default function Home({ route, navigation }) {
       return
     }
 
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
 
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
@@ -786,7 +785,7 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressProduct = (item) => {
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
         data: {
           is_product: true,
@@ -799,7 +798,6 @@ export default function Home({ route, navigation }) {
 
     }
   }
-
 
 
   //Reloads the screen
