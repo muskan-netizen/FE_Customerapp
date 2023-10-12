@@ -1598,7 +1598,7 @@ function ChooseVechile({ navigation, route }) {
                         )}
                     </Text>
                 </View>
-                {!!allListedDrivers[0]?.arrival_time &&
+                {!isEmpty(allListedDrivers)&&!!allListedDrivers[0]?.arrival_time &&
                     <View style={{
                         flexDirection: "row",
                         alignItems: "center",
