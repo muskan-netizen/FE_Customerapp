@@ -511,22 +511,40 @@ const P2pProductDetail = ({ navigation, route, item }) => {
   };
 
 
+
   const onTimeSlider = (value, key) => {
-    console.log(value, 'dlsjdf;js;f')
     let val = value[0]
+    let minSelectedDate = null
+    let selectedDatesCount = 0
+
+    for (let val in selectedDates) {
+      if (!!selectedDates[val]?.is_selected) {
+        selectedDatesCount = selectedDatesCount + 1
+        if (!minSelectedDate) {
+          minSelectedDate = val
+        }
+      }
+    }
+
+
+    let currentTime = moment(new Date()).format("h")
+    let currentTimeToSet = moment(new Date()).format("hh:mm")
 
     if (val === 24 || val === 12) {
       key == "P" ? setPickUpTime(val === 24 ? "12:00 AM" : "12:00 PM") : setDropOffTime(val === 24 ? "12:00 AM" : "12:00 PM")
     }
     else if (val >= 13) {
-      key == "P" ? setPickUpTime(`${val - 12}:00 PM`) : setDropOffTime(`${val - 12}:00 PM`)
+
+      key == "P" ? setPickUpTime((minSelectedDate == moment(new Date()).format("YYYY-MM-DD") && val - 12 == currentTime) ? `${currentTimeToSet} PM` : `${val - 12}:00 PM`) : setDropOffTime((minSelectedDate == moment(new Date()).format("YYYY-MM-DD") && val - 12 == currentTime && selectedDatesCount === 1) ? `${currentTimeToSet} PM` : `${val - 12}:00 PM`)
+
 
     }
     else {
-      key == "P" ? setPickUpTime(`${val}:00 AM`) : setDropOffTime(`${val}:00 AM`)
+      key == "P" ? setPickUpTime((minSelectedDate == moment(new Date()).format("YYYY-MM-DD") && val - 12 == currentTime) ? `${currentTimeToSet} AM` : `${val}:00 AM`) : setDropOffTime((minSelectedDate == moment(new Date()).format("YYYY-MM-DD") && val - 12 == currentTime && selectedDatesCount === 1) ? `${currentTimeToSet} AM` : `${val}:00 AM`)
     }
 
   }
+
 
 
 

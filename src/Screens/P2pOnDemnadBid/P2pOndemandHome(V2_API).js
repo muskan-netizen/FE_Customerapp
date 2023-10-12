@@ -431,6 +431,7 @@ export default function Home({ route, navigation }) {
         language: languages?.primary_language?.id,
       };
       console.log('sending api data header', apiData, apiHeader);
+      console.log(JSON.stringify({ ...apiData, action: 2 }), "fasjdgjfikh")
 
       actions
         .homeDataV2({ ...apiData, action: 2 }, apiHeader)

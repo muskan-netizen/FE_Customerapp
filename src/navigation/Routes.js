@@ -25,6 +25,7 @@ import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
 import TabRoutes from './TabRoutes';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesP2p from './TabRoutesP2p';
+import TabRoutesEcommerce from './TabRoutesEcommerce';
 
 
 const Stack = createNativeStackNavigator();
@@ -63,14 +64,14 @@ export default function Routes() {
               /> : <Stack.Screen
                 name={navigationStrings.TAB_ROUTES}
                 component={
-                  !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand :
-                    businessType === 4
-                      ? TaxiTabRoutes
-                      : businessType === 8
-                        ? TabRoutesP2p
-                        : businessType === 10
-                          ? TabRoutesEcommerce
-                          : TabRoutes
+                  // !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand :
+                  businessType === 4
+                    ? TaxiTabRoutes
+                    : businessType === 8
+                      ? TabRoutesP2pOnDemand
+                      : businessType === 10
+                        ? TabRoutesEcommerce
+                        : TabRoutes
                 }
                 options={{ gestureEnabled: false }}
               />
@@ -88,7 +89,7 @@ export default function Routes() {
 
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN}
-          component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pChatScreen : ChatScreen}
+          component={businessType === 8 ? P2pChatScreen : ChatScreen}
         />
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
@@ -96,7 +97,7 @@ export default function Routes() {
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM}
-          component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pChatRoom : ChatRoom}
+          component={businessType === 8 ? P2pChatRoom : ChatRoom}
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM_FOR_VENDOR}

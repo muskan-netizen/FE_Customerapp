@@ -13,9 +13,9 @@ import { showError } from '../../../utils/helperFunctions'
 import navigationStrings from '../../../navigation/navigationStrings'
 import { useDarkMode } from 'react-native-dynamic'
 import { MyDarkTheme } from '../../../styles/theme'
+import { isEmpty } from 'lodash'
 
 export default function RentTypeList({ route, navigation }) {
-    console.log(route, "<===route")
     const { appData, currencies, languages, appStyle, themeColors, themeToggle, themeColor } = useSelector(
         state => state?.initBoot,
     );
@@ -24,7 +24,7 @@ export default function RentTypeList({ route, navigation }) {
     const fontFamily = appStyle?.fontSizeData;
     const styles = stylesFunc({ fontFamily, themeColors })
     const paramData = route?.params
-
+    console.log(paramData, "fasdlkfsajdf")
     const [orderHistory, setOrderHistory] = useState([])
     const [isLoadingOrders, setIsLoadingOrders] = useState(true);
     const [isRefreshing, setisRefreshing] = useState(false);
@@ -49,7 +49,6 @@ export default function RentTypeList({ route, navigation }) {
                 },
             )
             .then(res => {
-                console.log(res, '<===res getAllP2pOrders');
                 console.log(res, '<===res getAllP2pOrders');
                 setIsLoadingOrders(false);
                 setOrderHistory(
@@ -90,11 +89,15 @@ export default function RentTypeList({ route, navigation }) {
 
     const renderItem = useCallback(
         ({ item }) => {
+
             return <P2pProductComp item={item} isMoreDetails={true} onViewDetails={() => navigation.navigate(navigationStrings.P2P_ORDER_DETAIL, {
-                order_id: item?.order_id
+                order_id: item?.order_id,
+                selectedTab: paramData?.selectedTab,
+                isAvailableToRaiseIssue: paramData?.userType == "borrower" ? true : false,
+                type: paramData?.userType
             })} />
         },
-        [],
+        [paramData, orderHistory],
     )
 
     const ListEmptyComp = () => <View
@@ -119,7 +122,9 @@ export default function RentTypeList({ route, navigation }) {
 
     return (
         <WrapperContainer isLoading={isLoadingOrders} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} >
-            <OoryksHeader leftTitle={`${paramData?.type === "upcoming" ? "Upcoming" : "Ongoing"} Rents`} />
+            <OoryksHeader
+                leftTitle={`${paramData?.type == "past" ? "Past" : paramData?.type === "upcoming" ? "Upcoming" : "Ongoing"} Rents`}
+            />
             <View style={{
                 height: 1,
                 backgroundColor: colors.textGreyO
@@ -128,7 +133,8 @@ export default function RentTypeList({ route, navigation }) {
                 flex: 1,
                 paddingTop: moderateScaleVertical(32)
             }}>
-                <Text style={{ ...styles.titleTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>As {paramData?.userType === "borrower" ? "Borrower" : "Lender"}</Text>
+
+                {!isEmpty(orderHistory) ? <Text style={{ ...styles.titleTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>As {paramData?.userType === "borrower" ? "Borrower" : "Lender"}</Text> : <></>}
                 <FlatList
                     data={orderHistory}
                     renderItem={renderItem}

@@ -134,6 +134,9 @@ export default function P2pProductComp({
                 </View>
             </View>
 
+            {
+                console.log(item?.products, "fasdfadsf")
+            }
 
             {isMoreDetails && !isEmpty(item?.products) && <View>
                 <LeftImgRightTxt image={imagePath.icTimeOrders} text={moment.utc(item?.products[0]?.start_date_time).local().format('DD MMM YYYY hh:mm:A')

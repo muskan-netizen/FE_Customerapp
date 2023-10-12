@@ -272,7 +272,7 @@ export default function ({ navigation }) {
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? P2pOndemandProductDetail : P2pProductDetail}
+        component={P2pOndemandProductDetail}
       />
       <Stack.Screen name={navigationStrings.MY_POSTS} component={MyP2pPosts} />
       <Stack.Screen name={navigationStrings.ATTRIBUTE_INFORMATION} component={P2pOndemandAttributeInformation} />

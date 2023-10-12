@@ -186,8 +186,8 @@ export default function OrderSuccess({ navigation, route }) {
           }}>
           <ButtonWithLoader
             isLoading={isLoadingChat}
-            btnText={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? strings.START_CHAT : strings.VIEW_DETAIL}
-            onPress={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? createRoom : viewOrderDetail}
+            btnText={appStyle?.homePageLayout === 8 ? strings.START_CHAT : strings.VIEW_DETAIL}
+            onPress={appStyle?.homePageLayout === 8 ? createRoom : viewOrderDetail}
             textStyle={{ color: themeColors.secondary_color }}
             borderRadius={moderateScale(13)}
             btnStyle={{

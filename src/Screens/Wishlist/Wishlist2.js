@@ -111,7 +111,7 @@ export default function Wishlist2({ navigation, route }) {
     return (
       <WishlistCard
         data={item.product}
-        onPress={!!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? () => navigation?.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+        onPress={!appStyle?.homePageLayout == 8 ? () => navigation?.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
           product_id: item?.product_id,
         }) : moveToNewScreen(navigationStrings.PRODUCTDETAIL, item.product)}
       />

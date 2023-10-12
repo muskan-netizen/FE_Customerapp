@@ -109,7 +109,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
   const [price, setPrice] = useState(
-    !!productData?.price ? String(productData?.price) : '',
+    !!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 ? productData?.price : productData?.price > 0 ? `${productData?.price}/day` : '',
   );  // const [emirateId, setEmirateId] = useState('')
   const [productLocation, setProductLocation] = useState(
     productData?.productLocation || {},
@@ -226,12 +226,12 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       });
     });
 
-    let updatedPrice
-    if (!!price && !!price.endsWith('/day')) {
-      updatedPrice = price.replace('/day', '')
-    }
+    let updatedPrice = price.replace('/day', '')
+
 
     formData.append('category_id', paramData?.category_id);
+    formData.append('sku', productData?.sku || '');
+    formData.append('product_id', productData?.id || '');
     formData.append('product_name', name);
     formData.append('body_html', description);
     formData.append('price', updatedPrice);
@@ -283,19 +283,39 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     console.log(formData, '<===formData onSubmitAttributes');
 
 
-    actions
-      .submitProductWithAttributes(formData, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        'Content-Type': 'multipart/form-data',
-      })
-      .then((res) => {
-        setLoadingSubmitAttributes(false);
-        console.log(res, '<===response onSubmitAttributes');
-        setIsProductAddedModal(true);
-      })
-      .catch(errorMethod);
+    if (!!productData) {
+      actions
+        .updateVendorProduct(formData, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          'Content-Type': 'multipart/form-data',
+        })
+        .then(res => {
+          actions.onRefreshHome("Y")
+          setLoadingSubmitAttributes(false);
+          showSuccess(res?.message);
+          navigation?.goBack();
+        })
+        .catch(error => {
+          console.log(error, '<===error');
+        });
+    } else {
+      actions
+        .submitProductWithAttributes(formData, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          'Content-Type': 'multipart/form-data',
+        })
+        .then(res => {
+          setLoadingSubmitAttributes(false);
+          console.log(res, '<===response onSubmitAttributes');
+          actions.onRefreshHome("Y")
+          setIsProductAddedModal(true);
+        })
+        .catch(errorMethod);
+    }
   };
 
 
@@ -673,7 +693,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
-      isLoading={isLoadingSubmitAttributes}>
+      isLoading={isLoadingAttributes}>
       <View
         style={{
           flex: 1,

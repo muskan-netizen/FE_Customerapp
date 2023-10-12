@@ -216,6 +216,7 @@ export default function MyP2pPosts({ route, navigation }) {
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,
           }).then((res) => {
+            actions.onRefreshHome("Y")
             showSuccess(res?.message)
             getAllPosts()
 

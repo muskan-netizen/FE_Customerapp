@@ -429,7 +429,8 @@ export default function MyOrders({ navigation, route }) {
                                                 isRightText={upcomingOngoingOrders?.borrower?.length > 1}
                                                 onPressRight={() => navigation.navigate(navigationStrings.RENT_TYPE_LISTING, {
                                                     userType: "borrower",
-                                                    type: selectedTab?.id == 5 ? "past" : selectedTab?.id == 2 ? "upcoming" : "ongoing"
+                                                    type: selectedTab?.id == 5 ? "past" : selectedTab?.id == 2 ? "upcoming" : "ongoing",
+                                                    selectedTab: selectedTab
                                                 })} />
                                             <FlatList
                                                 data={upcomingOngoingOrders?.borrower}

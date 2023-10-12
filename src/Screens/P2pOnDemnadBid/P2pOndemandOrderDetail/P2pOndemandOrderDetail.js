@@ -367,14 +367,14 @@ export default function P2pOrderDetail({ route, navigation }) {
                             additional_preferences,
                             currencies?.primary_currency?.symbol)}</Text>
                     </View>}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
+                    {orderData?.loyalty_amount_saved > 0 && <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{strings.LOYALTYPOINTS}</Text>
                         <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>- {tokenConverterPlusCurrencyNumberFormater(
                             orderData?.loyalty_amount_saved,
                             digit_after_decimal,
                             additional_preferences,
                             currencies?.primary_currency?.symbol)}</Text>
-                    </View>
+                    </View>}
                     {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Promo Code</Text>
                         <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}></Text>

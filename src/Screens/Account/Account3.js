@@ -442,24 +442,22 @@ export default function Account3({ navigation }) {
               />)
             }
           })}
-          {!!userData?.auth_token &&
-
-            (!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? null : (
-              <ListItemHorizontal
-                centerContainerStyle={{ flexDirection: 'row' }}
-                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
-                  isBack: true,
-                })}
-                iconLeft={imagePath.icMyPosts}
-                centerHeading={strings.MY_POSTS}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-              />
-            ))}
+          {!!(!!userData?.auth_token && businessType == 8) &&
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
+                isBack: true,
+              })}
+              iconLeft={imagePath.icMyPosts}
+              centerHeading={strings.MY_POSTS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            />
+          }
           {/* {!!userData?.auth_token && getBundleId() != appIds.sxm2go ? (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
