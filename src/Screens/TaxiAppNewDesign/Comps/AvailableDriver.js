@@ -21,6 +21,7 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import ListEmptyCar from '../../TaxiApp/ChooseCarTypeAndTime/ListEmptyCar';
 import stylesFun from '../styles';
+import { isEmpty } from 'lodash';
 
 export default function AvailableDriver({
   rideType,
@@ -111,7 +112,7 @@ export default function AvailableDriver({
                   currencies
                 )}
               </Text>
-              {!!allListedDrivers[0]?.arrival_time && <Text
+              {!isEmpty(allListedDrivers) && !!allListedDrivers[0]?.arrival_time &&  <Text
                 style={{
                   ...styles.vechilePriceName, color: isDarkMode
                     ? colors.whiteOpacity50
