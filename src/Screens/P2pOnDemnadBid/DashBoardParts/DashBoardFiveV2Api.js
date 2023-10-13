@@ -77,7 +77,7 @@ const DashBoardFiveV2Api = ({
 
   const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <View style={{ width: width / 4.2 }}>
+      <View style={{ width: width / 4.2, flex: 1 }}>
         <HomeCategoryCardP2p
           imgRadius={2}
           data={item}
@@ -454,11 +454,11 @@ const DashBoardFiveV2Api = ({
       <View style={{
         marginTop: moderateScaleVertical(20)
       }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(16) }}>
-          <Text style={{ fontSize: textScale(16), fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{strings.CATEGORIES}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(16), alignItems: "center" }}>
+          <Text style={{ fontSize: textScale(16), fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{strings.CATEGORIES}</Text>
           <TouchableOpacity
             onPress={() => { navigation.navigate(navigationStrings.ALL_CATEGORIES) }}>
-            <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.regular, fontSize: textScale(12) }}>{strings.VIEW_ALL}</Text>
+            <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.regular, fontSize: textScale(11) }}>{strings.VIEW_ALL}</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -740,7 +740,7 @@ const DashBoardFiveV2Api = ({
         sliderWidth={width - moderateScale(32)}
         itemWidth={width - moderateScale(32)}
         onSnapToItem={(index) => setSlider1ActiveSlide(index)}
-        onPress={(item) => bannerPress(item)}
+        // onPress={(item) => bannerPress(item)}
         isDarkMode={isDarkMode}
       />
     </View> : <React.Fragment />

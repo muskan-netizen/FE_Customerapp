@@ -230,6 +230,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
 
   const handleRefresh = () => {
     setP2pCategoriesRefreshing(true);
+    setcurrSelectedFilter({ id: 1, type: 'All' })
     getP2Pcategories();
   };
 
@@ -534,6 +535,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
                   )}
                   renderItem={renderAttributeOptions}
                   ListFooterComponent={listFooterComponent}
+
                 />
               </View>
               <FlashMessage ref={modalRef} position={'top'} />
@@ -679,6 +681,13 @@ const P2pOndemandPostCategory = ({ navigation }) => {
               ListFooterComponent={() => <View style={{
                 height: moderateScaleVertical(80)
               }} />}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isP2pCategoriesRefreshing}
+                  onRefresh={handleRefresh}
+                  tintColor={themeColors.primary_color}
+                />
+              }
             />
           )}
         </View>

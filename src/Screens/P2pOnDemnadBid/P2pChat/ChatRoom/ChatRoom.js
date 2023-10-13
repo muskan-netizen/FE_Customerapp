@@ -108,7 +108,7 @@ export default function ChatRoom({ navigation, route }) {
             console.log('room res++++', res);
         } catch (error) {
             console.log('error raised in start chat api', error);
-            showError(error?.message);
+            showError(error?.message || "Error occured");
             updateState({ isLoading: false });
         }
     };

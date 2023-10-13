@@ -45,7 +45,7 @@ import {
   cameraHandler,
   checkValueExistInAry,
 } from '../../../utils/commonFunction';
-import { showError } from '../../../utils/helperFunctions';
+import { showError, showSuccess } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
 import OoryksAccountsHeader from '../../../Components/OoryksAccountsHeader';
@@ -91,7 +91,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const { location } = useSelector(state => state?.home);
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
+  console.log(!!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 ? productData?.price : productData?.price > 0 ? `${productData?.price}/day` : '', "fafksdfh")
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors });
   const [attributeInfo, setAttributeInfo] = useState([]);
@@ -109,7 +109,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
   const [price, setPrice] = useState(
-    !!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 ? productData?.price : productData?.price > 0 ? `${productData?.price}/day` : '',
+    !!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 ? `${productData?.price}/day` : productData?.price > 0 ? String(productData?.price) : '',
   );  // const [emirateId, setEmirateId] = useState('')
   const [productLocation, setProductLocation] = useState(
     productData?.productLocation || {},
@@ -152,6 +152,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [selectedLocationAtt, setSelectedLocationAtt] = useState({})
   const { updateData, indicator, type, selectViaMap, isVisible, isDelivery } = state;
   const updateState = data => setState(state => ({ ...state, ...data }));
+
 
 
 
@@ -230,8 +231,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
 
     formData.append('category_id', paramData?.category_id);
-    formData.append('sku', productData?.sku || '');
-    formData.append('product_id', productData?.id || '');
+    !!productData?.sku && formData.append('sku', productData?.sku || '');
+    !!productData?.id && formData.append('product_id', productData?.id || '');
     formData.append('product_name', name);
     formData.append('body_html', description);
     formData.append('price', updatedPrice);
@@ -248,9 +249,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       formData.append('file[]', item);
     });
 
-    productImgs.map((item) => {
-      formData.append('file[]', item);
-    });
+
     product360Imgs.map((item) => {
       formData.append('file_360[]', item);
     });
@@ -301,6 +300,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           console.log(error, '<===error');
         });
     } else {
+      console.log(JSON.stringify(formData), "asdfasdfsdf")
       actions
         .submitProductWithAttributes(formData, {
           code: appData?.profile?.code,
@@ -662,7 +662,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   );
 
   const handleBlur = () => {
-    if (!!price && !price.endsWith('/day')) {
+    if (!!price && !price?.endsWith('/day')) {
       setPrice(price + '/day');
     }
   };
@@ -962,7 +962,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                     width: moderateScale(350),
                     alignSelf: 'center',
                     borderRadius: 8,
-                    marginBottom: moderateScaleVertical(60),
+                    marginBottom: moderateScaleVertical(40),
                     backgroundColor: colors.white,
                   }}
                   textStyle={{
@@ -973,9 +973,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                   }
                 />
               }
-              <View style={{
-                height: moderateScaleVertical(16)
-              }} />
+
               <FlatList
                 data={attributeInfo}
                 keyboardShouldPersistTaps={'handled'}

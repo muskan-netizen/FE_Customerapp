@@ -125,6 +125,8 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                 `/${paramData?.id}?page=${pageNo}&limit=${limit}&product_list=true&type=p2p`,
                 {
                     attributes: filterAry,
+                    latitude: location?.latitude,
+                    longitude: location?.longitude
                 },
                 {
                     code: appData?.profile?.code,

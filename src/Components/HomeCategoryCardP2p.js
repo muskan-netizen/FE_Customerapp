@@ -54,15 +54,19 @@ const HomeCategoryCardP2p = ({
             height={moderateScale(60)}
             width={moderateScale(60)}
             uri={imageURI}
-            style={{}}
+
           />
         ) : (
           <View>
             <FastImage
               style={{
-                height: moderateScale(50),
-                width: moderateScale(50),
+                height: moderateScale(55),
+                width: moderateScale(55),
                 borderRadius: moderateScale(12),
+                borderWidth: 1,
+                borderColor: colors.borderColor,
+
+
               }}
               source={{
                 uri: imageURI,
@@ -77,11 +81,11 @@ const HomeCategoryCardP2p = ({
       </View>
       <View>
         <Text
-          // numberOfLines={1}
+          numberOfLines={2}
           style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
-            fontFamily: fontFamily?.medium,
-            fontSize: textScale(11),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(12),
             textAlign: 'center',
             marginTop: moderateScaleVertical(12)
           }}>

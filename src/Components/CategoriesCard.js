@@ -16,12 +16,11 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
     const fontFamily = appStyle?.fontSizeData;
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const [isValidImg, setisValidImg] = useState(true)
-    console.log(item, "fsdafksd")
+
     let imageURI = getImageUrl(
         item?.icon?.image_fit,
         item?.icon?.image_path,
-        '500/500',
+        '1000/1000',
     );
     return (
         <TouchableOpacity style={{
@@ -32,7 +31,7 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
                 height: moderateScaleVertical(149),
                 width: moderateScale(166),
                 position: "absolute",
-                backgroundColor: isDarkMode ? colors.whiteOpacity5 : colors.blackOpacity20,
+                backgroundColor: isDarkMode ? colors.whiteOpacity5 : colors.blackOpacity30,
                 zIndex: 1
             }} />
             <FastImage

@@ -68,7 +68,8 @@ export default function DashBoardHeaderFive({
       <View style={{
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+
       }}>
         {!!(
           profileInfo &&
@@ -107,8 +108,9 @@ export default function DashBoardHeaderFive({
                 color: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.black,
-                fontFamily: fontFamily.medium,
-                maxWidth: moderateScale(180)
+                fontFamily: fontFamily.regular,
+                maxWidth: moderateScale(180),
+                fontSize: textScale(12)
               }
             }>
             {currentLocation?.address || location?.address}
@@ -157,7 +159,8 @@ export default function DashBoardHeaderFive({
               source={imagePath.icSearchNew}
             />
             <Text style={{
-              fontFamily: fontFamily?.medium, fontSize: textScale(14),
+              fontFamily: fontFamily?.regular,
+              fontSize: textScale(13),
               marginLeft: moderateScale(16),
               color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70
             }}>Search here...</Text>

@@ -446,7 +446,7 @@ const DashBoardFiveV2Api = ({
           width: moderateScale(100),
           height: moderateScale(100),
           borderRadius: 8,
-          alignSelf:'center'
+          alignSelf: 'center'
         }}
         containerStyle={{
           width: width / 3.2,
@@ -558,7 +558,7 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderCategories = useCallback(({ item, index }) => {
-    console.log(appStyle?.homePageLayout)
+    console.log(appStyle?.homePageLayout, "sadfj")
     switch (appStyle?.homePageLayout) {
       case 1:
         return (

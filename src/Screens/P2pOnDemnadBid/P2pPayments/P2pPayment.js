@@ -169,7 +169,6 @@ const P2pPayment = ({ navigation, route, item }) => {
 
 
     const _directOrderPlace = () => {
-        console.log(paramData, "paramDataparamData")
         if (isEmpty(selectedPayment)) {
             showError(strings.SELECT_PAYMENT_METHOD);
             return;
@@ -183,7 +182,7 @@ const P2pPayment = ({ navigation, route, item }) => {
         data['is_gift'] = 0;
         data['specific_instructions'] = '';
         data['amount'] = Number(paramData?.totalPayableAmount);
-        data['plateform_fee'] = Number(cartItemCount?.data?.plateform_fee);
+        // data['plateform_fee'] = Number(cartItemCount?.data?.plateform_fee);
         data['days'] = cartItemCount?.data?.products[0]?.vendor_products[0]?.days
         data['product_price'] = paramData?.productDetails?.price
         data['total_rental_price'] = paramData?.productDetails?.price * paramData?.productDetails.days
