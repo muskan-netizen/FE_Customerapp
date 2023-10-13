@@ -24,6 +24,8 @@ import {
   DECLINE_RIDE_BID,
   ACCEPT_RIDE_BID,
   ACCEPT_RIDE_FOR_BID,
+  SEARCH_PRODUCT_BY_TYPE,
+  RENTAL_PROTECTION,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
 import store from '../store';
@@ -430,4 +432,13 @@ export const onRefreshHome = (flag) => {
     payload: flag,
   });
 };
+
+
+export const searchProductByType = (data,headers={}) => {
+  return apiPost(SEARCH_PRODUCT_BY_TYPE, data, headers);
+}
+
+export const rentalProtection = ( data,headers={}) => {
+  return apiPost(RENTAL_PROTECTION , data, headers);
+}
 

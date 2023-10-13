@@ -23,6 +23,7 @@ import strings from '../../../constants/lang';
 // import DashBoardSeven from '../DashboardViews/DashBoardSeven';
 import socketServices from '../../../utils/scoketService';
 import { MyDarkTheme } from '../../../styles/theme';
+import CarRentHomeScreen from './CarRentHomeScreen/CarRentHomeScreen';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -619,7 +620,7 @@ console.log(res, "res>>>>>>>>>")
 
   const renderHomeScreen = () => {
 
-    switch (appStyle?.homePageLayout) {
+    switch (5) {
       case 4:
         return (
           <TaxiHomeDashbord
@@ -639,9 +640,12 @@ console.log(res, "res>>>>>>>>>")
         );
       case 5:
         return (
-          <View>
-            
-          </View>
+
+             <CarRentHomeScreen
+            curLatLong={locationObj}
+            location={locationObj}
+          />
+
           // <DashBoardSeven
           //   handleRefresh={() => handleRefresh()}
           //   bannerPress={(item) => bannerPress(item)}

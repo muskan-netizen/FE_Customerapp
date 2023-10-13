@@ -1191,4 +1191,37 @@ Amount`,
   ENTER_VALID_DETAILS: 'Please fill valid card details',
   CARDS: 'Cards',
   SAVED_CARDS: 'Saved Cards',
+
+  // carrental 
+  CONTINUE_TO_ATLANRIC:"Continue to Atlantic",
+  SHOW_CARS:'SHOW CARS',
+  MY_BOOKINGS:'My Bookings',
+  CURRENT_LOCATION:'Current Location',
+  RETURN_LOCATION:'Return Location',
+  WHERE:'Where ?',
+  SAME_AS_PICKUP_LOCATION:'Same as pickup location',
+  RETURN_DATE:'RETURN DATE',
+  PICKUP_DATE: 'PICKUP DATE',
+  DRIVER_LICENSE_NO:'Driver Licence Number',
+  LICENSE_ISSUE_DATE:'License Issue Date',
+  LICENSE_EXPIRY_DATE:'License expiry Date',
+  CHOOSE_PAYMENT_METHOD:'Choose Payment Method',
+  CLEAR_ALL:'Clear All',
+  SELECT_PICKUP_DATE_TIME:'Select Pickup Date & Time',
+  SELECT_RETURN_DATE_TIME:'Select Return Date & Time',
+  READ_MORE: 'Read More',
+  MY_CURRENT_LOCATION: 'My Current Location',
+  DIFFERENT_RETURN_LOCATION:'Different Return Location',
+  SEATS:'Seats',
+  MAIN_FEATURES:'Main Features',
+  TOTAL_PRICE: 'Total Price',
+  NEXT:'Next',
+  SKIP_FOR_NOW: "Skip For Now",
+  REMOVE_PROTECTION: 'Remove Protection',
+  ADD_PROTECTION:'Add Protection',
+
+
+
+
+
 };

@@ -216,5 +216,35 @@ export const getCardImage = (brand) => {
                 imagePath.icUnknownCard
 }
 
+export const numberFormate = (value) => {
+  if (value != undefined || value != null) {
+    return Number(value)
+  }
+return 0
+}
+export const numberOfArraySum = (value = []) => {
+  let sum = 0;
+    value.forEach(num => {
+      if (typeof num == 'undefined') {
+        sum = 0 ;
+      } else {
+        sum += Number(num)
+      }
+    });  
+  return sum;
+};
+export const getSomeDataFromArray = ( key, array ) => {
+  let data = []
+  array.map((item) => {
+    if (key.includes(item.key_name || item.title)) {
+      data.push(item)
+    }
+  })
+  console.log(data,'arrayarrayarrayarray');
+
+return data
+
+}
+
 
 export { cameraHandler, currencyNumberFormatter, cameraImgVideoHandler };

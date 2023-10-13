@@ -160,6 +160,17 @@ export default ({fontFamily, buttonTextColor}) => {
       fontFamily: fontFamily?.regular,
       opacity: 0.7,
       textAlign: 'left',
+    }, regularFont12: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+    },
+    regularFont14: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+  },
+    flexRowJustifyConten: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
   });
   return styles;

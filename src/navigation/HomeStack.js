@@ -59,7 +59,10 @@ import {
   Wishlist2,
   EcomOrderAgain,
   ProductPowerConumption,
-  Category
+  Category,
+  AvailableCars,
+  ProductDetail3,
+  ReviewBooking
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -106,9 +109,11 @@ export default function () {
   };
 
   const renderProductDetailsScreens = () => {
-    switch (appStyle?.homePageLayout) {
+    switch (3) {
       case 2:
         return ProductDetail2;
+        case 3:
+          return ProductDetail3;
       default:
         return ProductDetail;
     }
@@ -331,8 +336,15 @@ export default function () {
         name={navigationStrings.CATEGORY}
         component={Category}
       />
+  <Stack.Screen
+        name={navigationStrings.AVAILABLE_CARS}
+        component={AvailableCars}
+      />
 
-
+<Stack.Screen
+        name={navigationStrings.REVIEW_BOOKING}
+        component={ReviewBooking}
+          />
     </Stack.Navigator>
   );
 }

@@ -17,10 +17,13 @@ import {appIds} from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 export default function TaxiTabRoutes(props) {
+  let showBottomBar_ = true;
+
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -45,7 +48,33 @@ export default function TaxiTabRoutes(props) {
     } else {
     }
   };
-
+  const getTabBarVisibility = (route, navigation, screens = []) => {
+    if (navigation && navigation.isFocused && navigation.isFocused()) {
+      const route_name = getFocusedRouteNameFromRoute(route);
+      if (screens.includes(route_name)) {
+        showBottomBar_ = false;
+        return false;
+      }
+      showBottomBar_ = true;
+      return true;
+    }
+  };
+  const getCustomTabBar = (props) => {
+    if (showBottomBar_) {
+      switch (appStyle?.tabBarLayout) {
+        case 1:
+          return <CustomBottomTabBar {...props} />;
+        case 2:
+          return <CustomBottomTabBarTwo {...props} />;
+        case 3:
+          return <CustomBottomTabBarThree {...props} />;
+        case 4:
+          return <CustomBottomTabBarFour {...props} />;
+        case 5:
+          return <CustomBottomTabBarFive {...props} />;
+      }
+    }
+  }
   return (
     <Tab.Navigator
       backBehavior={'initialRoute'}
@@ -58,45 +87,57 @@ export default function TaxiTabRoutes(props) {
           color: colors.white,
         }
       }}
-      tabBar={(props) => {
-        switch (appStyle?.tabBarLayout) {
-          case 1:
-            return <CustomBottomTabBar {...props} />;
-          case 2:
-            return <CustomBottomTabBarTwo {...props} />;
-          case 3:
-            return <CustomBottomTabBarThree {...props} />;
-          case 4:
-            return <CustomBottomTabBarFour {...props} />;
-          case 5:
-            return <CustomBottomTabBarFive {...props} />;
-        }
-      }}>
+      tabBar={getCustomTabBar}>
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
-        options={{
+        options={({ route, navigation }) =>({
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.PRODUCTDETAIL,
+
+          ]),
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({focused, tintColor}) => (
-            <Image
-              style={getImgStyle(focused)}
-              source={
-                appStyle?.tabBarLayout === 5
-                  ? focused
-                    ? imagePath.homeActive
-                    : imagePath.homeInActive
-                  : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.homeRedActive
-                    : imagePath.homeRedInActive
-                  : focused
-                  ? imagePath.tabAActive
-                  : imagePath.tabAInActive
-              }
-            />
-          ),
-          // unmountOnBlur: true,
-        }}
+            tabBarIcon: ({focused, tintColor}) => (
+              <Image
+                style={getImgStyle(focused)}
+                source={
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.homeActive
+                      : imagePath.homeInActive
+                    : appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.homeRedActive
+                      : imagePath.homeRedInActive
+                    : focused
+                    ? imagePath.tabAActive
+                    : imagePath.tabAInActive
+                }
+              />
+            ),
+        }) }
+        // options={{
+        //   tabBarLabel: strings.HOME,
+        //   tabBarIcon: ({focused, tintColor}) => (
+        //     <Image
+        //       style={getImgStyle(focused)}
+        //       source={
+        //         appStyle?.tabBarLayout === 5
+        //           ? focused
+        //             ? imagePath.homeActive
+        //             : imagePath.homeInActive
+        //           : appStyle?.tabBarLayout === 4
+        //           ? focused
+        //             ? imagePath.homeRedActive
+        //             : imagePath.homeRedInActive
+        //           : focused
+        //           ? imagePath.tabAActive
+        //           : imagePath.tabAInActive
+        //       }
+        //     />
+        //   ),
+        //   // unmountOnBlur: true,
+        // }}
       />
       <Tab.Screen
         component={MyOrders}

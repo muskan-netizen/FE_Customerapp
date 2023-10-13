@@ -861,3 +861,9 @@ export const SEND_ADMIN_NOTIFICATION = getApiUrl('/sendAdminNotification');
 export const SAVE_PAYOUT_DETAILS = getApiUrl('/user/saveVenderBankDetails');
 
 export const USE_WALLET_AMOUNT = getApiUrl('/cart/updateCartWalletAmount');
+
+
+// ----------------------------carrental custom api-----
+export const SEARCH_PRODUCT_BY_TYPE = getApiUrl('/product/search');
+export const RENTAL_PROTECTION = getApiUrl('/rental-protection');
+export const ADD_BOOKING_OPTIONS = getApiUrl('/cart/add-booking-option');

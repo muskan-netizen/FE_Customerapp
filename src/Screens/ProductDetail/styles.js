@@ -320,6 +320,15 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
        borderWidth: 1, 
        borderColor: colors.greyA, 
        marginVertical: moderateScaleVertical(12)
+    },
+    featureslist:{
+      padding: moderateScale(5),
+      flexDirection: 'row',
+      width: moderateScale(140),
+      marginRight: moderateScale(30),
+      justifyContent: 'space-between',
+      marginVertical: moderateScaleVertical(8),
+      alignItems: 'center',
     }
  
   });
