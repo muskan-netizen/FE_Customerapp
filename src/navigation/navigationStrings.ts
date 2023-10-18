@@ -184,6 +184,8 @@ export default {
   PRODUCT_POWER_CONSUMPTION: 'ProductPowerConumption',
   LIVESS: 'Livees',
   SAVED_PAYMENT_CARDS:"savedPaymentCards",
-  AVAILABLE_CARS:'AVAILABLE_CARS',
-  REVIEW_BOOKING:'REVIEW_BOOKING'
+  // car rental stacks
+  CAR_RENTAL_HOME:'CarRentalHome',
+  AVAILABLE_CARS:'AvailableCar',
+  REVIEW_BOOKING:'ReviewBooking'
 };

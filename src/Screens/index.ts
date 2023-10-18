@@ -212,6 +212,7 @@ export {default as ProductPowerConumption} from './ProductPowerConumption/Produc
 export {default as SavedPaymentCards} from './P2pOnDemnadBid/SavedPaymentCards/SavedPaymentCards';
 
 // -----------------Atlantic----------
+export { default as CarRentalScreen } from './CarRentHomeScreen/CarRentHomeScreen'
 export { default as AvailableCars } from './AvailableCars/AvailableCars'
 export {default as ProductDetail3} from './ProductDetail/ProductDetail3';
 export {default as ReviewBooking} from './ReviewBooking/ReviewBooking';

@@ -766,7 +766,7 @@ export default {
   flight: require('../assets/images/Atlantic/flight.png'),
   childSeat: require('../assets/images/Atlantic/child_seat.png'),
   nameSignBoard:require('../assets/images/Atlantic/name_sign_board.png'),
-
+  transmission:require('../assets/images/Atlantic/transmission.png'),
 
 
 };

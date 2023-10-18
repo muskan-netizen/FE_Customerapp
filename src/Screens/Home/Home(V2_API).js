@@ -1056,7 +1056,7 @@ export default function Home({ route, navigation }) {
   console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout')
 
   const renderHeaders = useCallback(() => {
-    switch (11) {
+    switch (appStyle?.homePageLayout) {
       case 1:
         return (
           <SafeAreaView>
@@ -1292,7 +1292,7 @@ export default function Home({ route, navigation }) {
     return (
       <>
         {renderHeaders()}
-        {/* {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ?
+        {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ?
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
@@ -1306,15 +1306,14 @@ export default function Home({ route, navigation }) {
 
             curLatLong={curLatLong}
             currentLocation={currentLocation}
-          /> :
-          <DashBoardFiveV2Api
+          /> : dineInType == 'car_rental' ? <DashBoardEleven
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
             isLoading={isLoading}
             isRefreshing={isRefreshing}
             appMainData={memorizsedAppMainData}
-            onPressCategory={(item) => onPressCategory(item)}
-            onPressVendor={(item) => onPressVendor(item)}
+            onPressCategory={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME)}
+            onPressVendor={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME)}
             isDineInSelected={isDineInSelected}
             selcetedToggle={selcetedToggle}
             tempCartData={memorizedTempCartData}
@@ -1334,40 +1333,41 @@ export default function Home({ route, navigation }) {
             showVendorCategory={true}
             scrollHandler={scrollHandler}
             priceType={priceType}
-            onPressProduct={onPressProduct}
+            onPressProduct={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME)}
 
-          />
-        } */}
-        <DashBoardEleven
-          handleRefresh={() => handleRefresh()}
-          bannerPress={(item) => bannerPress(item)}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          appMainData={memorizsedAppMainData}
-          onPressCategory={(item) => onPressCategory(item)}
-          onPressVendor={(item) => onPressVendor(item)}
-          isDineInSelected={isDineInSelected}
-          selcetedToggle={selcetedToggle}
-          tempCartData={memorizedTempCartData}
-          toggleData={memorizedAppData}
-          navigation={navigation}
-          onVendorFilterSeletion={onVendorFilterSeletion}
-          singleVendor={singleVendor}
-          onPressAddLaundryItem={onPressAddLaundryItem}
-          isLoadingAddons={isLoadingAddons}
-          selectedHomeCategory={selectedHomeCategory}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-          isSubscription={isSubscription}
-          selectedFilterType={selectedFilterType}
-          showAllProducts={showAllProducts}
-          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-          showVendorCategory={true}
-          scrollHandler={scrollHandler}
-          priceType={priceType}
-          onPressProduct={onPressProduct}
+          /> :
+            <DashBoardFiveV2Api
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={memorizsedAppMainData}
+              onPressCategory={(item) => onPressCategory(item)}
+              onPressVendor={(item) => onPressVendor(item)}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              tempCartData={memorizedTempCartData}
+              toggleData={memorizedAppData}
+              navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
+              singleVendor={singleVendor}
+              onPressAddLaundryItem={onPressAddLaundryItem}
+              isLoadingAddons={isLoadingAddons}
+              selectedHomeCategory={selectedHomeCategory}
+              onClose={_closeModal}
+              onPressSubscribe={_onPressSubscribe}
+              isSubscription={isSubscription}
+              selectedFilterType={selectedFilterType}
+              showAllProducts={showAllProducts}
+              showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+              showVendorCategory={true}
+              scrollHandler={scrollHandler}
+              priceType={priceType}
+              onPressProduct={onPressProduct}
 
-        />
+            />
+        }
+
 
 
       </>

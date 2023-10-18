@@ -205,6 +205,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
           {tabs.map((val, i) => renderItem(val, i))}
 
         </ScrollView> */}
+        {console.log(tabs,'tabstabstabs')}
         <FlatList
           ref={flatRef}
           horizontal

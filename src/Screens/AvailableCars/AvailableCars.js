@@ -39,7 +39,8 @@ import actions from '../../redux/actions';
 import NoDataFound from '../../Components/NoDataFound';
 import {debounce} from 'lodash';
 import {UIActivityIndicator} from 'react-native-indicators';
-
+import styles from './styles'
+import ProductsThemeCard from '../../Components/NewComponents/ProductsThemeCard';
 const AvailableCars = ({route}) => {
   const navigation = useNavigation();
   console.log(navigation, 'ehjdkjebdjk');
@@ -52,15 +53,10 @@ console.log(paramData,'paramDataparamDataparamData');
     state => state?.initBoot || {},
   );
 
-  const appMainData = useSelector(state => state?.home?.appMainData);
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   // -------------states
-  const [showTime, setShowTime] = useState(false);
-  const [pickupTime, setPickTime] = useState(moment().toDate());
-  const [showReturnTime, setShowReturnTime] = useState(false);
-  const [returnTime, setReturnTime] = useState(moment().toDate());
-  const [editOption, setEditOption] = useState(false);
+
   const [isShowFilter, setIsShowFilter] = useState(false);
   const [selectedSortFilter, setSelectedSortFilter] = useState(null);
   const [minimumPrice, setMinimumPrice] = useState(0);
@@ -152,15 +148,6 @@ console.log(paramData,'paramDataparamDataparamData');
           }}>
           { searchDataParam?.service == 'yacht' ? strings.AVAILABLE_YACTH :strings.AVAILABLE_CAR}
         </Text>
-        {/* <TouchableOpacity onPress={() => setIsShowFilter(true)}>
-          <Image
-            source={imagePath.filter_atlantic}
-            style={{
-              ...styles.headerimage,
-              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
-          />
-        </TouchableOpacity> */}
       </View>
     );
   }
@@ -207,57 +194,8 @@ console.log(paramData,'paramDataparamDataparamData');
             marginTop: moderateScale(10),
             paddingHorizontal:moderateScale(10)
           }}>
-          {/* {editOption && (
-            <TouchableOpacity
-              style={{
-                alignSelf: 'flex-end',
-                paddingVertical: moderateScaleVertical(10),
-              }}
-              onPress={() => setEditOption(false)}>
-              <FastImage
-                source={imagePath.greyCrossSmall}
-                style={{
-                  height: moderateScale(25),
-                  width: moderateScale(25),
-                  marginHorizontal: moderateScale(10),
-                }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          )} */}
-          {/* {editOption ? (
-            <View
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <SelectDatePicker
-                showTime={showTime}
-                setShowTime={val => setShowTime(val)}
-                time={pickupTime}
-                minimumDate={pickupTime}
-                selectTime={vel => setPickTime(vel)}
-                title={strings.PICKUP_DATE}
-              />
-              <View
-                style={{
-                  justifyContent: 'center',
-                  borderWidth: 0.6,
-                  width: moderateScale(20),
-                }}
-              />
-              <SelectDatePicker
-                showTime={showReturnTime}
-                setShowTime={val => setShowReturnTime(val)}
-                time={returnTime}
-                minimumDate={returnTime}
-                selectTime={vel => setReturnTime(vel)}
-                title={'Return Date'}
-              />
-            </View>
-          ) : ( */}
+        
+   
           <View style={{flex: 0.9}}>
             {/* ---------place view---------- */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -395,19 +333,18 @@ console.log(paramData,'paramDataparamDataparamData');
         keyExtractor={(i, index) => index.toString()}
         renderItem={({item}) => {
           return (
-            <ProductInfoCard
-              onPress={() =>
-              {
-               
+            <ProductsThemeCard
+              item={item}
+              onPressProduct={() => {
+
                 navigation.navigate(navigationStrings.PRODUCTDETAIL, {
                   data: item,
-                  searchDataParam:searchDataParam
+                  searchDataParam: searchDataParam
                 })
               }
               }
-              serviveType={searchFullData?.service}
-              item={item}
             />
+
           );
         }}
         ListEmptyComponent={
@@ -446,24 +383,3 @@ console.log(paramData,'paramDataparamDataparamData');
 };
 export default memo(AvailableCars);
 
-const styles = StyleSheet.create({
-  flallistheaderview: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: moderateScale(22),
-    alignItems: 'center',
-    marginTop: moderateScaleVertical(16),
-    // backgroundColor:'pink'
-  },
-  headertext: {
-    fontFamily: fontFamily.bold,
-    marginTop: moderateScaleVertical(10),
-    fontSize: textScale(16),
-  },
-  headerimage: {
-    alignItems: 'center',
-    height: moderateScaleVertical(18),
-    // width: moderateScaleVertical(18),
-    marginTop: moderateScaleVertical(10),
-  },
-});

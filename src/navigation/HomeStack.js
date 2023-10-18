@@ -62,7 +62,8 @@ import {
   Category,
   AvailableCars,
   ProductDetail3,
-  ReviewBooking
+  ReviewBooking,
+  CarRentalScreen
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -74,7 +75,7 @@ const Stack = createNativeStackNavigator();
 
 export default function () {
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
-  const { lastBidInfo } = useSelector((state) => state?.home);
+  const { lastBidInfo,dineInType } = useSelector((state) => state?.home);
 
 
   const rendervendorScreen = () => {
@@ -109,11 +110,12 @@ export default function () {
   };
 
   const renderProductDetailsScreens = () => {
-    switch (3) {
+    if (dineInType == 'car_rental') {
+      return ProductDetail3
+    }
+    switch (appStyle?.homePageLayout) {
       case 2:
         return ProductDetail2;
-        case 3:
-          return ProductDetail3;
       default:
         return ProductDetail;
     }
@@ -336,6 +338,13 @@ export default function () {
         name={navigationStrings.CATEGORY}
         component={Category}
       />
+      {/* car rental stacks  */}
+      
+      <Stack.Screen
+        name={navigationStrings.CAR_RENTAL_HOME}
+        component={CarRentalScreen}
+      />
+
   <Stack.Screen
         name={navigationStrings.AVAILABLE_CARS}
         component={AvailableCars}
