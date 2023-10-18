@@ -40,6 +40,8 @@ import FastImage from 'react-native-fast-image';
 import Modal from "react-native-modal";
 import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
 import imagePath from '../../constants/imagePath';
+import DashBoardEleven from './DashboardViews/DashboardEleven';
+import DashboardHeaderEleven from './DashboardHeaderEleven';
 
 enableFreeze(true);
 
@@ -1051,10 +1053,10 @@ export default function Home({ route, navigation }) {
 
   })
 
-
+  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout')
 
   const renderHeaders = useCallback(() => {
-    switch (appStyle?.homePageLayout) {
+    switch (11) {
       case 1:
         return (
           <SafeAreaView>
@@ -1231,6 +1233,28 @@ export default function Home({ route, navigation }) {
           </SafeAreaView>
         );
 
+
+      case 11:
+        return (
+          <SafeAreaView>
+            <DashboardHeaderEleven
+              // showToggles={false}
+              // navigation={navigation}
+              // location={memorizsedLocation}
+              // selcetedToggle={selcetedToggle}
+              // toggleData={memorizedAppData}
+              // isLoading={isLoading}
+              // currentLocation={currentLocation}
+              // isLoadingB={isLoadingB}
+              // _onVoiceListen={_onVoiceListen}
+              // isVoiceRecord={isVoiceRecord}
+              // _onVoiceStop={_onVoiceStop}
+              // curLatLong={curLatLong}
+            />
+          </SafeAreaView>
+        );
+
+
       default:
         return <SafeAreaView>
           <DashBoardHeaderFive
@@ -1268,7 +1292,7 @@ export default function Home({ route, navigation }) {
     return (
       <>
         {renderHeaders()}
-        {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ?
+        {/* {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ?
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
@@ -1313,7 +1337,39 @@ export default function Home({ route, navigation }) {
             onPressProduct={onPressProduct}
 
           />
-        }
+        } */}
+        <DashBoardEleven
+          handleRefresh={() => handleRefresh()}
+          bannerPress={(item) => bannerPress(item)}
+          isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          appMainData={memorizsedAppMainData}
+          onPressCategory={(item) => onPressCategory(item)}
+          onPressVendor={(item) => onPressVendor(item)}
+          isDineInSelected={isDineInSelected}
+          selcetedToggle={selcetedToggle}
+          tempCartData={memorizedTempCartData}
+          toggleData={memorizedAppData}
+          navigation={navigation}
+          onVendorFilterSeletion={onVendorFilterSeletion}
+          singleVendor={singleVendor}
+          onPressAddLaundryItem={onPressAddLaundryItem}
+          isLoadingAddons={isLoadingAddons}
+          selectedHomeCategory={selectedHomeCategory}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+          isSubscription={isSubscription}
+          selectedFilterType={selectedFilterType}
+          showAllProducts={showAllProducts}
+          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+          showVendorCategory={true}
+          scrollHandler={scrollHandler}
+          priceType={priceType}
+          onPressProduct={onPressProduct}
+
+        />
+
+
       </>
     );
   };
@@ -1361,7 +1417,7 @@ export default function Home({ route, navigation }) {
     <WrapperContainer
       statusBarColor={colors.whiteSmokeColor}
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }
       isLoading={searchDataLoader}
       isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 ? false : true}
