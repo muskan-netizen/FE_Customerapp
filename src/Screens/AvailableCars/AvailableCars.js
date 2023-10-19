@@ -138,19 +138,19 @@ console.log(paramData,'paramDataparamDataparamData');
     setIsLoading(false);
   };
 
-  function headerview() {
-    return (
-      <View style={styles.flallistheaderview}>
-        <Text
-          style={{
-            ...styles.headertext,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          { searchDataParam?.service == 'yacht' ? strings.AVAILABLE_YACTH :strings.AVAILABLE_CAR}
-        </Text>
-      </View>
-    );
-  }
+  // function headerview() {
+  //   return (
+  //     <View style={styles.flallistheaderview}>
+  //       <Text
+  //         style={{
+  //           ...styles.headertext,
+  //           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+  //         }}>
+  //         { searchDataParam?.service == 'yacht' ? strings.AVAILABLE_YACTH :strings.AVAILABLE_CAR}
+  //       </Text>
+  //     </View>
+  //   );
+  // }
   const listFooterComponent = () => {
     return (
       <>
@@ -286,7 +286,7 @@ console.log(paramData,'paramDataparamDataparamData');
               }
             </View>
           </View>
-         {searchDataParam?.service == 'yacht' ? null :   <TouchableOpacity
+         {/* {searchDataParam?.service == 'yacht' ? null :   <TouchableOpacity
             style={{
               // position: 'absolute',
               //   right: 0,
@@ -306,7 +306,7 @@ console.log(paramData,'paramDataparamDataparamData');
               tintColor={isDarkMode ? colors.white : colors.black}
               resizeMode="contain"
             />
-          </TouchableOpacity>}
+          </TouchableOpacity>} */}
           {/* )} */}
         </View>
       </View>
@@ -328,7 +328,7 @@ console.log(paramData,'paramDataparamDataparamData');
         }
         onEndReached={onEndReached}
         onEndReachedThreshold={0.1}
-        ListHeaderComponent={headerview}
+        // ListHeaderComponent={headerview}
         contentContainerStyle={{paddingBottom: moderateScale(20)}}
         keyExtractor={(i, index) => index.toString()}
         renderItem={({item}) => {

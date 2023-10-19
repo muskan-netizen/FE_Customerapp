@@ -7,6 +7,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import WrapperContainer from '../../Components/WrapperContainer';
 
 export default function ListEmptyProduct({isLoading = false}) {
   // if (isLoading) {
@@ -55,9 +56,12 @@ export default function ListEmptyProduct({isLoading = false}) {
   // }
   if (isLoading) {
     return (
+      <WrapperContainer>
+
+
       <View
         style={{
-          marginTop: moderateScaleVertical(20),
+          marginTop: moderateScaleVertical(30),
           paddingHorizontal:moderateScale(16)
         }}>
         <HeaderLoader
@@ -257,6 +261,7 @@ export default function ListEmptyProduct({isLoading = false}) {
           />
         </View>
       </View>
+      </WrapperContainer>
     );
   }
   return (

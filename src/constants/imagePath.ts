@@ -767,6 +767,10 @@ export default {
   childSeat: require('../assets/images/Atlantic/child_seat.png'),
   nameSignBoard:require('../assets/images/Atlantic/name_sign_board.png'),
   transmission:require('../assets/images/Atlantic/transmission.png'),
+  fule:require('../assets/images/Atlantic/fule.png'),
+  seats:require('../assets/images/Atlantic/seats.png'),
+
+
 
 
 };

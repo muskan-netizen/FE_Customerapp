@@ -7,6 +7,7 @@ import {
   Alert,
   FlatList,
   Image,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -17,7 +18,6 @@ import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Share from 'react-native-share';
-import {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
 import Banner2 from '../../Components/Banner2';
 import Header from '../../Components/Header';
@@ -58,6 +58,8 @@ import AtlanticHeader from '../../Components/AtlanticHeader';
 import AtlanticBottom from '../../Components/AtlanticBottom';
 import Protection from '../ProtectionView/Protection';
 import ChooseAddons from '../ChooseAddons/ChooseAddons';
+import FeaturesCard from '../../Components/NewComponents/FeaturesCard';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 enableFreeze(true);
 
@@ -592,62 +594,107 @@ export default function ProductDetail3({route, navigation}) {
   const toggleExpanded = () => {
     seReadMore(!readMore);
   };
+  const setSnapState = (index) => {
+    updateState({slider1ActiveSlide: index});
+  };
 
-  const imageUrl =
-    productDetailData?.product_media.length > 0
+  const renderProductImages = ({ item, index }) => {
+    const imageUrl = item?.image?.path
       ? getImageUrl(
-          productDetailData?.product_media[0]?.image?.path?.image_fit,
-          productDetailData?.product_media[0]?.image?.path?.image_path,
-          '600/800',
-        )
-      : null;
-console.log(productDetailData,'productFullDetailproductFullDetail');
-  return (
-    <WrapperContainer
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      statusBarColor={colors.white}
-      source={loaderOne}
-      // isLoadingB={isLoadingC}
-    >
-      <AtlanticHeader lefttext={strings.Car_Detail} />
+        item.image.path.image_fit,
+        item.image.path.image_path,
+        '1000/1000',
+      )
+      : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
+    return (
 
+        <FastImage
+          source={{
+            uri: imageUrl,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={{
+            width: '100%',
+            height: '100%',
+            aspectRatio: 1,
+            alignSelf:'center'
+          }}
+          resizeMode='contain'
+        />
+    
+    )
+  }
+  return (
+
+      <View
+       style={{height:height ,
+       backgroundColor:isDarkMode?MyDarkTheme.colors.background:colors.white
+       }}>
+          <TouchableOpacity 
+          style={styles.backIconView} onPress={()=>navigation.goBack()}> 
+              <FastImage
+                source={imagePath.backRoyo}
+                style={{width: moderateScale(19), 
+                  height: moderateScale(19),
+                
+                }}
+                resizeMode='contain'
+              />   
+              </TouchableOpacity>
+      {/* <AtlanticHeader lefttext={strings.Car_Detail} /> */}
+      {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
       <KeyboardAwareScrollView
         ref={myRef}
         showsVerticalScrollIndicator={false}
-        style={{marginBottom: moderateScaleVertical(120)}}>
-        <View style={{}}>
-          {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
+        style={{flex:1}}>
+       {!state.isLoading && ( 
+       <View style={{paddingBottom: moderateScaleVertical(120)}}>
+            <View style={{ height: height / 3, alignItems: 'center' }}>
+              <Carousel
+                autoplay={true}
+                loop={true}
+                autoplayInterval={2000}
+                data={productDetailData?.product_media || []}
+                renderItem={renderProductImages}
+                sliderWidth={width}
+                itemWidth={width}
 
-          {!state.isLoading && (
-            <>
-              <FastImage
-                source={
-                  !imageUrl
-                    ? imagePath.icDefaultImg
-                    : {
-                        uri: imageUrl,
-                        priority: FastImage.priority.high,
-                        cache: FastImage.cacheControl.immutable,
-                      }
-                }
-                style={{width: width, height: height / 4}}
+                onSnapToItem={(index) => setSnapState(index)}
               />
+            
+            </View>
 
-              {/* Product Name and Branc detail */}
+            <View style={{marginTop:-10}}>
+              <Pagination
+                dotsLength={productDetailData?.product_media?.length}
+                activeDotIndex={state.slider1ActiveSlide}
+                dotColor={themeColors?.primary_color}
+                dotStyle={[styles.dotStyle]}
+                inactiveDotColor={colors.black}
+                inactiveDotOpacity={0.2}
+                inactiveDotScale={0.8}
+              />
+            </View>
+
 
               <View
                 style={{
-                  marginHorizontal: moderateScale(16),
+                  marginHorizontal: moderateScale(18),
                   justifyContent: 'space-between',
-                  marginTop: moderateScale(20),
+                  // marginTop: moderateScale(20),
                 }}>
+                  <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+
+              
                 <Text
                   numberOfLines={2}
                   style={{
-                    flex: 1,
+                    flex: 0.5,
                     fontFamily: fontFamily.bold,
                     fontSize: textScale(16),
                     color: isDarkMode ? colors.white : colors.black,
+                    
                   }}>
                   {productDetailData?.translation[0]?.title}
                 </Text>
@@ -656,6 +703,8 @@ console.log(productDetailData,'productFullDetailproductFullDetail');
                   <View
                     style={{
                       flexDirection: 'row',
+                      flex: 0.5,
+                      flexWrap:'wrap',
                       marginTop: moderateScaleVertical(6),
                     }}>
                     <Image
@@ -667,73 +716,36 @@ console.log(productDetailData,'productFullDetailproductFullDetail');
                       }}
                     />
                     <Text
+                    numberOfLines={1}
                       style={{
                         fontSize: moderateScale(13),
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.textColor,
                         marginLeft: moderateScale(5),
+                        maxWidth:width/3
                       }}>
                       {productDetailData?.address}
                     </Text>
-                  </View>}
+                  </View>
+                  } 
+                  </View>
+                  
               </View>
 
-              <Text
-                style={{
-                  fontSize: moderateScale(16),
-                  fontFamily: fontFamily.medium,
-                  marginTop: moderateScaleVertical(20),
-                  marginHorizontal: moderateScale(16),
-
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.MAIN_FEATURES}
-              </Text>
-              {console.log(productFullDetail, 'sadfdbvifvsudfb')}
+            
+              {console.log(productFullDetail.product_attribute, 'sadfdbvifvsudfb')}
               <FlatList
                 numColumns={2}
                 data={productFullDetail?.product_attribute}
+                style={{marginTop:moderateScale(10)}}
+                columnWrapperStyle={{justifyContent:'space-between'}}
                 contentContainerStyle={{marginHorizontal: moderateScale(16)}}
+                keyExtractor={(item,index)=>index.toString()}
+                ItemSeparatorComponent={()=><View style={{height:moderateScale(12)}}/>}
                 renderItem={({item}) => (
-                  <View style={styles.featureslist}>
-                    <View style={{flex: 0.3}}>
-                      <Image
-                        source={{uri: item?.icon}}
-                        style={{
-                          height: moderateScale(30),
-                          width: moderateScale(30),
-                          // tintColor: isDarkMode
-                          //   ? MyDarkTheme.colors.white
-                          //   : colors.black,
-                        }}
-                      />
-                    </View>
-
-                    <View style={{flex: 0.7}}>
-                      <Text
-                        style={{
-                          fontSize: textScale(12),
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.textColor
-                            : colors.textGreyC,
-                          fontFamily: fontFamily.regular,
-                        }}>
-                        {item?.title}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: textScale(13),
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          fontFamily: fontFamily.medium,
-                          marginTop: moderateScaleVertical(6),
-                        }}>
-                        {item?.value}
-                      </Text>
-                    </View>
-                  </View>
+               <FeaturesCard
+               item={item}/>
                 )}
               />
               {productDetailData?.translation[0]?.meta_description?.length >
@@ -826,9 +838,9 @@ console.log(productDetailData,'productFullDetailproductFullDetail');
                   </View>
                 )}
               />
-            </>
-          )}
-        </View>
+         
+       
+        </View>   )}
       </KeyboardAwareScrollView>
       {!!productPriceData?.price ? (
         <AtlanticBottom
@@ -927,6 +939,6 @@ console.log(productDetailData,'productFullDetailproductFullDetail');
           />
         </BottomSheet>
       ) : null}
-    </WrapperContainer>
+            </View>
   );
 }

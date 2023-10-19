@@ -70,7 +70,7 @@ const AtlanticBottom = ({
 const styles = StyleSheet.create({
   buttonview: {
     padding: moderateScale(16),
-    height: moderateScaleVertical(120),
+    // height: moderateScaleVertical(120),
     width: width,
     position: 'absolute',
     bottom: 0,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   button: {
     height: moderateScaleVertical(40),
     borderRadius: moderateScale(4),
-    marginTop: moderateScaleVertical(16),
+    // marginTop: moderateScaleVertical(16),
   },
 });
 

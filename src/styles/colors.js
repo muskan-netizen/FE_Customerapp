@@ -17,7 +17,7 @@ export default {
   bottomBarGradientB: 'rgba(97,160,242,1)',
   transparent: 'transparent',
   backgroundGrey: '#F4F7FA',
-  // backgroundGrey: '#FFF',
+  backgroundGrey2: '#FFF',
   backgroundGreyB: '#E2E6E9',
   backgroundGreyC: '#EEF2F5',
   whiteOpacity22: 'rgba(255,255,255,0.22)',

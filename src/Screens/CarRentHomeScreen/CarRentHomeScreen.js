@@ -18,7 +18,8 @@ import fontFamily from '../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
+  width
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { mapStyleGrey } from '../../utils/constants/MapStyle';
@@ -43,7 +44,7 @@ const CarRentHomeScreen = ({ location = {}, curLatLong = {} }) => {
   console.log(appMainData, 'appMainDataappMainData');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const styles= stylesFunc({themeColors,isDarkMode})
+  const styles = stylesFunc({ themeColors, isDarkMode, MyDarkTheme })
   const profileInfo = appData?.profile;
 
   // -------------states
@@ -166,7 +167,7 @@ const CarRentHomeScreen = ({ location = {}, curLatLong = {} }) => {
             styles.taxiBookContainer,
             {
               backgroundColor: isDarkMode
-                ? colors.blackOpacity70
+                ? colors.background
                 : colors.white,
 
             },
@@ -179,7 +180,7 @@ const CarRentHomeScreen = ({ location = {}, curLatLong = {} }) => {
                   resizeMode="contain"
                   source={imagePath.locationoval}
                 /> :
-                  <View style={{marginTop:moderateScale(10)}}>
+                  <View style={{ marginTop: moderateScale(10) }}>
 
                     <Image resizeMode="contain" source={imagePath.location} />
                     <Image resizeMode="contain" source={imagePath.oval} style={{ tintColor: themeColors?.primary_color }} />
@@ -273,74 +274,81 @@ const CarRentHomeScreen = ({ location = {}, curLatLong = {} }) => {
             </View>
           </View>
 
+          <View
+            style={{
+              backgroundColor: getColorCodeWithOpactiyNumber(
+                themeColors?.primary_color?.substr(1),
+                10,
+              ),
+              ...styles.datepickerview,
+            }}>
+
+            {/* --------------------piuck time ----------- */}
+            <TouchableOpacity
+              style={{}}
+              onPress={() => setShowPickUpTime(!showPickUpTime)}>
+              <Text style={styles.dateTitleText}>
+                {strings.PICKUP_DATE}
+              </Text>
+              <View
+                style={styles.dateView}>
+                <Text style={styles.dateText}>
+                  {!!pickTimeDate?.dateAndTime ? pickTimeDate?.dateAndTime : moment().format('YYYY-MM-DD hh:mm a')}
+                </Text>
+                <Image
+                  source={imagePath.ic_down_arrow1}
+                  style={styles.dropDownIcon}
+                />
+              </View>
+            </TouchableOpacity>
             <View
               style={{
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  themeColors?.primary_color?.substr(1),
-                  10,
-                ),
-                ...styles.datepickerview,
-              }}>
-
-              {/* --------------------piuck time ----------- */}
-              <TouchableOpacity
-                style={{}}
-                onPress={() => setShowPickUpTime(!showPickUpTime)}>
-                <Text style={styles.dateTitleText}>
-                  {strings.PICKUP_DATE}
-                </Text>
-                <View
-                  style={styles.dateView}>
-                  <Text style={styles.dateText}>
-                    {!!pickTimeDate?.dateAndTime ? pickTimeDate?.dateAndTime : moment().format('YYYY-MM-DD hh:mm a')}
-                  </Text>
-                  <Image
-                    source={imagePath.ic_down_arrow1}
-                    style={styles.dropDownIcon}
-                  />
-                </View>
-              </TouchableOpacity>
+                borderWidth: 0.6,
+                width: moderateScale(20),
+              }}
+            />
+            {/* -------------------------return date button */}
+            <TouchableOpacity
+              style={{}}
+              onPress={() => setShowReturnTime(!showReturnTime)}>
+              <Text style={styles.dateTitleText}>
+                {strings.RETURN_DATE}
+              </Text>
               <View
-                style={{
-                  borderWidth: 0.6,
-                  width: moderateScale(20),
-                }}
-              />
-              {/* -------------------------return date button */}
-              <TouchableOpacity
-                style={{}}
-                onPress={() => setShowReturnTime(!showReturnTime)}>
-                <Text style={styles.dateTitleText}>
-                  {strings.RETURN_DATE}
+                style={styles.dateView}>
+                <Text style={styles.dateText}>
+                  {!!returnTimeDate?.dateAndTime ? returnTimeDate?.dateAndTime : moment().format('YYYY-MM-DD hh:mm a')}
                 </Text>
-                <View
-                  style={styles.dateView}>
-                    <Text style={styles.dateText}>
-                    {!!returnTimeDate?.dateAndTime ? returnTimeDate?.dateAndTime : moment().format('YYYY-MM-DD hh:mm a')}
-                  </Text>
-                  <Image
-                    source={imagePath.ic_down_arrow1}
-                    style={styles.dropDownIcon}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
+                <Image
+                  source={imagePath.ic_down_arrow1}
+                  style={styles.dropDownIcon}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
 
         </View>
-            <GradientButton
-              containerStyle={styles.showCarButtonStyle}
-              textStyle={{
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.atlanticgreen,
-                fontSize: moderateScale(13),
-                fontWeight: '600',
+        <GradientButton
+          containerStyle={[styles.showCarButtonStyle,]}
+          textStyle={{
+            color: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.atlanticgreen,
+            fontSize: moderateScale(13),
+            fontWeight: '600',
 
-              }}
-              btnText={strings.SHOW_CARS}
-              onPress={onShowCars}
-              colorsArray={[colors.transparent, colors.transparent]}
-            />
+          }}
+          btnStyle={{
+            backgroundColor: getColorCodeWithOpactiyNumber(
+              themeColors?.primary_color?.substr(1),
+              10,
+            ), width: width - 30, marginBottom: moderateScale(20)
+          }}
+          btnText={strings.SHOW_CARS}
+          onPress={onShowCars}
+
+          colorsArray={[colors.transparent, colors.transparent]}
+        />
       </View>
       <SearchAreaModal
         showModal={addressModal}

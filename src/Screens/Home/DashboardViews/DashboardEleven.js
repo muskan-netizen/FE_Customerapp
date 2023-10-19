@@ -1090,8 +1090,7 @@ const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceTy
   return (
     <ProductsThemeCard
       item={item}
-      onPressProduct={() => onPressProduct(item)
-      }
+      onPressProduct={() => onPressProduct(item) }
     />
   )
 }
