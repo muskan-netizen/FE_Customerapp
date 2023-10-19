@@ -61,7 +61,7 @@ export default function ListEmptyProduct({isLoading = false}) {
 
       <View
         style={{
-          marginTop: moderateScaleVertical(30),
+          marginTop: moderateScaleVertical(50),
           paddingHorizontal:moderateScale(16)
         }}>
         <HeaderLoader

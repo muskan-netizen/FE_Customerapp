@@ -631,7 +631,7 @@ export default function ProductDetail3({route, navigation}) {
        style={{height:height ,
        backgroundColor:isDarkMode?MyDarkTheme.colors.background:colors.white
        }}>
-          <TouchableOpacity 
+          {!!showProtection || !!showAddons?null:<TouchableOpacity 
           style={styles.backIconView} onPress={()=>navigation.goBack()}> 
               <FastImage
                 source={imagePath.backRoyo}
@@ -641,7 +641,7 @@ export default function ProductDetail3({route, navigation}) {
                 }}
                 resizeMode='contain'
               />   
-              </TouchableOpacity>
+              </TouchableOpacity>}
       {/* <AtlanticHeader lefttext={strings.Car_Detail} /> */}
       {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
       <KeyboardAwareScrollView
@@ -910,6 +910,7 @@ export default function ProductDetail3({route, navigation}) {
             onPressNext={value => {
               console.log(value, 'valuevaluevalue');
               setTotalPrice(value);
+              setShowProtection(!showProtection)
               setShowAddons(!showAddons);
             }}
           />
@@ -929,6 +930,7 @@ export default function ProductDetail3({route, navigation}) {
             buttonLoader={buttonLoader}
             totalPrice={totalPrice}
             onBackPress={() => {
+              setShowProtection(!showProtection)
               setShowAddons(!showAddons);
             }}
             addToCart={_finalAddToCart}
