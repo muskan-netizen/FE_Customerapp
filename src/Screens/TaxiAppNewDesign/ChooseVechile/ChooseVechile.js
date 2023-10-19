@@ -1780,7 +1780,7 @@ function ChooseVechile({ navigation, route }) {
                 ref={bottomSheetRef}
                 index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
                 snapPoints={[height / 1.6, height / 1.4]}
-                // activeOffsetY={[-1, 1]}
+                activeOffsetY={[-1, 1]}
                 failOffsetX={[-5, 5]}
                 animateOnMount={true}
                 handleComponent={carModalHeader}
