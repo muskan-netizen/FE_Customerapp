@@ -25,7 +25,7 @@ import {
   ACCEPT_RIDE_BID,
   ACCEPT_RIDE_FOR_BID,
 } from '../../config/urls';
-import { apiPost, setItem, getItem, apiGet } from '../../utils/utils';
+import { apiPost, setItem, getItem, apiGet, saveBidData } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 
@@ -372,6 +372,21 @@ export function onGetProductsOnHomePage(data = {}, headers = {}) {
   });
 
 }
+export const saveBidInfo = (data = null) => {
+  dispatch({
+  type: types.LAST_BID_INFO,
+  payload: data,
+  });
+  }
+  
+  export const saveBidInAsync = (data) => {
+  saveBidData(data).then((res) => {
+  saveBidInfo(data)
+  }).catch((err) => {
+  console.log(err,'error')
+  })
+  }
+
 
 export const orderRideBidDetails = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
