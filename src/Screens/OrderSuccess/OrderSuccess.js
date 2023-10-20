@@ -34,7 +34,7 @@ export default function OrderSuccess({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
-
+  const { dineInType } = useSelector((state) => state?.home);
   const [isLoadingChat, setLoadingChat] = useState(false)
 
 
@@ -52,7 +52,9 @@ export default function OrderSuccess({ navigation, route }) {
   }
 
   useEffect(() => {
-    createRoom("onFocus")
+    if(dineInType==='p2p'){
+      createRoom("onFocus")
+    } 
   }, [])
 
   const createRoom = async (type = '') => {
