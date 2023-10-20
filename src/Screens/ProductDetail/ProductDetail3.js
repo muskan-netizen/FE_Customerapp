@@ -515,8 +515,10 @@ export default function ProductDetail3({ route, navigation }) {
         //       vendor: previousScreenData?.vendor,
         //     },
         //   });
-        // } else {
-        navigation.navigate(navigationStrings.REVIEW_BOOKING);
+        // } 
+        // else {
+        navigation.popToTop()
+
         // }
       })
       .catch(error => errorMethodSecond(error, addonSet));

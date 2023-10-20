@@ -30,17 +30,17 @@ import {
 } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
+import actions from '../../redux/actions';
 const CarRentHomeScreen = ({route}) => {
   const navigation = useNavigation();
   const {data}=  route?.params
   // -----------------redux data
-  const { appData, themeColors, themeColor, themeToggle } = useSelector(
+  const { appData, themeColors, themeColor, themeToggle ,currencies,languages} = useSelector(
     state => state?.initBoot || {},
   );
   const userData = useSelector(state => state?.auth?.userData || {});
   const { location, appMainData } = useSelector((state) => state?.home || {});
 
-  console.log(appMainData, 'appMainDataappMainData');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const styles = stylesFunc({ themeColors, isDarkMode, MyDarkTheme })
@@ -92,17 +92,6 @@ const CarRentHomeScreen = ({route}) => {
   const [checkBox, setCheckBox] = useState(false);
   console.log(pickTimeDate, 'dropLocationDatadropLocationData', returnTimeDate);
 
-  const imageURI = getImageUrl(
-    isDarkMode
-      ? profileInfo?.dark_logo?.image_fit
-      : profileInfo?.logo?.image_fit,
-    isDarkMode
-      ? profileInfo?.dark_logo?.image_path
-      : profileInfo?.logo?.image_path,
-    '200/400',
-  );
-
-
 
   // ----------selectedSearch -------------
 
@@ -123,29 +112,47 @@ const CarRentHomeScreen = ({route}) => {
     }
 
      if(data?.type == 'product'){
-      navigation.navigate(navigationStrings.PRODUCTDETAIL, {
-        data: data,
-        searchDataParam:  {
-          pickup: {
-            latitude: dropLocationData[0]?.location?.lat,
-            longitude: dropLocationData[0]?.location?.lng,
-            address: dropLocationData[0]?.address,
-            time: !!pickTimeDate.dateAndTime ? pickTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
-          },
-          dropOff: {
-            latitude:
-              dropLocationData[!!checkBox ? 0 : 1]?.location
-                ?.lat,
-            longitude:
-              dropLocationData[!!checkBox ? 0 : 1]?.location
-                ?.lng,
-            address:
-              dropLocationData[!!checkBox ? 0 : 1]?.address,
-            time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
-          },
-          service: 'rental',
-        }
-      })
+       actions.productCheckAvailibility(
+         `/${data?.id}`,
+         {
+           start_time: !!pickTimeDate.dateAndTime ? pickTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+           end_time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a')
+         },
+         {
+           code: appData?.profile?.code,
+           currency: currencies?.primary_currency?.id,
+           language: languages?.primary_language?.id,
+         }
+       ).then((res) => {
+        console.log(res,'resresresresresres');
+        return
+         navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+           data: data,
+           searchDataParam: {
+             pickup: {
+               latitude: dropLocationData[0]?.location?.lat,
+               longitude: dropLocationData[0]?.location?.lng,
+               address: dropLocationData[0]?.address,
+               time: !!pickTimeDate.dateAndTime ? pickTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+             },
+             dropOff: {
+               latitude:
+                 dropLocationData[!!checkBox ? 0 : 1]?.location
+                   ?.lat,
+               longitude:
+                 dropLocationData[!!checkBox ? 0 : 1]?.location
+                   ?.lng,
+               address:
+                 dropLocationData[!!checkBox ? 0 : 1]?.address,
+               time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+             },
+             service: 'rental',
+           }
+         })
+       }).catch((error) => {
+         showError(error?.message)
+       })
+  
       return
      }
 
@@ -169,6 +176,7 @@ const CarRentHomeScreen = ({route}) => {
           time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
         },
         service: 'rental',
+        category_id:data?.id
       },
     })
   }
@@ -258,8 +266,7 @@ const CarRentHomeScreen = ({route}) => {
               <View style={styles.sepratorView} />
 
 
-              {
-                !checkBox ?
+            
 
                   <View>
                     <TouchableOpacity
@@ -287,15 +294,14 @@ const CarRentHomeScreen = ({route}) => {
                         ]}>
                         {!!dropLocationData[1]?.address
                           ? dropLocationData[1]?.address
-                          : 'My Return Location'}
+                          : strings.MY_RETURN_LOCATION}
                       </Text>
 
 
                     </TouchableOpacity>
                     <View style={styles.sepratorView} />
                   </View>
-                  : null
-              }
+              
 
             </View>
           </View>
@@ -330,7 +336,9 @@ const CarRentHomeScreen = ({route}) => {
             <View
               style={{
                 borderWidth: 0.6,
-                width: moderateScale(20),
+                width: moderateScale(10),
+                marginLeft:moderateScale(-40),
+                marginTop:moderateScale(-10)
               }}
             />
             {/* -------------------------return date button */}
@@ -370,7 +378,7 @@ const CarRentHomeScreen = ({route}) => {
               10,
             ), width: width - 30, marginBottom: moderateScale(20)
           }}
-          btnText={strings.SHOW_CARS}
+          btnText={ data?.type == 'product' ? strings.PRODUCTS_DETAIL :strings.SHOW_CARS}
           onPress={onShowCars}
 
           colorsArray={[colors.transparent, colors.transparent]}

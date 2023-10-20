@@ -1219,6 +1219,7 @@ Amount`,
   SKIP_FOR_NOW: "Skip For Now",
   REMOVE_PROTECTION: 'Remove Protection',
   ADD_PROTECTION:'Add Protection',
+  MY_RETURN_LOCATION:'My Return Location'
 
 
 

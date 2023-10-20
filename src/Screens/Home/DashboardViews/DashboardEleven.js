@@ -1,36 +1,43 @@
+import { useScrollToTop } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Alert,
   FlatList,
   Image,
-  Modal,
-  Platform,
   RefreshControl,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import DashedLine from 'react-native-dashed-line';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { default as DeviceInfo, default as deviceInfoModule, getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import Animated from 'react-native-reanimated';
+import { enableFreeze } from "react-native-screens";
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
-import GradientButton from '../../../Components/GradientButton';
-import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
-import SubscriptionModal from '../../../Components/SubscriptionModal';
+import CarCategory from '../../../Components/CarCategory';
+import Cities from '../../../Components/Cities';
+import MarketCard3V2 from '../../../Components/MarketCard3V2';
+import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
+import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
+import VendorMode from '../../../Components/VendorMode';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import { useScrollToTop } from '@react-navigation/native';
-import deviceInfoModule from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -39,29 +46,12 @@ import {
   width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getImageUrlNew } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getColorCodeWithOpactiyNumber, getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions';
 import { getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
-import { getImageUrlNew } from '../../../utils/commonFunction';
-import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
-import * as CategoryTemplate from '../TemplateStyle/CategoryStyle'
-import MarketCard3V2 from '../../../Components/MarketCard3V2';
-import {
-  Menu,
-  MenuOption,
-  MenuOptions,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import Cities from '../../../Components/Cities';
-import fontFamily from '../../../styles/fontFamily';
-import actions from '../../../redux/actions';
-import VendorMode from '../../../Components/VendorMode';
-import { enableFreeze } from "react-native-screens";
-import Animated from 'react-native-reanimated';
-import CarCategory from '../../../Components/CarCategory';
-import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
 enableFreeze(true);
 
 const homeFilter = [
@@ -400,11 +390,12 @@ const DashBoardFiveV2Api = ({
                 showTitle={false}
               />
             ) :
-          (item?.slug == 'new_products' ||
-            item?.slug == 'featured_products' ||
-            item?.slug == 'on_sale' ||
-            item?.slug == 'most_popular_products' ||
-            item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
+          (
+            // item?.slug == 'new_products' ||
+            item?.slug == 'featured_products' 
+            // item?.slug == 'on_sale' ||
+            // item?.slug == 'most_popular_products' ||
+            // item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
           ) ?<ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} priceType={priceType} />
 
 
