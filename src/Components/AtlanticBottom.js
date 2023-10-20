@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   button: {
     height: moderateScaleVertical(40),
     borderRadius: moderateScale(4),
-    // marginTop: moderateScaleVertical(16),
+    marginBottom: moderateScaleVertical(16),
   },
 });
 

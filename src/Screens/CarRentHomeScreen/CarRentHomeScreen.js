@@ -30,17 +30,16 @@ import {
 } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-const CarRentHomeScreen = ({ location = {}, curLatLong = {} }) => {
+const CarRentHomeScreen = ({route}) => {
   const navigation = useNavigation();
-  const mapRef = useRef();
-
-  let date = moment().toDate();
+  const {data}=  route?.params
   // -----------------redux data
   const { appData, themeColors, themeColor, themeToggle } = useSelector(
     state => state?.initBoot || {},
   );
-  const appMainData = useSelector(state => state?.home?.appMainData || {});
   const userData = useSelector(state => state?.auth?.userData || {});
+  const { location, appMainData } = useSelector((state) => state?.home || {});
+
   console.log(appMainData, 'appMainDataappMainData');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -122,6 +121,33 @@ const CarRentHomeScreen = ({ location = {}, curLatLong = {} }) => {
       showError('Please enter dropLocation location')
       return
     }
+
+     if(data?.type == 'product'){
+      navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+        data: data,
+        searchDataParam:  {
+          pickup: {
+            latitude: dropLocationData[0]?.location?.lat,
+            longitude: dropLocationData[0]?.location?.lng,
+            address: dropLocationData[0]?.address,
+            time: !!pickTimeDate.dateAndTime ? pickTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+          },
+          dropOff: {
+            latitude:
+              dropLocationData[!!checkBox ? 0 : 1]?.location
+                ?.lat,
+            longitude:
+              dropLocationData[!!checkBox ? 0 : 1]?.location
+                ?.lng,
+            address:
+              dropLocationData[!!checkBox ? 0 : 1]?.address,
+            time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+          },
+          service: 'rental',
+        }
+      })
+      return
+     }
 
     navigation?.navigate(navigationStrings.AVAILABLE_CARS, {
       data: {

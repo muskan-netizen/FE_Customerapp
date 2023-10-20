@@ -1,18 +1,25 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
 import FastImage from 'react-native-fast-image';
-import { getImageUrl } from '../utils/helperFunctions';
+import { getImageUrl, pressInAnimation, pressOutAnimation ,getScaleTransformationStyle} from '../utils/helperFunctions';
+import { useDarkMode } from 'react-native-dynamic';
+import { useSelector } from 'react-redux';
+import { MyDarkTheme } from '../styles/theme';
+import colors from '../styles/colors';
 
 
 
 
 // create a component
 const CarCategory = (
-    { data ,onPress=()=>{}}
+    { data, onPress = () => { } }
 ) => {
+    const { appStyle, themeColors, appData, currencies, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
 
+    const darkthemeusingDevice = useDarkMode();
+    const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const imageUrl =
 
         getImageUrl(
@@ -21,20 +28,21 @@ const CarCategory = (
             '700/700'
         );
     console.log(data, 'dataKyaa')
+    const scaleInAnimated = new Animated.Value(0);
+
     return (
         <TouchableOpacity style={{
-            paddingVertical: moderateScaleVertical(10),
-            elevation: 2,
-            marginRight: moderateScale(5),
-            borderRadius: moderateScale(20),
-            alignItems: 'center',
-            padding: moderateScaleVertical(14)
-        }} onPress={onPress}>
+            ...styles.mainView,
+            ...getScaleTransformationStyle(scaleInAnimated),
+            backgroundColor: isDarkMode ? MyDarkTheme?.colors.lightDark : colors.white
+
+        }} onPress={onPress}
+        onPressIn={() => pressInAnimation(scaleInAnimated)}
+        onPressOut={() => pressOutAnimation(scaleInAnimated)}
+        activeOpacity={1}
+        >
             <FastImage
-                style={{
-                    height: 60,
-                    width: moderateScale(60)
-                }}
+                style={styles.imageStyle}
                 source={{
                     uri: imageUrl,
                     cache: FastImage.cacheControl.immutable,
@@ -44,21 +52,35 @@ const CarCategory = (
 
             />
             <Text numberOfLines={1}
-                style={{ fontSize: textScale(12), textAlign: 'center', width: 60, marginTop: moderateScaleVertical(6) }}>{data?.name}</Text>
-        
+                style={{ ...styles.titleStyle, 
+                color: isDarkMode ? colors.white : colors.black }}>{data?.name}</Text>
+
         </TouchableOpacity>
     );
 };
 
 // define your styles
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
+    mainView: {
+        paddingVertical: moderateScaleVertical(10),
+        elevation: 2,
+        marginRight: moderateScale(5),
+        borderRadius: moderateScale(12),
         alignItems: 'center',
-        backgroundColor: '#2c3e50',
+        padding: moderateScaleVertical(14),
+        margin:3
+    }, imageStyle: {
+        height: moderateScale(60),
+        width: moderateScale(70)
     },
+    titleStyle: {
+        fontSize: textScale(12),
+        textAlign: 'center',
+        maxWidth: moderateScale(60),
+        marginTop: moderateScaleVertical(6)
+    }
 });
 
 //make this component available to the app
 export default CarCategory;
+

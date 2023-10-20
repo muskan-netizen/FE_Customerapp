@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Animated, StyleSheet, Text, View } from 'react-native'
 import React, { FC, memo } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize'
@@ -7,24 +7,30 @@ import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../../
 import { useSelector } from 'react-redux'
 import fontFamily from '../../styles/fontFamily'
 import colors from '../../styles/colors'
-import { getImageUrl } from '../../utils/helperFunctions'
+import { getImageUrl,getScaleTransformationStyle, pressInAnimation, pressOutAnimation } from '../../utils/helperFunctions'
 import imagePath from '../../constants/imagePath'
 import { useDarkMode } from 'react-native-dynamic'
 import { MyDarkTheme } from '../../styles/theme'
+import strings from '../../constants/lang'
+import { itemType } from './interface'
+import { IRootState } from '../../Screens/ShortCode/interfaces'
+import { isEmpty } from 'lodash'
+
+
 type productType = {
-    item: object
+    item: itemType
     onPressProduct: () => void,
 
 }
 const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
-    const { appMainData } = useSelector((state) => state?.home || {});
+    const { appMainData } = useSelector((state: IRootState) => state?.home || {});
     const { appStyle, themeColors, appData, currencies, themeColor, themeToggle } = useSelector(
-        (state) => state?.initBoot,
+        (state: IRootState) => state?.initBoot,
     );
     const darkthemeusingDevice = useDarkMode();
+    const scaleInAnimated = new Animated.Value(0);
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const { additional_preferences, digit_after_decimal } =
-        appData?.profile?.preferences || {};
+    const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
 
     const imageUrl = !!item?.media
         ? getImageUrl(
@@ -32,21 +38,29 @@ const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
             item?.media[0]?.image?.path?.image_path,
             '381/181')
         : getImageUrlNew({
-            url: item?.path || null,
+            url: item?.path,
             image_const_arr: appMainData.image_prefix,
             type: 'image_fit',
             height: '1028',
             width: '1028',
         })
 
+    const attributes = !!item?.product_attributes ? JSON.parse(item?.product_attributes) : {};
+    const variantPrice = !!item?.price_numeric ? item?.price_numeric : item?.variant[0]?.actual_price
+    console.log(attributes, 'itemitemitemitem',item);
+
     return (
         <TouchableOpacity
             style={[styles.mainContainer,
-            {
+            {   ...getScaleTransformationStyle(scaleInAnimated),
                 backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
                 borderColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.boxGrey,
-            }]} onPress={onPressProduct}>
-            <FastImage resizeMode='contain'
+            }]} onPress={onPressProduct}
+            onPressIn={() => pressInAnimation(scaleInAnimated)}
+            onPressOut={() => pressOutAnimation(scaleInAnimated)}
+            activeOpacity={1}
+            >
+            <FastImage resizeMode='cover'
                 style={{ height: moderateScale(180), width: '100%', alignSelf: 'center' }}
                 source={{
                     uri: imageUrl,
@@ -61,40 +75,41 @@ const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
                 <Text style={{ ...styles.titleStyle, color: isDarkMode ? colors.white : colors.black }}>{item?.title}</Text>
 
                 <View style={styles.borderLine} />
-                <View style={styles.addressAndPriceView}>
-                    <Text style={{ ...styles.address, color: isDarkMode ? colors.white : colors.black }}>33, ABC Street, USA</Text>
-                    <Text style={[styles.priceText, { color: themeColors?.primary_color }]}>
+                {!!item?.address || variantPrice > 0 ? <View style={styles.addressAndPriceView}>
+                    <Text style={{ ...styles.address, color: isDarkMode ? colors.white : colors.black }}>{item?.address || ''}</Text>
+
+                    {variantPrice > 0 || variantPrice > 0 ? <Text style={[styles.priceText, { color: themeColors?.primary_color }]}>
                         {tokenConverterPlusCurrencyNumberFormater(
-                            item?.price_numeric || item?.variant[0]?.actual_price,
+                            variantPrice,
                             digit_after_decimal,
                             additional_preferences,
                             currencies?.primary_currency?.symbol,
-                        )}</Text>
-                </View>
-                <View style={{ flexDirection: 'row',marginTop:moderateScale(14) }}>
+                        )}</Text> : null}
+                </View> : null}
+                <View style={{ flexDirection: 'row', marginTop: moderateScale(14) }}>
 
 
-                    <View style={styles.attributesView}>
+                    {!!attributes.Transmission || !!item?.transmission ? <View style={styles.attributesView}>
                         <FastImage
                             source={imagePath.transmission}
                             style={styles.imageStyle} tintColor={isDarkMode ? colors.white : colors.black} />
-                        <Text style={{ ...styles.attributesText, color: isDarkMode ? colors.white : colors.black }}>Automatic</Text>
-                    </View>
+                        <Text style={{ ...styles.attributesText, color: isDarkMode ? colors.white : colors.black }}>{ attributes.Transmission  || item?.transmission}</Text>
+                    </View> : null}
 
-                    <View style={[styles.attributesView,{paddingLeft:moderateScale(10)}]}>
+                    {!!attributes.fuel_type || !!item?.fuel_type ? <View style={[styles.attributesView, { paddingLeft: moderateScale(10) }]}>
                         <FastImage
                             source={imagePath.fule}
                             style={styles.imageStyle} tintColor={isDarkMode ? colors.white : colors.black} />
-                        <Text style={{ ...styles.attributesText, color: isDarkMode ? colors.white : colors.black }}>Petrol</Text>
-                    </View>
+                        <Text style={{ ...styles.attributesText, color: isDarkMode ? colors.white : colors.black }}>{ attributes.fuel_type || item?.fuel_type}</Text>
+                    </View> : null}
 
-                    <View style={styles.attributesView}>
+                    {!!attributes.Seats || !!item?.Seats ? <View style={styles.attributesView}>
                         <FastImage
                             source={imagePath.seats}
                             style={styles.imageStyle} tintColor={isDarkMode ? colors.white : colors.black} />
-                        <Text style={{ ...styles.attributesText, color: isDarkMode ? colors.white : colors.black }}>1100 hp</Text>
-                    </View>
-                    
+                        <Text style={{ ...styles.attributesText, color: isDarkMode ? colors.white : colors.black }}>{`${!isEmpty(attributes) ? attributes.Seats : item?.Seats} ${strings.SEATS}`}</Text>
+                    </View> : null}
+
                 </View>
             </View>
         </TouchableOpacity>
@@ -116,6 +131,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         borderWidth: 1,
         borderColor: colors.boxGrey,
+        elevation: 1,
         borderRadius: moderateScale(12)
     },
     titleStyle: {
@@ -148,8 +164,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         flex: 0.33,
-        flexWrap:'wrap',
-        justifyContent:'center'
+        flexWrap: 'wrap',
+        // justifyContent: 'center'
 
     },
     imageStyle: {

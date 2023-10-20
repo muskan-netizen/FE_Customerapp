@@ -1312,8 +1312,8 @@ export default function Home({ route, navigation }) {
             isLoading={isLoading}
             isRefreshing={isRefreshing}
             appMainData={memorizsedAppMainData}
-            onPressCategory={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME)}
-            onPressVendor={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME)}
+            onPressCategory={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME,{data:{...item,type:'category'}})}
+            onPressVendor={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOM,{data:{...item,type:'vendor'}})}
             isDineInSelected={isDineInSelected}
             selcetedToggle={selcetedToggle}
             tempCartData={memorizedTempCartData}
@@ -1333,7 +1333,7 @@ export default function Home({ route, navigation }) {
             showVendorCategory={true}
             scrollHandler={scrollHandler}
             priceType={priceType}
-            onPressProduct={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME)}
+            onPressProduct={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME,{data:{...item,type:'product'}})}
 
           /> :
             <DashBoardFiveV2Api

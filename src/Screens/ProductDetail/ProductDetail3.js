@@ -1,8 +1,8 @@
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -13,15 +13,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Share from 'react-native-share';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Banner2 from '../../Components/Banner2';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -37,12 +37,12 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   addRemoveMinutes,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   showError,
@@ -52,7 +52,7 @@ import {
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
 
-import {enableFreeze} from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 import ReadMoreLessComponent from '../../Components/ReadMoreLessComponent';
 import AtlanticHeader from '../../Components/AtlanticHeader';
 import AtlanticBottom from '../../Components/AtlanticBottom';
@@ -63,7 +63,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 enableFreeze(true);
 
-export default function ProductDetail3({route, navigation}) {
+export default function ProductDetail3({ route, navigation }) {
   console.log('my route', route.params);
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
@@ -71,7 +71,7 @@ export default function ProductDetail3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const bottomSheetRef = useRef();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector(state => state?.initBoot);
   const {
     additional_preferences,
@@ -79,12 +79,12 @@ export default function ProductDetail3({route, navigation}) {
     seller_sold_title,
     seller_platform_logo,
   } = appData?.profile?.preferences || {};
-  const {productListData} = useSelector(state => state?.product);
+  const { productListData } = useSelector(state => state?.product);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
   const reloadData = useSelector(state => state?.reloadData?.reloadData);
-  const {data, searchDataParam} = route.params;
+  const { data, searchDataParam } = route.params;
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -130,8 +130,8 @@ export default function ProductDetail3({route, navigation}) {
   //Saving the initial state
 
   const dine_In_Type = useSelector(state => state?.home?.dineInType);
-  const updateState = data => setState(state => ({...state, ...data}));
-  const {bannerRef} = useRef();
+  const updateState = data => setState(state => ({ ...state, ...data }));
+  const { bannerRef } = useRef();
   const {
     productDetailData,
     productPriceData,
@@ -166,11 +166,11 @@ export default function ProductDetail3({route, navigation}) {
 
   const [addOnsData, setAddOnsData] = useState([]);
   const [totalPrice, setTotalPrice] = useState('');
-  const [buttonLoader,setButtonLoader]= useState(false)
+  const [buttonLoader, setButtonLoader] = useState(false)
 
   const [rentalProtectionData, setRentalProtectionData] = useState({});
 
- 
+
   // let plainHtml = productDetailData?.translation[0]?.meta_description || null;
 
   useFocusEffect(
@@ -221,7 +221,7 @@ export default function ProductDetail3({route, navigation}) {
             const url1 = val?.image?.path?.image_fit || val.image.image_fit;
             const url2 = val?.image?.path?.image_path || val.image.image_path;
             let imageUri = getImageUrl(url1, url2, '600/800');
-            FastImage.preload([{uri: imageUri}]);
+            FastImage.preload([{ uri: imageUri }]);
           });
         }
 
@@ -257,7 +257,7 @@ export default function ProductDetail3({route, navigation}) {
             Number(res?.data?.products?.minimum_duration_min),
           endDateRental: addRemoveMinutes(
             Number(res?.data?.products?.minimum_duration) * 60 +
-              Number(res?.data?.products?.minimum_duration_min),
+            Number(res?.data?.products?.minimum_duration_min),
           ),
           startDateRental: new Date(),
         });
@@ -266,7 +266,7 @@ export default function ProductDetail3({route, navigation}) {
           variantSet &&
           !variantSet.length
         ) {
-          updateState({variantSet: res.data.products.variant_set});
+          updateState({ variantSet: res.data.products.variant_set });
         }
       })
       .catch(errorMethod);
@@ -322,7 +322,7 @@ export default function ProductDetail3({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEAR_CART2, onPress: () => clearCart()},
+        { text: strings.CLEAR_CART2, onPress: () => clearCart() },
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -354,7 +354,7 @@ export default function ProductDetail3({route, navigation}) {
   const errorMethodSecond = (error, addonSet) => {
     setButtonLoader(false)
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
 
       Alert.alert('', strings.ALREADY_EXIST, [
@@ -363,10 +363,10 @@ export default function ProductDetail3({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet)},
+        { text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet) },
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       if (error?.message == 'Recurring booking type not be empty.') {
         showInfo('Schedule the product click on recurring checkbox');
       } else {
@@ -413,7 +413,7 @@ export default function ProductDetail3({route, navigation}) {
 
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
-      updateState({addonSet: data?.addonSetData});
+      updateState({ addonSet: data?.addonSetData });
       setTimeout(() => {
         _finalAddToCart(data?.addonSetData);
       }, 1000);
@@ -489,7 +489,7 @@ export default function ProductDetail3({route, navigation}) {
 
     // data['recurringformPost'] = recurringformPost;
     console.log(JSON.stringify(data), 'data for cart');
-    updateState({isLoadingC: true, isVisibleAddonModal: false});
+    updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -558,7 +558,7 @@ export default function ProductDetail3({route, navigation}) {
     }
     {
       addonSet && addonSet.length
-        ? updateState({isVisibleAddonModal: true})
+        ? updateState({ isVisibleAddonModal: true })
         : _finalAddToCart(addonSet);
     }
     // _finalAddToCart()
@@ -577,25 +577,25 @@ export default function ProductDetail3({route, navigation}) {
   const allImagesArrayForZoom = [];
   productDetailData?.product_media
     ? productDetailData?.product_media?.map((item, index) => {
-        return (allImagesArrayForZoom[index] = {
-          url: getImageUrl(
-            item?.image.path.image_fit,
-            item?.image.path.image_path,
-            '1000/1000',
-          ),
-        });
-      })
+      return (allImagesArrayForZoom[index] = {
+        url: getImageUrl(
+          item?.image.path.image_fit,
+          item?.image.path.image_path,
+          '1000/1000',
+        ),
+      });
+    })
     : getImageUrl(
-        productDetailData?.product_media[0]?.image?.path?.image_fit,
-        productDetailData?.product_media[0]?.image?.path?.image_path,
-        '1000/1000',
-      );
+      productDetailData?.product_media[0]?.image?.path?.image_fit,
+      productDetailData?.product_media[0]?.image?.path?.image_path,
+      '1000/1000',
+    );
 
   const toggleExpanded = () => {
     seReadMore(!readMore);
   };
   const setSnapState = (index) => {
-    updateState({slider1ActiveSlide: index});
+    updateState({ slider1ActiveSlide: index });
   };
 
   const renderProductImages = ({ item, index }) => {
@@ -608,48 +608,52 @@ export default function ProductDetail3({route, navigation}) {
       : getImageUrl(item.image.image_fit, item.image.image_path, '1000/1000');
     return (
 
-        <FastImage
-          source={{
-            uri: imageUrl,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-            aspectRatio: 1,
-            alignSelf:'center'
-          }}
-          resizeMode='contain'
-        />
-    
+      <FastImage
+        source={{
+          uri: imageUrl,
+          priority: FastImage.priority.high,
+          cache: FastImage.cacheControl.immutable,
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          aspectRatio: 1,
+          alignSelf: 'center'
+        }}
+        resizeMode='contain'
+      />
+
     )
   }
   return (
 
-      <View
-       style={{height:height ,
-       backgroundColor:isDarkMode?MyDarkTheme.colors.background:colors.white
-       }}>
-          {!!showProtection || !!showAddons?null:<TouchableOpacity 
-          style={styles.backIconView} onPress={()=>navigation.goBack()}> 
-              <FastImage
-                source={imagePath.backRoyo}
-                style={{width: moderateScale(19), 
-                  height: moderateScale(19),
-                
-                }}
-                resizeMode='contain'
-              />   
-              </TouchableOpacity>}
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
+      }}>
+
       {/* <AtlanticHeader lefttext={strings.Car_Detail} /> */}
       {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
       <KeyboardAwareScrollView
         ref={myRef}
         showsVerticalScrollIndicator={false}
-        style={{flex:1}}>
-       {!state.isLoading && ( 
-       <View style={{paddingBottom: moderateScaleVertical(120)}}>
+        style={{ flex: 1 }}>
+        {!state.isLoading && (
+          <View style={{ paddingBottom: height / 4 }}>
+            {!!showProtection || !!showAddons ? null
+              : <TouchableOpacity
+                style={styles.backIconView} onPress={() => navigation.goBack()}>
+                <FastImage
+                  source={imagePath.backRoyo}
+                  style={{
+                    width: moderateScale(19),
+                    height: moderateScale(19),
+
+                  }}
+                  resizeMode='contain'
+                />
+              </TouchableOpacity>}
             <View style={{ height: height / 3, alignItems: 'center' }}>
               <Carousel
                 autoplay={true}
@@ -662,10 +666,10 @@ export default function ProductDetail3({route, navigation}) {
 
                 onSnapToItem={(index) => setSnapState(index)}
               />
-            
+
             </View>
 
-            <View style={{marginTop:-10}}>
+            <View style={{ marginTop: 10 }}>
               <Pagination
                 dotsLength={productDetailData?.product_media?.length}
                 activeDotIndex={state.slider1ActiveSlide}
@@ -678,15 +682,15 @@ export default function ProductDetail3({route, navigation}) {
             </View>
 
 
-              <View
-                style={{
-                  marginHorizontal: moderateScale(18),
-                  justifyContent: 'space-between',
-                  // marginTop: moderateScale(20),
-                }}>
-                  <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+            <View
+              style={{
+                marginHorizontal: moderateScale(18),
+                justifyContent: 'space-between',
+                // marginTop: moderateScale(20),
+              }}>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
 
-              
+
                 <Text
                   numberOfLines={2}
                   style={{
@@ -694,7 +698,7 @@ export default function ProductDetail3({route, navigation}) {
                     fontFamily: fontFamily.bold,
                     fontSize: textScale(16),
                     color: isDarkMode ? colors.white : colors.black,
-                    
+
                   }}>
                   {productDetailData?.translation[0]?.title}
                 </Text>
@@ -704,7 +708,7 @@ export default function ProductDetail3({route, navigation}) {
                     style={{
                       flexDirection: 'row',
                       flex: 0.5,
-                      flexWrap:'wrap',
+                      flexWrap: 'wrap',
                       marginTop: moderateScaleVertical(6),
                     }}>
                     <Image
@@ -716,131 +720,131 @@ export default function ProductDetail3({route, navigation}) {
                       }}
                     />
                     <Text
-                    numberOfLines={1}
+                      numberOfLines={1}
                       style={{
                         fontSize: moderateScale(13),
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.textColor,
                         marginLeft: moderateScale(5),
-                        maxWidth:width/3
+                        maxWidth: width / 3
                       }}>
                       {productDetailData?.address}
                     </Text>
                   </View>
-                  } 
-                  </View>
-                  
+                }
               </View>
 
-            
-              {console.log(productFullDetail.product_attribute, 'sadfdbvifvsudfb')}
-              <FlatList
-                numColumns={2}
-                data={productFullDetail?.product_attribute}
-                style={{marginTop:moderateScale(10)}}
-                columnWrapperStyle={{justifyContent:'space-between'}}
-                contentContainerStyle={{marginHorizontal: moderateScale(16)}}
-                keyExtractor={(item,index)=>index.toString()}
-                ItemSeparatorComponent={()=><View style={{height:moderateScale(12)}}/>}
-                renderItem={({item}) => (
-               <FeaturesCard
-               item={item}/>
-                )}
-              />
-              {productDetailData?.translation[0]?.meta_description?.length >
+            </View>
+
+
+            {console.log(productFullDetail.product_attribute, 'sadfdbvifvsudfb')}
+            <FlatList
+              numColumns={2}
+              data={productFullDetail?.product_attribute}
+              style={{ marginTop: moderateScale(10) }}
+              columnWrapperStyle={{ justifyContent: 'space-between' }}
+              contentContainerStyle={{ marginHorizontal: moderateScale(16) }}
+              keyExtractor={(item, index) => index.toString()}
+              ItemSeparatorComponent={() => <View style={{ height: moderateScale(12) }} />}
+              renderItem={({ item }) => (
+                <FeaturesCard
+                  item={item} />
+              )}
+            />
+            {productDetailData?.translation[0]?.meta_description?.length >
               0 ? (
+              <View
+                style={{
+                  marginHorizontal: moderateScale(16),
+                }}>
+                <Text
+                  style={{
+                    fontSize: moderateScale(16),
+                    fontFamily: fontFamily.medium,
+                    marginTop: moderateScaleVertical(26),
+
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}>
+                  {strings.DESCRIPTION}
+                </Text>
+                {/* {!!productDetailData?.translation[0]?.meta_description ? ( */}
+                <ReadMoreLessComponent
+                  text={productDetailData?.translation[0]?.meta_description}
+                  maxLength={70}
+                  readMore={readMore}
+                  toggleExpanded={toggleExpanded}
+                />
+                {/* // ) : null} */}
+              </View>
+            ) : null}
+            <Text
+              style={{
+                fontSize: moderateScale(16),
+                fontFamily: fontFamily.medium,
+                marginTop: moderateScaleVertical(26),
+                marginHorizontal: moderateScale(16),
+
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.additionfeatures}
+            </Text>
+            <View style={{ marginTop: moderateScaleVertical(4) }}></View>
+            <FlatList
+              data={productFullDetail?.additional_features}
+              contentContainerStyle={{
+                // paddingBottom: moderateScale(100),
+                marginHorizontal: moderateScale(16),
+              }}
+              renderItem={({ item }) => (
                 <View
                   style={{
-                    marginHorizontal: moderateScale(16),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: moderateScaleVertical(8),
                   }}>
-                  <Text
-                    style={{
-                      fontSize: moderateScale(16),
-                      fontFamily: fontFamily.medium,
-                      marginTop: moderateScaleVertical(26),
-
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {strings.DESCRIPTION}
-                  </Text>
-                  {/* {!!productDetailData?.translation[0]?.meta_description ? ( */}
-                  <ReadMoreLessComponent
-                    text={productDetailData?.translation[0]?.meta_description}
-                    maxLength={70}
-                    readMore={readMore}
-                    toggleExpanded={toggleExpanded}
-                  />
-                  {/* // ) : null} */}
-                </View>
-              ) : null}
-              <Text
-                style={{
-                  fontSize: moderateScale(16),
-                  fontFamily: fontFamily.medium,
-                  marginTop: moderateScaleVertical(26),
-                  marginHorizontal: moderateScale(16),
-
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.additionfeatures}
-              </Text>
-              <View style={{marginTop: moderateScaleVertical(4)}}></View>
-              <FlatList
-                data={productFullDetail?.additional_features}
-                contentContainerStyle={{
-                  // paddingBottom: moderateScale(100),
-                  marginHorizontal: moderateScale(16),
-                }}
-                renderItem={({item}) => (
                   <View
                     style={{
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginTop: moderateScaleVertical(8),
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}>
-                    <View
+                    <Image
+                      source={imagePath.grayDot}
                       style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <Image
-                        source={imagePath.grayDot}
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.white
-                            : colors.blackLight,
-                          height: moderateScaleVertical(4),
-                          width: moderateScale(4),
-                        }}
-                      />
-                      <Text
-                        style={{
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.textColor,
-                          marginLeft: moderateScale(4),
-                        }}>
-                        {item?.title}
-                      </Text>
-                    </View>
+                        tintColor: isDarkMode
+                          ? MyDarkTheme.colors.white
+                          : colors.blackLight,
+                        height: moderateScaleVertical(4),
+                        width: moderateScale(4),
+                      }}
+                    />
                     <Text
                       style={{
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
                           : colors.textColor,
+                        marginLeft: moderateScale(4),
                       }}>
-                      {item?.value}
+                      {item?.title}
                     </Text>
                   </View>
-                )}
-              />
-         
-       
-        </View>   )}
+                  <Text
+                    style={{
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textColor,
+                    }}>
+                    {item?.value}
+                  </Text>
+                </View>
+              )}
+            />
+
+
+          </View>)}
       </KeyboardAwareScrollView>
       {!!productPriceData?.price ? (
         <AtlanticBottom
@@ -854,7 +858,7 @@ export default function ProductDetail3({route, navigation}) {
             currencies?.primary_currency?.symbol,
           )}
           btnText={strings.NEXT}
-          textStyle={{fontSize: textScale(13)}}
+          textStyle={{ fontSize: textScale(13) }}
           // onPress={() =>
           //   navigation.navigate(navigationStrings.Protection, {
           //     data: productDetailData,
@@ -941,6 +945,6 @@ export default function ProductDetail3({route, navigation}) {
           />
         </BottomSheet>
       ) : null}
-            </View>
+    </View>
   );
 }
