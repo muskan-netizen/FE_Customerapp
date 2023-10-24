@@ -90,7 +90,7 @@ const CarRentHomeScreen = ({route}) => {
   );
 
   const [checkBox, setCheckBox] = useState(false);
-  console.log(pickTimeDate, 'dropLocationDatadropLocationData', returnTimeDate);
+  console.log(dropLocationData, 'dropLocationDatadropLocationData', returnTimeDate);
 
 
   // ----------selectedSearch -------------
@@ -112,20 +112,22 @@ const CarRentHomeScreen = ({route}) => {
     }
 
      if(data?.type == 'product'){
+      let apiData = {
+        start_time: !!pickTimeDate.dateAndTime ? pickTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+        end_time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
+        pickup_latitude:dropLocationData[0]?.location?.latitude || dropLocationData[0]?.location?.lat,
+        pickup_longitude:dropLocationData[0]?.location?.longitude ||dropLocationData[0]?.location?.lng
+      }
+
        actions.productCheckAvailibility(
          `/${data?.id}`,
-         {
-           start_time: !!pickTimeDate.dateAndTime ? pickTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a'),
-           end_time: !!returnTimeDate.dateAndTime ? returnTimeDate.dateAndTime : moment().format('YYYY-MM-DD hh:mm a')
-         },
+         apiData,
          {
            code: appData?.profile?.code,
            currency: currencies?.primary_currency?.id,
            language: languages?.primary_language?.id,
          }
        ).then((res) => {
-        console.log(res,'resresresresresres');
-        return
          navigation.navigate(navigationStrings.PRODUCTDETAIL, {
            data: data,
            searchDataParam: {
