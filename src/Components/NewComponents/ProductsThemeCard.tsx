@@ -46,7 +46,7 @@ const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
         })
 
     const attributes = !!item?.product_attributes ? JSON.parse(item?.product_attributes) : {};
-    const variantPrice = !!item?.price_numeric ? item?.price_numeric : item?.variant[0]?.actual_price
+    const variantPrice = !!item?.price_numeric ? item?.price_numeric :item?.varian?.length > 0 ? item?.variant[0]?.actual_price : 0
     console.log(attributes, 'itemitemitemitem',item);
 
     return (
