@@ -86,7 +86,7 @@ const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
                             currencies?.primary_currency?.symbol,
                         )}</Text> : null}
                 </View> : null}
-                <View style={{ flexDirection: 'row', marginTop: moderateScale(14) }}>
+                <View style={{ flexDirection: 'row', marginTop: moderateScale(14)}}>
 
 
                     {!!attributes.Transmission || !!item?.transmission ? <View style={styles.attributesView}>
