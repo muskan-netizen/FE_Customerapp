@@ -187,7 +187,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
     //Naviagtion to specific screen
     const moveToNewScreen = (screenName, data = {}) => {
-       return () => {
+        return () => {
             navigation.navigate(screenName, { data });
         }
     }
@@ -300,11 +300,10 @@ export default function ViewAllSearchItems({ route, navigation }) {
                         marginRight: moderateScale(4),
 
                     }}>
-                        {console.log("itemitemitem",item)}
                         <ProductsComp3
                             item={item}
                             onPress={() =>
-                                navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
+                                dineInType == "p2p" ? navigation.push(navigationStrings.P2P_PRODUCT_DETAIL, { product_id: item?.id }) : navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
                             }
                             containerStyle={{
                                 width: '100%',

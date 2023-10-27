@@ -36,7 +36,6 @@ export default function OrderSuccess({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
-
   const [isLoadingChat, setLoadingChat] = useState(false)
 
 
@@ -54,7 +53,9 @@ export default function OrderSuccess({ navigation, route }) {
   );
 
   useEffect(() => {
-    createRoom("onFocus")
+    if (dineInType === 'p2p') {
+      createRoom("onFocus")
+    }
   }, [])
 
 
@@ -265,7 +266,7 @@ export default function OrderSuccess({ navigation, route }) {
           }}>
           <ButtonWithLoader
             isLoading={isLoadingChat}
-            btnText={dineInType == "p2p" ? "Start chat" : "View Detail"}
+            btnText={dineInType == "p2p" ? "Start Chat" : "View Detail"}
             onPress={createRoom}
             textStyle={{ color: themeColors.secondary_color }}
             borderRadius={moderateScale(13)}

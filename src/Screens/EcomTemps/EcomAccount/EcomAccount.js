@@ -394,7 +394,7 @@ export default function EcomAccount({ navigation }) {
             />
           </TouchableOpacity>
         )} */}
-                {!!userData?.auth_token &&
+                {!!userData?.auth_token && dineInType !== "p2p" &&
                     (businessType == 4 ? null : (
                         <ListItemHorizontal
                             centerContainerStyle={{ flexDirection: "row" }}
@@ -411,6 +411,22 @@ export default function EcomAccount({ navigation }) {
                         // rightIconStyle={{tintColor: colors.textGreyLight}}
                         />
                     ))}
+                {!!(!!userData?.auth_token && (businessType == 8 || dineInType == "p2p")) &&
+                    <ListItemHorizontal
+                        centerContainerStyle={{ flexDirection: 'row' }}
+                        leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                        onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
+                            isBack: true,
+                        })}
+                        iconLeft={imagePath.icMyPosts}
+                        centerHeading={strings.MY_POSTS}
+                        containerStyle={styles.containerStyle2}
+                        centerHeadingStyle={{
+                            fontSize: textScale(14),
+                            fontFamily: fontFamily.regular,
+                        }}
+                    />
+                }
 
                 {!!userData?.auth_token &&
                     !!appData &&
@@ -432,7 +448,7 @@ export default function EcomAccount({ navigation }) {
                         />
                     )}
 
-                {!!userData?.auth_token && getBundleId() !== appIds.appi && (
+                {!!userData?.auth_token && getBundleId() !== appIds.appi && dineInType !== "p2p" && (
                     <ListItemHorizontal
                         centerContainerStyle={{ flexDirection: "row" }}
                         leftIconStyle={{ flex: 0.1, alignItems: "center" }}

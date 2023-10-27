@@ -32,6 +32,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import DeviceCountry from 'react-native-device-country';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import { setCountryFlag } from '../../../redux/actions/home';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -78,7 +79,6 @@ export default function DashBoardHeaderEcommerce({
 
   const [countryCode, setCountryCode] = useState('IN')
 
-  console.log("primary_countryprimary_country", primary_country)
 
   useLayoutEffect(() => {
     DeviceCountry.getCountryCode()
@@ -86,7 +86,6 @@ export default function DashBoardHeaderEcommerce({
         console.log("DeviceCountry", result);
         getItem('countryFlag').then((res) => {
           if (!!res) {
-            console.log("resresres", res)
             setCountryCode(res)
             setCountryFlag(res)
           } else {

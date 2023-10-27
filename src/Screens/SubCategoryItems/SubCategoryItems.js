@@ -44,7 +44,7 @@ import { Image } from 'react-native';
 import { UIActivityIndicator } from 'react-native-indicators';
 
 export default function SubcategoryVendor({ navigation, route }) {
-  console.log(route, 'route>>>>route');
+
   const paramData = route?.params?.data;
   const {
     appData,
@@ -969,7 +969,7 @@ export default function SubcategoryVendor({ navigation, route }) {
           themeColors={memorizedThemeColors}
           appStyle={memorizedAppStyle}
         />
-        {!!dataProvider && !isEmpty(dataProvider)?
+        {!!dataProvider && !isEmpty(dataProvider) ?
           <View style={{ flexDirection: 'row', backgroundColor: colors.white }}>
             <ScrollView
               scrollEnabled
@@ -1021,9 +1021,9 @@ export default function SubcategoryVendor({ navigation, route }) {
             />
 
           </View> : <View style={{
-            flex:1, 
-            justifyContent:'center',
-            alignItems:'center'
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
           }}>
             <UIActivityIndicator size={40} color={themeColors?.primary_color} />
           </View>}

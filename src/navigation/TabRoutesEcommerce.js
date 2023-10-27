@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
-import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
@@ -13,23 +13,27 @@ import { moderateScale, moderateScaleVertical, textScale } from '../styles/respo
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
+import CategoryStack from './CategoryStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-import CategoryStack from './CategoryStack';
 
 
-import navigationStrings from './navigationStrings';
 import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
+import P2pChatStack from './P2pChatStack';
+import P2pOrderStack from './P2pOrderStack';
+import PostStack from './PostStack';
+import navigationStrings from './navigationStrings';
 
 const Tab = createBottomTabNavigator();
 
 
 export default function TabRoutesEcommerce(props) {
 
-  const { appMainData } = useSelector((state) => state?.home) || {};
+  const { appMainData, dineInType } = useSelector((state) => state?.home) || {};
   const { appStyle, appData, redirectedFrom, themeColors } = useSelector((state) => state?.initBoot || {});
   const { cartItemCount } = useSelector((state) => state?.cart || {});
+
 
 
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
@@ -132,7 +136,7 @@ export default function TabRoutesEcommerce(props) {
         // redirectedFrom == 'cart'
         //   ? navigationStrings.CART
         //   :
-           navigationStrings.HOMESTACK
+        navigationStrings.HOMESTACK
       }
     >
       <Tab.Screen
@@ -159,7 +163,7 @@ export default function TabRoutesEcommerce(props) {
           },
         })}
       />
-      <Tab.Screen
+      {dineInType !== "p2p" && <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
         options={({ route, navigation }) => ({
@@ -204,13 +208,15 @@ export default function TabRoutesEcommerce(props) {
           unmountOnBlur: true,
           gestureEnabled: true,
         })}
-      />
+      />}
 
-      {brandTab}
-      {celebTab}
+      {dineInType !== "p2p" && brandTab}
+      {dineInType !== "p2p" && celebTab}
 
 
-      {!!isEnableCategory ? <Tab.Screen
+
+
+      {!!isEnableCategory && dineInType !== "p2p" ? <Tab.Screen
         component={CategoryStack}
         name={navigationStrings.CATEGORY}
         options={({ route }) => ({
@@ -228,6 +234,67 @@ export default function TabRoutesEcommerce(props) {
           },
         })}
       /> : null}
+
+      {dineInType == "p2p" && <Tab.Screen
+        component={P2pOrderStack}
+        name={navigationStrings.P2P_ORDER_STACK}
+        options={({ route, navigation }) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.CHAT_SCREEN,
+            navigationStrings.P2P_PRODUCT_DETAIL,
+          ]),
+          tabBarLabel: strings.ORDER,
+          tabBarIcon: ({ focused, tintColor }) => (
+            <FastImage
+              style={styles.iconStyle}
+              source={!!focused
+                ? imagePath.ic_orders2_p2p
+                : imagePath.ic_orders2_p2p_inactive}
+              tintColor={!!focused ? themeColors?.primary_color : colors.inactiveText}
+            />
+          ),
+        })}
+      />}
+
+
+      {dineInType == "p2p" && <Tab.Screen
+        component={PostStack}
+        name={navigationStrings.POST}
+        options={({ route, navigation }) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, []),
+          tabBarLabel: "",
+          tabBarIcon: ({ focused, tintColor }) => (
+
+            <FastImage
+              style={{ ...styles.iconStyle, height: moderateScale(40), width: moderateScale(40) }}
+              tintColor={!!focused ? themeColors?.primary_color : colors.inactiveText}
+              source={focused ? imagePath.ic_addPostP2p_active : imagePath.ic_addPostP2p_inactive}
+            />
+
+
+          ),
+        })}
+      />}
+      {dineInType == "p2p" &&
+        <Tab.Screen
+          component={P2pChatStack}
+          name={navigationStrings.CHAT_STACK}
+          options={({ route, navigation }) => ({
+            tabBarVisible: getTabBarVisibility(route, navigation, [
+              navigationStrings.CHAT_SCREEN,
+            ]),
+            tabBarLabel: strings.CHATS,
+            tabBarIcon: ({ focused, tintColor }) => (
+              <FastImage
+                style={styles.iconStyle}
+                source={!!focused
+                  ? imagePath.ic_chatp2p_active
+                  : imagePath.ic_chatp2p_inactive}
+                tintColor={!!focused ? themeColors?.primary_color : colors.inactiveText}
+              />
+            ),
+          })}
+        />}
 
       <Tab.Screen
         component={AccountStack}
