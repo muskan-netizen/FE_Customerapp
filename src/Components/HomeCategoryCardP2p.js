@@ -41,6 +41,9 @@ const HomeCategoryCardP2p = ({
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
+      style={{
+        flex: 1
+      }}
     >
       <View
         style={{
@@ -60,13 +63,11 @@ const HomeCategoryCardP2p = ({
           <View>
             <FastImage
               style={{
-                height: moderateScale(55),
-                width: moderateScale(55),
+                height: moderateScale(63),
+                width: moderateScale(63),
                 borderRadius: moderateScale(12),
                 borderWidth: 1,
                 borderColor: colors.borderColor,
-
-
               }}
               source={{
                 uri: imageURI,
@@ -85,9 +86,9 @@ const HomeCategoryCardP2p = ({
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily?.regular,
-            fontSize: textScale(12),
+            fontSize: textScale(13),
             textAlign: 'center',
-            marginTop: moderateScaleVertical(12)
+            marginTop: moderateScaleVertical(8)
           }}>
           {data.name}
         </Text>

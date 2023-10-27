@@ -1,10 +1,14 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
-import {textScale} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
-  const commonStyles = commonStylesFunc({fontFamily});
+export default ({ fontFamily }) => {
+  const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     backTextWhite: {
       color: '#FFF',
@@ -44,9 +48,9 @@ export default ({fontFamily}) => {
 
     container: {
       backgroundColor: colors.white,
-      padding: 15,
-      marginHorizontal: 10,
-      flexDirection: 'row',
+      marginHorizontal: moderateScale(16),
+      padding: moderateScale(8),
+      borderRadius: moderateScale(6)
     },
     status: {
       color: colors.yellowText,
@@ -67,6 +71,30 @@ export default ({fontFamily}) => {
     headerLine: {
       ...commonStyles.headerTopLine,
     },
+    cardView: {
+      flex: 0.13,
+      justifyContent: 'center',
+      marginBottom: moderateScaleVertical(30),
+    },
+    descText: {
+      color: colors.buyBgDark,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      opacity: 0.5,
+      marginTop: moderateScaleVertical(6),
+    },
+    cardView2: { flex: 0.15, justifyContent: 'center' },
+    cardView3: {
+      padding: 5,
+      alignItems: 'center',
+      backgroundColor: colors.yellowB,
+      borderRadius: moderateScale(5),
+    },
+    containerStyle: {
+      flexGrow: 1,
+      marginTop: moderateScaleVertical(20),
+      paddingBottom: moderateScaleVertical(80),
+    }
   });
   return styles;
 };

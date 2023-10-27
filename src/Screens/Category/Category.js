@@ -13,7 +13,8 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical
+  moderateScaleVertical,
+  width
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
@@ -180,6 +181,9 @@ export default function Category({ navigation, route }) {
         onPress={() => onPressCategory(item)}
         imageHeight={80}
         imageWidth={80}
+        containerStyle={{
+          width: (width - moderateScale(64)) / 3
+        }}
       />
     )
   }, [!!allCategories && allCategories?.data || []])
@@ -206,8 +210,11 @@ export default function Category({ navigation, route }) {
           ListHeaderComponent={<View style={{ height: 10 }} />}
           keyExtractor={(item, index) => String(index)}
           contentContainerStyle={{ flexGrow: 1 }}
+          columnWrapperStyle={{
+            justifyContent: "space-between"
+          }}
           ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScaleVertical(20) }} />
+            <View style={{ height: moderateScaleVertical(16) }} />
           )}
           numColumns={3}
           renderItem={_renderItem}

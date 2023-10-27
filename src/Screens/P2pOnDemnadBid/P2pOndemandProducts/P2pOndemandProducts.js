@@ -47,6 +47,7 @@ import {
     checkValueExistInAry,
     tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
+import HTMLView from 'react-native-htmlview';
 
 const P2pOndemandProducts = ({ route, navigation }) => {
     const flatlistRef = useRef(null);
@@ -122,9 +123,9 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const getP2pProductsByCategoryId = (pageNo = 1, filterAry = [], limit = 7) => {
         actions
             .getProductByP2pCategoryId(
-                `/${paramData?.id}?page=${pageNo}&limit=${limit}&product_list=true&type=p2p`,
+                `/${paramData?.id}?page=${pageNo}&limit=${10}&product_list=true&type=p2p`,
                 {
-                    attributes: filterAry,
+                    attributes: [],
                     latitude: location?.latitude,
                     longitude: location?.longitude
                 },
@@ -161,7 +162,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         data['brands'] = filterData?.sleectdBrands || [];
         data['order_type'] = filterData?.selectedSorting || 0;
         data['range'] = `${minimumPrice};${maximumPrice}`;
-        console.log('api hit getAllProductsCategoryFilter', data);
+
 
         actions
             .getProductByCategoryFiltersOptamize(
@@ -347,10 +348,10 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         }
     };
 
-    const onEndReachedDelayed = debounce(onEndReached, 1000, {
-        leading: true,
-        trailing: false,
-    });
+    // const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    //     leading: true,
+    //     trailing: false,
+    // });
 
 
 
@@ -364,6 +365,8 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                         quality,
                     )
                     : item?.product_image;
+
+
 
             return (
                 <View>
@@ -404,30 +407,45 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                     {item?.translation[0]?.title || item?.title || item?.sku}
                                 </Text>
 
-                                {
-                                    !!item?.translation_description ||
-                                        !!item?.translation[0]?.translation_description
-                                        ? (
-                                            <Text
-                                                numberOfLines={3}
-                                                style={{
-                                                    fontSize: textScale(10),
-                                                    fontFamily: fontFamily.regular,
-                                                    // lineHeight: moderateScale(14),
-                                                    color: isDarkMode
-                                                        ? MyDarkTheme.colors.text
-                                                        : colors.blackOpacity66,
-                                                    textAlign: 'left',
-                                                    marginTop: moderateScaleVertical(8),
-                                                }}>
-                                                {!!item?.translation_description
-                                                    ? item?.translation_description.toString()
-                                                    : !!item?.translation[0]?.translation_description
-                                                        ? item?.translation[0]?.translation_description
-                                                        : ''}
-                                            </Text>
-                                        ) : null
+                                {!isEmpty(item?.translation) && (item?.translation[0]?.meta_description || item?.translation[0]?.body_html) &&
+                                    <View>
+                                        {!!item?.translation[0]?.meta_description
+                                            ? (
+                                                <Text
+                                                    numberOfLines={3}
+                                                    style={{
+                                                        fontSize: textScale(10),
+                                                        fontFamily: fontFamily.regular,
+                                                        // lineHeight: moderateScale(14),
+                                                        color: isDarkMode
+                                                            ? MyDarkTheme.colors.text
+                                                            : colors.blackOpacity66,
+                                                        textAlign: 'left',
+                                                        marginTop: moderateScaleVertical(8),
+                                                    }}>
+                                                    {item?.translation[0]?.meta_description}
+                                                </Text>
+                                            ) : <HTMLView
+                                                stylesheet={{
+                                                    p: {
+                                                        fontFamily: fontFamily?.regular,
+                                                        fontSize: textScale(12),
+                                                        color: colors.lightGreyText,
+                                                    },
+
+                                                }}
+                                                value={item?.translation[0]?.body_html
+                                                    ? item?.translation[0]?.body_html
+                                                    : ''}
+                                                textComponentProps={{
+                                                    numberOfLines: 3,
+                                                }}
+                                                nodeComponentProps={{ numberOfLines: 3 }}
+                                            />
+                                        }
+                                    </View>
                                 }
+
                                 <Text
                                     numberOfLines={1}
                                     style={{
@@ -446,64 +464,13 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                         digit_after_decimal,
                                         additional_preferences,
                                         currencies?.primary_currency?.symbol,
-                                    )}
+                                    )}{item?.category?.category_detail?.type_id == 13 ? "" : " / day"}
                                     <Text>
-
-
                                     </Text>
                                 </Text>
-                                {/* <Text style={styles.txt3}>
-                      {item?.translation[0]?.title || item?.title || item?.sku}
-                    </Text> */}
                             </View>
                         </View>
-                        {/* <FastImage
-                  style={styles.imgBack}
-                  source={{uri: getImage('700/700')}}
-                /> */}
-                        {/* <FastImage
-                  source={
-                    !!item?.vendor?.logo?.image_fit
-                      ? {
-                          uri: getImageUrl(
-                            item?.vendor?.logo?.image_fit,
-                            item?.vendor?.logo?.image_path,
-                            '400/400',
-                          ),
-                        }
-                      : imagePath.icProfile
-                  }
-                  style={{
-                    height: moderateScale(50),
-                    width: moderateScale(50),
-                    borderRadius: moderateScale(25),
-                    position: 'absolute',
-                    top: moderateScaleVertical(15),
-                    left: moderateScale(15),
-                  }}
-                /> */}
                     </TouchableOpacity>
-
-                    {/* <GradientView
-                title={tokenConverterPlusCurrencyNumberFormater(
-                  Number(item?.variant[0]?.price),
-                  digit_after_decimal,
-                  additional_preferences,
-                  currencies?.primary_currency?.symbol,
-                )}
-                colorsArray={[
-                  getColorCodeWithOpactiyNumber(
-                    themeColors?.primary_color.substr(1),
-                    30,
-                  ),
-                  getColorCodeWithOpactiyNumber(
-                    themeColors?.primary_color.substr(1),
-                    60,
-                  ),
-                  themeColors?.primary_color,
-                ]}
-                btnStyle={{ marginTop: moderateScale(4) }}
-              /> */}
                 </View>
             );
         },

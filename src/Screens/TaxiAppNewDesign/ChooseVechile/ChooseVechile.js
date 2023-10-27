@@ -1,5 +1,6 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
@@ -10,13 +11,13 @@ import {
     Platform,
     Pressable, Text,
     TouchableOpacity,
-    View,
-    TextInput,
-    ScrollView
+    View
 } from 'react-native';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import DatePicker from 'react-native-date-picker';
 import { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
+import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import * as RNLocalize from 'react-native-localize';
@@ -24,6 +25,7 @@ import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native
 import MapViewDirections from 'react-native-maps-directions';
 import RazorpayCheckout from 'react-native-razorpay';
 import { useSelector } from 'react-redux';
+import BorderTextInputWithLable from '../../../Components/BorderTextInputWithLable';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import GradientButton from '../../../Components/GradientButton';
@@ -46,7 +48,6 @@ import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
     deviceCountryCode,
-    getColorCodeWithOpactiyNumber,
     getCurrentLocation,
     getImageUrl,
     hapticEffects,
@@ -56,16 +57,11 @@ import {
 } from '../../../utils/helperFunctions';
 import { generateTransactionRef } from '../../../utils/paystackMethod';
 import { chekLocationPermission } from '../../../utils/permissions';
-import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
-import AvailableDriver from '../Comps/AvailableDriver';
-import SelectPaymentModalView from '../../TaxiApp/ChooseCarTypeAndTime/SelectPaymentModalView';
-import stylesFun from './styles';
-import FastImage from 'react-native-fast-image';
-import axios from 'axios';
 import useInterval from '../../../utils/useInterval';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import BorderTextInputWithLable from '../../../Components/BorderTextInputWithLable';
+import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
+import SelectPaymentModalView from '../../TaxiApp/ChooseCarTypeAndTime/SelectPaymentModalView';
+import AvailableDriver from '../Comps/AvailableDriver';
+import stylesFun from './styles';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -288,7 +284,6 @@ function ChooseVechile({ navigation, route }) {
         _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
     }, [date, selectedCarOption])
 
-    console.log(scheduleDateTime, "scheduleDateTime>>>>>>")
 
     const clearScheduleDate = useCallback(() => {
         actions.saveSchduleTime('now');
@@ -914,8 +909,8 @@ function ChooseVechile({ navigation, route }) {
         actions
             .getAllNearByDrivers(
                 {
-                    latitude: paramData?.location[0]?.latitude||myCurrentLocationDetails?.latitude,
-                    longitude: paramData?.location[0]?.longitude||myCurrentLocationDetails?.longitude,
+                    latitude: paramData?.location[0]?.latitude || myCurrentLocationDetails?.latitude,
+                    longitude: paramData?.location[0]?.longitude || myCurrentLocationDetails?.longitude,
                     tag: selectedCarOption?.tags,
                 },
                 {
@@ -1598,7 +1593,7 @@ function ChooseVechile({ navigation, route }) {
                         )}
                     </Text>
                 </View>
-                {!isEmpty(allListedDrivers)&&!!allListedDrivers[0]?.arrival_time &&
+                {!isEmpty(allListedDrivers) && !!allListedDrivers[0]?.arrival_time &&
                     <View style={{
                         flexDirection: "row",
                         alignItems: "center",

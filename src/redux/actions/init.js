@@ -109,7 +109,7 @@ export function initApp(
 
         countryData['primary_country'] = !isEmpty(data?.primary_country) ? data?.primary_country?.country :
           reload &&
-          primary_country?.id &&
+            primary_country?.id &&
             data?.countries.find((x) => x?.country?.id == primary_country?.id)
             ? primary_country
             : data?.countries
@@ -123,7 +123,6 @@ export function initApp(
           businessType: data.profile.preferences.business_type,
         };
 
-        console.log("languagesDatalanguagesData", languagesData)
 
         if (reload) {
           setItem('setPrimaryCurrent', currenciesData);

@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Alert, BackHandler, Image, Linking, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { Alert, BackHandler, Image, Linking, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -17,8 +17,14 @@ import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
 
+import FastImage from 'react-native-fast-image';
+import Modal from "react-native-modal";
+import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
+import { enableFreeze } from "react-native-screens";
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+import imagePath from '../../constants/imagePath';
+import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -27,19 +33,12 @@ import {
   showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import { DashBoardFiveV2Api, DashBoardHeaderFive, TaxiHomeDashbord } from './DashboardViews/Index';
-import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
-import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
-import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
-import { DashBoardHeaderFour } from './DashboardViews/Index';
-import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import socketServices from '../../utils/scoketService';
-import { enableFreeze } from "react-native-screens";
-import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
-import FastImage from 'react-native-fast-image';
-import Modal from "react-native-modal";
-import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
-import imagePath from '../../constants/imagePath';
+import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
+import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
+import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
+import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
+import { DashBoardFiveV2Api, DashBoardHeaderFive, DashBoardHeaderFour, TaxiHomeDashbord } from './DashboardViews/Index';
 
 enableFreeze(true);
 
@@ -157,7 +156,7 @@ export default function Home({ route, navigation }) {
               let locData = location?.latitude ? location : curLoc;
               if (!!userData?.auth_token) {
                 //IS LOGIN USER YES
-                if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                if (!!appData?.profile?.preferences?.is_hyperlocal || dineInType == "p2p") {
                   //YES
                   getAllAddress()
                     .then((savedAddress) => {
@@ -200,7 +199,7 @@ export default function Home({ route, navigation }) {
                 }
               } else {
                 //In case of guest user
-                if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                if (!!appData?.profile?.preferences?.is_hyperlocal || dineInType == "p2p") {
                   //YES
                   actions.locationData(locData);
                   homeData(locData);
@@ -218,7 +217,7 @@ export default function Home({ route, navigation }) {
               return;
             });
         } else {
-          if (appData?.profile?.preferences?.is_hyperlocal) {
+          if (appData?.profile?.preferences?.is_hyperlocal || dineInType == "p2p") {
             const data = {
               address: appData?.profile?.preferences?.Default_location_name,
               latitude: appData?.profile?.preferences?.Default_latitude,
@@ -408,7 +407,6 @@ export default function Home({ route, navigation }) {
     }
 
 
-    console.log("selectedFilterselectedFilter", selectedFilter)
     let vendorFilterData = {
       open_close_vendor: selectedFilter?.id == 2 ? 1 : 0
     };
@@ -462,7 +460,7 @@ export default function Home({ route, navigation }) {
           preLoadImages(filterCat)
 
           if (
-            appData?.profile?.preferences?.is_hyperlocal &&
+            (appData?.profile?.preferences?.is_hyperlocal || dineInType == "p2p") &&
             location?.latitude == '' &&
             location?.longitude == ''
           ) {
@@ -604,8 +602,7 @@ export default function Home({ route, navigation }) {
           item.redirect_to == staticStrings.ONDEMANDSERVICE ||
             item.redirect_to == staticStrings.PRODUCT ||
             item?.redirect_to == staticStrings.LAUNDRY ||
-            item?.redirect_to == staticStrings.APPOINTMENT ||
-            item?.redirect_to == staticStrings.RENTAL
+            item?.redirect_to == staticStrings.APPOINTMENT
             ? false
             : true,
         name: item.name,
@@ -615,7 +612,6 @@ export default function Home({ route, navigation }) {
     }
 
     if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
-
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
         id: item.id,
@@ -626,7 +622,7 @@ export default function Home({ route, navigation }) {
       return
     }
 
-    if (item?.redirect_to == staticStrings.P2P) {
+    if (item?.redirect_to == staticStrings.P2P || item?.redirect_to == staticStrings.RENTAL) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
       return;
     }
@@ -785,6 +781,13 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressProduct = (item) => {
+    if (dineInType == "p2p") {
+      navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+        product_id: item?.id,
+      })
+      return
+
+    }
     if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
         data: {
@@ -1052,6 +1055,8 @@ export default function Home({ route, navigation }) {
   })
 
 
+  console.log(appStyle?.homePageLayout, "Fasdfasdhfkjhsd")
+
 
   const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {
@@ -1090,7 +1095,6 @@ export default function Home({ route, navigation }) {
         } else {
           return (
             <SafeAreaView>
-              {console.log('curLatLong=>', curLatLong)}
               <DashBoardHeaderFive
                 showToggles={false}
                 navigation={navigation}
@@ -1105,8 +1109,6 @@ export default function Home({ route, navigation }) {
                 _onVoiceStop={_onVoiceStop}
                 nearestLoc={nearestLocDis}
                 currentLoc={currentLocation}
-
-
               />
             </SafeAreaView>
           );
@@ -1263,7 +1265,6 @@ export default function Home({ route, navigation }) {
   ])
 
 
-
   const renderHomeScreen = () => {
     return (
       <>
@@ -1361,7 +1362,7 @@ export default function Home({ route, navigation }) {
     <WrapperContainer
       statusBarColor={colors.whiteSmokeColor}
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.whiteSmokeColor
+        isDarkMode ? MyDarkTheme.colors.background : appStyle?.homePageLayout == 8 && dineInType == "p2p" ? colors.white : colors.whiteSmokeColor
       }
       isLoading={searchDataLoader}
       isSafeArea={appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10 ? false : true}

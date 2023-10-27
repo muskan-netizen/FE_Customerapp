@@ -58,6 +58,7 @@ import {
   showSuccess
 } from '../../../utils/helperFunctions';
 import styleFun from './styles';
+import { dialCall } from '../../../utils/openNativeApp';
 
 
 
@@ -72,7 +73,6 @@ const P2pProductDetail = ({ navigation, route, item }) => {
   const snapPoints = useMemo(() => [height], []);
   const bottomSheetModalRef = useRef(null);
   const paramData = route?.params;
-
 
   const {
     appData,
@@ -119,6 +119,10 @@ const P2pProductDetail = ({ navigation, route, item }) => {
   const [isKycErrorModal, setIsKycErrorModal] = useState(false)
   const [pickupvalues, setPickupValues] = useState(1)
   const [dropoffValues, setDropoffValues] = useState(1);
+  const [isOtherProducts, setIsOtherProducts] = useState(true)
+  const [otherProducts, setOtherProducts] = useState([]);
+  const [isLoadingChat, setLoadingChat] = useState(false);
+
 
   const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) };
   useEffect(() => {
@@ -215,8 +219,6 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
 
   const getP2pProductDetail = (routeProductId) => {
-
-
     const parts = redirectedFrom.split("-"); // Split the string into an array using "-"
     const charactersAfterDash = parts[1];
 
@@ -235,6 +237,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
         console.log(res, '<===response getProductDetailByProductId');
         setIsLoading(false);
         setProductInfo(res?.data?.products);
+        setOtherProducts(res?.data?.suggested_vendor_products)
         if (!isEmpty(res?.data?.products?.product_availability)) {
           let dateObj = {}
           res?.data?.products?.product_availability?.map((item, index) => {
@@ -484,23 +487,15 @@ const P2pProductDetail = ({ navigation, route, item }) => {
               }
             }
             let newMarkDates = { ...markedDates, ...range }
-
-
-
             markStartEndDate(newMarkDates)
             setSelectedDates(newMarkDates);
-
-
           }
           else {
             alert("You can not select blocked dates")
           }
-
         }
         else {
           markedDates[day?.dateString] = { selected: true, customStyles: { container: { backgroundColor: themeColors?.primary_color }, text: { color: colors.white } }, is_selected: true }
-
-
           markStartEndDate(markedDates)
           setSelectedDates(markedDates)
         }
@@ -555,22 +550,24 @@ const P2pProductDetail = ({ navigation, route, item }) => {
     const dateStartTime = moment(combinedStartDateTimeString, 'YYYY-MM-DD h:mm A');
 
     // Convert to UTC
-    const utcStartDateTime = dateStartTime.utc().format('YYYY-MM-DD HH:mm:ss');
+    const utcStartDateTime = dateStartTime.format('YYYY-MM-DD HH:mm:ss');
     const combinedEndDateTimeString = `${endDate} ${dropOffTime}`;
 
     // Parse the combined date and time string in a specific format
     const dateEndTime = moment(combinedEndDateTimeString, 'YYYY-MM-DD h:mm A');
 
     // Convert to UTC
-    const utcEndDateTime = dateEndTime.utc().format('YYYY-MM-DD HH:mm:ss');
+    const utcEndDateTime = dateEndTime.format('YYYY-MM-DD HH:mm:ss');
+
+
 
     const data = {};
     data['sku'] = productInfo?.sku;
     data['quantity'] = 1;
     data['product_variant_id'] = productInfo?.variant[0]?.id;
     data['type'] = dineInType;
-    data['start_date_time'] = utcStartDateTime;
-    data['end_date_time'] = utcEndDateTime;
+    data['start_date_time'] = productInfo?.category?.category_detail?.type_id == 13 ? moment().format("YYYY-MM-DD HH:mm:ss") : utcStartDateTime;
+    data['end_date_time'] = productInfo?.category?.category_detail?.type_id == 13 ? moment().format("YYYY-MM-DD 23:59:59") : utcEndDateTime;
     data['emirate_id'] = productInfo?.variant[0]?.emirate;
 
     actions.addProductsToCart(data, {
@@ -584,7 +581,12 @@ const P2pProductDetail = ({ navigation, route, item }) => {
         actions.cartItemQty(res);
         actions.reloadData(!reloadData);
         // showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        moveToNewScreen(navigationStrings.PRODUCT_PRICE_DETAILS, {})()
+        moveToNewScreen(navigationStrings.PRODUCT_PRICE_DETAILS, {
+          type_id: productInfo?.category?.category_detail?.type_id,
+          distance: Number(distance() / 1000).toFixed(2),
+          vendor_name: productInfo?.vendor?.name,
+          vendor_rating: productInfo?.averageRating
+        })()
       })
       .catch((error) => {
 
@@ -613,7 +615,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
       return;
     }
 
-    if (!startDate || !endDate) {
+    if (productInfo?.category?.category_detail?.type_id == 10 && (!startDate || !endDate)) {
       showError("Please select rental date range")
       return
     }
@@ -707,6 +709,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
 
 
+
   const getPlanType = () => {
     let count = 0;
     let newSelectedDates = cloneDeep(selectedDates)
@@ -718,6 +721,91 @@ const P2pProductDetail = ({ navigation, route, item }) => {
     return count == 0 ? "0" : count < 7 ? "day" : count >= 7 && count < 30 ? "week" : "month"
   }
 
+
+  const renderOtherProducts = useCallback(
+    (item, index) => {
+
+      return <TouchableOpacity
+
+        onPress={() => navigation.push(navigationStrings.P2P_PRODUCT_DETAIL, {
+          product_id: item?.id,
+        })}
+        style={{
+          width: (width - moderateScale(48)) / 2,
+          marginTop: index > 1 ? moderateScaleVertical(16) : 0,
+
+        }}>
+        <View style={{
+          backgroundColor: "#FAFAFA"
+        }}>
+          <FastImage
+
+            source={{
+              uri: getImageUrl(
+                item?.media[0]?.image?.path?.image_fit,
+                item?.media[0]?.image?.path?.image_path,
+                '1000/1000',
+              )
+            }}
+            style={{
+              height: moderateScaleVertical(120),
+              width: moderateScale(100),
+              alignSelf: "center"
+
+            }} />
+          <View style={{
+            bottom: 0,
+            height: moderateScaleVertical(28),
+            width: moderateScale(60),
+            backgroundColor: item?.type_id == 10 ? colors.purple : colors.blue,
+            position: "absolute",
+            zIndex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: moderateScale(3)
+          }} >
+            <Text style={{
+              fontFamily: fontFamily?.regular,
+              fontSize: textScale(10),
+              color: colors.white
+            }}>{item?.type_id == 10 ? "For Rent" : "For Sale"}</Text>
+          </View>
+        </View>
+        <View style={{
+          paddingVertical: moderateScaleVertical(6)
+        }}>
+          <Text style={{
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(11),
+            color: colors.blackOpacity30
+          }}>{item?.category_name?.name}</Text>
+          <Text
+            numberOfLines={1}
+            style={{
+              fontFamily: fontFamily?.regular,
+              fontSize: textScale(12),
+              color: colors.black,
+              marginTop: moderateScaleVertical(4)
+            }}>{item?.title}</Text>
+          <Text style={{
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(12),
+            color: colors.black,
+            marginTop: moderateScaleVertical(4)
+          }}>{tokenConverterPlusCurrencyNumberFormater(
+            item?.variant[0]?.price,
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+          )} {item?.type_id == 13 && <Text style={{
+            color: colors.blackOpacity30
+          }}> / day</Text>}</Text>
+        </View>
+
+      </TouchableOpacity>
+    },
+    [],
+  )
 
 
 
@@ -732,12 +820,9 @@ const P2pProductDetail = ({ navigation, route, item }) => {
         ...styles.container,
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
-          : colors.statusbarColor,
+          : colors.white,
         paddingBottom: paramData?.isMyPost ? 0 : moderateScaleVertical(50)
       }}>
-
-
-
       {!isEmpty(productInfo) && (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, }}>
           <View style={{ flex: 1 }}>
@@ -955,28 +1040,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
             </View>
             {!isEmpty(productInfo) && !!productInfo?.address &&
               <View>
-                {/* <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: moderateScale(20),
-                    marginHorizontal: moderateScale(16),
-                  }}>
-                  <Image
-                    source={imagePath.location1}
-                    style={{ tintColor: isDarkMode ? MyDarkTheme.colors.white : colors.grayOpacity51 }}
-                  />
-                  <Text
-                    style={{
-                      fontFamily: fontFamily?.regular,
-                      fontSize: textScale(14),
-                      marginHorizontal: moderateScale(16),
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    }}>
-                    {strings.PICKUP_LOCATION}- <Text style={{
-                      color: colors.textGreyN,
-                    }}>{productInfo?.address}</Text>
-                  </Text>
-                </View> */}
+
                 {(!!productInfo?.latitude && !!productInfo?.longitude) &&
                   <View
                     style={{
@@ -1021,87 +1085,133 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                 fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 fontSize: textScale(12)
               }}>
-                {tokenConverterPlusCurrencyNumberFormater(productInfo?.variant[0]?.compare_at_price, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}
+                {tokenConverterPlusCurrencyNumberFormater(productInfo?.category?.category_detail?.type_id == 10 ? productInfo?.variant[0]?.compare_at_price : dayPrice, digit_after_decimal, additional_preferences, currencies?.primary_currency?.symbol) || ''}
               </Text>
 
             </View>}
-            {!!productInfo?.variant[0]?.emirate && <View
-              style={{
-                flexDirection: 'row',
-                marginHorizontal: moderateScale(16),
-                marginTop: moderateScale(20),
-                width: width - moderateScale(30),
-                justifyContent: "space-between"
-              }}>
-              <Text style={{
-                fontFamily: fontFamily?.regular,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                fontSize: textScale(13)
-              }}>Emirates</Text>
 
-              <Text style={{
-                fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                fontSize: textScale(12)
-              }}>
-                {getEmirateName(productInfo)}
-              </Text>
+            {/* {(appData?.profile?.preferences?.chat_button == 1 ||
+              appData?.profile?.preferences?.call_button == 1) &&
+              productInfo?.vendor?.id !== userData?.vendor_id && (
+                <View style={styles.view3}>
+                  {appData?.profile?.preferences?.chat_button == 1 && (
+                    <GradientButton
+                      onPress={() => createRoom()}
+                      btnText={'Chat'}
+                      isImgWithTxt
+                      indicator={isLoadingChat}
+                      indicatorColor={themeColors?.primary_color}
+                      textImgViewStyle={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      leftImgSrc={imagePath.icChatP2p}
+                      textStyle={{ ...styles.chatBtn, color: themeColors?.primary_color, }}
+                      btnStyle={{ ...styles.btn1, borderColor: themeColors?.primary_color, }}
+                      source={imagePath.message}
+                      containerStyle={{ alignItems: 'flex-start' }}
+                      colorsArray={
+                        isDarkMode
+                          ? [
+                            MyDarkTheme?.colors?.lightDark,
+                            MyDarkTheme?.colors?.lightDark,
+                          ]
+                          : [colors.white, colors.white]
+                      }
+                      leftImgStyle={{
+                        tintColor: themeColors?.primary_color,
+                      }}
+                    />
+                  )}
+                  {appData?.profile?.preferences?.call_button == 1 && (
+                    <GradientButton
+                      btnText={'Call'}
+                      isImgWithTxt
+                      textImgViewStyle={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      onPress={() => {
+                        if (!userData?.auth_token) {
+                          actions.setAppSessionData('on_login');
+                          return;
+                        }
+                        dialCall(productInfo?.vendor?.phone_no);
+                      }}
+                      leftImgSrc={imagePath.icCallP2p}
+                      textStyle={styles.chatBtn}
+                      colorsArray={[themeColors?.primary_color, themeColors?.primary_color, themeColors?.primary_color]}
+                      btnStyle={styles.btn2}
+                      source={imagePath.call}
+                      containerStyle={{ alignItems: 'flex-start' }}
+                    />
+                  )}
+                </View>
+              )} */}
 
-            </View>}
-            <Text style={{
-              fontFamily: fontFamily?.regular,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              fontSize: textScale(14),
-              marginTop: moderateScale(20),
-              marginLeft: moderateScale(16),
-            }}>Offers for a:</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginHorizontal: moderateScale(16),
-                marginTop: moderateScale(12),
-                justifyContent: "space-between"
-              }}>
-              <TouchableOpacity style={{
-                ...styles.priceBtn, borderWidth: getPlanType() == "day" ? 1 : 0, borderColor: themeColors?.primary_color,
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  themeColors?.primary_color.substr(1),
-                  10,
-                ),
+            {productInfo?.category?.category_detail?.type_id == 10 &&
+              <View>
+                <Text style={{
+                  fontFamily: fontFamily?.regular,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  fontSize: textScale(14),
+                  marginTop: moderateScale(20),
+                  marginLeft: moderateScale(16),
+                }}>Offers for a:</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginHorizontal: moderateScale(16),
+                    marginTop: moderateScale(12),
+                    justifyContent: "space-between"
+                  }}>
+                  <TouchableOpacity style={{
+                    ...styles.priceBtn, borderWidth: getPlanType() == "day" ? 1 : 0, borderColor: themeColors?.primary_color,
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      10,
+                    ),
 
-              }}>
-                <Text style={{ ...styles.priceType, fontFamily: getPlanType() == "day" ? fontFamily?.bold : fontFamily?.regular }}>Daily</Text>
-                <Text style={{ ...styles.price, color: themeColors?.primary_color, fontFamily: getPlanType() == "day" ? fontFamily?.bold : fontFamily?.medium }}>{Number(dayPrice).toFixed(2)}/Day</Text>
-              </TouchableOpacity>
+                  }}>
+                    <Text style={{ ...styles.priceType, fontFamily: getPlanType() == "day" ? fontFamily?.bold : fontFamily?.regular }}>Daily</Text>
+                    <Text style={{ ...styles.price, color: themeColors?.primary_color, fontFamily: getPlanType() == "day" ? fontFamily?.bold : fontFamily?.medium }}>{Number(dayPrice).toFixed(2)}/Day</Text>
+                  </TouchableOpacity>
 
-              <TouchableOpacity style={{
-                ...styles.priceBtn, borderWidth: getPlanType() == "week" ? 1 : 0, borderColor: themeColors?.primary_color,
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  themeColors?.primary_color.substr(1),
-                  10,
-                ),
-              }}>
+                  <TouchableOpacity style={{
+                    ...styles.priceBtn, borderWidth: getPlanType() == "week" ? 1 : 0, borderColor: themeColors?.primary_color,
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      10,
+                    ),
+                  }}>
 
-                <Text style={{ ...styles.priceType, fontFamily: getPlanType() == "week" ? fontFamily?.bold : fontFamily?.regular }}>7 Days +</Text>
-                <Text style={{ ...styles.price, color: themeColors?.primary_color, fontFamily: getPlanType() == "week" ? fontFamily?.bold : fontFamily?.medium }}> {Number(weekPrice).toFixed(2)}/Day</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{
-                ...styles.priceBtn, borderWidth: getPlanType() == "month" ? 1 : 0, borderColor: themeColors?.primary_color,
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  themeColors?.primary_color.substr(1),
-                  10,
-                ),
+                    <Text style={{ ...styles.priceType, fontFamily: getPlanType() == "week" ? fontFamily?.bold : fontFamily?.regular }}>7 Days +</Text>
+                    <Text style={{ ...styles.price, color: themeColors?.primary_color, fontFamily: getPlanType() == "week" ? fontFamily?.bold : fontFamily?.medium }}> {Number(weekPrice).toFixed(2)}/Day</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{
+                    ...styles.priceBtn, borderWidth: getPlanType() == "month" ? 1 : 0, borderColor: themeColors?.primary_color,
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      10,
+                    ),
 
-              }}>
-                <Text style={{ ...styles.priceType, fontFamily: getPlanType() == "month" ? fontFamily?.bold : fontFamily?.regular }}>30 Days +</Text>
-                <Text style={{ ...styles.price, color: themeColors?.primary_color, fontFamily: getPlanType() == "month" ? fontFamily?.bold : fontFamily?.medium }}>{Number(monthPrice).toFixed(2)}/Day</Text>
-              </TouchableOpacity>
+                  }}>
+                    <Text style={{ ...styles.priceType, fontFamily: getPlanType() == "month" ? fontFamily?.bold : fontFamily?.regular }}>30 Days +</Text>
+                    <Text style={{ ...styles.price, color: themeColors?.primary_color, fontFamily: getPlanType() == "month" ? fontFamily?.bold : fontFamily?.medium }}>{Number(monthPrice).toFixed(2)}/Day</Text>
+                  </TouchableOpacity>
 
-            </View>
+                </View>
+              </View>}
 
 
-            {!paramData?.isMyPost && < TouchableOpacity
+            {productInfo?.category?.category_detail?.type_id == 10 && !paramData?.isMyPost && < TouchableOpacity
               onPress={toggleModal}
-              style={styles.dateBox}>
+              style={{
+                ...styles.dateBox, backgroundColor: getColorCodeWithOpactiyNumber(
+                  themeColors?.primary_color.substr(1),
+                  10,
+                ),
+              }}>
               <Text style={{ ...styles.dateTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyM }}>
                 {!startDate ? "Select Start Date & Time" : `${moment(startDate).format("dddd DD MMMM'YY")} \n ${pickUpTime}`}
 
@@ -1111,89 +1221,42 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                 {!endDate ? "Select End Date & Time" : `${moment(endDate).format("dddd DD MMMM'YY")} \n ${dropOffTime}`}
               </Text>
             </TouchableOpacity>}
-            <Text
-              style={{
-                fontFamily: fontFamily?.bold,
+            {productInfo?.translation[0]?.body_html && <View>
+              <Text
+                style={{
+                  fontFamily: fontFamily?.bold,
+                  marginHorizontal: moderateScale(16),
+                  marginTop: moderateScale(20),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }}>
+                {strings.DESCRIPTION}
+              </Text>
+              <View style={{
                 marginHorizontal: moderateScale(16),
-                marginTop: moderateScale(20),
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                marginTop: moderateScale(4)
               }}>
-              {strings.DESCRIPTION}
-            </Text>
-            <View style={{
-              marginHorizontal: moderateScale(16),
-              marginTop: moderateScale(4)
-            }}>
 
-              <RenderHTML
-                contentWidth={width}
-                source={{
-                  html: productInfo?.translation[0]?.body_html
-                    ? productInfo?.translation[0]?.body_html
-                    : ''
-                }}
-                tagsStyles={{
-                  p: {
-                    color: isDarkMode ? colors.white : colors.black,
-                    textAlign: 'left',
-                  },
+                <RenderHTML
+                  contentWidth={width}
+                  source={{
+                    html: productInfo?.translation[0]?.body_html
+                      ? productInfo?.translation[0]?.body_html
+                      : ''
+                  }}
+                  tagsStyles={{
+                    p: {
+                      color: isDarkMode ? colors.white : colors.black,
+                      textAlign: 'left',
+                    },
 
-                }}
-              />
+                  }}
+                />
 
-            </View>
-
-
-
-
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(8),
-                marginHorizontal: moderateScale(12),
-              }}>
-              <Text
-                style={{ fontFamily: fontFamily?.bold, fontSize: textScale(14) }}>
-                Type
-              </Text>
-              <Text style={{ width: moderateScale(186), fontSize: textScale(14) }}>
-                Digital camera with support for interchangeable lenses
-              </Text>
-            </View> */}
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(8),
-                marginHorizontal: moderateScale(12),
-              }}>
-              <Text
-                style={{ fontFamily: fontFamily?.bold, fontSize: textScale(14) }}>
-                LENS MOUNT
-              </Text>
-              <Text style={{ width: moderateScale(186), fontSize: textScale(14) }}>
-                Nikon Z mount
-              </Text>
-            </View>
+              </View>
+            </View>}
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(8),
-                marginHorizontal: moderateScale(12),
-              }}>
-              <Text
-                style={{ fontFamily: fontFamily?.bold, fontSize: textScale(14) }}>
-                PICTURE ANGLE
-              </Text>
-              <Text style={{ width: moderateScale(186), fontSize: textScale(14) }}>
-                APS-C Size / DX-Format
-              </Text>
-            </View> */}
-            <View
-              style={{
-                marginVertical: moderateScaleVertical(40),
+                marginTop: moderateScaleVertical(40),
                 marginHorizontal: moderateScale(12),
               }}>
               <Text
@@ -1211,11 +1274,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                   width: width - 20,
                   alignSelf: 'center',
                 }}>
-
-
-
                 {!!region?.latitude &&
-
                   <MapView
                     ref={mapRef}
                     provider={
@@ -1258,45 +1317,93 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
               </View>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginHorizontal: moderateScale(12),
-                marginBottom: moderateScaleVertical(12)
-              }}>
-              <Text
-                style={{ fontFamily: fontFamily?.bold, fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
-                Reviews:
-              </Text>
-              {/* <Text
-                style={{ color: colors.safety_orange, fontSize: textScale(14) }}>
-                View All
-              </Text> */}
-            </View>
+            <View style={{
+              backgroundColor: colors.borderColorB,
+              height: moderateScaleVertical(8),
+              marginVertical: moderateScaleVertical(16)
+            }} />
 
-            <FlatList
-              data={productInfo?.product_reviews || []}
-              ListFooterComponent={() => <View style={{
-                height: moderateScale(50)
-              }} />}
-              renderItem={renderReview}
-              ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: colors.borderColor, marginVertical: moderateScaleVertical(9) }} />}
-              ListEmptyComponent={() => <View style={{
-                alignItems: "center",
-                justifyContent: "center",
-                marginVertical: moderateScaleVertical(8),
-
-              }}
-              >
+            <View style={{
+              marginHorizontal: moderateScale(20),
+              borderBottomWidth: 1,
+              borderBottomColor: colors.borderColorB,
+              marginBottom: moderateScaleVertical(16),
+              flex: 1,
+              flexDirection: "row"
+            }}>
+              <TouchableOpacity
+                onPress={() => setIsOtherProducts(true)}
+                style={{
+                  borderBottomWidth: isOtherProducts ? 2 : 0,
+                  borderColor: colors.black,
+                  paddingBottom: moderateScaleVertical(16),
+                }}>
                 <Text style={{
-                  fontFamily: fontFamily?.medium,
-                  fontSize: textScale(14),
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-                }}>No Reviews Yet !</Text>
+                  fontFamily: fontFamily?.regular,
+                  fontSize: textScale(16),
+                  color: isOtherProducts ? colors.black : colors.blackOpacity43
+                }}>{`Products (${otherProducts.length})`}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setIsOtherProducts(false)}
+                style={{
+                  paddingBottom: moderateScaleVertical(16),
+                  marginLeft: moderateScale(24),
+                  borderBottomWidth: isOtherProducts ? 0 : 2,
+                  borderColor: colors.black,
+                }}>
+                <Text style={{
+                  fontFamily: fontFamily?.regular,
+                  fontSize: textScale(16),
+                  color: isOtherProducts ? colors.blackOpacity43 : colors.black
+                }}>{`Reviews (${productInfo?.product_reviews?.length})`}</Text>
+              </TouchableOpacity>
+            </View>
+            {isOtherProducts ?
+              <View style={{
+                marginHorizontal: moderateScale(16),
+                flexDirection: "row",
+                flexWrap: "wrap",
+                marginBottom: moderateScaleVertical(40),
+                justifyContent: "space-between"
+              }}>
+                {isEmpty(otherProducts) ? <View style={{
+                  width: "100%"
+                }}>
+                  <Text style={{
+                    fontFamily: fontFamily?.regular,
+                    fontSize: textScale(14),
+                    textAlign: "center",
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  }}>No data found!</Text>
+                </View> : otherProducts?.map(renderOtherProducts)}
+              </View> :
+              <View>
+                <FlatList
+                  data={productInfo?.product_reviews || []}
+                  ListFooterComponent={() => <View style={{
+                    height: moderateScale(50)
+                  }} />}
 
+                  renderItem={renderReview}
+                  ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: colors.borderColor, marginVertical: moderateScaleVertical(9) }} />}
+                  ListEmptyComponent={() => <View style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginVertical: moderateScaleVertical(8),
+
+                  }}
+                  >
+                    <Text style={{
+                      fontFamily: fontFamily?.regular,
+                      fontSize: textScale(14),
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    }}>No Reviews Yet !</Text>
+
+                  </View>
+                  } />
               </View>
-              } />
+            }
           </View>
         </ScrollView>
       )
@@ -1349,7 +1456,12 @@ const P2pProductDetail = ({ navigation, route, item }) => {
             }}
           />
           <View
-            style={styles.dateBox}>
+            style={{
+              ...styles.dateBox, backgroundColor: getColorCodeWithOpactiyNumber(
+                themeColors?.primary_color.substr(1),
+                10,
+              ),
+            }}>
             <Text style={styles.dateTxt}>
               {!startDate ? "Select Start Date & Time" : `${moment(startDate).format("dddd DD MMMM'YY")} \n ${pickUpTime}`}</Text>
             <Image source={imagePath.ic_right_arrow} style={{

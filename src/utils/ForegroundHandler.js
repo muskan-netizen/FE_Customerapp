@@ -83,7 +83,7 @@ const ForegroundHandler = (props) => {
             },
             ios: {
               sound: 'notification.wav',
-              },
+            },
 
             data: { ...data },
           };
@@ -103,7 +103,7 @@ const ForegroundHandler = (props) => {
           },
           ios: {
             sound: 'notification.wav',
-            },
+          },
           data: { ...data },
         };
       }
@@ -117,7 +117,8 @@ const ForegroundHandler = (props) => {
       if (
         Platform.OS == 'android' &&
         notification.android.sound == 'notification' &&
-        data.type != 'reached_location'
+        data.type != 'reached_location' &&
+        data?.type != "order_status_change"
       ) {
         actions.isVendorNotification(true);
         actions.refreshNotification(messageId);
@@ -141,7 +142,7 @@ const ForegroundHandler = (props) => {
       //   }
       // }
 
-      if (Platform.OS == 'ios' && notification.sound == 'notification.wav' && data.type != 'reached_location') {
+      if (Platform.OS == 'ios' && notification.sound == 'notification.wav' && data.type != 'reached_location' && data.type != 'order_status_change') {
         actions.isVendorNotification(true);
         actions.refreshNotification(messageId);
       }

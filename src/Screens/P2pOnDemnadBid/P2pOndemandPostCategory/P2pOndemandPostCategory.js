@@ -31,7 +31,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 //3rd party
-import { cloneDeep, isEmpty } from 'lodash';
+import { cloneDeep, filter, isEmpty } from 'lodash';
 import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
@@ -468,7 +468,9 @@ const P2pOndemandPostCategory = ({ navigation }) => {
   };
   const attributesModalContent = () => {
     return (
-      <WrapperContainer>
+      <WrapperContainer
+
+      >
         <Header
           centerTitle={'Attribute Information'}
           leftIcon={imagePath.back1}
@@ -546,10 +548,11 @@ const P2pOndemandPostCategory = ({ navigation }) => {
     );
   };
 
+
   return (
     <WrapperContainer
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }>
       <View style={{ marginBottom: moderateScale(18) }}>
         <View style={{ marginHorizontal: moderateScale(15) }}>
@@ -559,6 +562,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
             justifyContent: "space-between",
             marginBottom: moderateScale(20),
             marginTop: moderateScale(32),
+
           }}>
 
 
@@ -675,11 +679,11 @@ const P2pOndemandPostCategory = ({ navigation }) => {
               }}
               ItemSeparatorComponent={() => {
                 return (
-                  <View style={{ height: moderateScale(12) }} />
+                  <View style={{ height: moderateScale(16) }} />
                 )
               }}
               ListFooterComponent={() => <View style={{
-                height: moderateScaleVertical(80)
+                height: moderateScaleVertical(200)
               }} />}
               refreshControl={
                 <RefreshControl

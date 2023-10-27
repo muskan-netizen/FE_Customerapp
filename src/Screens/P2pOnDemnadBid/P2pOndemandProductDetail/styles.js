@@ -65,9 +65,9 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
     },
     view3: {
       flexDirection: 'row',
-      marginBottom: 18,
       alignItems: 'center',
-      justifyContent: 'space-around',
+      margin: moderateScaleVertical(16),
+      justifyContent: "space-between"
     },
     chatBtn: {
       fontFamily: fontFamily.regular,
@@ -115,7 +115,7 @@ export default ({ themeColor, toggleTheme, fontFamily }) => {
     },
     dateBox: {
       padding: moderateScale(12),
-      backgroundColor: colors.light_orange_bg,
+
       marginHorizontal: moderateScale(16),
       marginTop: moderateScaleVertical(12),
       borderRadius: moderateScale(4),

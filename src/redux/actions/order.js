@@ -40,6 +40,8 @@ import {
   GET_UPCOMING_ONGOING_ORDERS,
   P2P_ORDER_DETAIL,
   SEND_NOTIFCATION_TO_VENDOR,
+  GET_ALL_NOTIFICATIONS,
+  DELETE_NOTIFICATIONS,
 } from '../../config/urls';
 import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
@@ -455,4 +457,12 @@ export function getP2pOrderDetail(data = {}, headers = {}) {
 }
 export function sendNotificationToVendor(data = {}, headers = {}) {
   return apiPost(SEND_NOTIFCATION_TO_VENDOR, data, headers);
+}
+
+export function getAllNotifications(url = '', data = {}, headers = {}) {
+  return apiGet(GET_ALL_NOTIFICATIONS + url, data, headers);
+}
+
+export function onDeleteNotifications(data = {}, headers = {}) {
+  return apiPost(DELETE_NOTIFICATIONS, data, headers);
 }

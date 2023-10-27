@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import colors from '../styles/colors';
 import { moderateScale, width } from '../styles/responsiveSize';
-import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../utils/helperFunctions';
 
 const BannerHome2 = ({
@@ -34,13 +32,14 @@ const BannerHome2 = ({
         containerStyle={{
           justifyContent: 'flex-start',
           paddingVertical: moderateScale(15),
-          paddingHorizontal: moderateScale(20),
+          paddingHorizontal: moderateScale(10),
+
         }}
         dotStyle={{
           width: 10,
           height: 10,
           borderRadius: 5,
-          // marginHorizontal: 8,
+          marginHorizontal: -10,
           ...paginationColor,
         }}
         inactiveDotStyle={{
@@ -109,7 +108,7 @@ const BannerHome2 = ({
           onSnapToItem={(index) => setSnapState(index)}
         />
       </View>
-      <View style={{ alignSelf: 'center' }}>{isPagination && pagination()}</View>
+      <View style={{ alignSelf: 'center', }}>{isPagination && pagination()}</View>
     </>
   );
 };

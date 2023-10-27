@@ -96,7 +96,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
 
-  console.log(paramData, 'paramDataparamDataparamData');
 
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -225,6 +224,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
   };
+
 
   const urlValue = `/pickup-delivery/order-tracking-details`;
 
@@ -499,7 +499,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         : null,
     };
     if (!!paramData?.orderId || !!new_dispatch_traking_url) {
-      console.log(apiData, "apiData>?");
       try {
         const res = await actions.getOrderDetailPickUp(apiData, {
           code: appData?.profile?.code,
@@ -567,7 +566,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     }
   };
 
-  console.log(agent_location, "agent_location");
+
 
   useEffect(() => {
     if (!isLoading && orderStatus == "unassigned") {
@@ -1149,7 +1148,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log(paramData, "paramData>>");
 
   let subscription_percent =
     (orderFullDetail?.order_details?.order_detail?.subscription_discount /
@@ -1375,9 +1373,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     );
   }
 
-  console.log("taskstaskstaskstaskstasks", tasks)
-
-
   const orderDetailStatus = () => {
     return (
       <View style={{ marginBottom: moderateScaleVertical(16) }}>
@@ -1468,7 +1463,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
               ) : null}
               {orderFullDetail?.order &&
                 orderFullDetail?.agent_location?.lat &&
-                appData?.profile?.socket_url && (
+                appData?.profile?.socket_url && orderStatus !== "unassigned" && (
                   <TouchableOpacity
                     onPress={() =>
                       createRoom(
@@ -1733,8 +1728,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
               onPress={_onDropLocationChangeAfterOrderPlace}
             />
           )}
-
-
+        {/* && orderStatus !== "unassigned" */}
         {!!orderFullDetail?.agent_location ? (
           <View
             style={{
@@ -2023,7 +2017,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             >
               {orderFullDetail.order_details.products.map(
                 (val, index) => {
-                  console.log(val, "valvalvalval");
                   return (
                     <View key={String(index)}>
                       <View
@@ -2345,7 +2338,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
               </View>
             )}
 
-          {console.log(orderFullDetail, 'orderFullDetail')}
+
           {!!orderFullDetail?.order_details
             ?.service_fee_percentage_amount &&
             Number(

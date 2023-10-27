@@ -19,17 +19,17 @@ import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import { moderateScale, textScale } from '../styles/responsiveSize';
 import { appIds } from '../utils/constants/DynamicAppKeys';
-
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
 import MyOrdersStack from './MyOrdersStack';
-
-
-import navigationStrings from './navigationStrings';
+import P2pChatStack from './P2pChatStack';
+import P2pOrderStack from './P2pOrderStack';
+import PostStack from './PostStack';
 import SearchProductVendorStack from './SearchProductVendorStack';
+import navigationStrings from './navigationStrings';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,8 +38,9 @@ let showBottomBar_ = true;
 export default function TabRoutes(props) {
 
   const { cartItemCount } = useSelector((state) => state?.cart || {});
-  const { appMainData } = useSelector((state) => state?.home) || {};
+  const { appMainData, dineInType } = useSelector((state) => state?.home) || {};
   const { appStyle, appData, redirectedFrom } = useSelector((state) => state?.initBoot || {});
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
   const businessType = appStyle?.homePageLayout;
@@ -66,7 +67,6 @@ export default function TabRoutes(props) {
       return true;
     }
   };
-
 
 
   const getCustomTabBar = (props) => {
@@ -98,11 +98,6 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.homeActive
           : imagePath.homeInActive;
-
-      case 1:
-        return focused
-          ? imagePath.ic_home2NewTab
-          : imagePath.ic_home2NewTab;
       default:
         return focused
           ? imagePath.tabAActive
@@ -135,10 +130,7 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.profileActive
           : imagePath.profileInActive;
-      case 1:
-        return focused
-          ? imagePath.ic_account2NewTab
-          : imagePath.ic_account2NewTab
+
       default:
         return focused
           ? imagePath.tabEActive
@@ -165,10 +157,7 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.icCelebActive1
           : imagePath.icCelebInActive1;
-      case 1:
-        return focused
-          ? imagePath.icCelebActive1
-          : imagePath.icCelebInActive1;
+
       default:
         return focused
           ? imagePath.tabDActive
@@ -186,10 +175,7 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.icBrandActive
           : imagePath.icBrandInActive
-      case 1:
-        return focused
-          ? imagePath.ic_tag2NewTab
-          : imagePath.ic_tag2NewTab
+
       default:
         return focused
           ? imagePath.tabCActive
@@ -198,9 +184,7 @@ export default function TabRoutes(props) {
   }
 
   const getCartIcons = (focused) => {
-
     switch (appStyle?.tabBarLayout) {
-
       case 5:
         return focused
           ? imagePath.cartRedActive
@@ -209,14 +193,68 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.ordersActive
           : imagePath.ordersInActive
-      case 1:
-        return focused
-          ? imagePath.ic_cart2NewTab
-          : imagePath.ic_cart2NewTab
+
       default:
         return focused
           ? imagePath.cartActive
           : imagePath.cartInActive
+    }
+  }
+
+
+  const getChatIcons = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.ic_chat4_active
+          : imagePath.ic_chat4_inactive
+      case 4:
+        return focused
+          ? imagePath.ic_chat_grad_active
+          : imagePath.ic_chat_grad_inactive
+
+      default:
+        return focused
+          ? imagePath.ic_chat1_active
+          : imagePath.ic_chat1_inactive
+    }
+  }
+
+
+
+  const getOrdersIcons = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.ic_order4_active
+          : imagePath.ic_order4_inactive
+      case 4:
+        return focused
+          ? imagePath.ordersActive
+          : imagePath.ordersInActive
+
+      default:
+        return focused
+          ? imagePath.ic_order2_active
+          : imagePath.ic_order2_inactive
+    }
+  }
+
+  const getAddPostIcons = (focused) => {
+    switch (appStyle?.tabBarLayout) {
+      case 5:
+        return focused
+          ? imagePath.ic_add_post4_active
+          : imagePath.ic_add_post4_inactive
+      case 4:
+        return focused
+          ? imagePath.ic_add_post_grad
+          : imagePath.ic_add_post_grad_inactive
+
+      default:
+        return focused
+          ? imagePath.ic_post1_active
+          : imagePath.ic_post1_inactive
     }
   }
 
@@ -290,7 +328,11 @@ export default function TabRoutes(props) {
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
-            navigationStrings.BRANDDETAIL
+            navigationStrings.BRANDDETAIL,
+            navigationStrings.P2P_PRODUCT_DETAIL,
+            navigationStrings.P2P_PRODUCTS,
+            navigationStrings.PRODUCT_PRICE_DETAILS,
+            navigationStrings.PAYMENT_SCREEN
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => {
@@ -299,6 +341,7 @@ export default function TabRoutes(props) {
                 style={styles.iconStyle}
                 tintColor={getTintColor(focused, tintColor)}
                 source={getHomeIcons(focused)}
+                resizeMode="contain"
               />
             )
           },
@@ -322,7 +365,7 @@ export default function TabRoutes(props) {
         />
       )}
 
-      <Tab.Screen
+      {dineInType !== "p2p" && <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
         options={({ route, navigation }) => ({
@@ -369,30 +412,98 @@ export default function TabRoutes(props) {
           unmountOnBlur: true,
           gestureEnabled: true,
         })}
-      />
+      />}
 
-      {
-        // DeviceInfo.getBundleId() == appIds.dlvrd || DeviceInfo.getBundleId() == appIds.sxm2go && DeviceInfo.getBundleId() == appIds.stabex && DeviceInfo.getBundleId() == appIds.stafood && //stabex & stafood added by Paridhi Gupta
-        appStyle?.tabBarLayout === 5 && (
-          <Tab.Screen
-            component={MyOrdersStack}
-            name={navigationStrings.MYORDERSSTACK}
-            options={() => ({
-              tabBarLabel: strings.ORDERS,
-              tabBarIcon: ({ focused, tintColor }) => (
-                <FastImage
-                  style={styles.iconStyle}
-                  tintColor={getTintColor(focused, tintColor)}
-                  source={getMyOrderIcons(focused)}
-                />
-              ),
-            })}
-          />
-        )}
+      {dineInType !== "p2p" && appStyle?.tabBarLayout === 5 && (
+        <Tab.Screen
+          component={MyOrdersStack}
+          name={navigationStrings.MYORDERSSTACK}
+          options={() => ({
+            tabBarLabel: strings.ORDERS,
+            tabBarIcon: ({ focused, tintColor }) => (
+              <FastImage
+                style={styles.iconStyle}
+                tintColor={getTintColor(focused, tintColor)}
+                source={getMyOrderIcons(focused)}
 
-      {brandTab}
-      {celebTab}
 
+              />
+            ),
+          })}
+        />
+      )}
+
+      {dineInType !== "p2p" && brandTab}
+      {dineInType !== "p2p" && celebTab}
+
+
+      {dineInType == "p2p" && <Tab.Screen
+        component={P2pOrderStack}
+        name={navigationStrings.P2P_ORDER_STACK}
+        options={({ route, navigation }) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.CHAT_SCREEN,
+            navigationStrings.P2P_PRODUCT_DETAIL,
+          ]),
+          tabBarLabel: strings.ORDER,
+          tabBarIcon: ({ focused, tintColor }) => (
+            <FastImage
+              style={styles.iconStyle}
+              tintColor={getTintColor(focused, tintColor)}
+              source={getOrdersIcons(focused)}
+              resizeMode="contain"
+
+            />
+          ),
+        })}
+      />}
+
+
+      {dineInType == "p2p" && <Tab.Screen
+        component={PostStack}
+        name={navigationStrings.POST}
+        options={({ route, navigation }) => ({
+          tabBarVisible: getTabBarVisibility(route, navigation, []),
+          tabBarLabel: "",
+          tabBarIcon: ({ focused, tintColor }) => (
+            <View style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 20, width: 20
+            }}>
+              <Image
+                style={{
+                  height: 40, width: 40,
+                  position: "absolute",
+                  tintColor: getTintColor(focused, tintColor)
+                }}
+                source={getAddPostIcons(focused)}
+              />
+            </View>
+
+          ),
+        })}
+      />}
+      {dineInType == "p2p" &&
+        <Tab.Screen
+          component={P2pChatStack}
+          name={navigationStrings.CHAT_STACK}
+          options={({ route, navigation }) => ({
+            tabBarVisible: getTabBarVisibility(route, navigation, [
+              navigationStrings.CHAT_SCREEN,
+
+            ]),
+            tabBarLabel: strings.CHATS,
+            tabBarIcon: ({ focused, tintColor }) => (
+              <FastImage
+                style={styles.iconStyle}
+                tintColor={getTintColor(focused, tintColor)}
+                source={getChatIcons(focused)}
+                resizeMode="contain"
+              />
+            ),
+          })}
+        />}
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
@@ -419,9 +530,7 @@ export function stylesData(params) {
     cartItemCountView: {
       position: 'absolute',
       zIndex: 100,
-
       backgroundColor: colors.cartItemPrice,
-
       borderRadius: 50,
       alignItems: 'center',
       justifyContent: 'center',
@@ -439,7 +548,9 @@ export function stylesData(params) {
     },
     iconStyle: {
       height: moderateScale(20),
-      width: moderateScale(20)
+      width: moderateScale(20),
+
+
     }
   });
   return styles;

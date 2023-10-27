@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
+  AddVehicleDetails,
   Addaddress,
   AllCategories,
   BrandProducts,
@@ -13,7 +14,10 @@ import {
   Filter,
   LaundryAvailableVendors,
   Location,
+  Notifications,
   P2pOndemandHome,
+  P2pOndemandProductDetail,
+  P2pOndemandProducts,
   P2pPayment,
   Payment,
   PaymentSuccess,
@@ -42,11 +46,7 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
-  WebLinks,
-  P2pOndemandProductDetail,
-  AddVehicleDetails,
-  P2pOndemandProducts,
-  ChatScreen
+  WebLinks
 } from '../Screens';
 
 import { verticalAnimation } from '../utils/utils';
@@ -254,15 +254,21 @@ export default function () {
         component={ProductPriceDetails}
       />
 
-      <Stack.Screen
-        name={navigationStrings.WEBLINKS}
-        component={WebLinks}
-      />
-
 
       <Stack.Screen
         name={navigationStrings.PAYMENT_SCREEN}
         component={P2pPayment}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.NOTIFICATION}
+        component={Notifications}
+      />
+
+
+      <Stack.Screen
+        name={navigationStrings.WEBLINKS}
+        component={WebLinks}
       />
 
 

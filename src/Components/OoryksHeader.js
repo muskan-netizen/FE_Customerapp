@@ -76,7 +76,8 @@ export function stylesFunc({ fontFamily }) {
       paddingHorizontal: moderateScale(16),
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+
     },
     titleStyle: {
       fontFamily: fontFamily?.regular,

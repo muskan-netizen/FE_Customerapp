@@ -55,7 +55,7 @@ const HomeCategoryCard3 = ({
       ? moderateScale(30)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
         ? moderateScale(35)
-        : moderateScale(65/2);
+        : moderateScale(65 / 2);
 
   return (
     <TouchableOpacity

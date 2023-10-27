@@ -25,7 +25,8 @@ const BrandCard2 = ({
   onPress = () => { },
   applyRadius = false,
   imageHeight = 110,
-  imageWidth = 110
+  imageWidth = 110,
+  containerStyle = {}
 }) => {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -53,6 +54,7 @@ const BrandCard2 = ({
   return (
     <View style={{
       width: (width / 3 - 10),
+      ...containerStyle,
     }}>
       <TouchableOpacity
         activeOpacity={1}
@@ -73,7 +75,7 @@ const BrandCard2 = ({
               priority: FastImage.priority.high,
               cache: FastImage.cacheControl.immutable,
             }}
-            resizeMode={FastImage.resizeMode.contain}
+            resizeMode={FastImage.resizeMode.cover}
             style={{
               height: imgHeight,
               width: '100%',

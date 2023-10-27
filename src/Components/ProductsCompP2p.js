@@ -1,17 +1,16 @@
 import React from 'react';
 import {
   Animated,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
+import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
-import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {
   moderateScale,
@@ -27,8 +26,6 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import StarRating from 'react-native-star-rating';
-import ButtonImage from './ImageComp';
 
 const ProductsComp = ({
   isDiscount,
@@ -94,6 +91,7 @@ const ProductsComp = ({
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
 
+
       <View style={{
         height: moderateScale(100),
         width: width / 2.5,
@@ -101,6 +99,23 @@ const ProductsComp = ({
         borderTopRightRadius: moderateScale(8),
         overflow: "hidden"
       }}>
+        <View style={{
+          height: moderateScaleVertical(20),
+          backgroundColor: item?.type_id == 10 ? colors.purple : colors.blue,
+          position: "absolute",
+          zIndex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          top: 4,
+          padding: 3,
+          borderRadius: moderateScale(3)
+        }}>
+          <Text style={{
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(10),
+            color: colors.white
+          }}>{item?.type_id == 10 ? "For Rent" : "For Sale"}</Text>
+        </View>
         <FastImage
           resizeMode="cover"
           source={{
@@ -166,7 +181,7 @@ const ProductsComp = ({
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
-              )}
+              )}{item?.type_id == 10 ? "/day" : ""}
             </Text>
           </Text>
           <StarRating

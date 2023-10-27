@@ -51,6 +51,7 @@ import {
 import { UIActivityIndicator } from 'react-native-indicators';
 import FastImage from 'react-native-fast-image';
 import GradientView from '../../../Components/GradientView';
+import HTMLView from 'react-native-htmlview';
 
 const P2pProducts = ({ route, navigation }) => {
   const flatlistRef = useRef(null);
@@ -290,6 +291,7 @@ const P2pProducts = ({ route, navigation }) => {
           <Text style={styles.txt1}>
             {item?.translation[0]?.title || item?.title || item?.sku}
           </Text>
+
           <View style={{}}>
             {!!item?.translation_description ||
               !!item?.translation[0]?.translation_description ? (
@@ -312,7 +314,24 @@ const P2pProducts = ({ route, navigation }) => {
                       : ''}
                 </Text>
               </View>
-            ) : null}
+            ) : <HTMLView
+              stylesheet={{
+                p: {
+                  fontFamily: fontFamily?.regular,
+                  fontSize: textScale(12),
+                  color: colors.lightGreyText,
+                },
+
+              }}
+              value={item?.translation[0]?.body_html
+                ? item?.translation[0]?.body_html
+                : ''}
+              textComponentProps={{
+                numberOfLines: 3,
+
+              }}
+              nodeComponentProps={{ numberOfLines: 3 }}
+            />}
           </View>
 
           <GradientView

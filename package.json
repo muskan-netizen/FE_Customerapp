@@ -320,7 +320,7 @@
     "react-native-restart": "^0.0.22",
     "react-native-safe-area-context": "4.5.2",
     "react-native-scalable-image": "^1.1.0",
-    "react-native-screens": "^3.19.0",
+    "react-native-screens": "3.25.0",
     "react-native-section-list-get-item-layout": "^2.2.3",
     "react-native-select-contact": "^1.6.3",
     "react-native-shadow-2": "^7.0.5",

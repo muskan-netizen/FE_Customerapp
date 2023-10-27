@@ -369,6 +369,9 @@
 		BB84591CCD9F4B8582E313E1 /* libPods-available_pods-Gusto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C0D33125282EF2AE62E25 /* libPods-available_pods-Gusto.a */; };
 		BCD69D942C1AC85A532866A7 /* libPods-available_pods-Spa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B48470C24565A5E507DFAE53 /* libPods-available_pods-Spa.a */; };
 		D1718DA6221A12EB19B2DB8E /* libPods-available_pods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E3E2260EEB8AB954AE69B1 /* libPods-available_pods-RoyoOrder.a */; };
+		D964B1812AE7EB4A00AD16A2 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D964B17E2AE7EB4900AD16A2 /* ProximaNova-Regular.ttf */; };
+		D964B1822AE7EB4A00AD16A2 /* ProximaNova-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D964B17F2AE7EB4900AD16A2 /* ProximaNova-Medium.ttf */; };
+		D964B1832AE7EB4A00AD16A2 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D964B1802AE7EB4A00AD16A2 /* ProximaNova-Bold.ttf */; };
 		E6FC85BBAACB0778B9CCC593 /* libPods-available_pods-Punnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1DC38BD8F1D1973CA0D313 /* libPods-available_pods-Punnet.a */; };
 		ED7077312A9368D100A2F900 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED70772D2A9368D100A2F900 /* GoogleService-Info.plist */; };
 		ED7077322A9368D100A2F900 /* Rentzy(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED70772E2A9368D100A2F900 /* Rentzy(Development).xcconfig */; };
@@ -561,6 +564,9 @@
 		B48470C24565A5E507DFAE53 /* libPods-available_pods-Spa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Spa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3BBEA7450976A05AF99330 /* libPods-available_pods-GoKab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-GoKab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D72F70F3259138687C4B3BEF /* Pods-available_pods-Spa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Spa.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Spa/Pods-available_pods-Spa.release.xcconfig"; sourceTree = "<group>"; };
+		D964B17E2AE7EB4900AD16A2 /* ProximaNova-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Regular.ttf"; path = "../../../RoyoOrdersP2p/ios/Fonts/ProximaNova-Regular.ttf"; sourceTree = "<group>"; };
+		D964B17F2AE7EB4900AD16A2 /* ProximaNova-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Medium.ttf"; path = "../../../RoyoOrdersP2p/ios/Fonts/ProximaNova-Medium.ttf"; sourceTree = "<group>"; };
+		D964B1802AE7EB4A00AD16A2 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Bold.ttf"; path = "../../../RoyoOrdersP2p/ios/Fonts/ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
 		DC6078221D93F4BD8EBC696B /* libPods-available_pods-Emart.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Emart.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5349CBBC56F440F0FEB51C7 /* Pods-available_pods-Gusto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Gusto.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Gusto/Pods-available_pods-Gusto.release.xcconfig"; sourceTree = "<group>"; };
 		E9A8E8C5CF6AA6E89FB3357A /* libPods-available_pods-Ace.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Ace.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -978,6 +984,9 @@
 		844FDD0F267397EF00C16835 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D964B1802AE7EB4A00AD16A2 /* ProximaNova-Bold.ttf */,
+				D964B17F2AE7EB4900AD16A2 /* ProximaNova-Medium.ttf */,
+				D964B17E2AE7EB4900AD16A2 /* ProximaNova-Regular.ttf */,
 				8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */,
 				8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */,
 				8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */,
@@ -1699,7 +1708,9 @@
 				84C8548B270747D000D6B750 /* Images.xcassets in Resources */,
 				842467A527074643005473D3 /* SFProDisplay-Regular.ttf in Resources */,
 				842467A627074643005473D3 /* Futura-Medium.ttf in Resources */,
+				D964B1822AE7EB4A00AD16A2 /* ProximaNova-Medium.ttf in Resources */,
 				842467A727074643005473D3 /* LaunchScreen.storyboard in Resources */,
+				D964B1812AE7EB4A00AD16A2 /* ProximaNova-Regular.ttf in Resources */,
 				842467A827074643005473D3 /* CircularStd-Book.otf in Resources */,
 				842467A927074643005473D3 /* Metropolis-Bold.otf in Resources */,
 				84C85487270747AA00D6B750 /* Ace(Development).xcconfig in Resources */,
@@ -1720,6 +1731,7 @@
 				842467B827074643005473D3 /* CircularStd-Bold.ttf in Resources */,
 				842467B927074643005473D3 /* Metropolis-Regular.otf in Resources */,
 				842467BC27074643005473D3 /* SFProText-Bold.ttf in Resources */,
+				D964B1832AE7EB4A00AD16A2 /* ProximaNova-Bold.ttf in Resources */,
 				842467BD27074643005473D3 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4289,8 +4301,12 @@
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = Ace;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ace_New;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -4835,8 +4851,12 @@
 				PRODUCT_NAME = Runrun;
 				PROVISIONING_PROFILE_SPECIFIER = Ace;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ace_New;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};

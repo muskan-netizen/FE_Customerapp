@@ -1344,7 +1344,6 @@ export default function Addaddress({ navigation, route }) {
                       </Text>
                     </View>
                     {searchResult?.data.map((item, i) => {
-                      console.log(item, "itemm");
                       return renderSearchItem(item);
                     })}
                   </View>

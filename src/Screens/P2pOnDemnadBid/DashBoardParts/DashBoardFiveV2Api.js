@@ -77,18 +77,17 @@ const DashBoardFiveV2Api = ({
 
   const _renderCategories = useCallback(({ item, index }) => {
     return (
-      <View style={{ width: width / 4.2, flex: 1 }}>
-        <HomeCategoryCardP2p
-          imgRadius={2}
-          data={item}
-          onPress={() => onPressCategory(item)}
-          isLoading={isLoading}
-          applyRadius={true}
-          index={index}
-        />
+      <HomeCategoryCardP2p
+        imgRadius={2}
+        data={item}
+        onPress={() => onPressCategory(item)}
+        isLoading={isLoading}
+        applyRadius={true}
+        index={index}
+      />
 
 
-      </View>
+
     );
   }, [])
 
@@ -160,7 +159,7 @@ const DashBoardFiveV2Api = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: moderateScaleVertical(20)
+          marginBottom: moderateScaleVertical(8)
         }}>
           <Text
             numberOfLines={1}
@@ -294,7 +293,6 @@ const DashBoardFiveV2Api = ({
   }, [fontFamily, themeColors, tempCartData])
 
   const _renderProducts = useCallback(({ item, index }) => {
-
     return (
       <ProductsCompP2p
         item={item}
@@ -338,7 +336,7 @@ const DashBoardFiveV2Api = ({
   const ProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20),
+        marginTop: moderateScaleVertical(16),
       }}>
         {item?.slug == 'most_popular_products' ? <TitleViewHome item={{ title: strings.FEATURED_PRODUCTS }} /> : <TitleViewHome item={item} />}
 
@@ -368,7 +366,7 @@ const DashBoardFiveV2Api = ({
   const SingleCategoryProductsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={{ title: item?.data?.category_detail?.slug }} />
@@ -423,7 +421,7 @@ const DashBoardFiveV2Api = ({
   const SelectedProductsThemeView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
@@ -452,9 +450,9 @@ const DashBoardFiveV2Api = ({
   const CategoriesView = useCallback(({ item, showTitle }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(16), alignItems: "center" }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(6), alignItems: "center" }}>
           <Text style={{ fontSize: textScale(16), fontFamily: fontFamily?.medium, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{strings.CATEGORIES}</Text>
           <TouchableOpacity
             onPress={() => { navigation.navigate(navigationStrings.ALL_CATEGORIES) }}>
@@ -495,7 +493,7 @@ const DashBoardFiveV2Api = ({
   const VendorsView = useCallback(({ item }) => {
     return item?.data?.length > 1 ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
         {vendorHeader(item)}
         <FlatList
@@ -606,7 +604,7 @@ const DashBoardFiveV2Api = ({
   const BestSellersView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
         <TitleViewHome item={item} />
         <FlatList
@@ -634,7 +632,7 @@ const DashBoardFiveV2Api = ({
   const BrandsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
         <TitleViewHome item={item} />
         <FlatList
@@ -665,7 +663,7 @@ const DashBoardFiveV2Api = ({
         style={{
           ...styles.exploreStoresTxt,
           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          marginBottom: moderateScaleVertical(20),
+          marginBottom: moderateScaleVertical(6),
 
         }}>
         {!isEmpty(item?.translations) ? (item?.translations[0]?.title || item?.title) : item?.title}
@@ -687,7 +685,7 @@ const DashBoardFiveV2Api = ({
   const SpotlightDealsView = useCallback(({ item }) => {
     return !isEmpty(item?.data) ? (
       <View style={{
-        marginTop: moderateScaleVertical(20)
+        marginTop: moderateScaleVertical(16)
       }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <TitleViewHome item={item} />
@@ -723,27 +721,27 @@ const DashBoardFiveV2Api = ({
 
   const BannersView = useCallback(({ item = {}, showTitle = true }) => {
 
-    return !isEmpty(appMainData?.mobile_banners || appData?.mobile_banners || item?.banner_image) ? <View style={{
-      marginTop: moderateScaleVertical(20),
-    }}>
-      {!!showTitle ? <TitleViewHome item={item} /> :
-        <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-      <BannerHome2
-        // bannerRef={bannerRef}
-        slider1ActiveSlide={slider1ActiveSlide}
-        bannerData={
-          appMainData?.mobile_banners ||
-          appData?.mobile_banners ||
-          item?.banner_image
-        }
-        isPagination={true}
-        sliderWidth={width - moderateScale(32)}
-        itemWidth={width - moderateScale(32)}
-        onSnapToItem={(index) => setSlider1ActiveSlide(index)}
-        // onPress={(item) => bannerPress(item)}
-        isDarkMode={isDarkMode}
-      />
-    </View> : <React.Fragment />
+    return !isEmpty(appMainData?.mobile_banners || appData?.mobile_banners || item?.banner_image) ?
+      <View style={{
+        marginTop: moderateScaleVertical(16),
+
+      }}>
+        {!!showTitle && <TitleViewHome item={item} />}
+        <BannerHome2
+          slider1ActiveSlide={slider1ActiveSlide}
+          bannerData={
+            appMainData?.mobile_banners ||
+            appData?.mobile_banners ||
+            item?.banner_image
+          }
+          isPagination={true}
+          sliderWidth={width - moderateScale(32)}
+          itemWidth={width - moderateScale(32)}
+          onSnapToItem={(index) => setSlider1ActiveSlide(index)}
+          // onPress={(item) => bannerPress(item)}
+          isDarkMode={isDarkMode}
+        />
+      </View> : <React.Fragment />
   }, [appMainData, appData, isDarkMode, MyDarkTheme])
 
 
@@ -762,7 +760,7 @@ const DashBoardFiveV2Api = ({
         <FlatList
           data={!!appMainData?.homePageLabels ? appMainData?.homePageLabels || [] : []}
           renderItem={renderHomePageItems}
-          contentContainerStyle={{}}
+
           showsVerticalScrollIndicator={false}
           keyExtractor={keyExtractorUnique}
           refreshControl={

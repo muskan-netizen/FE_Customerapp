@@ -60,6 +60,8 @@ export default function DashBoardHeaderFive({
     '200/400',
   );
 
+
+
   return (
     <View
       style={{
@@ -77,10 +79,10 @@ export default function DashBoardHeaderFive({
         ) ? (
           <FastImage
             style={{
-              width: moderateScale(45),
-              height: moderateScale(55),
+              width: moderateScale(70),
+              height: moderateScale(45),
             }}
-            resizeMode={FastImage.resizeMode.cover}
+            resizeMode={FastImage.resizeMode.contain}
             source={{
               uri: imageURI,
               priority: FastImage.priority.high,
@@ -133,7 +135,8 @@ export default function DashBoardHeaderFive({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginTop: moderateScaleVertical(16)
+          marginTop: moderateScaleVertical(12),
+
         }}>
         <View
           style={{
@@ -158,12 +161,7 @@ export default function DashBoardHeaderFive({
               }}
               source={imagePath.icSearchNew}
             />
-            <Text style={{
-              fontFamily: fontFamily?.regular,
-              fontSize: textScale(13),
-              marginLeft: moderateScale(16),
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70
-            }}>Search here...</Text>
+
           </TouchableOpacity>
         </View>
 

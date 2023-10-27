@@ -423,7 +423,7 @@ export default function DashBoardHeaderFive({
               }}
             />
           ) : null}
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
+          {(!!appData?.profile?.preferences?.is_hyperlocal || dine_In_Type == "p2p") && (
             <TouchableOpacity
               activeOpacity={1}
               onPress={() =>

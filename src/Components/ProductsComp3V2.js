@@ -40,6 +40,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
   const scaleInAnimated = new Animated.Value(0);
 
   const appMainData = useSelector((state) => state?.home?.appMainData || {});
+  const { dineInType } = useSelector((state) => state?.home || {});
+
 
   const { category = {} } = item || {};
 
@@ -63,6 +65,27 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
+
+      {dineInType == "p2p" &&
+        <View
+          style={{
+            height: moderateScaleVertical(20),
+            backgroundColor: item?.type_id == 10 ? colors.purple : colors.blue,
+            position: "absolute",
+            zIndex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            top: 4,
+            padding: 3,
+            borderRadius: moderateScale(3),
+          }}>
+          <Text style={{
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(10),
+            color: colors.white
+          }}>{item?.type_id == 10 ? "For Rent" : "For Sale"}</Text>
+        </View>
+      }
       <FastImage
         resizeMode={FastImage.resizeMode.contain}
         source={{
@@ -153,7 +176,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
                 currencies
-              )}
+              )}{item?.type_id == 10 ? "/day" : ""}
             </Text>}
             {!!category?.category_detail?.translation[0]?.name && (
               <Text
@@ -229,7 +252,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
           </View>
         )}
       </View>
-      {priceType !== "freelancer" && !!Number(item?.compare_price_numeric) ?
+      {dineInType !== "p2p" && priceType !== "freelancer" && !!Number(item?.compare_price_numeric) ?
         <View
           style={{
             position: 'absolute',

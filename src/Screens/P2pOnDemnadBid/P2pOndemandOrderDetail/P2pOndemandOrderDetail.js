@@ -23,6 +23,8 @@ import { getImageUrl, showError, showSuccess } from '../../../utils/helperFuncti
 import stylesFunc from './styles'
 
 import imagePath from '../../../constants/imagePath'
+import LeftRightTextP2p from '../../../Components/LeftRightTextP2p'
+import { ScrollView } from 'react-native'
 
 
 
@@ -41,7 +43,7 @@ export default function P2pOrderDetail({ route, navigation }) {
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const paramData = route?.params
-    console.log(paramData, "fasdjfgasjdf")
+
     const [orderData, setOrderData] = useState({})
     const [isLoading, setisLoading] = useState(true)
     const [isProductRatingModal, setIsProductRatingModal] = useState(false)
@@ -81,8 +83,9 @@ export default function P2pOrderDetail({ route, navigation }) {
         })
     }
 
+    console.log(orderData, "sfskjdkfjshdf")
 
-    const productInfo = !isEmpty(orderData) ? orderData?.vendors[0]?.products[0] : {}
+    const productInfo = (!isEmpty(orderData) && !!orderData?.vendors) ? orderData?.vendors[0]?.products[0] : {}
 
     const onRateProduct = (rating) => {
         setProductRating(rating)
@@ -90,7 +93,7 @@ export default function P2pOrderDetail({ route, navigation }) {
     }
 
 
-
+    const priceOnTimeBase = (!isEmpty(orderData) && !!orderData?.price) ? orderData?.price : '';
 
     const onSubmitRating = () => {
         setIsProductRatingModal(false)
@@ -131,7 +134,14 @@ export default function P2pOrderDetail({ route, navigation }) {
             .catch(errorMethod);
     };
 
-
+    const currencyWithSymbol = ({ price, multiplier = 1 }) => {
+        return tokenConverterPlusCurrencyNumberFormater(
+            price * multiplier,
+            digit_after_decimal,
+            additional_preferences,
+            currencies?.primary_currency?.symbol,
+        );
+    };
 
     const onCancel = () => {
 
@@ -187,7 +197,7 @@ export default function P2pOrderDetail({ route, navigation }) {
         const date2 = new Date();
         const differenceInMilliseconds = Math.abs(date2.getTime() - date1.getTime());
         const differenceInHours = Math.floor(differenceInMilliseconds / (1000 * 60 * 60));
-        Alert.alert('', differenceInHours < 48 ? "You are cancelling the order within 48 hours of start renting, so you will be charged 100% of cancellation fee. Do you really want to cancel the order?" : "You are cancelling the order prior to 48 hours of start renting date, so you will get 100% refund. Please click on confirm if you wish to continue", [
+        Alert.alert('', differenceInHours < 48 ? "You are cancelling the order within 48 hours of start renting, so you will be charged 100% of cancellation fee. Do you really want to cancel the order?" : paramData?.type == "lender" ? "You are cancelling the order prior to 48 hours of start renting date, so you will not be charged any amount for cancelling. Please click on confirm if you wish to continue." : "You are cancelling the order prior to 48 hours of start renting date, so you will get 100% refund. Please click on confirm if you wish to continue", [
             {
                 text: strings.CANCEL,
                 onPress: () => { },
@@ -299,7 +309,7 @@ export default function P2pOrderDetail({ route, navigation }) {
                 onPressRight={onCancelOrder}
 
             />
-            {!isEmpty(orderData) && <View style={{ flex: 0.9, }}>
+            {!isEmpty(orderData) && <ScrollView style={{ flex: 0.9, }}>
                 {/* <View style={{ flexDirection: 'row', marginTop: moderateScaleVertical(14), marginHorizontal: moderateScale(16), }}>
                     <Text style={{ fontFamily: fontFamily?.regular, color: colors.textGreyN, marginLeft: moderateScale(8), fontSize: textScale(13) }}>
                         <Text style={{
@@ -308,11 +318,11 @@ export default function P2pOrderDetail({ route, navigation }) {
                     </Text>
                 </View> */}
 
-                <View style={{ borderWidth: 0.5, margin: moderateScale(16), borderColor: colors.greyA, borderRadius: moderateScale(8) }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
+                {/* <View style={{ borderWidth: 0.5, margin: moderateScale(16), borderColor: colors.greyA, borderRadius: moderateScale(8) }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12), alignItems: "center" }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Days {productInfo?.days}</Text>
                         <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }} numberOfLines={1}>
-                            {`${moment(productInfo?.start_date_time).format("DD MMMM")} - ${moment(productInfo?.end_date_time).format("DD MMMM")}`}
+                            {`${moment(productInfo?.start_date_time).format('DD MMM YY (hh:mm A)')} - ${moment(productInfo?.end_date_time).format('DD MMM YY (hh:mm A)')}`}
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
@@ -375,10 +385,10 @@ export default function P2pOrderDetail({ route, navigation }) {
                             additional_preferences,
                             currencies?.primary_currency?.symbol)}</Text>
                     </View>}
-                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(8), marginHorizontal: moderateScale(12) }}>
                         <Text style={{ fontSize: textScale(14), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Promo Code</Text>
                         <Text style={{ fontFamily: fontFamily.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}></Text>
-                    </View> */}
+                    </View>
 
                     <View style={{
                         height: 2,
@@ -396,8 +406,8 @@ export default function P2pOrderDetail({ route, navigation }) {
                             additional_preferences,
                             currencies?.primary_currency?.symbol)}</Text>
                     </View>
-                </View>
-                <Text style={{ fontFamily: fontFamily.bold, textTransform: 'capitalize', fontSize: textScale(16), marginLeft: moderateScale(20), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{orderData?.vendors[0]?.vendor_name}</Text>
+                </View> */}
+                <Text style={{ fontFamily: fontFamily.bold, textTransform: 'capitalize', fontSize: textScale(16), marginLeft: moderateScale(20), color: isDarkMode ? MyDarkTheme.colors.text : colors.black, marginTop: moderateScale(12) }}>{orderData?.vendors[0]?.vendor_name}</Text>
                 <View style={{ padding: moderateScale(16) }}>
 
                     <TouchableOpacity
@@ -442,14 +452,14 @@ export default function P2pOrderDetail({ route, navigation }) {
                                     fullStarColor={colors.ORANGE}
                                     starSize={25}
                                 />}
-                                {paramData?.type !== "lender" && paramData?.selectedTab?.id != 2 && !!paramData?.isAvailableToRaiseIssue && <TouchableOpacity onPress={onChatStart}>
+                                {/* {paramData?.type !== "lender" && paramData?.selectedTab?.id != 2 && !!paramData?.isAvailableToRaiseIssue && <TouchableOpacity onPress={onChatStart}>
                                     <Text style={{
                                         color: colors.blue,
                                         textDecorationLine: "underline",
                                         fontFamily: fontFamily?.bold,
                                         fontSize: textScale(16)
                                     }}>Help?</Text>
-                                </TouchableOpacity>}
+                                </TouchableOpacity>} */}
                             </View>
                         </View>
 
@@ -457,7 +467,118 @@ export default function P2pOrderDetail({ route, navigation }) {
                 </View>
 
 
-            </View>
+                {productInfo?.product?.category?.category_detail?.type_id == 10 && <View style={styles.priceContainer}>
+                    {!!productInfo?.days && <LeftRightTextP2p
+                        leftText={"Tenure"}
+                        rightText={`${productInfo?.days} days`}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText} />}
+                    <LeftRightTextP2p
+                        leftText={"Price (per day)"}
+                        rightText={tokenConverterPlusCurrencyNumberFormater(
+                            productInfo?.pvariant?.price,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol)}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText} marginBottom={0} />
+                    {!!productInfo?.start_date_time && <LeftRightTextP2p
+                        leftText={"Start Date & Time"}
+                        rightText={moment(productInfo?.start_date_time).format('DD MMM YYYY; hh:mmA')}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+                    {!!productInfo?.end_date_time && <LeftRightTextP2p
+                        leftText={"End Date & Time"}
+                        rightText={moment(productInfo?.end_date_time).format('DD MMM YYYY; hh:mmA')}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+                </View>}
+                <Text style={styles.sectionTitle}>Price Breakdown</Text>
+                <View style={{ ...styles.priceContainer, marginTop: 0 }}>
+                    <LeftRightTextP2p
+                        leftText={productInfo?.product?.category?.category_detail?.type_id == 10 ? `${tokenConverterPlusCurrencyNumberFormater(
+                            productInfo?.pvariant?.price,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol)} x ${productInfo?.days} days` : "Price"}
+                        rightText={currencyWithSymbol({
+                            price: productInfo?.pvariant?.price,
+                            multiplier:
+                                !isEmpty(productInfo) && Number(productInfo?.days),
+                        })}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText} marginBottom={0} />
+
+                    {productInfo?.product?.category?.category_detail?.type_id == 13 && !!productInfo?.start_date_time && <LeftRightTextP2p
+                        leftText={"Date"}
+                        rightText={moment(productInfo?.start_date_time).format("DD-MM-YYYY; hh:mm A")}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+                    {Number(orderData?.total_service_fee) > 0 && <LeftRightTextP2p
+                        leftText={"Service Fee"}
+                        rightText={tokenConverterPlusCurrencyNumberFormater(
+                            orderData?.total_service_fee,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol)}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+
+
+                    {Number(orderData?.plateform_fee) > 0 && <LeftRightTextP2p
+                        leftText={"Platform Fee"}
+                        rightText={currencyWithSymbol({ price: orderData?.plateform_fee })}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+                    {Number(orderData?.loyalty_amount_saved) > 0 && <LeftRightTextP2p
+                        leftText={"Loyalty Points"}
+                        rightText={`- ${currencyWithSymbol({ price: orderData?.loyalty_amount_saved })}`}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+                    {Number(orderData?.total_discount
+                    ) > 0 && <LeftRightTextP2p
+                            leftText={"Promo Code"}
+                            rightText={`- ${currencyWithSymbol({
+                                price: Number(orderData?.total_discount
+                                )
+                            })}`}
+                            leftTextStyle={styles.leftRightText}
+                            rightTextStyle={styles.leftRightText}
+                            marginTop={moderateScaleVertical(12)}
+                            marginBottom={0} />
+                    }
+                    {/* {orderData?.total_discount > 0 && <LeftRightTextP2p
+                        leftText={strings.DISCOUNT}
+                        rightText={tokenConverterPlusCurrencyNumberFormater(
+                            orderData?.total_discount,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol)}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText} />} */}
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: moderateScale(8), marginHorizontal: moderateScale(12) }}>
+                    <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(16), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>Total</Text>
+                    <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(16), color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>{tokenConverterPlusCurrencyNumberFormater(
+                        orderData?.payable_amount,
+                        digit_after_decimal,
+                        additional_preferences,
+                        currencies?.primary_currency?.symbol)}</Text>
+                </View>
+
+            </ScrollView>
             }
             <ProductRatingModal
                 isVisible={isProductRatingModal}

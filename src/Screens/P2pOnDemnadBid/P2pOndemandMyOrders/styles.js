@@ -1,14 +1,12 @@
-import { Platform, StyleSheet } from 'react-native';
-import colors from '../../styles/colors';
-import commonStylesFun from '../../styles/commonStyles';
+import { StyleSheet } from 'react-native';
+import colors from '../../../styles/colors';
+import commonStylesFun from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
-} from '../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+  textScale
+} from '../../../styles/responsiveSize';
 
 export default ({ fontFamily, themeColors }) => {
   const commonStyles = commonStylesFun({ fontFamily });

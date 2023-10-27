@@ -61,6 +61,9 @@ export default function DashBoardHeaderSeven({
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
+  const { dineInType } = useSelector(
+    (state) => state?.home,
+  );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -97,14 +100,14 @@ export default function DashBoardHeaderSeven({
         <TouchableOpacity
           style={{ flexDirection: 'row' }}
           activeOpacity={0.7}
-          disabled={!appData?.profile?.preferences?.is_hyperlocal}
+          disabled={dineInType !== "p2p" && !appData?.profile?.preferences?.is_hyperlocal}
           onPress={() =>
             navigation.navigate(navigationStrings.LOCATION, {
               type: 'Home1',
             })
           }>
           <Image source={imagePath.location1} />
-          {!appData?.profile?.preferences?.is_hyperlocal ? (
+          {(!appData?.profile?.preferences?.is_hyperlocal && dineInType !== "p2p") ? (
             <Text
               numberOfLines={1}
               style={{

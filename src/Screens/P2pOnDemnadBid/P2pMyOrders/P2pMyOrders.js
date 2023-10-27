@@ -51,24 +51,24 @@ export default function MyOrders({ navigation, route }) {
         // },
         {
             id: 2,
-            title: 'Upcoming rents',
+            title: 'Upcoming orders',
         },
         {
             id: 3,
-            title: 'Active rents',
+            title: 'Active orders',
         },
         {
             id: 4,
-            title: 'Cancelled rents',
+            title: 'Cancelled orders',
         },
         {
             id: 5,
-            title: 'Past rents',
+            title: 'Past orders',
         },
     ]);
     const [selectedTab, setSelectedTab] = useState({
         id: 2,
-        title: 'Upcoming rents',
+        title: 'Upcoming orders',
     },);
 
     const [orderHistory, setOrderHistory] = useState([]);

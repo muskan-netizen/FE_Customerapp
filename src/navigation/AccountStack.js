@@ -79,6 +79,8 @@ const Stack = createNativeStackNavigator();
 export default function ({ navigation }) {
   const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
+  console.log(appStyle?.homePageLayout, "fasdfajshdf")
+
   const checkAccountsLayout = (inx) => {
     switch (appStyle?.homePageLayout) {
       case 1:

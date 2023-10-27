@@ -838,7 +838,6 @@ export default function Home({ route, navigation }) {
 
   const addressDone = async data_ => {
     setisLocationModal(false);
-
     actions.locationData(data_);
     setisSelectViaMap(false);
 
@@ -1019,6 +1018,9 @@ export default function Home({ route, navigation }) {
       <Modal visible={isSelectViaMap}>
         <WrapperContainer>
           <OoryksHeader
+            titleStyle={{
+              color: colors.black
+            }}
             onPressLeft={() => {
               setisSelectViaMap(false);
               if (

@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
-// export const API_BASE_URL = 'http://192.168.101.161:8002/api/v1'
+// export const API_BASE_URL = 'http://192.168.101.210:8001/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
 // export const API_BASE_URL = 'https://solarprimex.netsolutionindia.com/api/v1';
@@ -861,3 +861,6 @@ export const SEND_ADMIN_NOTIFICATION = getApiUrl('/sendAdminNotification');
 export const SAVE_PAYOUT_DETAILS = getApiUrl('/user/saveVenderBankDetails');
 
 export const USE_WALLET_AMOUNT = getApiUrl('/cart/updateCartWalletAmount');
+
+export const RAISE_AN_ISSUE_RELATED_TO_CHAT = '/api/room/raiseanissue';
+

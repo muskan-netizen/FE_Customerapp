@@ -6,6 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
     moderateScale,
     moderateScaleVertical,
@@ -54,8 +55,10 @@ const ChatMedia = ({
                 alignSelf: isRight ? 'flex-end' : 'flex-start',
                 marginHorizontal: moderateScale(8),
             }}>
+
             <TouchableOpacity
-                disabled={currentMessage?.isLoading}
+                hitSlop={hitSlopProp}
+                disabled={!!currentMessage?.isLoading}
                 activeOpacity={0.7}
                 onPress={onPressMedia}
                 style={{
@@ -64,10 +67,16 @@ const ChatMedia = ({
                         isRight
                             ? isDarkMode
                                 ? '#005246'
-                                : '#e2ffd3'
+                                : themeColors?.primary_color
                             : isDarkMode
                                 ? '#363638'
-                                : '#ffffff',
+                                : colors.whiteSmokeColor,
+                    borderTopLeftRadius: moderateScale(12),
+                    borderTopRightRadius: moderateScale(12),
+                    borderBottomRightRadius: !isRight ? moderateScale(16) : 0,
+                    borderBottomLeftRadius: isRight ? moderateScale(16) : 0,
+                    zIndex: 2,
+
                     ...containerStyle,
                 }}>
                 {!isRight && (currentMessage?.username || currentMessage?.phone_num) ? (
@@ -77,6 +86,7 @@ const ChatMedia = ({
 
                     </Text>
                 ) : null}
+
                 {currentMessage?.mediaType == 'application/pdf' ||
                     currentMessage?.mediaType == 'docs' ? (
                     <View
@@ -104,11 +114,12 @@ const ChatMedia = ({
 
                         }}>
                         <VideoPlayer
+                            onPress={onPressMedia}
                             disabled
                             currentMessage={currentMessage}
                             containerStyle={{
                                 ...styles.chatMsgStyle,
-                                backgroundColor: colors.blackOpacity20,
+                                backgroundColor: colors.blackOpacity05,
                                 borderRadius: moderateScale(4)
                             }}
                             source={{ uri: currentMessage?.mediaUrl }}
@@ -134,7 +145,7 @@ const ChatMedia = ({
                         ...styles.dateTxt,
                         color: isDarkMode
                             ? '#84acaa'
-                            : colors.blackOpacity40,
+                            : colors.whiteOpacity77,
                     }}>
                     {moment(currentMessage?.created_date).format('LT')}
                 </Text>
@@ -173,7 +184,7 @@ const styleFunc = ({ fontFamily, themeColors, isDarkMode }) => {
             fontSize: textScale(10),
             fontFamily: fontFamily.regular,
             textTransform: 'uppercase',
-            color: colors.blackOpacity43,
+            color: colors.whiteOpacity77,
             marginLeft: moderateScale(12),
             marginTop: moderateScaleVertical(6),
             alignSelf: 'flex-end',
@@ -194,7 +205,8 @@ const styleFunc = ({ fontFamily, themeColors, isDarkMode }) => {
             fontFamily: fontFamily?.regular,
             fontSize: textScale(14),
             textAlign: "center",
-            marginTop: moderateScaleVertical(4)
+            marginTop: moderateScaleVertical(4),
+            color: colors.white
         },
         sending: {
             textAlign: 'right',

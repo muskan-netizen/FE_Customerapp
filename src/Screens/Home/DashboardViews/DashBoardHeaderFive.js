@@ -14,19 +14,18 @@ import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
+import { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
+import FastImage from 'react-native-fast-image';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import {
   loaderOne,
   voiceListen
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import FastImage from 'react-native-fast-image';
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
-import { getBundleId } from 'react-native-device-info';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { color } from 'react-native-reanimated';
 
 
 function DashBoardHeaderFive({
@@ -68,7 +67,6 @@ function DashBoardHeaderFive({
       : profileInfo?.logo?.image_path,
     '200/400',
   );
-
 
 
 
@@ -128,7 +126,7 @@ function DashBoardHeaderFive({
                 }}
               />
             ) : null}
-            {!!appData?.profile?.preferences?.is_hyperlocal && (
+            {(!!appData?.profile?.preferences?.is_hyperlocal || dineInType == "p2p") && (
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() =>

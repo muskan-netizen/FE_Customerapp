@@ -53,6 +53,7 @@ const P2pProductDetail = ({ navigation, route }) => {
   const snapPoints = useMemo(() => [height], []);
   const bottomSheetModalRef = useRef(null);
   const paramData = route?.params;
+  console.log(paramData, "Fasdfhaskdjf")
   const {
     appData,
     currencies,
@@ -300,7 +301,7 @@ const P2pProductDetail = ({ navigation, route }) => {
   };
 
   const addToCart = () => {
-    
+
     let data = {};
     data['sku'] = productInfo?.sku;
     data['quantity'] = productInfo?.minimum_order_count;
@@ -636,7 +637,7 @@ const P2pProductDetail = ({ navigation, route }) => {
                 )
               })}
             </View>
-          
+
           </View>
         </ScrollView>
       )}

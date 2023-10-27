@@ -149,6 +149,9 @@
 		<string>Metropolis-Bold.otf</string>
 		<string>Metropolis-Regular.otf</string>
 		<string>Metropolis-SemiBold.otf</string>
+		<string>ProximaNova-Medium.ttf</string>
+		<string>ProximaNova-Bold.ttf</string>
+		<string>ProximaNova-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

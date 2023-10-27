@@ -418,9 +418,9 @@ export default function Addaddress({ navigation, route }) {
   const getLiveLocation = async () => {
     const isLocationGranted = await chekLocationPermission();
 
-    console.log("isLocationGranted",isLocationGranted)
+    console.log("isLocationGranted", isLocationGranted)
 
-    if (isLocationGranted ==  'granted') {
+    if (isLocationGranted == 'granted') {
       const { latitude, longitude } = await getCurrentLocationFromApi();
 
       updateState({ curLatLng: { latitude, longitude } });
@@ -451,9 +451,9 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].task_type_id = 1;
         updateState({ dropLocationData: cloneArr });
       }
-    }else{
+    } else {
       let cloneArr = [...dropLocationData];
-      console.log("paramData?.prefillAdress",paramData?.prefillAdress )
+      console.log("paramData?.prefillAdress", paramData?.prefillAdress)
       if (!!paramData?.prefillAdress && paramData?.prefillAdress?.isFromSavedAddress) {
         cloneArr[1].pre_address = paramData?.prefillAdress?.address || '';
         cloneArr[1].address = paramData?.prefillAdress?.address || '';
@@ -631,7 +631,7 @@ export default function Addaddress({ navigation, route }) {
     if (dropLocationData.length > 5 && getBundleId() !== appIds.pave) {
       return;
     }
-    
+
     if (dropLocationData.length > 3 && getBundleId() === appIds.pave) {
       return;
     }
@@ -1366,7 +1366,6 @@ export default function Addaddress({ navigation, route }) {
                       </Text>
                     </View>
                     {searchResult?.data.map((item, i) => {
-                      console.log(item, "itemm");
                       return renderSearchItem(item);
                     })}
                   </View>

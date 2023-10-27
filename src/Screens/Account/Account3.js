@@ -384,26 +384,9 @@ export default function Account3({ navigation }) {
                   marginTop: moderateScale(30),
                 }}></View>
             </>
-            // <ListItemHorizontal
-            //   centerContainerStyle={{flexDirection: 'row'}}
-            //   leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            //   onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
-            //   iconLeft={imagePath.icProfile}
-            //   centerHeading={strings.MY_PROFILE}
-            //   containerStyle={styles.containerStyle}
-            //   iconRight={imagePath.goRight}
-            //   rightIconStyle={{tintColor: colors.textGreyLight}}
-            //   centerHeadingStyle={{fontSize: textScale(15)}}
-            // />
+
           )}
-          {/* {!!userData?.auth_token && (
-          <TouchableOpacity style={{flex: 0.1}}>
-            <Image
-              source={imagePath.myOrder}
-              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
-            />
-          </TouchableOpacity>
-        )} */}
+
 
           {!!userData?.auth_token &&
             ((businessType == 4 || !!appData?.profile?.preferences?.is_rental_weekly_monthly_price) ? null : (
@@ -442,7 +425,7 @@ export default function Account3({ navigation }) {
               />)
             }
           })}
-          {!!(!!userData?.auth_token && businessType == 8) &&
+          {!!(!!userData?.auth_token && (businessType == 8 || dineInType == "p2p")) &&
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
               leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -458,23 +441,6 @@ export default function Account3({ navigation }) {
               }}
             />
           }
-          {/* {!!userData?.auth_token && getBundleId() != appIds.sxm2go ? (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={moveToNewScreen(navigationStrings.REFER_AND_EARN)}
-              iconLeft={imagePath.share1}
-              centerHeading={strings.REFER_AND_EARN}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          ) : null} */}
-
           {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
@@ -507,24 +473,11 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+
             />
           )}
 
-          {/* {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.NOTIFICATION)}
-            iconLeft={imagePath.notifcation}
-            centerHeading={strings.NOTIFICATION}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{fontSize: textScale(15)}}
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )} */}
+
           {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}
@@ -557,7 +510,7 @@ export default function Account3({ navigation }) {
             }}
           />
           }
-          {!!userData?.auth_token &&
+          {dineInType !== 'p2p' && !!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}

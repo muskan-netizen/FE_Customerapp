@@ -351,6 +351,7 @@ export default function Signup4({ navigation }) {
   const getTextInputField = (type, index) => {
     return (
       <BorderTextInput
+        key={String(index)}
         // secureTextEntry={true}
         placeholder={type?.translations[0]?.name || ''}
         onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
@@ -368,6 +369,7 @@ export default function Signup4({ navigation }) {
   const getImageFieldView = (type, index) => {
     return (
       <View
+        key={String(index)}
         style={{
           marginRight: moderateScale(15),
           marginTop: moderateScale(10),
@@ -421,6 +423,7 @@ export default function Signup4({ navigation }) {
   const getPdfView = (type, index) => {
     return (
       <View
+        key={String(index)}
         style={{ marginRight: moderateScale(20), marginTop: moderateScale(20) }}>
         <TouchableOpacity
           onPress={() => getDoc(type, index)}

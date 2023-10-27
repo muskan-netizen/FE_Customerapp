@@ -81,6 +81,8 @@ export default function Login3({ navigation }) {
     additional_preferences,
   } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
   const darkthemeusingDevice = useDarkMode();
+  const { dineInType } =
+    useSelector(state => state?.home);
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
@@ -191,6 +193,7 @@ export default function Login3({ navigation }) {
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
       dialCode: !withEmail ? callingCode : '',
       countryData: !withEmail ? cca2 : '',
+      type: dineInType
     };
     if (Platform.OS === 'android' && !!appHashKey) {
       data['app_hash_key'] = appHashKey;

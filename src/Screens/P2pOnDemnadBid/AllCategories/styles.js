@@ -14,7 +14,17 @@ export default ({ themeColors, fontFamily }) => {
             backgroundColor: colors.green,
             marginLeft: moderateScale(16),
 
-        }
+        },
+        menuView: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: moderateScale(4),
+            borderWidth: 0.3,
+            borderColor: colors.textGreyB,
+            width: moderateScale(100),
+            height: moderateScale(30)
+        },
     });
 
     return styles;

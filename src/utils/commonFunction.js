@@ -3,6 +3,7 @@ import { Keyboard } from 'react-native';
 import { API_BASE_URL } from '../config/urls';
 import { openCamera, openPicker } from './imagePicker';
 import imagePath from '../constants/imagePath';
+import moment from 'moment';
 
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
@@ -214,6 +215,21 @@ export const getCardImage = (brand) => {
             brand == "UnionPay" ? imagePath.icUnionPay :
               brand == "American Express" ? imagePath.icAmericanExpressCard :
                 imagePath.icUnknownCard
+}
+
+export const getDaysFormat = (date = new Date()) => {
+  const createdAt = moment(date);
+  const today = moment().startOf('day');
+  const yesterday = moment().subtract(1, 'day').startOf('day');
+  let groupLabel = '';
+
+  if (createdAt.isSame(today, 'd')) {
+    return groupLabel = 'Today';
+  } else if (createdAt.isSame(yesterday, 'd')) {
+    return groupLabel = 'Yesterday';
+  } else {
+    return groupLabel = createdAt.format('MMM D, YYYY');
+  }
 }
 
 

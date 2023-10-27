@@ -81,7 +81,7 @@ const BorderTextInput = ({
         selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         placeholder={placeholder.concat(!!require ? '*' : '')}
         placeholderTextColor={
-          isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.textGreyB
         }
         maxLength={maxLength}
         style={{

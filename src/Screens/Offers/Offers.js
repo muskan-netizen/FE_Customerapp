@@ -29,7 +29,7 @@ export default function Offer({ route, navigation }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
   const paramsData = route?.params?.data;
-  console.log(paramsData, "fadsfkasdjf")
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -102,6 +102,7 @@ export default function Offer({ route, navigation }) {
       .catch(errorMethod);
   };
 
+
   //Verify your promo code
   const _verifyPromoCode = (item) => {
     let data = {};
@@ -125,13 +126,17 @@ export default function Offer({ route, navigation }) {
             promocodeDetail: {
               couponInfo: item,
               vendorInfo: paramsData,
-
             },
+            data: {
+              ...paramsData?.paramData
+            }
           });
         }
       })
       .catch(errorMethod);
   };
+
+  console.log(paramsData, "fasdfkhasdf")
 
 
   //Verify your promo code

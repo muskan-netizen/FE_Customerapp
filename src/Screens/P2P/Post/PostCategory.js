@@ -533,7 +533,7 @@ const PostCategory = ({ navigation }) => {
                 }}>
                 <FlatList
                   data={attributeInfo}
-                  scrollEnabled={false}
+
                   keyboardShouldPersistTaps={'handled'}
                   keyExtractor={(itm) => String(itm?.id)}
                   ItemSeparatorComponent={() => (
@@ -557,6 +557,7 @@ const PostCategory = ({ navigation }) => {
 
   return (
     <WrapperContainer
+
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.statusbarColor
       }>
@@ -686,6 +687,7 @@ function stylesFunc({ fontFamily, themeColor }) {
       justifyContent: 'center',
       alignItems: 'center',
       marginVertical: moderateScale(10),
+
     },
     textStyle: {
       fontFamily: fontFamily.medium,

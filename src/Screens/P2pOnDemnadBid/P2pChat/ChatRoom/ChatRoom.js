@@ -1,12 +1,11 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useRef, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
-import CircularImages from '../../../../Components/CircularImages';
 import WrapperContainer from '../../../../Components/WrapperContainer';
 import imagePath from '../../../../constants/imagePath';
 import strings from '../../../../constants/lang';
@@ -20,16 +19,15 @@ import socketServices from '../../../../utils/scoketService';
 import stylesFun from './styles';
 
 export default function ChatRoom({ navigation, route }) {
-    const theme = useSelector((state) => state?.initBoot?.themeColor);
-    const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-    const { appData, currencies, languages, appStyle } = useSelector((state) => state.initBoot || {});
+    const { themeToggle, themeColor, appData, currencies, languages, appStyle } = useSelector((state) => state?.initBoot);
     const { dineInType } = useSelector((state) => state?.home);
 
     const fontFamily = appStyle?.fontSizeData;
     const userData = useSelector((state) => state?.auth?.userData);
     const darkthemeusingDevice = useDarkMode();
-    const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+    const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const paramData = route?.params;
+
     const styles = stylesFun({ fontFamily, isDarkMode });
     const [state, setState] = useState({ roomData: [], isLoading: true });
     const { roomData, isLoading } = state;
@@ -65,7 +63,6 @@ export default function ChatRoom({ navigation, route }) {
             }
         }, [navigation]),
     );
-    console.log('paramDataparamData', appData);
     const fetchData = async () => {
         try {
             let headerData = {
@@ -108,16 +105,43 @@ export default function ChatRoom({ navigation, route }) {
             console.log('room res++++', res);
         } catch (error) {
             console.log('error raised in start chat api', error);
-            showError(error?.message || "Error occured");
+            showError(error?.message);
             updateState({ isLoading: false });
         }
     };
     const goToChatRoom = useCallback((item) => {
         navigation.navigate(navigationStrings.CHAT_SCREEN, {
-            data: { ...item, id: item?.order_vendor_id },
+            data: { ...item, id: item?.order_vendor_id, is_chat: true },
         });
     }, []);
+
+    const getOrderNumber = (item) => {
+
+        // Split the string by hyphens ("-")
+        const parts = item?.room_id.split('-');
+
+        // Get the last element of the resulting array
+        const valueAfterLastHyphen = parts[parts.length - 1];
+
+        return !!valueAfterLastHyphen ? valueAfterLastHyphen : false
+    }
+
+    const getUniqueByProperty = (arr, property) => {
+        return arr.reduce((unique, item) => {
+            const hasProperty = unique.some((uniqueItem) => uniqueItem[property] === item[property]);
+            if (!hasProperty) {
+                unique.push(item);
+            }
+            return unique;
+        }, []);
+    }
+
     const renderItem = useCallback(({ item, index }) => {
+        let reciver_data_room = item?.user_Data.filter((item, inx) => {
+            if (item?.user_id != userData?.id) {
+                return item
+            }
+        })
         let isAnyMessage = _.isEmpty(item?.chat_Data);
         return (
             <TouchableOpacity
@@ -129,133 +153,136 @@ export default function ChatRoom({ navigation, route }) {
                     padding: moderateScale(16),
                     borderColor: colors.textGreyO
                 }}>
-                <View>
-                    {dineInType == 'p2p' ? (
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            flex: 0.95,
+
+                        }}>
+                        <FastImage
+                            source={
+                                _.isEmpty(item?.user_Data)
+                                    ? imagePath.icDefaultImg
+                                    : { uri: item?.user_Data[0]?.display_image }
+                            }
+                            resizeMode={'cover'}
+                            style={{
+                                width: moderateScale(45),
+                                height: moderateScale(45),
+                                borderRadius: moderateScale(45) / 2,
+                                backgroundColor: colors.blackOpacity05,
+                            }}
+                        />
+
                         <View
                             style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
+                                marginLeft: moderateScale(12),
+                                alignItems: 'flex-start',
+                                flex: 1,
                             }}>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    flex: 0.85,
-                                }}>
-                                <FastImage
-                                    source={
-                                        _.isEmpty(item?.user_Data)
-                                            ? imagePath.icDefaultImg
-                                            : { uri: item?.user_Data[0]?.display_image }
-                                    }
-                                    resizeMode={'cover'}
-                                    style={{
-                                        width: moderateScale(40),
-                                        height: moderateScale(40),
-                                        borderRadius: moderateScale(40) / 2,
-                                        backgroundColor: 'rgba(0,0,0,0.5)',
-                                    }}
-                                />
-
-                                <View
-                                    style={{
-                                        marginLeft: moderateScale(12),
-                                        alignItems: 'flex-start',
-                                    }}>
-                                    {!isAnyMessage ? (
-                                        <Text
-                                            style={{
-                                                fontFamily: fontFamily?.regular,
-                                                color: colors.black,
-                                                fontSize: textScale(16)
-                                            }}>
-                                            {userData?.vendor_id == item?.vendor_id
-                                                ? item?.user_Data[0]?.username
-                                                : item?.vendor_name}{' '}
-                                            {!!item?.product_name ? `(${item?.product_name})` : ''}
-                                        </Text>
-                                    ) : (
-                                        <Text
-                                            style={{
-                                                fontFamily: fontFamily?.regular,
-                                                color: colors.black,
-                                                fontSize: textScale(16)
-                                            }}>
-                                            {item?.vendor_name || userData?.name}
-                                            {!!item?.product_name ? ` (${item?.product_name})` : ''}
-                                        </Text>
-                                    )}
-
-                                    <Text numberOfLines={2} style={{
-                                        fontFamily: fontFamily?.regular,
-                                        color: colors.black,
-                                        fontSize: textScale(16),
-                                        opacity: 0.5
-                                    }}>
-                                        {!isAnyMessage ? (
-                                            item?.chat_Data[0]?.message
-                                        ) : (
-                                            <Text
-                                                style={{
-                                                    fontFamily: fontFamily?.regular,
-                                                    fontSize: textScale(10),
-                                                    color: colors.blueB,
-                                                }}>
-                                                • New Chat
-                                            </Text>
-                                        )}
-                                    </Text>
-                                </View>
-                            </View>
-
                             {!isAnyMessage ? (
-                                <View>
+                                <Text
+                                    style={{
+                                        fontFamily: fontFamily?.regular,
+                                        color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
+                                        fontSize: textScale(16),
 
-                                    <Text style={{ ...styles.timeStyle, textAlign: 'right' }}>
-                                        {moment(item?.chat_Data[0]?.created_date).format('hh:mm A')} {"  >"}
-                                    </Text>
-                                </View>
-                            ) : (
-                                <View>
-                                    <Text style={{ ...styles.timeStyle, textAlign: 'right' }}>
-                                        {moment(item?.created_date).format('hh:mm A')} {"  >"}
-                                    </Text>
-                                </View>
-                            )}
-                        </View>
-                    ) : (
-                        <View>
-                            <View style={styles.flexView}>
-                                <Text style={styles.textStyle}>
-                                    <Text>{strings.ORDER}</Text> # {item?.room_id}
+                                    }}>
+                                    {
+                                        !isEmpty(item?.user_Data) ? getUniqueByProperty(item?.user_Data, "user_id")?.map((item, inx) => {
+                                            return `${inx > 0 ? ', ' : ''}${item?.username}`
+
+                                        }) : item?.user_Data[0]?.username
+                                    }
                                 </Text>
-                                {!isAnyMessage ? (
-                                    <Text style={styles.timeStyle}>
-                                        {moment(item?.chat_Data[0]?.created_date).format('LLL')}
-                                    </Text>
-                                ) : null}
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {_.isEmpty(item?.user_Data) ? null : (
-                                    <CircularImages
-                                        fontFamily={fontFamily}
-                                        isDarkMode={isDarkMode}
-                                        data={item?.user_Data}
-                                    />
-                                )}
-                                {!isAnyMessage ? (
-                                    <Text numberOfLines={2} style={styles.textDesc}>
-                                        {item?.chat_Data[0]?.message}
-                                    </Text>
-                                ) : null}
-                            </View>
+
+
+                            ) : (
+                                <Text
+                                    style={{
+                                        fontFamily: fontFamily?.regular,
+                                        color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
+                                        fontSize: textScale(16),
+
+                                    }}>
+                                    {item?.vendor_name || userData?.name}
+                                </Text>
+                            )}
+                            {!isAnyMessage ?
+                                <View>
+                                    {
+                                        !!item?.chat_Data[0]?.is_media ? <View style={{
+                                            flexDirection: "row",
+                                            alignItems: "center"
+                                        }}>
+                                            <Image
+                                                source={item?.chat_Data[0]?.mediaType == "image/jpeg" ? imagePath.icCamera : imagePath.icVideoCamera} style={{
+                                                    height: 15, width: 15,
+                                                    tintColor: colors.textGreyQ
+                                                }} />
+                                            <Text style={{
+                                                fontFamily: fontFamily?.regular,
+                                                color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
+                                                fontSize: textScale(12),
+                                                opacity: 0.5,
+                                            }}> {item?.chat_Data[0]?.mediaType == "image/jpeg" ? "Photo" : "Video"}</Text>
+                                        </View> :
+                                            <Text numberOfLines={2} style={{
+                                                fontFamily: fontFamily?.regular,
+                                                color: isDarkMode ? MyDarkTheme?.colors?.text : colors.black,
+                                                fontSize: textScale(12),
+                                                opacity: 0.5,
+                                            }}>
+                                                {item?.chat_Data[0]?.message}
+                                            </Text>}
+                                </View> : <Text
+                                    style={{
+                                        fontFamily: fontFamily?.regular,
+                                        fontSize: textScale(10),
+                                        color: colors.blueB,
+                                    }}>
+                                    • New Chat
+                                </Text>}
+
                         </View>
-                    )}
+                    </View>
+
+                    <View>
+                        {!!getOrderNumber(item) && <Text style={{
+                            marginTop: moderateScaleVertical(4)
+                        }}>#{getOrderNumber(item)}</Text>}
+
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            marginTop: moderateScaleVertical(4)
+                        }}>
+
+                            {!!item?.isRaiseIssue && <Image source={imagePath.redFlag} style={{
+                                height: 20,
+                                width: 20,
+                                marginRight: 4
+                            }} />}
+                            <Text style={{ ...styles.timeStyle, textAlign: 'right' }}>
+                                {moment(!isAnyMessage ? item?.chat_Data[0]?.created_date : item?.created_date).format('hh:mm A')}
+                            </Text>
+
+                        </View>
+                    </View>
+
                 </View>
+
             </TouchableOpacity>
         );
-    }, []);
+    }, [isDarkMode]);
+
     const listEmptyComponent = useCallback(() => {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -269,7 +296,7 @@ export default function ChatRoom({ navigation, route }) {
                 </Text>
             </View>
         );
-    }, []);
+    }, [isDarkMode]);
     const awesomeChildListKeyExtractor = useCallback(
         (item) => `awesome-child-key-${item?._id}`,
         [roomData],
@@ -280,7 +307,7 @@ export default function ChatRoom({ navigation, route }) {
     return (
         <WrapperContainer
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-            statusBarColor={colors.white}
+
             isLoading={isLoading}>
             <Text style={{
                 fontFamily: fontFamily?.bold,
@@ -288,7 +315,7 @@ export default function ChatRoom({ navigation, route }) {
                 marginLeft: moderateScale(16),
                 marginVertical: moderateScaleVertical(20),
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-            }}>{strings.CHATS}</Text>
+            }}>Chats</Text>
             <View style={{
                 flex: 1
             }}>
@@ -297,7 +324,6 @@ export default function ChatRoom({ navigation, route }) {
                     renderItem={renderItem}
                     ListEmptyComponent={!isLoading && listEmptyComponent}
                     keyExtractor={awesomeChildListKeyExtractor}
-                    // ItemSeparatorComponent={itemSeparatorComponent}
                     contentContainerStyle={{ flexGrow: 1 }}
                 />
             </View>

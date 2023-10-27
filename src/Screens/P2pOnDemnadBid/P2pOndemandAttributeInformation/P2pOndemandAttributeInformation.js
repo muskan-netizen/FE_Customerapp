@@ -19,13 +19,15 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import AddressBottomSheet from '../../../Components/AddressBottomSheet';
 import BorderTextInput from '../../../Components/BorderTextInput';
 import ButtonComponent from '../../../Components/ButtonComponent';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GallaryCameraImgPicker from '../../../Components/GallaryCameraImgPicker';
 import GradientButton from '../../../Components/GradientButton';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import OoryksAccountsHeader from '../../../Components/OoryksAccountsHeader';
 import OoryksHeader from '../../../Components/OoryksHeader';
+import SelectSearchFromMap from '../../../Components/SelectSearchFromMap';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -48,9 +50,6 @@ import {
 import { showError, showSuccess } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
-import OoryksAccountsHeader from '../../../Components/OoryksAccountsHeader';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import SelectSearchFromMap from '../../../Components/SelectSearchFromMap';
 
 const theme = {
   // Define your custom colors here
@@ -91,7 +90,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const { location } = useSelector(state => state?.home);
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  console.log(!!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 ? productData?.price : productData?.price > 0 ? `${productData?.price}/day` : '', "fafksdfh")
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors });
   const [attributeInfo, setAttributeInfo] = useState([]);
@@ -182,7 +180,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
 
   const isValidData = () => {
     const error = validations({
-      // productImg: productImgs,
+      productImg: productImgs,
       productName: name,
       productDetail: description,
       // emirateId: emirateId,
@@ -228,12 +226,11 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     });
 
     let updatedPrice = price.replace('/day', '')
-
-
     formData.append('category_id', paramData?.category_id);
     !!productData?.sku && formData.append('sku', productData?.sku || '');
     !!productData?.id && formData.append('product_id', productData?.id || '');
     formData.append('product_name', name);
+    formData.append('meta_description', description);
     formData.append('body_html', description);
     formData.append('price', updatedPrice);
     formData.append('latitude', String(productLocation?.latitude));
@@ -279,9 +276,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     });
 
 
-    console.log(formData, '<===formData onSubmitAttributes');
-
-
     if (!!productData) {
       actions
         .updateVendorProduct(formData, {
@@ -300,7 +294,6 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           console.log(error, '<===error');
         });
     } else {
-      console.log(JSON.stringify(formData), "asdfasdfsdf")
       actions
         .submitProductWithAttributes(formData, {
           code: appData?.profile?.code,
@@ -700,7 +693,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
         }}>
         <OoryksAccountsHeader
           leftIcon={imagePath.ic_backarrow}
-          lefticonTitle={strings.ADD_AN_ITEM_FOR_RENT}
+          lefticonTitle={`${strings.ADD_AN_ITEM_FOR_RENT}${paramData?.type_id == 10 ? "rent" : "sell"}`}
         />
         {isLoadingAttributes ? (
           <View style={{ flex: 1 }}>
@@ -846,7 +839,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                     ...styles.titleTxt,
                     color: !isEmpty(productLocation)
                       ? colors.black
-                      : colors.blackOpacity30,
+                      : isDarkMode ? MyDarkTheme.colors.lightDark : colors.blackOpacity30,
                   }}>
                   {!isEmpty(productLocation)
                     ? productLocation?.address
@@ -873,7 +866,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
                     marginLeft: moderateScale(1),
                     fontSize: textScale(14),
                     fontFamily: fontFamily?.medium,
-                    marginTop: moderateScaleVertical(16),
+
                   }}>
                   {strings.PRICING_DETAILS_FOR} :
                 </Text>
@@ -1250,7 +1243,8 @@ function stylesFunc({ fontFamily, themeColors }) {
       height: moderateScaleVertical(48),
       justifyContent: "space-between",
       flexDirection: "row",
-      alignItems: "center"
+      alignItems: "center",
+      marginBottom: moderateScaleVertical(16)
 
     },
     titleTxt: {

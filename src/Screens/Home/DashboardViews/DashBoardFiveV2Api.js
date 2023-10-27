@@ -1,3 +1,4 @@
+import { useScrollToTop } from '@react-navigation/native';
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -5,32 +6,41 @@ import {
   FlatList,
   Image,
   Modal,
-  Platform,
   RefreshControl,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { default as DeviceInfo, default as deviceInfoModule, getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import Animated from 'react-native-reanimated';
+import { enableFreeze } from "react-native-screens";
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import Cities from '../../../Components/Cities';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
+import MarketCard3V2 from '../../../Components/MarketCard3V2';
+import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
+import VendorMode from '../../../Components/VendorMode';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import { useScrollToTop } from '@react-navigation/native';
-import deviceInfoModule from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -39,27 +49,13 @@ import {
   width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getImageUrlNew } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getColorCodeWithOpactiyNumber, getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions';
 import { getItem, setItem } from '../../../utils/utils';
+import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
-import { getImageUrlNew } from '../../../utils/commonFunction';
-import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
-import * as CategoryTemplate from '../TemplateStyle/CategoryStyle'
-import MarketCard3V2 from '../../../Components/MarketCard3V2';
-import {
-  Menu,
-  MenuOption,
-  MenuOptions,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import Cities from '../../../Components/Cities';
-import fontFamily from '../../../styles/fontFamily';
-import actions from '../../../redux/actions';
-import VendorMode from '../../../Components/VendorMode';
-import { enableFreeze } from "react-native-screens";
-import Animated from 'react-native-reanimated';
 enableFreeze(true);
 
 const homeFilter = [
@@ -556,9 +552,7 @@ const DashBoardFiveV2Api = ({
   }, [themeColors, fontFamily, appMainData, isDarkMode])
 
 
-
   const _renderCategories = useCallback(({ item, index }) => {
-    console.log(appStyle?.homePageLayout, "sadfj")
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
@@ -577,7 +571,6 @@ const DashBoardFiveV2Api = ({
         return (
           <View
             style={{
-
               width: appStyle?.homePageLayout == 5 ? '20%' : '25%',
             }}>
             <CategoryTemplate.HomeCategoryCard_3_5_7
@@ -635,8 +628,8 @@ const DashBoardFiveV2Api = ({
         )
       case 8:
         return (
-          <CategoryTemplate.HomeCategoryCard8
-            item={item}
+          <CategoryTemplate.HomeCategoryCardP2p
+            data={item}
             onPress={() => onPressCategory(item)}
           />
 
@@ -683,7 +676,7 @@ const DashBoardFiveV2Api = ({
 
       case 8:
         return {
-          numColumns: 3,
+          numColumns: 4,
           horizontal: false,
           scrollEnabled: false
         };
@@ -713,14 +706,14 @@ const DashBoardFiveV2Api = ({
     let myBanner = item?.banner_images || appMainData?.mobile_banners || appData?.mobile_banners || []
     return (
       !isEmpty(myBanner) ?
-        <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0) }}>
+        <View key={String(item?.id)} style={{ marginBottom: moderateScaleVertical(0), }}>
           {!!showTitle ?
             <TitleViewHome
               item={item}
               isDarkMode={isDarkMode}
               appStyle={appStyle}
 
-            /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
+            /> : <View style={{ marginVertical: moderateScaleVertical(0), }} />}
           <Carousel
             autoplay={true}
             loop={true}
@@ -761,7 +754,10 @@ const DashBoardFiveV2Api = ({
       );
 
     return (
-      <View key={String(item?.id || index)}>
+      <View key={String(item?.id || index)} style={{
+
+      }}>
+
         <TouchableOpacity style={{
         }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
           <FastImage
@@ -772,17 +768,10 @@ const DashBoardFiveV2Api = ({
             }}
             style={{
               height:
-                appStyle?.homePageLayout !== 5
-                  ? moderateScale(140)
-                  : DeviceInfo.getBundleId() == appIds.masa
-                    ? moderateScale(260)
-                    : height / 3.8,
-              width:
-                appStyle?.homePageLayout !== 5
-                  ? width / 1.1
-                  : DeviceInfo.getBundleId() == appIds.masa
-                    ? width / 1.1
-                    : moderateScale(160),
+                DeviceInfo.getBundleId() == appIds.masa
+                  ? moderateScale(260)
+                  : moderateScale(140),
+              width: width / 1.1,
               borderRadius: moderateScale(16),
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
@@ -885,18 +874,63 @@ const DashBoardFiveV2Api = ({
         </View> :
           <View>
             {!!showTitle ? <TitleViewHome isDarkMode={isDarkMode} item={item} /> : <View style={{ marginVertical: moderateScaleVertical(6) }} />}
-            <FlatList
-              horizontal={categoryFlatViewStyle().horizontal}
-              data={item?.data}
-              scrollEnabled={categoryFlatViewStyle().scrollEnabled}
-              keyExtractor={(item, index) => String(item?.id + `${index}`)}
-              showsHorizontalScrollIndicator={false}
-              numColumns={categoryFlatViewStyle().numColumns}
-              renderItem={_renderCategories}
-              ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(8) }} />
-              )}
-            />
+            {appStyle?.homePageLayout == 8 && dineInType == "p2p" ?
+              <View
+                style={{
+                  borderRadius: moderateScale(8),
+                  borderColor: colors.borderColor,
+                  marginTop: moderateScaleVertical(12),
+                }}
+              >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(8), }}>
+                  <Text style={{ fontSize: textScale(16), fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{strings.CATEGORIES}</Text>
+                  <TouchableOpacity
+                    onPress={() => { navigation.navigate(navigationStrings.ALL_CATEGORIES) }}>
+                    <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.regular, fontSize: textScale(12) }}>{strings.VIEW_ALL}</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    borderRadius: moderateScale(8),
+                    backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
+                    borderWidth: moderateScale(1),
+                    borderColor: colors.borderColor,
+                    paddingVertical: moderateScale(16),
+                  }}
+                >
+                  <FlatList
+                    key={'6'}
+                    data={item?.data?.length > 4 ? item?.data.slice(0, 4) : item?.data}
+                    keyExtractor={(item) => item?.id?.toString()}
+                    showsHorizontalScrollIndicator={false}
+                    numColumns={4}
+                    renderItem={_renderCategories}
+                    ItemSeparatorComponent={() => (
+                      <View style={{ height: moderateScale(8), }} />
+                    )}
+                  />
+                </View>
+              </View> :
+              <View style={{
+
+              }}>
+
+
+                <FlatList
+                  horizontal={categoryFlatViewStyle().horizontal}
+                  data={item?.data}
+                  scrollEnabled={categoryFlatViewStyle().scrollEnabled}
+                  keyExtractor={(item, index) => String(item?.id + `${index}`)}
+                  showsHorizontalScrollIndicator={false}
+                  numColumns={categoryFlatViewStyle().numColumns}
+                  renderItem={_renderCategories}
+                  ItemSeparatorComponent={() => (
+                    <View style={{ height: moderateScale(8) }} />
+                  )}
+                />
+              </View>
+            }
           </View>
         }
       </View>
@@ -1085,7 +1119,7 @@ const DashBoardFiveV2Api = ({
 
   return (
     <WrapperContainer
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : dineInType == "p2p" && appStyle?.homePageLayout == 8 ? colors.white : colors.backgroundGrey}
     >
       {showAllTempCartOrders()}
       {!!dataProvider && !isEmpty(dataProvider) ?
@@ -1324,16 +1358,7 @@ const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceTy
   return (
     <ProductsComp3V2
       item={item}
-      onPress={() => onPressProduct(item)
-
-        // !!item?.is_p2p ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { data: item }) : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })
-        // navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
-        //   data: {
-        //     is_product: true,
-        //     product: item
-        //   }
-        // })
-      }
+      onPress={() => onPressProduct(item)}
       priceType={priceType}
     />
   )
@@ -1562,4 +1587,5 @@ const _renderBrands = ({
 }
 
 export default React.memo(DashBoardFiveV2Api);
+
 

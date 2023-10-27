@@ -85,6 +85,7 @@ export default function TabRoutesOnDemandP2p(props) {
                         navigationStrings.CHOOSECARTYPEANDTIMETAXI,
                         navigationStrings.P2P_PRODUCTS,
                         navigationStrings.P2P_PRODUCT_DETAIL,
+                        navigationStrings.PRODUCT_PRICE_DETAILS
                     ]),
                     tabBarLabel: strings.HOME,
                     tabBarIcon: ({ focused, tintColor }) => (

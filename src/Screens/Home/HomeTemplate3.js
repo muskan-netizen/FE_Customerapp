@@ -899,6 +899,8 @@ export default function HomeTemplate3({ route, navigation }) {
     });
   };
 
+  console.log("fasdlkfhalksdjf")
+
 
 
   const renderHomeScreen = () => {

@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native';
-import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
+import { StyleSheet } from 'react-native';
+import { getColorCodeWithOpactiyNumber } from '../utils/helperFunctions';
 import colors from './colors';
-import {moderateScaleVertical, textScale} from './responsiveSize';
+import { moderateScaleVertical, textScale } from './responsiveSize';
 
 export const hitSlopProp = {
   top: 15,
@@ -10,7 +10,7 @@ export const hitSlopProp = {
   bottom: 15,
 };
 
-export default ({fontFamily, buttonTextColor}) => {
+export default ({ fontFamily, buttonTextColor }) => {
   const styles = StyleSheet.create({
     loader: {
       position: 'absolute',
@@ -112,7 +112,7 @@ export default ({fontFamily, buttonTextColor}) => {
       backgroundColor: colors.white,
       borderRadius: 4,
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,

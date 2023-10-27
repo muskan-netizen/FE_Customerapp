@@ -168,6 +168,7 @@ const P2pPayment = ({ navigation, route, item }) => {
     };
 
 
+
     const _directOrderPlace = () => {
         if (isEmpty(selectedPayment)) {
             showError(strings.SELECT_PAYMENT_METHOD);
@@ -474,52 +475,37 @@ const P2pPayment = ({ navigation, route, item }) => {
     const renderPaymentMethods = useCallback(
         ({ item, index }) => {
             return (
-                <View
+                <TouchableOpacity
+                    onPress={() => {
+                        setSelectedPayment(item);
+                        if (item?.id === 4) {
+                            setisLoading(true)
+                            getAllPaymentCards();
+                        }
+                    }}
                     style={{
                         height: moderateScaleVertical(50),
-                        justifyContent: 'flex-end',
+                        flexDirection: "row",
+                        alignItems: "center"
                     }}>
-                    <ButtonWithLoader
-                        onPress={() => {
-                            setSelectedPayment(item);
-                            if (item?.id === 4) {
-                                setisLoading(true)
-                                getAllPaymentCards();
-                            }
-                        }}
-                        btnText={item?.title}
-                        btnTextStyle={{
-                            color:
-                                selectedPayment?.id === item?.id
-                                    ? themeColors?.primary_color
-                                    : colors.black,
-                        }}
-                        btnStyle={{
-                            borderColor:
-                                selectedPayment?.id === item?.id
-                                    ? themeColors?.primary_color
-                                    : colors.transactionHistoryBg,
-                            marginTop: 0,
-                            borderRadius: 2,
-                            paddingHorizontal: moderateScale(12),
-                            backgroundColor:
-                                selectedPayment?.id === item?.id
-                                    ? colors.white
-                                    : colors.transactionHistoryBg,
-                            height: moderateScaleVertical(40),
-                        }}
+                    <Image
+                        source={
+                            selectedPayment?.id === item?.id
+                                ? imagePath.radioActive
+                                : imagePath.radioInActive
+                        }
                     />
-                    {selectedPayment?.id === item?.id && (
-                        <Image
-                            source={imagePath.icTick}
-                            style={{
-                                position: 'absolute',
-                                right: -5,
-                                top: 5,
-                            }}
-                        />
-                    )}
-                </View>
+                    <Text style={{
+                        fontFamily: fontFamily?.bold,
+                        fontSize: textScale(14),
+                        color: colors.black,
+                        marginLeft: moderateScale(8)
+                    }}>
+                        {item?.title}
+                    </Text>
+
+
+                </TouchableOpacity>
             );
         },
         [paymentMethods, selectedPayment],
@@ -617,11 +603,13 @@ const P2pPayment = ({ navigation, route, item }) => {
         [savedPaymentCards, selectedPaymentCard, isDarkMode],
     );
 
+    console.log(paramData, "fasdfjaskhdf")
+
     return (
         <WrapperContainer
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
             isLoading={isLoading}>
-            <OoryksHeader leftTitle={strings.PAYMENT} />
+            <OoryksHeader leftTitle='' />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
@@ -633,48 +621,7 @@ const P2pPayment = ({ navigation, route, item }) => {
                         marginTop: moderateScaleVertical(8),
                         marginHorizontal: moderateScale(16),
                     }}>
-                    {/*    <View
-                        style={{
-                            padding: moderateScale(7),
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                        }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FastImage
-                                source={imagePath.mapIcon}
-                                resizeMode="contain"
-                                style={{
-                                    borderRadius: 8,
-                                    width: moderateScale(63),
-                                    height: moderateScaleVertical(69),
-                                }}
-                            />
-                           <View style={{ marginLeft: moderateScale(9) }}>
-                                <Text
-                                    style={{
-                                        fontSize: textScale(14),
-                                        fontFamily: fontFamily?.medium,
-                                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                                    }}
-                                    numberOfLines={1}>
-                                    Home
-                                </Text>
-                                <Text
-                                    style={{
-                                        lineHeight: moderateScaleVertical(15),
-                                        marginTop: moderateScaleVertical(8),
-                                        color: colors.lightGreyText,
-                                        width: moderateScale(182),
-                                        fontSize: textScale(12),
-                                        fontWeight: '400',
-                                    }}
-                                    numberOfLines={2}>
-                                    {location?.address}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                    */}
+
                     <Text
                         style={{
                             color: colors.greyD,
@@ -689,29 +636,13 @@ const P2pPayment = ({ navigation, route, item }) => {
 
                 <View
                     style={{
-                        marginVertical: moderateScaleVertical(24),
-
+                        margin: moderateScaleVertical(16),
                     }}>
                     <FlatList
                         data={paymentMethods}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        renderItem={renderPaymentMethods}
-                        ListHeaderComponent={() => (
-                            <View
 
-                                style={{
-                                    width: moderateScale(20),
-                                }}
-                            />
-                        )}
-                        ListFooterComponent={() => (
-                            <View
-                                style={{
-                                    width: 10,
-                                }}
-                            />
-                        )}
+                        renderItem={renderPaymentMethods}
+
                         ItemSeparatorComponent={() => (
                             <View style={{ width: moderateScale(8) }} />
                         )}

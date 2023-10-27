@@ -4,7 +4,7 @@ import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
 import { getImageUrl } from '../utils/helperFunctions';
 
 export default function CategoriesCard({ item = {}, onPress = () => { } }) {
@@ -25,20 +25,21 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
     return (
         <TouchableOpacity style={{
             borderRadius: moderateScale(16),
+
         }} onPress={onPress}>
             <View style={{
                 borderRadius: moderateScale(16),
                 height: moderateScaleVertical(149),
-                width: moderateScale(166),
+                width: ((width - moderateScale(48)) / 2),
                 position: "absolute",
-                backgroundColor: isDarkMode ? colors.whiteOpacity5 : colors.blackOpacity30,
+                backgroundColor: colors.blackOpacity30,
                 zIndex: 1
             }} />
             <FastImage
                 style={{
                     borderRadius: moderateScale(16),
                     height: moderateScaleVertical(149),
-                    width: moderateScale(166),
+                    width: ((width - moderateScale(48)) / 2),
                 }}
                 // onError={() => {
                 //     setisValidImg(false)

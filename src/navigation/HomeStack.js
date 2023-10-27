@@ -59,7 +59,13 @@ import {
   Wishlist2,
   EcomOrderAgain,
   ProductPowerConumption,
-  Category
+  Category,
+  Notifications,
+  P2pOndemandProducts,
+  P2pOndemandProductDetail,
+  AllCategories,
+  ProductPriceDetails,
+  P2pPayment
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -281,11 +287,11 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
-        component={P2pProducts}
+        component={P2pOndemandProducts}
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={P2pProductDetail}
+        component={P2pOndemandProductDetail}
       />
 
       <Stack.Screen
@@ -332,6 +338,25 @@ export default function () {
         component={Category}
       />
 
+
+      <Stack.Screen
+        name={navigationStrings.ALL_CATEGORIES}
+        component={AllCategories}
+      />
+      <Stack.Screen
+        name={navigationStrings.PRODUCT_PRICE_DETAILS}
+        component={ProductPriceDetails}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.PAYMENT_SCREEN}
+        component={P2pPayment}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.NOTIFICATION}
+        component={Notifications}
+      />
 
     </Stack.Navigator>
   );

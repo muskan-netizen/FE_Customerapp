@@ -1,34 +1,36 @@
+import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { BackHandler, Platform } from 'react-native';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { BackHandler, Image, Text, View } from 'react-native';
+import { getBuildId } from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
-import ButtonComponent from '../../Components/ButtonComponent';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getBuildId } from 'react-native-device-info';
-import actions from '../../redux/actions';
-import { showError } from '../../utils/helperFunctions';
-import { useFocusEffect } from '@react-navigation/native';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import socketServices from '../../utils/scoketService';
+import stylesFunc from './styles';
+import OoryksHeader from '../../Components/OoryksHeader';
 
 export default function OrderSuccess({ navigation, route }) {
   const paramData = route?.params?.data;
 
   const { appStyle, themeColors, themeColor, themeToggle, appData, currencies,
     languages, } = useSelector((state) => state?.initBoot);
+  const { dineInType } = useSelector((state) => state?.home || {});
+
   const { userData } = useSelector(state => state?.auth);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -38,22 +40,23 @@ export default function OrderSuccess({ navigation, route }) {
   const [isLoadingChat, setLoadingChat] = useState(false)
 
 
-  const viewOrderDetail = () => {
 
-    navigation.navigate(navigationStrings.ORDER_DETAIL, {
-      orderId: paramData?.orderDetail?.id,
-      fromActive: true, // this value use for useInterval
-      from: "cart"
-    });
-  };
+  useFocusEffect(
+    useCallback(() => {
 
-  const androidBackButtonHandler = () => {
 
-  }
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
 
   useEffect(() => {
     createRoom("onFocus")
   }, [])
+
 
   const createRoom = async (type = '') => {
 
@@ -61,6 +64,18 @@ export default function OrderSuccess({ navigation, route }) {
       actions.setAppSessionData('on_login');
       return;
     }
+
+    if (dineInType !== "p2p") {
+      navigation.navigate(navigationStrings.ORDER_DETAIL, {
+        orderId: paramData?.orderDetail?.id,
+        fromActive: true, // this value use for useInterval
+        from: "cart"
+      });
+
+      return
+
+    }
+
     setLoadingChat(true);
     try {
       const apiData = {
@@ -83,7 +98,7 @@ export default function OrderSuccess({ navigation, route }) {
       });
 
       if (!!res?.roomData) {
-        type !== "onFocus" && onChat(res.roomData);
+        onChat(res.roomData, type);
       }
       setLoadingChat(false);
     } catch (error) {
@@ -93,44 +108,108 @@ export default function OrderSuccess({ navigation, route }) {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        androidBackButtonHandler,
-      );
-      return () => backHandler.remove();
-    }, []),
+  const onChat = (item, type) => {
+    let dataToSend = {
+      ...item, vendor_id_order: paramData?.orderDetail?.vendors[0]?.id,
+      isFromOrder: true, order: paramData?.orderDetail
+    }
+    onSend(dataToSend, type)
+
+
+
+  };
+
+  const checkToMessage = (data) => {
+    let userType = data?.type;
+    if (!!userData?.is_superadmin && userType == 'agent_to_user') {
+      return 'to_user_agent';
+    }
+    if (!!userData?.is_superadmin && userType == 'vendor_to_user') {
+      return 'to_user_vendor';
+    }
+    if (userType == 'agent_to_user') {
+      return 'to_agent';
+    }
+    if (userType == 'vendor_to_user') {
+      return 'to_vendor';
+    }
+  };
+
+
+  const onSend = useCallback(
+    async (data = {}, type) => {
+      let phoneNumber = !!userData.phone_number
+        ? `+${userData?.dial_code} ${userData.phone_number}`
+        : null;
+      let userImage = !!userData?.source
+        ? getImageUrl(
+          userData?.source?.proxy_url,
+          userData?.source?.image_path,
+          '200/200',
+        )
+        : null;
+
+      try {
+        let apiData = {
+          room_id: data?._id,
+          message: "Hello",
+          user_type: !!userData?.is_superadmin ? 'admin' : 'user',
+          to_message: checkToMessage(data),
+          from_message: !!userData?.is_superadmin ? 'from_admin' : 'from_user',
+          user_id: userData?.id,
+          email: userData?.email,
+          username: userData?.name,
+          phone_num: phoneNumber,
+          display_image: userImage,
+          sub_domain: '192.168.101.88', //this is static value
+          //'room_name' =>$data->name,
+          chat_type: data?.type,
+        };
+
+
+        if (type == "onFocus") {
+          console.log(apiData, '<====data sending sendMessage');
+          const res = await actions.sendMessage(apiData, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          });
+          console.log('on send message res', res);
+          socketServices.emit('save-message', res);
+        }
+        type !== "onFocus" && navigation.navigate(navigationStrings.CHAT_SCREEN, {
+          data: {
+            ...data
+          }
+        });
+      } catch (error) {
+        console.log('error raised in fetchAllMessages api', error);
+      }
+    },
+    [],
   );
 
 
-
-  const onChat = (item) => {
-    navigation.navigate(navigationStrings.CHAT_SCREEN, {
-      data: {
-        ...item, vendor_id_order: paramData?.orderDetail?.vendors[0]?.id
-      }
-    });
-  };
   return (
     <WrapperContainer
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }
-      statusBarColor={colors.backgroundGrey}>
+      statusBarColor={colors.white}>
+      <OoryksHeader isCustomLeftPress onPressLeft={() => navigation.navigate(navigationStrings.HOME)} leftTitle='' />
       <KeyboardAwareScrollView
         alwaysBounceVertical={false}
         showsVerticalScrollIndicator={false}
         style={{ marginHorizontal: moderateScaleVertical(20) }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
-            navigation.navigate(navigationStrings.HOME)
+            navigation?.popToTop();
           }}>
           <Image
             style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
             source={imagePath.cross}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.doneIconView}>
           <Image
             source={imagePath.successfulIcon}
@@ -186,8 +265,8 @@ export default function OrderSuccess({ navigation, route }) {
           }}>
           <ButtonWithLoader
             isLoading={isLoadingChat}
-            btnText={appStyle?.homePageLayout === 8 ? strings.START_CHAT : strings.VIEW_DETAIL}
-            onPress={appStyle?.homePageLayout === 8 ? createRoom : viewOrderDetail}
+            btnText={dineInType == "p2p" ? "Start chat" : "View Detail"}
+            onPress={createRoom}
             textStyle={{ color: themeColors.secondary_color }}
             borderRadius={moderateScale(13)}
             btnStyle={{
@@ -196,7 +275,6 @@ export default function OrderSuccess({ navigation, route }) {
               borderWidth: 0
             }}
           />
-
         </View>
       </KeyboardAwareScrollView>
 

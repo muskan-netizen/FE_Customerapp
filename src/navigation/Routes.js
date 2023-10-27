@@ -17,15 +17,14 @@ import AuthStack from './AuthStack';
 import CourierStack from './CourierStack';
 import DrawerRoutes from './DrawerRoutes';
 import { navigationRef } from './NavigationService';
+import TabRoutes from './TabRoutes';
+import TabRoutesEcommerce from './TabRoutesEcommerce';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
+import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
 import navigationStrings from './navigationStrings';
 import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
-import TabRoutes from './TabRoutes';
-import TaxiTabRoutes from './TaxiTabRoutes';
-import TabRoutesP2p from './TabRoutesP2p';
-import TabRoutesEcommerce from './TabRoutesEcommerce';
 
 
 const Stack = createNativeStackNavigator();

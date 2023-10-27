@@ -1,29 +1,35 @@
 import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import _, { cloneDeep, isEmpty } from 'lodash';
+import axios from 'axios';
+import _, { cloneDeep, isArray, isEmpty, isObject } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     Alert,
     Image,
-    ImageBackground,
     Linking,
+    Modal,
+    PermissionsAndroid,
     Platform,
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
-    Modal,
-    PermissionsAndroid
+    View
 } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import { createThumbnail } from 'react-native-create-thumbnail';
+import DocumentPicker from 'react-native-document-picker';
 import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';
 import ReactModal from 'react-native-modal';
 import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import ChatMedia from '../../../../Components/ChatMedia';
 import CircularImages from '../../../../Components/CircularImages';
 import ButtonImage from '../../../../Components/ImageComp';
+import VideoPlayer from '../../../../Components/VideoPlayer';
 import WrapperContainer from '../../../../Components/WrapperContainer';
 import imagePath from '../../../../constants/imagePath';
 import strings from '../../../../constants/lang';
@@ -31,6 +37,7 @@ import navigationStrings from '../../../../navigation/navigationStrings';
 import actions from '../../../../redux/actions';
 import colors from '../../../../styles/colors';
 import {
+    StatusBarHeight,
     height,
     moderateScale,
     moderateScaleVertical,
@@ -38,16 +45,11 @@ import {
     width,
 } from '../../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../../styles/theme';
-import { cameraHandler, cameraImgVideoHandler } from '../../../../utils/commonFunction';
+import { cameraImgVideoHandler } from '../../../../utils/commonFunction';
 import { getImageUrl, showError, showSuccess } from '../../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../../utils/permissions';
 import socketServices from '../../../../utils/scoketService';
-import ActionSheet from 'react-native-actionsheet';
-import { v4 as uuidv4 } from 'uuid';
-import VideoPlayer from '../../../../Components/VideoPlayer';
-import ChatMedia from '../../../../Components/ChatMedia';
-import DocumentPicker from 'react-native-document-picker';
-import { createThumbnail } from 'react-native-create-thumbnail';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 
@@ -58,6 +60,8 @@ export default function ChatScreen({ route, navigation }) {
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
     const darkthemeusingDevice = useDarkMode();
     let actionSheet = useRef();
+    const insets = useSafeAreaInsets()
+
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const paramData = route.params.data;
     const { appData, themeColors, currencies, languages, appStyle } = useSelector(
@@ -66,7 +70,6 @@ export default function ChatScreen({ route, navigation }) {
     const fontFamily = appStyle?.fontSizeData;
     const { userData } = useSelector((state) => state?.auth);
     const { dineInType } = useSelector((state) => state?.home);
-
     const isChatRefresh = useSelector(
         (state) => state?.chatRefresh.isChatRefresh,
     );
@@ -84,7 +87,8 @@ export default function ChatScreen({ route, navigation }) {
         allRoomUsersAppartFromAgent: [],
         allAgentIds: [],
         productDetails: [],
-        reciverData: []
+        reciverData: [],
+        borrower_data: []
     });
     const {
         isLoading,
@@ -95,7 +99,8 @@ export default function ChatScreen({ route, navigation }) {
         allRoomUsersAppartFromAgent,
         allAgentIds,
         productDetails,
-        reciverData
+        reciverData,
+        borrower_data
     } = state;
     const [orderVendorDetail, setOrderVendorDetail] = useState({})
 
@@ -106,7 +111,6 @@ export default function ChatScreen({ route, navigation }) {
 
     const isFocused = useIsFocused();
 
-    console.log(dineInType, 'dineInTypedineInType')
     useFocusEffect(
         useCallback(() => {
             if (dineInType == 'p2p') {
@@ -141,13 +145,26 @@ export default function ChatScreen({ route, navigation }) {
     );
 
 
+    const getOrderNumber = (item) => {
+        console.log(item, 'yeryeu')
+        // Split the string by hyphens ("-")
+        const parts = item?.room_id.split('-');
+
+        // Get the last element of the resulting array
+        const valueAfterLastHyphen = parts[parts.length - 1];
+        console.log(valueAfterLastHyphen, 'valueAfterLastHyphenvalueAfterLastHyphen')
+        return !!valueAfterLastHyphen ? valueAfterLastHyphen : false
+    }
 
     const getProductDetail = () => {
+        const data = getOrderNumber(paramData)
+        console.log(data, 'datadata')
         actions
             .getProuctDetailsRelatedToChat(
                 {
                     product_id: paramData?.product_id,
-                    order_vendor_id: paramData?.vendor_id_order
+                    order_vendor_id: paramData?.vendor_id_order || paramData?.vendor_id,
+                    order_id: data
                 },
                 {
                     code: appData?.profile?.code,
@@ -156,7 +173,7 @@ export default function ChatScreen({ route, navigation }) {
                 },
             )
             .then((res) => {
-                console.log(res, "res>>>>>>>>res")
+                console.log(res, 'productDetailsproductDetailsproductDetails')
                 setOrderVendorDetail(res?.order_vendor)
                 updateState({
                     productDetails: res?.orderData,
@@ -178,7 +195,6 @@ export default function ChatScreen({ route, navigation }) {
             };
         }, []),
     );
-
     useEffect(() => {
         if (isFocused) {
             updateState({ isLoading: true });
@@ -218,12 +234,16 @@ export default function ChatScreen({ route, navigation }) {
                 },
             );
             console.log('fetchAllRoomUser res', res);
-
+            let reciver_data_room = res?.userData.filter((item, inx) => {
+                console.log(item, 'fetchAllRoomUser')
+                if (item?.user_id != userData?.id) {
+                    return item
+                }
+            })
             if (!!res?.userData && isFocused) {
                 let cloneRes = _.cloneDeep(res);
                 let cloneRes2 = _.cloneDeep(res);
 
-                console.log('cloneRescloneRes', res);
 
                 const allRoomUsersAppartFromAgentAry = cloneRes?.userData.filter(
                     (item) => {
@@ -240,15 +260,12 @@ export default function ChatScreen({ route, navigation }) {
                     }
                 });
 
-                console.log(
-                    allAgentIdsAry,
-                    'allAgentIdsAryallAgentIdsAryallAgentIdsAry',
-                );
-
+                console.log(reciver_data_room, 'datadata')
                 updateState({
                     allRoomUsersAppartFromAgent: allRoomUsersAppartFromAgentAry,
                     allAgentIds: allAgentIdsAry,
                     roomUsers: res?.userData,
+                    borrower_data: reciver_data_room
                 });
             }
         } catch (error) {
@@ -274,13 +291,16 @@ export default function ChatScreen({ route, navigation }) {
 
     const onSend = useCallback(
         async (messages = []) => {
-            if (String(messages[0].text).trim().length < 1) {
+            if (
+                String(messages[0].text).trim().length < 1 ||
+                messages[0]?.mediaUrl == ''
+            ) {
                 return;
             }
+
             let phoneNumber = !!userData.phone_number
                 ? `+${userData?.dial_code} ${userData.phone_number}`
                 : null;
-            console.log('phoneNumberphoneNumber', userData);
             let userImage = !!userData?.source
                 ? getImageUrl(
                     userData?.source?.proxy_url,
@@ -315,12 +335,15 @@ export default function ChatScreen({ route, navigation }) {
                         mediaType: messages[0]?.type,
                     };
                 }
+
+                console.log(apiData, '<====data sending sendMessage');
                 const res = await actions.sendMessage(apiData, {
                     code: appData?.profile?.code,
                     currency: currencies?.primary_currency?.id,
                     language: languages?.primary_language?.id,
                 });
                 console.log('on send message res', res);
+
                 socketServices.emit('save-message', res);
                 // const message = {
                 //   _id: userData.id,
@@ -342,6 +365,7 @@ export default function ChatScreen({ route, navigation }) {
         },
         [allRoomUsersAppartFromAgent, allAgentIds],
     );
+
 
     const sendToUserNotification = (id, text) => {
         let notificaionAgentIds =
@@ -370,6 +394,7 @@ export default function ChatScreen({ route, navigation }) {
             auth_id: userData?.id,
             web: false,
         };
+        console.log(apiData, "<<<<apiData")
         actions
             .sendNotification(apiData, {
                 code: appData?.profile?.code,
@@ -423,7 +448,7 @@ export default function ChatScreen({ route, navigation }) {
                     style={{
                         ...styles.chatStyle,
                         alignSelf: 'flex-end',
-                        backgroundColor: isDarkMode ? '#005246' : '#e2ffd3',
+                        backgroundColor: isDarkMode ? '#005246' : themeColors?.primary_color,
                         borderBottomRightRadius: 0,
                     }}>
                     <View style={{ flexDirection: 'row' }}>
@@ -434,7 +459,7 @@ export default function ChatScreen({ route, navigation }) {
                                         fontSize: textScale(12),
                                         fontFamily: fontFamily.medium,
                                         textTransform: 'capitalize',
-                                        color: isDarkMode ? colors.white : colors.black,
+                                        color: colors.white,
                                     }}>
                                     {currentMessage?.username || currentMessage?.phone_num}{' '}
                                     {dineInType !== 'p2p' && `(${currentMessage?.user_type})`}
@@ -445,7 +470,7 @@ export default function ChatScreen({ route, navigation }) {
                                 <Text
                                     style={{
                                         ...styles.descText,
-                                        color: isDarkMode ? colors.white : colors.black,
+                                        color: colors.white,
                                         marginTop: 0,
                                     }}>
                                     {currentMessage?.message}
@@ -453,7 +478,7 @@ export default function ChatScreen({ route, navigation }) {
                                 <Text
                                     style={{
                                         ...styles.timeText,
-                                        color: isDarkMode ? '#84acaa' : colors.blackOpacity40,
+                                        color: colors.whiteOpacity77,
                                     }}>
                                     {moment(currentMessage?.created_date).format('LT')}
                                 </Text>
@@ -489,7 +514,7 @@ export default function ChatScreen({ route, navigation }) {
                             style={{
                                 ...styles.chatStyle,
                                 alignSelf: 'flex-start',
-                                backgroundColor: isDarkMode ? '#363638' : '#ffffff',
+                                backgroundColor: isDarkMode ? '#363638' : colors.whiteSmokeColor,
                                 borderBottomLeftRadius: moderateScale(0),
                                 maxWidth: width / 1.2,
                             }}>
@@ -553,7 +578,6 @@ export default function ChatScreen({ route, navigation }) {
 
     const onSpeechResultsHandler = (e) => {
         let text = e.value[0];
-        console.log('this is the text');
         onSend([{ text: text }]);
         _onVoiceStop();
     };
@@ -578,152 +602,257 @@ export default function ChatScreen({ route, navigation }) {
     };
 
 
-    // this funtion use for camera handle
-    // const cameraHandle = async (index = 0) => {
-    //   const permissionStatus = await androidCameraPermission();
-
-    //   console.log('permision status');
-    //   if (permissionStatus) {
-    //     if (index == 1) {
-    //       cameraHandler(index, {
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true,
-    //         cropperCircleOverlay: true,
-    //         mediaType: 'photo',
-    //       })
-    //         .then((res) => {
-    //           if (res?.data) {
-    //             updateState({ isLoading: true });
-    //           }
-    //           let data = {
-    //             type: 'jpg',
-    //             avatar: res?.data,
-    //           };
-    //           actions
-    //             .uploadProfileImage(data, {
-    //               code: appData?.profile?.code,
-    //             })
-    //             .then((res) => {
-    //               const source = {
-    //                 uri: getImageUrl(
-    //                   res.data.proxy_url,
-    //                   res.data.image_path,
-    //                   '200/200',
-    //                 ),
-    //               };
-    //               const image = {
-    //                 source,
-    //               };
-
-    //               updateState({ isLoading: false });
-    //             })
-    //             .catch((err) => { });
-    //         })
-    //         .catch((err) => { });
-    //     }
-    //   }
-    // };
-
+    // this funtion use for camera handle 
     const cameraHandle = async (index = 0) => {
+        if (index == 3) {
+            return
+        }
         if (index === 2) { // to open device's document gallary
             try {
-                const granted = await PermissionsAndroid.requestMultiple([
-                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                ]);
-                if (
-                    granted['android.permission.READ_EXTERNAL_STORAGE'] ===
-                    PermissionsAndroid.RESULTS.GRANTED &&
-                    granted['android.permission.WRITE_EXTERNAL_STORAGE'] ===
-                    PermissionsAndroid.RESULTS.GRANTED
-                ) {
-                    try {
-                        const res = await DocumentPicker.pick({
-                            type: [
-                                DocumentPicker.types.pdf,
-                                DocumentPicker.types.zip,
-                                DocumentPicker.types.doc,
-                                DocumentPicker.types.docx,
-                                DocumentPicker.types.ppt,
-                                DocumentPicker.types.pptx,
-                                DocumentPicker.types.xls,
-                                DocumentPicker.types.xlsx,
-                            ],
-                        });
+                // Check if the platform is Android
+                if (Platform.OS === 'android') {
+                    // Request external storage permissions for Android
+                    const granted = await PermissionsAndroid.requestMultiple([
+                        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    ]);
 
-                        if (!!res) {
-                            let fileObj = {
-                                path: res[0]?.uri,
-                                mime: 'docs',
-                                name: res[0]?.name,
-                            };
-                            uploadMedia(fileObj, (name = res[0]?.name));
-                            appendMediaPreview(fileObj);
-                        }
-                    } catch (err) {
-                        if (DocumentPicker.isCancel(err)) {
-                            // User cancelled the picker, exit any dialogs or menus and move on
-                        } else {
-                            throw err;
-                        }
+                    // Check if both permissions are granted
+                    if (
+                        granted['android.permission.READ_EXTERNAL_STORAGE'] ===
+                        PermissionsAndroid.RESULTS.GRANTED &&
+                        granted['android.permission.WRITE_EXTERNAL_STORAGE'] ===
+                        PermissionsAndroid.RESULTS.GRANTED
+                    ) {
+                        // Proceed with document picker for Android
+                        pickDocument();
+                    } else {
+                        // Handle permission denied for Android
                     }
                 } else {
-                    // Permission denied, handle accordingly
+                    // For iOS, proceed directly with the document picker
+                    pickDocument();
                 }
             } catch (err) {
                 console.warn(err);
             }
         }
 
-        const permissionStatus = await androidCameraPermission();
-
-        if (permissionStatus) { // to open device's image / video gallary
-            cameraImgVideoHandler(index, {
-                mediaType: 'any',
-            })
-                .then(async res => {
-                    if (!!res?.path) {
-                        console.log(res, '<====cameraImgVideoHandler');
-                        var thumbnailPath = {};
-                        if (res?.mime == 'video/mp4') {
-                            thumbnailPath = await createThumbnail({
-                                url: res?.path,
-                                timeStamp: 10000, // Specify the timestamp for the desired thumbnail (in milliseconds)
-                            });
-                            // setThumbnail(thumbnailPath);
-                        }
-
-                        // return;
-                        appendMediaPreview(res, thumbnailPath);
-                        uploadMedia(res, res.path.split('/').pop()); // upload media directly from gallary
-                    }
+        else {
+            const permissionStatus = await androidCameraPermission();
+            if (permissionStatus) { // to open device's image / video gallary
+                cameraImgVideoHandler(index, {
+                    mediaType: 'any',
+                    multiple: true
                 })
-                .catch(err => { });
+                    .then(async res => {
+                        if ((index == 0 && !isEmpty(res) && res?.path) || (index == 1 && isArray(res))) {
+                            appendMediaPreview(isArray(res) ? res : [res], true);
+                            uploadMedia(isArray(res) ? res : [res], true)
+                        }
+                    })
+                    .catch(err => { });
+            }
+
         }
     };
 
-    const appendMediaPreview = (media, thumbnail = '') => { // to set preview/thumbnail of image/video/document while uploading video
+    const pickDocument = async () => {
+        try {
+            const res = await DocumentPicker.pickMultiple({
+                type: [
+                    DocumentPicker.types.pdf,
+                    DocumentPicker.types.zip,
+                    DocumentPicker.types.doc,
+                    DocumentPicker.types.docx,
+                    DocumentPicker.types.ppt,
+                    DocumentPicker.types.pptx,
+                    DocumentPicker.types.xls,
+                    DocumentPicker.types.xlsx,
+                ],
+            });
+
+            console.log(res, "fasdkfhkasldf")
+            if (!!res) {
+
+                uploadMedia(res, false);
+                appendMediaPreview(res, false);
+                // let fileObj = {
+                //   path: res[0]?.uri,
+                //   mime: 'docs',
+                //   name: res[0]?.name,
+                // };
+
+            }
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker, exit any dialogs or menus and move on
+            } else {
+                throw err;
+            }
+        }
+    };
+
+
+    const appendMediaPreview = (files, isImg = false) => {
+        // to set preview/thumbnail of image/video/document while uploading video
         let allMessages = cloneDeep(messages);
-        let newMsg = {
-            ...allMessages[0], // Copy properties from the first item
-            mediaType: media?.mime,
-            is_media: true,
-            mediaUrl: media?.path,
-            _id: allMessages[0]?._id + uuidv4(),
-            isLoading: true,
-            auth_user_id: userData?.id,
-            name: media?.name,
-        };
 
-        if (media?.mime == 'video/mp4') {
-            newMsg.thumbnailUrl = thumbnail;
-        }
-        allMessages.unshift(newMsg);
+        files.map(async (media, inx) => {
+            var thumbnailPath = {};
+            if (media?.mime == 'video/mp4') {
+                thumbnailPath = await createThumbnail({
+                    url: media?.path,
+                    timeStamp: 10000, // Specify the timestamp for the desired thumbnail (in milliseconds)
+                });
+                // setThumbnail(thumbnailPath);
+            }
+            let newMsg = {
+                ...allMessages[0], // Copy properties from the first item
+                mediaType: isImg ? media?.mime : "docs",
+                is_media: true,
+                mediaUrl: isImg ? media?.path : media?.uri,
+                _id: allMessages[0]?._id + uuidv4(),
+                isLoading: true,
+                auth_user_id: userData?.id,
+                name: media?.name,
+            };
+            if (media?.mime == 'video/mp4') {
+                newMsg.thumbnailUrl = thumbnailPath;
+            }
+            allMessages.unshift(newMsg);
+        })
+
         setMessages(allMessages);
+
+
+
     };
 
-    const uploadMedia = (fileRes = [], fileName = '') => { // To upload media filed to S3 server
+
+    const uploadMedia = (fileRes = [], isImg = false) => { // To upload media filed to S3 server
+
+        const requestPromises = fileRes.map((resp) => {
+
+            let encodedData = encodeURIComponent(
+                `uploads/${userData?.id}/${paramData?._id}/${isImg ? resp?.path.split('/').pop() : resp?.uri.split('/').pop()}`,
+            ); //encoded media data for AWS-S3
+            console.log(encodedData, '<====encodedData');
+
+            return actions
+                .uploadMediaS3(
+                    encodedData,
+                    {},
+                    {
+                        // API to get presigned URL from S3
+                        code: appData?.profile?.code,
+                        currency: currencies?.primary_currency?.id,
+                        language: languages?.primary_language?.id,
+                    },
+                )
+        });
+
+
+
+        axios.all(requestPromises)
+            .then(axios.spread(async (...responses) => {
+                for (let i = 0; i < responses.length; i++) {
+                    const res = responses[i];
+                    const blobResp = await fetch(isImg ? fileRes[i]?.path : fileRes[i]?.uri);
+                    const blob = await blobResp.blob(); // converts media to blob
+
+                    var encodedData = encodeURIComponent(
+                        `uploads/${userData?.id}/${paramData?._id}/${isImg ? fileRes[i]?.path?.split('/').pop() : fileRes[i]?.uri?.split('/').pop()}`,
+                    ); //encoded media data for AWS-S3
+                    try {
+
+                        let data = await fetch(res?.url, {
+                            // API to upload presigned URL to AWS directly
+                            method: 'PUT',
+                            body: blob,
+                        })
+
+                        if (!!data) {
+                            console.log(data, '<===afterputS3');
+                            const hostname = data?.url.match(/^(https?:\/\/)([^:/\n]+)/)[0];
+                            let mediaUrl = hostname + `/${encodedData}`;
+                            onSend([
+                                {
+                                    mediaUrl: mediaUrl,
+                                    type: isImg ? fileRes[i]?.mime || fileRes[i]?.type : "docs",
+                                    isMedia: true,
+                                },
+                            ]); // to send media info in user chat
+                        }
+                    } catch (error) {
+
+                    }
+
+
+                }
+                // responses.forEach(async (res) => {
+                //   console.log(res, "asdfkajsdhkf")
+
+                // fileRes?.map(async (item) => {
+                //   console.log(item, "item>>>>>item")
+                //   const blobResp = await fetch(item.path);
+                //   const blob = await blobResp.blob(); // converts media to blob
+                //   console.log(blob, '<===blob');
+                //   fetch(res?.url, {
+                //     // API to upload presigned URL to AWS directly
+                //     method: 'PUT',
+                //     body: blob,
+                //   })
+                //     .then(data => {
+                //       console.log(data, '<===afterputS3');
+                //       const hostname = data?.url.match(/^(https?:\/\/)([^:/\n]+)/)[0];
+                //       let mediaUrl = hostname + `/${encodedData}`;
+
+                //       onSend([
+                //         {
+                //           mediaUrl: mediaUrl,
+                //           type: fileRes?.mime || fileRes?.type,
+                //           isMedia: true,
+                //         },
+                //       ]); // to send media info in user chat
+                //     })
+                //     .catch(err => {
+                //       showError('Something went wrong');
+                //     });
+
+                // })
+                // const response = await fetch(fileRes.path);
+                // const blob = await response.blob(); // converts media to blob
+                // console.log(blob, '<===blob');
+                // fetch(res?.url, {
+                //   // API to upload presigned URL to AWS directly
+                //   method: 'PUT',
+                //   body: blob,
+                // })
+                //   .then(data => {
+                //     console.log(data, '<===afterputS3');
+                //     const hostname = data?.url.match(/^(https?:\/\/)([^:/\n]+)/)[0];
+                //     let mediaUrl = hostname + `/${encodedData}`;
+
+                //     onSend([
+                //       {
+                //         mediaUrl: mediaUrl,
+                //         type: fileRes?.mime || fileRes?.type,
+                //         isMedia: true,
+                //       },
+                //     ]); // to send media info in user chat
+                //   })
+                //   .catch(err => {
+                //     showError('Something went wrong');
+                //   });
+
+                // });
+            }))
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        return
         console.log(fileRes, '<====fileRes');
         if (!isEmpty(fileRes)) {
             let encodedData = encodeURIComponent(
@@ -776,11 +905,13 @@ export default function ChatScreen({ route, navigation }) {
     };
 
     const onPressMedia = currentMessage => {
-        if (currentMessage?.mediaType == 'application/pdf') {
+        if (
+            currentMessage?.mediaType == 'application/pdf' ||
+            currentMessage?.mediaType == 'docs'
+        ) {
             Linking.openURL(currentMessage?.mediaUrl);
             return;
         }
-
         setisVisible(true);
         setCurrentMsg(currentMessage);
     };
@@ -825,13 +956,73 @@ export default function ChatScreen({ route, navigation }) {
                 }
             },
         ]);
+    }
+
+    let apiHeaders = {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+    }
+    const onRaiseIssue = () => {
+        console.log(!!paramData?.isRaiseIssue, '!!paramData?.isRaiseIssue')
+        if (!!paramData?.isRaiseIssue) {
+            Alert.alert('', `Are you sure you want to resolve an issue`, [
+                {
+                    text: strings.NO,
+                    onPress: () => console.log('Cancel Pressed'),
+                },
+                {
+                    text: strings.YES, onPress: () => {
+                        actions.raiseAnIssueInChat(`/${paramData?._id}`, {
+                            isRaiseIssue: 0
+                        }, apiHeaders).then((res) => {
+                            showSuccess("Request submitted successfully")
+                            actions.onSendAdminNotification({ user_id: userData?.id, order_number: getOrderNumber(paramData), vendor_id: productDetails?.vendor?.id }, apiHeaders).then((res) => {
+                            }).catch((err) => {
+                                console.log(err, "<<<err")
+                            })
+                        }).catch((err) => {
+                            showError('Something went wrong');
+                        })
+                        navigation.goBack()
+                    }
+                },
+            ]);
+
+            return
+        }
+        Alert.alert('', `Are you sure you want to raise an issue?`, [
+            {
+                text: strings.NO,
+                onPress: () => console.log('Cancel Pressed'),
+            },
+            {
+                text: strings.YES, onPress: () => {
+
+                    actions.raiseAnIssueInChat(`/${paramData?._id}`, {
+                        isRaiseIssue: 1
+                    }, apiHeaders).then((res) => {
+                        showSuccess("Request submitted successfully")
+                        actions.onSendAdminNotification({ user_id: userData?.id, order_number: getOrderNumber(paramData), vendor_id: productDetails?.vendor?.id }, apiHeaders).then((res) => {
+                            console.log(res, "fasdlkhfds")
+                        }).catch((err) => {
+                            console.log(err, "fasldkhlf")
+                        })
+                    }).catch((err) => {
+                        showError('Something went wrong');
+                    })
+                    navigation.goBack()
+                }
+            },
+        ]);
+
 
 
     }
 
     const renderSend = props => {
         return (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                 {/* <TouchableOpacity 
         style={{ marginLeft: 8 }}
         activeOpacity={0.7}
@@ -896,8 +1087,8 @@ export default function ChatScreen({ route, navigation }) {
                         marginLeft: 10,
                     }}
                     imgStyle={{
-                        height: moderateScale(20),
-                        width: moderateScale(20),
+                        height: moderateScale(25),
+                        width: moderateScale(25),
                     }}
                 />
                 <Send
@@ -914,6 +1105,8 @@ export default function ChatScreen({ route, navigation }) {
 
     return (
         <WrapperContainer >
+
+
             <View style={{
                 height: moderateScaleVertical(56),
                 backgroundColor: colors.white,
@@ -926,23 +1119,30 @@ export default function ChatScreen({ route, navigation }) {
                     flexDirection: "row",
                     alignItems: "center"
                 }}>
-                    <ButtonImage onPress={() => !!paramData?.isFromOrder ? navigation.navigate(navigationStrings.HOME) : navigation.goBack()} image={imagePath.ic_backarrow} />
-                    <FastImage 
-                    style={{
+
+                    <ButtonImage onPress={() => !!paramData?.isFromOrder ? navigation.navigate(navigationStrings.HOME) : !!paramData?.is_chat ? navigation.goBack() : navigation.goBack()} image={imagePath.ic_backarrow} />
+                    <FastImage style={{
                         height: moderateScale(28),
                         width: moderateScale(28),
                         borderRadius: moderateScale(14),
-                        marginLeft: moderateScale(8),
+                        marginLeft: moderateScale(8)
                     }} source={{
-                        uri: getImageUrl(productDetails?.vendor?.logo?.image_fit, productDetails?.vendor?.logo?.image_path, "200/200"),
+                        uri: getImageUrl(reciverData?.image?.image_fit, reciverData?.image?.image_path, "200/200"),
                         priority: FastImage.priority.high,
                         cache: FastImage.cacheControl.immutable,
                     }} />
                     <Text style={{
-                        marginLeft: moderateScale(4),
+                        marginLeft: moderateScale(8),
                         fontFamily: fontFamily?.bold,
                         fontSize: textScale(16)
-                    }}>{productDetails?.vendor?.name || ''}</Text>
+                    }}>{userData.vendor_id != productDetails?.vendor?.id ? productDetails?.vendor?.name || '' :
+                        (!isEmpty(borrower_data) && borrower_data.length >= 1) ? borrower_data.map((item, inx) => {
+                            console.log(item, 'itemmmm')
+                            if (item?.user_id != userData?.id) {
+                                return item.username
+                            }
+                        }) : isEmpty(roomUsers) ? productDetails?.vendor?.name : isEmpty(borrower_data) && roomUsers[0]?.username}</Text>
+
 
                 </View>
 
@@ -960,87 +1160,75 @@ export default function ChatScreen({ route, navigation }) {
                         fontFamily: fontFamily?.bold,
                         color: themeColors?.primary_color,
                         fontSize: textScale(10)
-                    }}>{"Drop Complete"}</Text>
+                    }}>{"Drop-off Complete"}</Text>
 
                 </TouchableOpacity>}
 
             </View>
-            <TouchableOpacity
-                onPress={() => navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { product_id: productDetails?.id })}
-                activeOpacity={0.1}
-                style={{
-                    height: moderateScaleVertical(76),
-                    borderTopWidth: 1,
-                    borderBottomWidth: 1,
-                    borderColor: colors.textGreyO,
-                    padding: moderateScale(16),
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+            <View style={{
+                flexDirection: "row",
+                height: moderateScaleVertical(76),
+                borderTopWidth: 1,
+                borderBottomWidth: 1,
+                borderColor: colors.textGreyO,
+                padding: moderateScale(16),
+                alignItems: "center",
+                justifyContent: "space-between",
+            }}>
 
-                }}>
 
-                <Text style={{
-                    fontFamily: fontFamily?.bold,
-                    fontSize: textScale(15),
+                <TouchableOpacity
+                    onPress={() => navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { product_id: productDetails?.id, isMyPost: true })}
+                    activeOpacity={0.1}
+                    style={{
+                        flex: 0.5
+                    }}>
+                    <Text style={{
+                        fontFamily: fontFamily?.bold,
+                        fontSize: textScale(15),
 
-                    textAlign: "center"
-                }}>{productDetails?.title}</Text>
-                <Text style={{
-                    fontFamily: fontFamily?.regular,
-                    fontSize: textScale(12),
-                    color: colors.textGreyP,
-                    opacity: 0.5,
-                    marginTop: moderateScaleVertical(4),
-                    flex: 0.9
-                }}>{productDetails?.address}</Text>
+                    }}>{productDetails?.title}</Text>
 
-                <ButtonImage onPress={openGoogleMap} image={imagePath.icLocation1} />
-            </TouchableOpacity>
 
-            <ImageBackground
-                source={isDarkMode ? imagePath.icBgDark : imagePath.icBgLight}
-                style={{ flex: 1 }}>
-                <GiftedChat
-                    // messagesContainerStyle={{ backgroundColor: isDarkMode?"#171717": "#f6f6f6"}}
-                    messages={messages}
-                    onSend={(messages) => onSend(messages)}
-                    user={{ _id: userData?.id }}
-                    renderMessage={renderMessage}
-                    isKeyboardInternallyHandled={true}
-                    extraData={messages}
-                    // isTyping={true}
-                    // renderActions={props => {
-                    //   return (
-                    //     <TouchableOpacity
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={onRaiseIssue}
+                    activeOpacity={0.1}
+                    style={{
+                        flex: 0.5
+                    }}>
+                    <Text style={{
+                        fontFamily: fontFamily?.bold,
+                        fontSize: textScale(10),
+                        textAlign: "right",
+                        color: !!paramData?.isRaiseIssue ? colors.green : colors.redB
+                    }}>{!!paramData?.isRaiseIssue ? "Resolved?" : "Raise an issue"}</Text>
+                </TouchableOpacity>
+            </View>
 
-                    //       style={{
-                    //         marginHorizontal: 10,
-                    //         // alignSelf: 'center',
-                    //         // height: '100%',
-                    //         alignItems: 'center',
-                    //         justifyContent: 'center',
-                    //         marginBottom: 10
-                    //       }}>
-                    //       <Text>Bye</Text>
-                    //     </TouchableOpacity>
-                    //   );
-                    // }}
-                    renderInputToolbar={(props) => {
-                        return (
-                            <InputToolbar
-                                containerStyle={{
-                                    backgroundColor: isDarkMode ? '#171717' : '#f6f6f6',
-                                    paddingTop: 0,
-                                }}
-                                {...props}
-                            />
-                        );
-                    }}
-                    textInputStyle={styles.textInputStyle}
-                    renderSend={renderSend}
-                />
-            </ImageBackground>
+            <GiftedChat
+                messages={messages}
+                bottomOffset={insets.bottom + 2}
+                onSend={(messages) => onSend(messages)}
+                user={{ _id: userData?.id }}
+                renderMessage={renderMessage}
+                isKeyboardInternallyHandled={true}
+                extraData={messages}
+                placeholder={"Write here..."}
+                renderInputToolbar={(props) => {
+                    return (
+                        <InputToolbar
+                            containerStyle={{
+                                backgroundColor: colors.white,
+                                paddingTop: 0,
+                            }}
+                            {...props}
+                        />
+                    );
+                }}
+                textInputStyle={styles.textInputStyle}
+                renderSend={renderSend}
+            />
 
             <ReactModal
                 isVisible={showParticipant}
@@ -1143,10 +1331,13 @@ export default function ChatScreen({ route, navigation }) {
                 ]}
                 cancelButtonIndex={3}
                 destructiveButtonIndex={3}
+
                 onPress={index => cameraHandle(index)}
             />
             <Modal
-                style={{}}
+                style={{
+                    zIndex: 1
+                }}
                 animationType="slide"
                 transparent={false}
                 visible={isVisible}
@@ -1157,19 +1348,20 @@ export default function ChatScreen({ route, navigation }) {
                     style={{
                         flex: 1,
                         backgroundColor: colors.black,
+                        paddingTop: Platform.OS == "ios" ? StatusBarHeight : 0
                     }}>
-                    <View
-                        style={{
-                            margin: moderateScale(20),
-                        }}>
-                        <ButtonImage
-                            onPress={() => setisVisible(false)}
-                            image={imagePath.backArrow}
-                            imgStyle={{
-                                tintColor: colors.white,
-                            }}
-                        />
-                    </View>
+
+                    <ButtonImage
+                        onPress={() => setisVisible(false)}
+                        image={imagePath.backArrow}
+                        imgStyle={{
+                            tintColor: colors.white,
+                        }}
+                        btnStyle={{
+                            marginLeft: moderateScale(16)
+                        }}
+                    />
+
 
                     <View
                         style={{
@@ -1180,7 +1372,8 @@ export default function ChatScreen({ route, navigation }) {
                         ) : currentMsg?.mediaType === 'video/mp4' ? (
                             <VideoPlayer
                                 pause={false}
-                                source={{ uri: "file:///data/user/0/com.codebrew.royoorder/cache/react-native-image-crop-picker/uploads_2_6499607c3cd36541c8dd8591_uploads_2_649d84b4d597da4460346aaa_video (2160p).mp4" }} containerStyle={{
+                                isModalPlayer={true}
+                                source={{ uri: currentMsg?.mediaUrl }} containerStyle={{
                                     position: 'absolute',
                                     top: 0,
                                     left: 0,
@@ -1202,6 +1395,7 @@ export default function ChatScreen({ route, navigation }) {
                     </View>
                 </View>
             </Modal>
+
         </WrapperContainer>
     );
 }
@@ -1265,7 +1459,6 @@ const stylesFun = ({ fontFamily, isDarkMode }) => {
         textInputStyle: {
             backgroundColor: isDarkMode ? '#2c2c2e' : '#ffffff',
             paddingTop: Platform.OS == 'ios' ? 10 : undefined,
-            borderRadius: moderateScale(20),
             paddingHorizontal: moderateScale(20),
             textAlignVertical: 'center',
             fontFamily: fontFamily.regular,
@@ -1276,3 +1469,4 @@ const stylesFun = ({ fontFamily, isDarkMode }) => {
     });
     return styles;
 };
+

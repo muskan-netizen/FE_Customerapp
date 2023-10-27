@@ -1,45 +1,73 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import { useSelector } from 'react-redux';
 import imagePath from '../../constants/imagePath';
 import colors from '../../styles/colors';
-import {moderateScale} from '../../styles/responsiveSize';
+import {
+  moderateScaleVertical
+} from '../../styles/responsiveSize';
+import { getDaysFormat } from '../../utils/commonFunction';
 import stylesFunc from './styles';
 
-export default function CardViewNotification({data = {}, conatinerStyle}) {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+
+export default function CardViewNotification({ data = {}, conatinerStyle = {}, indx = 0, onDeleteNotification = () => { } }) {
+  const { appStyle } = useSelector(state => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({ fontFamily });
 
-  const styles = stylesFunc({fontFamily});
-  return (
-    <View style={[styles.container, conatinerStyle]}>
-      <View style={{flex: 0.15, justifyContent: 'center'}}>
-        <Image source={imagePath.notif} />
+
+
+  const renderItem = ({ item, index }) => {
+    return <View style={{ flexDirection: 'row', backgroundColor: colors.white }}>
+      <View style={styles.cardView}>
+        <Image source={imagePath.ic_activeBell} />
       </View>
       <View
         style={{
-          flex: data && data.status ? 0.7 : 0.85,
+          flex: 0.85,
           justifyContent: 'center',
         }}>
         <Text numberOfLines={1} style={styles.message}>
-          {data.message}
+          {item?.title}
         </Text>
-        <Text style={styles.time}>{data.time}</Text>
+        <Text style={styles.descText}>{item?.message}</Text>
       </View>
-      {data && data.status ? (
-        <View style={{flex: 0.15, justifyContent: 'center'}}>
-          <View
-            style={{
-              padding: 5,
-              alignItems: 'center',
-              backgroundColor: colors.yellowB,
-              borderRadius: moderateScale(5),
-            }}>
-            <Text style={styles.status}>{data.status}</Text>
+    </View>
+  }
+
+  return (
+    <View style={[styles.container, conatinerStyle]}>
+      <Text style={{ ...styles.time, marginBottom: moderateScaleVertical(10) }}>
+        {getDaysFormat(data?.date)}
+      </Text>
+      <SwipeListView
+        data={data?.data}
+        renderItem={renderItem}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        keyExtractor={(item, index) => String(index)}
+        renderHiddenItem={(item, rowMap) => {
+
+          return <View style={styles.rowBack}>
+            <TouchableOpacity
+              onPress={() => {
+                onDeleteNotification(data?.data[item.index])
+              }}
+              style={[styles.backRightBtn, styles.backRightBtnRight]}
+            >
+              <Image source={imagePath.delete} />
+            </TouchableOpacity>
           </View>
-        </View>
-      ) : null}
+        }}
+        disableRightSwipe
+        rightOpenValue={-150}
+        previewRowKey={indx === 0 ? '0' : ''}
+        previewOpenDelay={3000}
+        keyboardShouldPersistTaps="always"
+        showsVerticalScrollIndicator={false}
+
+      />
     </View>
   );
 }

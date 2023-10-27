@@ -63,10 +63,9 @@ export default function Settings({ route, navigation }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
 
-  console.log(languages, "currenciescurrenciescurrencies", currencies)
 
 
-const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0)
 
   const [state, setState] = useState({
     isLoading: false,
@@ -106,8 +105,6 @@ const [count, setCount] = useState(0)
   const styles = stylesFunc({ fontFamily, themeColors });
   const commonStyles = commonStylesFunc({ fontFamily });
 
-
-  console.log(appLanguages, "appLanguagesappLanguagesappLanguages")
 
   useFocusEffect(
     React.useCallback(() => {
@@ -165,7 +162,7 @@ const [count, setCount] = useState(0)
 
   //Update language
   const updateLanguage = (item) => {
-    console.log(item, 'itemmmm');
+
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
     // console.log(data, "setLang")
     if (data.sort_code !== languages.primary_language.sort_code) {
@@ -370,14 +367,14 @@ const [count, setCount] = useState(0)
   };
 
 
-  const onDeveloperMode = () =>{
-    if(count == 5){
+  const onDeveloperMode = () => {
+    if (count == 5) {
       navigation.navigate(navigationStrings.DEVELOPER_MODE)
       return
     }
-    setCount(prev=> prev+1)
+    setCount(prev => prev + 1)
   }
-  console.log("count incresase",count)
+  console.log("count incresase", count)
 
   return (
     <WrapperContainer
@@ -796,7 +793,7 @@ const [count, setCount] = useState(0)
             alignItems: 'center',
           }}>
           <Text
-          onPress={onDeveloperMode}
+            onPress={onDeveloperMode}
             style={{
               ...commonStyles.regularFont11,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,

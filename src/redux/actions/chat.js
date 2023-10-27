@@ -4,6 +4,8 @@ import {
   GET_ALL_MESSAGES,
   GET_PRODUCT_RELATED_TO_CHAT,
   P2P_USER_TO_USER_CHAT,
+  RAISE_AN_ISSUE_RELATED_TO_CHAT,
+  SEND_ADMIN_NOTIFICATION,
   SEND_MESSAGE,
   SEND_NOTIFCATION,
   START_CHAT,
@@ -158,4 +160,22 @@ export function uploadMediaS3(uri = '', data = {}, headers = {}) {
 
 export function putMediaS3(uri = '', data = {}) {
   return apiPut(uri, data);
+}
+export function onSendAdminNotification(data = {}, headers = {}) {
+  return apiPost(SEND_ADMIN_NOTIFICATION, data, headers);
+}
+
+export function raiseAnIssueInChat(url = '', data = {}, headers = {}) {
+  return new Promise(async (resolve, reject) => {
+    const getAppData = await getItem('appData');
+    const socketUrl = getAppData?.appData?.profile?.socket_url;
+
+    apiPut(socketUrl + RAISE_AN_ISSUE_RELATED_TO_CHAT + url, data, headers)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }

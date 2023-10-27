@@ -128,7 +128,6 @@ export default function TaxiHomeDashbord({
     myCategories = !isEmpty(appMainData?.categories) && [{ data: appMainData?.categories || [] }]
   }
 
-  console.log("myCategoriesmyCategories", myCategories)
 
   useEffect(() => {
     if (!!appMainData?.categories) {
@@ -240,7 +239,7 @@ export default function TaxiHomeDashbord({
     if (!!userData?.auth_token) {
       getAllAddress();
     }
-  }, [del ]);
+  }, [del]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -249,7 +248,7 @@ export default function TaxiHomeDashbord({
       }
     }, [])
   )
-  
+
   const getAllAddress = () => {
     actions
       .getAddress(
@@ -622,6 +621,8 @@ export default function TaxiHomeDashbord({
     }
   }
 
+
+
   const onDateSet = (date) => {
     updateState({
       isVisible: false,
@@ -632,6 +633,7 @@ export default function TaxiHomeDashbord({
       goToAddress({ scheduleDate: date })
     }, 2000);
   }
+
 
 
   return (
@@ -1014,7 +1016,7 @@ export default function TaxiHomeDashbord({
                   </Marker.Animated>
                 );
               })}
-             {getBundleId() == appIds.pave && <Marker
+              {getBundleId() == appIds.pave && <Marker
                 coordinate={{
                   latitude: !!curLatLong?.latitude
                     ? parseFloat(curLatLong?.latitude)
