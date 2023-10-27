@@ -264,7 +264,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
   const homeAllFilters = () => {
     let homeFilter = [
       { id: 1, type: "All" },
-      { id: 10, type: "Rental" },
+      { id: 10, type: "Rent" },
       { id: 13, type: "Sell" },
     ];
 

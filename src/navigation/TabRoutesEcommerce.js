@@ -16,8 +16,6 @@ import CartStack from './CartStack';
 import CategoryStack from './CategoryStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-
-
 import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
 import P2pChatStack from './P2pChatStack';
@@ -33,6 +31,7 @@ export default function TabRoutesEcommerce(props) {
   const { appMainData, dineInType } = useSelector((state) => state?.home) || {};
   const { appStyle, appData, redirectedFrom, themeColors } = useSelector((state) => state?.initBoot || {});
   const { cartItemCount } = useSelector((state) => state?.cart || {});
+  const { isTabBarVisible } = useSelector((state) => state?.settings || {});
 
 
 
@@ -128,16 +127,12 @@ export default function TabRoutesEcommerce(props) {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
+          display: isTabBarVisible ? "flex" : "none"
         },
       }}
 
       // tabBar={getCustomTabBar}
-      initialRouteName={
-        // redirectedFrom == 'cart'
-        //   ? navigationStrings.CART
-        //   :
-        navigationStrings.HOMESTACK
-      }
+      initialRouteName={navigationStrings.HOMESTACK}
     >
       <Tab.Screen
         component={HomeStack}

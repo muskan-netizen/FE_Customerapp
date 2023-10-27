@@ -96,6 +96,13 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     };
 
     useEffect(() => {
+        actions.setVisiblityOfTabBar(false);
+        return () => {
+            actions.setVisiblityOfTabBar(true);
+        };
+    }, []);
+
+    useEffect(() => {
         getP2pProductsByCategoryId();
         if (!!userData?.auth_token) {
             getListOfAvailableAttributes();
@@ -123,9 +130,9 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const getP2pProductsByCategoryId = (pageNo = 1, filterAry = [], limit = 7) => {
         actions
             .getProductByP2pCategoryId(
-                `/${paramData?.id}?page=${pageNo}&limit=${10}&product_list=true&type=p2p`,
+                `/${paramData?.id}?page=${pageNo}&limit=${limit}&product_list=true&type=p2p`,
                 {
-                    attributes: [],
+                    attributes: filterAry,
                     latitude: location?.latitude,
                     longitude: location?.longitude
                 },
@@ -308,9 +315,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         setIsAttributeFilterModal(false);
         setIsLoading(true);
         getP2pProductsByCategoryId();
-        updateState({
-            isShowFilter: false
-        })
+
     };
 
     const onClearAttributeFilter = () => {
@@ -335,9 +340,25 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     };
 
     const onShowHideFilter = () => {
-        updateState({ isShowFilter: !isShowFilter });
+        updateState({
+            isShowFilter: !isShowFilter,
+            selectedSortFilter: null,
+            minimumPrice: 0,
+            maximumPrice: 50000,
+        });
         setfilterType("filters")
     };
+
+    const checkIfAttributeSelected = () => {
+        let hasValuesKey = false;
+        for (let i = 0; i < attributeInfo.length; i++) {
+            if ('values' in attributeInfo[i]) {
+                hasValuesKey = true;
+                break; // Exit the loop once a match is found
+            }
+        }
+        return hasValuesKey
+    }
 
 
     const onEndReached = () => {
@@ -553,6 +574,8 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         [attributeInfo],
     );
 
+
+
     const renderAttributeOptions = useCallback(
         ({ item, index }) => {
 
@@ -606,57 +629,13 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         [attributeInfo],
     );
 
+
     const ListHeaderComponent = () => <View style={{
         marginVertical: moderateScaleVertical(12),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
     }}>
-        <TouchableOpacity
-            onPress={() => {
-                setfilterType("filters")
-                updateState({
-                    isShowFilter: false
-                })
-            }}
-            style={{
-                ...styles.filterBtns,
-                borderBottomWidth: filterType == "filters" ? 2 : 0,
-
-            }}>
-            <Image source={imagePath.filter} style={{
-                ...styles.filterBtnImg,
-                tintColor: filterType == "filters" ? themeColors?.primary_color : colors.black,
-
-            }} />
-            <Text style={{
-                ...styles.filterBtnTxt,
-                color: filterType == "filters" ? themeColors?.primary_color : colors.black,
-
-            }}>Choose By</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-            onPress={() => {
-                setfilterType("sortBy")
-                updateState({
-                    isShowFilter: true
-                })
-            }}
-            style={{
-                ...styles.filterBtns,
-                borderBottomWidth: filterType == "sortBy" ? 2 : 0,
-
-            }}>
-            <Image source={imagePath.sortSelected} style={{
-                height: moderateScale(14), width: moderateScale(14),
-                tintColor: filterType == "sortBy" ? themeColors?.primary_color : colors.black,
-            }} />
-            <Text style={{
-                ...styles.filterBtnTxt,
-                color: filterType == "sortBy" ? themeColors?.primary_color : colors.black,
-
-            }}>Sort By</Text>
-        </TouchableOpacity>
 
     </View>
 
@@ -669,6 +648,18 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                 onPressRight={onFilterPress}
                 isRight
                 rightIcon={imagePath.filter}
+                isRight2
+                rightIcon2={imagePath.ic_sort_az}
+                onPressRight2={() => updateState({
+                    isShowFilter: true
+                })}
+                rightImgStyle2={{
+                    tintColor: selectedSortFilter ? themeColors?.primary_color : null
+                }}
+                rightImgStyle={{
+                    tintColor: checkIfAttributeSelected() ? themeColors?.primary_color : null
+                }}
+
             />
 
             <View
@@ -755,9 +746,6 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                         <TopHeader
                             onPressLeft={() => {
                                 setIsAttributeFilterModal(false)
-                                updateState({
-                                    isShowFilter: false
-                                })
                             }}
                             onPressRight={onResetAllFilter}
                         />
@@ -779,9 +767,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                                 }}
                                             />
                                         )}
-                                        ListHeaderComponent={() => <View style={{
-                                            height: moderateScaleVertical(20)
-                                        }} />}
+
                                         renderItem={renderAttributeOptions}
                                         ListEmptyComponent={() => <View><Text style={{
                                             fontFamily: fontFamily?.regular,

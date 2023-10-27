@@ -16,7 +16,7 @@ import strings from '../../../constants/lang'
 import navigationStrings from '../../../navigation/navigationStrings'
 import actions from '../../../redux/actions'
 import colors from '../../../styles/colors'
-import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize'
+import { moderateScale, moderateScaleVertical, textScale, width } from '../../../styles/responsiveSize'
 import { MyDarkTheme } from '../../../styles/theme'
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction'
 import { getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions'
@@ -25,6 +25,7 @@ import stylesFunc from './styles'
 import imagePath from '../../../constants/imagePath'
 import LeftRightTextP2p from '../../../Components/LeftRightTextP2p'
 import { ScrollView } from 'react-native'
+import RenderHTML from 'react-native-render-html'
 
 
 
@@ -430,14 +431,25 @@ export default function P2pOrderDetail({ route, navigation }) {
                                     <Text style={{ fontFamily: fontFamily.bold }}>
                                         {productInfo?.translation?.title}
                                     </Text>
-                                    <HTMLView
+                                    <View style={{
+                                        width: "95%"
+                                    }}>
+                                        <RenderHTML
+                                            source={{
+                                                html: productInfo?.translation?.body_html
+                                                    ? productInfo?.translation?.body_html
+                                                    : ''
+                                            }}
+                                            tagsStyles={{
+                                                p: {
+                                                    color: isDarkMode ? colors.white : colors.black,
+                                                    textAlign: 'left',
 
-                                        value={
-                                            productInfo?.translation?.body_html
-                                                ? productInfo?.translation?.body_html
-                                                : ''
-                                        }
-                                    />
+                                                },
+                                            }}
+                                        />
+
+                                    </View>
                                 </View>
                             </View>
 

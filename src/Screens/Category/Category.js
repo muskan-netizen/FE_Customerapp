@@ -176,15 +176,22 @@ export default function Category({ navigation, route }) {
 
   const _renderItem = useCallback(({ item }) => {
     return (
-      <BrandCard3
-        data={item}
-        onPress={() => onPressCategory(item)}
-        imageHeight={80}
-        imageWidth={80}
-        containerStyle={{
-          width: (width - moderateScale(64)) / 3
-        }}
-      />
+      <View style={{
+        flexBasis: "33%",
+
+        alignItems: "center"
+      }}>
+        <BrandCard3
+          data={item}
+          onPress={() => onPressCategory(item)}
+          imageHeight={80}
+          imageWidth={80}
+          containerStyle={{
+            width: "90%",
+          }}
+        />
+      </View>
+
     )
   }, [!!allCategories && allCategories?.data || []])
 
@@ -210,15 +217,12 @@ export default function Category({ navigation, route }) {
           ListHeaderComponent={<View style={{ height: 10 }} />}
           keyExtractor={(item, index) => String(index)}
           contentContainerStyle={{ flexGrow: 1 }}
-          columnWrapperStyle={{
-            justifyContent: "space-between"
-          }}
+
           ItemSeparatorComponent={() => (
             <View style={{ height: moderateScaleVertical(16) }} />
           )}
           numColumns={3}
           renderItem={_renderItem}
-
           initialNumToRender={5}
           maxToRenderPerBatch={10}
           windowSize={10}

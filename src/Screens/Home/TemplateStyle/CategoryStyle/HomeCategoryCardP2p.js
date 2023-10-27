@@ -43,7 +43,6 @@ const HomeCategoryCardP2p = ({
             activeOpacity={0.9}
             style={{
                 flexBasis: "25%",
-
             }}
         >
             <View

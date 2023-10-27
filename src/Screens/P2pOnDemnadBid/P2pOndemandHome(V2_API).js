@@ -437,7 +437,7 @@ export default function Home({ route, navigation }) {
         .homeDataV2({ ...apiData, action: 2 }, apiHeader)
         .then(async res => {
           console.log('Home data++++++', res);
-          actions.onRefreshHome('N');
+
           updateState({ searchDataLoader: false });
           if (
             appData?.profile?.preferences?.is_hyperlocal &&

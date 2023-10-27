@@ -26,7 +26,13 @@ const OoryksHeader = ({
   isCustomLeftPress = false, rightText = '',
   isRightText = false,
   rightTxtStyle = {},
-  disabled = false
+  disabled = false,
+  rightIcon2 = imagePath.icSearchNew,
+  isRight2 = false,
+  isRightText2 = false,
+  onPressRight2 = () => { },
+  rightImgStyle = {},
+  rightImgStyle2 = {}
 }) => {
   const { appStyle, themeToggle, themeColor } = useSelector((state) => state?.initBoot || {});
   const darkthemeusingDevice = useDarkMode();
@@ -46,10 +52,28 @@ const OoryksHeader = ({
         }} />
         <Text style={{ ...styles.titleStyle, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, ...titleStyle }}>{leftTitle}</Text>
       </View>
-      {isRight ? <View >
-        {!isRightText ? <ButtonImage image={rightIcon} onPress={onPressRight} /> : <TouchableOpacity disabled={disabled} onPress={onPressRight}><Text style={{ ...styles.rightTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.redB, ...rightTxtStyle }}>{rightText}</Text></TouchableOpacity>}
+      <View style={{
+        flexDirection: "row",
+        alignItems: "center"
+      }}>
+        {isRight ? <View >
+          {!isRightText ? <ButtonImage image={rightIcon} onPress={onPressRight} imgStyle={{
+            ...rightImgStyle
+          }} /> : <TouchableOpacity disabled={disabled} onPress={onPressRight}><Text style={{ ...styles.rightTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.redB, ...rightTxtStyle }}>{rightText}</Text></TouchableOpacity>}
+        </View>
+
+          : <React.Fragment />}
+        {isRight2 ? <View style={{
+          marginLeft: moderateScale(12)
+        }} >
+          {!isRightText2 ? <ButtonImage image={rightIcon2} onPress={onPressRight2} imgStyle={{
+            height: moderateScale(24),
+            width: moderateScale(24),
+            ...rightImgStyle2
+          }} /> : <TouchableOpacity disabled={disabled} onPress={onPressRight2}><Text style={{ ...styles.rightTxt, color: isDarkMode ? MyDarkTheme.colors.text : colors.redB, ...rightTxtStyle }}>{rightText}</Text></TouchableOpacity>}
+        </View>
+          : <React.Fragment />}
       </View>
-        : <React.Fragment />}
     </View>
   );
 };

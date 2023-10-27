@@ -22,9 +22,9 @@ import {
   loaderOne
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import strings from '../../../constants/lang';
-import { MyDarkTheme } from '../../../styles/theme';
 import actions from '../../../redux/actions';
 import { hitSlopProp } from '../../../styles/commonStyles';
+import { MyDarkTheme } from '../../../styles/theme';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -224,8 +224,8 @@ export default function DashBoardHeaderEcommerce({
             onPress={onPressWishList}>
             <Image
               style={{
-                height:moderateScale(20),
-                width:moderateScale(20),
+                height: moderateScale(20),
+                width: moderateScale(20),
                 tintColor: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.greyD,
@@ -234,7 +234,7 @@ export default function DashBoardHeaderEcommerce({
               source={imagePath.wishlist2}
             />
           </TouchableOpacity>
-          
+
           {/*  */}
 
 
@@ -270,8 +270,8 @@ export default function DashBoardHeaderEcommerce({
             ) : null}
             <Image
               style={{
-                height:moderateScale(20),
-                width:moderateScale(20),
+                height: moderateScale(20),
+                width: moderateScale(20),
                 tintColor: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.greyD,
@@ -287,13 +287,13 @@ export default function DashBoardHeaderEcommerce({
               navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
             }>
             <Image
-        style={{
-          height:moderateScale(20),
-          width:moderateScale(20),
-          tintColor: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.greyD,
-        }}
+              style={{
+                height: moderateScale(20),
+                width: moderateScale(20),
+                tintColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.greyD,
+              }}
               source={imagePath.icEcomSearch}
             />
           </TouchableOpacity>

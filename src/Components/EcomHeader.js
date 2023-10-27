@@ -25,7 +25,7 @@ const Ecomheader = ({
 
     const userData = useSelector((state) => state?.auth?.userData || {});
 
-    console.log("userDatauserData",userData)
+
 
     return (
         <LinearGradient
@@ -33,7 +33,7 @@ const Ecomheader = ({
                 themeColors.primary_color.substr(1),
                 defaultBottomColor)]}
         >
-      
+
             <SafeAreaView>
                 <View style={{
                     ...styles.container,

@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
-import React, {useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, isEmpty } from 'lodash';
+import React, { useRef, useState } from 'react';
 import {
   Alert,
   Image,
@@ -11,17 +11,17 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dynamic';
-import {getBundleId} from 'react-native-device-info';
+import { useDarkMode } from 'react-native-dynamic';
+import { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import AddressBottomSheet from '../../Components/AddressBottomSheet';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -40,25 +40,25 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {cameraHandler} from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { cameraHandler } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {androidCameraPermission} from '../../utils/permissions';
+import { androidCameraPermission } from '../../utils/permissions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 
 var addtionSelectedImageIndex = null;
 
-import {enableFreeze} from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 enableFreeze(true);
 
-export default function MyProfile3({route, navigation}) {
+export default function MyProfile3({ route, navigation }) {
   const darkthemeusingDevice = useDarkMode();
   const {
     languages,
@@ -70,35 +70,34 @@ export default function MyProfile3({route, navigation}) {
     currencies,
   } = useSelector(state => state?.initBoot);
   const { userData } = useSelector(state => state?.auth);
-  
 
-  console.log("userDatauserDatauserData+++",userData)
+
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   const [state, setState] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
     tabBarData: [
-      {title: strings.BASIC_INFO, isActive: true},
-      {title: strings.CHANGE_PASS, isActive: false},
-      {title: strings.ADDRESS, isActive: false},
+      { title: strings.BASIC_INFO, isActive: true },
+      { title: strings.CHANGE_PASS, isActive: false },
+      { title: strings.ADDRESS, isActive: false },
     ],
     selectedTab: strings.BASIC_INFO,
     callingCode: userData?.dial_code
       ? userData?.dial_code
       : appData?.profile?.country?.phonecode
-      ? appData?.profile?.country?.phonecode
-      : '91',
+        ? appData?.profile?.country?.phonecode
+        : '91',
     cca2: userData?.cca2
       ? userData?.cca2
       : appData?.profile?.country?.code
-      ? appData?.profile?.country?.code
-      : 'IN',
+        ? appData?.profile?.country?.code
+        : 'IN',
     name: userData?.name,
     email: userData?.email,
     password: '',
@@ -155,15 +154,15 @@ export default function MyProfile3({route, navigation}) {
     addtionalPdfs,
   } = state;
 
-  const updateState = data => setState(state => ({...state, ...data}));
+  const updateState = data => setState(state => ({ ...state, ...data }));
 
   const profileAddress = useSelector(state => state?.home?.profileAddress);
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
+    navigation.navigate(screenName, { data });
   };
 
   const openCloseMapAddress = type => {
-    updateState({selectViaMap: type == 1 ? true : false});
+    updateState({ selectViaMap: type == 1 ? true : false });
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -188,8 +187,8 @@ export default function MyProfile3({route, navigation}) {
         },
       )
       .then(res => {
-        console.log("get user profile",res)
-        actions.updateProfile({...userData, ...res?.data});
+        console.log("get user profile", res)
+        actions.updateProfile({ ...userData, ...res?.data });
       })
       .catch(errorMethod);
   };
@@ -245,14 +244,14 @@ export default function MyProfile3({route, navigation}) {
 
   //select tje country
   const _onCountryChange = data => {
-    console.log("_onCountryChange_onCountryChange",data)
-    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    console.log("_onCountryChange_onCountryChange", data)
+    updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
 
   // on change text
   const _onChangeText = key => val => {
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //this function use for save user info
@@ -279,8 +278,8 @@ export default function MyProfile3({route, navigation}) {
       showError(strings.ENTER_YOUR_EMAIL);
       return false;
     }
- 
-    if (!validator.email(email)) { 
+
+    if (!validator.email(email)) {
       showError(strings.PLEASE_ENTER_VALID_EMAIL);
       return false;
     }
@@ -298,7 +297,7 @@ export default function MyProfile3({route, navigation}) {
     if (!isValid) {
       return;
     }
- 
+
 
     if (!!userData?.auth_token) {
       // const checkValid = isValidDataOfBasicInfo();
@@ -338,11 +337,11 @@ export default function MyProfile3({route, navigation}) {
               !!i.fileData
                 ? i?.file_type == 'Image'
                   ? {
-                      uri: i.fileData.path,
-                      name: i.fileData.filename,
-                      filename: i.fileData.filename,
-                      type: i.fileData.mime,
-                    }
+                    uri: i.fileData.path,
+                    name: i.fileData.filename,
+                    filename: i.fileData.filename,
+                    type: i.fileData.mime,
+                  }
                   : i?.fileData
                 : i?.user_document?.file_name,
             );
@@ -362,7 +361,7 @@ export default function MyProfile3({route, navigation}) {
         return;
       }
 
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       actions
         .profileBasicInfo(formdata, {
           language: languages?.primary_language?.id,
@@ -383,12 +382,12 @@ export default function MyProfile3({route, navigation}) {
             ['is_email_verified']: res.data.is_email_verified,
             ['is_phone_verified']: res.data.is_phone_verified,
           };
-          console.log("obj+++++++++",obj)
-          actions.updateProfile({...userData, ...obj});
-          updateState({isLoading: false});
+          console.log("obj+++++++++", obj)
+          actions.updateProfile({ ...userData, ...obj });
+          updateState({ isLoading: false });
           // navigation.goBack()
           showSuccess(res.message);
-        
+
           // updateState({name: '', email: '', phoneNumber: ''});
         })
         .catch(errorMethod);
@@ -441,7 +440,7 @@ export default function MyProfile3({route, navigation}) {
           showSuccess(res.message);
         })
         .catch(error => {
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           showError(error?.message || error?.error);
         });
     } else if (type == 'updateAddress') {
@@ -469,7 +468,7 @@ export default function MyProfile3({route, navigation}) {
   //this function use for chnage password
   const isValidDataOfChangePass = () => {
     const error = validations({
-      currentpassword:currentpassword,
+      currentpassword: currentpassword,
       newPassword: newPassword,
       confirmPassword: confirmPassword,
     });
@@ -491,14 +490,14 @@ export default function MyProfile3({route, navigation}) {
         new_password: newPassword,
         confirm_password: confirmPassword,
       };
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       actions
         .changePassword(data, {
           code: appData?.profile?.code,
         })
         .then(res => {
           // showSuccess(res.message)
-          updateState({isLoading: false});
+          updateState({ isLoading: false });
           showSuccess(res.message);
           updateState({
             currentpassword: '',
@@ -506,7 +505,7 @@ export default function MyProfile3({route, navigation}) {
             confirmPassword: '',
           });
         })
-        .catch(err => {showError(err?.error || err?.message)});
+        .catch(err => { showError(err?.error || err?.message) });
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
@@ -514,7 +513,7 @@ export default function MyProfile3({route, navigation}) {
 
   //Select Primary Address
   const setPrimaryLocation = item => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     let data = {};
     let query = `/${item?.id}`;
     actions
@@ -541,7 +540,7 @@ export default function MyProfile3({route, navigation}) {
         showSuccess(res.message);
       })
       .catch(error => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -574,9 +573,9 @@ export default function MyProfile3({route, navigation}) {
               data[addtionSelectedImageIndex].value =
                 res?.sourceURL || res?.path;
               data[addtionSelectedImageIndex].fileData = res;
-              updateState({addtionalImages: data});
+              updateState({ addtionalImages: data });
             } else if (res?.data) {
-              updateState({isLoading: true});
+              updateState({ isLoading: true });
               let data = {
                 type: 'jpg',
                 avatar: res?.data,
@@ -597,19 +596,19 @@ export default function MyProfile3({route, navigation}) {
                   const image = {
                     source,
                   };
-                  actions.updateProfile({...userData, ...image});
-                  updateState({isLoading: false});
+                  actions.updateProfile({ ...userData, ...image });
+                  updateState({ isLoading: false });
                   showSuccess(res.message);
                 })
                 .catch(err => {
                   console.log(err, 'err>>.inAPI');
-                  updateState({isLoading: false});
+                  updateState({ isLoading: false });
                 });
             }
           })
           .catch(err => {
             console.log(err, 'err>>.cameraPicker');
-            updateState({isLoading: false});
+            updateState({ isLoading: false });
           });
       }
     }
@@ -617,7 +616,7 @@ export default function MyProfile3({route, navigation}) {
 
   //get All address
   const getAllAddress = () => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .getAddress(
         {},
@@ -627,7 +626,7 @@ export default function MyProfile3({route, navigation}) {
       )
       .then(res => {
         actions.saveAllUserAddress(res.data);
-        updateState({address: res.data, isLoading: false, indicator: false});
+        updateState({ address: res.data, isLoading: false, indicator: false });
       })
       .catch(errorMethod);
   };
@@ -649,12 +648,12 @@ export default function MyProfile3({route, navigation}) {
         text: strings.NO,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.YES, onPress: () => onPressDelete(item)},
+      { text: strings.YES, onPress: () => onPressDelete(item) },
     ]);
   };
 
   const onPressDelete = item => {
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     let data = {};
     let query = `/${item?.id}`;
 
@@ -677,7 +676,7 @@ export default function MyProfile3({route, navigation}) {
         showSuccess(res.message);
       })
       .catch(error => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         showError(error?.message || error?.error);
       });
   };
@@ -688,7 +687,7 @@ export default function MyProfile3({route, navigation}) {
 
   const onModalClose = () => {
     setModalVisible(false);
-    updateState({selectViaMap: false});
+    updateState({ selectViaMap: false });
   };
 
   const handleDynamicTxtInput = (text, index, type) => {
@@ -697,7 +696,7 @@ export default function MyProfile3({route, navigation}) {
     data[index].id = type?.id;
     data[index].file_type = type?.file_type;
     data[index].label_name = type?.primary?.name;
-    updateState({addtionalTextInputs: data});
+    updateState({ addtionalTextInputs: data });
   };
   const getTextInputField = (type, index) => {
     return (
@@ -706,7 +705,7 @@ export default function MyProfile3({route, navigation}) {
         value={type?.contents}
         label={type?.primary?.name || ''}
         autoCapitalize={'none'}
-        containerStyle={{marginVertical: moderateScaleVertical(10)}}
+        containerStyle={{ marginVertical: moderateScaleVertical(10) }}
         txtInputStyle={{
           fontFamily: fontFamily.regular,
           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
@@ -739,10 +738,10 @@ export default function MyProfile3({route, navigation}) {
           onPress={() => updateImages(type, index)}
           style={styles.imageUpload}>
           {addtionalImages[index].value != undefined &&
-          addtionalImages[index].value != null &&
-          addtionalImages[index].value != '' ? (
+            addtionalImages[index].value != null &&
+            addtionalImages[index].value != '' ? (
             <Image
-              source={{uri: addtionalImages[index].value}}
+              source={{ uri: addtionalImages[index].value }}
               style={styles.imageStyle2}
             />
           ) : (
@@ -751,7 +750,7 @@ export default function MyProfile3({route, navigation}) {
         </TouchableOpacity>
         <Text
           numberOfLines={2}
-          style={{...styles.label3, minHeight: moderateScale(25)}}>
+          style={{ ...styles.label3, minHeight: moderateScale(25) }}>
           {type?.primary?.name}
           {type.is_required ? '*' : ''}
         </Text>
@@ -769,7 +768,7 @@ export default function MyProfile3({route, navigation}) {
         data[index].value = res[0].uri;
         data[index].filename = res[0].name;
         data[index].fileData = res[0];
-        updateState({addtionalPdfs: data});
+        updateState({ addtionalPdfs: data });
       }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -783,7 +782,7 @@ export default function MyProfile3({route, navigation}) {
   const getPdfView = (type, index) => {
     return (
       <View
-        style={{marginRight: moderateScale(20), marginTop: moderateScale(20)}}>
+        style={{ marginRight: moderateScale(20), marginTop: moderateScale(20) }}>
         <TouchableOpacity
           onPress={() => getDoc(type, index)}
           style={{
@@ -796,8 +795,8 @@ export default function MyProfile3({route, navigation}) {
           }}>
           <Text style={styles.uploadStyle}>
             {addtionalPdfs[index].value != undefined &&
-            addtionalPdfs[index].value != null &&
-            addtionalPdfs[index].value != ''
+              addtionalPdfs[index].value != null &&
+              addtionalPdfs[index].value != ''
               ? `${addtionalPdfs[index].filename}`
               : `+ ${strings.UPLOAD}`}
           </Text>
@@ -821,8 +820,8 @@ export default function MyProfile3({route, navigation}) {
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {userData?.refferal_code &&
-          userData?.refferal_code != '' &&
-          appIds.sxm2go != getBundleId() ? (
+            userData?.refferal_code != '' &&
+            appIds.sxm2go != getBundleId() ? (
             <View
               style={{
                 flexDirection: 'row',
@@ -838,7 +837,7 @@ export default function MyProfile3({route, navigation}) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.referralCode, {color: MyDarkTheme.colors.text}]
+                      ? [styles.referralCode, { color: MyDarkTheme.colors.text }]
                       : styles.referralCode
                   }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
               </View>
@@ -870,7 +869,7 @@ export default function MyProfile3({route, navigation}) {
             value={name}
             label={strings.YOUR_NAME}
             autoCapitalize={'none'}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+            containerStyle={{ marginVertical: moderateScaleVertical(10) }}
             undnerlinecolor={colors.textGreyB}
             txtInputStyle={{
               fontFamily: fontFamily.regular,
@@ -889,7 +888,7 @@ export default function MyProfile3({route, navigation}) {
             value={email}
             label={strings.EMAIL}
             autoCapitalize={'none'}
-            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+            containerStyle={{ marginVertical: moderateScaleVertical(10) }}
             txtInputStyle={{
               fontFamily: fontFamily.regular,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
@@ -907,7 +906,7 @@ export default function MyProfile3({route, navigation}) {
             onCountryChange={_onCountryChange}
             placeholder={strings.PHONE_NUMBER}
             onChangePhone={phoneNumber =>
-              updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+              updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
             }
             cca2={cca2}
             phoneNumber={phoneNumber}
@@ -925,7 +924,7 @@ export default function MyProfile3({route, navigation}) {
             }}
           />
 
-          <View style={{height: moderateScaleVertical(20)}} />
+          <View style={{ height: moderateScaleVertical(20) }} />
 
           {!isEmpty(addtionalTextInputs) &&
             addtionalTextInputs.map((item, index) => {
@@ -974,7 +973,7 @@ export default function MyProfile3({route, navigation}) {
           label={strings.ENTER_CURRENT_PASSWORD}
           value={currentpassword}
           secureTextEntry={true}
-          containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
           undnerlinecolor={colors.textGreyB}
           labelStyle={{
             color: colors.textGreyB,
@@ -995,7 +994,7 @@ export default function MyProfile3({route, navigation}) {
             fontSize: textScale(12),
           }}
           secureTextEntry={true}
-          containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
           returnKeyType={'next'}
         />
         <TextInputWithUnderlineAndLabel
@@ -1009,11 +1008,11 @@ export default function MyProfile3({route, navigation}) {
             fontSize: textScale(12),
           }}
           secureTextEntry={true}
-          containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          containerStyle={{ marginVertical: moderateScaleVertical(10) }}
           returnKeyType={'next'}
         />
         <GradientButton
-          btnStyle={{marginTop: moderateScaleVertical(57)}}
+          btnStyle={{ marginTop: moderateScaleVertical(57) }}
           colorsArray={[themeColors.primary_color, themeColors.primary_color]}
           textStyle={styles.textStyle}
           onPress={changePassword}
@@ -1092,31 +1091,31 @@ export default function MyProfile3({route, navigation}) {
                       <Image
                         style={
                           isDarkMode
-                            ? {tintColor: MyDarkTheme.colors.text}
+                            ? { tintColor: MyDarkTheme.colors.text }
                             : null
                         }
                         source={
                           itm?.type == 1
                             ? imagePath.home
                             : itm?.type == 2
-                            ? imagePath.workInActive
-                            : imagePath.icOtherAddressType
+                              ? imagePath.workInActive
+                              : imagePath.icOtherAddressType
                         }
                       />
                     </View>
-                    <View style={{flex: 0.8}}>
+                    <View style={{ flex: 0.8 }}>
                       <Text
                         numberOfLines={2}
                         style={
                           isDarkMode
                             ? [
-                                styles.address,
-                                {
-                                  textAlign: 'left',
-                                  color: MyDarkTheme.colors.text,
-                                },
-                              ]
-                            : [styles.address, {textAlign: 'left'}]
+                              styles.address,
+                              {
+                                textAlign: 'left',
+                                color: MyDarkTheme.colors.text,
+                              },
+                            ]
+                            : [styles.address, { textAlign: 'left' }]
                         }>
                         {!!itm?.house_number ? itm?.house_number + ',' : ''}{' '}
                         {itm?.address}
@@ -1130,7 +1129,7 @@ export default function MyProfile3({route, navigation}) {
                           justifyContent: 'center',
                         }}>
                         <Image
-                          style={{tintColor: themeColors.primary_color}}
+                          style={{ tintColor: themeColors.primary_color }}
                           source={imagePath.done}
                         />
                       </View>
@@ -1143,7 +1142,7 @@ export default function MyProfile3({route, navigation}) {
                     alignItems: 'center',
                     marginHorizontal: moderateScale(24),
                   }}>
-                  <View style={{flex: 0.1}} />
+                  <View style={{ flex: 0.1 }} />
                   <View
                     style={{
                       flex: 0.8,
@@ -1188,7 +1187,7 @@ export default function MyProfile3({route, navigation}) {
                         {strings.EDIT}
                       </Text>
                     </TouchableOpacity>
-                    <View style={{flex: 0.05}} />
+                    <View style={{ flex: 0.05 }} />
                     <TouchableOpacity
                       onPress={() => delAddress(itm)}
                       style={{
@@ -1217,7 +1216,7 @@ export default function MyProfile3({route, navigation}) {
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <View style={{flex: 0.1}} />
+                  <View style={{ flex: 0.1 }} />
                 </View>
               </View>
             );
@@ -1257,7 +1256,7 @@ export default function MyProfile3({route, navigation}) {
         }}
         onPressLeft={onPressGoBack}
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       {/* top section user general info */}
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -1288,13 +1287,13 @@ export default function MyProfile3({route, navigation}) {
                 source={
                   userData?.source?.image_path
                     ? {
-                        uri: getImageUrl(
-                          userData?.source?.proxy_url,
-                          userData?.source?.image_path,
-                          '200/200',
-                        ),
-                        priority: FastImage.priority.high,
-                      }
+                      uri: getImageUrl(
+                        userData?.source?.proxy_url,
+                        userData?.source?.image_path,
+                        '200/200',
+                      ),
+                      priority: FastImage.priority.high,
+                    }
                     : userData?.source
                 }
                 style={{
@@ -1330,7 +1329,7 @@ export default function MyProfile3({route, navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
                   : styles.userName
               }>
               {userData?.name}
@@ -1338,7 +1337,7 @@ export default function MyProfile3({route, navigation}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.userEmail, {color: MyDarkTheme.colors.text}]
+                  ? [styles.userEmail, { color: MyDarkTheme.colors.text }]
                   : styles.userEmail
               }>
               {userData?.email}
@@ -1350,9 +1349,9 @@ export default function MyProfile3({route, navigation}) {
           style={
             isDarkMode
               ? [
-                  styles.bottomSection,
-                  {backgroundColor: MyDarkTheme.colors.background},
-                ]
+                styles.bottomSection,
+                { backgroundColor: MyDarkTheme.colors.background },
+              ]
               : styles.bottomSection
           }>
           {/* scrolllablr tob bar */}
@@ -1402,7 +1401,7 @@ export default function MyProfile3({route, navigation}) {
           onCloseSheet={onModalClose}
         />
       ) : null}
-      <View style={{height: moderateScaleVertical(60)}} />
+      <View style={{ height: moderateScaleVertical(60) }} />
     </WrapperContainer>
   );
 }

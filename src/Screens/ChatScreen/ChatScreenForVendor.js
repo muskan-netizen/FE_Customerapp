@@ -90,8 +90,7 @@ export default function ChatScreenForVendor({ route, navigation }) {
 
   const isFocused = useIsFocused();
 
-  console.log('userDatauserData', userData);
-  console.log('paramDataparamDataparamData', paramData);
+
 
   useFocusEffect(
     useCallback(() => {

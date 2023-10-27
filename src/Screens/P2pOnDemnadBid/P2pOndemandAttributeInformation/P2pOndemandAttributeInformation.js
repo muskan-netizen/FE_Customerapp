@@ -219,6 +219,8 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
       })
     }
 
+
+
     paramData?.type_id == 10 && datesAry.forEach((obj, index) => {
       Object.keys(obj).forEach(key => {
         formData.append(`date_availability[${index}][${key}]`, obj[key]);
@@ -285,7 +287,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           'Content-Type': 'multipart/form-data',
         })
         .then(res => {
-          actions.onRefreshHome("Y")
+
           setLoadingSubmitAttributes(false);
           showSuccess(res?.message);
           navigation?.goBack();
@@ -300,11 +302,11 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           'Content-Type': 'multipart/form-data',
+          "accept": 'application/json',
         })
         .then(res => {
           setLoadingSubmitAttributes(false);
           console.log(res, '<===response onSubmitAttributes');
-          actions.onRefreshHome("Y")
           setIsProductAddedModal(true);
         })
         .catch(errorMethod);

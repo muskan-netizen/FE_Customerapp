@@ -1055,7 +1055,7 @@ export default function Home({ route, navigation }) {
   })
 
 
-  console.log(appStyle?.homePageLayout, "Fasdfasdhfkjhsd")
+
 
 
   const renderHeaders = useCallback(() => {

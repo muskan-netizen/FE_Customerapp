@@ -36,7 +36,6 @@ const CustomDrawerContent = (props) => {
 
   const currentTab = useRef(1)
 
-  console.log("userDatauserData", userData)
 
   const imageStyle = {
     height: moderateScale(30),
@@ -154,23 +153,23 @@ const CustomDrawerContent = (props) => {
             }}
             labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
           />
-          {!!userData && 
-          <DrawerItem
-            label={'Order Again'}
-            onPress={() => onPressItem(navigationStrings.ORDER_AGAIN, 2)} //tabIndex
+          {!!userData &&
+            <DrawerItem
+              label={'Order Again'}
+              onPress={() => onPressItem(navigationStrings.ORDER_AGAIN, 2)} //tabIndex
 
-            icon={({ focused }) => {
-              return (
-                <Image style={{
-                  ...imageStyle,
-                  resizeMode: 'contain',
-                  tintColor: themeColors.primary_color
-                }} source={imagePath.icRepeat} />
-              )
-            }}
-            labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
+              icon={({ focused }) => {
+                return (
+                  <Image style={{
+                    ...imageStyle,
+                    resizeMode: 'contain',
+                    tintColor: themeColors.primary_color
+                  }} source={imagePath.icRepeat} />
+                )
+              }}
+              labelStyle={{ color: isDarkMode ? colors.white : colors.black }}
 
-          />}
+            />}
 
           {/* <DrawerItem
             label={strings.CATEGORY}

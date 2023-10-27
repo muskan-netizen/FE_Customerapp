@@ -29,6 +29,8 @@ const HomeCategoryCard3 = ({
 }) => {
 
   const { themeColor, themeToggle, themeColors, appStyle } = useSelector((state) => state?.initBoot);
+  const { dineInType } = useSelector((state) => state?.home || {});
+
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -54,7 +56,7 @@ const HomeCategoryCard3 = ({
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => navigation.navigate(navigationStrings.CATEGORY, {
+        onPress={() => dineInType === "p2p" ? navigation.navigate(navigationStrings.ALL_CATEGORIES) : navigation.navigate(navigationStrings.CATEGORY, {
           data: {
             priceType: priceType
           }
@@ -95,7 +97,7 @@ const HomeCategoryCard3 = ({
           marginVertical: moderateScale(0),
           justifyContent: 'center',
           alignItems: 'center',
-          width:width/4.2
+          width: width / 4.2
         }}>
 
         {isSVG ? (

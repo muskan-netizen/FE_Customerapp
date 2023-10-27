@@ -739,4 +739,5 @@ export default {
   ic_chat1_inactive:require('../assets/images/Ooryks/ic_chat1_inactive.png'),
   ic_post1_active:require('../assets/images/Ooryks/ic_post1_active.png'),
   ic_post1_inactive:require('../assets/images/Ooryks/ic_post1_inactive.png'),
+  ic_sort_az:require('../assets/images/Ooryks/sort-az.png'),
 };

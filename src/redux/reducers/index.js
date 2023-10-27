@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import types from '../types';
 import appTheme from './appTheme';
 import auth from './auth';
@@ -13,6 +13,7 @@ import pendingNotifications from './pendingNotifications';
 import addressSearch from './addressSearch';
 import reloadData from './reloadData';
 import chatRefresh from './chatRefresh';
+import settings from './settings';
 
 const appReducer = combineReducers({
   auth,
@@ -27,7 +28,8 @@ const appReducer = combineReducers({
   pendingNotifications,
   addressSearch,
   reloadData,
-  chatRefresh
+  chatRefresh,
+  settings
 });
 
 const rootReducer = (state, action) => {

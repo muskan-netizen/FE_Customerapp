@@ -216,7 +216,7 @@ export default function MyP2pPosts({ route, navigation }) {
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,
           }).then((res) => {
-            actions.onRefreshHome("Y")
+
             showSuccess(res?.message)
             getAllPosts()
 
@@ -374,13 +374,45 @@ export default function MyP2pPosts({ route, navigation }) {
             ) : null}
 
             <View style={{ marginTop: 10 }}>
-              <HTMLView
-                value={
-                  item?.translation[0]?.body_html
-                    ? item?.translation[0]?.body_html
-                    : ''
-                }
-              />
+
+              {!isEmpty(item?.translation) && (item?.translation[0]?.meta_description || item?.translation[0]?.body_html) &&
+                <View>
+                  {!!item?.translation[0]?.meta_description
+                    ? (
+                      <Text
+                        numberOfLines={3}
+                        style={{
+                          fontSize: textScale(10),
+                          fontFamily: fontFamily.regular,
+                          // lineHeight: moderateScale(14),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.blackOpacity66,
+                          textAlign: 'left',
+                          marginTop: moderateScaleVertical(8),
+                        }}>
+                        {item?.translation[0]?.meta_description}
+                      </Text>
+                    ) : <HTMLView
+                      stylesheet={{
+                        p: {
+                          fontFamily: fontFamily?.regular,
+                          fontSize: textScale(12),
+                          color: colors.lightGreyText,
+                        },
+
+                      }}
+                      value={item?.translation[0]?.body_html
+                        ? item?.translation[0]?.body_html
+                        : ''}
+                      textComponentProps={{
+                        numberOfLines: 3,
+                      }}
+                      nodeComponentProps={{ numberOfLines: 3 }}
+                    />
+                  }
+                </View>
+              }
               <View />
             </View>
             <Text

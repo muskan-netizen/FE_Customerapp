@@ -16,6 +16,7 @@ import * as reloadData from './reloadData';
 import * as chat from './chat';
 import * as chatRefresh from './chatRefresh';
 import * as p2p from './p2p';
+import * as settings from './settings';
 
 export default {
   ...init,
@@ -35,4 +36,5 @@ export default {
   ...chat,
   ...chatRefresh,
   ...p2p,
+  ...settings
 };

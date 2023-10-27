@@ -757,18 +757,19 @@ const P2pProductDetail = ({ navigation, route, item }) => {
             bottom: 0,
             height: moderateScaleVertical(28),
             width: moderateScale(60),
-            backgroundColor: item?.type_id == 10 ? colors.purple : colors.blue,
+            backgroundColor: item?.category?.category_detail?.type_id == 10 ? colors.purple : colors.blue,
             position: "absolute",
             zIndex: 1,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: moderateScale(3)
           }} >
+
             <Text style={{
               fontFamily: fontFamily?.regular,
               fontSize: textScale(10),
               color: colors.white
-            }}>{item?.type_id == 10 ? "For Rent" : "For Sale"}</Text>
+            }}>{item?.category?.category_detail?.type_id == 10 ? "For Rent" : "For Sale"}</Text>
           </View>
         </View>
         <View style={{

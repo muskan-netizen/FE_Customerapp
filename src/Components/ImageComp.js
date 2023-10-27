@@ -20,6 +20,7 @@ const ButtonImage = ({
             <Image
                 source={image}
                 style={{ ...imgStyle }}
+                resizeMode="cover"
             />
         </TouchableOpacity>
     );

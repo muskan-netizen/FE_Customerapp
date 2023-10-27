@@ -830,6 +830,8 @@ const DashBoardFiveV2Api = ({
   };
 
 
+
+
   const renderMode = useCallback(({ item, index }) => {
     return (
       <VendorMode
@@ -884,10 +886,7 @@ const DashBoardFiveV2Api = ({
               >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: moderateScaleVertical(8), }}>
                   <Text style={{ fontSize: textScale(16), fontFamily: fontFamily?.bold, color: isDarkMode ? MyDarkTheme.colors.text : colors.black, }}>{strings.CATEGORIES}</Text>
-                  <TouchableOpacity
-                    onPress={() => { navigation.navigate(navigationStrings.ALL_CATEGORIES) }}>
-                    <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.regular, fontSize: textScale(12) }}>{strings.VIEW_ALL}</Text>
-                  </TouchableOpacity>
+
                 </View>
                 <View
                   style={{

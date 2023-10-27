@@ -76,9 +76,7 @@ export default function P2pProductComp({
 
     return (
         <View style={{ ...styles.touchContainer, backgroundColor: colors.whiteSmokeColor, }}>
-            {
-                console.log(userData, "fasdfh")
-            }
+
             <View style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -125,13 +123,42 @@ export default function P2pProductComp({
                         </View>
                         <View style={{ width: width / 2 }}>
 
-                            <HTMLView
-                                value={
-                                    !isEmpty(item?.product_details) ? item?.product_details[0]?.translation[0]?.body_html
-                                        ? item?.product_details[0]?.translation[0]?.body_html
-                                        : '' : ''
-                                }
-                            />
+                            {!isEmpty(item?.product_details) && (item?.product_details[0]?.translation[0]?.meta_description || item?.product_details[0]?.translation[0]?.body_html) &&
+                                <View>
+                                    {!!item?.product_details[0]?.translation[0]?.meta_description
+                                        ? (
+                                            <Text
+                                                numberOfLines={3}
+                                                style={{
+                                                    fontSize: textScale(10),
+                                                    fontFamily: fontFamily.regular,
+                                                    // lineHeight: moderateScale(14),
+                                                    color: colors.blackOpacity66,
+                                                    textAlign: 'left',
+                                                    marginTop: moderateScaleVertical(8),
+                                                }}>
+                                                {item?.product_details[0]?.translation[0]?.meta_description}
+                                            </Text>
+                                        ) : <HTMLView
+                                            stylesheet={{
+                                                p: {
+                                                    fontFamily: fontFamily?.regular,
+                                                    fontSize: textScale(12),
+                                                    color: colors.lightGreyText,
+                                                },
+
+                                            }}
+                                            value={item?.product_details[0]?.translation[0]?.body_html
+                                                ? item?.product_details[0].translation[0]?.body_html
+                                                : ''}
+                                            textComponentProps={{
+                                                numberOfLines: 3,
+                                            }}
+                                            nodeComponentProps={{ numberOfLines: 3 }}
+                                        />
+                                    }
+                                </View>
+                            }
                         </View>
                     </View>
 
