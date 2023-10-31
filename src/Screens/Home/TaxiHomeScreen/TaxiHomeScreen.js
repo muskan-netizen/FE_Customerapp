@@ -642,6 +642,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
           <View>
 
           </View>
+
           // <DashBoardSeven
           //   handleRefresh={() => handleRefresh()}
           //   bannerPress={(item) => bannerPress(item)}

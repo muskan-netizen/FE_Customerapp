@@ -863,3 +863,11 @@ export const USE_WALLET_AMOUNT = getApiUrl('/cart/updateCartWalletAmount');
 
 export const RAISE_AN_ISSUE_RELATED_TO_CHAT = '/api/room/raiseanissue';
 
+
+// ----------------------------carrental custom api-----
+export const SEARCH_PRODUCT_BY_TYPE = getApiUrl('/product/search');
+export const RENTAL_PROTECTION = getApiUrl('/rental-protection');
+export const ADD_BOOKING_OPTIONS = getApiUrl('/cart/add-booking-option');
+export const PRODUCT_CHECK_AVAILABILITY = getApiUrl('/check-product-availability');
+
+export const CREATE_ORDER_NOTIFICATION = getApiUrl('/pickup-delivery/create-order-notifications'); //<--------- driver notification endpoint

@@ -45,6 +45,7 @@ function SwipeableSection(props) {
 
     const { item, deleteItem, addDeleteCartItems, swipeRef, swipeKey, swipeBtns, isDarkMode, styles, fontFamily, btnLoadrId, btnLoader, digit_after_decimal, additional_preferences, currencies, cartData, scheduleType, openDeleteView, openPickerForPrescription, selectCartItem, parentIndex, showCheckBox = false,getProductFAQs=()=>{} } = props;
     const { themeColors } = useSelector((state) => state?.initBoot);
+    const { dineInType } = useSelector((state) => state?.home);
 
     const commonStyles = commonStylesFunc({ fontFamily });
 
@@ -235,7 +236,7 @@ function SwipeableSection(props) {
                                                             : colors.blackOpacity40,
                                                         marginBottom: moderateScaleVertical(4)
                                                     }} > {i?.scheduled_date_time} {i?.schedule_slot}</Text> : null}
-                                                    {getBundleId() !== appIds.rentzy &&
+                                                    {getBundleId() !== appIds.rentzy || dineInType != 'car_rental' &&
                                                         <View
                                                             pointerEvents={btnLoader ? 'none' : 'auto'}
                                                             style={{

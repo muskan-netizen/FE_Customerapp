@@ -1,4 +1,5 @@
 import {
+  ADD_BOOKING_OPTIONS,
   ADD_PRESCRIPTIONS,
   CANCELPAYTABURL,
   CART_ITEM_CHECKED,
@@ -579,4 +580,8 @@ export function savePayoutDetails(data = {}, headers = {}) {
 
 export function useWalletAmount(data = {}, headers = {}) {
   return apiPost(USE_WALLET_AMOUNT, data, headers)
+}
+
+export function addBookingOption(data = {}, headers = {}) {
+  return apiPost(ADD_BOOKING_OPTIONS , data ,  headers)
 }

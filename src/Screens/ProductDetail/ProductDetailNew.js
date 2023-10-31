@@ -1819,8 +1819,8 @@ export default function ProductDetail({ route, navigation }) {
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      statusBarColor={colors.white}
-      source={loaderOne}
+      // statusBarColor={colors.white}
+      // source={loaderOne}
     // isLoadingB={isLoadingC}
     >
       <Header

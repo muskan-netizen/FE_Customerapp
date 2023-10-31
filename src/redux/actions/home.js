@@ -26,6 +26,9 @@ import {
   ACCEPT_RIDE_FOR_BID,
   SERACH_ALL_ITEMS,
   GET_SUBCATEGORY_VENDORS_V2,
+  SEARCH_PRODUCT_BY_TYPE,
+  RENTAL_PROTECTION,
+  PRODUCT_CHECK_AVAILABILITY,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
@@ -484,4 +487,17 @@ export const acceptRideForBid = (data, headers = {}) => {
 
 
 
+
+
+export const searchProductByType = (data, headers = {}) => {
+  return apiPost(SEARCH_PRODUCT_BY_TYPE, data, headers);
+}
+
+export const rentalProtection = (data, headers = {}) => {
+  return apiPost(RENTAL_PROTECTION, data, headers);
+}
+
+export const productCheckAvailibility = (quary = '', data, headers = {}) => {
+  return apiPost(PRODUCT_CHECK_AVAILABILITY + quary, data, headers);
+}
 

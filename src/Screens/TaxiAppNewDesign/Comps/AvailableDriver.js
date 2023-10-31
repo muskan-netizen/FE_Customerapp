@@ -29,7 +29,7 @@ export default function AvailableDriver({
   isLoading = false,
   disabled,
   updateSeatNo,
-  availableCarList = [],
+availableCarList = [],
   onPressAvailableCar = () => { },
   selectedCarOption = null,
   allListedDrivers,

@@ -17,7 +17,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
 
       // marginRight: 20
     },
-    dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
+    dotStyle: { height: moderateScale(8), width: moderateScale(8), borderRadius: 12 / 2 },
     ratingColor: {
       // color: colors.backgroundGrey,
       paddingLeft: 5,
@@ -320,6 +320,19 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
        borderWidth: 1, 
        borderColor: colors.greyA, 
        marginVertical: moderateScaleVertical(12)
+    },
+    backIconView:{
+      // backgroundColor: colors.backgroundGrey2,
+      position: 'absolute',
+      left: moderateScale(16),
+      top: moderateScale(50),
+      zIndex: 100,
+      height: moderateScale(40),
+      alignItems: 'center',
+      width: moderateScale(40),
+      justifyContent: 'center',
+      borderRadius: moderateScale(12)
     }
+  
  
   });

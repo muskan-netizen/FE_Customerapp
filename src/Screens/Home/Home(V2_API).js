@@ -545,6 +545,11 @@ export default function Home({ route, navigation }) {
 
 
   const onPressVendor = (item) => {
+    if (dineInType == 'car_rental') {
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME, { data: { ...item, type: 'vendor' } })
+      return
+    }
+
     if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         id: item?.id,
@@ -594,6 +599,10 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
+    if (dineInType == 'car_rental') {
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME, { data: { ...item, type: 'category' } })
+      return
+    }
     if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
@@ -790,8 +799,14 @@ export default function Home({ route, navigation }) {
         product_id: item?.id,
       })
       return
-
     }
+
+    if (dineInType == 'car_rental') {
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME, { data: { ...item, type: 'product' } })
+      return
+    }
+
+
     if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
         data: {
@@ -1058,7 +1073,7 @@ export default function Home({ route, navigation }) {
 
   })
 
-
+  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout')
 
 
 
@@ -1237,6 +1252,28 @@ export default function Home({ route, navigation }) {
           </SafeAreaView>
         );
 
+
+      case 11:
+        return (
+          <SafeAreaView>
+            {/* <DashboardHeaderEleven
+            showToggles={false}
+            navigation={navigation}
+            location={memorizsedLocation}
+            selcetedToggle={selcetedToggle}
+            toggleData={memorizedAppData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            curLatLong={curLatLong}
+            /> */}
+          </SafeAreaView>
+        );
+
+
       default:
         return <SafeAreaView>
           <DashBoardHeaderFive
@@ -1319,6 +1356,9 @@ export default function Home({ route, navigation }) {
 
           />
         }
+
+
+
       </>
     );
   };

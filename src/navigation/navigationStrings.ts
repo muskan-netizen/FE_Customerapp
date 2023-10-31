@@ -183,5 +183,9 @@ export default {
   DEVELOPER_MODE: 'DeveloeprMode',
   PRODUCT_POWER_CONSUMPTION: 'ProductPowerConumption',
   LIVESS: 'Livees',
-  SAVED_PAYMENT_CARDS:"savedPaymentCards"
+  SAVED_PAYMENT_CARDS:"savedPaymentCards",
+  // car rental stacks
+  CAR_RENTAL_HOME:'CarRentalHome',
+  AVAILABLE_CARS:'AvailableCar',
+  REVIEW_BOOKING:'ReviewBooking'
 };

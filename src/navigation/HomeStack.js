@@ -2,36 +2,43 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Addaddress,
   Addaddress2,
+  AllCategories,
+  AvailableCars,
   AvailableTechnicians,
   BrandProducts,
   BrandProducts2,
   BuyProduct,
+  CarRentalScreen,
+  Category,
   CategoryBrands,
   ChatRoom,
   ChatRoomForVendor,
   ChatScreen,
   ConfirmDetailsBuy,
   Delivery,
+  EcomOrderAgain,
   Filter,
-  HomeTemplate3,
   FreelancerService,
-  Home,
+  HomeTemplate3,
   HomeV2Api,
   LaundryAvailableVendors,
   Location,
-  P2pProductDetail,
-  P2pProducts,
+  Notifications,
+  P2pOndemandProductDetail,
+  P2pOndemandProducts,
+  P2pPayment,
   Payment,
   PaymentSuccess,
   ProductDetail,
   ProductDetail2,
+  ProductDetail3,
   ProductList,
   ProductList2,
   ProductList3,
   ProductListEcom,
-  ProductWithCategory,
+  ProductPowerConumption,
+  ProductPriceDetails,
   ScrollableCategory,
   SearchProductVendorItem,
   SearchProductVendorItem3V2,
@@ -42,7 +49,6 @@ import {
   SubcategoryVendor,
   Subscriptions2,
   SuperMarket,
-  TaxiHome,
   TaxiHomeScreen,
   TechnicianProfile,
   TrackDetail,
@@ -55,17 +61,7 @@ import {
   Vendors3,
   ViewAllData,
   ViewAllSearchItems,
-  Wishlist,
-  Wishlist2,
-  EcomOrderAgain,
-  ProductPowerConumption,
-  Category,
-  Notifications,
-  P2pOndemandProducts,
-  P2pOndemandProductDetail,
-  AllCategories,
-  ProductPriceDetails,
-  P2pPayment
+  Wishlist2
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -77,7 +73,7 @@ const Stack = createNativeStackNavigator();
 
 export default function () {
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
-  const { lastBidInfo } = useSelector((state) => state?.home);
+  const { lastBidInfo, dineInType } = useSelector((state) => state?.home);
 
 
   const rendervendorScreen = () => {
@@ -112,6 +108,9 @@ export default function () {
   };
 
   const renderProductDetailsScreens = () => {
+    if (dineInType == 'car_rental') {
+      return ProductDetail3
+    }
     switch (appStyle?.homePageLayout) {
       case 2:
         return ProductDetail2;
@@ -337,7 +336,17 @@ export default function () {
         name={navigationStrings.CATEGORY}
         component={Category}
       />
+      {/* car rental stacks  */}
 
+      <Stack.Screen
+        name={navigationStrings.CAR_RENTAL_HOME}
+        component={CarRentalScreen}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.AVAILABLE_CARS}
+        component={AvailableCars}
+      />
 
       <Stack.Screen
         name={navigationStrings.ALL_CATEGORIES}

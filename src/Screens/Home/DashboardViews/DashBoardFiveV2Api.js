@@ -28,10 +28,12 @@ import { enableFreeze } from "react-native-screens";
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import CarCategory from '../../../Components/CarCategory';
 import Cities from '../../../Components/Cities';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
 import MarketCard3V2 from '../../../Components/MarketCard3V2';
+import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
 import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import VendorMode from '../../../Components/VendorMode';
@@ -42,7 +44,6 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -56,6 +57,7 @@ import { getItem, setItem } from '../../../utils/utils';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
+
 enableFreeze(true);
 
 const homeFilter = [
@@ -326,7 +328,6 @@ const DashBoardFiveV2Api = ({
     )
   }
 
-
   const renderHomePageItems = useCallback(({ item, index }) => {
     let uniqueId = String(item?.id || index)
     return (
@@ -338,13 +339,17 @@ const DashBoardFiveV2Api = ({
               item={item}
               showTitle={false}
             />
-          ) :
-            (item?.slug == 'new_products' ||
-              item?.slug == 'featured_products' ||
+          ) : item?.slug == 'featured_products' ?
+            <ProductsThemeView
+              appStyle={appStyle}
+              item={item}
+              isDarkMode={isDarkMode}
+              navigation={navigation} onPressProduct={onPressProduct} priceType={priceType} dineInType={dineInType}
+            />
+            : (dineInType != 'car_rental' && (item?.slug == 'new_products' ||
               item?.slug == 'on_sale' ||
               item?.slug == 'most_popular_products' ||
-              item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
-            ) ?
+              item?.slug == 'recently_viewed' || item?.slug == "ordered_products")) ?
               <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} priceType={priceType} />
               : item?.slug == 'vendors' && getBundleId() !== appIds?.greenhippo ?
                 <VendorsView item={item} />
@@ -361,12 +366,7 @@ const DashBoardFiveV2Api = ({
                   />
                 ) :
                   item?.slug == 'brands' ? (
-                    <BrandsView
-                      item={item}
-                      appMainData={appMainData}
-                      isDarkMode={isDarkMode}
-                      moveToNewScreen={moveToNewScreen}
-                    />
+                    <CategoriesView item={item} showTitle={false} />
                   ) : item?.slug == 'spotlight_deals' ? (
                     <SpotlightDealsView item={item} />
                   ) : item?.slug == 'selected_products' ? (
@@ -553,6 +553,19 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderCategories = useCallback(({ item, index }) => {
+
+
+    if (dineInType == 'car_rental') {
+      return (
+        <View style={{ width: width / 4.2, paddingTop: 1 }}>
+          <CarCategory
+            data={item}
+            onPress={() => onPressCategory(item)}
+          />
+        </View>
+      )
+    }
+
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
@@ -660,6 +673,15 @@ const DashBoardFiveV2Api = ({
 
 
   const categoryFlatViewStyle = () => {
+
+    if (dineInType == 'car_rental') {
+      return {
+        numColumns: 4,
+        horizontal: false,
+        scrollEnabled: false
+      }
+    }
+
     switch (appStyle?.homePageLayout) {
       case 1:
         return {
@@ -1114,7 +1136,7 @@ const DashBoardFiveV2Api = ({
   }
 
 
-
+  console.log(dataProvider, 'dataProvider');
 
   return (
     <WrapperContainer
@@ -1147,6 +1169,9 @@ const DashBoardFiveV2Api = ({
           />
           }
         /> : null}
+
+
+
 
       {getBundleId() == appIds.easyDrink && isConfirmAgeModal && (
         <View
@@ -1271,7 +1296,7 @@ const TitleViewHome = ({
 }
 
 //product theme view
-const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { }, priceType }) => {
+const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { }, priceType, dineInType }) => {
 
   return !isEmpty(item?.data) ? (
     <View
@@ -1287,9 +1312,9 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPres
       />
       <FlatList
         showsHorizontalScrollIndicator={false}
-        horizontal
+        horizontal={dineInType == 'car_rental' ? false : true}
         data={item?.data}
-        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct, priceType })}
+        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct, priceType, dineInType })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
           <View style={{ marginRight: moderateScale(16) }} />
@@ -1353,7 +1378,16 @@ const CitiesView = ({ item = {},
     </View>
   )
 }
-const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceType }) => {
+const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceType, dineInType }) => {
+  console.log(dineInType, 'dineInTypedineInTypedineInType');
+  if (dineInType == 'car_rental') {
+    return (
+      <ProductsThemeCard
+        item={item}
+        onPressProduct={() => onPressProduct(item)}
+      />
+    )
+  }
   return (
     <ProductsComp3V2
       item={item}

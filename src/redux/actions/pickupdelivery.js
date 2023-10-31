@@ -1,4 +1,4 @@
-import { ALL_NEARBY_DRIVERS, GET_ALL_CAR_AND_PRICE, PLACE_DELIVERY_ORDER, STATIC_DROP_LOCATIONS } from '../../config/urls';
+import { ALL_NEARBY_DRIVERS, CREATE_ORDER_NOTIFICATION, GET_ALL_CAR_AND_PRICE, PLACE_DELIVERY_ORDER, STATIC_DROP_LOCATIONS } from '../../config/urls';
 import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
@@ -58,3 +58,6 @@ export const getStaticLocations = (query = '', data = {}, headers = {}) => {
       });
   });
 };
+export function createOrderNotification(data = {}, headers = {}) {
+  return apiPost(CREATE_ORDER_NOTIFICATION, data, headers);
+  }
