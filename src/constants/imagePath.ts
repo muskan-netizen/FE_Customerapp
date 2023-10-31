@@ -801,8 +801,12 @@ export default {
   transmission:require('../assets/images/Atlantic/transmission.png'),
   fule:require('../assets/images/Atlantic/fule.png'),
   seats:require('../assets/images/Atlantic/seats.png'),
-
-
-
+  ic_hourly_taxi:require('../assets/images/ic_hourly_taxi.png'),
+  ic_hourly_taxi_back:require('../assets/images/ic_hourly_taxi_back.png'),
+  ic_minus_hours:require('../assets/images/ic_minus_hours.png'),
+  ic_plus_hours:require('../assets/images/ic_plus_hours.png'),
+  ic_current_bar:require('../assets/images/ic_current_bar.png'),
+  ic_selected_bar:require('../assets/images/ic_selected_bar.png'),
+  ic_unselected_bar:require('../assets/images/ic_unselected_bar.png'),
 
 };

@@ -48,6 +48,10 @@ import useInterval from '../../../utils/useInterval';
 import stylesFunc from '../styles';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import { isEmpty } from 'lodash';
+import TaxiHourlyRentalCard from '../../../Components/TaxiHourlyRentalCard';
+import { hitSlopProp } from '../../../styles/commonStyles';
+import { Shadow } from 'react-native-shadow-2';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -107,6 +111,10 @@ export default function TaxiHomeDashbord({
     allListedDrivers,
     isLoading
   } = state;
+  const [isHourlyRentalModal, setIsHourlyRentalModal] = useState(false)
+  const [isRentalCalendarModal, setIsRentalCalendarModal] = useState(false)
+
+  const [rentalHours, setRentalHours] = useState(9)
   const styles = stylesFunc({ themeColors, fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -396,7 +404,7 @@ export default function TaxiHomeDashbord({
   /*********************************************** instunt booking module code ends here *************************/
 
 
-  console.log("myCategories?.data", myCategories)
+
   const _renderItem = useCallback(({ item }) => {
 
     return (
@@ -697,7 +705,9 @@ export default function TaxiHomeDashbord({
             <View style={{ marginLeft: moderateScale(12) }} />
           )}
           ListFooterComponent={() => (
-            <View style={{ marginRight: moderateScale(12) }} />
+            <View style={{ marginHorizontal: moderateScale(12), }}>
+              <TaxiHourlyRentalCard onPress={() => setIsHourlyRentalModal(true)} />
+            </View>
           )}
         />
         }
@@ -1087,6 +1097,199 @@ export default function TaxiHomeDashbord({
             </SafeAreaView>
           </View>
         </View>
+      </Modal>
+      <Modal
+        isVisible={isHourlyRentalModal}
+        style={{
+          margin: 0,
+        }}
+        animationInTiming={600}>
+        <View style={{ flex: 1, backgroundColor: colors.white, }}>
+          <WrapperContainer>
+            <View style={{
+              flex: 1,
+              padding: moderateScale(16)
+            }}>
+              <TouchableOpacity hitSlop={hitSlopProp} onPress={() => setIsHourlyRentalModal(false)}>
+                <Image source={imagePath.ic_hourly_taxi_back} />
+              </TouchableOpacity>
+              <Text style={{
+                fontFamily: fontFamily?.bold,
+                fontSize: textScale(20),
+                color: colors.black,
+                marginTop: moderateScaleVertical(24)
+              }}>{"How much time do you \nneed?"}</Text>
+              <View style={{
+                paddingHorizontal: moderateScaleVertical(16),
+                paddingVertical: moderateScaleVertical(50),
+                borderRadius: moderateScale(6), elevation: 2,
+                borderWidth: 1,
+                borderColor: colors.blackOpacity05,
+                marginTop: moderateScaleVertical(50)
+
+
+
+
+              }}>
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingHorizontal: moderateScale(16),
+
+                }}>
+                  <TouchableOpacity
+                    disabled={rentalHours <= 1}
+                    onPress={() => rentalHours > 1 && setRentalHours(rentalHours - 1)}>
+
+                    <Image source={imagePath.ic_minus_hours} />
+                  </TouchableOpacity>
+                  <Text style={{
+                    fontFamily: fontFamily?.bold,
+                    fontSize: textScale(24), color: colors.black
+                  }}>{rentalHours} Hours</Text>
+                  <TouchableOpacity disabled={rentalHours >= 12}
+                    onPress={() => rentalHours < 12 && setRentalHours(rentalHours + 1)}>
+                    <Image source={imagePath.ic_plus_hours} />
+                  </TouchableOpacity>
+                </View>
+                <Text style={{
+                  textAlign: "center",
+                  fontFamily: fontFamily?.regular,
+                  fontSize: textScale(14),
+                  color: colors.greyF,
+                  marginTop: moderateScaleVertical(4)
+                }}>10 km</Text>
+                <View style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  marginVertical: moderateScaleVertical(30),
+                  alignItems: "center"
+                }}>
+                  {
+                    new Array(12).fill(0).map((item, index) => <TouchableOpacity
+                      hitSlop={{
+                        top: 7,
+                        right: 7,
+                        left: 7,
+                        bottom: 7,
+                      }}
+                      onPress={() => setRentalHours(index + 1)}>
+                      <Image
+
+                        source={index + 1 === rentalHours ? imagePath.ic_current_bar : index + 1 < rentalHours ? imagePath.ic_selected_bar : imagePath.ic_unselected_bar} style={{
+                          marginLeft: index !== 0 ? moderateScale(8) : 0
+                        }} />
+                    </TouchableOpacity>)
+                  }
+                </View>
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}>
+                  <ButtonWithLoader
+                    btnText='Leave now'
+                    btnTextStyle={{
+                      fontSize: textScale(12),
+                      textTransform: "none",
+                      fontFamily: fontFamily?.medium
+                    }}
+                    btnStyle={{
+                      backgroundColor: colors.black,
+                      height: moderateScaleVertical(34),
+                      paddingHorizontal: moderateScale(6),
+                      borderRadius: moderateScale(2),
+                      marginTop: 0
+                    }} />
+                  <ButtonWithLoader
+                    btnText='Leave later'
+                    btnTextStyle={{
+                      fontSize: textScale(12),
+                      textTransform: "none",
+                      fontFamily: fontFamily?.medium,
+                      color: colors.black,
+
+                    }}
+                    btnStyle={{
+                      backgroundColor: colors.lightGreyBg,
+                      height: moderateScaleVertical(34),
+                      paddingHorizontal: moderateScale(6),
+                      borderRadius: moderateScale(2),
+                      borderWidth: 0,
+                      marginLeft: moderateScale(12),
+                      marginTop: 0
+                    }} />
+                </View>
+              </View>
+
+
+            </View>
+            <View style={{
+
+              backgroundColor: colors.greyColor1,
+              padding: moderateScaleVertical(16)
+            }} >
+              <View style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}>
+                <Text style={{
+                  fontFamily: fontFamily?.regular,
+                  fontSize: textScale(15),
+                  color: colors.black
+                }}>Starting at:</Text>
+                <Text style={{
+                  fontFamily: fontFamily?.medium,
+                  fontSize: textScale(16),
+                  color: colors.black
+                }}>₹694.88</Text>
+              </View>
+              <View style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: moderateScaleVertical(6)
+              }}>
+                <Text style={{
+                }}></Text>
+                <Text style={{
+                  fontFamily: fontFamily?.regular,
+                  fontSize: textScale(15),
+                  color: colors.black
+                }}>₹231.63/hr</Text>
+              </View>
+              <ButtonWithLoader
+                onPress={() => setIsRentalCalendarModal(true)}
+                btnText='Choose a trip'
+                btnTextStyle={{
+                  fontSize: textScale(12),
+                  textTransform: "none",
+                  fontFamily: fontFamily?.medium
+                }}
+                btnStyle={{
+                  backgroundColor: colors.black,
+                  height: moderateScaleVertical(48),
+                  paddingHorizontal: moderateScale(6),
+                  borderRadius: moderateScale(2)
+                }} />
+            </View>
+          </WrapperContainer>
+
+        </View>
+        <Modal
+          isVisible={isRentalCalendarModal}
+          style={{
+            margin: 0,
+          }}
+          animationInTiming={600}>
+          <WrapperContainer>
+            <TouchableOpacity onPress={() => setIsRentalCalendarModal(false)}>
+              <Image source={imagePath.ic_back_taxi} />
+            </TouchableOpacity>
+          </WrapperContainer>
+
+        </Modal>
       </Modal>
     </WrapperContainer>
   );
