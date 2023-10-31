@@ -737,7 +737,7 @@ export default function Account3({ navigation }) {
             />
           )}
 
-          {!!userData?.auth_token &&
+          {dineInType !== "p2p" && !!userData?.auth_token &&
             !!appMainData?.is_admin &&
             businessType != 4 && (
               <ListItemHorizontal

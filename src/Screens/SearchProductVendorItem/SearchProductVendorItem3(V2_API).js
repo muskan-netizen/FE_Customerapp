@@ -1,3 +1,6 @@
+import Voice from '@react-native-voice/voice';
+import { useFocusEffect } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
@@ -7,12 +10,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
+import { UIActivityIndicator } from 'react-native-indicators';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
-import Header from '../../Components/Header';
+import FooterLoader from '../../Components/FooterLoader';
+import HorizontalLine from '../../Components/HorizontalLine';
 import {
-  loaderOne,
-  searchLoader,
+  loaderOne
 } from '../../Components/Loaders/AnimatedLoaderFiles';
+import MarketCard3 from '../../Components/MarketCard3';
+import NoDataFound from '../../Components/NoDataFound';
 import SearchBar from '../../Components/SearchBar';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -28,25 +36,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import LottieView from 'lottie-react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import MarketCard3 from '../../Components/MarketCard3';
-import { setItem } from '../../utils/utils';
-import RoundImg from '../../Components/RoundImg';
-import FooterLoader from '../../Components/FooterLoader';
-import styles from './styles';
-import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
 import { getCurrentLocation } from '../../utils/helperFunctions';
-import { useFocusEffect } from '@react-navigation/native';
-import Voice from '@react-native-voice/voice';
-import { isEmpty } from 'lodash';
-import { enableFreeze } from "react-native-screens";
-import HorizontalLine from '../../Components/HorizontalLine';
-import { UIActivityIndicator } from 'react-native-indicators';
-import NoDataFound from '../../Components/NoDataFound';
+import { setItem } from '../../utils/utils';
+import styles from './styles';
 enableFreeze(true);
 
 let isNoMore = false;
@@ -414,12 +407,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     actions.deleteSearchResults();
   };
 
-  const onEndReached = () => {
-    if (!onEndReachedCalledDuringMomentum && !isNoMore) {
-      updateState({ isLoadMore: true });
-      globalSearch(pageCount + 1);
-    }
-  };
+
 
   const onClickRecent = (item) => {
     console.log('item+++++', item);
@@ -501,38 +489,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     );
   };
 
-  const renderSearchResults = ({ item, index }) => {
-    return (
-      <TouchableOpacity
-        onPress={() => _onclickSearchItem(item)}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <Image
-          source={item?.image_url ? { uri: item?.image_url } : imagePath.icGold2}
-          style={{
-            height: 30,
-            width: 30,
-            borderRadius: moderateScale(15),
-          }}
-        />
-        <Text
-          numberOfLines={2}
-          style={{
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(12),
-            marginHorizontal: moderateScale(8),
-            color: isDarkMode
-              ? MyDarkTheme.colors.text
-              : colors.black,
-            textAlign: 'justify'
-          }}>
-          {item?.dataname || item?.title || item?.name}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
+
 
   const onPresItem = (item) => {
     navigation.navigate(navigationStrings.VIEW_ALL_SEARCH_ITEM, {

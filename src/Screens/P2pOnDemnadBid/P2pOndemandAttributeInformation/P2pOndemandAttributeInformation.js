@@ -50,6 +50,7 @@ import {
 import { showError, showSuccess } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
 import validations from '../../../utils/validations';
+import axios from 'axios';
 
 const theme = {
   // Define your custom colors here
@@ -198,7 +199,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   };
 
 
-  const onSubmitAttributes = () => {
+  const onSubmitAttributes = async () => {
 
     const checkValid = isValidData();
     if (!checkValid) {
@@ -213,19 +214,15 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     let datesAry = []
     let formData = new FormData();
     for (const property in markedDates) {
-      datesAry.push({
-        "not_available": 0,
-        "date_time": property
-      })
+      datesAry.push(property)
     }
 
 
+    if (paramData?.type_id == 10) {
+      formData.append(`date_availability`, JSON.stringify(datesAry));
+    }
 
-    paramData?.type_id == 10 && datesAry.forEach((obj, index) => {
-      Object.keys(obj).forEach(key => {
-        formData.append(`date_availability[${index}][${key}]`, obj[key]);
-      });
-    });
+
 
     let updatedPrice = price.replace('/day', '')
     formData.append('category_id', paramData?.category_id);
@@ -276,6 +273,9 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
         }
       }
     });
+    formData.append('attribute', JSON.stringify(apiObj));
+
+
 
 
     if (!!productData) {
@@ -296,13 +296,17 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
           console.log(error, '<===error');
         });
     } else {
+      // setLoadingSubmitAttributes(false);
+      // return
+
+
       actions
         .submitProductWithAttributes(formData, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          Accept: 'application/json',
           'Content-Type': 'multipart/form-data',
-          "accept": 'application/json',
         })
         .then(res => {
           setLoadingSubmitAttributes(false);

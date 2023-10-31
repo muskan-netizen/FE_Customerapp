@@ -696,6 +696,10 @@ export default function Home({ route, navigation }) {
 
   //On Press banner
   const bannerPress = (data) => {
+
+    if (dineInType === "p2p") {
+      return
+    }
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {

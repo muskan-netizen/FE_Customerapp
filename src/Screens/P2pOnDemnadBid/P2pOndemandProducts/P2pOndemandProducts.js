@@ -84,8 +84,10 @@ const P2pOndemandProducts = ({ route, navigation }) => {
         maximumPrice: 50000,
         isShowFilter: false,
 
+
     })
     const [filterType, setfilterType] = useState('filters')
+    const [filterData, setFilterData] = useState({})
 
     const {
         selectedSortFilter, minimumPrice, maximumPrice, isShowFilter
@@ -269,6 +271,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     };
 
     const onFilterApply = (filterData = {}) => {
+        setFilterData(filterData)
         setfilterType("filters")
         setIsLoading(true)
         setPageNo(1)
@@ -361,11 +364,12 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     }
 
 
+
     const onEndReached = () => {
         if (isLoadMore) {
             setPageNo(pageNo + 1);
 
-            !!selectedSortFilter ? getFilteredProductList(pageNo + 1) : getP2pProductsByCategoryId(pageNo + 1);
+            !!selectedSortFilter ? getFilteredProductList(pageNo + 1, filterData) : getP2pProductsByCategoryId(pageNo + 1);
         }
     };
 

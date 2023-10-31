@@ -19,22 +19,20 @@ import {
     width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import FooterLoader from '../../Components/FooterLoader';
 
-import { enableFreeze } from "react-native-screens";
+import { isEmpty } from 'lodash';
+import { Image, TouchableOpacity } from 'react-native';
 import { UIActivityIndicator } from 'react-native-indicators';
-import { getCurrentLocation } from '../../utils/helperFunctions';
+import { enableFreeze } from "react-native-screens";
 import BrandCard3 from '../../Components/BrandCard3';
-import staticStrings from '../../constants/staticStrings';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import ProductsComp3 from '../../Components/ProductsComp3';
 import SearchBar from '../../Components/SearchBar';
-import { TouchableOpacity } from 'react-native';
-import { Image } from 'react-native';
-import SearchVendorLoader from './SearchVendorLoader';
-import SearchProductLoader from './SearchProductLoader';
+import staticStrings from '../../constants/staticStrings';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { getCurrentLocation } from '../../utils/helperFunctions';
 import SearchCategoryLoader from './SearchCategoryLoader';
-import { isEmpty } from 'lodash';
+import SearchProductLoader from './SearchProductLoader';
+import SearchVendorLoader from './SearchVendorLoader';
 
 enableFreeze(true);
 
@@ -212,14 +210,12 @@ export default function ViewAllSearchItems({ route, navigation }) {
 
 
     const onPressCategory = useCallback((item) => {
-
-        if (item?.redirect_to == staticStrings.P2P) {
+        if (item?.redirect_to == staticStrings.P2P || (item?.redirect_to == staticStrings.RENTAL_SERVICE && dineInType === "p2p")) {
             moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
             return;
         }
         if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
             moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
-
             return;
         }
         if (item.redirect_to == staticStrings.VENDOR) {
