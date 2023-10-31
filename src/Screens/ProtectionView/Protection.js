@@ -126,10 +126,6 @@ const Protection = ({
           renderItem={({item, index}) => (
             <>
               <TouchableOpacity
-                // onPress={() => {
-                //   setmodalopen(true);
-                //   setSelectedProtection(item);
-                // }}
                 onPress={() => onPressProtection(item, index)}
                 style={[
                   styles.greyview,
@@ -173,20 +169,7 @@ const Protection = ({
                     }`}
                   </Text>
                 </View>
-
-                {/* <Text style={styles.listsubhead}>
-                Financial Responsibility:
-                <Text
-                  style={{
-                    fontSize: textScale(12),
-                    color: colors.atlanticgreen,
-                  }}>
-                  {' '}
-                  $0.00
-                </Text>
-              </Text> */}
-                {[1, 2].map(() => {
-                  return (
+               
                     <View style={styles.categoriesview}>
                       <View style={{flexDirection: 'row'}}>
                         <Image source={imagePath.tickrental} />
@@ -196,8 +179,7 @@ const Protection = ({
                       </View>
                       <Image source={imagePath.Info} style={styles.listimage} />
                     </View>
-                  );
-                })}
+               
               </TouchableOpacity>
 
               <Modal
@@ -208,18 +190,10 @@ const Protection = ({
                   <View>
                     <TouchableOpacity
                       onPress={() => onModalClose(index)}
-                      style={{
-                        alignSelf: 'flex-end',
-                        justifyContent: 'flex-end',
-                        padding: moderateScale(10),
-                      }}>
+                      style={styles.crossView}>
                       <Image
                         source={imagePath.redCross}
-                        style={{
-                          tintColor: colors.black,
-                          height: moderateScaleVertical(12),
-                          width: moderateScale(12),
-                        }}
+                        style={styles.crossIcon}
                       />
                     </TouchableOpacity>
                     <View
@@ -228,44 +202,22 @@ const Protection = ({
                         paddingBottom: moderateScaleVertical(16),
                       }}>
                       <Text
-                        style={{
-                          fontFamily: fontFamily.bold,
-                          fontSize: textScale(16),
-                          alignSelf: 'center',
-                          textAlign: 'center',
-                        }}>
-                        Continue without additional protection?
+                        style={styles.headerTitleText}>
+                        {strings.CONTINUE_WITHOUT_ADDITIONAL_PROTECION}
                       </Text>
                       <Text
-                        style={{
-                          fontSize: textScale(13),
-                          textAlign: 'center',
-                          marginTop: moderateScaleVertical(10),
-                        }}>
-                        You are liable for all damage and theft up to the full
-                        value of the rental vehicle plus admin fees.
+                        style={styles.subHeaderTitleText}>
+                        {strings.YOU_ARE_LAIBLE_FOR_ALL_DAMAGE}
                       </Text>
                       <GradientButton
                         btnText={!!item?.addProtection?  strings.REMOVE_PROTECTION :strings.ADD_PROTECTION}
-                        btnStyle={{
-                          height: moderateScaleVertical(30),
-                          // width: '46%',
-                          alignSelf: 'center',
-                          borderRadius: moderateScale(4),
-                          marginTop: moderateScale(10),
-                        }}
+                        btnStyle={styles.protectionAddButton}
                         onPress={()=>addProtection(item, index)}
                         textStyle={{fontSize: textScale(10)}}
                       />
                       <TouchableOpacity onPress={() => onModalClose(index)}>
                         <Text
-                          style={{
-                            fontSize: textScale(10),
-                            color: colors.atlanticgreen,
-                            fontFamily: fontFamily.bold,
-                            textAlign: 'center',
-                            marginTop: moderateScaleVertical(8),
-                          }}>
+                          style={styles.skipNowButton}>
                           {strings.SKIP_FOR_NOW}
                         </Text>
                       </TouchableOpacity>

@@ -55,6 +55,42 @@ const   styles = StyleSheet.create({
       fontSize: textScale(12),
       marginVertical: moderateScaleVertical(12),
     },
+    protectionAddButton:{
+      height: moderateScaleVertical(30),
+      // width: '46%',
+      alignSelf: 'center',
+      borderRadius: moderateScale(4),
+      marginTop: moderateScale(10),
+    },
+    skipNowButton:{
+      fontSize: textScale(10),
+      color: colors.atlanticgreen,
+      fontFamily: fontFamily.bold,
+      textAlign: 'center',
+      marginTop: moderateScaleVertical(8),
+    },
+    headerTitleText:{
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(16),
+      alignSelf: 'center',
+      textAlign: 'center',
+    },
+    subHeaderTitleText:{
+      fontSize: textScale(13),
+      textAlign: 'center',
+      marginTop: moderateScaleVertical(10),
+      maxWidth:width/1.2
+    },
+    crossIcon:{
+      tintColor: colors.black,
+      height: moderateScaleVertical(12),
+      width: moderateScale(12),
+    },
+    crossView:{
+      alignSelf: 'flex-end',
+      justifyContent: 'flex-end',
+      padding: moderateScale(10),
+    }
 });
   
 export default styles

@@ -111,8 +111,8 @@ const SearchAreaModal = ({
       modalMainContent={() => {
         return (
           <View
-            style={{height: height / 2, paddingHorizontal: moderateScale(10)}}>
-            <Text style={styles.titleStyle}>{title}</Text>
+            style={{height: height / 2, paddingHorizontal: moderateScale(10),}}>
+            <Text style={[styles.titleStyle,{color:isDarkMode?colors.white:colors.black}]}>{title}</Text>
             <SearchPlaces2
               showRightImg={false}
               curLatLng={location}
@@ -123,7 +123,7 @@ const SearchAreaModal = ({
               }}
               placeHolderColor={colors.grayOpacity51}
               placeHolder={strings.LOCATION}
-              textStyle={{fontSize:textScale(16)}}
+              textStyle={{fontSize:textScale(13)}}
               value={value}
               mapKey={mapKey} //
               fetchArrayResult={setSearchResult}

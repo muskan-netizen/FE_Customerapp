@@ -11,6 +11,9 @@ import {
 import colors from '../styles/colors';
 import strings from '../constants/lang';
 import fontFamily from '../styles/fontFamily';
+import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
 
 // create a component
 const AtlanticBottom = ({
@@ -23,35 +26,26 @@ const AtlanticBottom = ({
     onPress,
   buttonLoader=false
 }) => {
+  const {themeColor, themeToggle,themeColors} = useSelector(state => state?.initBoot || {});
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
-    <View style={styles.buttonview}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+    
+    <View style={[styles.buttonview,{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white}]}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',marginBottom:moderateScaleVertical(10)}}>
         <Text
-          style={{fontSize: textScale(16), fontFamily: fontFamily.semiBold}}>
+          style={{fontSize: textScale(16), fontFamily: fontFamily.semiBold,color:isDarkMode?MyDarkTheme.colors.text:colors.black}}>
           {Totalprice}
         </Text>
         <Text
           style={{
             fontSize: textScale(16),
-            color: colors.atlanticgreen,
+            color: themeColors?.primary_color,
             fontFamily: fontFamily.semiBold,
+            
           }}>
           {total}
-        </Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: moderateScaleVertical(6),
-        }}>
-        <TouchableOpacity>
-          <Text style={{fontSize: textScale(12), color: colors.orangerental}}>
-            {Pricedetails}
-          </Text>
-        </TouchableOpacity>
-        <Text style={{fontSize: textScale(12), color: colors.atlanticgreen}}>
-          {details}
         </Text>
       </View>
       <GradientButton

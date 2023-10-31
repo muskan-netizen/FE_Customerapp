@@ -619,7 +619,7 @@ console.log(res, "res>>>>>>>>>")
 
   const renderHomeScreen = () => {
 
-    switch (5) {
+    switch (appStyle?.homePageLayout) {
       case 4:
         return (
           <TaxiHomeDashbord

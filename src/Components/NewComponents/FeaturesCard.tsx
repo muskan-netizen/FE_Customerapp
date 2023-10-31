@@ -39,7 +39,7 @@ const FeaturesCard: FC<propType> = ({ item }) => {
                     color: isDarkMode
                         ? colors.white
                         : colors.black,
-                    fontFamily: fontFamily.medium,
+                    fontFamily: fontFamily.bold,
                     marginTop: moderateScaleVertical(7)
                 }}>
                 {item?.title}

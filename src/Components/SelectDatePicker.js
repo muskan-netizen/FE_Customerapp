@@ -81,7 +81,7 @@ const SelectDatePicker = ({
     <View style={{}}>
      
       <BottomModal
-        mainViewStyle={{height: height / 1.1, width: width, padding: 0}}
+        mainViewStyle={{height: height / 1.1, width: width, padding: 0,backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white}}
         onBackdropPress={() => {
          
           setShowTime(false)
@@ -162,6 +162,7 @@ const SelectDatePicker = ({
                 style={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.semiBold,
+                  color:isDarkMode?colors.white:colors.black
                 }}>
                 {strings.SELECTTIME}
               </Text>
@@ -194,7 +195,7 @@ const SelectDatePicker = ({
                           color:
                             item == timeDate.period
                               ? colors.white
-                              : colors.black,
+                              :isDarkMode? colors.white: colors.black,
                         }}>
                         {item}
                       </Text>
@@ -241,7 +242,7 @@ const SelectDatePicker = ({
                         style={{
                           fontSize: textScale(12),
                           color:
-                          timeDate.time == item ? colors.white : colors.black,
+                          timeDate.time == item ? colors.white : isDarkMode?colors.white: colors.black,
                           opacity: 0.7,
                         }}>
                         {item}
@@ -330,6 +331,7 @@ export const styles = isDarkMode =>
       fontSize: textScale(16),
       fontFamily: fontFamily.bold,
       marginLeft: moderateScale(20),
+      color:isDarkMode?colors.white:colors.black
     },
     selecttimeview: {
       flexDirection: 'row',

@@ -61,6 +61,8 @@ import VendorMode from '../../../Components/VendorMode';
 import { enableFreeze } from "react-native-screens";
 import Animated, { log } from 'react-native-reanimated';
 import ProductInfoCard from '../../../Components/ProductInfoCard';
+import CarCategory from '../../../Components/CarCategory';
+import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
 enableFreeze(true);
 
 const homeFilter = [
@@ -330,8 +332,7 @@ const DashBoardFiveV2Api = ({
       </TouchableOpacity>
     )
   }
-
-
+  
   const renderHomePageItems = useCallback(({ item, index }) => {
     let uniqueId = String(item?.id || index)
     return (
@@ -343,14 +344,18 @@ const DashBoardFiveV2Api = ({
               item={item}
               showTitle={false}
             />
-          ) :
-            (item?.slug == 'new_products' ||
-              item?.slug == 'featured_products' ||
+          ) : item?.slug == 'featured_products' ?  
+          <ProductsThemeView
+           appStyle={appStyle}
+            item={item} 
+            isDarkMode={isDarkMode} 
+            navigation={navigation} onPressProduct={onPressProduct} priceType={priceType}  dineInType={dineInType}  
+             />
+             : ( dineInType != 'car_rental' && (item?.slug == 'new_products' ||
               item?.slug == 'on_sale' ||
               item?.slug == 'most_popular_products' ||
-              item?.slug == 'recently_viewed' || item?.slug == "ordered_products"
-            ) ?
-              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} priceType={priceType} />
+              item?.slug == 'recently_viewed' || item?.slug == "ordered_products") )?
+              <ProductsThemeView appStyle={appStyle} item={item} isDarkMode={isDarkMode} navigation={navigation} onPressProduct={onPressProduct} priceType={priceType}/>
               : item?.slug == 'vendors' && getBundleId() !== appIds?.greenhippo ?
                 <VendorsView item={item} />
                 : item?.slug == 'nav_categories' ? (
@@ -554,7 +559,19 @@ const DashBoardFiveV2Api = ({
 
 
   const _renderCategories = useCallback(({ item, index }) => {
-    console.log(appStyle?.homePageLayout)
+
+
+    if (dineInType == 'car_rental') {
+      return (
+        <View style={{ width: width / 4.2, paddingTop: 1 }}>
+          <CarCategory
+            data={item}
+            onPress={() => onPressCategory(item)}
+          />
+        </View>
+      )
+    }  
+
     switch (appStyle?.homePageLayout) {
       case 1:
         return (
@@ -663,6 +680,15 @@ const DashBoardFiveV2Api = ({
 
 
   const categoryFlatViewStyle = () => {
+
+    if (dineInType == 'car_rental') {
+      return {
+        numColumns: 4,
+        horizontal: false,
+        scrollEnabled: false
+      }
+    }  
+
     switch (appStyle?.homePageLayout) {
       case 1:
         return {
@@ -1237,7 +1263,7 @@ const TitleViewHome = ({
 }
 
 //product theme view
-const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { }, priceType }) => {
+const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPressProduct = () => { }, priceType,dineInType }) => {
 
   return !isEmpty(item?.data) ? (
     <View
@@ -1253,9 +1279,9 @@ const ProductsThemeView = ({ item, navigation, isDarkMode, appStyle = {}, onPres
       />
       <FlatList
         showsHorizontalScrollIndicator={false}
-        horizontal
+        horizontal={ dineInType == 'car_rental' ?  false: true}
         data={item?.data}
-        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct, priceType })}
+        renderItem={({ item, }) => _renderProducts({ item, navigation, onPressProduct, priceType,dineInType })}
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
           <View style={{ marginRight: moderateScale(16) }} />
@@ -1319,7 +1345,16 @@ const CitiesView = ({ item = {},
     </View>
   )
 }
-const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceType }) => {
+const _renderProducts = ({ item, navigation, onPressProduct = () => { }, priceType,dineInType }) => {
+  console.log(dineInType,'dineInTypedineInTypedineInType');
+  if(dineInType == 'car_rental'){
+    return(
+      <ProductsThemeCard
+      item={item}
+      onPressProduct={() => onPressProduct(item) }
+    />
+    )
+  }
   return (
     <ProductsComp3V2
       item={item}

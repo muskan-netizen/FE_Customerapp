@@ -737,6 +737,7 @@ function ChooseVechile({ navigation, route }) {
                 language: languages?.primary_language?.id,
             })
             .then((res) => {
+
                 console.log(res, '<===placeDelievryOrder');
                 if (res && res?.status == 200) {
                     let extraData = {
@@ -750,6 +751,7 @@ function ChooseVechile({ navigation, route }) {
                         selectedCarOption: selectedCarOption?.sku,
                     };
                     console.log(extraData, data, "extraData, data");
+                    actions.createOrderNotification({ order_id: res?.data?.id }, headers)
 
                     if (selectedPayment?.id == 49 || selectedPayment?.id == 50) { _paymentWithPlugnPayMethods(extraData, res, data) }
                     else if (selectedPayment?.id == 48) {

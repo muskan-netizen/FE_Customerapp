@@ -24,7 +24,7 @@ export default ({  themeColors, isDarkMode, MyDarkTheme }) => {
     texiBookView: {
       flexDirection: 'row',
       // justifyContent: 'center',
-      paddingHorizontal: moderateScale(14),
+      paddingHorizontal: moderateScale(18),
       paddingTop: moderateScale(15),
     },
     locationHadingText: {

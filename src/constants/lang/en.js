@@ -1219,8 +1219,9 @@ Amount`,
   SKIP_FOR_NOW: "Skip For Now",
   REMOVE_PROTECTION: 'Remove Protection',
   ADD_PROTECTION:'Add Protection',
-  MY_RETURN_LOCATION:'My Return Location'
-
+  MY_RETURN_LOCATION:'My Return Location',
+  CONTINUE_WITHOUT_ADDITIONAL_PROTECION:'Continue without additional protection?',
+ YOU_ARE_LAIBLE_FOR_ALL_DAMAGE:'You are liable for all damage and theft up to the full value of the rental vehicle plus admin fees.'
 
 
 

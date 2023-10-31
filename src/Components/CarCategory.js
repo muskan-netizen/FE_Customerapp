@@ -25,9 +25,9 @@ const CarCategory = (
         getImageUrl(
             data?.image.image_fit,
             data?.image.image_path,
-            '700/700'
+            '150/150'
         );
-    console.log(data, 'dataKyaa')
+    console.log(imageUrl, 'dataKyaa',data?.image)
     const scaleInAnimated = new Animated.Value(0);
 
     return (
@@ -48,7 +48,7 @@ const CarCategory = (
                     cache: FastImage.cacheControl.immutable,
                     priority: FastImage.priority.high,
                 }}
-                resizeMode="cover"
+                resizeMode="contain"
 
             />
             <Text numberOfLines={1}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         margin:3
     }, imageStyle: {
         height: moderateScale(60),
-        width: moderateScale(70)
+        width: moderateScale(60)
     },
     titleStyle: {
         fontSize: textScale(12),

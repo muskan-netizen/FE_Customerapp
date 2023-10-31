@@ -1,6 +1,6 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
+export const API_BASE_URL = 'https://gokab.royoorders.com/api/v1';  //Live
 // export const API_BASE_URL = 'http://192.168.101.161:8002/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
@@ -868,3 +868,5 @@ export const SEARCH_PRODUCT_BY_TYPE = getApiUrl('/product/search');
 export const RENTAL_PROTECTION = getApiUrl('/rental-protection');
 export const ADD_BOOKING_OPTIONS = getApiUrl('/cart/add-booking-option');
 export const PRODUCT_CHECK_AVAILABILITY = getApiUrl('/check-product-availability');
+
+export const CREATE_ORDER_NOTIFICATION = getApiUrl('/pickup-delivery/create-order-notifications'); //<--------- driver notification endpoint

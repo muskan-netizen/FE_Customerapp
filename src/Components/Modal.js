@@ -5,6 +5,9 @@ import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {height, moderateScaleVertical} from '../styles/responsiveSize';
 import Header from './Header';
+import { useDarkMode } from 'react-native-dynamic';
+import { MyDarkTheme } from '../styles/theme';
+import { useSelector } from 'react-redux';
 
 const ModalView = ({
   isVisible = false,
@@ -27,6 +30,10 @@ const ModalView = ({
   hasBackdrop=true,
   ...props
 }) => {
+  const {themeColor, themeToggle} = useSelector(state => state?.initBoot || {});
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
     <Modal
       isVisible={isVisible}
@@ -45,7 +52,7 @@ const ModalView = ({
       <View
         style={{
           // flex: 1,
-          backgroundColor: colors.white,
+          backgroundColor:  isDarkMode ? MyDarkTheme.colors.lightDark:colors.white,
           borderRadius: 15,
           paddingTop: moderateScaleVertical(30),
           ...mainViewStyle,

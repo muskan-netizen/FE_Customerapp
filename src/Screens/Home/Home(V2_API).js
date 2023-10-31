@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Alert, BackHandler, Image, Linking, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { Alert, BackHandler, Image, Linking, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -17,8 +17,14 @@ import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
 
+import FastImage from 'react-native-fast-image';
+import Modal from "react-native-modal";
+import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
+import { enableFreeze } from "react-native-screens";
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+import imagePath from '../../constants/imagePath';
+import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -27,21 +33,13 @@ import {
   showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import { DashBoardFiveV2Api, DashBoardHeaderFive, TaxiHomeDashbord } from './DashboardViews/Index';
-import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
-import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
-import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
-import { DashBoardHeaderFour } from './DashboardViews/Index';
-import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
 import socketServices from '../../utils/scoketService';
-import { enableFreeze } from "react-native-screens";
-import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
-import FastImage from 'react-native-fast-image';
-import Modal from "react-native-modal";
-import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
-import imagePath from '../../constants/imagePath';
-import DashBoardEleven from './DashboardViews/DashboardEleven';
 import DashboardHeaderEleven from './DashboardHeaderEleven';
+import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
+import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
+import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
+import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
+import { DashBoardFiveV2Api, DashBoardHeaderFive, DashBoardHeaderFour, TaxiHomeDashbord } from './DashboardViews/Index';
 
 enableFreeze(true);
 
@@ -549,6 +547,11 @@ export default function Home({ route, navigation }) {
 
 
   const onPressVendor = (item) => {
+    if(dineInType == 'car_rental'){
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME,{data:{...item,type:'vendor'}})
+      return
+    }
+
     if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         id: item?.id,
@@ -598,6 +601,10 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
+    if(dineInType == 'car_rental'){
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME,{data:{...item,type:'category'}})
+      return
+    }
     if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
@@ -787,7 +794,12 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressProduct = (item) => {
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
+
+    if (dineInType == 'car_rental') {
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME, { data: { ...item, type: 'product' } })
+      return
+    }  
+      if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
         data: {
           is_product: true,
@@ -1306,35 +1318,6 @@ export default function Home({ route, navigation }) {
 
             curLatLong={curLatLong}
             currentLocation={currentLocation}
-          /> : dineInType == 'car_rental' ? <DashBoardEleven
-            handleRefresh={() => handleRefresh()}
-            bannerPress={(item) => bannerPress(item)}
-            isLoading={isLoading}
-            isRefreshing={isRefreshing}
-            appMainData={memorizsedAppMainData}
-            onPressCategory={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME,{data:{...item,type:'category'}})}
-            onPressVendor={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOM,{data:{...item,type:'vendor'}})}
-            isDineInSelected={isDineInSelected}
-            selcetedToggle={selcetedToggle}
-            tempCartData={memorizedTempCartData}
-            toggleData={memorizedAppData}
-            navigation={navigation}
-            onVendorFilterSeletion={onVendorFilterSeletion}
-            singleVendor={singleVendor}
-            onPressAddLaundryItem={onPressAddLaundryItem}
-            isLoadingAddons={isLoadingAddons}
-            selectedHomeCategory={selectedHomeCategory}
-            onClose={_closeModal}
-            onPressSubscribe={_onPressSubscribe}
-            isSubscription={isSubscription}
-            selectedFilterType={selectedFilterType}
-            showAllProducts={showAllProducts}
-            showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-            showVendorCategory={true}
-            scrollHandler={scrollHandler}
-            priceType={priceType}
-            onPressProduct={(item) => navigation.navigate(navigationStrings.CAR_RENTAL_HOME,{data:{...item,type:'product'}})}
-
           /> :
             <DashBoardFiveV2Api
               handleRefresh={() => handleRefresh()}

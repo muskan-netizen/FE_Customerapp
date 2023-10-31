@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         marginRight: moderateScale(4)
     },
     attributesText: {
-        fontFamily: fontFamily.medium, fontSize: textScale(14)
+        fontFamily: fontFamily.bold, fontSize: textScale(14)
     }
 
 })
