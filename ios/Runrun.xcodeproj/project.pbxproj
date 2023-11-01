@@ -373,9 +373,9 @@
 		A08C9802248497AD888A2495 /* libPods-available_pods-Homeric.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F7BF59E8F5C1735DC9E620 /* libPods-available_pods-Homeric.a */; };
 		B90EF4E675CB1112AA4A97A6 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C440316E6CB74E2F23C0867B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		D91519402AF11CE800DB7A85 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D915193D2AF11CE800DB7A85 /* ProximaNova-Regular.ttf */; };
-		D91519412AF11CE800DB7A85 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D915193E2AF11CE800DB7A85 /* ProximaNova-Bold.ttf */; };
-		D91519422AF11CE800DB7A85 /* ProximaNova-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D915193F2AF11CE800DB7A85 /* ProximaNova-Medium.ttf */; };
+		D91519462AF13CCD00DB7A85 /* ProximaNova-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91519432AF13CCC00DB7A85 /* ProximaNova-Medium.ttf */; };
+		D91519472AF13CCD00DB7A85 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91519442AF13CCC00DB7A85 /* ProximaNova-Bold.ttf */; };
+		D91519482AF13CCD00DB7A85 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91519452AF13CCC00DB7A85 /* ProximaNova-Regular.ttf */; };
 		ED7077312A9368D100A2F900 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED70772D2A9368D100A2F900 /* GoogleService-Info.plist */; };
 		ED7077322A9368D100A2F900 /* Rentzy(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED70772E2A9368D100A2F900 /* Rentzy(Development).xcconfig */; };
 		ED7077332A9368D100A2F900 /* Rentzy(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED70772F2A9368D100A2F900 /* Rentzy(Production).xcconfig */; };
@@ -574,9 +574,9 @@
 		CBDFF70B0D8B077A3C1514AB /* Pods-available_pods-Rentzy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Rentzy.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Rentzy/Pods-available_pods-Rentzy.release.xcconfig"; sourceTree = "<group>"; };
 		CEC153423880C9A3A5EE2962 /* Pods-available_pods-Emart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Emart.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Emart/Pods-available_pods-Emart.release.xcconfig"; sourceTree = "<group>"; };
 		D26EDDFD29F24A47C743B3E3 /* libPods-available_pods-Emart.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-available_pods-Emart.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D915193D2AF11CE800DB7A85 /* ProximaNova-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Regular.ttf"; path = "../../../Ooryks/ios/Fonts/ProximaNova-Regular.ttf"; sourceTree = "<group>"; };
-		D915193E2AF11CE800DB7A85 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Bold.ttf"; path = "../../../Ooryks/ios/Fonts/ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
-		D915193F2AF11CE800DB7A85 /* ProximaNova-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Medium.ttf"; path = "../../../Ooryks/ios/Fonts/ProximaNova-Medium.ttf"; sourceTree = "<group>"; };
+		D91519432AF13CCC00DB7A85 /* ProximaNova-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Medium.ttf"; path = "../../../Ooryks/ios/Fonts/ProximaNova-Medium.ttf"; sourceTree = "<group>"; };
+		D91519442AF13CCC00DB7A85 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Bold.ttf"; path = "../../../Ooryks/ios/Fonts/ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
+		D91519452AF13CCC00DB7A85 /* ProximaNova-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Regular.ttf"; path = "../../../Ooryks/ios/Fonts/ProximaNova-Regular.ttf"; sourceTree = "<group>"; };
 		DB763C6C90F870402B6E2D00 /* Pods-available_pods-Zest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Zest.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Zest/Pods-available_pods-Zest.debug.xcconfig"; sourceTree = "<group>"; };
 		DB88C62C4B48CBEF82AF7881 /* Pods-available_pods-Spa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Spa.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Spa/Pods-available_pods-Spa.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -992,9 +992,9 @@
 		844FDD0F267397EF00C16835 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				D915193E2AF11CE800DB7A85 /* ProximaNova-Bold.ttf */,
-				D915193F2AF11CE800DB7A85 /* ProximaNova-Medium.ttf */,
-				D915193D2AF11CE800DB7A85 /* ProximaNova-Regular.ttf */,
+				D91519442AF13CCC00DB7A85 /* ProximaNova-Bold.ttf */,
+				D91519432AF13CCC00DB7A85 /* ProximaNova-Medium.ttf */,
+				D91519452AF13CCC00DB7A85 /* ProximaNova-Regular.ttf */,
 				8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */,
 				8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */,
 				8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */,
@@ -1719,18 +1719,19 @@
 				842467A727074643005473D3 /* LaunchScreen.storyboard in Resources */,
 				842467A827074643005473D3 /* CircularStd-Book.otf in Resources */,
 				842467A927074643005473D3 /* Metropolis-Bold.otf in Resources */,
-				D91519412AF11CE800DB7A85 /* ProximaNova-Bold.ttf in Resources */,
+				D91519482AF13CCD00DB7A85 /* ProximaNova-Regular.ttf in Resources */,
 				84C85487270747AA00D6B750 /* Ace(Development).xcconfig in Resources */,
 				842467AA27074643005473D3 /* Futura Hv BT.ttf in Resources */,
 				84C85489270747C000D6B750 /* Ace(Production).xcconfig in Resources */,
 				842467AB27074643005473D3 /* SFProText-Regular.ttf in Resources */,
 				842467AC27074643005473D3 /* SFProText-SemiBold.ttf in Resources */,
+				D91519462AF13CCD00DB7A85 /* ProximaNova-Medium.ttf in Resources */,
 				842467AD27074643005473D3 /* SFProText-Medium.ttf in Resources */,
 				84C854F32707483700D6B750 /* GoogleService-Info.plist in Resources */,
 				842467AF27074643005473D3 /* notification.wav in Resources */,
 				842467B127074643005473D3 /* Plists in Resources */,
 				842467B227074643005473D3 /* Futura-Normal.ttf in Resources */,
-				D91519422AF11CE800DB7A85 /* ProximaNova-Medium.ttf in Resources */,
+				D91519472AF13CCD00DB7A85 /* ProximaNova-Bold.ttf in Resources */,
 				842467B327074643005473D3 /* Eina02-Bold.ttf in Resources */,
 				842467B427074643005473D3 /* Futura-Book.ttf in Resources */,
 				842467B527074643005473D3 /* CircularStd-Medium.otf in Resources */,

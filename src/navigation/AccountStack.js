@@ -70,7 +70,8 @@ import {
   P2pOndemandProductDetail,
   AttributeInformation,
   P2pOndemandAttributeInformation,
-  SavedPaymentCards
+  SavedPaymentCards,
+  P2pWishlist
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -78,6 +79,8 @@ import navigationStrings from './navigationStrings';
 const Stack = createNativeStackNavigator();
 export default function ({ navigation }) {
   const { appData, appStyle } = useSelector((state) => state?.initBoot);
+  const { dineInType } = useSelector((state) => state?.home);
+
 
   console.log(appStyle?.homePageLayout, "fasdfajshdf")
 
@@ -166,16 +169,7 @@ export default function ({ navigation }) {
       />
       <Stack.Screen name={navigationStrings.WALLET} component={Wallet} />
       <Stack.Screen name={navigationStrings.ADD_MONEY} component={AddMoney} />
-      <Stack.Screen
-        name={navigationStrings.WISHLIST}
-        component={
-          appStyle?.homePageLayout === 3 ||
-            appStyle?.homePageLayout === 5 ||
-            appStyle?.homePageLayout === 8
-            ? Wishlist2
-            : Wishlist
-        }
-      />
+
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
@@ -272,10 +266,7 @@ export default function ({ navigation }) {
         name={navigationStrings.REPLACE_ORDER}
         component={ReplaceOrder}
       />
-      <Stack.Screen
-        name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={P2pOndemandProductDetail}
-      />
+
       <Stack.Screen name={navigationStrings.MY_POSTS} component={MyP2pPosts} />
       <Stack.Screen name={navigationStrings.ATTRIBUTE_INFORMATION} component={P2pOndemandAttributeInformation} />
       <Stack.Screen
@@ -299,6 +290,8 @@ export default function ({ navigation }) {
         name={navigationStrings.SAVED_PAYMENT_CARDS}
         component={SavedPaymentCards}
       />
+
+
     </Stack.Navigator>
   );
 }

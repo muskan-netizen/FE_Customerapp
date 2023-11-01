@@ -510,7 +510,7 @@ export default function Account3({ navigation }) {
             }}
           />
           }
-          {dineInType !== 'p2p' && !!userData?.auth_token &&
+          {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}

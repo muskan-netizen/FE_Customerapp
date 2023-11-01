@@ -210,10 +210,13 @@ export {default as Account7} from './Account/Account7';
 export {default as DeveloperMode} from './DeveloperMode/DeveloperMode';
 export {default as ProductPowerConumption} from './ProductPowerConumption/ProductPowerConumption';
 export {default as SavedPaymentCards} from './P2pOnDemnadBid/SavedPaymentCards/SavedPaymentCards';
+export {default as P2pWishlist} from './P2pOnDemnadBid/P2pWishlist/P2pWishlist';
+
 
 // -----------------Atlantic----------
 export { default as CarRentalScreen } from './CarRentHomeScreen/CarRentHomeScreen'
 export { default as AvailableCars } from './AvailableCars/AvailableCars'
 export {default as ProductDetail3} from './ProductDetail/ProductDetail3';
 export {default as ReviewBooking} from './ReviewBooking/ReviewBooking';
+
 
