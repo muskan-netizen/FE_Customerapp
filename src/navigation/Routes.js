@@ -9,7 +9,11 @@ import {
   ChatScreen,
   ChatScreenForVendor,
   P2pChatRoom,
-  P2pChatScreen
+  P2pChatScreen,
+  P2pOndemandProductDetail,
+  P2pWishlist,
+  Wishlist,
+  Wishlist2
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -33,8 +37,9 @@ const Stack = createNativeStackNavigator();
 export default function Routes() {
   const { userData, appSessionInfo } = useSelector((state) => state?.auth || {});
   const { appStyle, themeColors, appData } = useSelector((state) => state?.initBoot || {});
+  const { dineInType } = useSelector((state) => state?.home);
+
   const businessType = appStyle?.homePageLayout;
-console.log(businessType,'businessTypebusinessType');
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -88,7 +93,7 @@ console.log(businessType,'businessTypebusinessType');
 
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN}
-          component={businessType === 8 ? P2pChatScreen : ChatScreen}
+          component={dineInType === "p2p" ? P2pChatScreen : ChatScreen}
         />
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
@@ -96,7 +101,7 @@ console.log(businessType,'businessTypebusinessType');
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM}
-          component={businessType === 8 ? P2pChatRoom : ChatRoom}
+          component={dineInType === 8 ? P2pChatRoom : ChatRoom}
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
@@ -113,7 +118,21 @@ console.log(businessType,'businessTypebusinessType');
           component={TabRoutesVendorNewTemplate}
           options={{ gestureEnabled: false }}
         />
-
+        <Stack.Screen
+          name={navigationStrings.WISHLIST}
+          component={
+            dineInType == "p2p" ? P2pWishlist :
+              appStyle?.homePageLayout === 3 ||
+                appStyle?.homePageLayout === 5 ||
+                appStyle?.homePageLayout === 8
+                ? Wishlist2
+                : Wishlist
+          }
+        />
+        <Stack.Screen
+          name={navigationStrings.P2P_PRODUCT_DETAIL}
+          component={P2pOndemandProductDetail}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -102,12 +102,12 @@ export default function Signup({ navigation }) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery  && getBundleId() !== appIds.pave)
+        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery && getBundleId() !== appIds.pave)
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
           '-',
           '',
         )
-        : getBundleId() == appIds.speedyDelivery ? "1"  : getBundleId() == appIds.pave ? '44' : appData?.profile?.country?.code
+        : getBundleId() == appIds.speedyDelivery ? "1" : getBundleId() == appIds.pave ? '44' : appData?.profile?.country?.code
           ? appData?.profile?.country?.phonecode
           : '91',
     cca2:
@@ -212,8 +212,8 @@ export default function Signup({ navigation }) {
       showError(error || 'Email is not in valid format');
       return;
     }
-    
-    
+
+
     return true;
   };
 
@@ -574,6 +574,8 @@ export default function Signup({ navigation }) {
     );
   };
 
+  console.log(aadharFront, "fasdkfjhasdf")
+
   // this funtion use for camera handle
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
@@ -587,35 +589,38 @@ export default function Signup({ navigation }) {
           mediaType: 'photo',
         })
           .then((res) => {
-            if (pickerType == 0) {
-              let file = {
-                id: uuidv4(),
-                name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
-                type: res?.mime,
-                uri: res?.path,
-              };
-              updateState({
-                aadharFront: file,
-              });
-              return;
-            }
-            if (pickerType == 1) {
-              let file = {
-                id: uuidv4(),
-                name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
-                type: res?.mime,
-                uri: res?.path,
-              };
-              updateState({
-                aadharBack: file,
-              });
-              return;
-            }
+            console.log(res, "fasjdkfahjsdf", pickerType)
+            if (!!res?.path) {
+              if (pickerType == 0) {
+                let file = {
+                  id: uuidv4(),
+                  name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                  type: res?.mime,
+                  uri: res?.path,
+                };
+                updateState({
+                  aadharFront: file,
+                });
+                return;
+              }
+              if (pickerType == 1) {
+                let file = {
+                  id: uuidv4(),
+                  name: res?.path.substring(res?.path.lastIndexOf('/') + 1),
+                  type: res?.mime,
+                  uri: res?.path,
+                };
+                updateState({
+                  aadharBack: file,
+                });
+                return;
+              }
 
-            let data = cloneDeep(addtionalImages);
-            data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
-            data[addtionSelectedImageIndex].fileData = res;
-            updateState({ addtionalImages: data });
+              let data = cloneDeep(addtionalImages);
+              data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
+              data[addtionSelectedImageIndex].fileData = res;
+              updateState({ addtionalImages: data });
+            }
           })
           .catch((err) => {
             console.log(err, 'err>>>>');
@@ -763,12 +768,13 @@ export default function Signup({ navigation }) {
               )}
               <PhoneNumberInput
                 onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) =>{
-                  if ( phoneNumber.length > 10 && getBundleId() == appIds.pave ) {
-                    return 
-                  }else{
-                    updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })}
-                  } 
+                onChangePhone={(phoneNumber) => {
+                  if (phoneNumber.length > 10 && getBundleId() == appIds.pave) {
+                    return
+                  } else {
+                    updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
+                  }
+                }
                 }
                 cca2={cca2}
                 phoneNumber={phoneNumber}

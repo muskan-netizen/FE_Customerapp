@@ -1013,7 +1013,10 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                 marginLeft: moderateScale(16),
                 marginTop: moderateScaleVertical(18),
               }}>
-              <Image source={imagePath.ooryks_Profile} />
+              <Image source={{ uri: getImageUrl(productInfo?.vendor?.logo?.image_fit, productInfo?.vendor?.logo?.image_path, "200/200") }} style={{
+                height: 40, width: 40,
+                borderRadius: 20
+              }} />
               <View style={{ marginLeft: moderateScale(16) }}>
                 <Text style={{
                   fontFamily: fontFamily?.regular,
@@ -1600,12 +1603,12 @@ const P2pProductDetail = ({ navigation, route, item }) => {
         images={productAllImgs}
         imageIndex={0}
         visible={isImagesModal}
-
-
+        animationType="slide"
         onImageIndexChange={(inx) => setActiveImgInx(inx)}
         onRequestClose={() => setImagesModal(false)}
         swipeToCloseEnabled={false}
-        presentationStyle={"overFullScreen"}
+        presentationStyle={"formSheet"}
+
         FooterComponent={() => <View>
           {productAllImgs?.length <= 10 ?
             <View style={{ flexDirection: "row", alignSelf: "center", bottom: 20, position: "absolute", flexWrap: "wrap" }}>

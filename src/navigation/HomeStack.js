@@ -25,6 +25,8 @@ import {
   LaundryAvailableVendors,
   Location,
   Notifications,
+  P2pChatRoom,
+  P2pChatScreen,
   P2pOndemandProductDetail,
   P2pOndemandProducts,
   P2pPayment,
@@ -260,7 +262,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.CHAT_SCREEN}
-        component={ChatScreen}
+        component={dineInType === "p2p" ? P2pChatScreen : ChatScreen}
         options={{ gestureEnabled: true }}
       />
       <Stack.Screen
@@ -271,7 +273,7 @@ export default function () {
         name={navigationStrings.LAUNDRY_AVAILABLE_VENDORS}
         component={LaundryAvailableVendors}
       />
-      <Stack.Screen name={navigationStrings.CHAT_ROOM} component={ChatRoom} />
+      <Stack.Screen name={navigationStrings.CHAT_ROOM} component={dineInType === "p2p" ? P2pChatRoom : ChatRoom} />
       <Stack.Screen
         name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
         component={ChatRoomForVendor}
