@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
-export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
-// export const API_BASE_URL = 'http://192.168.101.210:8001/api/v1'
+// export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
+export const API_BASE_URL = 'http://192.168.103.242:8002/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
 // export const API_BASE_URL = 'https://solarprimex.netsolutionindia.com/api/v1';
@@ -871,3 +871,4 @@ export const ADD_BOOKING_OPTIONS = getApiUrl('/cart/add-booking-option');
 export const PRODUCT_CHECK_AVAILABILITY = getApiUrl('/check-product-availability');
 
 export const CREATE_ORDER_NOTIFICATION = getApiUrl('/pickup-delivery/create-order-notifications'); //<--------- driver notification endpoint
+export const GET_HOURLY_BASE_PRICE = getApiUrl('/get-hourly-base-price'); 

@@ -295,6 +295,8 @@ function ChooseVechile({ navigation, route }) {
     }, [])
 
 
+    console.log(pickUpTimeType, "pickUpTimeTypepickUpTimeType")
+
 
     //Get list of all orders api
     const _getAllCarAndPrices = (showInitalModal = true, scheduleDateTime = null, _isCabPooling = false, seatNo = 1, _isBidRide = false) => {
@@ -537,7 +539,6 @@ function ChooseVechile({ navigation, route }) {
             extraData: extraData,
         };
 
-        console.log(paymentData, 'paymentData>paymentData');
         updateState({
             isModalVisible: false,
             isLoading: false,
@@ -725,12 +726,13 @@ function ChooseVechile({ navigation, route }) {
         });
 
         console.log(data, "<===sending data")
+        let headers = {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+        }
         actions
-            .placeDelievryOrder(data, {
-                code: appData?.profile?.code,
-                currency: currencies?.primary_currency?.id,
-                language: languages?.primary_language?.id,
-            })
+            .placeDelievryOrder(data, headers)
             .then((res) => {
 
                 console.log(res, '<===placeDelievryOrder');
@@ -771,6 +773,10 @@ function ChooseVechile({ navigation, route }) {
         const orderFinalPrice = paramData?.bidData?.bid_price ? Number(paramData?.bidData?.bid_price) : selectedCarOption?.total_tags_price ? selectedCarOption?.total_tags_price : selectedCarOption?.tags_price;
 
         let data = {};
+        if (!!paramData?.rentalTime) {
+            data['rental_hours'] = paramData?.rentalTime
+        }
+
         data['task_type'] = scheduleDateTime?.selectedDateAndTime ? '' : pickUpTimeType ? pickUpTimeType : '';
         data['schedule_time'] = scheduleDateTime?.selectedDateAndTime ? `${scheduleDateTime?.selectedDateAndTime}`
             : pickUpTimeType == 'now' ? '' : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;

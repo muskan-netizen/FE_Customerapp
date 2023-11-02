@@ -91,7 +91,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
   const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
-console.log(themeColors,'themeColorsthemeColorsthemeColors')
+  console.log(themeColors, 'themeColorsthemeColorsthemeColors')
   const [state, setState] = useState({
     region: {
       latitude: paramData?.location[0]?.latitude
@@ -515,9 +515,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
       selectedPayment: selectedPayment,
       extraData: extraData,
     };
-
-    console.log(paymentData, 'paymentData>paymentData');
-    console.log(paymentId, 'paymentData>paymentData123');
     updateState({
       isModalVisible: false,
       isLoading: false,
@@ -549,7 +546,7 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
       case 52: //SKIP_CASH Payment Gatway
         navigation.navigate(navigationStrings.SKIP_CASH, paymentData);
         break;
-        case 57: //Peaspal Payment Gatway
+      case 57: //Peaspal Payment Gatway
         navigation.navigate(navigationStrings.PESAPAL, paymentData);
         break;
       case 30: //FlutterWave Payment Getway
@@ -635,7 +632,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'resresresresplaceDelievryOrder');
         if (res && res?.status == 200) {
           let extraData = {
             orderId: res?.data?.id,
@@ -647,7 +643,6 @@ console.log(themeColors,'themeColorsthemeColorsthemeColors')
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           };
-          console.log(extraData, data, "extraData, data");
           if (selectedPayment?.id == 49 || selectedPayment?.id == 50 || selectedPayment?.id == 53) { _paymentWithPlugnPayMethods(extraData, res, data) }
           else { checkPaymentOptions(extraData, data); }
 

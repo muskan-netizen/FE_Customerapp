@@ -44,11 +44,11 @@
 		4DC821928AFB1C3449A457FD /* libPods-available_pods-Gusto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95641227EB5234A045B15C10 /* libPods-available_pods-Gusto.a */; };
 		5B53B811ECC4B30499C0721D /* libPods-available_pods-Ace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 390DBD265516E03D85101D17 /* libPods-available_pods-Ace.a */; };
 		65D4827219B47A47628FCB00 /* libPods-available_pods-Rentzy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 767B6C18F32F526315E75DC4 /* libPods-available_pods-Rentzy.a */; };
-		678C4729790A7832A8BC6960 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		678C4729790A7832A8BC6960 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		687D6840F82E1D2E52493824 /* libPods-available_pods-Suel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BDA5AE3E8E01951ACEEE02 /* libPods-available_pods-Suel.a */; };
 		6A2439CBEA374185FF222D02 /* libPods-available_pods-Grub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26EE3F355B9A3D123348CE64 /* libPods-available_pods-Grub.a */; };
-		6D8E1685332C75753104879C /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		7A569D2859674BEBD647C895 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		6D8E1685332C75753104879C /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		7A569D2859674BEBD647C895 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		83D7FFDFF17D740C1B0DA2ED /* libPods-available_pods-Punnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E7DF34A404F80D0440F84E4 /* libPods-available_pods-Punnet.a */; };
 		8424513727071D32005473D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8424513827071D32005473D3 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -371,8 +371,8 @@
 		8D5D14BCD9C8D4338B77FE9E /* libPods-available_pods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C12552500117E81120F28268 /* libPods-available_pods-RoyoOrder.a */; };
 		995FB59A93160992291C06C7 /* libPods-available_pods-Voltaic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B3D5B42D5718ED3114BEF9 /* libPods-available_pods-Voltaic.a */; };
 		A08C9802248497AD888A2495 /* libPods-available_pods-Homeric.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F7BF59E8F5C1735DC9E620 /* libPods-available_pods-Homeric.a */; };
-		B90EF4E675CB1112AA4A97A6 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		C440316E6CB74E2F23C0867B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		B90EF4E675CB1112AA4A97A6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		C440316E6CB74E2F23C0867B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		D91519462AF13CCD00DB7A85 /* ProximaNova-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91519432AF13CCC00DB7A85 /* ProximaNova-Medium.ttf */; };
 		D91519472AF13CCD00DB7A85 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91519442AF13CCC00DB7A85 /* ProximaNova-Bold.ttf */; };
 		D91519482AF13CCD00DB7A85 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91519452AF13CCC00DB7A85 /* ProximaNova-Regular.ttf */; };
@@ -620,7 +620,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A569D2859674BEBD647C895 /* (null) in Frameworks */,
+				7A569D2859674BEBD647C895 /* BuildFile in Frameworks */,
 				FA6119FE9E0E2971C08BDCBF /* libPods-available_pods-Emart.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,7 +636,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C440316E6CB74E2F23C0867B /* (null) in Frameworks */,
+				C440316E6CB74E2F23C0867B /* BuildFile in Frameworks */,
 				1634550026849AF6933BA12E /* libPods-available_pods-GoKab.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -653,7 +653,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B90EF4E675CB1112AA4A97A6 /* (null) in Frameworks */,
+				B90EF4E675CB1112AA4A97A6 /* BuildFile in Frameworks */,
 				5B53B811ECC4B30499C0721D /* libPods-available_pods-Ace.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,7 +702,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D8E1685332C75753104879C /* (null) in Frameworks */,
+				6D8E1685332C75753104879C /* BuildFile in Frameworks */,
 				A08C9802248497AD888A2495 /* libPods-available_pods-Homeric.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -719,7 +719,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				678C4729790A7832A8BC6960 /* (null) in Frameworks */,
+				678C4729790A7832A8BC6960 /* BuildFile in Frameworks */,
 				FFD9AB965E38C1F0D258E080 /* libPods-available_pods-Elixir.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1739,7 +1739,6 @@
 				842467B727074643005473D3 /* FuturaBT-Heavy.ttf in Resources */,
 				842467B827074643005473D3 /* CircularStd-Bold.ttf in Resources */,
 				842467B927074643005473D3 /* Metropolis-Regular.otf in Resources */,
-				D91519402AF11CE800DB7A85 /* ProximaNova-Regular.ttf in Resources */,
 				842467BC27074643005473D3 /* SFProText-Bold.ttf in Resources */,
 				842467BD27074643005473D3 /* Eina02-SemiBold.ttf in Resources */,
 			);

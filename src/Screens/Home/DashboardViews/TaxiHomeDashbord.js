@@ -1,4 +1,6 @@
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
@@ -6,6 +8,7 @@ import {
   StyleSheet,
   Text, TouchableOpacity, View
 } from 'react-native';
+import { Calendar } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -16,17 +19,23 @@ import MapView, {
   PROVIDER_GOOGLE
 } from 'react-native-maps';
 import Modal from 'react-native-modal';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSelector } from 'react-redux';
 import AddressModal3 from '../../../Components/AddressModal3';
+import ButtonComponent from '../../../Components/ButtonComponent';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GradientButton from '../../../Components/GradientButton';
-import Loader from '../../../Components/Loader';
+import HorizontalLine from '../../../Components/HorizontalLine';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
+import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
+import TaxiHourlyRentalCard from '../../../Components/TaxiHourlyRentalCard';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import commonStylesFunc, { hitSlopProp, hitSlopProp7 } from '../../../styles/commonStyles';
 import {
   height,
   itemWidth,
@@ -44,14 +53,10 @@ import {
   showError,
   showSuccess
 } from '../../../utils/helperFunctions';
-import useInterval from '../../../utils/useInterval';
 import stylesFunc from '../styles';
-import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
-import { isEmpty } from 'lodash';
-import TaxiHourlyRentalCard from '../../../Components/TaxiHourlyRentalCard';
-import { hitSlopProp } from '../../../styles/commonStyles';
-import { Shadow } from 'react-native-shadow-2';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+
+
+
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -113,9 +118,19 @@ export default function TaxiHomeDashbord({
   } = state;
   const [isHourlyRentalModal, setIsHourlyRentalModal] = useState(false)
   const [isRentalCalendarModal, setIsRentalCalendarModal] = useState(false)
+  const [rentalHours, setRentalHours] = useState(1)
+  const [isAm, setIsAm] = useState(false)
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false)
+  const [dateTime, setDateTime] = useState('')
+  const [dayTime, setDayTime] = useState(new Date())
+  const [isTimePicker, setIsTimePicker] = useState(false)
+  const [isHourlyRental, setIsHourlyRental] = useState(false)
+  const [pressedCategory, setPressedCategory] = useState({})
+  const [categoryBasePrice, setCategoryBasePrice] = useState(0)
+  const [categoryBaseKM, setCategoryBaseKM] = useState(0)
 
-  const [rentalHours, setRentalHours] = useState(9)
   const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
@@ -279,8 +294,35 @@ export default function TaxiHomeDashbord({
   };
 
   const continueWithNaxtScreen = (item) => {
-    onPressCategory(item);
+
+    if (!!userData?.auth_token) {
+      if (isHourlyRental) {
+        setPressedCategory(item)
+        setIsHourlyRentalModal(true)
+        onHourlyPrice(item)
+        return
+      }
+      onPressCategory(item);
+    }
+    else {
+      actions.setAppSessionData('on_login');
+    }
+
   };
+
+  const onHourlyPrice = (item) => {
+
+    let url = `?cat_id=${item?.id}`
+    actions.onGetHourlyBasePrice(url, {
+      code: appData?.profile?.code,
+    }).then((res) => {
+      console.log(res, "<===onGetHourlyBasePrice")
+      setCategoryBasePrice(res?.data?.price)
+      setCategoryBaseKM(!!res?.data?.km_included ? res?.data?.km_included : 1)
+
+    }).catch(errorMethod)
+
+  }
 
 
   const addUpdateLocation = (childData) => {
@@ -397,7 +439,6 @@ export default function TaxiHomeDashbord({
   }
 
   const errorMethod = (error) => {
-    console.log(error, "errorOccured");
     showError(error?.message || error?.error || error?.description);
   };
 
@@ -406,11 +447,10 @@ export default function TaxiHomeDashbord({
 
 
   const _renderItem = useCallback(({ item }) => {
-
     return (
       <TaxiHomeCategoryCard data={item} onPress={() => continueWithNaxtScreen(item)} mainViewStyle={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey }} />
     );
-  }, [appMainData?.categories, isDarkMode])
+  }, [appMainData?.categories, isDarkMode, isHourlyRental])
 
 
   const moveToScreen = (details, mapView) => {
@@ -608,6 +648,12 @@ export default function TaxiHomeDashbord({
     prefillAdress = null
   }) => {
     let item = !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0];
+    if (isHourlyRental) {
+      setIsHourlyRentalModal(true)
+      setPressedCategory(item)
+      return
+    }
+
     actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
     if (fromMap) {
       updateState({ fullMapShow: false })
@@ -616,6 +662,7 @@ export default function TaxiHomeDashbord({
           ? navigation.navigate(navigationStrings.ADDADDRESS, {
             item,
             prefillAdress: !!prefillAdress ? prefillAdress : null,
+            hourlyDateTime: isHourlyRental ? dateTime : null
           })
           : actions.setAppSessionData('on_login');
       }, 800);
@@ -624,6 +671,7 @@ export default function TaxiHomeDashbord({
         ? navigation.navigate(navigationStrings.ADDADDRESS, {
           item,
           prefillAdress: !!prefillAdress ? prefillAdress : null,
+          hourlyDateTime: isHourlyRental ? dateTime : null
         })
         : actions.setAppSessionData('on_login');
     }
@@ -637,10 +685,44 @@ export default function TaxiHomeDashbord({
       isLoadingModal: true,
     });
     setTimeout(() => {
+      console.log(date, "fasdfhskdjhf")
       updateState({ isLoadingModal: false });
       goToAddress({ scheduleDate: date })
     }, 2000);
   }
+
+  const onChooseTrip = () => {
+    if (!dateTime) {
+      alert("Pleast select pickup date and time.")
+      return
+    }
+    setIsHourlyRentalModal(false)
+    setTimeout(() => {
+      console.log(dateTime, "fasdfkasjdhf")
+      actions.saveSchduleTime(moment(dateTime).format("YYYY-DD-MM") > moment().format("YYYY-DD-MM") ? new Date(dateTime) : "now");
+      onPressCategory({ ...pressedCategory, hourlyDateTime: dateTime, rentalTime: isHourlyRental ? rentalHours : null })
+    }, 500);
+  }
+
+  const onLeaveNow = () => {
+    setDateTime(new Date())
+    const currentDate = new Date();
+    const hours = currentDate.getHours();
+    setIsAm(hours < 12)
+  }
+
+  const onDayPress = (day) => {
+    setDateTime(day?.dateString)
+  }
+
+  const onConfirmDayTime = (date) => {
+    setDayTime(date)
+    const currentDate = new Date(date);
+    const hours = currentDate.getHours();
+    setIsAm(hours < 12)
+    setIsTimePicker(false)
+  }
+
 
 
 
@@ -672,6 +754,40 @@ export default function TaxiHomeDashbord({
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
+        <View style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: moderateScaleVertical(8)
+        }}>
+          <ButtonComponent
+            onPress={() => setIsHourlyRental(false)}
+            btnText={"Pick & Drop"}
+            textStyle={{
+              color: isHourlyRental ? colors.black : colors.white,
+              textTransform: "none"
+            }}
+            containerStyle={{
+              flex: 0.5,
+              height: moderateScaleVertical(40),
+              backgroundColor: !isHourlyRental ? themeColors?.primary_color : colors.white,
+              borderRadius: 0,
+              elevation: 1
+            }} />
+          <ButtonComponent
+            onPress={() => setIsHourlyRental(true)}
+            btnText={"Rentals"}
+            textStyle={{
+              color: isHourlyRental ? colors.white : colors.black,
+              textTransform: "none"
+            }}
+            containerStyle={{
+              flex: 0.5,
+              height: moderateScaleVertical(40),
+              backgroundColor: isHourlyRental ? themeColors?.primary_color : colors.white,
+              borderRadius: 0,
+              elevation: 1
+            }} />
+        </View>
         <>
           <TaxiBannerHome
             appStyle={appStyle}
@@ -706,7 +822,7 @@ export default function TaxiHomeDashbord({
           )}
           ListFooterComponent={() => (
             <View style={{ marginHorizontal: moderateScale(12), }}>
-              <TaxiHourlyRentalCard onPress={() => setIsHourlyRentalModal(true)} />
+              {!!appData?.profile?.preferences?.is_hourly_pickup_rental && <TaxiHourlyRentalCard onPress={() => setIsHourlyRentalModal(true)} />}
             </View>
           )}
         />
@@ -739,7 +855,7 @@ export default function TaxiHomeDashbord({
                   {strings.WHERETO}
                 </Text>
               </TouchableOpacity>
-              {getBundleId() === appIds.appi ? null : <TouchableOpacity
+              {getBundleId() === appIds.appi || isHourlyRental ? null : <TouchableOpacity
                 onPress={() => {
                   userData?.auth_token
                     ? updateState({
@@ -1114,29 +1230,13 @@ export default function TaxiHomeDashbord({
                 <Image source={imagePath.ic_hourly_taxi_back} />
               </TouchableOpacity>
               <Text style={{
-                fontFamily: fontFamily?.bold,
-                fontSize: textScale(20),
-                color: colors.black,
+                ...commonStyles.boldFont20,
                 marginTop: moderateScaleVertical(24)
-              }}>{"How much time do you \nneed?"}</Text>
-              <View style={{
-                paddingHorizontal: moderateScaleVertical(16),
-                paddingVertical: moderateScaleVertical(50),
-                borderRadius: moderateScale(6), elevation: 2,
-                borderWidth: 1,
-                borderColor: colors.blackOpacity05,
-                marginTop: moderateScaleVertical(50)
-
-
-
-
-              }}>
+              }}>{strings.HOW_MUCH_TIME}</Text>
+              <View style={styles.hourSelectionContainer}>
                 <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  ...commonStyles.flexRowSpaceBtwn,
                   paddingHorizontal: moderateScale(16),
-
                 }}>
                   <TouchableOpacity
                     disabled={rentalHours <= 1}
@@ -1144,135 +1244,73 @@ export default function TaxiHomeDashbord({
 
                     <Image source={imagePath.ic_minus_hours} />
                   </TouchableOpacity>
-                  <Text style={{
-                    fontFamily: fontFamily?.bold,
-                    fontSize: textScale(24), color: colors.black
-                  }}>{rentalHours} Hours</Text>
+                  <Text style={commonStyles.boldFont24}>{rentalHours} {strings.HOURS}</Text>
                   <TouchableOpacity disabled={rentalHours >= 12}
                     onPress={() => rentalHours < 12 && setRentalHours(rentalHours + 1)}>
                     <Image source={imagePath.ic_plus_hours} />
                   </TouchableOpacity>
                 </View>
-                <Text style={{
-                  textAlign: "center",
-                  fontFamily: fontFamily?.regular,
-                  fontSize: textScale(14),
-                  color: colors.greyF,
-                  marginTop: moderateScaleVertical(4)
-                }}>10 km</Text>
-                <View style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  marginVertical: moderateScaleVertical(30),
-                  alignItems: "center"
-                }}>
+                <Text style={styles.kmTxt}>{Number(categoryBaseKM) * rentalHours} km</Text>
+                <View style={styles.hoursBar}>
                   {
                     new Array(12).fill(0).map((item, index) => <TouchableOpacity
-                      hitSlop={{
-                        top: 7,
-                        right: 7,
-                        left: 7,
-                        bottom: 7,
-                      }}
+                      hitSlop={hitSlopProp7}
                       onPress={() => setRentalHours(index + 1)}>
                       <Image
-
                         source={index + 1 === rentalHours ? imagePath.ic_current_bar : index + 1 < rentalHours ? imagePath.ic_selected_bar : imagePath.ic_unselected_bar} style={{
                           marginLeft: index !== 0 ? moderateScale(8) : 0
                         }} />
                     </TouchableOpacity>)
                   }
                 </View>
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center"
-                }}>
+                <View style={commonStyles.flexRowCenter}>
                   <ButtonWithLoader
-                    btnText='Leave now'
+                    onPress={onLeaveNow}
+                    btnText={strings.LEAVE_NOW}
                     btnTextStyle={{
-                      fontSize: textScale(12),
+                      ...commonStyles.mediumFont12,
                       textTransform: "none",
-                      fontFamily: fontFamily?.medium
+                      color: colors.white
+                    }}
+                    btnStyle={styles.leaveNowBtn} />
+                  <ButtonWithLoader
+                    onPress={() => setIsRentalCalendarModal(true)}
+                    btnText={!!dateTime ? moment(dateTime).format("YYYY-MM-DD hh:mm A") : strings.LEAVE_LATER}
+                    btnTextStyle={{
+                      ...commonStyles.mediumFont12,
+                      textTransform: "none",
                     }}
                     btnStyle={{
-                      backgroundColor: colors.black,
-                      height: moderateScaleVertical(34),
-                      paddingHorizontal: moderateScale(6),
-                      borderRadius: moderateScale(2),
-                      marginTop: 0
-                    }} />
-                  <ButtonWithLoader
-                    btnText='Leave later'
-                    btnTextStyle={{
-                      fontSize: textScale(12),
-                      textTransform: "none",
-                      fontFamily: fontFamily?.medium,
-                      color: colors.black,
-
-                    }}
-                    btnStyle={{
-                      backgroundColor: colors.lightGreyBg,
-                      height: moderateScaleVertical(34),
-                      paddingHorizontal: moderateScale(6),
-                      borderRadius: moderateScale(2),
-                      borderWidth: 0,
-                      marginLeft: moderateScale(12),
-                      marginTop: 0
+                      ...styles.leaveNowBtn,
+                      ...styles.leaveLaterBtn
                     }} />
                 </View>
               </View>
-
-
             </View>
             <View style={{
-
               backgroundColor: colors.greyColor1,
               padding: moderateScaleVertical(16)
             }} >
-              <View style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}>
-                <Text style={{
-                  fontFamily: fontFamily?.regular,
-                  fontSize: textScale(15),
-                  color: colors.black
-                }}>Starting at:</Text>
-                <Text style={{
-                  fontFamily: fontFamily?.medium,
-                  fontSize: textScale(16),
-                  color: colors.black
-                }}>₹694.88</Text>
+              <View style={commonStyles.flexRowSpaceBtwn}>
+                <Text style={commonStyles.font15}>{strings.STARTING_AT}</Text>
+                <Text style={commonStyles.mediumFont16}>{currencies?.primary_currency?.symbol}{Number(categoryBasePrice) * rentalHours}</Text>
               </View>
               <View style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
+                ...commonStyles.flexRowSpaceBtwn,
                 marginTop: moderateScaleVertical(6)
               }}>
-                <Text style={{
-                }}></Text>
-                <Text style={{
-                  fontFamily: fontFamily?.regular,
-                  fontSize: textScale(15),
-                  color: colors.black
-                }}>₹231.63/hr</Text>
+                <Text />
+                <Text style={commonStyles.font15}>{currencies?.primary_currency?.symbol}{Number(categoryBasePrice)}/hr</Text>
               </View>
               <ButtonWithLoader
-                onPress={() => setIsRentalCalendarModal(true)}
-                btnText='Choose a trip'
+                onPress={onChooseTrip}
+                btnText={strings.CHOOSE_A_TRIP}
                 btnTextStyle={{
-                  fontSize: textScale(12),
+                  ...commonStyles.mediumFont12,
                   textTransform: "none",
-                  fontFamily: fontFamily?.medium
+                  color: colors.white
                 }}
-                btnStyle={{
-                  backgroundColor: colors.black,
-                  height: moderateScaleVertical(48),
-                  paddingHorizontal: moderateScale(6),
-                  borderRadius: moderateScale(2)
-                }} />
+                btnStyle={styles.chooseTripBtn} />
             </View>
           </WrapperContainer>
 
@@ -1283,14 +1321,155 @@ export default function TaxiHomeDashbord({
             margin: 0,
           }}
           animationInTiming={600}>
-          <WrapperContainer>
-            <TouchableOpacity onPress={() => setIsRentalCalendarModal(false)}>
-              <Image source={imagePath.ic_back_taxi} />
-            </TouchableOpacity>
+          <WrapperContainer bgColor={colors.white}>
+            <View style={{
+              flex: 1
+            }}>
+              <View style={{
+                ...commonStyles.flexRowCenter,
+                ...styles.calendarModal,
+
+              }}>
+                <TouchableOpacity hitSlop={hitSlopProp} onPress={() => setIsRentalCalendarModal(false)}>
+                  <Image source={imagePath.ic_hourly_taxi_back} />
+                </TouchableOpacity>
+                <View style={{
+                  ...commonStyles.flexRowSpaceBtwn,
+                  ...styles.calendarContainer
+                }}>
+                  <Text style={{
+                    ...commonStyles.mediumFont15
+                  }}>Reserved Trip</Text>
+                  <View style={{
+                    alignItems: "flex-end"
+                  }}>
+                    <Text style={commonStyles.boldFont11}>{moment(dateTime).format("ddd, DD MMM")}</Text>
+                    <Text style={{ ...commonStyles.font11, marginTop: moderateScaleVertical(4) }}>{moment(dayTime).format("hh:mm A")}</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.calendarView}>
+                <Calendar
+                  minDate={new Date()}
+                  style={{
+                    padding: 0
+                  }}
+                  onDayPress={onDayPress}
+                  markedDates={{
+                    [moment(dateTime).format("YYYY-MM-DD")]: { selected: true, selectedColor: themeColors?.primary_color },
+                  }}
+                // hideArrows
+                />
+                <View style={{ ...commonStyles.flexRowCenter, ...styles.timeContainer }}>
+                  <TouchableOpacity
+                    onPress={() => setIsTimePicker(true)}
+                    style={{
+                      ...styles.timBtn,
+                      ...commonStyles.alignJustifyCenter,
+                      borderRadius: moderateScale(4)
+                    }}>
+                    <Text style={{ ...commonStyles.mediumFont14, color: colors.white }}>{moment(dayTime).format("hh:mm")}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setIsAm(true)}
+                    style={{
+                      ...styles.amPmBtn,
+                      ...commonStyles.alignJustifyCenter,
+                      backgroundColor: isAm ? themeColors?.primary_color : colors.greyH,
+                      marginLeft: moderateScale(6),
+                      borderTopLeftRadius: moderateScale(4),
+                      borderBottomLeftRadius: moderateScale(4),
+                      borderWidth: 0
+                    }}>
+                    <Text style={{ ...commonStyles.font12, color: isAm ? colors.white : colors.black }}>{strings.AM}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+
+                    onPress={() => setIsAm(false)}
+
+                    style={{
+                      ...commonStyles.alignJustifyCenter,
+                      ...styles.amPmBtn,
+                      backgroundColor: !isAm ? themeColors?.primary_color : colors.greyH,
+                      borderTopRightRadius: moderateScale(4),
+                      borderBottomRightRadius: moderateScale(4)
+                    }}>
+                    <Text style={{ ...commonStyles.font12, color: !isAm ? colors.white : colors.black }}>{strings.PM}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{ ...commonStyles.flexRowCenter, marginHorizontal: moderateScaleVertical(16), marginTop: moderateScaleVertical(20) }}>
+                <Image source={imagePath.ic_hourly_calendar} />
+                <View style={{
+                  marginLeft: moderateScale(10),
+                }}>
+                  <Text style={{
+                    ...commonStyles.font14,
+                    color: colors.greyI,
+                  }}>{strings.CHOOSE_YOUR_EXACT_PICKUP}</Text>
+                  <HorizontalLine lineStyle={{
+                    marginTop: moderateScaleVertical(16)
+                  }} />
+                </View>
+              </View>
+              <View style={{ ...commonStyles.flexRowCenter, marginHorizontal: moderateScaleVertical(16), marginTop: moderateScaleVertical(16) }}>
+                <Image source={imagePath.ic_hourglass} />
+                <View style={{
+                  marginLeft: moderateScale(10),
+                }}>
+                  <Text style={{
+                    ...commonStyles.font14,
+                    color: colors.greyI,
+                  }}>{strings.EXTRA_WAIT_TIME}</Text>
+                  <HorizontalLine lineStyle={{
+                    marginTop: moderateScaleVertical(16)
+                  }} />
+                </View>
+
+              </View>
+
+
+              <View style={{ ...commonStyles.flexRowCenter, marginHorizontal: moderateScaleVertical(16), marginTop: moderateScaleVertical(16) }}>
+                <Image source={imagePath.ic_credit_card} />
+                <View style={{
+                  marginLeft: moderateScale(10),
+                }}>
+                  <Text style={{
+                    ...commonStyles.font14,
+                    color: colors.greyI,
+                  }}>{strings.CANCEL_AT_NO_CHARGE}</Text>
+                </View>
+                <HorizontalLine lineStyle={{
+                  marginTop: moderateScaleVertical(12)
+                }} />
+              </View>
+            </View>
+
+            <ButtonWithLoader
+              onPress={() => setIsRentalCalendarModal(true)}
+              btnText={strings.SET_PICKUP_TIME}
+              btnTextStyle={{
+                fontSize: textScale(12),
+                textTransform: "none",
+                fontFamily: fontFamily?.medium
+              }}
+              btnStyle={{
+                ...styles.chooseTripBtn,
+                marginHorizontal: moderateScale(16),
+                marginBottom: moderateScaleVertical(16)
+              }}
+            />
+
           </WrapperContainer>
 
         </Modal>
       </Modal>
+      <DateTimePickerModal
+        isVisible={isTimePicker}
+        mode="time"
+        onConfirm={onConfirmDayTime}
+        onCancel={() => setIsTimePicker(false)}
+      />
     </WrapperContainer>
   );
 }

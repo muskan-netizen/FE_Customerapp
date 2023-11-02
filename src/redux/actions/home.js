@@ -29,6 +29,7 @@ import {
   SEARCH_PRODUCT_BY_TYPE,
   RENTAL_PROTECTION,
   PRODUCT_CHECK_AVAILABILITY,
+  GET_HOURLY_BASE_PRICE,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
@@ -260,6 +261,7 @@ export function getAllVendors(data = {}, headers = {}, isShortCode = false) {
 }
 
 export const saveSchduleTime = (data) => {
+  console.log(data, "fasdfhasdgfh")
   dispatch({
     type: types.SAVE_SCHEDULE_TIME,
     payload: data,
@@ -501,3 +503,6 @@ export const productCheckAvailibility = (quary = '', data, headers = {}) => {
   return apiPost(PRODUCT_CHECK_AVAILABILITY + quary, data, headers);
 }
 
+export const onGetHourlyBasePrice = (quary = '', headers = {}) => {
+  return apiGet(GET_HOURLY_BASE_PRICE + quary, {}, headers);
+}

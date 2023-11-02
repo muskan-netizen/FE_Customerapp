@@ -2296,6 +2296,23 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                 <View style={styles.horizontalLine} />
               </View>
             )}
+          {
+            console.log(orderFullDetail, "fasdfkasjdf")
+          }
+          {!!orderFullDetail?.order_details?.order_detail?.rental_hours &&
+            Number(orderFullDetail?.order_details?.order_detail?.rental_hours) !==
+            0 && (
+              <View>
+                <LeftRightText
+                  leftText={"Rental Hours"}
+                  rightText={orderFullDetail?.order_details?.order_detail?.rental_hours}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
+                />
+                <View style={styles.horizontalLine} />
+              </View>
+            )}
           {!!orderFullDetail?.order_details?.subtotal_amount &&
             Number(orderFullDetail?.order_details?.subtotal_amount) !==
             0 && (

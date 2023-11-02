@@ -808,5 +808,7 @@ export default {
   ic_current_bar:require('../assets/images/ic_current_bar.png'),
   ic_selected_bar:require('../assets/images/ic_selected_bar.png'),
   ic_unselected_bar:require('../assets/images/ic_unselected_bar.png'),
-
+  ic_credit_card:require('../assets/images/credit_card.png'),
+  ic_hourly_calendar:require('../assets/images/hourly_calendar.png'),
+  ic_hourglass:require('../assets/images/hourglass.png'),
 };

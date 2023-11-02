@@ -23,6 +23,7 @@ export default {
   whiteOpacity22: 'rgba(255,255,255,0.22)',
   whiteOpacity50: 'rgba(255,255,255,0.5)',
   whiteOpacity5: 'rgba(255,255,255,.5)',
+  blackOpacity02: 'rgba(0,0,0,0.02)',
   blackOpacity05: 'rgba(0,0,0,0.05)',
   blackOpacity10: 'rgba(0,0,0,0.1)',
   blackOpacity20: 'rgba(0,0,0,0.2)',
@@ -161,5 +162,7 @@ export default {
   purple: "#C361AD",
   greyE: "#8890A0",
   greyF: "#7C7C7C",
-  greyG: "#DDDDDD"
+  greyG: "#DDDDDD",
+  greyH: "#7676803D",
+  greyI: "#8A8A8A"
 };

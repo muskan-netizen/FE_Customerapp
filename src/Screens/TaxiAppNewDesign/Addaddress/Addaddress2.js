@@ -51,8 +51,7 @@ import {
 } from "../../../utils/helperFunctions";
 import {
   checkContactPermission,
-  chekLocationPermission,
-  locationPermission
+  chekLocationPermission
 } from "../../../utils/permissions";
 import stylesFun from "./styles";
 enableFreeze(true);
@@ -60,6 +59,7 @@ enableFreeze(true);
 
 export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
+  console.log(paramData, "<===paramData")
   const { userData } = useSelector((state) => state?.auth || {});
   const { pickUpTimeType } = useSelector((state) => state?.home || {});
   const {
@@ -248,6 +248,7 @@ export default function Addaddress({ navigation, route }) {
       latlongData
     )
       .then((res) => {
+        console.log("<===getDataByCategoryId")
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -340,32 +341,45 @@ export default function Addaddress({ navigation, route }) {
     }
   }
 
+
   const moveToNextScreenWithAddressData = () => {
     let location = [];
-    if (
-      dropLocationData[0].pre_address == "" ||
-      dropLocationData[0].address == ""
-    ) {
-      if (selectedTab == 2) {
-        alert(strings.PLEASE_SELECT_PICKUP_LOCATION);
-      } else {
+    if (!!appData?.profile?.preferences?.is_hourly_pickup_rental) {
+      if (
+        dropLocationData[0].pre_address == "" ||
+        dropLocationData[0].address == ""
+      ) {
         showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
+        return
       }
 
-      return;
     }
-    if (
-      dropLocationData[1].pre_address == "" ||
-      dropLocationData[1].address == ""
-    ) {
-      if (selectedTab == 2) {
-        alert(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
-      } else {
-        showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
-      }
+    else {
+      if (
+        dropLocationData[0].pre_address == "" ||
+        dropLocationData[0].address == ""
+      ) {
+        if (selectedTab == 2) {
+          alert(strings.PLEASE_SELECT_PICKUP_LOCATION);
+        } else {
+          showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
+        }
 
-      return;
+        return;
+      }
+      if (
+        dropLocationData[1].pre_address == "" ||
+        dropLocationData[1].address == ""
+      ) {
+        if (selectedTab == 2) {
+          alert(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
+        } else {
+          showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
+        }
+        return;
+      }
     }
+
     dropLocationData.map((val) => {
       if (val.pre_address !== "") {
         location.push({
@@ -382,6 +396,7 @@ export default function Addaddress({ navigation, route }) {
 
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+      rentalTime: paramData?.data?.rentalTime,
       location: location,
       id: categoryId,
       pickup_taxi: paramData?.cat?.pickup_taxi,
@@ -1218,125 +1233,131 @@ export default function Addaddress({ navigation, route }) {
 
                 }}
               >
+
                 {dropLocationData.map((val, i) => {
                   return (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        marginHorizontal: moderateScale(20),
-                        alignItems: "center",
-                        marginVertical: moderateScale(2),
-                        justifyContent: "space-between",
+                    <View>
 
-                      }}
-                    >
-                      <View style={{ alignItems: "center", }}>
-                        <View>
-                          <Image
-                            style={{
-                              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                              height: moderateScale(5),
-                              width: moderateScale(5),
-                              borderRadius:
-                                dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
-                            }}
-                            source={imagePath.blackSquare}
-                          />
-                        </View>
-                      </View>
-                      {i > 0 &&
-                        appData?.profile?.preferences?.is_static_dropoff ? (
-                        <View
-                          style={{ flex: 1, marginLeft: moderateScale(20) }}
-                        >
-                          <DropDown
-                            value={dropLocationData[i].address}
-                            inputStyle={styles.textInput}
-                            selectedIndexByProps={-1}
-                            placeholder={"select Drop Location"}
-                            data={staticLocation}
-                            fetchValues={(val) => fetchValues(val, i)}
-                            marginBottom={0}
-                          // onSelect={onPressAddress}
-                          // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
-                          />
-                        </View>
-                      ) : (
-                        <View
-                          style={{ flex: 1, marginLeft: moderateScale(12), }}
-                        >
-                          <SearchPlaces2
-                            curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                            autoFocus={i == dropLocationData.length - 1 ? true :
-                              false
-                            }
-                            placeHolder={
-                              i == 0
-                                ? strings.PICKUP_LOCATION
-                                : i == 1
-                                  ? strings.WHERETO
-                                  : strings.ADD_A_STOP
-                            }
-                            value={val?.pre_address} // instant update search value
-                            mapKey={profile?.preferences?.map_key} //send here google Key
-                            fetchArrayResult={(data) =>
-                              updateState({
-                                searchResult: { data: data, currentIndex: i },
-                              })
-                            }
-                            setValue={(text) => updateCurValues(text, i)} //return & update on change text value
-                            onFocus={() =>
-                              updateState({
-                                searchResult: {
-                                  ...searchResult,
-                                  currentIndex: i,
-                                },
-                              })
-                            }
-                            _moveToNextScreen={() => _moveToNextScreen(i)}
-                            onClear={() => onClearAddress("", i)}
-                            index={i}
-                          />
-                        </View>
-                      )}
-                      <View style={{ marginHorizontal: moderateScale(8) }} />
-                      <View style={{ flex: 0.1 }}>
-                        {i >= 1 && (
-                          <TouchableOpacity
-                            hitSlop={{
-                              top: 30,
-                              right: 30,
-                              left: 30,
-                              bottom: 30,
-                            }}
-                            onPress={() =>
-                              addRemove(
-                                dropLocationData.length - 1 == i ? true : false,
-                                i
-                              )
-                            }
-                            activeOpacity={1}
-                          >
-                            <Animated.Image
+                      {(!!paramData?.data?.hourlyDateTime && i > 0) ? <></> : <View
+                        style={{
+                          flexDirection: "row",
+                          marginHorizontal: moderateScale(20),
+                          alignItems: "center",
+                          marginVertical: moderateScale(2),
+                          justifyContent: "space-between",
+
+                        }}
+                      >
+                        <View style={{ alignItems: "center", }}>
+                          <View>
+                            <Image
                               style={{
-                                tintColor: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.black,
-                                transform: [
-                                  {
-                                    rotate:
-                                      dropLocationData.length - 1 == i
-                                        ? "0deg"
-                                        : "45deg",
-                                  },
-                                ],
+                                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                                height: moderateScale(5),
+                                width: moderateScale(5),
+                                borderRadius:
+                                  dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
                               }}
-                              source={imagePath.icAdd}
+                              source={imagePath.blackSquare}
                             />
-                          </TouchableOpacity>
+                          </View>
+                        </View>
+                        {i > 0 &&
+                          appData?.profile?.preferences?.is_static_dropoff ? (
+                          <View
+                            style={{ flex: 1, marginLeft: moderateScale(20) }}
+                          >
+                            <DropDown
+                              value={dropLocationData[i].address}
+                              inputStyle={styles.textInput}
+                              selectedIndexByProps={-1}
+                              placeholder={"select Drop Location"}
+                              data={staticLocation}
+                              fetchValues={(val) => fetchValues(val, i)}
+                              marginBottom={0}
+                            // onSelect={onPressAddress}
+                            // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+                            />
+                          </View>
+                        ) : (
+                          <View
+                            style={{ flex: 1, marginLeft: moderateScale(12), }}
+                          >
+                            <SearchPlaces2
+                              curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
+                              autoFocus={i == dropLocationData.length - 1 ? true :
+                                false
+                              }
+                              placeHolder={
+                                i == 0
+                                  ? strings.PICKUP_LOCATION
+                                  : i == 1
+                                    ? strings.WHERETO
+                                    : strings.ADD_A_STOP
+                              }
+                              value={val?.pre_address} // instant update search value
+                              mapKey={profile?.preferences?.map_key} //send here google Key
+                              fetchArrayResult={(data) =>
+                                updateState({
+                                  searchResult: { data: data, currentIndex: i },
+                                })
+                              }
+                              setValue={(text) => updateCurValues(text, i)} //return & update on change text value
+                              onFocus={() =>
+                                updateState({
+                                  searchResult: {
+                                    ...searchResult,
+                                    currentIndex: i,
+                                  },
+                                })
+                              }
+                              _moveToNextScreen={() => _moveToNextScreen(i)}
+                              onClear={() => onClearAddress("", i)}
+                              index={i}
+                            />
+                          </View>
                         )}
-                      </View>
+                        <View style={{ marginHorizontal: moderateScale(8) }} />
+                        <View style={{ flex: 0.1 }}>
+                          {i >= 1 && (
+                            <TouchableOpacity
+                              hitSlop={{
+                                top: 30,
+                                right: 30,
+                                left: 30,
+                                bottom: 30,
+                              }}
+                              onPress={() =>
+                                addRemove(
+                                  dropLocationData.length - 1 == i ? true : false,
+                                  i
+                                )
+                              }
+                              activeOpacity={1}
+                            >
+                              <Animated.Image
+                                style={{
+                                  tintColor: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black,
+                                  transform: [
+                                    {
+                                      rotate:
+                                        dropLocationData.length - 1 == i
+                                          ? "0deg"
+                                          : "45deg",
+                                    },
+                                  ],
+                                }}
+                                source={imagePath.icAdd}
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      </View>}
                     </View>
+
+
                   );
                 })}
               </View>

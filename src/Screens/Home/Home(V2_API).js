@@ -453,10 +453,8 @@ export default function Home({ route, navigation }) {
         .then(async (res) => {
           console.log('Home data++++++', res);
           updateState({ searchDataLoader: false, isRefreshing: false });
-
           const checkLayout = res?.data?.homePageLabels || []
           const filterCat = checkLayout.find(layout => layout?.slug == 'nav_categories')
-
           preLoadImages(filterCat)
 
           if (
@@ -666,16 +664,14 @@ export default function Home({ route, navigation }) {
         isVendorList: false,
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
-      if (!!userData?.auth_token) {
-        if (shortCodes.arenagrub == appData?.profile?.code) {
-          openUber();
-        } else {
-          item['pickup_taxi'] = true;
-          moveToNewScreen(navigationStrings.ADDADDRESS, item)();
-        }
+
+      if (shortCodes.arenagrub == appData?.profile?.code) {
+        openUber();
       } else {
-        actions.setAppSessionData('on_login');
+        item['pickup_taxi'] = true;
+        moveToNewScreen(navigationStrings.ADDADDRESS, item)();
       }
+
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
@@ -1073,7 +1069,6 @@ export default function Home({ route, navigation }) {
 
   })
 
-  console.log(appStyle?.homePageLayout, 'appStyle?.homePageLayout')
 
 
 

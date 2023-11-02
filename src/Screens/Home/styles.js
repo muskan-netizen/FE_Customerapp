@@ -9,8 +9,10 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
+import commonStylesFunc from '../../styles/commonStyles';
 
 export default ({ themeColors, fontFamily, isDarkMode }) => {
+  const commonStyles = commonStylesFunc({ fontFamily })
   const styles = StyleSheet.create({
     modalContainer: {
       backgroundColor: colors.white,
@@ -559,6 +561,87 @@ export default ({ themeColors, fontFamily, isDarkMode }) => {
       textAlign: 'center',
       fontFamily: fontFamily.medium,
     },
+    calendarContainer: {
+      flex: 1,
+      backgroundColor: colors.lightGreyBg,
+      padding: moderateScale(13),
+      borderRadius: moderateScale(2),
+      marginLeft: moderateScale(8),
+    },
+    calendarModal: {
+      paddingHorizontal: moderateScale(12),
+      marginTop: moderateScaleVertical(16),
+    },
+    amPmBtn: {
+      backgroundColor: colors.greyH,
+      height: moderateScaleVertical(32),
+      paddingHorizontal: moderateScale(16),
+    },
+    calendarView: {
+      backgroundColor: colors.white,
+      margin: moderateScale(16),
+      borderRadius: moderateScale(6),
+      elevation: 1,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+    },
+    hourSelectionContainer: {
+      paddingHorizontal: moderateScaleVertical(16),
+      paddingVertical: moderateScaleVertical(50),
+      borderRadius: moderateScale(6),
+      elevation: 1,
+      borderWidth: 1,
+      borderColor: colors.blackOpacity05,
+      marginTop: moderateScaleVertical(50)
+    },
+    kmTxt: {
+      ...commonStyles.font14,
+      textAlign: "center",
+      marginTop: moderateScaleVertical(4),
+      color: colors.greyF,
+
+    },
+    hoursBar: {
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      marginVertical: moderateScaleVertical(30),
+      alignItems: "center"
+    },
+    leaveNowBtn: {
+      backgroundColor: themeColors?.primary_color,
+      height: moderateScaleVertical(34),
+      paddingHorizontal: moderateScale(6),
+      borderRadius: moderateScale(4),
+      marginTop: 0,
+      borderWidth: 0
+
+    },
+    leaveLaterBtn: {
+      backgroundColor: colors.lightGreyBg,
+      borderWidth: 0,
+      marginLeft: moderateScale(12),
+
+    },
+    chooseTripBtn: {
+      backgroundColor: themeColors?.primary_color,
+      height: moderateScaleVertical(48),
+      paddingHorizontal: moderateScale(6),
+      borderRadius: moderateScale(8),
+      borderWidth: 0
+    },
+    timBtn: {
+      paddingHorizontal: moderateScale(12),
+      height: moderateScaleVertical(32),
+      borderRadius: moderateScale(8),
+      backgroundColor: themeColors?.primary_color,
+      borderWidth: 0
+    },
+    timeContainer: {
+      alignSelf: "flex-end", marginVertical: moderateScaleVertical(6), paddingRight: moderateScale(12), paddingBottom: moderateScale(12)
+    }
+
   });
 
   return styles;

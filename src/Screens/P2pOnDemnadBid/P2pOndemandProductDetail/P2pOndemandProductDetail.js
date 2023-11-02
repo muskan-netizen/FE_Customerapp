@@ -986,7 +986,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                             index === indexSelected
                               ? colors.orange1
                               : colors.white,
-                          // width: index === indexSelected ? 20 : 8,
+                          marginLeft: index !== 0 ? moderateScale(8) : 0,
                         },
                       ]}
                     />
