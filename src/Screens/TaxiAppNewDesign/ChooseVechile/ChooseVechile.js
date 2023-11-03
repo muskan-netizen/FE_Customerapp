@@ -778,7 +778,7 @@ function ChooseVechile({ navigation, route }) {
         }
 
         data['task_type'] = scheduleDateTime?.selectedDateAndTime ? '' : pickUpTimeType ? pickUpTimeType : '';
-        data['schedule_time'] = scheduleDateTime?.selectedDateAndTime ? `${scheduleDateTime?.selectedDateAndTime}`
+        data['schedule_time'] = !!paramData?.rentalTime ? pickUpTimeType : scheduleDateTime?.selectedDateAndTime ? `${scheduleDateTime?.selectedDateAndTime}`
             : pickUpTimeType == 'now' ? '' : slectedDate && selectedTime && `${slectedDate} ${selectedTime}`;
         data['recipient_phone'] = '';
         data['recipient_email'] = '';
@@ -1057,7 +1057,7 @@ function ChooseVechile({ navigation, route }) {
                         />
                     </View>
                 </View>
-                {is_cab_pooling || is_bid_ride_enable ? (
+                {!paramData?.rentalTime && (is_cab_pooling || is_bid_ride_enable) ? (
                     <View
                         style={{
                             marginHorizontal: moderateScale(16),
@@ -1643,7 +1643,7 @@ function ChooseVechile({ navigation, route }) {
                                     marginRight: moderateScale(8)
                                 }} source={imagePath.ic_close_circle} />
                             </Pressable> : null}
-                            <GradientButton
+                            {!paramData?.rentalTime && <GradientButton
                                 colorsArray={[colors.white, colors.white]}
                                 textStyle={{
                                     textTransform: "none",
@@ -1658,7 +1658,7 @@ function ChooseVechile({ navigation, route }) {
                                         : strings.SCHEDULE_A_RIDE
                                     }`}
                                 btnStyle={styles.scheduleBtnStyle}
-                            />
+                            />}
                         </View>
                     )}
 

@@ -1,5 +1,5 @@
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
@@ -128,17 +128,13 @@ export default function TaxiHomeDashbord({
   const [pressedCategory, setPressedCategory] = useState({})
   const [categoryBasePrice, setCategoryBasePrice] = useState(0)
   const [categoryBaseKM, setCategoryBaseKM] = useState(0)
+  const [markedDate, setMarkedDate] = useState(null)
 
   const styles = stylesFunc({ themeColors, fontFamily });
   const commonStyles = commonStylesFunc({ fontFamily });
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
 
-  // const navCatergories = appMainData?.homePageLabels.find((item) => {
-  //   if (item?.slug == 'nav_categories') {
-  //   return  item
-  //   }
-  // })
   let myCategories = [{ data: [] }]
 
   if (!isEmpty(appMainData?.homePageLabels)) {
@@ -198,7 +194,6 @@ export default function TaxiHomeDashbord({
           ];
         }
       });
-      console.log('i am calling');
       // animate(region);
       fitPadding(arr);
     }
@@ -647,33 +642,36 @@ export default function TaxiHomeDashbord({
     scheduleDate = null,
     prefillAdress = null
   }) => {
-    let item = !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0];
-    if (isHourlyRental) {
-      setIsHourlyRentalModal(true)
-      setPressedCategory(item)
-      return
-    }
+    if (!!userData?.auth_token) {
 
-    actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
-    if (fromMap) {
-      updateState({ fullMapShow: false })
-      setTimeout(() => {
-        userData?.auth_token
-          ? navigation.navigate(navigationStrings.ADDADDRESS, {
+
+      let item = !!appMainData?.categories ? appMainData?.categories[0] : myCategories[0]?.data[0];
+      if (isHourlyRental) {
+        setIsHourlyRentalModal(true)
+        setPressedCategory(item)
+        return
+      }
+      actions.saveSchduleTime(!!scheduleDate ? scheduleDate : 'now');
+      if (fromMap) {
+        updateState({ fullMapShow: false })
+        setTimeout(() => {
+          navigation.navigate(navigationStrings.ADDADDRESS, {
             item,
             prefillAdress: !!prefillAdress ? prefillAdress : null,
             hourlyDateTime: isHourlyRental ? dateTime : null
           })
-          : actions.setAppSessionData('on_login');
-      }, 800);
-    } else {
-      userData?.auth_token
-        ? navigation.navigate(navigationStrings.ADDADDRESS, {
+        }, 800);
+      } else {
+        navigation.navigate(navigationStrings.ADDADDRESS, {
           item,
           prefillAdress: !!prefillAdress ? prefillAdress : null,
           hourlyDateTime: isHourlyRental ? dateTime : null
         })
-        : actions.setAppSessionData('on_login');
+
+      }
+    }
+    else {
+      actions.setAppSessionData('on_login');
     }
   }
 
@@ -685,7 +683,6 @@ export default function TaxiHomeDashbord({
       isLoadingModal: true,
     });
     setTimeout(() => {
-      console.log(date, "fasdfhskdjhf")
       updateState({ isLoadingModal: false });
       goToAddress({ scheduleDate: date })
     }, 2000);
@@ -698,21 +695,24 @@ export default function TaxiHomeDashbord({
     }
     setIsHourlyRentalModal(false)
     setTimeout(() => {
-      console.log(dateTime, "fasdfkasjdhf")
-      actions.saveSchduleTime(moment(dateTime).format("YYYY-DD-MM") > moment().format("YYYY-DD-MM") ? new Date(dateTime) : "now");
+      actions.saveSchduleTime(moment(dateTime).format("YYYY-DD-MM hh:mm") > moment().format("YYYY-DD-MM hh:mm") ? new Date(dateTime) : "now");
       onPressCategory({ ...pressedCategory, hourlyDateTime: dateTime, rentalTime: isHourlyRental ? rentalHours : null })
     }, 500);
   }
 
   const onLeaveNow = () => {
     setDateTime(new Date())
+    setMarkedDate(moment(new Date()).format("YYYY-MM-DD"))
+    setDayTime(new Date())
     const currentDate = new Date();
     const hours = currentDate.getHours();
     setIsAm(hours < 12)
   }
 
+
   const onDayPress = (day) => {
-    setDateTime(day?.dateString)
+    setDayTime(new Date(day?.dateString))
+    setMarkedDate(day?.dateString)
   }
 
   const onConfirmDayTime = (date) => {
@@ -723,6 +723,15 @@ export default function TaxiHomeDashbord({
     setIsTimePicker(false)
   }
 
+
+  const onSetupPickupTime = () => {
+    if (!markedDate || markedDate == null) {
+      alert("Please select rental date")
+      return
+    }
+    setDateTime(dayTime)
+    setIsRentalCalendarModal(false)
+  }
 
 
 
@@ -754,40 +763,45 @@ export default function TaxiHomeDashbord({
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
-        <View style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: moderateScaleVertical(8)
-        }}>
-          <ButtonComponent
-            onPress={() => setIsHourlyRental(false)}
-            btnText={"Pick & Drop"}
-            textStyle={{
-              color: isHourlyRental ? colors.black : colors.white,
-              textTransform: "none"
-            }}
-            containerStyle={{
-              flex: 0.5,
-              height: moderateScaleVertical(40),
-              backgroundColor: !isHourlyRental ? themeColors?.primary_color : colors.white,
-              borderRadius: 0,
-              elevation: 1
-            }} />
-          <ButtonComponent
-            onPress={() => setIsHourlyRental(true)}
-            btnText={"Rentals"}
-            textStyle={{
-              color: isHourlyRental ? colors.white : colors.black,
-              textTransform: "none"
-            }}
-            containerStyle={{
-              flex: 0.5,
-              height: moderateScaleVertical(40),
-              backgroundColor: isHourlyRental ? themeColors?.primary_color : colors.white,
-              borderRadius: 0,
-              elevation: 1
-            }} />
-        </View>
+
+        {!!appData?.profile?.preferences?.is_hourly_pickup_rental &&
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: moderateScaleVertical(8)
+          }}>
+            <ButtonComponent
+              onPress={() => setIsHourlyRental(false)}
+              btnText={"Pick & Drop"}
+              textStyle={{
+                color: isHourlyRental ? colors.black : colors.white,
+                textTransform: "none"
+              }}
+              containerStyle={{
+                flex: 0.5,
+                height: moderateScaleVertical(40),
+                backgroundColor: !isHourlyRental ? themeColors?.primary_color : colors.white,
+                borderRadius: 0,
+                elevation: 1
+              }}
+            />
+            <ButtonComponent
+              onPress={() => setIsHourlyRental(true)}
+              btnText={"Rentals"}
+              textStyle={{
+                color: isHourlyRental ? colors.white : colors.black,
+                textTransform: "none"
+              }}
+              containerStyle={{
+                flex: 0.5,
+                height: moderateScaleVertical(40),
+                backgroundColor: isHourlyRental ? themeColors?.primary_color : colors.white,
+                borderRadius: 0,
+                elevation: 1
+              }}
+            />
+          </View>
+        }
         <>
           <TaxiBannerHome
             appStyle={appStyle}
@@ -822,7 +836,6 @@ export default function TaxiHomeDashbord({
           )}
           ListFooterComponent={() => (
             <View style={{ marginHorizontal: moderateScale(12), }}>
-              {!!appData?.profile?.preferences?.is_hourly_pickup_rental && <TaxiHourlyRentalCard onPress={() => setIsHourlyRentalModal(true)} />}
             </View>
           )}
         />
@@ -1343,7 +1356,7 @@ export default function TaxiHomeDashbord({
                   <View style={{
                     alignItems: "flex-end"
                   }}>
-                    <Text style={commonStyles.boldFont11}>{moment(dateTime).format("ddd, DD MMM")}</Text>
+                    <Text style={commonStyles.boldFont11}>{moment(dateTime || new Date()).format("ddd, DD MMM")}</Text>
                     <Text style={{ ...commonStyles.font11, marginTop: moderateScaleVertical(4) }}>{moment(dayTime).format("hh:mm A")}</Text>
                   </View>
                 </View>
@@ -1356,7 +1369,7 @@ export default function TaxiHomeDashbord({
                   }}
                   onDayPress={onDayPress}
                   markedDates={{
-                    [moment(dateTime).format("YYYY-MM-DD")]: { selected: true, selectedColor: themeColors?.primary_color },
+                    [markedDate]: { selected: true, selectedColor: themeColors?.primary_color },
                   }}
                 // hideArrows
                 />
@@ -1384,9 +1397,7 @@ export default function TaxiHomeDashbord({
                     <Text style={{ ...commonStyles.font12, color: isAm ? colors.white : colors.black }}>{strings.AM}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-
                     onPress={() => setIsAm(false)}
-
                     style={{
                       ...commonStyles.alignJustifyCenter,
                       ...styles.amPmBtn,
@@ -1446,7 +1457,7 @@ export default function TaxiHomeDashbord({
             </View>
 
             <ButtonWithLoader
-              onPress={() => setIsRentalCalendarModal(true)}
+              onPress={onSetupPickupTime}
               btnText={strings.SET_PICKUP_TIME}
               btnTextStyle={{
                 fontSize: textScale(12),
@@ -1467,6 +1478,7 @@ export default function TaxiHomeDashbord({
       <DateTimePickerModal
         isVisible={isTimePicker}
         mode="time"
+        date={new Date(markedDate)}
         onConfirm={onConfirmDayTime}
         onCancel={() => setIsTimePicker(false)}
       />
