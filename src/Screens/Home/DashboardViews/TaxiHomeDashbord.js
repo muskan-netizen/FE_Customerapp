@@ -693,10 +693,11 @@ export default function TaxiHomeDashbord({
       alert("Pleast select pickup date and time.")
       return
     }
-    setIsHourlyRentalModal(false)
+   
     setTimeout(() => {
       actions.saveSchduleTime(moment(dateTime).format("YYYY-DD-MM hh:mm") > moment().format("YYYY-DD-MM hh:mm") ? new Date(dateTime) : "now");
       onPressCategory({ ...pressedCategory, hourlyDateTime: dateTime, rentalTime: isHourlyRental ? rentalHours : null })
+      setIsHourlyRentalModal(false)
     }, 500);
   }
 
