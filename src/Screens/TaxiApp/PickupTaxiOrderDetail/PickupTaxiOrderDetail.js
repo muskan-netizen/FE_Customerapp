@@ -2514,8 +2514,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           }}
         >
           <TouchableOpacity
-            // onPress={() => navigation.popToTop()}
-            onPress={() => navigation.navigate(navigationStrings.HOME)}
+            onPress={() => navigation.popToTop()}
+            // onPress={() => navigation.navigate(navigationStrings.HOME)}
             activeOpacity={0.8}
           >
             <Image
