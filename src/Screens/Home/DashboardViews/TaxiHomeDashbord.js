@@ -1336,7 +1336,7 @@ export default function TaxiHomeDashbord({
           }}
           animationInTiming={600}>
           <WrapperContainer bgColor={colors.white}>
-            <View style={{
+            <ScrollView style={{
               flex: 1
             }}>
               <View style={{
@@ -1455,7 +1455,7 @@ export default function TaxiHomeDashbord({
                   marginTop: moderateScaleVertical(12)
                 }} />
               </View>
-            </View>
+            </ScrollView>
 
             <ButtonWithLoader
               onPress={onSetupPickupTime}
