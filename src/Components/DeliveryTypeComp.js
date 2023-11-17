@@ -239,6 +239,7 @@ export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
       height: moderateScale(40),
       alignItems: 'center',
       justifyContent: 'center',
+      minWidth:moderateScale(width/8)
     },
     tabItemImg: {
       height: moderateScale(16),
