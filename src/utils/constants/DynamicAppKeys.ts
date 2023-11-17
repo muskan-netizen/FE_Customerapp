@@ -466,6 +466,7 @@ const shortCodes = {
   chutneyeah: '85de17',
   ineeda: 'aaabf3',
   dropOff: '30f2f1',
+  peerPulse:'70c245'
 };
 
 const appIds = {
@@ -1181,6 +1182,10 @@ const appIds = {
   spa: Platform.select({
     ios: 'com.customerApp.spa',
     android: 'com.customerApp.spa',
+  }),
+  peerPulse: Platform.select({
+    ios: 'com.peerPulse.royoorder',
+    android: 'com.peerPulse.royoorder',
   }),
 };
 

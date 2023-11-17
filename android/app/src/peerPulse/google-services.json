@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "659344662539",
+    "project_id": "peerpulse-order",
+    "storage_bucket": "peerpulse-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659344662539:android:3bf591ad96ac5a7d9ce70e",
+        "android_client_info": {
+          "package_name": "com.peerPulse.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659344662539-g1305s6qpro7rrgosn1qbim8inanr6u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peerPulse.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "659344662539-kerk9bfjig9jf16ke706nt1bq9eggf6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peerPulse.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "659344662539-tqm2nrjg3l5og3bkke721g871q5rildp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peerPulse.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "659344662539-6nehqv4ki67h87l8c8dd5ed91cuv32sb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC95Vponp2ZeCZE0k-lOO5Hf1BPD46z_sY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659344662539-6nehqv4ki67h87l8c8dd5ed91cuv32sb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "659344662539-6lrdtafk08licbojs8v66j1koqjft8rp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.peerPulse.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
