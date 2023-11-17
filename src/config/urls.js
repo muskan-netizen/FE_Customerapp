@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
-export const API_BASE_URL = 'http://192.168.103.242:8002/api/v1'
+// export const API_BASE_URL = 'http://192.168.103.242:8002/api/v1'
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.102.171:8000/api/v1'; // yogesh
 // export const API_BASE_URL = 'https://solarprimex.netsolutionindia.com/api/v1';
@@ -433,6 +433,9 @@ export const API_BASE_URL = 'http://192.168.103.242:8002/api/v1'
 
 //Emart
 // export const API_BASE_URL = 'https://emart.royoorders.com/api/v1';
+
+//PeerPulse
+export const API_BASE_URL = 'https://peerpulse.royoorders.com/api/v1';
 
 // export const API_BASE_URL='https://dot-taxi.com/api/v1'
 
