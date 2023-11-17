@@ -221,8 +221,10 @@ export default function P2pProductComp({
                     ...styles.viewDetailsBtn,
                     marginVertical: moderateScaleVertical(5),
                     backgroundColor: colors.whiteSmokeColor,
+                    marginTop:moderateScale(14),
+                    marginRight:moderateScale(12)
                   }}>
-                  <Image style={{tintColor:themeColors.primary_color}} source={imagePath.icChatP2p} />
+                  <Image style={{tintColor:themeColors.primary_color}} source={imagePath.ic_chat1_inactive} />
                 </TouchableOpacity>
               )}
             </View>

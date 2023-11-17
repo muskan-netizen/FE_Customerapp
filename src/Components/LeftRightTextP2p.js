@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { moderateScaleVertical, textScale } from '../styles/responsiveSize';
 import colors from '../styles/colors';
 import { useSelector } from 'react-redux';
+import { Image } from 'react-native';
 
 const LeftRightText = ({
   leftText,
@@ -13,7 +14,9 @@ const LeftRightText = ({
   leftTextStyle,
   rightTextStyle,
   marginBottom = 12,
-  marginTop = 0
+  marginTop = 0,
+  isimg=false,
+  image
 }) => {
   const { appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -27,6 +30,7 @@ const LeftRightText = ({
         marginBottom: moderateScaleVertical(marginBottom),
         marginTop: marginTop
       }}>
+        {isimg? <Image source={image} />:
       <Text
         style={{
           ...styles.textStyle,
@@ -35,7 +39,7 @@ const LeftRightText = ({
           flex: 1,
         }}>
         {leftText}
-      </Text>
+      </Text>}
       <Text
         style={{
           ...styles.textStyle,
