@@ -1233,6 +1233,7 @@ Amount`,
   CHOOSE_YOUR_EXACT_PICKUP: "Choose your exact pickup time upto 90 days\nin advance.",
   EXTRA_WAIT_TIME: "Extra wait time included to meet your trip",
   CANCEL_AT_NO_CHARGE: "Cancel at no charge upto 60 minutes in\nadvance.",
-  SET_PICKUP_TIME: "Set pickup time"
-
+  SET_PICKUP_TIME: "Set pickup time",
+  AS_BUYER:'As Buyer',
+  AS_SELLER:'As Seller'
 };

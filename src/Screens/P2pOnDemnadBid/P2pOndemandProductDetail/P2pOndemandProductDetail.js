@@ -1094,7 +1094,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
             </View>}
 
-            {/* {(appData?.profile?.preferences?.chat_button == 1 ||
+            {(appData?.profile?.preferences?.chat_button == 1 ||
               appData?.profile?.preferences?.call_button == 1) &&
               productInfo?.vendor?.id !== userData?.vendor_id && (
                 <View style={styles.view3}>
@@ -1151,7 +1151,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                     />
                   )}
                 </View>
-              )} */}
+              )}
 
             {productInfo?.category?.category_detail?.type_id == 10 &&
               <View>

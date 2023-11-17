@@ -673,23 +673,6 @@ export default function Account4({ navigation }) {
               }}
             />
           )}
-              <ListItemHorizontal
-            centerContainerStyle={{
-              flexDirection: 'row',
-              marginHorizontal: moderateScale(0),
-            }}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.REVIEW_BOOKING)}
-            // iconLeft={imagePath.myOrder2}
-            centerHeading={navigationStrings.REVIEW_BOOKING}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(15),
-              fontFamily: fontFamily.medium,
-            }}
-            iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.atlanticgreen}}
-          />
 
         {dineInType !== 'p2p' &&
           !!userData?.auth_token &&

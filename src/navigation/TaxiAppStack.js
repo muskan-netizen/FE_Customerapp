@@ -6,7 +6,7 @@ import {
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
   ChooseVechile,
-  HomeScreenTaxi, Location, Offers,
+  HomeScreenTaxi, HomeV2Api, Location, Offers,
   OrderDetail,
   Payfast,
   PaymentOptions,
@@ -17,6 +17,7 @@ import {
   PinAddressOnMap,
   RateOrder,
   SkipCash,
+  TaxiHomeScreen,
   VerifyAccount
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
@@ -27,6 +28,21 @@ import navigationStrings from './navigationStrings';
 import Livees from '../Screens/PaymentGateways/Livees';
 
 export default function (Stack) {
+
+  const { appStyle, appData } = useSelector((state) => state?.initBoot);
+
+  const getHomeScreen = (homeScreen) => {
+    switch (appStyle?.homePageLayout) {
+      case 4:
+        return TaxiHomeScreen;
+      case 8:
+        return HomeV2Api;
+      case 10:
+        return HomeV2Api;
+      default:
+        return HomeV2Api;
+    }}
+  
   return (
     <>
       <Stack.Screen
@@ -150,6 +166,15 @@ export default function (Stack) {
         name={navigationStrings.LIVESS}
         component={Livees}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={
+          appStyle?.homePageLayout === 4
+            ? navigationStrings.TAXIHOMESCREEN
+            : navigationStrings.HOME
+        }
+        component={getHomeScreen()}
+        options={{ tabBarVisible: false }}
       />
     </>
   );

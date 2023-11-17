@@ -693,10 +693,11 @@ export default function TaxiHomeDashbord({
       alert("Pleast select pickup date and time.")
       return
     }
-    setIsHourlyRentalModal(false)
+   
     setTimeout(() => {
       actions.saveSchduleTime(moment(dateTime).format("YYYY-DD-MM hh:mm") > moment().format("YYYY-DD-MM hh:mm") ? new Date(dateTime) : "now");
       onPressCategory({ ...pressedCategory, hourlyDateTime: dateTime, rentalTime: isHourlyRental ? rentalHours : null })
+      setIsHourlyRentalModal(false)
     }, 500);
   }
 
@@ -1335,7 +1336,7 @@ export default function TaxiHomeDashbord({
           }}
           animationInTiming={600}>
           <WrapperContainer bgColor={colors.white}>
-            <View style={{
+            <ScrollView style={{
               flex: 1
             }}>
               <View style={{
@@ -1454,7 +1455,7 @@ export default function TaxiHomeDashbord({
                   marginTop: moderateScaleVertical(12)
                 }} />
               </View>
-            </View>
+            </ScrollView>
 
             <ButtonWithLoader
               onPress={onSetupPickupTime}

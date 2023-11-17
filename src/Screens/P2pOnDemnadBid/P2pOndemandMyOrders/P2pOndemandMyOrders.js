@@ -30,6 +30,7 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import { showError } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
+import ButtonComponent from '../../../Components/ButtonComponent';
 
 export default function P2pOndemandMyOrders({ navigation, route }) {
   const { appData, currencies, languages, appStyle, themeColors, themeToggle, themeColor } = useSelector(
@@ -77,6 +78,7 @@ export default function P2pOndemandMyOrders({ navigation, route }) {
   const [isLoadMore, setisLoadMore] = useState(true);
   const [isLoadingOrders, setIsLoadingOrders] = useState(false);
   const [upcomingOngoingOrders, setUpcomingOngoingOrders] = useState([]);
+  const [order_type, setOrder_type] = useState('rent');
 
 
   useFocusEffect(
@@ -237,7 +239,7 @@ export default function P2pOndemandMyOrders({ navigation, route }) {
     ({ item }) => {
 
       return <P2pProductComp
-        isMoreDetails={true}
+        isMoreDetails={false}
         isStartChat={selectedTab?.id == 1 && item?.order_status_option_id !== 3 && item?.order_status_option_id !== 6}
         onChatStart={() => onChatStart(item)}
         selectedTab={selectedTab}
@@ -255,7 +257,7 @@ export default function P2pOndemandMyOrders({ navigation, route }) {
   const renderUpcomingOngoingOrders = useCallback(
     ({ item }) => {
       return <P2pProductComp
-        isMoreDetails={true}
+        isMoreDetails={false}
         isStartChat
         onChatStart={() => onChatStart(item)}
         item={item}
@@ -341,6 +343,42 @@ export default function P2pOndemandMyOrders({ navigation, route }) {
         }}
 
       />
+
+
+<View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: moderateScaleVertical(8)
+          }}>
+            <ButtonComponent
+              onPress={() => setOrder_type('rent')}
+              btnText={"Rent"}
+              textStyle={{
+                color: order_type=='rent' ?themeColors?.primary_color: colors.black ,
+                textTransform: "none"
+              }}
+              containerStyle={{
+                flex: 0.5,
+                height: moderateScaleVertical(40),
+                backgroundColor: colors.white,
+                borderRadius: 0,
+              }}
+            />
+            <ButtonComponent
+              onPress={() => setOrder_type('purchase')}
+              btnText={"Purchase"}
+              textStyle={{
+                color: order_type=='purchase' ? themeColors?.primary_color : colors.black,
+                textTransform: "none"
+              }}
+              containerStyle={{
+                flex: 0.5,
+                height: moderateScaleVertical(40),
+                backgroundColor: colors.white,
+                borderRadius: 0,
+              }}
+            />
+          </View>
       <View
         style={{
           height: 1,

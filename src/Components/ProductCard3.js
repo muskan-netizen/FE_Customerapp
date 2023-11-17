@@ -383,9 +383,9 @@ const ProductCard3 = ({
                   textAlign: 'left',
                 }}>
                 {!!data?.translation_description
-                  ? data?.translation_description.toString()
+                  ? data?.translation_description.toString().replace(/<[^>]+>/g, '')
                   : !!data?.translation[0]?.translation_description
-                    ? data?.translation[0]?.translation_description
+                    ? data?.translation[0]?.translation_description.replace(/<[^>]+>/g, '')
                     : ''}
               </Text>
             </View>
