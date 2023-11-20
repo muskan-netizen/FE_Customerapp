@@ -1235,5 +1235,7 @@ Amount`,
   CANCEL_AT_NO_CHARGE: "Cancel at no charge upto 60 minutes in\nadvance.",
   SET_PICKUP_TIME: "Set pickup time",
   AS_BUYER:'As Buyer',
-  AS_SELLER:'As Seller'
+  AS_SELLER:'As Seller',
+  FOR_SALE:'For Sale',
+  FOR_RENT:'For Rent'
 };
