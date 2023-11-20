@@ -69,6 +69,7 @@ export default function OrderSuccess({ navigation, route }) {
     if (dineInType !== "p2p") {
       navigation.navigate(navigationStrings.ORDER_DETAIL, {
         orderId: paramData?.orderDetail?.id,
+        selected_vendor_id:paramData?.orderDetail?.vendors[0]?.vendor?.id,
         fromActive: true, // this value use for useInterval
         from: "cart"
       });

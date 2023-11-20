@@ -319,10 +319,11 @@ const P2pProductDetail = ({ navigation, route, item }) => {
               '600/600',
             ),
           }}
-          resizeMode="contain"
+          resizeMode='contain'
           style={{
-            height: moderateScale(290),
-            width: width,
+              width: "100%",
+              height: "auto",
+              aspectRatio: 1,
             borderBottomLeftRadius: moderateScale(12),
             borderBottomRightRadius: moderateScale(12),
 
@@ -747,10 +748,14 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                 '1000/1000',
               )
             }}
+            resizeMode='contain'
             style={{
-              height: moderateScaleVertical(120),
-              width: moderateScale(100),
-              alignSelf: "center"
+              width: "100%",
+              height: "auto",
+              maxWidth:moderateScale( (width - moderateScale(48)) / 2),
+              maxHeight:moderateScaleVertical( (width - moderateScale(48)) / 2),
+              aspectRatio: 1,
+              alignSelf: "center",
 
             }} />
           <View style={{
@@ -816,6 +821,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
   const { month_price: monthPrice = '', week_price: weekPrice = '', price: dayPrice = '',
   } = productInfo && productInfo?.variant ? productInfo?.variant[0] : {}
   return (
+    <WrapperContainer>
     <View
       style={{
         ...styles.container,
@@ -1656,6 +1662,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
       </View>}
 
     </View >
+    </WrapperContainer>
   );
 };
 

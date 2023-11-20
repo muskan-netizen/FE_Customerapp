@@ -180,7 +180,7 @@ export default function OrderDetail({ navigation, route }) {
     driverStatus: null,
     swipeKey: "randomStrings",
     showTaxFeeArea: false,
-    trackingUrl: paramData?.orderDetail?.dispatch_traking_url || null,
+    trackingUrl: paramData?.orderDetail?.products[0]?.routes[0]?.dispatch_traking_url || paramData?.orderDetail?.dispatch_traking_url,
     ratingData: null,
     isDriverRateModal: false,
     isVisibleTimeModal: false,
@@ -189,7 +189,6 @@ export default function OrderDetail({ navigation, route }) {
     isLoadingA: false,
     submitedRatingToDriver: null,
     driverRatingData: null,
-    isloader:false,
   });
   const {
     showTaxFeeArea,
@@ -217,7 +216,6 @@ export default function OrderDetail({ navigation, route }) {
     isLoadingA,
     submitedRatingToDriver,
     driverRatingData,
-    isloader,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -289,7 +287,7 @@ export default function OrderDetail({ navigation, route }) {
 
   const createRoom = async (item, type) => {
     console.log('driverStatus?.agent_location', driverStatus);
-  
+
     try {
       const apiData = {
         sub_domain: "192.168.101.88", //this is static value
@@ -309,7 +307,7 @@ export default function OrderDetail({ navigation, route }) {
       // agent_id: String(item?.order?.driver_id),
       // agent_db: clientInfo?.database_name,
 
-      updateState({ isloader: true });
+      updateState({ isLoading: true });
 
       console.log('sending create room data', apiData);
       const res = await actions.onStartChat(apiData, {
@@ -318,14 +316,14 @@ export default function OrderDetail({ navigation, route }) {
         language: languages?.primary_language?.id,
       });
       console.log("start chat res", res);
-      updateState({ isLoading: false ,isloader:false});
+      updateState({ isLoading: false });
       if (!!res?.roomData) {
         onChat(res.roomData);
       }
     } catch (error) {
       console.log("error raised in start chat api", error);
       showError(error?.message);
-      updateState({ isLoading: false,isloader:false });
+      updateState({ isLoading: false });
     }
   };
 
@@ -338,7 +336,7 @@ export default function OrderDetail({ navigation, route }) {
     let data = {};
     data["order_id"] = paramData?.orderId;
     if (paramData?.selectedVendor) {
-      data["vendor_id"] = paramData?.selectedVendor.id;
+      data["vendor_id"] = paramData?.selectedVendor.id||paramData?.selected_vendor_id;
     }
     if (!!new_dispatch_traking_url) {
       data["new_dispatch_traking_url"] = new_dispatch_traking_url;
@@ -2384,7 +2382,7 @@ export default function OrderDetail({ navigation, route }) {
 
 
 
-          {!!cartData?.scheduled_date_time && dineInType != 'appointment' && (
+          {!!cartData?.scheduled_date_time && !dineInType == 'appointment' && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
               rightText={cartData?.scheduled_date_time}
@@ -4432,7 +4430,6 @@ export default function OrderDetail({ navigation, route }) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
-      isLoading={isloader}
     >
       <Header
         leftIcon={

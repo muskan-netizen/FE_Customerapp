@@ -1050,7 +1050,7 @@ function Cart({ navigation, route }) {
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PESAPAL, paymentData);
         return;
-        case 59: //stafood: pesapal  Payment Getway
+      case 59: //stafood: pesapal  Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.LIVESS, paymentData);
         return;
@@ -1227,10 +1227,7 @@ function Cart({ navigation, route }) {
   const _directOrderPlace = () => {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
-    data['address_id'] =
-      dineInType != 'delivery'
-        ? ''
-        : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['address_id'] = paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data["payment_option_id"] =
       paramsData?.selectedPayment?.id || selectedPayment?.id || 1;
 
@@ -1530,7 +1527,10 @@ function Cart({ navigation, route }) {
           return;
         }
       }
-
+if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
+  showInfo(strings.SCHEDULE_DATE_REQUIRED);
+  return;
+}
       if (
         !!cartData?.closed_store_order_scheduled &&
         cartData?.products[0]?.vendor?.is_vendor_closed &&

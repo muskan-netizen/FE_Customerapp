@@ -77,6 +77,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     const [attributeInfo, setAttributeInfo] = useState([]);
     const [isAttributeFilterModal, setIsAttributeFilterModal] = useState(false);
     const [isLoadMore, setLoadMore] = useState(false);
+    const [categoryId, setCategoryId] = useState(0);
     const [pageNo, setPageNo] = useState(1);
     const [state, setState] = useState({
         selectedSortFilter: null,
@@ -159,11 +160,11 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                         ? res?.data?.listData?.data
                         : [...p2pProducts, ...res?.data?.listData?.data],
                 );
+                setCategoryId(res?.data?.category?.type_id)
                 setIsLoading(false);
             })
             .catch(errorMethod);
     };
-
     const getFilteredProductList = (pageNo = 1, filterData = {}, limit = 7) => {
         let data = {};
         data['variants'] = filterData?.selectedVariants || [];
@@ -665,6 +666,16 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                 }}
 
             />
+            {!!categoryId>0&&<View style={{
+                    paddingHorizontal: moderateScale(15),
+                    marginVertical:moderateScaleVertical(8)
+                    }}>
+            <Text style={{
+                    fontFamily: fontFamily?.medium,
+                    fontSize: textScale(16),
+                    color: colors.black,}}>{categoryId==13?strings.FOR_SALE:strings.FOR_RENT}
+            </Text>
+            </View>}
 
             <View
                 style={{
