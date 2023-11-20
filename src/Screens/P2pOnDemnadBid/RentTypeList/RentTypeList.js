@@ -39,7 +39,7 @@ export default function RentTypeList({ route, navigation }) {
     const getOrders = (pageNo = 1) => {
         actions
             .getAllP2pOrders(
-                `?limit=${12}&page=${pageNo}&type=${paramData?.type}&user_type=${paramData?.userType}`,
+                `?limit=${12}&page=${pageNo}&type=${paramData?.type}&user_type=${paramData?.userType}&productType=${paramData?.productType||''}`,
                 {},
                 {
                     code: appData?.profile?.code,
@@ -123,7 +123,7 @@ export default function RentTypeList({ route, navigation }) {
     return (
         <WrapperContainer isLoading={isLoadingOrders} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} >
             <OoryksHeader
-                leftTitle={`${paramData?.type == "past" ? "Past" : paramData?.type === "upcoming" ? "Upcoming" : "Ongoing"} Rents`}
+                leftTitle={`${paramData?.type == "past" ? "Past" : paramData?.type === "upcoming" ? "Upcoming" : "Ongoing"} ${paramData?.productType=='rent'?'Rents':'Purchases'}`}
             />
             <View style={{
                 height: 1,
