@@ -466,7 +466,8 @@ const shortCodes = {
   chutneyeah: '85de17',
   ineeda: 'aaabf3',
   dropOff: '30f2f1',
-  peerPulse:'70c245'
+  peerPulse:'70c245',
+  rentzGo:'94dcab'
 };
 
 const appIds = {
@@ -1186,6 +1187,10 @@ const appIds = {
   peerPulse: Platform.select({
     ios: 'com.peerPulse.royoorder',
     android: 'com.peerPulse.royoorder',
+  }),
+  rentzGo: Platform.select({
+    ios: 'com.rentzGo.royoorder',
+    android: 'com.rentzGo.royoorder',
   }),
 };
 

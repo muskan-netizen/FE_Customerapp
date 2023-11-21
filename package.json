@@ -187,6 +187,8 @@
     "dropoffRelease": "cd android && ./gradlew assembledropoffRelease",
     "peerPulse": "react-native run-android --variant=peerPulseDebug --appIdSuffix=peerPulse",
     "peerPulseRelease": "cd android && ./gradlew assemblepeerPulseRelease",
+    "rentzGo": "react-native run-android --variant=rentzGoDebug --appIdSuffix=rentzGo",
+    "rentzGoRelease": "cd android && ./gradlew assemblerentzGoRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

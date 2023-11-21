@@ -98,6 +98,11 @@ target 'PeerPulse' do
   
 end
 
+# 15 RentzGo Target
+target 'RentzGo' do
+  
+end
+
 
 
 post_install do |installer|
