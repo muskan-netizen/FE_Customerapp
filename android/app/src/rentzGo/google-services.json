@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "234597312101",
+    "project_id": "rentzgo-a5812",
+    "storage_bucket": "rentzgo-a5812.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234597312101:android:c50c5c30a5611b48a5888c",
+        "android_client_info": {
+          "package_name": "com.rentzGo.royoorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234597312101-4433lfh7jmfl0cckavca2s9hb3alvqq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentzGo.royoorder",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "234597312101-c2p3ujrk05cudpsivrosj4vc9fr6s6sv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentzGo.royoorder",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "234597312101-jiesp4tc60l38bgad5lm5035a9tiqri6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentzGo.royoorder",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "234597312101-q6kghb1npdqgi5uf6o29ptq81ub9dop1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOpz_lRvkonl7lra82LFIDC7fTcpIS0H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234597312101-q6kghb1npdqgi5uf6o29ptq81ub9dop1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "234597312101-3a5vg0840idjtbbhevug4q58702nqrnm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rentzGo.royoorder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
