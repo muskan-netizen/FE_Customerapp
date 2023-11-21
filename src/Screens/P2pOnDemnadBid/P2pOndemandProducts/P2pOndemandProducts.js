@@ -433,7 +433,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                     {item?.translation[0]?.title || item?.title || item?.sku}
                                 </Text>
 
-                                {!isEmpty(item?.translation) && (item?.translation[0]?.meta_description || item?.translation[0]?.body_html) &&
+                                {!isEmpty(item?.translation) && (!!item?.translation[0]?.meta_description || !!item?.translation[0]?.body_html) &&
                                     <View>
                                         {!!item?.translation[0]?.meta_description
                                             ? (
@@ -460,7 +460,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                                                     },
 
                                                 }}
-                                                value={item?.translation[0]?.body_html
+                                                value={!!item?.translation[0]?.body_html
                                                     ? item?.translation[0]?.body_html
                                                     : ''}
                                                 textComponentProps={{

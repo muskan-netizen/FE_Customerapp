@@ -511,6 +511,11 @@ export default function P2pOrderDetail({ route, navigation }) {
                 </View>}
                 <Text style={styles.sectionTitle}>Price Breakdown</Text>
                 <View style={{ ...styles.priceContainer, marginTop: 0 }}>
+                <LeftRightTextP2p
+                        leftText={''}
+                        rightText={strings.ORDER_NUMBER}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText} marginBottom={0} />
                     <LeftRightTextP2p
                         leftText={productInfo?.product?.category?.category_detail?.type_id == 10 ? `${tokenConverterPlusCurrencyNumberFormater(
                             productInfo?.pvariant?.price,
@@ -527,7 +532,14 @@ export default function P2pOrderDetail({ route, navigation }) {
 
                     {productInfo?.product?.category?.category_detail?.type_id == 13 && !!productInfo?.start_date_time && <LeftRightTextP2p
                         leftText={"Date"}
-                        rightText={moment(productInfo?.start_date_time).format("DD-MM-YYYY; hh:mm A")}
+                        rightText={moment(productInfo?.start_date_time).format("DD-MM-YYYY")}
+                        leftTextStyle={styles.leftRightText}
+                        rightTextStyle={styles.leftRightText}
+                        marginTop={moderateScaleVertical(12)}
+                        marginBottom={0} />}
+                        {productInfo?.product?.category?.category_detail?.type_id == 13 && !!productInfo?.start_date_time && <LeftRightTextP2p
+                        leftText={"Time"}
+                        rightText={moment(productInfo?.start_date_time).format("hh:mm A")}
                         leftTextStyle={styles.leftRightText}
                         rightTextStyle={styles.leftRightText}
                         marginTop={moderateScaleVertical(12)}

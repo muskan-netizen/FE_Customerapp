@@ -120,13 +120,13 @@ export default function P2pOndemandMyOrders({navigation, route}) {
     }
   };
 
-  const getOngoingAndUpcomingOrders = (type = selectedTab) => {
-    console.log(type, 'typetype');
+  const getOngoingAndUpcomingOrders = (type = selectedTab,productType=order_type) => {
+    console.log(type, 'typetype',order_type);
     actions
       .getUpcomingAndOngoingOrders(
         `?type=${
-          type?.id == 4 ? 'past' : type?.id == 1 ? 'upcoming' : 'ongoing'
-        }`,
+          type?.id == 4 ? 'past' : (type?.id == 1||(order_type=='purchase'&& type?.id==2)) ? 'upcoming' : 'ongoing'
+        }&productType=${productType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -143,11 +143,11 @@ export default function P2pOndemandMyOrders({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const getOrders = (pageNo = 1, type = 'past') => {
-    console.log(type, 'typetypetype');
+  const getOrders = (pageNo = 1, type = 'past',productType=order_type) => {
+    console.log(type, 'typetypetype',order_type);
     actions
       .getAllP2pOrders(
-        `?limit=${12}&page=${pageNo}&type=${type}`,
+        `?limit=${12}&page=${pageNo}&type=${type}&productType=${productType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -283,16 +283,16 @@ export default function P2pOndemandMyOrders({navigation, route}) {
       type == 'purchase'
         ? [
             {
-              id: 5,
+              id: 2,
               title: 'Active Orders',
             },
             {
-              id: 6,
-              title: 'Past Orders',
+              id: 3,
+              title: 'Cancelled Orders',
             },
             {
-              id: 7,
-              title: 'Cancelled Orders',
+              id: 4,
+              title: 'Past Orders',
             },
           ]
         : [
@@ -483,7 +483,7 @@ export default function P2pOndemandMyOrders({navigation, route}) {
         style={{
           flex: 1,
         }}>
-        {selectedTab?.id == 4 ? (
+        {selectedTab?.id == 3 ? (
           <FlatList
             data={orderHistory}
             renderItem={renderOrders}
@@ -525,7 +525,7 @@ export default function P2pOndemandMyOrders({navigation, route}) {
                         marginTop: moderateScaleVertical(12),
                       }}>
                       <HeaderView
-                        leftText={strings.AS_LENDER}
+                        leftText={order_type=='rent'? strings.AS_LENDER:strings.AS_SELLER}
                         isRightText={upcomingOngoingOrders?.lender?.length > 1}
                         onPressRight={() =>
                           navigation.navigate(
@@ -533,12 +533,13 @@ export default function P2pOndemandMyOrders({navigation, route}) {
                             {
                               userType: 'lender',
                               type:
-                                selectedTab?.id == 5
+                                selectedTab?.id == 4
                                   ? 'past'
-                                  : selectedTab?.id == 2
+                                  : selectedTab?.id == 1
                                   ? 'upcoming'
                                   : 'ongoing',
                               selectedTab: selectedTab,
+                              productType:order_type
                             },
                           )
                         }
@@ -558,7 +559,7 @@ export default function P2pOndemandMyOrders({navigation, route}) {
                         marginTop: moderateScaleVertical(12),
                       }}>
                       <HeaderView
-                        leftText={strings.AS_BORROWER}
+                        leftText={order_type=='rent'?strings.AS_BORROWER:strings.AS_BUYER}
                         isRightText={
                           upcomingOngoingOrders?.borrower?.length > 1
                         }
@@ -568,12 +569,13 @@ export default function P2pOndemandMyOrders({navigation, route}) {
                             {
                               userType: 'borrower',
                               type:
-                                selectedTab?.id == 5
+                                selectedTab?.id == 4
                                   ? 'past'
-                                  : selectedTab?.id == 2
+                                  : selectedTab?.id == 1
                                   ? 'upcoming'
                                   : 'ongoing',
                               selectedTab: selectedTab,
+                              productType:order_type
                             },
                           )
                         }

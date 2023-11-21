@@ -47,7 +47,7 @@ export default function GallaryCameraImgPicker({
               fontFamily: fontFamily.regular,
               fontSize: textScale(14),
             }}>
-            Gallary
+            Gallery
           </Text>
         </TouchableOpacity>
 
