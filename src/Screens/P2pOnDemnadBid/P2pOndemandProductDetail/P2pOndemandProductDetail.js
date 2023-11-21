@@ -694,8 +694,8 @@ const P2pProductDetail = ({ navigation, route, item }) => {
   const distance = () => {
     return getDistance(
       {
-        latitude: productInfo?.latitude,
-        longitude: productInfo?.longitude,
+        latitude: !!productInfo?.latitude?productInfo?.latitude:0,
+        longitude: !!productInfo?.longitude?productInfo?.longitude:0,
       },
       { latitude: location?.latitude, longitude: location?.longitude },
     );
@@ -1264,7 +1264,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
               </View>
             </View>}
-            <View
+            {!!region?.latitude &&<View
               style={{
                 marginTop: moderateScaleVertical(40),
                 marginHorizontal: moderateScale(12),
@@ -1284,7 +1284,8 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                   width: width - 20,
                   alignSelf: 'center',
                 }}>
-                {!!region?.latitude &&
+                  {console.log(region?.latitude,'region?.latitude')}
+                
                   <MapView
                     ref={mapRef}
                     provider={
@@ -1312,7 +1313,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                   </MapView>
 
 
-                }
+                
 
                 <TouchableOpacity
 
@@ -1326,7 +1327,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
                 </TouchableOpacity>
 
               </View>
-            </View>
+            </View>}
             <View style={{
               backgroundColor: colors.borderColorB,
               height: moderateScaleVertical(8),

@@ -535,7 +535,7 @@ export default function P2pOndemandMyOrders({navigation, route}) {
                               type:
                                 selectedTab?.id == 4
                                   ? 'past'
-                                  : selectedTab?.id == 1
+                                  : selectedTab?.id == 1||(selectedTab?.id==2&&order_type=='purchase')
                                   ? 'upcoming'
                                   : 'ongoing',
                               selectedTab: selectedTab,
@@ -571,7 +571,7 @@ export default function P2pOndemandMyOrders({navigation, route}) {
                               type:
                                 selectedTab?.id == 4
                                   ? 'past'
-                                  : selectedTab?.id == 1
+                                  : selectedTab?.id == 1||(selectedTab?.id==2&&order_type=='purchase')
                                   ? 'upcoming'
                                   : 'ongoing',
                               selectedTab: selectedTab,
