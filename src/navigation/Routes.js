@@ -11,6 +11,7 @@ import {
   P2pChatRoom,
   P2pChatScreen,
   P2pOndemandProductDetail,
+  P2pOndemandProducts,
   P2pWishlist,
   Wishlist,
   Wishlist2
@@ -133,6 +134,10 @@ export default function Routes() {
           name={navigationStrings.P2P_PRODUCT_DETAIL}
           component={P2pOndemandProductDetail}
         />
+         <Stack.Screen
+        name={navigationStrings.P2P_PRODUCTS}
+        component={P2pOndemandProducts}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );
