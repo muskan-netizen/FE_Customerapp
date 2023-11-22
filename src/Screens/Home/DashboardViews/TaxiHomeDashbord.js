@@ -787,8 +787,7 @@ export default function TaxiHomeDashbord({
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
-        {
-          true && (
+        {!!appData?.profile?.preferences?.is_hourly_pickup_rental && (
             <View
               style={{
                 flexDirection: 'row',
