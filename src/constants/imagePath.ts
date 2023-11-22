@@ -811,4 +811,6 @@ export default {
   ic_credit_card:require('../assets/images/credit_card.png'),
   ic_hourly_calendar:require('../assets/images/hourly_calendar.png'),
   ic_hourglass:require('../assets/images/hourglass.png'),
+  ic_pickdropcar:require('../assets/images/pickdropcar.png'),
+  ic_rentalcar:require('../assets/images/rentalcar.png'),
 };
