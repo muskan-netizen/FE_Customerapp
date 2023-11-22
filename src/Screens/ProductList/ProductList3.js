@@ -4093,7 +4093,28 @@ export default function Products({ route, navigation }) {
     setSelectedAppointmentIndx(index);
     setSelectedAgent({});
   };
+const checkSlot= async()=>{
+let apiData={
+  schedule_datetime: appointmentSelectedDate ? moment(appointmentSelectedDate).format("YYYY-MM-DD") : moment(new Date()).format("YYYY-MM-DD"),
+  schedule_slot:selectedAppointmentSlot?.value,
+  vendor_id:productListId?.id
+}
+  await actions.checkSlotsLimit(apiData, {
+    code: appData?.profile?.code
+  }).then((res) => {
+    console.log(res,'checkslotresssss>>>>>>')
+    if(res?.orderCount<res?.orders_per_slot){
+      addSingleItem(
+        selectedAllProductDataForAppointment,
+        selectedSection,
+        selectedItemIndx,
+      );
+    }else{
+      showError('This slot is not available, please select different slot.')
+    }
 
+  })
+}
   const _onSelecteAgent = item => {
     setSelectedAgent(item);
   };
@@ -4119,11 +4140,9 @@ export default function Products({ route, navigation }) {
       setAppointmentSlotsModal(false);
       setAppointmentPicker(false);
       setSelectedAgent({});
-      addSingleItem(
-        selectedAllProductDataForAppointment,
-        selectedSection,
-        selectedItemIndx,
-      );
+      checkSlot()
+      
+      
     } else {
       alert("Please select slot")
     }
