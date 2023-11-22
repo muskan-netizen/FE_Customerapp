@@ -1120,7 +1120,7 @@ export default function ChatScreen({ route, navigation }) {
                     alignItems: "center"
                 }}>
 
-                    <ButtonImage onPress={() => !!paramData?.isFromOrder ? navigation.navigate(navigationStrings.HOME) : !!paramData?.is_chat ? navigation.goBack() : navigation.goBack()} image={imagePath.ic_backarrow} />
+                    <ButtonImage onPress={() => !!paramData?.isFromOrder ? navigation.reset({index: 0,routes: [{name: navigationStrings.TAB_ROUTES}]}) : !!paramData?.is_chat ? navigation.goBack() : navigation.goBack()} image={imagePath.ic_backarrow} />
                     <FastImage style={{
                         height: moderateScale(28),
                         width: moderateScale(28),

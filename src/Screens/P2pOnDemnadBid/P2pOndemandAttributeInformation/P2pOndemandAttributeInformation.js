@@ -108,7 +108,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
   const [is360ImgPicker, set360ImgPicker] = useState(false);
   const [isProductAddedModal, setIsProductAddedModal] = useState(false);
   const [price, setPrice] = useState(
-    !!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 ? `${productData?.price}/day` : productData?.price > 0 ? String(productData?.price) : '',
+    !!appData?.profile?.preferences?.is_rental_weekly_monthly_price && productData?.price > 0 &&paramData?.type_id==10? `${productData?.price}/day` : productData?.price > 0 ? String(productData?.price) : '',
   );  // const [emirateId, setEmirateId] = useState('')
   const [productLocation, setProductLocation] = useState(
     productData?.productLocation || {},

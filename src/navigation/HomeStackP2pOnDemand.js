@@ -230,14 +230,14 @@ export default function () {
         name={navigationStrings.SUBCATEGORY_VENDORS}
         component={SubcategoryVendor}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
         component={P2pOndemandProducts}
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
         component={P2pOndemandProductDetail}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
