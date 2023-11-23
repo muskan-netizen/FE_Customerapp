@@ -5,6 +5,7 @@ import {
   GET_PRODUCT_RELATED_TO_CHAT,
   P2P_USER_TO_USER_CHAT,
   RAISE_AN_ISSUE_RELATED_TO_CHAT,
+  RAISE_ISSUE_MAIL,
   SEND_ADMIN_NOTIFICATION,
   SEND_MESSAGE,
   SEND_NOTIFCATION,
@@ -178,4 +179,8 @@ export function raiseAnIssueInChat(url = '', data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+export function raiseIssueMail(data = {}, headers = {}) {
+  return apiPost(RAISE_ISSUE_MAIL , data, headers);
 }

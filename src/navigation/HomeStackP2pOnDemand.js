@@ -46,6 +46,7 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
+  ViewAllSearchItems,
   WebLinks
 } from '../Screens';
 
@@ -271,7 +272,10 @@ export default function () {
         component={WebLinks}
       />
 
-
+<Stack.Screen
+        name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
+        component={ViewAllSearchItems}
+      />
 
 
     </Stack.Navigator>

@@ -431,7 +431,7 @@ export const SAVE_PAYOUT_DETAILS = getApiUrl('/user/saveVenderBankDetails');
 export const USE_WALLET_AMOUNT = getApiUrl('/cart/updateCartWalletAmount');
 
 export const RAISE_AN_ISSUE_RELATED_TO_CHAT = '/api/room/raiseanissue';
-
+export const RAISE_ISSUE_MAIL = getApiUrl('/raise-issue-mail');
 
 // ----------------------------carrental custom api-----
 export const SEARCH_PRODUCT_BY_TYPE = getApiUrl('/product/search');
