@@ -13,6 +13,7 @@ import BorderTextInput from '../../Components/BorderTextInput';
 import { moderateScale } from '../../styles/responsiveSize';
 import { getItem, setItem } from '../../utils/utils';
 import ButtonComponent from '../../Components/ButtonComponent';
+import RNRestart from 'react-native-restart';
 
 export default function DeveloperMode({ navigation }) {
     const currentTheme = useSelector((state) => state.appTheme);
@@ -44,8 +45,9 @@ export default function DeveloperMode({ navigation }) {
     console.log("shortCodeshortCode",shortCode)
 
     const onDone = () =>{
-        setItem('base_url', baseUrl).then((res)=>{
-
+        setItem('base_url', baseUrl).then((res)=>{})
+        setItem('saveShortCode', shortCode).then((res)=>{
+            RNRestart.Restart()
         })
     }
 
