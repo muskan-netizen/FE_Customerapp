@@ -236,7 +236,7 @@ function SwipeableSection(props) {
                                                             : colors.blackOpacity40,
                                                         marginBottom: moderateScaleVertical(4)
                                                     }} > {i?.scheduled_date_time} {i?.schedule_slot}</Text> : null}
-                                                    {getBundleId() !== appIds.rentzy || dineInType != 'car_rental' &&
+                                                    {(getBundleId() !== appIds.rentzy || dineInType != 'car_rental') &&
                                                         <View
                                                             pointerEvents={btnLoader ? 'none' : 'auto'}
                                                             style={{
@@ -245,7 +245,7 @@ function SwipeableSection(props) {
 
                                                                 justifyContent: 'space-between'
                                                             }}>
-                                                            <View style={{ flex: 0.7 }}>
+                                                            <View style={{ flex: 0.8 }}>
                                                                 <View style={{
                                                                     ...commonStyles.buttonRect,
                                                                     borderWidth: 0.4,
@@ -334,7 +334,7 @@ function SwipeableSection(props) {
                                                             </View>
 
 
-                                                            <View style={{ flex: 0.3 }}>
+                                                            <View style={{ flex: 0.2 }}>
                                                                 <TouchableOpacity
 
                                                                     onPress={() => openDeleteView(i)}>
