@@ -104,7 +104,7 @@ export const getAddressFromLatLong = (latlng, mapKey) =>
             console.log("error==>>>", error)
         });
 
-export const getNearByPlacesMarker = async (lat, long, radius, places, key = 'AIzaSyDHPQM4OBs2I7ngqFOWk0Wk9Ke4AA034VI') => {
+export const getNearByPlacesMarker = async (lat, long, radius, places, key = 'AIzaSyASANrOuQldA-UM0Kj0cRirK9RxG6DAzzw') => {
 
     try {
         let res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=${radius}&type=${places}&keyword=cruise&key=${key}`, {
