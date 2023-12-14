@@ -618,6 +618,16 @@ export default function Home({ route, navigation }) {
       return
     }
 
+    if(item?.redirect_to==staticStrings.APPOINTMENT){
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        id: item?.id,
+        vendor: false,
+        name: item?.name,
+        isVendorList: false,
+        fetchOffers: true,
+      })();
+      return
+    }
     if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
       moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
         fetchOffers: true,
