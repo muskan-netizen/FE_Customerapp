@@ -357,7 +357,7 @@ const CarRentHomeScreen = ({ route }) => {
       <SearchAreaModal
         showModal={addressModal}
         location={`${location.latitude}-${location.longitude}`}
-        mapKey={appData?.profile?.preferences?.map_key}
+        mapKey={Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key : appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key}
         title={locationIndex ? 'My Return Location' : 'My Current Location'}
         onClose={() => {
           showAddressModal(false);

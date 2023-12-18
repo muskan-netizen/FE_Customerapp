@@ -556,7 +556,7 @@ export default function Addaddress({ navigation, route }) {
       try {
         let res = await getPlaceDetails(
           place.place_id,
-          profile?.preferences?.map_key
+          Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key
         );
         const { result } = res;
 
@@ -1256,7 +1256,7 @@ export default function Addaddress({ navigation, route }) {
                                   : strings.ADD_A_STOP
                             }
                             value={val?.pre_address} // instant update search value
-                            mapKey={profile?.preferences?.map_key} //send here google Key
+                            mapKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key} //send here google Key
                             fetchArrayResult={(data) =>
                               updateState({
                                 searchResult: { data: data, currentIndex: i },

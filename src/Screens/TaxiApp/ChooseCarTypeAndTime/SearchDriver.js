@@ -19,6 +19,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import moment from 'moment';
 
 export default function ({
   isWaitingOver = false,
@@ -77,7 +78,7 @@ export default function ({
                 textAlign:'center'
               }}
             >
-             your ride has been schedule for {scheduleDate}
+            {strings.YOUR_RIDE_SCHEDULE_FOR} {moment.utc(scheduleDate).local().format("YYYY-MM-DD hh:mm:ss a")}
             </Text>
             </View>)
           :(<View style={{justifyContent: 'center', alignItems: 'center'}}>

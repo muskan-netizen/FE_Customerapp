@@ -2382,7 +2382,7 @@ export default function OrderDetail({ navigation, route }) {
 
 
 
-          {!!cartData?.scheduled_date_time && !dineInType == 'appointment' && (
+          {!!cartData?.scheduled_date_time && dineInType != 'appointment' && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
               rightText={cartData?.scheduled_date_time}

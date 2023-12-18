@@ -1237,5 +1237,6 @@ Amount`,
   AS_BUYER:'As Buyer',
   AS_SELLER:'As Seller',
   FOR_SALE:'For Sale',
-  FOR_RENT:'For Rent'
+  FOR_RENT:'For Rent',
+  YOUR_RIDE_SCHEDULE_FOR:' Your ride has been schedule for'
 };

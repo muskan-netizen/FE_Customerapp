@@ -96,6 +96,7 @@ function ChooseVechile({ navigation, route }) {
     const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
     const [responseTimer, setResponseTimer] = useState(420)
     const [pickuporderdetails, setPickuporderdetails] = useState('')
+    const [locaDateTime, setLocaDateTime] =  useState(null)
     const [state, setState] = useState({
         region: {
             latitude: paramData?.location[0]?.latitude
@@ -268,25 +269,31 @@ function ChooseVechile({ navigation, route }) {
     }, [isVisibleMtnGateway])
 
     const onDateSet = useCallback((date) => {
-        let time = moment(date).format("HH:mm ");
-        let dateSelectd = moment(date).format("YYYY-MM-DD");
+        let utcDate = moment.utc(date).format(); 
+        let dateSelected = moment.utc(date).format("YYYY-MM-DD");
+        let timeSelected = moment.utc(date).format("HH:mm");
+
+        const formattedDate = moment(date).format('YYYY-MM-DD hh:mm A');
+       
+        setLocaDateTime(formattedDate)
         updateState({
             isLoading: true,
             scheduleDateTime: {
-                selectedDateAndTime: `${dateSelectd} ${time}`,
-                slectedDate: dateSelectd,
-                selectedTime: moment(date).format("HH:mm"),
-                date: date,
+                selectedDateAndTime: `${dateSelected} ${timeSelected}`,
+                selectedDate: dateSelected,
+                selectedTime: timeSelected,
+                date: utcDate,
                 isScheduleModalVisible: false,
             },
         });
         updateState({ isScheduleModalVisible: false });
-        _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelectd} ${time}` });
-    }, [date, selectedCarOption])
+        _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelected} ${timeSelected}` });
+    }, [date, selectedCarOption]);
 
 
     const clearScheduleDate = useCallback(() => {
         actions.saveSchduleTime('now');
+        setLocaDateTime(null)
         updateState({
             isLoading: true,
             scheduleDateTime: {}
@@ -1651,12 +1658,12 @@ function ChooseVechile({ navigation, route }) {
                                     color: themeColors?.primary_color,
                                 }}
                                 onPress={_openDateTimeModal}
-                                btnText={`${scheduleDateTime?.selectedDateAndTime
-                                    ? `${scheduleDateTime?.selectedDateAndTime}`
-                                    : slectedDate || selectedTime
-                                        ? `${slectedDate} ${selectedTime}`
-                                        : strings.SCHEDULE_A_RIDE
-                                    }`}
+                                btnText={`${!!locaDateTime ? locaDateTime :  scheduleDateTime?.selectedDateAndTime
+                                ? `${scheduleDateTime?.selectedDateAndTime}`
+                                : slectedDate || selectedTime
+                                    ? `${slectedDate} ${selectedTime}`
+                                    : strings.SCHEDULE_A_RIDE
+                                }`}
                                 btnStyle={styles.scheduleBtnStyle}
                             />}
                         </View>
@@ -1929,7 +1936,7 @@ function ChooseVechile({ navigation, route }) {
             <DatePicker
                 modal
                 open={isScheduleModalVisible}
-                date={scheduleDateTime?.date ? scheduleDateTime?.date : new Date()}
+                date={new Date()}
                 locale={
                     languages?.primary_language?.sort_code
                         ? languages?.primary_language?.sort_code

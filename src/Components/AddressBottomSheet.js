@@ -3,6 +3,7 @@ import {
   I18nManager,
   Image,
   Keyboard,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -516,7 +517,7 @@ const AddressBottomSheet = ({
       try {
         let res = await getPlaceDetails(
           place.place_id,
-          profile?.preferences?.map_key,
+          Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key,
         );
         const { result } = res;
 
@@ -655,7 +656,7 @@ const AddressBottomSheet = ({
                     curLatLng={`${constCurrLoc?.latitude}-${constCurrLoc?.longitude}`}
                     placeHolder={strings.SEARCH_LOCATION}
                     value={address} // instant update search value
-                    mapKey={profile?.preferences?.map_key} //send here google Key
+                    mapKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key} //send here google Key
                     fetchArrayResult={(data) =>
                       updateState({ searchResult: data })
                     }

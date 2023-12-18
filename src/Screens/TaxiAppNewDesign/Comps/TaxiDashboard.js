@@ -499,7 +499,7 @@ export default function TaxiDashboard({
 
     nearbySearch(
       locations,
-      appData?.profile?.preferences?.map_key || google_map_key,
+      Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key : appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key || google_map_key,
       type,
     ).then((res) => {
       if (!isEmpty(res?.results)) {
