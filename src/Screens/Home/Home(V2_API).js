@@ -771,14 +771,15 @@ export default function Home({ route, navigation }) {
             // dat2['id'] = data?.redirect_id;
             // moveToNewScreen(navigationStrings.VENDOR, dat2)();
           }
-          if (data.redirect_to == staticStrings.CATEGORY) {
-            moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })();
-            return;
-          } else {
+          // if (data.redirect_to == staticStrings.CATEGORY) {
+          //   moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+          //     item,
+          //     rootProducts: true,
+          //     // categoryData: data,
+          //   })();
+          //   return;
+          // } 
+          else {
             moveToNewScreen(navigationStrings.PRODUCT_LIST, {
               id: data.redirect_id,
               // vendor: true,
@@ -787,14 +788,14 @@ export default function Home({ route, navigation }) {
             })();
           }
         }
-        if (data.redirect_to == staticStrings.CATEGORY) {
-          moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })();
-          return;
-        }
+        // if (data.redirect_to == staticStrings.CATEGORY) {
+        //   moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+        //     item,
+        //     rootProducts: true,
+        //     // categoryData: data,
+        //   })();
+        //   return;
+        // }
       }
     }
   };
