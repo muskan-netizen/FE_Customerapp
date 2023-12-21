@@ -466,7 +466,7 @@ const AddressBottomSheet = ({
   const updateAddress_ = async (data_) => {
     let res = await getPlaceDetails(
       data_.place_id,
-      profile?.preferences?.map_key,
+      Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key
     );
     const { result } = res;
 

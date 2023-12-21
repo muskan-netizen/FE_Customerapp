@@ -443,7 +443,7 @@ export default function Addaddress({ navigation, route }) {
       getAllPickUpVendors(latitude, longitude);
 
       const res = await getAddressFromLatLong(`${latitude}, ${longitude}`,
-        appData.profile.preferences?.map_key
+      Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key:appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key
       );
       let cloneArr = [...dropLocationData];
       if (!!paramData?.prefillAdress && paramData?.prefillAdress?.isFromSavedAddress) {
@@ -483,7 +483,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key, paramData?.type || 'city');
+      const res = await nearbySearch(latlng, Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, paramData?.type || 'city');
       updateState({
         nearByAddressess: res.results,
       });
