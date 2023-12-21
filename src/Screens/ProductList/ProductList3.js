@@ -442,6 +442,12 @@ export default function Products({ route, navigation }) {
   //usecallback functions
 
   const goToProductDetail = productDetail => {
+    if(dine_In_Type=='p2p'){
+      navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
+        product_id: productDetail?.id,
+    })
+    return
+    }
     navigation.navigate(navigationStrings.PRODUCTDETAIL, {
       data: productDetail,
       previousScreenData: data,

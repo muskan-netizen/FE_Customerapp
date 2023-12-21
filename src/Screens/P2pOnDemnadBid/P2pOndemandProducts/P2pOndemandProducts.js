@@ -664,6 +664,12 @@ const P2pOndemandProducts = ({ route, navigation }) => {
                 rightImgStyle={{
                     tintColor: checkIfAttributeSelected() ? themeColors?.primary_color : null
                 }}
+                onPressLeft={() =>
+                    navigation.goBack({
+                      index: 0,
+                    })
+                  }
+                  isCustomLeftPress={true}
 
             />
             {!!categoryId>0&&<View style={{
