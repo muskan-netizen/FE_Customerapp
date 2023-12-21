@@ -430,7 +430,7 @@ const ProductCard3 = ({
           />
         }
 
-        <View
+       {dine_In_Type!='p2p'&& <View
           style={{
             // justifyContent: url1 ? 'flex-start' : 'center',
             // marginLeft: url1 ? 0 : moderateScale(100),
@@ -608,7 +608,7 @@ const ProductCard3 = ({
           ) : (
             <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
           )}
-        </View>
+        </View>}
       </View>
 
     </TouchableOpacity>
