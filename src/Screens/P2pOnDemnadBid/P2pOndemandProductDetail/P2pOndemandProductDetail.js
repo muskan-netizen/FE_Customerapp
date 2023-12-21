@@ -605,10 +605,9 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
 
   const clearEntireCart = () => {
-
-
     if (!userData?.auth_token) {
-
+    showError('Please login to access check final price')
+    return
       const parts = redirectedFrom.split("-"); // Split the string into an array using "-"
       const charactersAfterDash = parts[1];
       actions.setRedirection(`productDetail-${paramData?.product_id || charactersAfterDash}`);

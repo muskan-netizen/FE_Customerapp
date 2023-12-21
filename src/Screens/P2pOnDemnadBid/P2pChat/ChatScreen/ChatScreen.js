@@ -1144,7 +1144,10 @@ export default function ChatScreen({ route, navigation }) {
           alignItems: "center",
         }}>
           
-          <ButtonImage imgStyle={{ tintColor: isDarkMode ? colors.white : colors.black }} onPress={() => !!paramData?.isFromOrder ? navigation.navigate(navigationStrings.HOME) : navigation.goBack()} image={imagePath.ic_backarrow} />
+          <ButtonImage imgStyle={{ tintColor: isDarkMode ? colors.white : colors.black }} onPress={() => !!paramData?.isFromOrder ? navigation.reset({
+            index: 0,
+            routes: [{name: navigationStrings.TAB_ROUTES}],
+          }) : navigation.goBack()} image={imagePath.ic_backarrow} />
           {(!!reciverData?.image_fit||!!productDetails?.vendor?.user_vendor?.user?.image?.image_fit?.image)?<FastImage style={{
             height: moderateScale(28),
             width: moderateScale(28),
