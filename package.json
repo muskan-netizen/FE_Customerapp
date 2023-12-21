@@ -15,6 +15,7 @@
     "elixir": "react-native run-android --variant=elixirDebug --appIdSuffix=elixir",
     "ace": "react-native run-android --variant=aceDebug --appIdSuffix=ace",
     "spa": "react-native run-android --variant=spaDebug --appIdSuffix=spa",
+    "spaRelease": "cd android && ./gradlew assemblespaRelease",
     "skyline": "react-native run-android --variant=skylineDebug --appIdSuffix=skyline",
     "rentzy": "react-native run-android --variant=rentzyDebug --appIdSuffix=rentzy",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
