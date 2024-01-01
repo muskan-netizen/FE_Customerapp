@@ -366,7 +366,7 @@ const DashBoardFiveV2Api = ({
                   />
                 ) :
                   item?.slug == 'brands' ? (
-                    <CategoriesView item={item} showTitle={false} />
+                    <BrandsView isDarkMode={isDarkMode} item={item} showTitle={false} appStyle={appStyle} appMainData={appMainData} moveToNewScreen={moveToNewScreen} />
                   ) : item?.slug == 'spotlight_deals' ? (
                     <SpotlightDealsView item={item} />
                   ) : item?.slug == 'selected_products' ? (
@@ -1571,6 +1571,7 @@ const BrandsView = ({
     <React.Fragment />
   );
 }
+
 //render brands function
 const _renderBrands = ({
   item = {},
