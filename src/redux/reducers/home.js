@@ -13,7 +13,7 @@ const initial_state = {
     addAddress: '',
     updatedAddress: '',
   },
-  dineInType: 'p2p',
+  dineInType: 'delivery',
   constCurrLoc: {
     address: '',
     latitude: '',
