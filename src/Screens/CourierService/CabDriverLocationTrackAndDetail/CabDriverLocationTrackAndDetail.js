@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import {Image, Platform, TouchableOpacity, View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useSelector} from 'react-redux';
@@ -76,7 +76,7 @@ export default function CabDriverLocationTrackAndDetail({navigation, route}) {
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
   const _confirmAddress = (addressType) => {};

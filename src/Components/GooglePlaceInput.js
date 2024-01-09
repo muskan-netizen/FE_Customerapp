@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Keyboard, Image} from 'react-native';
+import {StyleSheet, Text, View, Keyboard, Image, Platform} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {useSelector} from 'react-redux';
@@ -68,7 +68,7 @@ const GooglePlaceInput = ({
   const styles = stylesFunc({fontFamily});
 
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
   //update state

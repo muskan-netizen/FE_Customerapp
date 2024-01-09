@@ -3684,7 +3684,7 @@ export default function OrderDetail({ navigation, route }) {
                     latitudeDelta: 0.0222,
                     longitudeDelta: 0.032,
                   }}
-                  apikey={appData.profile?.preferences?.map_key}
+                  apikey={Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key:appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key}
                   strokeWidth={3}
                   strokeColor={themeColors?.primary_color}
                   optimizeWaypoints={false}

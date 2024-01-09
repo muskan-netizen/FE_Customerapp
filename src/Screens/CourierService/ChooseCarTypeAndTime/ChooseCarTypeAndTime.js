@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView, {Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
@@ -152,7 +152,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
   const _confirmAddress = (addressType) => {};
@@ -555,7 +555,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 : []
             }
             destination={paramData?.location[paramData?.location.length - 1]}
-            apikey={profile?.preferences?.map_key}
+            apikey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
             strokeWidth={3}
             strokeColor={themeColors.primary_color}
             optimizeWaypoints={true}

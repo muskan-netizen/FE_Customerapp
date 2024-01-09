@@ -218,7 +218,7 @@ function ChooseVechile({ navigation, route }) {
         }, [paramData]),
     );
     useEffect(() => {
-        Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+        Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
         setTimeout(() => {
             onCenter();
         }, 3000);
@@ -1756,7 +1756,7 @@ function ChooseVechile({ navigation, route }) {
                                 : []
                         }
                         destination={paramData?.location[paramData?.location.length - 1]}
-                        apikey={profile?.preferences?.map_key}
+                        apikey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                         strokeWidth={4}
                         strokeColor={colors.black}
                         optimizeWaypoints={true}

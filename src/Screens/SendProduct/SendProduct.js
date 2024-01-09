@@ -402,7 +402,7 @@ export default function SendProduct({navigation, route}) {
             navigation={navigation}
             addressType={'pickup'}
             placeholder={strings.PICKUPADDRESS}
-            googleApiKey={profile?.preferences?.map_key}
+            googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
             textInputContainer={styles.textGoogleInputContainerAddress}
             listView={
               stylesFunc({
@@ -457,7 +457,7 @@ export default function SendProduct({navigation, route}) {
             navigation={navigation}
             addressType={'dropoff'}
             placeholder={strings.DROPOFFADDRESS}
-            googleApiKey={profile?.preferences?.map_key}
+            googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
             textInputContainer={styles.textGoogleInputContainerAddress}
             listView={
               stylesFunc({

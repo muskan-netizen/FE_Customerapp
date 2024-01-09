@@ -99,14 +99,7 @@ export default function ({ navigation }) {
     }
   };
   const checkProfileLayout = (layout) => {
-    switch (appStyle?.homePageLayout) {
-      case 1:
-        return MyProfile;
-      case 2:
-        return MyProfile2;
-      default:
         return MyProfile3;
-    }
   };
 
   const checkSearchProductVendorItemLayout = (layout) => {

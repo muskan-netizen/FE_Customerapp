@@ -217,7 +217,7 @@ export default function Addaddress({ navigation, route }) {
         if (result === "goback") {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, { language: "en" }); // set the language
+        Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: "en" }); // set the language
       })
       .catch((error) => {
         console.log("error while accessing location", error)

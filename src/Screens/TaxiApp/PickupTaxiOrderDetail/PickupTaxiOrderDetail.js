@@ -2610,7 +2610,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                         : tasks[tasks.length - 1]
                     }
                     // destination={tasks[tasks.length - 1]}
-                    apikey={profile?.preferences?.map_key}
+                    apikey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                     strokeWidth={4}
                     strokeColor={colors.black}
                     optimizeWaypoints={true}

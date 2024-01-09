@@ -143,7 +143,7 @@ export default function MultipleDropOffSelection({navigation, route}) {
         if (result === 'goback') {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+        Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, {language: 'en'}); // set the language
       })
       .catch((error) => console.log('error while accessing location', error));
   }, []);
@@ -662,7 +662,7 @@ export default function MultipleDropOffSelection({navigation, route}) {
                 navigation={navigation}
                 addressType={'dropoff'}
                 placeholder={strings.DROPOFFADDRESS}
-                googleApiKey={profile?.preferences?.map_key}
+                googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                 textInputContainer={styles.textGoogleInputContainerAddress}
                 listView={styles.listView}
                 listView={
@@ -714,7 +714,7 @@ export default function MultipleDropOffSelection({navigation, route}) {
                     navigation={navigation}
                     addressType={'dropoff'}
                     placeholder={strings.DROPOFFADDRESS}
-                    googleApiKey={profile?.preferences?.map_key}
+                    googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                     textInputContainer={styles.textGoogleInputContainerAddress}
                     listView={
                       stylesFun({

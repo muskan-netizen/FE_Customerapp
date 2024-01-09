@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Image, Linking, TouchableOpacity, View } from 'react-native';
+import { Alert, BackHandler, Image, Linking, Platform, TouchableOpacity, View } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
@@ -261,7 +261,7 @@ export default function HomeTemplate3({ route, navigation }) {
 
 
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
 
