@@ -1456,7 +1456,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
       <Modal isVisible={isModalVisible} style={{
         margin: 0
       }}>
-        <View style={{ backgroundColor: colors.white, flex: 1, paddingTop: Platform.OS == "ios" ? StatusBarHeight : 0 }}>
+        <ScrollView style={{ backgroundColor: colors.white, flex: 1, paddingTop: Platform.OS == "ios" ? StatusBarHeight : 0 }}>
           <OoryksHeader
             leftTitle={strings.DATE_AND_TIME}
             onPressLeft={() => setModalVisible(false)}
@@ -1571,7 +1571,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
             />
           </View>
 
-        </View>
+        </ScrollView>
       </Modal >
 
       {/* <Modal isVisible={true} style={{

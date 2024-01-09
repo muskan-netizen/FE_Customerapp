@@ -887,9 +887,12 @@ export default function Addaddress({ navigation, route }) {
         updateState({
           showFriendListModal: false,
         });
-        navigation.navigate(navigationStrings.ADD_NEW_RIDER, {
-          addNewRiderContact: true,
-        });
+        setTimeout(() => {
+          navigation.navigate(navigationStrings.ADD_NEW_RIDER, {
+            addNewRiderContact: true,
+          });
+        }, 300);
+       
         break;
       case 2:
         _selectRiderContactFromPhoneBook();
