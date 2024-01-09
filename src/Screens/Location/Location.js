@@ -88,7 +88,7 @@ export default function Location({ route, navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily });
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, { language: "en" }); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: "en" }); // set the language
   }, []);
 
   //update state

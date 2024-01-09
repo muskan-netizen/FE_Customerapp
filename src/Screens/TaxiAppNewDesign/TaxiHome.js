@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Alert, BackHandler, View } from 'react-native';
+import { Alert, BackHandler, Platform, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
@@ -114,7 +114,7 @@ export default function TaxiHome({ route, navigation }) {
     );
 
     useEffect(() => {
-        Geocoder.init(appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
+        Geocoder.init(Platform.OS=='ios'? appData?.profile?.preferences?.map_key_for_ios_app|| appData?.profile?.preferences?.map_key: appData?.profile?.preferences?.map_key_for_app||  appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
         initApiHit();
     }, []);
 

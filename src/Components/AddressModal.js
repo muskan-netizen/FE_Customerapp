@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  Platform,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
@@ -128,7 +129,7 @@ const AddressModal = ({
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   const _onChangeText = (key) => (val) => {
@@ -386,7 +387,7 @@ const AddressModal = ({
           getDefaultValue={address}
           type={type}
           navigation={navigation}
-          googleApiKey={profile?.preferences?.map_key}
+          googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
           textInputContainer={styles.textGoogleInputContainerAddress}
           listView={styles.listView}
           textInput={styles.textInput2}

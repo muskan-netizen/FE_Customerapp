@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, BackHandler, View } from 'react-native';
+import { Alert, BackHandler, Platform, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 
@@ -254,7 +254,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useFocusEffect(

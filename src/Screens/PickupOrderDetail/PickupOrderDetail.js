@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, View, Text, TouchableOpacity, Image} from 'react-native';
+import {Dimensions, View, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -357,7 +357,7 @@ export default function PickupOrderDetail({navigation, route}) {
                 origin={tasks[0]}
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
                 destination={tasks[tasks.length - 1]}
-                apikey={profile?.preferences?.map_key}
+                apikey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                 strokeWidth={2}
                 strokeColor={themeColors.primary_color}
                 optimizeWaypoints={true}

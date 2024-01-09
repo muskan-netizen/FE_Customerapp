@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Platform, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import Header from "../../Components/Header";
@@ -291,7 +291,7 @@ export default function TrackiDetail({ navigation, route }) {
                   latitudeDelta: 0.0222,
                   longitudeDelta: 0.032,
                 }}
-                apikey={appData.profile?.preferences?.map_key}
+                apikey={Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key:appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key}
                 strokeWidth={3}
                 strokeColor={themeColors?.primary_color}
                 optimizeWaypoints={true}
