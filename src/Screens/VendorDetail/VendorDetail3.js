@@ -225,12 +225,14 @@ export default function VendorDetail3({ navigation, route }) {
   const _renderItem = ({ item, index }) => {
     return (
       <Animatable.View
+      style={{margin:moderateScale(6)}}
         delay={index * 40}>
         <BrandCard3
           onPress={() => moveToNewScreen(item)}
           // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
           data={item}
           withTextBG
+          containerStyle={{width:(width/3)-20}}
           cardIndex={index}
         />
       </Animatable.View>
@@ -332,7 +334,7 @@ export default function VendorDetail3({ navigation, route }) {
           ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
           ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScale(4) }} />
+            <View style={{ height: moderateScale(10) }} />
           )}
           renderItem={_renderItem}
           ListEmptyComponent={
