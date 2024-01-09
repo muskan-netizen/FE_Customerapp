@@ -610,7 +610,7 @@ export default function MultipleDropOffSelection({navigation, route}) {
                 navigation={navigation}
                 addressType={'pickup'}
                 placeholder={strings.PICKUPADDRESS}
-                googleApiKey={profile?.preferences?.map_key}
+                googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                 textInputContainer={styles.textGoogleInputContainerAddress}
                 listView={
                   stylesFun({
@@ -665,14 +665,14 @@ export default function MultipleDropOffSelection({navigation, route}) {
                 googleApiKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
                 textInputContainer={styles.textGoogleInputContainerAddress}
                 listView={styles.listView}
-                listView={
-                  stylesFun({
-                    fontFamily,
-                    themeColors,
-                    viewHeight: viewHeight,
-                    type: 'dropOffLocation',
-                  }).listView
-                }
+                // listView={
+                //   stylesFun({
+                //     fontFamily,
+                //     themeColors,
+                //     viewHeight: viewHeight,
+                //     type: 'dropOffLocation',
+                //   }).listView
+                // }
                 onFocus={() => updateState({dropOffLocationFocus: true})}
                 onBlur={() => {
                   if (dropOffLocation == '') {

@@ -254,7 +254,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key:appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useFocusEffect(

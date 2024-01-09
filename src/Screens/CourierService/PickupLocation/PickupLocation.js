@@ -23,7 +23,7 @@ export default function PickupLocation({navigation, route}) {
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pickUpLocation: '',
@@ -60,7 +60,7 @@ export default function PickupLocation({navigation, route}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
+
   const _onChangeText = (key) => (val) => {
     updateState({[key]: val});
   };
