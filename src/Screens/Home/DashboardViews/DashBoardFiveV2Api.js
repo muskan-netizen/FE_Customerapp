@@ -735,7 +735,7 @@ const DashBoardFiveV2Api = ({
               isDarkMode={isDarkMode}
               appStyle={appStyle}
 
-            /> : <View style={{ marginVertical: moderateScaleVertical(0), }} />}
+            /> : <View style={{ marginVertical: moderateScaleVertical(6), }} />}
           <Carousel
             autoplay={true}
             loop={true}
