@@ -376,7 +376,7 @@ export default function ChatScreen({ route, navigation }) {
     let apiData = {
       user_ids:
         allRoomUsersAppartFromAgent.length == 0
-          ? [{ auth_user_id: paramData?.vendor_id }]
+          ? [{ auth_user_id: reciverData?.id }]
           : allRoomUsersAppartFromAgent,
       roomId: id,
       roomIdText: paramData?.room_id,
