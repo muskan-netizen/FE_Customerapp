@@ -248,7 +248,7 @@ export default function ChatScreen({ route, navigation }) {
         const allRoomUsersAppartFromAgentAry = cloneRes?.userData.filter(
           (item) => {
 
-            if (item?.user_type == 'agent') {
+            if (item?.user_id!=userData?.id) {
               return item?.user_type !== 'agent';
             }
           },
