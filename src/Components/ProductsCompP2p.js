@@ -50,23 +50,6 @@ const ProductsComp = ({
 
   const scaleInAnimated = new Animated.Value(0);
 
-  const {
-    translation = [],
-    category = {},
-    media = [],
-    vendor = {},
-    variant = [],
-  } = item;
-
-
-  const imageUrl = getImageUrl(
-    media[0]?.image?.path?.image_fit,
-    media[0]?.image?.path?.image_path,
-    '600/600',
-  );
-
-
-
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -152,7 +135,7 @@ const ProductsComp = ({
               alignSelf: "flex-end",
               ...productNameStyle,
             }}>
-            {translation[0]?.title || item?.title || item?.sku}
+            {item?.translation[0]?.title || item?.title || item?.sku}
           </Text>
         </View>
       </View>
