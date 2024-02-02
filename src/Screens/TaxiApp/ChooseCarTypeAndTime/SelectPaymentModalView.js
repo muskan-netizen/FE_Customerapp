@@ -523,78 +523,80 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
           </View>
         </View>
       </View>
-      {!!loyalityAmount && !(paymentInfoAfterBidAccept?.bidData && paymentInfoAfterBidAccept?.showPaymentModal) && (
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: moderateScale(20),
-            justifyContent: 'space-between',
-            marginVertical: moderateScale(16),
-          }}>
-          <Text
-            style={
-              isDarkMode
-                ? [
-                  styles.distanceDurationDeliveryLable,
-                  { color: MyDarkTheme.colors.text },
-                ]
-                : styles.distanceDurationDeliveryLable
-            }>
-            {strings.LOYALTY}
-          </Text>
-          <Text
-            style={
-              isDarkMode
-                ? [
-                  styles.distanceDurationDeliveryValue,
-                  { color: MyDarkTheme.colors.text },
-                ]
-                : styles.distanceDurationDeliveryValue
-            }>{`-${tokenConverterPlusCurrencyNumberFormater(
+      
+      {!!selectedCarOption?.toll_fee &&
+        Number(selectedCarOption?.toll_fee) != 0 && (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              justifyContent: 'space-between',
+              marginVertical: moderateScale(16),
+            }}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryLable,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryLable
+              }>
+              {strings.TOLL_FEE}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryValue,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryValue
+              }>{`${tokenConverterPlusCurrencyNumberFormater(
               Number(selectedCarOption?.variant[0]?.multiplier) *
-              Number(loyalityAmount),
+                Number(selectedCarOption?.toll_fee),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
             )}`}</Text>
-        </View>
-      )}
-      {!!selectedCarOption?.toll_fee && (
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: moderateScale(20),
-            justifyContent: 'space-between',
-            marginVertical: moderateScale(16),
-          }}>
-          <Text
-            style={
-              isDarkMode
-                ? [
-                  styles.distanceDurationDeliveryLable,
-                  { color: MyDarkTheme.colors.text },
-                ]
-                : styles.distanceDurationDeliveryLable
-            }>
-            {strings.TOLL_FEE}
-          </Text>
-          <Text
-            style={
-              isDarkMode
-                ? [
-                  styles.distanceDurationDeliveryValue,
-                  { color: MyDarkTheme.colors.text },
-                ]
-                : styles.distanceDurationDeliveryValue
-            }>{`${tokenConverterPlusCurrencyNumberFormater(
-              Number(selectedCarOption?.variant[0]?.multiplier) *
-              Number(selectedCarOption?.toll_fee),
+          </View>
+        )}
+      {!!selectedCarOption?.taxable_amount &&
+        Number(selectedCarOption?.taxable_amount) != 0 && (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              justifyContent: 'space-between',
+              marginVertical: moderateScale(16),
+            }}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryLable,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryLable
+              }>
+              {strings.TAXES_FEES}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryValue,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryValue
+              }>{`${tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedCarOption?.taxable_amount),
               digit_after_decimal,
               additional_preferences,
               currencies?.primary_currency?.symbol,
             )}`}</Text>
-        </View>
-      )}
+          </View>
+        )}
 
       {!!selectedCarOption?.service_charge_amount && (
         <View
@@ -635,8 +637,132 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
           </Text>
         </View>
       )}
+      {!!loyalityAmount && !(paymentInfoAfterBidAccept?.bidData && paymentInfoAfterBidAccept?.showPaymentModal) && (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+            marginVertical: moderateScale(16),
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                  styles.distanceDurationDeliveryLable,
+                  { color: MyDarkTheme.colors.text },
+                ]
+                : styles.distanceDurationDeliveryLable
+            }>
+            {strings.LOYALTY}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                  styles.distanceDurationDeliveryValue,
+                  { color: MyDarkTheme.colors.text },
+                ]
+                : styles.distanceDurationDeliveryValue
+            }>{`-${tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedCarOption?.variant[0]?.multiplier) *
+              Number(loyalityAmount),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}`}</Text>
+          </View>
+        )}
 
-      <TouchableOpacity
+      {!!selectedCarOption?.wallet_amount_used &&
+        Number(selectedCarOption?.wallet_amount_used) != 0 && (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              justifyContent: 'space-between',
+              marginVertical: moderateScale(16),
+            }}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryLable,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryLable
+              }>
+              {strings.WALLET}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryValue,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryValue
+              }>{`- ${tokenConverterPlusCurrencyNumberFormater(
+              Number(selectedCarOption?.wallet_amount_used),
+              digit_after_decimal,
+              additional_preferences,
+              currencies?.primary_currency?.symbol,
+            )}`}</Text>
+          </View>
+        )}
+
+
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              justifyContent: 'space-between',
+              marginVertical: moderateScale(16),
+            }}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryLable,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryLable
+              }>
+              {strings.TOTAL_PAYABLE}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryValue,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryValue
+              }>{paymentInfoAfterBidAccept?.bidData &&
+                paymentInfoAfterBidAccept?.showPaymentModal
+                  ? `${tokenConverterPlusCurrencyNumberFormater(
+                      Number(paymentInfoAfterBidAccept?.bidData?.bid_price),
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}`
+                  : selectedCarOption
+                  ? `${tokenConverterPlusCurrencyNumberFormater(
+                      Number(
+                        selectedCarOption?.total_tags_price
+                          ? selectedCarOption?.total_tags_price -
+                              (updatedPrice ? updatedPrice : 0)
+                          : selectedCarOption?.tags_price -
+                              (updatedPrice ? updatedPrice : 0),
+                      ),
+                      digit_after_decimal,
+                      additional_preferences,
+                      currencies?.primary_currency?.symbol,
+                    )}`
+                  : ''}</Text>
+          </View>
+
+   { Number(selectedCarOption?.total_tags_price)!=0 &&  <TouchableOpacity
         style={{
           ...styles.offersViewB,
           marginHorizontal: moderateScale(17),
@@ -685,7 +811,7 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
             </Text>
           </View>
         )}
-      </TouchableOpacity>
+      </TouchableOpacity>}
       {/* select payment method */}
       <TouchableOpacity
         onPress={redirectToPayement}

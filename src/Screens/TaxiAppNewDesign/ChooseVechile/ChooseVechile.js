@@ -1019,12 +1019,12 @@ function ChooseVechile({ navigation, route }) {
                                 width: moderateScale(40),
                                 height: moderateScale(4),
                                 borderRadius: 8,
-                                marginRight: moderateScale(34),
+                                marginRight: moderateScale(21),
                             }}
                         />
                         <Text />
                     </View>
-                    <View style={{ marginBottom: moderateScaleVertical(32) }} />
+                    {/* <View style={{ marginBottom: moderateScaleVertical(4) }} /> */}
                 </View>
             );
         }

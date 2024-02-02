@@ -1491,6 +1491,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
             style={{
               backgroundColor: colors.grey1,
               marginTop: moderateScaleVertical(43),
+              marginBottom:moderateScaleVertical(height/10)
             }}>
             <View
               style={styles.sliderContainer}>

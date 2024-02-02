@@ -26,6 +26,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import { isEmpty } from 'lodash';
 
 const ProductsComp = ({
   isDiscount,
@@ -135,7 +136,7 @@ const ProductsComp = ({
               alignSelf: "flex-end",
               ...productNameStyle,
             }}>
-            {item?.translation[0]?.title || item?.title || item?.sku}
+            {isEmpty(item?.translation)? item?.title:item?.translation[0]?.title || item?.title || item?.sku}
           </Text>
         </View>
       </View>
