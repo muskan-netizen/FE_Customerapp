@@ -269,7 +269,10 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
   const createRoom = async () => {
     if (!userData?.auth_token) {
-      actions.setAppSessionData('on_login');
+      showError("Please login to access this feature")
+      setTimeout(() => {
+        actions.setAppSessionData('on_login');
+      }, 400);
       return;
     }
     setLoadingChat(true);

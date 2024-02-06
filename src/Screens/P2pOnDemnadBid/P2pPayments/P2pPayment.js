@@ -751,10 +751,7 @@ const P2pPayment = ({ navigation, route, item }) => {
                     </View>
 
                 )}
-            </ScrollView>
-
-
-            <ButtonWithLoader
+                <ButtonWithLoader
                 isLoading={isPlaceOrderLoading}
                 btnText={strings.PAYNOW}
                 disabled={selectedPayment?.id === 4 && isEmpty(selectedPaymentCard)}
@@ -769,11 +766,15 @@ const P2pPayment = ({ navigation, route, item }) => {
                     borderWidth: 0,
                     borderRadius: moderateScale(8),
                     position: 'absolute',
-                    bottom: 20,
+                    bottom: 40,
                     width: width - moderateScale(40),
                 }}
                 btnTextStyle={{}}
             />
+            </ScrollView>
+
+
+           
             <AddPaymentCard isVisible={isAddNewCardModal}
                 onBackdropPress={() => setisAddNewCardModal(false)}
                 cardHolderName={cardHolderName}
