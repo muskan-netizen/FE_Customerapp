@@ -256,10 +256,10 @@ export default function () {
       />
 
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.PAYMENT_SCREEN}
         component={P2pPayment}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.NOTIFICATION}

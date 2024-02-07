@@ -359,10 +359,10 @@ export default function () {
         component={ProductPriceDetails}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.PAYMENT_SCREEN}
         component={P2pPayment}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.NOTIFICATION}

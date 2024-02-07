@@ -12,6 +12,7 @@ import {
   P2pChatScreen,
   P2pOndemandProductDetail,
   P2pOndemandProducts,
+  P2pPayment,
   P2pWishlist,
   Wishlist,
   Wishlist2
@@ -137,6 +138,10 @@ export default function Routes() {
          <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
         component={P2pOndemandProducts}
+      />
+         <Stack.Screen
+        name={navigationStrings.PAYMENT_SCREEN}
+        component={P2pPayment}
       />
       </Stack.Navigator>
     </NavigationContainer>
