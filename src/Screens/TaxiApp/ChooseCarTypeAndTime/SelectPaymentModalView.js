@@ -72,7 +72,7 @@ function SelectPaymentModalView({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, appStyle } = useSelector((state) => state?.initBoot || {});
-  const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
+  const { additional_preferences, digit_after_decimal,distance_matrix_app_status } = appData?.profile?.preferences || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
@@ -87,7 +87,7 @@ function SelectPaymentModalView({
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-
+console.log(distance_matrix_app_status,'distance_matrix_app_status')
   const moveToNewScreen =
     (screenName, data = {}) =>
       () => {
@@ -312,7 +312,7 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
               {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
             ]}>
             {`${
-              !!Number(totalDistance)
+              !!Number(distance_matrix_app_status)
                 ? Number(totalDistance)||0
                 : selectedCarOption?.distance || '0'
             } ${
@@ -340,7 +340,7 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
               styles.distanceDurationDeliveryLable,
               {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
             ]}>
-            {!!Number(totalDuration)
+            {!!Number(distance_matrix_app_status)
               ? Number(totalDuration) < 60
                 ? `${Math.ceil(Number(totalDuration))} mins`
                 : `${(Number(totalDuration) / 60).toFixed(2)} hrs`
