@@ -87,8 +87,12 @@ export function initApp(
         let countryData = {};
 
         currenciesData['all_currencies'] = currencies;
-        currenciesData['primary_currency'] = !isEmpty(data?.primary_currencies) ? data?.primary_currencies?.currency :
-          reload && data?.currencies
+        currenciesData['primary_currency'] = !isEmpty(data?.primary_currencies) ? data?.primary_currencies?.currency||data?.primary_currencies[0]?.currency :
+          reload &&
+            primary_curreny?.id &&
+            data?.currencies.find((x) => x?.currency?.id == primary_curreny?.id)
+            ? primary_curreny
+            : data?.currencies
               ? data?.currencies.filter((x) => x?.is_primary)[0]?.currency
               : {};
 

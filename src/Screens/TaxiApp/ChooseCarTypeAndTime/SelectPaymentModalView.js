@@ -63,7 +63,9 @@ function SelectPaymentModalView({
   onQuestionAnswerSubmit,
   allScreenParamsData,
   indicatorLoader = false,
-  paymentInfoAfterBidAccept = {}
+  paymentInfoAfterBidAccept = {},
+  totalDistance = 0,
+  totalDuration = 0,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -307,14 +309,18 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
           <Text
             style={[
               styles.distanceDurationDeliveryLable,
-              { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
-            ]}
-          >
-            {`${selectedCarOption?.distance || '0'} ${getBundleId() === appIds?.weTogether ||
+              {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+            ]}>
+            {`${
+              !!Number(totalDistance)
+                ? Number(totalDistance)||0
+                : selectedCarOption?.distance || '0'
+            } ${
+              getBundleId() === appIds?.weTogether ||
               getBundleId() === appIds?.taxiolgy
-              ? 'Miles'
-              : 'km'
-              }`}
+                ? 'Miles'
+                : 'km'
+            }`}
           </Text>
         </View>
         <View style={{ flex: 0.33 }}>
@@ -332,10 +338,13 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
           <Text
             style={[
               styles.distanceDurationDeliveryLable,
-              { color: isDarkMode ? MyDarkTheme.colors.text : colors.black },
-            ]}
-          >
-            {!!selectedCarOption?.duration < 60
+              {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+            ]}>
+            {!!Number(totalDuration)
+              ? Number(totalDuration) < 60
+                ? `${Math.ceil(Number(totalDuration))} mins`
+                : `${(Number(totalDuration) / 60).toFixed(2)} hrs`
+              : !!selectedCarOption?.duration < 60
               ? `${selectedCarOption?.duration} mins`
               : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
           </Text>
@@ -493,11 +502,14 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
                   marginTop: moderateScale(5),
                   color: '#ACB1C0',
                 })
-              }
-            >
-              {!!selectedCarOption?.duration < 60
-                ? `${selectedCarOption?.duration} mins`
-                : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
+              }>
+              {!!Number(totalDuration)
+              ? Number(totalDuration) < 60
+                ? `${Math.ceil(Number(totalDuration))} mins`
+                : `${(Number(totalDuration) / 60).toFixed(2)} hrs`
+              : !!selectedCarOption?.duration < 60
+              ? `${selectedCarOption?.duration} mins`
+              : `${(Number(selectedCarOption?.duration) / 60).toFixed(2)} hrs`}
             </Text>
           </View>
           <View
