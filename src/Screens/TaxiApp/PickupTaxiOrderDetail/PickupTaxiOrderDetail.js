@@ -2334,6 +2334,27 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                 <View style={styles.horizontalLine} />
               </View>
             )}
+              {!!orderFullDetail?.order_details?.wallet_amount_used &&
+            Number(orderFullDetail?.order_details?.wallet_amount_used) !==
+            0 && (
+              <View>
+                <LeftRightText
+                  leftText={strings.WALLET}
+                  rightText={`- ${tokenConverterPlusCurrencyNumberFormater(
+                    Number(
+                      orderFullDetail?.order_details?.wallet_amount_used
+                    ),
+                    digit_after_decimal,
+                    additional_preferences,
+                    currencies?.primary_currency?.symbol
+                  )}`}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
+                />
+                <View style={styles.horizontalLine} />
+              </View>
+            )}
           {
             Number(orderFullDetail?.order_details?.toll_amount) > 0
             && (
