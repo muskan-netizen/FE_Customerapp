@@ -51,14 +51,16 @@ import {
 } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
+import { saveAllUserAddress } from './init';
 const { dispatch } = store;
 
-export const saveAddress = (data) => {
-  saveSelectedAddress(data).then((suc) => {
+export const  saveAddress =async (data) => {
+  await saveSelectedAddress(data).then((suc) => {
     dispatch({
       type: types.SELECTED_ADDRESS,
       payload: data,
     });
+    saveAllUserAddress(data)
   });
 };
 
