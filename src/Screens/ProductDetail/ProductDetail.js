@@ -428,7 +428,7 @@ export default function ProductDetail({ route, navigation }) {
     const optionsWithValueTrue = cloneVariantSetData.flatMap(item => item.options.filter(option => option?.isSelected === true));
     let data = {};
     data['variants'] = optionsWithValueTrue.map((i) => i?.variant_type_id);
-    data['options'] = optionsWithValueTrue.map((i) => i?.id || i?.variant_option_id);
+    data['options'] = optionsWithValueTrue.map((i) => i?.variant_option_id || i?.id );
     data['selected_title'] = cloneVariantSetData[0]?.title
     console.log("datadatadatadata", data)
 
@@ -627,40 +627,7 @@ export default function ProductDetail({ route, navigation }) {
       }
       return val;
     })
-
-    // console.log("modifyVariantsmodifyVariants", modifyVariants)
-    // setVariantSet(modifyVariants)
-
-    // return;
     getProductDetailBasedOnFilter(modifyVariants, productSku, item)
-    // console.log("item++++++",item)
-    // // variant_option_id
-
-    // let newArray = cloneDeep(options);
-    // let modifyVariants = variantSet.map((vi, vnx) => {
-    //   if (vi.variant_type_id == item.variant_id ) {
-    //     return {
-    //       ...vi,
-    //       options: newArray.map((j, jnx) => {
-    //         if (j?.variant_option_id == item?.id) {
-    //           return {
-    //             ...j,
-    //             isSelected: true,
-    //           };
-    //         }
-    //         return {
-    //           ...j,
-    //           isSelected: false,
-    //         };
-    //       }),
-    //     };
-    //   } else {
-    //     return vi;
-    //   }
-    // });
-    // console.log(options, "modifyVariantsmodifyVariants", modifyVariants)
-    // setVariantSet(modifyVariants)
-    // getProductDetailBasedOnFilter(modifyVariants, options, i)
   };
 
 
@@ -1749,7 +1716,7 @@ export default function ProductDetail({ route, navigation }) {
       <TouchableOpacity
         onPress={() => selectSpecificOptions(item, parentIndex)}
         activeOpacity={0.7}
-        disabled={!item?.quantity}
+        disabled={!item?.quantity && !has_inventory}
         style={{
           ...styles.colorContainer,
           borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
