@@ -1709,14 +1709,13 @@ export default function ProductDetail({ route, navigation }) {
     </View>
   }
 
-  console.log("selectedVariant+++++", selectedVariant)
 
   const renderColor = useCallback((item, index, options, parentIndex) => {
     return (
       <TouchableOpacity
         onPress={() => selectSpecificOptions(item, parentIndex)}
         activeOpacity={0.7}
-        disabled={!item?.quantity && !has_inventory}
+        disabled={!item?.quantity && !!productDetailData?.has_inventory}
         style={{
           ...styles.colorContainer,
           borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
