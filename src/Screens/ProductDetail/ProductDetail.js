@@ -1748,7 +1748,7 @@ export default function ProductDetail({ route, navigation }) {
     return (
       <TouchableOpacity
         onPress={() => selectSpecificOptions(item, parentIndex)}
-        disabled={parentIndex == 0 ? false : !item?.quantity}
+        disabled={parentIndex == 0 ? false : (!item?.quantity && !!productDetailData?.has_inventory)}
         style={{
           ...styles.sizeContainer,
           backgroundColor: !!item?.isSelected ? themeColors?.primary_color : colors.white,
