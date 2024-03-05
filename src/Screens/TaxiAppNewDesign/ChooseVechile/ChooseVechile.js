@@ -1590,7 +1590,8 @@ function ChooseVechile({ navigation, route }) {
                 }}>
                     <Text style={{
                         fontFamily: fontFamily?.bold,
-                        fontSize: textScale(20)
+                        fontSize: textScale(20),
+                        flex:1,
                     }}> {selectedCarOption?.translation[0]?.title}</Text>
                     <Text
                         style={{
