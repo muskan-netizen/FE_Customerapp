@@ -4116,6 +4116,8 @@ let apiData={
         selectedItemIndx,
       );
     }else{
+      setSelectedAppointmentSlot({});
+      setAppointmentSelectedDate(null);
       showError('This slot is not available, please select different slot.')
     }
 
