@@ -1419,6 +1419,7 @@ export default function Products({ route, navigation }) {
         setSelectedAllProductDataForAppointment(item);
         setSelectedSection(section);
         setPressedItemInx(inx);
+        updateState({selectedItemIndx:inx})
         return;
       }
 
