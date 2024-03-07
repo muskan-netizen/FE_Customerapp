@@ -1001,7 +1001,10 @@ export default function WebLinks(props) {
 
   const onPressGoBack = () => {
     if (!!paramData?.isComeFromDrawer) {
-      navigation.openDrawer()
+      navigation.reset({
+      index: 0,
+      routes: [{name: navigationStrings.TAB_ROUTES}],
+      })
     } else {
       navigation.goBack()
     }

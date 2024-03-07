@@ -167,7 +167,8 @@ export default function Wishlist({ navigation, route }) {
 
   const onPressGoBack = () => {
     if (!!route?.params && route?.params?.isComeFromDrawer) {
-      navigation.openDrawer()
+      // navigation.openDrawer()
+      navigation.goBack()
     } else {
       navigation.goBack()
     }

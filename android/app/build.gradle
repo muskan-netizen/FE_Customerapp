@@ -137,7 +137,10 @@ android {
     }
  packagingOptions {
         pickFirst '**/libc++_shared.so'
+        pickFirst "**/libarcore_sdk_c.so"
         pickFirst '**/libfbjni.so'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/*'
     }
    
     dexOptions {

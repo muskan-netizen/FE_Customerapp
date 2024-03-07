@@ -90,7 +90,7 @@ const CustomDrawerContent = (props) => {
   const onPressProfile = () => {
     if (!!userData?.auth_token) {
 
-      navigation.navigate(navigationStrings.MY_PROFILE, { isComeFromDrawer: true })
+      navigation.navigate(navigationStrings.ACCOUNTS, { isComeFromDrawer: true })
     } else {
       actions.setAppSessionData('on_login')
     }
@@ -141,7 +141,10 @@ const CustomDrawerContent = (props) => {
 
           <DrawerItem
             label={strings.HOME}
-            onPress={() => onPressItem(navigationStrings.HOME, 1)} //screenName, tabIndex
+            onPress={() => navigation.reset({
+              index: 0,
+              routes: [{name: navigationStrings.TAB_ROUTES}],
+              })} 
             icon={({ focused }) => {
               return (
                 <Image style={{

@@ -235,7 +235,6 @@ function Cart({ navigation, route }) {
     orderAmount,
     codMinAmount,
   } = state;
-  console.log(laundrySelectedDropOffDate, availableTimeSlots, 'laundrySelectedPickupDatelaundrySelectedPickupDate')
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
   const {
@@ -259,7 +258,6 @@ function Cart({ navigation, route }) {
   });
 
   const { preferences } = appData?.profile;
-  console.log(preferences, cartData, 'perferences-------')
   const { additional_preferences, digit_after_decimal } = preferences;
 
   const selectedAddressData = useSelector(
@@ -269,7 +267,6 @@ function Cart({ navigation, route }) {
   const { dineInType, appMainData, location } = useSelector(
     (state) => state?.home,
   );
-  console.log(localeSheduledOrderDate, 'localeSheduledOrderDate')
   //Update states on screens
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
@@ -563,7 +560,7 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data_++++++++', cartData, businessType, dineInType);
+  console.log('cart data_++++++++', cartData);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -739,7 +736,6 @@ function Cart({ navigation, route }) {
       _directOrderPlace();
     }
   }, [paramsData?.transactionId]);
-  console.log(selectedPayment, 'selectedPaymentselectedPayment')
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
     // updateState({ isLoadingB: true });
@@ -766,7 +762,6 @@ function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data++++', cartData);
 
   //flutter wave
   var redirectTimeout;
@@ -1504,7 +1499,6 @@ function Cart({ navigation, route }) {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
 
-  console.log(vendorAddress, 'vendorAddress....');
 
   //Clear cart
   const placeOrder = () => {
@@ -2745,7 +2739,6 @@ if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
   const _onGiftBoxSelection = () => {
     updateState({ isGiftBoxSelected: !isGiftBoxSelected });
   };
-  console.log(kycImages, 'kycImageskycImages');
   //get footer start
   const getFooter = () => {
     return (
@@ -2815,8 +2808,6 @@ if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
   //end footer
 
   //Header section of cart screen
-
-  console.log("cartDatacartData", cartData)
 
   const homeType = (data) => {
     let value = strings.HOME;
@@ -3666,11 +3657,6 @@ if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
       console.log('error riased', error);
     }
   };
-
-  const checkValidSlotSelected = (item) => {
-    console.log(item, "item?....item", localeSheduledOrderDate, selectedDateFromCalendar)
-
-  }
 
   const onSelectTime = (item) => {
     actions.checkSlotsLimit({
@@ -4704,7 +4690,6 @@ if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
 
 
   // Category KYC end
-  console.log(cartItems, "cartItemscartItems");
   return (
     <WrapperContainer
       bgColor={
@@ -5005,7 +4990,6 @@ if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
                     !!cartData?.slots?.length > 0) ? (
                   <Fragment>
                     <ScrollView>
-                      {console.log(minimumDelayVendorDate, '+++minimumDelayVendorDate', new Date())}
                       <Calendar
                         current={
                           getBundleId() == appIds.masa

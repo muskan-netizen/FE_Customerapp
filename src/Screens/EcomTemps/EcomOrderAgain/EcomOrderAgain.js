@@ -617,7 +617,7 @@ export default function EcomOrderAgain(props) {
                         ? { backgroundColor: MyDarkTheme.colors.background }
                         : { backgroundColor: colors.white }
                 }
-                onPressLeft={()=>navigation.openDrawer()}
+                onPressLeft={()=>navigation.goBack()}
             />
 
             <View style={{ ...commonStyles.headerTopLine }} />

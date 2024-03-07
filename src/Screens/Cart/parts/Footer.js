@@ -719,7 +719,6 @@ function Footer(props) {
           </Text>
         </View>
       )}
-      {console.log(cartData?.total_service_fee, "cartData?.total_service_fee")}
 
       {!!Number(cartData?.total_service_fee) > 0 && (
         <View style={styles.bottomTabLableValue}>
