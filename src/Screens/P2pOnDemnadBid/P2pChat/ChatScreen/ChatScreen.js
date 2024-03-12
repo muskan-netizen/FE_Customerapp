@@ -1143,7 +1143,7 @@ export default function ChatScreen({ route, navigation }) {
           flexDirection: "row",
           alignItems: "center",
         }}>
-          
+          {console.log(reciverData,'reciverDatareciverData')}
           <ButtonImage imgStyle={{ tintColor: isDarkMode ? colors.white : colors.black }} onPress={() => !!paramData?.isFromOrder ? navigation.reset({
             index: 0,
             routes: [{name: navigationStrings.TAB_ROUTES}],
@@ -1163,10 +1163,10 @@ export default function ChatScreen({ route, navigation }) {
           />:
           !!reciverData?.name?<View
               style={{
-                width: moderateScale(40),
-                height: moderateScale(40),
+                width: moderateScale(30),
+                height: moderateScale(30),
                 marginLeft:moderateScale(6),
-                borderRadius: moderateScale(40) / 2,
+                borderRadius: moderateScale(30) / 2,
                 backgroundColor: colors.paleRed,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -1227,7 +1227,7 @@ export default function ChatScreen({ route, navigation }) {
       </View>
       <View style={{
         flexDirection: "row",
-        height: moderateScaleVertical(76),
+        // height: moderateScaleVertical(76),
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: colors.textGreyO,
@@ -1241,7 +1241,7 @@ export default function ChatScreen({ route, navigation }) {
           onPress={() => navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, { product_id: productDetails?.id, isMyPost: true })}
           activeOpacity={0.1}
           style={{
-            flex: 0.5
+            flex: 1
           }}>
           <Text style={{
             fontFamily: fontFamily?.bold,
@@ -1257,7 +1257,7 @@ export default function ChatScreen({ route, navigation }) {
           onPress={onRaiseIssue}
           activeOpacity={0.1}
           style={{
-            flex: 0.5
+            flex: 0.3
           }}>
           <Text style={{
             fontFamily: fontFamily?.bold,

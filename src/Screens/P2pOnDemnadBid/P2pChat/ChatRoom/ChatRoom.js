@@ -160,7 +160,6 @@ export default function ChatRoom({ navigation, route }) {
         : item?.user_Data[0]?.username || userData?.name).slice(0,1)[0];
         const colorsArray = ['#feefe5', '#eccbbf', '#ffad8f'];
         const backgroundColor = colorsArray[index % colorsArray.length];
-        console.log(nameInitial.slice(0,1),'nameInitial');
         return (
       <TouchableOpacity
         onPress={() => goToChatRoom(item)}
