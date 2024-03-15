@@ -58,7 +58,7 @@ export default function EcomOrderAgain(props) {
     const location = useSelector((state) => state?.home?.location);
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
+    const { dineInType } = useSelector((state) => state?.home);
     const cartData = useSelector((state) => state?.cart?.cartItemCount);
 
     let backIconShow = true
@@ -572,7 +572,7 @@ export default function EcomOrderAgain(props) {
             >
                 <NoDataFound
                     image={
-                        appStyle?.homePageLayout === 4
+                        (appStyle?.homePageLayout === 4 || dineInType == "pick_drop" )
                             ? appIds.mml == getBundleId()
                                 ? imagePath.notrcukImage
                                 : imagePath.noRides
@@ -580,7 +580,7 @@ export default function EcomOrderAgain(props) {
                     }
                     isLoading={state.isLoading}
                     text={
-                        appStyle?.homePageLayout === 4
+                        (appStyle?.homePageLayout === 4 || dineInType == "pick_drop" )
                             ? appIds.mml == getBundleId()
                                 ? strings.NODELIVERIESFOUND
                                 : appIds.jiffex == getBundleId()

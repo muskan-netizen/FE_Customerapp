@@ -43,6 +43,7 @@ import { getBundleId } from 'react-native-device-info';
 
 
 import { enableFreeze } from "react-native-screens";
+import { dineInData } from "../../redux/actions/home";
 enableFreeze(true);
 
 export default function MyOrders(props) {
@@ -59,7 +60,7 @@ export default function MyOrders(props) {
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-
+  const { dineInType } = useSelector((state) => state?.home);
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
 
   let backIconShow = !!route?.params?.data ? route.params.data.isBack : false;
@@ -637,7 +638,7 @@ export default function MyOrders(props) {
       >
         <NoDataFound
           image={
-            appStyle?.homePageLayout === 4
+            (appStyle?.homePageLayout === 4 || dineInType == "pick_drop" )
               ? appIds.mml == getBundleId()
                 ? imagePath.notrcukImage
                 : imagePath.noRides
@@ -645,7 +646,7 @@ export default function MyOrders(props) {
           }
           isLoading={state.isLoading}
           text={
-            appStyle?.homePageLayout === 4
+            (appStyle?.homePageLayout === 4 || dineInType == "pick_drop" )
               ? appIds.mml == getBundleId()
                 ? strings.NODELIVERIESFOUND
                 : appIds.jiffex == getBundleId()
@@ -677,7 +678,7 @@ export default function MyOrders(props) {
               : imagePath.backArrowCourier
         }
         centerTitle={
-          appStyle?.homePageLayout === 4
+          (appStyle?.homePageLayout === 4 || dineInType == "pick_drop" )
             ? appIds.mml == getBundleId()
               ? strings.MYDELIERIES
               : appIds.jiffex == getBundleId()

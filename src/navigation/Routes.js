@@ -71,7 +71,7 @@ export default function Routes() {
                 name={navigationStrings.TAB_ROUTES}
                 component={
                   // !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand :
-                  businessType === 4
+                (  businessType === 4 || dineInType=='pick_drop')
                     ? TaxiTabRoutes
                     : businessType === 8
                       ? TabRoutesP2pOnDemand
