@@ -430,19 +430,7 @@ const ProductCard3 = ({
           />
         }
 
-       {dine_In_Type!='p2p'&& <View
-          style={{
-            // justifyContent: url1 ? 'flex-start' : 'center',
-            // marginLeft: url1 ? 0 : moderateScale(100),
-            // marginTop: url1
-            //   ? 0
-            //   : !!(
-            //       data?.translation[0]?.translation_description ||
-            //       data?.translation_description
-            //     )
-            //   ? moderateScale(30)
-            //   : moderateScale(20),
-          }}>
+       {dine_In_Type!='p2p' && dine_In_Type != 'rental'&& <View>
           {data?.has_inventory == 0 ||
             !!data?.variant[0]?.quantity ||
             (!!typeId && typeId == 8) ||

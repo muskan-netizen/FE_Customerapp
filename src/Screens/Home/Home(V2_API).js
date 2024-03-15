@@ -638,10 +638,19 @@ export default function Home({ route, navigation }) {
       })();
       return
     }
-
-    if (item?.redirect_to == staticStrings.P2P || item?.redirect_to == staticStrings.RENTAL) {
+    if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
       return;
+    }
+    if(item?.redirect_to == staticStrings.RENTAL){
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        id: item?.id,
+        vendor: false,
+        name: item?.name,
+        isVendorList: true,
+        fetchOffers: true,
+      })();
+      return
     }
     if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
       moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
