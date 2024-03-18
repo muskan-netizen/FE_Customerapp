@@ -64,7 +64,7 @@ const ShortCode: FC = () => {
     const prevCode = await getItem('saveShortCode');
     const appCode = !!prevCode ? prevCode : getAppCode();
 
-    // const appCode = "fb78f0"
+    // const appCode = "2d98b5"
 
     let header = {};
 
