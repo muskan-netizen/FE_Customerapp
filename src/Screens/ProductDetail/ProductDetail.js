@@ -2533,17 +2533,14 @@ export default function ProductDetail({ route, navigation }) {
                       {productDetailData?.additional_increments}
                     </Text>{' '}
                     hour and {' '}
-                    <Text
-                      style={{
-                        fontFamily: fontFamily.bold,
-                      }}>
+                    {/* <Text style={{fontFamily: fontFamily.bold}}>
                       {tokenConverterPlusCurrencyNumberFormater(
                         productDetailData?.variant[0]?.incremental_price_per_min,
                         digit_after_decimal,
                         additional_preferences,
                         currencies?.primary_currency?.symbol,
                       )} per
-                    </Text>
+                    </Text> */}
                     <Text
                       style={{
                         fontFamily: fontFamily.bold,
