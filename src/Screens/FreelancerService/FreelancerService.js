@@ -155,9 +155,9 @@ const FreelancerService = ({ route, navigation }) => {
 
                     if (
                         pageNo == 1 &&
-                        res?.data?.listData?.data.length == 0 &&
+                        res?.data?.listData?.data?.length == 0 &&
                         res?.data?.category &&
-                        res?.data?.category?.childs.length
+                        res?.data?.category?.childs?.length
                     ) {
                         setSelectedCategory(res.data.category.childs[0]);
                         setProductListId(res.data.category.childs[0]);
