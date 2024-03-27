@@ -917,13 +917,15 @@ export default function ProductDetail({ route, navigation }) {
       data['sele_slot_price'] = selectedProductInterval?.price;
       data['delivery_date'] = moment(selectedDate).format('YYYY-MM-DD');
     }
-
+   if(typeId == 10 ){
     data['start_date_time'] = String(
-      moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
+    moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
-    data['end_date_time'] = String(
-      moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
+   data['end_date_time'] = String(
+    moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
     );
+   }
+
     data['total_booking_time'] = rentalProductDuration;
 
     data['additional_increments_hrs_min'] =
