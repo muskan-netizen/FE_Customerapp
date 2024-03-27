@@ -12,7 +12,7 @@ import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
 import { moderateScaleVertical, StatusBarHeight } from '../styles/responsiveSize';
 import { getDistance } from 'geolib';
-import { min } from 'moment';
+import moment, { min } from 'moment';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
 import { selectContactPhone } from 'react-native-select-contact';
@@ -616,7 +616,21 @@ export function redirectFromNotification(clickActionUrl = null) {
     }
   }
 }
+const createDates = (dates) =>{
+  const resultArray = [];
+  const currentDate = moment();
 
+  for (let i = 0; i < dates; i++) {
+    const name = currentDate.format('ddd'); // Get the abbreviated day name (e.g., "Sat")
+    const day = currentDate.date(); // Get the day of the month
+    const year = currentDate.year(); // Get the year
+    const dateString = currentDate.format('YYYY-MM-DD');
+    // 2023-09-08
+    resultArray.push({ name, day, year,dateString });
+    currentDate.add(1, 'days');
+  }
+  return resultArray
+}
 export {
   showError,
   showSuccess,
@@ -633,4 +647,5 @@ export {
   playHapticEffect,
   hapticEffects,
   getTabBarVisibility,
+  createDates
 };

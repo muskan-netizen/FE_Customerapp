@@ -813,4 +813,20 @@ export default {
   ic_hourglass:require('../assets/images/hourglass.png'),
   ic_pickdropcar:require('../assets/images/pickdropcar.png'),
   ic_rentalcar:require('../assets/images/rentalcar.png'),
+
+  // ondemand
+  icHomeD: require('../assets/images/OnDemand/home.png'),
+  icHomeDInactive: require('../assets/images/OnDemand/Home_inactive.png'),
+  icOrderD: require('../assets/images/OnDemand/file.png'),
+  icOrderDInactive: require('../assets/images/OnDemand/file_inactive.png'),
+  icAccountD: require('../assets/images/OnDemand/profile.png'),
+  icAccountDInactive: require('../assets/images/OnDemand/profile2.png'),
+  icCartD: require('../assets/images/OnDemand/cart.png'),
+  icCartDInactive: require('../assets/images/OnDemand/cart_inactive.png'),
+
+  icArrow2: require('../assets/images/OnDemand/arrow.png'),
+  search4: require('../assets/images/OnDemand/search.png'),
+  icBackD: require('../assets/images/OnDemand/icBack.png'),
+  percentage:require('../assets/images/OnDemand/percentageOD.png'),
+  cashOD:require('../assets/images/OnDemand/cashOD.png'),
 };

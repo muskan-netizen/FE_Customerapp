@@ -7,6 +7,7 @@ import {
   AuthorizeNet,
   Avenue,
   Cart3,
+  CartOD,
   Cashfree,
   Conekta,
   Easebuzz,
@@ -55,11 +56,12 @@ import Pagarme from '../Screens/PaymentGateways/Pagarme';
 import StripeIdeal from '../Screens/PaymentGateways/StripeIdeal';
 import navigationStrings from './navigationStrings';
 import Livees from '../Screens/PaymentGateways/Livees';
+import OffersOnDemand from '../Screens/OnDemand/OffersOnDemand/OffersOnDemand';
 
 const Stack = createNativeStackNavigator();
 export default function () {
   const { appData, appStyle } = useSelector((state) => state?.initBoot || {});
-
+  const {  dineInType } = useSelector((state) => state?.home) || {};
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
       case 1: return ProductList;
@@ -86,7 +88,7 @@ export default function () {
       }}>
       <Stack.Screen
         name={navigationStrings.CART}
-        component={Cart3}
+        component={dineInType=="on_demand" ? CartOD : Cart3}
         options={{ animationEnabled: false }}
       />
 
@@ -204,6 +206,10 @@ export default function () {
       <Stack.Screen name={navigationStrings.CONEKTA} component={Conekta} />
       <Stack.Screen name={navigationStrings.PESAPAL} component={Pesapal} />
       <Stack.Screen name={navigationStrings.LIVESS} component={Livees} />
+      <Stack.Screen
+        name={navigationStrings.OFFERSONDEMAND}
+        component={OffersOnDemand}
+      />
     </Stack.Navigator>
   );
 }

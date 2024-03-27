@@ -187,5 +187,11 @@ export default {
   // car rental stacks
   CAR_RENTAL_HOME:'CarRentalHome',
   AVAILABLE_CARS:'AvailableCar',
-  REVIEW_BOOKING:'ReviewBooking'
+  REVIEW_BOOKING:'ReviewBooking',
+  ALL_VENDOR_ON_DEMAND:"allVendorOnDemand",
+  ONLY_PRODUCT_OD:'OnlyProductOD',
+  ONLY_CATEGORY_OD:'OnlyCategoryOD',
+  PRODUCT_WITH_CATEGORY_OD:'ProductWithCategoryOD',
+  PRODUCT_WITH_EXTENDED_CATEGORY:'ProductWithCategoryExtendedOD',
+  OFFERSONDEMAND:'OffersOnDemand'
 };
