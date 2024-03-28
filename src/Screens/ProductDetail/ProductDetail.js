@@ -2784,9 +2784,9 @@ export default function ProductDetail({ route, navigation }) {
                             indicator={isLoadingC}
                             disabled={
                               // !productDetailData?.vendor?.closed_store_order_scheduled
-                              !productDetailData?.vendor
+                              (!productDetailData?.vendor
                                 ?.closed_store_order_scheduled &&
-                              !!productDetailData?.vendor?.is_vendor_closed
+                              !!productDetailData?.vendor?.is_vendor_closed|| !!isLoadingC)
                             }
                             indicatorColor={colors.white}
                             colorsArray={[

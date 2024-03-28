@@ -400,7 +400,12 @@ function Footer(props) {
                 }}>
                 <TextInput
                   value={selectedTipAmount}
-                  onChangeText={(text) => setSelectedTipAmount(text)}
+                  onChangeText={(text) => {
+                    const numberRegex = /^[0-9]*$/;
+                    if (numberRegex.test(text) || text === "") {
+                      setSelectedTipAmount(text);
+                    }
+                  }}
                   style={{
                     height: 40,
                     alignItems: 'center',
@@ -411,7 +416,7 @@ function Footer(props) {
                   }}
                   maxLength={5}
                   returnKeyType={'done'}
-                  keyboardType={'number-pad'}
+                  keyboardType={'numeric'}
                   placeholder={strings.ENTER_CUSTOM_AMOUNT}
                   placeholderTextColor={
                     isDarkMode
