@@ -187,7 +187,7 @@ export default function OffersOnDemand({ route, navigation }) {
   const errorMethod = (error) => {
     console.log(error, 'error');
     updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
-    showError(error?.error);
+    showError(error?.message||error?.error);
   };
 
   const rightHeader = () => {

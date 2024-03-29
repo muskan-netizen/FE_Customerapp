@@ -30,6 +30,7 @@ function PromoCodeAvailableSection(props) {
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
     const { item=[], styles, cartData, themeColors, _getAllOffers, _removeCoupon } = props;
+    console.log(cartData,'cartDatacartData')
     return (
         <>
             {/* offerview */}
@@ -37,10 +38,10 @@ function PromoCodeAvailableSection(props) {
                 // !!item?.is_promo_code_available && 
                 true&&(
                     <TouchableOpacity
-                        disabled={item?.couponData ? true : false}
+                        disabled={!!cartData?.products && cartData?.products[0]?.couponData ? true : false}
                         onPress={() => _getAllOffers(item.vendor, cartData)}
                         style={styles.offersViewB}>
-                        {item?.couponData ? (
+                        {!!cartData?.products && cartData?.products[0]?.couponData ? (
                             <View
                                 style={{
                                     flexDirection: 'row',
@@ -53,7 +54,7 @@ function PromoCodeAvailableSection(props) {
                                         alignItems: 'center',
                                     }}>
                                     <FastImage
-                                        source={imagePath.percent}
+                                        source={imagePath.percentage}
                                         resizeMode="contain"
                                         style={{
                                             width: moderateScale(16),
@@ -70,13 +71,14 @@ function PromoCodeAvailableSection(props) {
                                                 color: isDarkMode ? colors.white: colors.black
                                              },
                                         ]}>
-                                        {`${item?.couponData?.name} ${strings.CODE} ${strings.APPLYED}`}
+                                        {`${cartData?.products[0]?.couponData?.name} ${strings.CODE} ${strings.APPLYED}`}
                                     </Text>
                                 </View>
-                                <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
+                                <TouchableOpacity
+                                onPress={() => _removeCoupon(cartData?.products[0], cartData)}
+                                style={{ flex: 0.3, alignItems: 'flex-end' }}>
                                     {/* <Image source={imagePath.crossBlueB}  /> */}
                                     <Text
-                                        onPress={() => _removeCoupon(item, cartData)}
                                         style={[
                                             styles.removeCoupon,
                                             { 
@@ -85,7 +87,7 @@ function PromoCodeAvailableSection(props) {
                                         ]}>
                                         {strings.REMOVE}
                                     </Text>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                         ) : (
                             <View style={{ flexDirection: 'row', alignItems: 'center',flex:1 }}>
