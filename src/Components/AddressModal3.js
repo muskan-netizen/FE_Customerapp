@@ -289,11 +289,11 @@ const AddressModal3 = ({
   const isValidDataOfAddressSave = () => {
     const error = validations({
       address: address || '',
-      // street: street || '',
-      // city: city || '',
-      // states: states || '',
-      // country: country || '',
-      // pincode: pincode || '',
+      street: street || '',
+      city: city || '',
+      states: states || '',
+      country: country || '',
+      pincode: pincode || '',
     });
     if (error) {
       // showError(error);

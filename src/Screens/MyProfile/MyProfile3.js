@@ -886,6 +886,7 @@ export default function MyProfile3({ route, navigation }) {
           <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('email')}
             value={email}
+            isEditable={false}
             label={strings.EMAIL}
             autoCapitalize={'none'}
             containerStyle={{ marginVertical: moderateScaleVertical(10) }}

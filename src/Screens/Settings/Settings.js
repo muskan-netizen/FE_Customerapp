@@ -162,22 +162,34 @@ export default function Settings({ route, navigation }) {
 
   //Update language
   const updateLanguage = (item) => {
-
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
-    // console.log(data, "setLang")
-    if (data.sort_code !== languages.primary_language.sort_code) {
-      let languagesData = {
-        ...languages,
-        primary_language: data,
-      };
-      // updateState({isLoading: true});
-      setItem('setPrimaryLanguage', languagesData);
-      setTimeout(() => {
-        updateState({ isLoading: false });
-        actions.updateLanguage(data);
-        onSubmitLang(data.sort_code, languagesData);
-      }, 1000);
-    }
+    Alert.alert(
+      "Confirmation",
+      "Are you sure you want to update the language?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            let languagesData = {
+              ...languages,
+              primary_language: data,
+            };
+
+            setItem('setPrimaryLanguage', languagesData);
+
+            setTimeout(() => {
+              updateState({ isLoading: false });
+              actions.updateLanguage(data);
+              onSubmitLang(data.sort_code, languagesData);
+            }, 1000);
+          }
+        }
+      ]
+    );
   };
 
   //update language all over the app

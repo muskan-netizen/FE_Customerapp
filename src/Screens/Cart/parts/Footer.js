@@ -399,12 +399,12 @@ function Footer(props) {
                   marginTop: moderateScaleVertical(8),
                 }}>
                 <TextInput
-                  value={selectedTipAmount}
+                  value={selectedTipAmount||''}
                   onChangeText={(text) => {
                     const numberRegex = /^[0-9]*$/;
-                    if (numberRegex.test(text) || text === "") {
-                      setSelectedTipAmount(text);
-                    }
+                  if (numberRegex.test(text) || text === "") {
+                    setSelectedTipAmount(text);
+                   }
                   }}
                   style={{
                     height: 40,

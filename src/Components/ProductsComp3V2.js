@@ -266,7 +266,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
             fontSize: textScale(11),
             color: colors.white,
             fontFamily: fontFamily.medium,
-          }}>{parseInt(((item?.compare_price_numeric - item?.price_numeric) / item?.price_numeric * 100).toFixed(3))}% OFF</Text>
+          }}>{parseInt(((item?.compare_price_numeric - item?.price_numeric) / item?.compare_price_numeric * 100).toFixed(3))}% OFF</Text>
         </View>
         : null}
 

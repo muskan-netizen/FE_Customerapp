@@ -1982,8 +1982,7 @@ export default function ProductDetail({ route, navigation }) {
                             : colors.black,
                         }}>
                         {tokenConverterPlusCurrencyNumberFormater(
-                          Number(productPriceData?.price) *
-                          Number(productQuantityForCart),
+                          Number(productPriceData?.price),
                           digit_after_decimal,
                           additional_preferences,
                           currencies?.primary_currency?.symbol,
