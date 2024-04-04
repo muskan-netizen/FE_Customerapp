@@ -8,8 +8,16 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import WrapperContainer from '../../Components/WrapperContainer';
+import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
+import colors from '../../styles/colors';
 
 export default function ListEmptyProduct({isLoading = false}) {
+  const { themeColor, themeToggle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // if (isLoading) {
   //   return (
   //     <View style={{marginTop: moderateScaleVertical(20)}}>
@@ -63,6 +71,7 @@ export default function ListEmptyProduct({isLoading = false}) {
         style={{
           marginTop: moderateScaleVertical(50),
           // paddingHorizontal:moderateScale(16)
+          backgroundColor:isDarkMode? colors.black:colors.white
         }}>
         <HeaderLoader
           isRight={false}

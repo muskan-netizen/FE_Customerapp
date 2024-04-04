@@ -4,6 +4,9 @@ import { ScrollView, View } from 'react-native';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
+import { useSelector } from 'react-redux';
+import { useDarkMode } from 'react-native-dynamic';
+import colors from '../../../styles/colors';
 
 
 var cardHeight = moderateScale(60)
@@ -14,13 +17,17 @@ let itemWidth = parseInt(moderateScale(140))
 
 
 const DashBoardFiveV2ApiLoader = () => {
-
+    const { themeColor, themeToggle} = useSelector(
+        (state) => state?.initBoot,
+      );
+      const darkthemeusingDevice = useDarkMode();
+      const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     return (
         <WrapperContainer>
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1 }}>
+                contentContainerStyle={{ flexGrow: 1 , backgroundColor:isDarkMode? colors.black:colors.white}}>
 
                 <BannerLoader homeLoaderHeight={moderateScaleVertical(180)} viewStyles={{ marginVertical: moderateScale(16) }} />
 
