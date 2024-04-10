@@ -57,6 +57,7 @@ import StripeIdeal from '../Screens/PaymentGateways/StripeIdeal';
 import navigationStrings from './navigationStrings';
 import Livees from '../Screens/PaymentGateways/Livees';
 import OffersOnDemand from '../Screens/OnDemand/OffersOnDemand/OffersOnDemand';
+import Paypal from '../Screens/PaymentGateways/Paypal';
 
 const Stack = createNativeStackNavigator();
 export default function () {
@@ -210,6 +211,7 @@ export default function () {
         name={navigationStrings.OFFERSONDEMAND}
         component={OffersOnDemand}
       />
+      <Stack.Screen name={navigationStrings.PAYPAL} component={Paypal} />
     </Stack.Navigator>
   );
 }
