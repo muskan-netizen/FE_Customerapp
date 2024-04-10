@@ -78,7 +78,7 @@ export default function MyP2pPosts({ route, navigation }) {
   );
 
   const getAllPosts = (pageNo = 1, limit = 10) => {
-    let query = `/${userData?.vendor_id}?limit=${limit}&page=${pageNo}type=all`;
+    let query = `/${userData?.vendor_id}?limit=${limit}&page=${pageNo}&type=all`;
 
     actions
       .allVendorData(query, {
@@ -484,7 +484,7 @@ export default function MyP2pPosts({ route, navigation }) {
               </View>
             );
           }}
-          onEndReached={onEndReached}
+          onPreviewEnd={onEndReachedDelayed}
         />
       </View>
 
