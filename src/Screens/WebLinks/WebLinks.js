@@ -422,18 +422,24 @@ export default function WebLinks(props) {
       formData.append('bank_name', bankName);
       formData.append('account_number', accountNumber);
       formData.append('ifsc_code', ifscCode);
-      formData.append('upload_logo', {
-        uri: vendorLogo.path,
-        name: vendorLogo.filename,
-        filename: vendorLogo.filename,
-        type: vendorLogo.mime,
-      });
-      formData.append('upload_banner', {
-        uri: vendorBanner.path,
-        name: vendorBanner.filename,
-        filename: vendorBanner.filename,
-        type: vendorBanner.mime,
-      });
+      if(!isEmpty(vendorLogo)){
+        formData.append('upload_logo', {
+          uri: vendorLogo.path,
+          name: vendorLogo.filename,
+          filename: vendorLogo.filename,
+          type: vendorLogo.mime,
+        });
+      }
+
+      if(!isEmpty(vendorBanner)){
+        formData.append('upload_banner', {
+          uri: vendorBanner.path,
+          name: vendorBanner.filename,
+          filename: vendorBanner.filename,
+          type: vendorBanner.mime,
+        });
+      }
+
 
       // console.log(vendorRegisterationDocs, 'vendorRegDocs');
       // vendorRegDocs?.map((itm) => {
