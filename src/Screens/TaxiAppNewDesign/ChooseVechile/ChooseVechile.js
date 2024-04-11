@@ -589,6 +589,9 @@ function ChooseVechile({ navigation, route }) {
                 // openPayTabs(paymentData)
 
                 break;
+            case 3: //paypal Payment Gatway
+                navigation.navigate(navigationStrings.PAYPAL, paymentData);
+            break;  
             default:
                 navigation.navigate(
                     navigationStrings.PICKUPTAXIORDERDETAILS,

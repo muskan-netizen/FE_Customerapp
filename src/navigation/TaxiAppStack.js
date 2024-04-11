@@ -26,6 +26,7 @@ import Khalti from '../Screens/PaymentGateways/Khalti';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
 import navigationStrings from './navigationStrings';
 import Livees from '../Screens/PaymentGateways/Livees';
+import Paypal from '../Screens/PaymentGateways/Paypal';
 
 export default function (Stack) {
 
@@ -175,6 +176,11 @@ export default function (Stack) {
         }
         component={getHomeScreen()}
         options={{ tabBarVisible: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYPAL}
+        component={Paypal}
+        options={{ headerShown: false }}
       />
     </>
   );

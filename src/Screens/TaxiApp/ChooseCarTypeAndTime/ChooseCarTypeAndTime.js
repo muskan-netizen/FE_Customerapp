@@ -549,6 +549,9 @@ function ChooseCarTypeAndTime({ navigation, route }) {
       case 57: //Peaspal Payment Gatway
         navigation.navigate(navigationStrings.PESAPAL, paymentData);
         break;
+      case 3: //Peaspal Payment Gatway
+        navigation.navigate(navigationStrings.PAYPAL, paymentData);
+        break;
       case 30: //FlutterWave Payment Getway
         updateState({
           isModalVisibleForPayFlutterWave: true,

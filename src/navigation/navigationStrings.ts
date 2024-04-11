@@ -193,5 +193,6 @@ export default {
   ONLY_CATEGORY_OD:'OnlyCategoryOD',
   PRODUCT_WITH_CATEGORY_OD:'ProductWithCategoryOD',
   PRODUCT_WITH_EXTENDED_CATEGORY:'ProductWithCategoryExtendedOD',
-  OFFERSONDEMAND:'OffersOnDemand'
+  OFFERSONDEMAND:'OffersOnDemand',
+  PAYPAL:'Paypal'
 };
