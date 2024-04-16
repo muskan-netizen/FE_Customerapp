@@ -266,14 +266,20 @@ const AddressBottomSheet = ({
         address: address || '',
 
         street: street || '',
-        // city: city || '',
-        // states: states || '',
-        // country: country || '',
-        // pincode: pincode || '',
+        city: city || '',
+        states: states || '',
+        country: country || '',
+        pincode: pincode || '',
         houseNo: houseNo
       }) :
       validations({
         address: address || '',
+        street: street || '',
+        city: city || '',
+        states: states || '',
+        country: country || '',
+        pincode: pincode || '',
+        houseNo: houseNo
       })
     if (error) {
       console.log(error, 'errorrrrr-----')
@@ -332,45 +338,45 @@ const AddressBottomSheet = ({
       });
     }
 
-    // if (
-    //   error ==
-    //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.STATE
-    // ) {
-    //   updateState({
-    //     isState: true,
-    //     isStreet: false,
-    //     isCity: false,
-    //     isCountry: false,
-    //     isPincode: false,
-    //     isAddress: false,
-    //   });
-    // }
-    // if (
-    //   error ==
-    //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.COUNTRY
-    // ) {
-    //   updateState({
-    //     isCountry: true,
-    //     isStreet: false,
-    //     isCity: false,
-    //     isState: false,
-    //     isPincode: false,
-    //     isAddress: false,
-    //   });
-    // }
-    // if (
-    //   error ==
-    //   strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.PINCODE
-    // ) {
-    //   updateState({
-    //     isPincode: true,
-    //     isStreet: false,
-    //     isCity: false,
-    //     isState: false,
-    //     isCountry: false,
-    //     isAddress: false,
-    //   });
-    // }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.STATE
+    ) {
+      updateState({
+        isState: true,
+        isStreet: false,
+        isCity: false,
+        isCountry: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.COUNTRY
+    ) {
+      updateState({
+        isCountry: true,
+        isStreet: false,
+        isCity: false,
+        isState: false,
+        isPincode: false,
+        isAddress: false,
+      });
+    }
+    if (
+      error ==
+      strings.PLEASE_ENTER + ' ' + strings.YOUR + ' ' + strings.PINCODE
+    ) {
+      updateState({
+        isPincode: true,
+        isStreet: false,
+        isCity: false,
+        isState: false,
+        isCountry: false,
+        isAddress: false,
+      });
+    }
     else {
       return;
     }
