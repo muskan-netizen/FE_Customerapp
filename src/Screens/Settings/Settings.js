@@ -172,7 +172,10 @@ console.log(languages,'languageslanguages');
       [
         {
           text: "Cancel",
-          style: "cancel"
+          style: "cancel",
+          onPress:()=>{
+            navigation.goBack()
+          }
         },
         {
           text: "Yes",
