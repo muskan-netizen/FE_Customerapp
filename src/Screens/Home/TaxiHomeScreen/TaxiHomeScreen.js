@@ -180,7 +180,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
   //     .catch((error) => console.log('error while accessing location', error));
   // }, []);
   const _getAllNearHosptital = async () => {
-    const res = await getNearByPlacesMarker(locationObj?.latitude, locationObj?.longitude, "1500", ['restaurant'], 'AIzaSyASANrOuQldA-UM0Kj0cRirK9RxG6DAzzw')
+    const res = await getNearByPlacesMarker(locationObj?.latitude, locationObj?.longitude, "1500", ['restaurant'], 'AIzaSyDSnnf9q7vfPc9ROItgYNFkWSuBoOF2x6Q')
     console.log(res, "res>>>>>>>>>")
 
   }
