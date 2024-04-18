@@ -297,7 +297,10 @@ export default function MyProfile3({ route, navigation }) {
     if (!isValid) {
       return;
     }
-
+    if(phoneNumber==userData?.phone_number && email == userData?.email && name ==userData?.name){
+      showError('No change in data')
+      return
+    }
 
     if (!!userData?.auth_token) {
       // const checkValid = isValidDataOfBasicInfo();

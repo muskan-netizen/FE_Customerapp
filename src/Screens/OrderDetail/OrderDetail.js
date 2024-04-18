@@ -2769,8 +2769,6 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.blackOpacity86,
             }}
           />
-          {console.log(appData, "tippppppppp")}
-          {console.log(appData?.profile?.preferences?.tip_after_order, "tippppppppp2222")}
           {!!(
             paramData?.orderStatus?.current_status?.title ===
             strings.DELIVERED &&

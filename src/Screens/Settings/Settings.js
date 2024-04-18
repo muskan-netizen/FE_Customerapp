@@ -63,7 +63,7 @@ export default function Settings({ route, navigation }) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
 
-
+console.log(languages,'languageslanguages');
 
   const [count, setCount] = useState(0)
 
@@ -163,13 +163,19 @@ export default function Settings({ route, navigation }) {
   //Update language
   const updateLanguage = (item) => {
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
+    if (data.sort_code == languages.primary_language.sort_code) {
+      return
+    }
     Alert.alert(
       "Confirmation",
       "Are you sure you want to update the language?",
       [
         {
           text: "Cancel",
-          style: "cancel"
+          style: "cancel",
+          onPress:()=>{
+            navigation.goBack()
+          }
         },
         {
           text: "Yes",
