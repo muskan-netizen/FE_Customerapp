@@ -714,7 +714,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
             <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
               <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
             </View>
-          ) : !isEmpty(searchData) ? (
+          ) :  (
             <FlatList
               data={searchData}
               renderItem={renderProduct}
@@ -744,9 +744,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                 )
               }
             />
-          ) : (
-            <NoDataFound text='' />
-          )}
+          ) }
         </View>
       </View>
     </WrapperContainer>

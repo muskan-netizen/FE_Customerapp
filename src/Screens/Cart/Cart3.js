@@ -287,19 +287,31 @@ function Cart({ navigation, route }) {
     });
     Keyboard.dismiss();
   };
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const backHandler = BackHandler.addEventListener(
-  //       'hardwareBackPress',
-  //       androidBackButtonHandler,
-  //     );
-  //     return () => backHandler.remove();
-  //   }, []),
-  // );
-
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+  
   const androidBackButtonHandler = () => {
-    setPaymentModal(false)
-    return true;
+    if(!!paymentModal){
+      setPaymentModal(false)
+      return true;
+    }else{
+      Alert.alert(strings.HOLD_ON, strings.EXIT_WARNING, [
+        {
+          text: strings.CANCEL,
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: strings.YES, onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    }
   };
 
   useFocusEffect(

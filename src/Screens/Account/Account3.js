@@ -1,6 +1,8 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  Alert,
+  BackHandler,
   I18nManager,
   Image,
   Linking,
@@ -37,10 +39,11 @@ import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getRandomColor,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { bluetoothPermission } from '../../utils/permissions';
 export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -81,7 +84,29 @@ export default function Account3({ navigation }) {
       };
 
   const userData = useSelector((state) => state.auth.userData);
-
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+  
+  const androidBackButtonHandler = () => {
+      Alert.alert(strings.HOLD_ON, strings.EXIT_WARNING, [
+        {
+          text: strings.CANCEL,
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: strings.YES, onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    // }
+  };
+  
   //Share your app
 
   useEffect(() => {

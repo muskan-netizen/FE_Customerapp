@@ -907,6 +907,7 @@ export default function MyProfile3({ route, navigation }) {
           />
 
           <PhoneNumberInputWithUnderline
+            isEditable={false}
             onCountryChange={_onCountryChange}
             placeholder={strings.PHONE_NUMBER}
             onChangePhone={phoneNumber =>

@@ -27,6 +27,7 @@ const PhoneNumberInputWithUnderline = ({
   textInputStyle = {},
   undnerlineColor = colors.transparent,
   labelStyle = {},
+  isEditable = true
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -44,7 +45,7 @@ const PhoneNumberInputWithUnderline = ({
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
-    if (getBundleId() !== appIds.baytukom) {
+    if (getBundleId() !== appIds.baytukom && !!isEditable) {
       setState({countryPickerModalVisible: true});
     }
   };
@@ -141,6 +142,7 @@ const PhoneNumberInputWithUnderline = ({
           selectionColor={
             isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
           }
+          editable={isEditable}
           onChangeText={onChangePhone}
           value={phoneNumber}
           theme={{
