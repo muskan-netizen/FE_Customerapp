@@ -99,6 +99,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
   const [indexSelected, setIndexSelected] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [productInfo, setProductInfo] = useState({});
+  const [productAttributeInfo, setProductAttributeInfo] = useState([]);
   const [selectedPanoImg, setSelectedPanoImg] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const [region, setRegion] = useState({
@@ -252,6 +253,18 @@ const P2pProductDetail = ({ navigation, route, item }) => {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         })
+        var results = res?.data?.product_attribute.reduce(function (
+          results,
+          org,
+        ) {
+          (results[org.attribute_id] = results[org.attribute_id] || []).push(
+            org,
+          );
+          return results;
+        },
+          {});
+
+        setProductAttributeInfo(Object.values(results) || []);
       })
       .catch(errorMethod);
   };
@@ -363,7 +376,48 @@ const P2pProductDetail = ({ navigation, route, item }) => {
     setModalVisible(!isModalVisible);
   };
 
-
+  const renderaAttributeItems = useCallback(
+    ({ item, index }) => {
+      console.log(item,'itemitemtest')
+      return (
+        <View
+          style={{
+            marginTop: moderateScaleVertical(5),
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            {item?.map((item, index) => {
+              return (
+                <Text
+                  style={{
+                    fontFamily: fontFamily?.regular,
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme?.colors?.text
+                      : colors.black,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily?.bold,
+                      fontSize: textScale(12),
+                      color: isDarkMode
+                        ? MyDarkTheme?.colors?.text
+                        : colors.black,
+                    }}>
+                    {index == 0 ? `${item?.title}: ` : ''}
+                  </Text>
+                  {index == 0 ? '' : ','} {item?.value}
+                </Text>
+              );
+            })}
+          </View>
+        </View>
+      );
+    },
+    [productInfo],
+  );
   const modalContent = () => {
     return (
       <View
@@ -1263,6 +1317,10 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
                   }}
                 />
+                 {!isEmpty(productAttributeInfo) &&<FlatList
+                data={productAttributeInfo}
+                renderItem={renderaAttributeItems}
+              />}
 
               </View>
             </View>}
